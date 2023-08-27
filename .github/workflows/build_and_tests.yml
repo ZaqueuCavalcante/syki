@@ -14,7 +14,6 @@ jobs:
         image: postgres
         env:
           POSTGRES_DB: syki-tests-db
-          POSTGRES_HOST: postgres
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         options: >-

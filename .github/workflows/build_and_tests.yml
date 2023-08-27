@@ -13,8 +13,10 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_DB: syki-tests-db
+          POSTGRES_PORT: 5432
+          POSTGRES_HOST: postgres
           POSTGRES_USER: postgres
+          POSTGRES_DB: syki-tests-db
           POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready

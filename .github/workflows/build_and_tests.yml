@@ -1,8 +1,10 @@
 name: Build and Tests
+
 on:
   push:
     branches:
       - master
+
 jobs:
   build_and_tests:
     runs-on: ubuntu-latest
@@ -13,7 +15,8 @@ jobs:
         env:
           POSTGRES_PASSWORD: postgres
           POSTGRES_HOST: postgres
-          POSTGRES_PORT: 5432
+        ports:
+          - 5432:5432
 
     steps:
       - uses: actions/checkout@v3

@@ -29,8 +29,6 @@ public class ApiTestBase
 
         var cnn = _ctx.Database.GetConnectionString()!;
 
-        Console.WriteLine("CNN_LALALA = " + cnn);
-
         if (Env.IsTesting() && cnn.Contains("Database=syki-tests-db"))
         {
             _ctx.Database.EnsureDeleted();

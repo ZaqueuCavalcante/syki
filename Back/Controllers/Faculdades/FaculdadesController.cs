@@ -1,9 +1,13 @@
 using Syki.Domain;
 using Syki.Database;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using static Syki.Configs.AuthorizationConfigs;
 
 namespace Syki.Controllers;
 
+[Authorize(Roles = Adm)]
 [ApiController, Route("[controller]")]
 public class FaculdadesController : ControllerBase
 {
@@ -21,5 +25,13 @@ public class FaculdadesController : ControllerBase
         await _ctx.SaveChangesAsync();
 
         return Ok(faculdade);
+    }
+
+    [HttpGet("")]
+    public async Task<IActionResult> GetAll()
+    {
+        var faculdades = await _ctx.Faculdades.ToListAsync();
+
+        return Ok(faculdades);
     }
 }

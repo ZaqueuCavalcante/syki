@@ -7,7 +7,11 @@ public class Startup
 {
     public static void ConfigureServices(IServiceCollection services)
     {
+        services.AddSingleton<AuthSettings>();
         services.AddSingleton<DatabaseSettings>();
+
+        services.AddAuthenticationConfigs();
+        services.AddAuthorizationConfigs();
 
         services.AddControllers();
 
@@ -21,6 +25,9 @@ public class Startup
     public static void Configure(IApplicationBuilder app)
     {
         app.UseRouting();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.UseSwaggerThings();
 

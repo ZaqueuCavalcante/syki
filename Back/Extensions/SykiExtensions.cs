@@ -11,6 +11,11 @@ public static class SykiExtensions
         return uint.Parse(user.FindFirstValue("sub")!);
     }
 
+    public static long Facul(this ClaimsPrincipal user)
+    {
+        return long.Parse(user.FindFirstValue("faculdade")!);
+    }
+
     public static string ToSnakeCase(this string input)
     {
         if (string.IsNullOrEmpty(input)) { return input; }

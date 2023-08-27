@@ -1,6 +1,8 @@
+using Syki.Domain;
 using Syki.Database;
 using NUnit.Framework;
 using Syki.Extensions;
+using Syki.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +11,7 @@ namespace Syki.Tests.Base;
 public class ApiTestBase
 {
     protected HttpClient _client = null!;
-    protected SykiDbContext _context = null!;
+    protected SykiDbContext _ctx = null!;
     protected SykiWebApplicationFactory _factory = null!;
 
     [OneTimeSetUp]
@@ -22,15 +24,40 @@ public class ApiTestBase
     public void SetupBeforeEachTest()
     {
         using var scope = _factory.Services.CreateScope();
-        _context = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        _ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
         _client = _factory.CreateClient();
 
-        var cnn = _context.Database.GetConnectionString()!;
+        var cnn = _ctx.Database.GetConnectionString()!;
 
         if (Env.IsTesting() && cnn.Contains("Database=syki-tests-db"))
         {
-            _context.Database.EnsureDeleted();
-            _context.Database.EnsureCreated();
+            _ctx.Database.EnsureDeleted();
+            _ctx.Database.EnsureCreated();
         }
+    }
+
+    protected async Task<string> Login(string email)
+    {
+        var data = new LoginIn { Email = email };
+
+        var response = await _client.PostAsync("/users/login", data.ToStringContent());
+
+        var token = await response.DeserializeTo<LoginOut>();
+
+        _client.DefaultRequestHeaders.Remove("Authorization");
+        _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.AccessToken}");
+
+        return token.AccessToken;
+    }
+
+    protected async Task<FaculdadeOut> CreateFaculdade(string nome)
+    {
+        await Login("adm@syki.com");
+
+        var body = new FaculdadeIn { Nome = nome };
+
+        var response = await _client.PostAsync("/faculdades", body.ToStringContent());
+        
+        return await response.DeserializeTo<FaculdadeOut>();
     }
 }

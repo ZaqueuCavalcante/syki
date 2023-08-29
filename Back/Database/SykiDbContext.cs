@@ -6,9 +6,12 @@ namespace Syki.Database;
 
 public class SykiDbContext : DbContext
 {
-    public DbSet<Aluno> Alunos { get; set; }
     public DbSet<Faculdade> Faculdades { get; set; }
     public DbSet<Campus> Campi { get; set; }
+    public DbSet<Curso> Cursos { get; set; }
+    public DbSet<Disciplina> Disciplinas { get; set; }
+
+    public DbSet<Aluno> Alunos { get; set; }
 
     public List<User> Users = new()
     {

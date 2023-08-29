@@ -11,4 +11,10 @@ public class Curso
     public Turno Turno { get; set; }
 
     public List<Disciplina> Disciplinas { get; set; }
+
+    public Curso(string nome, long faculdadeId)
+    {
+        Nome = nome;
+        FaculdadeId = faculdadeId;
+    }
 }

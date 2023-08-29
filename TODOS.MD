@@ -1,4 +1,10 @@
-0 - Run API tests on pipeline
-1 - Add authentication and authorization
-2 - Use Identity?
-3 - Manage API access
+0 - [ ] Run API tests on pipeline
+1 - [X] Add authentication and authorization
+2 - [X] Use Identity? NO
+3 - [X] Manage API access
+4 - [ ] Add some use cases
+
+
+
+
+

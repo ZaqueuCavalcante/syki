@@ -26,13 +26,6 @@ jobs:
         ports:
           - 5432:5432
 
-    env:
-      POSTGRES_PORT: 5432
-      POSTGRES_HOST: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: syki-tests-db
-      POSTGRES_PASSWORD: postgres
-
     steps:
       - uses: actions/checkout@v3
       - name: Setup

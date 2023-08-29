@@ -11,4 +11,16 @@ public class Disciplina
     public short Creditos { get; set; }
 
     public short CargaHoraria { get; set; }
+
+    public Disciplina(
+        string nome,
+        long faculdadeId,
+        short creditos,
+        short cargaHoraria
+    ) {
+        Nome = nome;
+        FaculdadeId = faculdadeId;
+        Creditos = creditos;
+        CargaHoraria = cargaHoraria;
+    }
 }

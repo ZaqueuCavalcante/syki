@@ -1,6 +1,6 @@
 namespace Syki.Domain;
 
-public class Campus
+public class Grade
 {
     public long Id { get; set; }
     
@@ -8,9 +8,5 @@ public class Campus
 
     public string Nome { get; set; }
 
-    public Campus(string nome, long faculdadeId)
-    {
-        Nome = nome;
-        FaculdadeId = faculdadeId;
-    }
+    public List<Disciplina> Disciplinas { get; set; }
 }

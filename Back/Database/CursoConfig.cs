@@ -14,15 +14,12 @@ public class CursoConfig : IEntityTypeConfiguration<Curso>
         curso.HasKey(c => c.Id);
         curso.Property(c => c.Id).ValueGeneratedOnAdd();
 
+        curso.HasOne<Grade>()
+            .WithOne()
+            .HasPrincipalKey<Grade>(g => g.Id)
+            .HasForeignKey<Curso>(c => c.GradeId);
+
         curso.Property(c => c.Turno)
             .HasConversion(new EnumToStringConverter<Turno>());
-
-        curso.HasMany(c => c.Disciplinas)
-            .WithMany()
-            .UsingEntity<Dictionary<string, object>>(
-                joinEntityName: "cursos_disciplinas",
-                configureLeft: x => x.HasOne<Curso>().WithMany().HasForeignKey("CursoId"),
-                configureRight: x => x.HasOne<Disciplina>().WithMany().HasForeignKey("DisciplinaId")
-            );
     }
 }

@@ -10,6 +10,8 @@ public class Faculdade
 
     public List<Curso> Cursos { get; set; }
 
+    public List<Grade> Grades { get; set; }
+
     public List<Disciplina> Disciplinas { get; set; }
 
     public List<Professor> Professores { get; set; }

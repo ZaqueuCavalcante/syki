@@ -8,5 +8,9 @@ public class Turma
     public long DisciplinaId { get; set; }
     public long CursoId { get; set; }
 
+    public string Periodo { get; set; }
+
     public List<Aluno> Alunos { get; set; }
+
+    public List<Aula> Aulas { get; set; }
 }

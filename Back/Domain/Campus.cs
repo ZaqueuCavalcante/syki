@@ -8,6 +8,8 @@ public class Campus
 
     public string Nome { get; set; }
 
+    public Campus() { }
+
     public Campus(string nome, long faculdadeId)
     {
         Nome = nome;

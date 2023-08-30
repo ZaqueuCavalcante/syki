@@ -10,7 +10,11 @@ public class Curso
 
     public string Nome { get; set; }
 
+    public TipoDeCurso Tipo { get; set; }
+
     public Turno Turno { get; set; }
+
+    public Curso() { }
 
     public Curso(string nome, long faculdadeId)
     {

@@ -18,6 +18,8 @@ public class Faculdade
 
     public List<Aluno> Alunos { get; set; }
 
+    public Faculdade() { }
+
     public Faculdade(string nome)
     {
         Nome = nome;

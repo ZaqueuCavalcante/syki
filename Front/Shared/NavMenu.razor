@@ -1,53 +1,10 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">SYKI</a>
-        <button title="Navigation menu" class="navbar-toggler">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
-
-<div class="nav-scrollable">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="campi">
-                <span class="oi oi-vertical-align-top" aria-hidden="true"></span> Campi
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="cursos">
-                <span class="oi oi-project" aria-hidden="true"></span> Cursos
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="disciplinas">
-                <span class="oi oi-puzzle-piece" aria-hidden="true"></span> Disciplinas
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="professores">
-                <span class="oi oi-person" aria-hidden="true"></span> Professores
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="alunos">
-                <span class="oi oi-people" aria-hidden="true"></span> Alunos
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="biblioteca">
-                <span class="oi oi-book" aria-hidden="true"></span> Biblioteca
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="financeiro">
-                <span class="oi oi-dollar" aria-hidden="true"></span> Financeiro
-            </NavLink>
-        </div>
-    </nav>
-</div>
+﻿<MudNavMenu>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+    <MudNavLink Href="campi" Match="NavLinkMatch.Prefix" Icon="oi oi-vertical-align-top">Campi</MudNavLink>
+    <MudNavLink Href="cursos" Match="NavLinkMatch.Prefix" Icon="oi oi-project">Cursos</MudNavLink>
+    <MudNavLink Href="disciplinas" Match="NavLinkMatch.Prefix" Icon="oi oi-puzzle-piece">Disciplinas</MudNavLink>
+    <MudNavLink Href="professores" Match="NavLinkMatch.Prefix" Icon="oi oi-person">Professores</MudNavLink>
+    <MudNavLink Href="alunos" Match="NavLinkMatch.Prefix" Icon="oi oi-people">Alunos</MudNavLink>
+    <MudNavLink Href="biblioteca" Match="NavLinkMatch.Prefix" Icon="oi oi-book">Biblioteca</MudNavLink>
+    <MudNavLink Href="financeiro" Match="NavLinkMatch.Prefix" Icon="oi oi-dollar">Financeiro</MudNavLink>
+</MudNavMenu>

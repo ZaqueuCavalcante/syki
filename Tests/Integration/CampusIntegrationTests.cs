@@ -21,11 +21,9 @@ public class CampusIntegrationTests : ApiTestBase
         var body = new CampusIn { Nome = "Campus Caruaru" };
 
         // Act
-        var response = await _client.PostAsync("/campi", body.ToStringContent());
+        var campus = await PostAsync<CampusOut>("/campi", body);
         
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var campus = await response.DeserializeTo<CampusOut>();
         campus.Id.Should().Be(1);
         campus.FaculdadeId.Should().Be(1);
         campus.Nome.Should().Be(body.Nome);
@@ -40,12 +38,11 @@ public class CampusIntegrationTests : ApiTestBase
         await Login("academico@novaroma.com");
 
         // Act
-        await _client.PostAsync("/campi", new CampusIn { Nome = "Campus Recife" }.ToStringContent());
-        await _client.PostAsync("/campi", new CampusIn { Nome = "Campus Caruaru" }.ToStringContent());
+        await PostAsync("/campi", new CampusIn { Nome = "Campus Recife" });
+        await PostAsync("/campi", new CampusIn { Nome = "Campus Caruaru" });
         
         // Assert
-        var response = await _client.GetAsync("/campi");
-        var campi = await response.DeserializeTo<List<CampusOut>>();
+        var campi = await GetAsync<List<CampusOut>>("/campi");
         campi.Should().HaveCount(2);
     }
 

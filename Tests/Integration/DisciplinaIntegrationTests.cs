@@ -21,11 +21,9 @@ public class DisciplinaIntegrationTests : ApiTestBase
         var body = new DisciplinaIn { Nome = "Banco de Dados", Creditos = 4, CargaHoraria = 72 };
 
         // Act
-        var response = await _client.PostAsync("/disciplinas", body.ToStringContent());
+        var disciplina = await PostAsync<DisciplinaOut>("/disciplinas", body);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var disciplina = await response.DeserializeTo<DisciplinaOut>();
         disciplina.Id.Should().Be(1);
         disciplina.FaculdadeId.Should().Be(1);
         disciplina.Nome.Should().Be(body.Nome);
@@ -42,12 +40,11 @@ public class DisciplinaIntegrationTests : ApiTestBase
         await Login("academico@novaroma.com");
 
         // Act
-        await _client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", Creditos = 4, CargaHoraria = 72 }.ToStringContent());
-        await _client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", Creditos = 4, CargaHoraria = 72 }.ToStringContent());
+        await PostAsync("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", Creditos = 4, CargaHoraria = 72 });
+        await PostAsync("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", Creditos = 4, CargaHoraria = 72 });
         
         // Assert
-        var response = await _client.GetAsync("/disciplinas");
-        var disciplinas = await response.DeserializeTo<List<DisciplinaOut>>();
+        var disciplinas = await GetAsync<List<DisciplinaOut>>("/disciplinas");
         disciplinas.Should().HaveCount(2);
     }
 

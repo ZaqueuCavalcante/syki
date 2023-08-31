@@ -21,11 +21,9 @@ public class CursoIntegrationTests : ApiTestBase
         var body = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" };
 
         // Act
-        var response = await _client.PostAsync("/cursos", body.ToStringContent());
+        var curso = await PostAsync<CursoOut>("/cursos", body);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var curso = await response.DeserializeTo<CursoOut>();
         curso.Id.Should().Be(1);
         curso.FaculdadeId.Should().Be(1);
         curso.Nome.Should().Be(body.Nome);
@@ -40,13 +38,12 @@ public class CursoIntegrationTests : ApiTestBase
         await Login("academico@novaroma.com");
 
         // Act
-        await _client.PostAsync("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" }.ToStringContent());
-        await _client.PostAsync("/cursos", new CursoIn { Nome = "Direito" }.ToStringContent());
+        await PostAsync("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
+        await PostAsync("/cursos", new CursoIn { Nome = "Direito" });
         
         // Assert
-        var response = await _client.GetAsync("/cursos");
-        var campi = await response.DeserializeTo<List<CursoOut>>();
-        campi.Should().HaveCount(2);
+        var cursos = await GetAsync<List<CursoOut>>("/cursos");
+        cursos.Should().HaveCount(2);
     }
 
     [Test]

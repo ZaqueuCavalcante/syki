@@ -5,6 +5,8 @@ using Syki.Extensions;
 using Syki.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using FluentAssertions;
+using System.Net;
 
 namespace Syki.Tests.Base;
 
@@ -36,6 +38,26 @@ public class ApiTestBase
         }
     }
 
+    protected async Task PostAsync(string path, object obj)
+    {
+        var response = await _client.PostAsync(path, obj.ToStringContent());
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    protected async Task<T> PostAsync<T>(string path, object obj)
+    {
+        var response = await _client.PostAsync(path, obj.ToStringContent());
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        return await response.DeserializeTo<T>();
+    }
+
+    protected async Task<T> GetAsync<T>(string path)
+    {
+        var response = await _client.GetAsync(path);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        return await response.DeserializeTo<T>();
+    }
+
     protected async Task<string> Login(string email)
     {
         var data = new LoginIn { Email = email };
@@ -57,7 +79,7 @@ public class ApiTestBase
         var body = new FaculdadeIn { Nome = nome };
 
         var response = await _client.PostAsync("/faculdades", body.ToStringContent());
-        
+
         return await response.DeserializeTo<FaculdadeOut>();
     }
 }

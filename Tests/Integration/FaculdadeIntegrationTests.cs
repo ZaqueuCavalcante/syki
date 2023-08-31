@@ -19,11 +19,9 @@ public class FauldadeIntegrationTests : ApiTestBase
         var body = new FaculdadeIn { Nome = "Nova Roma" };
 
         // Act
-        var response = await _client.PostAsync("/faculdades", body.ToStringContent());
+        var faculdade = await PostAsync<FaculdadeOut>("/faculdades", body);
         
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var faculdade = await response.DeserializeTo<FaculdadeOut>();
         faculdade.Id.Should().Be(1);
         faculdade.Nome.Should().Be(body.Nome);
     }
@@ -35,12 +33,11 @@ public class FauldadeIntegrationTests : ApiTestBase
         await Login("adm@syki.com");
 
         // Act
-        await _client.PostAsync("/faculdades", new FaculdadeIn { Nome = "Nova Roma" }.ToStringContent());
-        await _client.PostAsync("/faculdades", new FaculdadeIn { Nome = "UFPE" }.ToStringContent());
-        
+        await PostAsync("/faculdades", new FaculdadeIn { Nome = "Nova Roma" });
+        await PostAsync("/faculdades", new FaculdadeIn { Nome = "UFPE" });
+
         // Assert
-        var response = await _client.GetAsync("/faculdades");
-        var faculdades = await response.DeserializeTo<List<FaculdadeOut>>();
+        var faculdades = await GetAsync<List<FaculdadeOut>>("/faculdades");
         faculdades.Should().HaveCount(2);
     }
 

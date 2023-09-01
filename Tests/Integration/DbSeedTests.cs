@@ -25,8 +25,10 @@ public class DbSeedTests : ApiTestBase
         var faculdades = await _ctx.Faculdades.ToListAsync();
         var campi = await _ctx.Campi.ToListAsync();
         var cursos = await _ctx.Cursos.ToListAsync();
+        var disciplinas = await _ctx.Disciplinas.ToListAsync();
         faculdades.Should().HaveCount(1);
         campi.Should().HaveCount(2);
         cursos.Should().HaveCount(4);
+        disciplinas.Should().HaveCount(31);
     }
 }

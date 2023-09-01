@@ -12,6 +12,8 @@ public class Disciplina
 
     public short CargaHoraria { get; set; }
 
+    public Disciplina() { }
+
     public Disciplina(
         string nome,
         long faculdadeId,

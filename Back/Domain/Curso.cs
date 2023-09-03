@@ -6,13 +6,13 @@ public class Curso
 
     public long FaculdadeId { get; set; }
 
-    public long? GradeId { get; set; }
-
     public string Nome { get; set; }
 
     public TipoDeCurso Tipo { get; set; }
 
     public Turno Turno { get; set; }
+
+    public List<Grade> Grades { get; set; }
 
     public Curso() { }
 

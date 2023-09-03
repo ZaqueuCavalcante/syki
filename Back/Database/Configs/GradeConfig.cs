@@ -15,10 +15,12 @@ public class GradeConfig : IEntityTypeConfiguration<Grade>
 
         grade.HasMany(g => g.Disciplinas)
             .WithMany()
-            .UsingEntity<Dictionary<string, object>>(
-                joinEntityName: "grades__disciplinas",
-                configureLeft: x => x.HasOne<Grade>().WithMany().HasForeignKey("GradeId"),
-                configureRight: x => x.HasOne<Disciplina>().WithMany().HasForeignKey("DisciplinaId")
+            .UsingEntity<GradeDisciplina>(gd =>
+                {
+                    gd.ToTable("grades__disciplinas");
+                    gd.HasOne<Grade>().WithMany().HasForeignKey(x => x.GradeId);
+                    gd.HasOne<Disciplina>().WithMany().HasForeignKey(x => x.DisciplinaId);
+                }
             );
     }
 }

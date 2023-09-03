@@ -22,7 +22,7 @@ public class DisciplinasController : ControllerBase
         var disciplina = new Disciplina(
             body.Nome,
             User.Facul(),
-            body.Creditos,body.CargaHoraria
+            body.CargaHoraria
         );
 
         await _ctx.Disciplinas.AddAsync(disciplina);

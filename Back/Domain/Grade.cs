@@ -6,6 +6,8 @@ public class Grade
     
     public long FaculdadeId { get; set; }
 
+    public long CursoId { get; set; }
+
     public string Nome { get; set; }
 
     public List<Disciplina> Disciplinas { get; set; }

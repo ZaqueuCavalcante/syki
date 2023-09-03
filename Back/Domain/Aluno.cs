@@ -9,6 +9,8 @@ public class Aluno
     
     public long FaculdadeId { get; set; }
 
+    public long CursoId { get; set; }
+
     public string Nome { get; set; }
 
     public string Matricula { get; set; }

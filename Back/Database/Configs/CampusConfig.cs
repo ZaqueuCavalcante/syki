@@ -12,5 +12,9 @@ public class CampusConfig : IEntityTypeConfiguration<Campus>
 
         campus.HasKey(c => c.Id);
         campus.Property(c => c.Id).ValueGeneratedOnAdd();
+
+        campus.HasMany<CursoOfertado>()
+            .WithOne()
+            .HasForeignKey(a => a.CampusId);
     }
 }

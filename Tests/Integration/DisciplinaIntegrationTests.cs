@@ -18,7 +18,7 @@ public class DisciplinaIntegrationTests : ApiTestBase
 
         await Login("academico@novaroma.com");
 
-        var body = new DisciplinaIn { Nome = "Banco de Dados", Creditos = 4, CargaHoraria = 72 };
+        var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
 
         // Act
         var disciplina = await PostAsync<DisciplinaOut>("/disciplinas", body);
@@ -27,7 +27,6 @@ public class DisciplinaIntegrationTests : ApiTestBase
         disciplina.Id.Should().Be(1);
         disciplina.FaculdadeId.Should().Be(1);
         disciplina.Nome.Should().Be(body.Nome);
-        disciplina.Creditos.Should().Be(body.Creditos);
         disciplina.CargaHoraria.Should().Be(body.CargaHoraria);
     }
 
@@ -40,9 +39,9 @@ public class DisciplinaIntegrationTests : ApiTestBase
         await Login("academico@novaroma.com");
 
         // Act
-        await PostAsync("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", Creditos = 4, CargaHoraria = 72 });
-        await PostAsync("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", Creditos = 4, CargaHoraria = 72 });
-        
+        await PostAsync("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
+        await PostAsync("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 72 });
+
         // Assert
         var disciplinas = await GetAsync<List<DisciplinaOut>>("/disciplinas");
         disciplinas.Should().HaveCount(2);
@@ -52,7 +51,7 @@ public class DisciplinaIntegrationTests : ApiTestBase
     public async Task Nao_deve_criar_uma_nova_disciplina_quando_o_usuario_nao_esta_logado()
     {
         // Arrange
-        var body = new DisciplinaIn { Nome = "Banco de Dados", Creditos = 4, CargaHoraria = 72 };
+        var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
 
         // Act
         var response = await _client.PostAsync("/disciplinas", body.ToStringContent());
@@ -67,7 +66,7 @@ public class DisciplinaIntegrationTests : ApiTestBase
         // Arrange
         await Login("professor@novaroma.com");
 
-        var body = new DisciplinaIn { Nome = "Banco de Dados", Creditos = 4, CargaHoraria = 72 };
+        var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
 
         // Act
         var response = await _client.PostAsync("/disciplinas", body.ToStringContent());

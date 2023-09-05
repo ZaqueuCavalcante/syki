@@ -7,4 +7,6 @@
 
 
 
-
+https://portalservicos.usp.br/
+https://siga.ufpr.br/portal/sobre/
+https://siga.ufpe.br/ufpe/jsp/FolderModulosSiga.jsf

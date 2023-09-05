@@ -4,19 +4,19 @@
 - [ ] A quantidade de creditos de uma Disciplina depende da Grade que a contem.
 - [ ] Posso ter Alunos de Cursos diferentes cursando a mesma Disciplina dentro de uma mesma Turma.
 - [ ] Um mesmo Curso pode ter varias Grades diferentes
-- [ ] Um Aluno pode estar matriculado em um unico Curso Ofertado
-- [ ] Transferencia Interna e Externa de Curso???
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ] Um Aluno pode estar matriculado em varios Cursos Ofertados
+- [ ] Transferencia Interna e Externa de Curso
+- [ ] Na Transferencia de curso, deve-se manter um Historico do curso anterior do Aluno
+- [ ] Uma Faculdade pode ofertar cursos de Graduacao, Licenciatura, Mestrado, Doutorado, Extensao (Ingles)
+- [ ] Pesquisa Academica?
+- [ ] Oferta de Disciplinas?
+- [ ] Expedicao de diplomas?
+- [ ] Indicadores academicos?
+- [ ] Gerenciamento dos funcionarios?
+- [ ] Processos Administrativos?
+- [ ] Patrimonio / Inventario da instituicao?
+- [ ] Restaurante / cantina?
+- [ ] Eleicoes?
 - [ ] 
 - [ ] 
 - [ ] 

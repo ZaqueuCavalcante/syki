@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Back\Back.csproj" />
+    <ProjectReference Include="..\Dtos\Dtos.csproj" />
   </ItemGroup>
 
 </Project>

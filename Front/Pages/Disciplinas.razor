@@ -1,3 +1,56 @@
 ﻿@page "/disciplinas"
 
 <PageTitle>Disciplinas</PageTitle>
+
+<MudContainer Class="mt-16">
+    <MudChipSet @bind-SelectedChips="selected" MultiSelection="true" Filter="filter">
+        <MudChip Text="Milk"></MudChip>
+        <MudChip Text="Eggs"></MudChip>
+        <MudChip Text="Soap"></MudChip>
+        <MudChip Text="Cornflakes"></MudChip>
+        <MudChip Text="Salad"></MudChip>
+        <MudChip Text="Apples"></MudChip>
+        <MudChip Text="Red wine"></MudChip>
+    </MudChipSet>
+</MudContainer>
+
+<div class="d-flex flex-column align-center">
+    @if (selected != null && selected.Length>0)
+    {
+        <MudText>You selected @string.Join(", ", selected.Select(chip=>chip.Text)).</MudText>
+    }
+    else
+    {
+        <MudText>Nothing selected.</MudText>
+    }
+    <MudCheckBox @bind-Checked="filter">Filter</MudCheckBox>
+</div>
+
+@code
+{
+    bool filter = true;
+    MudChip[]? selected;
+}
+
+@using Syki.Dtos
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+
+<MudContainer Class="mt-16">
+    <MudDataGrid Items="@DisciplinasOut">
+        <Columns>
+            <PropertyColumn Property="x => x.Id" Title="Id" />
+            <PropertyColumn Property="x => x.Nome" Title="Nome" />
+            <PropertyColumn Property="x => x.CargaHoraria" Title="Carga Horária" />
+        </Columns>
+    </MudDataGrid>
+</MudContainer>
+
+@code { 
+    private IEnumerable<DisciplinaOut> DisciplinasOut = new List<DisciplinaOut>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        DisciplinasOut = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
+    }
+}

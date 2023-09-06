@@ -20,10 +20,14 @@ public class Startup
         services.AddEfCoreConfigs();
 
         services.AddSwaggerConfigs();
+
+        services.AddCorsConfigs();
     }
 
     public static void Configure(IApplicationBuilder app)
     {
+        app.UseCors();
+
         app.UseRouting();
 
         app.UseAuthentication();

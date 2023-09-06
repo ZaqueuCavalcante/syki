@@ -5,59 +5,137 @@
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
     <MudGrid>
         <MudItem xs="12" sm="6" md="4">
-            <MudCard Elevation="2" Class="pa-4" Style="height: 100%">
-                <MudCardContent>
-                    <MudText>Story of the day</MudText>
-                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
-                </MudCardContent>
-                <MudCardActions>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
-                </MudCardActions>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6">
-            <MudGrid>
-                <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-                </MudItem>
-                <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-                </MudItem>
-            </MudGrid>
-        </MudItem>
-        <MudItem xs="12" sm="6">
-            <MudCard Elevation="2" Class="pa-4" Style="height: 100%">
+            <MudCard>
                 <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.AlarmOn" Color="Color.Success" Size="Size.Large" />
+                    </CardHeaderAvatar>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h6">The Story Book</MudText>
+                        <MudText Typo="Typo.body2">Classificação:</MudText>
+                        <MudText Typo="Typo.h5">Cliente recente</MudText>
                     </CardHeaderContent>
-                    <CardHeaderActions>
-                        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
-                    </CardHeaderActions>
                 </MudCardHeader>
-                <MudCardContent>
-                    <MudText>This day everything happend.</MudText>
-                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
-                </MudCardContent>
-                <MudCardActions>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary">Read More</MudButton>
-                </MudCardActions>
             </MudCard>
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Icon="@Icons.Material.Outlined.LocalPhone" Color="Color.Info" Size="Size.Large" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body2">Ligações recebidas:</MudText>
+                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.h5">05</MudText>
+                            <MudText Typo="Typo.body2">(Últimos 30 dias)</MudText>
+                        </MudStack>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
         </MudItem>
         <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Icon="@Icons.Material.Outlined.AddIcCall" Color="Color.Success" Size="Size.Large" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body2">Ligações atendidas:</MudText>
+                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.h5">04</MudText>
+                            <MudText Typo="Typo.body2">(Últimos 30 dias)</MudText>
+                        </MudStack>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
+        </MudItem>
+
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Style="@($"color:{Colors.Blue.Darken4};")" Size="Size.Large" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body2">Doador desde:</MudText>
+                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.h5">10/02/20</MudText>
+                            <MudText Typo="Typo.body2">(3 anos)</MudText>
+                        </MudStack>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Icon="@Icons.Material.Outlined.VolunteerActivism" Style="@($"color:{Colors.Pink.Accent2};")" Size="Size.Large" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body2">Doou nos últimos 12 meses:</MudText>
+                        <MudText Typo="Typo.h5">8 vezes</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="4">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Icon="@Icons.Material.Outlined.Celebration" Color="Color.Warning" Size="Size.Large" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body2">Aniversário:</MudText>
+                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.h5">03/08/96</MudText>
+                            <MudText Typo="Typo.body2">(Daqui 4 dias)</MudText>
+                        </MudStack>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
+        </MudItem>
+
+
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Icon="@Icons.Material.Outlined.PhoneInTalk" Color="Color.Surface" Size="Size.Large" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body2">Último atendimento:</MudText>
+                        <MudText Typo="Typo.h5">24/08/23</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Icon="@Icons.Material.Outlined.TagFaces" Color="Color.Success" Size="Size.Large" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body2">Total doado:</MudText>
+                        <MudText Typo="Typo.h5">R$ 150,00</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="4">
+            <MudCard>
+                <MudCardHeader>
+                    <CardHeaderAvatar>
+                        <MudIcon Icon="@Icons.Material.Outlined.BarChart" Style="@($"color:{Colors.Pink.Accent3};")" Size="Size.Large" />
+                    </CardHeaderAvatar>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.body2">Frequência:</MudText>
+                        <MudText Typo="Typo.h5">Mensal</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
         </MudItem>
     </MudGrid>
 </MudContainer>

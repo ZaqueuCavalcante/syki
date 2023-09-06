@@ -2,6 +2,44 @@
 
 <PageTitle>Campi</PageTitle>
 
+<MudBreadcrumbs Items="_items"></MudBreadcrumbs>
+
+@code {
+    private List<BreadcrumbItem> _items = new List<BreadcrumbItem>
+    {
+        new BreadcrumbItem("Campi", href: "/", icon: Icons.Material.Filled.Home),
+        new BreadcrumbItem("Caruaru", href: "/", icon: Icons.Material.Filled.VideoLibrary),
+        new BreadcrumbItem("Novo", href: null, disabled: true, icon: Icons.Material.Filled.Create)
+    };
+}
+
+<MudContainer Class="mt-16">
+    <div>
+        <MudButton Variant="Variant.Outlined">Default</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary">Primary</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Secondary">Secondary</MudButton>
+        <MudButton Variant="Variant.Outlined" Disabled="true">Disabled</MudButton>
+    </div>
+
+    <div>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error">Delete</MudButton>
+        <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary">Send</MudButton>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Custom.Uncategorized.Radioactive" Color="Color.Warning">Warning</MudButton>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Mic" Disabled="true">Talk</MudButton>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info"  Size="Size.Small">Save</MudButton>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" IconColor="Color.Secondary" Size="Size.Large">Save</MudButton>
+    </div>
+
+    <div>
+        <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined">
+            <MudIconButton Icon="@Icons.Material.Filled.AccessAlarm"></MudIconButton>
+            <MudToggleIconButton Icon="@Icons.Material.Filled.AlarmOff" Color="@Color.Error"
+                                ToggledIcon="@Icons.Material.Filled.AlarmOn" ToggledColor="@Color.Success" />
+            <MudButton StartIcon="@Icons.Material.Filled.AlarmAdd" IconColor="Color.Warning">Add alarm</MudButton>
+        </MudButtonGroup>
+    </div>
+</MudContainer>
+
 <MudContainer Class="mt-16" MaxWidth="MaxWidth.Medium">
     <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Checkout</MudText>
     <MudGrid Spacing="6" Class="mt-16">

@@ -5,11 +5,20 @@
 <MudSnackbarProvider/>
 
 <MudLayout>
-    <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
+    <MudAppBar Elevation="1" Dense="true">
         <MudText Typo="Typo.h5" Class="ml-3">Syki</MudText>
         <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+        <div Class="d-flex justify-space-around flex-wrap mt-4">
+            <MudBadge Content="3" Overlap="true" Class="mx-6 my-4">
+                <MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Default" />
+            </MudBadge>
+            <MudBadge Content="100" Color="Color.Primary" Overlap="true" Class="mx-6 my-4">
+                <MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Default" />
+            </MudBadge>
+        </div>
+        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Href="/" Target="_self" />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="/" Target="_self" />
+        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Href="/" Target="_self" />
     </MudAppBar>
     <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu />
@@ -18,23 +27,3 @@
         @Body
     </MudMainContent>
 </MudLayout>
-
-
-
-
-@* <MudLayout>
-    <MudAppBar Elevation="1">
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Href="/" Target="_self" />
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="/" Target="_self" />
-    </MudAppBar>
-    <MudDrawer Open="true" Elevation="1">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h4">Syki</MudText>
-        </MudDrawerHeader>
-        <NavMenu />
-    </MudDrawer>
-    <MudMainContent>
-        @Body
-    </MudMainContent>
-</MudLayout> *@

@@ -2,38 +2,45 @@
 
 <PageTitle>Campi</PageTitle>
 
-<MudContainer Class="my-8 px-8">
-    <MudGrid Spacing="2">
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="1" Class="pa-4" Style="height: 160px;">0</MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="1" Class="pa-4" Style="height: 160px;">1</MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="1" Class="pa-4" Style="height: 160px;">2</MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="6">
-            <MudGrid>
-                <MudItem xs="12">
-                    <MudPaper Elevation="1" Class="pa-4" Style="height: 160px;">3</MudPaper>
-                </MudItem>
-                <MudItem xs="12">
-                    <MudPaper Elevation="1" Class="pa-4" Style="height: 160px;">4</MudPaper>
+<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
+    <MudGrid>
+        <MudItem xs="12">
+            <MudGrid Justify="Justify.FlexStart">
+                @foreach (var c in CampusOut)
+                {
+                    <MudItem xs="3">
+                        <MudPaper Height="100px" Class="d-flex flex-column align-center justify-center mud-width-full py-8">
+                            <MudText Typo="Typo.h6" Align="Align.Center">@c.Nome</MudText>
+                        </MudPaper>
+                    </MudItem>
+                }
+                <MudItem xs="3">
+                    <MudButton
+                        StartIcon="@Icons.Material.Outlined.Add"
+                        IconSize="Size.Large"
+                        Variant="Variant.Outlined"
+                        FullWidth="true"
+                        Class="border-dashed border-2 mud-border-secundary"
+                        Style="height: 100px;"
+                        Color="Color.Primary"
+                    >
+                        Novo Campus
+                    </MudButton>
                 </MudItem>
             </MudGrid>
         </MudItem>
-        <MudItem xs="12" sm="6" md="6">
-            <MudPaper Elevation="1" Class="pa-4" Style="height: 100%">5</MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="1" Class="pa-4" Style="height: 160px;">6</MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="1" Class="pa-4" Style="height: 160px;">7</MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="1" Class="pa-4" Style="height: 160px;">8</MudPaper>
-        </MudItem>
     </MudGrid>
 </MudContainer>
+
+@using Syki.Dtos
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+
+@code {
+    private List<CampusOut> CampusOut = new List<CampusOut>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        CampusOut = await httpClient.GetFromJsonAsync<List<CampusOut>>("/campi") ?? new();
+    }
+}

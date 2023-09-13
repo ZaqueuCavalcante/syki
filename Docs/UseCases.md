@@ -7,7 +7,7 @@
 - [ ] Um Aluno pode estar matriculado em varios Cursos Ofertados
 - [ ] Transferencia Interna e Externa de Curso
 - [ ] Na Transferencia de curso, deve-se manter um Historico do curso anterior do Aluno
-- [ ] Uma Faculdade pode ofertar cursos de Graduacao, Licenciatura, Mestrado, Doutorado, Extensao (Ingles)
+- [ ] Uma Faculdade pode ofertar cursos de Graduacao, Licenciatura, Mestrado, Doutorado, Extensão (EN)
 - [ ] Pesquisa Academica?
 - [ ] Oferta de Disciplinas?
 - [ ] Expedicao de diplomas?

@@ -1,4 +1,4 @@
-namespace Syki.Domain;
+namespace Syki.Dtos;
 
 public class CampusIn
 {

@@ -13,6 +13,14 @@ public class SykiDbContext : DbContext
 
     public DbSet<Aluno> Alunos { get; set; }
 
+    public void SeedStartupData()
+    {
+        Database.EnsureDeleted();
+        Database.EnsureCreated();
+        Faculdades.Add(DbSeed.NovaRoma);
+        SaveChanges();
+    }
+
     public List<User> Users = new()
     {
         new User { Id = 0, Email = "adm@syki.com", Role = AuthorizationConfigs.Adm },

@@ -1,4 +1,4 @@
-namespace Syki.Controllers;
+namespace Syki.Dtos;
 
 public class LoginOut
 {

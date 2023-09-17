@@ -1,0 +1,38 @@
+<MudDialog>
+    <DialogContent>
+        <MudForm>
+            <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome do curso!" />
+            <MudSelect @bind-Value="data.Tipo" Label="Tipo" Required="true" RequiredError="Informe o tipo do curso!" AdornmentColor="Color.Primary">
+                @foreach (TipoDeCurso item in Enum.GetValues(typeof(TipoDeCurso)))
+                {
+                    <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
+                }
+            </MudSelect>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelar</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@using Syki.Dtos
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient httpClient
+
+@code {
+    private CursoIn data = new();
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    async Task Submit()
+    {
+        await httpClient.PostAsJsonAsync("/cursos", data);
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

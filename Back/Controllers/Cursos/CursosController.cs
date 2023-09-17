@@ -1,3 +1,4 @@
+using Syki.Dtos;
 using Syki.Domain;
 using Syki.Database;
 using Syki.Extensions;
@@ -19,7 +20,7 @@ public class CursosController : ControllerBase
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] CursoIn body)
     {
-        var curso = new Curso(body.Nome, User.Facul());
+        var curso = new Curso(body.Nome, body.Tipo, User.Facul());
 
         await _ctx.Cursos.AddAsync(curso);
 

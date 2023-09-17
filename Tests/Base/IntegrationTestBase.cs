@@ -1,12 +1,11 @@
-using Syki.Domain;
+using Syki.Dtos;
+using System.Net;
 using Syki.Database;
 using NUnit.Framework;
 using Syki.Extensions;
-using Syki.Controllers;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using FluentAssertions;
-using System.Net;
 
 namespace Syki.Tests.Base;
 

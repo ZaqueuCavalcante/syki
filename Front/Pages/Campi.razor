@@ -3,44 +3,71 @@
 <PageTitle>Campi</PageTitle>
 
 <MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    <MudGrid>
-        <MudItem xs="12">
-            <MudGrid Justify="Justify.FlexStart">
-                @foreach (var c in CampusOut)
-                {
+    @if(CampusOut == null)
+    {
+        <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+    }
+    else
+    {
+        <MudGrid>
+            <MudItem xs="12">
+                <MudGrid Justify="Justify.FlexStart">
+                    @foreach (var c in CampusOut)
+                    {
+                        <MudItem xs="3">
+                            <MudPaper Height="100px" Class="d-flex flex-column align-center justify-center mud-width-full py-8">
+                                <MudText Typo="Typo.h6" Align="Align.Center">@c.Nome</MudText>
+                            </MudPaper>
+                        </MudItem>
+                    }
                     <MudItem xs="3">
-                        <MudPaper Height="100px" Class="d-flex flex-column align-center justify-center mud-width-full py-8">
-                            <MudText Typo="Typo.h6" Align="Align.Center">@c.Nome</MudText>
-                        </MudPaper>
+                        <MudButton
+                            StartIcon="@Icons.Material.Outlined.Add"
+                            IconSize="Size.Large"
+                            Variant="Variant.Outlined"
+                            FullWidth="true"
+                            Class="border-dashed border-2 mud-border-secundary"
+                            Style="height: 100px;"
+                            Color="Color.Primary"
+                            @onclick="OpenDialog"
+                        >
+                            Novo Campus
+                        </MudButton>
                     </MudItem>
-                }
-                <MudItem xs="3">
-                    <MudButton
-                        StartIcon="@Icons.Material.Outlined.Add"
-                        IconSize="Size.Large"
-                        Variant="Variant.Outlined"
-                        FullWidth="true"
-                        Class="border-dashed border-2 mud-border-secundary"
-                        Style="height: 100px;"
-                        Color="Color.Primary"
-                    >
-                        Novo Campus
-                    </MudButton>
-                </MudItem>
-            </MudGrid>
-        </MudItem>
-    </MudGrid>
+                </MudGrid>
+            </MudItem>
+        </MudGrid>
+    }
 </MudContainer>
 
 @using Syki.Dtos
 @using System.Net.Http.Json
 @inject HttpClient httpClient
+@inject IDialogService DialogService
 
 @code {
-    private List<CampusOut> CampusOut = new List<CampusOut>();
+    private List<CampusOut>? CampusOut;
 
     protected override async Task OnInitializedAsync()
     {
         CampusOut = await httpClient.GetFromJsonAsync<List<CampusOut>>("/campi") ?? new();
+    }
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            Position = DialogPosition.TopCenter,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = DialogService.Show<NewCampusDialog>("Novo Campus", options);
+
+        var result = await dialog.Result;
+
+        if (result.Cancelled) return;
+        
+        await OnInitializedAsync();
     }
 }

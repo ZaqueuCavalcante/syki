@@ -2,25 +2,20 @@
 
 <PageTitle>Professores</PageTitle>
 
-@inject IDialogService DialogService
+<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
+    <h1>Alunos: @AppState.AlunosCount</h1>
 
-<MudContainer Class="mt-16">
-    <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
-        Open Simple Dialog
+    <MudButton @onclick="IncrementCount" Variant="Variant.Filled" Color="Color.Primary">
+        Add
     </MudButton>
 </MudContainer>
 
 @code {
+    [CascadingParameter]
+    public AppState AppState { get; set; }
 
-    private void OpenDialog()
+    private void IncrementCount()
     {
-        var options = new DialogOptions {
-            CloseOnEscapeKey = true,
-            CloseButton = true,
-            Position = DialogPosition.TopCenter,
-            MaxWidth = MaxWidth.Small,
-            FullWidth = true
-        };
-        DialogService.Show<SimpleDialog>("Simple Dialog", options);
+        AppState.AlunosCount++;
     }
 }

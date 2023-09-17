@@ -1,3 +1,5 @@
+using Syki.Dtos;
+
 namespace Syki.Domain;
 
 public class Curso
@@ -16,9 +18,13 @@ public class Curso
 
     public Curso() { }
 
-    public Curso(string nome, long faculdadeId)
-    {
+    public Curso(
+        string nome,
+        TipoDeCurso tipo,
+        long faculdadeId
+    ) {
         Nome = nome;
+        Tipo = tipo;
         FaculdadeId = faculdadeId;
     }
 }

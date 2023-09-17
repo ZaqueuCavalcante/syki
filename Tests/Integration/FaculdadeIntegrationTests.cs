@@ -1,5 +1,5 @@
+using Syki.Dtos;
 using System.Net;
-using Syki.Domain;
 using Syki.Tests.Base;
 using Syki.Extensions;
 using NUnit.Framework;

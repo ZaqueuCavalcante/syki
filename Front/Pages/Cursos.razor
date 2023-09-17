@@ -2,200 +2,75 @@
 
 <PageTitle>Cursos</PageTitle>
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
-    <MudGrid>
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudIcon Icon="@Icons.Material.Filled.AlarmOn" Color="Color.Success" Size="Size.Large" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body2">Classificação:</MudText>
-                        <MudText Typo="Typo.h5">Cliente recente</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudIcon Icon="@Icons.Material.Outlined.LocalPhone" Color="Color.Info" Size="Size.Large" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body2">Ligações recebidas:</MudText>
-                        <MudStack Row="true" AlignItems="AlignItems.Center">
-                            <MudText Typo="Typo.h5">@Last30DaysCalls</MudText>
-                            <MudText Typo="Typo.body2">(Últimos 30 dias)</MudText>
-                        </MudStack>
-                    </CardHeaderContent>
-                </MudCardHeader>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudIcon Icon="@Icons.Material.Outlined.AddIcCall" Color="Color.Success" Size="Size.Large" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body2">Ligações atendidas:</MudText>
-                        <MudStack Row="true" AlignItems="AlignItems.Center">
-                            <MudText Typo="Typo.h5">@Last30DaysPerformedCalls</MudText>
-                            <MudText Typo="Typo.body2">(Últimos 30 dias)</MudText>
-                        </MudStack>
-                    </CardHeaderContent>
-                </MudCardHeader>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Style="@($"color:{Colors.Blue.Darken4};")" Size="Size.Large" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body2">Doador desde:</MudText>
-                        <MudText Typo="Typo.h5">@FirstPaidDonationDate?.ToString("dd/MM/yy")</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudIcon Icon="@Icons.Material.Outlined.VolunteerActivism" Style="@($"color:{Colors.Pink.Accent2};")" Size="Size.Large" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body2">Doou nos últimos 12 meses:</MudText>
-                        <MudText Typo="Typo.h5">@Last12MonthsPaidDonations vezes</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudIcon Icon="@Icons.Material.Outlined.Celebration" Color="Color.Warning" Size="Size.Large" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body2">Aniversário:</MudText>
-                            <MudText Typo="Typo.h5">@GetBirthdayMessage()</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudIcon Icon="@Icons.Material.Outlined.PhoneInTalk" Color="Color.Surface" Size="Size.Large" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body2">Último atendimento:</MudText>
-                        <MudText Typo="Typo.h5">@GetLastCallMessage()</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudIcon Icon="@Icons.Material.Outlined.TagFaces" Color="Color.Success" Size="Size.Large" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body2">Total doado:</MudText>
-                        <MudText Typo="Typo.h5">@GetTotalDonated()</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-            </MudCard>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudCard>
-                <MudCardHeader>
-                    <CardHeaderAvatar>
-                        <MudIcon Icon="@Icons.Material.Outlined.BarChart" Style="@($"color:{Colors.Pink.Accent3};")" Size="Size.Large" />
-                    </CardHeaderAvatar>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.body2">Frequência:</MudText>
-                        <MudText Typo="Typo.h5">Mensal</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-            </MudCard>
-        </MudItem>
-    </MudGrid>
+<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
+    @if(CursosOut == null)
+    {
+        <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+    }
+    else
+    {
+        <MudGrid>
+            <MudItem xs="12">
+                <MudGrid Justify="Justify.FlexStart">
+                    @foreach (var c in CursosOut)
+                    {
+                        <MudItem xs="3">
+                            <MudPaper Height="100px" Class="d-flex flex-column align-center justify-center mud-width-full py-8">
+                                <MudText Typo="Typo.h6" Align="Align.Center">@c.Nome</MudText>
+                            <MudStack Row="true">
+                                <MudChip Label="true" Variant="Variant.Text" Color="Color.Primary" Size="Size.Medium">@c.Tipo.GetDescription()</MudChip>
+                            </MudStack>
+                            </MudPaper>
+                        </MudItem>
+                    }
+                    <MudItem xs="3">
+                        <MudButton
+                            StartIcon="@Icons.Material.Outlined.Add"
+                            IconSize="Size.Large"
+                            Variant="Variant.Outlined"
+                            FullWidth="true"
+                            Class="border-dashed border-2 mud-border-secundary"
+                            Style="height: 100px;"
+                            Color="Color.Primary"
+                            @onclick="OpenDialog"
+                        >
+                            Novo Curso
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+        </MudGrid>
+    }
 </MudContainer>
 
-@using System.Globalization
+@using Syki.Dtos
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IDialogService DialogService
 
 @code {
-    public int ActiveDonations { get; set; }
-    public decimal TotalDonated { get; set; }
-
-    public int Last30DaysCalls { get; set; }
-    public int Last30DaysPerformedCalls { get; set; }
-
-    public int Last12MonthsPaidDonations { get; set; }
-    public decimal Last12MonthsDonationsValueAverage { get; set; }
-
-    public string LastCampaignName { get; set; }
-    public decimal LastCampaignTotalDonated { get; set; }
-
-    public DateTime? LastCall { get; set; }
-
-    public DateTime? BirthDate { get; set; }
-    public DateTime? FirstPaidDonationDate { get; set; }
-
-    public bool Recurrent { get; set; }
-    public bool Inactive { get; set; }
-
-    private string GetTotalDonated()
-    {
-        return string.Format(CultureInfo.GetCultureInfo("pt-BR"), "{0:C}", TotalDonated);
-    }
-
-    private string GetLastCallMessage()
-    {
-        if (LastCall == null) return "Esse é o primeiro!";
-
-        return LastCall.Value.ToString("dd/MM/yy");
-    }
-
-    private string GetBirthdayMessage()
-    {
-        if (BirthDate == null) return "Não informado";
-
-        var nextBirthday = BirthDate.Value.AddYears(DateTime.Today.Year - BirthDate.Value.Year);
-        if(nextBirthday < DateTime.Today) {
-            nextBirthday = nextBirthday.AddYears(1);
-        }
-        var days =  (nextBirthday - DateTime.Today).Days;
-
-        if (days == 1) return "É amanhã!";
-
-        if (days == 0) return "É hoje!";
-
-        return $"Daqui {days} dias";
-    }
+    private List<CursoOut>? CursosOut;
 
     protected override async Task OnInitializedAsync()
     {
-        Last30DaysCalls = 8;
-        Last30DaysPerformedCalls = 3;
+        CursosOut = await httpClient.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
+    }
 
-        FirstPaidDonationDate = DateTime.Parse("10/12/20");
-        BirthDate = DateTime.Parse("07/08/98");
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            Position = DialogPosition.TopCenter,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = DialogService.Show<NewCursoDialog>("Novo Curso", options);
 
-        LastCall = DateTime.Parse("01/08/23");
+        var result = await dialog.Result;
 
-        Last12MonthsPaidDonations = 5;
-
-        TotalDonated = 12586;
-
-        await Task.Delay(1);
+        if (result.Cancelled) return;
+        
+        await OnInitializedAsync();
     }
 }

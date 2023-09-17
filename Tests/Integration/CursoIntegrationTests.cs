@@ -1,5 +1,5 @@
+using Syki.Dtos;
 using System.Net;
-using Syki.Domain;
 using Syki.Tests.Base;
 using Syki.Extensions;
 using NUnit.Framework;
@@ -25,7 +25,6 @@ public class CursoIntegrationTests : ApiTestBase
 
         // Assert
         curso.Id.Should().Be(1);
-        curso.FaculdadeId.Should().Be(1);
         curso.Nome.Should().Be(body.Nome);
     }
 

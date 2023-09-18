@@ -3,19 +3,5 @@
 <PageTitle>Professores</PageTitle>
 
 <MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    <h1>Alunos: @AppState.AlunosCount</h1>
-
-    <MudButton @onclick="IncrementCount" Variant="Variant.Filled" Color="Color.Primary">
-        Add
-    </MudButton>
+    <h1>Professores</h1>
 </MudContainer>
-
-@code {
-    [CascadingParameter]
-    public AppState AppState { get; set; }
-
-    private void IncrementCount()
-    {
-        AppState.AlunosCount++;
-    }
-}

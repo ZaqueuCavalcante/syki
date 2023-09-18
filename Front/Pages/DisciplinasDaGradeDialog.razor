@@ -1,0 +1,24 @@
+<MudDialog>
+    <DialogContent>
+        <MudDataGrid Items="@Disciplinas" Hover="true">
+            <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" />
+                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.CargaHoraria" Title="Carga Horária" />
+            </Columns>
+        </MudDataGrid>
+    </DialogContent>
+</MudDialog>
+
+@using Syki.Dtos
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient httpClient
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public List<DisciplinaOut> Disciplinas { get; set; }
+}

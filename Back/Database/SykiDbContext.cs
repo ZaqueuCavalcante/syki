@@ -9,6 +9,7 @@ public class SykiDbContext : DbContext
     public DbSet<Faculdade> Faculdades { get; set; }
     public DbSet<Campus> Campi { get; set; }
     public DbSet<Curso> Cursos { get; set; }
+    public DbSet<Grade> Grades { get; set; }
     public DbSet<Disciplina> Disciplinas { get; set; }
 
     public DbSet<Aluno> Alunos { get; set; }
@@ -18,6 +19,17 @@ public class SykiDbContext : DbContext
         Database.EnsureDeleted();
         Database.EnsureCreated();
         Faculdades.Add(DbSeed.NovaRoma);
+        SaveChanges();
+        var novaRoma = Faculdades.First(x => x.Id == 1);
+
+        var disciplinasDireito = DbSeed.NovaRoma.Disciplinas.Skip(31).Take(39).ToList();
+        disciplinasDireito.Add(DbSeed.NovaRoma.Disciplinas.First(x => x.Nome == "Informática e Sociedade"));
+
+        novaRoma.Grades = new()
+        {
+            new() { CursoId = 2, Nome = "Grade de ADS", Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList() },
+            new() { CursoId = 5, Nome = "Grade de Direito", Disciplinas = disciplinasDireito },
+        };
         SaveChanges();
     }
 

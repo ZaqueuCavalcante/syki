@@ -25,7 +25,6 @@ public class DisciplinaIntegrationTests : ApiTestBase
 
         // Assert
         disciplina.Id.Should().Be(1);
-        disciplina.FaculdadeId.Should().Be(1);
         disciplina.Nome.Should().Be(body.Nome);
         disciplina.CargaHoraria.Should().Be(body.CargaHoraria);
     }

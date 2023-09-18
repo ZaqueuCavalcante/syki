@@ -1,3 +1,5 @@
+using Syki.Dtos;
+
 namespace Syki.Domain;
 
 public class Disciplina
@@ -20,5 +22,15 @@ public class Disciplina
         Nome = nome;
         FaculdadeId = faculdadeId;
         CargaHoraria = cargaHoraria;
+    }
+
+    public DisciplinaOut ToOut()
+    {
+        return new DisciplinaOut
+        {
+            Id = Id,
+            Nome = Nome,
+            CargaHoraria = CargaHoraria,
+        };
     }
 }

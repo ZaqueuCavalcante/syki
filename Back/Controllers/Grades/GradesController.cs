@@ -11,11 +11,11 @@ namespace Syki.Controllers;
 
 [Authorize(Roles = Academico)]
 [ApiController, Route("[controller]")]
-public class DisciplinasController : ControllerBase
+public class GradesController : ControllerBase
 {
     private readonly SykiDbContext _ctx;
 
-    public DisciplinasController(SykiDbContext ctx) => _ctx = ctx;
+    public GradesController(SykiDbContext ctx) => _ctx = ctx;
 
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] DisciplinaIn body)
@@ -36,9 +36,11 @@ public class DisciplinasController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var disciplinas = await _ctx.Disciplinas
-            .Where(c => c.FaculdadeId == User.Facul()).ToListAsync();
+        var grades = await _ctx.Grades
+            .Where(c => c.FaculdadeId == User.Facul())
+            .Include(g => g.Disciplinas)
+            .ToListAsync();
 
-        return Ok(disciplinas.ConvertAll(d => d.ToOut()));
+        return Ok(grades.ConvertAll(g => g.ToOut()));
     }
 }

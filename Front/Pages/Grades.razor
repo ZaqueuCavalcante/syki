@@ -1,0 +1,72 @@
+﻿@page "/grades"
+
+<PageTitle>Grades</PageTitle>
+
+@using Syki.Dtos
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IDialogService DialogService
+
+<MudContainer Class="mt-8 mb-8">
+    <MudDataGrid T="GradeOut" Items="@GradesOut" QuickFilter="@_quickFilter" Hover="true" RowClick="@RowClicked">
+        <ToolBarContent>
+            <MudText Typo="Typo.h5">Grades</MudText>
+            <MudSpacer />
+            <MudTextField
+                @bind-Value="_searchString"
+                Placeholder="Buscar"
+                Adornment="Adornment.Start"
+                Immediate="true"
+                AdornmentIcon="@Icons.Material.Filled.Search"
+                IconSize="Size.Medium"
+                Class="mt-0"
+            />
+        </ToolBarContent>
+        <Columns>
+            <PropertyColumn Property="x => x.Id" Title="Id" />
+            <PropertyColumn Property="x => x.CursoId" Title="Id do Curso" />
+            <PropertyColumn Property="x => x.Nome" Title="Nome" />
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="GradeOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+        </PagerContent>
+    </MudDataGrid>
+</MudContainer>
+
+@code {
+    private string _searchString;
+    private List<GradeOut> GradesOut = new List<GradeOut>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        GradesOut = await httpClient.GetFromJsonAsync<List<GradeOut>>("/grades") ?? new();
+    }
+
+    private void RowClicked(DataGridRowClickEventArgs<GradeOut> args)
+    {
+        Console.WriteLine(args.Item.Nome);
+
+        var parameters = new DialogParameters();
+        parameters.Add("Disciplinas", args.Item.Disciplinas);
+
+        var options = new DialogOptions {
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            Position = DialogPosition.TopCenter,
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true
+        };
+        var dialog = DialogService.Show<DisciplinasDaGradeDialog>(args.Item.Nome, parameters, options);
+    }
+
+    private Func<GradeOut, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Nome.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+}

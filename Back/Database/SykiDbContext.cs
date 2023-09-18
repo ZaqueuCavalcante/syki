@@ -30,6 +30,9 @@ public class SykiDbContext : DbContext
             new() { CursoId = 2, Nome = "Grade de ADS", Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList() },
             new() { CursoId = 5, Nome = "Grade de Direito", Disciplinas = disciplinasDireito },
         };
+
+        AddRange(DbSeed.Periodos);
+
         SaveChanges();
     }
 

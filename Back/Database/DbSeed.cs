@@ -123,4 +123,18 @@ public static class DbSeed
         new Faculdade("ITA"),
         new Faculdade("Unicamp"),
     };
+
+    public static List<Periodo> Periodos = new()
+    {
+        new Periodo { Id = "2019.1", FaculdadeId = 1, Start = new DateOnly(2019, 02, 01), End = new DateOnly(2019, 06, 01) },
+        new Periodo { Id = "2019.2", FaculdadeId = 1, Start = new DateOnly(2019, 07, 01), End = new DateOnly(2019, 12, 01) },
+        new Periodo { Id = "2020.1", FaculdadeId = 1, Start = new DateOnly(2020, 02, 01), End = new DateOnly(2020, 06, 01) },
+        new Periodo { Id = "2020.2", FaculdadeId = 1, Start = new DateOnly(2020, 07, 01), End = new DateOnly(2020, 12, 01) },
+        new Periodo { Id = "2021.1", FaculdadeId = 1, Start = new DateOnly(2021, 02, 01), End = new DateOnly(2021, 06, 01) },
+        new Periodo { Id = "2021.2", FaculdadeId = 1, Start = new DateOnly(2021, 07, 01), End = new DateOnly(2021, 12, 01) },
+        new Periodo { Id = "2022.1", FaculdadeId = 1, Start = new DateOnly(2022, 02, 01), End = new DateOnly(2022, 06, 01) },
+        new Periodo { Id = "2022.2", FaculdadeId = 1, Start = new DateOnly(2022, 07, 01), End = new DateOnly(2022, 12, 01) },
+        new Periodo { Id = "2023.1", FaculdadeId = 1, Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) },
+        new Periodo { Id = "2023.2", FaculdadeId = 1, Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) },
+    };
 }

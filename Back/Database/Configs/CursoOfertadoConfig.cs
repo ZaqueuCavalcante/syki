@@ -1,6 +1,8 @@
+using Syki.Dtos;
 using Syki.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Syki.Database;
 
@@ -23,6 +25,9 @@ public class CursoOfertadoConfig : IEntityTypeConfiguration<CursoOfertado>
 
         cursoOfertado.HasOne<Periodo>()
             .WithMany()
-            .HasForeignKey(co => co.PeriodoId);
+            .HasForeignKey(co => new { co.PeriodoId, co.FaculdadeId });
+
+        cursoOfertado.Property(c => c.Turno)
+            .HasConversion(new EnumToStringConverter<Turno>());
     }
 }

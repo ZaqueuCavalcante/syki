@@ -18,9 +18,6 @@ public class CursoConfig : IEntityTypeConfiguration<Curso>
         curso.Property(c => c.Tipo)
             .HasConversion(new EnumToStringConverter<TipoDeCurso>());
 
-        curso.Property(c => c.Turno)
-            .HasConversion(new EnumToStringConverter<Turno>());
-
         curso.HasMany(c => c.Grades)
             .WithOne()
             .HasForeignKey(g => g.CursoId);

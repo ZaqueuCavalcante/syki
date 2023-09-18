@@ -12,8 +12,6 @@ public class Curso
 
     public TipoDeCurso Tipo { get; set; }
 
-    public Turno Turno { get; set; }
-
     public List<Grade> Grades { get; set; }
 
     public Curso() { }

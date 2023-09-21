@@ -14,7 +14,6 @@ namespace Syki.Controllers;
 public class DisciplinasController : ControllerBase
 {
     private readonly SykiDbContext _ctx;
-
     public DisciplinasController(SykiDbContext ctx) => _ctx = ctx;
 
     [HttpPost("")]

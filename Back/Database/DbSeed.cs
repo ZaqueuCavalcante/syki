@@ -137,4 +137,18 @@ public static class DbSeed
         new Periodo { Id = "2023.1", FaculdadeId = 1, Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) },
         new Periodo { Id = "2023.2", FaculdadeId = 1, Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) },
     };
+
+    public static List<Professor> Professores = new()
+    {
+        new Professor { FaculdadeId = 1, Nome = "Conde Bregoso", },
+        new Professor { FaculdadeId = 1, Nome = "Reginaldo Rossi", },
+        new Professor { FaculdadeId = 1, Nome = "Chico Science", },
+    };
+
+    public static List<Aluno> Alunos = new()
+    {
+        new Aluno(1, "Ednaldo Pereira"),
+        new Aluno(1, "Manoel Gomes"),
+        new Aluno(1, "Zezo"),
+    };
 }

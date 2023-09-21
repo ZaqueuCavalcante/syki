@@ -12,9 +12,5 @@ public class AlunoConfig : IEntityTypeConfiguration<Aluno>
 
         aluno.HasKey(a => a.Id);
         aluno.Property(a => a.Id).ValueGeneratedOnAdd();
-
-        aluno.HasOne<CursoOfertado>()
-            .WithMany()
-            .HasForeignKey(a => a.CursoId);
     }
 }

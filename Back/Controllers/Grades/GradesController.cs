@@ -1,5 +1,3 @@
-using Syki.Dtos;
-using Syki.Domain;
 using Syki.Database;
 using Syki.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -14,24 +12,7 @@ namespace Syki.Controllers;
 public class GradesController : ControllerBase
 {
     private readonly SykiDbContext _ctx;
-
     public GradesController(SykiDbContext ctx) => _ctx = ctx;
-
-    [HttpPost("")]
-    public async Task<IActionResult> Create([FromBody] DisciplinaIn body)
-    {
-        var disciplina = new Disciplina(
-            body.Nome,
-            User.Facul(),
-            body.CargaHoraria
-        );
-
-        await _ctx.Disciplinas.AddAsync(disciplina);
-
-        await _ctx.SaveChangesAsync();
-
-        return Ok(disciplina);
-    }
 
     [HttpGet("")]
     public async Task<IActionResult> GetAll()

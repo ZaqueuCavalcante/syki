@@ -14,7 +14,6 @@ namespace Syki.Controllers;
 public class CampiController : ControllerBase
 {
     private readonly SykiDbContext _ctx;
-
     public CampiController(SykiDbContext ctx) => _ctx = ctx;
 
     [HttpPost("")]

@@ -14,7 +14,6 @@ namespace Syki.Controllers;
 public class CursosController : ControllerBase
 {
     private readonly SykiDbContext _ctx;
-
     public CursosController(SykiDbContext ctx) => _ctx = ctx;
 
     [HttpPost("")]

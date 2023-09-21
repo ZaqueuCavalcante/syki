@@ -1,3 +1,4 @@
+using Syki.Dtos;
 using Syki.Exceptions;
 using Syki.Extensions;
 
@@ -9,14 +10,13 @@ public class Aluno
     
     public long FaculdadeId { get; set; }
 
-    public long CursoId { get; set; }
-
     public string Nome { get; set; }
 
     public string Matricula { get; set; }
 
-    public Aluno(string nome)
+    public Aluno(long faculdadeId, string nome)
     {
+        FaculdadeId = faculdadeId;
         SetNome(nome);
         Matricula = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8]}";
     }
@@ -29,5 +29,15 @@ public class Aluno
         }
 
         Nome = nome;
+    }
+
+    public AlunoOut ToOut()
+    {
+        return new AlunoOut
+        {
+            Id = Id,
+            Nome = Nome,
+            Matricula = Matricula,
+        };
     }
 }

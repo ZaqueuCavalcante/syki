@@ -2,6 +2,56 @@
 
 <PageTitle>Alunos</PageTitle>
 
-<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    <h1>Alunos</h1>
+@using Syki.Dtos
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+
+<MudContainer Class="mt-8 mb-8">
+    <MudDataGrid Items="@AlunosOut" QuickFilter="@_quickFilter" Hover="true">
+        <ToolBarContent>
+            <MudText Typo="Typo.h5">Alunos</MudText>
+            <MudSpacer />
+            <MudTextField
+                @bind-Value="_searchString"
+                Placeholder="Buscar"
+                Adornment="Adornment.Start"
+                Immediate="true"
+                AdornmentIcon="@Icons.Material.Filled.Search"
+                IconSize="Size.Medium"
+                Class="mt-0"
+            />
+        </ToolBarContent>
+        <Columns>
+            <PropertyColumn Property="x => x.Id" Title="Id" />
+            <PropertyColumn Property="x => x.Nome" Title="Nome" />
+            <PropertyColumn Property="x => x.Matricula" Title="Matrícula" />
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="AlunoOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+        </PagerContent>
+    </MudDataGrid>
 </MudContainer>
+
+@code {
+    private string _searchString;
+    private List<AlunoOut> AlunosOut = new List<AlunoOut>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        AlunosOut = await httpClient.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? new();
+    }
+
+    private Func<AlunoOut, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Nome.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Matricula.ToString().Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+}

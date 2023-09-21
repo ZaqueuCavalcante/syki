@@ -12,6 +12,7 @@ public class SykiDbContext : DbContext
     public DbSet<Grade> Grades { get; set; }
     public DbSet<Disciplina> Disciplinas { get; set; }
 
+    public DbSet<Professor> Professores { get; set; }
     public DbSet<Aluno> Alunos { get; set; }
 
     public void SeedStartupData()
@@ -32,6 +33,8 @@ public class SykiDbContext : DbContext
         };
 
         AddRange(DbSeed.Periodos);
+        AddRange(DbSeed.Professores);
+        AddRange(DbSeed.Alunos);
 
         SaveChanges();
     }

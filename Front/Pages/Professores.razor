@@ -2,6 +2,52 @@
 
 <PageTitle>Professores</PageTitle>
 
-<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    <h1>Professores</h1>
+@using Syki.Dtos
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+
+<MudContainer Class="mt-8 mb-8">
+    <MudDataGrid Items="@ProfessoresOut" QuickFilter="@_quickFilter" Hover="true">
+        <ToolBarContent>
+            <MudText Typo="Typo.h5">Professores</MudText>
+            <MudSpacer />
+            <MudTextField
+                @bind-Value="_searchString"
+                Placeholder="Buscar"
+                Adornment="Adornment.Start"
+                Immediate="true"
+                AdornmentIcon="@Icons.Material.Filled.Search"
+                IconSize="Size.Medium"
+                Class="mt-0"
+            />
+        </ToolBarContent>
+        <Columns>
+            <PropertyColumn Property="x => x.Id" Title="Id" />
+            <PropertyColumn Property="x => x.Nome" Title="Nome" />
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="ProfessorOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+        </PagerContent>
+    </MudDataGrid>
 </MudContainer>
+
+@code {
+    private string _searchString;
+    private List<ProfessorOut> ProfessoresOut = new List<ProfessorOut>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProfessoresOut = await httpClient.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? new();
+    }
+
+    private Func<ProfessorOut, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Nome.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+}

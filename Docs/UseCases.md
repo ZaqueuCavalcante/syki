@@ -23,3 +23,11 @@
 - [ ] 
 - [ ] 
 - [ ] 
+
+
+# Oferta de Curso
+- Ofertar o curso de ADS
+- No campus Caruaru
+- Iniciando no periodo letivo 2020.1
+- Com a grade ADS_00
+- Com o turno noturno

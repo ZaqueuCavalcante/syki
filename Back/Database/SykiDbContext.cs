@@ -12,6 +12,8 @@ public class SykiDbContext : DbContext
     public DbSet<Grade> Grades { get; set; }
     public DbSet<Disciplina> Disciplinas { get; set; }
 
+    public DbSet<Oferta> Ofertas { get; set; }
+
     public DbSet<Professor> Professores { get; set; }
     public DbSet<Aluno> Alunos { get; set; }
 

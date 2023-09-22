@@ -10,7 +10,7 @@ public class Faculdade
 
     public List<Curso> Cursos { get; set; }
 
-    public List<CursoOfertado> CursosOfertados { get; set; }
+    public List<Oferta> Ofertas { get; set; }
 
     public List<Grade> Grades { get; set; }
 

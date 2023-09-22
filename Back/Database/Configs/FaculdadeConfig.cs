@@ -21,7 +21,7 @@ public class FaculdadeConfig : IEntityTypeConfiguration<Faculdade>
             .WithOne()
             .HasForeignKey(c => c.FaculdadeId);
 
-        faculdade.HasMany(f => f.CursosOfertados)
+        faculdade.HasMany(f => f.Ofertas)
             .WithOne()
             .HasForeignKey(co => co.FaculdadeId);
 

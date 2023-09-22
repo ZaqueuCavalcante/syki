@@ -6,28 +6,28 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Syki.Database;
 
-public class CursoOfertadoConfig : IEntityTypeConfiguration<CursoOfertado>
+public class OfertaConfig : IEntityTypeConfiguration<Oferta>
 {
-    public void Configure(EntityTypeBuilder<CursoOfertado> cursoOfertado)
+    public void Configure(EntityTypeBuilder<Oferta> oferta)
     {
-        cursoOfertado.ToTable("cursos_ofertados");
+        oferta.ToTable("ofertas");
 
-        cursoOfertado.HasKey(co => co.Id);
-        cursoOfertado.Property(co => co.Id).ValueGeneratedOnAdd();
+        oferta.HasKey(co => co.Id);
+        oferta.Property(co => co.Id).ValueGeneratedOnAdd();
 
-        cursoOfertado.HasOne<Curso>()
+        oferta.HasOne(o => o.Curso)
             .WithMany()
             .HasForeignKey(co => co.CursoId);
 
-        cursoOfertado.HasOne<Grade>()
+        oferta.HasOne(o => o.Grade)
             .WithMany()
             .HasForeignKey(co => co.GradeId);
 
-        cursoOfertado.HasOne<Periodo>()
+        oferta.HasOne<Periodo>()
             .WithMany()
             .HasForeignKey(co => new { co.PeriodoId, co.FaculdadeId });
 
-        cursoOfertado.Property(c => c.Turno)
+        oferta.Property(c => c.Turno)
             .HasConversion(new EnumToStringConverter<Turno>());
     }
 }

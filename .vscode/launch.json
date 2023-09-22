@@ -20,6 +20,12 @@
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
             }
+        },
+        {
+            "name": "FRONT",
+            "type": "blazorwasm",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Front"
         }
     ]
 }

@@ -1,0 +1,88 @@
+﻿@page "/ofertas"
+
+<PageTitle>Ofertas</PageTitle>
+
+<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
+    @if(OfertasOut == null)
+    {
+        <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+    }
+    else
+    {
+        <MudGrid>
+            <MudItem xs="12">
+                <MudGrid Justify="Justify.FlexStart">
+                    @foreach (var c in OfertasOut)
+                    {
+                        <MudItem xs="3">
+                            <MudContainer Class="mt-8 mb-8">
+                                <MudDataGrid Items="@OfertasOut" Hover="true">
+                                    <ToolBarContent>
+                                        <MudText Typo="Typo.h5">Ofertas</MudText>
+                                    </ToolBarContent>
+                                    <Columns>
+                                        <PropertyColumn Property="x => x.Id" Title="Id" />
+                                        <PropertyColumn Property="x => x.Campus" Title="Campus" />
+                                        <PropertyColumn Property="x => x.Curso" Title="Curso" />
+                                        <PropertyColumn Property="x => x.Grade" Title="Grade" />
+                                        <PropertyColumn Property="x => x.Periodo" Title="Periodo" />
+                                        <PropertyColumn Property="x => x.Turno.GetDescription()" Title="Turno" />
+                                    </Columns>
+                                    <PagerContent>
+                                        <MudDataGridPager T="OfertaOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+                                    </PagerContent>
+                                </MudDataGrid>
+                            </MudContainer>
+                        </MudItem>
+                    }
+                    <MudItem xs="3">
+                        <MudButton
+                            StartIcon="@Icons.Material.Outlined.Add"
+                            IconSize="Size.Large"
+                            Variant="Variant.Outlined"
+                            FullWidth="true"
+                            Class="border-dashed border-2 mud-border-secundary"
+                            Style="height: 150px;"
+                            Color="Color.Primary"
+                            @onclick="OpenDialog"
+                        >
+                            Nova Oferta
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+        </MudGrid>
+    }
+</MudContainer>
+
+@using Syki.Dtos
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IDialogService DialogService
+
+@code {
+    private List<OfertaOut>? OfertasOut;
+
+    protected override async Task OnInitializedAsync()
+    {
+        OfertasOut = await httpClient.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
+    }
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            Position = DialogPosition.TopCenter,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = DialogService.Show<NewOfertaDialog>("Nova Oferta", options);
+
+        var result = await dialog.Result;
+
+        if (result.Cancelled) return;
+        
+        await OnInitializedAsync();
+    }
+}

@@ -34,6 +34,6 @@ public class CursosController : ControllerBase
         var cursos = await _ctx.Cursos
             .Where(c => c.FaculdadeId == User.Facul()).ToListAsync();
 
-        return Ok(cursos);
+        return Ok(cursos.ConvertAll(c => c.ToOut()));
     }
 }

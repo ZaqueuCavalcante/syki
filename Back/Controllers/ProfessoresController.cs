@@ -1,3 +1,5 @@
+using Syki.Dtos;
+using Syki.Domain;
 using Syki.Database;
 using Syki.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +15,18 @@ public class ProfessoresController : ControllerBase
 {
     private readonly SykiDbContext _ctx;
     public ProfessoresController(SykiDbContext ctx) => _ctx = ctx;
+
+    [HttpPost("")]
+    public async Task<IActionResult> Create([FromBody] ProfessorIn body)
+    {
+        var professor = new Professor{ FaculdadeId = User.Facul(), Nome = body.Nome };
+
+        await _ctx.Professores.AddAsync(professor);
+
+        await _ctx.SaveChangesAsync();
+
+        return Ok(professor.ToOut());
+    }
 
     [HttpGet("")]
     public async Task<IActionResult> GetAll()

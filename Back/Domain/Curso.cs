@@ -25,4 +25,14 @@ public class Curso
         Tipo = tipo;
         FaculdadeId = faculdadeId;
     }
+
+    public CursoOut ToOut()
+    {
+        return new CursoOut
+        {
+            Id = Id,
+            Nome = Nome,
+            Tipo = Tipo,
+        };
+    }
 }

@@ -1,0 +1,35 @@
+<MudDialog>
+    <DialogContent>
+        <MudForm>
+            <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome do professor!" />
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelar</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@using Syki.Dtos
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient httpClient
+@inject ISnackbar Snackbar
+
+@code {
+    private ProfessorIn data = new();
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    async Task Submit()
+    {
+        await httpClient.PostAsJsonAsync("/professores", data);
+
+        MudDialog.Close(DialogResult.Ok(true));
+
+        Snackbar.Add("Professor cadastrado com sucesso!", Severity.Success);
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

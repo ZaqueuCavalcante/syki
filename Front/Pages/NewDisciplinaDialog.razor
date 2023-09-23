@@ -1,0 +1,43 @@
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="form">
+            <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da disciplina!" />
+            <MudTextField @bind-Value="_cargaHoraria" Label="Carga Horária" Required="true" RequiredError="Informe a carga horária da disciplina!" />
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelar</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@using Syki.Dtos
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient httpClient
+@inject ISnackbar Snackbar
+
+@code {
+    MudForm form;
+    ushort? _cargaHoraria;
+    DisciplinaIn data = new();
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    async Task Submit()
+    {
+        await form.Validate();
+        if (!form.IsValid) return;
+
+        data.CargaHoraria = _cargaHoraria!.Value;
+
+        await httpClient.PostAsJsonAsync("/disciplinas", data);
+
+        MudDialog.Close(DialogResult.Ok(true));
+
+        Snackbar.Add("Disciplina cadastrada com sucesso!", Severity.Success);
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

@@ -5,11 +5,24 @@
 @using Syki.Dtos
 @using System.Net.Http.Json
 @inject HttpClient httpClient
+@inject IDialogService DialogService
 
 <MudContainer Class="mt-8 mb-8">
     <MudDataGrid Items="@ProfessoresOut" QuickFilter="@_quickFilter" Hover="true">
         <ToolBarContent>
             <MudText Typo="Typo.h5">Professores</MudText>
+            <MudSpacer />
+            <MudButton
+                StartIcon="@Icons.Material.Outlined.Add"
+                IconSize="Size.Large"
+                Variant="Variant.Outlined"
+                Class="border-dashed border-2 mud-border-secundary"
+                Style="height: 40px;"
+                Color="Color.Primary"
+                @onclick="OpenDialog"
+            >
+                Novo Professor
+            </MudButton>
             <MudSpacer />
             <MudTextField
                 @bind-Value="_searchString"
@@ -50,4 +63,22 @@
 
         return false;
     };
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            Position = DialogPosition.TopCenter,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = DialogService.Show<NewProfessorDialog>("Novo Professor", options);
+
+        var result = await dialog.Result;
+
+        if (result.Cancelled) return;
+        
+        await OnInitializedAsync();
+    }
 }

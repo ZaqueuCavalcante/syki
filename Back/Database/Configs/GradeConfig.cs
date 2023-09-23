@@ -18,7 +18,7 @@ public class GradeConfig : IEntityTypeConfiguration<Grade>
             .UsingEntity<GradeDisciplina>(gd =>
                 {
                     gd.ToTable("grades__disciplinas");
-                    gd.HasOne<Grade>().WithMany().HasForeignKey(x => x.GradeId);
+                    gd.HasOne<Grade>().WithMany(g => g.Vinculos).HasForeignKey(x => x.GradeId);
                     gd.HasOne<Disciplina>().WithMany().HasForeignKey(x => x.DisciplinaId);
                 }
             );

@@ -14,6 +14,8 @@ public class Grade
 
     public List<Disciplina> Disciplinas { get; set; }
 
+    public List<GradeDisciplina> Vinculos { get; set; }
+
     public GradeOut ToOut()
     {
         return new GradeOut

@@ -2,30 +2,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "API",
+            "name": "BACK",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Back/bin/Debug/net7.0/Back.dll",
-            "args": [],
             "cwd": "${workspaceFolder}/Back",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
-            }
+            "program": "${workspaceFolder}/Back/bin/Debug/net7.0/Back.dll",
         },
         {
             "name": "FRONT",
             "type": "blazorwasm",
             "request": "launch",
-            "cwd": "${workspaceFolder}/Front"
+            "cwd": "${workspaceFolder}/Front",
         }
     ]
 }

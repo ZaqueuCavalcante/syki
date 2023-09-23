@@ -12,6 +12,18 @@
         <ToolBarContent>
             <MudText Typo="Typo.h5">Grades</MudText>
             <MudSpacer />
+            <MudButton
+                StartIcon="@Icons.Material.Outlined.Add"
+                IconSize="Size.Large"
+                Variant="Variant.Outlined"
+                Class="border-dashed border-2 mud-border-secundary"
+                Style="height: 40px;"
+                Color="Color.Primary"
+                @onclick="OpenDialog"
+            >
+                Nova Grade
+            </MudButton>
+            <MudSpacer />
             <MudTextField
                 @bind-Value="_searchString"
                 Placeholder="Buscar"
@@ -44,8 +56,6 @@
 
     private void RowClicked(DataGridRowClickEventArgs<GradeOut> args)
     {
-        Console.WriteLine(args.Item.Nome);
-
         var parameters = new DialogParameters();
         parameters.Add("Disciplinas", args.Item.Disciplinas);
 
@@ -69,4 +79,22 @@
 
         return false;
     };
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            Position = DialogPosition.TopCenter,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = DialogService.Show<NewGradeDialog>("Nova Grade", options);
+
+        var result = await dialog.Result;
+
+        if (result.Cancelled) return;
+        
+        await OnInitializedAsync();
+    }
 }

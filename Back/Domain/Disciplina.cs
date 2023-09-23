@@ -10,15 +10,14 @@ public class Disciplina
     
     public string Nome { get; set; }
 
-    // TODO: se mudar, perco o historico?
-    public short CargaHoraria { get; set; }
+    public ushort CargaHoraria { get; set; }
 
     public Disciplina() { }
 
     public Disciplina(
         string nome,
         long faculdadeId,
-        short cargaHoraria
+        ushort cargaHoraria
     ) {
         Nome = nome;
         FaculdadeId = faculdadeId;

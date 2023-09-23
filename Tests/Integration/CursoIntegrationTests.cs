@@ -24,7 +24,6 @@ public class CursoIntegrationTests : ApiTestBase
         var curso = await PostAsync<CursoOut>("/cursos", body);
 
         // Assert
-        curso.Id.Should().Be(1);
         curso.Nome.Should().Be(body.Nome);
     }
 

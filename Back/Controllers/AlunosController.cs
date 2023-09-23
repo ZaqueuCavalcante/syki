@@ -1,3 +1,5 @@
+using Syki.Dtos;
+using Syki.Domain;
 using Syki.Database;
 using Syki.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -9,19 +11,30 @@ namespace Syki.Controllers;
 
 [Authorize(Roles = Academico)]
 [ApiController, Route("[controller]")]
-public class GradesController : ControllerBase
+public class AlunosController : ControllerBase
 {
     private readonly SykiDbContext _ctx;
-    public GradesController(SykiDbContext ctx) => _ctx = ctx;
+    public AlunosController(SykiDbContext ctx) => _ctx = ctx;
+
+    [HttpPost("")]
+    public async Task<IActionResult> Create([FromBody] AlunoIn body)
+    {
+        var aluno = new Aluno(User.Facul(), body.Nome);
+
+        await _ctx.Alunos.AddAsync(aluno);
+
+        await _ctx.SaveChangesAsync();
+
+        return Ok(aluno);
+    }
 
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var grades = await _ctx.Grades
+        var alunos = await _ctx.Alunos
             .Where(c => c.FaculdadeId == User.Facul())
-            .Include(g => g.Disciplinas)
             .ToListAsync();
 
-        return Ok(grades.ConvertAll(g => g.ToOut()));
+        return Ok(alunos.ConvertAll(p => p.ToOut()));
     }
 }

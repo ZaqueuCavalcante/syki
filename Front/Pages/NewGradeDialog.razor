@@ -1,0 +1,91 @@
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="form">
+            <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da grade!" />
+            <MudSelect @bind-Value="_curso" Label="Curso" Required="true" RequiredError="Informe o curso!" AdornmentColor="Color.Primary">
+                @foreach (CursoOut? item in Cursos)
+                {
+                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+                }
+            </MudSelect>
+            <MudContainer Class="mt-4 px-8">
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudGrid Justify="Justify.FlexStart">
+                            @foreach (var c in CampusOut)
+                            {
+                                <MudItem xs="12">
+                                    <MudPaper Height="100px" Class="d-flex flex-column align-center justify-center mud-width-full py-8">
+                                        <MudText Typo="Typo.h6" Align="Align.Center">@c.Nome</MudText>
+                                    </MudPaper>
+                                </MudItem>
+                            }
+                            <MudItem xs="12">
+                                <MudButton
+                                    StartIcon="@Icons.Material.Outlined.Add"
+                                    IconSize="Size.Large"
+                                    Variant="Variant.Outlined"
+                                    FullWidth="true"
+                                    Class="border-dashed border-2 mud-border-secundary"
+                                    Style="height: 100px;"
+                                    Color="Color.Primary"
+                                >
+                                    Novo Campus
+                                </MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    </MudItem>
+                </MudGrid>
+            </MudContainer>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancelar</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@using Syki.Dtos
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient httpClient
+@inject ISnackbar Snackbar
+
+@code {
+    MudForm form;
+
+    CursoOut? _curso;
+
+    List<CampusOut> CampusOut = new();
+
+    List<CursoOut> Cursos = new();
+    List<DisciplinaOut> Disciplinas = new();
+
+    GradeIn data = new();
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Cursos = await httpClient.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
+        Disciplinas = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
+    }
+
+    async Task Submit()
+    {
+        await form.Validate();
+        if (!form.IsValid) return;
+
+        data.CursoId = _curso!.Id;
+        data.Disciplinas = new();
+
+        await httpClient.PostAsJsonAsync("/grades", data);
+
+        MudDialog.Close(DialogResult.Ok(true));
+
+        Snackbar.Add("Grade cadastrada com sucesso!", Severity.Success);
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

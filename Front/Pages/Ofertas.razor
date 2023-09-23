@@ -15,23 +15,15 @@
                     @foreach (var c in OfertasOut)
                     {
                         <MudItem xs="3">
-                            <MudContainer Class="mt-8 mb-8">
-                                <MudDataGrid Items="@OfertasOut" Hover="true">
-                                    <ToolBarContent>
-                                        <MudText Typo="Typo.h5">Ofertas</MudText>
-                                    </ToolBarContent>
-                                    <Columns>
-                                        <PropertyColumn Property="x => x.Id" Title="Id" />
-                                        <PropertyColumn Property="x => x.Campus" Title="Campus" />
-                                        <PropertyColumn Property="x => x.Curso" Title="Curso" />
-                                        <PropertyColumn Property="x => x.Grade" Title="Grade" />
-                                        <PropertyColumn Property="x => x.Periodo" Title="Periodo" />
-                                        <PropertyColumn Property="x => x.Turno.GetDescription()" Title="Turno" />
-                                    </Columns>
-                                    <PagerContent>
-                                        <MudDataGridPager T="OfertaOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
-                                    </PagerContent>
-                                </MudDataGrid>
+                            <MudContainer Class="mt-8 mb-8 border-dashed border-2 mud-border-secundary">
+                                <MudList>
+                                    <MudListItem>@c.Id</MudListItem>
+                                    <MudListItem>@c.Campus</MudListItem>
+                                    <MudListItem>@c.Curso</MudListItem>
+                                    <MudListItem>@c.Grade</MudListItem>
+                                    <MudListItem>@c.Periodo</MudListItem>
+                                    <MudListItem>@c.Turno.GetDescription()</MudListItem>
+                                </MudList>
                             </MudContainer>
                         </MudItem>
                     }

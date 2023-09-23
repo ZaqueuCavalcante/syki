@@ -1,32 +1,32 @@
 <MudDialog>
     <DialogContent>
         <MudForm>
-            <MudSelect @bind-Value="data.CampusId" Label="Campus" Required="true" RequiredError="Informe o campus!" AdornmentColor="Color.Primary">
-                @foreach (CampusOut item in Campi)
+            <MudSelect @bind-Value="_campus" Label="Campus" Required="true" RequiredError="Informe o campus!" AdornmentColor="Color.Primary">
+                @foreach (CampusOut? item in Campi)
                 {
-                    <MudSelectItem Value="@item.Id">@item.Nome</MudSelectItem>
+                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
                 }
             </MudSelect>
-            <MudSelect @bind-Value="data.CursoId" Label="Curso" Required="true" RequiredError="Informe o curso!" AdornmentColor="Color.Primary">
-                @foreach (CursoOut item in Cursos)
+            <MudSelect @bind-Value="_curso" Label="Curso" Required="true" RequiredError="Informe o curso!" AdornmentColor="Color.Primary">
+                @foreach (CursoOut? item in Cursos)
                 {
-                    <MudSelectItem Value="@item.Id">@item.Nome</MudSelectItem>
+                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
                 }
             </MudSelect>
-            <MudSelect @bind-Value="data.GradeId" Label="Grade" Required="true" RequiredError="Informe a grade!" AdornmentColor="Color.Primary">
-                @foreach (GradeOut item in Grades)
+            <MudSelect @bind-Value="_grade" Label="Grade" Required="true" RequiredError="Informe a grade!" AdornmentColor="Color.Primary">
+                @foreach (GradeOut? item in Grades)
                 {
-                    <MudSelectItem Value="@item.Id">@item.Nome</MudSelectItem>
+                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
                 }
             </MudSelect>
-            <MudSelect @bind-Value="data.PeriodoId" Label="Período" Required="true" RequiredError="Informe o período do curso!" AdornmentColor="Color.Primary">
-                @foreach (string item in Periodos)
+            <MudSelect @bind-Value="_periodoId" Label="Período" Required="true" RequiredError="Informe o período do curso!" AdornmentColor="Color.Primary">
+                @foreach (string? item in Periodos)
                 {
                     <MudSelectItem Value="@item">@item</MudSelectItem>
                 }
             </MudSelect>
-            <MudSelect @bind-Value="data.Turno" Label="Turno" Required="true" RequiredError="Informe o turno do curso!" AdornmentColor="Color.Primary">
-                @foreach (Turno item in Enum.GetValues(typeof(Turno)))
+            <MudSelect @bind-Value="_turno" Label="Turno" Required="true" RequiredError="Informe o turno do curso!" AdornmentColor="Color.Primary">
+                @foreach (Turno? item in Enum.GetValues(typeof(Turno)))
                 {
                     <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
                 }
@@ -45,6 +45,12 @@
 @inject HttpClient httpClient
 
 @code {
+    private CampusOut? _campus;
+    private CursoOut? _curso;
+    private GradeOut? _grade;
+    private string? _periodoId;
+    private Turno? _turno;
+
     private OfertaIn data = new();
 
     List<CampusOut> Campi = new()
@@ -78,6 +84,14 @@
 
     async Task Submit()
     {
+        data = new()
+        {
+            CampusId = _campus!.Id,
+            CursoId = _curso!.Id,
+            GradeId = _grade!.Id,
+            PeriodoId = _periodoId!,
+            Turno = _turno!.Value,
+        };
         await httpClient.PostAsJsonAsync("/ofertas", data);
 
         MudDialog.Close(DialogResult.Ok(true));

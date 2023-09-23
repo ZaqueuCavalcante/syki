@@ -25,9 +25,17 @@ public class OfertaConfig : IEntityTypeConfiguration<Oferta>
 
         oferta.HasOne<Periodo>()
             .WithMany()
-            .HasForeignKey(co => new { co.PeriodoId, co.FaculdadeId });
+            .HasForeignKey(co => new { co.Periodo, co.FaculdadeId });
 
         oferta.Property(c => c.Turno)
             .HasConversion(new EnumToStringConverter<Turno>());
+
+        oferta.HasMany<Turma>()
+            .WithMany()
+            .UsingEntity<Dictionary<string, object>>(
+                joinEntityName: "ofertas__turmas",
+                configureLeft: x => x.HasOne<Oferta>().WithMany().HasForeignKey("OfertaId"),
+                configureRight: x => x.HasOne<Turma>().WithMany().HasForeignKey("TurmaId")
+            );
     }
 }

@@ -1,4 +1,5 @@
 using Front;
+using MudBlazor;
 using MudBlazor.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -15,6 +16,6 @@ httpClient.DefaultRequestHeaders.Add(
 
 builder.Services.AddScoped(sp => httpClient);
 
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(config => config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopCenter);
 
 await builder.Build().RunAsync();

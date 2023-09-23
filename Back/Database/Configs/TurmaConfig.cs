@@ -13,11 +13,11 @@ public class TurmaConfig : IEntityTypeConfiguration<Turma>
         turma.HasKey(t => t.Id);
         turma.Property(t => t.Id).ValueGeneratedOnAdd();
 
-        turma.HasOne<Professor>()
+        turma.HasOne(t => t.Professor)
             .WithMany()
             .HasForeignKey(t => t.ProfessorId);
 
-        turma.HasOne<Disciplina>()
+        turma.HasOne(t => t.Disciplina)
             .WithMany()
             .HasForeignKey(t => t.DisciplinaId);
 
@@ -32,5 +32,9 @@ public class TurmaConfig : IEntityTypeConfiguration<Turma>
         turma.HasMany(t => t.Aulas)
             .WithOne()
             .HasForeignKey(a => a.TurmaId);
+
+        turma.HasOne<Periodo>()
+            .WithMany()
+            .HasForeignKey(t => new { t.Periodo, t.FaculdadeId });
     }
 }

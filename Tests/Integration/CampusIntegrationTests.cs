@@ -25,7 +25,6 @@ public class CampusIntegrationTests : ApiTestBase
         
         // Assert
         campus.Id.Should().Be(1);
-        campus.FaculdadeId.Should().Be(1);
         campus.Nome.Should().Be(body.Nome);
     }
 

@@ -1,6 +1,6 @@
 <MudDialog>
     <DialogContent>
-        <MudForm>
+        <MudForm @ref="form">
             <MudSelect @bind-Value="_campus" Label="Campus" Required="true" RequiredError="Informe o campus!" AdornmentColor="Color.Primary">
                 @foreach (CampusOut? item in Campi)
                 {
@@ -19,7 +19,7 @@
                     <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
                 }
             </MudSelect>
-            <MudSelect @bind-Value="_periodoId" Label="Período" Required="true" RequiredError="Informe o período do curso!" AdornmentColor="Color.Primary">
+            <MudSelect @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período do curso!" AdornmentColor="Color.Primary">
                 @foreach (string? item in Periodos)
                 {
                     <MudSelectItem Value="@item">@item</MudSelectItem>
@@ -43,58 +43,52 @@
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @inject HttpClient httpClient
+@inject ISnackbar Snackbar
 
 @code {
-    private CampusOut? _campus;
-    private CursoOut? _curso;
-    private GradeOut? _grade;
-    private string? _periodoId;
-    private Turno? _turno;
+    MudForm form;
+    CampusOut? _campus;
+    CursoOut? _curso;
+    GradeOut? _grade;
+    string? _periodo;
+    Turno? _turno;
 
-    private OfertaIn data = new();
+    OfertaIn data = new();
 
-    List<CampusOut> Campi = new()
-    {
-        new CampusOut { Id = 1, Nome = "Caruaru" },
-        new CampusOut { Id = 2, Nome = "Recife" },
-        new CampusOut { Id = 3, Nome = "Garanhuns" },
-    };
-
-    List<CursoOut> Cursos = new()
-    {
-        new CursoOut { Id = 1, Nome = "Administração" },
-        new CursoOut { Id = 2, Nome = "Análise e Desenvolvimento de Sistemas" },
-        new CursoOut { Id = 3, Nome = "Arquitetura e Urbanismo" },
-        new CursoOut { Id = 4, Nome = "Ciência da Computação" },
-    };
-
-    List<GradeOut> Grades = new()
-    {
-        new GradeOut { Id = 1, Nome = "Grade de ADS" },
-        new GradeOut { Id = 2, Nome = "Grade de Direito" },
-    };
-
-    List<string> Periodos = new()
-    {
-        "2020.1", "2020.2", "2021.1", "2021.2",
-    };
+    List<CampusOut> Campi = new();
+    List<CursoOut> Cursos = new();
+    List<GradeOut> Grades = new();
+    List<string> Periodos = new();
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        Campi = await httpClient.GetFromJsonAsync<List<CampusOut>>("/campi") ?? new();
+        Cursos = await httpClient.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
+        Grades = await httpClient.GetFromJsonAsync<List<GradeOut>>("/grades") ?? new();
+        Periodos = await httpClient.GetFromJsonAsync<List<string>>("/periodos") ?? new();
+    }
+
     async Task Submit()
     {
+        await form.Validate();
+        if (!form.IsValid) return;
+
         data = new()
         {
             CampusId = _campus!.Id,
             CursoId = _curso!.Id,
             GradeId = _grade!.Id,
-            PeriodoId = _periodoId!,
+            Periodo = _periodo!,
             Turno = _turno!.Value,
         };
         await httpClient.PostAsJsonAsync("/ofertas", data);
 
         MudDialog.Close(DialogResult.Ok(true));
+
+        Snackbar.Add("Oferta cadastrada com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

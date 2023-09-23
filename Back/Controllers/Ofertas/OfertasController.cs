@@ -25,7 +25,7 @@ public class OfertasController : ControllerBase
             CampusId = body.CampusId,
             CursoId = body.CursoId,
             GradeId = body.GradeId,
-            PeriodoId = body.PeriodoId,
+            Periodo = body.Periodo,
             Turno = body.Turno,
         };
 

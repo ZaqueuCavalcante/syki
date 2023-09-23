@@ -10,6 +10,7 @@ public class Disciplina
     
     public string Nome { get; set; }
 
+    // TODO: se mudar, perco o historico?
     public short CargaHoraria { get; set; }
 
     public Disciplina() { }

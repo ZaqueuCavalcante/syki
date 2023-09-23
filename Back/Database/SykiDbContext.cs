@@ -13,9 +13,11 @@ public class SykiDbContext : DbContext
     public DbSet<Disciplina> Disciplinas { get; set; }
 
     public DbSet<Oferta> Ofertas { get; set; }
+    public DbSet<Turma> Turmas { get; set; }
 
     public DbSet<Professor> Professores { get; set; }
     public DbSet<Aluno> Alunos { get; set; }
+    public DbSet<Periodo> Periodos { get; set; }
 
     public void SeedStartupData()
     {

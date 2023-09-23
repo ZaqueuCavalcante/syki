@@ -14,27 +14,24 @@
                 <MudGrid Justify="Justify.FlexStart">
                     @foreach (var c in OfertasOut)
                     {
-                        <MudItem xs="3">
-                            <MudContainer Class="mt-8 mb-8 border-dashed border-2 mud-border-secundary">
+                        <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
+                           <MudPaper Height="200px" Class="d-flex flex-column align-start justify-center mud-width-full py-8">
                                 <MudList>
-                                    <MudListItem>@c.Id</MudListItem>
-                                    <MudListItem>@c.Campus</MudListItem>
+                                    <MudListItem>@c.Campus | @c.Periodo | @c.Turno.GetDescription()</MudListItem>
                                     <MudListItem>@c.Curso</MudListItem>
                                     <MudListItem>@c.Grade</MudListItem>
-                                    <MudListItem>@c.Periodo</MudListItem>
-                                    <MudListItem>@c.Turno.GetDescription()</MudListItem>
                                 </MudList>
-                            </MudContainer>
+                            </MudPaper>
                         </MudItem>
                     }
-                    <MudItem xs="3">
+                    <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
                         <MudButton
                             StartIcon="@Icons.Material.Outlined.Add"
                             IconSize="Size.Large"
                             Variant="Variant.Outlined"
                             FullWidth="true"
                             Class="border-dashed border-2 mud-border-secundary"
-                            Style="height: 150px;"
+                            Style="height: 200px;"
                             Color="Color.Primary"
                             @onclick="OpenDialog"
                         >

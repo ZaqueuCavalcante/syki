@@ -3,5 +3,75 @@
 <PageTitle>Turmas</PageTitle>
 
 <MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    <h1>Turmas</h1>
+    @if(TurmasOut == null)
+    {
+        <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+    }
+    else
+    {
+        <MudGrid>
+            <MudItem xs="12">
+                <MudGrid Justify="Justify.FlexStart">
+                    @foreach (var c in TurmasOut)
+                    {
+                        <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
+                           <MudPaper Height="200px" Class="d-flex flex-column align-start justify-center mud-width-full py-8">
+                                <MudList>
+                                    <MudListItem>@c.Disciplina</MudListItem>
+                                    <MudListItem>@c.Professor</MudListItem>
+                                    <MudListItem>@c.Periodo</MudListItem>
+                                </MudList>
+                            </MudPaper>
+                        </MudItem>
+                    }
+                    <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
+                        <MudButton
+                            StartIcon="@Icons.Material.Outlined.Add"
+                            IconSize="Size.Large"
+                            Variant="Variant.Outlined"
+                            FullWidth="true"
+                            Class="border-dashed border-2 mud-border-secundary"
+                            Style="height: 200px;"
+                            Color="Color.Primary"
+                            @onclick="OpenDialog"
+                        >
+                            Nova Turma
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+        </MudGrid>
+    }
 </MudContainer>
+
+@using Syki.Dtos
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IDialogService DialogService
+
+@code {
+    private List<TurmaOut>? TurmasOut;
+
+    protected override async Task OnInitializedAsync()
+    {
+        TurmasOut = await httpClient.GetFromJsonAsync<List<TurmaOut>>("/turmas") ?? new();
+    }
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            Position = DialogPosition.TopCenter,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = DialogService.Show<NewTurmaDialog>("Nova Turma", options);
+
+        var result = await dialog.Result;
+
+        if (result.Cancelled) return;
+        
+        await OnInitializedAsync();
+    }
+}

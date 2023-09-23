@@ -20,6 +20,7 @@
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @inject HttpClient httpClient
+@inject ISnackbar Snackbar
 
 @code {
     private CursoIn data = new();
@@ -32,6 +33,8 @@
         await httpClient.PostAsJsonAsync("/cursos", data);
 
         MudDialog.Close(DialogResult.Ok(true));
+
+        Snackbar.Add("Curso cadastrado com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

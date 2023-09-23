@@ -17,7 +17,7 @@ public class Oferta
     public long GradeId { get; set; }
     public Grade Grade { get; set; }
 
-    public string PeriodoId { get; set; }
+    public string Periodo { get; set; }
 
     public Turno Turno { get; set; }
 
@@ -25,11 +25,10 @@ public class Oferta
     {
         return new OfertaOut
         {
-            Id = Id,
             Campus = Campus.Nome,
             Curso = Curso.Nome,
             Grade = Grade.Nome,
-            Periodo = PeriodoId,
+            Periodo = Periodo,
             Turno = Turno,
         };
     }

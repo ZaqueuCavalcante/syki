@@ -12,6 +12,9 @@ public class Curso
 
     public TipoDeCurso Tipo { get; set; }
 
+    public List<Disciplina> Disciplinas { get; set; }
+    public List<CursoDisciplina> Vinculos { get; set; }
+
     public List<Grade> Grades { get; set; }
 
     public Curso() { }

@@ -33,10 +33,16 @@ public class DisciplinasController : ControllerBase
     }
 
     [HttpGet("")]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] long? cursoId)
     {
+        var ids = await _ctx.CursosDisciplinas
+            .Where(cd => cd.CursoId == cursoId)
+            .Select(cd => cd.DisciplinaId)
+            .ToListAsync();
+
         var disciplinas = await _ctx.Disciplinas
-            .Where(c => c.FaculdadeId == User.Facul()).ToListAsync();
+            .Where(d => d.FaculdadeId == User.Facul() && (ids.Count == 0 || ids.Contains(d.Id)))
+            .ToListAsync();
 
         return Ok(disciplinas.ConvertAll(d => d.ToOut()));
     }

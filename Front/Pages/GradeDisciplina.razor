@@ -1,0 +1,51 @@
+<MudForm @ref="form">
+    <MudStack Row="true">
+        <MudItem xs="6">
+        <MudSelect @bind-Value="_disciplina" Label="Disciplina" Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary">
+            @foreach (DisciplinaOut? item in Disciplinas)
+            {
+                <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+            }
+        </MudSelect>
+        </MudItem>
+        <MudItem xs="2">
+            <MudTextField @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período!" />
+        </MudItem>
+        <MudItem xs="2">
+            <MudTextField @bind-Value="_creditos" Label="Créditos" Required="true" RequiredError="Informe os créditos!" />
+        </MudItem>
+        <MudItem xs="2">
+            <MudTextField @bind-Value="_cargaHoraria" Label="Carga Horária" Required="true" RequiredError="Informe a carga horária!" />
+        </MudItem>
+    </MudStack>
+</MudForm>
+
+@using Syki.Dtos
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@inject HttpClient httpClient
+@inject ISnackbar Snackbar
+
+@code {
+    MudForm form;
+
+    DisciplinaOut? _disciplina;
+    byte? _periodo;
+    byte? _creditos;
+    ushort? _cargaHoraria;
+
+    List<DisciplinaOut> Disciplinas = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Disciplinas = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
+    }
+
+    async Task Submit()
+    {
+        await form.Validate();
+        if (!form.IsValid) return;
+
+        Snackbar.Add("Grade cadastrada com sucesso!", Severity.Success);
+    }
+}

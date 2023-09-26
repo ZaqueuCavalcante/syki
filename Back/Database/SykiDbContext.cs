@@ -19,6 +19,8 @@ public class SykiDbContext : DbContext
     public DbSet<Aluno> Alunos { get; set; }
     public DbSet<Periodo> Periodos { get; set; }
 
+    public DbSet<CursoDisciplina> CursosDisciplinas { get; set; }
+
     public void SeedStartupData()
     {
         Database.EnsureDeleted();

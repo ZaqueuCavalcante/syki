@@ -3,6 +3,12 @@
         <MudForm @ref="form">
             <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da disciplina!" />
             <MudTextField @bind-Value="_cargaHoraria" Label="Carga Horária" Required="true" RequiredError="Informe a carga horária da disciplina!" />
+            <MudSelect T="CursoOut" Label="Cursos" MultiSelection="true" @bind-SelectedValues="SelectedCursos" AnchorOrigin="Origin.BottomCenter">
+                @foreach (var curso in Cursos)
+                {
+                    <MudSelectItem T="CursoOut" Value="@curso">@curso.Nome</MudSelectItem>
+                }
+            </MudSelect>
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -24,6 +30,14 @@
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
+
+    IEnumerable<CursoOut> SelectedCursos { get; set; } = new HashSet<CursoOut>() { };
+    private List<CursoOut> Cursos = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Cursos = await httpClient.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
+    }
 
     async Task Submit()
     {

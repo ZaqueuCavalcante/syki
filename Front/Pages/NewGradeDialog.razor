@@ -1,14 +1,16 @@
 <MudDialog>
     <DialogContent>
         <MudForm @ref="form">
-            <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da grade!" />
-            <MudSelect @bind-Value="_curso" Label="Curso" Required="true" RequiredError="Informe o curso!" AdornmentColor="Color.Primary">
-                @foreach (CursoOut? item in Cursos)
-                {
-                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
-                }
-            </MudSelect>
-            <MudContainer Class="mt-4 px-8">
+            <MudStack Row="true">
+                <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da grade!" />
+                <MudSelect @bind-Value="_curso" Label="Curso" Required="true" RequiredError="Informe o curso!" AdornmentColor="Color.Primary">
+                    @foreach (CursoOut? item in Cursos)
+                    {
+                        <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudStack>
+            <MudContainer Class="mt-4 px-0">
                 <MudGrid>
                     <MudItem xs="12">
                         <MudGrid Justify="Justify.FlexStart">
@@ -21,17 +23,12 @@
                                 </MudItem>
                             }
                             <MudItem xs="12">
-                                <MudButton
-                                    StartIcon="@Icons.Material.Outlined.Add"
-                                    IconSize="Size.Large"
-                                    Variant="Variant.Outlined"
-                                    FullWidth="true"
-                                    Class="border-dashed border-2 mud-border-secundary"
-                                    Style="height: 100px;"
-                                    Color="Color.Primary"
-                                >
-                                    Novo Campus
-                                </MudButton>
+                                <GradeDisciplina></GradeDisciplina>
+                                <GradeDisciplina></GradeDisciplina>
+                                <GradeDisciplina></GradeDisciplina>
+                                <GradeDisciplina></GradeDisciplina>
+                                <GradeDisciplina></GradeDisciplina>
+                                <GradeDisciplina></GradeDisciplina>
                             </MudItem>
                         </MudGrid>
                     </MudItem>

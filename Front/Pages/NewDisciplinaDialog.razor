@@ -45,6 +45,7 @@
         if (!form.IsValid) return;
 
         data.CargaHoraria = _cargaHoraria!.Value;
+        data.Cursos = SelectedCursos.ToList().ConvertAll(c => c.Id);
 
         await httpClient.PostAsJsonAsync("/disciplinas", data);
 

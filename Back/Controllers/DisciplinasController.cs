@@ -25,6 +25,11 @@ public class DisciplinasController : ControllerBase
             body.CargaHoraria
         );
 
+        foreach (var id in body.Cursos)
+        {
+            disciplina.Vinculos.Add(new CursoDisciplina { CursoId = id});
+        }
+
         await _ctx.Disciplinas.AddAsync(disciplina);
 
         await _ctx.SaveChangesAsync();
@@ -39,6 +44,11 @@ public class DisciplinasController : ControllerBase
             .Where(cd => cd.CursoId == cursoId)
             .Select(cd => cd.DisciplinaId)
             .ToListAsync();
+
+        if (cursoId != null && ids.Count == 0)
+        {
+            return Ok(new List<DisciplinaOut>());
+        }
 
         var disciplinas = await _ctx.Disciplinas
             .Where(d => d.FaculdadeId == User.Facul() && (ids.Count == 0 || ids.Contains(d.Id)))

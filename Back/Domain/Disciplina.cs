@@ -12,6 +12,8 @@ public class Disciplina
 
     public ushort CargaHoraria { get; set; }
 
+    public List<CursoDisciplina> Vinculos { get; set; }
+
     public Disciplina() { }
 
     public Disciplina(
@@ -22,6 +24,7 @@ public class Disciplina
         Nome = nome;
         FaculdadeId = faculdadeId;
         CargaHoraria = cargaHoraria;
+        Vinculos = new();
     }
 
     public DisciplinaOut ToOut()

@@ -3,7 +3,10 @@
         <MudForm @ref="form">
             <MudStack Row="true">
                 <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da grade!" />
-                <MudSelect @bind-Value="_curso" Label="Curso" Required="true" RequiredError="Informe o curso!" AdornmentColor="Color.Primary">
+                <MudSelect
+                    Value="@_curso" ValueChanged="@((CursoOut newValue) => HandleSelectCurso(newValue))"
+                    Label="Curso" Required="true" RequiredError="Informe o curso!" AdornmentColor="Color.Primary"
+                >
                     @foreach (CursoOut? item in Cursos)
                     {
                         <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
@@ -23,12 +26,12 @@
                                 </MudItem>
                             }
                             <MudItem xs="12">
-                                <GradeDisciplina></GradeDisciplina>
-                                <GradeDisciplina></GradeDisciplina>
-                                <GradeDisciplina></GradeDisciplina>
-                                <GradeDisciplina></GradeDisciplina>
-                                <GradeDisciplina></GradeDisciplina>
-                                <GradeDisciplina></GradeDisciplina>
+                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
+                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
+                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
+                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
+                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
+                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
                             </MudItem>
                         </MudGrid>
                     </MudItem>
@@ -66,7 +69,14 @@
     protected override async Task OnInitializedAsync()
     {
         Cursos = await httpClient.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
-        Disciplinas = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
+        Disciplinas = new();
+    }
+
+    async Task HandleSelectCurso(CursoOut newValue)
+    {
+        _curso = newValue;
+        var id = _curso!.Id;
+        Disciplinas = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>($"/disciplinas?cursoId={id}") ?? new();
     }
 
     async Task Submit()

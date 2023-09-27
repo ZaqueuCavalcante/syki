@@ -38,6 +38,12 @@ public class SykiDbContext : DbContext
             new() { CursoId = 5, Nome = "Grade de Direito", Disciplinas = disciplinasDireito },
         };
 
+        var ads = Cursos.First(c => c.Id == 2);
+        ads.Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList();
+
+        var direito = Cursos.First(c => c.Id == 5);
+        direito.Disciplinas = disciplinasDireito;
+
         AddRange(DbSeed.Periodos);
         AddRange(DbSeed.Professores);
         AddRange(DbSeed.Alunos);

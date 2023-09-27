@@ -28,7 +28,7 @@ public class CursoConfig : IEntityTypeConfiguration<Curso>
                 {
                     cd.ToTable("cursos__disciplinas");
                     cd.HasOne<Curso>().WithMany(c => c.Vinculos).HasForeignKey(x => x.CursoId);
-                    cd.HasOne<Disciplina>().WithMany().HasForeignKey(x => x.DisciplinaId);
+                    cd.HasOne<Disciplina>().WithMany(d => d.Vinculos).HasForeignKey(x => x.DisciplinaId);
                 }
             );
     }

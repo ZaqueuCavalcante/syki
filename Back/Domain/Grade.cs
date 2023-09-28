@@ -18,12 +18,25 @@ public class Grade
 
     public GradeOut ToOut()
     {
-        return new GradeOut
+        var result = new GradeOut
         {
             Id = Id,
             CursoId = CursoId,
             Nome = Nome,
             Disciplinas = Disciplinas.ConvertAll(d => d.ToOut()),
         };
+
+        if (Vinculos != null)
+        {
+            foreach (var item in Vinculos)
+            {
+                var disciplina = result.Disciplinas.First(x => x.Id == item.DisciplinaId);
+                disciplina.Periodo = item.Periodo;
+                disciplina.Creditos = item.Creditos;
+                disciplina.CargaHoraria = item.CargaHoraria;
+            }
+        }
+
+        return result;
     }
 }

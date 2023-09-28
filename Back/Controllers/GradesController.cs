@@ -53,6 +53,7 @@ public class GradesController : ControllerBase
         var grades = await _ctx.Grades
             .Where(c => c.FaculdadeId == User.Facul())
             .Include(g => g.Disciplinas)
+            .Include(g => g.Vinculos)
             .ToListAsync();
 
         return Ok(grades.ConvertAll(g => g.ToOut()));

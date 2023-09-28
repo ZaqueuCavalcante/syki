@@ -17,21 +17,24 @@
                 <MudGrid>
                     <MudItem xs="12">
                         <MudGrid Justify="Justify.FlexStart">
-                            @foreach (var c in CampusOut)
-                            {
-                                <MudItem xs="12">
-                                    <MudPaper Height="100px" Class="d-flex flex-column align-center justify-center mud-width-full py-8">
-                                        <MudText Typo="Typo.h6" Align="Align.Center">@c.Nome</MudText>
-                                    </MudPaper>
-                                </MudItem>
-                            }
                             <MudItem xs="12">
                                 <CascadingValue Value="@Disciplinas">
-                                    <GradeDisciplina></GradeDisciplina>
-                                    <GradeDisciplina></GradeDisciplina>
-                                    <GradeDisciplina></GradeDisciplina>
-                                    <GradeDisciplina></GradeDisciplina>
+                                    @for(var i=0; i<_count; i++)
+                                    {
+                                        <GradeDisciplina></GradeDisciplina>
+                                    }
                                 </CascadingValue>
+                                <MudButton
+                                    StartIcon="@Icons.Material.Outlined.Add"
+                                    IconSize="Size.Large"
+                                    Variant="Variant.Outlined"
+                                    FullWidth="true"
+                                    Class="mt-4 border-dashed border-2 mud-border-secundary"
+                                    Color="Color.Primary"
+                                    @onclick="NewGradeDisciplina"
+                                >
+                                    New
+                                </MudButton>
                             </MudItem>
                         </MudGrid>
                     </MudItem>
@@ -46,6 +49,7 @@
 </MudDialog>
 
 @using Syki.Dtos
+@using Front.Domain
 @using System.Text.RegularExpressions
 @using System.ComponentModel.DataAnnotations
 @inject HttpClient httpClient
@@ -56,10 +60,10 @@
 
     CursoOut? _curso;
 
-    List<CampusOut> CampusOut = new();
+    int _count = 1;
 
     List<CursoOut> Cursos = new();
-    List<DisciplinaOut> Disciplinas = new();
+    List<GradeDisciplinaFull> Disciplinas = new();
 
     GradeIn data = new();
 
@@ -72,11 +76,22 @@
         Disciplinas = new();
     }
 
+    void NewGradeDisciplina()
+    {
+        _count ++;
+    }
+
     async Task HandleSelectCurso(CursoOut newValue)
     {
         _curso = newValue;
         var id = _curso!.Id;
-        Disciplinas = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>($"/disciplinas?cursoId={id}") ?? new();
+        var disc = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>($"/disciplinas?cursoId={id}") ?? new();
+        Disciplinas = disc.ConvertAll(x => new GradeDisciplinaFull
+        {
+            Id = x.Id,
+            Nome = x.Nome,
+            CargaHoraria = x.CargaHoraria,
+        });
     }
 
     async Task Submit()
@@ -89,9 +104,9 @@
             .ConvertAll(d => new GradeDisciplinaIn
             {  
                 Id = d.Id,
-                Periodo = 1,
-                Creditos = 2,
-                CargaHoraria = 3,
+                Periodo = d.Periodo!.Value,
+                Creditos = d.Creditos!.Value,
+                CargaHoraria = d.CargaHoraria!.Value,
             });
 
         await httpClient.PostAsJsonAsync("/grades", data);

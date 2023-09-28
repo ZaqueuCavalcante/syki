@@ -2,7 +2,7 @@
   "profiles": {
     "dev": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:6070;https://localhost:6171",
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",

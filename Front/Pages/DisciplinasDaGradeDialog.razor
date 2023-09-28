@@ -2,8 +2,9 @@
     <DialogContent>
         <MudDataGrid Items="@Disciplinas" Hover="true">
             <Columns>
-                <PropertyColumn Property="x => x.Id" Title="Id" />
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.Periodo" Title="Período" />
+                <PropertyColumn Property="x => x.Creditos" Title="Créditos" />
                 <PropertyColumn Property="x => x.CargaHoraria" Title="Carga Horária" />
             </Columns>
         </MudDataGrid>

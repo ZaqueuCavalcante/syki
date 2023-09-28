@@ -26,12 +26,12 @@
                                 </MudItem>
                             }
                             <MudItem xs="12">
-                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
-                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
-                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
-                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
-                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
-                                <GradeDisciplina Disciplinas="@Disciplinas"></GradeDisciplina>
+                                <CascadingValue Value="@Disciplinas">
+                                    <GradeDisciplina></GradeDisciplina>
+                                    <GradeDisciplina></GradeDisciplina>
+                                    <GradeDisciplina></GradeDisciplina>
+                                    <GradeDisciplina></GradeDisciplina>
+                                </CascadingValue>
                             </MudItem>
                         </MudGrid>
                     </MudItem>
@@ -85,7 +85,14 @@
         if (!form.IsValid) return;
 
         data.CursoId = _curso!.Id;
-        data.Disciplinas = new();
+        data.Disciplinas = Disciplinas.Where(d => d.IsSelected).ToList()
+            .ConvertAll(d => new GradeDisciplinaIn
+            {  
+                Id = d.Id,
+                Periodo = 1,
+                Creditos = 2,
+                CargaHoraria = 3,
+            });
 
         await httpClient.PostAsJsonAsync("/grades", data);
 

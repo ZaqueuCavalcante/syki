@@ -2,12 +2,14 @@
     <MudStack Row="true">
         <MudItem xs="6">
             <MudSelect
-                @bind-Value="_disciplina"
+                Value="@_disciplina"
+                ValueChanged="(DisciplinaOut newValue) => HandleValueChanged(newValue)"
                 Label="Disciplina"
                 Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary"
             >
                 @foreach (DisciplinaOut? item in Disciplinas)
                 {
+                    if (item.IsSelected && item.Id != _disciplina?.Id) continue;
                     <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
                 }
             </MudSelect>
@@ -33,13 +35,25 @@
 @code {
     MudForm form;
 
-    [Parameter]
+    [CascadingParameter]
     public List<DisciplinaOut> Disciplinas { get; set; }
 
     DisciplinaOut? _disciplina;
     byte? _periodo;
     byte? _creditos;
     ushort? _cargaHoraria;
+
+    void HandleValueChanged(DisciplinaOut newValue)
+    {
+        if (_disciplina != null)
+        {
+            Disciplinas.First(d => d.Id == _disciplina.Id).IsSelected = false;
+        }
+
+        Disciplinas.First(d => d.Id == newValue.Id).IsSelected = true;
+        _disciplina = newValue;
+        Disciplinas.ForEach(p => Console.WriteLine(p.IsSelected));
+    }
 
     async Task Submit()
     {

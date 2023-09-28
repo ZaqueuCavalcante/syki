@@ -6,6 +6,8 @@ public class DisciplinaOut
     public string Nome { get; set; }
     public ushort CargaHoraria { get; set; }
 
+    public bool IsSelected { get; set; }
+
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;

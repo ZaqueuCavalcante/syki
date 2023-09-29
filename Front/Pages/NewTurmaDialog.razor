@@ -1,6 +1,12 @@
 <MudDialog>
     <DialogContent>
         <MudForm @ref="form">
+            <MudSelect AutoFocus="true" @bind-Value="_oferta" Label="Oferta" Required="true" RequiredError="Informe a oferta!" AdornmentColor="Color.Primary">
+                @foreach (OfertaOut? o in Ofertas)
+                {
+                    <MudSelectItem Value="@o">@o.Campus | @o.Periodo | @o.Turno.GetDescription() | @o.Curso | @o.Grade</MudSelectItem>
+                }
+            </MudSelect>
             <MudSelect @bind-Value="_disciplina" Label="Disciplina" Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary">
                 @foreach (DisciplinaOut? item in Disciplinas)
                 {
@@ -35,12 +41,14 @@
 
 @code {
     MudForm form;
+    OfertaOut? _oferta;
     DisciplinaOut? _disciplina;
     ProfessorOut? _professor;
     string? _periodo;
 
     TurmaIn data = new();
 
+    List<OfertaOut> Ofertas = new();
     List<DisciplinaOut> Disciplinas = new();
     List<ProfessorOut> Professores = new();
     List<string> Periodos = new();
@@ -50,6 +58,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Ofertas = await httpClient.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
         Disciplinas = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
         Professores = await httpClient.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? new();
         Periodos = await httpClient.GetFromJsonAsync<List<string>>("/periodos") ?? new();

@@ -36,7 +36,7 @@
         </ToolBarContent>
         <Columns>
             <PropertyColumn Property="x => x.Id" Title="Id" />
-            <PropertyColumn Property="x => x.CursoId" Title="Id do Curso" />
+            <PropertyColumn Property="x => x.CursoNome" Title="Curso" />
             <PropertyColumn Property="x => x.Nome" Title="Nome" />
         </Columns>
         <PagerContent>
@@ -60,8 +60,6 @@
         parameters.Add("Disciplinas", args.Item.Disciplinas);
 
         var options = new DialogOptions {
-            CloseOnEscapeKey = true,
-            CloseButton = true,
             Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
@@ -77,14 +75,15 @@
         if (x.Nome.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
 
+        if (x.CursoNome.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
         return false;
     };
 
     private async Task OpenDialog()
     {
         var options = new DialogOptions {
-            CloseOnEscapeKey = true,
-            CloseButton = true,
             Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Medium,
             FullWidth = true

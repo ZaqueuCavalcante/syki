@@ -19,7 +19,7 @@ public class CursoConfig : IEntityTypeConfiguration<Curso>
             .HasConversion(new EnumToStringConverter<TipoDeCurso>());
 
         curso.HasMany(c => c.Grades)
-            .WithOne()
+            .WithOne(g => g.Curso)
             .HasForeignKey(g => g.CursoId);
 
         curso.HasMany(c => c.Disciplinas)

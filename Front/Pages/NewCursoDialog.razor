@@ -1,7 +1,7 @@
 <MudDialog>
     <DialogContent>
-        <MudForm>
-            <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome do curso!" />
+        <MudForm @ref="form">
+            <MudTextField AutoFocus="true" @bind-Value="_nome" Label="Nome" Required="true" RequiredError="Informe o nome do curso!" />
             <MudSelect @bind-Value="data.Tipo" Label="Tipo" Required="true" RequiredError="Informe o tipo do curso!" AdornmentColor="Color.Primary">
                 @foreach (TipoDeCurso item in Enum.GetValues(typeof(TipoDeCurso)))
                 {
@@ -23,6 +23,10 @@
 @inject ISnackbar Snackbar
 
 @code {
+    MudForm form;
+
+    private string? _nome;
+
     private CursoIn data = new();
 
     [CascadingParameter]
@@ -30,6 +34,10 @@
 
     async Task Submit()
     {
+        await form.Validate();
+        if (!form.IsValid) return;
+
+        data.Nome = _nome;
         await httpClient.PostAsJsonAsync("/cursos", data);
 
         MudDialog.Close(DialogResult.Ok(true));

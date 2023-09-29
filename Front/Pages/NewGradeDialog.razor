@@ -18,11 +18,13 @@
                     <MudItem xs="12">
                         <MudGrid Justify="Justify.FlexStart">
                             <MudItem xs="12">
-                                <CascadingValue Value="@Disciplinas">
-                                    @for(var i=0; i<_count; i++)
-                                    {
-                                        <GradeDisciplina></GradeDisciplina>
-                                    }
+                                <CascadingValue Name="Disciplinas" Value="@Disciplinas">
+                                    <CascadingValue Name="Curso" Value="@_curso">
+                                        @for(var i=0; i<_count; i++)
+                                        {
+                                            <GradeDisciplina></GradeDisciplina>
+                                        }
+                                    </CascadingValue>
                                 </CascadingValue>
                                 <MudButton
                                     StartIcon="@Icons.Material.Outlined.Add"

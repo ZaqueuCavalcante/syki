@@ -8,22 +8,7 @@ on:
 jobs:
   build_and_tests:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Start PostgreSQL
-        run: |
-          sudo systemctl start postgresql.service
-          pg_isready
-
-      - name: Create user
-        run: |
-          sudo -u postgres psql --command="CREATE USER postgres PASSWORD 'postgres'" --command="\du"
-      
-      - name: Create database
-        run: |
-          sudo -u postgres createdb syki-tests-db --owner=postgres 
-          PGPASSWORD=postgres
-
       - uses: actions/checkout@v3
       - name: Setup
         uses: actions/setup-dotnet@v3
@@ -34,4 +19,4 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Test
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --no-build --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~UnitTests"

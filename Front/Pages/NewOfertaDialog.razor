@@ -1,7 +1,7 @@
 <MudDialog>
     <DialogContent>
         <MudForm @ref="form">
-            <MudSelect @bind-Value="_campus" Label="Campus" Required="true" RequiredError="Informe o campus!" AdornmentColor="Color.Primary">
+            <MudSelect AutoFocus="true" @bind-Value="_campus" Label="Campus" Required="true" RequiredError="Informe o campus!" AdornmentColor="Color.Primary">
                 @foreach (CampusOut? item in Campi)
                 {
                     <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
@@ -14,9 +14,20 @@
                 }
             </MudSelect>
             <MudSelect @bind-Value="_grade" Label="Grade" Required="true" RequiredError="Informe a grade!" AdornmentColor="Color.Primary">
-                @foreach (GradeOut? item in Grades)
+                @if(_curso == null)
                 {
-                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+                    <MudSelectItem Value="@_grade" Disabled="true">Selecione o curso!</MudSelectItem>
+                }
+                @if(_curso != null && Grades.Where(x => x.CursoId == _curso.Id).Count() == 0)
+                {
+                    <MudSelectItem Value="@_grade" Disabled="true">Este curso não possui grades vinculadas.</MudSelectItem>
+                }
+                @if(_curso != null)
+                {
+                    @foreach (GradeOut? item in Grades.Where(x => x.CursoId == _curso.Id))
+                    {
+                        <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+                    }
                 }
             </MudSelect>
             <MudSelect @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período do curso!" AdornmentColor="Color.Primary">

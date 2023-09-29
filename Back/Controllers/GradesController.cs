@@ -41,6 +41,7 @@ public class GradesController : ControllerBase
         await _ctx.SaveChangesAsync();
 
         grade = await _ctx.Grades.AsNoTracking()
+            .Include(g => g.Curso)
             .Include(x => x.Disciplinas)
             .FirstAsync(x => x.Id == grade.Id);
 
@@ -52,6 +53,7 @@ public class GradesController : ControllerBase
     {
         var grades = await _ctx.Grades
             .Where(c => c.FaculdadeId == User.Facul())
+            .Include(g => g.Curso)
             .Include(g => g.Disciplinas)
             .Include(g => g.Vinculos)
             .ToListAsync();

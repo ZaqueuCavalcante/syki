@@ -9,6 +9,7 @@ public class Grade
     public long FaculdadeId { get; set; }
 
     public long CursoId { get; set; }
+    public Curso Curso { get; set; }
 
     public string Nome { get; set; }
 
@@ -22,6 +23,7 @@ public class Grade
         {
             Id = Id,
             CursoId = CursoId,
+            CursoNome = Curso.Nome,
             Nome = Nome,
             Disciplinas = Disciplinas.ConvertAll(d => d.ToOut()),
         };

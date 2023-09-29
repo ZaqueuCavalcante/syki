@@ -32,12 +32,6 @@ public class SykiDbContext : DbContext
         var disciplinasDireito = DbSeed.NovaRoma.Disciplinas.Skip(31).Take(39).ToList();
         disciplinasDireito.Add(DbSeed.NovaRoma.Disciplinas.First(x => x.Nome == "Informática e Sociedade"));
 
-        novaRoma.Grades = new()
-        {
-            new() { CursoId = 2, Nome = "Grade de ADS", Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList() },
-            new() { CursoId = 5, Nome = "Grade de Direito", Disciplinas = disciplinasDireito },
-        };
-
         var ads = Cursos.First(c => c.Id == 2);
         ads.Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList();
 

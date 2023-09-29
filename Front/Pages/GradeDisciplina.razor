@@ -12,6 +12,14 @@
                     if (item.IsSelected && item.Id != _disciplina?.Id) continue;
                     <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
                 }
+                @if(Curso == null)
+                {
+                    <MudSelectItem Value="@_disciplina" Disabled="true">Selecione o curso!</MudSelectItem>
+                }
+                @if(Curso != null && Disciplinas.Count == 0)
+                {
+                    <MudSelectItem Value="@_disciplina" Disabled="true">Este curso não possui disciplinas vinculadas.</MudSelectItem>
+                }
             </MudSelect>
         </MudItem>
         <MudItem xs="2">
@@ -48,8 +56,11 @@
 @code {
     MudForm form;
 
-    [CascadingParameter]
+    [CascadingParameter(Name = "Disciplinas")]
     public List<GradeDisciplinaFull> Disciplinas { get; set; }
+
+    [CascadingParameter(Name = "Curso")]
+    public CursoOut? Curso { get; set; }
 
     GradeDisciplinaFull? _disciplina;
     byte? _periodo;

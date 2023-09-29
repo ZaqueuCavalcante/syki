@@ -2,11 +2,6 @@
 
 <PageTitle>Alunos</PageTitle>
 
-@using Syki.Dtos
-@using System.Net.Http.Json
-@inject HttpClient httpClient
-@inject IDialogService DialogService
-
 <MudContainer Class="mt-8 mb-8">
     <MudDataGrid Items="@AlunosOut" QuickFilter="@_quickFilter" Hover="true">
         <ToolBarContent>
@@ -45,6 +40,11 @@
     </MudDataGrid>
 </MudContainer>
 
+@using Syki.Dtos
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+@inject IDialogService DialogService
+
 @code {
     private string _searchString;
     private List<AlunoOut> AlunosOut = new List<AlunoOut>();
@@ -71,8 +71,6 @@
     private async Task OpenDialog()
     {
         var options = new DialogOptions {
-            CloseOnEscapeKey = true,
-            CloseButton = true,
             Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Small,
             FullWidth = true

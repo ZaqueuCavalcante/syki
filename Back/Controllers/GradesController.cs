@@ -60,4 +60,18 @@ public class GradesController : ControllerBase
 
         return Ok(grades.ConvertAll(g => g.ToOut()));
     }
+
+    [HttpGet("{id}/disciplinas")]
+    public async Task<IActionResult> GetDisciplinas([FromRoute] long id)
+    {
+        var grade = await _ctx.Grades
+            .Where(c => c.FaculdadeId == User.Facul() && c.Id == id)
+            .Include(g => g.Disciplinas)
+            .FirstOrDefaultAsync();
+        
+        if (grade == null)
+            return Ok(new List<DisciplinaOut>());
+
+        return Ok(grade.Disciplinas.ConvertAll(g => g.ToOut()));
+    }
 }

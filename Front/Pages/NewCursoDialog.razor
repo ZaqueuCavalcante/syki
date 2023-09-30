@@ -37,7 +37,7 @@
         await form.Validate();
         if (!form.IsValid) return;
 
-        data.Nome = _nome;
+        data.Nome = _nome!;
         await httpClient.PostAsJsonAsync("/cursos", data);
 
         MudDialog.Close(DialogResult.Ok(true));

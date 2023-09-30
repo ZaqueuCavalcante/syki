@@ -25,6 +25,7 @@ public class Oferta
     {
         return new OfertaOut
         {
+            Id = Id,
             Campus = Campus.Nome,
             Curso = Curso.Nome,
             Grade = Grade.Nome,

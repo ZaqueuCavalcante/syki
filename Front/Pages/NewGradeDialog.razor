@@ -14,31 +14,27 @@
                 </MudSelect>
             </MudStack>
             <MudContainer Class="mt-4 px-0">
-                <MudGrid>
+                <MudGrid Justify="Justify.FlexStart">
                     <MudItem xs="12">
-                        <MudGrid Justify="Justify.FlexStart">
-                            <MudItem xs="12">
-                                <CascadingValue Name="Disciplinas" Value="@Disciplinas">
-                                    <CascadingValue Name="Curso" Value="@_curso">
-                                        @for(var i=0; i<_count; i++)
-                                        {
-                                            <GradeDisciplina></GradeDisciplina>
-                                        }
-                                    </CascadingValue>
-                                </CascadingValue>
-                                <MudButton
-                                    StartIcon="@Icons.Material.Outlined.Add"
-                                    IconSize="Size.Large"
-                                    Variant="Variant.Outlined"
-                                    FullWidth="true"
-                                    Class="mt-4 border-dashed border-2 mud-border-secundary"
-                                    Color="Color.Primary"
-                                    @onclick="NewGradeDisciplina"
-                                >
-                                    New
-                                </MudButton>
-                            </MudItem>
-                        </MudGrid>
+                        <CascadingValue Name="Disciplinas" Value="@Disciplinas">
+                            <CascadingValue Name="Curso" Value="@_curso">
+                                @for(var i=0; i<_count; i++)
+                                {
+                                    <GradeDisciplina/>
+                                }
+                            </CascadingValue>
+                        </CascadingValue>
+                        <MudButton
+                            StartIcon="@Icons.Material.Outlined.Add"
+                            IconSize="Size.Large"
+                            Variant="Variant.Outlined"
+                            FullWidth="true"
+                            Class="mt-4 border-dashed border-2 mud-border-secundary"
+                            Color="Color.Primary"
+                            @onclick="NewGradeDisciplina"
+                        >
+                            New
+                        </MudButton>
                     </MudItem>
                 </MudGrid>
             </MudContainer>

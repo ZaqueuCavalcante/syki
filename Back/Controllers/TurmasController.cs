@@ -26,9 +26,15 @@ public class TurmasController : ControllerBase
             ProfessorId = body.ProfessorId,
             Periodo = body.Periodo,
         };
-
         _ctx.Turmas.Add(turma);
+        await _ctx.SaveChangesAsync();
 
+        var vinculo = new OfertaTurma
+        {
+            OfertaId = body.OfertaId,
+            TurmaId = turma.Id,
+        };
+        _ctx.Add(vinculo);
         await _ctx.SaveChangesAsync();
 
         turma = await _ctx.Turmas

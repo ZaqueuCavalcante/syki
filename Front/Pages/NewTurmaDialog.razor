@@ -1,30 +1,77 @@
 <MudDialog>
     <DialogContent>
         <MudForm @ref="form">
-            <MudSelect AutoFocus="true" @bind-Value="_oferta" Label="Oferta" Required="true" RequiredError="Informe a oferta!" AdornmentColor="Color.Primary">
+            <MudSelect
+                AutoFocus="true"
+                Value="_oferta" ValueChanged="@((OfertaOut newValue) => HandleSelectOferta(newValue))"
+                Label="Oferta" Required="true" RequiredError="Informe a oferta!" AdornmentColor="Color.Primary">
                 @foreach (OfertaOut? o in Ofertas)
                 {
                     <MudSelectItem Value="@o">@o.Campus | @o.Periodo | @o.Turno.GetDescription() | @o.Curso | @o.Grade</MudSelectItem>
                 }
-            </MudSelect>
-            <MudSelect @bind-Value="_disciplina" Label="Disciplina" Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary">
-                @foreach (DisciplinaOut? item in Disciplinas)
+                @if(Ofertas.Count == 0)
                 {
-                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+                    <MudSelectItem Value="@_oferta" Disabled="true">Nenhuma oferta cadastrada.</MudSelectItem>
                 }
             </MudSelect>
-            <MudSelect @bind-Value="_professor" Label="Professor" Required="true" RequiredError="Informe o professor!" AdornmentColor="Color.Primary">
-                @foreach (ProfessorOut? item in Professores)
-                {
-                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
-                }
-            </MudSelect>
-            <MudSelect @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período!" AdornmentColor="Color.Primary">
-                @foreach (string? item in Periodos)
-                {
-                    <MudSelectItem Value="@item">@item</MudSelectItem>
-                }
-            </MudSelect>
+            <MudStack Row="true">
+                <MudSelect @bind-Value="_disciplina" Label="Disciplina" Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary">
+                    @foreach (DisciplinaOut? item in Disciplinas)
+                    {
+                        <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+                    }
+                    @if(_oferta == null)
+                    {
+                        <MudSelectItem Value="@_disciplina" Disabled="true">Selecione a oferta!</MudSelectItem>
+                    }
+                    @if(_oferta != null && Disciplinas.Count == 0)
+                    {
+                        <MudSelectItem Value="@_disciplina" Disabled="true">Esta oferta não possui disciplinas vinculadas.</MudSelectItem>
+                    }
+                </MudSelect>
+                <MudSelect @bind-Value="_professor" Label="Professor" Required="true" RequiredError="Informe o professor!" AdornmentColor="Color.Primary">
+                    @foreach (ProfessorOut? item in Professores)
+                    {
+                        <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+                    }
+                </MudSelect>
+                <MudSelect @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período!" AdornmentColor="Color.Primary">
+                    @foreach (string? item in Periodos)
+                    {
+                        <MudSelectItem Value="@item">@item</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudStack>
+
+
+
+            <MudContainer Class="mt-4 px-0">
+                <MudGrid Justify="Justify.FlexStart">
+                    <MudItem xs="12">
+                        <MudDataGrid Items="@Alunos" Hover="true" SortMode="SortMode.None">
+                            <Columns>
+                                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                                <PropertyColumn Property="x => x.Matricula" Title="Matrícula" />
+                            </Columns>
+                        </MudDataGrid>
+                        <MudButton
+                            StartIcon="@Icons.Material.Outlined.Add"
+                            IconSize="Size.Large"
+                            Variant="Variant.Outlined"
+                            FullWidth="true"
+                            Class="mt-4 border-dashed border-2 mud-border-secundary"
+                            Color="Color.Primary"
+                            @onclick="NovoAluno"
+                        >
+                            Novo Aluno
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudContainer>
+
+
+
+
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -46,12 +93,15 @@
     ProfessorOut? _professor;
     string? _periodo;
 
+    int _count = 1;
+
     TurmaIn data = new();
 
     List<OfertaOut> Ofertas = new();
     List<DisciplinaOut> Disciplinas = new();
     List<ProfessorOut> Professores = new();
     List<string> Periodos = new();
+    List<AlunoOut> Alunos = new();
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
@@ -59,9 +109,21 @@
     protected override async Task OnInitializedAsync()
     {
         Ofertas = await httpClient.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
-        Disciplinas = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
         Professores = await httpClient.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? new();
         Periodos = await httpClient.GetFromJsonAsync<List<string>>("/periodos") ?? new();
+        Alunos = await httpClient.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? new();
+    }
+
+    void NovoAluno()
+    {
+        _count ++;
+    }
+
+    async Task HandleSelectOferta(OfertaOut newValue)
+    {
+        _oferta = newValue;
+        var id = _oferta!.Id;
+        Disciplinas = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>($"/grades/{id}/disciplinas") ?? new();
     }
 
     async Task Submit()
@@ -71,6 +133,7 @@
 
         data = new()
         {
+            OfertaId = _oferta!.Id,
             DisciplinaId = _disciplina!.Id,
             ProfessorId = _professor!.Id,
             Periodo = _periodo!,

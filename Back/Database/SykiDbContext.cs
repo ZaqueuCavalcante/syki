@@ -27,16 +27,16 @@ public class SykiDbContext : DbContext
         Database.EnsureCreated();
         Faculdades.Add(DbSeed.NovaRoma);
         SaveChanges();
-        var novaRoma = Faculdades.First(x => x.Id == 1);
+        // var novaRoma = Faculdades.First(x => x.Id == DbSeed.NovaRoma.Id);
 
-        var disciplinasDireito = DbSeed.NovaRoma.Disciplinas.Skip(31).Take(39).ToList();
-        disciplinasDireito.Add(DbSeed.NovaRoma.Disciplinas.First(x => x.Nome == "Informática e Sociedade"));
+        // var disciplinasDireito = DbSeed.NovaRoma.Disciplinas.Skip(31).Take(39).ToList();
+        // disciplinasDireito.Add(DbSeed.NovaRoma.Disciplinas.First(x => x.Nome == "Informática e Sociedade"));
 
-        var ads = Cursos.First(c => c.Id == 2);
-        ads.Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList();
+        // var ads = Cursos.First(c => c.Id == 2);
+        // ads.Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList();
 
-        var direito = Cursos.First(c => c.Id == 5);
-        direito.Disciplinas = disciplinasDireito;
+        // var direito = Cursos.First(c => c.Id == 5);
+        // direito.Disciplinas = disciplinasDireito;
 
         AddRange(DbSeed.Periodos);
         AddRange(DbSeed.Professores);
@@ -47,13 +47,10 @@ public class SykiDbContext : DbContext
 
     public List<User> Users = new()
     {
-        new User { Id = 0, Email = "adm@syki.com", Role = AuthorizationConfigs.Adm },
-        new User { Id = 1, Email = "aluno@novaroma.com", FaculdadeId = 1, Role = AuthorizationConfigs.Aluno },
-        new User { Id = 2, Email = "professor@novaroma.com", FaculdadeId = 1, Role = AuthorizationConfigs.Professor },
-        new User { Id = 3, Email = "academico@novaroma.com", FaculdadeId = 1, Role = AuthorizationConfigs.Academico },
-        new User { Id = 4, Email = "aluno@ufpe.com", FaculdadeId = 2, Role = AuthorizationConfigs.Aluno },
-        new User { Id = 5, Email = "professor@ufpe.com", FaculdadeId = 2, Role = AuthorizationConfigs.Professor },
-        new User { Id = 6, Email = "academico@ufpe.com", FaculdadeId = 2, Role = AuthorizationConfigs.Academico },
+        new User { Id = Guid.NewGuid(), Email = "adm@syki.com", Role = AuthorizationConfigs.Adm },
+        new User { Id = Guid.NewGuid(), Email = "aluno@novaroma.com", FaculdadeId = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432"), Role = AuthorizationConfigs.Aluno },
+        new User { Id = Guid.NewGuid(), Email = "professor@novaroma.com", FaculdadeId = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432"), Role = AuthorizationConfigs.Professor },
+        new User { Id = Guid.NewGuid(), Email = "academico@novaroma.com", FaculdadeId = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432"), Role = AuthorizationConfigs.Academico },
     };
 
     public SykiDbContext(DbContextOptions<SykiDbContext> options) : base(options) { }

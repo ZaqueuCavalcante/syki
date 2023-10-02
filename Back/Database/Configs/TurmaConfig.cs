@@ -11,7 +11,7 @@ public class TurmaConfig : IEntityTypeConfiguration<Turma>
         turma.ToTable("turmas");
 
         turma.HasKey(t => t.Id);
-        turma.Property(t => t.Id).ValueGeneratedOnAdd();
+        turma.Property(t => t.Id).ValueGeneratedNever();
 
         turma.HasOne(t => t.Professor)
             .WithMany()

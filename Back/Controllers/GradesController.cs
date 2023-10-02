@@ -21,6 +21,7 @@ public class GradesController : ControllerBase
     {
         var grade = new Grade
         {
+            Id = Guid.NewGuid(),
             FaculdadeId = User.Facul(),
             CursoId = body.CursoId,
             Nome = body.Nome,
@@ -62,7 +63,7 @@ public class GradesController : ControllerBase
     }
 
     [HttpGet("{id}/disciplinas")]
-    public async Task<IActionResult> GetDisciplinas([FromRoute] long id)
+    public async Task<IActionResult> GetDisciplinas([FromRoute] Guid id)
     {
         var grade = await _ctx.Grades
             .Where(c => c.FaculdadeId == User.Facul() && c.Id == id)

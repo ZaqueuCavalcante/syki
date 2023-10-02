@@ -6,16 +6,17 @@ namespace Syki.Domain;
 
 public class Aluno
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     
-    public long FaculdadeId { get; set; }
+    public Guid FaculdadeId { get; set; }
 
     public string Nome { get; set; }
 
     public string Matricula { get; set; }
 
-    public Aluno(long faculdadeId, string nome)
+    public Aluno(Guid faculdadeId, string nome)
     {
+        Id = Guid.NewGuid();
         FaculdadeId = faculdadeId;
         SetNome(nome);
         Matricula = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8]}";

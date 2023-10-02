@@ -4,9 +4,9 @@ namespace Syki.Domain;
 
 public class Disciplina
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 
-    public long FaculdadeId { get; set; }
+    public Guid FaculdadeId { get; set; }
     
     public string Nome { get; set; }
 
@@ -14,13 +14,12 @@ public class Disciplina
 
     public List<CursoDisciplina> Vinculos { get; set; }
 
-    public Disciplina() { }
-
     public Disciplina(
         string nome,
-        long faculdadeId,
+        Guid faculdadeId,
         ushort cargaHoraria
     ) {
+        Id = Guid.NewGuid();
         Nome = nome;
         FaculdadeId = faculdadeId;
         CargaHoraria = cargaHoraria;

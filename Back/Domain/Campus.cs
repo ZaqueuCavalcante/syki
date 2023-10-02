@@ -2,16 +2,21 @@ namespace Syki.Domain;
 
 public class Campus
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     
-    public long FaculdadeId { get; set; }
+    public Guid FaculdadeId { get; set; }
 
     public string Nome { get; set; }
 
-    public Campus() { }
-
-    public Campus(string nome, long faculdadeId)
+    public Campus(string nome)
     {
+        Id = Guid.NewGuid();
+        Nome = nome;
+    }
+
+    public Campus(string nome, Guid faculdadeId)
+    {
+        Id = Guid.NewGuid();
         Nome = nome;
         FaculdadeId = faculdadeId;
     }

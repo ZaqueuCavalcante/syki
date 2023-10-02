@@ -11,6 +11,6 @@ public class AulaConfig : IEntityTypeConfiguration<Aula>
         aula.ToTable("aulas");
 
         aula.HasKey(a => a.Id);
-        aula.Property(a => a.Id).ValueGeneratedOnAdd();
+        aula.Property(a => a.Id).ValueGeneratedNever();
     }
 }

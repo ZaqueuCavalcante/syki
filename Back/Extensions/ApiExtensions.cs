@@ -17,5 +17,3 @@ public static class ApiExtensions
         return JsonConvert.DeserializeObject<T>(responseAsString)!;
     }
 }
-
-public class ErrorDto { public string error { get; set; } = ""; }

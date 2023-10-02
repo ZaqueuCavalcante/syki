@@ -13,7 +13,7 @@ public class CursoConfig : IEntityTypeConfiguration<Curso>
         curso.ToTable("cursos");
 
         curso.HasKey(c => c.Id);
-        curso.Property(c => c.Id).ValueGeneratedOnAdd();
+        curso.Property(c => c.Id).ValueGeneratedNever();
 
         curso.Property(c => c.Tipo)
             .HasConversion(new EnumToStringConverter<TipoDeCurso>());

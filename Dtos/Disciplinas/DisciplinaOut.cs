@@ -2,7 +2,7 @@ namespace Syki.Dtos;
 
 public class DisciplinaOut
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     public string Nome { get; set; }
     public byte Periodo { get; set; }
     public byte Creditos { get; set; }
@@ -16,6 +16,7 @@ public class DisciplinaOut
 
     public override int GetHashCode()
     {
-        return (int)Id;
+        string justNumbers = new String(Id.ToString().Where(Char.IsDigit).ToArray());
+        return int.Parse(justNumbers.Substring(0, 8));
     }
 }

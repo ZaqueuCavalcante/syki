@@ -4,9 +4,9 @@ namespace Syki.Domain;
 
 public class Curso
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 
-    public long FaculdadeId { get; set; }
+    public Guid FaculdadeId { get; set; }
 
     public string Nome { get; set; }
 
@@ -21,9 +21,19 @@ public class Curso
 
     public Curso(
         string nome,
-        TipoDeCurso tipo,
-        long faculdadeId
+        TipoDeCurso tipo
     ) {
+        Id = Guid.NewGuid();
+        Nome = nome;
+        Tipo = tipo;
+    }
+
+    public Curso(
+        string nome,
+        TipoDeCurso tipo,
+        Guid faculdadeId
+    ) {
+        Id = Guid.NewGuid();
         Nome = nome;
         Tipo = tipo;
         FaculdadeId = faculdadeId;

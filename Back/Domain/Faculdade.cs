@@ -2,7 +2,7 @@ namespace Syki.Domain;
 
 public class Faculdade
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     
     public string Nome { get; set; }
 
@@ -24,6 +24,7 @@ public class Faculdade
 
     public Faculdade(string nome)
     {
+        Id = Guid.NewGuid();
         Nome = nome;
     }
 }

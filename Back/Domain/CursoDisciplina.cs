@@ -2,7 +2,7 @@ namespace Syki.Domain;
 
 public class CursoDisciplina
 {
-    public long CursoId { get; set; }
+    public Guid CursoId { get; set; }
 
-    public long DisciplinaId { get; set; }
+    public Guid DisciplinaId { get; set; }
 }

@@ -9,9 +9,9 @@ public static class SykiExtensions
         return uint.Parse(user.FindFirstValue("sub")!);
     }
 
-    public static long Facul(this ClaimsPrincipal user)
+    public static Guid Facul(this ClaimsPrincipal user)
     {
-        return long.Parse(user.FindFirstValue("faculdade")!);
+        return Guid.Parse(user.FindFirstValue("faculdade")!);
     }
 
     public static bool IsEmpty(this string? text)

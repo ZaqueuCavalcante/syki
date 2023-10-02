@@ -4,9 +4,9 @@ namespace Syki.Domain;
 
 public class Professor
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     
-    public long FaculdadeId { get; set; }
+    public Guid FaculdadeId { get; set; }
 
     public string Nome { get; set; }
 

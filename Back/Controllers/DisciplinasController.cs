@@ -38,7 +38,7 @@ public class DisciplinasController : ControllerBase
     }
 
     [HttpGet("")]
-    public async Task<IActionResult> GetAll([FromQuery] long? cursoId)
+    public async Task<IActionResult> GetAll([FromQuery] Guid? cursoId)
     {
         var ids = await _ctx.CursosDisciplinas
             .Where(cd => cd.CursoId == cursoId)

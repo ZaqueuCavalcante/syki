@@ -24,7 +24,6 @@ public class CampusIntegrationTests : ApiTestBase
         var campus = await PostAsync<CampusOut>("/campi", body);
         
         // Assert
-        campus.Id.Should().Be(1);
         campus.Nome.Should().Be(body.Nome);
     }
 

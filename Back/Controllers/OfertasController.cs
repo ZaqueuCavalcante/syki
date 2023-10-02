@@ -21,6 +21,7 @@ public class OfertasController : ControllerBase
     {
         var oferta = new Oferta
         {
+            Id = Guid.NewGuid(),
             FaculdadeId = User.Facul(),
             CampusId = body.CampusId,
             CursoId = body.CursoId,

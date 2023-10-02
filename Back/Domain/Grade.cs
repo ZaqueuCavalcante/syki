@@ -4,11 +4,11 @@ namespace Syki.Domain;
 
 public class Grade
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     
-    public long FaculdadeId { get; set; }
+    public Guid FaculdadeId { get; set; }
 
-    public long CursoId { get; set; }
+    public Guid CursoId { get; set; }
     public Curso Curso { get; set; }
 
     public string Nome { get; set; }

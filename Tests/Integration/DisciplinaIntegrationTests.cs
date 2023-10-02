@@ -24,7 +24,6 @@ public class DisciplinaIntegrationTests : ApiTestBase
         var disciplina = await PostAsync<DisciplinaOut>("/disciplinas", body);
 
         // Assert
-        disciplina.Id.Should().Be(1);
         disciplina.Nome.Should().Be(body.Nome);
         disciplina.CargaHoraria.Should().Be(body.CargaHoraria);
     }

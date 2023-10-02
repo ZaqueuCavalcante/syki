@@ -4,14 +4,14 @@ namespace Syki.Domain;
 
 public class Turma
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
 
-    public long FaculdadeId { get; set; }
+    public Guid FaculdadeId { get; set; }
 
-    public long DisciplinaId { get; set; }
+    public Guid DisciplinaId { get; set; }
     public Disciplina Disciplina { get; set; }
 
-    public long ProfessorId { get; set; }
+    public Guid ProfessorId { get; set; }
     public Professor Professor { get; set; }
 
     public string Periodo { get; set; }

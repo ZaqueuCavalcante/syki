@@ -2,7 +2,7 @@ namespace Syki.Dtos;
 
 public class CursoOut
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     public string Nome { get; set; }
     public TipoDeCurso Tipo { get; set; }
 
@@ -14,7 +14,8 @@ public class CursoOut
 
     public override int GetHashCode()
     {
-        return (int)Id;
+        string justNumbers = new String(Id.ToString().Where(Char.IsDigit).ToArray());
+        return int.Parse(justNumbers.Substring(0, 8));
     }
 
     public override string ToString()

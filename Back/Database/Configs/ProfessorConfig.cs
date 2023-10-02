@@ -11,6 +11,6 @@ public class ProfessorConfig : IEntityTypeConfiguration<Professor>
         professor.ToTable("professores");
 
         professor.HasKey(p => p.Id);
-        professor.Property(p => p.Id).ValueGeneratedOnAdd();
+        professor.Property(p => p.Id).ValueGeneratedNever();
     }
 }

@@ -11,6 +11,6 @@ public class DisciplinaConfig : IEntityTypeConfiguration<Disciplina>
         disciplina.ToTable("disciplinas");
 
         disciplina.HasKey(d => d.Id);
-        disciplina.Property(d => d.Id).ValueGeneratedOnAdd();
+        disciplina.Property(d => d.Id).ValueGeneratedNever();
     }
 }

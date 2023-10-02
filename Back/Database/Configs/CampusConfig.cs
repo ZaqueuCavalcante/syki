@@ -11,7 +11,7 @@ public class CampusConfig : IEntityTypeConfiguration<Campus>
         campus.ToTable("campi");
 
         campus.HasKey(c => c.Id);
-        campus.Property(c => c.Id).ValueGeneratedOnAdd();
+        campus.Property(c => c.Id).ValueGeneratedNever();
 
         campus.HasMany<Oferta>()
             .WithOne(o => o.Campus)

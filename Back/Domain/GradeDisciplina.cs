@@ -2,9 +2,9 @@ namespace Syki.Domain;
 
 public class GradeDisciplina
 {
-    public long GradeId { get; set; }
+    public Guid GradeId { get; set; }
     
-    public long DisciplinaId { get; set; }
+    public Guid DisciplinaId { get; set; }
 
     public byte Periodo { get; set; }
 

@@ -22,7 +22,6 @@ public class FauldadeIntegrationTests : ApiTestBase
         var faculdade = await PostAsync<FaculdadeOut>("/faculdades", body);
         
         // Assert
-        faculdade.Id.Should().Be(1);
         faculdade.Nome.Should().Be(body.Nome);
     }
 

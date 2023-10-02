@@ -11,6 +11,6 @@ public class AlunoConfig : IEntityTypeConfiguration<Aluno>
         aluno.ToTable("alunos");
 
         aluno.HasKey(a => a.Id);
-        aluno.Property(a => a.Id).ValueGeneratedOnAdd();
+        aluno.Property(a => a.Id).ValueGeneratedNever();
     }
 }

@@ -13,7 +13,7 @@ public class OfertaConfig : IEntityTypeConfiguration<Oferta>
         oferta.ToTable("ofertas");
 
         oferta.HasKey(co => co.Id);
-        oferta.Property(co => co.Id).ValueGeneratedOnAdd();
+        oferta.Property(co => co.Id).ValueGeneratedNever();
 
         oferta.HasOne(o => o.Curso)
             .WithMany()

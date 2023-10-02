@@ -11,7 +11,7 @@ public class GradeConfig : IEntityTypeConfiguration<Grade>
         grade.ToTable("grades");
 
         grade.HasKey(g => g.Id);
-        grade.Property(g => g.Id).ValueGeneratedOnAdd();
+        grade.Property(g => g.Id).ValueGeneratedNever();
 
         grade.HasMany(g => g.Disciplinas)
             .WithMany()

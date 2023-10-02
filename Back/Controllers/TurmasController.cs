@@ -21,13 +21,13 @@ public class TurmasController : ControllerBase
     {
         var turma = new Turma
         {
+            Id = Guid.NewGuid(),
             FaculdadeId = User.Facul(),
             DisciplinaId = body.DisciplinaId,
             ProfessorId = body.ProfessorId,
             Periodo = body.Periodo,
         };
         _ctx.Turmas.Add(turma);
-        await _ctx.SaveChangesAsync();
 
         var vinculo = new OfertaTurma
         {
@@ -35,6 +35,7 @@ public class TurmasController : ControllerBase
             TurmaId = turma.Id,
         };
         _ctx.Add(vinculo);
+
         await _ctx.SaveChangesAsync();
 
         turma = await _ctx.Turmas

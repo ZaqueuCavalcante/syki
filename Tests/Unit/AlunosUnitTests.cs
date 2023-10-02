@@ -12,8 +12,11 @@ public class AlunosUnitTests
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidNamesStream))]
     public void Nao_deve_criar_um_aluno_com_nome_invalido(string nome)
     {
-        // Arrange / Act
-        Action act = () => new Aluno(1, nome);
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+
+        // Act
+        Action act = () => new Aluno(faculdadeId, nome);
 
         // Assert
         act.Should().Throw<DomainException>();

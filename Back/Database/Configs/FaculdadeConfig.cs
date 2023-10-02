@@ -11,7 +11,7 @@ public class FaculdadeConfig : IEntityTypeConfiguration<Faculdade>
         faculdade.ToTable("faculdades");
 
         faculdade.HasKey(f => f.Id);
-        faculdade.Property(f => f.Id).ValueGeneratedOnAdd();
+        faculdade.Property(f => f.Id).ValueGeneratedNever();
 
         faculdade.HasMany(f => f.Campi)
             .WithOne()

@@ -2,9 +2,9 @@ namespace Syki.Domain;
 
 public class User
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     
-    public long FaculdadeId { get; set; }
+    public Guid FaculdadeId { get; set; }
 
     public string Email { get; set; }
 

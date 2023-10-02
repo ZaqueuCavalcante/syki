@@ -18,9 +18,7 @@
 </MudDialog>
 
 @using Syki.Dtos
-@using System.Text.RegularExpressions
-@using System.ComponentModel.DataAnnotations
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject ISnackbar Snackbar
 
 @code {
@@ -36,7 +34,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await httpClient.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
+        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
     }
 
     async Task Submit()
@@ -47,7 +45,7 @@
         data.CargaHoraria = _cargaHoraria!.Value;
         data.Cursos = SelectedCursos.ToList().ConvertAll(c => c.Id);
 
-        await httpClient.PostAsJsonAsync("/disciplinas", data);
+        await Http.PostAsJsonAsync("/disciplinas", data);
 
         MudDialog.Close(DialogResult.Ok(true));
 

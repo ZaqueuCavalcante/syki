@@ -51,9 +51,7 @@
 </MudDialog>
 
 @using Syki.Dtos
-@using System.Text.RegularExpressions
-@using System.ComponentModel.DataAnnotations
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject ISnackbar Snackbar
 
 @code {
@@ -76,10 +74,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Campi = await httpClient.GetFromJsonAsync<List<CampusOut>>("/campi") ?? new();
-        Cursos = await httpClient.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
-        Grades = await httpClient.GetFromJsonAsync<List<GradeOut>>("/grades") ?? new();
-        Periodos = await httpClient.GetFromJsonAsync<List<string>>("/periodos") ?? new();
+        Campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? new();
+        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
+        Grades = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? new();
+        Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? new();
     }
 
     async Task Submit()
@@ -95,7 +93,7 @@
             Periodo = _periodo!,
             Turno = _turno!.Value,
         };
-        await httpClient.PostAsJsonAsync("/ofertas", data);
+        await Http.PostAsJsonAsync("/ofertas", data);
 
         MudDialog.Close(DialogResult.Ok(true));
 

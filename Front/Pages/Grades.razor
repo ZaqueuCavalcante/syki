@@ -2,11 +2,6 @@
 
 <PageTitle>Grades</PageTitle>
 
-@using Syki.Dtos
-@using System.Net.Http.Json
-@inject HttpClient httpClient
-@inject IDialogService DialogService
-
 <MudContainer Class="mt-8 mb-8">
     <MudDataGrid T="GradeOut" Items="@GradesOut" QuickFilter="@_quickFilter" Hover="true" RowClick="@RowClicked">
         <ToolBarContent>
@@ -45,13 +40,17 @@
     </MudDataGrid>
 </MudContainer>
 
+@using Syki.Dtos
+@inject HttpClient Http
+@inject IDialogService DialogService
+
 @code {
     private string _searchString;
     private List<GradeOut> GradesOut = new List<GradeOut>();
 
     protected override async Task OnInitializedAsync()
     {
-        GradesOut = await httpClient.GetFromJsonAsync<List<GradeOut>>("/grades") ?? new();
+        GradesOut = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? new();
     }
 
     private void RowClicked(DataGridRowClickEventArgs<GradeOut> args)
@@ -60,7 +59,6 @@
         parameters.Add("Disciplinas", args.Item.Disciplinas);
 
         var options = new DialogOptions {
-            Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };
@@ -84,7 +82,6 @@
     private async Task OpenDialog()
     {
         var options = new DialogOptions {
-            Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };

@@ -3,7 +3,7 @@
 <PageTitle>Cursos</PageTitle>
 
 <MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    @if(CursosOut == null)
+    @if(_cursos == null)
     {
         <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
     }
@@ -12,7 +12,7 @@
         <MudGrid>
             <MudItem xs="12">
                 <MudGrid Justify="Justify.FlexStart">
-                    @foreach (var c in CursosOut)
+                    @foreach (var c in _cursos)
                     {
                         <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
                             <MudPaper Height="150px" Class="d-flex flex-column align-center justify-center mud-width-full py-8">
@@ -44,26 +44,24 @@
 </MudContainer>
 
 @using Syki.Dtos
-@using System.Net.Http.Json
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject IDialogService DialogService
 
 @code {
-    private List<CursoOut>? CursosOut;
+    private List<CursoOut>? _cursos;
 
     protected override async Task OnInitializedAsync()
     {
-        CursosOut = await httpClient.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
+        _cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
     }
 
     private async Task OpenDialog()
     {
         var options = new DialogOptions {
-            Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = DialogService.Show<NewCursoDialog>("Novo Curso", options);
+        var dialog = await DialogService.ShowAsync<NewCursoDialog>("Novo Curso", options);
 
         var result = await dialog.Result;
 

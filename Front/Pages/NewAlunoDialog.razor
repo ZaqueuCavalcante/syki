@@ -11,9 +11,7 @@
 </MudDialog>
 
 @using Syki.Dtos
-@using System.Text.RegularExpressions
-@using System.ComponentModel.DataAnnotations
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject ISnackbar Snackbar
 
 @code {
@@ -24,7 +22,7 @@
 
     async Task Submit()
     {
-        await httpClient.PostAsJsonAsync("/alunos", data);
+        await Http.PostAsJsonAsync("/alunos", data);
 
         MudDialog.Close(DialogResult.Ok(true));
 

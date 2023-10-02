@@ -43,8 +43,6 @@
                 </MudSelect>
             </MudStack>
 
-
-
             <MudContainer Class="mt-4 px-0">
                 <MudGrid Justify="Justify.FlexStart">
                     <MudItem xs="12">
@@ -68,10 +66,6 @@
                     </MudItem>
                 </MudGrid>
             </MudContainer>
-
-
-
-
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -81,9 +75,7 @@
 </MudDialog>
 
 @using Syki.Dtos
-@using System.Text.RegularExpressions
-@using System.ComponentModel.DataAnnotations
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject ISnackbar Snackbar
 
 @code {
@@ -108,10 +100,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Ofertas = await httpClient.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
-        Professores = await httpClient.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? new();
-        Periodos = await httpClient.GetFromJsonAsync<List<string>>("/periodos") ?? new();
-        Alunos = await httpClient.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? new();
+        Ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
+        Professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? new();
+        Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? new();
+        Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? new();
     }
 
     void NovoAluno()
@@ -123,7 +115,7 @@
     {
         _oferta = newValue;
         var id = _oferta!.Id;
-        Disciplinas = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>($"/grades/{id}/disciplinas") ?? new();
+        Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>($"/grades/{id}/disciplinas") ?? new();
     }
 
     async Task Submit()
@@ -138,7 +130,7 @@
             ProfessorId = _professor!.Id,
             Periodo = _periodo!,
         };
-        await httpClient.PostAsJsonAsync("/turmas", data);
+        await Http.PostAsJsonAsync("/turmas", data);
 
         MudDialog.Close(DialogResult.Ok(true));
 

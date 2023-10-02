@@ -45,8 +45,7 @@
 </MudContainer>
 
 @using Syki.Dtos
-@using System.Net.Http.Json
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject IDialogService DialogService
 
 @code {
@@ -54,13 +53,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        TurmasOut = await httpClient.GetFromJsonAsync<List<TurmaOut>>("/turmas") ?? new();
+        TurmasOut = await Http.GetFromJsonAsync<List<TurmaOut>>("/turmas") ?? new();
     }
 
     private async Task OpenDialog()
     {
         var options = new DialogOptions {
-            Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };

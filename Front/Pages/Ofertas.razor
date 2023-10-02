@@ -45,8 +45,7 @@
 </MudContainer>
 
 @using Syki.Dtos
-@using System.Net.Http.Json
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject IDialogService DialogService
 
 @code {
@@ -54,13 +53,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        OfertasOut = await httpClient.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
+        OfertasOut = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
     }
 
     private async Task OpenDialog()
     {
         var options = new DialogOptions {
-            Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };

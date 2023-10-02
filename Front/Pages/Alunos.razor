@@ -3,7 +3,7 @@
 <PageTitle>Alunos</PageTitle>
 
 <MudContainer Class="mt-8 mb-8">
-    <MudDataGrid Items="@AlunosOut" QuickFilter="@_quickFilter" Hover="true">
+    <MudDataGrid Items="@_alunos" QuickFilter="@QuickFilter" Hover="true">
         <ToolBarContent>
             <MudText Typo="Typo.h5">Alunos</MudText>
             <MudSpacer />
@@ -41,20 +41,19 @@
 </MudContainer>
 
 @using Syki.Dtos
-@using System.Net.Http.Json
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject IDialogService DialogService
 
 @code {
     private string _searchString;
-    private List<AlunoOut> AlunosOut = new();
+    private List<AlunoOut> _alunos = new();
 
     protected override async Task OnInitializedAsync()
     {
-        AlunosOut = await httpClient.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? new();
+        _alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? new();
     }
 
-    private Func<AlunoOut, bool> _quickFilter => x =>
+    private Func<AlunoOut, bool> QuickFilter => x =>
     {
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
@@ -71,11 +70,10 @@
     private async Task OpenDialog()
     {
         var options = new DialogOptions {
-            Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = DialogService.Show<NewAlunoDialog>("Novo Aluno", options);
+        var dialog = await DialogService.ShowAsync<NewAlunoDialog>("Novo Aluno", options);
 
         var result = await dialog.Result;
 

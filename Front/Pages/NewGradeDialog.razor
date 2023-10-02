@@ -48,9 +48,7 @@
 
 @using Syki.Dtos
 @using Front.Domain
-@using System.Text.RegularExpressions
-@using System.ComponentModel.DataAnnotations
-@inject HttpClient httpClient
+@inject HttpClient Http
 @inject ISnackbar Snackbar
 
 @code {
@@ -70,7 +68,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await httpClient.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
+        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
         Disciplinas = new();
     }
 
@@ -83,7 +81,7 @@
     {
         _curso = newValue;
         var id = _curso!.Id;
-        var disc = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>($"/disciplinas?cursoId={id}") ?? new();
+        var disc = await Http.GetFromJsonAsync<List<DisciplinaOut>>($"/disciplinas?cursoId={id}") ?? new();
         Disciplinas = disc.ConvertAll(x => new GradeDisciplinaFull
         {
             Id = x.Id,
@@ -107,7 +105,7 @@
                 CargaHoraria = d.CargaHoraria!.Value,
             });
 
-        await httpClient.PostAsJsonAsync("/grades", data);
+        await Http.PostAsJsonAsync("/grades", data);
 
         MudDialog.Close(DialogResult.Ok(true));
 

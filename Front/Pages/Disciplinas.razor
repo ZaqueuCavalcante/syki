@@ -2,13 +2,8 @@
 
 <PageTitle>Disciplinas</PageTitle>
 
-@using Syki.Dtos
-@using System.Net.Http.Json
-@inject HttpClient httpClient
-@inject IDialogService DialogService
-
 <MudContainer Class="mt-8 mb-8">
-    <MudDataGrid Items="@DisciplinasOut" QuickFilter="@_quickFilter" Hover="true">
+    <MudDataGrid Items="@_disciplinas" QuickFilter="@_quickFilter" Hover="true">
         <ToolBarContent>
             <MudText Typo="Typo.h5">Disciplinas</MudText>
             <MudSpacer />
@@ -44,13 +39,17 @@
     </MudDataGrid>
 </MudContainer>
 
+@using Syki.Dtos
+@inject HttpClient Http
+@inject IDialogService DialogService
+
 @code {
     private string _searchString;
-    private List<DisciplinaOut> DisciplinasOut = new List<DisciplinaOut>();
+    private List<DisciplinaOut> _disciplinas = new List<DisciplinaOut>();
 
     protected override async Task OnInitializedAsync()
     {
-        DisciplinasOut = await httpClient.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
+        _disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
     }
 
     private Func<DisciplinaOut, bool> _quickFilter => x =>
@@ -70,7 +69,6 @@
     private async Task OpenDialog()
     {
         var options = new DialogOptions {
-            Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };

@@ -29,12 +29,14 @@ public class TurmasController : ControllerBase
         };
         _ctx.Turmas.Add(turma);
 
-        var vinculo = new OfertaTurma
+        body.Ofertas.ForEach(x =>
         {
-            OfertaId = body.OfertaId,
-            TurmaId = turma.Id,
-        };
-        _ctx.Add(vinculo);
+            var vinculo = new OfertaTurma
+            {
+                OfertaId = x, TurmaId = turma.Id,
+            };
+            _ctx.Add(vinculo);
+        });
 
         await _ctx.SaveChangesAsync();
 

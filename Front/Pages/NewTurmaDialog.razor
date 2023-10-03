@@ -1,57 +1,47 @@
 <MudDialog>
     <DialogContent>
         <MudForm @ref="form">
-            <MudSelect
-                AutoFocus="true"
-                Value="_oferta" ValueChanged="@((OfertaOut newValue) => HandleSelectOferta(newValue))"
-                Label="Oferta" Required="true" RequiredError="Informe a oferta!" AdornmentColor="Color.Primary">
-                @foreach (OfertaOut? o in Ofertas)
-                {
-                    <MudSelectItem Value="@o">@o.Campus | @o.Periodo | @o.Turno.GetDescription() | @o.Curso | @o.Grade</MudSelectItem>
-                }
-                @if(Ofertas.Count == 0)
-                {
-                    <MudSelectItem Value="@_oferta" Disabled="true">Nenhuma oferta cadastrada.</MudSelectItem>
-                }
-            </MudSelect>
             <MudStack Row="true">
-                <MudSelect @bind-Value="_disciplina" Label="Disciplina" Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary">
-                    @foreach (DisciplinaOut? item in Disciplinas)
-                    {
-                        <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
-                    }
-                    @if(_oferta == null)
-                    {
-                        <MudSelectItem Value="@_disciplina" Disabled="true">Selecione a oferta!</MudSelectItem>
-                    }
-                    @if(_oferta != null && Disciplinas.Count == 0)
-                    {
-                        <MudSelectItem Value="@_disciplina" Disabled="true">Esta oferta não possui disciplinas vinculadas.</MudSelectItem>
-                    }
-                </MudSelect>
-                <MudSelect @bind-Value="_professor" Label="Professor" Required="true" RequiredError="Informe o professor!" AdornmentColor="Color.Primary">
-                    @foreach (ProfessorOut? item in Professores)
-                    {
-                        <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
-                    }
-                </MudSelect>
-                <MudSelect @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período!" AdornmentColor="Color.Primary">
-                    @foreach (string? item in Periodos)
-                    {
-                        <MudSelectItem Value="@item">@item</MudSelectItem>
-                    }
-                </MudSelect>
+                <MudGrid Justify="Justify.FlexStart">
+                    <MudItem xs="6">
+                        <MudSelect
+                            Value="_disciplina" ValueChanged="@((DisciplinaOut newValue) => HandleSelectDisciplina(newValue))"
+                            Label="Disciplina" Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary">
+                            @foreach (DisciplinaOut? item in Disciplinas)
+                            {
+                                <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="4">
+                            <MudSelect @bind-Value="_professor" Label="Professor" Required="true" RequiredError="Informe o professor!" AdornmentColor="Color.Primary">
+                            @foreach (ProfessorOut? item in Professores)
+                            {
+                                <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="2">
+                        <MudSelect @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período!" AdornmentColor="Color.Primary">
+                            @foreach (string? item in Periodos)
+                            {
+                                <MudSelectItem Value="@item">@item</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                </MudGrid>
             </MudStack>
-
             <MudContainer Class="mt-4 px-0">
                 <MudGrid Justify="Justify.FlexStart">
                     <MudItem xs="12">
-                        <MudDataGrid Items="@Alunos" Hover="true" SortMode="SortMode.None">
-                            <Columns>
-                                <PropertyColumn Property="x => x.Nome" Title="Nome" />
-                                <PropertyColumn Property="x => x.Matricula" Title="Matrícula" />
-                            </Columns>
-                        </MudDataGrid>
+                        <CascadingValue Name="Ofertas" Value="@Ofertas">
+                            <CascadingValue Name="Disciplina" Value="@_disciplina">
+                                @for(var i=0; i<_count; i++)
+                                {
+                                    <TurmaOferta />
+                                }
+                            </CascadingValue>
+                        </CascadingValue>
                         <MudButton
                             StartIcon="@Icons.Material.Outlined.Add"
                             IconSize="Size.Large"
@@ -59,9 +49,9 @@
                             FullWidth="true"
                             Class="mt-4 border-dashed border-2 mud-border-secundary"
                             Color="Color.Primary"
-                            @onclick="NovoAluno"
+                            @onclick="NewOferta"
                         >
-                            Novo Aluno
+                            New
                         </MudButton>
                     </MudItem>
                 </MudGrid>
@@ -75,12 +65,13 @@
 </MudDialog>
 
 @using Syki.Dtos
+@using Front.Domain
 @inject HttpClient Http
 @inject ISnackbar Snackbar
 
 @code {
     MudForm form;
-    OfertaOut? _oferta;
+
     DisciplinaOut? _disciplina;
     ProfessorOut? _professor;
     string? _periodo;
@@ -89,7 +80,7 @@
 
     TurmaIn data = new();
 
-    List<OfertaOut> Ofertas = new();
+    List<TurmaOfertaFull> Ofertas = new();
     List<DisciplinaOut> Disciplinas = new();
     List<ProfessorOut> Professores = new();
     List<string> Periodos = new();
@@ -100,22 +91,33 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
         Professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? new();
         Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? new();
         Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? new();
+        Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
     }
 
-    void NovoAluno()
+    void NewOferta()
     {
         _count ++;
     }
 
-    async Task HandleSelectOferta(OfertaOut newValue)
+    async Task HandleSelectDisciplina(DisciplinaOut newValue)
     {
-        _oferta = newValue;
-        var id = _oferta!.GradeId.ToString();
-        Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>($"/grades/{id}/disciplinas") ?? new();
+        _disciplina = newValue;
+        var id = _disciplina.Id.ToString();
+        var ofertaOuts = await Http.GetFromJsonAsync<List<OfertaOut>>($"/ofertas?disciplinaId={id}") ?? new();
+        Ofertas = ofertaOuts.ConvertAll(x =>
+            new TurmaOfertaFull
+            {
+                Id = x.Id,
+                Campus = x.Campus,
+                Curso = x.Curso,
+                Grade = x.Grade,
+                Periodo = x.Periodo,
+                Turno = x.Turno,
+            }
+        );
     }
 
     async Task Submit()
@@ -125,7 +127,7 @@
 
         data = new()
         {
-            OfertaId = _oferta!.Id,
+            Ofertas = Ofertas.Where(x => x.IsSelected).ToList().ConvertAll(x => x.Id),
             DisciplinaId = _disciplina!.Id,
             ProfessorId = _professor!.Id,
             Periodo = _periodo!,

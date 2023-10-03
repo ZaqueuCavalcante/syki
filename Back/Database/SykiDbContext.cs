@@ -10,6 +10,7 @@ public class SykiDbContext : DbContext
     public DbSet<Campus> Campi { get; set; }
     public DbSet<Curso> Cursos { get; set; }
     public DbSet<Grade> Grades { get; set; }
+    public DbSet<GradeDisciplina> GradesDisciplinas { get; set; }
     public DbSet<Disciplina> Disciplinas { get; set; }
 
     public DbSet<Oferta> Ofertas { get; set; }

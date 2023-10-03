@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using static Syki.Configs.AuthorizationConfigs;
+using Microsoft.IdentityModel.Protocols;
 
 namespace Syki.Controllers;
 
@@ -44,14 +45,33 @@ public class OfertasController : ControllerBase
     }
 
     [HttpGet("")]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] Guid? disciplinaId)
     {
-        var ofertas = await _ctx.Ofertas
-            .Include(x => x.Campus)
-            .Include(x => x.Curso)
-            .Include(x => x.Grade)
-            .Where(c => c.FaculdadeId == User.Facul())
-            .ToListAsync();
+        var ofertas = new List<Oferta>();
+
+        if (disciplinaId != null)
+        {
+            var grades = await _ctx.GradesDisciplinas
+                .Where(gd => gd.DisciplinaId == disciplinaId)
+                .Select(gd => gd.GradeId)
+                .ToListAsync();
+
+            ofertas = await _ctx.Ofertas
+                .Include(x => x.Campus)
+                .Include(x => x.Curso)
+                .Include(x => x.Grade)
+                .Where(c => c.FaculdadeId == User.Facul() && grades.Contains(c.GradeId))
+                .ToListAsync();
+        }
+        else
+        {
+            ofertas = await _ctx.Ofertas
+                .Include(x => x.Campus)
+                .Include(x => x.Curso)
+                .Include(x => x.Grade)
+                .Where(c => c.FaculdadeId == User.Facul())
+                .ToListAsync();
+        }
 
         return Ok(ofertas.ConvertAll(o => o.ToOut()));
     }

@@ -127,29 +127,28 @@ public static class DbSeed
 
     public static List<Periodo> Periodos = new()
     {
-        new Periodo { Id = "2019.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2019, 02, 01), End = new DateOnly(2019, 06, 01) },
-        new Periodo { Id = "2019.2", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2019, 07, 01), End = new DateOnly(2019, 12, 01) },
-        new Periodo { Id = "2020.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2020, 02, 01), End = new DateOnly(2020, 06, 01) },
-        new Periodo { Id = "2020.2", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2020, 07, 01), End = new DateOnly(2020, 12, 01) },
-        new Periodo { Id = "2021.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2021, 02, 01), End = new DateOnly(2021, 06, 01) },
-        new Periodo { Id = "2021.2", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2021, 07, 01), End = new DateOnly(2021, 12, 01) },
         new Periodo { Id = "2022.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2022, 02, 01), End = new DateOnly(2022, 06, 01) },
         new Periodo { Id = "2022.2", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2022, 07, 01), End = new DateOnly(2022, 12, 01) },
         new Periodo { Id = "2023.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) },
         new Periodo { Id = "2023.2", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) },
+        new Periodo { Id = "2024.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2024, 02, 01), End = new DateOnly(2024, 06, 01) },
     };
 
     public static List<Professor> Professores = new()
     {
-        new Professor { Id = Guid.NewGuid(), FaculdadeId = NovaRoma.Id, Nome = "Conde Bregoso", },
+        new Professor { Id = Guid.NewGuid(), FaculdadeId = NovaRoma.Id, Nome = "Richard Feynman", },
+        new Professor { Id = Guid.NewGuid(), FaculdadeId = NovaRoma.Id, Nome = "Robert Oppenheimer", },
         new Professor { Id = Guid.NewGuid(), FaculdadeId = NovaRoma.Id, Nome = "Reginaldo Rossi", },
         new Professor { Id = Guid.NewGuid(), FaculdadeId = NovaRoma.Id, Nome = "Chico Science", },
     };
 
     public static List<Aluno> Alunos = new()
     {
+        new Aluno(NovaRoma.Id, "Marieli Lemes"),
+        new Aluno(NovaRoma.Id, "Bianca Rios"),
         new Aluno(NovaRoma.Id, "Ednaldo Pereira"),
         new Aluno(NovaRoma.Id, "Manoel Gomes"),
-        new Aluno(NovaRoma.Id, "Zezo"),
+        new Aluno(NovaRoma.Id, "Zezo Potiguar"),
+        new Aluno(NovaRoma.Id, "Carlos Alberto"),
     };
 }

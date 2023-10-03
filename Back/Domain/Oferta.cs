@@ -28,6 +28,7 @@ public class Oferta
             Id = Id,
             Campus = Campus.Nome,
             Curso = Curso.Nome,
+            GradeId = Grade.Id,
             Grade = Grade.Nome,
             Periodo = Periodo,
             Turno = Turno,

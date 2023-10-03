@@ -114,7 +114,7 @@
     async Task HandleSelectOferta(OfertaOut newValue)
     {
         _oferta = newValue;
-        var id = _oferta!.Id;
+        var id = _oferta!.GradeId.ToString();
         Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>($"/grades/{id}/disciplinas") ?? new();
     }
 

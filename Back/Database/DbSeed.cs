@@ -26,91 +26,91 @@ public static class DbSeed
             new Curso("Engenharia de Produção", Dtos.TipoDeCurso.Graduacao),
             new Curso("Pedagogia", Dtos.TipoDeCurso.PosGraduacao),
         },
-        // Disciplinas = new()
-        // {
-        //     new Disciplina { Nome = "Matemática Discreta", CargaHoraria = 55 },  // 001
-        //     new Disciplina { Nome = "Introdução ao Desenvolvimento Web", CargaHoraria = 40 },
-        //     new Disciplina { Nome = "Design de Interação Humano-Máquina", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Introdução à Redes de Computadores", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Pensamento Computacional e Algoritmos", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Projeto Integrador I: Concepção e Prototipação", CargaHoraria = 25 },
-        //     //
-        //     new Disciplina { Nome = "Banco de Dados", CargaHoraria = 60 },  // 007
-        //     new Disciplina { Nome = "Estrutura de Dados", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Informática e Sociedade", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Programação Orientada a Objetos", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Projeto Integrador II: Modelagem de Banco de Dados", CargaHoraria = 30 },
-        //     new Disciplina { Nome = "Arquitetura de Computadores e Sistemas Operacionais", CargaHoraria = 60 },
-        //     //
-        //     new Disciplina { Nome = "Estatística Aplicada", CargaHoraria = 60 },  // 013
-        //     new Disciplina { Nome = "Arquitetura de Software", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Análise e Projeto de Software", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Computação em Nuvem e Web Services", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Configuração e Manutenção de Software", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Projeto Integrador III: Desenvolvimento Full Stack", CargaHoraria = 30 },
-        //     //
-        //     new Disciplina { Nome = "Sistemas Distribuídos", CargaHoraria = 60 },  // 019
-        //     new Disciplina { Nome = "Inovação e Empreendedorismo", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Análise e Visualização de Dados", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Desenvolvimentos de Aplicações Móveis", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Gestão de Projetos e Governança de TI", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Projeto Integrador IV: Aplicações Móveis", CargaHoraria = 35 },
-        //     //
-        //     new Disciplina { Nome = "Libras", CargaHoraria = 60 },  // 25
-        //     new Disciplina { Nome = "Sistemas Embarcados", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Big Data e Data Science", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Inteligência Artificial", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Segurança da Informação", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Testes e Verificação de Software", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Projeto Integrador V: Sistemas Inteligentes", CargaHoraria = 30 },
-        //     //
-        //     //
-        //     new Disciplina { Nome = "Direito e Economia", CargaHoraria = 60 },  // 032
-        //     new Disciplina { Nome = "Introdução ao Direito", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "História das Instituições Jurídicas", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Teoria do Estado, Política e Direito", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Sociologia Jurídica", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Antropologia Jurídica", CargaHoraria = 60 },
-        //     //
-        //     new Disciplina { Nome = "Direito Civil I (parte geral)", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Constitucional", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Financeiro", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Penal I (parte geral)", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Filosofia Geral e Jurídica", CargaHoraria = 60 },
-        //     //
-        //     new Disciplina { Nome = "Direito Civil II (obrigações e contratos)", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Administrativo", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Penal II (teoria da pena)", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Internacional Público", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Teoria Geral do Processo", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Hermenêutica Jurídica", CargaHoraria = 60 },
-        //     //
-        //     new Disciplina { Nome = "Direito Civil III (contratos em espécie)", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Civil IV (direitos reais)", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Processual Constitucional", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Processual III (crimes em espécie)", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Processual Civil I", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Metodologia da Pesquisa", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Estágio I - Laboratório de Prática Jurídica I", CargaHoraria = 60 },
-        //     //
-        //     new Disciplina { Nome = "Direito Civil V", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Empresarial I", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito do Trabalho I", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Processual Penal I", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Processual Civil II", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Estágio II - Laboratório de Prática Jurídica II", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Estágio II - Serviço de Assistência Judiciária I", CargaHoraria = 60 },
-        //     //
-        //     new Disciplina { Nome = "Direito Empresarial II", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Tributário", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Internacional Privado", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito Processual Penal II", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Direito do Trabalho II", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Ética (geral e jurídica)", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Estágio III - Serviço de Assistência Judiciária II", CargaHoraria = 60 },
-        //     new Disciplina { Nome = "Monografia Final", CargaHoraria = 60 },
-        //     //
-        // },
+        Disciplinas = new()
+        {
+            new Disciplina("Matemática Discreta", 55),  // 001
+            new Disciplina("Introdução ao Desenvolvimento Web", 40),
+            new Disciplina("Design de Interação Humano-Máquina", 60),
+            new Disciplina("Introdução à Redes de Computadores", 60),
+            new Disciplina("Pensamento Computacional e Algoritmos", 60),
+            new Disciplina("Projeto Integrador I: Concepção e Prototipação", 25),
+            //
+            new Disciplina("Banco de Dados", 60),  // 007
+            new Disciplina("Estrutura de Dados", 60),
+            new Disciplina("Informática e Sociedade", 60),
+            new Disciplina("Programação Orientada a Objetos", 60),
+            new Disciplina("Projeto Integrador II: Modelagem de Banco de Dados", 30),
+            new Disciplina("Arquitetura de Computadores e Sistemas Operacionais", 60),
+            //
+            new Disciplina("Estatística Aplicada", 60),  // 013
+            new Disciplina("Arquitetura de Software", 60),
+            new Disciplina("Análise e Projeto de Software", 60),
+            new Disciplina("Computação em Nuvem e Web Services", 60),
+            new Disciplina("Configuração e Manutenção de Software", 60),
+            new Disciplina("Projeto Integrador III: Desenvolvimento Full Stack", 30),
+            //
+            new Disciplina("Sistemas Distribuídos", 60),  // 019
+            new Disciplina("Inovação e Empreendedorismo", 60),
+            new Disciplina("Análise e Visualização de Dados", 60),
+            new Disciplina("Desenvolvimentos de Aplicações Móveis", 60),
+            new Disciplina("Gestão de Projetos e Governança de TI", 60),
+            new Disciplina("Projeto Integrador IV: Aplicações Móveis", 35),
+            //
+            new Disciplina("Libras", 60),  // 25
+            new Disciplina("Sistemas Embarcados", 60),
+            new Disciplina("Big Data e Data Science", 60),
+            new Disciplina("Inteligência Artificial", 60),
+            new Disciplina("Segurança da Informação", 60),
+            new Disciplina("Testes e Verificação de Software", 60),
+            new Disciplina("Projeto Integrador V: Sistemas Inteligentes", 30),
+            //
+            //
+            new Disciplina("Direito e Economia", 60),  // 032
+            new Disciplina("Introdução ao Direito", 60),
+            new Disciplina("História das Instituições Jurídicas", 60),
+            new Disciplina("Teoria do Estado, Política e Direito", 60),
+            new Disciplina("Sociologia Jurídica", 60),
+            new Disciplina("Antropologia Jurídica", 60),
+            //
+            new Disciplina("Direito Civil I (parte geral)", 60),
+            new Disciplina("Direito Constitucional", 60),
+            new Disciplina("Direito Financeiro", 60),
+            new Disciplina("Direito Penal I (parte geral)", 60),
+            new Disciplina("Filosofia Geral e Jurídica", 60),
+            //
+            new Disciplina("Direito Civil II (obrigações e contratos)", 60),
+            new Disciplina("Direito Administrativo", 60),
+            new Disciplina("Direito Penal II (teoria da pena)", 60),
+            new Disciplina("Direito Internacional Público", 60),
+            new Disciplina("Teoria Geral do Processo", 60),
+            new Disciplina("Hermenêutica Jurídica", 60),
+            //
+            new Disciplina("Direito Civil III (contratos em espécie)", 60),
+            new Disciplina("Direito Civil IV (direitos reais)", 60),
+            new Disciplina("Direito Processual Constitucional", 60),
+            new Disciplina("Direito Processual III (crimes em espécie)", 60),
+            new Disciplina("Direito Processual Civil I", 60),
+            new Disciplina("Metodologia da Pesquisa", 60),
+            new Disciplina("Estágio I - Laboratório de Prática Jurídica I", 60),
+            //
+            new Disciplina("Direito Civil V", 60),
+            new Disciplina("Direito Empresarial I", 60),
+            new Disciplina("Direito do Trabalho I", 60),
+            new Disciplina("Direito Processual Penal I", 60),
+            new Disciplina("Direito Processual Civil II", 60),
+            new Disciplina("Estágio II - Laboratório de Prática Jurídica II", 60),
+            new Disciplina("Estágio II - Serviço de Assistência Judiciária I", 60),
+            //
+            new Disciplina("Direito Empresarial II", 60),
+            new Disciplina("Direito Tributário", 60),
+            new Disciplina("Direito Internacional Privado", 60),
+            new Disciplina("Direito Processual Penal II", 60),
+            new Disciplina("Direito do Trabalho II", 60),
+            new Disciplina("Ética (geral e jurídica)", 60),
+            new Disciplina("Estágio III - Serviço de Assistência Judiciária II", 60),
+            new Disciplina("Monografia Final", 60),
+            //
+        },
     };
 
     public static List<Faculdade> Faculdades = new()

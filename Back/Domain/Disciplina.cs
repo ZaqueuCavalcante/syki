@@ -16,6 +16,16 @@ public class Disciplina
 
     public Disciplina(
         string nome,
+        ushort cargaHoraria
+    ) {
+        Id = Guid.NewGuid();
+        Nome = nome;
+        CargaHoraria = cargaHoraria;
+        Vinculos = new();
+    }
+
+    public Disciplina(
+        string nome,
         Guid faculdadeId,
         ushort cargaHoraria
     ) {

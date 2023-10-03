@@ -25,18 +25,14 @@ public class SykiDbContext : DbContext
     {
         Database.EnsureDeleted();
         Database.EnsureCreated();
+
+        DbSeed.NovaRoma.Cursos[1].Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList();
+
+        var disciplinasDireito = DbSeed.NovaRoma.Disciplinas.Skip(31).Take(39).ToList();
+        disciplinasDireito.Add(DbSeed.NovaRoma.Disciplinas.First(x => x.Nome == "Informática e Sociedade"));
+        DbSeed.NovaRoma.Cursos[4].Disciplinas = disciplinasDireito;
+
         Faculdades.Add(DbSeed.NovaRoma);
-        SaveChanges();
-        // var novaRoma = Faculdades.First(x => x.Id == DbSeed.NovaRoma.Id);
-
-        // var disciplinasDireito = DbSeed.NovaRoma.Disciplinas.Skip(31).Take(39).ToList();
-        // disciplinasDireito.Add(DbSeed.NovaRoma.Disciplinas.First(x => x.Nome == "Informática e Sociedade"));
-
-        // var ads = Cursos.First(c => c.Id == 2);
-        // ads.Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList();
-
-        // var direito = Cursos.First(c => c.Id == 5);
-        // direito.Disciplinas = disciplinasDireito;
 
         AddRange(DbSeed.Periodos);
         AddRange(DbSeed.Professores);

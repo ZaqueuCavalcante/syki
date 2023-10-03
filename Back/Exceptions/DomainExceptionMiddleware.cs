@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Syki.Exceptions;
+namespace Syki.Back.Exceptions;
 
 public class DomainExceptionMiddleware
 {

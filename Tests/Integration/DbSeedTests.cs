@@ -1,4 +1,4 @@
-using Syki.Database;
+using Syki.Back.Database;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;

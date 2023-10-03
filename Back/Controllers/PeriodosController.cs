@@ -1,11 +1,11 @@
-using Syki.Database;
-using Syki.Extensions;
+using Syki.Back.Database;
+using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using static Syki.Configs.AuthorizationConfigs;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
-namespace Syki.Controllers;
+namespace Syki.Back.Controllers;
 
 [Authorize(Roles = Academico)]
 [ApiController, Route("[controller]")]

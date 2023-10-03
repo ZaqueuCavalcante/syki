@@ -1,7 +1,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Syki.Extensions;
+namespace Syki.Back.Extensions;
 
 public static class ApiExtensions
 {

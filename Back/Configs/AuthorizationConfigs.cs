@@ -1,4 +1,4 @@
-namespace Syki.Configs;
+namespace Syki.Back.Configs;
 
 public static class AuthorizationConfigs
 {

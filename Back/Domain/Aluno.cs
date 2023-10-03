@@ -1,8 +1,8 @@
 using Syki.Dtos;
-using Syki.Exceptions;
-using Syki.Extensions;
+using Syki.Back.Exceptions;
+using Syki.Back.Extensions;
 
-namespace Syki.Domain;
+namespace Syki.Back.Domain;
 
 public class Aluno
 {

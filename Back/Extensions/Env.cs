@@ -1,4 +1,4 @@
-namespace Syki.Extensions;
+namespace Syki.Back.Extensions;
 
 public static class Env
 {

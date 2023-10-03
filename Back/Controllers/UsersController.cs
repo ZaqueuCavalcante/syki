@@ -1,13 +1,13 @@
 using Syki.Dtos;
 using System.Text;
-using Syki.Database;
-using Syki.Settings;
+using Syki.Back.Database;
+using Syki.Back.Settings;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace Syki.Controllers;
+namespace Syki.Back.Controllers;
 
 [ApiController, Route("[controller]")]
 public class UsersController : ControllerBase

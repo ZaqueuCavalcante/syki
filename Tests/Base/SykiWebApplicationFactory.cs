@@ -1,4 +1,5 @@
-using Syki.Extensions;
+using Syki.Back;
+using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;

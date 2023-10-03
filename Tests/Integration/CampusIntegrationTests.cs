@@ -1,7 +1,7 @@
 using System.Net;
 using Syki.Dtos;
 using Syki.Tests.Base;
-using Syki.Extensions;
+using Syki.Back.Extensions;
 using NUnit.Framework;
 using FluentAssertions;
 

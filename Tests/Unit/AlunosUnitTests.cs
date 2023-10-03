@@ -1,5 +1,5 @@
-using Syki.Domain;
-using Syki.Exceptions;
+using Syki.Back.Domain;
+using Syki.Back.Exceptions;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;

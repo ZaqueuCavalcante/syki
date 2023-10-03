@@ -1,4 +1,4 @@
-namespace Syki.Exceptions;
+namespace Syki.Back.Exceptions;
 
 public class DomainException : Exception
 {

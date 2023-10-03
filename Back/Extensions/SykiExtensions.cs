@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace Syki.Extensions;
+namespace Syki.Back.Extensions;
 
 public static class SykiExtensions
 {

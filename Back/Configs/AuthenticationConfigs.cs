@@ -1,9 +1,9 @@
 using System.Text;
-using Syki.Settings;
+using Syki.Back.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace Syki.Configs;
+namespace Syki.Back.Configs;
 
 public static class AuthenticationConfigs
 {

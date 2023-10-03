@@ -1,6 +1,6 @@
-using Syki.Domain;
+using Syki.Back.Domain;
 
-namespace Syki.Database;
+namespace Syki.Back.Database;
 
 public static class DbSeed
 {

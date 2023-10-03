@@ -1,12 +1,12 @@
 using Syki.Dtos;
-using Syki.Domain;
-using Syki.Database;
+using Syki.Back.Domain;
+using Syki.Back.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using static Syki.Configs.AuthorizationConfigs;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
-namespace Syki.Controllers;
+namespace Syki.Back.Controllers;
 
 [Authorize(Roles = Adm)]
 [ApiController, Route("[controller]")]

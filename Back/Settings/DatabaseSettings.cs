@@ -1,4 +1,4 @@
-namespace Syki.Settings;
+namespace Syki.Back.Settings;
 
 public class DatabaseSettings
 {

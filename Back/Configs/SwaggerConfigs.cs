@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.OpenApi.Models;
 
-namespace Syki.Configs;
+namespace Syki.Back.Configs;
 
 public static class SwaggerConfigs
 {

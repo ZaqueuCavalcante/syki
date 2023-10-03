@@ -1,8 +1,8 @@
-using Syki.Configs;
-using Syki.Database;
-using Syki.Settings;
+using Syki.Back.Configs;
+using Syki.Back.Database;
+using Syki.Back.Settings;
 
-namespace Syki;
+namespace Syki.Back;
 
 public class Startup
 {

@@ -1,8 +1,8 @@
 using Syki.Dtos;
 using System.Net;
-using Syki.Database;
+using Syki.Back.Database;
 using NUnit.Framework;
-using Syki.Extensions;
+using Syki.Back.Extensions;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

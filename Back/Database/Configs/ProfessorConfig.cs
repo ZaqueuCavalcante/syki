@@ -1,8 +1,8 @@
-using Syki.Domain;
+using Syki.Back.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Syki.Database;
+namespace Syki.Back.Database;
 
 public class ProfessorConfig : IEntityTypeConfiguration<Professor>
 {

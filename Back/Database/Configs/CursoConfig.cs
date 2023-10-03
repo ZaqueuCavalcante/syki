@@ -1,10 +1,10 @@
 using Syki.Dtos;
-using Syki.Domain;
+using Syki.Back.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Syki.Database;
+namespace Syki.Back.Database;
 
 public class CursoConfig : IEntityTypeConfiguration<Curso>
 {

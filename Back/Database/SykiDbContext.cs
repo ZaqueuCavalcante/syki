@@ -1,8 +1,8 @@
-using Syki.Domain;
-using Syki.Configs;
+using Syki.Back.Domain;
+using Syki.Back.Configs;
 using Microsoft.EntityFrameworkCore;
 
-namespace Syki.Database;
+namespace Syki.Back.Database;
 
 public class SykiDbContext : DbContext
 {

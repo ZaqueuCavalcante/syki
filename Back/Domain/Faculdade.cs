@@ -1,4 +1,4 @@
-namespace Syki.Domain;
+namespace Syki.Back.Domain;
 
 public class Faculdade
 {

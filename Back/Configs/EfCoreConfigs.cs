@@ -1,8 +1,8 @@
-using Syki.Database;
-using Syki.Settings;
+using Syki.Back.Database;
+using Syki.Back.Settings;
 using Microsoft.EntityFrameworkCore;
 
-namespace Syki.Configs;
+namespace Syki.Back.Configs;
 
 public static class EfCoreConfigs
 {

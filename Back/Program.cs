@@ -1,4 +1,4 @@
-namespace Syki;
+namespace Syki.Back;
 
 public static class Program
 {

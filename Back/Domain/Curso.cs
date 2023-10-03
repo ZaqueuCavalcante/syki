@@ -1,6 +1,6 @@
 using Syki.Dtos;
 
-namespace Syki.Domain;
+namespace Syki.Back.Domain;
 
 public class Curso
 {

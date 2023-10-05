@@ -2,6 +2,7 @@ using Front;
 using MudBlazor;
 using MudBlazor.Services;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -15,6 +16,9 @@ httpClient.DefaultRequestHeaders.Add(
 );
 
 builder.Services.AddScoped(sp => httpClient);
+
+builder.Services.AddScoped<AuthenticationStateProvider>();
+builder.Services.AddAuthorizationCore();
 
 builder.Services.AddMudServices(config =>
 {

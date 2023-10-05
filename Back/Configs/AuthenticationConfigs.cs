@@ -41,6 +41,7 @@ public static class AuthenticationConfigs
         services.AddAuthentication(options =>
         {
             options.DefaultScheme = BearerScheme;
+            options.DefaultSignInScheme = BearerScheme;
             options.DefaultChallengeScheme = BearerScheme;
             options.DefaultAuthenticateScheme = BearerScheme;
         })

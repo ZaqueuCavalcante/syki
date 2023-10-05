@@ -1,9 +1,9 @@
 using Syki.Dtos;
 using System.Net;
 using Syki.Tests.Base;
-using Syki.Back.Extensions;
 using NUnit.Framework;
 using FluentAssertions;
+using Syki.Back.Extensions;
 
 namespace Syki.Tests.Integration;
 

@@ -1,7 +1,7 @@
-using Syki.Back.Database;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
+using Syki.Back.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

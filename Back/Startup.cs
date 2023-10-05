@@ -20,6 +20,8 @@ public class Startup
 
         services.AddEfCoreConfigs();
 
+        services.AddIdentityConfigs();
+
         services.AddSwaggerConfigs();
 
         services.AddCorsConfigs();

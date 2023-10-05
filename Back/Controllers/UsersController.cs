@@ -28,15 +28,15 @@ public class UsersController : ControllerBase
     {
         await Task.Delay(1);
 
-        var user = _ctx.Users.First(u => u.Email == body.Email);
+        var user = _ctx.SykiUsers.First(u => u.Email == body.Email);
 
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
             new Claim("faculdade", user.FaculdadeId.ToString()),
-            new Claim("role", user.Role),
+            //new Claim("role", user.Role),
         };
 
         var identityClaims = new ClaimsIdentity();

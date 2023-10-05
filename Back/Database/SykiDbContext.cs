@@ -1,10 +1,11 @@
 using Syki.Back.Domain;
-using Syki.Back.Configs;
+using Syki.Back.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Syki.Back.Database;
 
-public class SykiDbContext : DbContext
+public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
 {
     public DbSet<Faculdade> Faculdades { get; set; }
     public DbSet<Campus> Campi { get; set; }
@@ -22,6 +23,25 @@ public class SykiDbContext : DbContext
 
     public DbSet<CursoDisciplina> CursosDisciplinas { get; set; }
 
+    public SykiDbContext(DbContextOptions<SykiDbContext> options) : base(options) { }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        builder.HasDefaultSchema("syki");
+
+        builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+
+        foreach (var entity in builder.Model.GetEntityTypes())
+        {
+            entity.SetTableName(entity.GetTableName()!.ToSnakeCase().Replace("asp_net_", ""));
+        }
+    }
+
+    // SEED DATA
     public void SeedStartupData()
     {
         Database.EnsureDeleted();
@@ -42,24 +62,11 @@ public class SykiDbContext : DbContext
         SaveChanges();
     }
 
-    public List<User> Users = new()
+    public List<SykiUser> SykiUsers = new()
     {
-        new User { Id = Guid.NewGuid(), Email = "adm@syki.com", Role = AuthorizationConfigs.Adm },
-        new User { Id = Guid.NewGuid(), Email = "aluno@novaroma.com", FaculdadeId = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432"), Role = AuthorizationConfigs.Aluno },
-        new User { Id = Guid.NewGuid(), Email = "professor@novaroma.com", FaculdadeId = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432"), Role = AuthorizationConfigs.Professor },
-        new User { Id = Guid.NewGuid(), Email = "academico@novaroma.com", FaculdadeId = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432"), Role = AuthorizationConfigs.Academico },
+        new SykiUser { Id = Guid.NewGuid(), Email = "adm@syki.com", },
+        new SykiUser { Id = Guid.NewGuid(), Email = "aluno@novaroma.com", FaculdadeId = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432"), },
+        new SykiUser { Id = Guid.NewGuid(), Email = "professor@novaroma.com", FaculdadeId = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432"), },
+        new SykiUser { Id = Guid.NewGuid(), Email = "academico@novaroma.com", FaculdadeId = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432"), },
     };
-
-    public SykiDbContext(DbContextOptions<SykiDbContext> options) : base(options) { }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
-
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
-
-        builder.HasDefaultSchema("syki");
-
-        builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-    }
 }

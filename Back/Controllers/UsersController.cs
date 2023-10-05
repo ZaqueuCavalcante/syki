@@ -1,66 +1,52 @@
 using Syki.Dtos;
-using System.Text;
-using Syki.Back.Database;
-using Syki.Back.Settings;
-using System.Security.Claims;
+using Syki.Back.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using SykiUser = Syki.Back.Domain.SykiUser;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.Controllers;
 
 [ApiController, Route("[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly SykiDbContext _ctx;
-    private readonly AuthSettings _settings;
+    private readonly AuthService _authService;
+    private readonly SignInManager<SykiUser> _signInManager;
 
     public UsersController(
-        SykiDbContext ctx,
-        AuthSettings settings
+        AuthService authService,
+        SignInManager<SykiUser> signInManager
     ) {
-        _ctx = ctx;
-        _settings = settings;
+        _authService = authService;
+        _signInManager = signInManager;
+    }
+
+    [HttpPost("register")]
+    [Authorize(Roles = Adm)]
+    public async Task<IActionResult> Register([FromBody] RegisterIn body)
+    {
+        await _authService.Register(body);
+
+        return Ok();
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginIn body)
     {
-        await Task.Delay(1);
-
-        var user = _ctx.SykiUsers.First(u => u.Email == body.Email);
-
-        var claims = new List<Claim>
-        {
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-            new Claim("faculdade", user.FaculdadeId.ToString()),
-            //new Claim("role", user.Role),
-        };
-
-        var identityClaims = new ClaimsIdentity();
-        identityClaims.AddClaims(claims);
-
-        var key = Encoding.ASCII.GetBytes(_settings.SecurityKey);
-        var expirationTime = _settings.ExpirationTimeInMinutes;
-        var signingCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(key),
-            SecurityAlgorithms.HmacSha256Signature
+        var result = await _signInManager.PasswordSignInAsync(
+            userName: body.Email,
+            password: body.Password,
+            isPersistent: false,
+            lockoutOnFailure: false
         );
 
-        var tokenDescriptor = new SecurityTokenDescriptor
+        if (!result.Succeeded)
         {
-            Issuer = _settings.Issuer,
-            Audience = _settings.Audience,
-            Expires = DateTime.UtcNow.AddMinutes(expirationTime),
-            SigningCredentials = signingCredentials,
-            Subject = identityClaims
-        };
+            return Unauthorized("Login failed.");
+        }
 
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        var jwt = tokenHandler.WriteToken(token);
+        var jwt = await _authService.GenerateAccessToken(body.Email);
 
         return Ok(new LoginOut { AccessToken = jwt });
     }

@@ -1,5 +1,6 @@
 using Syki.Back.Configs;
 using Syki.Back.Database;
+using Syki.Back.Services;
 using Syki.Back.Settings;
 
 namespace Syki.Back;
@@ -11,6 +12,9 @@ public class Startup
         services.AddSingleton<AuthSettings>();
         services.AddSingleton<DatabaseSettings>();
 
+        services.AddScoped<AuthService>();
+
+        services.AddIdentityConfigs();
         services.AddAuthenticationConfigs();
         services.AddAuthorizationConfigs();
 
@@ -19,8 +23,6 @@ public class Startup
         services.AddRouting(options => options.LowercaseUrls = true);
 
         services.AddEfCoreConfigs();
-
-        services.AddIdentityConfigs();
 
         services.AddSwaggerConfigs();
 

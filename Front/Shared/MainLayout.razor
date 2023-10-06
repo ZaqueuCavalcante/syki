@@ -8,8 +8,8 @@
     <MudAppBar Elevation="1" Dense="true">
         <MudText Typo="Typo.h5" Class="ml-3">Syki</MudText>
         <MudSpacer />
+        <MudText>@_userName</MudText>
         <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Href="/" Target="_self" />
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="/" Target="_self" />
         <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Href="/" Target="_self" />
     </MudAppBar>
     <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
@@ -22,6 +22,23 @@
     </MudMainContent>
 </MudLayout>
 
+@using System.Security.Claims
+
 @code {
     public AppState AppState = new AppState();
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; }
+
+    private string _userName = "Do login";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthState;
+        var claim = state.User.FindFirst("name");
+        if (claim != null)
+        {
+            _userName = claim.Value;
+        }
+    }
 }

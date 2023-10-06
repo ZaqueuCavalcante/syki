@@ -2,6 +2,35 @@
 
 <PageTitle>Syki</PageTitle>
 
-<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    <h1>Index</h1>
+<MudContainer Class="mt-16 mb-8" MaxWidth="MaxWidth.Small">
+    <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
+        <MudGrid>
+            <MudItem xs="12">
+                <MudCard>
+                    <MudCardContent>
+                        <MudTextField Label="Email" Class="mt-3" @bind-Value="_model.Email" For="@(() => _model.Email)"/>
+                        <MudTextField Label="Password" Class="mt-3" @bind-Value="_model.Password" For="@(() => _model.Password)" InputType="InputType.Password"/>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Login</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
 </MudContainer>
+
+@using Syki.Dtos;
+@using Syki.Front.Auth;
+
+@code {
+    [Inject]
+    public AuthService AuthService { get; set; }
+
+    LoginIn _model = new();
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        await AuthService.Login(_model.Email, _model.Password);
+    }
+}

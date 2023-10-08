@@ -1,0 +1,18 @@
+@inherits Bunit.TestContext
+
+@code
+{
+    [Test]
+    public void Financeiro_component_should_renders_correctly()
+    {
+        // Arrange / Act
+        var cut = Render(@<Financeiro />);
+
+        // Assert
+        cut.MarkupMatches(
+            @<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
+                <h1>Financeiro</h1>
+            </MudContainer>
+        );
+    }
+}

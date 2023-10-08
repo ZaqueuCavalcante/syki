@@ -1,5 +1,4 @@
 using Syki.Back.Configs;
-using Syki.Back.Database;
 using Syki.Back.Services;
 using Syki.Back.Settings;
 
@@ -29,10 +28,8 @@ public class Startup
         services.AddCorsConfigs();
     }
 
-    public static void Configure(IApplicationBuilder app, SykiDbContext ctx)
+    public static void Configure(IApplicationBuilder app)
     {
-        ctx.SeedStartupData();
-
         app.UseCors();
 
         app.UseRouting();

@@ -4,6 +4,7 @@ using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
 using Syki.Back.Extensions;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
@@ -14,7 +15,7 @@ public class FauldadeIntegrationTests : ApiTestBase
     public async Task Deve_criar_uma_nova_faculdade()
     {
         // Arrange
-        await Login("adm@syki.com");
+        await Login("adm@syki.com", "Adm@123");
 
         var body = new FaculdadeIn { Nome = "Nova Roma" };
 
@@ -29,7 +30,7 @@ public class FauldadeIntegrationTests : ApiTestBase
     public async Task Deve_criar_varias_faculdades()
     {
         // Arrange
-        await Login("adm@syki.com");
+        await Login("adm@syki.com", "Adm@123");
 
         // Act
         await PostAsync("/faculdades", new FaculdadeIn { Nome = "Nova Roma" });
@@ -57,9 +58,22 @@ public class FauldadeIntegrationTests : ApiTestBase
     public async Task Nao_deve_criar_uma_nova_faculdade_quando_o_usuario_nao_tem_permissao()
     {
         // Arrange
-        await Login("academico@novaroma.com");
+        await Login("adm@syki.com", "Adm@123");
 
-        var body = new FaculdadeIn { Nome = "Nova Roma" };
+        var faculdade = await CreateFaculdade("Nova Roma");
+
+        var user = new RegisterIn
+        {
+            Faculdade = faculdade.Id,
+            Name = "Acadêmico - Nova Roma",
+            Email = "academico@novaroma.com",
+            Password = "Academico@123",
+            Role = Academico,
+        };
+        await RegisterUser(user);
+        await Login(user.Email, user.Password);
+
+        var body = new FaculdadeIn { Nome = "UFPE" };
 
         // Act
         var response = await _client.PostAsync("/faculdades", body.ToStringContent());

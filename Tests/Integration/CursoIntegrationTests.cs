@@ -4,6 +4,7 @@ using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
 using Syki.Back.Extensions;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
@@ -14,9 +15,19 @@ public class CursoIntegrationTests : ApiTestBase
     public async Task Deve_criar_um_novo_curso()
     {
         // Arrange
-        await CreateFaculdade("Nova Roma");
+        await Login("adm@syki.com", "Adm@123");
+        var faculdade = await CreateFaculdade("Nova Roma");
 
-        await Login("academico@novaroma.com");
+        var user = new RegisterIn
+        {
+            Faculdade = faculdade.Id,
+            Name = "Acadêmico - Nova Roma",
+            Email = "academico@novaroma.com",
+            Password = "Academico@123",
+            Role = Academico,
+        };
+        await RegisterUser(user);
+        await Login(user.Email, user.Password);
 
         var body = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" };
 
@@ -31,9 +42,19 @@ public class CursoIntegrationTests : ApiTestBase
     public async Task Deve_criar_varios_cursos()
     {
         // Arrange
-        await CreateFaculdade("Nova Roma");
+        await Login("adm@syki.com", "Adm@123");
+        var faculdade = await CreateFaculdade("Nova Roma");
 
-        await Login("academico@novaroma.com");
+        var user = new RegisterIn
+        {
+            Faculdade = faculdade.Id,
+            Name = "Acadêmico - Nova Roma",
+            Email = "academico@novaroma.com",
+            Password = "Academico@123",
+            Role = Academico,
+        };
+        await RegisterUser(user);
+        await Login(user.Email, user.Password);
 
         // Act
         await PostAsync("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
@@ -61,7 +82,19 @@ public class CursoIntegrationTests : ApiTestBase
     public async Task Nao_deve_criar_um_novo_curso_quando_o_usuario_nao_tem_permissao()
     {
         // Arrange
-        await Login("professor@novaroma.com");
+        await Login("adm@syki.com", "Adm@123");
+        var faculdade = await CreateFaculdade("Nova Roma");
+
+        var user = new RegisterIn
+        {
+            Faculdade = faculdade.Id,
+            Name = "Professor - Nova Roma",
+            Email = "professor@novaroma.com",
+            Password = "Professor@123",
+            Role = Professor,
+        };
+        await RegisterUser(user);
+        await Login(user.Email, user.Password);
 
         var body = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" };
 

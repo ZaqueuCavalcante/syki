@@ -1,0 +1,16 @@
+﻿@inject NavigationManager NavigationManager
+
+@code 
+{
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        Redirect();
+    }
+
+    private void Redirect()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+}

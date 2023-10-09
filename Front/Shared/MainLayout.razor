@@ -1,27 +1,51 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 <MudThemeProvider IsDarkMode="false" />
 <MudDialogProvider CloseOnEscapeKey="true" CloseButton="true"/>
 <MudSnackbarProvider/>
 
-<MudLayout>
-    <MudAppBar Elevation="1" Dense="true">
-        <MudText Typo="Typo.h5" Class="ml-3">Syki</MudText>
-        <MudSpacer />
-        <MudText>@_userName</MudText>
-        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Href="/" Target="_self" />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Href="/" Target="_self" />
-    </MudAppBar>
-    <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
-        <NavMenu />
-    </MudDrawer>
-    <MudMainContent>
-        <CascadingValue Value="@AppState">
-            @Body
-        </CascadingValue>
-    </MudMainContent>
-</MudLayout>
+<AuthorizeView>
+    <Authorized>
+        <MudLayout>
+            <MudAppBar Elevation="1" Dense="true">
+                <MudText Typo="Typo.h5" Class="ml-3">Syki</MudText>
+                <MudSpacer />
+                <MudText>@_userName</MudText>
+                <MudSpacer />
+                <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Href="/" Target="_self" />
+                <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Href="/" Target="_self" />
+                <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="Logout" />
+            </MudAppBar>
+            <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
+                <NavMenu />
+            </MudDrawer>
+            <MudMainContent>
+                <CascadingValue Value="@AppState">
+                    @Body
+                </CascadingValue>
+            </MudMainContent>
+        </MudLayout>
+    </Authorized>
+    <NotAuthorized>
+        @if (NavigationManager.Uri.ToLower().Contains("login") || NavigationManager.Uri.ToLower().Contains("register"))
+        {
+            <MudLayout>
+                <MudMainContent>
+                    <CascadingValue Value="@AppState">
+                        @Body
+                    </CascadingValue>
+                </MudMainContent>
+            </MudLayout>
+        }
+        else
+        {
+            <SykiRedirect />
+        }
+    </NotAuthorized>
+</AuthorizeView>
 
+@using Syki.Front.Auth
 @using System.Security.Claims
 
 @code {
@@ -30,15 +54,37 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
 
-    private string _userName = "Do login";
+    [Inject]
+    public AuthService AuthService { get; set; }
+
+    private string _userName = "";
 
     protected override async Task OnInitializedAsync()
     {
+        await SetUserName();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+
+        await SetUserName();
+    }
+
+    private async Task SetUserName()
+    {
         var state = await AuthState;
+
         var claim = state.User.FindFirst("name");
         if (claim != null)
         {
             _userName = claim.Value;
         }
+    }
+
+    private async Task Logout()
+    {
+        await AuthService.Logout();
+        NavigationManager.NavigateTo("/login");
     }
 }

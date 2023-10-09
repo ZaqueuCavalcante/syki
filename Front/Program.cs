@@ -23,6 +23,7 @@ builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<SykiAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<SykiAuthStateProvider>());
+
 builder.Services.AddAuthorizationCore();
 
 builder.Services.AddMudServices(config =>

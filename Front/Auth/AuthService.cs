@@ -1,4 +1,5 @@
 using Syki.Dtos;
+using Newtonsoft.Json;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
 using System.Security.Claims;
@@ -21,19 +22,24 @@ public class AuthService
         _authStateProvider = authStateProvider;
     }
 
-    public async Task Login(string email, string password)
+    public async Task<bool> Login(string email, string password)
     {
         var body = new LoginIn { Email = email, Password = password };
         var response = await _http.PostAsJsonAsync("/users/login", body);
 
         if (response.IsSuccessStatusCode)
         {
-            var jwt = (await response.DeserializeTo<LoginOut>()).AccessToken;
+            var responseAsString = await response.Content.ReadAsStringAsync();
+            var jwt = JsonConvert.DeserializeObject<LoginOut>(responseAsString)!.AccessToken;
 
             await _localStorage.SetItemAsync("AccessToken", jwt);
 
             _authStateProvider.MarkUserAsAuthenticated();
+
+            return true;
         }
+
+        return false;
     }
 
     public async Task<ClaimsPrincipal> GetUser()

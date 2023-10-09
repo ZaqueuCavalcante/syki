@@ -1,0 +1,56 @@
+﻿@page "/login"
+
+<PageTitle>Syki</PageTitle>
+
+<MudContainer Class="mt-16 mb-8" MaxWidth="MaxWidth.Small">
+    <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
+        <MudGrid>
+            <SykiLoading Loading="@_loading" />
+            <MudItem xs="12">
+                <MudCard>
+                    <MudCardContent>
+                        <MudTextField AutoFocus="true" Label="Email" Class="mt-3" @bind-Value="_model.Email" For="@(() => _model.Email)" Variant="Variant.Outlined"
+                            Required="true" RequiredError="Informe o email!"/>
+                        <MudTextField Label="Password" Class="mt-3" @bind-Value="_model.Password" For="@(() => _model.Password)" InputType="InputType.Password" Variant="Variant.Outlined"
+                            Required="true" RequiredError="Informe a senha!"/>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Login</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+</MudContainer>
+
+@using Syki.Dtos
+@using Syki.Front.Auth
+
+@inject ISnackbar Snackbar
+@inject NavigationManager NavigationManager
+
+@code {
+    [Inject]
+    public AuthService AuthService { get; set; }
+
+    private bool _loading;
+
+    LoginIn _model = new();
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        _loading = true;
+        var success = await AuthService.Login(_model.Email, _model.Password);
+
+        if (success)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            Snackbar.Add("Erro!", Severity.Error);
+        }
+
+        _loading = false;
+    }
+}

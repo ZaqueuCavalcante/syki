@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Microsoft.JSInterop;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
@@ -40,23 +39,17 @@ public class SykiAuthStateProvider : AuthenticationStateProvider
     private ClaimsPrincipal CreateClaimsPrincipalFromToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
+
         var identity = new ClaimsIdentity();
 
         if (tokenHandler.CanReadToken(token))
         {
             var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
             identity = new(jwtSecurityToken.Claims, "Bearer");
+
+            identity.AddClaim(new Claim(ClaimTypes.Role, identity.FindFirst("role")!.Value));
         }
 
         return new(identity);
-    }
-}
-
-public static class ApiExtensions
-{
-    public static async Task<T> DeserializeTo<T>(this HttpResponseMessage httpResponse)
-    {
-        var responseAsString = await httpResponse.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<T>(responseAsString)!;
     }
 }

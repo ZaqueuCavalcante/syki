@@ -1,0 +1,13 @@
+﻿@using System.Reflection
+
+@typeparam TItem
+
+@code
+{
+    [Parameter]
+    public IEnumerable<TItem> Items { get; set; } = Enumerable.Empty<TItem>();
+
+    private IEnumerable<PropertyInfo> ItemsPropInfo => typeof(TItem)
+        .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+        .Where(x => x.CanRead);
+}

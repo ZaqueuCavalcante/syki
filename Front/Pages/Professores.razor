@@ -2,42 +2,51 @@
 
 <PageTitle>Professores</PageTitle>
 
-<MudContainer Class="mt-8 mb-8">
-    <MudDataGrid Items="@ProfessoresOut" QuickFilter="@_quickFilter" Hover="true">
-        <ToolBarContent>
-            <MudText Typo="Typo.h5">Professores</MudText>
-            <MudSpacer />
-            <MudButton
-                StartIcon="@Icons.Material.Outlined.Add"
-                IconSize="Size.Large"
-                Variant="Variant.Outlined"
-                Class="border-dashed border-2 mud-border-secundary"
-                Style="height: 40px;"
-                Color="Color.Primary"
-                @onclick="OpenDialog"
-            >
-                Novo Professor
-            </MudButton>
-            <MudSpacer />
-            <MudTextField
-                Variant="Variant.Outlined"
-                @bind-Value="_searchString"
-                Placeholder="Buscar"
-                Adornment="Adornment.Start"
-                Immediate="true"
-                AdornmentIcon="@Icons.Material.Filled.Search"
-                IconSize="Size.Medium"
-                Class="mt-0"
-            />
-        </ToolBarContent>
-        <Columns>
-            <PropertyColumn Property="x => x.Id" Title="Id" />
-            <PropertyColumn Property="x => x.Nome" Title="Nome" />
-        </Columns>
-        <PagerContent>
-            <MudDataGridPager T="ProfessorOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
-        </PagerContent>
-    </MudDataGrid>
+<MudContainer>
+    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h5" Style="font-weight: bold" >Professores</MudText>
+                <MudSpacer />
+                <MudButton
+                    StartIcon="@Icons.Material.Outlined.Add"
+                    IconSize="Size.Large"
+                    Variant="Variant.Filled"
+                    Style="height: 40px;"
+                    Color="Color.Primary"
+                    @onclick="OpenDialog"
+                >
+                    Novo Professor
+                </MudButton>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_professores" QuickFilter="@_quickFilter" Hover="true">
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField
+                    Variant="Variant.Outlined"
+                    @bind-Value="_searchString"
+                    Placeholder="Busque por nome"
+                    Adornment="Adornment.Start"
+                    Immediate="true"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium"
+                    Class="mt-0"
+                />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" />
+                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="ProfessorOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
 </MudContainer>
 
 @using Syki.Dtos
@@ -46,11 +55,11 @@
 
 @code {
     private string _searchString;
-    private List<ProfessorOut> ProfessoresOut = new List<ProfessorOut>();
+    private List<ProfessorOut> _professores = new();
 
     protected override async Task OnInitializedAsync()
     {
-        ProfessoresOut = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? new();
+        _professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? new();
     }
 
     private Func<ProfessorOut, bool> _quickFilter => x =>

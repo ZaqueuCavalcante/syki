@@ -23,7 +23,7 @@
     </MudCard>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_alunos" QuickFilter="@QuickFilter" Hover="true">
+        <MudDataGrid Class="pa-4" Items="@_alunos" QuickFilter="@_quickFilter" Hover="true">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -63,7 +63,7 @@
         _alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? new();
     }
 
-    private Func<AlunoOut, bool> QuickFilter => x =>
+    private Func<AlunoOut, bool> _quickFilter => x =>
     {
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;

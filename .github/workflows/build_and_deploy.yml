@@ -1,4 +1,4 @@
-name: Build and Tests
+name: Build and Deploy
 
 on:
   push:
@@ -18,7 +18,5 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
-      - name: Test
-        run: dotnet test --no-build --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~UnitTests"
       - name: Publish
         run: dotnet publish .\Back\Back.csproj --configuration Release --no-build

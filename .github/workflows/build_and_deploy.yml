@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build_and_tests:
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,4 +19,4 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Publish
-        run: dotnet publish .\Back\Back.csproj --configuration Release --no-build
+        run: dotnet publish ./Back/Back.csproj --configuration Release --no-build

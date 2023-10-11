@@ -2,42 +2,52 @@
 
 <PageTitle>Alunos</PageTitle>
 
-<MudContainer Class="mt-8 mb-8">
-    <MudDataGrid Items="@_alunos" QuickFilter="@QuickFilter" Hover="true">
-        <ToolBarContent>
-            <MudText Typo="Typo.h5">Alunos</MudText>
-            <MudSpacer />
-            <MudButton
-                StartIcon="@Icons.Material.Outlined.Add"
-                IconSize="Size.Large"
-                Variant="Variant.Outlined"
-                Class="border-dashed border-2 mud-border-secundary"
-                Style="height: 40px;"
-                Color="Color.Primary"
-                @onclick="OpenDialog"
-            >
-                Novo Aluno
-            </MudButton>
-            <MudSpacer />
-            <MudTextField
-                @bind-Value="_searchString"
-                Placeholder="Buscar"
-                Adornment="Adornment.Start"
-                Immediate="true"
-                AdornmentIcon="@Icons.Material.Filled.Search"
-                IconSize="Size.Medium"
-                Class="mt-0"
-            />
-        </ToolBarContent>
-        <Columns>
-            <PropertyColumn Property="x => x.Id" Title="Id" />
-            <PropertyColumn Property="x => x.Nome" Title="Nome" />
-            <PropertyColumn Property="x => x.Matricula" Title="Matrícula" />
-        </Columns>
-        <PagerContent>
-            <MudDataGridPager T="AlunoOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
-        </PagerContent>
-    </MudDataGrid>
+<MudContainer>
+    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h5" Style="font-weight: bold" >Alunos</MudText>
+                <MudSpacer />
+                <MudButton
+                    StartIcon="@Icons.Material.Outlined.Add"
+                    IconSize="Size.Large"
+                    Variant="Variant.Filled"
+                    Style="height: 40px;"
+                    Color="Color.Primary"
+                    @onclick="OpenDialog"
+                >
+                    Novo Aluno
+                </MudButton>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_alunos" QuickFilter="@QuickFilter" Hover="true">
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField
+                    Variant="Variant.Outlined"
+                    @bind-Value="_searchString"
+                    Placeholder="Busque por nome ou matrícula"
+                    Adornment="Adornment.Start"
+                    Immediate="true"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium"
+                    Class="mt-0"
+                />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" />
+                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.Matricula" Title="Matrícula" />
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="AlunoOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
 </MudContainer>
 
 @using Syki.Dtos
@@ -77,7 +87,7 @@
 
         var result = await dialog.Result;
 
-        if (result.Cancelled) return;
+        if (result.Canceled) return;
         
         await OnInitializedAsync();
     }

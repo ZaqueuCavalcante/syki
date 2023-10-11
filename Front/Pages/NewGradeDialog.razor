@@ -1,9 +1,10 @@
 <MudDialog>
     <DialogContent>
-        <MudForm @ref="form">
+        <MudForm @ref="_form">
             <MudStack Row="true">
-                <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da grade!" />
+                <MudTextField Variant="Variant.Outlined" AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da grade!" />
                 <MudSelect
+                    Variant="Variant.Outlined"
                     Value="@_curso" ValueChanged="@((CursoOut newValue) => HandleSelectCurso(newValue))"
                     Label="Curso" Required="true" RequiredError="Informe o curso!" AdornmentColor="Color.Primary"
                 >
@@ -41,8 +42,8 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancelar</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+        <DialogCancelButton OnClick="Cancel" />
+        <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
 
@@ -52,7 +53,7 @@
 @inject ISnackbar Snackbar
 
 @code {
-    MudForm form;
+    MudForm _form;
 
     CursoOut? _curso;
 
@@ -92,8 +93,8 @@
 
     async Task Submit()
     {
-        await form.Validate();
-        if (!form.IsValid) return;
+        await _form.Validate();
+        if (!_form.IsValid) return;
 
         data.CursoId = _curso!.Id;
         data.Disciplinas = Disciplinas.Where(d => d.IsSelected).ToList()

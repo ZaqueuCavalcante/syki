@@ -1,0 +1,7 @@
+<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" OnClick="OnClick">Salvar</MudButton>
+
+@code
+{
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

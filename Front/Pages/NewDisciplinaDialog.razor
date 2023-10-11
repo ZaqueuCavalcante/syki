@@ -1,9 +1,9 @@
 <MudDialog>
     <DialogContent>
-        <MudForm @ref="form">
-            <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da disciplina!" />
-            <MudTextField @bind-Value="_cargaHoraria" Label="Carga Horária" Required="true" RequiredError="Informe a carga horária da disciplina!" />
-            <MudSelect T="CursoOut" Label="Cursos" MultiSelection="true" @bind-SelectedValues="SelectedCursos" AnchorOrigin="Origin.BottomCenter">
+        <MudForm @ref="_form">
+            <MudTextField Variant="Variant.Outlined" Class="mb-2" AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da disciplina!" />
+            <MudTextField Variant="Variant.Outlined" Class="mb-2" @bind-Value="_cargaHoraria" Label="Carga Horária" Required="true" RequiredError="Informe a carga horária da disciplina!" />
+            <MudSelect Variant="Variant.Outlined" Class="mb-2" T="CursoOut" Label="Cursos" MultiSelection="true" @bind-SelectedValues="SelectedCursos" AnchorOrigin="Origin.BottomCenter">
                 @foreach (var curso in Cursos)
                 {
                     <MudSelectItem T="CursoOut" Value="@curso">@curso.Nome</MudSelectItem>
@@ -12,8 +12,8 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancelar</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+        <DialogCancelButton OnClick="Cancel" />
+        <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
 
@@ -22,7 +22,8 @@
 @inject ISnackbar Snackbar
 
 @code {
-    MudForm form;
+    MudForm _form;
+
     ushort? _cargaHoraria;
     DisciplinaIn data = new();
 
@@ -39,8 +40,8 @@
 
     async Task Submit()
     {
-        await form.Validate();
-        if (!form.IsValid) return;
+        await _form.Validate();
+        if (!_form.IsValid) return;
 
         data.CargaHoraria = _cargaHoraria!.Value;
         data.Cursos = SelectedCursos.ToList().ConvertAll(c => c.Id);

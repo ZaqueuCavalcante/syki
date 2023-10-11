@@ -62,11 +62,11 @@
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };
-        var dialog = DialogService.Show<NewTurmaDialog>("Nova Turma", options);
+        var dialog = await DialogService.ShowAsync<NewTurmaDialog>("Nova Turma", options);
 
         var result = await dialog.Result;
 
-        if (result.Cancelled) return;
+        if (result.Canceled) return;
         
         await OnInitializedAsync();
     }

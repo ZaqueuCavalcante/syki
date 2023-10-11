@@ -1,7 +1,8 @@
-<MudForm @ref="form">
+<MudForm>
     <MudStack Row="true">
         <MudItem xs="12">
             <MudSelect
+                Variant="Variant.Outlined"
                 Value="@_oferta"
                 ValueChanged="(TurmaOfertaFull newValue) => HandleOFertaChanged(newValue)"
                 Label="Oferta"
@@ -29,8 +30,6 @@
 @using Front.Domain
 
 @code {
-    MudForm form;
-
     [CascadingParameter(Name = "Ofertas")]
     public List<TurmaOfertaFull> Ofertas { get; set; }
 

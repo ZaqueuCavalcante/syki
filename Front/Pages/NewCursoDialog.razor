@@ -1,8 +1,8 @@
 <MudDialog>
     <DialogContent>
-        <MudForm @ref="form">
-            <MudTextField AutoFocus="true" @bind-Value="_nome" Label="Nome" Required="true" RequiredError="Informe o nome do curso!" />
-            <MudSelect @bind-Value="data.Tipo" Label="Tipo" Required="true" RequiredError="Informe o tipo do curso!" AdornmentColor="Color.Primary">
+        <MudForm @ref="_form">
+            <MudTextField Variant="Variant.Outlined" Class="mb-2" AutoFocus="true" @bind-Value="_nome" Label="Nome" Required="true" RequiredError="Informe o nome do curso!" />
+            <MudSelect Variant="Variant.Outlined" Class="mb-2" @bind-Value="data.Tipo" Label="Tipo" Required="true" RequiredError="Informe o tipo do curso!" AdornmentColor="Color.Primary">
                 @foreach (TipoDeCurso item in Enum.GetValues(typeof(TipoDeCurso)))
                 {
                     <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
@@ -11,8 +11,8 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancelar</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+        <DialogCancelButton OnClick="Cancel" />
+        <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
 
@@ -21,7 +21,7 @@
 @inject ISnackbar Snackbar
 
 @code {
-    MudForm form;
+    private MudForm _form;
 
     private string? _nome;
 
@@ -32,8 +32,8 @@
 
     async Task Submit()
     {
-        await form.Validate();
-        if (!form.IsValid) return;
+        await _form.Validate();
+        if (!_form.IsValid) return;
 
         data.Nome = _nome!;
         await Http.PostAsJsonAsync("/cursos", data);

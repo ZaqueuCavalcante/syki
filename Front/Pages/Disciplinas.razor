@@ -20,6 +20,7 @@
             </MudButton>
             <MudSpacer />
             <MudTextField
+                Variant="Variant.Outlined"
                 @bind-Value="_searchString"
                 Placeholder="Buscar"
                 Adornment="Adornment.Start"
@@ -72,11 +73,11 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = DialogService.Show<NewDisciplinaDialog>("Nova Disciplina", options);
+        var dialog = await DialogService.ShowAsync<NewDisciplinaDialog>("Nova Disciplina", options);
 
         var result = await dialog.Result;
 
-        if (result.Cancelled) return;
+        if (result.Canceled) return;
         
         await OnInitializedAsync();
     }

@@ -20,6 +20,7 @@
             </MudButton>
             <MudSpacer />
             <MudTextField
+                Variant="Variant.Outlined"
                 @bind-Value="_searchString"
                 Placeholder="Buscar"
                 Adornment="Adornment.Start"
@@ -69,11 +70,11 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = DialogService.Show<NewProfessorDialog>("Novo Professor", options);
+        var dialog = await DialogService.ShowAsync<NewProfessorDialog>("Novo Professor", options);
 
         var result = await dialog.Result;
 
-        if (result.Cancelled) return;
+        if (result.Canceled) return;
         
         await OnInitializedAsync();
     }

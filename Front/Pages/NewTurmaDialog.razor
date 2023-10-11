@@ -1,10 +1,11 @@
 <MudDialog>
     <DialogContent>
-        <MudForm @ref="form">
+        <MudForm @ref="_form">
             <MudStack Row="true">
                 <MudGrid Justify="Justify.FlexStart">
                     <MudItem xs="6">
                         <MudSelect
+                            Variant="Variant.Outlined" AutoFocus="true"
                             Value="_disciplina" ValueChanged="@((DisciplinaOut newValue) => HandleSelectDisciplina(newValue))"
                             Label="Disciplina" Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary">
                             @foreach (DisciplinaOut? item in Disciplinas)
@@ -14,7 +15,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="4">
-                            <MudSelect @bind-Value="_professor" Label="Professor" Required="true" RequiredError="Informe o professor!" AdornmentColor="Color.Primary">
+                            <MudSelect Variant="Variant.Outlined" @bind-Value="_professor" Label="Professor" Required="true" RequiredError="Informe o professor!" AdornmentColor="Color.Primary">
                             @foreach (ProfessorOut? item in Professores)
                             {
                                 <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
@@ -22,7 +23,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="2">
-                        <MudSelect @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período!" AdornmentColor="Color.Primary">
+                        <MudSelect Variant="Variant.Outlined" @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período!" AdornmentColor="Color.Primary">
                             @foreach (string? item in Periodos)
                             {
                                 <MudSelectItem Value="@item">@item</MudSelectItem>
@@ -59,8 +60,8 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancelar</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+        <DialogCancelButton OnClick="Cancel" />
+        <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
 
@@ -70,7 +71,7 @@
 @inject ISnackbar Snackbar
 
 @code {
-    MudForm form;
+    MudForm _form;
 
     DisciplinaOut? _disciplina;
     ProfessorOut? _professor;
@@ -122,8 +123,8 @@
 
     async Task Submit()
     {
-        await form.Validate();
-        if (!form.IsValid) return;
+        await _form.Validate();
+        if (!_form.IsValid) return;
 
         data = new()
         {

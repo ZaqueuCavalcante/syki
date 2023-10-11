@@ -2,7 +2,7 @@
     <MudStack Row="true">
         <MudItem xs="6">
             <MudSelect
-                Value="@_disciplina"
+                Variant="Variant.Outlined" Value="@_disciplina"
                 ValueChanged="(GradeDisciplinaFull newValue) => HandleDisciplinaChanged(newValue)"
                 Label="Disciplina"
                 Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary"
@@ -24,6 +24,7 @@
         </MudItem>
         <MudItem xs="2">
             <MudTextField
+                Variant="Variant.Outlined"
                 T="byte?"
                 Value="@_periodo"
                 ValueChanged="x => HandlePeriodoChanged(x)"
@@ -31,6 +32,7 @@
         </MudItem>
         <MudItem xs="2">
             <MudTextField
+                Variant="Variant.Outlined"
                 T="byte?"
                 Value="@_creditos"
                 ValueChanged="x => HandleCreditosChanged(x)"
@@ -38,6 +40,7 @@
         </MudItem>
         <MudItem xs="2">
             <MudTextField
+                Variant="Variant.Outlined"
                 T="ushort?"
                 Value="@_cargaHoraria"
                 ValueChanged="x => HandleCargaHorariaChanged(x)"

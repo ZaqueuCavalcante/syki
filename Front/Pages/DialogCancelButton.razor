@@ -1,0 +1,7 @@
+<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" OnClick="OnClick">Cancelar</MudButton>
+
+@code
+{
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

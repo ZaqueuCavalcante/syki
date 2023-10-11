@@ -62,11 +62,11 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = DialogService.Show<NewOfertaDialog>("Nova Oferta", options);
+        var dialog = await DialogService.ShowAsync<NewOfertaDialog>("Nova Oferta", options);
 
         var result = await dialog.Result;
 
-        if (result.Cancelled) return;
+        if (result.Canceled) return;
         
         await OnInitializedAsync();
     }

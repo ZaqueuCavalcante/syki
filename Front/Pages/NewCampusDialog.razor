@@ -1,12 +1,12 @@
 <MudDialog>
     <DialogContent>
-        <MudForm>
-            <MudTextField AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome do campus!" />
+        <MudForm @ref="_form">
+            <MudTextField Variant="Variant.Outlined" Class="mb-2" AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome do campus!" />
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancelar</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Salvar</MudButton>
+        <DialogCancelButton OnClick="Cancel" />
+        <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
 
@@ -15,6 +15,8 @@
 @inject ISnackbar Snackbar
 
 @code {
+    private MudForm _form;
+
     private CampusIn data = new();
 
     [CascadingParameter]
@@ -22,6 +24,9 @@
 
     async Task Submit()
     {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
         await Http.PostAsJsonAsync("/campi", data);
 
         MudDialog.Close(DialogResult.Ok(true));

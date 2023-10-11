@@ -20,6 +20,7 @@
             </MudButton>
             <MudSpacer />
             <MudTextField
+                Variant="Variant.Outlined"
                 @bind-Value="_searchString"
                 Placeholder="Buscar"
                 Adornment="Adornment.Start"
@@ -52,7 +53,7 @@
         GradesOut = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? new();
     }
 
-    private void RowClicked(DataGridRowClickEventArgs<GradeOut> args)
+    private async Task RowClicked(DataGridRowClickEventArgs<GradeOut> args)
     {
         var parameters = new DialogParameters();
         parameters.Add("Disciplinas", args.Item.Disciplinas);
@@ -61,7 +62,7 @@
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };
-        var dialog = DialogService.Show<DisciplinasDaGradeDialog>(args.Item.Nome, parameters, options);
+        await DialogService.ShowAsync<DisciplinasDaGradeDialog>(args.Item.Nome, parameters, options);
     }
 
     private Func<GradeOut, bool> _quickFilter => x =>
@@ -84,11 +85,11 @@
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };
-        var dialog = DialogService.Show<NewGradeDialog>("Nova Grade", options);
+        var dialog = await DialogService.ShowAsync<NewGradeDialog>("Nova Grade", options);
 
         var result = await dialog.Result;
 
-        if (result.Cancelled) return;
+        if (result.Canceled) return;
         
         await OnInitializedAsync();
     }

@@ -16,6 +16,11 @@ jobs:
         with:
           dotnet-version: 7.x
 
+      - name: Export variables from secret
+        run: |
+          ENV_JSON='${{ secrets.APPSETTINGS_VARIABLES }}'
+          echo "$ENV_JSON" | jq -r 'to_entries[] | "\(.key)=\(.value)"' >> $GITHUB_ENV
+
       - name: Restore
         run: dotnet restore
 

@@ -9,7 +9,6 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.Controllers;
 
-[Authorize(Roles = Academico)]
 [ApiController, Route("[controller]")]
 public class AlunosController : ControllerBase
 {
@@ -17,9 +16,11 @@ public class AlunosController : ControllerBase
     public AlunosController(SykiDbContext ctx) => _ctx = ctx;
 
     [HttpPost("")]
+    [Authorize(Roles = Academico)]
     public async Task<IActionResult> Create([FromBody] AlunoIn body)
     {
         var aluno = new Aluno(User.Facul(), body.Nome);
+        aluno.OfertaId = body.OfertaId;
 
         await _ctx.Alunos.AddAsync(aluno);
 
@@ -28,7 +29,21 @@ public class AlunosController : ControllerBase
         return Ok(aluno);
     }
 
+    [HttpGet("disciplinas")]
+    [Authorize(Roles = Configs.AuthorizationConfigs.Aluno)]
+    public async Task<IActionResult> GetDisciplinas()
+    {
+        var aluno = await _ctx.Alunos.FirstAsync(a => a.Id == User.Id());
+        var oferta = await _ctx.Ofertas.FirstAsync(o => o.Id == aluno.OfertaId);
+        var grade = await _ctx.Grades
+            .Include(g => g.Disciplinas)
+            .FirstAsync(g => g.Id == oferta.GradeId);
+
+        return Ok(grade.Disciplinas.ConvertAll(d => d.ToOut()));
+    }
+
     [HttpGet("")]
+    [Authorize(Roles = Academico)]
     public async Task<IActionResult> GetAll()
     {
         var alunos = await _ctx.Alunos

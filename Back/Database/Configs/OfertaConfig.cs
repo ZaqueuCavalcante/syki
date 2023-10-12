@@ -29,5 +29,9 @@ public class OfertaConfig : IEntityTypeConfiguration<Oferta>
 
         oferta.Property(c => c.Turno)
             .HasConversion(new EnumToStringConverter<Turno>());
+
+        oferta.HasMany<Aluno>()
+            .WithOne()
+            .HasForeignKey(a => a.OfertaId);
     }
 }

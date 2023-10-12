@@ -1,4 +1,5 @@
-﻿@page "/disciplinas"
+﻿@page "/alunos/disciplinas"
+@attribute [Authorize(Roles = "Aluno")]
 
 <PageTitle>Disciplinas</PageTitle>
 
@@ -7,17 +8,6 @@
         <MudCardContent>
             <MudStack Row="true" AlignItems="AlignItems.Center">
                 <MudText Typo="Typo.h5" Style="font-weight: bold" >Disciplinas</MudText>
-                <MudSpacer />
-                <MudButton
-                    StartIcon="@Icons.Material.Outlined.Add"
-                    IconSize="Size.Large"
-                    Variant="Variant.Filled"
-                    Style="height: 40px;"
-                    Color="Color.Primary"
-                    @onclick="OpenDialog"
-                >
-                    Nova Disciplina
-                </MudButton>
             </MudStack>
         </MudCardContent>
     </MudCard>
@@ -60,7 +50,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
+        _disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("alunos/disciplinas") ?? new();
     }
 
     private Func<DisciplinaOut, bool> _quickFilter => x =>
@@ -76,19 +66,4 @@
 
         return false;
     };
-
-    private async Task OpenDialog()
-    {
-        var options = new DialogOptions {
-            MaxWidth = MaxWidth.Small,
-            FullWidth = true
-        };
-        var dialog = await DialogService.ShowAsync<NewDisciplinaDialog>("Nova Disciplina", options);
-
-        var result = await dialog.Result;
-
-        if (result.Canceled) return;
-        
-        await OnInitializedAsync();
-    }
 }

@@ -2,6 +2,12 @@
     <DialogContent>
         <MudForm @ref="_form">
             <MudTextField Variant="Variant.Outlined" Class="mb-2" AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome do aluno!" />
+            <MudSelect Variant="Variant.Outlined" Class="mb-2" @bind-Value="_oferta" Label="Oferta" Required="true" RequiredError="Informe a oferta de curso!" AdornmentColor="Color.Primary">
+                @foreach (OfertaOut? item in _ofertas)
+                {
+                    <MudSelectItem Value="@item">@item.Id</MudSelectItem>
+                }
+            </MudSelect>
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -17,16 +23,25 @@
 @code {
     private MudForm _form;
 
+    private OfertaOut? _oferta;
+    private List<OfertaOut> _ofertas = new();
+
     private AlunoIn data = new();
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
+    }
 
     async Task Submit()
     {
         await _form.Validate();
         if (!_form.IsValid) return;
 
+        data.OfertaId = _oferta!.Id;
         await Http.PostAsJsonAsync("/alunos", data);
 
         MudDialog.Close(DialogResult.Ok(true));

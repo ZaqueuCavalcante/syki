@@ -40,6 +40,7 @@
                 />
             </ToolBarContent>
             <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" />
                 <PropertyColumn Property="x => x.Campus" Title="Campus" />
                 <PropertyColumn Property="x => x.Periodo" Title="Período" />
                 <PropertyColumn Property="x => x.Turno.GetDescription()" Title="Turno" />
@@ -59,7 +60,7 @@
 
 @code {
     private string _searchString;
-    private List<OfertaOut> _ofertas;
+    private List<OfertaOut> _ofertas = new();
 
     protected override async Task OnInitializedAsync()
     {

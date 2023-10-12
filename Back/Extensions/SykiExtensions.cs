@@ -5,9 +5,9 @@ namespace Syki.Back.Extensions;
 
 public static class SykiExtensions
 {
-    public static uint Id(this ClaimsPrincipal user)
+    public static Guid Id(this ClaimsPrincipal user)
     {
-        return uint.Parse(user.FindFirstValue("sub")!);
+        return Guid.Parse(user.FindFirstValue("sub")!);
     }
 
     public static Guid Facul(this ClaimsPrincipal user)

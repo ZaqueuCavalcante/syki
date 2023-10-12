@@ -10,6 +10,8 @@ public class Aluno
     
     public Guid FaculdadeId { get; set; }
 
+    public Guid OfertaId { get; set; }
+
     public string Nome { get; set; }
 
     public string Matricula { get; set; }
@@ -37,6 +39,7 @@ public class Aluno
         return new AlunoOut
         {
             Id = Id,
+            OfertaId = OfertaId,
             Nome = Nome,
             Matricula = Matricula,
         };

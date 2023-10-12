@@ -2,42 +2,52 @@
 
 <PageTitle>Campi</PageTitle>
 
-<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    @if(_campus == null)
-    {
-        <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
-    }
-    else
-    {
-        <MudGrid>
-            <MudItem xs="12">
-                <MudGrid Justify="Justify.FlexStart">
-                    @foreach (var c in _campus)
-                    {
-                        <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-                            <MudPaper Height="100px" Class="d-flex flex-column align-center justify-center mud-width-full py-8">
-                                <MudText Typo="Typo.h6" Align="Align.Center" Variant="Variant.Outlined">@c.Nome</MudText>
-                            </MudPaper>
-                        </MudItem>
-                    }
-                    <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-                        <MudButton
-                            StartIcon="@Icons.Material.Outlined.Add"
-                            IconSize="Size.Large"
-                            Variant="Variant.Outlined"
-                            FullWidth="true"
-                            Class="border-dashed border-2 mud-border-secundary"
-                            Style="height: 100px;"
-                            Color="Color.Primary"
-                            @onclick="OpenDialog"
-                        >
-                            Novo Campus
-                        </MudButton>
-                    </MudItem>
-                </MudGrid>
-            </MudItem>
-        </MudGrid>
-    }
+<MudContainer>
+    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h5" Style="font-weight: bold" >Campi</MudText>
+                <MudSpacer />
+                <MudButton
+                    StartIcon="@Icons.Material.Outlined.Add"
+                    IconSize="Size.Large"
+                    Variant="Variant.Filled"
+                    Style="height: 40px;"
+                    Color="Color.Primary"
+                    @onclick="OpenDialog"
+                >
+                    Novo Campus
+                </MudButton>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_campi" QuickFilter="@_quickFilter" Hover="true">
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    @bind-Value="_searchString"
+                    Placeholder="Busque por nome"
+                    Adornment="Adornment.Start"
+                    Immediate="true"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium"
+                    Class="mt-0"
+                />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" />
+                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="CampusOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
 </MudContainer>
 
 @using Syki.Dtos
@@ -45,12 +55,24 @@
 @inject IDialogService DialogService
 
 @code {
-    private List<CampusOut>? _campus;
+    private string _searchString;
+    private List<CampusOut> _campi;
 
     protected override async Task OnInitializedAsync()
     {
-        _campus = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? new();
+        _campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? new();
     }
+
+    private Func<CampusOut, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Nome.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
 
     private async Task OpenDialog()
     {

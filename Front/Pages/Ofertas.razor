@@ -2,46 +2,55 @@
 
 <PageTitle>Ofertas</PageTitle>
 
-<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    @if(OfertasOut == null)
-    {
-        <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
-    }
-    else
-    {
-        <MudGrid>
-            <MudItem xs="12">
-                <MudGrid Justify="Justify.FlexStart">
-                    @foreach (var c in OfertasOut)
-                    {
-                        <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-                           <MudPaper Height="200px" Class="d-flex flex-column align-start justify-center mud-width-full py-8">
-                                <MudList>
-                                    <MudListItem>@c.Campus | @c.Periodo | @c.Turno.GetDescription()</MudListItem>
-                                    <MudListItem>@c.Curso</MudListItem>
-                                    <MudListItem>@c.Grade</MudListItem>
-                                </MudList>
-                            </MudPaper>
-                        </MudItem>
-                    }
-                    <MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-                        <MudButton
-                            StartIcon="@Icons.Material.Outlined.Add"
-                            IconSize="Size.Large"
-                            Variant="Variant.Outlined"
-                            FullWidth="true"
-                            Class="border-dashed border-2 mud-border-secundary"
-                            Style="height: 200px;"
-                            Color="Color.Primary"
-                            @onclick="OpenDialog"
-                        >
-                            Nova Oferta
-                        </MudButton>
-                    </MudItem>
-                </MudGrid>
-            </MudItem>
-        </MudGrid>
-    }
+<MudContainer>
+    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h5" Style="font-weight: bold" >Ofertas</MudText>
+                <MudSpacer />
+                <MudButton
+                    StartIcon="@Icons.Material.Outlined.Add"
+                    IconSize="Size.Large"
+                    Variant="Variant.Filled"
+                    Style="height: 40px;"
+                    Color="Color.Primary"
+                    @onclick="OpenDialog"
+                >
+                    Nova Oferta
+                </MudButton>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true">
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    @bind-Value="_searchString"
+                    Placeholder="Busque por nome ou matrícula"
+                    Adornment="Adornment.Start"
+                    Immediate="true"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium"
+                    Class="mt-0"
+                />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Campus" Title="Campus" />
+                <PropertyColumn Property="x => x.Periodo" Title="Período" />
+                <PropertyColumn Property="x => x.Turno.GetDescription()" Title="Turno" />
+                <PropertyColumn Property="x => x.Curso" Title="Curso" />
+                <PropertyColumn Property="x => x.Grade" Title="Grade" />
+            </Columns>
+            <PagerContent>
+                <MudDataGridPager T="OfertaOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
 </MudContainer>
 
 @using Syki.Dtos
@@ -49,12 +58,24 @@
 @inject IDialogService DialogService
 
 @code {
-    private List<OfertaOut>? OfertasOut;
+    private string _searchString;
+    private List<OfertaOut> _ofertas;
 
     protected override async Task OnInitializedAsync()
     {
-        OfertasOut = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
+        _ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
     }
+
+    private Func<OfertaOut, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Curso.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;;
+
+        return false;
+    };
 
     private async Task OpenDialog()
     {

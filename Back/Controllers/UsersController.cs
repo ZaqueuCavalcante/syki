@@ -50,15 +50,4 @@ public class UsersController : ControllerBase
 
         return Ok(new LoginOut { AccessToken = jwt });
     }
-
-
-    [HttpGet("env")]
-    public async Task<IActionResult> Env([FromServices] IConfiguration configuration)
-    {
-        await Task.Delay(1);
-
-        var env = configuration.AsEnumerable().ToList();
-
-        return Ok(env);
-    }
 }

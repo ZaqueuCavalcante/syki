@@ -3,7 +3,7 @@
 2 - [X] Use Identity? NO
 3 - [X] Manage API access
 4 - [ ] Add some use cases
-5 - [ ] Fix front deploy
+5 - [x] Fix front deploy
 
 
 

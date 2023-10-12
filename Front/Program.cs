@@ -13,9 +13,11 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddLocalStorageServices();
 builder.Services.AddScoped<SykiDelegatingHandler>();
 
+var url = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production" ?
+    "https://syki-dev-api.azurewebsites.net" : "http://localhost:5160";
+
 builder.Services
-    //.AddHttpClient("HttpClient", x => x.BaseAddress = new Uri("http://localhost:5160"))
-    .AddHttpClient("HttpClient", x => x.BaseAddress = new Uri("https://syki-dev-api.azurewebsites.net"))
+    .AddHttpClient("HttpClient", x => x.BaseAddress = new Uri(url))
     .AddHttpMessageHandler<SykiDelegatingHandler>();
 
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()

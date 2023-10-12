@@ -31,7 +31,7 @@
                     Margin="Margin.Dense"
                     Variant="Variant.Outlined"
                     @bind-Value="_searchString"
-                    Placeholder="Busque por nome ou matrícula"
+                    Placeholder="Busque por qualquer atributo"
                     Adornment="Adornment.Start"
                     Immediate="true"
                     AdornmentIcon="@Icons.Material.Filled.Search"
@@ -71,8 +71,20 @@
         if (string.IsNullOrWhiteSpace(_searchString))
             return true;
 
+        if (x.Campus.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Periodo.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Turno.GetDescription().Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
         if (x.Curso.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;;
+            return true;
+
+        if (x.Grade.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
 
         return false;
     };

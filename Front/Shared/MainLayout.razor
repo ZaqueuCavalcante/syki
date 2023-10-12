@@ -9,11 +9,18 @@
     <Authorized>
         <MudLayout>
             <MudAppBar Elevation="1" Dense="true">
-                <MudText Typo="Typo.h5" Class="ml-3">Syki</MudText>
+                <MudButton
+                    Href="/" Target="_self"
+                    StartIcon="@Icons.Custom.Brands.MudBlazor"
+                    IconSize="Size.Large"
+                    Variant="Variant.Text"
+                    Style="color: white;"
+                >
+                    Syki
+                </MudButton>
                 <MudSpacer />
                 <MudText>@_userName</MudText>
                 <MudSpacer />
-                <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Href="/" Target="_self" />
                 <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Href="/" Target="_self" />
                 <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="Logout" />
             </MudAppBar>

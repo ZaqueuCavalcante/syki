@@ -11,5 +11,6 @@ public static class Program
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
                 webBuilder.UseStartup<Startup>()
+                    .UseUrls("http://*:8080")
             );
 }

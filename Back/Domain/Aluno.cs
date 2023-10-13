@@ -18,6 +18,7 @@ public class Aluno
 
     public Aluno(Guid faculdadeId, string nome)
     {
+        // Deve ficar com o mesmo ID do User???
         Id = Guid.NewGuid();
         FaculdadeId = faculdadeId;
         SetNome(nome);

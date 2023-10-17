@@ -15,3 +15,10 @@ https://stenbrinke.nl/blog/taking-ef-core-data-seeding-to-the-next-level-with-bo
 https://portalservicos.usp.br/
 https://siga.ufpr.br/portal/sobre/
 https://siga.ufpe.br/ufpe/jsp/FolderModulosSiga.jsf
+
+# POST
+- Deploy de banco + api + front na Azure
+- Authentication and Authorization com Identity
+- Two Factor Authentication dor Adm
+- Mari Design Help
+- Roles (Adm, Academico, Professor, Aluno)

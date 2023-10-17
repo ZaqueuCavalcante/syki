@@ -1,12 +1,27 @@
-<MudDialog>
+<MudDialog Class="pb-2">
     <DialogContent>
         <MudForm @ref="_form">
             <MudStack Row="true">
-                <MudTextField Variant="Variant.Outlined" AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da grade!" />
-                <MudSelect
+                <MudTextField
+                    Margin="Margin.Dense"
                     Variant="Variant.Outlined"
-                    Value="@_curso" ValueChanged="@((CursoOut newValue) => HandleSelectCurso(newValue))"
-                    Label="Curso" Required="true" RequiredError="Informe o curso!" AdornmentColor="Color.Primary"
+                    AutoFocus="true"
+                    @bind-Value="data.Nome"
+                    T="String"
+                    Label="Nome"
+                    Required="true"
+                    RequiredError="Informe o nome da grade!"
+                />
+                <MudSelect
+                    Dense="true"
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    Value="@_curso"
+                    ValueChanged="@((CursoOut newValue) => HandleSelectCurso(newValue))"
+                    Label="Curso"
+                    Required="true"
+                    RequiredError="Informe o curso!"
+                    AdornmentColor="Color.Primary"
                 >
                     @foreach (CursoOut? item in Cursos)
                     {
@@ -43,6 +58,7 @@
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="Cancel" />
+        <MudSpacer />
         <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>

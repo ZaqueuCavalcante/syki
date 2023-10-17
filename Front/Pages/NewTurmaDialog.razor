@@ -1,10 +1,11 @@
-<MudDialog>
+<MudDialog Class="pb-2">
     <DialogContent>
         <MudForm @ref="_form">
             <MudStack Row="true">
                 <MudGrid Justify="Justify.FlexStart">
                     <MudItem xs="6">
                         <MudSelect
+                            Dense="true" Margin="Margin.Dense"
                             Variant="Variant.Outlined" AutoFocus="true"
                             Value="_disciplina" ValueChanged="@((DisciplinaOut newValue) => HandleSelectDisciplina(newValue))"
                             Label="Disciplina" Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary">
@@ -15,7 +16,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="4">
-                            <MudSelect Variant="Variant.Outlined" @bind-Value="_professor" Label="Professor" Required="true" RequiredError="Informe o professor!" AdornmentColor="Color.Primary">
+                            <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="_professor" Label="Professor" Required="true" RequiredError="Informe o professor!" AdornmentColor="Color.Primary">
                             @foreach (ProfessorOut? item in Professores)
                             {
                                 <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
@@ -23,7 +24,7 @@
                         </MudSelect>
                     </MudItem>
                     <MudItem xs="2">
-                        <MudSelect Variant="Variant.Outlined" @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período!" AdornmentColor="Color.Primary">
+                        <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período!" AdornmentColor="Color.Primary">
                             @foreach (string? item in Periodos)
                             {
                                 <MudSelectItem Value="@item">@item</MudSelectItem>
@@ -61,6 +62,7 @@
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="Cancel" />
+        <MudSpacer />
         <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>

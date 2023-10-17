@@ -52,6 +52,7 @@ public class DisciplinasController : ControllerBase
 
         var disciplinas = await _ctx.Disciplinas
             .Where(d => d.FaculdadeId == User.Facul() && (ids.Count == 0 || ids.Contains(d.Id)))
+            .OrderBy(d => d.Nome)
             .ToListAsync();
 
         return Ok(disciplinas.ConvertAll(d => d.ToOut()));

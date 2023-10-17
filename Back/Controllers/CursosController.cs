@@ -32,7 +32,9 @@ public class CursosController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var cursos = await _ctx.Cursos
-            .Where(c => c.FaculdadeId == User.Facul()).ToListAsync();
+            .Where(c => c.FaculdadeId == User.Facul())
+            .OrderBy(c => c.Nome)
+            .ToListAsync();
 
         return Ok(cursos.ConvertAll(c => c.ToOut()));
     }

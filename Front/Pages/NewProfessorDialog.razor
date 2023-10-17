@@ -1,11 +1,12 @@
-<MudDialog>
+<MudDialog Class="pb-2">
     <DialogContent>
         <MudForm @ref="_form">
-            <MudTextField Variant="Variant.Outlined" Class="mb-2" AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome do professor!" />
+            <MudTextField Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-2" AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome do professor!" />
         </MudForm>
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="Cancel" />
+        <MudSpacer />
         <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>

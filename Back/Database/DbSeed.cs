@@ -136,10 +136,10 @@ public static class DbSeed
 
     public static List<Professor> Professores = new()
     {
-        new Professor { Id = Guid.NewGuid(), FaculdadeId = NovaRoma.Id, Nome = "Richard Feynman", },
-        new Professor { Id = Guid.NewGuid(), FaculdadeId = NovaRoma.Id, Nome = "Robert Oppenheimer", },
-        new Professor { Id = Guid.NewGuid(), FaculdadeId = NovaRoma.Id, Nome = "Reginaldo Rossi", },
-        new Professor { Id = Guid.NewGuid(), FaculdadeId = NovaRoma.Id, Nome = "Chico Science", },
+        new Professor(NovaRoma.Id, "Richard Feynman"),
+        new Professor(NovaRoma.Id, "Robert Oppenheimer"),
+        new Professor(NovaRoma.Id, "Reginaldo Rossi"),
+        new Professor(NovaRoma.Id, "Chico Science"),
     };
 
     public static List<Aluno> Alunos = new()

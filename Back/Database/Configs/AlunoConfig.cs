@@ -12,5 +12,10 @@ public class AlunoConfig : IEntityTypeConfiguration<Aluno>
 
         aluno.HasKey(a => a.Id);
         aluno.Property(a => a.Id).ValueGeneratedNever();
+
+        aluno.HasOne<SykiUser>()
+            .WithOne()
+            .HasPrincipalKey<SykiUser>(u => new { u.FaculdadeId, u.Id })
+            .HasForeignKey<Aluno>(a => new { a.FaculdadeId, a.UserId });
     }
 }

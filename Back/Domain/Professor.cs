@@ -8,7 +8,16 @@ public class Professor
     
     public Guid FaculdadeId { get; set; }
 
+    public Guid? UserId { get; set; }
+
     public string Nome { get; set; }
+
+    public Professor(Guid faculdadeId, string nome)
+    {
+        Id = Guid.NewGuid();
+        FaculdadeId = faculdadeId;
+        Nome = nome;
+    }
 
     public ProfessorOut ToOut()
     {

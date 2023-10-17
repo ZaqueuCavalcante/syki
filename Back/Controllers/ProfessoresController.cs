@@ -19,11 +19,7 @@ public class ProfessoresController : ControllerBase
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] ProfessorIn body)
     {
-        var professor = new Professor {
-            Id = Guid.NewGuid(), 
-            FaculdadeId = User.Facul(),
-            Nome = body.Nome
-        };
+        var professor = new Professor(User.Facul(), body.Nome);
 
         await _ctx.Professores.AddAsync(professor);
 

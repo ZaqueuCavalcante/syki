@@ -10,6 +10,8 @@ public class Aluno
     
     public Guid FaculdadeId { get; set; }
 
+    public Guid? UserId { get; set; }
+
     public Guid OfertaId { get; set; }
 
     public string Nome { get; set; }
@@ -18,14 +20,13 @@ public class Aluno
 
     public Aluno(Guid faculdadeId, string nome)
     {
-        // Deve ficar com o mesmo ID do User???
         Id = Guid.NewGuid();
         FaculdadeId = faculdadeId;
         SetNome(nome);
         Matricula = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8]}";
     }
 
-    public void SetNome(string nome)
+    private void SetNome(string nome)
     {
         if (nome.IsEmpty() || nome.Length < 3)
         {

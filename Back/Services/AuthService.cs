@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using SykiUser = Syki.Back.Domain.SykiUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.Services;
 
@@ -41,18 +42,47 @@ public class AuthService
         }
     }
 
+    public async Task<string> GetMfaKey(Guid userId)
+    {
+        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
+
+        var key = await _userManager.GetAuthenticatorKeyAsync(user);
+
+        if (key == null)
+        {
+            await _userManager.ResetAuthenticatorKeyAsync(user);
+            key = await _userManager.GetAuthenticatorKeyAsync(user);
+        }
+
+        return key!;
+    }
+
+    public async Task<bool> SetupMfa(Guid userId, string token)
+    {
+        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
+
+        var tokenProvider = _userManager.Options.Tokens.AuthenticatorTokenProvider;
+        var ok = await _userManager.VerifyTwoFactorTokenAsync(user, tokenProvider, token);
+
+        if (ok)
+        {
+            await _userManager.SetTwoFactorEnabledAsync(user, true);
+        }
+
+        return ok;
+    }
+
     public async Task<string> GenerateAccessToken(string email)
     {
-        var user = await _userManager.FindByEmailAsync(email);
-        var facul = user!.FaculdadeId != null ? user.FaculdadeId.ToString()! : Guid.Empty.ToString();
+        var user = (await _userManager.FindByEmailAsync(email))!;
 
         var claims = new List<Claim>
         {
             new ("jti", Guid.NewGuid().ToString()),
-            new ("sub", user!.Id.ToString()),
+            new ("sub", user.Id.ToString()),
             new ("name", user.Name),
             new ("email", user.Email!),
-            new ("faculdade", facul),
+            new ("faculdade", user.FaculdadeId.ToString()),
         };
 
         var roleNames = await _userManager.GetRolesAsync(user);

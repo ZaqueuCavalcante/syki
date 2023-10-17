@@ -1,9 +1,37 @@
-<MudDialog>
+<MudDialog Class="pb-2">
     <DialogContent>
         <MudForm @ref="_form">
-            <MudTextField Variant="Variant.Outlined" Class="mb-2" AutoFocus="true" @bind-Value="data.Nome" T="String" Label="Nome" Required="true" RequiredError="Informe o nome da disciplina!" />
-            <MudTextField Variant="Variant.Outlined" Class="mb-2" @bind-Value="_cargaHoraria" Label="Carga Horária" Required="true" RequiredError="Informe a carga horária da disciplina!" />
-            <MudSelect Variant="Variant.Outlined" Class="mb-2" T="CursoOut" Label="Cursos" MultiSelection="true" @bind-SelectedValues="SelectedCursos" AnchorOrigin="Origin.BottomCenter">
+            <MudTextField
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-4"
+                AutoFocus="true"
+                @bind-Value="data.Nome"
+                T="String"
+                Label="Nome"
+                Required="true"
+                RequiredError="Informe o nome da disciplina!"
+            />
+            <MudTextField
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-4"
+                @bind-Value="_cargaHoraria"
+                Label="Carga Horária"
+                Required="true"
+                RequiredError="Informe a carga horária da disciplina!"
+            />
+            <MudSelect
+                Dense="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-2"
+                T="CursoOut"
+                Label="Cursos"
+                MultiSelection="true"
+                @bind-SelectedValues="SelectedCursos"
+                AnchorOrigin="Origin.BottomCenter"
+            >
                 @foreach (var curso in Cursos)
                 {
                     <MudSelectItem T="CursoOut" Value="@curso">@curso.Nome</MudSelectItem>
@@ -13,6 +41,7 @@
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="Cancel" />
+        <MudSpacer />
         <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>

@@ -12,5 +12,10 @@ public class ProfessorConfig : IEntityTypeConfiguration<Professor>
 
         professor.HasKey(p => p.Id);
         professor.Property(p => p.Id).ValueGeneratedNever();
+
+        professor.HasOne<SykiUser>()
+            .WithOne()
+            .HasPrincipalKey<SykiUser>(u => new { u.FaculdadeId, u.Id })
+            .HasForeignKey<Professor>(p => new { p.FaculdadeId, p.UserId });
     }
 }

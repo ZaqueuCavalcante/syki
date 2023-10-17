@@ -45,6 +45,11 @@ public class ApiTestBase
     private async Task AddAdmUser()
     {
         using var scope = _factory.Services.CreateScope();
+
+        _ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        _ctx.Add(new Faculdade { Id = Guid.Empty, Nome = "Syki" });
+        await _ctx.SaveChangesAsync();
+
         var _userManager = scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
 
         var user = new SykiUser
@@ -52,6 +57,7 @@ public class ApiTestBase
             Name = "Syki Adm",
             UserName = "adm@syki.com",
             Email = "adm@syki.com",
+            FaculdadeId = Guid.Empty,
         };
 
         await _userManager.CreateAsync(user, "Adm@123");

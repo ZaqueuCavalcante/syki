@@ -2,6 +2,9 @@
     <DialogContent>
         <MudForm @ref="_form">
             <MudTextField
+                OnKeyDown="HandleOnKeyDown"
+                OnlyValidateIfDirty="true"
+                Immediate="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
@@ -32,6 +35,14 @@
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
+
+    async Task HandleOnKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            await Submit();
+        }
+    }
 
     async Task Submit()
     {

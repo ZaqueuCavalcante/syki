@@ -3,6 +3,8 @@
         <MudForm @ref="_form">
             <MudStack Row="true">
                 <MudTextField
+                    OnlyValidateIfDirty="true"
+                    Immediate="true"
                     Margin="Margin.Dense"
                     Variant="Variant.Outlined"
                     AutoFocus="true"
@@ -36,7 +38,7 @@
                             <CascadingValue Name="Curso" Value="@_curso">
                                 @for(var i=0; i<_count; i++)
                                 {
-                                    <GradeDisciplina/>
+                                    <GradeDisciplina />
                                 }
                             </CascadingValue>
                         </CascadingValue>

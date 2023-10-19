@@ -1,18 +1,47 @@
 <MudDialog Class="pb-2">
     <DialogContent>
         <MudForm @ref="_form">
-            <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-2" AutoFocus="true" @bind-Value="_campus" Label="Campus" Required="true" RequiredError="Informe o campus!" AdornmentColor="Color.Primary">
-                @foreach (CampusOut? item in Campi)
-                {
-                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
-                }
-            </MudSelect>
-            <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-2" @bind-Value="_curso" Label="Curso" Required="true" RequiredError="Informe o curso!" AdornmentColor="Color.Primary">
-                @foreach (CursoOut? item in Cursos)
-                {
-                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
-                }
-            </MudSelect>
+            <MudGrid Justify="Justify.FlexStart" Spacing="1">
+                <MudItem xs="6">
+                    <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-2" AutoFocus="true" @bind-Value="_campus" Label="Campus" Required="true" RequiredError="Informe o campus!" AdornmentColor="Color.Primary">
+                        @foreach (CampusOut? item in Campi)
+                        {
+                            <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="3">
+                    <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-2" @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período do curso!" AdornmentColor="Color.Primary">
+                        @foreach (string? item in Periodos)
+                        {
+                            <MudSelectItem Value="@item">@item</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="3">
+                    <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-2" @bind-Value="_turno" Label="Turno" Required="true" RequiredError="Informe o turno do curso!" AdornmentColor="Color.Primary">
+                        @foreach (Turno? item in Enum.GetValues(typeof(Turno)))
+                        {
+                            <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+
+            <MudAutocomplete
+                T="CursoOut"
+                SearchFunc="@SearchCurso"
+                Dense="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-2"
+                @bind-Value="_curso"
+                Label="Curso"
+                Required="true"
+                RequiredError="Informe o curso!"
+                AdornmentColor="Color.Primary"
+            />
+
             <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-2" @bind-Value="_grade" Label="Grade" Required="true" RequiredError="Informe a grade!" AdornmentColor="Color.Primary">
                 @if(_curso == null)
                 {
@@ -30,18 +59,7 @@
                     }
                 }
             </MudSelect>
-            <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-2" @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período do curso!" AdornmentColor="Color.Primary">
-                @foreach (string? item in Periodos)
-                {
-                    <MudSelectItem Value="@item">@item</MudSelectItem>
-                }
-            </MudSelect>
-            <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-2" @bind-Value="_turno" Label="Turno" Required="true" RequiredError="Informe o turno do curso!" AdornmentColor="Color.Primary">
-                @foreach (Turno? item in Enum.GetValues(typeof(Turno)))
-                {
-                    <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
-                }
-            </MudSelect>
+
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -80,6 +98,16 @@
         Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
         Grades = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? new();
         Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? new();
+    }
+
+    private async Task<IEnumerable<CursoOut>> SearchCurso(string value)
+    {
+        await Task.Delay(1);
+
+        if (string.IsNullOrEmpty(value))
+            return Cursos;
+
+        return Cursos.Where(x => x.Nome.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
     async Task Submit()

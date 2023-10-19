@@ -56,7 +56,6 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
         Faculdades.Add(DbSeed.NovaRoma);
 
         AddRange(DbSeed.Periodos);
-        AddRange(DbSeed.Professores);
 
         SaveChanges();
     }

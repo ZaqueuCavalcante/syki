@@ -33,7 +33,7 @@ public class ApiTestBase
 
         var cnn = _ctx.Database.GetConnectionString()!;
 
-        if (Env.IsTesting() && cnn.Contains("Database=syki-tests-db"))
+        if (Env.IsTesting())
         {
             await _ctx.Database.EnsureDeletedAsync();
             await _ctx.Database.EnsureCreatedAsync();

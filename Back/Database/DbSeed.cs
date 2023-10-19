@@ -28,35 +28,35 @@ public static class DbSeed
         },
         Disciplinas = new()
         {
-            new Disciplina("Matemática Discreta", 55),  // 001
+            new Disciplina("Matemática Discreta", 55),
             new Disciplina("Introdução ao Desenvolvimento Web", 40),
             new Disciplina("Design de Interação Humano-Máquina", 60),
-            new Disciplina("Introdução à Redes de Computadores", 60),
-            new Disciplina("Pensamento Computacional e Algoritmos", 60),
+            new Disciplina("Introdução à Redes de Computadores", 50),
+            new Disciplina("Pensamento Computacional e Algoritmos", 45),
             new Disciplina("Projeto Integrador I: Concepção e Prototipação", 25),
             //
-            new Disciplina("Banco de Dados", 60),  // 007
-            new Disciplina("Estrutura de Dados", 60),
-            new Disciplina("Informática e Sociedade", 60),
-            new Disciplina("Programação Orientada a Objetos", 60),
-            new Disciplina("Projeto Integrador II: Modelagem de Banco de Dados", 30),
+            new Disciplina("Banco de Dados", 80),
+            new Disciplina("Estrutura de Dados", 50),
+            new Disciplina("Informática e Sociedade", 30),
+            new Disciplina("Programação Orientada a Objetos", 40),
+            new Disciplina("Projeto Integrador II: Modelagem de Banco de Dados", 20),
             new Disciplina("Arquitetura de Computadores e Sistemas Operacionais", 60),
             //
-            new Disciplina("Estatística Aplicada", 60),  // 013
-            new Disciplina("Arquitetura de Software", 60),
-            new Disciplina("Análise e Projeto de Software", 60),
-            new Disciplina("Computação em Nuvem e Web Services", 60),
+            new Disciplina("Estatística Aplicada", 55),
+            new Disciplina("Arquitetura de Software", 65),
+            new Disciplina("Análise e Projeto de Software", 45),
+            new Disciplina("Computação em Nuvem e Web Services", 50),
             new Disciplina("Configuração e Manutenção de Software", 60),
             new Disciplina("Projeto Integrador III: Desenvolvimento Full Stack", 30),
             //
-            new Disciplina("Sistemas Distribuídos", 60),  // 019
+            new Disciplina("Sistemas Distribuídos", 60),
             new Disciplina("Inovação e Empreendedorismo", 60),
             new Disciplina("Análise e Visualização de Dados", 60),
             new Disciplina("Desenvolvimentos de Aplicações Móveis", 60),
             new Disciplina("Gestão de Projetos e Governança de TI", 60),
             new Disciplina("Projeto Integrador IV: Aplicações Móveis", 35),
             //
-            new Disciplina("Libras", 60),  // 25
+            new Disciplina("Libras", 60),
             new Disciplina("Sistemas Embarcados", 60),
             new Disciplina("Big Data e Data Science", 60),
             new Disciplina("Inteligência Artificial", 60),
@@ -65,7 +65,7 @@ public static class DbSeed
             new Disciplina("Projeto Integrador V: Sistemas Inteligentes", 30),
             //
             //
-            new Disciplina("Direito e Economia", 60),  // 032
+            new Disciplina("Direito e Economia", 60),
             new Disciplina("Introdução ao Direito", 60),
             new Disciplina("História das Instituições Jurídicas", 60),
             new Disciplina("Teoria do Estado, Política e Direito", 60),
@@ -113,22 +113,8 @@ public static class DbSeed
         },
     };
 
-    public static List<Faculdade> Faculdades = new()
-    {
-        new Faculdade("Nova Roma"),
-        new Faculdade("UPE"),
-        new Faculdade("UFPE"),
-        new Faculdade("UFRPE"),
-        new Faculdade("IFPE"),
-        new Faculdade("USP"),
-        new Faculdade("ITA"),
-        new Faculdade("Unicamp"),
-    };
-
     public static List<Periodo> Periodos = new()
     {
-        new Periodo { Id = "2022.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2022, 02, 01), End = new DateOnly(2022, 06, 01) },
-        new Periodo { Id = "2022.2", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2022, 07, 01), End = new DateOnly(2022, 12, 01) },
         new Periodo { Id = "2023.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) },
         new Periodo { Id = "2023.2", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) },
         new Periodo { Id = "2024.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2024, 02, 01), End = new DateOnly(2024, 06, 01) },

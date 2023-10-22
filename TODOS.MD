@@ -19,6 +19,7 @@ https://siga.ufpe.br/ufpe/jsp/FolderModulosSiga.jsf
 # POST
 - Deploy de banco + api + front na Azure
 - Authentication and Authorization com Identity
-- Two Factor Authentication dor Adm
+- Two Factor Authentication for Adm
 - Mari Design Help
 - Roles (Adm, Academico, Professor, Aluno)
+- Auto completes + search

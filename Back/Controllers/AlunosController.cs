@@ -33,13 +33,15 @@ public class AlunosController : ControllerBase
     [Authorize(Roles = Configs.AuthorizationConfigs.Aluno)]
     public async Task<IActionResult> GetDisciplinas()
     {
-        var aluno = await _ctx.Alunos.FirstAsync(a => a.Id == User.Id());
+        var aluno = await _ctx.Alunos.FirstAsync(a => a.UserId == User.Id());
         var oferta = await _ctx.Ofertas.FirstAsync(o => o.Id == aluno.OfertaId);
         var grade = await _ctx.Grades
+            .Include(g => g.Curso)
             .Include(g => g.Disciplinas)
+            .Include(g => g.Vinculos)
             .FirstAsync(g => g.Id == oferta.GradeId);
 
-        return Ok(grade.Disciplinas.ConvertAll(d => d.ToOut()));
+        return Ok(grade.ToOut().Disciplinas.OrderBy(d => d.Periodo));
     }
 
     [HttpGet("")]
@@ -47,9 +49,11 @@ public class AlunosController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var alunos = await _ctx.Alunos
+            .Include(a => a.Oferta)
+                .ThenInclude(o => o.Curso)
             .Where(c => c.FaculdadeId == User.Facul())
             .ToListAsync();
-
+        
         return Ok(alunos.ConvertAll(p => p.ToOut()));
     }
 }

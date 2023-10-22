@@ -1,30 +1,29 @@
 ﻿<MudNavMenu>
     <AuthorizeView Roles="Adm">
-        <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-        <MudNavLink Href="users" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People">Users</MudNavLink>
-        <MudNavLink Href="faculdades" Match="NavLinkMatch.All" Icon=@Icons.Material.Filled.Games>Faculdades</MudNavLink>
+        <MudNavLink Href="users" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Users</MudNavLink>
+        <MudNavLink Href="faculdades" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Games" IconColor="Color.Inherit">Faculdades</MudNavLink>
     </AuthorizeView>
 
     <AuthorizeView Roles="Academico">
-        <MudNavLink Href="campi" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.GroupWork">Campi</MudNavLink>
-        <MudNavLink Href="cursos" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Class">Cursos</MudNavLink>
-        <MudNavLink Href="disciplinas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apps">Disciplinas</MudNavLink>
-        <MudNavLink Href="grades" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.AccountTree">Grades</MudNavLink>
-        <MudNavLink Href="ofertas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.PlaylistAddCheck">Ofertas</MudNavLink>
-        <MudNavLink Href="turmas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CenterFocusStrong">Turmas</MudNavLink>
-        <MudNavLink Href="professores" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person4">Professores</MudNavLink>
-        <MudNavLink Href="alunos" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People">Alunos</MudNavLink>
-        <MudNavLink Href="matriculas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.DesignServices">Matrículas</MudNavLink>
-        <MudNavLink Href="biblioteca" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks">Biblioteca</MudNavLink>
-        <MudNavLink Href="financeiro" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.AttachMoney">Financeiro</MudNavLink>
+        <MudNavLink Href="campi" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.GroupWork" IconColor="Color.Inherit">Campi</MudNavLink>
+        <MudNavLink Href="cursos" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Class" IconColor="Color.Inherit">Cursos</MudNavLink>
+        <MudNavLink Href="disciplinas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apps" IconColor="Color.Inherit">Disciplinas</MudNavLink>
+        <MudNavLink Href="grades" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.AccountTree" IconColor="Color.Inherit">Grades</MudNavLink>
+        <MudNavLink Href="ofertas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.PlaylistAddCheck" IconColor="Color.Inherit">Ofertas</MudNavLink>
+        <MudNavLink Href="turmas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CenterFocusStrong" IconColor="Color.Inherit">Turmas</MudNavLink>
+        <MudNavLink Href="professores" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person4" IconColor="Color.Inherit">Professores</MudNavLink>
+        <MudNavLink Href="alunos" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Alunos</MudNavLink>
+        <MudNavLink Href="matriculas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.DesignServices" IconColor="Color.Inherit">Matrículas</MudNavLink>
+        <MudNavLink Href="biblioteca" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks" IconColor="Color.Inherit">Biblioteca</MudNavLink>
+        <MudNavLink Href="financeiro" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.AttachMoney" IconColor="Color.Inherit">Financeiro</MudNavLink>
     </AuthorizeView>
 
     <AuthorizeView Roles="Professor">
-        <MudNavLink Href="professores/aulas" Match="NavLinkMatch.All" Icon=@Icons.Material.Filled.CalendarMonth>Aulas</MudNavLink>
+        <MudNavLink Href="professores/aulas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Aulas</MudNavLink>
     </AuthorizeView>
 
     <AuthorizeView Roles="Aluno">
-        <MudNavLink Href="alunos/disciplinas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apps">Disciplinas</MudNavLink>
-        <MudNavLink Href="alunos/agenda" Match="NavLinkMatch.All" Icon=@Icons.Material.Filled.CalendarMonth>Agenda</MudNavLink>
+        <MudNavLink Href="alunos/disciplinas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apps" IconColor="Color.Inherit">Disciplinas</MudNavLink>
+        <MudNavLink Href="alunos/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
     </AuthorizeView>
 </MudNavMenu>

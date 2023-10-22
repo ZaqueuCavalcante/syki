@@ -1,6 +1,13 @@
 <MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.AccountTree" Class="mr-1 mb-n1" />
+            @MudDialog.Title
+        </MudText>
+    </TitleContent>
+
     <DialogContent>
-        <MudDataGrid Items="@Disciplinas" Hover="true">
+        <MudDataGrid Items="@Disciplinas" Hover="true" Class="mb-4">
             <Columns>
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
                 <PropertyColumn Property="x => x.Periodo" Title="Período" />

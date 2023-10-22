@@ -6,7 +6,8 @@
     <MudCard Class="mt-8 mb-4 mx-6 px-2">
         <MudCardContent>
             <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudText Typo="Typo.h5" Style="font-weight: bold" >Grades</MudText>
+                <MudIcon Icon="@Icons.Material.Filled.AccountTree" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">Grades</MudText>
                 <MudSpacer />
                 <MudButton
                     StartIcon="@Icons.Material.Outlined.Add"
@@ -22,8 +23,14 @@
         </MudCardContent>
     </MudCard>
 
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudText>Perceba que um mesmo curso pode ter várias grades diferentes ao longo do tempo, com diferentes disciplinas.</MudText>
+    </MudAlert>
+
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" T="GradeOut" Items="@_grades" QuickFilter="@_quickFilter" Hover="true" RowClick="@RowClicked">
+        <MudDataGrid Class="pa-4" T="GradeOut" Items="@_grades" QuickFilter="@_quickFilter" Hover="true" RowClick="@RowClicked" Loading="_loading" RowsPerPage="8">
+
+
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -43,6 +50,11 @@
                 <PropertyColumn Property="x => x.CursoNome" Title="Curso" />
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
             </Columns>
+
+            <NoRecordsContent>
+                Não existem grades cadastradas ainda.
+            </NoRecordsContent>
+
             <PagerContent>
                 <MudDataGridPager T="GradeOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
             </PagerContent>
@@ -55,12 +67,15 @@
 @inject IDialogService DialogService
 
 @code {
+    private bool _loading;
     private string _searchString;
     private List<GradeOut> _grades = new();
 
     protected override async Task OnInitializedAsync()
     {
+        _loading = true;
         _grades = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? new();
+        _loading = false;
     }
 
     private async Task RowClicked(DataGridRowClickEventArgs<GradeOut> args)
@@ -95,7 +110,7 @@
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewGradeDialog>("Nova Grade", options);
+        var dialog = await DialogService.ShowAsync<NewGradeDialog>("", options);
 
         var result = await dialog.Result;
 

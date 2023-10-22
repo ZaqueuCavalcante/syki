@@ -4,9 +4,24 @@ namespace Syki.Dtos;
 
 public enum TipoDeCurso
 {
-    [Description("Graduação")]
-    Graduacao,
+    [Description("Bacharelado")]
+    Bacharelado,
 
-    [Description("Pós-Graduação")]
-    PosGraduacao,
+    [Description("Licenciatura")]
+    Licenciatura,
+
+    [Description("Tecnólogo")]
+    Tecnologo,
+
+    [Description("Especialização")]
+    Especializacao,
+
+    [Description("Mestrado")]
+    Mestrado,
+
+    [Description("Doutorado")]
+    Doutorado,
+
+    [Description("Pós-Doutorado")]
+    PosDoutorado,
 }

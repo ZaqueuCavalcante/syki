@@ -1,19 +1,30 @@
 <MudDialog Class="pb-2">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
+            Nova Turma
+        </MudText>
+    </TitleContent>
     <DialogContent>
         <MudForm @ref="_form">
             <MudStack Row="true">
                 <MudGrid Justify="Justify.FlexStart">
                     <MudItem xs="6">
-                        <MudSelect
-                            Dense="true" Margin="Margin.Dense"
-                            Variant="Variant.Outlined" AutoFocus="true"
-                            Value="_disciplina" ValueChanged="@((DisciplinaOut newValue) => HandleSelectDisciplina(newValue))"
-                            Label="Disciplina" Required="true" RequiredError="Informe a disciplina!" AdornmentColor="Color.Primary">
-                            @foreach (DisciplinaOut? item in Disciplinas)
-                            {
-                                <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
-                            }
-                        </MudSelect>
+                        <MudAutocomplete
+                            T="DisciplinaOut"
+                            MaxItems="50"
+                            SearchFunc="@SearchDisciplina"
+                            Dense="true"
+                            Margin="Margin.Dense"
+                            Variant="Variant.Outlined"
+                            AutoFocus="true"
+                            Value="_disciplina"
+                            ValueChanged="@((DisciplinaOut newValue) => HandleSelectDisciplina(newValue))"
+                            Label="Disciplina"
+                            Required="true"
+                            RequiredError="Informe a disciplina!"
+                            AdornmentColor="Color.Primary"
+                        />
                     </MudItem>
                     <MudItem xs="4">
                             <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="_professor" Label="Professor" Required="true" RequiredError="Informe o professor!" AdornmentColor="Color.Primary">
@@ -98,6 +109,16 @@
         Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? new();
         Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? new();
         Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
+    }
+
+    private async Task<IEnumerable<DisciplinaOut>> SearchDisciplina(string value)
+    {
+        await Task.Delay(1);
+
+        if (string.IsNullOrEmpty(value))
+            return Disciplinas;
+
+        return Disciplinas.Where(x => x.Nome.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
     void NewOferta()

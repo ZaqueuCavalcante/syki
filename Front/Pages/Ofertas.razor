@@ -6,7 +6,8 @@
     <MudCard Class="mt-8 mb-4 mx-6 px-2">
         <MudCardContent>
             <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudText Typo="Typo.h5" Style="font-weight: bold" >Ofertas</MudText>
+                <MudIcon Icon="@Icons.Material.Filled.PlaylistAddCheck" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">Ofertas</MudText>
                 <MudSpacer />
                 <MudButton
                     StartIcon="@Icons.Material.Outlined.Add"
@@ -22,8 +23,12 @@
         </MudCardContent>
     </MudCard>
 
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudText>Uma oferta de curso pode acontecer a cada período, com variações de campus e de turno.</MudText>
+    </MudAlert>
+
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true">
+        <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true" RowsPerPage="8">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -40,13 +45,17 @@
                 />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Id" Title="Id" />
                 <PropertyColumn Property="x => x.Campus" Title="Campus" />
                 <PropertyColumn Property="x => x.Periodo" Title="Período" />
                 <PropertyColumn Property="x => x.Turno.GetDescription()" Title="Turno" />
                 <PropertyColumn Property="x => x.Curso" Title="Curso" />
                 <PropertyColumn Property="x => x.Grade" Title="Grade" />
             </Columns>
+
+            <NoRecordsContent>
+                Não existem ofertas cadastradas ainda.
+            </NoRecordsContent>
+
             <PagerContent>
                 <MudDataGridPager T="OfertaOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
             </PagerContent>
@@ -94,9 +103,9 @@
     {
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Small,
-            FullWidth = true
+            FullWidth = true,
         };
-        var dialog = await DialogService.ShowAsync<NewOfertaDialog>("Nova Oferta", options);
+        var dialog = await DialogService.ShowAsync<NewOfertaDialog>("", options);
 
         var result = await dialog.Result;
 

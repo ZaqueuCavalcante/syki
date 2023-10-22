@@ -31,7 +31,7 @@ public class OfertaConfig : IEntityTypeConfiguration<Oferta>
             .HasConversion(new EnumToStringConverter<Turno>());
 
         oferta.HasMany<Aluno>()
-            .WithOne()
+            .WithOne(a => a.Oferta)
             .HasForeignKey(a => a.OfertaId);
     }
 }

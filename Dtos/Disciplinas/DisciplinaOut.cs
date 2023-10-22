@@ -19,4 +19,9 @@ public class DisciplinaOut
         string justNumbers = new String(Id.ToString().Where(Char.IsDigit).ToArray());
         return int.Parse(justNumbers.Substring(0, 8));
     }
+
+    public override string ToString()
+    {
+        return Nome;
+    }
 }

@@ -6,7 +6,8 @@
     <MudCard Class="mt-8 mb-4 mx-6 px-2">
         <MudCardContent>
             <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudText Typo="Typo.h5" Style="font-weight: bold" >Professores</MudText>
+                <MudIcon Icon="@Icons.Material.Filled.Person4" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">Professores</MudText>
                 <MudSpacer />
                 <MudButton
                     StartIcon="@Icons.Material.Outlined.Add"
@@ -22,8 +23,12 @@
         </MudCardContent>
     </MudCard>
 
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudText>Um professor pode lecionar várias disciplinas ao longo de um período, inclusive em mais de um campus.</MudText>
+    </MudAlert>
+
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_professores" QuickFilter="@_quickFilter" Hover="true">
+        <MudDataGrid Class="pa-4" Items="@_professores" QuickFilter="@_quickFilter" Hover="true" RowsPerPage="8">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -43,6 +48,11 @@
                 <PropertyColumn Property="x => x.Id" Title="Id" />
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
             </Columns>
+
+            <NoRecordsContent>
+                Não existem professores cadastrados ainda.
+            </NoRecordsContent>
+
             <PagerContent>
                 <MudDataGridPager T="ProfessorOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
             </PagerContent>
@@ -80,7 +90,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewProfessorDialog>("Novo Professor", options);
+        var dialog = await DialogService.ShowAsync<NewProfessorDialog>("", options);
 
         var result = await dialog.Result;
 

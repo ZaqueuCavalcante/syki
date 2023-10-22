@@ -10,21 +10,21 @@ public static class DbSeed
         Nome = "Nova Roma",
         Campi = new()
         {
-            new Campus("Caruaru"),
-            new Campus("Recife"),
-            new Campus("Garanhuns"),
+            new Campus("Agreste I", "Caruaru - PE"),
+            new Campus("Suassuna", "Recife - PE"),
+            new Campus("Garoa II", "Garanhuns - PE"),
         },
         Cursos = new()
         {
-            new Curso("Administração", Dtos.TipoDeCurso.PosGraduacao),
-            new Curso("Análise e Desenvolvimento de Sistemas", Dtos.TipoDeCurso.Graduacao),
-            new Curso("Arquitetura e Urbanismo", Dtos.TipoDeCurso.Graduacao),
-            new Curso("Ciência da Computação", Dtos.TipoDeCurso.Graduacao),
-            new Curso("Direito", Dtos.TipoDeCurso.PosGraduacao),
-            new Curso("Engenharia Civil", Dtos.TipoDeCurso.Graduacao),
-            new Curso("Engenharia Mecânica", Dtos.TipoDeCurso.Graduacao),
-            new Curso("Engenharia de Produção", Dtos.TipoDeCurso.Graduacao),
-            new Curso("Pedagogia", Dtos.TipoDeCurso.PosGraduacao),
+            new Curso("Administração", Dtos.TipoDeCurso.Mestrado),
+            new Curso("Análise e Desenvolvimento de Sistemas", Dtos.TipoDeCurso.Bacharelado),
+            new Curso("Arquitetura e Urbanismo", Dtos.TipoDeCurso.Tecnologo),
+            new Curso("Ciência da Computação", Dtos.TipoDeCurso.Bacharelado),
+            new Curso("Direito", Dtos.TipoDeCurso.Licenciatura),
+            new Curso("Engenharia Civil", Dtos.TipoDeCurso.Bacharelado),
+            new Curso("Engenharia Mecânica", Dtos.TipoDeCurso.Bacharelado),
+            new Curso("Engenharia de Produção", Dtos.TipoDeCurso.PosDoutorado),
+            new Curso("Pedagogia", Dtos.TipoDeCurso.Licenciatura),
         },
         Disciplinas = new()
         {

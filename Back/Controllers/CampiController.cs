@@ -19,7 +19,7 @@ public class CampiController : ControllerBase
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] CampusIn body)
     {
-        var campus = new Campus(body.Nome, User.Facul());
+        var campus = new Campus(body.Nome, body.Cidade, User.Facul());
 
         await _ctx.Campi.AddAsync(campus);
 
@@ -34,6 +34,6 @@ public class CampiController : ControllerBase
         var campi = await _ctx.Campi
             .Where(c => c.FaculdadeId == User.Facul()).ToListAsync();
 
-        return Ok(campi);
+        return Ok(campi.ConvertAll(c => c.ToOut()));
     }
 }

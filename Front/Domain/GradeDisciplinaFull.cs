@@ -8,4 +8,9 @@ public class GradeDisciplinaFull
     public byte? Periodo { get; set; }
     public byte? Creditos { get; set; }
     public bool IsSelected { get; set; }
+
+    public override string ToString()
+    {
+        return Nome;
+    }
 }

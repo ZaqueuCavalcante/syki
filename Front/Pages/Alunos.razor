@@ -6,7 +6,8 @@
     <MudCard Class="mt-8 mb-4 mx-6 px-2">
         <MudCardContent>
             <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudText Typo="Typo.h5" Style="font-weight: bold" >Alunos</MudText>
+                <MudIcon Icon="@Icons.Material.Filled.People" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">Alunos</MudText>
                 <MudSpacer />
                 <MudButton
                     StartIcon="@Icons.Material.Outlined.Add"
@@ -22,8 +23,12 @@
         </MudCardContent>
     </MudCard>
 
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudText>Um aluno precisa necessariamente estar vinculado à uma oferta de curso.</MudText>
+    </MudAlert>
+
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_alunos" QuickFilter="@_quickFilter" Hover="true">
+        <MudDataGrid Class="pa-4" Items="@_alunos" QuickFilter="@_quickFilter" Hover="true" RowsPerPage="8">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -40,11 +45,15 @@
                 />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Id" Title="Id" />
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
                 <PropertyColumn Property="x => x.Matricula" Title="Matrícula" />
-                <PropertyColumn Property="x => x.OfertaId" Title="Oferta" />
+                <PropertyColumn Property="x => x.Oferta" Title="Oferta" />
             </Columns>
+
+            <NoRecordsContent>
+                Não existem alunos cadastrados ainda.
+            </NoRecordsContent>
+
             <PagerContent>
                 <MudDataGridPager T="AlunoOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
             </PagerContent>
@@ -85,7 +94,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewAlunoDialog>("Novo Aluno", options);
+        var dialog = await DialogService.ShowAsync<NewAlunoDialog>("", options);
 
         var result = await dialog.Result;
 

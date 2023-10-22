@@ -13,6 +13,7 @@ public class Aluno
     public Guid? UserId { get; set; }
 
     public Guid OfertaId { get; set; }
+    public Oferta Oferta { get; set; }
 
     public string Nome { get; set; }
 
@@ -42,6 +43,7 @@ public class Aluno
         {
             Id = Id,
             OfertaId = OfertaId,
+            Oferta = Oferta?.Curso?.Nome ?? "-",
             Nome = Nome,
             Matricula = Matricula,
         };

@@ -1,3 +1,5 @@
+using Syki.Dtos;
+
 namespace Syki.Back.Domain;
 
 public class Campus
@@ -8,16 +10,30 @@ public class Campus
 
     public string Nome { get; set; }
 
-    public Campus(string nome)
+    public string Cidade { get; set; }
+
+    public Campus(string nome, string cidade)
     {
         Id = Guid.NewGuid();
         Nome = nome;
+        Cidade = cidade;
     }
 
-    public Campus(string nome, Guid faculdadeId)
+    public Campus(string nome, string cidade, Guid faculdadeId)
     {
         Id = Guid.NewGuid();
         Nome = nome;
+        Cidade = cidade;
         FaculdadeId = faculdadeId;
+    }
+
+    public CampusOut ToOut()
+    {
+        return new CampusOut
+        {
+            Id = Id,
+            Nome = Nome,
+            Cidade = Cidade,
+        };
     }
 }

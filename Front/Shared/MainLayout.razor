@@ -21,8 +21,25 @@
                 <MudSpacer />
                 <MudText>@_userName</MudText>
                 <MudSpacer />
-                <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Href="/" Target="_self" />
-                <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="Logout" />
+                <MudTooltip Text="Account">
+                    <MudMenu Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Inherit" Dense="true" AnchorOrigin="Origin.BottomCenter" TransformOrigin="@Origin.BottomCenter">
+                        <MudMenuItem>Profile</MudMenuItem>
+                        <MudMenuItem>My account</MudMenuItem>
+                        <MudMenuItem Disabled="true">Logout</MudMenuItem>
+                    </MudMenu>
+                </MudTooltip>
+
+                <MudTooltip Text="Settings">
+                    <MudMenu Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Dense="true" AnchorOrigin="Origin.BottomCenter" TransformOrigin="@Origin.BottomCenter">
+                        <MudMenuItem>Campus</MudMenuItem>
+                        <MudMenuItem>Provas</MudMenuItem>
+                        <MudMenuItem>Boletos</MudMenuItem>
+                    </MudMenu>
+                </MudTooltip>
+
+                <MudTooltip Text="Logout">
+                    <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="Logout" />
+                </MudTooltip>
             </MudAppBar>
             <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
                 <NavMenu />

@@ -6,7 +6,8 @@
     <MudCard Class="mt-8 mb-4 mx-6 px-2">
         <MudCardContent>
             <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudText Typo="Typo.h5" Style="font-weight: bold" >Disciplinas</MudText>
+                <MudIcon Icon="@Icons.Material.Filled.Apps" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">Disciplinas</MudText>
                 <MudSpacer />
                 <MudButton
                     StartIcon="@Icons.Material.Outlined.Add"
@@ -22,8 +23,12 @@
         </MudCardContent>
     </MudCard>
 
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudText>Uma mesma disciplina pode compor a grade de cursos diferentes. A carga horária definida aqui é apenas um valor de referência.</MudText>
+    </MudAlert>
+
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_disciplinas" QuickFilter="@_quickFilter" Hover="true">
+        <MudDataGrid Class="pa-4" Items="@_disciplinas" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" RowsPerPage="8">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -43,6 +48,11 @@
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
                 <PropertyColumn Property="x => x.CargaHoraria" Title="Carga Horária" />
             </Columns>
+
+            <NoRecordsContent>
+                Não existem disciplinas cadastradas ainda.
+            </NoRecordsContent>
+
             <PagerContent>
                 <MudDataGridPager T="DisciplinaOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
             </PagerContent>
@@ -55,12 +65,15 @@
 @inject IDialogService DialogService
 
 @code {
+    private bool _loading;
     private string _searchString;
     private List<DisciplinaOut> _disciplinas = new();
 
     protected override async Task OnInitializedAsync()
     {
+        _loading = true;
         _disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
+        _loading = false;
     }
 
     private Func<DisciplinaOut, bool> _quickFilter => x =>
@@ -83,7 +96,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewDisciplinaDialog>("Nova Disciplina", options);
+        var dialog = await DialogService.ShowAsync<NewDisciplinaDialog>("", options);
 
         var result = await dialog.Result;
 

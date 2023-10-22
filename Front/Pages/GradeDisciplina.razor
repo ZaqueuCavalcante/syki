@@ -1,10 +1,15 @@
 <MudForm @ref="form">
     <MudStack Row="true">
         <MudItem xs="6">
-            <MudSelect
+            <MudAutocomplete
+                MaxItems="50"
+                T="GradeDisciplinaFull"
+                SearchFunc="@SearchDisciplina"
                 Dense="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
+                ShowProgressIndicator="true"
+                Class="mb-2"
                 Value="@_disciplina"
                 ValueChanged="(GradeDisciplinaFull newValue) => HandleDisciplinaChanged(newValue)"
                 Label="Disciplina"
@@ -12,20 +17,13 @@
                 RequiredError="Informe a disciplina!"
                 AdornmentColor="Color.Primary"
             >
-                @foreach (GradeDisciplinaFull? item in Disciplinas)
-                {
-                    if (item.IsSelected && item.Id != _disciplina?.Id) continue;
-                    <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
-                }
-                @if(Curso == null)
-                {
-                    <MudSelectItem Value="@_disciplina" Disabled="true">Selecione o curso!</MudSelectItem>
-                }
-                @if(Curso != null && Disciplinas.Count == 0)
-                {
-                    <MudSelectItem Value="@_disciplina" Disabled="true">Este curso não possui disciplinas vinculadas.</MudSelectItem>
-                }
-            </MudSelect>
+                <NoItemsTemplate>
+                    <MudText Align="Align.Center" Class="px-4 py-1">
+                        @(GetNotFoundMessage())
+                    </MudText>
+                </NoItemsTemplate>
+            </MudAutocomplete>
+
         </MudItem>
         <MudItem xs="2">
             <MudTextField
@@ -82,6 +80,29 @@
     byte? _periodo;
     byte? _creditos;
     ushort? _cargaHoraria;
+
+    private string GetNotFoundMessage()
+    {
+        if (Curso == null)
+            return "Selecione o curso!";
+
+        if (Disciplinas.Count == 0)
+            return "Este curso não possui disciplinas vinculadas.";
+        
+        return "";
+    }
+
+    private async Task<IEnumerable<GradeDisciplinaFull>> SearchDisciplina(string value)
+    {
+        await Task.Delay(1);
+
+        var filtered = Disciplinas.Where(d => !d.IsSelected || (d.IsSelected && d.Id == _disciplina?.Id));
+
+        if (string.IsNullOrEmpty(value))
+            return filtered;
+
+        return filtered.Where(x => x.Nome.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
 
     void HandleDisciplinaChanged(GradeDisciplinaFull newValue)
     {

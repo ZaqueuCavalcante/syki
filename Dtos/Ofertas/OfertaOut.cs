@@ -9,4 +9,9 @@ public class OfertaOut
     public string Grade { get; set; }
     public string Periodo { get; set; }
     public Turno Turno { get; set; }
+
+    public string GetLine()
+    {
+        return $"{Grade} | {Campus} | {Periodo} | {Turno.GetDescription()}";
+    }
 }

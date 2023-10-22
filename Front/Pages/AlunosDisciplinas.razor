@@ -7,7 +7,8 @@
     <MudCard Class="mt-8 mb-4 mx-6 px-2">
         <MudCardContent>
             <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudText Typo="Typo.h5" Style="font-weight: bold" >Disciplinas</MudText>
+                <MudIcon Icon="@Icons.Material.Filled.Apps" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">Disciplinas</MudText>
                 <MudSpacer />
             </MudStack>
         </MudCardContent>
@@ -25,16 +26,24 @@
                         </div>
                     </TitleContent>
                     <ChildContent>
-                            <MudDataGrid
-                                ColumnResizeMode="ResizeMode.None"
-                                SortMode="SortMode.None" ShowColumnOptions="false" Class="px-4 pb-2"
-                                Elevation="0" Dense="true" Items="@_disciplinas.Where(x => x.Periodo == periodo)" Hover="true">
-                                <Columns>
-                                    <PropertyColumn Property="x => x.Nome" Title="Nome" />
-                                    <PropertyColumn Property="x => x.Creditos" Title="Créditos" />
-                                    <PropertyColumn Property="x => x.CargaHoraria" Title="Carga Horária" />
-                                </Columns>
-                            </MudDataGrid>
+                        <MudTable Items="@_disciplinas.Where(x => x.Periodo == periodo)" Breakpoint="Breakpoint.Sm" Dense="true">
+                            <ColGroup>
+                                <col style="width: 60%;" />
+                                <col style="width: 20%;" />
+                                <col style="width: 20%;" />
+                            </ColGroup>
+
+                            <HeaderContent>
+                                <MudTh>Nome</MudTh>
+                                <MudTh>Créditos</MudTh>
+                                <MudTh>Carga Horária</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Nome">@context.Nome</MudTd>
+                                <MudTd DataLabel="Créditos">@context.Creditos</MudTd>
+                                <MudTd DataLabel="Carga Horária">@context.CargaHoraria</MudTd>
+                            </RowTemplate>
+                        </MudTable>
                     </ChildContent>
                 </MudExpansionPanel>
             }

@@ -7,7 +7,7 @@
     </TitleContent>
 
     <DialogContent>
-        <MudDataGrid Items="@Disciplinas" Hover="true" Class="mb-4">
+        <MudDataGrid Items="@Disciplinas.OrderBy(d => d.Periodo).ThenBy(d => d.Nome)" Hover="true" Class="mb-4">
             <Columns>
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
                 <PropertyColumn Property="x => x.Periodo" Title="Período" />

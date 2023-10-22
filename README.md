@@ -4,7 +4,7 @@
 
 ## Database Modelling ER Diagram
 
-![ER](/Docs/ER_05.png "ER")
+![ER](/Docs/ER_06.png "ER")
 
 ## Front-End
 

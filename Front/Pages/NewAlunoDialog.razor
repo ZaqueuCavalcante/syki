@@ -20,8 +20,9 @@
                 Required="true"
                 RequiredError="Informe o nome do aluno!"
             />
+
             <MudSelect
-                Dense="true"
+                Dense='true'
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
@@ -33,7 +34,7 @@
             ">
                 @foreach (OfertaOut? item in _ofertas)
                 {
-                    <MudSelectItem Value="@item">@item.Id</MudSelectItem>
+                    <MudSelectItem Value="@item">@item.GetLine()</MudSelectItem>
                 }
             </MudSelect>
         </MudForm>

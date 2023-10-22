@@ -28,7 +28,7 @@
     </MudAlert>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true" RowsPerPage="8">
+        <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" RowsPerPage="8">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -68,12 +68,15 @@
 @inject IDialogService DialogService
 
 @code {
+    private bool _loading;
     private string _searchString;
     private List<OfertaOut> _ofertas = new();
 
     protected override async Task OnInitializedAsync()
     {
+        _loading = true;
         _ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
+        _loading = false;
     }
 
     private Func<OfertaOut, bool> _quickFilter => x =>

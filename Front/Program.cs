@@ -14,7 +14,7 @@ builder.Services.AddLocalStorageServices();
 builder.Services.AddScoped<SykiDelegatingHandler>();
 
 var url = "https://syki-dev-api.azurewebsites.net";
-url = "http://localhost:5160";
+// url = "http://localhost:5160";
 
 builder.Services
     .AddHttpClient("HttpClient", x => x.BaseAddress = new Uri(url))

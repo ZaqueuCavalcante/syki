@@ -7,7 +7,7 @@
 6 - [ ] Add policies instead roles
 7 - [ ] Link Aluno and Professor to SykiUser
 8 - [ ] Add full intial setup usecase (Academico -> Professor + Aluno views)
-
+9 - [ ] Add full setup and login flows for Two Factor Auth (+ QrCode)
 
 https://stenbrinke.nl/blog/taking-ef-core-data-seeding-to-the-next-level-with-bogus/
 

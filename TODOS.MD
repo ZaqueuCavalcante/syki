@@ -1,13 +1,14 @@
-0 - [ ] Run API tests on pipeline
-1 - [X] Add authentication and authorization
-2 - [X] Use Identity? YES
-3 - [X] Manage API access
-4 - [ ] Add some use cases
-5 - [x] Fix front deploy
-6 - [ ] Add policies instead roles
-7 - [ ] Link Aluno and Professor to SykiUser
-8 - [ ] Add full intial setup usecase (Academico -> Professor + Aluno views)
-9 - [ ] Add full setup and login flows for Two Factor Auth (+ QrCode)
+00 - [ ] Run API tests on pipeline
+01 - [X] Add authentication and authorization
+02 - [X] Use Identity? YES
+03 - [X] Manage API access
+04 - [ ] Add some use cases
+05 - [x] Fix front deploy
+06 - [ ] Add policies instead roles
+07 - [ ] Link Aluno and Professor to SykiUser
+08 - [ ] Add full intial setup usecase (Academico -> Professor + Aluno views)
+09 - [ ] Add full setup and login flows for Two Factor Auth (+ QrCode)
+10 - [ ] Add calendar?
 
 https://stenbrinke.nl/blog/taking-ef-core-data-seeding-to-the-next-level-with-bogus/
 

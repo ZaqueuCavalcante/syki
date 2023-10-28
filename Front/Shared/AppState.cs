@@ -1,4 +1,4 @@
-namespace Front;
+namespace Syki.Front;
 
 public class AppState
 {

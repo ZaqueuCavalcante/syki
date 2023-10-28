@@ -1,4 +1,4 @@
-namespace Front.Domain;
+namespace Syki.Front.Domain;
 
 public class GradeDisciplinaFull
 {

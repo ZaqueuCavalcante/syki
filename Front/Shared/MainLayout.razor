@@ -1,5 +1,4 @@
 ﻿@inherits LayoutComponentBase
-@inject NavigationManager NavigationManager
 
 <MudThemeProvider IsDarkMode="false" />
 <MudDialogProvider CloseOnEscapeKey="true" CloseButton="true"/>
@@ -69,17 +68,14 @@
     </NotAuthorized>
 </AuthorizeView>
 
-@using Syki.Front.Auth
-@using System.Security.Claims
+@inject AuthService AuthService
+@inject NavigationManager NavigationManager
 
 @code {
-    public AppState AppState = new AppState();
-
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
 
-    [Inject]
-    public AuthService AuthService { get; set; }
+    public AppState AppState = new AppState();
 
     private string _userName = "";
 

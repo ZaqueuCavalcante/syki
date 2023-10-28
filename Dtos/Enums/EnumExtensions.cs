@@ -20,6 +20,16 @@ public static class EnumExtensions
         return value.ToString();
     }
 
+    public static string OnlyNumbers(this string text)
+    {
+        if (!string.IsNullOrEmpty(text))
+        {
+            return new string(text.Where(char.IsDigit).ToArray());
+        }
+
+        return "";
+    }
+
     public static bool IsIn(this Enum source, params Enum[] valuesToCheck)
     {
         if (valuesToCheck == null || valuesToCheck.Length == 0)

@@ -1,0 +1,159 @@
+﻿@page "/mfa-setup"
+
+<PageTitle>MFA Setup</PageTitle>
+
+<AuthorizeView Roles="Adm, Academico">
+    <MudContainer Class="mt-8 px-12">
+        <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-4">
+            <MudIcon Icon="@Icons.Material.Filled.ScreenLockPortrait" Class="mr-1 mb-n1" Size="Size.Large"/>
+            MFA Setup
+        </MudText>
+
+        <MudAlert Class="mt-4" Severity="Severity.Normal" Variant="Variant.Text">
+            <MudStack Row="true" Justify="Justify.SpaceAround">
+                <MudText>A autenticação de dois fatores ajuda a manter sua conta segura.</MudText>
+            </MudStack>
+        </MudAlert>
+
+        <MudTabs Elevation="2" Rounded="true" Centered="true" ApplyEffectsToContainer="true" Class="mt-4" PanelClass="pa-0" @bind-ActivePanelIndex="_activeIndex">
+            <MudPaper Height="510px" Elevation="0">
+                <MudTabPanel Icon="@Icons.Material.Filled.QrCode" Text="App Setup">
+                    <MudCard Class="mt-4 px-16 py-0" Elevation="0">
+                        <MudCardContent>
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudAlert Severity="Severity.Info" Variant="Variant.Text">
+                                    <MudStack Row="true" Justify="Justify.SpaceAround">
+                                        <MudText>Abra o Google Authenticator e leia o QR-Code abaixo</MudText>
+                                    </MudStack>
+                                </MudAlert>
+
+                                @if(_qrCodeLoading)
+                                {
+                                    <MudCard Elevation="25" Class="ma-4 d-flex align-center justify-center" Style="width: 300px; height: 300px;">
+                                        <MudProgressCircular Color="Color.Dark" Indeterminate="true" Size="Size.Large" />
+                                    </MudCard>
+                                }
+                                else
+                                {
+                                    <MudImage Src="@(GetQrCodeImageSrc())" Width="300" Height="300" Alt="MFA QR Code" Elevation="25" Class="rounded-lg ma-4"/>
+                                }
+                            </MudStack>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton
+                                Size="Size.Large"
+                                Variant="Variant.Filled"
+                                Color="Color.Primary"
+                                OnClick="HandleClick"
+                                Class="mx-auto mb-4 px-12"
+                            >
+                                Feito!
+                            </MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudTabPanel>
+                <MudTabPanel Icon="@Icons.Material.Filled.NavigateNext" Text="" Disabled="true" />
+                <MudTabPanel Icon="@Icons.Material.Filled.Numbers" Text="Insert Code">
+
+                    <style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
+                    <MudCard Class="mt-4 px-16 py-0" Elevation="0">
+                        <MudCardContent>
+                            <MudStack AlignItems="AlignItems.Center">
+                                <MudAlert Severity="Severity.Info" Variant="Variant.Text">
+                                    <MudStack Row="true" Justify="Justify.SpaceAround">
+                                        <MudText>Insira o código para finalizar o setup</MudText>
+                                    </MudStack>
+                                </MudAlert>
+                                <MudForm>
+                                    <MudTextField
+                                        Immediate="true"
+                                        OnlyValidateIfDirty="true"
+                                        Variant="Variant.Outlined"
+                                        Style="width: 200px;"
+                                        Class="mt-8"
+                                        AutoFocus="true"
+                                        Value="_userCode"
+                                        ValueChanged="x => HandleCodeChanged(x)"
+                                        T="String"
+                                        Mask="@(new PatternMask("000 000"))"
+                                    />
+                                </MudForm>         
+                            </MudStack>
+                        </MudCardContent>
+                    </MudCard>
+                </MudTabPanel>
+            </MudPaper>
+        </MudTabs>
+    </MudContainer>
+</AuthorizeView>
+
+@using QRCoder;
+@inject HttpClient Http
+
+@code {
+    private int _activeIndex;
+    private string _userCode;
+
+    private bool _qrCodeLoading;
+
+    public string Code { get; set; }
+
+    public Byte[] CodeBytes { get; set; }
+
+    private void HandleClick()
+    {
+        _activeIndex = 2;
+    }
+
+    private async Task HandleCodeChanged(string newValue)
+    {
+        _userCode = newValue;
+
+        Console.WriteLine(_userCode);
+
+        if (_userCode.Length == 7)
+        {
+            var data = new MfaSetupIn { Token = _userCode.OnlyNumbers() };
+            await Http.PostAsJsonAsync("/users/mfa-setup", data);
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _qrCodeLoading = true;
+
+        var result = await Http.GetFromJsonAsync<MfaKeyOut>("/users/mfa-key");
+
+        if (result != null)
+        {
+            Code = result.Key;
+            CodeBytes = GenerateQrCodeBytes(Code);
+
+            Console.WriteLine(Code);
+        }
+
+        _qrCodeLoading = false;
+    }
+
+    private string GetQrCodeImageSrc()
+    {
+        if (CodeBytes == null) return "";
+        return string.Format("data:image/png;base64,{0}", Convert.ToBase64String(CodeBytes));
+    }
+
+    private Byte[] GenerateQrCodeBytes(string key)
+    {
+        const string provider = "Syki App";
+        const string email = "zaqueudovale@gmail.com";
+
+        using var qrGenerator = new QRCodeGenerator();
+        using var qrCodeData = qrGenerator.CreateQrCode(
+            $"otpauth://totp/{provider}:{email}?secret={key}&issuer={provider}",
+            QRCodeGenerator.ECCLevel.Q
+        );
+        
+        var qrCode = new PngByteQRCode(qrCodeData);
+
+        return qrCode.GetGraphic(20);
+    }
+}

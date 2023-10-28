@@ -36,7 +36,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("mfa-key")]
-    [Authorize(Roles = Adm)]
+    [Authorize(Roles = $"{Adm}, {Academico}")]
     public async Task<IActionResult> GetMfaKey()
     {
         var key = await _authService.GetMfaKey(User.Id());
@@ -45,7 +45,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("mfa-setup")]
-    [Authorize(Roles = Adm)]
+    [Authorize(Roles = $"{Adm}, {Academico}")]
     public async Task<IActionResult> MfaSetup([FromBody] MfaSetupIn body)
     {
         await _authService.SetupMfa(User.Id(), body.Token);

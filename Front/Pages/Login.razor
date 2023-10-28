@@ -1,44 +1,71 @@
 ﻿@page "/login"
 
-<PageTitle>Syki</PageTitle>
+<PageTitle>Login</PageTitle>
 
-<MudContainer Class="mt-16 mb-8" MaxWidth="MaxWidth.Small">
-    <EditForm Model="@_model" OnValidSubmit="OnValidSubmit">
-        <MudGrid>
-            <SykiLoading Loading="@_loading" />
-            <MudItem xs="12">
-                <MudCard>
-                    <MudCardContent>
-                        <MudTextField AutoFocus="true" Label="Email" Class="mt-3" @bind-Value="_model.Email" For="@(() => _model.Email)" Variant="Variant.Outlined"
-                            Required="true" RequiredError="Informe o email!"/>
-                        <MudTextField Label="Password" Class="mt-3" @bind-Value="_model.Password" For="@(() => _model.Password)" InputType="InputType.Password" Variant="Variant.Outlined"
-                            Required="true" RequiredError="Informe a senha!"/>
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Login</MudButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
-        </MudGrid>
-    </EditForm>
+<style>body { background-color: rgba(235,235,235,1); }</style>
+
+<MudContainer Class="mt-16 mb-8" Style="width: 460px">
+    <MudForm @ref="_form">
+        <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+        </MudOverlay>
+        <MudCard Class="px-16 pt-16 pb-8">
+            <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
+            <MudCardContent Class="mt-4">
+                <MudTextField
+                    Margin="Margin.Dense"
+                    AutoFocus="true"
+                    Label="Email"
+                    Class="mt-3"
+                    OnlyValidateIfDirty="true"
+                    @bind-Value="_model.Email"
+                    Variant="Variant.Outlined"
+                    Required="true"
+                    RequiredError="Informe o email!"
+                />
+                <MudTextField
+                    Margin="Margin.Dense"
+                    Label="Password"
+                    Class="mt-3"
+                    OnlyValidateIfDirty="true"
+                    @bind-Value="_model.Password"
+                    InputType="InputType.Password"
+                    Variant="Variant.Outlined"
+                    Required="true"
+                    RequiredError="Informe a senha!"
+                />
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton
+                    Size="Size.Large"
+                    OnClick="OnLoginClick"
+                    Variant="Variant.Filled"
+                    Color="Color.Primary"
+                    Class="mx-auto mb-4 px-12"
+                >
+                    Login
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudForm>
 </MudContainer>
 
-@using Syki.Dtos
-@using Syki.Front.Auth
-
 @inject ISnackbar Snackbar
+@inject AuthService AuthService
 @inject NavigationManager NavigationManager
 
 @code {
-    [Inject]
-    public AuthService AuthService { get; set; }
-
     private bool _loading;
+
+    private MudForm _form;
 
     LoginIn _model = new();
 
-    private async Task OnValidSubmit(EditContext context)
+    private async Task OnLoginClick()
     {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
         _loading = true;
         var success = await AuthService.Login(_model.Email, _model.Password);
 

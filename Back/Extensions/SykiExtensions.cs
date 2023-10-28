@@ -25,6 +25,16 @@ public static class SykiExtensions
         return !string.IsNullOrEmpty(text);
     }
 
+    public static string OnlyNumbers(this string text)
+    {
+        if (!string.IsNullOrEmpty(text))
+        {
+            return new string(text.Where(char.IsDigit).ToArray());
+        }
+
+        return "";
+    }
+
     public static string ToSnakeCase(this string input)
     {
         if (string.IsNullOrEmpty(input)) { return input; }

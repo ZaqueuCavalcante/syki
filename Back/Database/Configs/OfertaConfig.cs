@@ -1,4 +1,4 @@
-using Syki.Dtos;
+using Syki.Shared;
 using Syki.Back.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

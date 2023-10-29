@@ -1,4 +1,4 @@
-using Syki.Dtos;
+using Syki.Shared;
 
 namespace Syki.Back.Domain;
 

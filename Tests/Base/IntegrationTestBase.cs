@@ -1,4 +1,4 @@
-using Syki.Dtos;
+using Syki.Shared;
 using System.Net;
 using NUnit.Framework;
 using FluentAssertions;

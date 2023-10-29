@@ -1,4 +1,4 @@
-using Syki.Dtos;
+using Syki.Shared;
 using System.Net;
 using Syki.Tests.Base;
 using NUnit.Framework;
@@ -29,7 +29,7 @@ public class CampusIntegrationTests : ApiTestBase
         await RegisterUser(user);
         await Login(user.Email, user.Password);
 
-        var body = new CampusIn { Nome = "Campus Caruaru" };
+        var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
 
         // Act
         var campus = await PostAsync<CampusOut>("/campi", body);
@@ -57,8 +57,8 @@ public class CampusIntegrationTests : ApiTestBase
         await Login(user.Email, user.Password);
 
         // Act
-        await PostAsync("/campi", new CampusIn { Nome = "Campus Recife" });
-        await PostAsync("/campi", new CampusIn { Nome = "Campus Caruaru" });
+        await PostAsync("/campi", new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" });
+        await PostAsync("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
         
         // Assert
         var campi = await GetAsync<List<CampusOut>>("/campi");
@@ -69,7 +69,7 @@ public class CampusIntegrationTests : ApiTestBase
     public async Task Nao_deve_criar_um_novo_campus_quando_o_usuario_nao_esta_logado()
     {
         // Arrange
-        var body = new CampusIn { Nome = "Campus Caruaru" };
+        var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
 
         // Act
         var response = await _client.PostAsync("/campi", body.ToStringContent());

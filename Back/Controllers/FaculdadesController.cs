@@ -1,4 +1,4 @@
-using Syki.Dtos;
+using Syki.Shared;
 using Syki.Back.Domain;
 using Syki.Back.Database;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +30,9 @@ public class FaculdadesController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var faculdades = await _ctx.Faculdades.ToListAsync();
+        var faculdades = await _ctx.Faculdades
+            .Where(x => x.Id != Guid.Empty)
+            .ToListAsync();
 
         return Ok(faculdades);
     }

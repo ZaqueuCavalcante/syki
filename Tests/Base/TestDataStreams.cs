@@ -21,4 +21,17 @@ public static class TestDataStreams
             yield return new object[] { name };
         }
     }
+
+    public static IEnumerable<object[]> FormatedStrings()
+    {
+        foreach (var text in new List<(string, string)>()
+        {
+            ("629.219.140-00", "62921914000"),
+            ("18.297.767/0001-90", "18297767000190"),
+            ("yu2v34y1434u6b54u6b", "23414346546"),
+        })
+        {
+            yield return new object[] { text };
+        }
+    }
 }

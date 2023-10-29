@@ -1,4 +1,4 @@
-using Syki.Dtos;
+using Syki.Shared;
 using Syki.Back.Exceptions;
 using Syki.Back.Extensions;
 

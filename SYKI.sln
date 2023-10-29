@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Front", "Front\Front.csproj", "{108C6749-6910-4852-80D4-EF60ACCAA17E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dtos", "Dtos\Dtos.csproj", "{0B8A0918-F21B-4E45-886D-E012EE548043}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{239752E6-AB06-4B02-B432-1833371618B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +32,9 @@ Global
 		{108C6749-6910-4852-80D4-EF60ACCAA17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{108C6749-6910-4852-80D4-EF60ACCAA17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{108C6749-6910-4852-80D4-EF60ACCAA17E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B8A0918-F21B-4E45-886D-E012EE548043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B8A0918-F21B-4E45-886D-E012EE548043}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B8A0918-F21B-4E45-886D-E012EE548043}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B8A0918-F21B-4E45-886D-E012EE548043}.Release|Any CPU.Build.0 = Release|Any CPU
+		{239752E6-AB06-4B02-B432-1833371618B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{239752E6-AB06-4B02-B432-1833371618B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{239752E6-AB06-4B02-B432-1833371618B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{239752E6-AB06-4B02-B432-1833371618B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

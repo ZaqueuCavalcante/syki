@@ -1,4 +1,4 @@
-using Syki.Dtos;
+using Syki.Shared;
 using Syki.Back.Domain;
 using Syki.Back.Database;
 using Syki.Back.Extensions;

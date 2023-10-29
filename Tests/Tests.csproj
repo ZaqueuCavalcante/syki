@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <ImplicitUsings>enable</ImplicitUsings>
     <NoWarn>CA1806;IDE1006;CS8625;</NoWarn>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,8 +22,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Back\Back.csproj" />
-    <ProjectReference Include="..\Dtos\Dtos.csproj" />
     <ProjectReference Include="..\Front\Front.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

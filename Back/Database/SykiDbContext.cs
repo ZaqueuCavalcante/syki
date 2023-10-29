@@ -1,5 +1,5 @@
+using Syki.Shared;
 using Syki.Back.Domain;
-using Syki.Back.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 

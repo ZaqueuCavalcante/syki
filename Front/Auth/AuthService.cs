@@ -1,4 +1,4 @@
-using Syki.Dtos;
+using Syki.Shared;
 using Newtonsoft.Json;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;

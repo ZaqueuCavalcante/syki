@@ -1,3 +1,4 @@
+using Syki.Shared;
 using Syki.Back.Domain;
 
 namespace Syki.Back.Database;
@@ -16,15 +17,15 @@ public static class DbSeed
         },
         Cursos = new()
         {
-            new Curso("Administração", Dtos.TipoDeCurso.Mestrado),
-            new Curso("Análise e Desenvolvimento de Sistemas", Dtos.TipoDeCurso.Bacharelado),
-            new Curso("Arquitetura e Urbanismo", Dtos.TipoDeCurso.Tecnologo),
-            new Curso("Ciência da Computação", Dtos.TipoDeCurso.Bacharelado),
-            new Curso("Direito", Dtos.TipoDeCurso.Licenciatura),
-            new Curso("Engenharia Civil", Dtos.TipoDeCurso.Bacharelado),
-            new Curso("Engenharia Mecânica", Dtos.TipoDeCurso.Bacharelado),
-            new Curso("Engenharia de Produção", Dtos.TipoDeCurso.PosDoutorado),
-            new Curso("Pedagogia", Dtos.TipoDeCurso.Licenciatura),
+            new Curso("Administração", TipoDeCurso.Mestrado),
+            new Curso("Análise e Desenvolvimento de Sistemas", TipoDeCurso.Bacharelado),
+            new Curso("Arquitetura e Urbanismo", TipoDeCurso.Tecnologo),
+            new Curso("Ciência da Computação", TipoDeCurso.Bacharelado),
+            new Curso("Direito", TipoDeCurso.Licenciatura),
+            new Curso("Engenharia Civil", TipoDeCurso.Bacharelado),
+            new Curso("Engenharia Mecânica", TipoDeCurso.Bacharelado),
+            new Curso("Engenharia de Produção", TipoDeCurso.PosDoutorado),
+            new Curso("Pedagogia", TipoDeCurso.Licenciatura),
         },
         Disciplinas = new()
         {

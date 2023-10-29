@@ -1,4 +1,4 @@
-using Syki.Dtos;
+using Syki.Shared;
 using Syki.Back.Services;
 using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Mvc;

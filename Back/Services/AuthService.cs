@@ -1,4 +1,4 @@
-using Syki.Dtos;
+using Syki.Shared;
 using System.Text;
 using Syki.Back.Settings;
 using System.Security.Claims;

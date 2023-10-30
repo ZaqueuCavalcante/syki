@@ -41,16 +41,16 @@ public class UsersController : ControllerBase
     {
         var key = await _authService.GetMfaKey(User.Id());
 
-        return Ok(new { key });
+        return Ok(new MfaKeyOut { Key = key });
     }
 
     [HttpPost("mfa-setup")]
     [Authorize(Roles = $"{Adm}, {Academico}")]
     public async Task<IActionResult> MfaSetup([FromBody] MfaSetupIn body)
     {
-        await _authService.SetupMfa(User.Id(), body.Token);
+        var ok = await _authService.SetupMfa(User.Id(), body.Token);
 
-        return Ok();
+        return Ok(new MfaSetupOut { Ok = ok });
     }
 
     [HttpPost("login")]

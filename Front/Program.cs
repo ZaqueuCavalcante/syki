@@ -1,45 +1,11 @@
-using Front;
-using MudBlazor;
-using Syki.Front.Auth;
-using MudBlazor.Services;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Syki.Front.Configs;
 
-var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<App>("#app");
-builder.RootComponents.Add<HeadOutlet>("head::after");
+var builder = WasmConfigs.CreateHostBuilder(args);
 
-builder.Services.AddLocalStorageServices();
-builder.Services.AddScoped<SykiDelegatingHandler>();
-
-var url = "https://syki-dev-api.azurewebsites.net";
-// url = "http://localhost:5160";
-
-builder.Services
-    .AddHttpClient("HttpClient", x => x.BaseAddress = new Uri(url))
-    .AddHttpMessageHandler<SykiDelegatingHandler>();
-
-builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-    .CreateClient("HttpClient"));
-
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<SykiAuthStateProvider>();
-builder.Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<SykiAuthStateProvider>());
-
-builder.Services.AddAuthorizationCore();
-
-builder.Services.AddMudServices(config =>
-{
-    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopCenter;
-
-    config.SnackbarConfiguration.PreventDuplicates = true;
-    config.SnackbarConfiguration.NewestOnTop = true;
-    config.SnackbarConfiguration.ShowCloseIcon = true;
-    config.SnackbarConfiguration.VisibleStateDuration = 2_000;
-    config.SnackbarConfiguration.ShowTransitionDuration = 500;
-    config.SnackbarConfiguration.HideTransitionDuration = 500;
-    config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
-});
+builder.AddMudConfigs();
+builder.AddHttpConfigs();
+builder.AddAuthConfigs();
+builder.AddServicesConfigs();
+builder.AddLocalStorageConfigs();
 
 await builder.Build().RunAsync();

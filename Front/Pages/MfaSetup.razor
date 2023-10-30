@@ -47,7 +47,7 @@
                                 OnClick="HandleClick"
                                 Class="mx-auto mb-4 px-12"
                             >
-                                Feito!
+                                Continuar
                             </MudButton>
                         </MudCardActions>
                     </MudCard>
@@ -109,8 +109,6 @@
     {
         _userCode = newValue;
 
-        Console.WriteLine(_userCode);
-
         if (_userCode.Length == 7)
         {
             var data = new MfaSetupIn { Token = _userCode.OnlyNumbers() };
@@ -128,8 +126,6 @@
         {
             Code = result.Key;
             CodeBytes = GenerateQrCodeBytes(Code);
-
-            Console.WriteLine(Code);
         }
 
         _qrCodeLoading = false;

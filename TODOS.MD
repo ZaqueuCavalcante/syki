@@ -9,6 +9,7 @@
 08 - [ ] Add full intial setup usecase (Academico -> Professor + Aluno views)
 09 - [ ] Add full setup and login flows for Two Factor Auth (+ QrCode)
 10 - [ ] Add calendar?
+11 - [ ] Use Result Pattern instead throw exceptions
 
 https://stenbrinke.nl/blog/taking-ef-core-data-seeding-to-the-next-level-with-bogus/
 

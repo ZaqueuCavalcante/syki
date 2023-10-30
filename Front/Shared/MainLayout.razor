@@ -20,23 +20,18 @@
                 <MudSpacer />
                 <MudText>@_userName</MudText>
                 <MudSpacer />
-                <MudTooltip Text="Account">
-                    <MudMenu Icon="@Icons.Material.Filled.AccountCircle" Color="Color.Inherit" Dense="true" AnchorOrigin="Origin.BottomCenter" TransformOrigin="@Origin.BottomCenter">
-                        <MudMenuItem>Profile</MudMenuItem>
-                        <MudMenuItem>My account</MudMenuItem>
-                        <MudMenuItem Disabled="true">Logout</MudMenuItem>
-                    </MudMenu>
-                </MudTooltip>
 
-                <MudTooltip Text="Settings">
+                <style>.mud-list-item-icon { min-width: 35px !important; }</style>
+                <MudTooltip Text="Configs">
                     <MudMenu Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Dense="true" AnchorOrigin="Origin.BottomCenter" TransformOrigin="@Origin.BottomCenter">
-                        <MudMenuItem>Campus</MudMenuItem>
-                        <MudMenuItem>Provas</MudMenuItem>
-                        <MudMenuItem>Boletos</MudMenuItem>
+                        <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.AccountCircle">Account</MudMenuItem>
+                        <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.FilterAlt">Preferences</MudMenuItem>
+                        <MudMenuItem Href="mfa-setup" IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.ScreenLockPortrait">MFA setup</MudMenuItem>
+                        <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.Help">Help</MudMenuItem>
                     </MudMenu>
                 </MudTooltip>
 
-                <MudTooltip Text="Logout">
+                <MudTooltip Text="Sair">
                     <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="Logout" />
                 </MudTooltip>
             </MudAppBar>

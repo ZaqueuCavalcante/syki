@@ -19,7 +19,7 @@ public class DbSeedIntegrationTests : ApiTestBase
 
         // Act
         _ctx.SeedStartupData();
-        
+
         // Assert
         var faculdades = await _ctx.Faculdades.ToListAsync();
         faculdades.Should().HaveCount(1);

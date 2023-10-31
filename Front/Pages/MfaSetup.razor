@@ -15,6 +15,10 @@
             </MudStack>
         </MudAlert>
 
+        <MudOverlay @bind-Visible="@_validateCodeLoading" LightBackground="true" Absolute="false">
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+        </MudOverlay>
+
         <MudTabs Elevation="2" Rounded="true" Centered="true" ApplyEffectsToContainer="true" Class="mt-4" PanelClass="pa-0" @bind-ActivePanelIndex="_activeIndex">
             <MudPaper Height="510px" Elevation="0">
                 <MudTabPanel Icon="@Icons.Material.Filled.QrCode" Text="App Setup">
@@ -77,7 +81,26 @@
                                         T="String"
                                         Mask="@(new PatternMask("000 000"))"
                                     />
-                                </MudForm>         
+                                </MudForm>
+
+                                @if(_showCodeFeedback && !_codeIsCorrect)
+                                {
+                                    <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Text">
+                                        <MudStack Row="true" Justify="Justify.SpaceAround">
+                                            <MudText>ERRADO!</MudText>
+                                        </MudStack>
+                                    </MudAlert>
+                                }
+
+                                @if(_showCodeFeedback && _codeIsCorrect)
+                                {
+                                    <MudAlert Class="mt-4" Severity="Severity.Success" Variant="Variant.Text">
+                                        <MudStack Row="true" Justify="Justify.SpaceAround">
+                                            <MudText>CERTO!</MudText>
+                                        </MudStack>
+                                    </MudAlert>
+                                }
+
                             </MudStack>
                         </MudCardContent>
                     </MudCard>
@@ -89,12 +112,17 @@
 
 @using QRCoder;
 @inject HttpClient Http
+@inject IMfaService Mfa
 
 @code {
+
     private int _activeIndex;
     private string _userCode;
 
     private bool _qrCodeLoading;
+    private bool _validateCodeLoading;
+    private bool _showCodeFeedback;
+    private bool _codeIsCorrect;
 
     public string Code { get; set; }
 
@@ -107,12 +135,16 @@
 
     private async Task HandleCodeChanged(string newValue)
     {
+        _showCodeFeedback = false;
         _userCode = newValue;
 
         if (_userCode.Length == 7)
         {
-            var data = new MfaSetupIn { Token = _userCode.OnlyNumbers() };
-            await Http.PostAsJsonAsync("/users/mfa-setup", data);
+            _validateCodeLoading = true;
+            var result = await Mfa.EnableUserMfa(_userCode);
+            _codeIsCorrect = result.Ok;
+            _showCodeFeedback = true;
+            _validateCodeLoading = false;
         }
     }
 
@@ -120,7 +152,7 @@
     {
         _qrCodeLoading = true;
 
-        var result = await Http.GetFromJsonAsync<MfaKeyOut>("/users/mfa-key");
+        var result = await Mfa.GetMfaKey();
 
         if (result != null)
         {

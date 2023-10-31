@@ -41,12 +41,8 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
         }
     }
 
-    // SEED DATA
     public void SeedStartupData()
     {
-        Database.EnsureDeleted();
-        Database.EnsureCreated();
-
         DbSeed.NovaRoma.Cursos[1].Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList();
 
         var disciplinasDireito = DbSeed.NovaRoma.Disciplinas.Skip(31).Take(39).ToList();

@@ -1,0 +1,32 @@
+<MudDialog Class="pb-2" ClassContent="pt-0">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Done" Class="mr-1 mb-n1" />
+            2FA configurado com sucesso!
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudDivider Class="mb-4"/>
+        <MudText>No seu próximo login já vai ser necessário informar os dois fatores de autenticação.</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudSpacer/>
+        <MudButton Class="mt-4" Variant="Variant.Filled" Style="@($"color: white; background: {Colors.Green.Default};")" OnClick="Submit">Continuar</MudButton>
+        <MudSpacer/>
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject NavigationManager Nav
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    private void Submit()
+    {
+        Nav.NavigateTo("/");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

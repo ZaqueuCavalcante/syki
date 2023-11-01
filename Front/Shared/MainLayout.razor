@@ -26,7 +26,7 @@
                     <MudMenu Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Dense="true" AnchorOrigin="Origin.BottomCenter" TransformOrigin="@Origin.BottomCenter">
                         <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.AccountCircle">Account</MudMenuItem>
                         <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.FilterAlt">Preferences</MudMenuItem>
-                        <MudMenuItem Href="mfa-setup" IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.ScreenLockPortrait">MFA setup</MudMenuItem>
+                        <MudMenuItem Href="mfa-setup" IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.ScreenLockPortrait">2FA setup</MudMenuItem>
                         <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.Help">Help</MudMenuItem>
                     </MudMenu>
                 </MudTooltip>
@@ -46,7 +46,7 @@
         </MudLayout>
     </Authorized>
     <NotAuthorized>
-        @if (NavigationManager.Uri.ToLower().Contains("login") || NavigationManager.Uri.ToLower().Contains("register"))
+        @if (Nav.Uri.ToLower().Contains("login") || Nav.Uri.ToLower().Contains("register"))
         {
             <MudLayout>
                 <MudMainContent>
@@ -63,8 +63,8 @@
     </NotAuthorized>
 </AuthorizeView>
 
+@inject NavigationManager Nav
 @inject AuthService AuthService
-@inject NavigationManager NavigationManager
 
 @code {
     [CascadingParameter]
@@ -100,6 +100,6 @@
     private async Task Logout()
     {
         await AuthService.Logout();
-        NavigationManager.NavigateTo("/login");
+        Nav.NavigateTo("/login");
     }
 }

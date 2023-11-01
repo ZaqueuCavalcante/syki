@@ -52,7 +52,7 @@
 
 @inject ISnackbar Snackbar
 @inject AuthService AuthService
-@inject NavigationManager NavigationManager
+@inject NavigationManager Nav
 
 @code {
     private bool _loading;
@@ -71,7 +71,7 @@
 
         if (success)
         {
-            NavigationManager.NavigateTo("/");
+            Nav.NavigateTo("/");
         }
         else
         {

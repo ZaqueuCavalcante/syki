@@ -11,35 +11,57 @@ public class AuthService
     private readonly HttpClient _http;
     private readonly ILocalStorageService _localStorage;
     private readonly SykiAuthStateProvider _authStateProvider;
+    private readonly CookieStorageAccessor _cookieStorageAccessor;
 
     public AuthService(
         HttpClient http,
         ILocalStorageService localStorage,
-        SykiAuthStateProvider authStateProvider
+        SykiAuthStateProvider authStateProvider,
+        CookieStorageAccessor cookieStorageAccessor
     ) {
         _http = http;
         _localStorage = localStorage;
         _authStateProvider = authStateProvider;
+        _cookieStorageAccessor = cookieStorageAccessor;
     }
 
-    public async Task<bool> Login(string email, string password)
+    public async Task<LoginOut> Login(string email, string password)
     {
         var body = new LoginIn { Email = email, Password = password };
         var response = await _http.PostAsJsonAsync("/users/login", body);
 
-        if (response.IsSuccessStatusCode)
+        var responseAsString = await response.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<LoginOut>(responseAsString)!;
+
+        if (result.RequiresTwoFactor)
         {
-            var responseAsString = await response.Content.ReadAsStringAsync();
-            var jwt = JsonConvert.DeserializeObject<LoginOut>(responseAsString)!.AccessToken;
-
-            await _localStorage.SetItemAsync("AccessToken", jwt);
-
-            _authStateProvider.MarkUserAsAuthenticated();
-
-            return true;
+            //await _cookieStorageAccessor.SetValueAsync("Identity.TwoFactorUserId", result.TwoFactorUserId);
         }
 
-        return false;
+        if (response.IsSuccessStatusCode)
+        {
+            await _localStorage.SetItemAsync("AccessToken", result.AccessToken);
+            _authStateProvider.MarkUserAsAuthenticated();
+        }
+
+        return result;
+    }
+
+    public async Task<LoginOut> LoginMfa(string code)
+    {
+        var body = new LoginMfaIn { Code = code };
+        var response = await _http.PostAsJsonAsync("/users/login-mfa", body);
+
+        var responseAsString = await response.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<LoginOut>(responseAsString)!;
+
+        if (response.IsSuccessStatusCode)
+        {
+            await _localStorage.SetItemAsync("AccessToken", result.AccessToken);
+            _authStateProvider.MarkUserAsAuthenticated();
+        }
+
+        return result;
     }
 
     public async Task<ClaimsPrincipal> GetUser()

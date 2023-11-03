@@ -20,7 +20,7 @@ public class MfaService : IMfaService
 
     public async Task<MfaSetupOut> EnableUserMfa(string code)
     {
-        var data = new MfaSetupIn { Token = code.OnlyNumbers() };
+        var data = new MfaSetupIn { Token = code };
         var response = await _http.PostAsJsonAsync("/users/mfa-setup", data);
 
         var responseAsString = await response.Content.ReadAsStringAsync();

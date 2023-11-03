@@ -15,5 +15,7 @@ public static class HttpConfigs
 
         builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
             .CreateClient("HttpClient"));
+
+        builder.Services.AddScoped<CookieStorageAccessor>();
     }
 }

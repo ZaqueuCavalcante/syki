@@ -5,10 +5,10 @@
 <style>body { background-color: rgba(235,235,235,1); }</style>
 
 <MudContainer Class="mt-16 mb-8" Style="width: 460px">
+    <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+    </MudOverlay>
     <MudForm @ref="_form">
-        <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
-            <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
-        </MudOverlay>
         <MudCard Class="px-16 pt-16 pb-8">
             <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
             <MudCardContent Class="mt-4">
@@ -38,7 +38,7 @@
             <MudCardActions>
                 <MudButton
                     Size="Size.Large"
-                    OnClick="OnLoginClick"
+                    OnClick="OnClick"
                     Variant="Variant.Filled"
                     Color="Color.Primary"
                     Class="mx-auto mb-4 px-12"
@@ -50,32 +50,36 @@
     </MudForm>
 </MudContainer>
 
+@inject IMfaService Mfa
 @inject ISnackbar Snackbar
 @inject AuthService AuthService
 @inject NavigationManager Nav
 
 @code {
     private bool _loading;
-
     private MudForm _form;
-
     LoginIn _model = new();
 
-    private async Task OnLoginClick()
+    private async Task OnClick()
     {
         await _form.Validate();
         if (!_form.IsValid) return;
 
         _loading = true;
-        var success = await AuthService.Login(_model.Email, _model.Password);
+        var result = await AuthService.Login(_model.Email, _model.Password);
 
-        if (success)
+        if (result.AccessToken != null)
         {
             Nav.NavigateTo("/");
         }
-        else
+        else if (result.WrongEmailOrPassword)
         {
-            Snackbar.Add("Erro!", Severity.Error);
+            Snackbar.Add("Email ou senha invalidos!", Severity.Error);
+        }
+        else if (result.RequiresTwoFactor)
+        {
+            
+            Nav.NavigateTo("/login-mfa");
         }
 
         _loading = false;

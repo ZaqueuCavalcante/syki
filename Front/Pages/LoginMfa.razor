@@ -1,0 +1,82 @@
+﻿@page "/login-mfa"
+
+<PageTitle>Login MFA</PageTitle>
+
+<style>body { background-color: rgba(235,235,235,1); }</style>
+
+<MudContainer Class="mt-16 mb-8" Style="width: 460px">
+    <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+    </MudOverlay>
+
+    <style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
+    <MudCard Class="mt-4 px-6 pt-16" Elevation="0" Style="height: 460px">
+        <MudCardContent>
+            <MudStack AlignItems="AlignItems.Center">
+                <MudAlert Severity="Severity.Info" Variant="Variant.Text">
+                    <MudStack Row="true" Justify="Justify.SpaceAround">
+                        <MudText>Insira o código para realizar o login</MudText>
+                    </MudStack>
+                </MudAlert>
+                <MudForm>
+                    <MudTextField
+                        Immediate="true"
+                        Placeholder="_ _ _  _ _ _"
+                        OnlyValidateIfDirty="true"
+                        Variant="Variant.Outlined"
+                        Style="width: 200px;"
+                        Class="mt-8 pt-16"
+                        AutoFocus="true"
+                        Value="_code"
+                        ValueChanged="x => HandleCodeChanged(x)"
+                        T="String"
+                        Mask="@(new PatternMask("000 000"))"
+                    />
+                </MudForm>
+
+                @if (_showCodeFeedback && !_codeIsCorrect)
+                {
+                    <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Text">
+                        <MudStack Row="true" Justify="Justify.SpaceAround">
+                            <MudText>Código inválido</MudText>
+                        </MudStack>
+                    </MudAlert>
+                }
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@inject NavigationManager Nav
+@inject AuthService AuthService
+
+@code {
+    private bool _loading;
+    private bool _showCodeFeedback;
+    private bool _codeIsCorrect;
+    private string _code;
+
+    private async Task HandleCodeChanged(string newValue)
+    {
+        _showCodeFeedback = false;
+        _code = newValue;
+
+        if (_code.Length == 7)
+        {
+            _loading = true;
+            var result = await AuthService.LoginMfa(_code);
+
+            if (result.AccessToken != null)
+            {
+                Nav.NavigateTo("/");
+            }
+            else if (result.Wrong2FactorCode)
+            {
+                _codeIsCorrect = false;
+            }
+
+            _loading = false;
+            _showCodeFeedback = true;
+        }
+    }
+}

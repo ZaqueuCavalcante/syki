@@ -48,7 +48,7 @@ public class UsersController : ControllerBase
     [Authorize(Roles = $"{Adm}, {Academico}")]
     public async Task<IActionResult> MfaSetup([FromBody] MfaSetupIn body)
     {
-        var ok = await _authService.SetupMfa(User.Id(), body.Token);
+        var ok = await _authService.SetupMfa(User.Id(), body.Token.OnlyNumbers());
 
         return Ok(new MfaSetupOut { Ok = ok });
     }
@@ -63,18 +63,37 @@ public class UsersController : ControllerBase
             lockoutOnFailure: false
         );
 
-        if (result.RequiresTwoFactor)
+        if (!result.Succeeded && !result.RequiresTwoFactor)
         {
-            var provider = _userManager.Options.Tokens.AuthenticatorTokenProvider;
-            result = await _signInManager.TwoFactorSignInAsync(provider, body.TwoFactorToken!, false, false);
+            return BadRequest(new LoginOut { WrongEmailOrPassword = true });
         }
 
-        if (!result.Succeeded)
+        if (result.RequiresTwoFactor)
         {
-            return Unauthorized("Login failed.");
+            var cookie = Response.Headers["Set-Cookie"][0]!.Split(";")[0];
+            // Response.Headers["Set-Cookie"] = cookie;
+            return BadRequest(new LoginOut { RequiresTwoFactor = true, TwoFactorUserId = cookie });
         }
 
         var jwt = await _authService.GenerateAccessToken(body.Email);
+
+        return Ok(new LoginOut { AccessToken = jwt });
+    }
+
+    [HttpPost("login-mfa")]
+    public async Task<IActionResult> LoginMfa([FromBody] LoginMfaIn body)
+    {
+        var token = body.Code!.OnlyNumbers();
+        var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(token, false, false);
+
+        if (!result.Succeeded)
+        {
+            return BadRequest(new LoginOut { Wrong2FactorCode = true });
+        }
+
+        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+
+        var jwt = await _authService.GenerateAccessToken(user!.Email!);
 
         return Ok(new LoginOut { AccessToken = jwt });
     }

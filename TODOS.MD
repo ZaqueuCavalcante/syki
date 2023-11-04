@@ -10,6 +10,7 @@
 09 - [ ] Add full setup and login flows for Two Factor Auth (+ QrCode)
 10 - [ ] Add calendar?
 11 - [ ] Use Result Pattern instead throw exceptions
+12 - [ ] https://devblogs.microsoft.com/dotnet/whats-new-with-identity-in-dotnet-8/
 
 https://stenbrinke.nl/blog/taking-ef-core-data-seeding-to-the-next-level-with-bogus/
 

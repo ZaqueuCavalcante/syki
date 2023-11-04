@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 namespace Syki.Front.Auth;
 
@@ -12,6 +13,8 @@ public class SykiDelegatingHandler : DelegatingHandler
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
+        request.SetBrowserRequestCredentials(BrowserRequestCredentials.Include);
+
         var token = await _localStorage.GetItemAsync("AccessToken");
 
         request.Headers.Add("Authorization", $"Bearer {token}");

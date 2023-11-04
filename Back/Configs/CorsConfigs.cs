@@ -6,9 +6,10 @@ public static class CorsConfigs
     {
         services.AddCors(options => options
             .AddDefaultPolicy(builder => builder
-                .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
+                .AllowCredentials()
+                .SetIsOriginAllowed(_ => true)
             )
         );
     }

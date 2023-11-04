@@ -11,18 +11,15 @@ public class AuthService
     private readonly HttpClient _http;
     private readonly ILocalStorageService _localStorage;
     private readonly SykiAuthStateProvider _authStateProvider;
-    private readonly CookieStorageAccessor _cookieStorageAccessor;
 
     public AuthService(
         HttpClient http,
         ILocalStorageService localStorage,
-        SykiAuthStateProvider authStateProvider,
-        CookieStorageAccessor cookieStorageAccessor
+        SykiAuthStateProvider authStateProvider
     ) {
         _http = http;
         _localStorage = localStorage;
         _authStateProvider = authStateProvider;
-        _cookieStorageAccessor = cookieStorageAccessor;
     }
 
     public async Task<LoginOut> Login(string email, string password)
@@ -32,11 +29,6 @@ public class AuthService
 
         var responseAsString = await response.Content.ReadAsStringAsync();
         var result = JsonConvert.DeserializeObject<LoginOut>(responseAsString)!;
-
-        if (result.RequiresTwoFactor)
-        {
-            //await _cookieStorageAccessor.SetValueAsync("Identity.TwoFactorUserId", result.TwoFactorUserId);
-        }
 
         if (response.IsSuccessStatusCode)
         {

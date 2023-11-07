@@ -70,9 +70,7 @@ public class UsersController : ControllerBase
 
         if (result.RequiresTwoFactor)
         {
-            var cookie = Response.Headers["Set-Cookie"][0]!.Split(";")[0];
-            // Response.Headers["Set-Cookie"] = cookie;
-            return BadRequest(new LoginOut { RequiresTwoFactor = true, TwoFactorUserId = cookie });
+            return BadRequest(new LoginOut { RequiresTwoFactor = true });
         }
 
         var jwt = await _authService.GenerateAccessToken(body.Email);

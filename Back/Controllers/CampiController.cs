@@ -28,6 +28,22 @@ public class CampiController : ControllerBase
         return Ok(campus);
     }
 
+    [HttpPut("")]
+    public async Task<IActionResult> Update([FromBody] CampusOut body)
+    {
+        var campus = await _ctx.Campi.FirstOrDefaultAsync(x => x.Id == body.Id);
+
+        if (campus == null)
+        {
+            return NotFound();
+        }
+
+        campus.Update(body.Nome, body.Cidade);
+        await _ctx.SaveChangesAsync();
+
+        return Ok(campus);
+    }
+
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {

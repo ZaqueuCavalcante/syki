@@ -34,13 +34,9 @@
             Items="@_campi"
             QuickFilter="@_quickFilter"
             Hover="true"
-            ReadOnly="false"
+            ReadOnly="true"
             Loading="_loading"
             RowsPerPage="8"
-            StartedEditingItem="@StartedEditingItem"
-            CanceledEditingItem="@CanceledEditingItem"
-            CommittedItemChanges="@CommittedItemChanges"
-            EditDialogOptions="@(new DialogOptions { MaxWidth = MaxWidth.ExtraSmall, FullWidth = true } )"
         >
             <ToolBarContent>
                 <MudSpacer />
@@ -62,11 +58,11 @@
                 <PropertyColumn Property="x => x.Cidade" Title="Cidade" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@context.Actions.StartEditingItemAsync" />
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@(() => OpenEditDialog(context.Item))" />
                     </CellTemplate>
                 </TemplateColumn>
             </Columns>
-
+ 
             <NoRecordsContent>
                 Não existem campus cadastrados ainda.
             </NoRecordsContent>
@@ -94,21 +90,6 @@
         _loading = false;
     }
 
-    void StartedEditingItem(CampusOut item)
-    {
-        Console.WriteLine($"Event = StartedEditingItem, Data = {item.Nome}");
-    }
-
-    void CanceledEditingItem(CampusOut item)
-    {
-        Console.WriteLine($"Event = CanceledEditingItem, Data = {item.Nome}");
-    }
-
-    void CommittedItemChanges(CampusOut item)
-    {
-        Console.WriteLine($"Event = CommittedItemChanges, Data = {item.Nome}");
-    }
-
     private Func<CampusOut, bool> _quickFilter => x =>
     {
         if (string.IsNullOrWhiteSpace(_searchString))
@@ -130,6 +111,24 @@
             FullWidth = true,
         };
         var dialog = await DialogService.ShowAsync<NewCampusDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+
+    private async Task OpenEditDialog(CampusOut item)
+    {
+        var parameters = new DialogParameters<EditCampusDialog>();
+        parameters.Add(x => x.Campus, item);
+
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true,
+        };
+        var dialog = await DialogService.ShowAsync<EditCampusDialog>("", parameters, options);
 
         var result = await dialog.Result;
 

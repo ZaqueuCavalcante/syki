@@ -77,8 +77,8 @@
 
     private async Task RowClicked(DataGridRowClickEventArgs<GradeOut> args)
     {
-        var parameters = new DialogParameters();
-        parameters.Add("Disciplinas", args.Item.Disciplinas);
+        var parameters = new DialogParameters<DisciplinasDaGradeDialog>();
+        parameters.Add(x => x.Disciplinas, args.Item.Disciplinas);
 
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Medium,

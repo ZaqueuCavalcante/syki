@@ -27,6 +27,12 @@ public class Campus
         Cidade = cidade;
     }
 
+    public void Update(string nome, string cidade)
+    {
+        Nome = nome;
+        Cidade = cidade;
+    }
+
     public CampusOut ToOut()
     {
         return new CampusOut

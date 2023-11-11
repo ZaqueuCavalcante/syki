@@ -1,7 +1,7 @@
+using Bogus;
 using NUnit.Framework;
 using Syki.Back.Domain;
 using FluentAssertions;
-using Bogus;
 
 namespace Syki.Tests.Unit;
 
@@ -35,6 +35,6 @@ public class ProfessoresUnitTests
         var professores = faker.Generate(5);
 
         // Assert
-        professores.Should().HaveCount(5);
+        professores.ConvertAll(x => x.Id).Should().OnlyHaveUniqueItems();
     }
 }

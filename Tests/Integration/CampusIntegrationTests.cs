@@ -1,5 +1,5 @@
-using Syki.Shared;
 using System.Net;
+using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
@@ -36,6 +36,7 @@ public class CampusIntegrationTests : ApiTestBase
         
         // Assert
         campus.Nome.Should().Be(body.Nome);
+        campus.Cidade.Should().Be(body.Cidade);
     }
 
     [Test]

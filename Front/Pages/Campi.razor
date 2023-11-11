@@ -28,7 +28,20 @@
     </MudAlert>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_campi" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" RowsPerPage="8">
+        <MudDataGrid
+            T="CampusOut"
+            Class="pa-4"
+            Items="@_campi"
+            QuickFilter="@_quickFilter"
+            Hover="true"
+            ReadOnly="false"
+            Loading="_loading"
+            RowsPerPage="8"
+            StartedEditingItem="@StartedEditingItem"
+            CanceledEditingItem="@CanceledEditingItem"
+            CommittedItemChanges="@CommittedItemChanges"
+            EditDialogOptions="@(new DialogOptions { MaxWidth = MaxWidth.ExtraSmall, FullWidth = true } )"
+        >
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -47,6 +60,11 @@
             <Columns>
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
                 <PropertyColumn Property="x => x.Cidade" Title="Cidade" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@context.Actions.StartEditingItemAsync" />
+                    </CellTemplate>
+                </TemplateColumn>
             </Columns>
 
             <NoRecordsContent>
@@ -63,7 +81,8 @@
 @inject HttpClient Http
 @inject IDialogService DialogService
 
-@code {
+@code
+{
     private bool _loading;
     private string _searchString;
     private List<CampusOut> _campi = new();
@@ -73,6 +92,21 @@
         _loading = true;
         _campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? new();
         _loading = false;
+    }
+
+    void StartedEditingItem(CampusOut item)
+    {
+        Console.WriteLine($"Event = StartedEditingItem, Data = {item.Nome}");
+    }
+
+    void CanceledEditingItem(CampusOut item)
+    {
+        Console.WriteLine($"Event = CanceledEditingItem, Data = {item.Nome}");
+    }
+
+    void CommittedItemChanges(CampusOut item)
+    {
+        Console.WriteLine($"Event = CommittedItemChanges, Data = {item.Nome}");
     }
 
     private Func<CampusOut, bool> _quickFilter => x =>

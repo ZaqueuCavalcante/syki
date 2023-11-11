@@ -2,7 +2,7 @@
 
 <PageTitle>2FA Setup</PageTitle>
 
-<AuthorizeView Roles="Adm, Academico">
+<AuthorizeView>
     <MudContainer Class="mt-8 px-12">
         <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-4">
             <MudIcon Icon="@Icons.Material.Filled.ScreenLockPortrait" Class="mr-1 mb-n1" Size="Size.Large"/>
@@ -93,6 +93,9 @@
 @inject IDialogService DialogService
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; }
+
     private string _userCode;
     private bool _qrCodeLoading;
     private bool _validateCodeLoading;
@@ -133,6 +136,19 @@
         await DialogService.ShowAsync<MfaSetupDialog>("", options);
     }
 
+    private async Task<string> GetUserEmail()
+    {
+        var state = await AuthState;
+
+        var claim = state.User.FindFirst("email");
+        if (claim != null)
+        {
+            return claim.Value;
+        }
+
+        return "";
+    }
+
     protected override async Task OnInitializedAsync()
     {
         _qrCodeLoading = true;
@@ -142,7 +158,8 @@
         if (result != null)
         {
             Code = result.Key;
-            CodeBytes = GenerateQrCodeBytes(Code);
+            var email = await GetUserEmail();
+            CodeBytes = GenerateQrCodeBytes(Code, email);
         }
 
         _qrCodeLoading = false;
@@ -154,10 +171,9 @@
         return string.Format("data:image/png;base64,{0}", Convert.ToBase64String(CodeBytes));
     }
 
-    private Byte[] GenerateQrCodeBytes(string key)
+    private  Byte[] GenerateQrCodeBytes(string key, string email)
     {
-        const string provider = "Syki App";
-        const string email = "zaqueudovale@gmail.com";
+        const string provider = "Syki";
 
         using var qrGenerator = new QRCodeGenerator();
         using var qrCodeData = qrGenerator.CreateQrCode(

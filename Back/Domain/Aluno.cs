@@ -1,6 +1,5 @@
 using Syki.Shared;
 using Syki.Back.Exceptions;
-using Syki.Back.Extensions;
 
 namespace Syki.Back.Domain;
 
@@ -24,7 +23,7 @@ public class Aluno
         Id = Guid.NewGuid();
         FaculdadeId = faculdadeId;
         SetNome(nome);
-        Matricula = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8]}";
+        Matricula = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
     }
 
     private void SetNome(string nome)

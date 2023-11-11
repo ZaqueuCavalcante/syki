@@ -22,9 +22,9 @@ public class Campus
     public Campus(string nome, string cidade, Guid faculdadeId)
     {
         Id = Guid.NewGuid();
+        FaculdadeId = faculdadeId;
         Nome = nome;
         Cidade = cidade;
-        FaculdadeId = faculdadeId;
     }
 
     public CampusOut ToOut()

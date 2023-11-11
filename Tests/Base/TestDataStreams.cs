@@ -4,7 +4,7 @@ public static class TestDataStreams
 {
     public static IEnumerable<object[]> InvalidNames()
     {
-        foreach (var name in new List<string>() { null, "", "a", "", " ", "  ", "     ", "La", })
+        foreach (var name in new List<string>() { null, "", "a", " ", "  ", "     ", "La", })
         {
             yield return new object[] { name };
         }

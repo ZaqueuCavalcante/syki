@@ -1,5 +1,5 @@
-using Syki.Shared;
 using System.Net;
+using Syki.Shared;
 using NUnit.Framework;
 using FluentAssertions;
 using Syki.Back.Domain;

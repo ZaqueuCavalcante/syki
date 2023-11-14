@@ -28,7 +28,15 @@
     </MudAlert>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_cursos" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" RowsPerPage="8">
+        <MudDataGrid
+            Class="pa-4"
+            Items="@_cursos"
+            QuickFilter="@_quickFilter"
+            Hover="true"
+            Dense="true"
+            Loading="_loading"
+            RowsPerPage="10"
+        >
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />

@@ -28,7 +28,7 @@
     </MudAlert>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" T="GradeOut" Items="@_grades" QuickFilter="@_quickFilter" Hover="true" RowClick="@RowClicked" Loading="_loading" RowsPerPage="8">
+        <MudDataGrid Class="pa-4" T="GradeOut" Items="@_grades" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -45,8 +45,13 @@
                 />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.CursoNome" Title="Curso" />
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.CursoNome" Title="Curso" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenDisciplinasDialog(context.Item))" />
+                    </CellTemplate>
+                </TemplateColumn>
             </Columns>
 
             <NoRecordsContent>
@@ -75,16 +80,16 @@
         _loading = false;
     }
 
-    private async Task RowClicked(DataGridRowClickEventArgs<GradeOut> args)
+    private async Task OpenDisciplinasDialog(GradeOut grade)
     {
         var parameters = new DialogParameters<DisciplinasDaGradeDialog>();
-        parameters.Add(x => x.Disciplinas, args.Item.Disciplinas);
+        parameters.Add(x => x.Disciplinas, grade.Disciplinas);
 
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };
-        await DialogService.ShowAsync<DisciplinasDaGradeDialog>(args.Item.Nome, parameters, options);
+        await DialogService.ShowAsync<DisciplinasDaGradeDialog>(grade.Nome, parameters, options);
     }
 
     private Func<GradeOut, bool> _quickFilter => x =>

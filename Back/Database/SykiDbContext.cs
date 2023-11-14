@@ -16,6 +16,7 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
 
     public DbSet<Oferta> Ofertas { get; set; }
     public DbSet<Turma> Turmas { get; set; }
+    public DbSet<Livro> Livros { get; set; }
 
     public DbSet<Professor> Professores { get; set; }
     public DbSet<Aluno> Alunos { get; set; }

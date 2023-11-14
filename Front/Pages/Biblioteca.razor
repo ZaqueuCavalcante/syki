@@ -2,6 +2,102 @@
 
 <PageTitle>Biblioteca</PageTitle>
 
-<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    <h1>Biblioteca</h1>
+<MudContainer>
+    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudIcon Icon="@Icons.Material.Filled.People" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">Biblioteca</MudText>
+                <MudSpacer />
+                <MudButton
+                    StartIcon="@Icons.Material.Outlined.Add"
+                    IconSize="Size.Large"
+                    Variant="Variant.Filled"
+                    Style="height: 40px;"
+                    Color="Color.Primary"
+                    @onclick="OpenDialog"
+                >
+                    Novo Livro
+                </MudButton>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudText>Um livro precisa necessariamente estar vinculado à um campus.</MudText>
+    </MudAlert>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_livros" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    @bind-Value="_searchString"
+                    Placeholder="Busque por título"
+                    Adornment="Adornment.Start"
+                    Immediate="true"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium"
+                    Class="mt-0"
+                />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" />
+                <PropertyColumn Property="x => x.Titulo" Title="Título" />
+            </Columns>
+
+            <NoRecordsContent>
+                Não existem livros cadastrados ainda.
+            </NoRecordsContent>
+
+            <PagerContent>
+                <MudDataGridPager T="LivroOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
 </MudContainer>
+
+@inject HttpClient Http
+@inject IDialogService DialogService
+
+@code {
+    private bool _loading;
+    private string _searchString;
+    private List<LivroOut> _livros = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _livros = await Http.GetFromJsonAsync<List<LivroOut>>("/livros") ?? new();
+        _loading = false;
+    }
+
+    private Func<LivroOut, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Titulo.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = await DialogService.ShowAsync<NewLivroDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+}

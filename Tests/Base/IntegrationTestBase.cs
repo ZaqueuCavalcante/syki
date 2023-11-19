@@ -24,6 +24,19 @@ public class ApiTestBase
         _factory = new SykiWebApplicationFactory();
     }
 
+    [TearDown]
+    public async Task TearDown()
+    {
+        _client.Dispose();
+        await _ctx.DisposeAsync();
+    }
+
+    [OneTimeTearDown]
+    public async Task OneTimeTearDown()
+    {
+        await _factory.DisposeAsync();
+    }
+
     [SetUp]
     public async Task SetupBeforeEachTest()
     {

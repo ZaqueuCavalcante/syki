@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
 		<NoWarn>CS1591;CS8618;CS0618;CS0649;</NoWarn>
     <StaticWebAssetsEnabled>true</StaticWebAssetsEnabled>
   </PropertyGroup>

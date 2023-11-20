@@ -1,10 +1,11 @@
 using Syki.Shared;
+using Syki.Front.Auth;
 using Newtonsoft.Json;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
 using System.Security.Claims;
 
-namespace Syki.Front.Auth;
+namespace Syki.Front.Services;
 
 public class AuthService
 {

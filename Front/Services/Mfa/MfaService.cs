@@ -7,11 +7,7 @@ namespace Syki.Front.Services;
 public class MfaService : IMfaService
 {
     private readonly HttpClient _http;
-
-    public MfaService(HttpClient http)
-    {
-        _http = http;
-    }
+    public MfaService(HttpClient http) => _http = http;
 
     public async Task<MfaKeyOut> GetMfaKey()
     {

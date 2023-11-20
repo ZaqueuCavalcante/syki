@@ -11,9 +11,10 @@ public class Startup
         services.AddSingleton<AuthSettings>();
         services.AddSingleton<DatabaseSettings>();
 
-        services.AddScoped<AuthService>();
+        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IAlunosService, AlunosService>();
         services.AddScoped<ICampiService, CampiService>();
+        services.AddScoped<ICursosService, CursosService>();
 
         services.AddIdentityConfigs();
         services.AddAuthenticationConfigs();

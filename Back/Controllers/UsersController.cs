@@ -12,12 +12,12 @@ namespace Syki.Back.Controllers;
 [ApiController, Route("[controller]")]
 public class UsersController : ControllerBase
 {
-    private readonly AuthService _authService;
+    private readonly IAuthService _authService;
     private readonly SignInManager<SykiUser> _signInManager;
     private readonly UserManager<SykiUser> _userManager;
 
     public UsersController(
-        AuthService authService,
+        IAuthService authService,
         SignInManager<SykiUser> signInManager,
         UserManager<SykiUser> userManager
     ) {

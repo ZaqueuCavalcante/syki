@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.Services;
 
-public class AuthService
+public class AuthService : IAuthService
 {
     private readonly AuthSettings _settings;
     private readonly UserManager<SykiUser> _userManager;

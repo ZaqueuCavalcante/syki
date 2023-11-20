@@ -1,9 +1,7 @@
 using Syki.Shared;
-using Syki.Back.Domain;
-using Syki.Back.Database;
+using Syki.Back.Services;
 using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
@@ -13,17 +11,13 @@ namespace Syki.Back.Controllers;
 [ApiController, Route("[controller]")]
 public class CampiController : ControllerBase
 {
-    private readonly SykiDbContext _ctx;
-    public CampiController(SykiDbContext ctx) => _ctx = ctx;
+    private readonly ICampiService _service;
+    public CampiController(ICampiService service) => _service = service;
 
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] CampusIn body)
     {
-        var campus = new Campus(body.Nome, body.Cidade, User.Facul());
-
-        await _ctx.Campi.AddAsync(campus);
-
-        await _ctx.SaveChangesAsync();
+        var campus = await _service.Create(User.Facul(), body);
 
         return Ok(campus);
     }
@@ -31,15 +25,7 @@ public class CampiController : ControllerBase
     [HttpPut("")]
     public async Task<IActionResult> Update([FromBody] CampusOut body)
     {
-        var campus = await _ctx.Campi.FirstOrDefaultAsync(x => x.Id == body.Id);
-
-        if (campus == null)
-        {
-            return NotFound();
-        }
-
-        campus.Update(body.Nome, body.Cidade);
-        await _ctx.SaveChangesAsync();
+        var campus = await _service.Update(User.Facul(), body);
 
         return Ok(campus);
     }
@@ -47,9 +33,8 @@ public class CampiController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var campi = await _ctx.Campi
-            .Where(c => c.FaculdadeId == User.Facul()).ToListAsync();
+        var campi = await _service.GetAll(User.Facul());
 
-        return Ok(campi.ConvertAll(c => c.ToOut()));
+        return Ok(campi);
     }
 }

@@ -13,6 +13,7 @@ public class Startup
 
         services.AddScoped<AuthService>();
         services.AddScoped<IAlunosService, AlunosService>();
+        services.AddScoped<ICampiService, CampiService>();
 
         services.AddIdentityConfigs();
         services.AddAuthenticationConfigs();

@@ -12,6 +12,7 @@ public class Startup
         services.AddSingleton<DatabaseSettings>();
 
         services.AddScoped<AuthService>();
+        services.AddScoped<IAlunosService, AlunosService>();
 
         services.AddIdentityConfigs();
         services.AddAuthenticationConfigs();

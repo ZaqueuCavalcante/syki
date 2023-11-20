@@ -13,9 +13,10 @@ public class AlunosUnitTests
     {
         // Arrange
         var faculdadeId = Guid.NewGuid();
+        var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(faculdadeId, "Zaqueu");
+        var aluno = new Aluno(faculdadeId, "Zaqueu", ofertaId);
 
         // Assert
         aluno.Id.Should().NotBeEmpty();
@@ -27,9 +28,10 @@ public class AlunosUnitTests
         // Arrange
         var faculdadeId = Guid.NewGuid();
         const string nome = "Zaqueu";
+        var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(faculdadeId, nome);
+        var aluno = new Aluno(faculdadeId, nome, ofertaId);
 
         // Assert
         aluno.FaculdadeId.Should().Be(faculdadeId);
@@ -41,12 +43,28 @@ public class AlunosUnitTests
         // Arrange
         var faculdadeId = Guid.NewGuid();
         const string nome = "Zaqueu";
+        var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(faculdadeId, nome);
+        var aluno = new Aluno(faculdadeId, nome, ofertaId);
 
         // Assert
         aluno.Nome.Should().Be(nome);
+    }
+
+    [Test]
+    public void Deve_criar_um_aluno_com_oferta_id_correto()
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        const string nome = "Zaqueu";
+        var ofertaId = Guid.NewGuid();
+
+        // Act
+        var aluno = new Aluno(faculdadeId, nome, ofertaId);
+
+        // Assert
+        aluno.OfertaId.Should().Be(ofertaId);
     }
 
     [Test]
@@ -55,9 +73,10 @@ public class AlunosUnitTests
         // Arrange
         var faculdadeId = Guid.NewGuid();
         const string nome = "Zaqueu";
+        var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(faculdadeId, nome);
+        var aluno = new Aluno(faculdadeId, nome, ofertaId);
 
         // Assert
         aluno.Matricula.Should().HaveLength(12);
@@ -69,10 +88,11 @@ public class AlunosUnitTests
     {
         // Arrange
         var faculdadeId = Guid.NewGuid();
+        var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluna = new Aluno(faculdadeId, "Maria");
-        var aluno = new Aluno(faculdadeId, "Zaqueu");
+        var aluna = new Aluno(faculdadeId, "Maria", ofertaId);
+        var aluno = new Aluno(faculdadeId, "Zaqueu", ofertaId);
 
         // Assert
         aluna.Matricula.Should().NotBeSameAs(aluno.Matricula);
@@ -84,9 +104,10 @@ public class AlunosUnitTests
     {
         // Arrange
         var faculdadeId = Guid.NewGuid();
+        var ofertaId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Aluno(faculdadeId, nome);
+        Action act = () => new Aluno(faculdadeId, nome, ofertaId);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(ExceptionMessages.DE0000);

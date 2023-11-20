@@ -1,0 +1,36 @@
+@inherits BunitTestContext
+
+@code
+{
+    // [Test]
+    public async Task DisciplinasDaGradeDialog_component_should_renders_correctly()
+    {
+        // Arrange
+        Services.AddMudServices();
+        var dialogService = Services.GetService<IDialogService>()!;
+
+        var disciplinas = new List<DisciplinaOut>
+        {
+            new DisciplinaOut { Nome = "Matemática Discreta", Periodo = 1, Creditos = 6, CargaHoraria = 60, },
+            new DisciplinaOut { Nome = "Introdução à Redes de Computadores", Periodo = 5, Creditos = 4, CargaHoraria = 50, },
+            new DisciplinaOut { Nome = "Pensamento Computacional e Algoritmos", Periodo = 3, Creditos = 7, CargaHoraria = 25, },
+            new DisciplinaOut { Nome = "Design de Interação Humano-Máquina", Periodo = 2, Creditos = 6, CargaHoraria = 90, },
+            new DisciplinaOut { Nome = "Projeto Integrador I: Concepção e Prototipação", Periodo = 4, Creditos = 6, CargaHoraria = 60, },
+        };
+
+        var parameters = new DialogParameters<DisciplinasDaGradeDialog>();
+        parameters.Add(x => x.Disciplinas, disciplinas);
+
+        var dialog = await dialogService.ShowAsync<DisciplinasDaGradeDialog>("Nome da Grade", parameters);
+
+        // Act
+        var cut = Render(dialog.RenderFragment);
+
+        // Assert
+        cut.MarkupMatches(
+            @<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
+                <h1>Financeiro</h1>
+            </MudContainer>
+        );
+    }
+}

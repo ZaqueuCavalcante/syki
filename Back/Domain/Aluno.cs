@@ -18,10 +18,11 @@ public class Aluno
 
     public string Matricula { get; set; }
 
-    public Aluno(Guid faculdadeId, string nome)
+    public Aluno(Guid faculdadeId, string nome, Guid ofertaId)
     {
         Id = Guid.NewGuid();
         FaculdadeId = faculdadeId;
+        OfertaId = ofertaId;
         SetNome(nome);
         Matricula = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
     }

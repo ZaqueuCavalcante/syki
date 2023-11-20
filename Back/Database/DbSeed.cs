@@ -121,21 +121,21 @@ public static class DbSeed
         new Periodo { Id = "2024.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2024, 02, 01), End = new DateOnly(2024, 06, 01) },
     };
 
-    public static List<Professor> Professores = new()
-    {
-        new Professor(NovaRoma.Id, "Richard Feynman"),
-        new Professor(NovaRoma.Id, "Robert Oppenheimer"),
-        new Professor(NovaRoma.Id, "Reginaldo Rossi"),
-        new Professor(NovaRoma.Id, "Chico Science"),
-    };
+    // public static List<Professor> Professores = new()
+    // {
+    //     new Professor(NovaRoma.Id, "Richard Feynman"),
+    //     new Professor(NovaRoma.Id, "Robert Oppenheimer"),
+    //     new Professor(NovaRoma.Id, "Reginaldo Rossi"),
+    //     new Professor(NovaRoma.Id, "Chico Science"),
+    // };
 
-    public static List<Aluno> Alunos = new()
-    {
-        new Aluno(NovaRoma.Id, "Marieli Lemes"),
-        new Aluno(NovaRoma.Id, "Bianca Rios"),
-        new Aluno(NovaRoma.Id, "Ednaldo Pereira"),
-        new Aluno(NovaRoma.Id, "Manoel Gomes"),
-        new Aluno(NovaRoma.Id, "Zezo Potiguar"),
-        new Aluno(NovaRoma.Id, "Carlos Alberto"),
-    };
+    // public static List<Aluno> Alunos = new()
+    // {
+    //     new Aluno(NovaRoma.Id, "Marieli Lemes"),
+    //     new Aluno(NovaRoma.Id, "Bianca Rios"),
+    //     new Aluno(NovaRoma.Id, "Ednaldo Pereira"),
+    //     new Aluno(NovaRoma.Id, "Manoel Gomes"),
+    //     new Aluno(NovaRoma.Id, "Zezo Potiguar"),
+    //     new Aluno(NovaRoma.Id, "Carlos Alberto"),
+    // };
 }

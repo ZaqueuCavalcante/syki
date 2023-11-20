@@ -5,9 +5,12 @@
             @MudDialog.Title
         </MudText>
     </TitleContent>
-
     <DialogContent>
-        <MudDataGrid Items="@Disciplinas.OrderBy(d => d.Periodo).ThenBy(d => d.Nome)" Hover="true" Class="mb-4">
+        <MudDataGrid
+            Class="mb-4"
+            Hover="true"
+            Items="@Disciplinas.OrderBy(d => d.Periodo).ThenBy(d => d.Nome)"
+        >
             <Columns>
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
                 <PropertyColumn Property="x => x.Periodo" Title="Período" />
@@ -18,7 +21,8 @@
     </DialogContent>
 </MudDialog>
 
-@code {
+@code
+{
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 

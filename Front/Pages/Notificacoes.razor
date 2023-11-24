@@ -1,0 +1,59 @@
+﻿@page "/notificacoes"
+
+@using Microsoft.AspNetCore.SignalR.Client
+
+<PageTitle>Notifications</PageTitle>
+
+<MudContainer>
+   <MudGrid Class="mt-4">
+        <MudItem xs="6" sm="4">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                <MudStack AlignItems="AlignItems.Center">
+                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_counter</MudText>
+                    <MudButton
+                        StartIcon="@Icons.Material.Outlined.Add"
+                        IconSize="Size.Large"
+                        Variant="Variant.Filled"
+                        Style="height: 40px;"
+                        Color="Color.Primary"
+                        @onclick="UpdateCounter"
+                    >
+                        ADD
+                    </MudButton>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@inject HttpClient Http
+@inject IDialogService DialogService
+
+@code
+{
+    private int _counter;
+    private HubConnection? _hubConnection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl("http://localhost:5160/hubs/notifications")
+            .Build();
+
+        _hubConnection.On<int>("OnCounterUpdate", (counter) =>
+        {
+            _counter = counter;
+            StateHasChanged();
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+    private async Task UpdateCounter()
+    {
+        if (_hubConnection is not null)
+        {
+            await _hubConnection.SendAsync("UpdateCounter");
+        }
+    }
+}

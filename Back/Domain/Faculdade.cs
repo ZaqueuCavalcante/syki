@@ -1,3 +1,5 @@
+using Syki.Shared;
+
 namespace Syki.Back.Domain;
 
 public class Faculdade
@@ -28,5 +30,14 @@ public class Faculdade
     {
         Id = Guid.NewGuid();
         Nome = nome;
+    }
+
+    public FaculdadeOut ToOut()
+    {
+        return new FaculdadeOut
+        {
+            Id = Id,
+            Nome = Nome,
+        };
     }
 }

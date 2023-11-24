@@ -16,7 +16,3 @@ dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~U
 - Parameters and services must be passed in like the Blazor runtime does it.
 - Components have event handlers that must be invoked like the Blazor runtime does it.
 - BUnit is a Blazor runtime specifically built for testing.
-
-
-
-

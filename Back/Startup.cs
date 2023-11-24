@@ -1,3 +1,4 @@
+using Syki.Back.Hubs;
 using Syki.Back.Configs;
 using Syki.Back.Services;
 using Syki.Back.Settings;
@@ -15,10 +16,15 @@ public class Startup
         services.AddScoped<IAlunosService, AlunosService>();
         services.AddScoped<ICampiService, CampiService>();
         services.AddScoped<ICursosService, CursosService>();
+        services.AddScoped<IDisciplinasService, DisciplinasService>();
+        services.AddScoped<IFaculdadesService, FaculdadesService>();
+        services.AddScoped<IGradesService, GradesService>();
 
         services.AddIdentityConfigs();
         services.AddAuthenticationConfigs();
         services.AddAuthorizationConfigs();
+
+        services.AddSignalR();
 
         services.AddControllers();
 
@@ -42,6 +48,10 @@ public class Startup
 
         app.UseSwaggerThings();
 
-        app.UseEndpoints(options => options.MapControllers());
+        app.UseEndpoints(options =>
+        {
+            options.MapControllers();
+            options.MapHub<NotificationsHub>("hubs/notifications");
+        });
     }
 }

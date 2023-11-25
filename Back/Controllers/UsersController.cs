@@ -92,4 +92,13 @@ public class UsersController : ControllerBase
 
         return Ok(new LoginOut { AccessToken = jwt });
     }
+
+    [HttpGet()]
+    [Authorize(Roles = Adm)]
+    public async Task<IActionResult> GetAll()
+    {
+        var users = await _authService.GetAllUsers();
+
+        return Ok(users);
+    }
 }

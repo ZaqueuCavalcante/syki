@@ -6,8 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
+            "requireExactSource": false,
             "cwd": "${workspaceFolder}/Back",
-            "program": "${workspaceFolder}/Back/bin/Debug/net7.0/Back.dll",
+            "program": "${workspaceFolder}/Back/bin/Debug/net8.0/Back.dll",
         },
         {
             "name": "FRONT",

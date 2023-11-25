@@ -1,8 +1,89 @@
 ﻿@page "/users"
 @attribute [Authorize(Roles = "Adm")]
 
-<PageTitle>Users</PageTitle>
+<PageTitle>Usuários</PageTitle>
 
-<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    <h1>Users lalala</h1>
+<MudContainer>
+    <SykiPageHeader Title="Usuários" ButtonText="Novo Usuário" OnClick="OpenDialog"/>
+
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudText>Um usuário necessariamente precisa estar vinculado à uma faculdade.</MudText>
+    </MudAlert>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_users" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    @bind-Value="_searchString"
+                    Placeholder="Busque por nome"
+                    Adornment="Adornment.Start"
+                    Immediate="true"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium"
+                    Class="mt-0"
+                />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" />
+                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.Email" Title="Email" />
+                <PropertyColumn Property="x => x.Faculdade" Title="Faculdade" />
+                <PropertyColumn Property="x => x.Role" Title="Role" />
+            </Columns>
+
+            <NoRecordsContent>
+                Não existem usuários cadastrados ainda.
+            </NoRecordsContent>
+
+            <PagerContent>
+                <MudDataGridPager T="UserOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
 </MudContainer>
+
+@inject HttpClient Http
+@inject IDialogService DialogService
+
+@code {
+    private bool _loading;
+    private string _searchString;
+    private List<UserOut> _users = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _users = await Http.GetFromJsonAsync<List<UserOut>>("/users") ?? new();
+        _loading = false;
+    }
+
+    private Func<UserOut, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Nome.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = await DialogService.ShowAsync<NewProfessorDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+}

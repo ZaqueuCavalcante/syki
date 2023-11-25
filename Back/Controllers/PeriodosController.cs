@@ -1,7 +1,6 @@
-using Syki.Back.Database;
+using Syki.Back.Services;
 using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
@@ -11,17 +10,14 @@ namespace Syki.Back.Controllers;
 [ApiController, Route("[controller]")]
 public class PeriodosController : ControllerBase
 {
-    private readonly SykiDbContext _ctx;
-    public PeriodosController(SykiDbContext ctx) => _ctx = ctx;
+    private readonly IPeriodosService _service;
+    public PeriodosController(IPeriodosService service) => _service = service;
 
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var periodos = await _ctx.Periodos
-            .Where(c => c.FaculdadeId == User.Facul())
-            .Select(p => p.Id)
-            .ToListAsync();
+        var periodos = await _service.GetAll(User.Facul());
 
-        return Ok(periodos);
+        return Ok(periodos.ConvertAll(p => p.Id));
     }
 }

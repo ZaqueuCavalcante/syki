@@ -1,9 +1,7 @@
 using Syki.Shared;
-using Syki.Back.Domain;
-using Syki.Back.Database;
+using Syki.Back.Services;
 using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
@@ -13,28 +11,22 @@ namespace Syki.Back.Controllers;
 [ApiController, Route("[controller]")]
 public class ProfessoresController : ControllerBase
 {
-    private readonly SykiDbContext _ctx;
-    public ProfessoresController(SykiDbContext ctx) => _ctx = ctx;
+    private readonly IProfessoresService _service;
+    public ProfessoresController(IProfessoresService service) => _service = service;
 
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] ProfessorIn body)
     {
-        var professor = new Professor(User.Facul(), body.Nome);
+        var professor = await _service.Create(User.Facul(), body);
 
-        await _ctx.Professores.AddAsync(professor);
-
-        await _ctx.SaveChangesAsync();
-
-        return Ok(professor.ToOut());
+        return Ok(professor);
     }
 
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var professores = await _ctx.Professores
-            .Where(c => c.FaculdadeId == User.Facul())
-            .ToListAsync();
+        var professores = await _service.GetAll(User.Facul());
 
-        return Ok(professores.ConvertAll(p => p.ToOut()));
+        return Ok(professores);
     }
 }

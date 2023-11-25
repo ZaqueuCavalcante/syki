@@ -1,3 +1,5 @@
+using Syki.Shared;
+
 namespace Syki.Back.Domain;
 
 public class Periodo
@@ -10,4 +12,14 @@ public class Periodo
     public DateOnly Start { get; set; }
 
     public DateOnly End { get; set; }
+
+    public PeriodoOut ToOut()
+    {
+        return new PeriodoOut
+        {
+            Id = Id,
+            Start = Start,
+            End = End,
+        };
+    }
 }

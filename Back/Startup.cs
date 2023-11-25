@@ -19,8 +19,15 @@ public class Startup
         services.AddScoped<IDisciplinasService, DisciplinasService>();
         services.AddScoped<IFaculdadesService, FaculdadesService>();
         services.AddScoped<IGradesService, GradesService>();
+        services.AddScoped<IIndexService, IndexService>();
+        services.AddScoped<ILivrosService, LivrosService>();
+        services.AddScoped<IOfertasService, OfertasService>();
+        services.AddScoped<IPeriodosService, PeriodosService>();
+        services.AddScoped<IProfessoresService, ProfessoresService>();
+        services.AddScoped<ITurmasService, TurmasService>();
 
         services.AddIdentityConfigs();
+
         services.AddAuthenticationConfigs();
         services.AddAuthorizationConfigs();
 

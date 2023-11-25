@@ -4,25 +4,7 @@
 <PageTitle>Disciplinas</PageTitle>
 
 <MudContainer>
-    <MudCard Class="mt-8 mb-4 mx-6 px-2">
-        <MudCardContent>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.Apps" Class="mr-1 mb-1" Size="Size.Large"/>
-                <MudText Typo="Typo.h5" Style="font-weight: bold">Disciplinas</MudText>
-                <MudSpacer />
-                <MudButton
-                    StartIcon="@Icons.Material.Outlined.Add"
-                    IconSize="Size.Large"
-                    Variant="Variant.Filled"
-                    Style="height: 40px;"
-                    Color="Color.Primary"
-                    @onclick="OpenDialog"
-                >
-                    Nova Disciplina
-                </MudButton>
-            </MudStack>
-        </MudCardContent>
-    </MudCard>
+    <SykiPageHeader Title="Disciplinas" ButtonText="Nova Disciplina" OnClick="OpenDialog"/>
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
         <MudText>Uma mesma disciplina pode compor a grade de cursos diferentes. A carga horária definida aqui é apenas um valor de referência.</MudText>

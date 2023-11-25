@@ -4,25 +4,7 @@
 <PageTitle>Cursos</PageTitle>
 
 <MudContainer>
-    <MudCard Class="mt-8 mb-4 mx-6 px-2">
-        <MudCardContent>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.Class" Class="mr-1 mb-1" Size="Size.Large"/>
-                <MudText Typo="Typo.h5" Style="font-weight: bold">Cursos</MudText>
-                <MudSpacer />
-                <MudButton
-                    StartIcon="@Icons.Material.Outlined.Add"
-                    IconSize="Size.Large"
-                    Variant="Variant.Filled"
-                    Style="height: 40px;"
-                    Color="Color.Primary"
-                    @onclick="OpenDialog"
-                >
-                    Novo Curso
-                </MudButton>
-            </MudStack>
-        </MudCardContent>
-    </MudCard>
+    <SykiPageHeader Title="Cursos" ButtonText="Novo Curso" OnClick="OpenDialog"/>
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
         <MudText>Note que um mesmo curso pode ser ofertado em mais de um campus.</MudText>

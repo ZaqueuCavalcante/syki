@@ -30,7 +30,7 @@ public class AuthService : IAuthService
         _userManager = userManager;
     }
 
-    public async Task Register(RegisterIn body)
+    public async Task Register(UserIn body)
     {
         var user = new SykiUser
         {

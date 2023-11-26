@@ -4,7 +4,7 @@
 <PageTitle>Usuários</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Title="Usuários" ButtonText="Novo Usuário" OnClick="OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Usuários" ButtonText="Novo Usuário" OnClick="OpenDialog"/>
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
         <MudText>Um usuário necessariamente precisa estar vinculado à uma faculdade.</MudText>
@@ -78,7 +78,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewProfessorDialog>("", options);
+        var dialog = await DialogService.ShowAsync<NewUserDialog>("", options);
 
         var result = await dialog.Result;
 

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class RegisterIn
+public class UserIn
 {
     public Guid Faculdade { get; set; }
     public string Name { get; set; }

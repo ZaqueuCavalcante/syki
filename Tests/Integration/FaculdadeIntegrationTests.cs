@@ -62,7 +62,7 @@ public class FauldadeIntegrationTests : ApiTestBase
 
         var faculdade = await CreateFaculdade("Nova Roma");
 
-        var user = new RegisterIn
+        var user = new UserIn
         {
             Faculdade = faculdade.Id,
             Name = "Acadêmico - Nova Roma",

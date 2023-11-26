@@ -8,7 +8,6 @@ namespace Syki.Front.Auth;
 public class SykiAuthStateProvider : AuthenticationStateProvider
 {
     private readonly ILocalStorageService _localStorage;
-
     public SykiAuthStateProvider(ILocalStorageService localStorage)
     {
         _localStorage = localStorage;
@@ -36,7 +35,7 @@ public class SykiAuthStateProvider : AuthenticationStateProvider
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 
-    private ClaimsPrincipal CreateClaimsPrincipalFromToken(string token)
+    private static ClaimsPrincipal CreateClaimsPrincipalFromToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
 

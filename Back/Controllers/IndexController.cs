@@ -29,4 +29,13 @@ public class IndexController : ControllerBase
         
         return Ok(data);
     }
+
+    [HttpGet("aluno")]
+    [Authorize(Roles = Aluno)]
+    public async Task<IActionResult> GetAllAluno()
+    {
+        var data = await _service.GetAllAluno(User.Id());
+        
+        return Ok(data);
+    }
 }

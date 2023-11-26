@@ -120,7 +120,7 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        data.Faculdade = _faculdade.Id;
+        data.Faculdade = _faculdade!.Id;
 
         await Http.PostAsJsonAsync("/users/register", data);
 

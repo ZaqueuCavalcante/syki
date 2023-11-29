@@ -18,7 +18,7 @@ public class CursoIntegrationTests : ApiTestBase
         await Login("adm@syki.com", "Adm@123");
         var faculdade = await CreateFaculdade("Nova Roma");
 
-        var user = new RegisterIn
+        var user = new UserIn
         {
             Faculdade = faculdade.Id,
             Name = "Acadêmico - Nova Roma",
@@ -45,7 +45,7 @@ public class CursoIntegrationTests : ApiTestBase
         await Login("adm@syki.com", "Adm@123");
         var faculdade = await CreateFaculdade("Nova Roma");
 
-        var user = new RegisterIn
+        var user = new UserIn
         {
             Faculdade = faculdade.Id,
             Name = "Acadêmico - Nova Roma",
@@ -85,7 +85,7 @@ public class CursoIntegrationTests : ApiTestBase
         await Login("adm@syki.com", "Adm@123");
         var faculdade = await CreateFaculdade("Nova Roma");
 
-        var user = new RegisterIn
+        var user = new UserIn
         {
             Faculdade = faculdade.Id,
             Name = "Professor - Nova Roma",

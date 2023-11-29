@@ -3,6 +3,89 @@
 
 <PageTitle>Faculdades</PageTitle>
 
-<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    <h1>Faculdades lalala</h1>
+<MudContainer>
+    <SykiPageHeader Icon="@Icons.Material.Filled.School" Title="Faculdades" ButtonText="Nova Faculdade" OnClick="OpenDialog"/>
+
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudText>Uma faculdade pode conter vários campus e ofertar vários cursos.</MudText>
+    </MudAlert>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_faculdades" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    @bind-Value="_searchString"
+                    Placeholder="Busque por nome"
+                    Adornment="Adornment.Start"
+                    Immediate="true"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium"
+                    Class="mt-0"
+                />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" />
+                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+            </Columns>
+
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+
+            <PagerContent>
+                <MudDataGridPager T="FaculdadeOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
 </MudContainer>
+
+@inject HttpClient Http
+@inject IDialogService DialogService
+
+@code {
+    private bool _loading;
+    private string _searchString;
+    private List<FaculdadeOut> _faculdades = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _faculdades = await Http.GetFromJsonAsync<List<FaculdadeOut>>("/faculdades") ?? new();
+        _loading = false;
+    }
+
+    private Func<FaculdadeOut, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Nome.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = await DialogService.ShowAsync<NewFaculdadeDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem faculdades cadastradas ainda." : "Nenhuma faculdade encontrada com esse nome.";
+    }
+}

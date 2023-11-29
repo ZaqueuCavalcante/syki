@@ -1,7 +1,5 @@
 using Syki.Back.Hubs;
 using Syki.Back.Configs;
-using Syki.Back.Services;
-using Syki.Back.Settings;
 
 namespace Syki.Back;
 
@@ -9,16 +7,8 @@ public class Startup
 {
     public static void ConfigureServices(IServiceCollection services)
     {
-        services.AddSingleton<AuthSettings>();
-        services.AddSingleton<DatabaseSettings>();
-
-        services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<IAlunosService, AlunosService>();
-        services.AddScoped<ICampiService, CampiService>();
-        services.AddScoped<ICursosService, CursosService>();
-        services.AddScoped<IDisciplinasService, DisciplinasService>();
-        services.AddScoped<IFaculdadesService, FaculdadesService>();
-        services.AddScoped<IGradesService, GradesService>();
+        services.AddSettingsConfigs();
+        services.AddServicesConfigs();
 
         services.AddIdentityConfigs();
         services.AddAuthenticationConfigs();
@@ -27,7 +17,6 @@ public class Startup
         services.AddSignalR();
 
         services.AddControllers();
-
         services.AddRouting(options => options.LowercaseUrls = true);
 
         services.AddEfCoreConfigs();

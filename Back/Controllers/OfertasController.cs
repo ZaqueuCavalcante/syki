@@ -1,9 +1,7 @@
 using Syki.Shared;
-using Syki.Back.Domain;
-using Syki.Back.Database;
+using Syki.Back.Services;
 using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
@@ -13,65 +11,22 @@ namespace Syki.Back.Controllers;
 [ApiController, Route("[controller]")]
 public class OfertasController : ControllerBase
 {
-    private readonly SykiDbContext _ctx;
-    public OfertasController(SykiDbContext ctx) => _ctx = ctx;
+    private readonly IOfertasService _service;
+    public OfertasController(IOfertasService service) => _service = service;
 
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] OfertaIn body)
     {
-        var oferta = new Oferta
-        {
-            Id = Guid.NewGuid(),
-            FaculdadeId = User.Facul(),
-            CampusId = body.CampusId,
-            CursoId = body.CursoId,
-            GradeId = body.GradeId,
-            Periodo = body.Periodo,
-            Turno = body.Turno,
-        };
+        var oferta = await _service.Create(User.Facul(), body);
 
-        _ctx.Ofertas.Add(oferta);
-
-        await _ctx.SaveChangesAsync();
-
-        oferta = await _ctx.Ofertas
-            .Include(x => x.Campus)
-            .Include(x => x.Curso)
-            .Include(x => x.Grade)
-            .FirstAsync(x => x.Id == oferta.Id);
-
-        return Ok(oferta.ToOut());
+        return Ok(oferta);
     }
 
     [HttpGet("")]
     public async Task<IActionResult> GetAll([FromQuery] Guid? disciplinaId)
     {
-        var ofertas = new List<Oferta>();
+        var ofertas = await _service.GetAll(User.Facul(), disciplinaId);
 
-        if (disciplinaId != null)
-        {
-            var grades = await _ctx.GradesDisciplinas
-                .Where(gd => gd.DisciplinaId == disciplinaId)
-                .Select(gd => gd.GradeId)
-                .ToListAsync();
-
-            ofertas = await _ctx.Ofertas
-                .Include(x => x.Campus)
-                .Include(x => x.Curso)
-                .Include(x => x.Grade)
-                .Where(c => c.FaculdadeId == User.Facul() && grades.Contains(c.GradeId))
-                .ToListAsync();
-        }
-        else
-        {
-            ofertas = await _ctx.Ofertas
-                .Include(x => x.Campus)
-                .Include(x => x.Curso)
-                .Include(x => x.Grade)
-                .Where(c => c.FaculdadeId == User.Facul())
-                .ToListAsync();
-        }
-
-        return Ok(ofertas.ConvertAll(o => o.ToOut()));
+        return Ok(ofertas);
     }
 }

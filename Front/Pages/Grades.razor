@@ -4,25 +4,7 @@
 <PageTitle>Grades</PageTitle>
 
 <MudContainer>
-    <MudCard Class="mt-8 mb-4 mx-6 px-2">
-        <MudCardContent>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.AccountTree" Class="mr-1 mb-1" Size="Size.Large"/>
-                <MudText Typo="Typo.h5" Style="font-weight: bold">Grades</MudText>
-                <MudSpacer />
-                <MudButton
-                    StartIcon="@Icons.Material.Outlined.Add"
-                    IconSize="Size.Large"
-                    Variant="Variant.Filled"
-                    Style="height: 40px;"
-                    Color="Color.Primary"
-                    @onclick="OpenDialog"
-                >
-                    Nova Grade
-                </MudButton>
-            </MudStack>
-        </MudCardContent>
-    </MudCard>
+    <SykiPageHeader Icon="@Icons.Material.Filled.AccountTree" Title="Grades" ButtonText="Nova Grade" OnClick="OpenDialog"/>
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
         <MudText>Perceba que um mesmo curso pode ter várias grades diferentes ao longo do tempo, com diferentes disciplinas.</MudText>

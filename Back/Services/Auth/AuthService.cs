@@ -1,3 +1,5 @@
+using Dapper;
+using Npgsql;
 using Syki.Shared;
 using System.Text;
 using Syki.Back.Settings;
@@ -8,23 +10,27 @@ using System.IdentityModel.Tokens.Jwt;
 using SykiUser = Syki.Back.Domain.SykiUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Syki.Back.Services;
 
 public class AuthService : IAuthService
 {
     private readonly AuthSettings _settings;
+    private readonly DatabaseSettings _dbSettings;
     private readonly UserManager<SykiUser> _userManager;
 
     public AuthService(
         AuthSettings settings,
+        DatabaseSettings dbSettings,
         UserManager<SykiUser> userManager
     ) {
         _settings = settings;
+        _dbSettings = dbSettings;
         _userManager = userManager;
     }
 
-    public async Task Register(RegisterIn body)
+    public async Task Register(UserIn body)
     {
         var user = new SykiUser
         {
@@ -114,5 +120,33 @@ public class AuthService : IAuthService
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
         return tokenHandler.WriteToken(token);
+    }
+
+    public async Task<List<UserOut>> GetAllUsers()
+    {
+        using var connection = new NpgsqlConnection(_dbSettings.ConnectionString);
+
+        const string sql = @"
+            SELECT
+                u.id,
+                u.name AS nome,
+                u.email,
+                f.nome AS faculdade,
+                STRING_AGG(r.name, ',') AS role
+            FROM
+                syki.users u
+            INNER JOIN
+                syki.faculdades f ON f.id = u.faculdade_id
+            INNER JOIN
+                syki.user_roles ur ON ur.user_id = u.id
+            INNER JOIN
+                syki.roles r ON r.id = ur.role_id
+            GROUP BY
+                u.id, f.nome
+        ";
+
+        var data = await connection.QueryAsync<UserOut>(sql);
+        
+        return data.ToList();
     }
 }

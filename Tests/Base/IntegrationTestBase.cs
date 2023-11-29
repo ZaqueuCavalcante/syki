@@ -112,7 +112,7 @@ public class ApiTestBase
         return token.AccessToken;
     }
 
-    protected async Task RegisterUser(RegisterIn body)
+    protected async Task RegisterUser(UserIn body)
     {
         var response = await _client.PostAsync("/users/register", body.ToStringContent());
         response.StatusCode.Should().Be(HttpStatusCode.OK);

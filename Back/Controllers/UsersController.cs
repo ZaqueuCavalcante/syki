@@ -14,21 +14,18 @@ public class UsersController : ControllerBase
 {
     private readonly IAuthService _authService;
     private readonly SignInManager<SykiUser> _signInManager;
-    private readonly UserManager<SykiUser> _userManager;
 
     public UsersController(
         IAuthService authService,
-        SignInManager<SykiUser> signInManager,
-        UserManager<SykiUser> userManager
+        SignInManager<SykiUser> signInManager
     ) {
         _authService = authService;
         _signInManager = signInManager;
-        _userManager = userManager;
     }
 
     [HttpPost("register")]
     [Authorize(Roles = Adm)]
-    public async Task<IActionResult> Register([FromBody] RegisterIn body)
+    public async Task<IActionResult> Register([FromBody] UserIn body)
     {
         await _authService.Register(body);
 
@@ -94,5 +91,14 @@ public class UsersController : ControllerBase
         var jwt = await _authService.GenerateAccessToken(user!.Email!);
 
         return Ok(new LoginOut { AccessToken = jwt });
+    }
+
+    [HttpGet()]
+    [Authorize(Roles = Adm)]
+    public async Task<IActionResult> GetAll()
+    {
+        var users = await _authService.GetAllUsers();
+
+        return Ok(users);
     }
 }

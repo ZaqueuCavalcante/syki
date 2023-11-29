@@ -1,0 +1,133 @@
+<MudDialog Class="pb-2">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
+            Novo Usuário
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="_form">
+            <MudAutocomplete
+                T="FaculdadeOut"
+                MaxItems="50"
+                SearchFunc="@SearchFaculdade"
+                Dense="true"
+                AutoFocus="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-4"
+                @bind-Value="_faculdade"
+                Label="Faculdade"
+                Required="true"
+                RequiredError="Informe a faculdade!"
+                AdornmentColor="Color.Primary"
+            />
+            <MudTextField
+                OnlyValidateIfDirty="true"
+                Immediate="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-4"
+                @bind-Value="data.Name"
+                T="String"
+                Label="Nome"
+                Required="true"
+                RequiredError="Informe o nome do usuário!"
+            />
+            <MudTextField
+                OnlyValidateIfDirty="true"
+                Immediate="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-4"
+                @bind-Value="data.Email"
+                T="String"
+                Label="Email"
+                Required="true"
+                RequiredError="Informe o email do usuário!"
+            />
+            <MudTextField
+                OnlyValidateIfDirty="true"
+                Immediate="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-4"
+                @bind-Value="data.Password"
+                T="String"
+                Label="Senha"
+                Required="true"
+                RequiredError="Informe a senha do usuário!"
+            />
+            <MudSelect
+                Dense="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-4"
+                @bind-Value="data.Role"
+                Label="Role"
+                Required="true"
+                RequiredError="Informe a role do usuário!"
+                AdornmentColor="Color.Primary"
+            >
+                @foreach (string? item in _roles)
+                {
+                    <MudSelectItem Value="@item">@item</MudSelectItem>
+                }
+            </MudSelect>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="Cancel" />
+        <MudSpacer />
+        <DialogSaveButton OnClick="Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+@code
+{
+    MudForm _form;
+
+    UserIn data = new();
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    FaculdadeOut? _faculdade;
+    List<FaculdadeOut> _faculdades = new();
+
+    List<string> _roles = new() { "Adm", "Academico", "Professor", "Aluno" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        _faculdades = await Http.GetFromJsonAsync<List<FaculdadeOut>>("/faculdades") ?? new();
+    }
+
+    private async Task<IEnumerable<FaculdadeOut>> SearchFaculdade(string value)
+    {
+        await Task.Delay(1);
+
+        if (string.IsNullOrEmpty(value))
+            return _faculdades;
+
+        return _faculdades.Where(x => x.Nome.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    async Task Submit()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        data.Faculdade = _faculdade!.Id;
+
+        await Http.PostAsJsonAsync("/users/register", data);
+
+        MudDialog.Close(DialogResult.Ok(true));
+
+        Snackbar.Add("Usuário cadastrado com sucesso!", Severity.Success);
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

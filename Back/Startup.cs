@@ -15,14 +15,13 @@ public class Startup
         services.AddAuthorizationConfigs();
 
         services.AddSignalR();
-
         services.AddControllers();
-        services.AddRouting(options => options.LowercaseUrls = true);
+        services.AddHttpConfigs();
 
+        services.AddAuditConfigs();
         services.AddEfCoreConfigs();
 
         services.AddSwaggerConfigs();
-
         services.AddCorsConfigs();
     }
 
@@ -36,6 +35,8 @@ public class Startup
         app.UseAuthorization();
 
         app.UseSwaggerThings();
+
+        app.UseAudit();
 
         app.UseEndpoints(options =>
         {

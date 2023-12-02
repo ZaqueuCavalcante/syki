@@ -58,7 +58,7 @@
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 
-    async Task HandleOnKeyDown(KeyboardEventArgs args)
+    private async Task HandleOnKeyDown(KeyboardEventArgs args)
     {
         if (args.Key == "Enter")
         {

@@ -21,8 +21,12 @@
                 <MudText>@_userName</MudText>
                 <MudSpacer />
 
+                <MudTooltip Text="Notificações">
+                    <MudIconButton Icon="@Icons.Material.Filled.NotificationsNone" Color="Color.Inherit" />
+                </MudTooltip>
+
                 <style>.mud-list-item-icon { min-width: 35px !important; }</style>
-                <MudTooltip Text="Configs">
+                <MudTooltip Text="Configurações">
                     <MudMenu Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Dense="true" AnchorOrigin="Origin.BottomCenter" TransformOrigin="@Origin.BottomCenter">
                         <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.AccountCircle">Account</MudMenuItem>
                         <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.FilterAlt">Preferences</MudMenuItem>

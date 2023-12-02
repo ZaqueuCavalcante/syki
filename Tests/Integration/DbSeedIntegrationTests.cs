@@ -17,8 +17,15 @@ public class DbSeedIntegrationTests : ApiTestBase
         using var scope = _factory.Services.CreateScope();
         _ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 
+        DbSeed.NovaRoma.Cursos[1].Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList();
+        var disciplinasDireito = DbSeed.NovaRoma.Disciplinas.Skip(31).Take(39).ToList();
+        disciplinasDireito.Add(DbSeed.NovaRoma.Disciplinas.First(x => x.Nome == "Informática e Sociedade"));
+        DbSeed.NovaRoma.Cursos[4].Disciplinas = disciplinasDireito;
+
         // Act
-        _ctx.SeedStartupData();
+        _ctx.Faculdades.Add(DbSeed.NovaRoma);
+        _ctx.AddRange(DbSeed.Periodos);
+        _ctx.SaveChanges();
 
         // Assert
         var faculdades = await _ctx.Faculdades.ToListAsync();

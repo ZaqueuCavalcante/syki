@@ -4,11 +4,8 @@ namespace Syki.Back.Hubs;
 
 public sealed class NotificationsHub : Hub
 {
-    public int Counter { get; set; }
-
-    public async Task UpdateCounter()
+    public async Task UpdateNotificationsCounter()
     {
-        Counter = (new Random()).Next();
-        await Clients.All.SendAsync("OnCounterUpdate", Counter);
+        await Clients.All.SendAsync("OnUpdateNotificationsCounter", 0);
     }
 }

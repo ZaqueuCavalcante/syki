@@ -44,5 +44,9 @@ public class FaculdadeConfig : IEntityTypeConfiguration<Faculdade>
         faculdade.HasMany<SykiUser>()
             .WithOne()
             .HasForeignKey(u => u.FaculdadeId);
+
+        faculdade.HasMany(f => f.Notifications)
+            .WithOne()
+            .HasForeignKey(n => n.FaculdadeId);
     }
 }

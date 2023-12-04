@@ -1,29 +1,57 @@
 ﻿@page "/notificacoes"
 
-@using Microsoft.AspNetCore.SignalR.Client
-
-<PageTitle>Notifications</PageTitle>
+<PageTitle>Notificações</PageTitle>
 
 <MudContainer>
-   <MudGrid Class="mt-4">
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_counter</MudText>
-                    <MudButton
-                        StartIcon="@Icons.Material.Outlined.Add"
-                        IconSize="Size.Large"
-                        Variant="Variant.Filled"
-                        Style="height: 40px;"
-                        Color="Color.Primary"
-                        @onclick="UpdateCounter"
-                    >
-                        ADD
-                    </MudButton>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-    </MudGrid>
+    <SykiPageHeader Icon="@Icons.Material.Filled.Notifications" Title="Notificações" ButtonText="Nova Notificação" OnClick="OpenDialog"/>
+
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudText>Aqui você pode escolher quais usuários serão notificados e acompanhar o status de visualização das mensagens.</MudText>
+    </MudAlert>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid
+            T="NotificationOut"
+            Class="pa-4"
+            Items="@_notifications"
+            QuickFilter="@_quickFilter"
+            Dense="true"
+            Hover="true"
+            ReadOnly="true"
+            Loading="_loading"
+            RowsPerPage="10"
+        >
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    @bind-Value="_searchString"
+                    Placeholder="Busque por título ou descrição"
+                    Adornment="Adornment.Start"
+                    Immediate="true"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium"
+                    Class="mt-0"
+                />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Title" Title="Título" />
+                <PropertyColumn Property="x => x.Description" Title="Descrição" />
+                <PropertyColumn Property="x => x.CreatedAt" Title="Criada em" />
+                <PropertyColumn Property="x => x.Views" Title="Visualizações" />
+            </Columns>
+ 
+            <NoRecordsContent>
+                Não existem notificações cadastradas ainda.
+            </NoRecordsContent>
+
+            <PagerContent>
+                <MudDataGridPager T="NotificationOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
 </MudContainer>
 
 @inject HttpClient Http
@@ -31,29 +59,43 @@
 
 @code
 {
-    private int _counter;
-    private HubConnection? _hubConnection;
+    private bool _loading;
+    private string _searchString;
+    private List<NotificationOut> _notifications = new();
 
     protected override async Task OnInitializedAsync()
     {
-        _hubConnection = new HubConnectionBuilder()
-            .WithUrl("http://localhost:5160/hubs/notifications")
-            .Build();
-
-        _hubConnection.On<int>("OnCounterUpdate", (counter) =>
-        {
-            _counter = counter;
-            StateHasChanged();
-        });
-
-        await _hubConnection.StartAsync();
+        _loading = true;
+        _notifications = await Http.GetFromJsonAsync<List<NotificationOut>>("/notifications") ?? new();
+        _loading = false;
     }
 
-    private async Task UpdateCounter()
+    private async Task OpenDialog()
     {
-        if (_hubConnection is not null)
-        {
-            await _hubConnection.SendAsync("UpdateCounter");
-        }
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true,
+        };
+        var dialog = await DialogService.ShowAsync<NewNotificationDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled) return;
+        
+        await OnInitializedAsync();
     }
+
+    private Func<NotificationOut, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (x.Description.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    };
 }

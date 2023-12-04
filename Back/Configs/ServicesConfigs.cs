@@ -15,6 +15,7 @@ public static class ServicesConfigs
         services.AddScoped<IGradesService, GradesService>();
         services.AddScoped<IIndexService, IndexService>();
         services.AddScoped<ILivrosService, LivrosService>();
+        services.AddScoped<INotificationsService, NotificationsService>();
         services.AddScoped<IOfertasService, OfertasService>();
         services.AddScoped<IPeriodosService, PeriodosService>();
         services.AddScoped<IProfessoresService, ProfessoresService>();

@@ -1,0 +1,41 @@
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Notifications" Class="mr-1 mb-n1" />
+            Notificações
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudDataGrid
+            Class="mb-4"
+            Hover="true"
+            Loading="_loading"
+            Items="@_notifications.OrderByDescending(d => d.CreatedAt)"
+        >
+            <Columns>
+                <PropertyColumn Property="x => x.Title" Title="Título" />
+                <PropertyColumn Property="x => x.Description" Title="Descrição" />
+                <PropertyColumn Property="x => x.CreatedAt" Title="Criada em" />
+            </Columns>
+
+            <NoRecordsContent>
+                Não existem notificações ainda.
+            </NoRecordsContent>
+        </MudDataGrid>
+    </DialogContent>
+</MudDialog>
+
+@inject HttpClient Http
+
+@code
+{
+    private bool _loading;
+    private List<UserNotificationOut> _notifications = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _notifications = await Http.GetFromJsonAsync<List<UserNotificationOut>>("/notifications/user") ?? new();
+        _loading = false;
+    }
+}

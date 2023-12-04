@@ -52,7 +52,10 @@ https://siga.ufpe.br/ufpe/jsp/FolderModulosSiga.jsf
         - Ter um check informando q leu??
         - Abrir cada uma em dialog pra poder ler tudo e ai sim marcar como lida??
 
+- Conceito de notificacao padrao:
+    - A cada usuario criado, vincular uma notificacao de boas vindas
+    - Perceba q a notificacao n muda, apenas um novo vinculo eh feito
+
 ## MUDBLAZOR SITE EXAMPLE:
 
 ![Alt text](image.png)
-

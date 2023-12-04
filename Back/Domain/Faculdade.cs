@@ -24,6 +24,8 @@ public class Faculdade
 
     public List<Livro> Livros { get; set; }
 
+    public List<Notification> Notifications { get; set; }
+
     public Faculdade() { }
 
     public Faculdade(string nome)

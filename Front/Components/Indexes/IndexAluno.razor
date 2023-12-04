@@ -10,23 +10,23 @@
     </MudAlert>
 
     <MudGrid Class="mt-4">
-        <MudItem xs="6" sm="4">
+        <MudItem xs="6" sm="6" md="6">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                <MudStack AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Large" Color="Color.Primary"/>
+                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.DisciplinasConcluidas Concluídas</MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="6" sm="6" md="6">
             <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
                 <MudStack AlignItems="AlignItems.Center">
                     <MudIcon Icon="@Icons.Material.Filled.School" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.DisciplinasConcluidas Disciplinas Concluídas</MudText>
+                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.DisciplinasTotal Disciplinas</MudText>
                 </MudStack>
             </MudPaper>
         </MudItem>
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.DisciplinasTotal Disciplinas Total</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="6" sm="4">
+        <MudItem xs="6" sm="6" md="6">
             <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
                 <MudStack AlignItems="AlignItems.Center">
                     <MudIcon Icon="@Icons.Material.Filled.GroupWork" Size="Size.Large" Color="Color.Primary"/>
@@ -35,7 +35,7 @@
             </MudPaper>
         </MudItem>
 
-        <MudItem xs="6" sm="4">
+        <MudItem xs="6" sm="6" md="6">
             <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
                 <MudStack AlignItems="AlignItems.Center">
                     <MudIcon Icon="@Icons.Material.Filled.Class" Size="Size.Large" Color="Color.Primary"/>

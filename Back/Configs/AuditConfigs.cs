@@ -35,6 +35,7 @@ public static class AuditConfigs
                 .Map<Professor, AuditLog>()
                 .Map<SykiUser, AuditLog>()
                 .Map<Turma, AuditLog>()
+                .Map<Notification, AuditLog>()
                 .AuditEntityAction<AuditLog>((ev, entry, log) =>
                 {
                     log.Id = Guid.NewGuid();

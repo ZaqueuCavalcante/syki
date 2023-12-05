@@ -10,8 +10,6 @@ public static class AuditConfigs
 {
     public static void AddAuditConfigs(this IServiceCollection services)
     {
-        if (Env.IsTesting()) return;
-
         var context = services.BuildServiceProvider().GetService<SykiDbContext>();
 
         Configuration.Setup().UseEntityFramework(_ => _
@@ -51,7 +49,7 @@ public static class AuditConfigs
 
     public static void UseAudit(this IApplicationBuilder app)
     {
-        if (Env.IsTesting()) return;
+        if (Configuration.AuditDisabled) return;
 
         var contextAccessor = app.ApplicationServices.GetService<IHttpContextAccessor>()!;
 

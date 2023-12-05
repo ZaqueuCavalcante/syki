@@ -10,6 +10,8 @@ public static class AuditConfigs
 {
     public static void AddAuditConfigs(this IServiceCollection services)
     {
+        if (Env.IsTesting()) return;
+
         var context = services.BuildServiceProvider().GetService<SykiDbContext>();
 
         Configuration.Setup().UseEntityFramework(_ => _
@@ -43,11 +45,13 @@ public static class AuditConfigs
                     log.FaculdadeId = Guid.Parse(ev.CustomFields["FaculdadeId"].ToString()!);
                     log.Data = JsonDocument.Parse(entry.ToJson());
                 }))
-        .IgnoreMatchedProperties(true));
+            .IgnoreMatchedProperties(true));
     }
 
     public static void UseAudit(this IApplicationBuilder app)
     {
+        if (Env.IsTesting()) return;
+
         var contextAccessor = app.ApplicationServices.GetService<IHttpContextAccessor>()!;
 
         Configuration.AddCustomAction(ActionType.OnScopeCreated, scope =>

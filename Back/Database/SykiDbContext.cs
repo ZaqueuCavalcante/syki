@@ -1,4 +1,5 @@
 using Syki.Shared;
+using Syki.Back.Audit;
 using Syki.Back.Domain;
 using Syki.Back.Settings;
 using Audit.EntityFramework;

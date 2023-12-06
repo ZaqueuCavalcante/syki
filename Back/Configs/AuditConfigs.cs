@@ -1,6 +1,6 @@
 using Audit.Core;
+using Syki.Back.Audit;
 using Syki.Back.Domain;
-using System.Text.Json;
 using Syki.Back.Database;
 using Syki.Back.Extensions;
 
@@ -34,16 +34,7 @@ public static class AuditConfigs
                 .Map<SykiUser, AuditLog>()
                 .Map<Turma, AuditLog>()
                 .Map<Notification, AuditLog>()
-                .AuditEntityAction<AuditLog>((ev, entry, log) =>
-                {
-                    log.Id = Guid.NewGuid();
-                    log.EntityId = Guid.Parse(entry.PrimaryKey.First().Value.ToString()!);
-                    log.EntityType = entry.EntityType.Name;
-                    log.CreatedAt = DateTime.Now;
-                    log.UserId = Guid.Parse(ev.CustomFields["UserId"].ToString()!);
-                    log.FaculdadeId = Guid.Parse(ev.CustomFields["FaculdadeId"].ToString()!);
-                    log.Data = JsonDocument.Parse(entry.ToJson());
-                }))
+                .AuditEntityAction<AuditLog>((evt, entry, log) => log.Fill(evt, entry)))
             .IgnoreMatchedProperties(true));
     }
 

@@ -1,3 +1,4 @@
+using Syki.Back.Audit;
 using Syki.Back.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

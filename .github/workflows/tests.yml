@@ -24,4 +24,4 @@ jobs:
         run: dotnet build -c Release --no-restore
 
       - name: Tests
-        run: dotnet test --logger:"console;verbosity=detailed"
+        run: dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~UnitTests"

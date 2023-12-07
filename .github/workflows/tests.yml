@@ -12,11 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Start Postgres
-        run: |
-          sudo systemctl start postgresql.service
-          pg_isready
-
       - name: Setup
         uses: actions/setup-dotnet@v3
         with:

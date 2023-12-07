@@ -9,22 +9,13 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-
     steps:
       - uses: actions/checkout@v3
+
+      - name: Start Postgres
+        run: |
+          sudo systemctl start postgresql.service
+          pg_isready
 
       - name: Setup
         uses: actions/setup-dotnet@v3

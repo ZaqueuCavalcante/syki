@@ -9,10 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using AngleSharp.Common;
 
 namespace Syki.Tests.Base;
 
-public class ApiTestBase
+public class IntegrationTestBase
 {
     protected HttpClient _client = null!;
     protected SykiDbContext _ctx = null!;
@@ -45,6 +48,13 @@ public class ApiTestBase
         _client = _factory.CreateClient();
 
         var cnn = _ctx.Database.GetConnectionString()!;
+
+        var configs = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+        Console.WriteLine(cnn);
+        foreach (var item in configs.AsEnumerable())
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(item));
+        }
 
         if (Env.IsTesting())
         {

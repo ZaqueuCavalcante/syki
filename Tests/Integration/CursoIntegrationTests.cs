@@ -9,7 +9,7 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 namespace Syki.Tests.Integration;
 
 [TestFixture]
-public class CursoIntegrationTests : ApiTestBase
+public class CursoIntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_criar_um_novo_curso()

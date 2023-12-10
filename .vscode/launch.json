@@ -13,8 +13,8 @@
         {
             "name": "FRONT",
             "type": "blazorwasm",
-            "request": "launch",
-            "cwd": "${workspaceFolder}/Front",
-        }
+            "request": "attach",
+            "url": "http://localhost:5000"
+          }
     ]
 }

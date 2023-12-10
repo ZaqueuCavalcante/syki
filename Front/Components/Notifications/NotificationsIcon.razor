@@ -34,6 +34,7 @@
         await GetNotifications();
 
         _hubConnection = new HubConnectionBuilder()
+            .WithAutomaticReconnect()
             .WithUrl("http://localhost:5160/hubs/notifications")
             .Build();
 

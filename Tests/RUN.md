@@ -2,6 +2,7 @@
 
 dotnet test --logger:"console;verbosity=detailed"
 dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~UnitTests"
+dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~Deve_criar_varios_campus_para_uma_mesma_faculdade"
 
 # How to create maintainable and testable Blazor components
 

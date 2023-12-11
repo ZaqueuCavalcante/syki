@@ -5,13 +5,9 @@ using FluentAssertions;
 using Syki.Back.Domain;
 using Syki.Back.Database;
 using Syki.Back.Extensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using AngleSharp.Common;
 
 namespace Syki.Tests.Base;
 
@@ -46,15 +42,6 @@ public class IntegrationTestBase
         using var scope = _factory.Services.CreateScope();
         _ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
         _client = _factory.CreateClient();
-
-        var cnn = _ctx.Database.GetConnectionString()!;
-
-        var configs = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-        Console.WriteLine(cnn);
-        foreach (var item in configs.AsEnumerable())
-        {
-            Console.WriteLine(JsonConvert.SerializeObject(item));
-        }
 
         if (Env.IsTesting())
         {

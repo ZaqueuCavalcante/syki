@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Syki.Tests.Integration;
 
 [TestFixture]
-public partial class IntegrationTests : IntegrationTestBase
+public class DbSeedIntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_fazer_o_seed_do_banco_de_dados()

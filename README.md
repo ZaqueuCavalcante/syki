@@ -1,6 +1,6 @@
 # SYKI
 
-![LOGO](/Docs/syki_logo.png "LOGO")
+![Overview](/Docs/syki_overview.gif "Overview")
 
 ## Database Modelling ER Diagram
 

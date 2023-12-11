@@ -2,6 +2,7 @@ using System.Text;
 using Syki.Back.Settings;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Syki.Back.Configs;
 
@@ -38,6 +39,22 @@ public static class AuthenticationConfigs
             RoleClaimType = "role",
         };
 
+        var events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var path = context.HttpContext.Request.Path;
+                var accessToken = context.Request.Query["access_token"];
+
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/notifications"))
+                {
+                    context.Token = accessToken;
+                }
+
+                return Task.CompletedTask;
+            }
+        };
+
         services.AddAuthentication(options =>
         {
             options.DefaultScheme = BearerScheme;
@@ -47,6 +64,7 @@ public static class AuthenticationConfigs
         })
         .AddJwtBearer(BearerScheme, options =>
         {
+            options.Events = events;
             options.TokenValidationParameters = tokenValidationParameters;
         });
     }

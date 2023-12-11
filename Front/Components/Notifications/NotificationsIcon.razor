@@ -23,6 +23,7 @@
 
 @inject HttpClient Http
 @inject IDialogService DialogService
+@inject ILocalStorageService LocalStorage
 
 @code
 {
@@ -33,9 +34,13 @@
     {
         await GetNotifications();
 
+        var token = await LocalStorage.GetItemAsync("AccessToken");
+
         _hubConnection = new HubConnectionBuilder()
             .WithAutomaticReconnect()
-            .WithUrl("http://localhost:5160/hubs/notifications")
+            .WithUrl(
+                "http://localhost:5160/hubs/notifications",
+                options => options.AccessTokenProvider = () => Task<string?>.FromResult(token))
             .Build();
 
         _hubConnection.On<int>("OnUpdateNotificationsCounter", async _ =>

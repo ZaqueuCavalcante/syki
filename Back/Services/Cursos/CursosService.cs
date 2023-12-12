@@ -12,7 +12,7 @@ public class CursosService : ICursosService
 
     public async Task<CursoOut> Create(Guid faculdadeId, CursoIn data)
     {
-        var curso = new Curso(data.Nome, data.Tipo, faculdadeId);
+        var curso = new Curso(faculdadeId, data.Nome, data.Tipo);
 
         await _ctx.Cursos.AddAsync(curso);
 

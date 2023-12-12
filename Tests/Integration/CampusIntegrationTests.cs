@@ -17,14 +17,7 @@ public class CampusIntegrationTests : IntegrationTestBase
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
 
-        var user = new UserIn
-        {
-            Faculdade = faculdade.Id,
-            Name = "Acadêmico - Nova Roma",
-            Email = "academico@novaroma.com",
-            Password = "Academico@123",
-            Role = Academico,
-        };
+        var user = UserIn.New(faculdade.Id, Academico);
         await RegisterUser(user);
         await Login(user.Email, user.Password);
 
@@ -32,7 +25,7 @@ public class CampusIntegrationTests : IntegrationTestBase
 
         // Act
         var campus = await PostAsync<CampusOut>("/campi", body);
-        
+
         // Assert
         campus.Id.Should().NotBeEmpty();
         campus.Nome.Should().Be(body.Nome);
@@ -45,21 +38,14 @@ public class CampusIntegrationTests : IntegrationTestBase
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
 
-        var user = new UserIn
-        {
-            Faculdade = faculdade.Id,
-            Name = "Acadêmico - Nova Roma",
-            Email = "academico@novaroma.com",
-            Password = "Academico@123",
-            Role = Academico,
-        };
+        var user = UserIn.New(faculdade.Id, Academico);
         await RegisterUser(user);
         await Login(user.Email, user.Password);
 
         // Act
         await PostAsync("/campi", new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" });
         await PostAsync("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
-        
+
         // Assert
         var campi = await GetAsync<List<CampusOut>>("/campi");
         campi.Should().HaveCount(2);
@@ -71,14 +57,7 @@ public class CampusIntegrationTests : IntegrationTestBase
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
 
-        var user = new UserIn
-        {
-            Faculdade = faculdade.Id,
-            Name = "Acadêmico - Nova Roma",
-            Email = "academico@novaroma.com",
-            Password = "Academico@123",
-            Role = Academico,
-        };
+        var user = UserIn.New(faculdade.Id, Academico);
         await RegisterUser(user);
         await Login(user.Email, user.Password);
 
@@ -89,7 +68,7 @@ public class CampusIntegrationTests : IntegrationTestBase
         campus.Nome = "Agreste II";
         campus.Cidade = "Bonito - PE";
         var updatedCampus = await PutAsync<CampusOut>("/campi", campus);
-        
+
         // Assert
         updatedCampus.Id.Should().Be(campus.Id);
         updatedCampus.Nome.Should().Be(campus.Nome);
@@ -104,7 +83,7 @@ public class CampusIntegrationTests : IntegrationTestBase
 
         // Act
         var response = await _client.PostAsync("/campi", body.ToStringContent());
-        
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
@@ -124,8 +103,40 @@ public class CampusIntegrationTests : IntegrationTestBase
 
         // Act
         var response = await _client.PostAsync("/campi", body.ToStringContent());
-        
+
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+
+    [Test]
+    public async Task Deve_retornar_apenas_os_campus_da_faculdade_do_usuario_logado()
+    {
+        // Arrange
+        var novaRoma = await CreateFaculdade("Nova Roma");
+        var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
+        await RegisterUser(userNovaRoma);
+
+        var ufpe = await CreateFaculdade("UFPE");
+        var userUfpe = UserIn.New(ufpe.Id, Academico);
+        await RegisterUser(userUfpe);
+
+        await Login(userNovaRoma.Email, userNovaRoma.Password);
+        var bodyNovaRoma = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
+        await PostAsync<CampusOut>("/campi", bodyNovaRoma);
+
+        await Login(userUfpe.Email, userUfpe.Password);
+        var bodyUfpe = new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" };
+        await PostAsync<CampusOut>("/campi", bodyUfpe);
+
+        // Act
+        await Login(userNovaRoma.Email, userNovaRoma.Password);
+
+        var campi = await GetAsync<List<CampusOut>>("/campi");
+        campi.Should().HaveCount(1);
+
+        // Assert
+        campi[0].Id.Should().NotBeEmpty();
+        campi[0].Nome.Should().Be(bodyNovaRoma.Nome);
+        campi[0].Cidade.Should().Be(bodyNovaRoma.Cidade);
     }
 }

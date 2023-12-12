@@ -19,15 +19,15 @@ public static class DbSeed
         },
         Cursos = new()
         {
-            new Curso("Administração", TipoDeCurso.Mestrado),
-            new Curso("Análise e Desenvolvimento de Sistemas", TipoDeCurso.Bacharelado),
-            new Curso("Arquitetura e Urbanismo", TipoDeCurso.Tecnologo),
-            new Curso("Ciência da Computação", TipoDeCurso.Bacharelado),
-            new Curso("Direito", TipoDeCurso.Licenciatura),
-            new Curso("Engenharia Civil", TipoDeCurso.Bacharelado),
-            new Curso("Engenharia Mecânica", TipoDeCurso.Bacharelado),
-            new Curso("Engenharia de Produção", TipoDeCurso.PosDoutorado),
-            new Curso("Pedagogia", TipoDeCurso.Licenciatura),
+            new Curso(Id, "Administração", TipoDeCurso.Mestrado),
+            new Curso(Id, "Análise e Desenvolvimento de Sistemas", TipoDeCurso.Bacharelado),
+            new Curso(Id, "Arquitetura e Urbanismo", TipoDeCurso.Tecnologo),
+            new Curso(Id, "Ciência da Computação", TipoDeCurso.Bacharelado),
+            new Curso(Id, "Direito", TipoDeCurso.Licenciatura),
+            new Curso(Id, "Engenharia Civil", TipoDeCurso.Bacharelado),
+            new Curso(Id, "Engenharia Mecânica", TipoDeCurso.Bacharelado),
+            new Curso(Id, "Engenharia de Produção", TipoDeCurso.PosDoutorado),
+            new Curso(Id, "Pedagogia", TipoDeCurso.Licenciatura),
         },
         Disciplinas = new()
         {

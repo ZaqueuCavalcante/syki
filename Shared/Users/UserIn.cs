@@ -10,11 +10,12 @@ public class UserIn
 
     public static UserIn New(Guid faculdadeId, string role)
     {
+        var hash = faculdadeId.ToString().OnlyNumbers();
         return new UserIn
         {
             Faculdade = faculdadeId,
-            Name = $"{role} - Nova Roma",
-            Email = $"{role.ToLower()}@novaroma.com",
+            Name = $"{role} - {hash}",
+            Email = $"{role.ToLower()}@{hash}.com",
             Password = $"{role}@123",
             Role = role,
         };

@@ -12,7 +12,7 @@ public class CampiService : ICampiService
 
     public async Task<CampusOut> Create(Guid faculdadeId, CampusIn data)
     {
-        var campus = new Campus(data.Nome, data.Cidade, faculdadeId);
+        var campus = new Campus(faculdadeId, data.Nome, data.Cidade);
 
         await _ctx.Campi.AddAsync(campus);
 

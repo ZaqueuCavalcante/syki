@@ -88,6 +88,13 @@ public class IntegrationTestBase
         return await response.DeserializeTo<T>();
     }
 
+    protected async Task<T> PutAsync<T>(string path, object obj)
+    {
+        var response = await _client.PutAsync(path, obj.ToStringContent());
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        return await response.DeserializeTo<T>();
+    }
+
     protected async Task<T> GetAsync<T>(string path)
     {
         var response = await _client.GetAsync(path);

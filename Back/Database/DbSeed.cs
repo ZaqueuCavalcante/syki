@@ -5,15 +5,17 @@ namespace Syki.Back.Database;
 
 public static class DbSeed
 {
+    public static Guid Id = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432");
+
     public static Faculdade NovaRoma = new()
     {
-        Id = Guid.Parse("8d08e437-8b18-4a15-a231-4a2260e60432"),
+        Id = Id,
         Nome = "Nova Roma",
         Campi = new()
         {
-            new Campus("Agreste I", "Caruaru - PE"),
-            new Campus("Suassuna", "Recife - PE"),
-            new Campus("Garoa II", "Garanhuns - PE"),
+            new Campus(Id, "Agreste I", "Caruaru - PE"),
+            new Campus(Id, "Suassuna", "Recife - PE"),
+            new Campus(Id, "Garoa II", "Garanhuns - PE"),
         },
         Cursos = new()
         {

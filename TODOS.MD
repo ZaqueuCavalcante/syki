@@ -1,4 +1,4 @@
-00 - [ ] Run API tests on pipeline
+00 - [X] Run API tests on pipeline
 01 - [X] Add authentication and authorization
 02 - [X] Use Identity? YES
 03 - [X] Manage API access
@@ -7,7 +7,7 @@
 06 - [ ] Add policies instead roles
 07 - [ ] Link Aluno and Professor to SykiUser
 08 - [ ] Add full intial setup usecase (Academico -> Professor + Aluno views)
-09 - [ ] Add full setup and login flows for Two Factor Auth (+ QrCode)
+09 - [X] Add full setup and login flows for Two Factor Auth (+ QrCode)
 10 - [ ] Add calendar?
 11 - [ ] Use Result Pattern instead throw exceptions
 12 - [ ] https://devblogs.microsoft.com/dotnet/whats-new-with-identity-in-dotnet-8/

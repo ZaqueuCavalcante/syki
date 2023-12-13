@@ -7,6 +7,7 @@ public class DisciplinaOut
     public byte Periodo { get; set; }
     public byte Creditos { get; set; }
     public ushort CargaHoraria { get; set; }
+    public List<Guid> Cursos { get; set; } = [];
 
     public override bool Equals(object? obj)
     {

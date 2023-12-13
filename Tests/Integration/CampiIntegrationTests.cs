@@ -9,7 +9,7 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 namespace Syki.Tests.Integration;
 
 [TestFixture]
-public class CampusIntegrationTests : IntegrationTestBase
+public class CampiIntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_criar_um_novo_campus()
@@ -103,6 +103,44 @@ public class CampusIntegrationTests : IntegrationTestBase
 
         // Act
         var response = await _client.PostAsync("/campi", body.ToStringContent());
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    public async Task Nao_deve_editar_um_campus_quando_o_usuario_nao_tem_permissao(string role)
+    {
+        // Arrange
+        var faculdade = await CreateFaculdade("Nova Roma");
+
+        var user = UserIn.New(faculdade.Id, role);
+        await RegisterUser(user);
+        await Login(user.Email, user.Password);
+
+        var body = new CampusOut { Nome = "Campus Caruaru" };
+
+        // Act
+        var response = await _client.PutAsync("/campi", body.ToStringContent());
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    public async Task Nao_deve_retornar_os_campus_quando_o_usuario_nao_tem_permissao(string role)
+    {
+        // Arrange
+        var faculdade = await CreateFaculdade("Nova Roma");
+
+        var user = UserIn.New(faculdade.Id, role);
+        await RegisterUser(user);
+        await Login(user.Email, user.Password);
+
+        // Act
+        var response = await _client.GetAsync("/campi");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);

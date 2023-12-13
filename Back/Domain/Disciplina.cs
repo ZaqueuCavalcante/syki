@@ -5,35 +5,21 @@ namespace Syki.Back.Domain;
 public class Disciplina
 {
     public Guid Id { get; set; }
-
     public Guid FaculdadeId { get; set; }
-    
     public string Nome { get; set; }
-
     public ushort CargaHoraria { get; set; }
-
     public List<CursoDisciplina> Vinculos { get; set; }
 
     public Disciplina(
-        string nome,
-        ushort cargaHoraria
-    ) {
-        Id = Guid.NewGuid();
-        Nome = nome;
-        CargaHoraria = cargaHoraria;
-        Vinculos = new();
-    }
-
-    public Disciplina(
-        string nome,
         Guid faculdadeId,
+        string nome,
         ushort cargaHoraria
     ) {
         Id = Guid.NewGuid();
-        Nome = nome;
         FaculdadeId = faculdadeId;
+        Nome = nome;
         CargaHoraria = cargaHoraria;
-        Vinculos = new();
+        Vinculos = [];
     }
 
     public DisciplinaOut ToOut()
@@ -43,6 +29,7 @@ public class Disciplina
             Id = Id,
             Nome = Nome,
             CargaHoraria = CargaHoraria,
+            Cursos = Vinculos.ConvertAll(v => v.CursoId),
         };
     }
 }

@@ -13,18 +13,19 @@ public class DisciplinasService : IDisciplinasService
     public async Task<DisciplinaOut> Create(Guid faculdadeId, DisciplinaIn data)
     {
         var disciplina = new Disciplina(
-            data.Nome,
             faculdadeId,
+            data.Nome,
             data.CargaHoraria
         );
 
-        foreach (var id in data.Cursos)
-        {
-            disciplina.Vinculos.Add(new CursoDisciplina { CursoId = id });
-        }
+        var cursos = await _ctx.Cursos
+            .Where(c => c.FaculdadeId == faculdadeId && data.Cursos.Contains(c.Id))
+            .Select(c => c.Id)
+            .ToListAsync();
+
+        cursos.ForEach(id => disciplina.Vinculos.Add(new() { CursoId = id }));
 
         await _ctx.Disciplinas.AddAsync(disciplina);
-
         await _ctx.SaveChangesAsync();
 
         return disciplina.ToOut();
@@ -37,10 +38,7 @@ public class DisciplinasService : IDisciplinasService
             .Select(cd => cd.DisciplinaId)
             .ToListAsync();
 
-        if (cursoId != null && ids.Count == 0)
-        {
-            return [];
-        }
+        if (cursoId != null && ids.Count == 0) return [];
 
         var disciplinas = await _ctx.Disciplinas
             .Where(d => d.FaculdadeId == faculdadeId && (ids.Count == 0 || ids.Contains(d.Id)))

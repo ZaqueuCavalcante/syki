@@ -9,7 +9,7 @@ public class CursoOut
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;
-        return this.Id == ((CursoOut)obj).Id;
+        return Id == ((CursoOut)obj).Id;
     }
 
     public override int GetHashCode()

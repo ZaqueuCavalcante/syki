@@ -45,7 +45,7 @@ public class UsersController : ControllerBase
     [HttpPost("mfa-setup")]
     public async Task<IActionResult> MfaSetup([FromBody] MfaSetupIn body)
     {
-        var ok = await _authService.SetupMfa(User.Id(), body.Token.OnlyNumbers());
+        var ok = await _authService.SetupMfa(User.Id(), body.Token);
 
         return Ok(new MfaSetupOut { Ok = ok });
     }

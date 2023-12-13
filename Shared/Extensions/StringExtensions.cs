@@ -1,3 +1,4 @@
+using OtpNet;
 using System.Text.RegularExpressions;
 
 namespace Syki.Shared;
@@ -30,5 +31,11 @@ public static class StringExtensions
 
         var startUnderscores = Regex.Match(input, @"^_+");
         return startUnderscores + Regex.Replace(input, @"([a-z0-9])([A-Z])", "$1_$2").ToLower();
+    }
+
+    public static string ToMfaToken(this string key)
+    {
+        var totp = new Totp(Base32Encoding.ToBytes(key));
+        return totp.ComputeTotp();
     }
 }

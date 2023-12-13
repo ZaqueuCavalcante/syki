@@ -9,7 +9,7 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 namespace Syki.Tests.Integration;
 
 [TestFixture]
-public class FauldadeIntegrationTests : IntegrationTestBase
+public class FauldadesIntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_criar_uma_nova_faculdade()

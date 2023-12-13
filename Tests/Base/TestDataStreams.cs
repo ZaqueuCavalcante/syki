@@ -12,6 +12,14 @@ public static class TestDataStreams
         }
     }
 
+    public static IEnumerable<object[]> AllUsersRoles()
+    {
+        foreach (var role in AllRoles)
+        {
+            yield return new object[] { role };
+        }
+    }
+
     public static IEnumerable<object[]> AllRolesExceptAcademico()
     {
         foreach (var role in AllRoles)

@@ -64,7 +64,7 @@ public class CursosUnitTests
     }
 
     [Test]
-    public void Deve_converter_corretamente_pro_out()
+    public void Deve_converter_o_curso_corretamente_pro_out()
     {
         // Arrange
         var faculdadeId = Guid.NewGuid();

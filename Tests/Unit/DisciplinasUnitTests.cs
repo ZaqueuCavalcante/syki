@@ -61,7 +61,7 @@ public class DisciplinasUnitTests
     }
 
     [Test]
-    public void Deve_converter_corretamente_pro_out()
+    public void Deve_converter_a_disciplina_corretamente_pro_out()
     {
         // Arrange
         var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados", 72);

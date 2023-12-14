@@ -12,14 +12,11 @@ public class GradesService : IGradesService
 
     public async Task<GradeOut> Create(Guid faculdadeId, GradeIn data)
     {
-        var grade = new Grade
-        {
-            Id = Guid.NewGuid(),
-            FaculdadeId = faculdadeId,
-            CursoId = data.CursoId,
-            Nome = data.Nome,
-            Vinculos = new(),
-        };
+        var grade = new Grade(
+            faculdadeId,
+            data.CursoId,
+            data.Nome
+        );
 
         foreach (var d in data.Disciplinas)
         {
@@ -57,7 +54,7 @@ public class GradesService : IGradesService
     public async Task<List<DisciplinaOut>> GetDisciplinas(Guid faculdadeId, Guid id)
     {
         var grade = await _ctx.Grades
-            .Where(c => c.FaculdadeId == faculdadeId && c.Id == id)
+            .Where(g => g.FaculdadeId == faculdadeId && g.Id == id)
             .Include(g => g.Disciplinas)
             .FirstOrDefaultAsync();
         

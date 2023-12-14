@@ -79,7 +79,7 @@ public class CampiUnitTests
     }
 
     [Test]
-    public void Deve_converter_corretamente_pro_out()
+    public void Deve_converter_o_campus_corretamente_pro_out()
     {
         // Arrange
         var campus = new Campus(Guid.NewGuid(), "Agreste II", "Bonito - PE");

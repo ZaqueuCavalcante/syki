@@ -122,7 +122,7 @@
 
         data.Faculdade = _faculdade!.Id;
 
-        await Http.PostAsJsonAsync("/users/register", data);
+        await Http.PostAsJsonAsync("/users", data);
 
         MudDialog.Close(DialogResult.Ok(true));
 

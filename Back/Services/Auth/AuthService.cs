@@ -5,12 +5,11 @@ using System.Text;
 using Syki.Back.Settings;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using SykiUser = Syki.Back.Domain.SykiUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Syki.Back.Services;
 
@@ -30,7 +29,7 @@ public class AuthService : IAuthService
         _userManager = userManager;
     }
 
-    public async Task Register(UserIn body)
+    public async Task<UserOut> Register(UserIn body)
     {
         var user = new SykiUser
         {
@@ -46,6 +45,8 @@ public class AuthService : IAuthService
         {
             await _userManager.AddToRoleAsync(user, body.Role);
         }
+
+        return user.ToOut();
     }
 
     public async Task<string> GetMfaKey(Guid userId)

@@ -23,13 +23,13 @@ public class UsersController : ControllerBase
         _signInManager = signInManager;
     }
 
-    [HttpPost("register")]
+    [HttpPost()]
     [Authorize(Roles = Adm)]
     public async Task<IActionResult> Register([FromBody] UserIn body)
     {
-        await _authService.Register(body);
+        var user = await _authService.Register(body);
 
-        return Ok();
+        return Ok(user);
     }
 
     [Authorize]

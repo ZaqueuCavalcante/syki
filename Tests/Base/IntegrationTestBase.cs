@@ -118,7 +118,7 @@ public class IntegrationTestBase
 
     protected async Task RegisterUser(UserIn body)
     {
-        var response = await _client.PostAsync("/users/register", body.ToStringContent());
+        var response = await _client.PostAsync("/users", body.ToStringContent());
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 

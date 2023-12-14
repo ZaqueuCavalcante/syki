@@ -29,6 +29,15 @@ public static class TestDataStreams
         }
     }
 
+    public static IEnumerable<object[]> AllRolesExceptAdm()
+    {
+        foreach (var role in AllRoles)
+        {
+            if (role == Adm) continue;
+            yield return new object[] { role };
+        }
+    }
+
     public static IEnumerable<object[]> CamelCaseNames()
     {
         foreach (var name in new List<(string, string)>()

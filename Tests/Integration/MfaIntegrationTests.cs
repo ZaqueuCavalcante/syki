@@ -3,9 +3,6 @@ using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using OtpNet;
-using System.Text;
-using System.Security.Cryptography;
 
 namespace Syki.Tests.Integration;
 

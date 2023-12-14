@@ -6,16 +6,11 @@ namespace Syki.Back.Domain;
 public class Aluno
 {
     public Guid Id { get; set; }
-    
     public Guid FaculdadeId { get; set; }
-
     public Guid? UserId { get; set; }
-
     public Guid OfertaId { get; set; }
     public Oferta Oferta { get; set; }
-
     public string Nome { get; set; }
-
     public string Matricula { get; set; }
 
     public Aluno(Guid faculdadeId, string nome, Guid ofertaId)

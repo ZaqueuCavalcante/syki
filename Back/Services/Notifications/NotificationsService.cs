@@ -60,7 +60,7 @@ public class NotificationsService : INotificationsService
         notifications.ForEach(n =>
         {
             var viewed = n.Users.Count(u => u.ViewedAt != null);
-            var total = n.Users.Count();
+            var total = n.Users.Count;
             n.Views = $"{viewed}/{total}";
         });
 

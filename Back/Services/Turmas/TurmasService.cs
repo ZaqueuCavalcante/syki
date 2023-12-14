@@ -12,24 +12,17 @@ public class TurmasService : ITurmasService
 
     public async Task<TurmaOut> Create(Guid faculdadeId, TurmaIn data)
     {
-        var turma = new Turma
-        {
-            Id = Guid.NewGuid(),
-            FaculdadeId = faculdadeId,
-            DisciplinaId = data.DisciplinaId,
-            ProfessorId = data.ProfessorId,
-            Periodo = data.Periodo,
-        };
+        var turma = new Turma(
+            faculdadeId,
+            data.DisciplinaId,
+            data.ProfessorId,
+            data.Periodo
+        );
         _ctx.Turmas.Add(turma);
 
-        data.Ofertas.ForEach(x =>
-        {
-            var vinculo = new OfertaTurma
-            {
-                OfertaId = x, TurmaId = turma.Id,
-            };
-            _ctx.Add(vinculo);
-        });
+        var vinculos = data.Ofertas.ConvertAll(x =>
+            new OfertaTurma { OfertaId = x, TurmaId = turma.Id });
+        _ctx.AddRange(vinculos);
 
         await _ctx.SaveChangesAsync();
 

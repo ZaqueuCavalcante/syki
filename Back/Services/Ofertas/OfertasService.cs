@@ -24,7 +24,6 @@ public class OfertasService : IOfertasService
         };
 
         _ctx.Ofertas.Add(oferta);
-
         await _ctx.SaveChangesAsync();
 
         oferta = await _ctx.Ofertas

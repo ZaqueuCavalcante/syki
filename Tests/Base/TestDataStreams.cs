@@ -38,6 +38,15 @@ public static class TestDataStreams
         }
     }
 
+    public static IEnumerable<object[]> AllRolesExceptAluno()
+    {
+        foreach (var role in AllRoles)
+        {
+            if (role == Aluno) continue;
+            yield return new object[] { role };
+        }
+    }
+
     public static IEnumerable<object[]> CamelCaseNames()
     {
         foreach (var name in new List<(string, string)>()

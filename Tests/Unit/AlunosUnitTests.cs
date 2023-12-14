@@ -1,3 +1,4 @@
+using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using Syki.Back.Domain;
@@ -84,6 +85,7 @@ public class AlunosUnitTests
     }
 
     [Test]
+    [Repeat(100)]
     public void Deve_criar_alunos_com_matriculas_diferentes()
     {
         // Arrange
@@ -111,5 +113,44 @@ public class AlunosUnitTests
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(ExceptionMessages.DE0000);
+    }
+
+    [Test]
+    public void Deve_converter_o_aluno_corretamente_pro_out_sem_oferta()
+    {
+        // Arrange
+        var aluno = new Aluno(Guid.NewGuid(), "Zaqueu", Guid.NewGuid());
+
+        // Act
+        var alunoOut = aluno.ToOut();
+
+        // Assert
+        alunoOut.Id.Should().Be(aluno.Id);
+        alunoOut.OfertaId.Should().Be(aluno.OfertaId);
+        alunoOut.Nome.Should().Be(aluno.Nome);
+        alunoOut.Oferta.Should().Be("-");
+        alunoOut.Matricula.Should().Be(aluno.Matricula);
+    }
+
+    [Test]
+    public void Deve_converter_o_aluno_corretamente_pro_out_com_oferta()
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        var aluno = new Aluno(faculdadeId, "Zaqueu", Guid.NewGuid());
+        aluno.Oferta = new()
+        {
+            Curso = new(faculdadeId, "Direito", TipoDeCurso.Doutorado)
+        };
+
+        // Act
+        var alunoOut = aluno.ToOut();
+
+        // Assert
+        alunoOut.Id.Should().Be(aluno.Id);
+        alunoOut.OfertaId.Should().Be(aluno.OfertaId);
+        alunoOut.Nome.Should().Be(aluno.Nome);
+        alunoOut.Oferta.Should().Be("Direito");
+        alunoOut.Matricula.Should().Be(aluno.Matricula);
     }
 }

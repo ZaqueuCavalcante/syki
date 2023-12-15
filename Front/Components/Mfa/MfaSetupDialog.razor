@@ -11,7 +11,7 @@
     </DialogContent>
     <DialogActions>
         <MudSpacer/>
-        <MudButton Class="mt-4" Variant="Variant.Filled" Style="@($"color: white; background: {Colors.Green.Default};")" OnClick="Submit">Continuar</MudButton>
+        <DialogSaveButton Text="Continuar" OnClick="Submit" />
         <MudSpacer/>
     </DialogActions>
 </MudDialog>
@@ -19,7 +19,8 @@
 @inject ISnackbar Snackbar
 @inject NavigationManager Nav
 
-@code {
+@code
+{
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 

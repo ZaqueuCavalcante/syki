@@ -14,8 +14,7 @@ public class CursoOut
 
     public override int GetHashCode()
     {
-        string justNumbers = Id.ToString().OnlyNumbers();
-        return int.Parse(justNumbers[..8]);
+        return Id.ToHashCode();
     }
 
     public override string ToString()

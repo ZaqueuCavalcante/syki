@@ -60,6 +60,19 @@ public static class TestDataStreams
         }
     }
 
+    public static IEnumerable<object[]> GuidsToHashCodes()
+    {
+        foreach (var name in new List<(Guid, int)>()
+        {
+            (Guid.Parse("e2e833ce-9eee-4755-96be-66c52d7dc260"), 2833_9475),
+            (Guid.Parse("bab5f379-ac8b-446d-9325-13d18cd42227"), 5379_8446),
+            (Guid.Parse("439f1f9d-5be0-4456-8364-a2a2391953bb"), 4391_9504),
+        })
+        {
+            yield return new object[] { name };
+        }
+    }
+
     public static IEnumerable<object[]> FormatedStrings()
     {
         foreach (var text in new List<(string, string)>()

@@ -58,7 +58,7 @@
 
     async Task HandleOnKeyDown(KeyboardEventArgs args)
     {
-        if (args.Key == "Enter")
+        if (args.IsEnter())
         {
             await Submit();
         }

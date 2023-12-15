@@ -69,7 +69,7 @@ public class AuthService : IAuthService
         var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
         var tokenProvider = _userManager.Options.Tokens.AuthenticatorTokenProvider;
-        var ok = await _userManager.VerifyTwoFactorTokenAsync(user, tokenProvider, token);
+        var ok = await _userManager.VerifyTwoFactorTokenAsync(user, tokenProvider, token.OnlyNumbers());
 
         if (ok)
         {

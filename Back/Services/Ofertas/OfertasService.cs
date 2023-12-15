@@ -12,16 +12,14 @@ public class OfertasService : IOfertasService
 
     public async Task<OfertaOut> Create(Guid faculdadeId, OfertaIn data)
     {
-        var oferta = new Oferta
-        {
-            Id = Guid.NewGuid(),
-            FaculdadeId = faculdadeId,
-            CampusId = data.CampusId,
-            CursoId = data.CursoId,
-            GradeId = data.GradeId,
-            Periodo = data.Periodo,
-            Turno = data.Turno,
-        };
+        var oferta = new Oferta(
+            faculdadeId,
+            data.CampusId,
+            data.CursoId,
+            data.GradeId,
+            data.Periodo,
+            data.Turno
+        );
 
         _ctx.Ofertas.Add(oferta);
         await _ctx.SaveChangesAsync();

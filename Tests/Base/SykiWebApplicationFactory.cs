@@ -2,9 +2,9 @@ using Syki.Back;
 using Audit.Core;
 using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.TestHost;
 
 namespace Syki.Tests.Base;
 

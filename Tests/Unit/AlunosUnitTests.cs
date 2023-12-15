@@ -137,10 +137,18 @@ public class AlunosUnitTests
     {
         // Arrange
         var faculdadeId = Guid.NewGuid();
-        var aluno = new Aluno(faculdadeId, "Zaqueu", Guid.NewGuid());
-        aluno.Oferta = new()
+        var campusId = Guid.NewGuid();
+        var cursoId = Guid.NewGuid();
+        var gradeId = Guid.NewGuid();
+        const string periodo = "2024.1";
+        var turno = Turno.Matutino;
+
+        var aluno = new Aluno(faculdadeId, "Zaqueu", Guid.NewGuid())
         {
-            Curso = new(faculdadeId, "Direito", TipoDeCurso.Doutorado)
+            Oferta = new(faculdadeId, campusId, cursoId, gradeId, periodo, turno)
+            {
+                Curso = new(faculdadeId, "Direito", TipoDeCurso.Doutorado)
+            }
         };
 
         // Act

@@ -30,12 +30,12 @@
 @code
 {
     private bool _loading;
-    private List<UserNotificationOut> _notifications = new();
+    private List<UserNotificationOut> _notifications = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _notifications = await Http.GetFromJsonAsync<List<UserNotificationOut>>("/notifications/user") ?? new();
+        _notifications = await Http.GetFromJsonAsync<List<UserNotificationOut>>("/notifications/user") ?? [];
         _loading = false;
     }
 }

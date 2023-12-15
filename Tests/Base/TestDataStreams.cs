@@ -73,4 +73,56 @@ public static class TestDataStreams
             yield return new object[] { text };
         }
     }
+
+    public static IEnumerable<object[]> TextsContains()
+    {
+        foreach (var text in new List<(string, string, string)>()
+        {
+            ("Banco de Dados", "72", "dados"),
+            ("Banco de Dados", "72", "72"),
+            ("Informática e Sociedade", "Chat GPT", "Informáti"),
+            ("Informática e Sociedade", "Chat GPT", "chat"),
+            ("Estatística Aplicada", "50", "estatística"),
+            ("Computação em Nuvem e Web Services", "web", "nuvem"),
+            ("Projeto Integrador I: Concepção e Prototipação", "60", "Projeto Integrador I"),
+            ("Direito e Economia", "", "econo"),
+            ("Sociologia Jurídica", "leis", "socio"),
+            ("Direito Empresarial II", "80", "II"),
+            ("Direito Empresarial II", "80", "80"),
+            ("Monografia Final", "final", "grafia"),
+            ("3681515", "6816", "515"),
+            ("8681918485", "Lalala", "681"),
+            ("1681616851651", "57681", "6168"),
+            ("6841861", "68416", "84"),
+        })
+        {
+            yield return new object[] { text };
+        }
+    }
+
+    public static IEnumerable<object[]> TextsNotContains()
+    {
+        foreach (var text in new List<(string, string, string)>()
+        {
+            ("Banco de Dados", "72", "objeto"),
+            ("Banco de Dados", "72", "sociedade"),
+            ("Informática e Sociedade", "Chat GPT", "bard"),
+            ("Informática e Sociedade", "Chat GPT", "dados"),
+            ("Estatística Aplicada", "50", "51"),
+            ("Computação em Nuvem e Web Services", "web", "mobile"),
+            ("Projeto Integrador I: Concepção e Prototipação", "60", "II"),
+            ("Direito e Economia", "", "80"),
+            ("Sociologia Jurídica", "leis", "poo"),
+            ("Direito Empresarial II", "80", "socio"),
+            ("Direito Empresarial II", "80", "leis"),
+            ("Monografia Final", "final", "tcc"),
+            ("3681515", "6816", "8641"),
+            ("8681918485", "Lalala", "0"),
+            ("1681616851651", "57681", "684"),
+            ("6841861", "68416", "68419"),
+        })
+        {
+            yield return new object[] { text };
+        }
+    }
 }

@@ -49,11 +49,12 @@
 @inject HttpClient Http
 @inject ISnackbar Snackbar
 
-@code {
+@code
+{
     private MudForm _form;
 
     private OfertaOut? _oferta;
-    private List<OfertaOut> _ofertas = new();
+    private List<OfertaOut> _ofertas = [];
 
     private AlunoIn data = new();
 
@@ -62,7 +63,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? new();
+        _ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? [];
     }
 
     async Task Submit()

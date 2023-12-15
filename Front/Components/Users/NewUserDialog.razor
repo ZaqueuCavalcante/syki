@@ -96,18 +96,18 @@
     MudDialogInstance MudDialog { get; set; }
 
     FaculdadeOut? _faculdade;
-    List<FaculdadeOut> _faculdades = new();
+    List<FaculdadeOut> _faculdades = [];
 
-    List<string> _roles = new() { "Adm", "Academico", "Professor", "Aluno" };
+    List<string> _roles = ["Adm", "Academico", "Professor", "Aluno"];
 
     protected override async Task OnInitializedAsync()
     {
-        _faculdades = await Http.GetFromJsonAsync<List<FaculdadeOut>>("/faculdades") ?? new();
+        _faculdades = await Http.GetFromJsonAsync<List<FaculdadeOut>>("/faculdades") ?? [];
     }
 
     private async Task<IEnumerable<FaculdadeOut>> SearchFaculdade(string value)
     {
-        await Task.Delay(1);
+        await Task.Delay(0);
 
         if (string.IsNullOrEmpty(value))
             return _faculdades;

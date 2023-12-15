@@ -54,7 +54,7 @@
 
     private async Task GetNotifications()
     {
-        _notifications = await Http.GetFromJsonAsync<List<UserNotificationOut>>("/notifications/user") ?? new();
+        _notifications = await Http.GetFromJsonAsync<List<UserNotificationOut>>("/notifications/user") ?? [];
     }
 
     private int GetCount()

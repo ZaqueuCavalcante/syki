@@ -10,6 +10,20 @@ public static class StringExtensions
         return string.IsNullOrEmpty(text) || string.IsNullOrWhiteSpace(text);
     }
 
+    public static bool IsIn(this string? text, params string[] others)
+    {
+        if (text.IsEmpty())
+            return true;
+
+        foreach (var other in others)
+        {
+            if (other.Contains(text!, StringComparison.OrdinalIgnoreCase))
+                return true;
+        }
+
+        return false;
+    }
+
     public static bool HasValue(this string? text)
     {
         return !string.IsNullOrEmpty(text);

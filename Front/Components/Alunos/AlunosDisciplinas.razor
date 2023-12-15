@@ -56,10 +56,10 @@
 
 @code
 {
-    private List<DisciplinaOut> _disciplinas = new();
+    private List<DisciplinaOut> _disciplinas = [];
 
     protected override async Task OnInitializedAsync()
     {
-        _disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("alunos/disciplinas") ?? new();
+        _disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("alunos/disciplinas") ?? [];
     }
 }

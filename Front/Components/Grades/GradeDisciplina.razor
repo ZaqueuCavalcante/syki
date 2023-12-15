@@ -91,7 +91,7 @@
 
     private async Task<IEnumerable<GradeDisciplinaFull>> SearchDisciplina(string value)
     {
-        await Task.Delay(1);
+        await Task.Delay(0);
 
         var filtered = Disciplinas.Where(d => !d.IsSelected || (d.IsSelected && d.Id == _disciplina?.Id));
 

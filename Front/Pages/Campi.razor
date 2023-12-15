@@ -65,28 +65,16 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<CampusOut> _campi = new();
+    private List<CampusOut> _campi = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? new();
+        _campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? [];
         _loading = false;
     }
 
-    private Func<CampusOut, bool> _quickFilter => x =>
-    {
-        if (string.IsNullOrWhiteSpace(_searchString))
-            return true;
-
-        if (x.Nome.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-
-        if (x.Cidade.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-
-        return false;
-    };
+    private Func<CampusOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome, x.Cidade);
 
     private async Task OpenDialog()
     {

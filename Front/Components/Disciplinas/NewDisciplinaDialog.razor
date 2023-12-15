@@ -60,7 +60,8 @@
 @inject HttpClient Http
 @inject ISnackbar Snackbar
 
-@code {
+@code
+{
     MudForm _form;
 
     ushort? _cargaHoraria;
@@ -70,11 +71,11 @@
     MudDialogInstance MudDialog { get; set; }
 
     IEnumerable<CursoOut> SelectedCursos { get; set; } = new HashSet<CursoOut>() { };
-    private List<CursoOut> Cursos = new();
+    private List<CursoOut> Cursos = [];
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
+        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? [];
     }
 
     async Task Submit()

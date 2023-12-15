@@ -61,12 +61,12 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<NotificationOut> _notifications = new();
+    private List<NotificationOut> _notifications = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _notifications = await Http.GetFromJsonAsync<List<NotificationOut>>("/notifications") ?? new();
+        _notifications = await Http.GetFromJsonAsync<List<NotificationOut>>("/notifications") ?? [];
         _loading = false;
     }
 
@@ -85,17 +85,5 @@
         await OnInitializedAsync();
     }
 
-    private Func<NotificationOut, bool> _quickFilter => x =>
-    {
-        if (string.IsNullOrWhiteSpace(_searchString))
-            return true;
-
-        if (x.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-
-        if (x.Description.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-
-        return false;
-    };
+    private Func<NotificationOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);
 }

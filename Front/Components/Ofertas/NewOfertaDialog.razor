@@ -79,7 +79,8 @@
 @inject HttpClient Http
 @inject ISnackbar Snackbar
 
-@code {
+@code
+{
     MudForm _form;
 
     CampusOut? _campus;
@@ -90,25 +91,27 @@
 
     OfertaIn data = new();
 
-    List<CampusOut> Campi = new();
-    List<CursoOut> Cursos = new();
-    List<GradeOut> Grades = new();
-    List<string> Periodos = new();
+    List<CampusOut> Campi = [];
+    List<CursoOut> Cursos = [];
+    List<GradeOut> Grades = [];
+    List<string> Periodos = [];
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? new();
-        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? new();
-        Grades = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? new();
-        Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? new();
+        await Task.WhenAll(new Task[] { 
+            Task.Run(async () => Campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? []),
+            Task.Run(async () => Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? []),
+            Task.Run(async () => Grades = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? []),
+            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? []),
+        });
     }
 
     private async Task<IEnumerable<CursoOut>> SearchCurso(string value)
     {
-        await Task.Delay(1);
+        await Task.Delay(0);
 
         if (string.IsNullOrEmpty(value))
             return Cursos;

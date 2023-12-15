@@ -81,7 +81,8 @@
 @inject HttpClient Http
 @inject ISnackbar Snackbar
 
-@code {
+@code
+{
     MudForm _form;
 
     DisciplinaOut? _disciplina;
@@ -92,26 +93,28 @@
 
     TurmaIn data = new();
 
-    List<TurmaOfertaFull> Ofertas = new();
-    List<DisciplinaOut> Disciplinas = new();
-    List<ProfessorOut> Professores = new();
-    List<string> Periodos = new();
-    List<AlunoOut> Alunos = new();
+    List<TurmaOfertaFull> Ofertas = [];
+    List<DisciplinaOut> Disciplinas = [];
+    List<ProfessorOut> Professores = [];
+    List<string> Periodos = [];
+    List<AlunoOut> Alunos = [];
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? new();
-        Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? new();
-        Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? new();
-        Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? new();
+        await Task.WhenAll(new Task[] { 
+            Task.Run(async () => Professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? []),
+            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? []),
+            Task.Run(async () => Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? []),
+            Task.Run(async () => Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? []),
+        });
     }
 
     private async Task<IEnumerable<DisciplinaOut>> SearchDisciplina(string value)
     {
-        await Task.Delay(1);
+        await Task.Delay(0);
 
         if (string.IsNullOrEmpty(value))
             return Disciplinas;
@@ -128,7 +131,7 @@
     {
         _disciplina = newValue;
         var id = _disciplina.Id.ToString();
-        var ofertaOuts = await Http.GetFromJsonAsync<List<OfertaOut>>($"/ofertas?disciplinaId={id}") ?? new();
+        var ofertaOuts = await Http.GetFromJsonAsync<List<OfertaOut>>($"/ofertas?disciplinaId={id}") ?? [];
         Ofertas = ofertaOuts.ConvertAll(x =>
             new TurmaOfertaFull
             {

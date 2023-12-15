@@ -11,6 +11,14 @@
 10 - [ ] Add calendar?
 11 - [ ] Use Result Pattern instead throw exceptions
 12 - [ ] https://devblogs.microsoft.com/dotnet/whats-new-with-identity-in-dotnet-8/
+13 - [ ] Security
+14 - [ ] Logging
+15 - [ ] Alerting
+16 - [ ] Performance
+17 - [ ] Monitoring
+18 - [ ] Exception Handling
+19 - [ ] Cross-cutting concerns
+20 - [ ] Load testing (K6)
 
 https://stenbrinke.nl/blog/taking-ef-core-data-seeding-to-the-next-level-with-bogus/
 

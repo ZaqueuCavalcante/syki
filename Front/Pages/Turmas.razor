@@ -47,34 +47,21 @@
 @inject HttpClient Http
 @inject IDialogService DialogService
 
-@code {
+@code
+{
     private bool _loading;
     private string _searchString;
-    private List<TurmaOut> _turmas = new();
+    private List<TurmaOut> _turmas = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _turmas = await Http.GetFromJsonAsync<List<TurmaOut>>("/turmas") ?? new();
+        _turmas = await Http.GetFromJsonAsync<List<TurmaOut>>("/turmas") ?? [];
         _loading = false;
     }
 
     private Func<TurmaOut, bool> _quickFilter => x =>
-    {
-        if (string.IsNullOrWhiteSpace(_searchString))
-            return true;
-
-        if (x.Disciplina.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-
-        if (x.Professor.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-
-        if (x.Periodo.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-
-        return false;
-    };
+        _searchString.IsIn(x.Disciplina, x.Professor, x.Periodo);
 
     private async Task OpenDialog()
     {

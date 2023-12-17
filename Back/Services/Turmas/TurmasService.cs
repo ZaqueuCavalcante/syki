@@ -26,7 +26,7 @@ public class TurmasService : ITurmasService
 
         await _ctx.SaveChangesAsync();
 
-        turma = await _ctx.Turmas
+        turma = await _ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Professor)
             .FirstAsync(x => x.Id == turma.Id);
@@ -36,7 +36,7 @@ public class TurmasService : ITurmasService
 
     public async Task<List<TurmaOut>> GetAll(Guid faculdadeId)
     {
-        var turmas = await _ctx.Turmas
+        var turmas = await _ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Professor)
             .Where(c => c.FaculdadeId == faculdadeId)

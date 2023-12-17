@@ -27,7 +27,7 @@ public class AlunosService : IAlunosService
         var gradeId = await _ctx.Ofertas.Where(o => o.Id == ofertaId)
             .Select(o => o.GradeId).FirstAsync();
 
-        var grade = await _ctx.Grades
+        var grade = await _ctx.Grades.AsNoTracking()
             .Include(g => g.Curso)
             .Include(g => g.Disciplinas)
             .Include(g => g.Vinculos)
@@ -39,6 +39,7 @@ public class AlunosService : IAlunosService
     public async Task<List<AlunoOut>> GetAll(Guid faculdadeId)
     {
         var alunos = await _ctx.Alunos
+            .AsNoTracking().AsSplitQuery()
             .Include(a => a.Oferta)
                 .ThenInclude(o => o.Curso)
             .Where(c => c.FaculdadeId == faculdadeId)

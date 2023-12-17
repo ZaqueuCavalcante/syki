@@ -76,24 +76,10 @@ public class GradesUnitTests
                 new Disciplina(faculdadeId, "Banco de Dados", 72),
                 new Disciplina(faculdadeId, "Estruturas de Dados", 60),
             ],
-            Vinculos = [],
         };
 
-        grade.Vinculos.Add(new()
-        {
-            DisciplinaId = grade.Disciplinas[0].Id,
-            Periodo = 2,
-            Creditos = 12,
-            CargaHoraria = 80
-        });
-
-        grade.Vinculos.Add(new()
-        {
-            DisciplinaId = grade.Disciplinas[1].Id,
-            Periodo = 1,
-            Creditos = 8,
-            CargaHoraria = 50
-        });
+        grade.Vinculos.Add(new(grade.Disciplinas[0].Id, 2, 12, 80));
+        grade.Vinculos.Add(new(grade.Disciplinas[1].Id, 1, 8, 50));
 
         // Act
         var gradeOut = grade.ToOut();

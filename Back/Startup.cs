@@ -1,5 +1,6 @@
 using Syki.Back.Hubs;
 using Syki.Back.Configs;
+using Syki.Back.Exceptions;
 
 namespace Syki.Back;
 
@@ -37,6 +38,8 @@ public class Startup
         app.UseSwaggerThings();
 
         app.UseAudit();
+
+        app.UseMiddleware<DomainExceptionMiddleware>();
 
         app.UseEndpoints(options =>
         {

@@ -1,3 +1,5 @@
+using Syki.Shared;
+
 namespace Syki.Back.Domain;
 
 public class GradeDisciplina
@@ -7,4 +9,24 @@ public class GradeDisciplina
     public byte Periodo { get; set; }
     public byte Creditos { get; set; }
     public ushort CargaHoraria { get; set; }
+
+    public GradeDisciplina(
+        Guid disciplinaId,
+        byte periodo,
+        byte creditos,
+        ushort cargaHoraria
+    ) {
+        DisciplinaId = disciplinaId;
+        Periodo = periodo;
+        Creditos = creditos;
+        CargaHoraria = cargaHoraria;
+    }
+
+    public GradeDisciplina(GradeDisciplinaIn gdIn)
+    {
+        DisciplinaId = gdIn.Id;
+        Periodo = gdIn.Periodo;
+        Creditos = gdIn.Creditos;
+        CargaHoraria = gdIn.CargaHoraria;
+    }
 }

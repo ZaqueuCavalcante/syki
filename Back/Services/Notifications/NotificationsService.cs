@@ -51,7 +51,7 @@ public class NotificationsService : INotificationsService
 
     public async Task<List<NotificationOut>> GetAll(Guid faculdadeId)
     {
-        var notifications = await _ctx.Notifications
+        var notifications = await _ctx.Notifications.AsNoTracking()
             .Include(x => x.Users)
             .Where(c => c.FaculdadeId == faculdadeId)
             .OrderByDescending(x => x.CreatedAt)
@@ -69,7 +69,7 @@ public class NotificationsService : INotificationsService
 
     public async Task<List<UserNotificationOut>> GetByUserId(Guid faculdadeId, Guid userId)
     {
-        var notifications = await _ctx.UserNotifications
+        var notifications = await _ctx.UserNotifications.AsNoTracking()
             .Include(x => x.Notification)
             .Where(c => c.Notification.FaculdadeId == faculdadeId && c.UserId == userId)
             .ToListAsync();
@@ -79,7 +79,7 @@ public class NotificationsService : INotificationsService
 
     public async Task ViewByUserId(Guid faculdadeId, Guid userId)
     {
-        var notifications = await _ctx.UserNotifications
+        var notifications = await _ctx.UserNotifications.AsNoTracking()
             .Include(x => x.Notification)
             .Where(c => c.Notification.FaculdadeId == faculdadeId && c.UserId == userId)
             .ToListAsync();

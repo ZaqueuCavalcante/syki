@@ -122,12 +122,12 @@
         data.CursoId = _curso!.Id;
         data.Disciplinas = Disciplinas.Where(d => d.IsSelected).ToList()
             .ConvertAll(d => new GradeDisciplinaIn
-            {  
-                Id = d.Id,
-                Periodo = d.Periodo!.Value,
-                Creditos = d.Creditos!.Value,
-                CargaHoraria = d.CargaHoraria!.Value,
-            });
+            (
+                d.Id,
+                d.Periodo!.Value,
+                d.Creditos!.Value,
+                d.CargaHoraria!.Value
+            ));
 
         await Http.PostAsJsonAsync("/grades", data);
 

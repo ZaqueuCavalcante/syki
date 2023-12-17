@@ -24,7 +24,7 @@ public class OfertasService : IOfertasService
         _ctx.Ofertas.Add(oferta);
         await _ctx.SaveChangesAsync();
 
-        oferta = await _ctx.Ofertas
+        oferta = await _ctx.Ofertas.AsNoTracking()
             .Include(x => x.Campus)
             .Include(x => x.Curso)
             .Include(x => x.Grade)
@@ -39,12 +39,12 @@ public class OfertasService : IOfertasService
 
         if (disciplinaId != null)
         {
-            var grades = await _ctx.GradesDisciplinas
+            var grades = await _ctx.GradesDisciplinas.AsNoTracking()
                 .Where(gd => gd.DisciplinaId == disciplinaId)
                 .Select(gd => gd.GradeId)
                 .ToListAsync();
 
-            ofertas = await _ctx.Ofertas
+            ofertas = await _ctx.Ofertas.AsNoTracking()
                 .Include(x => x.Campus)
                 .Include(x => x.Curso)
                 .Include(x => x.Grade)
@@ -53,7 +53,7 @@ public class OfertasService : IOfertasService
         }
         else
         {
-            ofertas = await _ctx.Ofertas
+            ofertas = await _ctx.Ofertas.AsNoTracking()
                 .Include(x => x.Campus)
                 .Include(x => x.Curso)
                 .Include(x => x.Grade)

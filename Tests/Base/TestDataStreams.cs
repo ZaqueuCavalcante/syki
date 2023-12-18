@@ -12,6 +12,22 @@ public static class TestDataStreams
         }
     }
 
+    public static IEnumerable<object[]> InvalidPeriods()
+    {
+        foreach (var id in new List<string>() { null, "", "   ", "lalala", "1970.3", "1970.0", "1971.90", "2001", "202", "2023.9", })
+        {
+            yield return new object[] { id };
+        }
+    }
+
+    public static IEnumerable<object[]> ValidPeriods()
+    {
+        foreach (var id in new List<string>() { "2023.1", "2023.2", })
+        {
+            yield return new object[] { id };
+        }
+    }
+
     public static IEnumerable<object[]> AllUsersRoles()
     {
         foreach (var role in AllRoles)

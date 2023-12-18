@@ -32,3 +32,15 @@
 - [X] Ao buscar todas as grades:
     - Deve trazer apenas daquela faculdade
     - Deve trazer ordenado por nome
+
+## Periodo
+
+- Os periodos so podem ser criados com os seguintes ids:
+    - [X] Depois de 1970
+    - [X] Com final .1 ou .2
+    - [X] Exemplos validos: 1970.1 | 1970.2 | 1971.1 | 2001.1 | 2023.2
+    - [X] Exemplos invalidos: 1970.3 | 1970.0 | 1971.90 | 2001 | 202
+
+- As datas de inicio e fim:
+    - [X] devem respeitar o ano do id
+    - [X] a de inicio deve ser menor q a de fim

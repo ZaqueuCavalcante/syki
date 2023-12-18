@@ -116,12 +116,12 @@ public static class DbSeed
         },
     };
 
-    public static List<Periodo> Periodos = new()
-    {
-        new Periodo { Id = "2023.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) },
-        new Periodo { Id = "2023.2", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) },
-        new Periodo { Id = "2024.1", FaculdadeId = NovaRoma.Id, Start = new DateOnly(2024, 02, 01), End = new DateOnly(2024, 06, 01) },
-    };
+    public static List<Periodo> Periodos =
+    [
+        new Periodo("2023.1", NovaRoma.Id, new DateOnly(2023, 02, 01), new DateOnly(2023, 06, 01)),
+        new Periodo("2023.2", NovaRoma.Id, new DateOnly(2023, 07, 01), new DateOnly(2023, 12, 01)),
+        new Periodo("2024.1", NovaRoma.Id, new DateOnly(2024, 02, 01), new DateOnly(2024, 06, 01)),
+    ];
 
     // public static List<Professor> Professores = new()
     // {

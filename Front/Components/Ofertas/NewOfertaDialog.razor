@@ -50,15 +50,15 @@
             />
 
             <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-2" @bind-Value="_grade" Label="Grade" Required="true" RequiredError="Informe a grade!" AdornmentColor="Color.Primary">
-                @if(_curso == null)
+                @if (_curso == null)
                 {
                     <MudSelectItem Value="@_grade" Disabled="true">Selecione o curso!</MudSelectItem>
                 }
-                @if(_curso != null && Grades.Where(x => x.CursoId == _curso.Id).Count() == 0)
+                @if (_curso != null && Grades.Where(x => x.CursoId == _curso.Id).Count() == 0)
                 {
                     <MudSelectItem Value="@_grade" Disabled="true">Este curso não possui grades vinculadas.</MudSelectItem>
                 }
-                @if(_curso != null)
+                @if (_curso != null)
                 {
                     @foreach (GradeOut? item in Grades.Where(x => x.CursoId == _curso.Id))
                     {

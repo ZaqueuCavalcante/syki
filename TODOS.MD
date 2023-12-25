@@ -19,6 +19,8 @@
 18 - [ ] Exception Handling
 19 - [ ] Cross-cutting concerns
 20 - [ ] Load testing (K6)
+21 - [ ] Code and API documentation
+22 - [ ] ?
 
 https://stenbrinke.nl/blog/taking-ef-core-data-seeding-to-the-next-level-with-bogus/
 

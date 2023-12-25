@@ -1,0 +1,9 @@
+<MudTooltip Text="Sair">
+    <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="OnClick" />
+</MudTooltip>
+
+@code
+{
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

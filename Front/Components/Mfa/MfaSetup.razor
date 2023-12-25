@@ -30,7 +30,7 @@
                                 </MudStack>
                             </MudAlert>
 
-                            @if(_qrCodeLoading)
+                            @if (_qrCodeLoading)
                             {
                                 <MudCard Elevation="25" Class="ma-4 d-flex align-center justify-center" Style="width: 300px; height: 300px;">
                                     <MudProgressCircular Color="Color.Dark" Indeterminate="true" Size="Size.Large" />
@@ -72,7 +72,7 @@
                                 />
                             </MudForm>
 
-                            @if(_showCodeFeedback && !_codeIsCorrect)
+                            @if (_showCodeFeedback && !_codeIsCorrect)
                             {
                                 <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Text">
                                     <MudStack Row="true" Justify="Justify.SpaceAround">
@@ -92,7 +92,8 @@
 @inject IMfaService Mfa
 @inject IDialogService DialogService
 
-@code {
+@code
+{
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
 

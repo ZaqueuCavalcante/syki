@@ -6,11 +6,6 @@
     {
         await base.OnAfterRenderAsync(firstRender);
 
-        Redirect();
-    }
-
-    private void Redirect()
-    {
         Nav.NavigateTo("/login");
     }
 }

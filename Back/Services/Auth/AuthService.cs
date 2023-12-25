@@ -85,11 +85,11 @@ public class AuthService : IAuthService
 
         var claims = new List<Claim>
         {
-            new ("jti", Guid.NewGuid().ToString()),
-            new ("sub", user.Id.ToString()),
-            new ("name", user.Name),
-            new ("email", user.Email!),
-            new ("faculdade", user.FaculdadeId.ToString()),
+            new("jti", Guid.NewGuid().ToString()),
+            new("sub", user.Id.ToString()),
+            new("name", user.Name),
+            new("email", user.Email!),
+            new("faculdade", user.FaculdadeId.ToString()),
         };
 
         var roleNames = await _userManager.GetRolesAsync(user);

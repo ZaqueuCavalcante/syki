@@ -33,6 +33,13 @@
     - Deve trazer apenas daquela faculdade
     - Deve trazer ordenado por nome
 
+## Ofertas
+
+- [ ] Deve criar uma oferta de curso
+
+
+
+
 ## Periodo
 
 - Os periodos so podem ser criados com os seguintes ids:

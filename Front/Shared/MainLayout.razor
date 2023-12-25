@@ -8,36 +8,15 @@
     <Authorized>
         <MudLayout>
             <MudAppBar Elevation="1" Dense="true">
-                <MudButton
-                    Href="/" Target="_self"
-                    StartIcon="@Icons.Material.Filled.Home"
-                    IconSize="Size.Large"
-                    Variant="Variant.Text"
-                    Style="color: white; margin-left: -11px;"
-                >
-                    Syki
-                </MudButton>
+                <HomeButton />
                 <MudSpacer />
                 <MudText>@_userName</MudText>
                 <MudSpacer />
-
                 <NotificationsIcon />
-
-                <style>.mud-list-item-icon { min-width: 35px !important; }</style>
-                <MudTooltip Text="Configurações">
-                    <MudMenu Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Dense="true" AnchorOrigin="Origin.BottomCenter" TransformOrigin="@Origin.BottomCenter">
-                        <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.AccountCircle">Account</MudMenuItem>
-                        <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.FilterAlt">Preferences</MudMenuItem>
-                        <MudMenuItem Href="mfa-setup" IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.ScreenLockPortrait">2FA setup</MudMenuItem>
-                        <MudMenuItem IconSize="Size.Small" IconColor="Color.Primary" Icon="@Icons.Material.Filled.Help">Help</MudMenuItem>
-                    </MudMenu>
-                </MudTooltip>
-
-                <MudTooltip Text="Sair">
-                    <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="Logout" />
-                </MudTooltip>
+                <ConfigsIconButton />
+                <LogoutIconButton OnClick="Logout" />
             </MudAppBar>
-            <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2">
+            <MudDrawer Open="true" ClipMode="DrawerClipMode.Always" Elevation="2" Width="200px">
                 <NavMenu />
             </MudDrawer>
             <MudMainContent>

@@ -1,7 +1,5 @@
-@using Microsoft.AspNetCore.SignalR.Client
-
 <div>
-    @if(GetCount() > 0)
+    @if (GetCount() > 0)
     {
         <div class="d-flex justify-space-around flex-wrap mt-2" style="width: 50px">
             <MudTooltip Text="Notificações">
@@ -21,6 +19,8 @@
     }
 </div>
 
+@using Microsoft.AspNetCore.SignalR.Client
+
 @inject HttpClient Http
 @inject IDialogService DialogService
 @inject ILocalStorageService LocalStorage
@@ -39,7 +39,7 @@
         _hubConnection = new HubConnectionBuilder()
             .WithAutomaticReconnect()
             .WithUrl(
-                "http://localhost:5160/hubs/notifications",
+                "http://localhost:5160/hubs/notifications", // TODO: Fix this
                 options => options.AccessTokenProvider = () => Task<string?>.FromResult(token))
             .Build();
 

@@ -35,10 +35,21 @@
 
 ## Ofertas
 
-- [ ] Deve criar uma oferta de curso
+- [X] Nao deve criar uma oferta sem vinculo com campus
+- [X] Nao deve criar uma oferta com campus que n existe
+- [X] Nao deve criar uma oferta com campus de outra faculdade
 
+- [X] Nao deve criar uma oferta sem vinculo com periodo
+- [X] Nao deve criar uma oferta com periodo que n existe
+- [X] Nao deve criar uma oferta com periodo de outra faculdade
 
+- [] Nao deve criar uma oferta sem vinculo com curso
+- [] Nao deve criar uma oferta com um curso que n existe
+- [] Nao deve criar uma oferta com curso de outra faculdade
+- [] Nao deve criar uma oferta com curso sem grade vinculada
+- [] Nao deve criar uma oferta vinculando grade que nao eh do curso escolhido
 
+- [] Ao buscar todas as ofertas, deve trazer apenas daquela faculdade
 
 ## Periodo
 

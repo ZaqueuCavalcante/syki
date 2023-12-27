@@ -1,10 +1,14 @@
+using Npgsql;
+using Respawn;
 using System.Net;
 using Syki.Shared;
 using NUnit.Framework;
 using FluentAssertions;
 using Syki.Back.Domain;
+using System.Data.Common;
 using Syki.Back.Database;
 using Syki.Back.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
@@ -15,12 +19,41 @@ public class IntegrationTestBase
 {
     protected HttpClient _client = null!;
     protected SykiDbContext _ctx = null!;
+    protected Respawner _respawner = null!;
+    protected DbConnection _dbConnection = null!;
     protected SykiWebApplicationFactory _factory = null!;
 
     [OneTimeSetUp]
-    public void OneTimeSetUp()
+    public async Task OneTimeSetUp()
     {
         _factory = new SykiWebApplicationFactory();
+
+        using var scope = _factory.Services.CreateScope();
+        _ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+
+        if (Env.IsTesting())
+        {
+            await _ctx.Database.EnsureDeletedAsync();
+            await _ctx.Database.EnsureCreatedAsync();
+        }
+
+        _dbConnection = new NpgsqlConnection(_ctx.Database.GetConnectionString()!);
+        await _dbConnection.OpenAsync();
+        _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions()
+        {
+            SchemasToInclude = [ "syki" ],
+            TablesToIgnore = [ new ("roles") ],
+            DbAdapter = DbAdapter.Postgres,
+        });
+    }
+
+    [SetUp]
+    public async Task SetUp()
+    {
+        _client = _factory.CreateClient();
+        await _respawner.ResetAsync(_dbConnection);
+
+        await AddAdmUser();
     }
 
     [TearDown]
@@ -33,23 +66,10 @@ public class IntegrationTestBase
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
     {
+        _client.Dispose();
+        await _ctx.DisposeAsync();
         await _factory.DisposeAsync();
-    }
-
-    [SetUp]
-    public async Task SetupBeforeEachTest()
-    {
-        using var scope = _factory.Services.CreateScope();
-        _ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
-        _client = _factory.CreateClient();
-
-        if (Env.IsTesting())
-        {
-            await _ctx.Database.EnsureDeletedAsync();
-            await _ctx.Database.EnsureCreatedAsync();
-        }
-
-        await AddAdmUser();
+        await _dbConnection.DisposeAsync();
     }
 
     private async Task AddAdmUser()

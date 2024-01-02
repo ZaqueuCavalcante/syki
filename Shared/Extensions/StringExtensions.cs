@@ -1,4 +1,5 @@
 using OtpNet;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Syki.Shared;
@@ -51,5 +52,10 @@ public static class StringExtensions
     {
         var totp = new Totp(Base32Encoding.ToBytes(key));
         return totp.ComputeTotp();
+    }
+
+    public static string Format(this decimal value)
+    {
+        return value.ToString("0.00", CultureInfo.InvariantCulture);
     }
 }

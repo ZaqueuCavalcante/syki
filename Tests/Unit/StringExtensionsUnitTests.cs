@@ -50,4 +50,15 @@ public class StringExtensionsUnitTests
         // Assert
         result.Should().BeFalse();
     }
+
+    [Test]
+    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.DecimalsStringsForFormat))]
+    public void Shoud_format_decimal_as_string((decimal number, string text) data)
+    {
+        // Arrange / Act
+        var result = data.number.Format();
+
+        // Assert
+        result.Should().Be(data.text);
+    }
 }

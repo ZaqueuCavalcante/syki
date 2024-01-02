@@ -162,4 +162,18 @@ public static class TestDataStreams
             yield return new object[] { text };
         }
     }
+
+    public static IEnumerable<object[]> DecimalsStringsForFormat()
+    {
+        foreach (var text in new List<(decimal, string)>()
+        {
+            (0.00M, "0.00"),
+            (9.85M, "9.85"),
+            (0.23M, "0.23"),
+            (15.00M, "15.00"),
+        })
+        {
+            yield return new object[] { text };
+        }
+    }
 }

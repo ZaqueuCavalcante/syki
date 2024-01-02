@@ -3,7 +3,7 @@
 @code
 {
     [Test]
-    public void Should_renders_the_aluno_index_data()
+    public async Task Should_renders_the_aluno_index_data()
     {
         // Arrange
         var authContext = TestContext!.AddTestAuthorization();
@@ -22,12 +22,13 @@
 
         // Act
         var cut = Render(@<IndexAluno />);
+        await Task.Delay(500);
 
         // Assert
         cut.Find("h4").TextContent.MarkupMatches("Olá, Zaqueu");
         cut.Find("p").TextContent.MarkupMatches("Aqui você encontra dados consolidados sobre seu curso, atualizados em tempo real!");
-        cut.WaitForState(() => cut.Find("h5").TextContent == "5 Concluídas");
-        var data = cut.FindAll("h5", true).ToList();
+        var data = cut.FindAll("h5").ToList();
+        data[0].TextContent.MarkupMatches("5 Concluídas");
         data[1].TextContent.MarkupMatches("22 Disciplinas");
         data[2].TextContent.MarkupMatches("9,95 Média");
         data[3].TextContent.MarkupMatches("8,89 CR");

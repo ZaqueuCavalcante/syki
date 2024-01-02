@@ -20,7 +20,7 @@
 19 - [ ] Cross-cutting concerns
 20 - [ ] Load testing (K6)
 21 - [ ] Code and API documentation
-22 - [ ] ?
+22 - [ ] Add CSS Isolation
 
 https://stenbrinke.nl/blog/taking-ef-core-data-seeding-to-the-next-level-with-bogus/
 

@@ -34,7 +34,12 @@
 
 - Local Storage Service
 
-## 6 - 
+## 6 - Progressive Web App
+
+- 
+
+## 7 - 
+
 
 
 

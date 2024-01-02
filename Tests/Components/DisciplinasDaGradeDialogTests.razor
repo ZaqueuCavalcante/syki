@@ -2,12 +2,17 @@
 
 @code
 {
-    // [Test]
-    public async Task DisciplinasDaGradeDialog_component_should_renders_correctly()
+    [Test]
+    public async Task Should_renders_correctly()
     {
         // Arrange
         Services.AddMudServices();
+        TestContext!.JSInterop.SetupVoid("mudPopover.initialize", _ => true);
+        TestContext!.JSInterop.SetupVoid("mudElementRef.saveFocus", _ => true);
+        TestContext!.JSInterop.SetupVoid("mudScrollManager.lockScroll", _ => true);
         var dialogService = Services.GetService<IDialogService>()!;
+
+        const string grade = "Grade de ADS - 1.0";
 
         var disciplinas = new List<DisciplinaOut>
         {
@@ -21,16 +26,20 @@
         var parameters = new DialogParameters<DisciplinasDaGradeDialog>();
         parameters.Add(x => x.Disciplinas, disciplinas);
 
-        var dialog = await dialogService.ShowAsync<DisciplinasDaGradeDialog>("Nome da Grade", parameters);
+        var dialog = await dialogService.ShowAsync<DisciplinasDaGradeDialog>(grade, parameters);
 
         // Act
         var cut = Render(dialog.RenderFragment);
 
         // Assert
-        cut.MarkupMatches(
-            @<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-                <h1>Financeiro</h1>
-            </MudContainer>
+        cut.Find("h6").MarkupMatches(
+            @<h6 class="mud-typography mud-typography-h6">
+                <svg class="mud-icon-root mud-svg-icon mud-icon-size-medium mr-1 mb-n1" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"></path>
+                </svg>
+                @grade
+            </h6>
         );
     }
 }

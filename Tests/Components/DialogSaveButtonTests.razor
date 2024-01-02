@@ -1,0 +1,43 @@
+@inherits BunitTestContext
+
+@code
+{
+    [Test]
+    public void Should_renders_the_default_text()
+    {
+        // Arrange / Act
+        var cut = Render(@<DialogSaveButton />);
+
+        // Assert
+        cut.Find("span").TextContent.MarkupMatches("Salvar");
+    }
+
+    [Test]
+    public void Should_renders_the_provided_text()
+    {
+        // Arrange
+        const string text = "Continuar";
+
+        // Act
+        var cut = Render(@<DialogSaveButton Text="@text"/>);
+
+        // Assert
+        cut.Find("span").TextContent.MarkupMatches(text);
+    }
+
+    [Test]
+    public void Should_call_on_click_method()
+    {
+        // Arrange
+        var counter = 20;
+        Action<MouseEventArgs> onClick = _ => { counter++; };
+        
+        var cut = Render(@<DialogSaveButton OnClick="onClick"/>);
+
+        // Act
+        cut.Find("button").Click();
+
+        // Assert
+        counter.Should().Be(21);
+    }
+}

@@ -35,7 +35,7 @@ public class Periodo
         var year = int.Parse(numbers.Substring(0, 4));
         var digit = int.Parse(numbers.Substring(4, 1));
 
-        if (year < 1970 || year > 2030)
+        if (year < 1970 || year > 2070)
             throw new DomainException(ExceptionMessages.DE0003);
 
         if (digit < 1 || digit > 2)

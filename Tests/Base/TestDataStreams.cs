@@ -4,9 +4,17 @@ namespace Syki.Tests.Base;
 
 public static class TestDataStreams
 {
+    public static IEnumerable<object[]> ValidNames()
+    {
+        foreach (var name in new List<string>() { "Keu", "Maju", "Maria", "Naldinho Silva", })
+        {
+            yield return new object[] { name };
+        }
+    }
+
     public static IEnumerable<object[]> InvalidNames()
     {
-        foreach (var name in new List<string>() { null, "", "a", " ", "  ", "     ", "La", })
+        foreach (var name in new List<string>() { null, "", "a", " ", "  ", "     ", "JP", })
         {
             yield return new object[] { name };
         }
@@ -14,7 +22,7 @@ public static class TestDataStreams
 
     public static IEnumerable<object[]> InvalidPeriods()
     {
-        foreach (var id in new List<string>() { null, "", "   ", "lalala", "1970.3", "1970.0", "1971.90", "2001", "202", "2023.9", })
+        foreach (var id in new List<string>() { null, "", "   ", "lalala", "1969.1", "1970.3", "1970.0", "1971.90", "2001", "202", "2023.9", "2070.0", })
         {
             yield return new object[] { id };
         }
@@ -22,7 +30,7 @@ public static class TestDataStreams
 
     public static IEnumerable<object[]> ValidPeriods()
     {
-        foreach (var id in new List<string>() { "2023.1", "2023.2", })
+        foreach (var id in new List<string>() { "1970.1", "1970.2", "2023.1", "2023.2", "2070.1", "2070.2", })
         {
             yield return new object[] { id };
         }

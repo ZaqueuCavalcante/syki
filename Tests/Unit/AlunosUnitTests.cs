@@ -101,6 +101,21 @@ public class AlunosUnitTests
     }
 
     [Test]
+    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.ValidNames))]
+    public void Deve_criar_um_aluno_com_nome_valido(string nome)
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        var ofertaId = Guid.NewGuid();
+
+        // Act
+        Action act = () => new Aluno(faculdadeId, nome, ofertaId);
+
+        // Assert
+        act.Should().NotThrow<DomainException>();
+    }
+
+    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidNames))]
     public void Nao_deve_criar_um_aluno_com_nome_invalido(string nome)
     {

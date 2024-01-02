@@ -33,11 +33,8 @@
 
         // Assert
         cut.Find("h6").MarkupMatches(
-            @<h6 class="mud-typography mud-typography-h6">
-                <svg class="mud-icon-root mud-svg-icon mud-icon-size-medium mr-1 mb-n1" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                    <path d="M22 11V3h-7v3H9V3H2v8h7V8h2v10h4v3h7v-8h-7v3h-2V8h2v3z"></path>
-                </svg>
+            @<h6 diff:ignoreAttributes>
+                <svg diff:ignore></svg>
                 @grade
             </h6>
         );

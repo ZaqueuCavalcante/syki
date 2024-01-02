@@ -94,8 +94,9 @@ public class PeriodosUnitTests
     {
         // Arrange
         var faculdadeId = Guid.NewGuid();
-        var start = new DateOnly(2023, 02, 01);
-        var end = new DateOnly(2023, 06, 01);
+        var year = int.Parse(id.Substring(0, 4));
+        var start = new DateOnly(year, 02, 01);
+        var end = new DateOnly(year, 06, 01);
 
         // Act
         Action act = () => new Periodo(id, faculdadeId, start, end);

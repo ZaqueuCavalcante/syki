@@ -29,8 +29,8 @@
     public void Should_call_on_click_method()
     {
         // Arrange
-        var counter = 20;
-        Action<MouseEventArgs> onClick = _ => { counter++; };
+        var clicked = false;
+        Action<MouseEventArgs> onClick = _ => { clicked = true; };
         
         var cut = Render(@<DialogSaveButton OnClick="onClick"/>);
 
@@ -38,6 +38,6 @@
         cut.Find("button").Click();
 
         // Assert
-        counter.Should().Be(21);
+        clicked.Should().BeTrue();
     }
 }

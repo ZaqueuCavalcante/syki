@@ -30,11 +30,12 @@ public class GradesService : IGradesService
             .Where(x => x.CursoId == data.CursoId)
             .Select(x => x.DisciplinaId)
             .ToListAsync();
-        
+
         if (!data.Disciplinas.ConvertAll(d => d.Id).IsSubsetOf(disciplinas))
             throw new DomainException(ExceptionMessages.DE0002);
 
-        data.Disciplinas.ForEach(d => grade.Vinculos.Add(new GradeDisciplina(d)));
+        data.Disciplinas.ForEach(d => grade.Vinculos.Add(
+            new GradeDisciplina(d.Id, d.Periodo, d.Creditos, d.CargaHoraria)));
 
         _ctx.Grades.Add(grade);
         await _ctx.SaveChangesAsync();

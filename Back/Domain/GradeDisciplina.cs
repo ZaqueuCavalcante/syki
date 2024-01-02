@@ -1,5 +1,3 @@
-using Syki.Shared;
-
 namespace Syki.Back.Domain;
 
 public class GradeDisciplina
@@ -20,13 +18,5 @@ public class GradeDisciplina
         Periodo = periodo;
         Creditos = creditos;
         CargaHoraria = cargaHoraria;
-    }
-
-    public GradeDisciplina(GradeDisciplinaIn gdIn)
-    {
-        DisciplinaId = gdIn.Id;
-        Periodo = gdIn.Periodo;
-        Creditos = gdIn.Creditos;
-        CargaHoraria = gdIn.CargaHoraria;
     }
 }

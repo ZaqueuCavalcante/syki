@@ -22,8 +22,16 @@ public class OfertasService : IOfertasService
             .AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.Periodo);
         if (!periodoOk)
             throw new DomainException(ExceptionMessages.DE0003);
-        
-        
+
+        var cursoOk = await _ctx.Cursos
+            .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.CursoId);
+        if (!cursoOk)
+            throw new DomainException(ExceptionMessages.DE0001);
+
+        var gradeOk = await _ctx.Grades
+            .AnyAsync(g => g.FaculdadeId == faculdadeId && g.Id == data.GradeId && g.CursoId == data.CursoId);
+        if (!gradeOk)
+            throw new DomainException(ExceptionMessages.DE0008);
 
         var oferta = new Oferta(
             faculdadeId,

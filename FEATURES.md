@@ -43,13 +43,11 @@
 - [X] Nao deve criar uma oferta com periodo que n existe
 - [X] Nao deve criar uma oferta com periodo de outra faculdade
 
-- [] Nao deve criar uma oferta sem vinculo com curso
-- [] Nao deve criar uma oferta com um curso que n existe
-- [] Nao deve criar uma oferta com curso de outra faculdade
-- [] Nao deve criar uma oferta com curso sem grade vinculada
-- [] Nao deve criar uma oferta vinculando grade que nao eh do curso escolhido
-
-- [] Ao buscar todas as ofertas, deve trazer apenas daquela faculdade
+- [X] Nao deve criar uma oferta sem vinculo com curso
+- [X] Nao deve criar uma oferta com um curso que n existe
+- [X] Nao deve criar uma oferta com curso de outra faculdade
+- [X] Nao deve criar uma oferta com curso sem grade vinculada
+- [X] Nao deve criar uma oferta vinculando grade que nao eh do curso escolhido
 
 ## Periodo
 

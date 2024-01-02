@@ -26,17 +26,17 @@
         var cut = Render(@<IndexAcademico />);
 
         // Assert
+        cut.Find("h4").TextContent.MarkupMatches("Insights");
         cut.Find("p").TextContent.MarkupMatches("Aqui você encontra dados consolidados sobre a sua faculdade, atualizados em tempo real!");
-        var data = cut.FindAll("h5").ToList();
-        data[0].TextContent.MarkupMatches("Insights");
-        data[1].TextContent.MarkupMatches("5 Campus");
-        data[2].TextContent.MarkupMatches("3 Cursos");
-        data[3].TextContent.MarkupMatches("67 Disciplinas");
-        data[4].TextContent.MarkupMatches("8 Grades");
-        data[5].TextContent.MarkupMatches("2 Ofertas");
-        data[6].TextContent.MarkupMatches("0 Turmas");
-        data[7].TextContent.MarkupMatches("5 Professores");
-        data[8].TextContent.MarkupMatches("45 Alunos");
-        data[9].TextContent.MarkupMatches("96 Livros");
+        cut.WaitForState(() => cut.Find("h5").TextContent == "5 Campus");
+        var data = cut.FindAll("h5", true).ToList();
+        data[1].TextContent.MarkupMatches("3 Cursos");
+        data[2].TextContent.MarkupMatches("67 Disciplinas");
+        data[3].TextContent.MarkupMatches("8 Grades");
+        data[4].TextContent.MarkupMatches("2 Ofertas");
+        data[5].TextContent.MarkupMatches("0 Turmas");
+        data[6].TextContent.MarkupMatches("5 Professores");
+        data[7].TextContent.MarkupMatches("45 Alunos");
+        data[8].TextContent.MarkupMatches("96 Livros");
     }
 }

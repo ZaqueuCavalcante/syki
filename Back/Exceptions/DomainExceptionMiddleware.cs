@@ -35,7 +35,7 @@ public class DomainExceptionMiddleware
         return context.Response.WriteAsync(result);
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception ex)
+    private static Task HandleExceptionAsync(HttpContext context, Exception _)
     {
         var result = JsonSerializer.Serialize(new ErrorOut { Message = "Internal Server Error" });
 

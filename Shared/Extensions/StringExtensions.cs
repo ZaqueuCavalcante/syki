@@ -32,7 +32,7 @@ public static class StringExtensions
 
     public static string OnlyNumbers(this string text)
     {
-        if (!string.IsNullOrEmpty(text))
+        if (text.HasValue())
         {
             return new string(text.Where(char.IsDigit).ToArray());
         }

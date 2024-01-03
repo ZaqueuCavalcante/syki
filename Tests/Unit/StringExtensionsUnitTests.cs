@@ -31,7 +31,7 @@ public class StringExtensionsUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.TextsContains))]
-    public void Shoud_return_true_because_serch_is_inside_some_text((string text1, string text2, string search) data)
+    public void Shoud_return_true_because_serch_is_inside_some_text((string text1, string text2, string? search) data)
     {
         // Arrange / Act
         var result = data.search.IsIn(data.text1, data.text2);

@@ -60,3 +60,57 @@
 - As datas de inicio e fim:
     - [X] devem respeitar o ano do id
     - [X] a de inicio deve ser menor q a de fim
+
+- [] Endpoints
+
+## Login
+
+## MFA
+
+## Audit
+
+- [] AuditChange unit tests
+- [] AuditData unit tests
+- [] AuditLog unit tests
+- [] Audit for insert campus
+- [] Audit for update campus
+
+## Alunos
+
+## Home
+
+- [X] Redirect
+
+## Index
+
+- [] GetAllAdm
+- [] GetAllAcademico
+- [] GetAllAluno
+
+## Livros
+
+## Professores
+
+## Turmas
+
+## Aula, Chamada
+
+- [] 
+
+## Notifications
+
+- [] Hub
+- [] 
+
+## Exceptions
+
+- [X] Handle Internal Server Error test case
+
+## EnumExtensions
+
+- [X] Methods
+
+## Front Services
+
+- [] Auth
+- [] MFA

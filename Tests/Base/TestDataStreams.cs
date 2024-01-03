@@ -1,3 +1,4 @@
+using Syki.Shared;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Base;
@@ -113,8 +114,10 @@ public static class TestDataStreams
 
     public static IEnumerable<object[]> TextsContains()
     {
-        foreach (var text in new List<(string, string, string)>()
+        foreach (var text in new List<(string, string, string?)>()
         {
+            ("Banco de Dados", "72", null),
+            ("Banco de Dados", "72", ""),
             ("Banco de Dados", "72", "dados"),
             ("Banco de Dados", "72", "72"),
             ("Informática e Sociedade", "Chat GPT", "Informáti"),
@@ -171,6 +174,34 @@ public static class TestDataStreams
             (9.85M, "9.85"),
             (0.23M, "0.23"),
             (15.00M, "15.00"),
+        })
+        {
+            yield return new object[] { text };
+        }
+    }
+
+    public static IEnumerable<object[]> TipoDeCursoEnumToDescription()
+    {
+        foreach (var text in new List<(TipoDeCurso, string)>()
+        {
+            (TipoDeCurso.Bacharelado, "Bacharelado"),
+            (TipoDeCurso.Tecnologo, "Tecnólogo"),
+            (TipoDeCurso.Especializacao, "Especialização"),
+            (TipoDeCurso.PosDoutorado, "Pós-Doutorado"),
+        })
+        {
+            yield return new object[] { text };
+        }
+    }
+
+    public static IEnumerable<object[]> TipoDeCursoEnumForIsIn()
+    {
+        foreach (var text in new List<(Enum, bool)>()
+        {
+            (TipoDeCurso.Bacharelado, true),
+            (Situacao.Cursando, false),
+            (TipoDeCurso.Tecnologo, true),
+            (Turno.Vespertino, false),
         })
         {
             yield return new object[] { text };

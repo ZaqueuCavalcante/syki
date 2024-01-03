@@ -16,8 +16,8 @@ public class IndexService : IIndexService
 
         const string sql = @"
             SELECT
-                COUNT(1) AS faculdades,
-                (SELECT COUNT(1) FROM syki.users) AS users,
+                COUNT(1)-1 AS faculdades,
+                (SELECT COUNT(1)-1 FROM syki.users) AS users,
                 (SELECT COUNT(1) FROM syki.campi) AS campus,
                 (SELECT COUNT(1) FROM syki.cursos) AS cursos,
                 (SELECT COUNT(1) FROM syki.disciplinas) AS disciplinas,
@@ -27,8 +27,6 @@ public class IndexService : IIndexService
                 (SELECT COUNT(1) FROM syki.alunos) AS alunos
             FROM
             	syki.faculdades
-            WHERE
-                id <> '00000000-0000-0000-0000-000000000000'
         ";
 
         var data = await connection.QueryFirstAsync<IndexAdmOut>(sql);

@@ -1,6 +1,7 @@
 using Syki.Shared;
 using Syki.Back.Domain;
 using Syki.Back.Database;
+using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.Services;
@@ -12,6 +13,11 @@ public class AlunosService : IAlunosService
 
     public async Task<AlunoOut> Create(Guid faculdadeId, AlunoIn data)
     {
+        var ofertaOk = await _ctx.Ofertas
+            .AnyAsync(o => o.FaculdadeId == faculdadeId && o.Id == data.OfertaId);
+        if (!ofertaOk)
+            throw new DomainException(ExceptionMessages.DE0009);
+
         var aluno = new Aluno(faculdadeId, data.Nome, data.OfertaId);
 
         await _ctx.Alunos.AddAsync(aluno);

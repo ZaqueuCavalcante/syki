@@ -11,4 +11,5 @@ public static class ExceptionMessages
     public const string DE0006 = "A data de inicio deve ser menor que a de fim de periodo.";
     public const string DE0007 = "Campus inválido.";
     public const string DE0008 = "Grade inválida.";
+    public const string DE0009 = "Oferta inválida.";
 }

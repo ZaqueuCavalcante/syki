@@ -77,15 +77,17 @@
 
 ## Alunos
 
+- [X] Deve criar um aluno
+
 ## Home
 
 - [X] Redirect
 
 ## Index
 
-- [] GetAllAdm
-- [] GetAllAcademico
-- [] GetAllAluno
+- [X] GetAllAdm
+- [X] GetAllAcademico
+- [X] GetAllAluno
 
 ## Livros
 

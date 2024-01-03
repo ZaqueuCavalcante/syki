@@ -65,7 +65,23 @@
 
 ## Login
 
-## MFA
+- [] Register
+    - [X] Nao deve registrar quando a role informada for diferente das permitidas
+    - [X] Faculdade empty ou n existe
+    - [] Nao deve registrar dois com o mesmo email
+    - [X] Email invalido
+    - [X] Senha fraca (identity validation)
+- [] Login
+    - [] Email ou senhas errados
+    - [] Dados corretos, sem MFA -> recebe JWT
+    - [] Dados corretos, mas precisa de MFA
+    - [] Dados corretos, precisa de MFA, informa Code errado
+    - [] Dados corretos, precisa de MFA, informa Code certo (+ cookie?) -> recebe JWT
+- [] MFA
+    - [] Fez login normal, tentou configurar o MFA com code errado -> ok = false
+    - [] Fez login normal, tentou configurar o MFA com code certo -> ok = true
+
+- [] Como Adm, deve listar todos os usuarios
 
 ## Audit
 

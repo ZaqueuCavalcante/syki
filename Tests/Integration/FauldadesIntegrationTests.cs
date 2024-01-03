@@ -58,8 +58,6 @@ public class FauldadesIntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_nova_faculdade_quando_o_usuario_nao_tem_permissao()
     {
         // Arrange
-        await Login("adm@syki.com", "Adm@123");
-
         var faculdade = await CreateFaculdade("Nova Roma");
 
         var user = new UserIn

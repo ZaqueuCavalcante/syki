@@ -45,6 +45,54 @@ public static class TestDataStreams
         }
     }
 
+    public static IEnumerable<object[]> InvalidRoles()
+    {
+        foreach (var role in new List<string>() { "", "  ", "lalala", Adm })
+        {
+            yield return new object[] { role };
+        }
+    }
+
+    public static IEnumerable<object[]> InvalidEmails()
+    {
+        foreach (var role in new List<string>()
+        {
+            "zaqueugmail",
+            "majuasp.net",
+            "#@%^%#$@#$@#.com",
+            "@example.com",
+            "Joe Smith <email@example.com>",
+            "email.example.com",
+            "email@example@example.com",
+            ".email@example.com",
+            "email.@example.com",
+            "email..email@example.com",
+            "email@example.com (Joe Smith)",
+            "email@example",
+            "email@-example.com",
+            "email@example..com",
+            "Abc..123@example.com",
+        })
+        {
+            yield return new object[] { role };
+        }
+    }
+
+    public static IEnumerable<object[]> InvalidPasswords()
+    {
+        foreach (var role in new List<string>()
+        {
+            "syki",
+            "syki123",
+            "Syki123",
+            "lalal.com",
+            "5816811681816",
+        })
+        {
+            yield return new object[] { role };
+        }
+    }
+
     public static IEnumerable<object[]> AllRolesExceptAcademico()
     {
         foreach (var role in AllRoles)

@@ -4,6 +4,7 @@ using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
 using Syki.Back.Extensions;
+using Syki.Back.Exceptions;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -12,19 +13,13 @@ namespace Syki.Tests.Integration;
 public class UsersIntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Deve_registrar_um_novo_usuario_com_role_de_academico()
+    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAdm))]
+    public async Task Deve_registrar_um_novo_usuario_com_role_permitida(string role)
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
 
-        var body = new UserIn
-        {
-            Faculdade = faculdade.Id,
-            Name = "Zaqueu",
-            Email = "zaqueu@syki.com",
-            Password = "Zaqueu@123",
-            Role = Academico,
-        };
+        var body = UserIn.New(faculdade.Id, role);
 
         // Act
         var user = await PostAsync<UserOut>("/users", body);
@@ -55,10 +50,7 @@ public class UsersIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         var body = new UserIn { Name = "Zaqueu" };
 
@@ -67,5 +59,90 @@ public class UsersIntegrationTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidRoles))]
+    public async Task Nao_deve_registrar_um_novo_usuario_com_role_invalida(string role)
+    {
+        // Arrange
+        var faculdade = await CreateFaculdade("Nova Roma");
+
+        var body = UserIn.New(faculdade.Id, role);
+
+        // Act
+        var response = await _client.PostAsync("/users", body.ToStringContent());
+
+        // Assert
+        var error = await response.DeserializeTo<ErrorOut>();
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        error.Message.Should().Be(ExceptionMessages.DE0010);  
+    }
+
+    [Test]
+    public async Task Nao_deve_registrar_um_novo_usuario_com_faculdade_invalida()
+    {
+        // Arrange
+        await Login("adm@syki.com", "Adm@123");
+
+        var body = UserIn.New(Guid.NewGuid(), Academico);
+
+        // Act
+        var response = await _client.PostAsync("/users", body.ToStringContent());
+
+        // Assert
+        var error = await response.DeserializeTo<ErrorOut>();
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        error.Message.Should().Be(ExceptionMessages.DE0011);  
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidEmails))]
+    public async Task Nao_deve_registrar_um_novo_usuario_com_email_invalido(string email)
+    {
+        // Arrange
+        var faculdade = await CreateFaculdade("Nova Roma");
+
+        var body = new UserIn
+        {
+            Faculdade = faculdade.Id,
+            Name = "Acadêmico - Nova Roma",
+            Email = email,
+            Password = "Academico@123",
+            Role = Academico,
+        };
+
+        // Act
+        var response = await _client.PostAsync("/users", body.ToStringContent());
+
+        // Assert
+        var error = await response.DeserializeTo<ErrorOut>();
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        error.Message.Should().Be(ExceptionMessages.DE0013);  
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidPasswords))]
+    public async Task Nao_deve_registrar_um_novo_usuario_com_senha_fraca(string password)
+    {
+        // Arrange
+        var faculdade = await CreateFaculdade("Nova Roma");
+
+        var body = new UserIn
+        {
+            Faculdade = faculdade.Id,
+            Name = "Acadêmico - Nova Roma",
+            Email = "academico@novaroma.com",
+            Password = password,
+            Role = Academico,
+        };
+
+        // Act
+        var response = await _client.PostAsync("/users", body.ToStringContent());
+
+        // Assert
+        var error = await response.DeserializeTo<ErrorOut>();
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        error.Message.Should().Be(ExceptionMessages.DE0012);  
     }
 }

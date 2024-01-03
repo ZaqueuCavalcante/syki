@@ -71,10 +71,7 @@ public class CursosIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         var body = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado };
 
@@ -91,10 +88,7 @@ public class CursosIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         // Act
         var response = await _client.GetAsync("/cursos");

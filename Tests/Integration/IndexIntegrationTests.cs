@@ -16,9 +16,7 @@ public class IndexIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         // Act
         var response = await _client.GetAsync("/index/adm");
@@ -33,9 +31,7 @@ public class IndexIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         // Act
         var response = await _client.GetAsync("/index/academico");
@@ -50,9 +46,7 @@ public class IndexIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         // Act
         var response = await _client.GetAsync("/index/aluno");

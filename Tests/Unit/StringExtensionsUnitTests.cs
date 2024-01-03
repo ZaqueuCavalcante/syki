@@ -2,6 +2,7 @@ using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
+using Bogus;
 
 namespace Syki.Tests.Unit;
 
@@ -60,5 +61,19 @@ public class StringExtensionsUnitTests
 
         // Assert
         result.Should().Be(data.text);
+    }
+
+    [Test]
+    [Repeat(100)]
+    public void Shoud_return_true_when_email_is_valid()
+    {
+        // Arrange
+        var email = new Faker().Internet.Email();
+
+        // Act
+        var result = email.IsValidEmail();
+
+        // Assert
+        result.Should().BeTrue();
     }
 }

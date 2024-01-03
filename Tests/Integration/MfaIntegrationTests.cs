@@ -3,6 +3,7 @@ using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
@@ -25,10 +26,7 @@ public class MfaIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         // Act
         var response = await GetAsync<MfaKeyOut>("/users/mfa-key");
@@ -43,10 +41,7 @@ public class MfaIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         var keyResponse = await GetAsync<MfaKeyOut>("/users/mfa-key");
         var token = keyResponse.Key.ToMfaToken();

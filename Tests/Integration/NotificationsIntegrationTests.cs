@@ -4,6 +4,7 @@ using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
 using Syki.Back.Extensions;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
@@ -16,9 +17,7 @@ public class NotificationsIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
 

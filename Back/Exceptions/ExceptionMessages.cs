@@ -12,4 +12,8 @@ public static class ExceptionMessages
     public const string DE0007 = "Campus inválido.";
     public const string DE0008 = "Grade inválida.";
     public const string DE0009 = "Oferta inválida.";
+    public const string DE0010 = "Role inválida.";
+    public const string DE0011 = "Faculdade inválida.";
+    public const string DE0012 = "Senha fraca.";
+    public const string DE0013 = "Email inválido.";
 }

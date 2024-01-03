@@ -2,7 +2,9 @@ using Dapper;
 using Npgsql;
 using Syki.Shared;
 using System.Text;
+using Syki.Back.Database;
 using Syki.Back.Settings;
+using Syki.Back.Exceptions;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,15 +17,18 @@ namespace Syki.Back.Services;
 
 public class AuthService : IAuthService
 {
+    private readonly SykiDbContext _ctx;
     private readonly AuthSettings _settings;
     private readonly DatabaseSettings _dbSettings;
     private readonly UserManager<SykiUser> _userManager;
 
     public AuthService(
+        SykiDbContext ctx,
         AuthSettings settings,
         DatabaseSettings dbSettings,
         UserManager<SykiUser> userManager
     ) {
+        _ctx = ctx;
         _settings = settings;
         _dbSettings = dbSettings;
         _userManager = userManager;
@@ -31,6 +36,16 @@ public class AuthService : IAuthService
 
     public async Task<UserOut> Register(UserIn body)
     {
+        if (!(body.Role is Academico or Professor or Aluno))
+            throw new DomainException(ExceptionMessages.DE0010);
+
+        var faculdadeOk = await _ctx.Faculdades.AnyAsync(c => c.Id == body.Faculdade);
+        if (!faculdadeOk)
+            throw new DomainException(ExceptionMessages.DE0011);
+
+        if (!body.Email.IsValidEmail())
+            throw new DomainException(ExceptionMessages.DE0013);
+
         var user = new SykiUser
         {
             FaculdadeId = body.Faculdade,
@@ -39,12 +54,12 @@ public class AuthService : IAuthService
             Email = body.Email,
         };
 
-        await _userManager.CreateAsync(user, body.Password);
+        var result = await _userManager.CreateAsync(user, body.Password);
 
-        if (body.Role is Academico or Professor or Aluno)
-        {
-            await _userManager.AddToRoleAsync(user, body.Role);
-        }
+        if (!result.Succeeded)
+            throw new DomainException(ExceptionMessages.DE0012);
+
+        await _userManager.AddToRoleAsync(user, body.Role);
 
         return user.ToOut();
     }

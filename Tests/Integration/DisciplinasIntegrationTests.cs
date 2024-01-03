@@ -155,12 +155,8 @@ public class DisciplinasIntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_nova_disciplina_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
-        await Login("adm@syki.com", "Adm@123");
         var faculdade = await CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
 

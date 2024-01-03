@@ -339,12 +339,8 @@ public class GradesIntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_nova_grade_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
-        await Login("adm@syki.com", "Adm@123");
         var faculdade = await CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         var body = new GradeIn { Nome = "Grade ADS - 1.0" };
 
@@ -360,12 +356,8 @@ public class GradesIntegrationTests : IntegrationTestBase
     public async Task Nao_deve_retornar_as_grades_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
-        await Login("adm@syki.com", "Adm@123");
         var faculdade = await CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, role);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, role);
 
         // Act
         var response = await _client.GetAsync("/grades");

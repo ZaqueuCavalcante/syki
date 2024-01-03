@@ -91,7 +91,6 @@ public class IntegrationTestBase
         };
 
         await _userManager.CreateAsync(user, "Adm@123");
-
         await _userManager.AddToRoleAsync(user, Adm);
     }
 
@@ -151,5 +150,15 @@ public class IntegrationTestBase
         var response = await _client.PostAsync("/faculdades", body.ToStringContent());
 
         return await response.DeserializeTo<FaculdadeOut>();
+    }
+
+    protected async Task RegisterAndLogin(Guid faculdadeId, string role)
+    {
+        if (role != Adm)
+        {
+            var user = UserIn.New(faculdadeId, role);
+            await RegisterUser(user);
+            await Login(user.Email, user.Password);
+        }
     }
 }

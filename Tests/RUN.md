@@ -19,3 +19,7 @@ reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\6dad489e-8e84-4
 - Parameters and services must be passed in like the Blazor runtime does it.
 - Components have event handlers that must be invoked like the Blazor runtime does it.
 - BUnit is a Blazor runtime specifically built for testing.
+
+
+
+

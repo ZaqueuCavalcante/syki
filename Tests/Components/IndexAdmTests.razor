@@ -1,0 +1,43 @@
+@inherits BunitTestContext
+
+@code
+{
+    [Test]
+    public async Task Should_renders_the_adm_index_data()
+    {
+        // Arrange
+        var response = new IndexAdmOut
+        {
+            Faculdades = 5,
+            Users = 3,
+            Campus = 67,
+            Cursos = 8,
+            Disciplinas = 2,
+            Grades = 0,
+            Ofertas = 5,
+            Professores = 45,
+            Alunos = 96,
+        };
+
+        var mock = Services.AddMockHttpClient();
+        mock.When(HttpMethod.Get, "/index/adm").RespondJson(response);
+
+        // Act
+        var cut = Render(@<IndexAdm />);
+        await Task.Delay(500);
+
+        // Assert
+        cut.Find("h4").TextContent.MarkupMatches("Insights");
+        cut.Find("p").TextContent.MarkupMatches("Aqui você encontra dados consolidados sobre todo o sistema, atualizados em tempo real!");
+        var data = cut.FindAll("h5", true).ToList();
+        data[0].TextContent.MarkupMatches("5 Faculdades");
+        data[1].TextContent.MarkupMatches("3 Usuários");
+        data[2].TextContent.MarkupMatches("67 Campus");
+        data[3].TextContent.MarkupMatches("8 Cursos");
+        data[4].TextContent.MarkupMatches("2 Disciplinas");
+        data[5].TextContent.MarkupMatches("0 Grades");
+        data[6].TextContent.MarkupMatches("5 Ofertas");
+        data[7].TextContent.MarkupMatches("45 Professores");
+        data[8].TextContent.MarkupMatches("96 Alunos");
+    }
+}

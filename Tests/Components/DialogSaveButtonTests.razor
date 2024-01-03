@@ -32,7 +32,7 @@
         var clicked = false;
         Action<MouseEventArgs> onClick = _ => { clicked = true; };
         
-        var cut = Render(@<DialogSaveButton OnClick="onClick"/>);
+        var cut = Render(@<DialogSaveButton OnClick=@onClick />);
 
         // Act
         cut.Find("button").Click();

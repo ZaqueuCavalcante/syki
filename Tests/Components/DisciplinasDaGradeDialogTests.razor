@@ -6,10 +6,7 @@
     public async Task Should_renders_correctly()
     {
         // Arrange
-        Services.AddMudServices();
-        TestContext!.JSInterop.SetupVoid("mudPopover.initialize", _ => true);
-        TestContext!.JSInterop.SetupVoid("mudElementRef.saveFocus", _ => true);
-        TestContext!.JSInterop.SetupVoid("mudScrollManager.lockScroll", _ => true);
+        AddMudServices();
         var dialogService = Services.GetService<IDialogService>()!;
 
         const string grade = "Grade de ADS - 1.0";

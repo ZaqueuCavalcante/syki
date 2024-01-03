@@ -3,23 +3,15 @@
 @code
 {
     [Test]
-    public void Should_renders_the_default_text()
-    {
-        // Arrange / Act
-        var cut = Render(@<DialogCancelButton />);
-
-        // Assert
-        cut.Find("span").TextContent.MarkupMatches("Cancelar");
-    }
-
-    [Test]
     public void Should_call_on_click_method()
     {
         // Arrange
+        AddMudServices();
+
         var clicked = false;
         Action<MouseEventArgs> onClick = _ => { clicked = true; };
         
-        var cut = Render(@<DialogCancelButton OnClick=@onClick />);
+        var cut = Render(@<LogoutIconButton OnClick=@onClick />);
 
         // Act
         cut.Find("button").Click();

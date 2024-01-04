@@ -130,4 +130,4 @@
 ## Front Services
 
 - [] Auth
-- [] MFA
+- [X] MFA

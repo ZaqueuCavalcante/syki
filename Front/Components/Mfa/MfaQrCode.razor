@@ -21,7 +21,6 @@
     </MudCardContent>
 </MudCard>
 
-@using QRCoder
 @inject IMfaService Mfa
 
 @code
@@ -41,7 +40,7 @@
         if (result != null)
         {
             var email = await GetUserEmail();
-            _codeBytes = GenerateQrCodeBytes(result.Key, email);
+            _codeBytes = GuidExtensions.GenerateQrCodeBytes(result.Key, email);
         }
 
         _qrCodeLoading = false;
@@ -64,20 +63,5 @@
     {
         if (_codeBytes == null) return "";
         return string.Format("data:image/png;base64,{0}", Convert.ToBase64String(_codeBytes));
-    }
-
-    private  Byte[] GenerateQrCodeBytes(string key, string email)
-    {
-        const string provider = "Syki";
-
-        using var qrGenerator = new QRCodeGenerator();
-        using var qrCodeData = qrGenerator.CreateQrCode(
-            $"otpauth://totp/{provider}:{email}?secret={key}&issuer={provider}",
-            QRCodeGenerator.ECCLevel.Q
-        );
-        
-        var qrCode = new PngByteQRCode(qrCodeData);
-
-        return qrCode.GetGraphic(20);
     }
 }

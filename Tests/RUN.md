@@ -4,7 +4,8 @@ dotnet test --logger:"console;verbosity=detailed"
 dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~UnitTests"
 dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~Deve_criar_varios_campus_para_uma_mesma_faculdade"
 
-reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\6dad489e-8e84-4d63-9fc4-874f6963a535\coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
+dotnet test --collect:"XPlat Code Coverage"
+reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\cc63c858-ff1b-41ec-9854-b6f44477bb9c\coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
 
 # How to create maintainable and testable Blazor components
 
@@ -19,7 +20,3 @@ reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\6dad489e-8e84-4
 - Parameters and services must be passed in like the Blazor runtime does it.
 - Components have event handlers that must be invoked like the Blazor runtime does it.
 - BUnit is a Blazor runtime specifically built for testing.
-
-
-
-

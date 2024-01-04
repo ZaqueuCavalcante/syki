@@ -36,6 +36,21 @@ public class MfaIntegrationTests : IntegrationTestBase
     }
 
     [Test]
+    public async Task Nao_deve_realizar_o_setup_da_mfa_quando_informar_codigo_errado()
+    {
+        // Arrange
+        var faculdade = await CreateFaculdade("Nova Roma");
+        await RegisterAndLogin(faculdade.Id, Academico);
+        var token = Guid.NewGuid().ToHashCode().ToString()[..6];
+
+        // Act
+        var response = await PostAsync<MfaSetupOut>("/users/mfa-setup", new MfaSetupIn { Token = token });
+
+        // Assert
+        response.Ok.Should().BeFalse();
+    }
+
+    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllUsersRoles))]
     public async Task Deve_realizar_o_setup_da_mfa_independente_da_role_do_usuario(string role)
     {

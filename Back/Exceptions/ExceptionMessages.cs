@@ -16,4 +16,5 @@ public static class ExceptionMessages
     public const string DE0011 = "Faculdade inválida.";
     public const string DE0012 = "Senha fraca.";
     public const string DE0013 = "Email inválido.";
+    public const string DE0014 = "Email duplicado.";
 }

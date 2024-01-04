@@ -46,6 +46,10 @@ public class AuthService : IAuthService
         if (!body.Email.IsValidEmail())
             throw new DomainException(ExceptionMessages.DE0013);
 
+        var emailUsed = await _ctx.Users.AnyAsync(u => u.Email == body.Email);
+        if (emailUsed)
+            throw new DomainException(ExceptionMessages.DE0014);
+
         var user = new SykiUser
         {
             FaculdadeId = body.Faculdade,

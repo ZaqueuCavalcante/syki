@@ -1,0 +1,28 @@
+﻿@page "/mfa-setup"
+
+<PageTitle>2FA Setup</PageTitle>
+
+<AuthorizeView>
+    <MudContainer Class="mt-8 px-12">
+        <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-4">
+            <MudIcon Icon="@Icons.Material.Filled.ScreenLockPortrait" Class="mr-1 mb-n1" Size="Size.Large"/>
+            2FA Setup
+        </MudText>
+
+        <MudAlert Class="mt-4" Severity="Severity.Normal" Variant="Variant.Text">
+            <MudStack Row="true" Justify="Justify.SpaceAround">
+                <MudText>A autenticação de dois fatores ajuda a manter sua conta segura.</MudText>
+            </MudStack>
+        </MudAlert>
+
+        <MudPaper Elevation="2" Class="mt-6">
+            <MudStack Row="true" Justify="Justify.SpaceAround">
+                <MfaQrCode />
+
+                <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="my-10" />
+
+                <MfaSetupInput />
+            </MudStack>
+        </MudPaper>
+    </MudContainer>
+</AuthorizeView>

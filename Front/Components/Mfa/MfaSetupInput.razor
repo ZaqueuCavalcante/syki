@@ -1,0 +1,83 @@
+﻿<MudOverlay @bind-Visible="@_validateCodeLoading" LightBackground="true" Absolute="false">
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+</MudOverlay>
+
+<style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
+<MudCard Class="mt-4 px-8 py-0" Elevation="0">
+    <MudCardContent>
+        <MudStack AlignItems="AlignItems.Center">
+            <MudAlert Severity="Severity.Info" Variant="Variant.Text">
+                <MudStack Row="true" Justify="Justify.SpaceAround">
+                    <MudText>Insira o código para finalizar o setup</MudText>
+                </MudStack>
+            </MudAlert>
+            <MudForm>
+                <MudTextField
+                    Immediate="true"
+                    Placeholder="_ _ _  _ _ _"
+                    OnlyValidateIfDirty="true"
+                    Variant="Variant.Outlined"
+                    Disabled="_codeIsCorrect"
+                    Style="width: 200px;"
+                    Class="mt-8"
+                    AutoFocus="true"
+                    Value="_userCode"
+                    ValueChanged="x => HandleCodeChanged(x)"
+                    T="String"
+                    Mask="@(new PatternMask("000 000"))"
+                />
+            </MudForm>
+
+            @if (_showCodeFeedback && !_codeIsCorrect)
+            {
+                <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Text">
+                    <MudStack Row="true" Justify="Justify.SpaceAround">
+                        <MudText>Código inválido</MudText>
+                    </MudStack>
+                </MudAlert>
+            }
+        </MudStack>
+    </MudCardContent>
+</MudCard>
+
+@inject IMfaService Mfa
+@inject IDialogService DialogService
+
+@code
+{
+    private string _userCode;
+    private bool _validateCodeLoading;
+    private bool _showCodeFeedback;
+    private bool _codeIsCorrect;
+
+    private async Task HandleCodeChanged(string newValue)
+    {
+        _showCodeFeedback = false;
+        _userCode = newValue;
+
+        if (_userCode.Length == 7)
+        {
+            _validateCodeLoading = true;
+            var result = await Mfa.EnableUserMfa(_userCode);
+            _codeIsCorrect = result.Ok;
+            _showCodeFeedback = true;
+            _validateCodeLoading = false;
+        }
+
+        if (_codeIsCorrect)
+        {
+            await OpenDialog();
+        }
+    }
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            FullWidth = true,
+            CloseButton = false,
+            DisableBackdropClick = true,
+            MaxWidth = MaxWidth.ExtraSmall,
+        };
+        await DialogService.ShowAsync<MfaSetupDialog>("", options);
+    }
+}

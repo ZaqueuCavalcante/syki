@@ -5,7 +5,7 @@ dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~U
 dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~Deve_criar_varios_campus_para_uma_mesma_faculdade"
 
 dotnet test --collect:"XPlat Code Coverage"
-reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\cc63c858-ff1b-41ec-9854-b6f44477bb9c\coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
+reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\492dcf7f-676b-4aa5-95c9-09522eb9a639\coverage.cobertura.xml" -targetdir:"./Tests/Reports" -reporttypes:Html
 
 # How to create maintainable and testable Blazor components
 

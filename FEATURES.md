@@ -16,22 +16,9 @@
     - Prova 1 + Prova 2
     - Prova Final
 
-## Audit
-
-- [X] AuditChange unit tests
-- [X] AuditData unit tests
-- [X] AuditLog unit tests
-- [X] Audit for insert campus
-- [X] Audit for update campus
-
 ## Alunos
 
 - [] GetDisciplinas
-- [] GetAll
-
-## Livros
-
-- [] Create
 - [] GetAll
 
 ## Notifications

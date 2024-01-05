@@ -35,20 +35,17 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Tests
-        run: dotnet test --no-build --logger:"console;verbosity=detailed" --collect:"XPlat Code Coverage"
-
-      - name: Copy Coverage To Predictable Location
-        run: cp coverage/*/coverage.cobertura.xml coverage/coverage.cobertura.xml
+        run: dotnet test --no-build --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~UnitTests" --collect:"XPlat Code Coverage"
 
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
         with:
-          reports: 'coverage/*/coverage.cobertura.xml'
+          reports: '**/Tests/TestResults/*/coverage.cobertura.xml'
           targetdir: 'coveragereport'
           reporttypes: 'HtmlInline;Cobertura'
 
       - name: Upload coverage report artifact
-        uses: actions/upload-artifact@v2.2.3
+        uses: actions/upload-artifact@v3
         with:
           name: CoverageReport
           path: coveragereport

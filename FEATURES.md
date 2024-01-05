@@ -34,19 +34,9 @@
 - [] GetAll
 - [] FilterByDisciplinaId
 
-## Turmas
-
-- [] Create
-- [] GetAll
-
 ## Users
 
 - [] GetAll
-
-## Unit
-
-- [] Aula
-- [] Chamada
 
 ========================================================================
 
@@ -68,16 +58,3 @@
 ## Auth
 - [] SykiDelegatingHandler
 - [] SykiAuthStateProvider
-
-========================================================================
-
-# SHARED
-
-- [] CursoOut
-- [] LivroIn
-- [] ProfessorIn
-- [] TurmaIn
-- [] FaculdadeOut
-- [] EnumExtensions
-- [] OfertaOut
-- [] DisciplinaOut

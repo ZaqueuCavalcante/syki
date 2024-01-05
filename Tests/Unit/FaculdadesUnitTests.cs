@@ -45,4 +45,18 @@ public class FaculdadesUnitTests
         faculdadeOut.Id.Should().Be(faculdade.Id);
         faculdadeOut.Nome.Should().Be(faculdade.Nome);
     }
+
+    [Test]
+    public void Deve_retornar_o_nome_da_faculdade_como_to_string()
+    {
+        // Arrange
+        var faculdade = new Faculdade("UFPE");
+        var faculdadeOut = faculdade.ToOut();
+
+        // Act
+        var nome = faculdadeOut.ToString();
+
+        // Assert
+        nome.Should().Be(faculdade.Nome);
+    }
 }

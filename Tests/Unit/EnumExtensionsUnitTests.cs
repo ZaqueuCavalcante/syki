@@ -7,6 +7,31 @@ namespace Syki.Tests.Unit;
 
 public class EnumExtensionsUnitTests
 {
+    private enum TestEnum
+    {
+        WithoutDescription
+    }
+
+    [Test]
+    public void Shoud_get_enum_description_when_null()
+    {
+        // Arrange / Act
+        var result = ((Enum)null!).GetDescription();
+
+        // Assert
+        result.Should().Be("");
+    }
+
+    [Test]
+    public void Shoud_get_enum_description_when_has_no_description_attribute()
+    {
+        // Arrange / Act
+        var result = TestEnum.WithoutDescription.GetDescription();
+
+        // Assert
+        result.Should().Be("WithoutDescription");
+    }
+
     [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.TipoDeCursoEnumToDescription))]
     public void Shoud_get_enum_description((TipoDeCurso tipo, string description) data)
@@ -27,5 +52,25 @@ public class EnumExtensionsUnitTests
 
         // Assert
         result.Should().Be(data.isIn);
+    }
+
+    [Test]
+    public void Shoud_return_false_when_value_is_null()
+    {
+        // Arrange / Act
+        var result = TipoDeCurso.Bacharelado.IsIn(null);
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    [Test]
+    public void Shoud_return_false_when_value_is_empty()
+    {
+        // Arrange / Act
+        var result = TipoDeCurso.Bacharelado.IsIn([]);
+
+        // Assert
+        result.Should().BeFalse();
     }
 }

@@ -1,3 +1,4 @@
+using Syki.Shared;
 using NUnit.Framework;
 using Syki.Back.Domain;
 using FluentAssertions;
@@ -78,5 +79,76 @@ public class CursosUnitTests
         cursoOut.Id.Should().Be(curso.Id);
         cursoOut.Nome.Should().Be(curso.Nome);
         cursoOut.Tipo.Should().Be(curso.Tipo);
+    }
+
+    [Test]
+    public void Deve_retornar_true_quando_for_o_mesmo_curso()
+    {
+        // Arrange
+        var curso = new Curso(Guid.NewGuid(), "Curso", Bacharelado);
+        var cursoOut1 = curso.ToOut();
+        var cursoOut2 = curso.ToOut();
+
+        // Act
+        var equals = cursoOut1.Equals(cursoOut2);
+
+        // Assert
+        equals.Should().BeTrue();
+    }
+
+    [Test]
+    public void Deve_retornar_false_quando_nao_for_o_mesmo_curso()
+    {
+        // Arrange
+        var curso1 = new Curso(Guid.NewGuid(), "Curso1", Bacharelado);
+        var curso2 = new Curso(Guid.NewGuid(), "Curso2", Bacharelado);
+        var cursoOut1 = curso1.ToOut();
+        var cursoOut2 = curso2.ToOut();
+
+        // Act
+        var equals = cursoOut1.Equals(cursoOut2);
+
+        // Assert
+        equals.Should().BeFalse();
+    }
+
+    [Test]
+    public void Deve_retornar_false_quando_o_outro_curso_for_nulo()
+    {
+        // Arrange
+        var curso = new Curso(Guid.NewGuid(), "Curso1", Bacharelado);
+        var cursoOut = curso.ToOut();
+
+        // Act
+        var equals = cursoOut.Equals(null);
+
+        // Assert
+        equals.Should().BeFalse();
+    }
+
+    [Test]
+    public void Deve_retornar_o_hash_code_correto()
+    {
+        // Arrange
+        var cursoOut = new CursoOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
+
+        // Act
+        var hashCode = cursoOut.GetHashCode();
+
+        // Assert
+        hashCode.Should().Be(4523_9002);
+    }
+
+    [Test]
+    public void Deve_retornar_o_nome_do_curso_como_to_string()
+    {
+        // Arrange
+        var cursoOut = new CursoOut { Nome = "Curso" };
+
+        // Act
+        var nome = cursoOut.ToString();
+
+        // Assert
+        nome.Should().Be("Curso");
     }
 }

@@ -164,4 +164,23 @@ public class OfertasUnitTests
         ofertaOut.Periodo.Should().Be(oferta.Periodo);
         ofertaOut.Turno.Should().Be(oferta.Turno);
     }
+
+    [Test]
+    public void Deve_converter_o_get_line_correto()
+    {
+        // Arrange
+        var ofertaOut = new OfertaOut
+        {
+            Grade = "Grade de ADS - 1.0",
+            Campus = "Agreste I",
+            Periodo = "2024.1",
+            Turno = Turno.Matutino,
+        };
+
+        // Act
+        var getLine = ofertaOut.GetLine();
+
+        // Assert
+        getLine.Should().Be("Grade de ADS - 1.0 | Agreste I | 2024.1 | Matutino");
+    }
 }

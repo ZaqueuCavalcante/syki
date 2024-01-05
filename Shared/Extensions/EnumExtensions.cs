@@ -11,8 +11,11 @@ public static class EnumExtensions
             return string.Empty;
         }
 
-        var attribute = value.GetType().GetField(value.ToString())!.GetCustomAttributes(typeof(DescriptionAttribute), inherit: false);
-        if (attribute is DescriptionAttribute[] source && source.Any())
+        var attribute = value.GetType()
+            .GetField(value.ToString())!
+            .GetCustomAttributes(typeof(DescriptionAttribute), inherit: false);
+
+        if (attribute is DescriptionAttribute[] source && source.Length != 0)
         {
             return source.First().Description;
         }

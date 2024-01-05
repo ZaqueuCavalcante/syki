@@ -5,6 +5,7 @@ dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~U
 dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~Deve_criar_varios_campus_para_uma_mesma_faculdade"
 
 dotnet test --collect:"XPlat Code Coverage"
+dotnet test --logger:"console;verbosity=detailed" --collect:"XPlat Code Coverage"
 reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\*\coverage.cobertura.xml" -targetdir:"./Tests/Reports" -reporttypes:Html
 
 # How to create maintainable and testable Blazor components

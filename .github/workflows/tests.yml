@@ -37,6 +37,9 @@ jobs:
       - name: Tests
         run: dotnet test --no-build --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~UnitTests" --collect:"XPlat Code Coverage"
 
+      - name: Install Tool
+        run: dotnet tool install dotnet-reportgenerator-globaltool --tool-path reportgeneratortool --version 5.2.0 --ignore-failed-sources
+
       - name: Generate Report
         run: reportgenerator -reports:"**/Tests/TestResults/*/coverage.cobertura.xml" -targetdir:"./" -reporttypes:Html
 

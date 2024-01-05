@@ -4,6 +4,7 @@ using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
 using Syki.Back.Database;
+using Syki.Back.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
@@ -70,5 +71,40 @@ public class AuditIntegrationTests : IntegrationTestBase
         audit.EntityId.Should().Be(campus.Id);
         audit.Action.Should().Be("Update");
         audit.FaculdadeId.Should().Be(faculdade.Id);
+    }
+
+    [Test]
+    public async Task Nao_deve_auditar_o_login_com_mfa()
+    {
+        // Arrange
+        var faculdade = await CreateFaculdade("Nova Roma");
+
+        var user = UserIn.New(faculdade.Id, Academico);
+        await RegisterUser(user);
+        await Login(user.Email, user.Password);
+
+        var keyResponse = await GetAsync<MfaKeyOut>("/users/mfa-key");
+        var token = keyResponse.Key.ToMfaToken();
+        await PostAsync<MfaSetupOut>("/users/mfa-setup", new MfaSetupIn { Token = token });
+
+        _client.DefaultRequestHeaders.Remove("Authorization");
+
+        var data = new LoginIn { Email = user.Email, Password = user.Password };
+        await _client.PostAsync("/users/login", data.ToStringContent());
+
+        var body = new LoginMfaIn { Code = Guid.NewGuid().ToHashCode().ToString()[..6] };
+
+        // Act
+        Configuration.AuditDisabled = false;
+        await _client.PostAsync("/users/login-mfa", body.ToStringContent());
+        Configuration.AuditDisabled = true;
+
+        // Assert
+        using var scope = _factory.Services.CreateScope();
+        _ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+
+        var audit = await _ctx.AuditLogs.FirstOrDefaultAsync();
+
+        audit.Should().BeNull();
     }
 }

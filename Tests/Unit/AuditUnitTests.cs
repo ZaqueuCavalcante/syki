@@ -64,7 +64,6 @@ public class AuditUnitTests
         // Assert
         audit.RootElement.GetProperty("Name").ToString().Should().Be(_eventEntry.Name);
         audit.RootElement.GetProperty("Table").ToString().Should().Be(_eventEntry.Table);
-        audit.RootElement.GetProperty("Action").ToString().Should().Be(_eventEntry.Action);
         audit.RootElement.GetProperty("Schema").ToString().Should().Be(_eventEntry.Schema);
     }
 
@@ -114,6 +113,22 @@ public class AuditUnitTests
 
         // Assert
         audit.EntityType.Should().Be("Turma");
+    }
+
+    [Test]
+    public void Deve_criar_uma_audit_log_com_action_correta()
+    {
+        // Arrange
+        var evt = new AuditEvent { CustomFields = [] };
+        evt.CustomFields["UserId"] = Guid.NewGuid();
+        evt.CustomFields["FaculdadeId"] = Guid.NewGuid();
+
+        // Act
+        var audit = new AuditLog();
+        audit.Fill(evt, _eventEntry);
+
+        // Assert
+        audit.Action.Should().Be("Insert");
     }
 
     [Test]

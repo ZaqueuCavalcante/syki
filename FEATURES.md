@@ -34,15 +34,6 @@
 - [] GetAll
 - [] FilterByDisciplinaId
 
-## Periodos
-
-- [] GetAll
-
-## Professores
-
-- [] Create
-- [] GetAll
-
 ## Turmas
 
 - [] Create

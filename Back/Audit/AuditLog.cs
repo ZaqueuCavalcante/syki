@@ -9,6 +9,7 @@ public class AuditLog
     public Guid Id { get; set; }
     public Guid EntityId { get; set; }
     public string EntityType { get; set; }
+    public string Action { get; set; }
     public DateTime CreatedAt { get; set; }
     public Guid UserId { get; set; }
     public Guid FaculdadeId { get; set; }
@@ -19,6 +20,7 @@ public class AuditLog
         Id = Guid.NewGuid();
         EntityId = Guid.Parse(entry.PrimaryKey.First().Value.ToString()!);
         EntityType = entry.EntityType.Name;
+        Action = entry.Action;
         CreatedAt = DateTime.Now;
         UserId = Guid.Parse(evt.CustomFields["UserId"].ToString()!);
         FaculdadeId = Guid.Parse(evt.CustomFields["FaculdadeId"].ToString()!);

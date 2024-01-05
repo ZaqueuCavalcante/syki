@@ -34,19 +34,34 @@ public static class AuditConfigs
                 .Map<SykiUser, AuditLog>()
                 .Map<Turma, AuditLog>()
                 .Map<Notification, AuditLog>()
-                .AuditEntityAction<AuditLog>((evt, entry, log) => log.Fill(evt, entry)))
+                .AuditEntityAction<AuditLog>((evt, entry, log) =>
+                {
+                    if (evt.CustomFields.ContainsKey("IsLogin"))
+                        return false;
+
+                    log.Fill(evt, entry);
+                    return true;
+                }))
             .IgnoreMatchedProperties(true));
     }
 
     public static void UseAudit(this IApplicationBuilder app)
     {
-        if (Configuration.AuditDisabled) return;
-
         var contextAccessor = app.ApplicationServices.GetService<IHttpContextAccessor>()!;
 
         Configuration.AddCustomAction(ActionType.OnScopeCreated, scope =>
         {
-            var httpContext = contextAccessor.HttpContext!;
+            var httpContext = contextAccessor.HttpContext;
+            if (httpContext == null) return;
+
+            var path = httpContext.Request.Path;
+
+            if (path == "/users/login" || path == "/users/login-mfa")
+            {
+                scope.Event.CustomFields["IsLogin"] = true;
+                return;
+            }
+
             scope.Event.CustomFields["UserId"] = httpContext.User.Id();
             scope.Event.CustomFields["FaculdadeId"] = httpContext.User.Facul();
         });

@@ -16,118 +16,92 @@
     - Prova 1 + Prova 2
     - Prova Final
 
-## Grades
-
-- [X] Nao deve criar uma grade sem vinculo com curso
-- [X] Nao deve criar uma grade com um curso que n existe
-- [X] Nao deve criar uma grade com curso de outra faculdade
-- [X] Nao deve criar uma grade vinculando disciplinas que nao sao do curso escolhido
-- [X] Nao deve criar uma grade vinculando disciplinas de outra faculdade
-- [X] A carga horaria da disciplina dentro de uma grade pode ser diferente da CH default do curso
-
-- [X] Deve criar uma grade mesmo sem disciplinas vinculadas, apenas com curso
-- [X] Caso venham disciplinas repetidas (ids), retornar erro
-- [X] Caso venham disciplinas q n existem, retornar erro
-
-- [X] Ao buscar todas as grades:
-    - Deve trazer apenas daquela faculdade
-    - Deve trazer ordenado por nome
-
-## Ofertas
-
-- [X] Nao deve criar uma oferta sem vinculo com campus
-- [X] Nao deve criar uma oferta com campus que n existe
-- [X] Nao deve criar uma oferta com campus de outra faculdade
-
-- [X] Nao deve criar uma oferta sem vinculo com periodo
-- [X] Nao deve criar uma oferta com periodo que n existe
-- [X] Nao deve criar uma oferta com periodo de outra faculdade
-
-- [X] Nao deve criar uma oferta sem vinculo com curso
-- [X] Nao deve criar uma oferta com um curso que n existe
-- [X] Nao deve criar uma oferta com curso de outra faculdade
-- [X] Nao deve criar uma oferta com curso sem grade vinculada
-- [X] Nao deve criar uma oferta vinculando grade que nao eh do curso escolhido
-
-## Periodo
-
-- Os periodos so podem ser criados com os seguintes ids:
-    - [X] Depois de 1970
-    - [X] Com final .1 ou .2
-    - [X] Exemplos validos: 1970.1 | 1970.2 | 1971.1 | 2001.1 | 2023.2
-    - [X] Exemplos invalidos: 1970.3 | 1970.0 | 1971.90 | 2001 | 202
-
-- As datas de inicio e fim:
-    - [X] devem respeitar o ano do id
-    - [X] a de inicio deve ser menor q a de fim
-
-- [] Endpoints
-
-## Login
-
-- [X] Register
-    - [X] Nao deve registrar quando a role informada for diferente das permitidas
-    - [X] Faculdade empty ou n existe
-    - [X] Nao deve registrar dois com o mesmo email
-    - [X] Email invalido
-    - [X] Senha fraca (identity validation)
-- [X] Login
-    - [X] Email ou senhas errados
-    - [X] Dados corretos, sem MFA -> recebe JWT
-    - [X] Dados corretos, mas precisa de MFA
-    - [X] Dados corretos, precisa de MFA, informa Code errado
-    - [X] Dados corretos, precisa de MFA, informa Code certo (+ cookie?) -> recebe JWT
-- [X] MFA
-    - [X] Fez login normal, tentou configurar o MFA com code errado -> ok = false
-    - [X] Fez login normal, tentou configurar o MFA com code certo -> ok = true
-
-- [] Como Adm, deve listar todos os usuarios
-
 ## Audit
 
-- [] AuditChange unit tests
-- [] AuditData unit tests
-- [] AuditLog unit tests
-- [] Audit for insert campus
-- [] Audit for update campus
+- [X] AuditChange unit tests
+- [X] AuditData unit tests
+- [X] AuditLog unit tests
+- [X] Audit for insert campus
+- [X] Audit for update campus
 
 ## Alunos
 
-- [X] Deve criar um aluno
-
-## Home
-
-- [X] Redirect
-
-## Index
-
-- [X] GetAllAdm
-- [X] GetAllAcademico
-- [X] GetAllAluno
+- [] GetDisciplinas
+- [] GetAll
 
 ## Livros
 
-## Professores
-
-## Turmas
-
-## Aula, Chamada
-
-- [] 
+- [] Create
+- [] GetAll
 
 ## Notifications
 
 - [] Hub
+- [] Create
+- [] ViewByUserId
+- [] GetAll
+- [] GetByUserId
 
-## Exceptions
+## Ofertas
 
-- [X] Handle Internal Server Error test case
+- [] GetAll
+- [] FilterByDisciplinaId
 
-## EnumExtensions
+## Periodos
 
-- [X] Methods
+- [] GetAll
 
-## Front Services
+## Professores
 
-- [] Auth
-- [X] MFA
+- [] Create
+- [] GetAll
+
+## Turmas
+
+- [] Create
+- [] GetAll
+
+## Users
+
+- [] GetAll
+
+## Unit
+
+- [] OfertaTurma
+- [] AlunoDisciplina
+- [] Aula
+- [] Chamada
+
+========================================================================
+
+# FRONT
+
+## Components
+
+- [] ???
+- [] Dialogs??? https://github.com/bUnit-dev/bUnit/discussions/588
+- [] https://github.com/MudBlazor/MudBlazor/blob/dev/src/MudBlazor.UnitTests/Components/DialogTests.cs
+
+## Pages
+
+- [] ???
+
+## Services
+- [] AuthService
+
+## Auth
+- [] SykiDelegatingHandler
+- [] SykiAuthStateProvider
+
+========================================================================
+
+# SHARED
+
+- [] CursoOut
+- [] LivroIn
+- [] ProfessorIn
+- [] TurmaIn
+- [] FaculdadeOut
+- [] EnumExtensions
+- [] OfertaOut
+- [] DisciplinaOut

@@ -30,5 +30,10 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
+# Coverage
+
+/Tests/TestResults
+/Tests/Reports
+
 # Visual Studio 2015
 .vs/

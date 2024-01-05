@@ -20,9 +20,7 @@
                 <NavMenu />
             </MudDrawer>
             <MudMainContent>
-                <CascadingValue Value="@AppState">
-                    @Body
-                </CascadingValue>
+                @Body
             </MudMainContent>
         </MudLayout>
     </Authorized>
@@ -31,9 +29,7 @@
         {
             <MudLayout>
                 <MudMainContent>
-                    <CascadingValue Value="@AppState">
-                        @Body
-                    </CascadingValue>
+                    @Body
                 </MudMainContent>
             </MudLayout>
         }
@@ -51,8 +47,6 @@
 {
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
-
-    public AppState AppState = new AppState();
 
     private string _userName = "";
 

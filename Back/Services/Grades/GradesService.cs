@@ -26,7 +26,7 @@ public class GradesService : IGradesService
             data.Nome
         );
 
-        var disciplinas = await _ctx.CursosDisciplinas
+        var disciplinas = await _ctx.CursosDisciplinas.AsNoTracking()
             .Where(x => x.CursoId == data.CursoId)
             .Select(x => x.DisciplinaId)
             .ToListAsync();

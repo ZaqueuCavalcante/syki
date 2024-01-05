@@ -1,6 +1,7 @@
 using Syki.Shared;
 using Syki.Back.Domain;
 using Syki.Back.Database;
+using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.Services;
@@ -12,18 +13,29 @@ public class TurmasService : ITurmasService
 
     public async Task<TurmaOut> Create(Guid faculdadeId, TurmaIn data)
     {
+        var disciplinaOk = await _ctx.Disciplinas
+            .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.DisciplinaId);
+        if (!disciplinaOk)
+            throw new DomainException(ExceptionMessages.DE0002);
+
+        var professorOk = await _ctx.Professores
+            .AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.ProfessorId);
+        if (!professorOk)
+            throw new DomainException(ExceptionMessages.DE0015);
+
+        var periodoOk = await _ctx.Periodos
+            .AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.Periodo);
+        if (!periodoOk)
+            throw new DomainException(ExceptionMessages.DE0003);
+
         var turma = new Turma(
             faculdadeId,
             data.DisciplinaId,
             data.ProfessorId,
             data.Periodo
         );
+
         _ctx.Turmas.Add(turma);
-
-        var vinculos = data.Ofertas.ConvertAll(x =>
-            new OfertaTurma { OfertaId = x, TurmaId = turma.Id });
-        _ctx.AddRange(vinculos);
-
         await _ctx.SaveChangesAsync();
 
         turma = await _ctx.Turmas.AsNoTracking()

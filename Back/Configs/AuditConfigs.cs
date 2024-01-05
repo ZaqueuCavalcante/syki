@@ -28,7 +28,6 @@ public static class AuditConfigs
                 .Map<GradeDisciplina, AuditLog>()
                 .Map<Livro, AuditLog>()
                 .Map<Oferta, AuditLog>()
-                .Map<OfertaTurma, AuditLog>()
                 .Map<Periodo, AuditLog>()
                 .Map<Professor, AuditLog>()
                 .Map<SykiUser, AuditLog>()

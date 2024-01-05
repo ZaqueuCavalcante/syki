@@ -2,7 +2,7 @@
 01 - [X] Add authentication and authorization
 02 - [X] Use Identity? YES
 03 - [X] Manage API access
-04 - [ ] Add some use cases
+04 - [X] Add some use cases
 05 - [x] Fix front deploy
 06 - [ ] Add policies instead roles
 07 - [ ] Link Aluno and Professor to SykiUser

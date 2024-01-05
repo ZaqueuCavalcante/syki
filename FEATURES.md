@@ -45,8 +45,6 @@
 
 ## Unit
 
-- [] OfertaTurma
-- [] AlunoDisciplina
 - [] Aula
 - [] Chamada
 

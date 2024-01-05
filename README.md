@@ -10,11 +10,4 @@
 
 ## Guidelines
 
-1 - Integridade Conceitual:
-    - Qual a PRINCIPAL FUNCIONALIDADE do software?
-    - Suprir as necessidades do ACADEMICO
-
-2 - Nao reinvente a roda:
-    - Use libs, foque nos problemas de negocio
-
-3 - 
+Integridade Conceitual - Qual a PRINCIPAL FUNCIONALIDADE do software?

@@ -79,7 +79,7 @@ public class NotificationsService : INotificationsService
 
     public async Task ViewByUserId(Guid faculdadeId, Guid userId)
     {
-        var notifications = await _ctx.UserNotifications.AsNoTracking()
+        var notifications = await _ctx.UserNotifications
             .Include(x => x.Notification)
             .Where(c => c.Notification.FaculdadeId == faculdadeId && c.UserId == userId)
             .ToListAsync();

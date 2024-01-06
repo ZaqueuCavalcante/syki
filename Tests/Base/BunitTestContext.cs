@@ -15,8 +15,10 @@ public abstract class BunitTestContext : TestContextWrapper
     public void AddMudServices()
     {
         Services.AddMudServices();
+        TestContext!.JSInterop.SetupVoid("mudJsEvent.connect", _ => true);
         TestContext!.JSInterop.SetupVoid("mudPopover.initialize", _ => true);
         TestContext!.JSInterop.SetupVoid("mudElementRef.saveFocus", _ => true);
         TestContext!.JSInterop.SetupVoid("mudScrollManager.lockScroll", _ => true);
+        TestContext!.JSInterop.SetupVoid("mudScrollManager.unlockScroll", _ => true);
     }
 }

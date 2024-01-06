@@ -17,9 +17,7 @@ public class OfertasIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new OfertaIn { };
 
@@ -37,9 +35,7 @@ public class OfertasIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new OfertaIn { CampusId = Guid.NewGuid() };
 
@@ -88,9 +84,7 @@ public class OfertasIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
         var body = new OfertaIn { CampusId = campus.Id };
@@ -109,9 +103,7 @@ public class OfertasIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
         var body = new OfertaIn { CampusId = campus.Id, Periodo = "2025.1" };
@@ -162,9 +154,7 @@ public class OfertasIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
         var periodo = new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) };
@@ -186,9 +176,7 @@ public class OfertasIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
         var periodo = new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) };
@@ -242,9 +230,7 @@ public class OfertasIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
         var periodo = await PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
@@ -266,9 +252,7 @@ public class OfertasIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
         var periodo = await PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
@@ -290,9 +274,7 @@ public class OfertasIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
         var periodo = await PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
@@ -316,9 +298,7 @@ public class OfertasIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
         var periodo = await PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
@@ -334,5 +314,27 @@ public class OfertasIntegrationTests : IntegrationTestBase
         oferta.Id.Should().NotBeEmpty();
         oferta.GradeId.Should().Be(grade.Id);
         oferta.Periodo.Should().Be(periodo.Id);     
+    }
+
+    [Test]
+    public async Task Deve_retornar_todas_as_ofertas()
+    {
+        // Arrange
+        var faculdade = await CreateFaculdade("Nova Roma");
+        await RegisterAndLogin(faculdade.Id, Academico);
+
+        var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
+        var periodo = await PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        var curso = await PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
+        var grade = await PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id, });
+
+        var body = new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id, Turno = Turno.Noturno, };
+        await PostAsync<OfertaOut>("/ofertas", body);
+
+        // Act
+        var ofertas = await GetAsync<List<OfertaOut>>("/ofertas");
+        
+        // Assert
+        ofertas.Count.Should().Be(1);
     }
 }

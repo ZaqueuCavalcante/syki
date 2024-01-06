@@ -54,33 +54,14 @@ public class OfertasService : IOfertasService
         return oferta.ToOut();
     }
 
-    public async Task<List<OfertaOut>> GetAll(Guid faculdadeId, Guid? disciplinaId)
+    public async Task<List<OfertaOut>> GetAll(Guid faculdadeId)
     {
-        var ofertas = new List<Oferta>();
-
-        if (disciplinaId != null)
-        {
-            var grades = await _ctx.GradesDisciplinas.AsNoTracking()
-                .Where(gd => gd.DisciplinaId == disciplinaId)
-                .Select(gd => gd.GradeId)
-                .ToListAsync();
-
-            ofertas = await _ctx.Ofertas.AsNoTracking()
-                .Include(x => x.Campus)
-                .Include(x => x.Curso)
-                .Include(x => x.Grade)
-                .Where(c => c.FaculdadeId == faculdadeId && grades.Contains(c.GradeId))
-                .ToListAsync();
-        }
-        else
-        {
-            ofertas = await _ctx.Ofertas.AsNoTracking()
-                .Include(x => x.Campus)
-                .Include(x => x.Curso)
-                .Include(x => x.Grade)
-                .Where(c => c.FaculdadeId == faculdadeId)
-                .ToListAsync();
-        }
+        var ofertas = await _ctx.Ofertas.AsNoTracking()
+            .Include(x => x.Campus)
+            .Include(x => x.Curso)
+            .Include(x => x.Grade)
+            .Where(c => c.FaculdadeId == faculdadeId)
+            .ToListAsync();
 
         return ofertas.ConvertAll(o => o.ToOut());
     }

@@ -18,17 +18,6 @@
 
 ## Notifications
 - [] Hub
-- [] Create
-- [] ViewByUserId
-- [] GetAll
-- [] GetByUserId
-
-## Ofertas
-- [] GetAll
-- [] FilterByDisciplinaId
-
-## Users
-- [] GetAll
 
 ========================================================================
 

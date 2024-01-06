@@ -318,4 +318,21 @@ public class UsersIntegrationTests : IntegrationTestBase
         // Assert
         response.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
     }
+
+    [Test]
+    public async Task Deve_retornar_todos_os_usuarios()
+    {
+        // Arrange
+        var faculdade = await CreateFaculdade("Nova Roma");
+
+        await RegisterUser(UserIn.New(faculdade.Id, Academico));
+        await RegisterUser(UserIn.New(faculdade.Id, Professor));
+        await RegisterUser(UserIn.New(faculdade.Id, Aluno));
+
+        // Act
+        var users = await GetAsync<List<UserOut>>("/users");
+
+        // Assert
+        users.Count.Should().Be(4);
+    }
 }

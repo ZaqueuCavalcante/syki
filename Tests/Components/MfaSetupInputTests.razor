@@ -1,0 +1,65 @@
+@inherits BunitTestContext
+
+@code
+{
+    [Test]
+    public void Should_validate_qr_code_input_markup()
+    {
+        // Arrange
+        AddMudServices();
+        Services.AddScoped<IMfaService, MfaServiceMock>();
+
+        // Act
+        var cut = Render(@<MfaSetupInput />);
+
+        // Assert
+        cut.MarkupMatches(
+            @<text>
+                <style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
+                <div diff:ignoreAttributes>
+                    <div diff:ignoreAttributes>
+                        <div diff:ignoreAttributes>
+                            <div diff:ignoreAttributes>
+                                <div diff:ignoreAttributes>
+                                    <div diff:ignore></div>
+                                    <div diff:ignoreAttributes>
+                                        <div diff:ignoreAttributes>
+                                            <p diff:ignoreAttributes>Insira o código para finalizar o setup</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form diff:ignoreAttributes>
+                                <button diff:ignoreAttributes></button>
+                                <div diff:ignoreAttributes>
+                                    <div diff:ignoreAttributes>
+                                        <div id:ignore class:ignore style="width: 200px;">
+                                            <input class:ignore type="text" inputmode="text" value="" placeholder="_ _ _  _ _ _">
+                                            <div diff:ignoreAttributes></div>
+                                            <div diff:ignoreAttributes></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </text>
+        );
+    }
+
+    [Test]
+    public void Should_validate_qr_code_input_markup_when_wrong_code_is_inputed()
+    {
+        // Arrange
+        AddMudServices();
+        Services.AddScoped<IMfaService, MfaServiceMock>();
+
+        var cut = Render(@<MfaSetupInput />);
+
+        // Act
+        cut.Find("form");
+
+        // Assert
+    }
+}

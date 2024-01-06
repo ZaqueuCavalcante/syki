@@ -3,6 +3,43 @@
 @code
 {
     [Test]
+    public void Should_validate_markup_when_qr_code_is_loading()
+    {
+        // Arrange
+        Services.AddScoped<IMfaService, DelayedMfaServiceMock>();
+
+        // Act
+        var cut = Render(@<MfaQrCode />);
+
+        // Assert
+        cut.MarkupMatches(
+            @<div diff:ignoreAttributes>
+                <div diff:ignoreAttributes>
+                    <div diff:ignoreAttributes>
+                        <div diff:ignoreAttributes>
+                            <div diff:ignoreAttributes>
+                                <div diff:ignore></div>
+                                <div diff:ignoreAttributes>
+                                    <div diff:ignoreAttributes>
+                                        <p class:ignore>Utilize um app de autenticação para ler o QR-Code</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div diff:ignoreAttributes>
+                            <div diff:ignoreAttributes>
+                                <svg diff:ignoreAttributes>
+                                    <circle diff:ignoreAttributes></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    [Test]
     public void Should_validate_qr_code_markup()
     {
         // Arrange

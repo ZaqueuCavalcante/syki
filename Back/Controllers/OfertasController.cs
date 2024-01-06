@@ -7,7 +7,6 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.Controllers;
 
-[Authorize(Roles = Academico)]
 [ApiController, Route("[controller]")]
 public class OfertasController : ControllerBase
 {
@@ -15,6 +14,7 @@ public class OfertasController : ControllerBase
     public OfertasController(IOfertasService service) => _service = service;
 
     [HttpPost("")]
+    [Authorize(Roles = Academico)]
     public async Task<IActionResult> Create([FromBody] OfertaIn body)
     {
         var oferta = await _service.Create(User.Facul(), body);
@@ -23,9 +23,10 @@ public class OfertasController : ControllerBase
     }
 
     [HttpGet("")]
-    public async Task<IActionResult> GetAll([FromQuery] Guid? disciplinaId)
+    [Authorize(Roles = Academico)]
+    public async Task<IActionResult> GetAll()
     {
-        var ofertas = await _service.GetAll(User.Facul(), disciplinaId);
+        var ofertas = await _service.GetAll(User.Facul());
 
         return Ok(ofertas);
     }

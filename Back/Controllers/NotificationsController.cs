@@ -19,7 +19,7 @@ public class NotificationsController : ControllerBase
     {
         var notification = await _service.Create(User.Facul(), body);
 
-        return Created("", notification);
+        return Ok(notification);
     }
 
     [Authorize]

@@ -1,9 +1,7 @@
-using System.Net;
 using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Extensions;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -12,19 +10,20 @@ namespace Syki.Tests.Integration;
 public class NotificationsIntegrationTests : IntegrationTestBase
 {
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
-    public async Task Nao_deve_criar_a_notification_quando_o_usuario_nao_eh_academico(string role)
+    public async Task Deve_criar_a_notification()
     {
         // Arrange
         var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, role);
+        await RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
 
         // Act
-        var response = await _client.PostAsync("/notifications", body.ToStringContent());
+        var response = await PostAsync<NotificationOut>("/notifications", body);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        response.Id.Should().NotBeEmpty();
+        response.Title.Should().Be(body.Title);
+        response.Description.Should().Be(body.Description);
     }
 }

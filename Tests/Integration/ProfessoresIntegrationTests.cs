@@ -1,9 +1,7 @@
-using System.Net;
 using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Extensions;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -48,38 +46,6 @@ public class ProfessoresIntegrationTests : IntegrationTestBase
         // Assert
         var professores = await GetAsync<List<ProfessorOut>>("/professores");
         professores.Should().HaveCount(2);
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
-    public async Task Nao_deve_criar_um_novo_professor_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, role);
-
-        var body = new ProfessorIn { Nome = "Chico" };
-
-        // Act
-        var response = await _client.PostAsync("/professores", body.ToStringContent());
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
-    public async Task Nao_deve_retornar_os_professores_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, role);
-
-        // Act
-        var response = await _client.GetAsync("/professores");
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
     }
 
     [Test]

@@ -16,10 +16,6 @@
     - Prova 1 + Prova 2
     - Prova Final
 
-## Alunos
-- [] GetDisciplinas
-- [] GetAll
-
 ## Notifications
 - [] Hub
 - [] Create

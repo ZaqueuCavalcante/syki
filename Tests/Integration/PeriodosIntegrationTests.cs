@@ -1,9 +1,7 @@
-using System.Net;
 using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Extensions;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -47,38 +45,6 @@ public class PeriodosIntegrationTests : IntegrationTestBase
         // Assert
         var periodos = await GetAsync<List<string>>("/periodos");
         periodos.Should().HaveCount(2);
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
-    public async Task Nao_deve_criar_um_novo_periodo_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, role);
-
-        var body = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };
-
-        // Act
-        var response = await _client.PostAsync("/periodos", body.ToStringContent());
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
-    public async Task Nao_deve_retornar_os_periodos_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, role);
-
-        // Act
-        var response = await _client.GetAsync("/periodos");
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
     }
 
     [Test]

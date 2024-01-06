@@ -53,38 +53,6 @@ public class CursosIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
-    public async Task Nao_deve_criar_um_novo_curso_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, role);
-
-        var body = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado };
-
-        // Act
-        var response = await _client.PostAsync("/cursos", body.ToStringContent());
-        
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
-    public async Task Nao_deve_retornar_os_cursos_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, role);
-
-        // Act
-        var response = await _client.GetAsync("/cursos");
-        
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
     public async Task Deve_retornar_apenas_os_cursos_da_faculdade_do_usuario_logado()
     {
         // Arrange

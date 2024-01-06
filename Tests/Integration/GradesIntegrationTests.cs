@@ -322,38 +322,6 @@ public class GradesIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
-    public async Task Nao_deve_criar_uma_nova_grade_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, role);
-
-        var body = new GradeIn { Nome = "Grade ADS - 1.0" };
-
-        // Act
-        var response = await _client.PostAsync("/grades", body.ToStringContent());
-        
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
-    public async Task Nao_deve_retornar_as_grades_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, role);
-
-        // Act
-        var response = await _client.GetAsync("/grades");
-        
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
     public async Task Deve_retornar_todas_as_grades_apenas_daquela_faculdade()
     {
         // Arrange

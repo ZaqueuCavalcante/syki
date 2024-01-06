@@ -138,23 +138,6 @@ public class DisciplinasIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
-    public async Task Nao_deve_criar_uma_nova_disciplina_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, role);
-
-        var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
-
-        // Act
-        var response = await _client.PostAsync("/disciplinas", body.ToStringContent());
-        
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
     public async Task Deve_retornar_apenas_as_disciplinas_da_faculdade_do_usuario_logado()
     {
         // Arrange

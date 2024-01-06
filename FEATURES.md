@@ -17,12 +17,10 @@
     - Prova Final
 
 ## Alunos
-
 - [] GetDisciplinas
 - [] GetAll
 
 ## Notifications
-
 - [] Hub
 - [] Create
 - [] ViewByUserId
@@ -30,12 +28,10 @@
 - [] GetByUserId
 
 ## Ofertas
-
 - [] GetAll
 - [] FilterByDisciplinaId
 
 ## Users
-
 - [] GetAll
 
 ========================================================================

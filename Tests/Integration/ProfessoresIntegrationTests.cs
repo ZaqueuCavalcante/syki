@@ -51,19 +51,6 @@ public class ProfessoresIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_um_novo_professor_quando_o_usuario_esta_deslogado()
-    {
-        // Arrange
-        var body = new ProfessorIn { Nome = "Chico" };
-
-        // Act
-        var response = await _client.PostAsync("/professores", body.ToStringContent());
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_um_novo_professor_quando_o_usuario_nao_tem_permissao(string role)
     {

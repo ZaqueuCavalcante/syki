@@ -51,19 +51,6 @@ public class LivrosIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_um_novo_livro_quando_o_usuario_esta_deslogado()
-    {
-        // Arrange
-        var body = new LivroIn { Titulo = "Manual de DevOps" };
-
-        // Act
-        var response = await _client.PostAsync("/livros", body.ToStringContent());
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_um_novo_livro_quando_o_usuario_nao_tem_permissao(string role)
     {

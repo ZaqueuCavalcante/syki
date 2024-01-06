@@ -22,8 +22,8 @@ public class NotificationsController : ControllerBase
         return Created("", notification);
     }
 
-    [HttpPut("user")]
     [Authorize]
+    [HttpPut("user")]
     public async Task<IActionResult> ViewByUserId()
     {
         await _service.ViewByUserId(User.Facul(), User.Id());
@@ -40,8 +40,8 @@ public class NotificationsController : ControllerBase
         return Ok(notifications);
     }
 
-    [HttpGet("user")]
     [Authorize]
+    [HttpGet("user")]
     public async Task<IActionResult> GetByUserId()
     {
         var notifications = await _service.GetByUserId(User.Facul(), User.Id());

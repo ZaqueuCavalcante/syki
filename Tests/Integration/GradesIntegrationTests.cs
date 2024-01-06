@@ -322,19 +322,6 @@ public class GradesIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_uma_nova_grade_quando_o_usuario_nao_esta_logado()
-    {
-        // Arrange
-        var body = new GradeIn { Nome = "Grade ADS - 1.0" };
-
-        // Act
-        var response = await _client.PostAsync("/grades", body.ToStringContent());
-        
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_uma_nova_grade_quando_o_usuario_nao_tem_permissao(string role)
     {

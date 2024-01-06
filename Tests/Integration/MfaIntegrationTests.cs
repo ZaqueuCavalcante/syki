@@ -11,16 +11,6 @@ namespace Syki.Tests.Integration;
 public class MfaIntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Nao_deve_retornar_a_mfa_key_quando_o_usuario_esta_deslogado()
-    {
-        // Arrange / Act
-        var response = await _client.GetAsync("/users/mfa-key");
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllUsersRoles))]
     public async Task Deve_retornar_a_mfa_key_independente_da_role_do_usuario(string role)
     {

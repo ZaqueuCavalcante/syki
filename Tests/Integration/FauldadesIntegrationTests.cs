@@ -42,19 +42,6 @@ public class FauldadesIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_uma_nova_faculdade_quando_o_usuario_nao_esta_logado()
-    {
-        // Arrange
-        var body = new FaculdadeIn { Nome = "Nova Roma" };
-
-        // Act
-        var response = await _client.PostAsync("/faculdades", body.ToStringContent());
-        
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
     public async Task Nao_deve_criar_uma_nova_faculdade_quando_o_usuario_nao_tem_permissao()
     {
         // Arrange

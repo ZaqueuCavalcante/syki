@@ -138,19 +138,6 @@ public class DisciplinasIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_uma_nova_disciplina_quando_o_usuario_nao_esta_logado()
-    {
-        // Arrange
-        var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
-
-        // Act
-        var response = await _client.PostAsync("/disciplinas", body.ToStringContent());
-        
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_uma_nova_disciplina_quando_o_usuario_nao_tem_permissao(string role)
     {

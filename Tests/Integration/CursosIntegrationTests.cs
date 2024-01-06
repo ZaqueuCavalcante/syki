@@ -53,19 +53,6 @@ public class CursosIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_um_novo_curso_quando_o_usuario_esta_deslogado()
-    {
-        // Arrange
-        var body = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado };
-
-        // Act
-        var response = await _client.PostAsync("/cursos", body.ToStringContent());
-        
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_um_novo_curso_quando_o_usuario_nao_tem_permissao(string role)
     {

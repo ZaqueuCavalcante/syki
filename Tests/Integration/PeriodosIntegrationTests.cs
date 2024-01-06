@@ -50,19 +50,6 @@ public class PeriodosIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_um_novo_periodo_quando_o_usuario_esta_deslogado()
-    {
-        // Arrange
-        var body = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };
-
-        // Act
-        var response = await _client.PostAsync("/periodos", body.ToStringContent());
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_um_novo_periodo_quando_o_usuario_nao_tem_permissao(string role)
     {

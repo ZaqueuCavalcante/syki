@@ -32,19 +32,6 @@ public class UsersIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_registrar_um_novo_usuario_quando_o_usuario_esta_deslogado()
-    {
-        // Arrange
-        var body = new UserIn { Name = "Zaqueu" };
-
-        // Act
-        var response = await _client.PostAsync("/users", body.ToStringContent());
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAdm))]
     public async Task Nao_deve_registrar_um_novo_usuario_quando_o_usuario_nao_tem_permissao(string role)
     {

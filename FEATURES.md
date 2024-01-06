@@ -18,7 +18,4 @@
 
 ## Components
 
-- [] Dialogs??? https://github.com/bUnit-dev/bUnit/discussions/588
-- [] https://github.com/MudBlazor/MudBlazor/blob/dev/src/MudBlazor.UnitTests/Components/DialogTests.cs
-
 ## Pages

@@ -1,0 +1,307 @@
+<div class="mud-container mud-container-maxwidth-lg">
+    <div class="mud-paper mud-elevation-1 mud-card mt-8 mb-4 mx-6 px-2" style="">
+        <div class="mud-card-content">
+            <div class="d-flex flex-row align-center gap-3">
+                <svg class="mud-icon-root mud-svg-icon mud-icon-size-large mr-1 mb-1" focusable="false"
+                    viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M0 0h24v24H0z" fill="none"></path>
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM8 17.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM9.5 8c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5S9.5 9.38 9.5 8zm6.5 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+                    </path>
+                </svg>
+                <h5 class="mud-typography mud-typography-h5" style="font-weight: bold">Campi</h5>
+                <div class="flex-grow-1"></div>
+                <button type="button"
+                    class="mud-button-root mud-button mud-button-filled mud-button-filled-primary mud-button-filled-size-medium mud-ripple"
+                    style="height: 40px;">
+                    <span class="mud-button-label">
+                        <span class="mud-button-icon-start mud-button-icon-size-large">
+                            <svg class="mud-icon-root mud-svg-icon mud-icon-size-large" focusable="false"
+                                viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                            </svg>
+                        </span>Novo Campus</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div role="alert" class="mud-alert mud-alert-text-normal mud-elevation-0 mt-4 mb-4 mx-6 pl-6">
+        <div class="mud-alert-position justify-sm-start">
+            <div class="mud-alert-icon mud-alert-icon-left">
+                <svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false" viewBox="0 0 24 24"
+                    aria-hidden="true">
+                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                    <path
+                        d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V9h14v10zM5 7V5h14v2H5zm2 4h10v2H7zm0 4h7v2H7z">
+                    </path>
+                </svg>
+            </div>
+            <div class="mud-alert-message">
+                <p class="mud-typography mud-typography-body1">Você pode escolher um dos campus abaixo para que o
+                    sistema filtre informações apenas relacionadas à ele.</p>
+            </div>
+        </div>
+    </div>
+    <div class="mud-container mud-container-maxwidth-lg mb-8">
+        <div class="mud-table mud-data-grid mud-xs-table mud-table-dense mud-table-hover mud-elevation-1 pa-4" style="">
+            <div class="mud-toolbar mud-toolbar-gutters mud-table-toolbar" style="">
+                <div class="flex-grow-1"></div>
+                <div class="flex-grow-1"></div>
+                <div class="mud-input-control mud-input-control-margin-dense mud-input-input-control mt-0">
+                    <div class="mud-input-control-input-container">
+                        <div
+                            class="mud-input mud-input-outlined mud-input-adorned-start mud-input-margin-dense mud-shrink">
+                            <div class="mud-input-adornment mud-input-adornment-start">
+                                <svg aria-label="Icon" tabindex="-1"
+                                    class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium"
+                                    focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M0 0h24v24H0z" fill="none"></path>
+                                    <path
+                                        d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <input
+                                class="mud-input-slot mud-input-root mud-input-root-outlined mud-input-root-adorned-start mud-input-root-margin-dense"
+                                type="text" placeholder="Busque por nome ou cidade" inputmode="text" maxlength="524288"
+                                aria-invalid="false">
+                            <div class="mud-input-slot mud-input-root mud-input-root-outlined mud-input-root-adorned-start mud-input-root-margin-dense"
+                                style="display:none" tabindex="-1"></div>
+                            <div class="mud-input-outlined-border"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mud-table-container" style="">
+                <div class="mud-drop-container">
+                    <table class="mud-table-root">
+                        <thead class="mud-table-head">
+                            <tr class="mud-table-row">
+                                <th scope="col" class="mud-table-cell" style="" colspan="1">
+                                    <span class="column-header">
+                                        <span class="sortable-column-header cursor-pointer">Nome</span>
+                                        <span class="column-options cursor-pointer">
+                                            <button type="button"
+                                                class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-icon-button-size-small sort-direction-icon">
+                                                <span class="mud-icon-button-label">
+                                                    <svg class="mud-icon-root mud-svg-icon mud-icon-size-small"
+                                                        focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                                        <path
+                                                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z">
+                                                        </path>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                            <div class="mud-menu">
+                                                <button type="button"
+                                                    class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-icon-button-size-small">
+                                                    <span class="mud-icon-button-label">
+                                                        <svg class="mud-icon-root mud-svg-icon mud-icon-size-small"
+                                                            focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M0 0h24v24H0z" fill="none"></path>
+                                                            <path
+                                                                d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z">
+                                                            </path>
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                                <div id="popover-fda8ccfb-8ede-4add-9e83-73547f070108"
+                                                    class="mud-popover-cascading-value"></div>
+                                            </div>
+                                        </span>
+                                    </span>
+                                </th>
+                                <th scope="col" class="mud-table-cell" style="" colspan="1">
+                                    <span class="column-header">
+                                        <span class="sortable-column-header cursor-pointer">Cidade</span>
+                                        <span class="column-options cursor-pointer">
+                                            <button type="button"
+                                                class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-icon-button-size-small sort-direction-icon">
+                                                <span class="mud-icon-button-label">
+                                                    <svg class="mud-icon-root mud-svg-icon mud-icon-size-small"
+                                                        focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                                        <path
+                                                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z">
+                                                        </path>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                            <div class="mud-menu">
+                                                <button type="button"
+                                                    class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-icon-button-size-small">
+                                                    <span class="mud-icon-button-label">
+                                                        <svg class="mud-icon-root mud-svg-icon mud-icon-size-small"
+                                                            focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M0 0h24v24H0z" fill="none"></path>
+                                                            <path
+                                                                d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z">
+                                                            </path>
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                                <div id="popover-70644978-b78f-4352-9b05-9071861248ab"
+                                                    class="mud-popover-cascading-value"></div>
+                                            </div>
+                                        </span>
+                                    </span>
+                                </th>
+                                <th scope="col" class="mud-table-cell" style="" colspan="1">
+                                    <span class="column-header">
+                                        <span class="sortable-column-header cursor-pointer"></span>
+                                        <span class="column-options cursor-pointer">
+                                            <button type="button"
+                                                class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-icon-button-size-small sort-direction-icon">
+                                                <span class="mud-icon-button-label">
+                                                    <svg class="mud-icon-root mud-svg-icon mud-icon-size-small"
+                                                        focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                                        <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                                        <path
+                                                            d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z">
+                                                        </path>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                            <div class="mud-menu">
+                                                <button type="button"
+                                                    class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-icon-button-size-small">
+                                                    <span class="mud-icon-button-label">
+                                                        <svg class="mud-icon-root mud-svg-icon mud-icon-size-small"
+                                                            focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                                            <path d="M0 0h24v24H0z" fill="none"></path>
+                                                            <path
+                                                                d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z">
+                                                            </path>
+                                                        </svg>
+                                                    </span>
+                                                </button>
+                                                <div id="popover-c74d20a8-a633-4338-8255-f2960ec91ba1"
+                                                    class="mud-popover-cascading-value"></div>
+                                            </div>
+                                        </span>
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="mud-table-body">
+                            <tr class="mud-table-row " style="">
+                                <td data-label="Nome" class="mud-table-cell" style="">Agreste I</td>
+                                <td data-label="Cidade" class="mud-table-cell" style="">Caruaru - PE</td>
+                                <td class="d-flex justify-end mud-table-cell" style="">
+                                    <button type="button"
+                                        class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-icon-button-size-small">
+                                        <span class="mud-icon-button-label">
+                                            <svg class="mud-icon-root mud-svg-icon mud-icon-size-small"
+                                                focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                                <path
+                                                    d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="mud-table-row " style="">
+                                <td data-label="Nome" class="mud-table-cell" style="">Suassuna I</td>
+                                <td data-label="Cidade" class="mud-table-cell" style="">Recife - PE</td>
+                                <td class="d-flex justify-end mud-table-cell" style="">
+                                    <button type="button"
+                                        class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-icon-button-size-small">
+                                        <span class="mud-icon-button-label">
+                                            <svg class="mud-icon-root mud-svg-icon mud-icon-size-small"
+                                                focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                                <path
+                                                    d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z">
+                                                </path>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="mud-table-foot">
+                            <tr class="mud-table-row"></tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="mud-table-pagination" style="">
+                <div class="mud-toolbar mud-toolbar-gutters mud-table-pagination-toolbar">
+                    <div class="mud-table-pagination-spacer"></div>
+                    <p class="mud-typography mud-typography-body2 mud-table-pagination-caption">Linhas por página:</p>
+                    <div class="mud-select" id="select_8bd4c59d">
+                        <div class="mud-input-control mud-select mud-table-pagination-select">
+                            <div class="mud-input-control-input-container">
+                                <div class="mud-input mud-input-text mud-input-adorned-end mud-shrink mud-select-input">
+                                    <input
+                                        class="mud-input-slot mud-input-root mud-input-root-text mud-input-root-adorned-end mud-select-input"
+                                        type="hidden" value="10" readonly="" inputmode="text" maxlength="524288"
+                                        aria-invalid="false">
+                                    <div class="mud-input-slot mud-input-root mud-input-root-text mud-input-root-adorned-end mud-select-input"
+                                        style="display:inline" tabindex="0">10</div>
+                                    <div class="mud-input-adornment mud-input-adornment-end mud-select-input">
+                                        <svg aria-label="Icon" tabindex="-1"
+                                            class="mud-icon-root mud-icon-default mud-svg-icon mud-icon-size-medium"
+                                            focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M7 10l5 5 5-5z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div id="popover-ad2ceb9c-487e-4e86-b617-6e14ed5a516f"
+                                    class="mud-popover-cascading-value"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mud-typography mud-typography-body2 mud-table-pagination-caption">1-2 de 2</p>
+                    <div class="mud-table-pagination-actions">
+                        <button type="button" disabled=""
+                            class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-flip-x-rtl">
+                            <span class="mud-icon-button-label">
+                                <svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false"
+                                    viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z"></path>
+                                    <path d="M24 24H0V0h24v24z" fill="none"></path>
+                                </svg>
+                            </span>
+                        </button>
+                        <button type="button" disabled=""
+                            class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-flip-x-rtl">
+                            <span class="mud-icon-button-label">
+                                <svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false"
+                                    viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+                                </svg>
+                            </span>
+                        </button>
+                        <button type="button" disabled=""
+                            class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-flip-x-rtl">
+                            <span class="mud-icon-button-label">
+                                <svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false"
+                                    viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+                                </svg>
+                            </span>
+                        </button>
+                        <button type="button" disabled=""
+                            class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon mud-flip-x-rtl">
+                            <span class="mud-icon-button-label">
+                                <svg class="mud-icon-root mud-svg-icon mud-icon-size-medium" focusable="false"
+                                    viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                    <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z"></path>
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

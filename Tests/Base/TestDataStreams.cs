@@ -15,7 +15,7 @@ public static class TestDataStreams
 
     public static IEnumerable<object[]> InvalidNames()
     {
-        foreach (var name in new List<string>() { null, "", "a", " ", "  ", "     ", "JP", })
+        foreach (var name in new List<string>() { null, "", "a", "42", " ", "  ", "     ", "JP", })
         {
             yield return new object[] { name };
         }
@@ -47,7 +47,7 @@ public static class TestDataStreams
 
     public static IEnumerable<object[]> InvalidRoles()
     {
-        foreach (var role in new List<string>() { "", "  ", "lalala", Adm })
+        foreach (var role in new List<string>() { "a", "4", "", "  ", "lalala", Adm })
         {
             yield return new object[] { role };
         }
@@ -57,6 +57,8 @@ public static class TestDataStreams
     {
         foreach (var role in new List<string>()
         {
+            "",
+            " ",
             "zaqueugmail",
             "majuasp.net",
             "#@%^%#$@#$@#.com",
@@ -82,6 +84,8 @@ public static class TestDataStreams
     {
         foreach (var role in new List<string>()
         {
+            "",
+            " ",
             "syki",
             "syki123",
             "Syki123",
@@ -124,7 +128,11 @@ public static class TestDataStreams
     {
         foreach (var name in new List<(string, string)>()
         {
+            ("", ""),
+            (" ", ""),
+            (null!, ""),
             ("AspNetUsers", "asp_net_users"),
+            ("AlunosTurmas", "alunos_turmas"),
             ("AspNetUserRoles", "asp_net_user_roles"),
             ("AspNetRoleClaims", "asp_net_role_claims"),
         })
@@ -150,10 +158,14 @@ public static class TestDataStreams
     {
         foreach (var text in new List<(string, string)>()
         {
+            ("", ""),
+            (" ", ""),
+            (null!, ""),
+            ("ewfewfewf", ""),
             ("629.219.140-00", "62921914000"),
-            ("18.297.767/0001-90", "18297767000190"),
-            ("yu2v34y1434u6b54u6b", "23414346546"),
             ("(81) 98578-9526", "81985789526"),
+            ("yu2v34y1434u6b54u6b", "23414346546"),
+            ("18.297.767/0001-90", "18297767000190"),
         })
         {
             yield return new object[] { text };
@@ -166,6 +178,7 @@ public static class TestDataStreams
         {
             ("Banco de Dados", "72", null),
             ("Banco de Dados", "72", ""),
+            ("Banco de Dados", "72", " "),
             ("Banco de Dados", "72", "dados"),
             ("Banco de Dados", "72", "72"),
             ("Informática e Sociedade", "Chat GPT", "Informáti"),
@@ -219,9 +232,24 @@ public static class TestDataStreams
         foreach (var text in new List<(decimal, string)>()
         {
             (0.00M, "0.00"),
-            (9.85M, "9.85"),
             (0.23M, "0.23"),
-            (15.00M, "15.00"),
+            (9.85M, "9.85"),
+            (15.74M, "15.74"),
+        })
+        {
+            yield return new object[] { text };
+        }
+    }
+
+    public static IEnumerable<object[]> Notas()
+    {
+        foreach (var text in new List<(decimal, decimal, decimal, decimal)>()
+        {
+            (0.00M, 0.00M, 0.00M, 0.00M),
+            (10.00M, 10.00M, 0.00M, 10.00M),
+            (6.00M, 7.00M, 0.00M, 6.50M),
+            (9.00M, 0.00M, 0.00M, 4.50M),
+            (0.00M, 10.00M, 0.00M, 5.00M),
         })
         {
             yield return new object[] { text };
@@ -233,8 +261,11 @@ public static class TestDataStreams
         foreach (var text in new List<(TipoDeCurso, string)>()
         {
             (TipoDeCurso.Bacharelado, "Bacharelado"),
+            (TipoDeCurso.Licenciatura, "Licenciatura"),
             (TipoDeCurso.Tecnologo, "Tecnólogo"),
             (TipoDeCurso.Especializacao, "Especialização"),
+            (TipoDeCurso.Mestrado, "Mestrado"),
+            (TipoDeCurso.Doutorado, "Doutorado"),
             (TipoDeCurso.PosDoutorado, "Pós-Doutorado"),
         })
         {

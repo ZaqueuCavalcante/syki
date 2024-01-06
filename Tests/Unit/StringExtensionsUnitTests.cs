@@ -1,8 +1,8 @@
+using Bogus;
 using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Bogus;
 
 namespace Syki.Tests.Unit;
 

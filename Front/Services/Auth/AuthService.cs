@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace Syki.Front.Services;
 
-public class AuthService
+public class AuthService : IAuthService
 {
     private readonly HttpClient _http;
     private readonly ILocalStorageService _localStorage;

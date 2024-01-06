@@ -47,19 +47,4 @@
             </text>
         );
     }
-
-    [Test]
-    public void Should_validate_qr_code_input_markup_when_wrong_code_is_inputed()
-    {
-        // Arrange
-        AddMudServices();
-        Services.AddScoped<IMfaService, MfaServiceMock>();
-
-        var cut = Render(@<MfaSetupInput />);
-
-        // Act
-        cut.Find("form");
-
-        // Assert
-    }
 }

@@ -16,26 +16,9 @@
     - Prova 1 + Prova 2
     - Prova Final
 
-## Notifications
-- [] Hub
-
-========================================================================
-
-# FRONT
-
 ## Components
 
-- [] ???
 - [] Dialogs??? https://github.com/bUnit-dev/bUnit/discussions/588
 - [] https://github.com/MudBlazor/MudBlazor/blob/dev/src/MudBlazor.UnitTests/Components/DialogTests.cs
 
 ## Pages
-
-- [] ???
-
-## Services
-- [] AuthService
-
-## Auth
-- [] SykiDelegatingHandler
-- [] SykiAuthStateProvider

@@ -5,14 +5,16 @@ using FluentAssertions;
 
 namespace Syki.Tests.Integration;
 
-[TestFixture]
-public class HomeIntegrationTests : IntegrationTestBase
+public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_redirecionar_pro_swagger()
     {
-        // Arrange / Act
-        var response = await _client.GetAsync("/");
+        // Arrange
+        var client = _factory.CreateClient();
+
+        // Act
+        var response = await client.GetAsync("/");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);

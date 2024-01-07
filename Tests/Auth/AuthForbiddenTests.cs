@@ -3,11 +3,9 @@ using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Extensions;
 
 namespace Syki.Tests.Auth;
 
-[TestFixture]
 public class AuthForbiddenTests : AuthTestBase
 {
     [Test]

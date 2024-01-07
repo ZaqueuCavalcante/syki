@@ -5,19 +5,19 @@ using FluentAssertions;
 
 namespace Syki.Tests.Integration;
 
-[TestFixture]
-public class FauldadesIntegrationTests : IntegrationTestBase
+public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_criar_uma_nova_faculdade()
     {
         // Arrange
-        await Login("adm@syki.com", "Adm@123");
+        var client = _factory.CreateClient();
+        await client.Login("adm@syki.com", "Adm@123");
 
         var body = new FaculdadeIn { Nome = "Nova Roma" };
 
         // Act
-        var faculdade = await PostAsync<FaculdadeOut>("/faculdades", body);
+        var faculdade = await client.PostAsync<FaculdadeOut>("/faculdades", body);
         
         // Assert
         faculdade.Nome.Should().Be(body.Nome);
@@ -27,14 +27,15 @@ public class FauldadesIntegrationTests : IntegrationTestBase
     public async Task Deve_criar_varias_faculdades()
     {
         // Arrange
-        await Login("adm@syki.com", "Adm@123");
+        var client = _factory.CreateClient();
+        await client.Login("adm@syki.com", "Adm@123");
 
         // Act
-        await PostAsync("/faculdades", new FaculdadeIn { Nome = "Nova Roma" });
-        await PostAsync("/faculdades", new FaculdadeIn { Nome = "UFPE" });
+        await client.PostAsync("/faculdades", new FaculdadeIn { Nome = "Nova Roma" });
+        await client.PostAsync("/faculdades", new FaculdadeIn { Nome = "UFPE" });
 
         // Assert
-        var faculdades = await GetAsync<List<FaculdadeOut>>("/faculdades");
-        faculdades.Should().HaveCount(2);
+        var faculdades = await client.GetAsync<List<FaculdadeOut>>("/faculdades");
+        faculdades.Should().HaveCountGreaterThanOrEqualTo(2);
     }
 }

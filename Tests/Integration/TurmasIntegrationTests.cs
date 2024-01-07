@@ -3,37 +3,36 @@ using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Extensions;
 using Syki.Back.Exceptions;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
-[TestFixture]
-public class TurmasIntegrationTests : IntegrationTestBase
+public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_criar_uma_turma()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
-        var disciplina = await PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
+        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
 
         var bodyProfessor = new ProfessorIn { Nome = "Chico" };
-        var professor = await PostAsync<ProfessorOut>("/professores", bodyProfessor);
+        var professor = await client.PostAsync<ProfessorOut>("/professores", bodyProfessor);
 
         var bodyPeriodo = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };
-        var periodo = await PostAsync<PeriodoOut>("/periodos", bodyPeriodo);
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", bodyPeriodo);
 
         var body = new TurmaIn { DisciplinaId = disciplina.Id, ProfessorId = professor.Id, Periodo = periodo.Id };
 
         // Act
-        var turma = await PostAsync<TurmaOut>("/turmas", body);
+        var turma = await client.PostAsync<TurmaOut>("/turmas", body);
 
         // Assert
         turma.Disciplina.Should().Be(disciplina.Nome);
@@ -45,15 +44,16 @@ public class TurmasIntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_disciplina()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         var body = new TurmaIn { DisciplinaId = Guid.NewGuid(), Periodo = "2024.1" };
 
         // Act
-        var response = await _client.PostAsync("/turmas", body.ToStringContent());
+        var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
@@ -65,18 +65,19 @@ public class TurmasIntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_professor()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
-        var disciplina = await PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
+        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
 
         var body = new TurmaIn { DisciplinaId = disciplina.Id, Periodo = "2024.1" };
 
         // Act
-        var response = await _client.PostAsync("/turmas", body.ToStringContent());
+        var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
@@ -88,21 +89,22 @@ public class TurmasIntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_periodo()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
-        var disciplina = await PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
+        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
 
         var bodyProfessor = new ProfessorIn { Nome = "Chico" };
-        var professor = await PostAsync<ProfessorOut>("/professores", bodyProfessor);
+        var professor = await client.PostAsync<ProfessorOut>("/professores", bodyProfessor);
 
         var body = new TurmaIn { DisciplinaId = disciplina.Id, ProfessorId = professor.Id, Periodo = "2024.1" };
 
         // Act
-        var response = await _client.PostAsync("/turmas", body.ToStringContent());
+        var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
@@ -114,25 +116,26 @@ public class TurmasIntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_todas_as_turmas_da_faculdade()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
-        var disciplina = await PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
+        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
 
         var bodyProfessor = new ProfessorIn { Nome = "Chico" };
-        var professor = await PostAsync<ProfessorOut>("/professores", bodyProfessor);
+        var professor = await client.PostAsync<ProfessorOut>("/professores", bodyProfessor);
 
         var bodyPeriodo = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };
-        var periodo = await PostAsync<PeriodoOut>("/periodos", bodyPeriodo);
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", bodyPeriodo);
 
         var body = new TurmaIn { DisciplinaId = disciplina.Id, ProfessorId = professor.Id, Periodo = periodo.Id };
-        await PostAsync<TurmaOut>("/turmas", body);
+        await client.PostAsync<TurmaOut>("/turmas", body);
 
         // Act
-        var turmas = await GetAsync<List<TurmaOut>>("/turmas");
+        var turmas = await client.GetAsync<List<TurmaOut>>("/turmas");
 
         // Assert
         turmas.Count.Should().Be(1);

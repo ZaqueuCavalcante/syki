@@ -10,20 +10,20 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
-[TestFixture]
-public class NotificationsIntegrationTests : IntegrationTestBase
+public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_criar_a_notification()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, Academico);
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
 
         // Act
-        var response = await PostAsync<NotificationOut>("/notifications", body);
+        var response = await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Assert
         response.Id.Should().NotBeEmpty();
@@ -35,37 +35,38 @@ public class NotificationsIntegrationTests : IntegrationTestBase
     public async Task Deve_marcar_a_notificacao_como_vista_pelo_usuario()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var userBody = UserIn.New(faculdade.Id, Aluno);
-        var userAluno = await PostAsync<UserOut>("/users", userBody);
-        await RegisterAndLogin(faculdade.Id, Academico);
+        var userAluno = await client.PostAsync<UserOut>("/users", userBody);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
-        var periodo = await PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
-        var curso = await PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
+        var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
 
-        var grade = await PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id });
-        var oferta = await PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id });
-        var aluno = await PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id });
+        var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id });
+        var oferta = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id });
+        var aluno = await client.PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id });
 
         // GAMBIARRA
         using var scope = _factory.Services.CreateScope();
-        _ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
-        var alunoDb = await _ctx.Alunos.FirstAsync(a => a.Id == aluno.Id);
+        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        var alunoDb = await ctx.Alunos.FirstAsync(a => a.Id == aluno.Id);
         alunoDb.UserId = userAluno.Id;
-        await _ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync();
         // GAMBIARRA
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
-        await PostAsync<NotificationOut>("/notifications", body);
+        await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
-        await Login(userBody.Email, userBody.Password);
-        var response = await _client.PutAsync("/notifications/user", null);
+        await client.Login(userBody.Email, userBody.Password);
+        var response = await client.PutAsync("/notifications/user", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var notification = await _ctx.UserNotifications.FirstAsync(n => n.UserId == userAluno.Id);
+        var notification = await ctx.UserNotifications.FirstAsync(n => n.UserId == userAluno.Id);
         notification.ViewedAt.Should().NotBeNull();
     }
 
@@ -73,14 +74,15 @@ public class NotificationsIntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_todas_as_notificacoes()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, Academico);
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        await PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" });
-        await PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Ola", Description = "O", UsersGroup = "Alunos" });
+        await client.PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" });
+        await client.PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Ola", Description = "O", UsersGroup = "Alunos" });
 
         // Act
-        var notifications = await GetAsync<List<NotificationOut>>("/notifications");
+        var notifications = await client.GetAsync<List<NotificationOut>>("/notifications");
 
         // Assert
         notifications.Count.Should().Be(2);
@@ -90,33 +92,34 @@ public class NotificationsIntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_todas_as_notificacoes_do_usuario_logado()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var userBody = UserIn.New(faculdade.Id, Aluno);
-        var userAluno = await PostAsync<UserOut>("/users", userBody);
-        await RegisterAndLogin(faculdade.Id, Academico);
+        var userAluno = await client.PostAsync<UserOut>("/users", userBody);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
-        var periodo = await PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
-        var curso = await PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
+        var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
 
-        var grade = await PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id });
-        var oferta = await PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id });
-        var aluno = await PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id });
+        var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id });
+        var oferta = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id });
+        var aluno = await client.PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id });
 
         // GAMBIARRA
         using var scope = _factory.Services.CreateScope();
-        _ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
-        var alunoDb = await _ctx.Alunos.FirstAsync(a => a.Id == aluno.Id);
+        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        var alunoDb = await ctx.Alunos.FirstAsync(a => a.Id == aluno.Id);
         alunoDb.UserId = userAluno.Id;
-        await _ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync();
         // GAMBIARRA
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
-        await PostAsync<NotificationOut>("/notifications", body);
+        await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
-        await Login(userBody.Email, userBody.Password);
-        var response = await GetAsync<List<UserNotificationOut>>("/notifications/user");
+        await client.Login(userBody.Email, userBody.Password);
+        var response = await client.GetAsync<List<UserNotificationOut>>("/notifications/user");
 
         // Assert
         response.Count.Should().Be(1);

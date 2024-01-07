@@ -1,31 +1,29 @@
-using System.Net;
 using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Extensions;
 using static Syki.Shared.TipoDeCurso;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
-[TestFixture]
-public class CursosIntegrationTests : IntegrationTestBase
+public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_criar_um_novo_curso()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         var body = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado };
 
         // Act
-        var curso = await PostAsync<CursoOut>("/cursos", body);
+        var curso = await client.PostAsync<CursoOut>("/cursos", body);
 
         // Assert
         curso.Id.Should().NotBeEmpty();
@@ -37,18 +35,19 @@ public class CursosIntegrationTests : IntegrationTestBase
     public async Task Deve_criar_varios_cursos()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         // Act
-        await PostAsync("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado });
-        await PostAsync("/cursos", new CursoIn { Nome = "Direito", Tipo = Licenciatura });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Direito", Tipo = Licenciatura });
         
         // Assert
-        var cursos = await GetAsync<List<CursoOut>>("/cursos");
+        var cursos = await client.GetAsync<List<CursoOut>>("/cursos");
         cursos.Should().HaveCount(2);
     }
 
@@ -56,26 +55,27 @@ public class CursosIntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_apenas_os_cursos_da_faculdade_do_usuario_logado()
     {
         // Arrange
-        var novaRoma = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var novaRoma = await client.CreateFaculdade("Nova Roma");
         var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
-        await RegisterUser(userNovaRoma);
+        await client.RegisterUser(userNovaRoma);
 
-        var ufpe = await CreateFaculdade("UFPE");
+        var ufpe = await client.CreateFaculdade("UFPE");
         var userUfpe = UserIn.New(ufpe.Id, Academico);
-        await RegisterUser(userUfpe);
+        await client.RegisterUser(userUfpe);
 
-        await Login(userNovaRoma.Email, userNovaRoma.Password);
+        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
         var bodyNovaRoma = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado };
-        await PostAsync<CursoOut>("/cursos", bodyNovaRoma);
+        await client.PostAsync<CursoOut>("/cursos", bodyNovaRoma);
 
-        await Login(userUfpe.Email, userUfpe.Password);
+        await client.Login(userUfpe.Email, userUfpe.Password);
         var bodyUfpe = new CursoIn { Nome = "Direito", Tipo = Licenciatura };
-        await PostAsync<CursoOut>("/cursos", bodyUfpe);
+        await client.PostAsync<CursoOut>("/cursos", bodyUfpe);
 
         // Act
-        await Login(userNovaRoma.Email, userNovaRoma.Password);
+        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
 
-        var cursos = await GetAsync<List<CursoOut>>("/cursos");
+        var cursos = await client.GetAsync<List<CursoOut>>("/cursos");
         cursos.Should().HaveCount(1);
 
         // Assert
@@ -88,21 +88,22 @@ public class CursosIntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_os_cursos_ordenados_pelo_nome()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         // Act
-        await PostAsync("/cursos", new CursoIn { Nome = "Direito", Tipo = Tecnologo });
-        await PostAsync("/cursos", new CursoIn { Nome = "Pedagogia", Tipo = Mestrado });
-        await PostAsync("/cursos", new CursoIn { Nome = "Ciência da Computação", Tipo = Especializacao });
-        await PostAsync("/cursos", new CursoIn { Nome = "Administração", Tipo = Doutorado });
-        await PostAsync("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Direito", Tipo = Tecnologo });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Pedagogia", Tipo = Mestrado });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Ciência da Computação", Tipo = Especializacao });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Administração", Tipo = Doutorado });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado });
 
         // Assert
-        var cursos = await GetAsync<List<CursoOut>>("/cursos");
+        var cursos = await client.GetAsync<List<CursoOut>>("/cursos");
         cursos.Should().HaveCount(5);
         cursos[0].Nome.Should().Be("Administração");
         cursos[1].Nome.Should().Be("Análise e Desenvolvimento de Sistemas");

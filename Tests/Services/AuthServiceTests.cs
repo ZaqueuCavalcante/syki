@@ -14,7 +14,6 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Services;
 
-[TestFixture]
 public class AuthServiceTests : BunitTestContext
 {
     [Test]

@@ -1,30 +1,28 @@
-using System.Net;
 using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Extensions;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
-[TestFixture]
-public class CampiIntegrationTests : IntegrationTestBase
+public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_criar_um_novo_campus()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
 
         // Act
-        var campus = await PostAsync<CampusOut>("/campi", body);
+        var campus = await client.PostAsync<CampusOut>("/campi", body);
 
         // Assert
         campus.Id.Should().NotBeEmpty();
@@ -36,18 +34,19 @@ public class CampiIntegrationTests : IntegrationTestBase
     public async Task Deve_criar_varios_campus_para_uma_mesma_faculdade()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         // Act
-        await PostAsync("/campi", new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" });
-        await PostAsync("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
+        await client.PostAsync("/campi", new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" });
+        await client.PostAsync("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
 
         // Assert
-        var campi = await GetAsync<List<CampusOut>>("/campi");
+        var campi = await client.GetAsync<List<CampusOut>>("/campi");
         campi.Should().HaveCount(2);
     }
 
@@ -55,19 +54,20 @@ public class CampiIntegrationTests : IntegrationTestBase
     public async Task Deve_atualizar_um_campus()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
-        var campus = await PostAsync<CampusOut>("/campi", body);
+        var campus = await client.PostAsync<CampusOut>("/campi", body);
 
         // Act
         campus.Nome = "Agreste II";
         campus.Cidade = "Bonito - PE";
-        var updatedCampus = await PutAsync<CampusOut>("/campi", campus);
+        var updatedCampus = await client.PutAsync<CampusOut>("/campi", campus);
 
         // Assert
         updatedCampus.Id.Should().Be(campus.Id);
@@ -79,26 +79,27 @@ public class CampiIntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_apenas_os_campus_da_faculdade_do_usuario_logado()
     {
         // Arrange
-        var novaRoma = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var novaRoma = await client.CreateFaculdade("Nova Roma");
         var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
-        await RegisterUser(userNovaRoma);
+        await client.RegisterUser(userNovaRoma);
 
-        var ufpe = await CreateFaculdade("UFPE");
+        var ufpe = await client.CreateFaculdade("UFPE");
         var userUfpe = UserIn.New(ufpe.Id, Academico);
-        await RegisterUser(userUfpe);
+        await client.RegisterUser(userUfpe);
 
-        await Login(userNovaRoma.Email, userNovaRoma.Password);
+        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
         var bodyNovaRoma = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
-        await PostAsync<CampusOut>("/campi", bodyNovaRoma);
+        await client.PostAsync<CampusOut>("/campi", bodyNovaRoma);
 
-        await Login(userUfpe.Email, userUfpe.Password);
+        await client.Login(userUfpe.Email, userUfpe.Password);
         var bodyUfpe = new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" };
-        await PostAsync<CampusOut>("/campi", bodyUfpe);
+        await client.PostAsync<CampusOut>("/campi", bodyUfpe);
 
         // Act
-        await Login(userNovaRoma.Email, userNovaRoma.Password);
+        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
 
-        var campi = await GetAsync<List<CampusOut>>("/campi");
+        var campi = await client.GetAsync<List<CampusOut>>("/campi");
         campi.Should().HaveCount(1);
 
         // Assert

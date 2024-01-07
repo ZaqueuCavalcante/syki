@@ -5,36 +5,36 @@ using NUnit.Framework;
 using FluentAssertions;
 using Syki.Back.Database;
 using Syki.Back.Exceptions;
-using Syki.Back.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
-[TestFixture]
-public class AlunosIntegrationTests : IntegrationTestBase
+[Parallelizable(ParallelScope.All), Category("ParallelizableAll")]
+public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_criar_um_aluno_o_vinculando_com_uma_oferta()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
-        var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
-        var periodo = await PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
-        var curso = await PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
-        var grade = await PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id, });
-        var oferta = await PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id, });
+        var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
+        var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id, });
+        var oferta = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id, });
 
         var body = new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id };
 
         // Act
-        var response = await PostAsync<AlunoOut>("/alunos", body);
+        var response = await client.PostAsync<AlunoOut>("/alunos", body);
 
         // Assert
         response.Id.Should().NotBeEmpty(); 
@@ -46,16 +46,17 @@ public class AlunosIntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_um_aluno_sem_vinculo_com_oferta()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         var body = new AlunoIn { Nome = "Zaqueu", OfertaId = Guid.NewGuid() };
 
         // Act
-        var response = await _client.PostAsync("/alunos", body.ToStringContent());
+        var response = await client.PostAsync("/alunos", body.ToStringContent());
 
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
@@ -67,37 +68,38 @@ public class AlunosIntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_as_disciplinas_cursadas_pelo_aluno()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var userBody = UserIn.New(faculdade.Id, Aluno);
-        var userAluno = await PostAsync<UserOut>("/users", userBody);
-        await RegisterAndLogin(faculdade.Id, Academico);
+        var userAluno = await client.PostAsync<UserOut>("/users", userBody);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
-        var periodo = await PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
-        var curso = await PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
+        var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
 
-        var disciplina01 = await PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [curso.Id] });
-        var disciplina02 = await PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60, Cursos = [curso.Id] });
-        var disciplina03 = await PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55, Cursos = [curso.Id] });
+        var disciplina01 = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [curso.Id] });
+        var disciplina02 = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60, Cursos = [curso.Id] });
+        var disciplina03 = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55, Cursos = [curso.Id] });
         var disciplinas = new List<GradeDisciplinaIn>() { new() { Id = disciplina01.Id }, new() { Id = disciplina02.Id }, new() { Id = disciplina03.Id } };
 
-        var grade = await PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id, Disciplinas = disciplinas });
-        var oferta = await PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id });
+        var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id, Disciplinas = disciplinas });
+        var oferta = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id });
 
-        var aluno = await PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id });
+        var aluno = await client.PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id });
 
         // GAMBIARRA
         using var scope = _factory.Services.CreateScope();
-        _ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
-        var alunoDb = await _ctx.Alunos.FirstAsync(a => a.Id == aluno.Id);
+        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        var alunoDb = await ctx.Alunos.FirstAsync(a => a.Id == aluno.Id);
         alunoDb.UserId = userAluno.Id;
-        await _ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync();
         // GAMBIARRA
 
-        await Login(userBody.Email, userBody.Password);
+        await client.Login(userBody.Email, userBody.Password);
 
         // Act
-        var response = await GetAsync<List<DisciplinaOut>>("/alunos/disciplinas");
+        var response = await client.GetAsync<List<DisciplinaOut>>("/alunos/disciplinas");
 
         // Assert
         response.Count.Should().Be(3); 
@@ -107,20 +109,21 @@ public class AlunosIntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_os_alunos()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
-        await RegisterAndLogin(faculdade.Id, Academico);
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var campus = await PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
-        var periodo = await PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
-        var curso = await PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
-        var grade = await PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id, });
-        var oferta = await PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id, });
+        var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
+        var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id, });
+        var oferta = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id, });
 
-        await PostAsync("/alunos", new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id });
-        await PostAsync("/alunos", new AlunoIn { Nome = "Maju", OfertaId = oferta.Id });
+        await client.PostAsync("/alunos", new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id });
+        await client.PostAsync("/alunos", new AlunoIn { Nome = "Maju", OfertaId = oferta.Id });
 
         // Act
-        var response = await GetAsync<List<AlunoOut>>("/alunos");
+        var response = await client.GetAsync<List<AlunoOut>>("/alunos");
 
         // Assert
         response.Count.Should().Be(2); 

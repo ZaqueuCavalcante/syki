@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Services;
 
-[TestFixture]
 public class MfaServiceTests : BunitTestContext
 {
     [Test]

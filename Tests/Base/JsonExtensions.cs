@@ -1,7 +1,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Syki.Back.Extensions;
+namespace Syki.Tests.Base;
 
 public static class JsonExtensions
 {

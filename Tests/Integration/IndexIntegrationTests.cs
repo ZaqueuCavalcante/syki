@@ -6,53 +6,55 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
-[TestFixture]
-public class IndexIntegrationTests : IntegrationTestBase
+public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_retornar_os_dados_de_index_do_adm()
     {
         // Arrange
-        await CreateFaculdade("USP");
-        await CreateFaculdade("UFPE");
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+
+        await client.CreateFaculdade("USP");
+        await client.CreateFaculdade("UFPE");
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var userAcademico = UserIn.New(faculdade.Id, Academico);
         var userAluno = UserIn.New(faculdade.Id, Aluno);
-        await RegisterUser(userAcademico);
-        await RegisterUser(userAluno);
+        await client.RegisterUser(userAcademico);
+        await client.RegisterUser(userAluno);
 
         // Act
-        var response = await GetAsync<IndexAdmOut>("/index/adm");
+        var response = await client.GetAsync<IndexAdmOut>("/index/adm");
 
         // Assert
-        response.Faculdades.Should().Be(3);
-        response.Users.Should().Be(2);
+        response.Faculdades.Should().BeGreaterThanOrEqualTo(3);
+        response.Users.Should().BeGreaterThanOrEqualTo(2);
     }
 
     [Test]
     public async Task Deve_retornar_os_dados_de_index_do_academico()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
-        await PostAsync("/campi", new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" });
-        await PostAsync("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
+        await client.PostAsync("/campi", new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" });
+        await client.PostAsync("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
 
-        await PostAsync("/cursos", new CursoIn { Nome = "Direito", Tipo = TipoDeCurso.Tecnologo });
-        await PostAsync("/cursos", new CursoIn { Nome = "Pedagogia", Tipo = TipoDeCurso.Mestrado });
-        await PostAsync("/cursos", new CursoIn { Nome = "Ciência da Computação", Tipo = TipoDeCurso.Especializacao });
-        await PostAsync("/cursos", new CursoIn { Nome = "Administração", Tipo = TipoDeCurso.Doutorado });
-        await PostAsync("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = TipoDeCurso.Bacharelado });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Direito", Tipo = TipoDeCurso.Tecnologo });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Pedagogia", Tipo = TipoDeCurso.Mestrado });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Ciência da Computação", Tipo = TipoDeCurso.Especializacao });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Administração", Tipo = TipoDeCurso.Doutorado });
+        await client.PostAsync("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = TipoDeCurso.Bacharelado });
 
-        await PostAsync("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
-        await PostAsync("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60 });
-        await PostAsync("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55 });
+        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
+        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60 });
+        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55 });
 
         // Act
-        var response = await GetAsync<IndexAcademicoOut>("/index/academico");
+        var response = await client.GetAsync<IndexAcademicoOut>("/index/academico");
 
         // Assert
         response.Campus.Should().Be(2);
@@ -70,13 +72,14 @@ public class IndexIntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_os_dados_de_index_do_aluno()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
         var user = UserIn.New(faculdade.Id, Aluno);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         // Act
-        var response = await GetAsync<IndexAlunoOut>("/index/aluno");
+        var response = await client.GetAsync<IndexAlunoOut>("/index/aluno");
 
         // Assert
         response.DisciplinasConcluidas.Should().Be(5);

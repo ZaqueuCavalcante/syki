@@ -6,23 +6,23 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
-[TestFixture]
-public class ProfessoresIntegrationTests : IntegrationTestBase
+public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Deve_criar_um_novo_professor()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         var body = new ProfessorIn { Nome = "Chico" };
 
         // Act
-        var professor = await PostAsync<ProfessorOut>("/professores", body);
+        var professor = await client.PostAsync<ProfessorOut>("/professores", body);
 
         // Assert
         professor.Id.Should().NotBeEmpty();
@@ -33,18 +33,19 @@ public class ProfessoresIntegrationTests : IntegrationTestBase
     public async Task Deve_criar_varios_professores_para_uma_mesma_faculdade()
     {
         // Arrange
-        var faculdade = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = UserIn.New(faculdade.Id, Academico);
-        await RegisterUser(user);
-        await Login(user.Email, user.Password);
+        await client.RegisterUser(user);
+        await client.Login(user.Email, user.Password);
 
         // Act
-        await PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico" });
-        await PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Maju" });
+        await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico" });
+        await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Maju" });
 
         // Assert
-        var professores = await GetAsync<List<ProfessorOut>>("/professores");
+        var professores = await client.GetAsync<List<ProfessorOut>>("/professores");
         professores.Should().HaveCount(2);
     }
 
@@ -52,27 +53,28 @@ public class ProfessoresIntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_apenas_os_professores_da_faculdade_do_usuario_logado()
     {
         // Arrange
-        var novaRoma = await CreateFaculdade("Nova Roma");
+        var client = _factory.CreateClient();
+        var novaRoma = await client.CreateFaculdade("Nova Roma");
         var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
-        await RegisterUser(userNovaRoma);
+        await client.RegisterUser(userNovaRoma);
 
-        var ufpe = await CreateFaculdade("UFPE");
+        var ufpe = await client.CreateFaculdade("UFPE");
         var userUfpe = UserIn.New(ufpe.Id, Academico);
-        await RegisterUser(userUfpe);
+        await client.RegisterUser(userUfpe);
 
-        await Login(userNovaRoma.Email, userNovaRoma.Password);
+        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
         var bodyNovaRoma = new ProfessorIn { Nome = "Chico" };
-        var professor = await PostAsync<CampusOut>("/professores", bodyNovaRoma);
+        var professor = await client.PostAsync<CampusOut>("/professores", bodyNovaRoma);
 
-        await Login(userUfpe.Email, userUfpe.Password);
+        await client.Login(userUfpe.Email, userUfpe.Password);
         var bodyUfpe = new ProfessorIn { Nome = "Maju" };
-        await PostAsync<CampusOut>("/professores", bodyUfpe);
+        await client.PostAsync<CampusOut>("/professores", bodyUfpe);
 
         // Act
-        await Login(userNovaRoma.Email, userNovaRoma.Password);
+        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
 
         // Assert
-        var campi = await GetAsync<List<ProfessorOut>>("/professores");
+        var campi = await client.GetAsync<List<ProfessorOut>>("/professores");
         campi.Should().HaveCount(1);
         campi[0].Id.Should().Be(professor.Id);
         campi[0].Nome.Should().Be(bodyNovaRoma.Nome);

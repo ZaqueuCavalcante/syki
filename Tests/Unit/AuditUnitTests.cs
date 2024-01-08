@@ -182,4 +182,39 @@ public class AuditUnitTests
         // Assert
         audit.FaculdadeId.Should().Be(faculdadeId);
     }
+
+    [Test]
+    public void Deve_retornar_false_quando_eh_um_request_de_login()
+    {
+        // Arrange
+        var evt = new AuditEvent { CustomFields = [] };
+        var userId = Guid.NewGuid();
+        var faculdadeId = Guid.NewGuid();
+        evt.CustomFields["IsLogin"] = true;
+
+        // Act
+        var audit = new AuditLog();
+        var result = audit.Fill(evt, _eventEntry);
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    [Test]
+    public void Deve_retornar_true_quando_nao_eh_um_request_de_login()
+    {
+        // Arrange
+        var evt = new AuditEvent { CustomFields = [] };
+        var userId = Guid.NewGuid();
+        var faculdadeId = Guid.NewGuid();
+        evt.CustomFields["UserId"] = userId;
+        evt.CustomFields["FaculdadeId"] = faculdadeId;
+
+        // Act
+        var audit = new AuditLog();
+        var result = audit.Fill(evt, _eventEntry);
+
+        // Assert
+        result.Should().BeTrue();
+    }
 }

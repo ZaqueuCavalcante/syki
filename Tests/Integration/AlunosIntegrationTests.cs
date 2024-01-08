@@ -11,7 +11,7 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
-[Parallelizable(ParallelScope.All), Category("ParallelizableAll")]
+[Parallelizable(ParallelScope.All)]
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]

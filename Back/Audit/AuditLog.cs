@@ -15,8 +15,11 @@ public class AuditLog
     public Guid FaculdadeId { get; set; }
     public JsonDocument Data { get; set; }
 
-    public void Fill(AuditEvent evt, EventEntry entry)
+    public bool Fill(AuditEvent evt, EventEntry entry)
     {
+        if (evt.CustomFields.ContainsKey("IsLogin"))
+            return false;
+
         Id = Guid.NewGuid();
         EntityId = Guid.Parse(entry.PrimaryKey.First().Value.ToString()!);
         EntityType = entry.EntityType.Name;
@@ -25,5 +28,6 @@ public class AuditLog
         UserId = Guid.Parse(evt.CustomFields["UserId"].ToString()!);
         FaculdadeId = Guid.Parse(evt.CustomFields["FaculdadeId"].ToString()!);
         Data = AuditData.NewAsJson(entry);
+        return true;
     }
 }

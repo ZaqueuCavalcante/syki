@@ -13,4 +13,9 @@ public static class UserExtensions
     {
         return Guid.Parse(user.FindFirstValue("faculdade")!);
     }
+
+    public static bool IsLogin(this PathString path)
+    {
+        return path == "/users/login" || path == "/users/login-mfa";
+    }
 }

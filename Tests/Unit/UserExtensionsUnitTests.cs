@@ -2,6 +2,8 @@ using NUnit.Framework;
 using FluentAssertions;
 using Syki.Back.Extensions;
 using System.Security.Claims;
+using Syki.Tests.Base;
+using Microsoft.AspNetCore.Http;
 
 namespace Syki.Tests.Unit;
 
@@ -35,5 +37,16 @@ public class UserExtensionsUnitTests
 
         // Assert
         result.Should().Be(faculdadeIdClaim.Value);
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.LoginPaths))]
+    public void Shoud_return_if_path_is_login((PathString path, bool isLogin) data)
+    {
+        // Arrange / Act
+        var result = data.path.IsLogin();
+
+        // Assert
+        result.Should().Be(data.isLogin);
     }
 }

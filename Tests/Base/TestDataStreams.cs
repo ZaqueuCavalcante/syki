@@ -1,4 +1,5 @@
 using Syki.Shared;
+using Microsoft.AspNetCore.Http;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Base;
@@ -221,6 +222,20 @@ public static class TestDataStreams
             ("8681918485", "Lalala", "0"),
             ("1681616851651", "57681", "684"),
             ("6841861", "68416", "68419"),
+        })
+        {
+            yield return new object[] { text };
+        }
+    }
+
+    public static IEnumerable<object[]> LoginPaths()
+    {
+        foreach (var text in new List<(PathString, bool)>()
+        {
+            ("/", false),
+            ("/campi", false),
+            ("/users/login", true),
+            ("/users/login-mfa", true),
         })
         {
             yield return new object[] { text };

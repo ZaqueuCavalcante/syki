@@ -33,14 +33,7 @@ public static class AuditConfigs
                 .Map<SykiUser, AuditLog>()
                 .Map<Turma, AuditLog>()
                 .Map<Notification, AuditLog>()
-                .AuditEntityAction<AuditLog>((evt, entry, log) =>
-                {
-                    if (evt.CustomFields.ContainsKey("IsLogin"))
-                        return false;
-
-                    log.Fill(evt, entry);
-                    return true;
-                }))
+                .AuditEntityAction<AuditLog>((evt, entry, log) => log.Fill(evt, entry)))
             .IgnoreMatchedProperties(true));
     }
 
@@ -53,9 +46,7 @@ public static class AuditConfigs
             var httpContext = contextAccessor.HttpContext;
             if (httpContext == null) return;
 
-            var path = httpContext.Request.Path;
-
-            if (path == "/users/login" || path == "/users/login-mfa")
+            if (httpContext.Request.Path.IsLogin())
             {
                 scope.Event.CustomFields["IsLogin"] = true;
                 return;

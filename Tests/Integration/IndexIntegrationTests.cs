@@ -36,9 +36,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         await client.PostAsync("/campi", new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" });
         await client.PostAsync("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
@@ -74,9 +72,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Aluno);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Aluno);
 
         // Act
         var response = await client.GetAsync<IndexAlunoOut>("/index/aluno");

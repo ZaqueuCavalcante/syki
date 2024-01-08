@@ -18,10 +18,7 @@ public class AuditIntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
 
@@ -46,10 +43,7 @@ public class AuditIntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
         var campus = await client.PostAsync<CampusOut>("/campi", body);
@@ -77,10 +71,7 @@ public class AuditIntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        var user = await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
         var token = keyResponse.Key.ToMfaToken();

@@ -57,13 +57,16 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<T>();
     }
 
-    public static async Task RegisterAndLogin(this HttpClient client, Guid faculdadeId, string role)
+    public static async Task<UserIn> RegisterAndLogin(this HttpClient client, Guid faculdadeId, string role)
     {
         if (role != "Adm")
         {
             var user = UserIn.New(faculdadeId, role);
             await client.RegisterUser(user);
             await client.Login(user.Email, user.Password);
+            return user;
         }
+
+        return null!;
     }
 }

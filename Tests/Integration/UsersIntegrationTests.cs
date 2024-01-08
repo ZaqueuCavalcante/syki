@@ -219,9 +219,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await  client.Login(user.Email, user.Password);
+        var user = await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
         var token = keyResponse.Key.ToMfaToken();
@@ -246,9 +244,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await  client.Login(user.Email, user.Password);
+        var user = await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
         var token = keyResponse.Key.ToMfaToken();
@@ -276,9 +272,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await  client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
         var token = keyResponse.Key.ToMfaToken();
@@ -303,9 +297,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await  client.Login(user.Email, user.Password);
+        var user = await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
         var token = keyResponse.Key.ToMfaToken();

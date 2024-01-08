@@ -205,17 +205,13 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var ufpe = await client.CreateFaculdade("UFPE");
-        var userUfpe = UserIn.New(ufpe.Id, Academico);
-        await client.RegisterUser(userUfpe);
+        await client.RegisterAndLogin(ufpe.Id, Academico);
 
-        await client.Login(userUfpe.Email, userUfpe.Password);
         var bodyUfpe = new CursoIn { Nome = "Direito", Tipo = TipoDeCurso.Licenciatura };
         var curso = await client.PostAsync<CursoOut>("/cursos", bodyUfpe);
 
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
         var periodo = new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) };

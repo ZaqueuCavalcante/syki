@@ -33,7 +33,8 @@ public static class AuditConfigs
                 .Map<SykiUser, AuditLog>()
                 .Map<Turma, AuditLog>()
                 .Map<Notification, AuditLog>()
-                .AuditEntityAction<AuditLog>((evt, entry, log) => log.Fill(evt, entry)))
+                .AuditEntityAction<AuditLog>((evt, entry, log) => {
+                    return log.Fill(evt, entry); }))
             .IgnoreMatchedProperties(true));
     }
 

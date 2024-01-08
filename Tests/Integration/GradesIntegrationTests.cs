@@ -16,10 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
 
@@ -45,10 +42,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
 
@@ -83,10 +77,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
 
@@ -118,10 +109,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new GradeIn { Nome = "Grade de ADS - 1.0" };
 
@@ -140,10 +128,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = Guid.NewGuid(), };
 
@@ -192,10 +177,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var ads = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
         var direito = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Direito" });
@@ -262,10 +244,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
 
@@ -299,10 +278,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
 
@@ -374,10 +350,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var direito = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Direito" });
         var gradeDireito = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de Direito - 1.0", CursoId = direito.Id, });

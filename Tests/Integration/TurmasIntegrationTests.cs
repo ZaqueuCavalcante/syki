@@ -16,9 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
@@ -46,9 +44,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new TurmaIn { DisciplinaId = Guid.NewGuid(), Periodo = "2024.1" };
 
@@ -67,9 +63,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
@@ -91,9 +85,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
@@ -118,9 +110,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
-        await client.RegisterUser(user);
-        await client.Login(user.Email, user.Password);
+        await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);

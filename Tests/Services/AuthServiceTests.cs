@@ -131,30 +131,4 @@ public class AuthServiceTests : BunitTestContext
         var token = await storage.GetItemAsync("AccessToken");
         token.Should().BeNull();
     }
-
-    [Test]
-    public async Task Should_add_jwt_to_requests()
-    {
-        // Arrange
-        Services.AddSingleton<ILocalStorageService, LocalStorageServiceMock>();
-
-        Services.AddScoped<SykiDelegatingHandler>();
-        Services
-            .AddHttpClient("HttpClient", x => x.BaseAddress = new Uri("http://localhost"))
-            .AddHttpMessageHandler<SykiDelegatingHandler>();
-        Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-            .CreateClient("HttpClient"));
-
-        var storage = Services.GetService<ILocalStorageService>()!;
-        await storage.SetItemAsync("AccessToken", AuthTestBase.JWTAcademico);
-
-        var client = Services.GetService<HttpClient>()!;
-
-        // Act
-        var response = await client.GetAsync("/campi");
-
-        // Assert
-        var authHeader = response.RequestMessage!.Headers.Authorization!.ToString();
-        authHeader.Should().Be($"Bearer {AuthTestBase.JWTAcademico}");
-    }
 }

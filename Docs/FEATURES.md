@@ -16,6 +16,29 @@
     - Prova 1 + Prova 2
     - Prova Final
 
-## Components
+## Setup completo pra iniciar um periodo
 
-## Pages
+- Logar como 'Adm'
+- Criar uma faculdade (criar periodos do ano corrente + proximo???)
+- Criar um usuario Academico pra ela
+
+- Logar como Academico
+- Criar um campus
+- Criar periodos
+- Criar um curso
+- Criar disciplinas pro curso
+- Criar uma grade pro curso, com as disciplinas
+- Criar uma oferta de curso
+- Criar professores
+- Criar alunos
+- Criar turmas e vinculos
+
+- Quais os horarios?
+- Aulas?
+- Provas?
+- Chamadas?
+
+## Periodo completo de um curso
+
+- Professor precisa ver horarios
+- Professor precisar dar aula, fazer chamada, e aplicar provas (e notas)

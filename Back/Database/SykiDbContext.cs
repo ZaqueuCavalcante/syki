@@ -38,6 +38,8 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
 
     public DbSet<CursoDisciplina> CursosDisciplinas { get; set; }
 
+    public DbSet<ResetPassword> ResetPasswords { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(_settings.ConnectionString);

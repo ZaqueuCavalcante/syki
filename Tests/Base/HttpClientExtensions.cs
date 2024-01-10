@@ -4,23 +4,32 @@ namespace Syki.Tests.Base;
 
 public static class HttpClientExtensions
 {
-    public static async Task RegisterUser(this HttpClient client, UserIn body)
+    public static async Task<UserOut> RegisterUser(this HttpClient client, UserIn body)
     {
-        await client.PostAsync("/users", body.ToStringContent());
+        var response = await client.PostAsync("/users", body.ToStringContent());
+        return await response.DeserializeTo<UserOut>();
+    }
+
+    public static void RemoveAuthToken(this HttpClient client)
+    {
+        client.DefaultRequestHeaders.Remove("Authorization");
+    }
+
+    public static void AddAuthToken(this HttpClient client, string token)
+    {
+        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
     }
 
     public static async Task<string> Login(this HttpClient client, string email, string password)
     {
         var data = new LoginIn { Email = email, Password = password };
 
-        var response = await client.PostAsync("/users/login", data.ToStringContent());
+        var response = await client.PostAsync<LoginOut>("/users/login", data);
 
-        var token = await response.DeserializeTo<LoginOut>();
+        client.RemoveAuthToken();
+        client.AddAuthToken(response.AccessToken);
 
-        client.DefaultRequestHeaders.Remove("Authorization");
-        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.AccessToken}");
-
-        return token.AccessToken;
+        return response.AccessToken;
     }
 
     public static async Task<FaculdadeOut> CreateFaculdade(this HttpClient client, string nome)
@@ -36,7 +45,7 @@ public static class HttpClientExtensions
 
     public static async Task PostAsync(this HttpClient client, string path, object obj)
     {
-        var response = await client.PostAsync(path, obj.ToStringContent());
+        await client.PostAsync(path, obj.ToStringContent());
     }
 
     public static async Task<T> PostAsync<T>(this HttpClient client, string path, object obj)

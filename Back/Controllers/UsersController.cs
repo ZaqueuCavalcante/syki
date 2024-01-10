@@ -47,7 +47,7 @@ public class UsersController : ControllerBase
     {
         var ok = await _authService.SetupMfa(User.Id(), body.Token);
 
-        return Ok(new MfaSetupOut { Ok = ok });
+        return Ok(ok);
     }
 
     [HttpPost("login")]
@@ -91,6 +91,14 @@ public class UsersController : ControllerBase
         var jwt = await _authService.GenerateAccessToken(user!.Email!);
 
         return Ok(new LoginOut { AccessToken = jwt });
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordIn body)
+    {
+        var ok = await _authService.ResetPassword(body);
+
+        return Ok(ok);
     }
 
     [HttpGet()]

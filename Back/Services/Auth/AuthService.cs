@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using SykiUser = Syki.Back.Domain.SykiUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using ResetPassword = Syki.Back.Domain.ResetPassword;
 
 namespace Syki.Back.Services;
 
@@ -83,7 +84,7 @@ public class AuthService : IAuthService
         return key!;
     }
 
-    public async Task<bool> SetupMfa(Guid userId, string token)
+    public async Task<MfaSetupOut> SetupMfa(Guid userId, string token)
     {
         var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
@@ -95,7 +96,44 @@ public class AuthService : IAuthService
             await _userManager.SetTwoFactorEnabledAsync(user, true);
         }
 
-        return ok;
+        return new MfaSetupOut { Ok = ok };
+    }
+
+    public async Task<ResetPasswordTokenOut> GetResetPasswordToken(Guid userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+
+        if (user == null)
+            throw new DomainException(ExceptionMessages.DE0016);
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+        var reset = new ResetPassword(user.Id, token);
+        _ctx.Add(reset);
+        await _ctx.SaveChangesAsync();
+
+        return new ResetPasswordTokenOut { Token = token };
+    }
+
+    public async Task<ResetPasswordOut> ResetPassword(ResetPasswordIn body)
+    {
+        var reset = await _ctx.ResetPasswords
+            .FirstOrDefaultAsync(r => r.Token == body.Token);
+
+        if (reset == null)
+            throw new DomainException(ExceptionMessages.DE0016);
+
+        var user = await _userManager.FindByIdAsync(reset.UserId.ToString());
+
+        var result = await _userManager.ResetPasswordAsync(user!, body.Token, body.Password);
+
+        if (!result.Succeeded)
+            throw new DomainException(ExceptionMessages.DE0012);
+
+        reset.Use();
+        await _ctx.SaveChangesAsync();
+
+        return new ResetPasswordOut { Ok = true };
     }
 
     public async Task<string> GenerateAccessToken(string email)

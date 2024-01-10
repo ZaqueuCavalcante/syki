@@ -225,7 +225,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = keyResponse.Key.ToMfaToken();
         await client.PostAsync<MfaSetupOut>("/users/mfa-setup", new MfaSetupIn { Token = token });
 
-        client.DefaultRequestHeaders.Remove("Authorization");
+        client.RemoveAuthToken();
 
         var data = new LoginIn { Email = user.Email, Password = user.Password };
 
@@ -250,7 +250,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = keyResponse.Key.ToMfaToken();
         await client.PostAsync<MfaSetupOut>("/users/mfa-setup", new MfaSetupIn { Token = token });
 
-        client.DefaultRequestHeaders.Remove("Authorization");
+        client.RemoveAuthToken();
 
         var data = new LoginIn { Email = user.Email, Password = user.Password };
         await client.PostAsync("/users/login", data.ToStringContent());
@@ -278,7 +278,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = keyResponse.Key.ToMfaToken();
         await client.PostAsync<MfaSetupOut>("/users/mfa-setup", new MfaSetupIn { Token = token });
 
-        client.DefaultRequestHeaders.Remove("Authorization");
+        client.RemoveAuthToken();
 
         var body = new LoginMfaIn { Code = token };
 
@@ -303,7 +303,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = keyResponse.Key.ToMfaToken();
         await client.PostAsync<MfaSetupOut>("/users/mfa-setup", new MfaSetupIn { Token = token });
 
-        client.DefaultRequestHeaders.Remove("Authorization");
+        client.RemoveAuthToken();
 
         var data = new LoginIn { Email = user.Email, Password = user.Password };
         await client.PostAsync("/users/login", data.ToStringContent());

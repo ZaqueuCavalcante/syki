@@ -43,8 +43,8 @@ public class AuthTestBase
             Aluno => JWTAluno,
             _ => ""
         };
-        _client.DefaultRequestHeaders.Remove("Authorization");
-        _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {jwt}");
+        _client.RemoveAuthToken();
+        _client.AddAuthToken(jwt);
     }
 
     public const string JWTAdm = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQWRtIiwibmJmIjoxNzA0NTA1MDI3LCJleHAiOjUzMDQ1MDUwMjcsImlhdCI6MTcwNDUwNTAyNywiaXNzIjoic3lraS1hcGktdGVzdGluZyIsImF1ZCI6InN5a2ktYXBpLXRlc3RpbmcifQ.7tEWvPsGJdTUEsjQWAFMi7RqoVRmpZfeRbVuvQTsFLM";

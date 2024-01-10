@@ -77,6 +77,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        client.RemoveAuthToken();
 
         using var scope = _factory.Services.CreateScope();
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
@@ -101,6 +102,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        client.RemoveAuthToken();
 
         using var scope = _factory.Services.CreateScope();
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
@@ -123,6 +125,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        client.RemoveAuthToken();
 
         using var scope = _factory.Services.CreateScope();
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
@@ -149,6 +152,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var userIn = UserIn.New(faculdade.Id, Academico);
         var userOut = await client.RegisterUser(userIn);
+        client.RemoveAuthToken();
 
         using var scope = _factory.Services.CreateScope();
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
@@ -167,6 +171,32 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
+    public async Task Nao_deve_resetar_a_senha_do_usuario_pela_segunda_vez_usando_o_mesmo_token()
+    {
+        // Arrange
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
+
+        var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        client.RemoveAuthToken();
+
+        using var scope = _factory.Services.CreateScope();
+        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
+        var tokenResponse = await service.GetResetPasswordToken(user.Id);
+
+        var body = new ResetPasswordIn { Token = tokenResponse.Token, Password = "My@newP4ssword" };
+        await client.PostAsync("/users/reset-password", body.ToStringContent());
+
+        // Act
+        var response = await client.PostAsync("/users/reset-password", body.ToStringContent());
+
+        // Assert
+        var error = await response.DeserializeTo<ErrorOut>();
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        error.Message.Should().Be(ExceptionMessages.DE0017); 
+    }
+
+    [Test]
     [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidPasswords))]
     public async Task Nao_deve_resetar_a_senha_do_usuario_quando_a_senha_for_fraca(string password)
     {
@@ -175,6 +205,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        client.RemoveAuthToken();
 
         using var scope = _factory.Services.CreateScope();
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();

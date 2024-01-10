@@ -190,7 +190,7 @@ public class AuditUnitTests
         var evt = new AuditEvent { CustomFields = [] };
         var userId = Guid.NewGuid();
         var faculdadeId = Guid.NewGuid();
-        evt.CustomFields["IsLogin"] = true;
+        evt.CustomFields["Skip"] = true;
 
         // Act
         var audit = new AuditLog();

@@ -14,8 +14,8 @@ public static class UserExtensions
         return Guid.Parse(user.FindFirstValue("faculdade")!);
     }
 
-    public static bool IsLogin(this PathString path)
+    public static bool IsAuditable(this PathString path)
     {
-        return path == "/users/login" || path == "/users/login-mfa";
+        return path != "/users/login" && path != "/users/login-mfa" && path != "/users/reset-password";
     }
 }

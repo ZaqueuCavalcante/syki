@@ -66,6 +66,8 @@ public class AuthService : IAuthService
 
         await _userManager.AddToRoleAsync(user, body.Role);
 
+        await GetResetPasswordToken(user.Id);
+
         return user.ToOut();
     }
 
@@ -128,7 +130,12 @@ public class AuthService : IAuthService
         var result = await _userManager.ResetPasswordAsync(user!, body.Token, body.Password);
 
         if (!result.Succeeded)
+        {
+            if (result.Errors.Any(e => e.Code == "InvalidToken"))
+                throw new DomainException(ExceptionMessages.DE0017);
+            
             throw new DomainException(ExceptionMessages.DE0012);
+        }
 
         reset.Use();
         await _ctx.SaveChangesAsync();

@@ -19,4 +19,5 @@ public static class ExceptionMessages
     public const string DE0014 = "Email duplicado.";
     public const string DE0015 = "Professor inválido.";
     public const string DE0016 = "Usuario nao encontrado.";
+    public const string DE0017 = "Reset token inválido.";
 }

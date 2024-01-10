@@ -40,13 +40,13 @@ public class UserExtensionsUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.LoginPaths))]
-    public void Shoud_return_if_path_is_login((PathString path, bool isLogin) data)
+    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AuditPaths))]
+    public void Shoud_return_if_path_is_login((PathString path, bool isAuditable) data)
     {
         // Arrange / Act
-        var result = data.path.IsLogin();
+        var result = data.path.IsAuditable();
 
         // Assert
-        result.Should().Be(data.isLogin);
+        result.Should().Be(data.isAuditable);
     }
 }

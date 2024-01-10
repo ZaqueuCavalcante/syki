@@ -17,7 +17,7 @@ public class AuditLog
 
     public bool Fill(AuditEvent evt, EventEntry entry)
     {
-        if (evt.CustomFields.ContainsKey("IsLogin"))
+        if (evt.CustomFields.ContainsKey("Skip"))
             return false;
 
         Id = Guid.NewGuid();

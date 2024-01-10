@@ -47,9 +47,9 @@ public static class AuditConfigs
             var httpContext = contextAccessor.HttpContext;
             if (httpContext == null) return;
 
-            if (httpContext.Request.Path.IsLogin())
+            if (!httpContext.Request.Path.IsAuditable())
             {
-                scope.Event.CustomFields["IsLogin"] = true;
+                scope.Event.CustomFields["Skip"] = true;
                 return;
             }
 

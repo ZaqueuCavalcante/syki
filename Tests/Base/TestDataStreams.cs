@@ -228,14 +228,15 @@ public static class TestDataStreams
         }
     }
 
-    public static IEnumerable<object[]> LoginPaths()
+    public static IEnumerable<object[]> AuditPaths()
     {
         foreach (var text in new List<(PathString, bool)>()
         {
-            ("/", false),
-            ("/campi", false),
-            ("/users/login", true),
-            ("/users/login-mfa", true),
+            ("/campi", true),
+            ("/cursos", true),
+            ("/users/login", false),
+            ("/users/login-mfa", false),
+            ("/users/reset-password", false),
         })
         {
             yield return new object[] { text };

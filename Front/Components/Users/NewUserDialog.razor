@@ -46,18 +46,6 @@
                 Required="true"
                 RequiredError="Informe o email do usuário!"
             />
-            <MudTextField
-                OnlyValidateIfDirty="true"
-                Immediate="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-4"
-                @bind-Value="data.Password"
-                T="String"
-                Label="Senha"
-                Required="true"
-                RequiredError="Informe a senha do usuário!"
-            />
             <MudSelect
                 Dense="true"
                 Margin="Margin.Dense"
@@ -98,7 +86,7 @@
     FaculdadeOut? _faculdade;
     List<FaculdadeOut> _faculdades = [];
 
-    List<string> _roles = ["Adm", "Academico", "Professor", "Aluno"];
+    List<string> _roles = ["Academico", "Professor", "Aluno"];
 
     protected override async Task OnInitializedAsync()
     {
@@ -121,6 +109,7 @@
         if (!_form.IsValid) return;
 
         data.Faculdade = _faculdade!.Id;
+        data.Password = $"Pass@{Guid.NewGuid().ToString().OnlyNumbers()}";
 
         await Http.PostAsJsonAsync("/users", data);
 

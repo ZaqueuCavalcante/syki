@@ -37,8 +37,6 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var userBody = UserIn.New(faculdade.Id, Aluno);
-        var userAluno = await client.PostAsync<UserOut>("/users", userBody);
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
@@ -47,26 +45,23 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id });
         var oferta = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id });
-        var aluno = await client.PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id });
 
-        // GAMBIARRA
-        using var scope = _factory.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
-        var alunoDb = await ctx.Alunos.FirstAsync(a => a.Id == aluno.Id);
-        alunoDb.UserId = userAluno.Id;
-        await ctx.SaveChangesAsync();
-        // GAMBIARRA
+        var bodyAluno = new AlunoIn { Nome = "Zaqueu", Email = "zaqueu4@aluno.com", OfertaId = oferta.Id };
+        var aluno = await client.PostAsync<AlunoOut>("/alunos", bodyAluno);
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
         await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
-        await client.Login(userBody.Email, userBody.Password);
+        var password = await _factory.ResetPassword(aluno.UserId);
+        await client.Login(bodyAluno.Email, password);
         var response = await client.PutAsync("/notifications/user", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var notification = await ctx.UserNotifications.FirstAsync(n => n.UserId == userAluno.Id);
+        using var scope = _factory.Services.CreateScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        var notification = await ctx.UserNotifications.FirstAsync(n => n.UserId == aluno.UserId);
         notification.ViewedAt.Should().NotBeNull();
     }
 
@@ -94,8 +89,6 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-        var userBody = UserIn.New(faculdade.Id, Aluno);
-        var userAluno = await client.PostAsync<UserOut>("/users", userBody);
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
@@ -104,21 +97,16 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id });
         var oferta = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id });
-        var aluno = await client.PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Zaqueu", OfertaId = oferta.Id });
 
-        // GAMBIARRA
-        using var scope = _factory.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
-        var alunoDb = await ctx.Alunos.FirstAsync(a => a.Id == aluno.Id);
-        alunoDb.UserId = userAluno.Id;
-        await ctx.SaveChangesAsync();
-        // GAMBIARRA
+        var bodyAluno = new AlunoIn { Nome = "Zaqueu", Email = "zaqueu5@aluno.com", OfertaId = oferta.Id };
+        var aluno = await client.PostAsync<AlunoOut>("/alunos", bodyAluno);
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
         await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
-        await client.Login(userBody.Email, userBody.Password);
+        var password = await _factory.ResetPassword(aluno.UserId);
+        await client.Login(bodyAluno.Email, password);
         var response = await client.GetAsync<List<UserNotificationOut>>("/notifications/user");
 
         // Assert

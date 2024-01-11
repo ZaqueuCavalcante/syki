@@ -30,7 +30,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await service.GetResetPasswordToken(user.Id);
 
         // Assert
-        response.Token.Length.Should().Be(240);
+        response.Token!.Length.Should().Be(240);
     }
 
     [Test]
@@ -63,10 +63,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
 
         // Act
-        Func<Task> act = async () => await service.GetResetPasswordToken(Guid.NewGuid());
+        var result = await service.GetResetPasswordToken(Guid.NewGuid());
 
         // Assert
-        await act.Should().ThrowAsync<DomainException>().WithMessage(ExceptionMessages.DE0016);
+        result.Token.Should().BeNull();
     }
 
     [Test]
@@ -108,7 +108,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
         var tokenResponse = await service.GetResetPasswordToken(user.Id);
 
-        var body = new ResetPasswordIn { Token = tokenResponse.Token, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = tokenResponse.Token!, Password = "My@newP4ssword" };
 
         // Act
         var response = await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
@@ -131,7 +131,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
         var tokenResponse = await service.GetResetPasswordToken(user.Id);
 
-        var body = new ResetPasswordIn { Token = tokenResponse.Token, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = tokenResponse.Token!, Password = "My@newP4ssword" };
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
 
         var data = new LoginIn { Email = user.Email, Password = body.Password };
@@ -158,7 +158,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
         var tokenResponse = await service.GetResetPasswordToken(userOut.Id);
 
-        var body = new ResetPasswordIn { Token = tokenResponse.Token, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = tokenResponse.Token!, Password = "My@newP4ssword" };
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
 
         var data = new LoginIn { Email = userIn.Email, Password = userIn.Password };
@@ -184,7 +184,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
         var tokenResponse = await service.GetResetPasswordToken(user.Id);
 
-        var body = new ResetPasswordIn { Token = tokenResponse.Token, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = tokenResponse.Token!, Password = "My@newP4ssword" };
         await client.PostAsync("/users/reset-password", body.ToStringContent());
 
         // Act
@@ -211,7 +211,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
         var tokenResponse = await service.GetResetPasswordToken(user.Id);
 
-        var body = new ResetPasswordIn { Token = tokenResponse.Token, Password = password };
+        var body = new ResetPasswordIn { Token = tokenResponse.Token!, Password = password };
 
         // Act
         var response = await client.PostAsync("/users/reset-password", body.ToStringContent());

@@ -66,7 +66,7 @@ public class AuthService : IAuthService
 
         await _userManager.AddToRoleAsync(user, body.Role);
 
-        await GetResetPasswordToken(user.Id);
+        await GenerateResetPasswordToken(user.Id);
 
         return user.ToOut();
     }
@@ -101,7 +101,7 @@ public class AuthService : IAuthService
         return new MfaSetupOut { Ok = ok };
     }
 
-    public async Task<ResetPasswordTokenOut> GetResetPasswordToken(Guid userId)
+    public async Task GenerateResetPasswordToken(Guid userId)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
 
@@ -113,6 +113,15 @@ public class AuthService : IAuthService
         var reset = new ResetPassword(user.Id, token);
         _ctx.Add(reset);
         await _ctx.SaveChangesAsync();
+    }
+
+    public async Task<ResetPasswordTokenOut> GetResetPasswordToken(Guid userId)
+    {
+        var token = await _ctx.ResetPasswords
+            .Where(r => r.UserId == userId && r.UsedAt == null)
+            .OrderByDescending(r => r.CreatedAt)
+            .Select(r => r.Token)
+            .FirstOrDefaultAsync();
 
         return new ResetPasswordTokenOut { Token = token };
     }

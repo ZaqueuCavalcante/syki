@@ -1,5 +1,6 @@
 using Syki.Shared;
 using Syki.Back.Domain;
+using Syki.Back.Configs;
 using Syki.Back.Database;
 using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,14 @@ namespace Syki.Back.Services;
 public class AlunosService : IAlunosService
 {
     private readonly SykiDbContext _ctx;
-    public AlunosService(SykiDbContext ctx) => _ctx = ctx;
+    private readonly IAuthService _authService;
+    public AlunosService(
+        SykiDbContext ctx,
+        IAuthService authService
+    ) {
+        _ctx = ctx;
+        _authService = authService;
+    }
 
     public async Task<AlunoOut> Create(Guid faculdadeId, AlunoIn data)
     {
@@ -18,7 +26,17 @@ public class AlunosService : IAlunosService
         if (!ofertaOk)
             throw new DomainException(ExceptionMessages.DE0009);
 
-        var aluno = new Aluno(faculdadeId, data.Nome, data.OfertaId);
+        var userIn = new UserIn
+        {
+            Faculdade = faculdadeId,
+            Name = data.Nome,
+            Email = data.Email,
+            Password = $"Aluno@{Guid.NewGuid().ToString().OnlyNumbers()}",
+            Role = AuthorizationConfigs.Aluno,
+        };
+        var user = await _authService.Register(userIn);
+
+        var aluno = new Aluno(faculdadeId, user.Id, data.Nome, data.OfertaId);
 
         await _ctx.Alunos.AddAsync(aluno);
         await _ctx.SaveChangesAsync();

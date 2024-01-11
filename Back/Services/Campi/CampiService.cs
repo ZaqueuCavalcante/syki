@@ -14,8 +14,7 @@ public class CampiService : ICampiService
     {
         var campus = new Campus(faculdadeId, data.Nome, data.Cidade);
 
-        await _ctx.Campi.AddAsync(campus);
-
+        _ctx.Add(campus);
         await _ctx.SaveChangesAsync();
 
         return campus.ToOut();

@@ -21,7 +21,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
 
-        var bodyProfessor = new ProfessorIn { Nome = "Chico" };
+        var bodyProfessor = new ProfessorIn { Nome = "Chico", Email = "chico4@prof.com" };
         var professor = await client.PostAsync<ProfessorOut>("/professores", bodyProfessor);
 
         var bodyPeriodo = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };
@@ -90,7 +90,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
 
-        var bodyProfessor = new ProfessorIn { Nome = "Chico" };
+        var bodyProfessor = new ProfessorIn { Nome = "Chico", Email = "chico5@prof.com" };
         var professor = await client.PostAsync<ProfessorOut>("/professores", bodyProfessor);
 
         var body = new TurmaIn { DisciplinaId = disciplina.Id, ProfessorId = professor.Id, Periodo = "2024.1" };
@@ -115,7 +115,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
 
-        var bodyProfessor = new ProfessorIn { Nome = "Chico" };
+        var bodyProfessor = new ProfessorIn { Nome = "Chico", Email = "chico6@prof.com" };
         var professor = await client.PostAsync<ProfessorOut>("/professores", bodyProfessor);
 
         var bodyPeriodo = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };

@@ -25,7 +25,7 @@ public class DisciplinasService : IDisciplinasService
 
         cursos.ForEach(id => disciplina.Vinculos.Add(new() { CursoId = id }));
 
-        await _ctx.Disciplinas.AddAsync(disciplina);
+        _ctx.Add(disciplina);
         await _ctx.SaveChangesAsync();
 
         return disciplina.ToOut();

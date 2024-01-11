@@ -14,7 +14,7 @@ public class PeriodosService : IPeriodosService
     {
         var periodo = new Periodo(data.Id, faculdadeId, data.Start, data.End);
 
-        await _ctx.Periodos.AddAsync(periodo);
+        _ctx.Add(periodo);
         await _ctx.SaveChangesAsync();
 
         return periodo.ToOut();

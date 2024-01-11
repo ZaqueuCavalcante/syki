@@ -40,8 +40,7 @@ public class NotificationsService : INotificationsService
 
         users.ForEach(u => _ctx.UserNotifications.Add(new UserNotification(u, notification.Id)));
 
-        await _ctx.Notifications.AddAsync(notification);
-
+        _ctx.Add(notification);
         await _ctx.SaveChangesAsync();
 
         await _hub.Clients.All.SendAsync("OnUpdateNotificationsCounter", 0);

@@ -38,7 +38,7 @@ public class AlunosService : IAlunosService
 
         var aluno = new Aluno(faculdadeId, user.Id, data.Nome, data.OfertaId);
 
-        await _ctx.Alunos.AddAsync(aluno);
+        _ctx.Add(aluno);
         await _ctx.SaveChangesAsync();
 
         return aluno.ToOut();

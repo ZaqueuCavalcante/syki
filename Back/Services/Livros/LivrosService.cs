@@ -14,7 +14,7 @@ public class LivrosService : ILivrosService
     {
         var livro = new Livro(faculdadeId, data.Titulo);
 
-        await _ctx.Livros.AddAsync(livro);
+        _ctx.Add(livro);
         await _ctx.SaveChangesAsync();
 
         return livro.ToOut();

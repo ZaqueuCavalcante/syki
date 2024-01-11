@@ -8,17 +8,62 @@ namespace Syki.Tests.Unit;
 public class ProfessoresUnitTests
 {
     [Test]
-    public void Deve_criar_um_professor()
+    public void Deve_criar_um_professor_com_id()
     {
         // Arrange
         var faculdadeId = Guid.NewGuid();
+        var userId = Guid.NewGuid();
         const string nome = "Chico Science";
 
         // Act
-        var professor = new Professor(faculdadeId, nome);
+        var professor = new Professor(faculdadeId, userId, nome);
+
+        // Assert
+        professor.Id.Should().NotBeEmpty();
+    }
+
+    [Test]
+    public void Deve_criar_um_professor_com_faculdade_id_correto()
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        var userId = Guid.NewGuid();
+        const string nome = "Chico Science";
+
+        // Act
+        var professor = new Professor(faculdadeId, userId, nome);
 
         // Assert
         professor.FaculdadeId.Should().Be(faculdadeId);
+    }
+
+    [Test]
+    public void Deve_criar_um_professor_com_user_id_correto()
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        var userId = Guid.NewGuid();
+        const string nome = "Chico Science";
+
+        // Act
+        var professor = new Professor(faculdadeId, userId, nome);
+
+        // Assert
+        professor.UserId.Should().Be(userId);
+    }
+
+    [Test]
+    public void Deve_criar_um_professor_com_nome_correto()
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        var userId = Guid.NewGuid();
+        const string nome = "Chico Science";
+
+        // Act
+        var professor = new Professor(faculdadeId, userId, nome);
+
+        // Assert
         professor.Nome.Should().Be(nome);
     }
 
@@ -27,9 +72,10 @@ public class ProfessoresUnitTests
     {
         // Arrange
         var faculdadeId = Guid.NewGuid();
+        var userId = Guid.NewGuid();
 
         var faker = new Faker<Professor>()
-            .CustomInstantiator(f => new Professor(faculdadeId, f.Person.FirstName));
+            .CustomInstantiator(f => new Professor(faculdadeId, userId, f.Person.FirstName));
 
         // Act
         var professores = faker.Generate(5);
@@ -43,8 +89,9 @@ public class ProfessoresUnitTests
     {
         // Arrange
         var faculdadeId = Guid.NewGuid();
+        var userId = Guid.NewGuid();
         const string nome = "Chico Science";
-        var professor = new Professor(faculdadeId, nome);
+        var professor = new Professor(faculdadeId, userId, nome);
 
         // Act
         var professorOut = professor.ToOut();

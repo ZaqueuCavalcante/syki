@@ -14,8 +14,7 @@ public class CursosService : ICursosService
     {
         var curso = new Curso(faculdadeId, data.Nome, data.Tipo);
 
-        await _ctx.Cursos.AddAsync(curso);
-
+        _ctx.Add(curso);
         await _ctx.SaveChangesAsync();
 
         return curso.ToOut();

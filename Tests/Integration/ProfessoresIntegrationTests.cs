@@ -16,7 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var body = new ProfessorIn { Nome = "Chico" };
+        var body = new ProfessorIn { Nome = "Chico", Email = "chico1@prof.com" };
 
         // Act
         var professor = await client.PostAsync<ProfessorOut>("/professores", body);
@@ -35,8 +35,8 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         // Act
-        await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico" });
-        await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Maju" });
+        await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = "chico2@prof.com" });
+        await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Maju", Email = "maju1@prof.com" });
 
         // Assert
         var professores = await client.GetAsync<List<ProfessorOut>>("/professores");
@@ -57,11 +57,11 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterUser(userUfpe);
 
         await client.Login(userNovaRoma.Email, userNovaRoma.Password);
-        var bodyNovaRoma = new ProfessorIn { Nome = "Chico" };
+        var bodyNovaRoma = new ProfessorIn { Nome = "Chico", Email = "chico3@prof.com" };
         var professor = await client.PostAsync<CampusOut>("/professores", bodyNovaRoma);
 
         await client.Login(userUfpe.Email, userUfpe.Password);
-        var bodyUfpe = new ProfessorIn { Nome = "Maju" };
+        var bodyUfpe = new ProfessorIn { Nome = "Maju", Email = "maju2@prof.com" };
         await client.PostAsync<CampusOut>("/professores", bodyUfpe);
 
         // Act

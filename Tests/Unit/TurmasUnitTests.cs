@@ -93,10 +93,11 @@ public class TurmasUnitTests
         var faculdadeId = Guid.NewGuid();
         var disciplinaId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
+        var userId = Guid.NewGuid();
         const string periodo = "2023.2";
 
         var disciplina = new Disciplina(faculdadeId, "Banco de Dados", 72);
-        var professor = new Professor(faculdadeId, "Chico Science");
+        var professor = new Professor(faculdadeId, userId, "Chico Science");
 
         var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo)
         {

@@ -14,7 +14,7 @@ public class FaculdadesService : IFaculdadesService
     {
         var faculdade = new Faculdade(data.Nome);
 
-        await _ctx.Faculdades.AddAsync(faculdade);
+        _ctx.Add(faculdade);
         await _ctx.SaveChangesAsync();
 
         return faculdade.ToOut();

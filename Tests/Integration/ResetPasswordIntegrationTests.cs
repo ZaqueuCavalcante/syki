@@ -3,11 +3,8 @@ using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Services;
-using Syki.Back.Database;
 using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -20,17 +17,13 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
 
-        using var scope = _factory.Services.CreateScope();
-        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
-
         // Act
-        var response = await service.GetResetPasswordToken(user.Id);
+        var token = await client.GetResetPasswordToken(user.Id);
 
         // Assert
-        response.Token!.Length.Should().Be(240);
+        token!.Length.Should().Be(240);
     }
 
     [Test]
@@ -39,34 +32,28 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
-
-        using var scope = _factory.Services.CreateScope();
-        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
-        var response = await service.GetResetPasswordToken(user.Id);
-
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        var token = await client.GetResetPasswordToken(user.Id);
+        using var ctx = _factory.GetDbContext();
 
         // Act
         var reset = await ctx.ResetPasswords.FirstAsync(r => r.UserId == user.Id);
 
         // Assert
-        reset.Token.Should().Be(response.Token);
+        reset.Token.Should().Be(token);
     }
 
     [Test]
     public async Task Nao_deve_retornar_o_token_de_reset_de_senha_quando_o_usuario_nao_existir()
     {
         // Arrange
-        using var scope = _factory.Services.CreateScope();
-        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
+        var client = _factory.CreateClient();
 
         // Act
-        var result = await service.GetResetPasswordToken(Guid.NewGuid());
+        var token = await client.GetResetPasswordToken(Guid.NewGuid());
 
         // Assert
-        result.Token.Should().BeNull();
+        token.Should().BeNull();
     }
 
     [Test]
@@ -75,14 +62,9 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
+        await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
 
-        var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
         client.RemoveAuthToken();
-
-        using var scope = _factory.Services.CreateScope();
-        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
-        await service.GetResetPasswordToken(user.Id);
-
         var body = new ResetPasswordIn { Token = Guid.NewGuid().ToString(), Password = "My@newP4ssword" };
 
         // Act
@@ -100,15 +82,11 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+
         client.RemoveAuthToken();
-
-        using var scope = _factory.Services.CreateScope();
-        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
-        var tokenResponse = await service.GetResetPasswordToken(user.Id);
-
-        var body = new ResetPasswordIn { Token = tokenResponse.Token!, Password = "My@newP4ssword" };
+        var token = await client.GetResetPasswordToken(user.Id);
+        var body = new ResetPasswordIn { Token = token!, Password = "My@newP4ssword" };
 
         // Act
         var response = await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
@@ -125,13 +103,11 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
 
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+
         client.RemoveAuthToken();
+        var token = await client.GetResetPasswordToken(user.Id);
 
-        using var scope = _factory.Services.CreateScope();
-        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
-        var tokenResponse = await service.GetResetPasswordToken(user.Id);
-
-        var body = new ResetPasswordIn { Token = tokenResponse.Token!, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = token!, Password = "My@newP4ssword" };
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
 
         var data = new LoginIn { Email = user.Email, Password = body.Password };
@@ -149,16 +125,13 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
         var userIn = UserIn.New(faculdade.Id, Academico);
         var userOut = await client.RegisterUser(userIn);
+
         client.RemoveAuthToken();
+        var token = await client.GetResetPasswordToken(userOut.Id);
 
-        using var scope = _factory.Services.CreateScope();
-        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
-        var tokenResponse = await service.GetResetPasswordToken(userOut.Id);
-
-        var body = new ResetPasswordIn { Token = tokenResponse.Token!, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = token!, Password = "My@newP4ssword" };
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
 
         var data = new LoginIn { Email = userIn.Email, Password = userIn.Password };
@@ -176,15 +149,12 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+
         client.RemoveAuthToken();
+        var token = await client.GetResetPasswordToken(user.Id);
 
-        using var scope = _factory.Services.CreateScope();
-        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
-        var tokenResponse = await service.GetResetPasswordToken(user.Id);
-
-        var body = new ResetPasswordIn { Token = tokenResponse.Token!, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = token!, Password = "My@newP4ssword" };
         await client.PostAsync("/users/reset-password", body.ToStringContent());
 
         // Act
@@ -203,15 +173,12 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
-
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+
         client.RemoveAuthToken();
+        var token = await client.GetResetPasswordToken(user.Id);
 
-        using var scope = _factory.Services.CreateScope();
-        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
-        var tokenResponse = await service.GetResetPasswordToken(user.Id);
-
-        var body = new ResetPasswordIn { Token = tokenResponse.Token!, Password = password };
+        var body = new ResetPasswordIn { Token = token!, Password = password };
 
         // Act
         var response = await client.PostAsync("/users/reset-password", body.ToStringContent());

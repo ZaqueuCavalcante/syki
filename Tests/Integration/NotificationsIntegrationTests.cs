@@ -53,14 +53,13 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
-        var password = await _factory.ResetPassword(aluno.UserId);
+        var password = await client.ResetPassword(aluno.UserId);
         await client.Login(bodyAluno.Email, password);
         var response = await client.PutAsync("/notifications/user", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        using var scope = _factory.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        using var ctx = _factory.GetDbContext();
         var notification = await ctx.UserNotifications.FirstAsync(n => n.UserId == aluno.UserId);
         notification.ViewedAt.Should().NotBeNull();
     }
@@ -105,7 +104,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
-        var password = await _factory.ResetPassword(aluno.UserId);
+        var password = await client.ResetPassword(aluno.UserId);
         await client.Login(bodyAluno.Email, password);
         var response = await client.GetAsync<List<UserNotificationOut>>("/notifications/user");
 

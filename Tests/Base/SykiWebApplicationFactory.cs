@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
 
@@ -26,6 +27,12 @@ public class SykiWebApplicationFactory : WebApplicationFactory<Startup>
                 .Build();
 
             config.AddConfiguration(configuration);
+        });
+
+        builder.ConfigureServices(services =>
+        {
+            var assembly = typeof(TestsController).Assembly;
+            services.AddControllers().AddApplicationPart(assembly);
         });
     }
 }

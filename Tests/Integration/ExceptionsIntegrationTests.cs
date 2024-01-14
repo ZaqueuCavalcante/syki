@@ -3,9 +3,7 @@ using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -17,8 +15,7 @@ public class ExceptionsIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        using var scope = _factory.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        using var ctx = _factory.GetDbContext();
 
         var academicoRole = await ctx.Roles.FirstAsync(r => r.Name == "Academico");
         ctx.Remove(academicoRole);

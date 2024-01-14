@@ -1,5 +1,5 @@
 using Syki.Shared;
-using Syki.Back.Services;
+using Syki.Back.Database;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
@@ -81,17 +81,25 @@ public static class HttpClientExtensions
         return null!;
     }
 
-    public static async Task<string> ResetPassword(this SykiWebApplicationFactory factory, Guid userId)
+    public static async Task<string?> GetResetPasswordToken(this HttpClient client, Guid userId)
     {
-        using var scope = factory.Services.CreateScope();
-        var service = scope.ServiceProvider.GetRequiredService<IAuthService>();
+        var tokenResponse = await client.GetAsync<ResetPasswordTokenOut>($"/tests/reset-password-token/{userId}");
+        return tokenResponse.Token;
+    }
 
-        var tokenResponse = await service.GetResetPasswordToken(userId);
-        var bodyReset = new ResetPasswordIn { Token = tokenResponse.Token!, Password = "My@newP4ssword" };
+    public static async Task<string> ResetPassword(this HttpClient client, Guid userId)
+    {
+        var token = await client.GetResetPasswordToken(userId);
+        var bodyReset = new ResetPasswordIn { Token = token!, Password = "My@newP4ssword" };
 
-        var client = factory.CreateClient();
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", bodyReset);
 
         return bodyReset.Password;
+    }
+
+    public static SykiDbContext GetDbContext(this SykiWebApplicationFactory factory)
+    {
+        var scope = factory.Services.CreateScope();
+        return scope.ServiceProvider.GetRequiredService<SykiDbContext>();
     }
 }

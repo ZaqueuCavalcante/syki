@@ -68,9 +68,9 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.Login(userNovaRoma.Email, userNovaRoma.Password);
 
         // Assert
-        var campi = await client.GetAsync<List<ProfessorOut>>("/professores");
-        campi.Should().HaveCount(1);
-        campi[0].Id.Should().Be(professor.Id);
-        campi[0].Nome.Should().Be(bodyNovaRoma.Nome);
+        var professores = await client.GetAsync<List<ProfessorOut>>("/professores");
+        professores.Should().HaveCount(1);
+        professores[0].Id.Should().Be(professor.Id);
+        professores[0].Nome.Should().Be(bodyNovaRoma.Nome);
     }
 }

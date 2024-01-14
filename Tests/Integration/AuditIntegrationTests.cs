@@ -28,11 +28,8 @@ public class AuditIntegrationTests : IntegrationTestBase
         Configuration.AuditDisabled = true;
 
         // Assert
-        using var scope = _factory.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
-
+        using var ctx = _factory.GetDbContext();
         var audit = await ctx.AuditLogs.FirstAsync(a => a.EntityId == campus.Id);
-
         audit.Action.Should().Be("Insert");
         audit.FaculdadeId.Should().Be(faculdade.Id);
     }
@@ -56,11 +53,8 @@ public class AuditIntegrationTests : IntegrationTestBase
         Configuration.AuditDisabled = true;
 
         // Assert
-        using var scope = _factory.Services.CreateScope();
-         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
-
+        using var ctx = _factory.GetDbContext();
         var audit = await ctx.AuditLogs.FirstAsync(a => a.EntityId == campus.Id);
-
         audit.Action.Should().Be("Update");
         audit.FaculdadeId.Should().Be(faculdade.Id);
     }
@@ -90,11 +84,8 @@ public class AuditIntegrationTests : IntegrationTestBase
         Configuration.AuditDisabled = true;
 
         // Assert
-        using var scope = _factory.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
-
+        using var ctx = _factory.GetDbContext();
         var audit = await ctx.AuditLogs.FirstOrDefaultAsync(a => a.EntityType != "Campus");
-
         audit.Should().BeNull();
     }
 }

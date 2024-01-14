@@ -13,8 +13,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_fazer_o_seed_do_banco_de_dados()
     {
         // Arrange
-        using var scope = _factory.Services.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        using var ctx = _factory.GetDbContext();
 
         DbSeed.NovaRoma.Cursos[1].Disciplinas = DbSeed.NovaRoma.Disciplinas.Take(31).ToList();
         var disciplinasDireito = DbSeed.NovaRoma.Disciplinas.Skip(31).Take(39).ToList();

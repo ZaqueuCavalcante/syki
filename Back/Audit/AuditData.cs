@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Text.Json;
+﻿using System.Text.Json;
+using Syki.Back.Configs;
 using Audit.EntityFramework;
 
 namespace Syki.Back.Audit;
@@ -27,7 +27,6 @@ public class AuditData
     public static JsonDocument NewAsJson(EventEntry entry)
     {
         var data = new AuditData(entry);
-        var serialized = JsonConvert.SerializeObject(data);
-        return JsonDocument.Parse(serialized);
+        return JsonDocument.Parse(data.Serialize());
     }
 }

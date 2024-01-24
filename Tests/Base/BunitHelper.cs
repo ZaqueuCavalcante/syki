@@ -31,16 +31,4 @@ public static class BunitHelper
         });
         return request;
     }
-
-    public static MockedRequest RespondJson<T>(this MockedRequest request, Func<T> contentProvider)
-    {
-        request.Respond(req =>
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK);
-            response.Content = new StringContent(JsonSerializer.Serialize(contentProvider()));
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            return response;
-        });
-        return request;
-    }
 }

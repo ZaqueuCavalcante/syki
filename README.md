@@ -6,8 +6,8 @@
 
 ## Database Modelling ER Diagram
 
-![ER](/Docs/images/ER_06.png "ER")
+![ER](/Docs/images/ER_07.png "ER")
 
 ## Guidelines
 
-Integridade Conceitual - Qual a PRINCIPAL FUNCIONALIDADE do software?
+Integridade Conceitual

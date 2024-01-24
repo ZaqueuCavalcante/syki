@@ -18,7 +18,7 @@ public class GradesService : IGradesService
             .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.CursoId);
 
         if (!cursoValido)
-            throw new DomainException(ExceptionMessages.DE0001);
+            throw DomainExceptions.DE0001();
 
         var grade = new Grade(
             faculdadeId,

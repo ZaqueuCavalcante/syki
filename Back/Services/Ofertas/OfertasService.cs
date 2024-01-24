@@ -26,7 +26,7 @@ public class OfertasService : IOfertasService
         var cursoOk = await _ctx.Cursos
             .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.CursoId);
         if (!cursoOk)
-            throw new DomainException(ExceptionMessages.DE0001);
+            throw DomainExceptions.DE0001();
 
         var gradeOk = await _ctx.Grades
             .AnyAsync(g => g.FaculdadeId == faculdadeId && g.Id == data.GradeId && g.CursoId == data.CursoId);

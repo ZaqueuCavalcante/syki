@@ -3,9 +3,7 @@ using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;

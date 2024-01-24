@@ -17,28 +17,23 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
     }
 
     public DbSet<AuditLog> AuditLogs { get; set; }
-
     public DbSet<Faculdade> Faculdades { get; set; }
     public DbSet<Campus> Campi { get; set; }
     public DbSet<Curso> Cursos { get; set; }
     public DbSet<Grade> Grades { get; set; }
     public DbSet<GradeDisciplina> GradesDisciplinas { get; set; }
     public DbSet<Disciplina> Disciplinas { get; set; }
-
     public DbSet<Oferta> Ofertas { get; set; }
     public DbSet<Turma> Turmas { get; set; }
     public DbSet<Livro> Livros { get; set; }
-
     public DbSet<Professor> Professores { get; set; }
     public DbSet<Aluno> Alunos { get; set; }
     public DbSet<Periodo> Periodos { get; set; }
-
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<UserNotification> UserNotifications { get; set; }
-
     public DbSet<CursoDisciplina> CursosDisciplinas { get; set; }
-
     public DbSet<ResetPassword> ResetPasswords { get; set; }
+    public DbSet<Message> Messages { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

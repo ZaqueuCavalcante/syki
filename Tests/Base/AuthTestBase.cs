@@ -12,18 +12,7 @@ public class AuthTestBase
     public void OneTimeSetUp()
     {
         _factory = new SykiWebApplicationFactory();
-    }
-
-    [SetUp]
-    public void SetUp()
-    {
         _client = _factory.CreateClient();
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        _client.Dispose();
     }
 
     [OneTimeTearDown]

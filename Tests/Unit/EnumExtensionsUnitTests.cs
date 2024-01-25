@@ -33,7 +33,7 @@ public class EnumExtensionsUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.TipoDeCursoEnumToDescription))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.TipoDeCursoEnumToDescription))]
     public void Shoud_get_enum_description((TipoDeCurso tipo, string description) data)
     {
         // Arrange / Act
@@ -44,7 +44,7 @@ public class EnumExtensionsUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.TipoDeCursoEnumForIsIn))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.TipoDeCursoEnumForIsIn))]
     public void Shoud_get_if_value_is_in_list((Enum value, bool isIn) data)
     {
         // Arrange / Act

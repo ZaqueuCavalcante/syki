@@ -12,7 +12,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        await client.Login("adm@syki.com", "Adm@123");
+        await client.LoginAsAdm();
 
         var body = new FaculdadeIn { Nome = "Nova Roma" };
 
@@ -28,7 +28,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        await client.Login("adm@syki.com", "Adm@123");
+        await client.LoginAsAdm();
 
         // Act
         await client.PostAsync("/faculdades", new FaculdadeIn { Nome = "Nova Roma" });

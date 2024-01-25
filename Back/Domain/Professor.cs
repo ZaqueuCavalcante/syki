@@ -1,4 +1,5 @@
 using Syki.Shared;
+using Syki.Back.Exceptions;
 
 namespace Syki.Back.Domain;
 
@@ -17,6 +18,16 @@ public class Professor
         Id = Guid.NewGuid();
         FaculdadeId = faculdadeId;
         UserId = userId;
+        SetNome(nome);
+    }
+
+    private void SetNome(string nome)
+    {
+        if (nome.IsEmpty() || nome.Length < 3)
+        {
+            throw DomainExceptions.DE0000();
+        }
+
         Nome = nome;
     }
 

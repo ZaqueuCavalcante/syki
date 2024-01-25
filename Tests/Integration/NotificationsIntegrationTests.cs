@@ -44,7 +44,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id });
         var oferta = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id });
 
-        var bodyAluno = new AlunoIn { Nome = "Zaqueu", Email = "zaqueu4@aluno.com", OfertaId = oferta.Id };
+        var bodyAluno = new AlunoIn { Nome = "Zaqueu", Email = TestData.Email, OfertaId = oferta.Id };
         var aluno = await client.PostAsync<AlunoOut>("/alunos", bodyAluno);
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
@@ -95,7 +95,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id });
         var oferta = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id });
 
-        var bodyAluno = new AlunoIn { Nome = "Zaqueu", Email = "zaqueu5@aluno.com", OfertaId = oferta.Id };
+        var bodyAluno = new AlunoIn { Nome = "Zaqueu", Email = TestData.Email, OfertaId = oferta.Id };
         var aluno = await client.PostAsync<AlunoOut>("/alunos", bodyAluno);
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };

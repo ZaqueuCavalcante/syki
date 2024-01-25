@@ -8,7 +8,7 @@ namespace Syki.Tests.Unit;
 public class GuidExtensionsUnitTests
 {
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.GuidsToHashCodes))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.GuidsToHashCodes))]
     public void Shoud_convert_guid_to_hash_code((Guid guid, int hashCode) data)
     {
         // Arrange / Act

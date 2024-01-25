@@ -20,6 +20,18 @@
                 Required="true"
                 RequiredError="Informe o nome do professor!"
             />
+            <MudTextField
+                OnlyValidateIfDirty="true"
+                Immediate="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-2"
+                @bind-Value="data.Email"
+                T="String"
+                Label="Email"
+                Required="true"
+                RequiredError="Informe o email do professor!"
+            />
         </MudForm>
     </DialogContent>
     <DialogActions>

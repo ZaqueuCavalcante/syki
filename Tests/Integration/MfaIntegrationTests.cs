@@ -9,7 +9,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllUsersRoles))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllUsersRoles))]
     public async Task Deve_retornar_a_mfa_key_independente_da_role_do_usuario(string role)
     {
         // Arrange
@@ -41,7 +41,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAdm))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAdm))]
     public async Task Deve_realizar_o_setup_da_mfa_independente_da_role_do_usuario(string role)
     {
         // Arrange

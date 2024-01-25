@@ -20,6 +20,8 @@ public class ProfessoresService : IProfessoresService
 
     public async Task<ProfessorOut> Create(Guid faculdadeId, ProfessorIn data)
     {
+        using var transaction = _ctx.Database.BeginTransaction();
+
         var userIn = new UserIn
         {
             Faculdade = faculdadeId,
@@ -34,6 +36,8 @@ public class ProfessoresService : IProfessoresService
 
         _ctx.Add(professor);
         await _ctx.SaveChangesAsync();
+
+        transaction.Commit();
 
         return professor.ToOut();
     }

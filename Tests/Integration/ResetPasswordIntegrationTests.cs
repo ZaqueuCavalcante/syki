@@ -167,7 +167,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidPasswords))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
     public async Task Nao_deve_resetar_a_senha_do_usuario_quando_a_senha_for_fraca(string password)
     {
         // Arrange

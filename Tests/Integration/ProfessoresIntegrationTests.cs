@@ -1,3 +1,4 @@
+using System.Net;
 using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
@@ -16,7 +17,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var body = new ProfessorIn { Nome = "Chico", Email = "chico1@prof.com" };
+        var body = new ProfessorIn { Nome = "Chico", Email = TestData.Email };
 
         // Act
         var professor = await client.PostAsync<ProfessorOut>("/professores", body);
@@ -24,6 +25,26 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         professor.Id.Should().NotBeEmpty();
         professor.Nome.Should().Be(body.Nome);
+    }
+
+    [Test]
+    public async Task Nao_deve_criar_um_professor_nem_seu_usuario_quando_der_erro()
+    {
+        // Arrange
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
+        await client.RegisterAndLogin(faculdade.Id, Academico);
+
+        var body = new ProfessorIn { Nome = "CC", Email = TestData.Email };
+
+        var response = await client.PostAsync("/professores", body.ToStringContent());
+
+        await client.LoginAsAdm();
+        var users = await client.GetAsync<List<UserOut>>("/users");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        users.FirstOrDefault(u => u.Email == body.Email).Should().BeNull();
     }
 
     [Test]
@@ -35,8 +56,8 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         // Act
-        await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = "chico2@prof.com" });
-        await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Maju", Email = "maju1@prof.com" });
+        await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
+        await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Maju", Email = TestData.Email });
 
         // Assert
         var professores = await client.GetAsync<List<ProfessorOut>>("/professores");
@@ -57,11 +78,11 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterUser(userUfpe);
 
         await client.Login(userNovaRoma.Email, userNovaRoma.Password);
-        var bodyNovaRoma = new ProfessorIn { Nome = "Chico", Email = "chico3@prof.com" };
+        var bodyNovaRoma = new ProfessorIn { Nome = "Chico", Email = TestData.Email };
         var professor = await client.PostAsync<CampusOut>("/professores", bodyNovaRoma);
 
         await client.Login(userUfpe.Email, userUfpe.Password);
-        var bodyUfpe = new ProfessorIn { Nome = "Maju", Email = "maju2@prof.com" };
+        var bodyUfpe = new ProfessorIn { Nome = "Maju", Email = TestData.Email };
         await client.PostAsync<CampusOut>("/professores", bodyUfpe);
 
         // Act

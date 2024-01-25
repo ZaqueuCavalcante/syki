@@ -9,7 +9,7 @@ namespace Syki.Tests.Auth;
 public class AuthForbiddenTests : AuthTestBase
 {
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_um_novo_aluno_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -24,7 +24,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAluno))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAluno))]
     public async Task Nao_deve_retornar_as_disciplinas_do_aluno_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -38,7 +38,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_os_alunos_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -52,7 +52,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_um_novo_campus_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -67,7 +67,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_editar_um_campus_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -82,7 +82,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_os_campus_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -96,7 +96,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_um_novo_curso_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -111,7 +111,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_os_cursos_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -125,7 +125,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_uma_nova_disciplina_quando_o_usuario_nao_esta_logado(string role)
     {
         // Arrange
@@ -140,7 +140,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_as_disciplinas_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -154,7 +154,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAdm))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAdm))]
     public async Task Nao_deve_criar_uma_nova_faculdade_quando_o_usuario_nao_esta_logado(string role)
     {
         // Arrange
@@ -169,7 +169,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAdm))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAdm))]
     public async Task Nao_deve_retornar_as_faculdades_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -183,7 +183,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_uma_nova_grade_quando_o_usuario_nao_esta_logado(string role)
     {
         // Arrange
@@ -198,7 +198,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_as_grades_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -212,7 +212,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAdm))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAdm))]
     public async Task Nao_deve_retornar_os_dados_de_index_adm_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -226,7 +226,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_os_dados_de_index_academico_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -240,7 +240,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAluno))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAluno))]
     public async Task Nao_deve_retornar_os_dados_de_index_aluno_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -254,7 +254,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_um_novo_livro_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -269,7 +269,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_os_livros_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -283,7 +283,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_uma_nova_notificacao_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -298,7 +298,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_todas_as_notificacoes_da_faculdade_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -312,7 +312,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_uma_nova_oferta_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -327,7 +327,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_as_ofertas_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -341,7 +341,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_um_novo_periodo_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -356,7 +356,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_os_periodos_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -370,7 +370,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_um_novo_professor_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -385,7 +385,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_os_professores_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -399,7 +399,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_criar_uma_nova_turma_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -414,7 +414,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAcademico))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
     public async Task Nao_deve_retornar_as_turmas_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -428,7 +428,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAdm))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAdm))]
     public async Task Nao_deve_criar_um_novo_usuario_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange
@@ -443,7 +443,7 @@ public class AuthForbiddenTests : AuthTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAdm))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAdm))]
     public async Task Nao_deve_retornar_os_usuarios_quando_o_usuario_nao_tem_permissao(string role)
     {
         // Arrange

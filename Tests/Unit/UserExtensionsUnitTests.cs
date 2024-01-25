@@ -40,7 +40,7 @@ public class UserExtensionsUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AuditPaths))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AuditPaths))]
     public void Shoud_return_if_path_is_login((PathString path, bool isAuditable) data)
     {
         // Arrange / Act

@@ -11,7 +11,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.AllRolesExceptAdm))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAdm))]
     public async Task Deve_registrar_um_novo_usuario_com_role_permitida(string role)
     {
         // Arrange
@@ -31,7 +31,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidRoles))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidRoles))]
     public async Task Nao_deve_registrar_um_novo_usuario_com_role_invalida(string role)
     {
         // Arrange
@@ -54,7 +54,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        await  client.Login("adm@syki.com", "Adm@123");
+        await client.LoginAsAdm();
 
         var body = UserIn.New(Guid.NewGuid(), Academico);
 
@@ -68,7 +68,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidEmails))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidEmails))]
     public async Task Nao_deve_registrar_um_novo_usuario_com_email_invalido(string email)
     {
         // Arrange
@@ -94,7 +94,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidPasswords))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
     public async Task Nao_deve_registrar_um_novo_usuario_com_senha_fraca(string password)
     {
         // Arrange

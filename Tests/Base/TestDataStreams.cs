@@ -4,8 +4,11 @@ using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Base;
 
-public static class TestDataStreams
+public static class TestData
 {
+    public static string Email => 
+        $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com";
+
     public static IEnumerable<object[]> ValidNames()
     {
         foreach (var name in new List<string>() { "Keu", "Maju", "Maria", "Naldinho Silva", })

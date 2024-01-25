@@ -21,6 +21,8 @@ public class AlunosService : IAlunosService
 
     public async Task<AlunoOut> Create(Guid faculdadeId, AlunoIn data)
     {
+        using var transaction = _ctx.Database.BeginTransaction();
+
         var ofertaOk = await _ctx.Ofertas
             .AnyAsync(o => o.FaculdadeId == faculdadeId && o.Id == data.OfertaId);
         if (!ofertaOk)
@@ -40,6 +42,8 @@ public class AlunosService : IAlunosService
 
         _ctx.Add(aluno);
         await _ctx.SaveChangesAsync();
+
+        transaction.Commit();
 
         return aluno.ToOut();
     }

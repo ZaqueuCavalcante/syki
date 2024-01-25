@@ -34,9 +34,14 @@ public static class HttpClientExtensions
         return response.AccessToken;
     }
 
-    public static async Task<FaculdadeOut> CreateFaculdade(this HttpClient client, string nome)
+    public static async Task LoginAsAdm(this HttpClient client)
     {
         await client.Login("adm@syki.com", "Adm@123");
+    }
+
+    public static async Task<FaculdadeOut> CreateFaculdade(this HttpClient client, string nome)
+    {
+        await client.LoginAsAdm();
 
         var body = new FaculdadeIn { Nome = nome };
 

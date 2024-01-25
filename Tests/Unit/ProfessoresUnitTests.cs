@@ -2,6 +2,8 @@ using Bogus;
 using NUnit.Framework;
 using Syki.Back.Domain;
 using FluentAssertions;
+using Syki.Tests.Base;
+using Syki.Back.Exceptions;
 
 namespace Syki.Tests.Unit;
 
@@ -82,6 +84,21 @@ public class ProfessoresUnitTests
 
         // Assert
         professores.ConvertAll(x => x.Id).Should().OnlyHaveUniqueItems();
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidNames))]
+    public void Nao_deve_criar_um_professor_com_nome_invalido(string nome)
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        var userId = Guid.NewGuid();
+
+        // Act
+        Action act = () => new Professor(faculdadeId, userId, nome);
+
+        // Assert
+        act.Should().Throw<DomainException>().WithMessage(ExceptionMessages.DE0000);
     }
 
     [Test]

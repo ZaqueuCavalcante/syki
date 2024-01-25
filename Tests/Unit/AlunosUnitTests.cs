@@ -123,7 +123,7 @@ public class AlunosUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.ValidNames))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.ValidNames))]
     public void Deve_criar_um_aluno_com_nome_valido(string nome)
     {
         // Arrange
@@ -139,7 +139,7 @@ public class AlunosUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidNames))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidNames))]
     public void Nao_deve_criar_um_aluno_com_nome_invalido(string nome)
     {
         // Arrange

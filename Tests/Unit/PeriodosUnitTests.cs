@@ -73,7 +73,7 @@ public class PeriodosUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.InvalidPeriods))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPeriods))]
     public void Nao_deve_criar_um_periodo_com_id_invalido(string id)
     {
         // Arrange
@@ -89,7 +89,7 @@ public class PeriodosUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.ValidPeriods))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.ValidPeriods))]
     public void Deve_criar_um_periodo_com_id_valido(string id)
     {
         // Arrange

@@ -9,7 +9,7 @@ namespace Syki.Tests.Unit;
 public class StringExtensionsUnitTests
 {
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.CamelCaseNames))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.CamelCaseNames))]
     public void Shoud_change_to_snake_case((string camel, string snake) data)
     {
         // Arrange / Act
@@ -20,7 +20,7 @@ public class StringExtensionsUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.FormatedStrings))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.FormatedStrings))]
     public void Shoud_change_to_only_numbers((string text, string numbers) data)
     {
         // Arrange / Act
@@ -31,7 +31,7 @@ public class StringExtensionsUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.TextsContains))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.TextsContains))]
     public void Shoud_return_true_because_serch_is_inside_some_text((string text1, string text2, string? search) data)
     {
         // Arrange / Act
@@ -42,7 +42,7 @@ public class StringExtensionsUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.TextsNotContains))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.TextsNotContains))]
     public void Shoud_return_false_because_serch_is_not_inside_some_text((string text1, string text2, string search) data)
     {
         // Arrange / Act
@@ -53,7 +53,7 @@ public class StringExtensionsUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestDataStreams), nameof(TestDataStreams.DecimalsStringsForFormat))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.DecimalsStringsForFormat))]
     public void Shoud_format_decimal_as_string((decimal number, string text) data)
     {
         // Arrange / Act

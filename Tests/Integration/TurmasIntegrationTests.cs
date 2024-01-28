@@ -27,7 +27,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var bodyPeriodo = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", bodyPeriodo);
 
-        var body = new TurmaIn { DisciplinaId = disciplina.Id, ProfessorId = professor.Id, Periodo = periodo.Id };
+        var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, Dia.Segunda, [ Hora.H07 ]);
 
         // Act
         var turma = await client.PostAsync<TurmaOut>("/turmas", body);
@@ -46,7 +46,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var body = new TurmaIn { DisciplinaId = Guid.NewGuid(), Periodo = "2024.1" };
+        var body = new TurmaIn(Guid.NewGuid(), Guid.NewGuid(), "2024.1", Dia.Segunda, [ Hora.H07 ]);
 
         // Act
         var response = await client.PostAsync("/turmas", body.ToStringContent());
@@ -68,7 +68,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
 
-        var body = new TurmaIn { DisciplinaId = disciplina.Id, Periodo = "2024.1" };
+        var body = new TurmaIn { DisciplinaId = disciplina.Id, Periodo = "2024.1", Horas = [] };
 
         // Act
         var response = await client.PostAsync("/turmas", body.ToStringContent());
@@ -93,7 +93,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var bodyProfessor = new ProfessorIn { Nome = "Chico", Email = TestData.Email };
         var professor = await client.PostAsync<ProfessorOut>("/professores", bodyProfessor);
 
-        var body = new TurmaIn { DisciplinaId = disciplina.Id, ProfessorId = professor.Id, Periodo = "2024.1" };
+        var body = new TurmaIn(disciplina.Id, professor.Id, "2024.1", Dia.Segunda, [ Hora.H07 ]);
 
         // Act
         var response = await client.PostAsync("/turmas", body.ToStringContent());
@@ -102,6 +102,34 @@ public partial class IntegrationTests : IntegrationTestBase
         var error = await response.DeserializeTo<ErrorOut>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         error.Message.Should().Be(ExceptionMessages.DE0003);       
+    }
+
+    [Test]
+    public async Task Nao_deve_criar_uma_turma_sem_horario()
+    {
+        // Arrange
+        var client = _factory.CreateClient();
+        var faculdade = await client.CreateFaculdade("Nova Roma");
+        await client.RegisterAndLogin(faculdade.Id, Academico);
+
+        var bodyDisciplina = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
+        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyDisciplina);
+
+        var bodyProfessor = new ProfessorIn { Nome = "Chico", Email = TestData.Email };
+        var professor = await client.PostAsync<ProfessorOut>("/professores", bodyProfessor);
+
+        var bodyPeriodo = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", bodyPeriodo);
+
+        var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, Dia.Segunda, []);
+
+        // Act
+        var response = await client.PostAsync("/turmas", body.ToStringContent());
+
+        // Assert
+        var error = await response.DeserializeTo<ErrorOut>();
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        error.Message.Should().Be(ExceptionMessages.DE0018);       
     }
 
     [Test]
@@ -121,7 +149,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var bodyPeriodo = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", bodyPeriodo);
 
-        var body = new TurmaIn { DisciplinaId = disciplina.Id, ProfessorId = professor.Id, Periodo = periodo.Id };
+        var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, Dia.Segunda, [ Hora.H07 ]);
         await client.PostAsync<TurmaOut>("/turmas", body);
 
         // Act

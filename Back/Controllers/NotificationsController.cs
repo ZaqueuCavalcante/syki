@@ -15,9 +15,9 @@ public class NotificationsController : ControllerBase
 
     [HttpPost("")]
     [Authorize(Roles = Academico)]
-    public async Task<IActionResult> Create([FromBody] NotificationIn body)
+    public async Task<IActionResult> Create([FromBody] NotificationIn data)
     {
-        var notification = await _service.Create(User.Facul(), body);
+        var notification = await _service.Create(User.Facul(), data);
 
         return Ok(notification);
     }

@@ -14,9 +14,9 @@ public class FaculdadesController : ControllerBase
     public FaculdadesController(IFaculdadesService service) => _service = service;
 
     [HttpPost("")]
-    public async Task<IActionResult> Create([FromBody] FaculdadeIn body)
+    public async Task<IActionResult> Create([FromBody] FaculdadeIn data)
     {
-        var faculdade = await _service.Create(body);
+        var faculdade = await _service.Create(data);
 
         return Ok(faculdade);
     }

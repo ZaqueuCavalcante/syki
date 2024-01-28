@@ -15,9 +15,9 @@ public class TurmasController : ControllerBase
     public TurmasController(ITurmasService service) => _service = service;
 
     [HttpPost("")]
-    public async Task<IActionResult> Create([FromBody] TurmaIn body)
+    public async Task<IActionResult> Create([FromBody] TurmaIn data)
     {
-        var turma = await _service.Create(User.Facul(), body);
+        var turma = await _service.Create(User.Facul(), data);
 
         return Ok(turma);
     }

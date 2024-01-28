@@ -15,9 +15,9 @@ public class PeriodosController : ControllerBase
     public PeriodosController(IPeriodosService service) => _service = service;
 
     [HttpPost("")]
-    public async Task<IActionResult> Create([FromBody] PeriodoIn body)
+    public async Task<IActionResult> Create([FromBody] PeriodoIn data)
     {
-        var periodo = await _service.Create(User.Facul(), body);
+        var periodo = await _service.Create(User.Facul(), data);
 
         return Ok(periodo);
     }

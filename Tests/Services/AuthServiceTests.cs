@@ -25,7 +25,7 @@ public class AuthServiceTests : BunitTestContext
         Services.AddScoped<SykiAuthStateProvider>();
         Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<SykiAuthStateProvider>());
 
-        var response = new LoginOut { AccessToken = AuthTestBase.JWTAcademico  };
+        var response = new LoginOut { AccessToken = AuthTestBase.JWTAcademico };
         var mock = Services.AddMockHttpClient();
         mock.When(HttpMethod.Post, "/users/login").RespondJson(response);
 

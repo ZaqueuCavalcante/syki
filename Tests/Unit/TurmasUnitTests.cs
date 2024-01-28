@@ -1,3 +1,4 @@
+using Syki.Shared;
 using NUnit.Framework;
 using Syki.Back.Domain;
 using FluentAssertions;
@@ -16,7 +17,7 @@ public class TurmasUnitTests
         const string periodo = "2023.2";
 
         // Act
-        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo);
+        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo, []);
 
         // Assert
         turma.Id.Should().NotBeEmpty();
@@ -32,7 +33,7 @@ public class TurmasUnitTests
         const string periodo = "2023.2";
 
         // Act
-        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo);
+        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo, []);
 
         // Assert
         turma.FaculdadeId.Should().Be(faculdadeId);
@@ -48,7 +49,7 @@ public class TurmasUnitTests
         const string periodo = "2023.2";
 
         // Act
-        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo);
+        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo, []);
 
         // Assert
         turma.DisciplinaId.Should().Be(disciplinaId);
@@ -64,7 +65,7 @@ public class TurmasUnitTests
         const string periodo = "2023.2";
 
         // Act
-        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo);
+        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo, []);
 
         // Assert
         turma.ProfessorId.Should().Be(professorId);
@@ -80,10 +81,27 @@ public class TurmasUnitTests
         const string periodo = "2023.2";
 
         // Act
-        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo);
+        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo, []);
 
         // Assert
         turma.Periodo.Should().Be(periodo);
+    }
+
+    [Test]
+    public void Deve_criar_uma_turma_com_horarios_corretos()
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        var disciplinaId = Guid.NewGuid();
+        var professorId = Guid.NewGuid();
+        const string periodo = "2023.2";
+        var horarios = new List<Horario>() { new(Dia.Segunda, []) };
+
+        // Act
+        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo, horarios);
+
+        // Assert
+        turma.Horarios.Should().BeEquivalentTo(horarios);
     }
 
     [Test]
@@ -99,7 +117,7 @@ public class TurmasUnitTests
         var disciplina = new Disciplina(faculdadeId, "Banco de Dados", 72);
         var professor = new Professor(faculdadeId, userId, "Chico Science");
 
-        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo)
+        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo, [])
         {
             Disciplina = disciplina,
             Professor = professor,

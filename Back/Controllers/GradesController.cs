@@ -15,9 +15,9 @@ public class GradesController : ControllerBase
     public GradesController(IGradesService service) => _service = service;
 
     [HttpPost("")]
-    public async Task<IActionResult> Create([FromBody] GradeIn body)
+    public async Task<IActionResult> Create([FromBody] GradeIn data)
     {
-        var grade = await _service.Create(User.Facul(), body);
+        var grade = await _service.Create(User.Facul(), data);
 
         return Ok(grade);
     }

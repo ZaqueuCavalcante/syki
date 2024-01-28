@@ -11,20 +11,25 @@ public class Turma
     public Guid ProfessorId { get; set; }
     public Professor Professor { get; set; }
     public string Periodo { get; set; }
-    public List<Aluno> Alunos { get; set; }
     public List<Aula> Aulas { get; set; }
+    public List<Aluno> Alunos { get; set; }
+    public List<Horario> Horarios { get; set; }
+
+    private Turma() {}
 
     public Turma(
         Guid faculdadeId,
         Guid disciplinaId,
         Guid professorId,
-        string periodo
+        string periodo,
+        List<Horario> horarios
     ) {
         Id = Guid.NewGuid();
         FaculdadeId = faculdadeId;
         DisciplinaId = disciplinaId;
         ProfessorId = professorId;
         Periodo = periodo;
+        Horarios = horarios;
     }
 
     public TurmaOut ToOut()

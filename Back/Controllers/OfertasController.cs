@@ -15,9 +15,9 @@ public class OfertasController : ControllerBase
 
     [HttpPost("")]
     [Authorize(Roles = Academico)]
-    public async Task<IActionResult> Create([FromBody] OfertaIn body)
+    public async Task<IActionResult> Create([FromBody] OfertaIn data)
     {
-        var oferta = await _service.Create(User.Facul(), body);
+        var oferta = await _service.Create(User.Facul(), data);
 
         return Ok(oferta);
     }

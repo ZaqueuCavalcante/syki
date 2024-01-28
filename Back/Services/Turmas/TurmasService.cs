@@ -28,11 +28,16 @@ public class TurmasService : ITurmasService
         if (!periodoOk)
             throw new DomainException(ExceptionMessages.DE0003);
 
+        if (data.Horas.Count == 0)
+            throw new DomainException(ExceptionMessages.DE0018);
+        var horarios = new List<Horario>() { new(data.Dia, data.Horas) };
+
         var turma = new Turma(
             faculdadeId,
             data.DisciplinaId,
             data.ProfessorId,
-            data.Periodo
+            data.Periodo,
+            horarios
         );
 
         _ctx.Turmas.Add(turma);

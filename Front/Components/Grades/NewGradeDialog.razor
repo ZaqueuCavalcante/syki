@@ -37,7 +37,10 @@
                     }
                 </MudSelect>
             </MudStack>
-            <MudContainer Class="mt-4 px-0">
+            
+            <MudDivider Class="my-4"/>
+
+            <MudContainer Class="px-0">
                 <MudGrid Justify="Justify.FlexStart">
                     <MudItem xs="12">
                         <CascadingValue Name="Disciplinas" Value="@Disciplinas">
@@ -53,11 +56,11 @@
                             IconSize="Size.Large"
                             Variant="Variant.Outlined"
                             FullWidth="true"
-                            Class="mt-4 border-dashed border-2 mud-border-secundary"
+                            Class="mt-2 border-dashed border-2 mud-border-secundary"
                             Color="Color.Primary"
                             @onclick="NewGradeDisciplina"
                         >
-                            New
+                            NOVA DISCIPLINA
                         </MudButton>
                     </MudItem>
                 </MudGrid>

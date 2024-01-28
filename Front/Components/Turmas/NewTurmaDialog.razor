@@ -12,6 +12,7 @@
                     <MudAutocomplete
                         T="DisciplinaOut"
                         MaxItems="50"
+                        Class="py-0 my-0"
                         SearchFunc="@SearchDisciplina"
                         Dense="true"
                         Margin="Margin.Dense"
@@ -25,7 +26,17 @@
                     />
                 </MudItem>
                 <MudItem xs="8">
-                        <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="_professor" Label="Professor" Required="true" RequiredError="Informe o professor!" AdornmentColor="Color.Primary">
+                        <MudSelect
+                            Dense="true"
+                            Margin="Margin.Dense"
+                            Class="py-0 my-0"
+                            Variant="Variant.Outlined"
+                            @bind-Value="_professor"
+                            Label="Professor"
+                            Required="true"
+                            RequiredError="Informe o professor!"
+                            AdornmentColor="Color.Primary"
+                        >
                         @foreach (ProfessorOut? item in Professores)
                         {
                             <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
@@ -33,10 +44,57 @@
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="4">
-                    <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período!" AdornmentColor="Color.Primary">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Class="py-0 my-0"
+                        Variant="Variant.Outlined"
+                        @bind-Value="_periodo"
+                        Label="Período"
+                        Required="true"
+                        RequiredError="Informe o período!"
+                        AdornmentColor="Color.Primary"
+                    >
                         @foreach (string? item in Periodos)
                         {
                             <MudSelectItem Value="@item">@item</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="4">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Class="py-0 my-0"
+                        Variant="Variant.Outlined"
+                        @bind-Value="_dia"
+                        Label="Dia"
+                        Required="true"
+                        RequiredError="Informe o dia!"
+                        AdornmentColor="Color.Primary"
+                    >
+                        @foreach (Dia? dia in Enum.GetValues(typeof(Dia)))
+                        {
+                            <MudSelectItem Value="@dia">@dia.GetDescription()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="8">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        Class="py-0 my-0"
+                        T="Hora?"
+                        Label="Horários"
+                        MultiSelection="true"
+                        @bind-SelectedValues="_horarios"
+                        AnchorOrigin="Origin.BottomCenter"
+                    >
+                        @foreach (Hora? horario in Enum.GetValues(typeof(Hora)))
+                        {
+                            horario.ToString();
+                            <MudSelectItem Value="@horario">@horario.GetDescription()</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>
@@ -67,6 +125,9 @@
     List<ProfessorOut> Professores = [];
     List<string> Periodos = [];
     List<AlunoOut> Alunos = [];
+
+    Dia? _dia;
+    IEnumerable<Hora?> _horarios { get; set; } = new HashSet<Hora?>() { };
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }

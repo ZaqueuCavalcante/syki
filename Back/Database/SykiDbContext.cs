@@ -33,7 +33,6 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
     public DbSet<UserNotification> UserNotifications { get; set; }
     public DbSet<CursoDisciplina> CursosDisciplinas { get; set; }
     public DbSet<ResetPassword> ResetPasswords { get; set; }
-    public DbSet<Message> Messages { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -54,5 +53,10 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
         {
             entity.SetTableName(entity.GetTableName()!.ToSnakeCase().Replace("asp_net_", ""));
         }
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<Enum>().HaveConversion<string>();
     }
 }

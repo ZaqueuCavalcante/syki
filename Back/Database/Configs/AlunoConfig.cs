@@ -28,9 +28,6 @@ public class AlunoConfig : IEntityTypeConfiguration<Aluno>
 
                     ad.HasOne<Aluno>().WithMany().HasForeignKey(x => x.AlunoId);
                     ad.HasOne<Disciplina>().WithMany().HasForeignKey(x => x.DisciplinaId);
-
-                    ad.Property(c => c.Situacao)
-                        .HasConversion(new EnumToStringConverter<Situacao>());
                 }
             );
     }

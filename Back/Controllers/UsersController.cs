@@ -25,9 +25,9 @@ public class UsersController : ControllerBase
 
     [HttpPost()]
     [Authorize(Roles = Adm)]
-    public async Task<IActionResult> Register([FromBody] UserIn body)
+    public async Task<IActionResult> Register([FromBody] UserIn data)
     {
-        var user = await _authService.Register(body);
+        var user = await _authService.Register(data);
 
         return Ok(user);
     }
@@ -43,19 +43,19 @@ public class UsersController : ControllerBase
 
     [Authorize]
     [HttpPost("mfa-setup")]
-    public async Task<IActionResult> SetupMfa([FromBody] MfaSetupIn body)
+    public async Task<IActionResult> SetupMfa([FromBody] MfaSetupIn data)
     {
-        var ok = await _authService.SetupMfa(User.Id(), body.Token);
+        var ok = await _authService.SetupMfa(User.Id(), data.Token);
 
         return Ok(ok);
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginIn body)
+    public async Task<IActionResult> Login([FromBody] LoginIn data)
     {
         var result = await _signInManager.PasswordSignInAsync(
-            userName: body.Email,
-            password: body.Password,
+            userName: data.Email,
+            password: data.Password,
             isPersistent: false,
             lockoutOnFailure: false
         );
@@ -70,15 +70,15 @@ public class UsersController : ControllerBase
             return BadRequest(new LoginOut { RequiresTwoFactor = true });
         }
 
-        var jwt = await _authService.GenerateAccessToken(body.Email);
+        var jwt = await _authService.GenerateAccessToken(data.Email);
 
         return Ok(new LoginOut { AccessToken = jwt });
     }
 
     [HttpPost("login-mfa")]
-    public async Task<IActionResult> LoginMfa([FromBody] LoginMfaIn body)
+    public async Task<IActionResult> LoginMfa([FromBody] LoginMfaIn data)
     {
-        var token = body.Code!.OnlyNumbers();
+        var token = data.Code!.OnlyNumbers();
         var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(token, false, false);
 
         if (!result.Succeeded)
@@ -94,9 +94,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("reset-password")]
-    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordIn body)
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordIn data)
     {
-        var ok = await _authService.ResetPassword(body);
+        var ok = await _authService.ResetPassword(data);
 
         return Ok(ok);
     }

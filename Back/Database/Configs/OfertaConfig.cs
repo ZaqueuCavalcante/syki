@@ -27,9 +27,6 @@ public class OfertaConfig : IEntityTypeConfiguration<Oferta>
             .WithMany()
             .HasForeignKey(co => new { co.Periodo, co.FaculdadeId });
 
-        oferta.Property(c => c.Turno)
-            .HasConversion(new EnumToStringConverter<Turno>());
-
         oferta.HasMany<Aluno>()
             .WithOne(a => a.Oferta)
             .HasForeignKey(a => a.OfertaId);

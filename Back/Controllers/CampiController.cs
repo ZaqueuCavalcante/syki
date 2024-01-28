@@ -15,17 +15,17 @@ public class CampiController : ControllerBase
     public CampiController(ICampiService service) => _service = service;
 
     [HttpPost("")]
-    public async Task<IActionResult> Create([FromBody] CampusIn body)
+    public async Task<IActionResult> Create([FromBody] CampusIn data)
     {
-        var campus = await _service.Create(User.Facul(), body);
+        var campus = await _service.Create(User.Facul(), data);
 
         return Ok(campus);
     }
 
     [HttpPut("")]
-    public async Task<IActionResult> Update([FromBody] CampusOut body)
+    public async Task<IActionResult> Update([FromBody] CampusOut data)
     {
-        var campus = await _service.Update(User.Facul(), body);
+        var campus = await _service.Update(User.Facul(), data);
 
         return Ok(campus);
     }

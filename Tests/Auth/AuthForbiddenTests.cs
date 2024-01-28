@@ -1,5 +1,4 @@
 using System.Net;
-using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
@@ -14,10 +13,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new AlunoIn { Nome = "Zaqueu" };
 
         // Act
-        var response = await _client.PostAsync("/alunos", body.ToStringContent());
+        var response = await _client.PostAsync("/alunos", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -57,10 +55,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
 
         // Act
-        var response = await _client.PostAsync("/campi", body.ToStringContent());
+        var response = await _client.PostAsync("/campi", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -72,10 +69,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
 
         // Act
-        var response = await _client.PutAsync("/campi", body.ToStringContent());
+        var response = await _client.PutAsync("/campi", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -101,10 +97,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" };
 
         // Act
-        var response = await _client.PostAsync("/cursos", body.ToStringContent());
+        var response = await _client.PostAsync("/cursos", null);
         
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -130,10 +125,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
 
         // Act
-        var response = await _client.PostAsync("/disciplinas", body.ToStringContent());
+        var response = await _client.PostAsync("/disciplinas", null);
         
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -159,10 +153,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new FaculdadeIn { Nome = "Nova Roma" };
 
         // Act
-        var response = await _client.PostAsync("/faculdades", body.ToStringContent());
+        var response = await _client.PostAsync("/faculdades", null);
         
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -188,10 +181,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new GradeIn { Nome = "Grade ADS - 1.0" };
 
         // Act
-        var response = await _client.PostAsync("/grades", body.ToStringContent());
+        var response = await _client.PostAsync("/grades", null);
         
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -259,10 +251,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new LivroIn { Titulo = "Manual de DevOps" };
 
         // Act
-        var response = await _client.PostAsync("/livros", body.ToStringContent());
+        var response = await _client.PostAsync("/livros", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -288,10 +279,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
 
         // Act
-        var response = await _client.PostAsync("/notifications", body.ToStringContent());
+        var response = await _client.PostAsync("/notifications", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -317,10 +307,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new OfertaIn { };
 
         // Act
-        var response = await _client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await _client.PostAsync("/ofertas", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -346,10 +335,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) };
 
         // Act
-        var response = await _client.PostAsync("/periodos", body.ToStringContent());
+        var response = await _client.PostAsync("/periodos", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -375,10 +363,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new ProfessorIn { Nome = "Chico" };
 
         // Act
-        var response = await _client.PostAsync("/professores", body.ToStringContent());
+        var response = await _client.PostAsync("/professores", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -404,10 +391,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new TurmaIn { Periodo = "2024.1" };
 
         // Act
-        var response = await _client.PostAsync("/turmas", body.ToStringContent());
+        var response = await _client.PostAsync("/turmas", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -433,10 +419,9 @@ public class AuthForbiddenTests : AuthTestBase
     {
         // Arrange
         Login(role);
-        var body = new UserIn { Name = "Zaqueu" };
 
         // Act
-        var response = await _client.PostAsync("/users", body.ToStringContent());
+        var response = await _client.PostAsync("/users", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);

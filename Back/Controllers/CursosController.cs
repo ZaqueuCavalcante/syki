@@ -15,9 +15,9 @@ public class CursosController : ControllerBase
     public CursosController(ICursosService service) => _service = service;
 
     [HttpPost("")]
-    public async Task<IActionResult> Create([FromBody] CursoIn body)
+    public async Task<IActionResult> Create([FromBody] CursoIn data)
     {
-        var curso = await _service.Create(User.Facul(), body);
+        var curso = await _service.Create(User.Facul(), data);
 
         return Ok(curso);
     }

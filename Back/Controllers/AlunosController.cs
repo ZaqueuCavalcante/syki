@@ -15,9 +15,9 @@ public class AlunosController : ControllerBase
 
     [HttpPost("")]
     [Authorize(Roles = Academico)]
-    public async Task<IActionResult> Create([FromBody] AlunoIn body)
+    public async Task<IActionResult> Create([FromBody] AlunoIn data)
     {
-        var aluno = await _service.Create(User.Facul(), body);
+        var aluno = await _service.Create(User.Facul(), data);
 
         return Ok(aluno);
     }

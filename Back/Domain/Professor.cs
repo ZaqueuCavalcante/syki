@@ -36,7 +36,6 @@ public class Professor
         return new ProfessorOut
         {
             Id = Id,
-            UserId = UserId,
             Nome = Nome,
         };
     }

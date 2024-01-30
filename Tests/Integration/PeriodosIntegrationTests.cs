@@ -38,7 +38,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
 
         // Assert
-        var periodos = await client.GetAsync<List<string>>("/periodos");
+        var periodos = await client.GetAsync<List<PeriodoOut>>("/periodos");
         periodos.Should().HaveCount(2);
     }
 
@@ -67,8 +67,8 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.Login(userNovaRoma.Email, userNovaRoma.Password);
 
         // Assert
-        var periodos = await client.GetAsync<List<string>>("/periodos");
+        var periodos = await client.GetAsync<List<PeriodoOut>>("/periodos");
         periodos.Should().HaveCount(1);
-        periodos[0].Should().Be(periodo.Id);
+        periodos[0].Id.Should().Be(periodo.Id);
     }
 }

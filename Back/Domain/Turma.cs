@@ -34,11 +34,14 @@ public class Turma
 
     public TurmaOut ToOut()
     {
+        var horario = Horarios.FirstOrDefault();
         return new TurmaOut
         {
             Disciplina = Disciplina.Nome,
             Professor = Professor.Nome,
             Periodo = Periodo,
+            Dia = horario != null ? horario.Dia.GetDescription() : "",
+            Horas = horario != null ?  string.Join(", ", horario.Horas.ConvertAll(h => h.ToString().OnlyNumbers())) : "",
         };
     }
 }

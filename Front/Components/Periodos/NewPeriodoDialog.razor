@@ -1,0 +1,91 @@
+<MudDialog Class="pb-2">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
+            Novo Período
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="_form">
+            <MudTextField
+                OnlyValidateIfDirty="true"
+                Immediate="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-4"
+                AutoFocus="true"
+                @bind-Value="data.Id"
+                Counter="6"
+                MaxLength="6"
+                HelperText="Formato de exemplo: 2024.1"
+                T="String"
+                Label="Id"
+                Required="true"
+                RequiredError="Informe o id do período!"
+            />
+            <MudStack Row="true">
+                <MudDatePicker
+                    Label="Início"
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    Editable="true"
+                    Required="true"
+                    RequiredError="Informe a data de início do período!"
+                    @bind-Date="start"
+                    Mask="@(new DateMask("dd/MM/yyyy"))"
+                    DateFormat="dd/MM/yyyy"
+                    Placeholder="dd/MM/yyyy"
+                />
+                <MudDatePicker
+                    Label="Fim"
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    Editable="true"
+                    Required="true"
+                    RequiredError="Informe a data de fim do período!"
+                    @bind-Date="end"
+                    Mask="@(new DateMask("dd/MM/yyyy"))"
+                    DateFormat="dd/MM/yyyy"
+                    Placeholder="dd/MM/yyyy"
+                />
+            </MudStack>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="Cancel" />
+        <MudSpacer />
+        <DialogSaveButton OnClick="Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+@code
+{
+    private MudForm _form;
+
+    private DateTime? start;
+    private DateTime? end;
+    private PeriodoIn data = new();
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    async Task Submit()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        data.Start = DateOnly.FromDateTime(start!.Value);
+        data.End = DateOnly.FromDateTime(end!.Value);
+
+        await Http.PostAsJsonAsync("/periodos", data);
+
+        MudDialog.Close(DialogResult.Ok(true));
+
+        Snackbar.Add("Período cadastrado com sucesso!", Severity.Success);
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

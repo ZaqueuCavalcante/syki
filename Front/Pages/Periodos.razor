@@ -1,17 +1,17 @@
-﻿@page "/turmas"
+﻿@page "/periodos"
 @attribute [Authorize(Roles = "Academico")]
 
-<PageTitle>Turmas</PageTitle>
+<PageTitle>Períodos</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="Turmas" ButtonText="Nova Turma" OnClick="OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.CalendarMonth" Title="Períodos" ButtonText="Novo Período" OnClick="OpenDialog"/>
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
-        <MudText>Em uma mesma turma podem estudar alunos de diferentes cursos.</MudText>
+        <MudText>Utilize os períodos para organizar as informações durante o ano letivo.</MudText>
     </MudAlert>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_turmas" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_periodos" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -19,7 +19,7 @@
                     Margin="Margin.Dense"
                     Variant="Variant.Outlined"
                     @bind-Value="_searchString"
-                    Placeholder="Busque por disciplina, professor ou período"
+                    Placeholder="Busque por ano"
                     Adornment="Adornment.Start"
                     Immediate="true"
                     AdornmentIcon="@Icons.Material.Filled.Search"
@@ -28,19 +28,17 @@
                 />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Disciplina" Title="Disciplina" />
-                <PropertyColumn Property="x => x.Professor" Title="Professor" />
-                <PropertyColumn Property="x => x.Periodo" Title="Período" />
-                <PropertyColumn Property="x => x.Dia" Title="Dia" />
-                <PropertyColumn Property="x => x.Horas" Title="Horas" />
+                <PropertyColumn Property="x => x.Id" Title="Id" />
+                <PropertyColumn Property="x => x.Start" Title="Início" />
+                <PropertyColumn Property="x => x.End" Title="Fim" />
             </Columns>
 
             <NoRecordsContent>
-                Não existem turmas cadastradas ainda.
+                Não existem períodos cadastrados ainda.
             </NoRecordsContent>
 
             <PagerContent>
-                <MudDataGridPager T="TurmaOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+                <MudDataGridPager T="PeriodoOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -53,17 +51,16 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<TurmaOut> _turmas = [];
+    private List<PeriodoOut> _periodos = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _turmas = await Http.GetFromJsonAsync<List<TurmaOut>>("/turmas") ?? [];
+        _periodos = await Http.GetFromJsonAsync<List<PeriodoOut>>("/periodos") ?? [];
         _loading = false;
     }
 
-    private Func<TurmaOut, bool> _quickFilter => x =>
-        _searchString.IsIn(x.Disciplina, x.Professor, x.Periodo);
+    private Func<PeriodoOut, bool> _quickFilter => x => _searchString.IsIn(x.Id);
 
     private async Task OpenDialog()
     {
@@ -71,7 +68,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewTurmaDialog>("", options);
+        var dialog = await DialogService.ShowAsync<NewPeriodoDialog>("", options);
 
         var result = await dialog.Result;
 

@@ -27,6 +27,6 @@ public class PeriodosController : ControllerBase
     {
         var periodos = await _service.GetAll(User.Facul());
 
-        return Ok(periodos.ConvertAll(p => p.Id));
+        return Ok(periodos);
     }
 }

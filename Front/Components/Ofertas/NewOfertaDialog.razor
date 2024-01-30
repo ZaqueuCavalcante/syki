@@ -18,7 +18,7 @@
                 </MudItem>
                 <MudItem xs="3">
                     <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-4" @bind-Value="_periodo" Label="Período" Required="true" RequiredError="Informe o período do curso!" AdornmentColor="Color.Primary">
-                        @foreach (string? item in Periodos)
+                        @foreach (string? item in Periodos.ConvertAll(p => p.Id))
                         {
                             <MudSelectItem Value="@item">@item</MudSelectItem>
                         }
@@ -94,7 +94,7 @@
     List<CampusOut> Campi = [];
     List<CursoOut> Cursos = [];
     List<GradeOut> Grades = [];
-    List<string> Periodos = [];
+    List<PeriodoOut> Periodos = [];
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
@@ -105,7 +105,7 @@
             Task.Run(async () => Campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? []),
             Task.Run(async () => Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? []),
             Task.Run(async () => Grades = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? []),
-            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? []),
+            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<PeriodoOut>>("/periodos") ?? []),
         });
     }
 

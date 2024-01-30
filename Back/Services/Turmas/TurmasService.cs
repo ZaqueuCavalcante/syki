@@ -46,6 +46,7 @@ public class TurmasService : ITurmasService
         turma = await _ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Professor)
+            .Include(t => t.Horarios)
             .FirstAsync(x => x.Id == turma.Id);
 
         return turma.ToOut();
@@ -56,6 +57,7 @@ public class TurmasService : ITurmasService
         var turmas = await _ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Professor)
+            .Include(t => t.Horarios)
             .Where(c => c.FaculdadeId == faculdadeId)
             .ToListAsync();
 

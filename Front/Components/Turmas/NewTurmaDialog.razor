@@ -55,7 +55,7 @@
                         RequiredError="Informe o período!"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (string? item in Periodos)
+                        @foreach (string? item in Periodos.ConvertAll(p => p.Id))
                         {
                             <MudSelectItem Value="@item">@item</MudSelectItem>
                         }
@@ -123,7 +123,7 @@
 
     List<DisciplinaOut> Disciplinas = [];
     List<ProfessorOut> Professores = [];
-    List<string> Periodos = [];
+    List<PeriodoOut> Periodos = [];
     List<AlunoOut> Alunos = [];
 
     Dia? _dia;
@@ -136,7 +136,7 @@
     {
         await Task.WhenAll(new Task[] { 
             Task.Run(async () => Professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? []),
-            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<string>>("/periodos") ?? []),
+            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<PeriodoOut>>("/periodos") ?? []),
             Task.Run(async () => Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? []),
             Task.Run(async () => Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? []),
         });
@@ -162,6 +162,8 @@
             DisciplinaId = _disciplina!.Id,
             ProfessorId = _professor!.Id,
             Periodo = _periodo!,
+            Dia = _dia!.Value,
+            Horas = _horarios.ToList().ConvertAll(h => h!.Value),
         };
         await Http.PostAsJsonAsync("/turmas", data);
 

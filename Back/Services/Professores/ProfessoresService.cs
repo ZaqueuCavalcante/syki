@@ -44,10 +44,21 @@ public class ProfessoresService : IProfessoresService
 
     public async Task<List<ProfessorOut>> GetAll(Guid faculdadeId)
     {
-        var professores = await _ctx.Professores
-            .Where(c => c.FaculdadeId == faculdadeId)
-            .ToListAsync();
+        FormattableString sql = $@"
+            SELECT
+                p.id,
+                p.nome,
+                u.email
+            FROM
+                syki.professores p
+            INNER JOIN
+                syki.users u ON u.id = p.user_id
+            WHERE
+                u.faculdade_id = {faculdadeId}
+        ";
 
-        return professores.ConvertAll(p => p.ToOut());
+        var professores = await _ctx.Database.SqlQuery<ProfessorOut>(sql).ToListAsync();
+
+        return professores;
     }
 }

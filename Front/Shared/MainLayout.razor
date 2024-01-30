@@ -25,7 +25,7 @@
         </MudLayout>
     </Authorized>
     <NotAuthorized>
-        @if (Nav.Uri.ToLower().Contains("login") || Nav.Uri.ToLower().Contains("register"))
+        @if (Nav.Uri.ToLower().Contains("login") || Nav.Uri.ToLower().Contains("reset-password"))
         {
             <MudLayout>
                 <MudMainContent>

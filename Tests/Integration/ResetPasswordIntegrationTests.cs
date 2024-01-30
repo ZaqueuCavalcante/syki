@@ -23,16 +23,17 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await client.GetResetPasswordToken(user.Id);
 
         // Assert
-        token!.Length.Should().Be(240);
+        token!.Length.Should().Be(36);
     }
 
     [Test]
-    public async Task Deve_salvar_o_reset_password_ao_buscar_o_token_de_reset_de_senha()
+    public async Task Deve_salvar_o_reset_password_ao_criar_um_usuario()
     {
         // Arrange
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
         var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+
         var token = await client.GetResetPasswordToken(user.Id);
         using var ctx = _factory.GetDbContext();
 
@@ -40,7 +41,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var reset = await ctx.ResetPasswords.FirstAsync(r => r.UserId == user.Id);
 
         // Assert
-        reset.Token.Should().Be(token);
+        reset.Id.Should().Be(token);
     }
 
     [Test]
@@ -73,7 +74,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(ExceptionMessages.DE0016); 
+        error.Message.Should().Be(Throw.DE0016); 
     }
 
     [Test]
@@ -163,7 +164,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(ExceptionMessages.DE0017); 
+        error.Message.Should().Be(Throw.DE0017); 
     }
 
     [Test]
@@ -186,6 +187,6 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(ExceptionMessages.DE0012); 
+        error.Message.Should().Be(Throw.DE0012); 
     }
 }

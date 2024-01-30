@@ -1,6 +1,6 @@
 namespace Syki.Back.Exceptions;
 
-public static class ExceptionMessages
+public static class Throw
 {
     public const string DE0000 = "Nome inválido.";
     public const string DE0001 = "Curso inválido.";
@@ -21,4 +21,9 @@ public static class ExceptionMessages
     public const string DE0016 = "Usuário não encontrado.";
     public const string DE0017 = "Reset token inválido.";
     public const string DE0018 = "Horário inválido.";
+
+    public static void Now(this string message)
+    {
+        throw new DomainException(message);
+    }
 }

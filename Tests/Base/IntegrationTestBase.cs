@@ -31,13 +31,7 @@ public class IntegrationTestBase
 
         var _userManager = scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
 
-        var user = new SykiUser
-        {
-            Name = "Syki Adm",
-            UserName = "adm@syki.com",
-            Email = "adm@syki.com",
-            FaculdadeId = Guid.Empty,
-        };
+        var user = new SykiUser(Guid.Empty, "Syki Adm", "adm@syki.com");
 
         await _userManager.CreateAsync(user, "Adm@123");
         await _userManager.AddToRoleAsync(user, Adm);

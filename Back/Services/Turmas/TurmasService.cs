@@ -16,20 +16,20 @@ public class TurmasService : ITurmasService
         var disciplinaOk = await _ctx.Disciplinas
             .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.DisciplinaId);
         if (!disciplinaOk)
-            throw new DomainException(ExceptionMessages.DE0002);
+            Throw.DE0002.Now();
 
         var professorOk = await _ctx.Professores
             .AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.ProfessorId);
         if (!professorOk)
-            throw new DomainException(ExceptionMessages.DE0015);
+            Throw.DE0015.Now();
 
         var periodoOk = await _ctx.Periodos
             .AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.Periodo);
         if (!periodoOk)
-            throw new DomainException(ExceptionMessages.DE0003);
+            Throw.DE0003.Now();
 
         if (data.Horas.Count == 0)
-            throw new DomainException(ExceptionMessages.DE0018);
+            Throw.DE0018.Now();
         var horarios = new List<Horario>() { new(data.Dia, data.Horas) };
 
         var turma = new Turma(

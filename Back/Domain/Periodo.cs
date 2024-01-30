@@ -30,25 +30,25 @@ public class Periodo
         var numbers = id.OnlyNumbers();
 
         if (numbers.Length != 5)
-            throw new DomainException(ExceptionMessages.DE0003);
+            Throw.DE0003.Now();
 
         var year = int.Parse(numbers.Substring(0, 4));
         var digit = int.Parse(numbers.Substring(4, 1));
 
         if (year < 1970 || year > 2070)
-            throw new DomainException(ExceptionMessages.DE0003);
+            Throw.DE0003.Now();
 
         if (digit < 1 || digit > 2)
-            throw new DomainException(ExceptionMessages.DE0003);
+            Throw.DE0003.Now();
 
         if (start.Year != year)
-            throw new DomainException(ExceptionMessages.DE0004);
+            Throw.DE0004.Now();
 
         if (end.Year != year)
-            throw new DomainException(ExceptionMessages.DE0005);
+            Throw.DE0005.Now();
 
         if (!(start < end))
-            throw new DomainException(ExceptionMessages.DE0006);
+            Throw.DE0006.Now();
 
         return $"{year}.{digit}";
     }

@@ -79,7 +79,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(ExceptionMessages.DE0009);  
+        error.Message.Should().Be(Throw.DE0009);  
     }
 
     [Test]

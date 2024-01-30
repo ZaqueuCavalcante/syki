@@ -80,7 +80,6 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        if (client == null) throw new Exception("NULL LALALA");
         var novaRoma = await client.CreateFaculdade("Nova Roma");
         var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
         await client.RegisterUser(userNovaRoma);

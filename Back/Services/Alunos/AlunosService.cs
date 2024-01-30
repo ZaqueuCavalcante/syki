@@ -26,7 +26,7 @@ public class AlunosService : IAlunosService
         var ofertaOk = await _ctx.Ofertas
             .AnyAsync(o => o.FaculdadeId == faculdadeId && o.Id == data.OfertaId);
         if (!ofertaOk)
-            throw new DomainException(ExceptionMessages.DE0009);
+            Throw.DE0009.Now();
 
         var userIn = new UserIn
         {

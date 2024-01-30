@@ -10,6 +10,7 @@ public class Startup
     {
         services.AddSettingsConfigs();
         services.AddServicesConfigs();
+        services.AddSykiTasksConfigs();
 
         services.AddIdentityConfigs();
         services.AddAuthenticationConfigs();

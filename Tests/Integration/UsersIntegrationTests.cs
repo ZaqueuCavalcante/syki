@@ -46,7 +46,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(ExceptionMessages.DE0010);  
+        error.Message.Should().Be(Throw.DE0010);  
     }
 
     [Test]
@@ -64,7 +64,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(ExceptionMessages.DE0011);  
+        error.Message.Should().Be(Throw.DE0011);  
     }
 
     [Test]
@@ -90,7 +90,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(ExceptionMessages.DE0013);  
+        error.Message.Should().Be(Throw.DE0013);  
     }
 
     [Test]
@@ -110,7 +110,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(ExceptionMessages.DE0012);  
+        error.Message.Should().Be(Throw.DE0012);  
     }
 
     [Test]
@@ -136,7 +136,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var error = await response.DeserializeTo<ErrorOut>();
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(ExceptionMessages.DE0014);  
+        error.Message.Should().Be(Throw.DE0014);  
     }
 
     [Test]

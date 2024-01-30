@@ -31,7 +31,7 @@ public class Aluno
     {
         if (nome.IsEmpty() || nome.Length < 3)
         {
-            throw DomainExceptions.DE0000();
+            Throw.DE0000.Now();
         }
 
         Nome = nome;

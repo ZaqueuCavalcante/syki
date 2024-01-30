@@ -2,6 +2,7 @@ using Dapper;
 using Npgsql;
 using Syki.Shared;
 using System.Text;
+using Syki.Back.Tasks;
 using Syki.Back.Database;
 using Syki.Back.Settings;
 using Syki.Back.Exceptions;
@@ -38,35 +39,33 @@ public class AuthService : IAuthService
     public async Task<UserOut> Register(UserIn body)
     {
         if (!(body.Role is Academico or Professor or Aluno))
-            throw new DomainException(ExceptionMessages.DE0010);
+            Throw.DE0010.Now();
 
         var faculdadeOk = await _ctx.Faculdades.AnyAsync(c => c.Id == body.Faculdade);
         if (!faculdadeOk)
-            throw new DomainException(ExceptionMessages.DE0011);
+            Throw.DE0011.Now();
 
         if (!body.Email.IsValidEmail())
-            throw new DomainException(ExceptionMessages.DE0013);
+            Throw.DE0013.Now();
 
         var emailUsed = await _ctx.Users.AnyAsync(u => u.Email == body.Email);
         if (emailUsed)
-            throw new DomainException(ExceptionMessages.DE0014);
+            Throw.DE0014.Now();
 
-        var user = new SykiUser
-        {
-            FaculdadeId = body.Faculdade,
-            Name = body.Name,
-            UserName = body.Email,
-            Email = body.Email,
-        };
+        var user = new SykiUser(body.Faculdade, body.Name, body.Email);
 
         var result = await _userManager.CreateAsync(user, body.Password);
 
         if (!result.Succeeded)
-            throw new DomainException(ExceptionMessages.DE0012);
+            Throw.DE0012.Now();
 
         await _userManager.AddToRoleAsync(user, body.Role);
 
         await GenerateResetPasswordToken(user.Id);
+
+        var task = new SykiTask(new SendResetPasswordEmail { UserId = user.Id });
+        _ctx.Add(task);
+        await _ctx.SaveChangesAsync();
 
         return user.ToOut();
     }
@@ -106,7 +105,7 @@ public class AuthService : IAuthService
         var user = await _userManager.FindByIdAsync(userId.ToString());
 
         if (user == null)
-            throw new DomainException(ExceptionMessages.DE0016);
+            Throw.DE0016.Now();
 
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -117,33 +116,34 @@ public class AuthService : IAuthService
 
     public async Task<ResetPasswordTokenOut> GetResetPasswordToken(Guid userId)
     {
-        var token = await _ctx.ResetPasswords
+        var id = await _ctx.ResetPasswords
             .Where(r => r.UserId == userId && r.UsedAt == null)
             .OrderByDescending(r => r.CreatedAt)
-            .Select(r => r.Token)
+            .Select(r => r.Id)
             .FirstOrDefaultAsync();
 
-        return new ResetPasswordTokenOut { Token = token };
+        return new ResetPasswordTokenOut { Token = id == Guid.Empty ? null : id.ToString() };
     }
 
     public async Task<ResetPasswordOut> ResetPassword(ResetPasswordIn body)
     {
+        _ = Guid.TryParse(body.Token, out var id);
         var reset = await _ctx.ResetPasswords
-            .FirstOrDefaultAsync(r => r.Token == body.Token);
+            .FirstOrDefaultAsync(r => r.Id == id);
 
         if (reset == null)
-            throw new DomainException(ExceptionMessages.DE0016);
+            Throw.DE0016.Now();
 
-        var user = await _userManager.FindByIdAsync(reset.UserId.ToString());
+        var user = await _userManager.FindByIdAsync(reset!.UserId.ToString());
 
-        var result = await _userManager.ResetPasswordAsync(user!, body.Token, body.Password);
+        var result = await _userManager.ResetPasswordAsync(user!, reset.Token, body.Password);
 
         if (!result.Succeeded)
         {
             if (result.Errors.Any(e => e.Code == "InvalidToken"))
-                throw new DomainException(ExceptionMessages.DE0017);
+                Throw.DE0017.Now();
             
-            throw new DomainException(ExceptionMessages.DE0012);
+            Throw.DE0012.Now();
         }
 
         reset.Use();

@@ -28,10 +28,10 @@ public static class AuditConfigs
                 .Map<GradeDisciplina, AuditLog>()
                 .Map<Livro, AuditLog>()
                 .Map<Oferta, AuditLog>()
-                .Map<Periodo, AuditLog>()
                 .Map<Professor, AuditLog>()
                 .Map<SykiUser, AuditLog>()
                 .Map<Turma, AuditLog>()
+                .Map<Horario, AuditLog>()
                 .Map<Notification, AuditLog>()
                 .AuditEntityAction<AuditLog>((evt, entry, log) => {
                     return log.Fill(evt, entry); }))

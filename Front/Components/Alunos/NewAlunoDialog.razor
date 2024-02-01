@@ -48,7 +48,7 @@
             ">
                 @foreach (OfertaOut? item in _ofertas)
                 {
-                    <MudSelectItem Value="@item">@item.GetLine()</MudSelectItem>
+                    <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
                 }
             </MudSelect>
         </MudForm>

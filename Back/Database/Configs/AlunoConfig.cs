@@ -25,7 +25,6 @@ public class AlunoConfig : IEntityTypeConfiguration<Aluno>
             .UsingEntity<AlunoDisciplina>(ad =>
                 {
                     ad.ToTable("alunos__disciplinas");
-
                     ad.HasOne<Aluno>().WithMany().HasForeignKey(x => x.AlunoId);
                     ad.HasOne<Disciplina>().WithMany().HasForeignKey(x => x.DisciplinaId);
                 }

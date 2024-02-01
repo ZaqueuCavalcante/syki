@@ -10,7 +10,7 @@ public class OfertaOut
     public string Periodo { get; set; }
     public Turno Turno { get; set; }
 
-    public string GetLine()
+    public override string ToString()
     {
         return $"{Grade} | {Campus} | {Periodo} | {Turno.GetDescription()}";
     }

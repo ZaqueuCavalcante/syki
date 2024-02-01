@@ -178,7 +178,7 @@ public class OfertasUnitTests
         };
 
         // Act
-        var getLine = ofertaOut.GetLine();
+        var getLine = ofertaOut.ToString();
 
         // Assert
         getLine.Should().Be("Grade de ADS - 1.0 | Agreste I | 2024.1 | Matutino");

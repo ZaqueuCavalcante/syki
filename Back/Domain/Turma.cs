@@ -13,6 +13,7 @@ public class Turma
     public string Periodo { get; set; }
     public List<Aula> Aulas { get; set; }
     public List<Aluno> Alunos { get; set; }
+    public List<Oferta> Ofertas { get; set; }
     public List<Horario> Horarios { get; set; }
 
     private Turma() {}
@@ -22,6 +23,7 @@ public class Turma
         Guid disciplinaId,
         Guid professorId,
         string periodo,
+        List<Oferta> ofertas,
         List<Horario> horarios
     ) {
         Id = Guid.NewGuid();
@@ -29,19 +31,21 @@ public class Turma
         DisciplinaId = disciplinaId;
         ProfessorId = professorId;
         Periodo = periodo;
+        Ofertas = ofertas;
         Horarios = horarios;
     }
 
     public TurmaOut ToOut()
     {
-        var horario = Horarios.FirstOrDefault();
+        var horario = Horarios.First();
         return new TurmaOut
         {
             Disciplina = Disciplina.Nome,
             Professor = Professor.Nome,
             Periodo = Periodo,
-            Dia = horario != null ? horario.Dia.GetDescription() : "",
-            Horas = horario != null ?  string.Join(", ", horario.Horas.ConvertAll(h => h.ToString().OnlyNumbers())) : "",
+            Dia = horario.Dia,
+            Start = horario.Start,
+            End = horario.End,
         };
     }
 }

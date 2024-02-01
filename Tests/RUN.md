@@ -1,9 +1,12 @@
 # Commands
 
+dotnet test --filter TestCategory=Auth
+dotnet test --filter TestCategory=Integration
+dotnet test --filter "FullyQualifiedName~UnitTests"
+
 dotnet test --logger:"console;verbosity=detailed"
 dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~IntegrationTests"
 dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName!~IntegrationTests"
-dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~Deve_criar_varios_campus_para_uma_mesma_faculdade"
 
 dotnet test --collect:"XPlat Code Coverage"
 dotnet test --logger:"console;verbosity=detailed" --collect:"XPlat Code Coverage"

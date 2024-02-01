@@ -13,8 +13,15 @@ public class TurmasService : ITurmasService
 
     public async Task<TurmaOut> Create(Guid faculdadeId, TurmaIn data)
     {
-        var disciplinaOk = await _ctx.Disciplinas
-            .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.DisciplinaId);
+        var ofertas = await _ctx.Ofertas
+            .Where(o => o.FaculdadeId == faculdadeId && o.Id == data.OfertaId).ToListAsync();
+        if (ofertas.Count == 0)
+            Throw.DE0009.Now();
+
+        var gradeId = await _ctx.Ofertas
+            .Where(o => o.Id == data.OfertaId).Select(o => o.GradeId).FirstAsync();
+        var disciplinaOk = await _ctx.GradesDisciplinas
+            .AnyAsync(x => x.GradeId == gradeId && x.DisciplinaId == data.DisciplinaId);
         if (!disciplinaOk)
             Throw.DE0002.Now();
 
@@ -28,15 +35,14 @@ public class TurmasService : ITurmasService
         if (!periodoOk)
             Throw.DE0003.Now();
 
-        if (data.Horas.Count == 0)
-            Throw.DE0018.Now();
-        var horarios = new List<Horario>() { new(data.Dia, data.Horas) };
+        var horarios = new List<Horario>() { new(data.Dia, data.Start, data.End) };
 
         var turma = new Turma(
             faculdadeId,
             data.DisciplinaId,
             data.ProfessorId,
             data.Periodo,
+            ofertas,
             horarios
         );
 

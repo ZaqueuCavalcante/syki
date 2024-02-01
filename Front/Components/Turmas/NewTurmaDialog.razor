@@ -10,6 +10,23 @@
             <MudGrid Justify="Justify.FlexStart">
                 <MudItem xs="12">
                     <MudAutocomplete
+                        T="OfertaOut"
+                        MaxItems="50"
+                        Class="py-0 my-0"
+                        SearchFunc="@SearchOferta"
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        AutoFocus="true"
+                        @bind-Value="_oferta"
+                        Label="Oferta"
+                        Required="true"
+                        RequiredError="Informe a oferta!"
+                        AdornmentColor="Color.Primary"
+                    />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudAutocomplete
                         T="DisciplinaOut"
                         MaxItems="50"
                         Class="py-0 my-0"
@@ -17,7 +34,6 @@
                         Dense="true"
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
-                        AutoFocus="true"
                         @bind-Value="_disciplina"
                         Label="Disciplina"
                         Required="true"
@@ -79,22 +95,40 @@
                         }
                     </MudSelect>
                 </MudItem>
-                <MudItem xs="8">
+                <MudItem xs="4">
                     <MudSelect
                         Dense="true"
                         Margin="Margin.Dense"
-                        Variant="Variant.Outlined"
                         Class="py-0 my-0"
-                        T="Hora?"
-                        Label="Horários"
-                        MultiSelection="true"
-                        @bind-SelectedValues="_horarios"
-                        AnchorOrigin="Origin.BottomCenter"
+                        Variant="Variant.Outlined"
+                        @bind-Value="_start"
+                        Label="Início"
+                        Required="true"
+                        RequiredError="Informe a hora de início!"
+                        AdornmentColor="Color.Primary"
                     >
-                        @foreach (Hora? horario in Enum.GetValues(typeof(Hora)))
+                        @foreach (Hora? hora in Enum.GetValues(typeof(Hora)))
                         {
-                            horario.ToString();
-                            <MudSelectItem Value="@horario">@horario.GetDescription()</MudSelectItem>
+                            <MudSelectItem Value="@hora">@hora.GetDescription()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="4">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Class="py-0 my-0"
+                        Variant="Variant.Outlined"
+                        @bind-Value="_end"
+                        Label="Fim"
+                        Required="true"
+                        RequiredError="Informe a hora de fim!"
+                        AdornmentColor="Color.Primary"
+                    >
+                        @foreach (Hora? hora in Enum.GetValues(typeof(Hora)))
+                        {
+                            if (_start == null || hora <= _start) continue;
+                            <MudSelectItem Value="@hora">@hora.GetDescription()</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>
@@ -115,19 +149,22 @@
 {
     MudForm _form;
 
+    OfertaOut? _oferta;
     DisciplinaOut? _disciplina;
     ProfessorOut? _professor;
     string? _periodo;
 
     TurmaIn data = new();
 
+    List<OfertaOut> Ofertas = [];
     List<DisciplinaOut> Disciplinas = [];
     List<ProfessorOut> Professores = [];
     List<PeriodoOut> Periodos = [];
     List<AlunoOut> Alunos = [];
 
     Dia? _dia;
-    IEnumerable<Hora?> _horarios { get; set; } = new HashSet<Hora?>() { };
+    Hora? _start;
+    Hora? _end;
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
@@ -138,8 +175,19 @@
             Task.Run(async () => Professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? []),
             Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<PeriodoOut>>("/periodos") ?? []),
             Task.Run(async () => Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? []),
+            Task.Run(async () => Ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? []),
             Task.Run(async () => Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? []),
         });
+    }
+
+    private async Task<IEnumerable<OfertaOut>> SearchOferta(string value)
+    {
+        await Task.Delay(0);
+
+        if (value.IsEmpty())
+            return Ofertas;
+
+        return Ofertas.Where(x => value.IsIn(x.Grade, x.Campus, x.Periodo, x.Turno.GetDescription()));
     }
 
     private async Task<IEnumerable<DisciplinaOut>> SearchDisciplina(string value)
@@ -149,7 +197,7 @@
         if (string.IsNullOrEmpty(value))
             return Disciplinas;
 
-        return Disciplinas.Where(x => x.Nome.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        return Disciplinas.Where(x => value.IsIn(x.Nome));
     }
 
     async Task Submit()
@@ -159,11 +207,13 @@
 
         data = new()
         {
+            OfertaId = _oferta!.Id,
             DisciplinaId = _disciplina!.Id,
             ProfessorId = _professor!.Id,
             Periodo = _periodo!,
             Dia = _dia!.Value,
-            Horas = _horarios.ToList().ConvertAll(h => h!.Value),
+            Start = _start!.Value,
+            End = _end!.Value,
         };
         await Http.PostAsJsonAsync("/turmas", data);
 

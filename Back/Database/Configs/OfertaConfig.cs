@@ -1,8 +1,6 @@
-using Syki.Shared;
 using Syki.Back.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Syki.Back.Database;
 
@@ -30,5 +28,15 @@ public class OfertaConfig : IEntityTypeConfiguration<Oferta>
         oferta.HasMany<Aluno>()
             .WithOne(a => a.Oferta)
             .HasForeignKey(a => a.OfertaId);
+
+        oferta.HasMany(c => c.Turmas)
+            .WithMany(t => t.Ofertas)
+            .UsingEntity<OfertaTurma>(cd =>
+                {
+                    cd.ToTable("ofertas__turmas");
+                    cd.HasOne<Oferta>().WithMany().HasForeignKey(x => x.OfertaId);
+                    cd.HasOne<Turma>().WithMany().HasForeignKey(x => x.TurmaId);
+                }
+            );
     }
 }

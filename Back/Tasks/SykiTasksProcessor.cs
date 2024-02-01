@@ -20,7 +20,7 @@ public class SykiTasksProcessor : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         using var scope = _serviceScopeFactory.CreateScope();
-        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(3));
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
         using var connection = new NpgsqlConnection(_dbSettings.ConnectionString);
 
         while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
@@ -39,7 +39,7 @@ public class SykiTasksProcessor : BackgroundService
             }
             catch (Exception ex)
             {
-                error = ex.Message;
+                error = ex.Message + ex.InnerException?.Message;
             }
 
             await connection.ExecuteAsync(update, new { task.Id, error });

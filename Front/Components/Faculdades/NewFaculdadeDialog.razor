@@ -21,6 +21,12 @@
                 Required="true"
                 RequiredError="Informe o nome da faculdade!"
             />
+            <MudCheckBox
+                T="bool"
+                @bind-Checked="data.SeedData"
+                Label="Fazer o seed do banco com dados de teste"
+                Color="Color.Primary"
+            />
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -37,7 +43,7 @@
 {
     private MudForm _form;
 
-    private FaculdadeIn data = new();
+    FaculdadeIn data = new();
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }

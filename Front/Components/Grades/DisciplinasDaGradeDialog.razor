@@ -8,6 +8,7 @@
     <DialogContent>
         <MudDataGrid
             Class="mb-4"
+            Dense="true"
             Hover="true"
             Items="@Disciplinas.OrderBy(d => d.Periodo).ThenBy(d => d.Nome)"
         >

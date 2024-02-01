@@ -17,7 +17,7 @@ public class AuditLog
 
     public bool Fill(AuditEvent evt, EventEntry entry)
     {
-        if (evt.CustomFields.ContainsKey("Skip"))
+        if (evt.CustomFields.Count == 0 || evt.CustomFields.ContainsKey("Skip"))
             return false;
 
         Id = Guid.NewGuid();

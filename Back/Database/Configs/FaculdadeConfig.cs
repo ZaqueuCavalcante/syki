@@ -13,6 +13,10 @@ public class FaculdadeConfig : IEntityTypeConfiguration<Faculdade>
         faculdade.HasKey(f => f.Id);
         faculdade.Property(f => f.Id).ValueGeneratedNever();
 
+        faculdade.HasMany(f => f.Periodos)
+            .WithOne()
+            .HasForeignKey(p => p.FaculdadeId);
+
         faculdade.HasMany(f => f.Campi)
             .WithOne()
             .HasForeignKey(c => c.FaculdadeId);

@@ -1,8 +1,6 @@
-using Syki.Shared;
 using Syki.Back.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Syki.Back.Database;
 

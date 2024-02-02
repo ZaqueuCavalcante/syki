@@ -5,7 +5,6 @@ using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using Syki.Back.Exceptions;
 
 namespace Syki.Tests.Base;
 

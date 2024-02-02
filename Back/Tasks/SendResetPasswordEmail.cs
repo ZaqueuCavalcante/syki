@@ -32,7 +32,7 @@ public class SendResetPasswordEmailHandler : ISykiTaskHandler<SendResetPasswordE
             .OrderByDescending(r => r.CreatedAt)
             .FirstOrDefaultAsync(r => r.UserId == user.Id && r.UsedAt == null);
 
-        var message = $"http://localhost:5000/reset-password?token={reset.Id}";
+        var message = $"https://localhost:6001/reset-password?token={reset.Id}";
 
         _emailsService.Send(user.Email, message);
     }

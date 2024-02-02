@@ -14,7 +14,7 @@
             "name": "FRONT",
             "type": "blazorwasm",
             "request": "attach",
-            "url": "http://localhost:5000"
+            "url": "http://localhost:6000"
           }
     ]
 }

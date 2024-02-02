@@ -17,6 +17,6 @@ public static class WasmConfigs
     public static string GetUrl(this WebAssemblyHostBuilder builder)
     {
         return builder.HostEnvironment.IsDevelopment() ?
-            "http://localhost:5160" : "https://syki-dev-api.azurewebsites.net";
+            "https://localhost:5001" : "https://syki-production.up.railway.app";
     }
 }

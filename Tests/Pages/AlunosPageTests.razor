@@ -11,8 +11,8 @@
         var mock = Services.AddMockHttpClient();
         var response = new List<AlunoOut>()
         {
-            new AlunoOut { Nome = "Zaqueu", Matricula = "351861", Oferta = "ADS" },
-            new AlunoOut { Nome = "Maju", Matricula = "864684", Oferta = "Direito" },
+            new AlunoOut { Nome = "Zaqueu", Email = "zaqueu@facul.com", Matricula = "351861", Oferta = "ADS" },
+            new AlunoOut { Nome = "Maju", Email = "maju@facul.com", Matricula = "864684", Oferta = "Direito" },
         };
         mock.When(HttpMethod.Get, "/alunos").RespondJson(response);
 
@@ -27,11 +27,13 @@
             @<tbody diff:ignoreAttributes>
                 <tr diff:ignoreAttributes>
                     <td data-label="Nome" class:ignore style:ignore>Zaqueu</td>
+                    <td data-label="Email" class:ignore style:ignore>zaqueu@facul.com</td>
                     <td data-label="Matrícula" class:ignore style:ignore>351861</td>
                     <td data-label="Oferta" class:ignore style:ignore>ADS</td>
                 </tr>
                 <tr diff:ignoreAttributes>
                     <td data-label="Nome" class:ignore style:ignore>Maju</td>
+                    <td data-label="Email" class:ignore style:ignore>maju@facul.com</td>
                     <td data-label="Matrícula" class:ignore style:ignore>864684</td>
                     <td data-label="Oferta" class:ignore style:ignore>Direito</td>
                 </tr>

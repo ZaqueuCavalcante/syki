@@ -18,7 +18,8 @@
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         AutoFocus="true"
-                        @bind-Value="_oferta"
+                        Value="_oferta"
+                        ValueChanged="x => HandleOfertaChanged(x)"
                         Label="Oferta"
                         Required="true"
                         RequiredError="Informe a oferta!"
@@ -176,8 +177,15 @@
             Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<PeriodoOut>>("/periodos") ?? []),
             Task.Run(async () => Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? []),
             Task.Run(async () => Ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? []),
-            Task.Run(async () => Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? []),
         });
+    }
+
+    async Task HandleOfertaChanged(OfertaOut? newValue)
+    {
+        _oferta = newValue;
+
+        var gradeId = _oferta?.GradeId;
+        Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>($"/grades/{gradeId}/disciplinas") ?? [];
     }
 
     private async Task<IEnumerable<OfertaOut>> SearchOferta(string value)
@@ -187,7 +195,7 @@
         if (value.IsEmpty())
             return Ofertas;
 
-        return Ofertas.Where(x => value.IsIn(x.Grade, x.Campus, x.Periodo, x.Turno.GetDescription()));
+        return Ofertas.Where(x => value.IsIn(x.ToString()));
     }
 
     private async Task<IEnumerable<DisciplinaOut>> SearchDisciplina(string value)

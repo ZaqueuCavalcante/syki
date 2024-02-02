@@ -68,6 +68,7 @@ public class AlunosService : IAlunosService
     {
         var alunos = await _ctx.Alunos
             .AsNoTracking().AsSplitQuery()
+            .Include(a => a.User)
             .Include(a => a.Oferta)
                 .ThenInclude(o => o.Curso)
             .Where(c => c.FaculdadeId == faculdadeId)

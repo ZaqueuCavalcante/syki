@@ -8,6 +8,7 @@ public class Aluno
     public Guid Id { get; set; }
     public Guid FaculdadeId { get; set; }
     public Guid UserId { get; set; }
+    public SykiUser User { get; set; }
     public Guid OfertaId { get; set; }
     public Oferta Oferta { get; set; }
     public string Nome { get; set; }
@@ -45,6 +46,7 @@ public class Aluno
             UserId = UserId,
             OfertaId = OfertaId,
             Oferta = Oferta?.Curso?.Nome ?? "-",
+            Email = User?.Email ?? "-",
             Nome = Nome,
             Matricula = Matricula,
         };

@@ -1,0 +1,19 @@
+<MudPaper Height="500px" Width="155px">
+    <MudStack AlignItems="AlignItems.Center">
+        <MudText Class="mt-2" Typo="Typo.h6">@Data.Dia.GetDescription()</MudText>
+        <MudDivider />
+        @foreach (AgendaDisciplinaOut item in Data.Disciplinas)
+        {
+            <MudPaper Style="width: 90%">
+                <MudText Class="pa-2" Typo="Typo.body2">@item.Nome</MudText>
+                <MudText Align="Align.Center" Class="px-2 pb-2" Typo="Typo.body2">@item.Start.GetDescription() - @item.End.GetDescription()</MudText>
+            </MudPaper>
+        }
+    </MudStack>
+</MudPaper>
+
+@code
+{
+    [Parameter]
+    public AgendaDiaOut Data { get; set; }
+}

@@ -1,17 +1,16 @@
-﻿@page "/alunos"
 @attribute [Authorize(Roles = "Academico")]
 
-<PageTitle>Alunos</PageTitle>
+<PageTitle>Disciplinas</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Alunos" ButtonText="Novo Aluno" OnClick="OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" ButtonText="Nova Disciplina" OnClick="OpenDialog"/>
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
-        <MudText>Um aluno precisa necessariamente estar vinculado à uma oferta de curso.</MudText>
+        <MudText>Uma mesma disciplina pode compor a grade de cursos diferentes. A carga horária definida aqui é apenas um valor de referência.</MudText>
     </MudAlert>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_alunos" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_disciplinas" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -19,7 +18,7 @@
                     Margin="Margin.Dense"
                     Variant="Variant.Outlined"
                     @bind-Value="_searchString"
-                    Placeholder="Busque por nome ou matrícula"
+                    Placeholder="Busque por nome ou carga horária"
                     Adornment="Adornment.Start"
                     Immediate="true"
                     AdornmentIcon="@Icons.Material.Filled.Search"
@@ -29,17 +28,15 @@
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
-                <PropertyColumn Property="x => x.Email" Title="Email" />
-                <PropertyColumn Property="x => x.Matricula" Title="Matrícula" />
-                <PropertyColumn Property="x => x.Oferta" Title="Oferta" />
+                <PropertyColumn Property="x => x.CargaHoraria" Title="Carga Horária" />
             </Columns>
 
             <NoRecordsContent>
-                Não existem alunos cadastrados ainda.
+                Não existem disciplinas cadastradas ainda.
             </NoRecordsContent>
 
             <PagerContent>
-                <MudDataGridPager T="AlunoOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+                <MudDataGridPager T="DisciplinaOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -52,16 +49,16 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<AlunoOut> _alunos = [];
+    private List<DisciplinaOut> _disciplinas = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? [];
+        _disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? [];
         _loading = false;
     }
 
-    private Func<AlunoOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome, x.Matricula);
+    private Func<DisciplinaOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome, x.CargaHoraria.ToString());
 
     private async Task OpenDialog()
     {
@@ -69,7 +66,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewAlunoDialog>("", options);
+        var dialog = await DialogService.ShowAsync<NewDisciplinaDialog>("", options);
 
         var result = await dialog.Result;
 

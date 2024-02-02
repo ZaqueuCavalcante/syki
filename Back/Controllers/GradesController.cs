@@ -22,6 +22,14 @@ public class GradesController : ControllerBase
         return Ok(grade);
     }
 
+    [HttpGet("{id}/disciplinas")]
+    public async Task<IActionResult> GetDisciplinas([FromRoute] Guid id)
+    {
+        var grades = await _service.GetDisciplinas(User.Facul(), id);
+
+        return Ok(grades);
+    }
+
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {

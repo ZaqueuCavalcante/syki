@@ -49,6 +49,16 @@ public class GradesService : IGradesService
         return grade.ToOut();
     }
 
+    public async Task<List<DisciplinaOut>> GetDisciplinas(Guid faculdadeId, Guid id)
+    {
+        var grade = await _ctx.Grades.AsNoTracking()
+            .Where(g => g.FaculdadeId == faculdadeId && g.Id == id)
+            .Include(g => g.Disciplinas)
+            .FirstOrDefaultAsync();
+
+        return grade== null ? [] : grade.Disciplinas.ConvertAll(d => d.ToOut()).OrderBy(d => d.Nome).ToList();
+    }
+
     public async Task<List<GradeOut>> GetAll(Guid faculdadeId)
     {
         var grades = await _ctx.Grades.AsNoTracking()

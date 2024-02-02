@@ -1,8 +1,37 @@
-﻿@page "/alunos/agenda"
+﻿@page "/agenda"
 @attribute [Authorize(Roles = "Aluno")]
 
 <PageTitle>Agenda</PageTitle>
 
-<MudContainer Class="mt-8 px-8" MaxWidth="MaxWidth.False">
-    <h1>Agenda lalala</h1>
+<MudContainer>
+    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">Agenda</MudText>
+                <MudSpacer />
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+    <MudContainer Class="mb-8">
+        <MudGrid Spacing="0" Justify="Justify.SpaceBetween">
+            @foreach (AgendaDiaOut? dia in Dias)
+            {
+                <AgendaDiaStack Data="dia" />
+            }
+        </MudGrid>
+    </MudContainer>
 </MudContainer>
+
+@inject HttpClient Http
+@inject IDialogService DialogService
+
+@code
+{
+    private List<AgendaDiaOut> Dias = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        Dias = await Http.GetFromJsonAsync<List<AgendaDiaOut>>("/agenda/aluno") ?? [];
+    }
+}

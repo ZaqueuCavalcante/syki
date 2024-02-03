@@ -2,6 +2,8 @@ using Syki.Shared;
 using NUnit.Framework;
 using Syki.Back.Domain;
 using FluentAssertions;
+using Syki.Back.Exceptions;
+using Syki.Tests.Base;
 
 namespace Syki.Tests.Unit;
 
@@ -96,6 +98,61 @@ public class TurmasUnitTests
         var professorId = Guid.NewGuid();
         const string periodo = "2023.2";
         var horarios = new List<Horario>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
+
+        // Act
+        var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo, horarios);
+
+        // Assert
+        turma.Horarios.Should().BeEquivalentTo(horarios);
+    }
+
+    [Test]
+    public void Nao_deve_criar_uma_turma_com_horarios_totalmente_conflitantes()
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        var disciplinaId = Guid.NewGuid();
+        var professorId = Guid.NewGuid();
+        const string periodo = "2023.2";
+        var horarios = new List<Horario>()
+        {
+            new(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+            new(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+        };
+
+        // Act
+        Action act = () => new Turma(faculdadeId, disciplinaId, professorId, periodo, horarios);
+
+        // Assert
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE1100);
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.HorariosConflitantes))]
+    public void Nao_deve_criar_uma_turma_com_horarios_parcialmente_conflitantes(List<Horario> horarios)
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        var disciplinaId = Guid.NewGuid();
+        var professorId = Guid.NewGuid();
+        const string periodo = "2023.2";
+
+        // Act
+        Action act = () => new Turma(faculdadeId, disciplinaId, professorId, periodo, horarios);
+
+        // Assert
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE1100);
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.HorariosValidos))]
+    public void Deve_criar_uma_turma_com_horarios_validos(List<Horario> horarios)
+    {
+        // Arrange
+        var faculdadeId = Guid.NewGuid();
+        var disciplinaId = Guid.NewGuid();
+        var professorId = Guid.NewGuid();
+        const string periodo = "2023.2";
 
         // Act
         var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo, horarios);

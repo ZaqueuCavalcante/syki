@@ -8,6 +8,7 @@ public class TurmaIn
     public Dia Dia { get; set; }
     public Hora Start { get; set; }
     public Hora End { get; set; }
+    public List<HorarioIn> Horarios { get; set; }
 
     public TurmaIn() {}
 
@@ -15,15 +16,11 @@ public class TurmaIn
         Guid disciplinaId,
         Guid professorId,
         string periodo,
-        Dia dia,
-        Hora start,
-        Hora end
+        List<HorarioIn> horarios
     ) {
         DisciplinaId = disciplinaId;
         ProfessorId = professorId;
         Periodo = periodo;
-        Dia = dia;
-        Start = start;
-        End = end;
+        Horarios = horarios;
     }
 }

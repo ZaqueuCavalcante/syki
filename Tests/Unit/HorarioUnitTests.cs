@@ -97,4 +97,94 @@ public class HorarioUnitTests
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE0018);
     }
+
+    [Test]
+    public void Horarios_em_dias_diferentes_nao_devem_conflitar()
+    {
+        // Arrange
+        var start = Hora.H07_00;
+        var end = Hora.H08_00;
+
+        var horarioA = new Horario(Dia.Segunda, start, end);
+        var horarioB = new Horario(Dia.Terca, start, end);
+
+        // Act
+        var result = horarioA.Conflict(horarioB);
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    [Test]
+    public void Horarios_validos_nao_devem_conflitar()
+    {
+        // Arrange
+        var horarioA = new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00);
+        var horarioB = new Horario(Dia.Segunda, Hora.H08_00, Hora.H08_30);
+
+        // Act
+        var result = horarioA.Conflict(horarioB);
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    [Test]
+    public void Horarios_exatamente_iguais_devem_conflitar()
+    {
+        // Arrange
+        var start = Hora.H07_00;
+        var end = Hora.H08_00;
+
+        var horarioA = new Horario(Dia.Segunda, start, end);
+        var horarioB = new Horario(Dia.Segunda, start, end);
+
+        // Act
+        var result = horarioA.Conflict(horarioB);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    public void Horarios_parcialmente_iguais_devem_conflitar()
+    {
+        // Arrange
+        var horarioA = new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00);
+        var horarioB = new Horario(Dia.Segunda, Hora.H07_30, Hora.H08_30);
+
+        // Act
+        var result = horarioA.Conflict(horarioB);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    public void Horarios_cujo_segundo_esta_contido_no_primeiro_devem_conflitar()
+    {
+        // Arrange
+        var horarioA = new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00);
+        var horarioB = new Horario(Dia.Segunda, Hora.H07_30, Hora.H07_45);
+
+        // Act
+        var result = horarioA.Conflict(horarioB);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    public void Horarios_cujo_primeiro_esta_contido_no_segundo_devem_conflitar()
+    {
+        // Arrange
+        var horarioA = new Horario(Dia.Segunda, Hora.H10_00, Hora.H11_00);
+        var horarioB = new Horario(Dia.Segunda, Hora.H09_30, Hora.H12_15);
+
+        // Act
+        var result = horarioA.Conflict(horarioB);
+
+        // Assert
+        result.Should().BeTrue();
+    }
 }

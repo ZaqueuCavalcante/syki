@@ -28,8 +28,7 @@ public class TurmasService : ITurmasService
         if (!periodoOk)
             Throw.DE0003.Now();
 
-        var horarios = new List<Horario>() { new(data.Dia, data.Start, data.End) };
-
+        var horarios = data.Horarios.ConvertAll(h => new Horario(h.Dia, h.Start, h.End));
         var turma = new Turma(
             faculdadeId,
             data.DisciplinaId,

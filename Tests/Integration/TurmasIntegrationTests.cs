@@ -20,9 +20,10 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
+        var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
-        var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, Dia.Segunda, Hora.H07_00, Hora.H08_00);
+        var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, horarios);
 
         // Act
         var turma = await client.PostAsync<TurmaOut>("/turmas", body);
@@ -41,8 +42,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = _factory.CreateClient();
         var faculdade = await client.CreateFaculdade("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
+        var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
-        var body = new TurmaIn(Guid.NewGuid(), Guid.NewGuid(), "2024.1", Dia.Segunda, Hora.H07_00, Hora.H08_00);
+        var body = new TurmaIn(Guid.NewGuid(), Guid.NewGuid(), "2024.1", horarios);
 
         // Act
         var response = await client.PostAsync("/turmas", body.ToStringContent());
@@ -62,9 +64,10 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
+        var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
-        var body = new TurmaIn { DisciplinaId = disciplina.Id, Periodo = periodo.Id };
+        var body = new TurmaIn { DisciplinaId = disciplina.Id, Periodo = periodo.Id, Horarios = horarios };
 
         // Act
         var response = await client.PostAsync("/turmas", body.ToStringContent());
@@ -85,8 +88,9 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
+        var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
-        var body = new TurmaIn(disciplina.Id, professor.Id, "2024.1", Dia.Segunda, Hora.H07_00, Hora.H08_00);
+        var body = new TurmaIn(disciplina.Id, professor.Id, "2024.1", horarios);
 
         // Act
         var response = await client.PostAsync("/turmas", body.ToStringContent());
@@ -107,9 +111,10 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
+        var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H07_00) };
 
-        var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, Dia.Segunda, Hora.H07_00, Hora.H07_00);
+        var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, horarios);
 
         // Act
         var response = await client.PostAsync("/turmas", body.ToStringContent());
@@ -130,9 +135,10 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
+        var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
-        var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, Dia.Segunda, Hora.H07_00, Hora.H08_00);
+        var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, horarios);
         var turma = await client.PostAsync<TurmaOut>("/turmas", body);
 
         // Act

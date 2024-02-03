@@ -1,6 +1,7 @@
 using Syki.Shared;
+using Syki.Back.Domain;
+using Syki.Back.Configs;
 using Microsoft.AspNetCore.Http;
-using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Base;
 
@@ -43,7 +44,7 @@ public static class TestData
 
     public static IEnumerable<object[]> AllUsersRoles()
     {
-        foreach (var role in AllRoles)
+        foreach (var role in AuthorizationConfigs.AllRoles)
         {
             yield return new object[] { role };
         }
@@ -51,7 +52,7 @@ public static class TestData
 
     public static IEnumerable<object[]> InvalidRoles()
     {
-        foreach (var role in new List<string>() { "a", "4", "", "  ", "lalala", Adm })
+        foreach (var role in new List<string>() { "a", "4", "", "  ", "lalala", "Adm" })
         {
             yield return new object[] { role };
         }
@@ -103,27 +104,27 @@ public static class TestData
 
     public static IEnumerable<object[]> AllRolesExceptAcademico()
     {
-        foreach (var role in AllRoles)
+        foreach (var role in AuthorizationConfigs.AllRoles)
         {
-            if (role == Academico) continue;
+            if (role == AuthorizationConfigs.Academico) continue;
             yield return new object[] { role };
         }
     }
 
     public static IEnumerable<object[]> AllRolesExceptAdm()
     {
-        foreach (var role in AllRoles)
+        foreach (var role in AuthorizationConfigs.AllRoles)
         {
-            if (role == Adm) continue;
+            if (role == AuthorizationConfigs.Adm) continue;
             yield return new object[] { role };
         }
     }
 
     public static IEnumerable<object[]> AllRolesExceptAluno()
     {
-        foreach (var role in AllRoles)
+        foreach (var role in AuthorizationConfigs.AllRoles)
         {
-            if (role == Aluno) continue;
+            if (role == AuthorizationConfigs.Aluno) continue;
             yield return new object[] { role };
         }
     }
@@ -303,6 +304,68 @@ public static class TestData
         })
         {
             yield return new object[] { text };
+        }
+    }
+
+    public static IEnumerable<object[]> HorariosConflitantes()
+    {
+        foreach (var list in new List<List<Horario>>()
+        {
+            new() {
+                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Dia.Segunda, Hora.H07_30, Hora.H07_45),
+            },
+            new() {
+                new Horario(Dia.Segunda, Hora.H10_00, Hora.H11_00),
+                new Horario(Dia.Segunda, Hora.H09_30, Hora.H12_15),
+            },
+            new() {
+                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Dia.Segunda, Hora.H07_30, Hora.H08_30),
+            },
+            new() {
+                new Horario(Dia.Segunda, Hora.H07_30, Hora.H08_30),
+                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+            },
+            new() {
+                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Dia.Terca, Hora.H08_00, Hora.H09_00),
+                new Horario(Dia.Segunda, Hora.H07_15, Hora.H07_45),
+            },
+            new() {
+                new Horario(Dia.Quarta, Hora.H12_00, Hora.H15_30),
+                new Horario(Dia.Quarta, Hora.H13_00, Hora.H14_15),
+            },
+        })
+        {
+            yield return new object[] { list };
+        }
+    }
+
+    public static IEnumerable<object[]> HorariosValidos()
+    {
+        foreach (var list in new List<List<Horario>>()
+        {
+            new() {
+                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Dia.Segunda, Hora.H08_00, Hora.H09_00),
+            },
+            new() {
+                new Horario(Dia.Segunda, Hora.H08_00, Hora.H09_00),
+                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+            },
+            new() {
+                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Dia.Terca, Hora.H08_00, Hora.H09_00),
+                new Horario(Dia.Segunda, Hora.H09_45, Hora.H10_15),
+            },
+            new() {
+                new Horario(Dia.Quarta, Hora.H12_00, Hora.H15_30),
+                new Horario(Dia.Quarta, Hora.H11_15, Hora.H12_00),
+            },
+        })
+        {
+            yield return new object[] { list };
         }
     }
 }

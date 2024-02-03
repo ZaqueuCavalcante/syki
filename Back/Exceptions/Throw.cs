@@ -2,6 +2,7 @@ namespace Syki.Back.Exceptions;
 
 public static class Throw
 {
+    // TODO: melhorar essas mensagens e criar especificas para cada erro
     public const string DE0000 = "Nome inválido.";
     public const string DE0001 = "Curso inválido.";
     public const string DE0002 = "Disciplina inválida.";
@@ -21,6 +22,8 @@ public static class Throw
     public const string DE0016 = "Usuário não encontrado.";
     public const string DE0017 = "Reset token inválido.";
     public const string DE0018 = "Horário inválido.";
+
+    public const string DE1100 = "Horários conflitantes.";
 
     public static void Now(this string message)
     {

@@ -1,4 +1,5 @@
 using Syki.Shared;
+using Syki.Back.Exceptions;
 
 namespace Syki.Back.Domain;
 
@@ -29,6 +30,20 @@ public class Turma
         DisciplinaId = disciplinaId;
         ProfessorId = professorId;
         Periodo = periodo;
+        SetHorarios(horarios);
+    }
+
+    private void SetHorarios(List<Horario> horarios)
+    {
+        for (int i = 0; i < horarios.Count-1; i++)
+        {
+            for (int j = i+1; j < horarios.Count; j++)
+            {
+                if (horarios[i].Conflict(horarios[j]))
+                    Throw.DE1100.Now();
+            }
+        }
+
         Horarios = horarios;
     }
 

@@ -16,7 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var body = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };
+        var body = new PeriodoIn("2023.2");
 
         // Act
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", body);
@@ -34,8 +34,8 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         // Act
-        await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) });
-        await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) });
+        await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2023.1"));
+        await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2023.2"));
 
         // Assert
         var periodos = await client.GetAsync<List<PeriodoOut>>("/periodos");
@@ -56,11 +56,11 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterUser(userUfpe);
 
         await client.Login(userNovaRoma.Email, userNovaRoma.Password);
-        var bodyNovaRoma = new PeriodoIn { Id = "2023.1", Start = new DateOnly(2023, 02, 01), End = new DateOnly(2023, 06, 01) };
+        var bodyNovaRoma = new PeriodoIn("2023.1");
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", bodyNovaRoma);
 
         await client.Login(userUfpe.Email, userUfpe.Password);
-        var bodyUfpe = new PeriodoIn { Id = "2023.2", Start = new DateOnly(2023, 07, 01), End = new DateOnly(2023, 12, 01) };
+        var bodyUfpe = new PeriodoIn("2023.2");
         await client.PostAsync<PeriodoOut>("/periodos", bodyUfpe);
 
         // Act

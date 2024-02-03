@@ -10,24 +10,6 @@
             <MudGrid Justify="Justify.FlexStart">
                 <MudItem xs="12">
                     <MudAutocomplete
-                        T="OfertaOut"
-                        MaxItems="50"
-                        Class="py-0 my-0"
-                        SearchFunc="@SearchOferta"
-                        Dense="true"
-                        Margin="Margin.Dense"
-                        Variant="Variant.Outlined"
-                        AutoFocus="true"
-                        Value="_oferta"
-                        ValueChanged="x => HandleOfertaChanged(x)"
-                        Label="Oferta"
-                        Required="true"
-                        RequiredError="Informe a oferta!"
-                        AdornmentColor="Color.Primary"
-                    />
-                </MudItem>
-                <MudItem xs="12">
-                    <MudAutocomplete
                         T="DisciplinaOut"
                         MaxItems="50"
                         Class="py-0 my-0"
@@ -150,22 +132,18 @@
 {
     MudForm _form;
 
-    OfertaOut? _oferta;
     DisciplinaOut? _disciplina;
     ProfessorOut? _professor;
     string? _periodo;
 
+    Dia? _dia; Hora? _start; Hora? _end;
+
     TurmaIn data = new();
 
-    List<OfertaOut> Ofertas = [];
     List<DisciplinaOut> Disciplinas = [];
     List<ProfessorOut> Professores = [];
     List<PeriodoOut> Periodos = [];
     List<AlunoOut> Alunos = [];
-
-    Dia? _dia;
-    Hora? _start;
-    Hora? _end;
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
@@ -176,26 +154,8 @@
             Task.Run(async () => Professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? []),
             Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<PeriodoOut>>("/periodos") ?? []),
             Task.Run(async () => Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? []),
-            Task.Run(async () => Ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? []),
+            Task.Run(async () => Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? []),
         });
-    }
-
-    async Task HandleOfertaChanged(OfertaOut? newValue)
-    {
-        _oferta = newValue;
-
-        var gradeId = _oferta?.GradeId;
-        Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>($"/grades/{gradeId}/disciplinas") ?? [];
-    }
-
-    private async Task<IEnumerable<OfertaOut>> SearchOferta(string value)
-    {
-        await Task.Delay(0);
-
-        if (value.IsEmpty())
-            return Ofertas;
-
-        return Ofertas.Where(x => value.IsIn(x.ToString()));
     }
 
     private async Task<IEnumerable<DisciplinaOut>> SearchDisciplina(string value)
@@ -215,7 +175,6 @@
 
         data = new()
         {
-            OfertaId = _oferta!.Id,
             DisciplinaId = _disciplina!.Id,
             ProfessorId = _professor!.Id,
             Periodo = _periodo!,

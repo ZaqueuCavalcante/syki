@@ -42,10 +42,3 @@
 
 - Professor precisa ver horarios
 - Professor precisar dar aula, fazer chamada, e aplicar provas (e notas)
-
-## Abertura de Turma
-
-- Para abrir uma Turma, preciso informar uma Oferta
-- Se a Disciplina da Turma nao estiver contida na Grade da Oferta, retornar erro
-- Nao pode haver choque de horario entre Turmas:
-    - Que estejam na mesma Oferta e com o mesmo Periodo

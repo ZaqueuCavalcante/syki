@@ -2,7 +2,6 @@ namespace Syki.Shared;
 
 public class TurmaIn
 {
-    public Guid OfertaId { get; set; }
     public Guid DisciplinaId { get; set; }
     public Guid ProfessorId { get; set; }
     public string Periodo { get; set; }
@@ -13,7 +12,6 @@ public class TurmaIn
     public TurmaIn() {}
 
     public TurmaIn(
-        Guid ofertaId,
         Guid disciplinaId,
         Guid professorId,
         string periodo,
@@ -21,7 +19,6 @@ public class TurmaIn
         Hora start,
         Hora end
     ) {
-        OfertaId = ofertaId;
         DisciplinaId = disciplinaId;
         ProfessorId = professorId;
         Periodo = periodo;

@@ -52,7 +52,7 @@
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="Cancel" />
-        <MudSpacer />
+        <DialogProgressCircular Loading="_loading" />
         <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
@@ -63,6 +63,7 @@
 @code
 {
     MudForm _form;
+    private bool _loading = false;
 
     ushort? _cargaHoraria;
     DisciplinaIn data = new();
@@ -80,13 +81,17 @@
 
     async Task Submit()
     {
+        if (_loading) return;
+
         await _form.Validate();
         if (!_form.IsValid) return;
 
         data.CargaHoraria = _cargaHoraria!.Value;
         data.Cursos = SelectedCursos.ToList().ConvertAll(c => c.Id);
 
+        _loading = true;
         await Http.PostAsJsonAsync("/disciplinas", data);
+        _loading = false;
 
         MudDialog.Close(DialogResult.Ok(true));
 

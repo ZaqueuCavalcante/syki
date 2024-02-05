@@ -71,7 +71,7 @@
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="Cancel" />
-        <MudSpacer />
+        <DialogProgressCircular Loading="_loading" />
         <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
@@ -82,6 +82,7 @@
 @code
 {
     MudForm _form;
+    private bool _loading = false;
 
     CampusOut? _campus;
     CursoOut? _curso;
@@ -121,6 +122,8 @@
 
     async Task Submit()
     {
+        if (_loading) return;
+
         await _form.Validate();
         if (!_form.IsValid) return;
 
@@ -132,7 +135,10 @@
             Periodo = _periodo!,
             Turno = _turno!.Value,
         };
+
+        _loading = true;
         await Http.PostAsJsonAsync("/ofertas", data);
+        _loading = false;
 
         MudDialog.Close(DialogResult.Ok(true));
 

@@ -92,7 +92,7 @@
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="Cancel" />
-        <MudSpacer />
+        <DialogProgressCircular Loading="_loading" />
         <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
@@ -103,6 +103,7 @@
 @code
 {
     MudForm _form;
+    private bool _loading = false;
 
     DisciplinaOut? _disciplina;
     ProfessorOut? _professor;
@@ -147,6 +148,8 @@
 
     async Task Submit()
     {
+        if (_loading) return;
+
         await _form.Validate();
         if (!_form.IsValid) return;
 
@@ -157,7 +160,10 @@
             Periodo = _periodo!,
             Horarios = Horarios,
         };
+
+        _loading = true;
         await Http.PostAsJsonAsync("/turmas", data);
+        _loading = false;
 
         MudDialog.Close(DialogResult.Ok(true));
 

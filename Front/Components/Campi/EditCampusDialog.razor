@@ -38,7 +38,7 @@
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="Cancel" />
-        <MudSpacer />
+        <DialogProgressCircular Loading="_loading" />
         <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
@@ -49,6 +49,7 @@
 @code
 {
     private MudForm _form;
+    private bool _loading = false;
 
     [Parameter]
     public CampusOut Campus { get; set; }
@@ -66,10 +67,14 @@
 
     async Task Submit()
     {
+        if (_loading) return;
+
         await _form.Validate();
         if (!_form.IsValid) return;
 
+        _loading = true;
         await Http.PutAsJsonAsync("/campi", Campus);
+        _loading = false;
 
         MudDialog.Close(DialogResult.Ok(true));
 

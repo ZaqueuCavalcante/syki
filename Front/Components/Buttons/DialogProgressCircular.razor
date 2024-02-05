@@ -1,0 +1,12 @@
+<MudSpacer />
+@if (Loading)
+{
+    <MudProgressCircular Size="Size.Medium" Color="Color.Primary" Indeterminate="true" StrokeWidth="4" />
+}
+<MudSpacer />
+
+@code
+{
+    [Parameter]
+    public bool Loading { get; set; }
+}

@@ -53,7 +53,7 @@
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="Cancel" />
-        <MudSpacer />
+        <DialogProgressCircular Loading="_loading" />
         <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
@@ -64,6 +64,7 @@
 @code
 {
     private MudForm _form;
+    private bool _loading = false;
 
     private DateTime? start;
     private DateTime? end;
@@ -74,13 +75,17 @@
 
     async Task Submit()
     {
+        if (_loading) return;
+
         await _form.Validate();
         if (!_form.IsValid) return;
 
         data.Start = DateOnly.FromDateTime(start!.Value);
         data.End = DateOnly.FromDateTime(end!.Value);
 
+        _loading = true;
         await Http.PostAsJsonAsync("/periodos", data);
+        _loading = false;
 
         MudDialog.Close(DialogResult.Ok(true));
 

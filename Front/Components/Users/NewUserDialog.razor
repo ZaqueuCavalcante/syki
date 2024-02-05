@@ -66,7 +66,7 @@
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="Cancel" />
-        <MudSpacer />
+        <DialogProgressCircular Loading="_loading" />
         <DialogSaveButton OnClick="Submit" />
     </DialogActions>
 </MudDialog>
@@ -77,6 +77,7 @@
 @code
 {
     MudForm _form;
+    private bool _loading = false;
 
     UserIn data = new();
 
@@ -105,13 +106,17 @@
 
     async Task Submit()
     {
+        if (_loading) return;
+
         await _form.Validate();
         if (!_form.IsValid) return;
 
         data.Faculdade = _faculdade!.Id;
         data.Password = $"Pass@{Guid.NewGuid().ToString().OnlyNumbers()}";
 
+        _loading = true;
         await Http.PostAsJsonAsync("/users", data);
+        _loading = false;
 
         MudDialog.Close(DialogResult.Ok(true));
 

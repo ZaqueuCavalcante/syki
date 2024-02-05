@@ -38,7 +38,7 @@
             </Columns>
 
             <NoRecordsContent>
-                Não existem grades cadastradas ainda.
+                @(GetNotFoundMessage())
             </NoRecordsContent>
 
             <PagerContent>
@@ -91,5 +91,10 @@
         if (result.Canceled) return;
         
         await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem grades cadastradas ainda." : "Nenhuma grade encontrada.";
     }
 }

@@ -49,16 +49,13 @@ public class Turma
 
     public TurmaOut ToOut()
     {
-        var horario = Horarios.First();
         return new TurmaOut
         {
             Id = Id,
             Disciplina = Disciplina.Nome,
             Professor = Professor.Nome,
             Periodo = Periodo,
-            Dia = horario.Dia,
-            Start = horario.Start,
-            End = horario.End,
+            Horario = string.Join(" | ", Horarios.OrderBy(h => h.Dia).ThenBy(h => h.Start).ToList().ConvertAll(h => h.ToString())),
         };
     }
 }

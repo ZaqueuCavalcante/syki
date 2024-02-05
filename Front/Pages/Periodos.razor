@@ -34,7 +34,7 @@
             </Columns>
 
             <NoRecordsContent>
-                Não existem períodos cadastrados ainda.
+                @(GetNotFoundMessage())
             </NoRecordsContent>
 
             <PagerContent>
@@ -75,5 +75,10 @@
         if (result.Canceled) return;
         
         await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem períodos cadastrados ainda." : "Nenhum período encontrado.";
     }
 }

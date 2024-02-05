@@ -48,4 +48,19 @@ public class Horario
 
         return false;
     }
+
+    public override string ToString()
+    {
+        return $"{Dia.GetDescription()} {Start.GetDescription()}-{End.GetDescription()}";
+    }
+
+    public HorarioOut ToOut()
+    {
+        return new HorarioOut
+        {
+            Dia = Dia,
+            Start = Start,
+            End = End,
+        };
+    }
 }

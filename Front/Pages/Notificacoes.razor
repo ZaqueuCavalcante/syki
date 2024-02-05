@@ -44,7 +44,7 @@
             </Columns>
  
             <NoRecordsContent>
-                Não existem notificações cadastradas ainda.
+                @(GetNotFoundMessage())
             </NoRecordsContent>
 
             <PagerContent>
@@ -86,4 +86,9 @@
     }
 
     private Func<NotificationOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem notificações cadastradas ainda." : "Nenhuma notificação encontrada.";
+    }
 }

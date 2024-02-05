@@ -32,7 +32,7 @@
             </Columns>
 
             <NoRecordsContent>
-                Não existem disciplinas cadastradas ainda.
+                @(GetNotFoundMessage())
             </NoRecordsContent>
 
             <PagerContent>
@@ -73,5 +73,10 @@
         if (result.Canceled) return;
         
         await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem disciplinas cadastradas ainda." : "Nenhuma disciplina encontrada.";
     }
 }

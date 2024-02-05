@@ -19,7 +19,7 @@ public class AlunoDisciplinaUnitTests
         var aluno = new AlunoDisciplina(alunoId, disciplinaId, situacao);
 
         // Assert
-        aluno.Id.Should().BeEmpty();
+        aluno.Id.Should().NotBeEmpty();
     }
 
     [Test]

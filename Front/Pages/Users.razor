@@ -36,7 +36,7 @@
             </Columns>
 
             <NoRecordsContent>
-                Não existem usuários cadastrados ainda.
+                @(GetNotFoundMessage())
             </NoRecordsContent>
 
             <PagerContent>
@@ -77,5 +77,10 @@
         if (result.Canceled) return;
         
         await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem usuários cadastrados ainda." : "Nenhum usuário encontrado.";
     }
 }

@@ -41,7 +41,7 @@
             </Columns>
 
             <NoRecordsContent>
-                Não existem cursos cadastrados ainda.
+                @(GetNotFoundMessage())
             </NoRecordsContent>
 
             <PagerContent>
@@ -82,5 +82,10 @@
         if (result.Canceled) return;
         
         await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem cursos cadastrados ainda." : "Nenhum curso encontrado.";
     }
 }

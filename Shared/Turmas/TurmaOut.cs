@@ -6,7 +6,16 @@ public class TurmaOut
     public string Disciplina { get; set; }
     public string Professor { get; set; }
     public string Periodo { get; set; }
-    public Dia Dia { get; set; }
-    public Hora Start { get; set; }
-    public Hora End { get; set; }
+    public string Horario { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null) return false;
+        return Id == ((TurmaOut)obj).Id;
+    }
+
+    public override int GetHashCode()
+    {
+        return Id.ToHashCode();
+    }
 }

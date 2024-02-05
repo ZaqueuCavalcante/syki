@@ -19,7 +19,7 @@
             </Columns>
 
             <NoRecordsContent>
-                Não existem notificações ainda.
+                @(GetNotFoundMessage())
             </NoRecordsContent>
         </MudDataGrid>
     </DialogContent>
@@ -37,5 +37,10 @@
         _loading = true;
         _notifications = await Http.GetFromJsonAsync<List<UserNotificationOut>>("/notifications/user") ?? [];
         _loading = false;
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return "Não existem notificações cadastradas ainda.";
     }
 }

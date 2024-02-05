@@ -7,12 +7,11 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="_form">
-            <MudGrid Justify="Justify.FlexStart">
-                <MudItem xs="12">
+            <MudGrid>
+                <MudItem xs="12" Class="pb-2">
                     <MudAutocomplete
                         T="DisciplinaOut"
                         MaxItems="50"
-                        Class="py-0 my-0"
                         SearchFunc="@SearchDisciplina"
                         Dense="true"
                         Margin="Margin.Dense"
@@ -24,29 +23,27 @@
                         AdornmentColor="Color.Primary"
                     />
                 </MudItem>
-                <MudItem xs="8">
-                        <MudSelect
-                            Dense="true"
-                            Margin="Margin.Dense"
-                            Class="py-0 my-0"
-                            Variant="Variant.Outlined"
-                            @bind-Value="_professor"
-                            Label="Professor"
-                            Required="true"
-                            RequiredError="Informe o professor!"
-                            AdornmentColor="Color.Primary"
-                        >
+                <MudItem xs="8" Class="py-0">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        @bind-Value="_professor"
+                        Label="Professor"
+                        Required="true"
+                        RequiredError="Informe o professor!"
+                        AdornmentColor="Color.Primary"
+                    >
                         @foreach (ProfessorOut? item in Professores)
                         {
                             <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>
-                <MudItem xs="4">
+                <MudItem xs="4" Class="py-0">
                     <MudSelect
                         Dense="true"
                         Margin="Margin.Dense"
-                        Class="py-0 my-0"
                         Variant="Variant.Outlined"
                         @bind-Value="_periodo"
                         Label="Período"
@@ -61,62 +58,34 @@
                     </MudSelect>
                 </MudItem>
 
-                <MudDivider Class="my-4"/>
+                <MudItem xs="12" Class="pt-2 pb-0">
+                    <MudDivider />
+                </MudItem>
 
-                <MudItem xs="4">
-                    <MudSelect
-                        Dense="true"
-                        Margin="Margin.Dense"
-                        Class="py-0 my-0"
-                        Variant="Variant.Outlined"
-                        @bind-Value="_dia"
-                        Label="Dia"
-                        Required="true"
-                        RequiredError="Informe o dia!"
-                        AdornmentColor="Color.Primary"
-                    >
-                        @foreach (Dia? dia in Enum.GetValues(typeof(Dia)))
-                        {
-                            <MudSelectItem Value="@dia">@dia.GetDescription()</MudSelectItem>
-                        }
-                    </MudSelect>
-                </MudItem>
-                <MudItem xs="4">
-                    <MudSelect
-                        Dense="true"
-                        Margin="Margin.Dense"
-                        Class="py-0 my-0"
-                        Variant="Variant.Outlined"
-                        @bind-Value="_start"
-                        Label="Início"
-                        Required="true"
-                        RequiredError="Informe a hora de início!"
-                        AdornmentColor="Color.Primary"
-                    >
-                        @foreach (Hora? hora in Enum.GetValues(typeof(Hora)))
-                        {
-                            <MudSelectItem Value="@hora">@hora.GetDescription()</MudSelectItem>
-                        }
-                    </MudSelect>
-                </MudItem>
-                <MudItem xs="4">
-                    <MudSelect
-                        Dense="true"
-                        Margin="Margin.Dense"
-                        Class="py-0 my-0"
-                        Variant="Variant.Outlined"
-                        @bind-Value="_end"
-                        Label="Fim"
-                        Required="true"
-                        RequiredError="Informe a hora de fim!"
-                        AdornmentColor="Color.Primary"
-                    >
-                        @foreach (Hora? hora in Enum.GetValues(typeof(Hora)))
-                        {
-                            if (_start == null || hora <= _start) continue;
-                            <MudSelectItem Value="@hora">@hora.GetDescription()</MudSelectItem>
-                        }
-                    </MudSelect>
+                <MudItem xs="12">
+                    <MudContainer Class="px-0">
+                        <MudGrid Justify="Justify.FlexStart">
+                            <MudItem xs="12">
+                                <CascadingValue Name="Horarios" Value="@Horarios">
+                                    @for(var i = 0; i < _count; i++)
+                                    {
+                                        <TurmaHorario />
+                                    }
+                                </CascadingValue>
+                                <MudButton
+                                    StartIcon="@Icons.Material.Outlined.Add"
+                                    IconSize="Size.Large"
+                                    Variant="Variant.Outlined"
+                                    FullWidth="true"
+                                    Class="mt-2 border-dashed border-2 mud-border-secundary"
+                                    Color="Color.Primary"
+                                    @onclick="NewTurmaHorario"
+                                >
+                                    NOVO HORÁRIO
+                                </MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    </MudContainer>
                 </MudItem>
             </MudGrid>
         </MudForm>
@@ -139,14 +108,13 @@
     ProfessorOut? _professor;
     string? _periodo;
 
-    Dia? _dia; Hora? _start; Hora? _end;
-
     TurmaIn data = new();
 
     List<DisciplinaOut> Disciplinas = [];
     List<ProfessorOut> Professores = [];
     List<PeriodoOut> Periodos = [];
     List<AlunoOut> Alunos = [];
+    List<HorarioIn> Horarios { get; set; } = [];
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
@@ -159,6 +127,12 @@
             Task.Run(async () => Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? []),
             Task.Run(async () => Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? []),
         });
+    }
+
+    int _count = 1;
+    void NewTurmaHorario()
+    {
+        _count ++;
     }
 
     private async Task<IEnumerable<DisciplinaOut>> SearchDisciplina(string value)
@@ -181,9 +155,7 @@
             DisciplinaId = _disciplina!.Id,
             ProfessorId = _professor!.Id,
             Periodo = _periodo!,
-            Dia = _dia!.Value,
-            Start = _start!.Value,
-            End = _end!.Value,
+            Horarios = Horarios,
         };
         await Http.PostAsJsonAsync("/turmas", data);
 

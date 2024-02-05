@@ -33,7 +33,7 @@
             </Columns>
 
             <NoRecordsContent>
-                Não existem professores cadastrados ainda.
+                @(GetNotFoundMessage())
             </NoRecordsContent>
 
             <PagerContent>
@@ -74,5 +74,10 @@
         if (result.Canceled) return;
         
         await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem professores cadastrados ainda." : "Nenhum professor encontrado.";
     }
 }

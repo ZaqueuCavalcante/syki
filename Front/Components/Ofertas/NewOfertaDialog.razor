@@ -26,7 +26,7 @@
                 </MudItem>
                 <MudItem xs="4">
                     <MudSelect Dense="true" Margin="Margin.Dense" Variant="Variant.Outlined" Class="mb-4" @bind-Value="_turno" Label="Turno" Required="true" RequiredError="Informe o turno do curso!" AdornmentColor="Color.Primary">
-                        @foreach (Turno? item in Enum.GetValues(typeof(Turno)))
+                        @foreach (Turno? item in Enum.GetValues<Turno>())
                         {
                             <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
                         }

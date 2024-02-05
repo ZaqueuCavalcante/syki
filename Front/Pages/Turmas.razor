@@ -31,13 +31,11 @@
                 <PropertyColumn Property="x => x.Disciplina" Title="Disciplina" />
                 <PropertyColumn Property="x => x.Professor" Title="Professor" />
                 <PropertyColumn Property="x => x.Periodo" Title="Período" />
-                <PropertyColumn Property="x => x.Dia" Title="Dia" />
-                <PropertyColumn Property="x => x.Start.GetDescription()" Title="Início" />
-                <PropertyColumn Property="x => x.End.GetDescription()" Title="Fim" />
+                <PropertyColumn Property="x => x.Horario" Title="Horário" />
             </Columns>
 
             <NoRecordsContent>
-                Não existem turmas cadastradas ainda.
+                @(GetNotFoundMessage())
             </NoRecordsContent>
 
             <PagerContent>
@@ -79,5 +77,10 @@
         if (result.Canceled) return;
         
         await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem turmas cadastradas ainda." : "Nenhuma turma encontrada.";
     }
 }

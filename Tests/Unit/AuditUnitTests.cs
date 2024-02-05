@@ -18,7 +18,7 @@ public class AuditUnitTests
         EntityType = typeof(Turma),
         PrimaryKey = new Dictionary<string, object>()
         {
-            {"Id", "0346158a-f03f-4d95-b627-a154876c3f5b" },
+            { "Id", "0346158a-f03f-4d95-b627-a154876c3f5b" },
         },
         ColumnValues = new Dictionary<string, object>()
         {

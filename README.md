@@ -11,6 +11,3 @@
 ## Guidelines
 
 Integridade Conceitual
-
-## Links
-

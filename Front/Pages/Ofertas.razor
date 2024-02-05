@@ -36,7 +36,7 @@
             </Columns>
 
             <NoRecordsContent>
-                Não existem ofertas cadastradas ainda.
+                @(GetNotFoundMessage())
             </NoRecordsContent>
 
             <PagerContent>
@@ -78,5 +78,10 @@
         if (result.Canceled) return;
         
         await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem ofertas cadastradas ainda." : "Nenhuma oferta encontrada.";
     }
 }

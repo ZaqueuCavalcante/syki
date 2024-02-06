@@ -12,8 +12,3 @@
         - Disciplinas que nao tem pre-requisitos
         - Disciplinas que tem pre-requisitos mas o aluno ja cumpriu
         - Turma ainda tem vagas abertas
-
-
-
-
-

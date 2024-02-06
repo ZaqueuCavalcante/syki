@@ -12,5 +12,10 @@ public class PeriodoConfig : IEntityTypeConfiguration<Periodo>
 
         periodo.HasKey(p => new { p.Id, p.FaculdadeId });
         periodo.Property(p => p.Id).ValueGeneratedNever();
+
+        periodo.HasOne<PeriodoDeMatricula>()
+            .WithOne()
+            .HasPrincipalKey<Periodo>(p => new { p.Id, p.FaculdadeId })
+            .HasForeignKey<PeriodoDeMatricula>(pm => new { pm.Id, pm.FaculdadeId });
     }
 }

@@ -47,7 +47,7 @@ public class Periodo
         if (end.Year != year)
             Throw.DE0005.Now();
 
-        if (!(start < end))
+        if (start >= end)
             Throw.DE0006.Now();
 
         return $"{year}.{digit}";

@@ -1,0 +1,84 @@
+﻿@page "/matriculas"
+@attribute [Authorize(Roles = "Academico")]
+
+<PageTitle>Matrículas</PageTitle>
+
+<MudContainer>
+    <SykiPageHeader Icon="@Icons.Material.Filled.Article" Title="Matrículas" ButtonText="Nova Matrícula" OnClick="OpenDialog"/>
+
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudText>Utilize os períodos de matrícula para organizar as informações durante o ano letivo.</MudText>
+    </MudAlert>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_periodos" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    @bind-Value="_searchString"
+                    Placeholder="Busque por ano"
+                    Adornment="Adornment.Start"
+                    Immediate="true"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium"
+                    Class="mt-0"
+                />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Id" Title="Id" />
+                <PropertyColumn Property="x => x.Start" Title="Início" />
+                <PropertyColumn Property="x => x.End" Title="Fim" />
+            </Columns>
+
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+
+            <PagerContent>
+                <MudDataGridPager T="PeriodoDeMatriculaOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject HttpClient Http
+@inject IDialogService DialogService
+
+@code
+{
+    private bool _loading;
+    private string _searchString;
+    private List<PeriodoDeMatriculaOut> _periodos = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _periodos = await Http.GetFromJsonAsync<List<PeriodoDeMatriculaOut>>("/matriculas/periodos") ?? [];
+        _loading = false;
+    }
+
+    private Func<PeriodoDeMatriculaOut, bool> _quickFilter => x => _searchString.IsIn(x.Id);
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = await DialogService.ShowAsync<NewPeriodoDeMatriculaDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem períodos de matrícula cadastrados ainda." : "Nenhum período de matrícula encontrado.";
+    }
+}

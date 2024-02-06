@@ -1,3 +1,4 @@
+using Syki.Shared;
 using Syki.Back.Exceptions;
 
 namespace Syki.Back.Domain;
@@ -23,5 +24,15 @@ public class PeriodoDeMatricula
 
         Start = start;
         End = end;
+    }
+
+    public PeriodoDeMatriculaOut ToOut()
+    {
+        return new PeriodoDeMatriculaOut
+        {
+            Id = Id,
+            Start = Start,
+            End = End,
+        };
     }
 }

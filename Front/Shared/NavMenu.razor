@@ -13,17 +13,19 @@
         <MudNavLink Href="turmas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CenterFocusStrong" IconColor="Color.Inherit">Turmas</MudNavLink>
         <MudNavLink Href="professores" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person4" IconColor="Color.Inherit">Professores</MudNavLink>
         <MudNavLink Href="alunos" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Alunos</MudNavLink>
-        <MudNavLink Href="periodos" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Períodos</MudNavLink>
         <MudNavLink Href="biblioteca" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.LibraryBooks" IconColor="Color.Inherit">Biblioteca</MudNavLink>
+        <MudNavLink Href="periodos" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Períodos</MudNavLink>
         <MudNavLink Href="notificacoes" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Notifications" IconColor="Color.Inherit">Notificações</MudNavLink>
+        <MudNavLink Href="matriculas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrículas</MudNavLink>
     </AuthorizeView>
 
     <AuthorizeView Roles="Professor">
-        <MudNavLink Href="professores/aulas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Aulas</MudNavLink>
+        <MudNavLink Href="aulas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Aulas</MudNavLink>
     </AuthorizeView>
 
     <AuthorizeView Roles="Aluno">
         <MudNavLink Href="disciplinas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apps" IconColor="Color.Inherit">Disciplinas</MudNavLink>
         <MudNavLink Href="agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
+        <MudNavLink Href="matricula" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrícula</MudNavLink>
     </AuthorizeView>
 </MudNavMenu>

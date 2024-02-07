@@ -5,7 +5,8 @@ using FluentAssertions;
 
 namespace Syki.Tests.Auth;
 
-public class AuthUnauthorizedTests : AuthTestBase
+// TODO: split all tests in partial class and files
+public partial class AuthUnauthorizedTests : AuthTestBase
 {
     [Test]
     public async Task Nao_deve_criar_um_novo_aluno_quando_o_usuario_esta_deslogado()

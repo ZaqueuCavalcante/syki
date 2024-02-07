@@ -47,6 +47,11 @@ public class Turma
         Horarios = horarios;
     }
 
+    public string GetHorario()
+    {
+        return string.Join(" | ", Horarios.OrderBy(h => h.Dia).ThenBy(h => h.Start).ToList().ConvertAll(h => h.ToString()));
+    }
+
     public TurmaOut ToOut()
     {
         return new TurmaOut
@@ -55,7 +60,7 @@ public class Turma
             Disciplina = Disciplina.Nome,
             Professor = Professor.Nome,
             Periodo = Periodo,
-            Horario = string.Join(" | ", Horarios.OrderBy(h => h.Dia).ThenBy(h => h.Start).ToList().ConvertAll(h => h.ToString())),
+            Horario = GetHorario(),
         };
     }
 }

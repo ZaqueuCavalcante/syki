@@ -39,28 +39,4 @@ public class HorarioIn
     {
         return Id.ToHashCode();
     }
-
-    // TODO: refactor this to use same Horario method
-    public bool Conflict(HorarioIn other)
-    {
-        if (Dia != other.Dia)
-            return false;
-
-        if (Start == other.Start || End == other.End)
-            return true;
-
-        if (Start < other.Start && other.Start < End)
-            return true;
-
-        if (Start < other.End && other.End < End)
-            return true;
-
-        if (other.Start < Start && Start < other.End)
-            return true;
-
-        if (other.Start < End && End < other.End)
-            return true;
-
-        return false;
-    }
 }

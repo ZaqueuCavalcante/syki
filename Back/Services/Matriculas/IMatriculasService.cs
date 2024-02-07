@@ -6,4 +6,5 @@ public interface IMatriculasService
 {
     Task<PeriodoDeMatriculaOut> CreatePeriodoDeMatricula(Guid faculdadeId, PeriodoDeMatriculaIn data);
     Task<List<PeriodoDeMatriculaOut>> GetPeriodosDeMatricula(Guid faculdadeId);
+    Task<List<MatriculaTurmaOut>> GetTurmas(Guid faculdadeId, Guid userId);
 }

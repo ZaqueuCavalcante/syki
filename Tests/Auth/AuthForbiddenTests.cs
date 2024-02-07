@@ -5,7 +5,8 @@ using FluentAssertions;
 
 namespace Syki.Tests.Auth;
 
-public class AuthForbiddenTests : AuthTestBase
+// TODO: split all tests in partial class and files
+public partial class AuthForbiddenTests : AuthTestBase
 {
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]

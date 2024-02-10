@@ -1,4 +1,3 @@
-using Bogus;
 using NUnit.Framework;
 using Syki.Back.Domain;
 using FluentAssertions;
@@ -13,12 +12,12 @@ public class ProfessoresUnitTests
     public void Deve_criar_um_professor_com_id()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
         var userId = Guid.NewGuid();
+        var faculdadeId = Guid.NewGuid();
         const string nome = "Chico Science";
 
         // Act
-        var professor = new Professor(faculdadeId, userId, nome);
+        var professor = new Professor(userId, faculdadeId, nome);
 
         // Assert
         professor.Id.Should().NotBeEmpty();
@@ -28,12 +27,12 @@ public class ProfessoresUnitTests
     public void Deve_criar_um_professor_com_faculdade_id_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
         var userId = Guid.NewGuid();
+        var faculdadeId = Guid.NewGuid();
         const string nome = "Chico Science";
 
         // Act
-        var professor = new Professor(faculdadeId, userId, nome);
+        var professor = new Professor(userId, faculdadeId, nome);
 
         // Assert
         professor.FaculdadeId.Should().Be(faculdadeId);
@@ -43,47 +42,30 @@ public class ProfessoresUnitTests
     public void Deve_criar_um_professor_com_user_id_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
         var userId = Guid.NewGuid();
+        var faculdadeId = Guid.NewGuid();
         const string nome = "Chico Science";
 
         // Act
-        var professor = new Professor(faculdadeId, userId, nome);
+        var professor = new Professor(userId, faculdadeId, nome);
 
         // Assert
-        professor.UserId.Should().Be(userId);
+        professor.Id.Should().Be(userId);
     }
 
     [Test]
     public void Deve_criar_um_professor_com_nome_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
         var userId = Guid.NewGuid();
+        var faculdadeId = Guid.NewGuid();
         const string nome = "Chico Science";
 
         // Act
-        var professor = new Professor(faculdadeId, userId, nome);
+        var professor = new Professor(userId, faculdadeId, nome);
 
         // Assert
         professor.Nome.Should().Be(nome);
-    }
-
-    [Test]
-    public void Deve_criar_varios_professores()
-    {
-        // Arrange
-        var faculdadeId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
-
-        var faker = new Faker<Professor>()
-            .CustomInstantiator(f => new Professor(faculdadeId, userId, f.Person.FirstName));
-
-        // Act
-        var professores = faker.Generate(5);
-
-        // Assert
-        professores.ConvertAll(x => x.Id).Should().OnlyHaveUniqueItems();
     }
 
     [Test]
@@ -95,7 +77,7 @@ public class ProfessoresUnitTests
         var userId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Professor(faculdadeId, userId, nome);
+        Action act = () => new Professor(userId, faculdadeId, nome);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE0000);
@@ -108,7 +90,7 @@ public class ProfessoresUnitTests
         var faculdadeId = Guid.NewGuid();
         var userId = Guid.NewGuid();
         const string nome = "Chico Science";
-        var professor = new Professor(faculdadeId, userId, nome);
+        var professor = new Professor(userId, faculdadeId, nome);
 
         // Act
         var professorOut = professor.ToOut();

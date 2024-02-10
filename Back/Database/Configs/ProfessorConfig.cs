@@ -16,6 +16,6 @@ public class ProfessorConfig : IEntityTypeConfiguration<Professor>
         professor.HasOne<SykiUser>()
             .WithOne()
             .HasPrincipalKey<SykiUser>(u => new { u.FaculdadeId, u.Id })
-            .HasForeignKey<Professor>(p => new { p.FaculdadeId, p.UserId });
+            .HasForeignKey<Professor>(p => new { p.FaculdadeId, p.Id });
     }
 }

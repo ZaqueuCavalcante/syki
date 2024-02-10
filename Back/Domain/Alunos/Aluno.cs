@@ -7,7 +7,6 @@ public class Aluno
 {
     public Guid Id { get; set; }
     public Guid FaculdadeId { get; set; }
-    public Guid UserId { get; set; }
     public SykiUser User { get; set; }
     public Guid OfertaId { get; set; }
     public Oferta Oferta { get; set; }
@@ -15,14 +14,13 @@ public class Aluno
     public string Matricula { get; set; }
 
     public Aluno(
+        Guid id,
         Guid faculdadeId,
-        Guid userId,
         string nome,
         Guid ofertaId
     ) {
-        Id = Guid.NewGuid();
+        Id = id;
         FaculdadeId = faculdadeId;
-        UserId = userId;
         OfertaId = ofertaId;
         SetNome(nome);
         Matricula = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
@@ -43,7 +41,6 @@ public class Aluno
         return new AlunoOut
         {
             Id = Id,
-            UserId = UserId,
             OfertaId = OfertaId,
             Oferta = Oferta?.Curso?.Nome ?? "-",
             Email = User?.Email ?? "-",

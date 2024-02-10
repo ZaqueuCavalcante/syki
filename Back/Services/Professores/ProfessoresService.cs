@@ -32,7 +32,7 @@ public class ProfessoresService : IProfessoresService
         };
         var user = await _authService.Register(userIn);
 
-        var professor = new Professor(faculdadeId, user.Id, data.Nome);
+        var professor = new Professor(user.Id, faculdadeId, data.Nome);
 
         _ctx.Add(professor);
         await _ctx.SaveChangesAsync();
@@ -52,7 +52,7 @@ public class ProfessoresService : IProfessoresService
             FROM
                 syki.professores p
             INNER JOIN
-                syki.users u ON u.id = p.user_id
+                syki.users u ON u.id = p.id
             WHERE
                 u.faculdade_id = {faculdadeId}
         ";

@@ -165,14 +165,14 @@ public class TurmasUnitTests
     public void Deve_converter_a_turma_corretamente_pro_out()
     {
         // Arrange
+        var userId = Guid.NewGuid();
         var faculdadeId = Guid.NewGuid();
         var disciplinaId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
         const string periodo = "2023.2";
 
         var disciplina = new Disciplina(faculdadeId, "Banco de Dados", 72);
-        var professor = new Professor(faculdadeId, userId, "Chico Science");
+        var professor = new Professor(userId, faculdadeId, "Chico Science");
         var horarios = new List<Horario>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
         var turma = new Turma(faculdadeId, disciplinaId, professorId, periodo, horarios)

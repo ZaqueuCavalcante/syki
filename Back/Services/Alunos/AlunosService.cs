@@ -38,7 +38,7 @@ public class AlunosService : IAlunosService
         };
         var user = await _authService.Register(userIn);
 
-        var aluno = new Aluno(faculdadeId, user.Id, data.Nome, data.OfertaId);
+        var aluno = new Aluno(user.Id, faculdadeId, data.Nome, data.OfertaId);
 
         _ctx.Add(aluno);
         await _ctx.SaveChangesAsync();
@@ -50,7 +50,7 @@ public class AlunosService : IAlunosService
 
     public async Task<List<DisciplinaOut>> GetDisciplinas(Guid userId)
     {
-        var ofertaId = await _ctx.Alunos.Where(a => a.UserId == userId)
+        var ofertaId = await _ctx.Alunos.Where(a => a.Id == userId)
             .Select(a => a.OfertaId).FirstAsync();
         var gradeId = await _ctx.Ofertas.Where(o => o.Id == ofertaId)
             .Select(o => o.GradeId).FirstAsync();
@@ -63,11 +63,8 @@ public class AlunosService : IAlunosService
 
         var response = grade.ToOut().Disciplinas.OrderBy(d => d.Periodo).ToList();
 
-        // TODO: make AlunoId and ProfessorId same as UserId?
-        var alunoId = await _ctx.Alunos.Where(a => a.UserId == userId)
-            .Select(a => a.Id).FirstAsync();
         var situacoes = await _ctx.TurmaAlunos.AsNoTracking()
-            .Where(x => x.AlunoId == alunoId)
+            .Where(x => x.AlunoId == userId)
             .ToListAsync();
 
         var ids = grade.Disciplinas.ConvertAll(d => d.Id);

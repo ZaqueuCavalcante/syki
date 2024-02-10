@@ -51,14 +51,14 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
-        var password = await client.ResetPassword(aluno.UserId);
+        var password = await client.ResetPassword(aluno.Id);
         await client.Login(bodyAluno.Email, password);
         var response = await client.PutAsync("/notifications/user", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         using var ctx = _factory.GetDbContext();
-        var notification = await ctx.UserNotifications.FirstAsync(n => n.UserId == aluno.UserId);
+        var notification = await ctx.UserNotifications.FirstAsync(n => n.UserId == aluno.Id);
         notification.ViewedAt.Should().NotBeNull();
     }
 
@@ -102,7 +102,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
-        var password = await client.ResetPassword(aluno.UserId);
+        var password = await client.ResetPassword(aluno.Id);
         await client.Login(bodyAluno.Email, password);
         var response = await client.GetAsync<List<UserNotificationOut>>("/notifications/user");
 

@@ -11,12 +11,8 @@ public class AgendasService : IAgendasService
 
     public async Task<List<AgendaDiaOut>> GetAluno(Guid faculdadeId, Guid userId)
     {
-        // TODO: make AlunoId and ProfessorId same as UserId?
-        var alunoId = await _ctx.Alunos.Where(a => a.UserId == userId)
-            .Select(a => a.Id).FirstAsync();
-
         var ids = await _ctx.TurmaAlunos.AsNoTracking()
-            .Where(x => x.AlunoId == alunoId && x.Situacao == Situacao.Matriculado)
+            .Where(x => x.AlunoId == userId && x.Situacao == Situacao.Matriculado)
             .Select(x => x.TurmaId)
             .ToListAsync();
 

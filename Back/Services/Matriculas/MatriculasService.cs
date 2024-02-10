@@ -49,13 +49,9 @@ public class MatriculasService : IMatriculasService
             .Select(t => t.Id)
             .ToListAsync();
 
-        // TODO: make AlunoId and ProfessorId same as UserId?
-        var alunoId = await _ctx.Alunos.Where(a => a.UserId == userId)
-            .Select(a => a.Id).FirstAsync();
-
         foreach (var id in ids)
         {
-            _ctx.Add(new TurmaAluno(id, alunoId, Situacao.Matriculado));
+            _ctx.Add(new TurmaAluno(id, userId, Situacao.Matriculado));
         }
 
         await _ctx.SaveChangesAsync();
@@ -71,7 +67,7 @@ public class MatriculasService : IMatriculasService
         if (periodoDeMatricula == null)
             return [];
 
-        var ofertaId = await _ctx.Alunos.Where(a => a.UserId == userId)
+        var ofertaId = await _ctx.Alunos.Where(a => a.Id == userId)
             .Select(a => a.OfertaId).FirstAsync();
         var gradeId = await _ctx.Ofertas.Where(o => o.Id == ofertaId)
             .Select(o => o.GradeId).FirstAsync();

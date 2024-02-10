@@ -25,22 +25,25 @@
                         </div>
                     </TitleContent>
                     <ChildContent>
-                        <MudTable Items="@_disciplinas.Where(x => x.Periodo == periodo)" Breakpoint="Breakpoint.Sm" Dense="true">
+                        <MudTable Items="@_disciplinas.Where(x => x.Periodo == periodo).OrderBy(x => x.Nome)" Breakpoint="Breakpoint.Sm" Dense="true">
                             <ColGroup>
-                                <col style="width: 60%;" />
-                                <col style="width: 20%;" />
+                                <col style="width: 50%;" />
+                                <col style="width: 15%;" />
+                                <col style="width: 15%;" />
                                 <col style="width: 20%;" />
                             </ColGroup>
 
                             <HeaderContent>
                                 <MudTh>Nome</MudTh>
                                 <MudTh>Créditos</MudTh>
-                                <MudTh>Carga Horária</MudTh>
+                                <MudTh>CH</MudTh>
+                                <MudTh>Situação</MudTh>
                             </HeaderContent>
                             <RowTemplate>
                                 <MudTd DataLabel="Nome">@context.Nome</MudTd>
                                 <MudTd DataLabel="Créditos">@context.Creditos</MudTd>
-                                <MudTd DataLabel="Carga Horária">@context.CargaHoraria</MudTd>
+                                <MudTd DataLabel="CH">@context.CargaHoraria</MudTd>
+                                <MudTd DataLabel="Situação">@context.Situacao</MudTd>
                             </RowTemplate>
                         </MudTable>
                     </ChildContent>

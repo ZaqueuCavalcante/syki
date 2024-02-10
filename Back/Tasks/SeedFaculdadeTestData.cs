@@ -2,6 +2,7 @@ using Syki.Shared;
 using Syki.Back.Domain;
 using Syki.Back.Database;
 using Microsoft.EntityFrameworkCore;
+using Syki.Back.Services;
 
 namespace Syki.Back.Tasks;
 
@@ -13,9 +14,11 @@ public class SeedFaculdadeTestData
 public class SeedFaculdadeTestDataHandler : ISykiTaskHandler<SeedFaculdadeTestData>
 {
     private readonly SykiDbContext _ctx;
-    public SeedFaculdadeTestDataHandler(SykiDbContext ctx)
+    private readonly IProfessoresService _professoresService;
+    public SeedFaculdadeTestDataHandler(SykiDbContext ctx, IProfessoresService professoresService)
     {
         _ctx = ctx;
+        _professoresService = professoresService;
     }
 
     public async Task Handle(SeedFaculdadeTestData task)
@@ -177,7 +180,7 @@ public class SeedFaculdadeTestDataHandler : ISykiTaskHandler<SeedFaculdadeTestDa
         gradeAds.Vinculos.Add(new GradeDisciplina(faculdade.Disciplinas[30].Id, 5, 2, 25));
         _ctx.Add(gradeAds);
 
-        var oferta = new Oferta(
+        var ofertaAds = new Oferta(
             id,
             faculdade.Campi[2].Id,
             faculdade.Cursos[1].Id,
@@ -185,7 +188,14 @@ public class SeedFaculdadeTestDataHandler : ISykiTaskHandler<SeedFaculdadeTestDa
             faculdade.Periodos[0].Id,
             Turno.Noturno
         );
-        _ctx.Add(oferta);
+        _ctx.Add(ofertaAds);
+
+        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Davi Pessoa Ferraz", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
+        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Luciete Bezerra Alves", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
+        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Antonio Marques da Costa Júnior", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
+        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Paulo Marcelo Pedrosa de Almeida", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
+        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Josélia Pachêco de Santana", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
+        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Manuela Abath Valença", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
 
         await _ctx.SaveChangesAsync();
     }

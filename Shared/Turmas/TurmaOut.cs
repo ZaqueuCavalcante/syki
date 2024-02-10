@@ -6,7 +6,8 @@ public class TurmaOut
     public string Disciplina { get; set; }
     public string Professor { get; set; }
     public string Periodo { get; set; }
-    public string Horario { get; set; }
+    public List<HorarioOut> Horarios { get; set; }
+    public string HorariosInline { get; set; }
 
     public override bool Equals(object? obj)
     {

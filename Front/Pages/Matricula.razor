@@ -14,15 +14,105 @@
         </MudCardContent>
     </MudCard>
 
-    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
-        <MudText>Selecione as disciplinas que você irá cursar nesse período.</MudText>
-    </MudAlert>
+    @if (_periodoDeMatricula == null)
+    {
+    }
+    else if (_periodoDeMatricula.Id.IsEmpty())
+    {
+        <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+            <MudText>Período de matrícula encerrado!</MudText>
+        </MudAlert>
+    }
+    else
+    {
+        <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+            <MudText>Selecione as disciplinas que você irá cursar nesse semestre. O período de matrícula vai até <strong>@_periodoDeMatricula.End</strong>. </MudText>
+        </MudAlert>
+
+        <CascadingValue Name="Dias" Value="@_dias">
+            <AgendaSemanal />
+        </CascadingValue>
+
+        <MudContainer Class="mb-8">
+            <MudDataGrid
+                Class="pa-4"
+                Items="@_options"
+                Hover="true"
+                Dense="true"
+                Loading="_loading"
+                RowsPerPage="100"
+                SortMode="SortMode.None"
+            >
+                <Columns>
+                    <PropertyColumn Property="x => x.Disciplina" Title="Disciplina" />
+                    <PropertyColumn Property="x => x.Periodo" Title="Período" />
+                    <PropertyColumn Property="x => x.Creditos" Title="Créditos" />
+                    <PropertyColumn Property="x => x.CargaHoraria" Title="CH" />
+                    <PropertyColumn Property="x => x.Professor" Title="Professor" />
+                    <TemplateColumn>
+                        <CellTemplate>
+                            <MudCheckBox T="bool" Checked="@context.Item.IsSelected" CheckedChanged="x => { context.Item.IsSelected = x; HandleCheckedChanged(); }" Size="Size.Small" Dense="true" Color="Color.Success"></MudCheckBox>
+                        </CellTemplate>
+                    </TemplateColumn>
+                </Columns>
+
+                <NoRecordsContent>
+                    Não existem turmas disponíveis no momento.
+                </NoRecordsContent>
+
+                <PagerContent>
+                    <MudStack Row="true" Class="mt-2">
+                        <DialogProgressCircular Loading="_saving" />
+                        <DialogSaveButton OnClick="Submit" />
+                    </MudStack>
+                </PagerContent>
+            </MudDataGrid>
+        </MudContainer>
+    }
 </MudContainer>
 
 @inject HttpClient Http
-@inject IDialogService DialogService
+@inject ISnackbar Snackbar
 
 @code
 {
-    private List<AgendaDiaOut> Dias = [];
+    private bool _loading;
+    private bool _saving;
+    PeriodoDeMatriculaOut _periodoDeMatricula;
+    private List<MatriculaTurmaOut> _options = [];
+    private List<AgendaDiaOut> _dias = [];
+
+    void HandleCheckedChanged()
+    {
+        _dias = _options.Where(o => o.IsSelected).ToList().ToAgendas();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _periodoDeMatricula = await Http.GetFromJsonAsync<PeriodoDeMatriculaOut?>("/matriculas/periodos/atual") ?? new();
+        if (_periodoDeMatricula.Id.IsEmpty())
+        {
+            _loading = false;
+            return;
+        }
+
+        _options = await Http.GetFromJsonAsync<List<MatriculaTurmaOut>>("/matriculas/turmas") ?? [];
+        _loading = false;
+    }
+
+    async Task Submit()
+    {
+        if (_saving) return;
+
+        _saving = true;
+        var data = new MatriculaTurmaIn
+        {
+            Turmas = _options.Where(o => o.IsSelected).Select(o => o.Id).ToList()
+        };
+        await Http.PostAsJsonAsync("/matriculas", data);
+        _saving = false;
+
+        Snackbar.Add("Matrícula salva com sucesso!", Severity.Success);
+    }
 }

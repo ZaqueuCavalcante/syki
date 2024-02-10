@@ -31,6 +31,24 @@ public class MatriculasController : ControllerBase
         return Ok(periodos);
     }
 
+    [HttpGet("periodos/atual")]
+    [Authorize(Roles = Aluno)]
+    public async Task<IActionResult> GetPeriodoDeMatriculaAtual()
+    {
+        var periodo = await _service.GetPeriodoDeMatriculaAtual(User.Facul());
+
+        return Ok(periodo);
+    }
+
+    [HttpPost()]
+    [Authorize(Roles = Aluno)]
+    public async Task<IActionResult> Create([FromBody] MatriculaTurmaIn data)
+    {
+        await _service.Create(User.Facul(), User.Id(), data);
+
+        return Ok();
+    }
+
     [HttpGet("turmas")]
     [Authorize(Roles = Aluno)]
     public async Task<IActionResult> GetTurmas()

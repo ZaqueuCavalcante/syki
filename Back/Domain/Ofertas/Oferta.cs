@@ -14,7 +14,6 @@ public class Oferta
     public Grade Grade { get; set; }
     public string Periodo { get; set; }
     public Turno Turno { get; set; }
-    public List<Turma> Turmas { get; set; }
 
     public Oferta(
         Guid faculdadeId,

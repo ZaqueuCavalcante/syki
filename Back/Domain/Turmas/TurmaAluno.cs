@@ -2,21 +2,19 @@ using Syki.Shared;
 
 namespace Syki.Back.Domain;
 
-public class AlunoDisciplina
+public class TurmaAluno
 {
-    public Guid Id { get; set; }
+    public Guid TurmaId { get; set; }
     public Guid AlunoId { get; set; }
-    public Guid DisciplinaId { get; set; }
     public Situacao Situacao { get; set; }
 
-    public AlunoDisciplina(
+    public TurmaAluno(
+        Guid turmaId,
         Guid alunoId,
-        Guid disciplinaId,
         Situacao situacao
     ) {
-        Id = Guid.NewGuid();
+        TurmaId = turmaId;
         AlunoId = alunoId;
-        DisciplinaId = disciplinaId;
         Situacao = situacao;
     }
 }

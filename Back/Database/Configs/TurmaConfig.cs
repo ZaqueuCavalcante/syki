@@ -23,10 +23,12 @@ public class TurmaConfig : IEntityTypeConfiguration<Turma>
 
         turma.HasMany(t => t.Alunos)
             .WithMany()
-            .UsingEntity<Dictionary<string, object>>(
-                joinEntityName: "turmas__alunos",
-                configureLeft: x => x.HasOne<Turma>().WithMany().HasForeignKey("TurmaId"),
-                configureRight: x => x.HasOne<Aluno>().WithMany().HasForeignKey("AlunoId")
+            .UsingEntity<TurmaAluno>(ta =>
+                {
+                    ta.ToTable("turmas__alunos");
+                    ta.HasOne<Turma>().WithMany().HasForeignKey(x => x.TurmaId);
+                    ta.HasOne<Aluno>().WithMany().HasForeignKey(x => x.AlunoId);
+                }
             );
 
         turma.HasMany(t => t.Aulas)

@@ -3,7 +3,7 @@ namespace Syki.Shared;
 public class AgendaDiaOut
 {
     public Dia Dia { get; set; }
-    public List<AgendaDisciplinaOut> Disciplinas { get; set; }
+    public List<AgendaDisciplinaOut> Disciplinas { get; set; } = [];
 }
 
 public class AgendaDisciplinaOut

@@ -16,7 +16,6 @@ public static class AuditConfigs
             .UseDbContext(_ => context)
             .AuditTypeExplicitMapper(_ => _
                 .Map<Aluno, AuditLog>()
-                .Map<AlunoDisciplina, AuditLog>()
                 .Map<Aula, AuditLog>()
                 .Map<Campus, AuditLog>()
                 .Map<Chamada, AuditLog>()

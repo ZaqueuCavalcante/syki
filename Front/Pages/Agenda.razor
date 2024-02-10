@@ -13,14 +13,9 @@
             </MudStack>
         </MudCardContent>
     </MudCard>
-    <MudContainer Class="mb-8">
-        <MudGrid Spacing="0" Justify="Justify.SpaceBetween">
-            @foreach (AgendaDiaOut? dia in Dias)
-            {
-                <AgendaDiaStack Data="dia" />
-            }
-        </MudGrid>
-    </MudContainer>
+    <CascadingValue Name="Dias" Value="@Dias">
+        <AgendaSemanal />
+    </CascadingValue>
 </MudContainer>
 
 @inject HttpClient Http
@@ -32,6 +27,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Dias = await Http.GetFromJsonAsync<List<AgendaDiaOut>>("/agenda/aluno") ?? [];
+        Dias = await Http.GetFromJsonAsync<List<AgendaDiaOut>>("/agendas/aluno") ?? [];
     }
 }

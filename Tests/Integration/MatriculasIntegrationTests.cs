@@ -3,6 +3,7 @@ using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Bunit;
 
 namespace Syki.Tests.Integration;
 
@@ -111,7 +112,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_retornar_as_turmas_disponiveis_para_o_aluno_escolher_na_sua_matricula()
+    public async Task Deve_retornar_apenas_as_turmas_cujas_disciplinas_estao_na_grade_da_oferta_de_curso_do_aluno()
     {
         // Arrange
         var client = _factory.CreateClient();
@@ -120,36 +121,65 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var year = DateTime.Now.Year;
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn($"{year}.1"));
-
         var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(2));
         await client.PostAsync<PeriodoDeMatriculaOut>("/matriculas/periodos", new PeriodoDeMatriculaIn { Id = periodo.Id, Start = start, End = end });
 
         var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
-        var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [curso.Id] });
-        var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id, Disciplinas = [new(disciplina.Id, 1, 7, 73)] });
-        var oferta = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = grade.Id, });
+        var ads = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
+        var direito = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Direito", Tipo = TipoDeCurso.Bacharelado });
 
-        var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
-        var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
-        var turma = await client.PostAsync<TurmaOut>("/turmas", new TurmaIn(disciplina.Id, professor.Id, periodo.Id, horarios));
+        var matematica = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Matemática Discreta", CargaHoraria = 72, Cursos = [ads.Id] });
+        var bancoDeDados = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [ads.Id] });
+        var estruturaDeDados = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60, Cursos = [ads.Id] });
+        var infoSociedade = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Informática e Sociedade", CargaHoraria = 55, Cursos = [ads.Id, direito.Id] });
+        var direitoEconomia = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Direito e Economia", CargaHoraria = 60, Cursos = [direito.Id] });
+        var introDireito = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Introdução ao Direito", CargaHoraria = 50, Cursos = [direito.Id] });
+        var direitoFinanceiro = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Direito Financeiro", CargaHoraria = 65, Cursos = [direito.Id] });
 
-        var aluno = await client.PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Zaqueu", Email = TestData.Email, OfertaId = oferta.Id });
-        var password = await client.ResetPassword(aluno.UserId);
-        await client.Login(aluno.Email, password);
+        var gradeAds = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = ads.Id, Disciplinas =
+        [
+            new(matematica.Id, 1, 7, 73),
+            new(bancoDeDados.Id, 1, 7, 73),
+            new(estruturaDeDados.Id, 2, 7, 73),
+            new(infoSociedade.Id, 2, 7, 73),
+        ]});
+        var gradeDireito = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = direito.Id, Disciplinas =
+        [
+            new(direitoEconomia.Id, 1, 7, 73),
+            new(infoSociedade.Id, 2, 7, 73),
+            new(introDireito.Id, 1, 7, 73),
+            new(direitoFinanceiro.Id, 1, 7, 73),
+        ]});
+
+        var ofertaAds = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = ads.Id, GradeId = gradeAds.Id, });
+        var ofertaDireito = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = direito.Id, GradeId = gradeDireito.Id, });
+
+        var chico = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
+        var ana = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Ana", Email = TestData.Email });
+
+        var turmaMatematica = await client.PostAsync<TurmaOut>("/turmas", new TurmaIn(matematica.Id, chico.Id, periodo.Id, [new(Dia.Segunda, Hora.H07_00, Hora.H10_00)]));
+        var turmaBancoDeDados = await client.PostAsync<TurmaOut>("/turmas", new TurmaIn(bancoDeDados.Id, chico.Id, periodo.Id, [new(Dia.Terca, Hora.H07_00, Hora.H10_00)]));
+        var turmaEstruturaDeDados = await client.PostAsync<TurmaOut>("/turmas", new TurmaIn(estruturaDeDados.Id, chico.Id, periodo.Id, [new(Dia.Quarta, Hora.H07_00, Hora.H10_00)]));
+        var turmaInfoSociedade = await client.PostAsync<TurmaOut>("/turmas", new TurmaIn(infoSociedade.Id, ana.Id, periodo.Id, [new(Dia.Segunda, Hora.H07_00, Hora.H08_00)]));
+        var turmaDireitoEconomia = await client.PostAsync<TurmaOut>("/turmas", new TurmaIn(direitoEconomia.Id, ana.Id, periodo.Id, [new(Dia.Terca, Hora.H07_00, Hora.H08_00)]));
+        var turmaIntroDireito = await client.PostAsync<TurmaOut>("/turmas", new TurmaIn(introDireito.Id, ana.Id, periodo.Id, [new(Dia.Quarta, Hora.H07_00, Hora.H08_00)]));
+        var turmaDireitoFinanceiro = await client.PostAsync<TurmaOut>("/turmas", new TurmaIn(direitoFinanceiro.Id, ana.Id, periodo.Id, [new(Dia.Quinta, Hora.H07_00, Hora.H08_00)]));
+
+        var zaqueu = await client.PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Zaqueu", Email = TestData.Email, OfertaId = ofertaAds.Id });
+        var maju = await client.PostAsync<AlunoOut>("/alunos", new AlunoIn { Nome = "Maju", Email = TestData.Email, OfertaId = ofertaDireito.Id });
+
+        var password = await client.ResetPassword(zaqueu.UserId);
+        await client.Login(zaqueu.Email, password);
 
         // Act
         var turmas = await client.GetAsync<List<MatriculaTurmaOut>>("/matriculas/turmas");
 
         // Assert
-        turmas.Should().ContainSingle();
-        turmas[0].Id.Should().Be(turma.Id);
-        turmas[0].Disciplina.Should().Be(disciplina.Nome);
-        turmas[0].Periodo.Should().Be(1);
-        turmas[0].Creditos.Should().Be(7);
-        turmas[0].CargaHoraria.Should().Be(73);
-        turmas[0].Professor.Should().Be(professor.Nome);
-        turmas[0].Horario.Should().Be(turma.Horario);
+        turmas.Should().HaveCount(4);
+        turmas.Should().Contain(t => t.Id == turmaMatematica.Id);
+        turmas.Should().Contain(t => t.Id == turmaBancoDeDados.Id);
+        turmas.Should().Contain(t => t.Id == turmaEstruturaDeDados.Id);
+        turmas.Should().Contain(t => t.Id == turmaInfoSociedade.Id);
     }
 }

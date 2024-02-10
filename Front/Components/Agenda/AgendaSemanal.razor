@@ -1,0 +1,24 @@
+<MudContainer Class="mb-4">
+    <MudGrid Spacing="0" Justify="Justify.SpaceBetween">
+        @foreach (AgendaDiaOut dia in GetDias())
+        {
+            <AgendaDiaStack Data="dia" />
+        }
+    </MudGrid>
+</MudContainer>
+
+@code
+{
+    [CascadingParameter(Name = "Dias")]
+    public List<AgendaDiaOut> Dias { get; set; }
+
+    private List<AgendaDiaOut> GetDias()
+    {
+        @foreach (Dia dia in Enum.GetValues<Dia>())
+        {
+            if (Dias.Any(d => d.Dia == dia)) continue;
+            Dias.Add(new AgendaDiaOut { Dia = dia });
+        }
+        return Dias.OrderBy(d => d.Dia).ToList();
+    }
+}

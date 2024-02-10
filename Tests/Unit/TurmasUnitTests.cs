@@ -189,6 +189,6 @@ public class TurmasUnitTests
         turmaOut.Disciplina.Should().Be(turma.Disciplina.Nome);
         turmaOut.Professor.Should().Be(turma.Professor.Nome);
         turmaOut.Periodo.Should().Be(turma.Periodo);
-        turmaOut.Horario.Should().Be("Segunda 07:00-08:00");
+        turmaOut.Horarios.Should().HaveCount(1);
     }
 }

@@ -4,8 +4,11 @@ namespace Syki.Shared;
 
 public enum Situacao
 {
-    [Description("Cursando")]
-    Cursando,
+    [Description("Pendente")]
+    Pendente,
+
+    [Description("Matriculado")]
+    Matriculado,
 
     [Description("Aprovado")]
     Aprovado,

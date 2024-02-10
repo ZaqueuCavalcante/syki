@@ -8,6 +8,9 @@ public class MatriculaTurmaOut
     public byte Creditos { get; set; }
     public ushort CargaHoraria { get; set; }
     public string Professor { get; set; }
-    public string Horario { get; set; }
+    public List<HorarioOut> Horarios { get; set; }
+    public string HorariosInline { get; set; }
     public string Alunos { get; set; }
+
+    public bool IsSelected { get; set; }
 }

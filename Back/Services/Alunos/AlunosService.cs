@@ -61,7 +61,26 @@ public class AlunosService : IAlunosService
             .Include(g => g.Vinculos)
             .FirstAsync(g => g.Id == gradeId);
 
-        return grade.ToOut().Disciplinas.OrderBy(d => d.Periodo).ToList();
+        var response = grade.ToOut().Disciplinas.OrderBy(d => d.Periodo).ToList();
+
+        // TODO: make AlunoId and ProfessorId same as UserId?
+        var alunoId = await _ctx.Alunos.Where(a => a.UserId == userId)
+            .Select(a => a.Id).FirstAsync();
+        var situacoes = await _ctx.TurmaAlunos.AsNoTracking()
+            .Where(x => x.AlunoId == alunoId)
+            .ToListAsync();
+
+        var ids = grade.Disciplinas.ConvertAll(d => d.Id);
+        var turmas = await _ctx.Turmas.Where(t => ids.Contains(t.DisciplinaId))
+            .Select(x => new { x.Id, x.DisciplinaId }).ToListAsync();
+
+        response.ForEach(r =>
+        {
+            var turmaId = turmas.FirstOrDefault(x => x.DisciplinaId == r.Id)?.Id;
+            r.Situacao = situacoes.FirstOrDefault(x => x.TurmaId == turmaId)?.Situacao ?? Situacao.Pendente;
+        });
+
+        return response;
     }
 
     public async Task<List<AlunoOut>> GetAll(Guid faculdadeId)

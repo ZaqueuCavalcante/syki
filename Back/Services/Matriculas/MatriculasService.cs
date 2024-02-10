@@ -29,11 +29,43 @@ public class MatriculasService : IMatriculasService
         return periodos.ConvertAll(p => p.ToOut());
     }
 
+    public async Task<PeriodoDeMatriculaOut> GetPeriodoDeMatriculaAtual(Guid faculdadeId)
+    {
+        var today = DateOnly.FromDateTime(DateTime.Now);
+        var periodoDeMatricula = await _ctx.PeriodosDeMatricula.AsNoTracking()
+            .Where(p => p.FaculdadeId == faculdadeId && p.Start <= today && p.End >= today)
+            .FirstOrDefaultAsync();
+        
+        if (periodoDeMatricula == null)
+            return new PeriodoDeMatriculaOut { };
+        
+        return periodoDeMatricula.ToOut();
+    }
+
+    public async Task Create(Guid faculdadeId, Guid userId, MatriculaTurmaIn data)
+    {
+        var ids = await _ctx.Turmas
+            .Where(t => t.FaculdadeId == faculdadeId && data.Turmas.Contains(t.Id))
+            .Select(t => t.Id)
+            .ToListAsync();
+
+        // TODO: make AlunoId and ProfessorId same as UserId?
+        var alunoId = await _ctx.Alunos.Where(a => a.UserId == userId)
+            .Select(a => a.Id).FirstAsync();
+
+        foreach (var id in ids)
+        {
+            _ctx.Add(new TurmaAluno(id, alunoId, Situacao.Matriculado));
+        }
+
+        await _ctx.SaveChangesAsync();
+    }
+
     public async Task<List<MatriculaTurmaOut>> GetTurmas(Guid faculdadeId, Guid userId)
     {
         var today = DateOnly.FromDateTime(DateTime.Now);
         var periodoDeMatricula = await _ctx.PeriodosDeMatricula.AsNoTracking()
-            .Where(p => p.FaculdadeId == faculdadeId && p.Start < today && p.End > today)
+            .Where(p => p.FaculdadeId == faculdadeId && p.Start <= today && p.End >= today)
             .FirstOrDefaultAsync();
         
         if (periodoDeMatricula == null)
@@ -58,7 +90,7 @@ public class MatriculasService : IMatriculasService
         var response = turmas.ConvertAll(t =>
         {
             var vinculo = grade.Vinculos.First(v => v.DisciplinaId == t.DisciplinaId);
-            var turmaOut = new MatriculaTurmaOut
+            return new MatriculaTurmaOut
             {
                 Id = t.Id,
                 Disciplina = t.Disciplina.Nome,
@@ -66,11 +98,10 @@ public class MatriculasService : IMatriculasService
                 Creditos = vinculo.Creditos,
                 CargaHoraria = vinculo.CargaHoraria,
                 Professor = t.Professor.Nome,
-                Horario = t.GetHorario(),
+                Horarios = t.Horarios.ConvertAll(h => h.ToOut()),
             };
-            return turmaOut;
         });
 
-        return response;
+        return response.OrderBy(t => t.Periodo).ToList();
     }
 }

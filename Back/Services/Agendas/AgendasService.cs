@@ -11,29 +11,30 @@ public class AgendasService : IAgendasService
 
     public async Task<List<AgendaDiaOut>> GetAluno(Guid faculdadeId, Guid userId)
     {
+        // TODO: make AlunoId and ProfessorId same as UserId?
+        var alunoId = await _ctx.Alunos.Where(a => a.UserId == userId)
+            .Select(a => a.Id).FirstAsync();
+
+        var ids = await _ctx.TurmaAlunos.AsNoTracking()
+            .Where(x => x.AlunoId == alunoId && x.Situacao == Situacao.Matriculado)
+            .Select(x => x.TurmaId)
+            .ToListAsync();
+
         var turmas = await _ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Horarios)
-            .Where(c => c.FaculdadeId == faculdadeId)
+            .Where(t => t.FaculdadeId == faculdadeId && ids.Contains(t.Id))
             .ToListAsync();
 
-        var result = turmas.ConvertAll(t =>
+        var response = turmas.ConvertAll(t =>
         {
-            return new AgendaDiaOut
+            return new MatriculaTurmaOut
             {
-                Dia = t.Horarios[0].Dia,
-                Disciplinas =
-                [
-                    new AgendaDisciplinaOut
-                    {
-                        Nome = t.Disciplina.Nome,
-                        Start = t.Horarios[0].Start,
-                        End = t.Horarios[0].End
-                    }
-                ]
+                Disciplina = t.Disciplina.Nome,
+                Horarios = t.Horarios.ConvertAll(h => h.ToOut()),
             };
         });
         
-        return result;
+        return response.ToAgendas();
     }
 }

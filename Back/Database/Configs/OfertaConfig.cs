@@ -10,20 +10,20 @@ public class OfertaConfig : IEntityTypeConfiguration<Oferta>
     {
         oferta.ToTable("ofertas");
 
-        oferta.HasKey(co => co.Id);
-        oferta.Property(co => co.Id).ValueGeneratedNever();
+        oferta.HasKey(o => o.Id);
+        oferta.Property(o => o.Id).ValueGeneratedNever();
 
         oferta.HasOne(o => o.Curso)
             .WithMany()
-            .HasForeignKey(co => co.CursoId);
+            .HasForeignKey(o => o.CursoId);
 
         oferta.HasOne(o => o.Grade)
             .WithMany()
-            .HasForeignKey(co => co.GradeId);
+            .HasForeignKey(o => o.GradeId);
 
         oferta.HasOne<Periodo>()
             .WithMany()
-            .HasForeignKey(co => new { co.Periodo, co.FaculdadeId });
+            .HasForeignKey(o => new { o.Periodo, o.FaculdadeId });
 
         oferta.HasMany<Aluno>()
             .WithOne(a => a.Oferta)

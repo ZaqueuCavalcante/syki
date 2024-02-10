@@ -1,6 +1,6 @@
+using Syki.Shared;
 using NUnit.Framework;
 using FluentAssertions;
-using Syki.Back.Extensions;
 
 namespace Syki.Tests.Unit;
 

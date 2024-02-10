@@ -298,7 +298,7 @@ public static class TestData
         foreach (var text in new List<(Enum, bool)>()
         {
             (TipoDeCurso.Bacharelado, true),
-            (Situacao.Cursando, false),
+            (Situacao.Matriculado, false),
             (TipoDeCurso.Tecnologo, true),
             (Turno.Vespertino, false),
         })

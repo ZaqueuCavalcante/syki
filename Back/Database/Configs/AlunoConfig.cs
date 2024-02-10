@@ -17,15 +17,5 @@ public class AlunoConfig : IEntityTypeConfiguration<Aluno>
             .WithOne()
             .HasPrincipalKey<SykiUser>(u => new { u.FaculdadeId, u.Id })
             .HasForeignKey<Aluno>(a => new { a.FaculdadeId, a.UserId });
-
-        aluno.HasMany<Disciplina>()
-            .WithMany()
-            .UsingEntity<AlunoDisciplina>(ad =>
-                {
-                    ad.ToTable("alunos__disciplinas");
-                    ad.HasOne<Aluno>().WithMany().HasForeignKey(x => x.AlunoId);
-                    ad.HasOne<Disciplina>().WithMany().HasForeignKey(x => x.DisciplinaId);
-                }
-            );
     }
 }

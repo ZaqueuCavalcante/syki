@@ -7,22 +7,22 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="_form">
-            <MudTextField
-                OnlyValidateIfDirty="true"
-                Immediate="true"
+            <MudSelect
+                Dense="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-4"
-                AutoFocus="true"
                 @bind-Value="data.Id"
-                Counter="6"
-                MaxLength="6"
-                HelperText="TODO: colocar como select so com as opcoes que vem da API"
-                T="String"
-                Label="Id"
+                Label="Período"
                 Required="true"
-                RequiredError="Informe o id do período!"
-            />
+                RequiredError="Informe o período do curso!"
+                AdornmentColor="Color.Primary"
+            >
+                @foreach (string? item in Periodos.ConvertAll(p => p.Id))
+                {
+                    <MudSelectItem Value="@item">@item</MudSelectItem>
+                }
+            </MudSelect>
             <MudStack Row="true">
                 <MudDatePicker
                     Label="Início"
@@ -70,8 +70,15 @@
     private DateTime? end;
     private PeriodoDeMatriculaIn data = new();
 
+    List<PeriodoOut> Periodos = [];
+
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Periodos = await Http.GetFromJsonAsync<List<PeriodoOut>>("/periodos") ?? [];
+    }
 
     async Task Submit()
     {
@@ -89,6 +96,7 @@
 
         MudDialog.Close(DialogResult.Ok(true));
 
+        // TODO: handle all error cases...
         Snackbar.Add("Período cadastrado com sucesso!", Severity.Success);
     }
 

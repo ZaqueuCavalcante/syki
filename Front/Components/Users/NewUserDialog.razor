@@ -46,22 +46,16 @@
                 Required="true"
                 RequiredError="Informe o email do usuário!"
             />
-            <MudSelect
-                Dense="true"
+            <MudTextField
                 Margin="Margin.Dense"
+                Label="Password"
+                Class="mt-3"
+                OnlyValidateIfDirty="true"
+                @bind-Value="data.Password"
                 Variant="Variant.Outlined"
-                Class="mb-4"
-                @bind-Value="data.Role"
-                Label="Role"
                 Required="true"
-                RequiredError="Informe a role do usuário!"
-                AdornmentColor="Color.Primary"
-            >
-                @foreach (string? item in _roles)
-                {
-                    <MudSelectItem Value="@item">@item</MudSelectItem>
-                }
-            </MudSelect>
+                RequiredError="Informe a senha do usuário!"
+            />
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -87,8 +81,6 @@
     FaculdadeOut? _faculdade;
     List<FaculdadeOut> _faculdades = [];
 
-    List<string> _roles = ["Academico", "Professor", "Aluno"];
-
     protected override async Task OnInitializedAsync()
     {
         _faculdades = await Http.GetFromJsonAsync<List<FaculdadeOut>>("/faculdades") ?? [];
@@ -112,7 +104,7 @@
         if (!_form.IsValid) return;
 
         data.Faculdade = _faculdade!.Id;
-        data.Password = $"Pass@{Guid.NewGuid().ToString().OnlyNumbers()}";
+        data.Role = "Academico";
 
         _loading = true;
         await Http.PostAsJsonAsync("/users", data);

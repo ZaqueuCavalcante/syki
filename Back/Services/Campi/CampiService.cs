@@ -20,7 +20,7 @@ public class CampiService : ICampiService
         return campus.ToOut();
     }
 
-    public async Task<CampusOut> Update(Guid faculdadeId, CampusOut data)
+    public async Task<CampusOut> Update(Guid faculdadeId, CampusUp data)
     {
         var campus = await _ctx.Campi
             .FirstOrDefaultAsync(x => x.FaculdadeId == faculdadeId && x.Id == data.Id);

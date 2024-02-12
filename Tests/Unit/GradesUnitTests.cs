@@ -74,7 +74,7 @@ public class GradesUnitTests
             Curso = new Curso(faculdadeId, "ADS", TipoDeCurso.Bacharelado),
             Disciplinas = [
                 new Disciplina(faculdadeId, "Banco de Dados", 72),
-                new Disciplina(faculdadeId, "Estruturas de Dados", 60),
+                new Disciplina(faculdadeId, "Estrutura de Dados", 60),
             ],
         };
 
@@ -95,7 +95,7 @@ public class GradesUnitTests
         gradeOut.Disciplinas[0].Periodo.Should().Be(2);
         gradeOut.Disciplinas[0].Creditos.Should().Be(12);
         gradeOut.Disciplinas[0].CargaHoraria.Should().Be(80);
-        gradeOut.Disciplinas[1].Nome.Should().Be("Estruturas de Dados");
+        gradeOut.Disciplinas[1].Nome.Should().Be("Estrutura de Dados");
         gradeOut.Disciplinas[1].Periodo.Should().Be(1);
         gradeOut.Disciplinas[1].Creditos.Should().Be(8);
         gradeOut.Disciplinas[1].CargaHoraria.Should().Be(50);

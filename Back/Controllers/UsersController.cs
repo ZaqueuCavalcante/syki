@@ -53,6 +53,7 @@ public class UsersController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginIn data)
     {
+        // TODO: remove logic from controller
         var result = await _signInManager.PasswordSignInAsync(
             userName: data.Email,
             password: data.Password,
@@ -78,6 +79,7 @@ public class UsersController : ControllerBase
     [HttpPost("login-mfa")]
     public async Task<IActionResult> LoginMfa([FromBody] LoginMfaIn data)
     {
+        // TODO: remove logic from controller
         var token = data.Code!.OnlyNumbers();
         var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(token, false, false);
 

@@ -23,7 +23,7 @@ public class CampiController : ControllerBase
     }
 
     [HttpPut("")]
-    public async Task<IActionResult> Update([FromBody] CampusOut data)
+    public async Task<IActionResult> Update([FromBody] CampusUp data)
     {
         var campus = await _service.Update(User.Facul(), data);
 

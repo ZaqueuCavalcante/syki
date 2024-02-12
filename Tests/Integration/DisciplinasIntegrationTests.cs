@@ -13,19 +13,15 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_nova_disciplina_sem_vinculo_com_nenhum_curso()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
-
-        var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
+        var client = await _factory.LoggedAsAcademico();
 
         // Act
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", body);
+        var disciplina = await client.NewDisciplina("Banco de Dados", 72);
 
         // Assert
         disciplina.Id.Should().NotBeEmpty();
-        disciplina.Nome.Should().Be(body.Nome);
-        disciplina.CargaHoraria.Should().Be(body.CargaHoraria);
+        disciplina.Nome.Should().Be("Banco de Dados");
+        disciplina.CargaHoraria.Should().Be(72);
         disciplina.Cursos.Should().BeEquivalentTo(new List<Guid>());
     }
 
@@ -33,21 +29,16 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_nova_disciplina_vincula_a_um_unico_curso()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = await _factory.LoggedAsAcademico();
 
-        var bodyAds = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado };
-        var curso = await client.PostAsync<CursoOut>("/cursos", bodyAds);
-
-        var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [curso.Id] };
+        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
 
         // Act
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", body);
+        var disciplina = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
 
         // Assert
-        disciplina.Nome.Should().Be(body.Nome);
-        disciplina.CargaHoraria.Should().Be(body.CargaHoraria);
+        disciplina.Nome.Should().Be("Banco de Dados");
+        disciplina.CargaHoraria.Should().Be(72);
         disciplina.Cursos.Should().BeEquivalentTo([curso.Id]);
     }
 
@@ -55,24 +46,18 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_nova_disciplina_vincula_a_mais_de_um_curso()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = await _factory.LoggedAsAcademico();
 
-        var bodyAds = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado };
-        var ads = await client.PostAsync<CursoOut>("/cursos", bodyAds);
-        var bodyCC = new CursoIn { Nome = "Ciência da Computação", Tipo = Bacharelado };
-        var cc = await client.PostAsync<CursoOut>("/cursos", bodyCC);
-
-        var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [ads.Id, cc.Id] };
+        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
+        var cc = await client.NewCurso("Ciência da Computação", Bacharelado);
 
         // Act
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", body);
+        var disciplina = await client.NewDisciplina("Banco de Dados", 72, [ads.Id, cc.Id]);
 
         // Assert
-        disciplina.Nome.Should().Be(body.Nome);
-        disciplina.CargaHoraria.Should().Be(body.CargaHoraria);
-        disciplina.Cursos.Should().BeEquivalentTo([ads.Id, cc.Id]);
+        disciplina.Nome.Should().Be("Banco de Dados");
+        disciplina.CargaHoraria.Should().Be(72);
+        disciplina.Cursos.Should().BeEquivalentTo([cc.Id, ads.Id]);
     }
 
     [Test]
@@ -80,6 +65,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
+
         var novaRoma = await client.CreateFaculdade("Nova Roma");
         var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
         await client.RegisterUser(userNovaRoma);
@@ -88,24 +74,20 @@ public partial class IntegrationTests : IntegrationTestBase
         var userUfpe = UserIn.New(ufpe.Id, Academico);
         await client.RegisterUser(userUfpe);
 
-        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
-        var bodyNovaRoma = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado };
-        var adsNovaRoma = await client.PostAsync<CursoOut>("/cursos", bodyNovaRoma);
+        await client.Login(userNovaRoma);
+        var adsNovaRoma = await client.NewCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
 
-        await client.Login(userUfpe.Email, userUfpe.Password);
-        var bodyUfpe = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Licenciatura };
-        var adsUfpe = await client.PostAsync<CursoOut>("/cursos", bodyUfpe);
+        await client.Login(userUfpe);
+        var adsUfpe = await client.NewCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
 
-        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
-
-        var body = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [adsNovaRoma.Id, adsUfpe.Id] };
+        await client.Login(userNovaRoma);
 
         // Act
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", body);
+        var disciplina = await client.NewDisciplina("Banco de Dados", 72, [adsNovaRoma.Id, adsUfpe.Id]);
 
         // Assert
-        disciplina.Nome.Should().Be(body.Nome);
-        disciplina.CargaHoraria.Should().Be(body.CargaHoraria);
+        disciplina.Nome.Should().Be("Banco de Dados");
+        disciplina.CargaHoraria.Should().Be(72);
         disciplina.Cursos.Should().BeEquivalentTo([adsNovaRoma.Id]);
     }
 
@@ -113,14 +95,12 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_varias_disciplinas()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = await _factory.LoggedAsAcademico();
 
         // Act
-        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
-        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60 });
-        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55 });
+        await client.NewDisciplina("Banco de Dados", 72);
+        await client.NewDisciplina("Estrutura de Dados", 60);
+        await client.NewDisciplina("Programação Orientada a Objetos", 55);
 
         // Assert
         var disciplinas = await client.GetAsync<List<DisciplinaOut>>("/disciplinas");
@@ -132,6 +112,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
+
         var novaRoma = await client.CreateFaculdade("Nova Roma");
         var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
         await client.RegisterUser(userNovaRoma);
@@ -140,24 +121,21 @@ public partial class IntegrationTests : IntegrationTestBase
         var userUfpe = UserIn.New(ufpe.Id, Academico);
         await client.RegisterUser(userUfpe);
 
-        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
-        var bodyNovaRoma = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
-        await client.PostAsync<DisciplinaOut>("/disciplinas", bodyNovaRoma);
+        await client.Login(userNovaRoma);
+        await client.NewDisciplina("Banco de Dados", 72);
 
-        await client.Login(userUfpe.Email, userUfpe.Password);
-        var bodyUfpe = new DisciplinaIn { Nome = "Estruturas de Dados", CargaHoraria = 80 };
-        await client.PostAsync<DisciplinaOut>("/disciplinas", bodyUfpe);
+        await client.Login(userUfpe);
+        await client.NewDisciplina("Estrutura de Dados", 80);
 
         // Act
-        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
-
-        var disciplinas = await client.GetAsync<List<DisciplinaOut>>("/disciplinas");
-        disciplinas.Should().HaveCount(1);
+        await client.Login(userNovaRoma);
 
         // Assert
+        var disciplinas = await client.GetAsync<List<DisciplinaOut>>("/disciplinas");
+        disciplinas.Should().HaveCount(1);
         disciplinas[0].Id.Should().NotBeEmpty();
-        disciplinas[0].Nome.Should().Be(bodyNovaRoma.Nome);
-        disciplinas[0].CargaHoraria.Should().Be(bodyNovaRoma.CargaHoraria);
+        disciplinas[0].Nome.Should().Be("Banco de Dados");
+        disciplinas[0].CargaHoraria.Should().Be(72);
         disciplinas[0].Cursos.Should().BeEquivalentTo(new List<Guid>());
     }
 
@@ -165,25 +143,22 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_as_disciplinas_ordenadas_pelo_nome()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = await _factory.LoggedAsAcademico();
 
         // Act
-        await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estruturas de Dados", CargaHoraria = 80 });
-        await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 50 });
-        await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Informática e Sociedade", CargaHoraria = 40 });
-        await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55 });
-        await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Projeto Integrador II: Modelagem de Banco de Dados", CargaHoraria = 72 });
-        await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Arquitetura de Computadores e Sistemas Operacionais", CargaHoraria = 60 });
+        await client.NewDisciplina("Estrutura de Dados", 60);
+        await client.NewDisciplina("Banco de Dados", 72);
+        await client.NewDisciplina("Programação Orientada a Objetos", 55);
+        await client.NewDisciplina("Informática e Sociedade", 40);
+        await client.NewDisciplina("Projeto Integrador II: Modelagem de Banco de Dados", 72);
+        await client.NewDisciplina("Arquitetura de Computadores e Sistemas Operacionais", 55);
 
         // Assert
         var disciplinas = await client.GetAsync<List<DisciplinaOut>>("/disciplinas");
         disciplinas.Should().HaveCount(6);
-
         disciplinas[0].Nome.Should().Be("Arquitetura de Computadores e Sistemas Operacionais");
         disciplinas[1].Nome.Should().Be("Banco de Dados");
-        disciplinas[2].Nome.Should().Be("Estruturas de Dados");
+        disciplinas[2].Nome.Should().Be("Estrutura de Dados");
         disciplinas[3].Nome.Should().Be("Informática e Sociedade");
         disciplinas[4].Nome.Should().Be("Programação Orientada a Objetos");
         disciplinas[5].Nome.Should().Be("Projeto Integrador II: Modelagem de Banco de Dados");
@@ -193,25 +168,21 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_apenas_as_disciplinas_do_curso_informado()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = await _factory.LoggedAsAcademico();
 
-        var bodyAds = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = Bacharelado };
-        var ads = await client.PostAsync<CursoOut>("/cursos", bodyAds);
-        var bodyCC = new CursoIn { Nome = "Ciência da Computação", Tipo = Bacharelado };
-        var cc = await client.PostAsync<CursoOut>("/cursos", bodyCC);
+        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
+        var cc = await client.NewCurso("Ciência da Computação", Bacharelado);
 
-        await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 50, Cursos = [ads.Id, cc.Id] });
-        await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Informática e Sociedade", CargaHoraria = 40, Cursos = [ads.Id] });
-        await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55, Cursos = [cc.Id] });
-        await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Projeto Integrador II: Modelagem de Banco de Dados", CargaHoraria = 72, Cursos = [cc.Id] });
+        await client.NewDisciplina("Banco de Dados", 50, [ads.Id, cc.Id]);
+        await client.NewDisciplina("Informática e Sociedade", 40, [ads.Id]);
+        await client.NewDisciplina("Programação Orientada a Objetos", 55, [cc.Id]);
+        await client.NewDisciplina("Projeto Integrador II: Modelagem de Banco de Dados", 72, [cc.Id]);
 
         // Act
         var disciplinas = await client.GetAsync<List<DisciplinaOut>>($"/disciplinas?cursoId={ads.Id}");
-        disciplinas.Should().HaveCount(2);
 
         // Assert
+        disciplinas.Should().HaveCount(2);
         disciplinas[0].Nome.Should().Be("Banco de Dados");
         disciplinas[1].Nome.Should().Be("Informática e Sociedade");
     }

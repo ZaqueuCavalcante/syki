@@ -16,6 +16,6 @@ public static class UserExtensions
 
     public static bool IsAuditable(this PathString path)
     {
-        return path != "/users/login" && path != "/users/login-mfa" && path != "/users/reset-password";
+        return path != "/users/login" && path != "/users/login-mfa" && path != "/users/reset-password" && path != "/demos"  && path != "/demos/setup";
     }
 }

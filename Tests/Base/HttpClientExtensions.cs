@@ -179,6 +179,11 @@ public static class HttpClientExtensions
         var tokenResponse = await client.GetAsync<ResetPasswordTokenOut>($"/tests/reset-password-token/{userId}");
         return tokenResponse.Token;
     }
+    public static async Task<string?> GetDemoSetupToken(this HttpClient client, string email)
+    {
+        var tokenResponse = await client.GetAsync<DemoSetupTokenOut>($"/tests/demo-setup-token/{email}");
+        return tokenResponse.Token;
+    }
 
     public static async Task<string> ResetPassword(this HttpClient client, Guid userId)
     {

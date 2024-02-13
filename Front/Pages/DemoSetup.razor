@@ -1,6 +1,6 @@
-﻿@page "/demo"
+﻿@page "/demo-setup"
 
-<PageTitle>Demo</PageTitle>
+<PageTitle>Demo setup</PageTitle>
 
 <style>body { background-color: rgba(235,235,235,1); }</style>
 
@@ -13,25 +13,15 @@
             <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
             <MudCardContent Class="mt-4">
                 <MudTextField
-                    AutoFocus="true"
                     Margin="Margin.Dense"
-                    Label="Nome da sua instituição"
+                    Label="New password"
                     Class="mt-3"
                     OnlyValidateIfDirty="true"
-                    @bind-Value="_model.Name"
+                    @bind-Value="_model.Password"
+                    InputType="InputType.Password"
                     Variant="Variant.Outlined"
                     Required="true"
-                    RequiredError="Informe o nome da sua instituição!"
-                />
-                <MudTextField
-                    Margin="Margin.Dense"
-                    Label="Email"
-                    Class="mt-3"
-                    OnlyValidateIfDirty="true"
-                    @bind-Value="_model.Email"
-                    Variant="Variant.Outlined"
-                    Required="true"
-                    RequiredError="Informe seu email!"
+                    RequiredError="Informe a senha!"
                 />
             </MudCardContent>
             <MudCardActions>
@@ -42,7 +32,7 @@
                     Color="Color.Primary"
                     Class="mx-auto mb-4 px-12"
                 >
-                    Cadastrar
+                    SALVAR
                 </MudButton>
             </MudCardActions>
         </MudCard>
@@ -55,20 +45,35 @@
 
 @code
 {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Token { get; set; }
+
     private bool _loading;
     private MudForm _form;
-    DemoIn _model = new();
+    DemoSetupIn _model = new();
 
     private async Task OnClick()
     {
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        _loading = true;
-        await Http.PostAsJsonAsync("/demos", _model);
+        _model.Token = Token;
 
-        Snackbar.Add("Demo salva com sucesso!", Severity.Success);
-        Nav.NavigateTo("/");
+        _loading = true;
+        var response = await Http.PostAsJsonAsync("/demos/setup", _model);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Nav.NavigateTo("/login");
+        }
+        else
+        {
+            var responseAsString = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ErrorOut>(responseAsString)!;
+            Snackbar.Add(result.Message, Severity.Error);
+        }
+
         _loading = false;
     }
 }

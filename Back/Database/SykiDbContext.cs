@@ -35,6 +35,7 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
     public DbSet<CursoDisciplina> CursosDisciplinas { get; set; }
     public DbSet<ResetPassword> ResetPasswords { get; set; }
     public DbSet<PeriodoDeMatricula> PeriodosDeMatricula { get; set; }
+    public DbSet<Demo> Demos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

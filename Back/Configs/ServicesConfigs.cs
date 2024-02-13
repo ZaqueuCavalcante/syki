@@ -23,5 +23,6 @@ public static class ServicesConfigs
         services.AddScoped<IEmailsService, EmailsService>();
         services.AddScoped<IAgendasService, AgendasService>();
         services.AddScoped<IMatriculasService, MatriculasService>();
+        services.AddScoped<IDemosService, DemosService>();
     }
 }

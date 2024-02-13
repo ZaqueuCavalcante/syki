@@ -1,0 +1,72 @@
+﻿@page "/demo"
+
+<PageTitle>Demo</PageTitle>
+
+<style>body { background-color: rgba(235,235,235,1); }</style>
+
+<MudContainer Class="mt-16 mb-8" Style="width: 460px">
+    <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
+        <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
+    </MudOverlay>
+    <MudForm @ref="_form">
+        <MudCard Class="px-16 pt-16 pb-8">
+            <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
+            <MudCardContent Class="mt-4">
+                <MudTextField
+                    AutoFocus="true"
+                    Margin="Margin.Dense"
+                    Label="Nome da sua instituição"
+                    Class="mt-3"
+                    OnlyValidateIfDirty="true"
+                    @bind-Value="_model.Name"
+                    Variant="Variant.Outlined"
+                    Required="true"
+                    RequiredError="Informe o nome da sua instituição!"
+                />
+                <MudTextField
+                    Margin="Margin.Dense"
+                    Label="Email"
+                    Class="mt-3"
+                    OnlyValidateIfDirty="true"
+                    @bind-Value="_model.Email"
+                    Variant="Variant.Outlined"
+                    Required="true"
+                    RequiredError="Informe seu email!"
+                />
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton
+                    Size="Size.Large"
+                    OnClick="OnClick"
+                    Variant="Variant.Filled"
+                    Color="Color.Primary"
+                    Class="mx-auto mb-4 px-12"
+                >
+                    Cadastrar
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudForm>
+</MudContainer>
+
+@inject IMfaService Mfa
+@inject ISnackbar Snackbar
+@inject AuthService AuthService
+@inject NavigationManager Nav
+
+@code
+{
+    private bool _loading;
+    private MudForm _form;
+    DemoIn _model = new();
+
+    private async Task OnClick()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+
+        _loading = false;
+    }
+}

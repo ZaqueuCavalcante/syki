@@ -3,17 +3,25 @@
 <PageTitle>Syki</PageTitle>
 
 <AuthorizeView Roles="Adm">
-    <MudContainer Class="mt-8 px-8">
+    <Authorized>
         <IndexAdm />
-    </MudContainer>
+    </Authorized>
 </AuthorizeView>
 
 <AuthorizeView Roles="Academico">
-    <IndexAcademico />
+    <Authorized>
+        <IndexAcademico />
+    </Authorized>
 </AuthorizeView>
 
 <AuthorizeView Roles="Aluno">
-    <MudContainer Class="mt-8 px-8">
+    <Authorized>
         <IndexAluno />
-    </MudContainer>
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Adm, Academico, Aluno">
+    <NotAuthorized>
+        <IndexAnonymous />
+    </NotAuthorized>
 </AuthorizeView>

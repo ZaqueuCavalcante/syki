@@ -26,13 +26,18 @@
         </MudLayout>
     </Authorized>
     <NotAuthorized>
-        @if (Nav.Uri.ToLower().Contains("login") || Nav.Uri.ToLower().Contains("reset-password"))
+        @if (Nav.Uri.EndsWith("/") || Nav.Uri.ToLower().Contains("demo") || Nav.Uri.ToLower().Contains("login") || Nav.Uri.ToLower().Contains("reset-password"))
         {
-            <MudLayout>
-                <MudMainContent>
-                    @Body
-                </MudMainContent>
-            </MudLayout>
+            <MudAppBar Elevation="1" Dense="true">
+                <MudStack Row="true" Class="d-flex justify-space-around flex-grow-1">
+                    <HomeButton />
+                    <MudSpacer />
+                    <LoginButton />
+                </MudStack>
+            </MudAppBar>
+            <MudMainContent>
+                @Body
+            </MudMainContent>
         }
         else
         {
@@ -87,6 +92,6 @@
     private async Task Logout()
     {
         await AuthService.Logout();
-        Nav.NavigateTo("/login");
+        Nav.NavigateTo("/");
     }
 }

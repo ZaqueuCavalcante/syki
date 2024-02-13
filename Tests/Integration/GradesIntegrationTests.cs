@@ -1,4 +1,3 @@
-using System.Net;
 using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
@@ -15,20 +14,14 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-
         var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
-        var body = new GradeIn {
-            Nome = "Grade de ADS - 1.0",
-            CursoId = curso.Id,
-        };
-
         // Act
-        var grade = await client.PostAsync<GradeOut>("/grades", body);
+        var grade = await client.NewGrade("Grade de ADS 1.0", curso.Id);
 
         // Assert
         grade.Id.Should().NotBeEmpty();
-        grade.Nome.Should().Be(body.Nome);
+        grade.Nome.Should().Be("Grade de ADS 1.0");
         grade.CursoId.Should().Be(curso.Id);
         grade.CursoNome.Should().Be(curso.Nome);
         grade.Disciplinas.Should().HaveCount(0);        
@@ -39,29 +32,19 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-
         var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [curso.Id] });
-        var ed = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60, Cursos = [curso.Id] });
-        var poo = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55, Cursos = [curso.Id] });
-
-        var body = new GradeIn {
-            Nome = "Grade de ADS - 1.0",
-            CursoId = curso.Id,
-            Disciplinas = [
-                new(bd.Id, 1, 10, 70),
-                new(ed.Id, 2, 8, 55),
-                new(poo.Id, 3, 12, 60),
-            ],
-        };
+        var bd = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
+        var ed = await client.NewDisciplina("Estrutura de Dados", 60, [curso.Id]);
+        var poo = await client.NewDisciplina("Programação Orientada a Objetos", 55, [curso.Id]);
+        var disciplinas = new List<GradeDisciplinaIn> { new(bd.Id, 1, 10, 70), new(ed.Id, 2, 8, 55), new(poo.Id, 3, 12, 60) };
 
         // Act
-        var grade = await client.PostAsync<GradeOut>("/grades", body);
+        var grade = await client.NewGrade("Grade de ADS 1.0", curso.Id, disciplinas);
 
         // Assert
         grade.Id.Should().NotBeEmpty();
-        grade.Nome.Should().Be(body.Nome);
+        grade.Nome.Should().Be("Grade de ADS 1.0");
         grade.CursoId.Should().Be(curso.Id);
         grade.CursoNome.Should().Be(curso.Nome);
         grade.Disciplinas.Should().HaveCount(3);        
@@ -72,25 +55,17 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-
         var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [curso.Id] });
-
-        var body = new GradeIn {
-            Nome = "Grade de ADS - 1.0",
-            CursoId = curso.Id,
-            Disciplinas = [
-                new(bd.Id, 1, 10, 80),
-            ],
-        };
+        var bd = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
+        var disciplinas = new List<GradeDisciplinaIn> { new(bd.Id, 1, 10, 80) };
 
         // Act
-        var grade = await client.PostAsync<GradeOut>("/grades", body);
+        var grade = await client.NewGrade("Grade de ADS 1.0", curso.Id, disciplinas);
 
         // Assert
         grade.Id.Should().NotBeEmpty();
-        grade.Nome.Should().Be(body.Nome);
+        grade.Nome.Should().Be("Grade de ADS 1.0");
         grade.CursoId.Should().Be(curso.Id);
         grade.CursoNome.Should().Be(curso.Nome);
         grade.Disciplinas.Should().HaveCount(1);
@@ -102,16 +77,13 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-
-        var body = new GradeIn { Nome = "Grade de ADS - 1.0" };
+        var body = new GradeIn { Nome = "Grade de ADS 1.0" };
 
         // Act
         var response = await client.PostAsync("/grades", body.ToStringContent());
         
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0001);
+        await response.AssertBadRequest(Throw.DE0001);
     }
 
     [Test]
@@ -119,16 +91,13 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-
-        var body = new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = Guid.NewGuid(), };
+        var body = new GradeIn { Nome = "Grade de ADS 1.0", CursoId = Guid.NewGuid() };
 
         // Act
         var response = await client.PostAsync("/grades", body.ToStringContent());
-        
+
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0001);
+        await response.AssertBadRequest(Throw.DE0001);
     }
 
     [Test]
@@ -136,30 +105,20 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
+        var userNovaRoma = await client.NewAcademico("Nova Roma");
+        var userUfpe = await client.NewAcademico("UFPE");
 
-        var novaRoma = await client.CreateFaculdade("Nova Roma");
-        var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
-        await client.RegisterUser(userNovaRoma);
+        await client.Login(userUfpe);
+        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
-        var ufpe = await client.CreateFaculdade("UFPE");
-        var userUfpe = UserIn.New(ufpe.Id, Academico);
-        await client.RegisterUser(userUfpe);
-
-        await client.Login(userUfpe.Email, userUfpe.Password);
-        var bodyUfpe = new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = TipoDeCurso.Bacharelado };
-        var curso = await client.PostAsync<CursoOut>("/cursos", bodyUfpe);
-
-        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
-
-        var body = new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id, };
+        await client.Login(userNovaRoma);
+        var body = new GradeIn { Nome = "Grade de ADS 1.0", CursoId = curso.Id };
 
         // Act
         var response = await client.PostAsync("/grades", body.ToStringContent());
         
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0001);
+        await response.AssertBadRequest(Throw.DE0001);
     }
 
     [Test]
@@ -171,21 +130,19 @@ public partial class IntegrationTests : IntegrationTestBase
         var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
         var direito = await client.NewCurso("Direito");
 
-        var bd = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [ads.Id] });
+        var bd = await client.NewDisciplina("Banco de Dados", 72, [ads.Id]);
 
         var body = new GradeIn {
-            Nome = "Grade de Direito - 1.0",
+            Nome = "Grade de Direito 1.0",
             CursoId = direito.Id,
             Disciplinas = [ new(bd.Id, 1, 10, 70) ],
         };
 
         // Act
         var response = await client.PostAsync("/grades", body.ToStringContent());
-        
+
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0002);      
+        await response.AssertBadRequest(Throw.DE0002);
     }
 
     [Test]
@@ -193,39 +150,29 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
+        var userNovaRoma = await client.NewAcademico("Nova Roma");
+        var userUfpe = await client.NewAcademico("UFPE");
 
-        var novaRoma = await client.CreateFaculdade("Nova Roma");
-        var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
-        await client.RegisterUser(userNovaRoma);
+        await client.Login(userNovaRoma);
+        await client.NewDisciplina("Banco de Dados", 72);
 
-        var ufpe = await client.CreateFaculdade("UFPE");
-        var userUfpe = UserIn.New(ufpe.Id, Academico);
-        await client.RegisterUser(userUfpe);
+        await client.Login(userUfpe);
+        var disciplinaUfpe = await client.NewDisciplina("Banco de Dados", 80);
 
-        await client.Login(userUfpe.Email, userUfpe.Password);
-        var bodyUfpe = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
-        var disciplinaUfpe = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyUfpe);
-
-        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
-        var bodyNovaRoma = new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 };
-        var disciplinaNovaRoma = await client.PostAsync<DisciplinaOut>("/disciplinas", bodyNovaRoma);
-
-        var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
+        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
         var body = new GradeIn
         {
-            Nome = "Grade de ADS - 1.0",
+            Nome = "Grade de ADS 1.0",
             CursoId = curso.Id,
             Disciplinas = [ new(disciplinaUfpe.Id, 1, 10, 70) ],
         };
 
         // Act
         var response = await client.PostAsync("/grades", body.ToStringContent());
-        
+
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0002);
+        await response.AssertBadRequest(Throw.DE0002);
     }
 
     [Test]
@@ -233,15 +180,14 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
+        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
-        var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
-
-        var bd = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [curso.Id] });
-        var ed = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60, Cursos = [curso.Id] });
-        var poo = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55, Cursos = [curso.Id] });
+        var bd = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
+        var ed = await client.NewDisciplina("Estrutura de Dados", 72, [curso.Id]);
+        var poo = await client.NewDisciplina("Programação Orientada a Objetos", 72, [curso.Id]);
 
         var body = new GradeIn {
-            Nome = "Grade de Direito - 1.0",
+            Nome = "Grade de Direito 1.0",
             CursoId = curso.Id,
             Disciplinas = [
                 new(bd.Id, 1, 10, 70),
@@ -253,11 +199,9 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Act
         var response = await client.PostAsync("/grades", body.ToStringContent());
-        
+
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0002);      
+        await response.AssertBadRequest(Throw.DE0002);
     }
 
     [Test]
@@ -265,30 +209,19 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-
         var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [curso.Id] });
-        var ed = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60, Cursos = [curso.Id] });
-        var poo = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55, Cursos = [curso.Id] });
+        var bd = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
+        var poo = await client.NewDisciplina("Programação Orientada a Objetos", 55, [curso.Id]);
+        var disciplinas = new List<GradeDisciplinaIn> { new(bd.Id, 1, 10, 70), new(poo.Id, 3, 12, 60), new(Guid.NewGuid(), 2, 9, 55) };
 
-        var body = new GradeIn {
-            Nome = "Grade de Direito - 1.0",
-            CursoId = curso.Id,
-            Disciplinas = [
-                new(bd.Id, 1, 10, 70),
-                new(poo.Id, 3, 12, 60),
-                new(Guid.NewGuid(), 2, 9, 55),
-            ],
-        };
+        var body = new GradeIn { Nome = "Grade de Direito 1.0", CursoId = curso.Id, Disciplinas = disciplinas };
 
         // Act
         var response = await client.PostAsync("/grades", body.ToStringContent());
-        
+
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0002);      
+        await response.AssertBadRequest(Throw.DE0002);     
     }
 
     [Test]
@@ -296,12 +229,10 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
+        var userNovaRoma = await client.NewAcademico("Nova Roma");
+        var userUfpe = await client.NewAcademico("UFPE");
 
-        var novaRoma = await client.CreateFaculdade("Nova Roma");
-        var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
-        await client.RegisterUser(userNovaRoma);
-
-        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
+        await client.Login(userNovaRoma);
         var cursoNovaRoma = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
         var bodyNovaRoma = new GradeIn {
             Nome = "NR - Grade de ADS - 1.0",
@@ -309,20 +240,16 @@ public partial class IntegrationTests : IntegrationTestBase
         };
         var gradeNovaRoma = await client.PostAsync<GradeOut>("/grades", bodyNovaRoma);
 
-        var ufpe = await client.CreateFaculdade("UFPE");
-        var userUfpe = UserIn.New(ufpe.Id, Academico);
-        await client.RegisterUser(userUfpe);
-
-        await client.Login(userUfpe.Email, userUfpe.Password);
+        await client.Login(userUfpe);
         var cursoUfpe = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
         var bodyUfpe = new GradeIn {
             Nome = "UFPE - Grade de ADS - 1.0",
             CursoId = cursoUfpe.Id,
         };
-        var gradeUfpe = await client.PostAsync<GradeOut>("/grades", bodyUfpe);
+        await client.PostAsync<GradeOut>("/grades", bodyUfpe);
 
         // Act
-        await client.Login(userNovaRoma.Email, userNovaRoma.Password);
+        await client.Login(userNovaRoma);
         var grades = await client.GetAsync<List<GradeOut>>("/grades");
 
         // Assert
@@ -337,11 +264,11 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _factory.LoggedAsAcademico();
 
-        var direito = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Direito" });
-        var gradeDireito = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de Direito - 1.0", CursoId = direito.Id, });
+        var direito = await client.NewCurso("Direito");
+        var gradeDireito = await client.NewGrade("Grade de Direito 1.0", direito.Id);
 
-        var ads = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas" });
-        var gradeAds = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = ads.Id, });
+        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var gradeAds = await client.NewGrade("Grade de ADS 1.0", ads.Id);
 
         // Act
         var grades = await client.GetAsync<List<GradeOut>>("/grades");

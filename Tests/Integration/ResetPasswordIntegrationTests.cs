@@ -72,9 +72,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users/reset-password", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0016); 
+        await response.AssertBadRequest(Throw.DE0016);
     }
 
     [Test]
@@ -162,9 +160,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users/reset-password", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0017); 
+        await response.AssertBadRequest(Throw.DE0017);
     }
 
     [Test]
@@ -185,8 +181,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users/reset-password", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0012); 
+        await response.AssertBadRequest(Throw.DE0012);
     }
 }

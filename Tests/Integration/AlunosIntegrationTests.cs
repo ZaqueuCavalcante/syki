@@ -77,9 +77,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/alunos", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0009);  
+        await response.AssertBadRequest(Throw.DE0009);
     }
 
     [Test]

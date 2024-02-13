@@ -50,9 +50,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0002);       
+        await response.AssertBadRequest(Throw.DE0002);
     }
 
     [Test]
@@ -73,9 +71,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0015);       
+        await response.AssertBadRequest(Throw.DE0015);
     }
 
     [Test]
@@ -96,9 +92,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0003);       
+        await response.AssertBadRequest(Throw.DE0003);
     }
 
     [Test]
@@ -120,9 +114,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0018);       
+        await response.AssertBadRequest(Throw.DE0018);
     }
 
     [Test]

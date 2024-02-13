@@ -2,7 +2,6 @@ using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
@@ -61,14 +60,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-
-        var novaRoma = await client.CreateFaculdade();
-        var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
-        await client.RegisterUser(userNovaRoma);
-
-        var ufpe = await client.CreateFaculdade("UFPE");
-        var userUfpe = UserIn.New(ufpe.Id, Academico);
-        await client.RegisterUser(userUfpe);
+        var userNovaRoma = await client.NewAcademico("Nova Roma");
+        var userUfpe = await client.NewAcademico("UFPE");
 
         await client.Login(userNovaRoma);
         await client.NewCampus("Agreste I", "Caruaru - PE");

@@ -44,9 +44,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0010);  
+        await response.AssertBadRequest(Throw.DE0010);
     }
 
     [Test]
@@ -62,9 +60,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0011);  
+        await response.AssertBadRequest(Throw.DE0011);
     }
 
     [Test]
@@ -88,9 +84,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0013);  
+        await response.AssertBadRequest(Throw.DE0013);
     }
 
     [Test]
@@ -108,9 +102,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0012);  
+        await response.AssertBadRequest(Throw.DE0012);
     }
 
     [Test]
@@ -134,9 +126,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users", body.ToStringContent());
 
         // Assert
-        var error = await response.DeserializeTo<ErrorOut>();
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(Throw.DE0014);  
+        await response.AssertBadRequest(Throw.DE0014);
     }
 
     [Test]

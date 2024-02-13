@@ -13,6 +13,14 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<UserOut>();
     }
 
+    public static async Task<UserIn> NewAcademico(this HttpClient client, string faculdade)
+    {
+        var novaRoma = await client.CreateFaculdade(faculdade);
+        var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
+        await client.RegisterUser(userNovaRoma);
+        return userNovaRoma;
+    }
+
     public static async Task<string> Login(this HttpClient client, string email, string password)
     {
         var data = new LoginIn { Email = email, Password = password };
@@ -65,18 +73,6 @@ public static class HttpClientExtensions
         return client;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     public static async Task<CampusOut> NewCampus(
         this HttpClient client,
         string nome = "Agreste I",
@@ -105,16 +101,46 @@ public static class HttpClientExtensions
         return await client.PostAsync<DisciplinaOut>("/disciplinas", body);
     }
 
+    public static async Task<GradeOut> NewGrade(
+        this HttpClient client,
+        string nome,
+        Guid cursoId,
+        List<GradeDisciplinaIn> disciplinas = null
+    ) {
+        var body = new GradeIn {
+            Nome = nome,
+            CursoId = cursoId,
+            Disciplinas = disciplinas ?? []
+        };
 
+        return await client.PostAsync<GradeOut>("/grades", body);
+    }
 
+    public static async Task<PeriodoOut> NewPeriodo(
+        this HttpClient client,
+        string id
+    ) {
+        return await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn(id));
+    }
 
+    public static async Task<OfertaOut> NewOferta(
+        this HttpClient client,
+        Guid campusId,
+        Guid cursoId,
+        Guid gradeId,
+        string? periodo,
+        Turno turno = Turno.Noturno
+    ) {
+        var body = new OfertaIn {
+            CampusId = campusId,
+            Periodo = periodo,
+            CursoId = cursoId,
+            GradeId = gradeId,
+            Turno = turno,
+        };
 
-
-
-
-
-
-
+        return await client.PostAsync<OfertaOut>("/ofertas", body);
+    }
 
     public static void RemoveAuthToken(this HttpClient client)
     {
@@ -125,10 +151,6 @@ public static class HttpClientExtensions
     {
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
     }
-
-
-
-
 
     public static async Task PostAsync(this HttpClient client, string path, object obj)
     {
@@ -152,9 +174,6 @@ public static class HttpClientExtensions
         var response = await client.GetAsync(path);
         return await response.DeserializeTo<T>();
     }
-
-
-
     public static async Task<string?> GetResetPasswordToken(this HttpClient client, Guid userId)
     {
         var tokenResponse = await client.GetAsync<ResetPasswordTokenOut>($"/tests/reset-password-token/{userId}");

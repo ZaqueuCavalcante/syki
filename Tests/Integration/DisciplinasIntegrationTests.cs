@@ -2,8 +2,6 @@ using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
-using static Syki.Shared.TipoDeCurso;
-using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
@@ -30,8 +28,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-
-        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
+        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
         // Act
         var disciplina = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
@@ -47,9 +44,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-
-        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
-        var cc = await client.NewCurso("Ciência da Computação", Bacharelado);
+        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var cc = await client.NewCurso("Ciência da Computação");
 
         // Act
         var disciplina = await client.NewDisciplina("Banco de Dados", 72, [ads.Id, cc.Id]);
@@ -65,20 +61,14 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-
-        var novaRoma = await client.CreateFaculdade("Nova Roma");
-        var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
-        await client.RegisterUser(userNovaRoma);
-
-        var ufpe = await client.CreateFaculdade("UFPE");
-        var userUfpe = UserIn.New(ufpe.Id, Academico);
-        await client.RegisterUser(userUfpe);
+        var userNovaRoma = await client.NewAcademico("Nova Roma");
+        var userUfpe = await client.NewAcademico("UFPE");
 
         await client.Login(userNovaRoma);
-        var adsNovaRoma = await client.NewCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
+        var adsNovaRoma = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
         await client.Login(userUfpe);
-        var adsUfpe = await client.NewCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
+        var adsUfpe = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
         await client.Login(userNovaRoma);
 
@@ -112,14 +102,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-
-        var novaRoma = await client.CreateFaculdade("Nova Roma");
-        var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
-        await client.RegisterUser(userNovaRoma);
-
-        var ufpe = await client.CreateFaculdade("UFPE");
-        var userUfpe = UserIn.New(ufpe.Id, Academico);
-        await client.RegisterUser(userUfpe);
+        var userNovaRoma = await client.NewAcademico("Nova Roma");
+        var userUfpe = await client.NewAcademico("UFPE");
 
         await client.Login(userNovaRoma);
         await client.NewDisciplina("Banco de Dados", 72);
@@ -169,9 +153,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-
-        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
-        var cc = await client.NewCurso("Ciência da Computação", Bacharelado);
+        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var cc = await client.NewCurso("Ciência da Computação");
 
         await client.NewDisciplina("Banco de Dados", 50, [ads.Id, cc.Id]);
         await client.NewDisciplina("Informática e Sociedade", 40, [ads.Id]);

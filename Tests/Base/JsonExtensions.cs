@@ -1,5 +1,8 @@
+using System.Net;
 using System.Text;
+using Syki.Shared;
 using Newtonsoft.Json;
+using FluentAssertions;
 
 namespace Syki.Tests.Base;
 
@@ -15,5 +18,12 @@ public static class JsonExtensions
     {
         var responseAsString = await httpResponse.Content.ReadAsStringAsync();
         return JsonConvert.DeserializeObject<T>(responseAsString)!;
+    }
+
+    public static async Task AssertBadRequest(this HttpResponseMessage httpResponse, string message)
+    {
+        var error = await httpResponse.DeserializeTo<ErrorOut>();
+        httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        error.Message.Should().Be(message);
     }
 }

@@ -1,0 +1,23 @@
+@if (IsDark)
+{
+    <MudTooltip Text="Light">
+        <MudIconButton Icon="@Icons.Material.Filled.LightMode" Color="Color.Inherit" OnClick="OnClick" />
+    </MudTooltip>
+}
+else
+{
+    <MudTooltip Text="Dark">
+        <MudIconButton Icon="@Icons.Material.Filled.DarkMode" Color="Color.Inherit" OnClick="OnClick" />
+    </MudTooltip>
+}
+
+@code
+{
+    [Parameter]
+    public bool IsDark { get; set; }
+    [Parameter]
+    public EventCallback<bool> IsDarkChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

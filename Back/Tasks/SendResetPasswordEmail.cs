@@ -24,16 +24,17 @@ public class SendResetPasswordEmailHandler : ISykiTaskHandler<SendResetPasswordE
 
     public async Task Handle(SendResetPasswordEmail task)
     {
-        var user = await _ctx.Users.FirstOrDefaultAsync(u => u.Id == task.UserId);
+        var user = await _ctx.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == task.UserId);
         if (user == null)
             Throw.DE0016.Now();
+
+        if (user.Email.EndsWith("@syki.demo.com") || user.Name == "DEMO")
+            return;
 
         var reset = await _ctx.ResetPasswords
             .OrderByDescending(r => r.CreatedAt)
             .FirstOrDefaultAsync(r => r.UserId == user.Id && r.UsedAt == null);
 
-        var message = $"https://localhost:6001/reset-password?token={reset.Id}";
-
-        _emailsService.Send(user.Email, message);
+        await _emailsService.SendResetPasswordEmail(user.Email, reset.Id.ToString());
     }
 }

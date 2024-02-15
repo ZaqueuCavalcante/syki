@@ -190,12 +190,12 @@ public class SeedFaculdadeTestDataHandler : ISykiTaskHandler<SeedFaculdadeTestDa
         );
         _ctx.Add(ofertaAds);
 
-        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Davi Pessoa Ferraz", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
-        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Luciete Bezerra Alves", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
-        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Antonio Marques da Costa Júnior", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
-        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Paulo Marcelo Pedrosa de Almeida", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
-        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Josélia Pachêco de Santana", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
-        await _professoresService.Create(faculdade.Id, new ProfessorIn { Nome = "Manuela Abath Valença", Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com" });
+        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Davi Pessoa Ferraz"));
+        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Luciete Bezerra Alves"));
+        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Antonio Marques da Costa Júnior"));
+        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Paulo Marcelo Pedrosa de Almeida"));
+        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Josélia Pachêco de Santana"));
+        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Manuela Abath Valença"));
 
         await _ctx.SaveChangesAsync();
     }

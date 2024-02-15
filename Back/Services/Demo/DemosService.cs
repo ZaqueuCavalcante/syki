@@ -1,10 +1,10 @@
 using Syki.Shared;
+using Syki.Back.Tasks;
 using Syki.Back.Domain;
 using Syki.Back.Configs;
 using Syki.Back.Database;
 using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using Syki.Back.Tasks;
 
 namespace Syki.Back.Services;
 
@@ -32,7 +32,7 @@ public class DemosService : IDemosService
         if (demoExists)
             Throw.DE1102.Now();
 
-        var demo = new Demo(data.Name, data.Email);
+        var demo = new Demo(data.Email);
         _ctx.Add(demo);
 
         var task = new SykiTask(new SendDemoEmailConfirmation { Email = demo.Email });
@@ -52,12 +52,15 @@ public class DemosService : IDemosService
         if (demo == null)
             Throw.DE1103.Now();
 
-        var faculdade = await _faculdadesService.Create(new FaculdadeIn { Nome = demo.Name, SeedData = true });
+        if (demo.Start != null)
+            Throw.DE1104.Now();
+
+        var faculdade = await _faculdadesService.Create(new FaculdadeIn { Nome = "DEMO", SeedData = true });
 
         var userIn = new UserIn
         {
             Faculdade = faculdade.Id,
-            Name = demo.Name,
+            Name = "DEMO",
             Email = demo.Email,
             Password = data.Password,
             Role = AuthorizationConfigs.Academico,

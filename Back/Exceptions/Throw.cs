@@ -27,6 +27,7 @@ public static class Throw
     public const string DE1101 = "A data de início deve ser menor que a de fim de período de matrícula.";
     public const string DE1102 = "Email já utilizado.";
     public const string DE1103 = "Demo não encontrada.";
+    public const string DE1104 = "Demo já configurada.";
 
     public static void Now(this string message)
     {

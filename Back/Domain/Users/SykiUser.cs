@@ -7,6 +7,7 @@ public class SykiUser : IdentityUser<Guid>
 {
     public Guid FaculdadeId { get; set; }
     public string Name { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public SykiUser(
         Guid faculdadeId,
@@ -17,6 +18,7 @@ public class SykiUser : IdentityUser<Guid>
         Name = name;
         UserName = email;
         Email = email;
+        CreatedAt = DateTime.Now;
     }
 
     public UserOut ToOut()

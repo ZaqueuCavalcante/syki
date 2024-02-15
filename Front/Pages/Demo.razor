@@ -11,40 +11,39 @@
     <MudForm @ref="_form">
         <MudCard Class="px-16 pt-16 pb-8">
             <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
-            <MudCardContent Class="mt-4">
-                <MudTextField
-                    AutoFocus="true"
-                    Margin="Margin.Dense"
-                    Label="Nome da sua instituição"
-                    Class="mt-3"
-                    OnlyValidateIfDirty="true"
-                    @bind-Value="_model.Name"
-                    Variant="Variant.Outlined"
-                    Required="true"
-                    RequiredError="Informe o nome da sua instituição!"
-                />
-                <MudTextField
-                    Margin="Margin.Dense"
-                    Label="Email"
-                    Class="mt-3"
-                    OnlyValidateIfDirty="true"
-                    @bind-Value="_model.Email"
-                    Variant="Variant.Outlined"
-                    Required="true"
-                    RequiredError="Informe seu email!"
-                />
-            </MudCardContent>
-            <MudCardActions>
-                <MudButton
-                    Size="Size.Large"
-                    OnClick="OnClick"
-                    Variant="Variant.Filled"
-                    Color="Color.Primary"
-                    Class="mx-auto mb-4 px-12"
-                >
-                    Cadastrar
-                </MudButton>
-            </MudCardActions>
+            @if (_saved)
+            {
+                <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center">
+                    <MudText>Verifique seu email e utilize o link para definir sua senha de acesso.</MudText>
+                </MudAlert>
+            }
+            else
+            {
+                <MudCardContent Class="mt-4">
+                    <MudTextField
+                        Margin="Margin.Dense"
+                        Label="Email"
+                        Class="mt-3"
+                        AutoFocus="true"
+                        OnlyValidateIfDirty="true"
+                        @bind-Value="_model.Email"
+                        Variant="Variant.Outlined"
+                        Required="true"
+                        RequiredError="Informe seu email!"
+                    />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton
+                        Size="Size.Large"
+                        OnClick="OnClick"
+                        Variant="Variant.Filled"
+                        Color="Color.Primary"
+                        Class="mx-auto mb-4 px-12"
+                    >
+                        Cadastrar
+                    </MudButton>
+                </MudCardActions>   
+            }
         </MudCard>
     </MudForm>
 </MudContainer>
@@ -56,6 +55,7 @@
 @code
 {
     private bool _loading;
+    private bool _saved;
     private MudForm _form;
     DemoIn _model = new();
 
@@ -66,9 +66,7 @@
 
         _loading = true;
         await Http.PostAsJsonAsync("/demos", _model);
-
-        Snackbar.Add("Demo salva com sucesso!", Severity.Success);
-        Nav.NavigateTo("/");
+        _saved = true;
         _loading = false;
     }
 }

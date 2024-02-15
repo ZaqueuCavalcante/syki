@@ -2,5 +2,6 @@ namespace Syki.Back.Services;
 
 public interface IEmailsService
 {
-    void Send(string email, string message);
+    Task SendResetPasswordEmail(string to, string token);
+    Task SendDemoEmailConfirmation(string to, string token);
 }

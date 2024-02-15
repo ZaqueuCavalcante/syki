@@ -28,8 +28,6 @@ public class SendDemoEmailConfirmationHandler : ISykiTaskHandler<SendDemoEmailCo
         if (demo == null)
             Throw.DE1103.Now();
 
-        var message = $"https://localhost:6001/demo-setup?token={demo.Id}";
-
-        _emailsService.Send(demo.Email, message);
+        await _emailsService.SendDemoEmailConfirmation(demo.Email, demo.Id.ToString());
     }
 }

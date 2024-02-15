@@ -12,13 +12,12 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new DemoIn { Name = "Demo Facul", Email = "demo00.facul@syki.com" };
+        var body = new DemoIn { Email = "demo00.facul@syki.com" };
 
         // Act
         var demo = await client.PostAsync<DemoOut>("/demos", body);
 
         // Assert
-        demo.Name.Should().Be(body.Name);
         demo.Email.Should().Be(body.Email);
     }
 
@@ -27,7 +26,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var demo = await client.PostAsync<DemoOut>("/demos", new DemoIn { Name = "Demo Facul", Email = "demo01.facul@syki.com" });
+        var demo = await client.PostAsync<DemoOut>("/demos", new DemoIn { Email = "demo01.facul@syki.com" });
         var token = await client.GetDemoSetupToken(demo.Email);
 
         // Act

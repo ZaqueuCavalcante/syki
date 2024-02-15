@@ -7,6 +7,7 @@ public static class SettingsConfigs
     public static void AddSettingsConfigs(this IServiceCollection services)
     {
         services.AddSingleton<AuthSettings>();
+        services.AddSingleton<EmailSettings>();
         services.AddSingleton<DatabaseSettings>();
     }
 }

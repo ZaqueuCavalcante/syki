@@ -4,4 +4,9 @@ public class ProfessorIn
 {
     public string Nome { get; set; }
     public string Email { get; set; }
+
+    public static ProfessorIn Demo(string nome)
+    {
+        return new ProfessorIn { Nome = nome, Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.demo.com" };
+    }
 }

@@ -5,15 +5,13 @@ namespace Syki.Back.Domain;
 public class Demo
 {
     public Guid Id { get; set; }
-    public string Name { get; set; }
     public string Email { get; set; }
     public DateOnly? Start { get; set; }
     public DateOnly? End { get; set; }
 
-    public Demo(string name, string email)
+    public Demo(string email)
     {
         Id = Guid.NewGuid();
-        Name = name;
         Email = email.ToLower();
     }
 
@@ -27,7 +25,6 @@ public class Demo
     {
         return new DemoOut
         {
-            Name = Name,
             Email = Email,
         };
     }

@@ -21,20 +21,7 @@
                     Required="true"
                     RequiredError="Informe o email!"
                 />
-                <MudTextField
-                    Margin="Margin.Dense"
-                    Adornment="Adornment.End"
-                    AdornmentIcon="@PasswordIcon"
-                    InputType="@PasswordInputType"
-                    OnAdornmentClick="PasswordIconClick"
-                    Label="Password"
-                    Class="mt-3"
-                    OnlyValidateIfDirty="true"
-                    @bind-Value="_model.Password"
-                    Variant="Variant.Outlined"
-                    Required="true"
-                    RequiredError="Informe a senha!"
-                />
+                <PasswordTextField @bind-Value="_model.Password" />
             </MudCardContent>
             <MudCardActions>
                 <MudButton
@@ -62,25 +49,6 @@
     private MudForm _form;
     LoginIn _model = new();
 
-    bool _showPassword;
-    InputType PasswordInputType = InputType.Password;
-    string PasswordIcon = Icons.Material.Filled.VisibilityOff;
-
-    private void PasswordIconClick()
-    {
-        @if (_showPassword)
-        {
-            _showPassword = false;
-            PasswordIcon = Icons.Material.Filled.VisibilityOff;
-            PasswordInputType = InputType.Password;
-        }
-        else {
-            _showPassword = true;
-            PasswordIcon = Icons.Material.Filled.Visibility;
-            PasswordInputType = InputType.Text;
-        }
-    }
-
     private async Task OnClick()
     {
         await _form.Validate();
@@ -95,7 +63,7 @@
         }
         else if (result.WrongEmailOrPassword)
         {
-            Snackbar.Add("Email ou senha invalidos!", Severity.Error);
+            Snackbar.Add("Email ou senha inválidos!", Severity.Error);
         }
         else if (result.RequiresTwoFactor)
         {

@@ -9,6 +9,13 @@
     <MudForm @ref="_form">
         <MudCard Class="px-16 pt-16 pb-8">
             <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
+            <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
+                <MudText>Sua senha deve conter:</MudText>
+                <MudText>• números</MudText>
+                <MudText>• letras maiúsculas</MudText>
+                <MudText>• letras minúsculas</MudText>
+                <MudText>• caracteres não alfanuméricos</MudText>
+            </MudAlert>
             <MudCardContent Class="mt-4">
                 <PasswordTextField @bind-Value="_model.Password" />
             </MudCardContent>

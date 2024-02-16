@@ -11,12 +11,16 @@
             <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
             @if (_saved)
             {
-                <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center">
+                <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                     <MudText>Verifique seu email e utilize o link para definir sua senha de acesso.</MudText>
                 </MudAlert>
             }
             else
             {
+                <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
+                    <MudText>Valide seu email para ter acesso a versão demo do sistema.</MudText>
+                </MudAlert>
+
                 <MudCardContent Class="mt-4">
                     <MudTextField
                         Margin="Margin.Dense"

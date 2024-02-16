@@ -19,13 +19,13 @@
     }
     else if (_periodoDeMatricula.Id.IsEmpty())
     {
-        <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
             <MudText>Período de matrícula encerrado!</MudText>
         </MudAlert>
     }
     else
     {
-        <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text">
+        <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
             <MudText>Selecione as disciplinas que você irá cursar nesse semestre. O período de matrícula vai até <strong>@_periodoDeMatricula.End</strong>. </MudText>
         </MudAlert>
 

@@ -11,6 +11,7 @@ public class Startup
         services.AddSettingsConfigs();
         services.AddServicesConfigs();
         services.AddSykiTasksConfigs();
+        services.AddRateLimiterConfigs();
 
         services.AddIdentityConfigs();
         services.AddAuthenticationConfigs();
@@ -32,6 +33,7 @@ public class Startup
         app.UseCors();
 
         app.UseRouting();
+        app.UseRateLimiter();
 
         app.UseAuthentication();
         app.UseAuthorization();

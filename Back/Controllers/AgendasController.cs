@@ -1,11 +1,13 @@
 using Syki.Back.Services;
 using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Authorization;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.Controllers;
 
+[EnableRateLimiting("Medium")]
 [ApiController, Route("[controller]")]
 public class AgendasController : ControllerBase
 {

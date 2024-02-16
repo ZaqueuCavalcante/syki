@@ -3,12 +3,14 @@ using Syki.Back.Services;
 using Syki.Back.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Authorization;
 using SykiUser = Syki.Back.Domain.SykiUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.Controllers;
 
+[EnableRateLimiting("Small")]
 [ApiController, Route("[controller]")]
 public class UsersController : ControllerBase
 {

@@ -1,9 +1,11 @@
 using Syki.Shared;
 using Syki.Back.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Syki.Back.Controllers;
 
+[EnableRateLimiting("Small")]
 [ApiController, Route("[controller]")]
 public class DemosController : ControllerBase
 {

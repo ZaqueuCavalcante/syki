@@ -2,8 +2,6 @@
 
 <PageTitle>Demo</PageTitle>
 
-<style>body { background-color: rgba(235,235,235,1); }</style>
-
 <MudContainer Class="mt-16 mb-8" Style="width: 460px">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
@@ -65,8 +63,17 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        await Http.PostAsJsonAsync("/demos", _model);
-        _saved = true;
+        var response = await Http.PostAsJsonAsync("/demos", _model);
+
+        if (response.IsSuccessStatusCode)
+        {
+            _saved = true;
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _loading = false;
     }
 }

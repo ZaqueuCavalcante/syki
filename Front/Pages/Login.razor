@@ -2,8 +2,6 @@
 
 <PageTitle>Login</PageTitle>
 
-<style>body { background-color: rgba(235,235,235,1); }</style>
-
 <MudContainer Class="mt-16 mb-8" Style="width: 460px">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
@@ -25,11 +23,14 @@
                 />
                 <MudTextField
                     Margin="Margin.Dense"
+                    Adornment="Adornment.End"
+                    AdornmentIcon="@PasswordIcon"
+                    InputType="@PasswordInputType"
+                    OnAdornmentClick="PasswordIconClick"
                     Label="Password"
                     Class="mt-3"
                     OnlyValidateIfDirty="true"
                     @bind-Value="_model.Password"
-                    InputType="InputType.Password"
                     Variant="Variant.Outlined"
                     Required="true"
                     RequiredError="Informe a senha!"
@@ -60,6 +61,25 @@
     private bool _loading;
     private MudForm _form;
     LoginIn _model = new();
+
+    bool _showPassword;
+    InputType PasswordInputType = InputType.Password;
+    string PasswordIcon = Icons.Material.Filled.VisibilityOff;
+
+    private void PasswordIconClick()
+    {
+        @if (_showPassword)
+        {
+            _showPassword = false;
+            PasswordIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInputType = InputType.Password;
+        }
+        else {
+            _showPassword = true;
+            PasswordIcon = Icons.Material.Filled.Visibility;
+            PasswordInputType = InputType.Text;
+        }
+    }
 
     private async Task OnClick()
     {

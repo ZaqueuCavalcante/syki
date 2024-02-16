@@ -32,12 +32,15 @@
                 <MudStack Row="true" Class="d-flex justify-space-around flex-grow-1">
                     <HomeButton />
                     <MudSpacer />
+                    <ThemeIconButton @bind-IsDark="_isDark" OnClick="ChangeTheme" />
                     <LoginButton />
                 </MudStack>
             </MudAppBar>
-            <MudMainContent>
-                @Body
-            </MudMainContent>
+            <CascadingValue Name="IsDarkTheme" Value="@_isDark">
+                <MudMainContent>
+                    @Body
+                </MudMainContent>
+            </CascadingValue>
         }
         else
         {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.RateLimiting;
 
 namespace Syki.Back.Controllers;
 
-[EnableRateLimiting("Small")]
+
 [ApiController, Route("[controller]")]
 public class DemosController : ControllerBase
 {
@@ -13,6 +13,7 @@ public class DemosController : ControllerBase
     public DemosController(IDemosService service) => _service = service;
 
     [HttpPost("")]
+    [EnableRateLimiting("VerySmall")]
     public async Task<IActionResult> Create([FromBody] DemoIn data)
     {
         var demo = await _service.Create(data);
@@ -21,6 +22,7 @@ public class DemosController : ControllerBase
     }
 
     [HttpPost("setup")]
+    [EnableRateLimiting("Small")]
     public async Task<IActionResult> Setup([FromBody] DemoSetupIn data)
     {
         var ok = await _service.Setup(data);

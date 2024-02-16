@@ -14,10 +14,20 @@ public static class RateLimiterConfigs
 
             if (Env.IsTesting())
             {
+                options.AddFixedWindowLimiter("VerySmall", o => { o.PermitLimit = 1000; o.Window = TimeSpan.FromHours(1); });
                 options.AddFixedWindowLimiter("Small", o => { o.PermitLimit = 1000; o.Window = TimeSpan.FromHours(1); });
                 options.AddFixedWindowLimiter("Medium", o => { o.PermitLimit = 1000; o.Window = TimeSpan.FromHours(1); });
                 return;
             }
+
+            options.AddPolicy("VerySmall", httpContext =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 2,
+                        Window = TimeSpan.FromHours(1)
+                    }));
 
             options.AddPolicy("Small", httpContext =>
                 RateLimitPartition.GetFixedWindowLimiter(

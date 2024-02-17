@@ -26,7 +26,8 @@
 
         </MudItem>
         <MudItem xs="2">
-            <MudTextField
+            <MudSelect
+                Dense="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 T="byte?"
@@ -35,7 +36,13 @@
                 Label="Período"
                 Required="true"
                 RequiredError="Informe o período!"
-            />
+                AdornmentColor="Color.Primary"
+            >
+                @foreach (byte? item in Enumerable.Range(1, 10).ToList())
+                {
+                    <MudSelectItem Value="@item">@($"{item}º")</MudSelectItem>
+                }
+            </MudSelect>
         </MudItem>
         <MudItem xs="2">
             <MudTextField
@@ -75,7 +82,6 @@
     public CursoOut? Curso { get; set; }
 
     GradeDisciplinaFull? _disciplina;
-    // TODO: Diferenciar que esse periodo n eh o mesmo que o 2024.1 || 2024.2...
     byte? _periodo;
     byte? _creditos;
     ushort? _cargaHoraria;

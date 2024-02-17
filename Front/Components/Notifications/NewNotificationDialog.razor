@@ -63,7 +63,7 @@
 @code
 {
     private MudForm _form;
-    private bool _loading = false;
+    private bool _loading;
     private NotificationIn data = new();
 
     [CascadingParameter]
@@ -85,12 +85,18 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        await Http.PostAsJsonAsync("/notifications", data);
+        var response = await Http.PostAsJsonAsync("/notifications", data);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Notificação cadastrada com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _loading = false;
-
-        MudDialog.Close(DialogResult.Ok(true));
-
-        Snackbar.Add("Notificação cadastrada com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

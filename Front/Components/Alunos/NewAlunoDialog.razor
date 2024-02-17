@@ -20,7 +20,6 @@
                 Required="true"
                 RequiredError="Informe o nome do aluno!"
             />
-
             <MudTextField
                 OnlyValidateIfDirty="true"
                 Immediate="true"
@@ -33,7 +32,6 @@
                 Required="true"
                 RequiredError="Informe o email do aluno!"
             />
-
             <MudSelect
                 Dense="true"
                 Disabled="@(_ofertas.Count == 0)"
@@ -66,7 +64,7 @@
 @code
 {
     private MudForm _form;
-    private bool _loading = false;
+    private bool _loading;
 
     private OfertaOut? _oferta;
     private List<OfertaOut> _ofertas = [];
@@ -89,13 +87,20 @@
         if (!_form.IsValid) return;
 
         data.OfertaId = _oferta!.Id;
+
         _loading = true;
-        await Http.PostAsJsonAsync("/alunos", data);
+        var response = await Http.PostAsJsonAsync("/alunos", data);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Aluno cadastrado com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _loading = false;
-
-        MudDialog.Close(DialogResult.Ok(true));
-
-        Snackbar.Add("Aluno cadastrado com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

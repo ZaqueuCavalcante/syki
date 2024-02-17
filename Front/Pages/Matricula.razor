@@ -96,7 +96,6 @@
             _loading = false;
             return;
         }
-
         _options = await Http.GetFromJsonAsync<List<MatriculaTurmaOut>>("/matriculas/turmas") ?? [];
         _loading = false;
     }
@@ -110,9 +109,16 @@
         {
             Turmas = _options.Where(o => o.IsSelected).Select(o => o.Id).ToList()
         };
-        await Http.PostAsJsonAsync("/matriculas", data);
+        var response = await Http.PostAsJsonAsync("/matriculas", data);
+        if (response.IsSuccessStatusCode)
+        {
+            Snackbar.Add("Matrícula salva com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _saving = false;
-
-        Snackbar.Add("Matrícula salva com sucesso!", Severity.Success);
     }
 }

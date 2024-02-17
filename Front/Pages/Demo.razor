@@ -68,7 +68,6 @@
 
         _loading = true;
         var response = await Http.PostAsJsonAsync("/demos", _model);
-
         if (response.IsSuccessStatusCode)
         {
             _saved = true;

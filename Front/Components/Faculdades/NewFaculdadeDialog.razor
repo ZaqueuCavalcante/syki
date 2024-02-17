@@ -23,9 +23,9 @@
             />
             <MudCheckBox
                 T="bool"
+                Color="Color.Primary"
                 @bind-Checked="data.SeedData"
                 Label="Fazer o seed do banco com dados de teste"
-                Color="Color.Primary"
             />
         </MudForm>
     </DialogContent>
@@ -42,7 +42,7 @@
 @code
 {
     private MudForm _form;
-    private bool _loading = false;
+    private bool _loading;
 
     FaculdadeIn data = new();
 
@@ -57,12 +57,18 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        await Http.PostAsJsonAsync("/faculdades", data);
+        var response = await Http.PostAsJsonAsync("/faculdades", data);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Faculdade cadastrada com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _loading = false;
-
-        MudDialog.Close(DialogResult.Ok(true));
-
-        Snackbar.Add("Faculdade cadastrada com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

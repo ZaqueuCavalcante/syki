@@ -47,7 +47,7 @@
 @code
 {
     private MudForm _form;
-    private bool _loading = false;
+    private bool _loading;
 
     private ProfessorIn data = new();
 
@@ -62,12 +62,18 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        await Http.PostAsJsonAsync("/professores", data);
+        var response = await Http.PostAsJsonAsync("/professores", data);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Professor cadastrado com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _loading = false;
-
-        MudDialog.Close(DialogResult.Ok(true));
-
-        Snackbar.Add("Professor cadastrado com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

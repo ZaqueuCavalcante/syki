@@ -107,12 +107,18 @@
         data.Role = "Academico";
 
         _loading = true;
-        await Http.PostAsJsonAsync("/users", data);
+        var response = await Http.PostAsJsonAsync("/users", data);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Usuário cadastrado com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _loading = false;
-
-        MudDialog.Close(DialogResult.Ok(true));
-
-        Snackbar.Add("Usuário cadastrado com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

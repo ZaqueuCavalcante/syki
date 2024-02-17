@@ -33,7 +33,6 @@
                     </MudSelect>
                 </MudItem>
             </MudGrid>
-
             <MudAutocomplete
                 T="CursoOut"
                 MaxItems="50"
@@ -82,7 +81,7 @@
 @code
 {
     MudForm _form;
-    private bool _loading = false;
+    private bool _loading;
 
     CampusOut? _campus;
     CursoOut? _curso;
@@ -137,12 +136,18 @@
         };
 
         _loading = true;
-        await Http.PostAsJsonAsync("/ofertas", data);
+        var response = await Http.PostAsJsonAsync("/ofertas", data);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Oferta cadastrada com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _loading = false;
-
-        MudDialog.Close(DialogResult.Ok(true));
-
-        Snackbar.Add("Oferta cadastrada com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

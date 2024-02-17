@@ -35,7 +35,7 @@
 @code
 {
     private MudForm _form;
-    private bool _loading = false;
+    private bool _loading;
 
     private LivroIn data = new();
 
@@ -50,12 +50,18 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        await Http.PostAsJsonAsync("/livros", data);
+        var response = await Http.PostAsJsonAsync("/livros", data);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Livro cadastrado com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _loading = false;
-
-        MudDialog.Close(DialogResult.Ok(true));
-
-        Snackbar.Add("Livro cadastrado com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

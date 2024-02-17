@@ -12,6 +12,8 @@ public class PeriodosService : IPeriodosService
 
     public async Task<PeriodoOut> Create(Guid faculdadeId, PeriodoIn data)
     {
+        // TODO: validar se ja existe com o mesmo id!
+
         var periodo = new Periodo(data.Id, faculdadeId, data.Start, data.End);
 
         _ctx.Add(periodo);

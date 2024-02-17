@@ -21,7 +21,7 @@ public class EmailsService : IEmailsService
             sender: "syki@zaqbit.com",
             to: to,
             subject: "Syki Reset Password",
-            content: $"Redefina sua senha aqui: {link}"
+            content: $"<html><head></head><body>Redefina sua senha aqui: <a href=\"{link}\"><strong>{link}</strong></a></body></html>"
         );
 
         await _client.PostAsJsonAsync("", body);
@@ -34,7 +34,7 @@ public class EmailsService : IEmailsService
             sender: "syki@zaqbit.com",
             to: to,
             subject: "Syki Demo",
-            content: $"Defina sua senha para iniciar a demo: {link}"
+            content: $"<html><head></head><body>Crie sua senha aqui: <a href=\"{link}\"><strong>{link}</strong></a></body></html>"
         );
 
         await _client.PostAsJsonAsync("", body);

@@ -50,6 +50,7 @@
 
     private async Task OnClick()
     {
+        // TODO: colocar um check a cada criterio da senha satisfeito
         await _form.Validate();
         if (!_form.IsValid) return;
 
@@ -57,9 +58,9 @@
 
         _loading = true;
         var response = await Http.PostAsJsonAsync("/demos/setup", _model);
-
         if (response.IsSuccessStatusCode)
         {
+            // Colocar botao "Realizar Login" e confirmacao q deu certo, ao inves de redirecionar direto
             Nav.NavigateTo("/login");
         }
         else
@@ -67,7 +68,6 @@
             var error = await response.ToError();
             Snackbar.Add(error.Message, Severity.Error);
         }
-
         _loading = false;
     }
 }

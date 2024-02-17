@@ -56,7 +56,6 @@
 
         _loading = true;
         var result = await AuthService.Login(_model.Email, _model.Password);
-
         if (result.AccessToken != null)
         {
             Nav.NavigateTo("/");
@@ -67,10 +66,8 @@
         }
         else if (result.RequiresTwoFactor)
         {
-            
             Nav.NavigateTo("/login-mfa");
         }
-
         _loading = false;
     }
 }

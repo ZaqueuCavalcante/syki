@@ -63,7 +63,7 @@
 @code
 {
     MudForm _form;
-    private bool _loading = false;
+    private bool _loading;
 
     ushort? _cargaHoraria;
     DisciplinaIn data = new();
@@ -90,12 +90,18 @@
         data.Cursos = SelectedCursos.ToList().ConvertAll(c => c.Id);
 
         _loading = true;
-        await Http.PostAsJsonAsync("/disciplinas", data);
+        var response = await Http.PostAsJsonAsync("/disciplinas", data);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Disciplina cadastrada com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _loading = false;
-
-        MudDialog.Close(DialogResult.Ok(true));
-
-        Snackbar.Add("Disciplina cadastrada com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

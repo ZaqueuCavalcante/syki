@@ -49,7 +49,7 @@
 @code
 {
     private MudForm _form;
-    private bool _loading = false;
+    private bool _loading;
 
     [Parameter]
     public CampusOut Campus { get; set; }
@@ -73,12 +73,18 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        await Http.PutAsJsonAsync("/campi", Campus);
+        var response = await Http.PutAsJsonAsync("/campi", Campus);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Campus editado com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
         _loading = false;
-
-        MudDialog.Close(DialogResult.Ok(true));
-
-        Snackbar.Add("Campus editado com sucesso!", Severity.Success);
     }
 
     void Cancel() => MudDialog.Cancel();

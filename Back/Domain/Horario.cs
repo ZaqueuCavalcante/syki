@@ -20,7 +20,7 @@ public class Horario
         Dia = dia;
 
         if (start == end || end < start)
-            Throw.DE0018.Now();
+            Throw.DE021.Now();
 
         Start = start;
         End = end;

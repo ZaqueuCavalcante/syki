@@ -16,17 +16,17 @@ public class TurmasService : ITurmasService
         var disciplinaOk = await _ctx.Disciplinas
             .AnyAsync(x => x.FaculdadeId == faculdadeId && x.Id == data.DisciplinaId);
         if (!disciplinaOk)
-            Throw.DE0002.Now();
+            Throw.DE004.Now();
 
         var professorOk = await _ctx.Professores
             .AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.ProfessorId);
         if (!professorOk)
-            Throw.DE0015.Now();
+            Throw.DE018.Now();
 
         var periodoOk = await _ctx.Periodos
             .AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.Periodo);
         if (!periodoOk)
-            Throw.DE0003.Now();
+            Throw.DE005.Now();
 
         var horarios = data.Horarios.ConvertAll(h => new Horario(h.Dia, h.Start, h.End));
         var turma = new Turma(

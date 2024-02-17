@@ -39,25 +39,25 @@ public class AuthService : IAuthService
     public async Task<UserOut> Register(UserIn body)
     {
         if (!(body.Role is Academico or Professor or Aluno))
-            Throw.DE0010.Now();
+            Throw.DE013.Now();
 
         var faculdadeOk = await _ctx.Faculdades.AnyAsync(c => c.Id == body.Faculdade);
         if (!faculdadeOk)
-            Throw.DE0011.Now();
+            Throw.DE014.Now();
 
         if (!body.Email.IsValidEmail())
-            Throw.DE0013.Now();
+            Throw.DE016.Now();
 
         var emailUsed = await _ctx.Users.AnyAsync(u => u.Email == body.Email);
         if (emailUsed)
-            Throw.DE0014.Now();
+            Throw.DE017.Now();
 
         var user = new SykiUser(body.Faculdade, body.Name, body.Email);
 
         var result = await _userManager.CreateAsync(user, body.Password);
 
         if (!result.Succeeded)
-            Throw.DE0012.Now();
+            Throw.DE015.Now();
 
         await _userManager.AddToRoleAsync(user, body.Role);
 
@@ -105,7 +105,7 @@ public class AuthService : IAuthService
         var user = await _userManager.FindByIdAsync(userId.ToString());
 
         if (user == null)
-            Throw.DE0016.Now();
+            Throw.DE019.Now();
 
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -132,7 +132,7 @@ public class AuthService : IAuthService
             .FirstOrDefaultAsync(r => r.Id == id);
 
         if (reset == null)
-            Throw.DE0016.Now();
+            Throw.DE019.Now();
 
         var user = await _userManager.FindByIdAsync(reset!.UserId.ToString());
 
@@ -141,9 +141,9 @@ public class AuthService : IAuthService
         if (!result.Succeeded)
         {
             if (result.Errors.Any(e => e.Code == "InvalidToken"))
-                Throw.DE0017.Now();
+                Throw.DE020.Now();
             
-            Throw.DE0012.Now();
+            Throw.DE015.Now();
         }
 
         reset.Use();

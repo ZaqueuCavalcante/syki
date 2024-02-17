@@ -20,7 +20,7 @@ public class PeriodoDeMatricula
         FaculdadeId = faculdadeId;
 
         if (start >= end)
-            Throw.DE1101.Now();
+            Throw.DE023.Now();
 
         Start = start;
         End = end;

@@ -151,7 +151,7 @@ public class AlunosUnitTests
         Action act = () => new Aluno(userId, faculdadeId, nome, ofertaId);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE0000);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE000);
     }
 
     [Test]

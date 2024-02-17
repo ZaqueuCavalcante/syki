@@ -26,11 +26,11 @@ public class DemosService : IDemosService
     public async Task<DemoOut> Create(DemoIn data)
     {
         if (!data.Email.IsValidEmail())
-            Throw.DE0013.Now();
+            Throw.DE016.Now();
 
         var demoExists = await _ctx.Demos.AnyAsync(d => d.Email == data.Email.ToLower());
         if (demoExists)
-            Throw.DE1102.Now();
+            Throw.DE017.Now();
 
         var demo = new Demo(data.Email);
         _ctx.Add(demo);
@@ -50,10 +50,10 @@ public class DemosService : IDemosService
         _ = Guid.TryParse(data.Token, out var id);
         var demo = await _ctx.Demos.FirstOrDefaultAsync(d => d.Id == id);
         if (demo == null)
-            Throw.DE1103.Now();
+            Throw.DE024.Now();
 
         if (demo.Start != null)
-            Throw.DE1104.Now();
+            Throw.DE025.Now();
 
         var faculdade = await _faculdadesService.Create(new FaculdadeIn { Nome = "DEMO", SeedData = true });
 

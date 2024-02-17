@@ -85,7 +85,7 @@ public class PeriodosUnitTests
         Action act = () => new Periodo(id, faculdadeId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE0003);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE006);
     }
 
     [Test]
@@ -118,7 +118,7 @@ public class PeriodosUnitTests
         Action act = () => new Periodo(id, faculdadeId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE0004);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE007);
     }
 
     [Test]
@@ -134,7 +134,7 @@ public class PeriodosUnitTests
         Action act = () => new Periodo(id, faculdadeId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE0005);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE008);
     }
 
     [Test]
@@ -150,7 +150,7 @@ public class PeriodosUnitTests
         Action act = () => new Periodo(id, faculdadeId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE0006);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE009);
     }
 
     [Test]
@@ -166,7 +166,7 @@ public class PeriodosUnitTests
         Action act = () => new Periodo(id, faculdadeId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE0006);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE009);
     }
 
     [Test]

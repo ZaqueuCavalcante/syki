@@ -26,7 +26,7 @@ public class SendDemoEmailConfirmationHandler : ISykiTaskHandler<SendDemoEmailCo
     {
         var demo = await _ctx.Demos.FirstOrDefaultAsync(d => d.Email == task.Email);
         if (demo == null)
-            Throw.DE1103.Now();
+            Throw.DE024.Now();
 
         await _emailsService.SendDemoEmailConfirmation(demo.Email, demo.Id.ToString());
     }

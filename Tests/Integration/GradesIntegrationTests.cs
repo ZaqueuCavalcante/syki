@@ -83,7 +83,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/grades", body.ToStringContent());
         
         // Assert
-        await response.AssertBadRequest(Throw.DE0001);
+        await response.AssertBadRequest(Throw.DE002);
     }
 
     [Test]
@@ -97,7 +97,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/grades", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0001);
+        await response.AssertBadRequest(Throw.DE002);
     }
 
     [Test]
@@ -118,7 +118,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/grades", body.ToStringContent());
         
         // Assert
-        await response.AssertBadRequest(Throw.DE0001);
+        await response.AssertBadRequest(Throw.DE002);
     }
 
     [Test]
@@ -142,7 +142,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/grades", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0002);
+        await response.AssertBadRequest(Throw.DE003);
     }
 
     [Test]
@@ -172,7 +172,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/grades", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0002);
+        await response.AssertBadRequest(Throw.DE003);
     }
 
     [Test]
@@ -201,7 +201,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/grades", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0002);
+        await response.AssertBadRequest(Throw.DE003);
     }
 
     [Test]
@@ -221,7 +221,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/grades", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0002);     
+        await response.AssertBadRequest(Throw.DE003);     
     }
 
     [Test]

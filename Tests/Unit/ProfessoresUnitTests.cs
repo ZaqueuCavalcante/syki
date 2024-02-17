@@ -80,7 +80,7 @@ public class ProfessoresUnitTests
         Action act = () => new Professor(userId, faculdadeId, nome);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE0000);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE001);
     }
 
     [Test]

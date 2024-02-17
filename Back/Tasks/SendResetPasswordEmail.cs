@@ -26,7 +26,7 @@ public class SendResetPasswordEmailHandler : ISykiTaskHandler<SendResetPasswordE
     {
         var user = await _ctx.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == task.UserId);
         if (user == null)
-            Throw.DE0016.Now();
+            Throw.DE019.Now();
 
         if (user.Email.EndsWith("@syki.demo.com") || user.Name == "DEMO")
             return;

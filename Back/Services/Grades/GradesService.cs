@@ -18,7 +18,7 @@ public class GradesService : IGradesService
             .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.CursoId);
 
         if (!cursoValido)
-            Throw.DE0001.Now();
+            Throw.DE002.Now();
 
         var grade = new Grade(
             faculdadeId,
@@ -32,7 +32,7 @@ public class GradesService : IGradesService
             .ToListAsync();
 
         if (!data.Disciplinas.ConvertAll(d => d.Id).IsSubsetOf(disciplinas))
-            Throw.DE0002.Now();
+            Throw.DE003.Now();
 
         data.Disciplinas.ForEach(d => grade.Vinculos.Add(
             new GradeDisciplina(d.Id, d.Periodo, d.Creditos, d.CargaHoraria)));

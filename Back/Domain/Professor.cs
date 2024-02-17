@@ -23,7 +23,7 @@ public class Professor
     {
         if (nome.IsEmpty() || nome.Length < 3)
         {
-            Throw.DE0000.Now();
+            Throw.DE001.Now();
         }
 
         Nome = nome;

@@ -26,7 +26,7 @@ public class AlunosService : IAlunosService
         var ofertaOk = await _ctx.Ofertas
             .AnyAsync(o => o.FaculdadeId == faculdadeId && o.Id == data.OfertaId);
         if (!ofertaOk)
-            Throw.DE0009.Now();
+            Throw.DE012.Now();
 
         var userIn = new UserIn
         {

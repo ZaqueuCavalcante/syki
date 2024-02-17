@@ -84,7 +84,7 @@ public class PeriodosDeMatriculaUnitTests
         Action act = () => new PeriodoDeMatricula(id, faculdadeId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE1101);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE023);
     }
 
     [Test]
@@ -100,6 +100,6 @@ public class PeriodosDeMatriculaUnitTests
         Action act = () => new PeriodoDeMatricula(id, faculdadeId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE1101);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE023);
     }
 }

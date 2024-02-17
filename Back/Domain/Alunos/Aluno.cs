@@ -30,7 +30,7 @@ public class Aluno
     {
         if (nome.IsEmpty() || nome.Length < 3)
         {
-            Throw.DE0000.Now();
+            Throw.DE000.Now();
         }
 
         Nome = nome;

@@ -40,7 +40,7 @@ public class Turma
             for (int j = i+1; j < horarios.Count; j++)
             {
                 if (horarios[i].Conflict(horarios[j]))
-                    Throw.DE1100.Now();
+                    Throw.DE022.Now();
             }
         }
 

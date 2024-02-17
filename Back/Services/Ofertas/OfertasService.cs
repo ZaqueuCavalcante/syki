@@ -16,22 +16,22 @@ public class OfertasService : IOfertasService
         var campusOk = await _ctx.Campi
             .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.CampusId);
         if (!campusOk)
-            Throw.DE0007.Now();
+            Throw.DE010.Now();
 
         var periodoOk = await _ctx.Periodos
             .AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.Periodo);
         if (!periodoOk)
-            Throw.DE0003.Now();
+            Throw.DE005.Now();
 
         var cursoOk = await _ctx.Cursos
             .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.CursoId);
         if (!cursoOk)
-            Throw.DE0001.Now();
+            Throw.DE002.Now();
 
         var gradeOk = await _ctx.Grades
             .AnyAsync(g => g.FaculdadeId == faculdadeId && g.Id == data.GradeId && g.CursoId == data.CursoId);
         if (!gradeOk)
-            Throw.DE0008.Now();
+            Throw.DE011.Now();
 
         var oferta = new Oferta(
             faculdadeId,

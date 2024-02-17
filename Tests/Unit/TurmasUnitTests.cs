@@ -124,7 +124,7 @@ public class TurmasUnitTests
         Action act = () => new Turma(faculdadeId, disciplinaId, professorId, periodo, horarios);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE1100);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE022);
     }
 
     [Test]
@@ -141,7 +141,7 @@ public class TurmasUnitTests
         Action act = () => new Turma(faculdadeId, disciplinaId, professorId, periodo, horarios);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE1100);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE022);
     }
 
     [Test]

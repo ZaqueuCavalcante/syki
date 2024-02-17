@@ -80,7 +80,7 @@ public class HorarioUnitTests
         Action act = () => new Horario(dia, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE0018);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE021);
     }
 
     [Test]
@@ -95,7 +95,7 @@ public class HorarioUnitTests
         Action act = () => new Horario(dia, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE0018);
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE021);
     }
 
     [Test]

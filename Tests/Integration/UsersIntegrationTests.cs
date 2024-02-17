@@ -44,7 +44,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0010);
+        await response.AssertBadRequest(Throw.DE013);
     }
 
     [Test]
@@ -60,7 +60,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0011);
+        await response.AssertBadRequest(Throw.DE014);
     }
 
     [Test]
@@ -84,7 +84,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0013);
+        await response.AssertBadRequest(Throw.DE016);
     }
 
     [Test]
@@ -102,7 +102,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0012);
+        await response.AssertBadRequest(Throw.DE015);
     }
 
     [Test]
@@ -126,7 +126,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/users", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0014);
+        await response.AssertBadRequest(Throw.DE017);
     }
 
     [Test]

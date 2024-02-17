@@ -50,7 +50,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0002);
+        await response.AssertBadRequest(Throw.DE004);
     }
 
     [Test]
@@ -71,7 +71,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0015);
+        await response.AssertBadRequest(Throw.DE018);
     }
 
     [Test]
@@ -92,7 +92,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0003);
+        await response.AssertBadRequest(Throw.DE005);
     }
 
     [Test]
@@ -114,7 +114,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/turmas", body.ToStringContent());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE0018);
+        await response.AssertBadRequest(Throw.DE021);
     }
 
     [Test]

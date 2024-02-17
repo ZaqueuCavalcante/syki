@@ -15,7 +15,7 @@ public class PeriodosService : IPeriodosService
     {
         var periodoExists = await _ctx.Periodos.AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.Id);
         if (periodoExists)
-            Throw.DE1105.Now();
+            Throw.DE026.Now();
 
         var periodo = new Periodo(data.Id, faculdadeId, data.Start, data.End);
 

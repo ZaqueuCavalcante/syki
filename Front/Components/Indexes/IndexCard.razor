@@ -1,0 +1,30 @@
+﻿<MudItem xs="6" sm="4">
+    <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+        <MudStack AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icon" Size="Size.Large" Color="Color.Primary"/>
+            @if (Loading)
+            {
+                <MudText Typo="Typo.h5" Style="font-weight: bold">...</MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.h5" Style="font-weight: bold">@Value @Text</MudText>
+            }
+        </MudStack>
+    </MudPaper>
+</MudItem>
+
+@code
+{
+    [Parameter]
+    public bool Loading { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; }
+
+    [Parameter]
+    public int Value { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+}

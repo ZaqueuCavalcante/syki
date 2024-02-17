@@ -3,88 +3,21 @@
         <MudIcon Icon="@Icons.Material.Filled.Insights" Class="mr-1 mb-n1" Size="Size.Large"/>
         Insights
     </MudText>
-
     <MudAlert Class="mt-4" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudStack Row="true" Justify="Justify.SpaceAround">
             <MudText>Aqui você encontra dados consolidados sobre todo o sistema, atualizados em tempo real!</MudText>
         </MudStack>
     </MudAlert>
-
     <MudGrid Class="mt-4">
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.School" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Faculdades Faculdades</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Users Usuários</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.GroupWork" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Campus Campus</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.Class" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Cursos Cursos</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.Apps" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Disciplinas Disciplinas</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.AccountTree" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Grades Grades</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.PlaylistAddCheck" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Ofertas Ofertas</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.Person4" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Professores Professores</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="6" sm="4">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.People" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Alunos Alunos</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.School" Value="_data.Faculdades" Text="Faculdades" />
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.People" Value="_data.Users" Text="Usuários" />
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.GroupWork" Value="_data.Campus" Text="Campus" />
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.Class" Value="_data.Cursos" Text="Cursos" />
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.Apps" Value="_data.Disciplinas" Text="Disciplinas" />
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.AccountTree" Value="_data.Grades" Text="Grades" />
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.PlaylistAddCheck" Value="_data.Ofertas" Text="Ofertas" />
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.Person4" Value="_data.Professores" Text="Professores" />
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.People" Value="_data.Alunos" Text="Alunos" />
     </MudGrid>
 </MudContainer>
 
@@ -92,10 +25,13 @@
 
 @code
 {
+    private bool _loading;
     private IndexAdmOut _data = new();
 
     protected override async Task OnInitializedAsync()
     {
+        _loading = true;
         _data = await Http.GetFromJsonAsync<IndexAdmOut>("/index/adm") ?? new();
+        _loading = false;
     }
 }

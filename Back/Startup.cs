@@ -1,6 +1,4 @@
-using Syki.Back.Hubs;
 using Syki.Back.Configs;
-using Syki.Back.Exceptions;
 
 namespace Syki.Back;
 
@@ -17,7 +15,6 @@ public class Startup
         services.AddAuthenticationConfigs();
         services.AddAuthorizationConfigs();
 
-        services.AddSignalR();
         services.AddControllers();
         services.AddHttpConfigs();
 
@@ -38,16 +35,10 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseSwaggerThings();
-
         app.UseAudit();
+        app.UseSwaggerThings();
+        app.UseDomainExceptions();
 
-        app.UseMiddleware<DomainExceptionMiddleware>();
-
-        app.UseEndpoints(options =>
-        {
-            options.MapControllers();
-            options.MapHub<NotificationsHub>("hubs/notifications");
-        });
+        app.UseControllers();
     }
 }

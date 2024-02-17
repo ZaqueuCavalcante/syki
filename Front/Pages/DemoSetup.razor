@@ -60,7 +60,7 @@
         var response = await Http.PostAsJsonAsync("/demos/setup", _model);
         if (response.IsSuccessStatusCode)
         {
-            // Colocar botao "Realizar Login" e confirmacao q deu certo, ao inves de redirecionar direto
+            // TODO: Colocar botao "Realizar Login" e confirmacao q deu certo, ao inves de redirecionar direto
             Nav.NavigateTo("/login");
         }
         else

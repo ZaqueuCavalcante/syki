@@ -1,8 +1,6 @@
 using Syki.Shared;
-using Syki.Back.Hubs;
 using Syki.Back.Domain;
 using Syki.Back.Database;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.Services;
@@ -10,12 +8,7 @@ namespace Syki.Back.Services;
 public class NotificationsService : INotificationsService
 {
     private readonly SykiDbContext _ctx;
-    private readonly IHubContext<NotificationsHub> _hub;
-    public NotificationsService(SykiDbContext ctx, IHubContext<NotificationsHub> hub)
-    {
-        _ctx = ctx;
-        _hub = hub;
-    }
+    public NotificationsService(SykiDbContext ctx) => _ctx = ctx;
 
     public async Task<NotificationOut> Create(Guid faculdadeId, NotificationIn data)
     {
@@ -42,8 +35,6 @@ public class NotificationsService : INotificationsService
 
         _ctx.Add(notification);
         await _ctx.SaveChangesAsync();
-
-        await _hub.Clients.All.SendAsync("OnUpdateNotificationsCounter", 0);
 
         return notification.ToOut();
     }

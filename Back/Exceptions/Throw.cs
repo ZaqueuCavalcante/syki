@@ -28,6 +28,7 @@ public static class Throw
     public const string DE1102 = "Email já utilizado.";
     public const string DE1103 = "Demo não encontrada.";
     public const string DE1104 = "Demo token inválido.";
+    public const string DE1105 = "Já existe um período com esse id.";
 
     public static void Now(this string message)
     {

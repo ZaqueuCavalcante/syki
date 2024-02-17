@@ -1,6 +1,7 @@
 using Syki.Shared;
 using Syki.Back.Domain;
 using Syki.Back.Database;
+using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.Services;
@@ -12,7 +13,9 @@ public class PeriodosService : IPeriodosService
 
     public async Task<PeriodoOut> Create(Guid faculdadeId, PeriodoIn data)
     {
-        // TODO: validar se ja existe com o mesmo id!
+        var periodoExists = await _ctx.Periodos.AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.Id);
+        if (periodoExists)
+            Throw.DE1105.Now();
 
         var periodo = new Periodo(data.Id, faculdadeId, data.Start, data.End);
 

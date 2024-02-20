@@ -94,10 +94,9 @@ public static class HttpClientExtensions
     public static async Task<DisciplinaOut> NewDisciplina(
         this HttpClient client,
         string nome = "Banco de Dados",
-        ushort cargaHoraria = 72,
         List<Guid> cursos = null
     ) {
-        var body = new DisciplinaIn { Nome = nome, CargaHoraria = cargaHoraria, Cursos = cursos ?? [] };
+        var body = new DisciplinaIn { Nome = nome, Cursos = cursos ?? [] };
         return await client.PostAsync<DisciplinaOut>("/disciplinas", body);
     }
 

@@ -18,7 +18,7 @@
                 T="String"
                 Label="Nome"
                 Required="true"
-                RequiredError="Informe o nome do aluno!"
+                RequiredError="Informe!"
             />
             <MudTextField
                 OnlyValidateIfDirty="true"
@@ -30,7 +30,7 @@
                 T="String"
                 Label="Email"
                 Required="true"
-                RequiredError="Informe o email do aluno!"
+                RequiredError="Informe!"
             />
             <MudSelect
                 Dense="true"
@@ -41,7 +41,7 @@
                 @bind-Value="_oferta"
                 Label="Oferta"
                 Required="true"
-                RequiredError="Informe a oferta de curso!"
+                RequiredError="Informe!"
                 AdornmentColor="Color.Primary
             ">
                 @foreach (OfertaOut? item in _ofertas)

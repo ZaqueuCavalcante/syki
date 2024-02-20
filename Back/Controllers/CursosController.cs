@@ -31,4 +31,20 @@ public class CursosController : ControllerBase
 
         return Ok(cursos);
     }
+
+    [HttpGet("disciplinas")]
+    public async Task<IActionResult> GetAllWithDisciplinas()
+    {
+        var cursos = await _service.GetAllWithDisciplinas(User.Facul());
+
+        return Ok(cursos);
+    }
+
+    [HttpGet("{id}/disciplinas")]
+    public async Task<IActionResult> GetDisciplinas([FromRoute] Guid id)
+    {
+        var disciplinas = await _service.GetDisciplinas(id, User.Facul());
+
+        return Ok(disciplinas);
+    }
 }

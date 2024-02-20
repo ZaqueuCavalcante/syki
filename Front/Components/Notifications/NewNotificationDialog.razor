@@ -19,7 +19,7 @@
                 T="String"
                 Label="Título"
                 Required="true"
-                RequiredError="Informe o título!"
+                RequiredError="Informe!"
             />
             <MudTextField
                 OnKeyDown="HandleOnKeyDown"
@@ -32,7 +32,7 @@
                 T="String"
                 Label="Descrição"
                 Required="true"
-                RequiredError="Informe a descrição!"
+                RequiredError="Informe!"
             />
             <MudSelect
                 Dense="true"
@@ -42,7 +42,7 @@
                 @bind-Value="data.UsersGroup"
                 Label="Usuários"
                 Required="true"
-                RequiredError="Informe quais usuários serão notificados!"
+                RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
                 <MudSelectItem Value="@("Alunos")">Alunos</MudSelectItem>

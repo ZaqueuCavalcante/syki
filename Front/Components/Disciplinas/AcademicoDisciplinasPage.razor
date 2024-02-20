@@ -3,7 +3,7 @@
 <PageTitle>Disciplinas</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" ButtonText="Nova Disciplina" OnClick="OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" ButtonText="Nova Disciplina" OnClick="OpenDialog" />
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudText>Uma mesma disciplina pode compor a grade de cursos diferentes. A carga horária definida aqui é apenas um valor de referência.</MudText>
@@ -18,7 +18,7 @@
                     Margin="Margin.Dense"
                     Variant="Variant.Outlined"
                     @bind-Value="_searchString"
-                    Placeholder="Busque por nome ou carga horária"
+                    Placeholder="Busque por nome"
                     Adornment="Adornment.Start"
                     Immediate="true"
                     AdornmentIcon="@Icons.Material.Filled.Search"
@@ -28,7 +28,6 @@
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
-                <PropertyColumn Property="x => x.CargaHoraria" Title="CH" />
             </Columns>
 
             <NoRecordsContent>
@@ -58,7 +57,7 @@
         _loading = false;
     }
 
-    private Func<DisciplinaOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome, x.CargaHoraria.ToString());
+    private Func<DisciplinaOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome);
 
     private async Task OpenDialog()
     {

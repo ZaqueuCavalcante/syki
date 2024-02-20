@@ -18,7 +18,7 @@
                 @bind-Value="_nome"
                 Label="Nome"
                 Required="true"
-                RequiredError="Informe o nome do curso!"
+                RequiredError="Informe!"
             />
             <MudSelect
                 Dense="true"
@@ -28,7 +28,7 @@
                 @bind-Value="data.Tipo"
                 Label="Tipo"
                 Required="true"
-                RequiredError="Informe o tipo do curso!"
+                RequiredError="Informe!"
                 AdornmentColor="Color.Primary
             ">
                 @foreach (TipoDeCurso item in Enum.GetValues<TipoDeCurso>())

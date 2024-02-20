@@ -18,7 +18,7 @@
                     T="String"
                     Label="Nome"
                     Required="true"
-                    RequiredError="Informe o nome da grade!"
+                    RequiredError="Informe!"
                 />
                 <MudSelect
                     Dense="true"
@@ -28,30 +28,35 @@
                     ValueChanged="@((CursoOut newValue) => HandleSelectCurso(newValue))"
                     Label="Curso"
                     Required="true"
-                    RequiredError="Informe o curso!"
+                    RequiredError="Informe!"
                     AdornmentColor="Color.Primary"
                 >
                     @foreach (CursoOut? item in Cursos)
                     {
                         <MudSelectItem Value="@item">@item.Nome</MudSelectItem>
                     }
+                    @if (Cursos.Count == 0)
+                    {
+                        <MudSelectItem Value="@_curso" Disabled="true">Não existem cursos com disciplinas ainda.</MudSelectItem>
+                    }
                 </MudSelect>
             </MudStack>
-            
+
             <MudDivider Class="my-4"/>
 
             <MudContainer Class="px-0">
                 <MudGrid Justify="Justify.FlexStart">
                     <MudItem xs="12">
-                        <CascadingValue Name="Disciplinas" Value="@Disciplinas">
-                            <CascadingValue Name="Curso" Value="@_curso">
-                                @for(var i=0; i<_count; i++)
+                        <CascadingValue Name="Options" Value="@Options">
+                            <CascadingValue Name="Disciplinas" Value="@Disciplinas">
+                                @foreach (var _ in Disciplinas)
                                 {
                                     <GradeDisciplina />
                                 }
                             </CascadingValue>
                         </CascadingValue>
                         <MudButton
+                            Disabled="(GetNewDisciplinaDisabled())"
                             StartIcon="@Icons.Material.Outlined.Add"
                             IconSize="Size.Large"
                             Variant="Variant.Outlined"
@@ -83,10 +88,10 @@
     private bool _loading;
 
     CursoOut? _curso;
-    int _count = 1;
-
     List<CursoOut> Cursos = [];
-    List<GradeDisciplinaFull> Disciplinas = [];
+
+    List<CursoDisciplinaOut> Options = [];
+    List<GradeDisciplinaFillable> Disciplinas = [];
 
     GradeIn data = new();
 
@@ -95,27 +100,25 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? [];
-        Disciplinas = [];
+        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos/disciplinas") ?? [];
     }
 
     // TODO: adicionar botao para remover disciplina
     void NewGradeDisciplina()
     {
-        _count ++;
+        Disciplinas.Add(new GradeDisciplinaFillable { });
+    }
+
+    bool GetNewDisciplinaDisabled()
+    {
+        return _curso == null;
     }
 
     async Task HandleSelectCurso(CursoOut newValue)
     {
         _curso = newValue;
-        var id = _curso!.Id;
-        var disc = await Http.GetFromJsonAsync<List<DisciplinaOut>>($"/disciplinas?cursoId={id}") ?? [];
-        Disciplinas = disc.ConvertAll(x => new GradeDisciplinaFull
-        {
-            Id = x.Id,
-            Nome = x.Nome,
-            CargaHoraria = x.CargaHoraria,
-        });
+        Options = await Http.GetFromJsonAsync<List<CursoDisciplinaOut>>($"/cursos/{_curso!.Id}/disciplinas") ?? [];
+        Disciplinas = [];
     }
 
     async Task Submit()
@@ -126,7 +129,7 @@
         if (!_form.IsValid) return;
 
         data.CursoId = _curso!.Id;
-        data.Disciplinas = Disciplinas.Where(d => d.IsSelected).ToList()
+        data.Disciplinas = Disciplinas
             .ConvertAll(d => new GradeDisciplinaIn
             (
                 d.Id,

@@ -51,7 +51,14 @@
                     <PropertyColumn Property="x => x.Professor" Title="Professor" />
                     <TemplateColumn>
                         <CellTemplate>
-                            <MudCheckBox T="bool" Checked="@context.Item.IsSelected" CheckedChanged="x => { context.Item.IsSelected = x; HandleCheckedChanged(); }" Size="Size.Small" Dense="true" Color="Color.Success"></MudCheckBox>
+                            <MudCheckBox
+                                T="bool"
+                                Checked="@context.Item.IsSelected"
+                                CheckedChanged="x => { context.Item.IsSelected = x; HandleCheckedChanged(); }"
+                                Size="Size.Small"
+                                Dense="true"
+                                Color="Color.Success"
+                            />
                         </CellTemplate>
                     </TemplateColumn>
                 </Columns>

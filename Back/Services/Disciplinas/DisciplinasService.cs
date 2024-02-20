@@ -14,8 +14,7 @@ public class DisciplinasService : IDisciplinasService
     {
         var disciplina = new Disciplina(
             faculdadeId,
-            data.Nome,
-            data.CargaHoraria
+            data.Nome
         );
 
         var cursos = await _ctx.Cursos

@@ -10,7 +10,7 @@
             ValueChanged="x => HandleDiaChanged(x)"
             Label="Dia"
             Required="true"
-            RequiredError="Informe o dia!"
+            RequiredError="Informe!"
             AdornmentColor="Color.Primary"
         >
             @foreach (Dia? dia in Enum.GetValues<Dia>())
@@ -30,7 +30,7 @@
             ValueChanged="x => HandleStartChanged(x)"
             Label="Início"
             Required="true"
-            RequiredError="Informe a hora de início!"
+            RequiredError="Informe!"
             AdornmentColor="Color.Primary"
         >
             @foreach (Hora? hora in Enum.GetValues<Hora>())
@@ -50,7 +50,7 @@
             ValueChanged="x => HandleEndChanged(x)"
             Label="Fim"
             Required="true"
-            RequiredError="Informe a hora de fim!"
+            RequiredError="Informe!"
             AdornmentColor="Color.Primary"
         >
             @foreach (Hora? hora in Enum.GetValues<Hora>())

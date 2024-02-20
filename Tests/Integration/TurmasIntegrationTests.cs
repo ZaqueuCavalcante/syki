@@ -1,4 +1,3 @@
-using System.Net;
 using Syki.Shared;
 using Syki.Tests.Base;
 using NUnit.Framework;
@@ -18,7 +17,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
+        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
         var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
@@ -61,7 +60,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
+        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
         var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
@@ -82,7 +81,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
+        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
         var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
@@ -103,7 +102,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
+        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
         var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H07_00) };
@@ -125,7 +124,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateFaculdade("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
+        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
         var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };

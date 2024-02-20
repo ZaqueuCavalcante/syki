@@ -21,7 +21,7 @@
                 T="String"
                 Label="Id"
                 Required="true"
-                RequiredError="Informe o id do período!"
+                RequiredError="Informe!"
             />
             <MudStack Row="true">
                 <MudDatePicker
@@ -30,7 +30,7 @@
                     Variant="Variant.Outlined"
                     Editable="true"
                     Required="true"
-                    RequiredError="Informe a data de início do período!"
+                    RequiredError="Informe!"
                     @bind-Date="start"
                     Mask="@(new DateMask("dd/MM/yyyy"))"
                     DateFormat="dd/MM/yyyy"
@@ -42,7 +42,7 @@
                     Variant="Variant.Outlined"
                     Editable="true"
                     Required="true"
-                    RequiredError="Informe a data de fim do período!"
+                    RequiredError="Informe!"
                     @bind-Date="end"
                     Mask="@(new DateMask("dd/MM/yyyy"))"
                     DateFormat="dd/MM/yyyy"

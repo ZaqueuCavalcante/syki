@@ -92,9 +92,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
         var curso = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
 
-        var disciplina01 = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [curso.Id] });
-        var disciplina02 = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60, Cursos = [curso.Id] });
-        var disciplina03 = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55, Cursos = [curso.Id] });
+        var disciplina01 = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", Cursos = [curso.Id] });
+        var disciplina02 = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", Cursos = [curso.Id] });
+        var disciplina03 = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", Cursos = [curso.Id] });
         var disciplinas = new List<GradeDisciplinaIn>() { new() { Id = disciplina01.Id }, new() { Id = disciplina02.Id }, new() { Id = disciplina03.Id } };
 
         var grade = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = curso.Id, Disciplinas = disciplinas });

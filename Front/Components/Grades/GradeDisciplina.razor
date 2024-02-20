@@ -3,27 +3,20 @@
         <MudItem xs="6">
             <MudAutocomplete
                 MaxItems="50"
-                T="GradeDisciplinaFull"
+                T="GradeDisciplinaFillable"
                 SearchFunc="@SearchDisciplina"
                 Dense="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 ShowProgressIndicator="true"
                 Class="mb-2"
-                Value="@_disciplina"
-                ValueChanged="(GradeDisciplinaFull newValue) => HandleDisciplinaChanged(newValue)"
+                Value="@Data"
+                ValueChanged="(GradeDisciplinaFillable newValue) => HandleDisciplinaChanged(newValue)"
                 Label="Disciplina"
                 Required="true"
-                RequiredError="Informe a disciplina!"
+                RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
-            >
-                <NoItemsTemplate>
-                    <MudText Align="Align.Center" Class="px-4 py-1">
-                        @(GetNotFoundMessage())
-                    </MudText>
-                </NoItemsTemplate>
-            </MudAutocomplete>
-
+            />
         </MudItem>
         <MudItem xs="2">
             <MudSelect
@@ -31,11 +24,11 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 T="byte?"
-                Value="@_periodo"
+                Value="@Data.Periodo"
                 ValueChanged="x => HandlePeriodoChanged(x)"
                 Label="Período"
                 Required="true"
-                RequiredError="Informe o período!"
+                RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
                 @foreach (byte? item in Enumerable.Range(1, 10).ToList())
@@ -45,27 +38,31 @@
             </MudSelect>
         </MudItem>
         <MudItem xs="2">
-            <MudTextField
+            <MudNumericField
+                MaxLength="2"
+                HideSpinButtons="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 T="byte?"
-                Value="@_creditos"
+                Value="@Data.Creditos"
                 ValueChanged="x => HandleCreditosChanged(x)"
                 Label="Créditos"
                 Required="true"
-                RequiredError="Informe os créditos!"
+                RequiredError="Informe!"
             />
         </MudItem>
         <MudItem xs="2">
-            <MudTextField
+            <MudNumericField
+                MaxLength="3"
+                HideSpinButtons="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 T="ushort?"
-                Value="@_cargaHoraria"
+                Value="@Data.CargaHoraria"
                 ValueChanged="x => HandleCargaHorariaChanged(x)"
                 Label="Carga Horária"
                 Required="true"
-                RequiredError="Informe a carga horária!"
+                RequiredError="Informe!"
             />
         </MudItem>
     </MudStack>
@@ -75,33 +72,20 @@
 {
     MudForm form;
 
+    [CascadingParameter(Name = "Options")]
+    public List<CursoDisciplinaOut> Options { get; set; }
+
     [CascadingParameter(Name = "Disciplinas")]
-    public List<GradeDisciplinaFull> Disciplinas { get; set; }
+    public List<GradeDisciplinaFillable> Disciplinas { get; set; }
 
-    [CascadingParameter(Name = "Curso")]
-    public CursoOut? Curso { get; set; }
+    GradeDisciplinaFillable Data = new();
 
-    GradeDisciplinaFull? _disciplina;
-    byte? _periodo;
-    byte? _creditos;
-    ushort? _cargaHoraria;
-
-    private string GetNotFoundMessage()
-    {
-        if (Curso == null)
-            return "Selecione o curso!";
-
-        if (Disciplinas.Count == 0)
-            return "Este curso não possui disciplinas vinculadas.";
-        
-        return "";
-    }
-
-    private async Task<IEnumerable<GradeDisciplinaFull>> SearchDisciplina(string value)
+    private async Task<IEnumerable<GradeDisciplinaFillable>> SearchDisciplina(string value)
     {
         await Task.Delay(0);
 
-        var filtered = Disciplinas.Where(d => !d.IsSelected || (d.IsSelected && d.Id == _disciplina?.Id));
+        var filtered = Options.Where(d => !d.IsSelected || (d.IsSelected && d.Id == Data.Id))
+            .ToList().ConvertAll(x => new GradeDisciplinaFillable { Id = x.Id, Nome = x.Nome });
 
         if (string.IsNullOrEmpty(value))
             return filtered;
@@ -109,49 +93,47 @@
         return filtered.Where(x => x.Nome.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    void HandleDisciplinaChanged(GradeDisciplinaFull newValue)
+    void HandleDisciplinaChanged(GradeDisciplinaFillable newValue)
     {
-        if (_disciplina != null)
+        if (Data.Id == Guid.Empty)
         {
-            Disciplinas.First(d => d.Id == _disciplina.Id).IsSelected = false;
+            Options.First(d => d.Id == newValue.Id).IsSelected = true;
+            Disciplinas.First(d => d.Id == Data.Id).Nome = newValue.Nome;
+            Disciplinas.First(d => d.Id == Data.Id).Id = newValue.Id;
+            Data = newValue;
+            return;
         }
 
-        _cargaHoraria = newValue.CargaHoraria;
-        Disciplinas.First(d => d.Id == newValue.Id).IsSelected = true;
-        Disciplinas.First(d => d.Id == newValue.Id).Periodo = _periodo;
-        Disciplinas.First(d => d.Id == newValue.Id).Creditos = _creditos;
-        Disciplinas.First(d => d.Id == newValue.Id).CargaHoraria = _cargaHoraria;
-
-        _disciplina = Disciplinas.First(d => d.Id == newValue.Id);
+        Options.First(d => d.Id == Data.Id).IsSelected = false;
+        Disciplinas.First(d => d.Id == Data.Id).Nome = newValue.Nome;
+        Disciplinas.First(d => d.Id == Data.Id).Id = newValue.Id;
+        Data = newValue;
     }
 
     void HandlePeriodoChanged(byte? newValue)
     {
-        _periodo = newValue;
+        Data.Periodo = newValue;
 
-        if (_disciplina == null) return;
+        if (Data.Id == Guid.Empty) return;
 
-        _disciplina.Periodo = _periodo;
-        Disciplinas.First(d => d.Id == _disciplina.Id).Periodo = _periodo;
+        Disciplinas.First(d => d.Id == Data.Id).Periodo = newValue;
     }
 
     void HandleCreditosChanged(byte? newValue)
     {
-        _creditos = newValue;
+        Data.Creditos = newValue;
 
-        if (_disciplina == null) return;
+        if (Data.Id == Guid.Empty) return;
 
-        _disciplina.Creditos = _creditos;
-        Disciplinas.First(d => d.Id == _disciplina.Id).Creditos = _creditos;
+        Disciplinas.First(d => d.Id == Data.Id).Creditos = newValue;
     }
 
     void HandleCargaHorariaChanged(ushort? newValue)
     {
-        _cargaHoraria = newValue;
+        Data.CargaHoraria = newValue;
 
-        if (_disciplina == null) return;
+        if (Data.Id == Guid.Empty) return;
 
-        _disciplina.CargaHoraria = _cargaHoraria;
-        Disciplinas.First(d => d.Id == _disciplina.Id).CargaHoraria = _cargaHoraria;
+        Disciplinas.First(d => d.Id == Data.Id).CargaHoraria = newValue;
     }
 }

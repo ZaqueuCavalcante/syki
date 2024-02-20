@@ -129,13 +129,13 @@ public partial class IntegrationTests : IntegrationTestBase
         var ads = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
         var direito = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Direito", Tipo = TipoDeCurso.Bacharelado });
 
-        var matematica = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Matemática Discreta", CargaHoraria = 72, Cursos = [ads.Id] });
-        var bancoDeDados = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72, Cursos = [ads.Id] });
-        var estruturaDeDados = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60, Cursos = [ads.Id] });
-        var infoSociedade = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Informática e Sociedade", CargaHoraria = 55, Cursos = [ads.Id, direito.Id] });
-        var direitoEconomia = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Direito e Economia", CargaHoraria = 60, Cursos = [direito.Id] });
-        var introDireito = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Introdução ao Direito", CargaHoraria = 50, Cursos = [direito.Id] });
-        var direitoFinanceiro = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Direito Financeiro", CargaHoraria = 65, Cursos = [direito.Id] });
+        var matematica = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Matemática Discreta", Cursos = [ads.Id] });
+        var bancoDeDados = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", Cursos = [ads.Id] });
+        var estruturaDeDados = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", Cursos = [ads.Id] });
+        var infoSociedade = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Informática e Sociedade", Cursos = [ads.Id, direito.Id] });
+        var direitoEconomia = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Direito e Economia", Cursos = [direito.Id] });
+        var introDireito = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Introdução ao Direito", Cursos = [direito.Id] });
+        var direitoFinanceiro = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Direito Financeiro", Cursos = [direito.Id] });
 
         var gradeAds = await client.PostAsync<GradeOut>("/grades", new GradeIn { Nome = "Grade de ADS - 1.0", CursoId = ads.Id, Disciplinas =
         [

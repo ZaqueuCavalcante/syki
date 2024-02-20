@@ -1,4 +1,4 @@
-using Syki.Back.Configs;
+using Syki.Shared;
 
 namespace Syki.Back.Tasks;
 

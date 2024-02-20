@@ -14,7 +14,7 @@ public class DisciplinasUnitTests
         var faculdadeId = Guid.NewGuid();
 
         // Act
-        var disciplina = new Disciplina(faculdadeId, "Banco de Dados", 72);
+        var disciplina = new Disciplina(faculdadeId, "Banco de Dados");
 
         // Assert
         disciplina.Id.Should().NotBeEmpty();
@@ -27,7 +27,7 @@ public class DisciplinasUnitTests
         var faculdadeId = Guid.NewGuid();
 
         // Act
-        var disciplina = new Disciplina(faculdadeId, "Banco de Dados", 72);
+        var disciplina = new Disciplina(faculdadeId, "Banco de Dados");
 
         // Assert
         disciplina.FaculdadeId.Should().Be(faculdadeId);
@@ -41,31 +41,17 @@ public class DisciplinasUnitTests
         const string nome = "Banco de Dados";
 
         // Act
-        var disciplina = new Disciplina(faculdadeId, nome, 72);
+        var disciplina = new Disciplina(faculdadeId, nome);
 
         // Assert
         disciplina.Nome.Should().Be(nome);
     }
 
     [Test]
-    public void Deve_criar_uma_disciplina_com_carga_horaria_correta()
-    {
-        // Arrange
-        var faculdadeId = Guid.NewGuid();
-        const string nome = "Banco de Dados";
-
-        // Act
-        var disciplina = new Disciplina(faculdadeId, nome, 72);
-
-        // Assert
-        disciplina.CargaHoraria.Should().Be(72);
-    }
-
-    [Test]
     public void Deve_converter_a_disciplina_corretamente_pro_out()
     {
         // Arrange
-        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados", 72);
+        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados");
         disciplina.Vinculos.Add(new() { CursoId = Guid.NewGuid() });
         disciplina.Vinculos.Add(new() { CursoId = Guid.NewGuid() });
 
@@ -75,7 +61,6 @@ public class DisciplinasUnitTests
         // Assert
         disciplinaOut.Id.Should().Be(disciplina.Id);
         disciplinaOut.Nome.Should().Be(disciplina.Nome);
-        disciplinaOut.CargaHoraria.Should().Be(disciplina.CargaHoraria);
         disciplinaOut.Cursos.Should().BeEquivalentTo(disciplina.Vinculos.ConvertAll(x => x.CursoId));
     }
 
@@ -83,7 +68,7 @@ public class DisciplinasUnitTests
     public void Deve_retornar_true_quando_for_a_mesma_disciplina()
     {
         // Arrange
-        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados", 72);
+        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados");
         var disciplinaOut1 = disciplina.ToOut();
         var disciplinaOut2 = disciplina.ToOut();
 
@@ -98,8 +83,8 @@ public class DisciplinasUnitTests
     public void Deve_retornar_false_quando_nao_for_a_mesma_disciplina()
     {
         // Arrange
-        var disciplina1 = new Disciplina(Guid.NewGuid(), "Banco de Dados", 72);
-        var disciplina2 = new Disciplina(Guid.NewGuid(), "Banco de Dados", 72);
+        var disciplina1 = new Disciplina(Guid.NewGuid(), "Banco de Dados");
+        var disciplina2 = new Disciplina(Guid.NewGuid(), "Banco de Dados");
         var disciplinaOut1 = disciplina1.ToOut();
         var disciplinaOut2 = disciplina2.ToOut();
 
@@ -114,7 +99,7 @@ public class DisciplinasUnitTests
     public void Deve_retornar_false_quando_a_outra_disciplina_for_nula()
     {
         // Arrange
-        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados", 72);
+        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados");
         var disciplinaOut = disciplina.ToOut();
 
         // Act

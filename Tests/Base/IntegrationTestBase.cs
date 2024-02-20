@@ -25,7 +25,7 @@ public class IntegrationTestBase
         {
             await ctx.Database.EnsureDeletedAsync();
             await ctx.Database.EnsureCreatedAsync();
-            // Throw.DE0000.Now();
+            // Throw.DE000.Now();
         }
 
         ctx.Add(new Faculdade { Id = Guid.Empty, Nome = "Syki" });

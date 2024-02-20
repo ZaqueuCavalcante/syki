@@ -9,13 +9,14 @@
         <MudForm @ref="_form">
             <MudSelect
                 Dense="true"
+                AutoFocus="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-4"
                 @bind-Value="data.Id"
                 Label="Período"
                 Required="true"
-                RequiredError="Informe o período do curso!"
+                RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
                 @foreach (string? item in Periodos.ConvertAll(p => p.Id))
@@ -30,7 +31,7 @@
                     Variant="Variant.Outlined"
                     Editable="true"
                     Required="true"
-                    RequiredError="Informe a data de início do período!"
+                    RequiredError="Informe!"
                     @bind-Date="start"
                     Mask="@(new DateMask("dd/MM/yyyy"))"
                     DateFormat="dd/MM/yyyy"
@@ -42,7 +43,7 @@
                     Variant="Variant.Outlined"
                     Editable="true"
                     Required="true"
-                    RequiredError="Informe a data de fim do período!"
+                    RequiredError="Informe!"
                     @bind-Date="end"
                     Mask="@(new DateMask("dd/MM/yyyy"))"
                     DateFormat="dd/MM/yyyy"

@@ -73,8 +73,8 @@ public class GradesUnitTests
         {
             Curso = new Curso(faculdadeId, "ADS", TipoDeCurso.Bacharelado),
             Disciplinas = [
-                new Disciplina(faculdadeId, "Banco de Dados", 72),
-                new Disciplina(faculdadeId, "Estrutura de Dados", 60),
+                new Disciplina(faculdadeId, "Banco de Dados"),
+                new Disciplina(faculdadeId, "Estrutura de Dados"),
             ],
         };
 

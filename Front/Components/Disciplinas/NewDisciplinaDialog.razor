@@ -18,19 +18,7 @@
                 T="String"
                 Label="Nome"
                 Required="true"
-                RequiredError="Informe o nome da disciplina!"
-            />
-            <MudNumericField
-                T="ushort?"
-                HideSpinButtons="true"
-                OnlyValidateIfDirty="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-4"
-                @bind-Value="_cargaHoraria"
-                Label="Carga Horária"
-                Required="true"
-                RequiredError="Informe a carga horária da disciplina!"
+                RequiredError="Informe!"
             />
             <MudSelect
                 Dense="true"
@@ -65,7 +53,6 @@
     MudForm _form;
     private bool _loading;
 
-    ushort? _cargaHoraria;
     DisciplinaIn data = new();
 
     [CascadingParameter]
@@ -86,7 +73,6 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        data.CargaHoraria = _cargaHoraria!.Value;
         data.Cursos = SelectedCursos.ToList().ConvertAll(c => c.Id);
 
         _loading = true;

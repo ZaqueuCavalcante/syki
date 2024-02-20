@@ -47,9 +47,9 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.PostAsync("/cursos", new CursoIn { Nome = "Administração", Tipo = TipoDeCurso.Doutorado });
         await client.PostAsync("/cursos", new CursoIn { Nome = "Análise e Desenvolvimento de Sistemas", Tipo = TipoDeCurso.Bacharelado });
 
-        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados", CargaHoraria = 72 });
-        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados", CargaHoraria = 60 });
-        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos", CargaHoraria = 55 });
+        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
+        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Estrutura de Dados" });
+        await client.PostAsync("/disciplinas", new DisciplinaIn { Nome = "Programação Orientada a Objetos" });
 
         // Act
         var response = await client.GetAsync<IndexAcademicoOut>("/index/academico");

@@ -14,12 +14,11 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
 
         // Act
-        var disciplina = await client.NewDisciplina("Banco de Dados", 72);
+        var disciplina = await client.NewDisciplina("Banco de Dados");
 
         // Assert
         disciplina.Id.Should().NotBeEmpty();
         disciplina.Nome.Should().Be("Banco de Dados");
-        disciplina.CargaHoraria.Should().Be(72);
         disciplina.Cursos.Should().BeEquivalentTo(new List<Guid>());
     }
 
@@ -31,11 +30,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
         // Act
-        var disciplina = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
+        var disciplina = await client.NewDisciplina("Banco de Dados", [curso.Id]);
 
         // Assert
         disciplina.Nome.Should().Be("Banco de Dados");
-        disciplina.CargaHoraria.Should().Be(72);
         disciplina.Cursos.Should().BeEquivalentTo([curso.Id]);
     }
 
@@ -48,11 +46,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var cc = await client.NewCurso("Ciência da Computação");
 
         // Act
-        var disciplina = await client.NewDisciplina("Banco de Dados", 72, [ads.Id, cc.Id]);
+        var disciplina = await client.NewDisciplina("Banco de Dados", [ads.Id, cc.Id]);
 
         // Assert
         disciplina.Nome.Should().Be("Banco de Dados");
-        disciplina.CargaHoraria.Should().Be(72);
         disciplina.Cursos.Should().BeEquivalentTo([cc.Id, ads.Id]);
     }
 
@@ -73,11 +70,10 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.Login(userNovaRoma);
 
         // Act
-        var disciplina = await client.NewDisciplina("Banco de Dados", 72, [adsNovaRoma.Id, adsUfpe.Id]);
+        var disciplina = await client.NewDisciplina("Banco de Dados", [adsNovaRoma.Id, adsUfpe.Id]);
 
         // Assert
         disciplina.Nome.Should().Be("Banco de Dados");
-        disciplina.CargaHoraria.Should().Be(72);
         disciplina.Cursos.Should().BeEquivalentTo([adsNovaRoma.Id]);
     }
 
@@ -88,9 +84,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
 
         // Act
-        await client.NewDisciplina("Banco de Dados", 72);
-        await client.NewDisciplina("Estrutura de Dados", 60);
-        await client.NewDisciplina("Programação Orientada a Objetos", 55);
+        await client.NewDisciplina("Banco de Dados");
+        await client.NewDisciplina("Estrutura de Dados");
+        await client.NewDisciplina("Programação Orientada a Objetos");
 
         // Assert
         var disciplinas = await client.GetAsync<List<DisciplinaOut>>("/disciplinas");
@@ -106,10 +102,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var userUfpe = await client.NewAcademico("UFPE");
 
         await client.Login(userNovaRoma);
-        await client.NewDisciplina("Banco de Dados", 72);
+        await client.NewDisciplina("Banco de Dados");
 
         await client.Login(userUfpe);
-        await client.NewDisciplina("Estrutura de Dados", 80);
+        await client.NewDisciplina("Estrutura de Dados");
 
         // Act
         await client.Login(userNovaRoma);
@@ -119,7 +115,6 @@ public partial class IntegrationTests : IntegrationTestBase
         disciplinas.Should().HaveCount(1);
         disciplinas[0].Id.Should().NotBeEmpty();
         disciplinas[0].Nome.Should().Be("Banco de Dados");
-        disciplinas[0].CargaHoraria.Should().Be(72);
         disciplinas[0].Cursos.Should().BeEquivalentTo(new List<Guid>());
     }
 
@@ -130,12 +125,12 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
 
         // Act
-        await client.NewDisciplina("Estrutura de Dados", 60);
-        await client.NewDisciplina("Banco de Dados", 72);
-        await client.NewDisciplina("Programação Orientada a Objetos", 55);
-        await client.NewDisciplina("Informática e Sociedade", 40);
-        await client.NewDisciplina("Projeto Integrador II: Modelagem de Banco de Dados", 72);
-        await client.NewDisciplina("Arquitetura de Computadores e Sistemas Operacionais", 55);
+        await client.NewDisciplina("Estrutura de Dados");
+        await client.NewDisciplina("Banco de Dados");
+        await client.NewDisciplina("Programação Orientada a Objetos");
+        await client.NewDisciplina("Informática e Sociedade");
+        await client.NewDisciplina("Projeto Integrador II: Modelagem de Banco de Dados");
+        await client.NewDisciplina("Arquitetura de Computadores e Sistemas Operacionais");
 
         // Assert
         var disciplinas = await client.GetAsync<List<DisciplinaOut>>("/disciplinas");
@@ -156,10 +151,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
         var cc = await client.NewCurso("Ciência da Computação");
 
-        await client.NewDisciplina("Banco de Dados", 50, [ads.Id, cc.Id]);
-        await client.NewDisciplina("Informática e Sociedade", 40, [ads.Id]);
-        await client.NewDisciplina("Programação Orientada a Objetos", 55, [cc.Id]);
-        await client.NewDisciplina("Projeto Integrador II: Modelagem de Banco de Dados", 72, [cc.Id]);
+        await client.NewDisciplina("Banco de Dados", [ads.Id, cc.Id]);
+        await client.NewDisciplina("Informática e Sociedade", [ads.Id]);
+        await client.NewDisciplina("Programação Orientada a Objetos", [cc.Id]);
+        await client.NewDisciplina("Projeto Integrador II: Modelagem de Banco de Dados", [cc.Id]);
 
         // Act
         var disciplinas = await client.GetAsync<List<DisciplinaOut>>($"/disciplinas?cursoId={ads.Id}");

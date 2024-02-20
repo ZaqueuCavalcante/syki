@@ -34,9 +34,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
         var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
-        var ed = await client.NewDisciplina("Estrutura de Dados", 60, [curso.Id]);
-        var poo = await client.NewDisciplina("Programação Orientada a Objetos", 55, [curso.Id]);
+        var bd = await client.NewDisciplina("Banco de Dados", [curso.Id]);
+        var ed = await client.NewDisciplina("Estrutura de Dados", [curso.Id]);
+        var poo = await client.NewDisciplina("Programação Orientada a Objetos", [curso.Id]);
         var disciplinas = new List<GradeDisciplinaIn> { new(bd.Id, 1, 10, 70), new(ed.Id, 2, 8, 55), new(poo.Id, 3, 12, 60) };
 
         // Act
@@ -57,7 +57,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
         var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
+        var bd = await client.NewDisciplina("Banco de Dados", [curso.Id]);
         var disciplinas = new List<GradeDisciplinaIn> { new(bd.Id, 1, 10, 80) };
 
         // Act
@@ -130,7 +130,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
         var direito = await client.NewCurso("Direito");
 
-        var bd = await client.NewDisciplina("Banco de Dados", 72, [ads.Id]);
+        var bd = await client.NewDisciplina("Banco de Dados", [ads.Id]);
 
         var body = new GradeIn {
             Nome = "Grade de Direito 1.0",
@@ -154,10 +154,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var userUfpe = await client.NewAcademico("UFPE");
 
         await client.Login(userNovaRoma);
-        await client.NewDisciplina("Banco de Dados", 72);
+        await client.NewDisciplina("Banco de Dados");
 
         await client.Login(userUfpe);
-        var disciplinaUfpe = await client.NewDisciplina("Banco de Dados", 80);
+        var disciplinaUfpe = await client.NewDisciplina("Banco de Dados");
 
         var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
@@ -182,9 +182,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
         var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
-        var ed = await client.NewDisciplina("Estrutura de Dados", 72, [curso.Id]);
-        var poo = await client.NewDisciplina("Programação Orientada a Objetos", 72, [curso.Id]);
+        var bd = await client.NewDisciplina("Banco de Dados", [curso.Id]);
+        var ed = await client.NewDisciplina("Estrutura de Dados", [curso.Id]);
+        var poo = await client.NewDisciplina("Programação Orientada a Objetos", [curso.Id]);
 
         var body = new GradeIn {
             Nome = "Grade de Direito 1.0",
@@ -211,8 +211,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
         var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.NewDisciplina("Banco de Dados", 72, [curso.Id]);
-        var poo = await client.NewDisciplina("Programação Orientada a Objetos", 55, [curso.Id]);
+        var bd = await client.NewDisciplina("Banco de Dados", [curso.Id]);
+        var poo = await client.NewDisciplina("Programação Orientada a Objetos", [curso.Id]);
         var disciplinas = new List<GradeDisciplinaIn> { new(bd.Id, 1, 10, 70), new(poo.Id, 3, 12, 60), new(Guid.NewGuid(), 2, 9, 55) };
 
         var body = new GradeIn { Nome = "Grade de Direito 1.0", CursoId = curso.Id, Disciplinas = disciplinas };

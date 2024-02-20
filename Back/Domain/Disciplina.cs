@@ -7,18 +7,15 @@ public class Disciplina
     public Guid Id { get; set; }
     public Guid FaculdadeId { get; set; }
     public string Nome { get; set; }
-    public ushort CargaHoraria { get; set; }
     public List<CursoDisciplina> Vinculos { get; set; }
 
     public Disciplina(
         Guid faculdadeId,
-        string nome,
-        ushort cargaHoraria
+        string nome
     ) {
         Id = Guid.NewGuid();
         FaculdadeId = faculdadeId;
         Nome = nome;
-        CargaHoraria = cargaHoraria;
         Vinculos = [];
     }
 
@@ -28,7 +25,6 @@ public class Disciplina
         {
             Id = Id,
             Nome = Nome,
-            CargaHoraria = CargaHoraria,
             Cursos = Vinculos.ConvertAll(v => v.CursoId),
         };
     }

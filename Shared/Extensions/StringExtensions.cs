@@ -1,5 +1,7 @@
 using OtpNet;
+using Newtonsoft.Json;
 using System.Globalization;
+using Newtonsoft.Json.Converters;
 using System.Text.RegularExpressions;
 
 namespace Syki.Shared;
@@ -63,4 +65,13 @@ public static class StringExtensions
     {
         return Regex.IsMatch(email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
     }
+
+	private static JsonSerializerSettings _settings = new()
+	{
+		Converters = [new StringEnumConverter()],
+	};
+	public static string Serialize(this object obj)
+	{
+		return JsonConvert.SerializeObject(obj, _settings);
+	}
 }

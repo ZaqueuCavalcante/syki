@@ -171,7 +171,7 @@ public class TurmasUnitTests
         var professorId = Guid.NewGuid();
         const string periodo = "2023.2";
 
-        var disciplina = new Disciplina(faculdadeId, "Banco de Dados", 72);
+        var disciplina = new Disciplina(faculdadeId, "Banco de Dados");
         var professor = new Professor(userId, faculdadeId, "Chico Science");
         var horarios = new List<Horario>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 

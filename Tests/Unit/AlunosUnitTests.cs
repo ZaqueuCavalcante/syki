@@ -21,7 +21,7 @@ public class AlunosUnitTests
         var aluno = new Aluno(userId, faculdadeId, "Zaqueu", ofertaId);
 
         // Assert
-        aluno.Id.Should().BeEmpty();
+        aluno.Id.Should().NotBeEmpty();
     }
 
     [Test]

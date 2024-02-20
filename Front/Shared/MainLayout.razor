@@ -13,7 +13,7 @@
                 <MudText>@_userName</MudText>
                 <MudSpacer />
                 <NotificationsIcon />
-                <ConfigsIconButton />
+                <SegurancaIconButton />
                 <ThemeIconButton @bind-IsDark="_isDark" OnClick="ChangeTheme" />
                 <LogoutIconButton OnClick="Logout" />
             </MudAppBar>
@@ -59,12 +59,12 @@
     public Task<AuthenticationState> AuthState { get; set; }
 
     private string _userName = "";
-    private bool _isDark = false;
+    private bool _isDark = true;
 
     protected override async Task OnInitializedAsync()
     {
         var isDark = await LocalStorage.GetItemAsync("IsDark");
-        _isDark = isDark != null ? bool.Parse(isDark) : false;
+        _isDark = isDark != null ? bool.Parse(isDark) : true;
         await SetUserName();
     }
 

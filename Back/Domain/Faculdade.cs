@@ -1,3 +1,4 @@
+using Syki.Back.CreateBook;
 using Syki.Shared;
 
 namespace Syki.Back.Domain;
@@ -14,7 +15,7 @@ public class Faculdade
     public List<Disciplina> Disciplinas { get; set; }
     public List<Professor> Professores { get; set; }
     public List<Aluno> Alunos { get; set; }
-    public List<Livro> Livros { get; set; }
+    public List<Book> Books { get; set; }
     public List<Notification> Notifications { get; set; }
 
     public Faculdade() { }

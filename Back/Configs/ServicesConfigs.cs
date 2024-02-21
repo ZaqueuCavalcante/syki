@@ -1,4 +1,6 @@
 using Syki.Back.Services;
+using Syki.Back.GetBooks;
+using Syki.Back.CreateBook;
 using Syki.Back.Extensions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -8,6 +10,9 @@ public static class ServicesConfigs
 {
     public static void AddServicesConfigs(this IServiceCollection services)
     {
+        services.AddScoped<CreateBookService>();
+        services.AddScoped<GetBooksService>();
+
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ICampiService, CampiService>();
         services.AddScoped<IDemosService, DemosService>();
@@ -15,7 +20,6 @@ public static class ServicesConfigs
         services.AddScoped<ICursosService, CursosService>();
         services.AddScoped<IGradesService, GradesService>();
         services.AddScoped<IAlunosService, AlunosService>();
-        services.AddScoped<ILivrosService, LivrosService>();
         services.AddScoped<IEmailsService, EmailsService>();
         services.AddScoped<ITurmasService, TurmasService>();
         services.AddScoped<IOfertasService, OfertasService>();

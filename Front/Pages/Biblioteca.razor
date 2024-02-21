@@ -11,7 +11,7 @@
     </MudAlert>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_livros" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_books" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <MudSpacer />
                 <MudSpacer />
@@ -29,7 +29,7 @@
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Id" Title="Id" />
-                <PropertyColumn Property="x => x.Titulo" Title="Título" />
+                <PropertyColumn Property="x => x.Title" Title="Título" />
             </Columns>
 
             <NoRecordsContent>
@@ -37,7 +37,7 @@
             </NoRecordsContent>
 
             <PagerContent>
-                <MudDataGridPager T="LivroOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+                <MudDataGridPager T="GetBooksOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -50,16 +50,16 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<LivroOut> _livros = [];
+    private List<GetBooksOut> _books = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _livros = await Http.GetFromJsonAsync<List<LivroOut>>("/livros") ?? [];
+        _books = await Http.GetFromJsonAsync<List<GetBooksOut>>("/books") ?? [];
         _loading = false;
     }
 
-    private Func<LivroOut, bool> _quickFilter => x => _searchString.IsIn(x.Titulo);
+    private Func<GetBooksOut, bool> _quickFilter => x => _searchString.IsIn(x.Title);
 
     private async Task OpenDialog()
     {

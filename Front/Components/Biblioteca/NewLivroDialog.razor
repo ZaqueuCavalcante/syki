@@ -14,9 +14,9 @@
                 Variant="Variant.Outlined"
                 Class="mb-4"
                 AutoFocus="true"
-                @bind-Value="data.Titulo"
+                @bind-Value="_data.Title"
                 T="String"
-                Label="Titulo"
+                Label="Título"
                 Required="true"
                 RequiredError="Informe!"
             />
@@ -34,13 +34,12 @@
 
 @code
 {
-    private MudForm _form;
-    private bool _loading;
-
-    private LivroIn data = new();
-
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
+
+    private MudForm _form;
+    private bool _loading;
+    private CreateBookIn _data = new();
 
     async Task Submit()
     {
@@ -50,7 +49,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/livros", data);
+        var response = await Http.PostAsJsonAsync("/books", _data);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

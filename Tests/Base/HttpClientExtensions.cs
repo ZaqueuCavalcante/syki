@@ -2,6 +2,7 @@ using Syki.Shared;
 using Syki.Back.Database;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Shared.CreateBook;
 
 namespace Syki.Tests.Base;
 
@@ -71,6 +72,14 @@ public static class HttpClientExtensions
         var faculdade = await client.CreateFaculdade();
         await client.RegisterAndLogin(faculdade.Id, Academico);
         return client;
+    }
+
+    public static async Task<CreateBookOut> CreateBook(
+        this HttpClient client,
+        string title = "Manual de DevOps"
+    ) {
+        var body = new CreateBookIn { Title = "Manual de DevOps" };
+        return await client.PostAsync<CreateBookOut>("/books", body);
     }
 
     public static async Task<CampusOut> NewCampus(

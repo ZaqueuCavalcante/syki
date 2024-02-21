@@ -2,6 +2,7 @@ using Syki.Shared;
 using Syki.Back.Audit;
 using Syki.Back.Domain;
 using Syki.Back.Settings;
+using Syki.Back.CreateBook;
 using Audit.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -16,6 +17,8 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
         _settings = settings;
     }
 
+    public DbSet<Book> Books { get; set; }
+
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<Faculdade> Faculdades { get; set; }
     public DbSet<Campus> Campi { get; set; }
@@ -26,7 +29,6 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
     public DbSet<Oferta> Ofertas { get; set; }
     public DbSet<Turma> Turmas { get; set; }
     public DbSet<TurmaAluno> TurmaAlunos { get; set; }
-    public DbSet<Livro> Livros { get; set; }
     public DbSet<Professor> Professores { get; set; }
     public DbSet<Aluno> Alunos { get; set; }
     public DbSet<Periodo> Periodos { get; set; }

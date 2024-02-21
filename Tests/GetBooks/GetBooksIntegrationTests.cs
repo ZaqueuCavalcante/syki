@@ -5,6 +5,19 @@ namespace Syki.Tests.GetBooks;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
+    public async Task Should_get_empty_list_when_has_no_books()
+    {
+        // Arrange
+        var client = await _factory.LoggedAsAcademico();
+
+        // Act
+        var books = await client.GetAsync<List<GetBooksOut>>("/books");
+
+        // Assert
+        books.Should().BeEmpty();
+    }
+
+    [Test]
     public async Task Should_get_many_books()
     {
         // Arrange

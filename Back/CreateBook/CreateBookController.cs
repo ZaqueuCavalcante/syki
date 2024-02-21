@@ -2,12 +2,10 @@ using Syki.Back.Extensions;
 using Syki.Shared.CreateBook;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.Authorization;
-using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.CreateBook;
 
-[ApiController]
+[ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]
 public class CreateBookController : ControllerBase
 {
@@ -15,7 +13,6 @@ public class CreateBookController : ControllerBase
     public CreateBookController(CreateBookService service) => _service = service;
 
     [HttpPost("books")]
-    [Authorize(Roles = Academico)]
     public async Task<IActionResult> Create([FromBody] CreateBookIn data)
     {
         var book = await _service.Create(User.InstitutionId(), data);

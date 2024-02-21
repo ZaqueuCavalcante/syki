@@ -1,0 +1,40 @@
+<MudTextField
+    T="String"
+    Class="mb-4"
+    Label="@Label"
+    Value="@Value"
+    Required="true"
+    Immediate="true"
+    Margin="Margin.Dense"
+    AutoFocus="@AutoFocus"
+    RequiredError="Informe!"
+    OnlyValidateIfDirty="true"
+    Variant="Variant.Outlined"
+    ValueChanged="ValueChanged"
+    OnKeyDown="HandleOnKeyDown"
+/>
+
+@code
+{
+    [Parameter]
+    public string Value { get; set; }
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public bool AutoFocus { get; set; }
+
+    [Parameter]
+    public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
+
+    private async Task HandleOnKeyDown(KeyboardEventArgs args)
+    {
+        if (args.IsEnter())
+        {
+            await OnKeyDown.InvokeAsync();
+        }
+    }
+}

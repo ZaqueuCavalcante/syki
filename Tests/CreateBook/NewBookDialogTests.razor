@@ -1,0 +1,24 @@
+@inherits BunitTestContext
+
+@code
+{
+    [Test]
+    public async Task Should_renders_the_new_book_dialog_correctly()
+    {
+        // Arrange
+        AddMudServices();
+        var provider = RenderComponent<MudDialogProvider>();
+        var service = Services.GetService<IDialogService>() as DialogService;
+
+        // Act
+        IDialogReference dialog = null!;
+        await provider.InvokeAsync(() => dialog = service!.Show<NewBookDialog>());
+
+        // Assert
+        provider.FindComponent<SykiDialogTitle>().Markup.Should().Contain("Novo Livro");
+        provider.FindComponent<SykiTextField>().Markup.Should().Contain("Título");
+        provider.FindComponent<DialogCancelButton>().Should().NotBeNull();
+        provider.FindComponent<DialogProgressCircular>().Should().NotBeNull();
+        provider.FindComponent<DialogSaveButton>().Should().NotBeNull();
+    }
+}

@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using Syki.Back.Domain;
 using Syki.Back.Database;
 using Syki.Back.Extensions;

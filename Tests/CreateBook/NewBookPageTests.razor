@@ -1,0 +1,22 @@
+@inherits BunitTestContext
+
+@code
+{
+    [Test]
+    public void Should_open_the_new_book_dialog()
+    {
+        // Arrange
+        AddMudServices();
+        var mock = Services.AddMockHttpClient();
+        mock.When(HttpMethod.Get, "/books").RespondJson(new List<GetBooksOut> {});
+
+        var page = Render(@<Biblioteca />);
+        var provider = RenderComponent<MudDialogProvider>();
+
+        // Act
+        page.FindComponent<SykiPageHeader>().Find("button").Click();
+
+        // Assert
+        provider.FindComponent<NewBookDialog>().Should().NotBeNull();
+    }
+}

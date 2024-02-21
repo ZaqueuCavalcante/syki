@@ -4,40 +4,22 @@
 <PageTitle>Biblioteca</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.LibraryBooks" Title="Biblioteca" ButtonText="Novo Livro" OnClick="OpenDialog"/>
-
-    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>Um livro precisa necessariamente estar vinculado à um campus.</MudText>
-    </MudAlert>
-
+    <SykiPageHeader Icon="@Icons.Material.Filled.LibraryBooks" Title="Biblioteca" ButtonText="Novo Livro" OnClick="OpenDialog" />
+    <SykiPageAlert Text="Um livro precisa necessariamente estar vinculado à um campus." />
     <MudContainer Class="mb-8">
         <MudDataGrid Class="pa-4" Items="@_books" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <MudSpacer />
-                <MudSpacer />
-                <MudTextField
-                    Margin="Margin.Dense"
-                    Variant="Variant.Outlined"
-                    @bind-Value="_searchString"
-                    Placeholder="Busque por título"
-                    Adornment="Adornment.Start"
-                    Immediate="true"
-                    AdornmentIcon="@Icons.Material.Filled.Search"
-                    IconSize="Size.Medium"
-                    Class="mt-0"
-                />
+                <SykiDataGridSearchTextField @bind-Value="_searchString" Placeholder="Busque por título" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Id" Title="Id" />
                 <PropertyColumn Property="x => x.Title" Title="Título" />
             </Columns>
-
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
-
             <PagerContent>
-                <MudDataGridPager T="GetBooksOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+                <SykiDataGridPager T="GetBooksOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -67,10 +49,9 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewLivroDialog>("", options);
+        var dialog = await DialogService.ShowAsync<NewBookDialog>("", options);
 
         var result = await dialog.Result;
-
         if (result.Canceled) return;
         
         await OnInitializedAsync();

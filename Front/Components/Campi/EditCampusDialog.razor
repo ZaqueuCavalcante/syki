@@ -1,39 +1,11 @@
 <MudDialog Class="pb-2">
     <TitleContent>
-        <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Outlined.Edit" Class="mr-1 mb-n1" />
-            Editar Campus
-        </MudText>
+        <SykiDialogTitle Text="Editar Campus" />
     </TitleContent>
     <DialogContent>
         <MudForm @ref="_form">
-            <MudTextField
-                OnKeyDown="HandleOnKeyDown"
-                OnlyValidateIfDirty="true"
-                Immediate="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-4"
-                AutoFocus="true"
-                @bind-Value="Campus.Nome"
-                T="String"
-                Label="Nome"
-                Required="true"
-                RequiredError="Informe!"
-            />
-            <MudTextField
-                OnKeyDown="HandleOnKeyDown"
-                OnlyValidateIfDirty="true"
-                Immediate="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-2"
-                @bind-Value="Campus.Cidade"
-                T="String"
-                Label="Cidade"
-                Required="true"
-                RequiredError="Informe!"
-            />
+            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@Campus.Nome" OnKeyDown="Submit" />
+            <SykiTextField Label="Cidade" @bind-Value="@Campus.Cidade" OnKeyDown="Submit" />
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -48,22 +20,14 @@
 
 @code
 {
-    private MudForm _form;
-    private bool _loading;
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
 
     [Parameter]
     public CampusOut Campus { get; set; }
 
-    [CascadingParameter]
-    MudDialogInstance MudDialog { get; set; }
-
-    async Task HandleOnKeyDown(KeyboardEventArgs args)
-    {
-        if (args.IsEnter())
-        {
-            await Submit();
-        }
-    }
+    private MudForm _form;
+    private bool _loading;
 
     async Task Submit()
     {

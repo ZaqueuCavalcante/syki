@@ -1,39 +1,11 @@
 <MudDialog Class="pb-2">
     <TitleContent>
-        <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
-            Novo Campus
-        </MudText>
+        <SykiDialogTitle Text="Novo Campus" />
     </TitleContent>
     <DialogContent>
         <MudForm @ref="_form">
-            <MudTextField
-                OnKeyDown="HandleOnKeyDown"
-                OnlyValidateIfDirty="true"
-                Immediate="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-4"
-                AutoFocus="true"
-                @bind-Value="data.Nome"
-                T="String"
-                Label="Nome"
-                Required="true"
-                RequiredError="Informe!"
-            />
-            <MudTextField
-                OnKeyDown="HandleOnKeyDown"
-                OnlyValidateIfDirty="true"
-                Immediate="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-2"
-                @bind-Value="data.Cidade"
-                T="String"
-                Label="Cidade"
-                Required="true"
-                RequiredError="Informe!"
-            />
+            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="_data.Nome" OnKeyDown="Submit" />
+            <SykiTextField Label="Cidade" @bind-Value="_data.Cidade" OnKeyDown="Submit" />
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -48,21 +20,12 @@
 
 @code
 {
-    private MudForm _form;
-    private bool _loading;
-
-    private CampusIn data = new();
-
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 
-    async Task HandleOnKeyDown(KeyboardEventArgs args)
-    {
-        if (args.IsEnter())
-        {
-            await Submit();
-        }
-    }
+    private MudForm _form;
+    private bool _loading;
+    private CampusIn _data = new();
 
     async Task Submit()
     {
@@ -72,7 +35,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/campi", data);
+        var response = await Http.PostAsJsonAsync("/campi", _data);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

@@ -2,15 +2,15 @@
 
 @code
 {
-    // [Test] TODO: fix this, runs very slow (5s)
+    [Test]
     public async Task Should_renders_correctly()
     {
         // Arrange
         AddMudServices();
-        var dialogService = Services.GetService<IDialogService>()!;
+        var provider = RenderComponent<MudDialogProvider>();
+        var service = Services.GetService<IDialogService>() as DialogService;
 
         const string grade = "Grade de ADS - 1.0";
-
         var disciplinas = new List<DisciplinaOut>
         {
             new DisciplinaOut { Nome = "Matemática Discreta", Periodo = 1, Creditos = 6, CargaHoraria = 60, },
@@ -19,17 +19,15 @@
             new DisciplinaOut { Nome = "Design de Interação Humano-Máquina", Periodo = 2, Creditos = 6, CargaHoraria = 90, },
             new DisciplinaOut { Nome = "Projeto Integrador I: Concepção e Prototipação", Periodo = 4, Creditos = 6, CargaHoraria = 60, },
         };
-
         var parameters = new DialogParameters<DisciplinasDaGradeDialog>();
         parameters.Add(x => x.Disciplinas, disciplinas);
 
-        var dialog = await dialogService.ShowAsync<DisciplinasDaGradeDialog>(grade, parameters);
-
         // Act
-        var cut = Render(dialog.RenderFragment);
+        IDialogReference dialog = null!;
+        await provider.InvokeAsync(() => dialog = service!.Show<DisciplinasDaGradeDialog>(grade, parameters));
 
         // Assert
-        cut.Find("h6").MarkupMatches(
+        provider.Find("h6").MarkupMatches(
             @<h6 diff:ignoreAttributes>
                 <svg diff:ignore></svg>
                 @grade

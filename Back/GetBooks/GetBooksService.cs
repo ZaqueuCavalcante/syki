@@ -11,7 +11,7 @@ public class GetBooksService
 
     public async Task<List<GetBooksOut>> Get(Guid institutionId)
     {
-        var books = await _ctx.Books
+        var books = await _ctx.Books.AsNoTracking()
             .Where(c => c.InstitutionId == institutionId)
             .ToListAsync();
         

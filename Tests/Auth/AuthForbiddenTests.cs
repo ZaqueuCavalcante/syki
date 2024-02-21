@@ -1,11 +1,5 @@
-using System.Net;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-
 namespace Syki.Tests.Auth;
 
-// TODO: split all tests in partial class and files
 public partial class AuthForbiddenTests : AuthTestBase
 {
     [Test]
@@ -241,34 +235,6 @@ public partial class AuthForbiddenTests : AuthTestBase
 
         // Act
         var response = await _client.GetAsync("/index/aluno");
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
-    public async Task Nao_deve_criar_um_novo_livro_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        Login(role);
-
-        // Act
-        var response = await _client.PostAsync("/livros", null);
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAcademico))]
-    public async Task Nao_deve_retornar_os_livros_quando_o_usuario_nao_tem_permissao(string role)
-    {
-        // Arrange
-        Login(role);
-
-        // Act
-        var response = await _client.GetAsync("/livros");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);

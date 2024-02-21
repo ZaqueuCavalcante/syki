@@ -1,11 +1,5 @@
-using System.Net;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-
 namespace Syki.Tests.Auth;
 
-// TODO: split all tests in partial class and files
 public partial class AuthUnauthorizedTests : AuthTestBase
 {
     [Test]
@@ -173,26 +167,6 @@ public partial class AuthUnauthorizedTests : AuthTestBase
     {
         // Arrange / Act
         var response = await _client.GetAsync("/index/aluno");
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
-    public async Task Nao_deve_criar_um_novo_livro_quando_o_usuario_esta_deslogado()
-    {
-        // Arrange / Act
-        var response = await _client.PostAsync("/livros", null);
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
-    public async Task Nao_deve_retornar_os_livros_quando_o_usuario_esta_deslogado()
-    {
-        // Arrange / Act
-        var response = await _client.GetAsync("/livros");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);

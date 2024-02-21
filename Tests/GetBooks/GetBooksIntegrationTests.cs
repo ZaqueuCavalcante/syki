@@ -1,6 +1,3 @@
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
 using Syki.Shared.GetBooks;
 
 namespace Syki.Tests.GetBooks;

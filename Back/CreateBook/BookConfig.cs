@@ -11,5 +11,7 @@ public class BookConfig : IEntityTypeConfiguration<Book>
 
         book.HasKey(b => b.Id);
         book.Property(b => b.Id).ValueGeneratedNever();
+
+        book.Property(b => b.Title);
     }
 }

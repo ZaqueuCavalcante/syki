@@ -2,27 +2,22 @@
 
 <PageTitle>Demo setup</PageTitle>
 
-<MudContainer Class="mt-16 mb-8" Style="width: 460px">
+<MudContainer Class="mt-16 mb-8" Style="width: 480px">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
     <MudForm @ref="_form">
         <MudCard Class="px-16 pt-16 pb-8">
             <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
-            <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
-                <MudText>Sua senha deve conter:</MudText>
-                <MudText>• números</MudText>
-                <MudText>• letras maiúsculas</MudText>
-                <MudText>• letras minúsculas</MudText>
-                <MudText>• caracteres não alfanuméricos</MudText>
-            </MudAlert>
+            <PasswordRequerimentsCard @bind-Validation="_data.Validation" />
             <MudCardContent Class="mt-4">
-                <PasswordTextField @bind-Value="_model.Password" />
+                <PasswordTextField Value="@_data.Password" ValueChanged="HandlePasswordChange" OnKeyDown="Submit" Required="false" />
             </MudCardContent>
             <MudCardActions>
                 <MudButton
                     Size="Size.Large"
-                    OnClick="OnClick"
+                    OnClick="Submit"
+                    Disabled="@(!_data.IsValid())"
                     Variant="Variant.Filled"
                     Color="Color.Primary"
                     Class="mx-auto mb-4 px-12"
@@ -46,18 +41,20 @@
 
     private bool _loading;
     private MudForm _form;
-    DemoSetupIn _model = new();
+    SetupDemoIn _data = new();
 
-    private async Task OnClick()
+    private void HandlePasswordChange(string newValue)
     {
-        // TODO: colocar um check a cada criterio da senha satisfeito
-        await _form.Validate();
-        if (!_form.IsValid) return;
+        _data.Password = newValue;
+        _data.Validate();
+    }
 
-        _model.Token = Token;
+    private async Task Submit()
+    {
+        _data.Token = Token;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/demos/setup", _model);
+        var response = await Http.PostAsJsonAsync("/demos/setup", _data);
         if (response.IsSuccessStatusCode)
         {
             // TODO: Colocar botao "Realizar Login" e confirmacao q deu certo, ao inves de redirecionar direto

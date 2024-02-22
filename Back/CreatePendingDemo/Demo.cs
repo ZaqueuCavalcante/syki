@@ -20,6 +20,9 @@ public class Demo
 
     public void Setup()
     {
+        if (Start != null)
+            Throw.DE025.Now();
+
         Start = DateOnly.FromDateTime(DateTime.Now);
         End = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
     }

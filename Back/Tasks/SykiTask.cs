@@ -20,4 +20,9 @@ public class SykiTask
         Data = data.Serialize();
         CreatedAt = DateTime.Now;
     }
+
+    public static SykiTask SeedInstitutionDemoData(Guid institutionId)
+    {
+        return new SykiTask(new SeedInstitutionDemoData { InstitutionId = institutionId });
+    }
 }

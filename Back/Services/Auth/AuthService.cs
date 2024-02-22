@@ -36,12 +36,12 @@ public class AuthService : IAuthService
         _userManager = userManager;
     }
 
-    public async Task<UserOut> Register(UserIn body)
+    public async Task<UserOut> RegisterUser(UserIn body)
     {
         if (!(body.Role is Academico or Professor or Aluno))
             Throw.DE013.Now();
 
-        var faculdadeOk = await _ctx.Faculdades.AnyAsync(c => c.Id == body.Faculdade);
+        var faculdadeOk = await _ctx.Faculdades.AnyAsync(c => c.Id == body.InstitutionId);
         if (!faculdadeOk)
             Throw.DE014.Now();
 
@@ -52,14 +52,20 @@ public class AuthService : IAuthService
         if (emailUsed)
             Throw.DE017.Now();
 
-        var user = new SykiUser(body.Faculdade, body.Name, body.Email);
+        var user = new SykiUser(body.InstitutionId, body.Name, body.Email);
 
         var result = await _userManager.CreateAsync(user, body.Password);
-
         if (!result.Succeeded)
             Throw.DE015.Now();
 
         await _userManager.AddToRoleAsync(user, body.Role);
+
+        return user.ToOut();
+    }
+
+    public async Task<UserOut> Register(UserIn body)
+    {
+        var user = await RegisterUser(body);
 
         await GenerateResetPasswordToken(user.Id);
 
@@ -67,7 +73,7 @@ public class AuthService : IAuthService
         _ctx.Add(task);
         await _ctx.SaveChangesAsync();
 
-        return user.ToOut();
+        return user;
     }
 
     public async Task<string> GetMfaKey(Guid userId)

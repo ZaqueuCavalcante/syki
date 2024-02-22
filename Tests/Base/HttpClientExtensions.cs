@@ -3,6 +3,7 @@ using Syki.Back.Database;
 using Syki.Shared.CreateBook;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Tests.Base;
 
@@ -35,7 +36,7 @@ public static class HttpClientExtensions
 
     public static async Task LoginAsAdm(this HttpClient client)
     {
-        await client.Login("adm@syki.com", "Adm@123");
+        await client.Login("adm@syki.com", "Admin@123");
     }
 
     public static async Task Login(this HttpClient client, UserIn user)
@@ -64,14 +65,6 @@ public static class HttpClientExtensions
         }
 
         return null!;
-    }
-
-    public static async Task<HttpClient> LoggedAsAcademico(this SykiWebApplicationFactory factory)
-    {
-        var client = factory.CreateClient();
-        var faculdade = await client.CreateFaculdade();
-        await client.RegisterAndLogin(faculdade.Id, Academico);
-        return client;
     }
 
     public static async Task<CreateBookOut> CreateBook(
@@ -192,11 +185,6 @@ public static class HttpClientExtensions
         var tokenResponse = await client.GetAsync<ResetPasswordTokenOut>($"/tests/reset-password-token/{userId}");
         return tokenResponse.Token;
     }
-    public static async Task<string?> GetDemoSetupToken(this HttpClient client, string email)
-    {
-        var tokenResponse = await client.GetAsync<DemoSetupTokenOut>($"/tests/demo-setup-token/{email}");
-        return tokenResponse.Token;
-    }
 
     public static async Task<string> ResetPassword(this HttpClient client, Guid userId)
     {
@@ -206,17 +194,5 @@ public static class HttpClientExtensions
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", bodyReset);
 
         return bodyReset.Password;
-    }
-
-    public static SykiDbContext GetDbContext(this SykiWebApplicationFactory factory)
-    {
-        var scope = factory.Services.CreateScope();
-        return scope.ServiceProvider.GetRequiredService<SykiDbContext>();
-    }
-
-    public static T GetService<T>(this SykiWebApplicationFactory factory) where T : notnull
-    {
-        var scope = factory.Services.CreateScope();
-        return scope.ServiceProvider.GetRequiredService<T>();
     }
 }

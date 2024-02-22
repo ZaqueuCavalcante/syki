@@ -1,5 +1,6 @@
 using Syki.Back.Services;
 using Syki.Back.GetBooks;
+using Syki.Back.SetupDemo;
 using Syki.Back.CreateBook;
 using Syki.Back.Extensions;
 using Syki.Back.CreatePendingDemo;
@@ -14,11 +15,11 @@ public static class ServicesConfigs
         services.AddScoped<CreateBookService>();
         services.AddScoped<GetBooksService>();
         services.AddScoped<CreatePendingDemoService>();
+        services.AddScoped<SetupDemoService>();
 
 
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ICampiService, CampiService>();
-        services.AddScoped<IDemosService, DemosService>();
         services.AddScoped<IIndexService, IndexService>();
         services.AddScoped<ICursosService, CursosService>();
         services.AddScoped<IGradesService, GradesService>();

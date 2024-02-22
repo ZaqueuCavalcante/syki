@@ -1,8 +1,4 @@
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using Syki.Back.Exceptions;
 
 namespace Syki.Tests.Integration;
 

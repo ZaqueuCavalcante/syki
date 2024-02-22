@@ -22,12 +22,4 @@ public class TestsController : ControllerBase
 
         return Ok(new ResetPasswordTokenOut { Token = id == Guid.Empty ? null : id.ToString() });
     }
-
-    [HttpGet("demo-setup-token/{email}")]
-    public async Task<IActionResult> GetResetPasswordToken([FromRoute] string email)
-    {
-        var demo = await _ctx.Demos.FirstOrDefaultAsync(d => d.Email == email);
-
-        return Ok(new DemoSetupTokenOut { Token = demo?.Id.ToString() });
-    }
 }

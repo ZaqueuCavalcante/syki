@@ -21,4 +21,8 @@
     - Front.FEATURE.lalala
     - Tests.FEATURE.lalala
 
-- Eliminar projeto Shared?
+# Backlog
+
+- Logs (Serilog)
+- Datadog (free?)
+- Reduzir custo de infra por uso excessivo de memoria

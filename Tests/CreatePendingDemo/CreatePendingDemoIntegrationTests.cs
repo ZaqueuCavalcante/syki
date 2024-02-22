@@ -1,6 +1,3 @@
-using Syki.Back.Tasks;
-using Syki.Back.Exceptions;
-using Microsoft.EntityFrameworkCore;
 using Syki.Shared.CreatePendingDemo;
 
 namespace Syki.Tests.CreatePendingDemo;
@@ -12,7 +9,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new CreatePendingDemoIn { Email = "demo00.facul@syki.com" };
+        var body = new CreatePendingDemoIn { Email = TestData.Email };
 
         // Act
         var response = await client.PostHttpAsync("/demos", body);
@@ -26,7 +23,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new CreatePendingDemoIn { Email = "demo01.faculsyki.com" };
+        var body = new CreatePendingDemoIn { Email = "demo.faculsyki.com" };
 
         // Act
         var response = await client.PostHttpAsync("/demos", body);
@@ -40,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new CreatePendingDemoIn { Email = "demo02.facul@syki.com" };
+        var body = new CreatePendingDemoIn { Email = TestData.Email };
         await client.PostHttpAsync("/demos", body);
 
         // Act
@@ -55,17 +52,18 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new CreatePendingDemoIn { Email = "demo03.facul@syki.com" };
+        var body = new CreatePendingDemoIn { Email = "6576247542354@gmail.com" };
 
         // Act
         await client.PostHttpAsync("/demos", body);
 
         // Assert
         using var ctx = _factory.GetDbContext();
+        var email = $"%{body.Email}%";
         FormattableString sql = $@"
             SELECT *
             FROM syki.tasks
-            WHERE data LIKE '%demo03.facul@syki.com%'
+            WHERE data LIKE {email}
         ";
         var tasks = await ctx.Database.SqlQuery<SykiTask>(sql).ToListAsync();
         tasks.Should().ContainSingle();
@@ -76,7 +74,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_return_error_when_demo_not_found()
     {
         // Arrange
-        var task = new SendDemoEmailConfirmation { Email = "demo04.facul@syki.com" };
+        var task = new SendDemoEmailConfirmation { Email = TestData.Email };
         var handler = _factory.GetService<SendDemoEmailConfirmationHandler>();
 
         // Act
@@ -91,10 +89,10 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new CreatePendingDemoIn { Email = "demo05.facul@syki.com" };
+        var body = new CreatePendingDemoIn { Email = TestData.Email };
         await client.PostHttpAsync("/demos", body);
 
-        var task = new SendDemoEmailConfirmation { Email = "demo05.facul@syki.com" };
+        var task = new SendDemoEmailConfirmation { Email = body.Email };
         var handler = _factory.GetService<SendDemoEmailConfirmationHandler>();
 
         // Act

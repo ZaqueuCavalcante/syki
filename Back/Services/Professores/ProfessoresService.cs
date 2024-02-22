@@ -24,7 +24,7 @@ public class ProfessoresService : IProfessoresService
 
         var userIn = new UserIn
         {
-            Faculdade = faculdadeId,
+            InstitutionId = faculdadeId,
             Name = data.Nome,
             Email = data.Email,
             Password = $"Professor@{Guid.NewGuid().ToString().OnlyNumbers()}",

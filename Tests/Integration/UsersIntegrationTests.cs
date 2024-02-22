@@ -27,7 +27,7 @@ public partial class IntegrationTests : IntegrationTestBase
         user.Id.Should().NotBeEmpty();
         user.Nome.Should().Be(body.Name);
         user.Email.Should().Be(body.Email);
-        user.FaculdadeId.Should().Be(body.Faculdade);
+        user.FaculdadeId.Should().Be(body.InstitutionId);
     }
 
     [Test]
@@ -73,7 +73,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var body = new UserIn
         {
-            Faculdade = faculdade.Id,
+            InstitutionId = faculdade.Id,
             Name = "Acadêmico - Nova Roma",
             Email = email,
             Password = "Academico@123",
@@ -114,7 +114,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var body = new UserIn
         {
-            Faculdade = faculdade.Id,
+            InstitutionId = faculdade.Id,
             Name = "Acadêmico - Nova Roma",
             Email = "academico@novaroma.com",
             Password = "Academico@123",

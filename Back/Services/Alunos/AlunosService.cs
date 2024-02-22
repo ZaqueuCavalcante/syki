@@ -30,7 +30,7 @@ public class AlunosService : IAlunosService
 
         var userIn = new UserIn
         {
-            Faculdade = faculdadeId,
+            InstitutionId = faculdadeId,
             Name = data.Nome,
             Email = data.Email,
             Password = $"Aluno@{Guid.NewGuid().ToString().OnlyNumbers()}",

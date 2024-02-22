@@ -1,29 +1,29 @@
 using Syki.Shared;
 using Syki.Back.Domain;
 using Syki.Back.Database;
-using Microsoft.EntityFrameworkCore;
 using Syki.Back.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.Tasks;
 
-public class SeedFaculdadeTestData
+public class SeedInstitutionDemoData
 {
-    public Guid FaculdadeId { get; set; }
+    public Guid InstitutionId { get; set; }
 }
 
-public class SeedFaculdadeTestDataHandler : ISykiTaskHandler<SeedFaculdadeTestData>
+public class SeedInstitutionDemoDataHandler : ISykiTaskHandler<SeedInstitutionDemoData>
 {
     private readonly SykiDbContext _ctx;
     private readonly IProfessoresService _professoresService;
-    public SeedFaculdadeTestDataHandler(SykiDbContext ctx, IProfessoresService professoresService)
+    public SeedInstitutionDemoDataHandler(SykiDbContext ctx, IProfessoresService professoresService)
     {
         _ctx = ctx;
         _professoresService = professoresService;
     }
 
-    public async Task Handle(SeedFaculdadeTestData task)
+    public async Task Handle(SeedInstitutionDemoData task)
     {
-        var id = task.FaculdadeId;
+        var id = task.InstitutionId;
         var faculdade = await _ctx.Faculdades.FirstAsync(f => f.Id == id);
 
         var year = DateTime.Now.Year;

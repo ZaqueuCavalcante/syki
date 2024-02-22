@@ -1,5 +1,4 @@
 using Syki.Shared;
-using Syki.Back.Tasks;
 using Syki.Back.Domain;
 using Syki.Back.Database;
 using Microsoft.EntityFrameworkCore;
@@ -15,12 +14,6 @@ public class FaculdadesService : IFaculdadesService
     {
         var faculdade = new Faculdade(data.Nome);
         _ctx.Add(faculdade);
-
-        if (data.SeedData)
-        {
-            var task = new SykiTask(new SeedFaculdadeTestData { FaculdadeId = faculdade.Id });
-            _ctx.Add(task);
-        }
 
         await _ctx.SaveChangesAsync();
 

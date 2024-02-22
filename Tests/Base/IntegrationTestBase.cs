@@ -30,7 +30,7 @@ public class IntegrationTestBase
 
         var user = new SykiUser(Guid.Empty, "Syki Adm", "adm@syki.com");
         var _userManager = scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
-        await _userManager.CreateAsync(user, "Adm@123");
+        await _userManager.CreateAsync(user, "Admin@123");
         await _userManager.AddToRoleAsync(user, Adm);
     }
 

@@ -103,7 +103,7 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        data.Faculdade = _faculdade!.Id;
+        data.InstitutionId = _faculdade!.Id;
         data.Role = "Academico";
 
         _loading = true;

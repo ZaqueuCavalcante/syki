@@ -6,7 +6,7 @@ public static class SykiTasksConfigs
 {
     public static void AddSykiTasksConfigs(this IServiceCollection services)
     {
-        services.AddTransient<SeedFaculdadeTestDataHandler>();
+        services.AddTransient<SeedInstitutionDemoDataHandler>();
         services.AddTransient<SendResetPasswordEmailHandler>();
         services.AddTransient<SendDemoEmailConfirmationHandler>();
 

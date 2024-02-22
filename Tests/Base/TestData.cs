@@ -26,6 +26,16 @@ public static class TestData
         }
     }
 
+    public static IEnumerable<object[]> InvalidSetupDemoTokens()
+    {
+        var empty = Guid.Empty.ToString();
+        var random = Guid.NewGuid().ToString();
+        foreach (var name in new List<string>() { null, "", "a", "42", " ", "  ", "     ", "JP", empty, random, })
+        {
+            yield return new object[] { name };
+        }
+    }
+
     public static IEnumerable<object[]> InvalidPeriods()
     {
         foreach (var id in new List<string>() { null, "", "   ", "lalala", "1969.1", "1970.3", "1970.0", "1971.90", "2001", "202", "2023.9", "2070.0", })

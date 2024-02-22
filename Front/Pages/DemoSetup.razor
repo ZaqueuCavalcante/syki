@@ -9,22 +9,42 @@
     <MudForm @ref="_form">
         <MudCard Class="px-16 pt-16 pb-8">
             <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
-            <PasswordRequerimentsCard @bind-Validation="_data.Validation" />
-            <MudCardContent Class="mt-4">
-                <PasswordTextField Value="@_data.Password" ValueChanged="HandlePasswordChange" OnKeyDown="Submit" Required="false" />
-            </MudCardContent>
-            <MudCardActions>
-                <MudButton
-                    Size="Size.Large"
-                    OnClick="Submit"
-                    Disabled="@(!_data.IsValid())"
-                    Variant="Variant.Filled"
-                    Color="Color.Primary"
-                    Class="mx-auto mb-4 px-12"
-                >
-                    SALVAR
-                </MudButton>
-            </MudCardActions>
+            @if (_saved)
+            {
+                <MudStack AlignItems="AlignItems.Center">
+                    <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
+                        <MudText>Pronto! Agora é só logar para iniciar a demo.</MudText>
+                    </MudAlert>
+                    <MudButton
+                        Size="Size.Large"
+                        OnClick="GoToLogin"
+                        Variant="Variant.Filled"
+                        Color="Color.Primary"
+                        Class="mx-auto my-4 px-12"
+                    >
+                        Ir pro login
+                    </MudButton>
+                </MudStack>
+            }
+            else
+            {
+                <PasswordRequerimentsCard @bind-Validation="_data.Validation" />
+                <MudCardContent Class="mt-4">
+                    <PasswordTextField Value="@_data.Password" ValueChanged="HandlePasswordChange" OnKeyDown="Submit" Required="false" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton
+                        Size="Size.Large"
+                        OnClick="Submit"
+                        Disabled="@(!_data.IsValid())"
+                        Variant="Variant.Filled"
+                        Color="Color.Primary"
+                        Class="mx-auto mb-4 px-12"
+                    >
+                        SALVAR
+                    </MudButton>
+                </MudCardActions>
+            }
         </MudCard>
     </MudForm>
 </MudContainer>
@@ -39,6 +59,7 @@
     [SupplyParameterFromQuery]
     public string Token { get; set; }
 
+    private bool _saved;
     private bool _loading;
     private MudForm _form;
     SetupDemoIn _data = new();
@@ -49,6 +70,11 @@
         _data.Validate();
     }
 
+    private void GoToLogin()
+    {
+        Nav.NavigateTo("/login");
+    }
+
     private async Task Submit()
     {
         _data.Token = Token;
@@ -57,8 +83,7 @@
         var response = await Http.PostAsJsonAsync("/demos/setup", _data);
         if (response.IsSuccessStatusCode)
         {
-            // TODO: Colocar botao "Realizar Login" e confirmacao q deu certo, ao inves de redirecionar direto
-            Nav.NavigateTo("/login");
+            _saved = true;
         }
         else
         {

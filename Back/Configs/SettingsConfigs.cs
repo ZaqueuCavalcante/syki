@@ -8,6 +8,7 @@ public static class SettingsConfigs
     {
         services.AddSingleton<AuthSettings>();
         services.AddSingleton<EmailSettings>();
+        services.AddSingleton<TasksSettings>();
         services.AddSingleton<DatabaseSettings>();
     }
 }

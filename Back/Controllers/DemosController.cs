@@ -11,15 +11,6 @@ public class DemosController : ControllerBase
     private readonly IDemosService _service;
     public DemosController(IDemosService service) => _service = service;
 
-    [HttpPost("")]
-    [EnableRateLimiting("VerySmall")]
-    public async Task<IActionResult> Create([FromBody] DemoIn data)
-    {
-        var demo = await _service.Create(data);
-
-        return Ok(demo);
-    }
-
     [HttpPost("setup")]
     [EnableRateLimiting("Small")]
     public async Task<IActionResult> Setup([FromBody] DemoSetupIn data)

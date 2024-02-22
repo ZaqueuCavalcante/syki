@@ -4,6 +4,7 @@ using Syki.Back.Domain;
 using Syki.Back.Settings;
 using Syki.Back.CreateBook;
 using Audit.EntityFramework;
+using Syki.Back.CreatePendingDemo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
     }
 
     public DbSet<Book> Books { get; set; }
+    public DbSet<Demo> Demos { get; set; }
 
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<Faculdade> Faculdades { get; set; }
@@ -37,7 +39,6 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
     public DbSet<CursoDisciplina> CursosDisciplinas { get; set; }
     public DbSet<ResetPassword> ResetPasswords { get; set; }
     public DbSet<PeriodoDeMatricula> PeriodosDeMatricula { get; set; }
-    public DbSet<Demo> Demos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

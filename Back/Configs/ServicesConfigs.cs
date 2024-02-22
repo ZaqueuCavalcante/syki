@@ -2,6 +2,7 @@ using Syki.Back.Services;
 using Syki.Back.GetBooks;
 using Syki.Back.CreateBook;
 using Syki.Back.Extensions;
+using Syki.Back.CreatePendingDemo;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Syki.Back.Configs;
@@ -12,6 +13,8 @@ public static class ServicesConfigs
     {
         services.AddScoped<CreateBookService>();
         services.AddScoped<GetBooksService>();
+        services.AddScoped<CreatePendingDemoService>();
+
 
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ICampiService, CampiService>();

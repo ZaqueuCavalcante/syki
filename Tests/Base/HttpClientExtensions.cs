@@ -1,8 +1,8 @@
 using Syki.Shared;
 using Syki.Back.Database;
+using Syki.Shared.CreateBook;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using Syki.Shared.CreateBook;
 
 namespace Syki.Tests.Base;
 
@@ -171,6 +171,11 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<T>();
     }
 
+    public static async Task<HttpResponseMessage> PostHttpAsync(this HttpClient client, string path, object obj)
+    {
+        return await client.PostAsync(path, obj.ToStringContent());
+    }
+
     public static async Task<T> PutAsync<T>(this HttpClient client, string path, object obj)
     {
         var response = await client.PutAsync(path, obj.ToStringContent());
@@ -207,5 +212,11 @@ public static class HttpClientExtensions
     {
         var scope = factory.Services.CreateScope();
         return scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+    }
+
+    public static T GetService<T>(this SykiWebApplicationFactory factory) where T : notnull
+    {
+        var scope = factory.Services.CreateScope();
+        return scope.ServiceProvider.GetRequiredService<T>();
     }
 }

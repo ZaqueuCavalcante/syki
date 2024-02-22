@@ -20,27 +20,16 @@
                 <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                     <MudText>Valide seu email para ter acesso a versão demo do sistema.</MudText>
                 </MudAlert>
-
                 <MudCardContent Class="mt-4">
-                    <MudTextField
-                        Margin="Margin.Dense"
-                        Label="Email"
-                        Class="mt-3"
-                        AutoFocus="true"
-                        OnlyValidateIfDirty="true"
-                        @bind-Value="_model.Email"
-                        Variant="Variant.Outlined"
-                        Required="true"
-                        RequiredError="Informe!"
-                    />
+                    <SykiTextField Label="Email" AutoFocus="true" @bind-Value="_data.Email" OnKeyDown="Submit" />
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton
                         Size="Size.Large"
-                        OnClick="OnClick"
+                        OnClick="Submit"
                         Variant="Variant.Filled"
                         Color="Color.Primary"
-                        Class="mx-auto mb-4 px-12"
+                        Class="mx-auto mb-4 px-12 mt-4"
                     >
                         Cadastrar
                     </MudButton>
@@ -52,22 +41,21 @@
 
 @inject HttpClient Http
 @inject ISnackbar Snackbar
-@inject NavigationManager Nav
 
 @code
 {
-    private bool _loading;
     private bool _saved;
+    private bool _loading;
     private MudForm _form;
-    DemoIn _model = new();
+    CreatePendingDemoIn _data = new();
 
-    private async Task OnClick()
+    private async Task Submit()
     {
         await _form.Validate();
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/demos", _model);
+        var response = await Http.PostAsJsonAsync("/demos", _data);
         if (response.IsSuccessStatusCode)
         {
             _saved = true;

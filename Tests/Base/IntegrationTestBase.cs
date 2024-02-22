@@ -16,7 +16,6 @@ public class IntegrationTestBase
     public async Task OneTimeSetUp()
     {
         _factory = new SykiWebApplicationFactory();
-
         using var scope = _factory.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 
@@ -24,16 +23,13 @@ public class IntegrationTestBase
         {
             await ctx.Database.EnsureDeletedAsync();
             await ctx.Database.EnsureCreatedAsync();
-            // Throw.DE000.Now();
         }
 
         ctx.Add(new Faculdade { Id = Guid.Empty, Nome = "Syki" });
         await ctx.SaveChangesAsync();
 
-        var _userManager = scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
-
         var user = new SykiUser(Guid.Empty, "Syki Adm", "adm@syki.com");
-
+        var _userManager = scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
         await _userManager.CreateAsync(user, "Adm@123");
         await _userManager.AddToRoleAsync(user, Adm);
     }

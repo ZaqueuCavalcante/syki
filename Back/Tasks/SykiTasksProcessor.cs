@@ -7,12 +7,15 @@ namespace Syki.Back.Tasks;
 
 public class SykiTasksProcessor : BackgroundService
 {
+    private readonly TasksSettings _settings;
     private readonly DatabaseSettings _dbSettings;
     private readonly  IServiceScopeFactory _serviceScopeFactory;
     public SykiTasksProcessor(
+        TasksSettings settings,
         DatabaseSettings dbSettings,
         IServiceScopeFactory serviceScopeFactory
     ) {
+        _settings = settings;
         _dbSettings = dbSettings;
         _serviceScopeFactory = serviceScopeFactory;
     }
@@ -20,7 +23,7 @@ public class SykiTasksProcessor : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         using var scope = _serviceScopeFactory.CreateScope();
-        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(10));
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(_settings.Delay));
         using var connection = new NpgsqlConnection(_dbSettings.ConnectionString);
 
         while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))

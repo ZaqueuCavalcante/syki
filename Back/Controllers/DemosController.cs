@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.RateLimiting;
 
 namespace Syki.Back.Controllers;
 
-
 [ApiController, Route("[controller]")]
 public class DemosController : ControllerBase
 {

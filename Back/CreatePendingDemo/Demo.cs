@@ -1,17 +1,20 @@
 using Syki.Shared;
+using Syki.Back.Exceptions;
 
-namespace Syki.Back.Domain;
+namespace Syki.Back.CreatePendingDemo;
 
 public class Demo
 {
-    public Guid Id { get; set; }
-    public string Email { get; set; }
-    public DateOnly? Start { get; set; }
-    public DateOnly? End { get; set; }
+    public Guid Id { get; }
+    public string Email { get; }
+    public DateOnly? Start { get; private set; }
+    public DateOnly? End { get; private set; }
 
     public Demo(string email)
     {
         Id = Guid.NewGuid();
+        if (!email.IsValidEmail())
+            Throw.DE016.Now();
         Email = email.ToLower();
     }
 
@@ -19,13 +22,5 @@ public class Demo
     {
         Start = DateOnly.FromDateTime(DateTime.Now);
         End = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
-    }
-
-    public DemoOut ToOut()
-    {
-        return new DemoOut
-        {
-            Email = Email,
-        };
     }
 }

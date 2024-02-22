@@ -23,26 +23,6 @@ public class DemosService : IDemosService
         _faculdadesService = faculdadesService;
     }
 
-    public async Task<DemoOut> Create(DemoIn data)
-    {
-        if (!data.Email.IsValidEmail())
-            Throw.DE016.Now();
-
-        var demoExists = await _ctx.Demos.AnyAsync(d => d.Email == data.Email.ToLower());
-        if (demoExists)
-            Throw.DE017.Now();
-
-        var demo = new Demo(data.Email);
-        _ctx.Add(demo);
-
-        var task = new SykiTask(new SendDemoEmailConfirmation { Email = demo.Email });
-        _ctx.Add(task);
-
-        await _ctx.SaveChangesAsync();
-
-        return demo.ToOut();
-    }
-
     public async Task<DemoSetupOut> Setup(DemoSetupIn data)
     {
         using var transaction = _ctx.Database.BeginTransaction();

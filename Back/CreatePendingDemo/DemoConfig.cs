@@ -1,8 +1,7 @@
-using Syki.Back.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.CreatePendingDemo;
 
 public class DemoConfig : IEntityTypeConfiguration<Demo>
 {
@@ -11,8 +10,10 @@ public class DemoConfig : IEntityTypeConfiguration<Demo>
         demo.ToTable("demos");
 
         demo.HasKey(d => d.Id);
-        demo.Property(c => c.Id).ValueGeneratedNever();
+        demo.Property(d => d.Id).ValueGeneratedNever();
 
         demo.HasIndex(d => d.Email).IsUnique();
+        demo.Property(d => d.Start);
+        demo.Property(d => d.End);
     }
 }

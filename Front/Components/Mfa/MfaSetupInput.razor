@@ -58,8 +58,7 @@
         if (_userCode.Length == 7)
         {
             _validateCodeLoading = true;
-            var result = await Mfa.EnableUserMfa(_userCode);
-            _codeIsCorrect = result.Ok;
+            _codeIsCorrect = await Mfa.EnableUserMfa(_userCode);
             _showCodeFeedback = true;
             _validateCodeLoading = false;
         }

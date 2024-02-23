@@ -12,12 +12,11 @@ public class MfaService(HttpClient http) : IMfaService
         return (await http.GetFromJsonAsync<GetMfaKeyOut>("/mfa/key"))!;
     }
 
-    public async Task<SetupMfaOut> EnableUserMfa(string code)
+    public async Task<bool> EnableUserMfa(string code)
     {
         var data = new SetupMfaIn { Token = code };
         var response = await http.PostAsJsonAsync("/mfa/setup", data);
 
-        var responseAsString = await response.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<SetupMfaOut>(responseAsString)!;
+        return response.IsSuccessStatusCode;
     }
 }

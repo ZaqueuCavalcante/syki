@@ -8,13 +8,13 @@ using Syki.Back.Settings;
 using Syki.Back.Exceptions;
 using Syki.Back.CreateUser;
 using System.Security.Claims;
+using Syki.Shared.CreateUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using static Syki.Back.Configs.AuthorizationConfigs;
 using ResetPassword = Syki.Back.Domain.ResetPassword;
-using Syki.Shared.CreateUser;
 
 namespace Syki.Back.Services;
 
@@ -172,11 +172,8 @@ public class AuthService : IAuthService
             new("faculdade", user.InstitutionId.ToString()),
         };
 
-        var roleNames = await _userManager.GetRolesAsync(user);
-        foreach (var role in roleNames)
-        {
-            claims.Add(new Claim("role", role));
-        }
+        var roles = await _userManager.GetRolesAsync(user);
+        claims.Add(new Claim("role", roles[0]));
 
         var identityClaims = new ClaimsIdentity();
         identityClaims.AddClaims(claims);

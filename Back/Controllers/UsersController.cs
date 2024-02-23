@@ -2,12 +2,12 @@ using Syki.Shared;
 using Syki.Back.Services;
 using Syki.Back.Extensions;
 using Syki.Back.CreateUser;
+using Syki.Shared.CreateUser;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Authorization;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using Syki.Shared.CreateUser;
 
 namespace Syki.Back.Controllers;
 
@@ -51,32 +51,6 @@ public class UsersController : ControllerBase
         var ok = await _authService.SetupMfa(User.Id(), data.Token);
 
         return Ok(ok);
-    }
-
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginIn data)
-    {
-        // TODO: remove logic from controller
-        var result = await _signInManager.PasswordSignInAsync(
-            userName: data.Email,
-            password: data.Password,
-            isPersistent: false,
-            lockoutOnFailure: false
-        );
-
-        if (!result.Succeeded && !result.RequiresTwoFactor)
-        {
-            return BadRequest(new LoginOut { WrongEmailOrPassword = true });
-        }
-
-        if (result.RequiresTwoFactor)
-        {
-            return BadRequest(new LoginOut { RequiresTwoFactor = true });
-        }
-
-        var jwt = await _authService.GenerateAccessToken(data.Email);
-
-        return Ok(new LoginOut { AccessToken = jwt });
     }
 
     [HttpPost("login-mfa")]

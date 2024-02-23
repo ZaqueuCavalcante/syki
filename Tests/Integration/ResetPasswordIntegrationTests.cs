@@ -1,11 +1,6 @@
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using Syki.Back.Exceptions;
-using Microsoft.EntityFrameworkCore;
-using static Syki.Back.Configs.AuthorizationConfigs;
 using Syki.Shared.CreateUser;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
@@ -112,7 +107,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var data = new LoginIn { Email = user.Email, Password = body.Password };
 
         // Act
-        var response = await client.PostAsync<LoginOut>("/users/login", data);
+        var response = await client.PostAsync<LoginOut>("/login", data);
 
         // Assert
         response.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
@@ -136,7 +131,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var data = new LoginIn { Email = userIn.Email, Password = userIn.Password };
 
         // Act
-        var response = await client.PostAsync<LoginOut>("/users/login", data);
+        var response = await client.PostAsync<LoginOut>("/login", data);
 
         // Assert
         response.WrongEmailOrPassword.Should().BeTrue();

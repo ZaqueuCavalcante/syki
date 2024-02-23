@@ -26,4 +26,3 @@
 - Logs (Serilog)
 - Datadog (free?)
 - Reduzir custo de infra por uso excessivo de memoria
-

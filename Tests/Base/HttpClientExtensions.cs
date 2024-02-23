@@ -24,7 +24,7 @@ public static class HttpClientExtensions
     public static async Task<string> Login(this HttpClient client, string email, string password)
     {
         var data = new LoginIn { Email = email, Password = password };
-        var response = await client.PostAsync<LoginOut>("/users/login", data);
+        var response = await client.PostAsync<LoginOut>("/login", data);
 
         client.RemoveAuthToken();
         client.AddAuthToken(response.AccessToken);

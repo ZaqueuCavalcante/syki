@@ -114,7 +114,8 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Should_not_create_a_user_with_invalid_email()
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidEmails))]
+    public async Task Should_not_create_a_user_with_invalid_email(string email)
     {
         // Arrange
         var client = _factory.CreateClient();
@@ -124,7 +125,7 @@ public partial class IntegrationTests : IntegrationTestBase
         {
             InstitutionId = institution.Id,
             Name = "Zaqueu",
-            Email = "lalala",
+            Email = email,
             Password = "My@new@strong@P4ssword",
             Role = Academico,
         };

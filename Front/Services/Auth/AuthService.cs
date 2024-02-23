@@ -26,12 +26,12 @@ public class AuthService : IAuthService
     public async Task<LoginOut> Login(string email, string password)
     {
         var body = new LoginIn { Email = email, Password = password };
-        var response = await _http.PostAsJsonAsync("/users/login", body);
+        var response = await _http.PostAsJsonAsync("/login", body);
 
         var responseAsString = await response.Content.ReadAsStringAsync();
         var result = JsonConvert.DeserializeObject<LoginOut>(responseAsString)!;
 
-        if (response.IsSuccessStatusCode)
+        if (result.AccessToken != null)
         {
             await _localStorage.SetItemAsync("AccessToken", result.AccessToken);
             _authStateProvider.MarkUserAsAuthenticated();

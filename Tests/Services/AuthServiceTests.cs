@@ -1,9 +1,6 @@
 using Syki.Shared;
 using Syki.Front.Auth;
-using Syki.Tests.Base;
-using NUnit.Framework;
 using Syki.Tests.Mock;
-using FluentAssertions;
 using Syki.Front.Services;
 using Microsoft.JSInterop;
 using System.Security.Claims;
@@ -27,7 +24,7 @@ public class AuthServiceTests : BunitTestContext
 
         var response = new LoginOut { AccessToken = AuthTestBase.JWTAcademico };
         var mock = Services.AddMockHttpClient();
-        mock.When(HttpMethod.Post, "/users/login").RespondJson(response);
+        mock.When(HttpMethod.Post, "/login").RespondJson(response);
 
         var authService = Services.GetService<IAuthService>()!;
 
@@ -52,7 +49,7 @@ public class AuthServiceTests : BunitTestContext
 
         var response = new LoginOut { AccessToken = AuthTestBase.JWTAcademico  };
         var mock = Services.AddMockHttpClient();
-        mock.When(HttpMethod.Post, "/users/login").RespondJson(response);
+        mock.When(HttpMethod.Post, "/login").RespondJson(response);
 
         var authService = Services.GetService<IAuthService>()!;
         await authService.Login("email", "password");

@@ -72,7 +72,7 @@ public class AuditIntegrationTests : IntegrationTestBase
         client.RemoveAuthToken();
 
         var data = new LoginIn { Email = user.Email, Password = user.Password };
-        await client.PostAsync("/users/login", data.ToStringContent());
+        await client.PostAsync("/login", data.ToStringContent());
 
         var body = new LoginMfaIn { Code = Guid.NewGuid().ToHashCode().ToString()[..6] };
 

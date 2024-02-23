@@ -30,7 +30,7 @@ public class AuthService(HttpClient http, ILocalStorageService localStorage, Syk
     public async Task<LoginMfaOut> LoginMfa(string code)
     {
         var body = new LoginMfaIn { Code = code };
-        var response = await http.PostAsJsonAsync("/users/login-mfa", body);
+        var response = await http.PostAsJsonAsync("/mfa/login", body);
 
         var responseAsString = await response.Content.ReadAsStringAsync();
         var result = JsonConvert.DeserializeObject<LoginMfaOut>(responseAsString)!;

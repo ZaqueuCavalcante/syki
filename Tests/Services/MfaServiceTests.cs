@@ -43,6 +43,6 @@ public class MfaServiceTests : BunitTestContext
         var result = await mfaService.EnableUserMfa("951753");
 
         // Assert
-        result.Ok.Should().BeTrue();
+        result.Should().BeTrue();
     }
 }

@@ -6,15 +6,12 @@ namespace Syki.Back.CreatePendingDemo;
 
 [ApiController]
 [EnableRateLimiting("VerySmall")]
-public class CreatePendingDemoController : ControllerBase
+public class CreatePendingDemoController(CreatePendingDemoService service) : ControllerBase
 {
-    private readonly CreatePendingDemoService _service;
-    public CreatePendingDemoController(CreatePendingDemoService service) => _service = service;
-
     [HttpPost("demos")]
     public async Task<IActionResult> Create([FromBody] CreatePendingDemoIn data)
     {
-        await _service.Create(data);
+        await service.Create(data);
 
         return Ok();
     }

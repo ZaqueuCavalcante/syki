@@ -303,26 +303,6 @@ public partial class AuthUnauthorizedTests : AuthTestBase
     }
 
     [Test]
-    public async Task Nao_deve_retornar_a_mfa_key_quando_o_usuario_esta_deslogado()
-    {
-        // Arrange / Act
-        var response = await _client.GetAsync("/users/mfa-key");
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
-    public async Task Nao_deve_realizar_o_setup_da_mfa__quando_o_usuario_esta_deslogado()
-    {
-        // Arrange / Act
-        var response = await _client.PostAsync("/users/mfa-setup", null);
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-    }
-
-    [Test]
     public async Task Nao_deve_retornar_os_usuarios_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act

@@ -8,22 +8,12 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace Syki.Back.GenerateJWT;
 
-public class GenerateJWTService
+public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> userManager)
 {
-    private readonly AuthSettings _settings;
-    private readonly UserManager<SykiUser> _userManager;
-    public GenerateJWTService(
-        AuthSettings settings,
-        UserManager<SykiUser> userManager
-    ) {
-        _settings = settings;
-        _userManager = userManager;
-    }
-
     public async Task<string> Generate(string email)
     {
-        var user = (await _userManager.FindByEmailAsync(email))!;
-        var roles = await _userManager.GetRolesAsync(user);
+        var user = (await userManager.FindByEmailAsync(email))!;
+        var roles = await userManager.GetRolesAsync(user);
 
         var claims = new List<Claim>
         {
@@ -38,8 +28,8 @@ public class GenerateJWTService
         var identityClaims = new ClaimsIdentity();
         identityClaims.AddClaims(claims);
 
-        var key = Encoding.ASCII.GetBytes(_settings.SecurityKey);
-        var expirationTime = _settings.ExpirationTimeInMinutes;
+        var key = Encoding.ASCII.GetBytes(settings.SecurityKey);
+        var expirationTime = settings.ExpirationTimeInMinutes;
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(key),
             SecurityAlgorithms.HmacSha256Signature
@@ -47,8 +37,8 @@ public class GenerateJWTService
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Issuer = _settings.Issuer,
-            Audience = _settings.Audience,
+            Issuer = settings.Issuer,
+            Audience = settings.Audience,
             Expires = DateTime.UtcNow.AddMinutes(expirationTime),
             SigningCredentials = signingCredentials,
             Subject = identityClaims

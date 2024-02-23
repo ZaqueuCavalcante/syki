@@ -1,4 +1,7 @@
 using Syki.Shared;
+using Syki.Shared.Login;
+using Syki.Shared.SetupMfa;
+using Syki.Shared.GetMfaKey;
 using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
@@ -82,9 +85,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateInstitution();
         var user = await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
+        var keyResponse = await client.GetAsync<GetMfaKeyOut>("/mfa/key");
         var token = keyResponse.Key.ToMfaToken();
-        await client.PostAsync<MfaSetupOut>("/users/mfa-setup", new MfaSetupIn { Token = token });
+        await client.PostAsync<SetupMfaOut>("/mfa/setup", new SetupMfaIn { Token = token });
 
         client.RemoveAuthToken();
 

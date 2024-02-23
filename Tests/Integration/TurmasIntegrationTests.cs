@@ -46,7 +46,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new TurmaIn(Guid.NewGuid(), Guid.NewGuid(), "2024.1", horarios);
 
         // Act
-        var response = await client.PostAsync("/turmas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/turmas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE004);
@@ -67,7 +67,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new TurmaIn { DisciplinaId = disciplina.Id, Periodo = periodo.Id, Horarios = horarios };
 
         // Act
-        var response = await client.PostAsync("/turmas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/turmas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE018);
@@ -88,7 +88,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new TurmaIn(disciplina.Id, professor.Id, "2024.1", horarios);
 
         // Act
-        var response = await client.PostAsync("/turmas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/turmas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE005);
@@ -110,7 +110,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, horarios);
 
         // Act
-        var response = await client.PostAsync("/turmas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/turmas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE021);

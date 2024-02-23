@@ -77,36 +77,6 @@ public class AuthService : IAuthService
         return user;
     }
 
-    public async Task<string> GetMfaKey(Guid userId)
-    {
-        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
-
-        var key = await _userManager.GetAuthenticatorKeyAsync(user);
-
-        if (key == null)
-        {
-            await _userManager.ResetAuthenticatorKeyAsync(user);
-            key = await _userManager.GetAuthenticatorKeyAsync(user);
-        }
-
-        return key!;
-    }
-
-    public async Task<MfaSetupOut> SetupMfa(Guid userId, string token)
-    {
-        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
-
-        var tokenProvider = _userManager.Options.Tokens.AuthenticatorTokenProvider;
-        var ok = await _userManager.VerifyTwoFactorTokenAsync(user, tokenProvider, token.OnlyNumbers());
-
-        if (ok)
-        {
-            await _userManager.SetTwoFactorEnabledAsync(user, true);
-        }
-
-        return new MfaSetupOut { Ok = ok };
-    }
-
     public async Task GenerateResetPasswordToken(Guid userId)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());

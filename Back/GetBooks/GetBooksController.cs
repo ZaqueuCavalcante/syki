@@ -6,15 +6,12 @@ namespace Syki.Back.GetBooks;
 
 [ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]
-public class GetBooksController : ControllerBase
+public class GetBooksController(GetBooksService service) : ControllerBase
 {
-    private readonly GetBooksService _service;
-    public GetBooksController(GetBooksService service) => _service = service;
-
     [HttpGet("books")]
     public async Task<IActionResult> Get()
     {
-        var books = await _service.Get(User.InstitutionId());
+        var books = await service.Get(User.InstitutionId());
 
         return Ok(books);
     }

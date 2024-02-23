@@ -1,9 +1,4 @@
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using Syki.Back.Exceptions;
-using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
@@ -80,7 +75,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new GradeIn { Nome = "Grade de ADS 1.0" };
 
         // Act
-        var response = await client.PostAsync("/grades", body.ToStringContent());
+        var response = await client.PostHttpAsync("/grades", body);
         
         // Assert
         await response.AssertBadRequest(Throw.DE002);
@@ -94,7 +89,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new GradeIn { Nome = "Grade de ADS 1.0", CursoId = Guid.NewGuid() };
 
         // Act
-        var response = await client.PostAsync("/grades", body.ToStringContent());
+        var response = await client.PostHttpAsync("/grades", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE002);
@@ -115,7 +110,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new GradeIn { Nome = "Grade de ADS 1.0", CursoId = curso.Id };
 
         // Act
-        var response = await client.PostAsync("/grades", body.ToStringContent());
+        var response = await client.PostHttpAsync("/grades", body);
         
         // Assert
         await response.AssertBadRequest(Throw.DE002);
@@ -139,7 +134,7 @@ public partial class IntegrationTests : IntegrationTestBase
         };
 
         // Act
-        var response = await client.PostAsync("/grades", body.ToStringContent());
+        var response = await client.PostHttpAsync("/grades", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE003);
@@ -169,7 +164,7 @@ public partial class IntegrationTests : IntegrationTestBase
         };
 
         // Act
-        var response = await client.PostAsync("/grades", body.ToStringContent());
+        var response = await client.PostHttpAsync("/grades", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE003);
@@ -198,7 +193,7 @@ public partial class IntegrationTests : IntegrationTestBase
         };
 
         // Act
-        var response = await client.PostAsync("/grades", body.ToStringContent());
+        var response = await client.PostHttpAsync("/grades", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE003);
@@ -218,7 +213,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new GradeIn { Nome = "Grade de Direito 1.0", CursoId = curso.Id, Disciplinas = disciplinas };
 
         // Act
-        var response = await client.PostAsync("/grades", body.ToStringContent());
+        var response = await client.PostHttpAsync("/grades", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE003);     

@@ -1,4 +1,5 @@
 using Syki.Shared;
+using Syki.Shared.Login;
 using Syki.Shared.CreateBook;
 using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
@@ -9,7 +10,7 @@ public static class HttpClientExtensions
 {
     public static async Task<CreateUserOut> RegisterUser(this HttpClient client, CreateUserIn body)
     {
-        var response = await client.PostAsync("/users", body.ToStringContent());
+        var response = await client.PostHttpAsync("/users", body);
         return await response.DeserializeTo<CreateUserOut>();
     }
 
@@ -47,7 +48,7 @@ public static class HttpClientExtensions
         await client.LoginAsAdm();
 
         var body = new FaculdadeIn { Nome = nome };
-        var response = await client.PostAsync("/faculdades", body.ToStringContent());
+        var response = await client.PostHttpAsync("/faculdades", body);
 
         return await response.DeserializeTo<FaculdadeOut>();
     }
@@ -158,7 +159,7 @@ public static class HttpClientExtensions
 
     public static async Task<T> PostAsync<T>(this HttpClient client, string path, object obj)
     {
-        var response = await client.PostAsync(path, obj.ToStringContent());
+        var response = await client.PostHttpAsync(path, obj);
         return await response.DeserializeTo<T>();
     }
 

@@ -1,4 +1,4 @@
-using Syki.Shared;
+using Syki.Shared.Login;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
@@ -6,15 +6,12 @@ namespace Syki.Back.Login;
 
 [ApiController]
 [EnableRateLimiting("Small")]
-public class LoginController : ControllerBase
+public class LoginController(LoginService service) : ControllerBase
 {
-    private readonly LoginService _service;
-    public LoginController(LoginService service) => _service = service;
-
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginIn data)
     {
-        var result = await _service.Login(data);
+        var result = await service.Login(data);
 
         return Ok(result);
     }

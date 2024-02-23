@@ -1,8 +1,6 @@
-using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
 using Syki.Front.Services;
+using Syki.Shared.SetupMfa;
+using Syki.Shared.GetMfaKey;
 using RichardSzalay.MockHttp;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,9 +14,9 @@ public class MfaServiceTests : BunitTestContext
         // Arrange
         Services.AddScoped<IMfaService, MfaService>();
 
-        var response = new MfaKeyOut { Key = "LRZSGTSW5SEQFCWCNXHRNM5PZC7LFVBH" };
+        var response = new GetMfaKeyOut { Key = "LRZSGTSW5SEQFCWCNXHRNM5PZC7LFVBH" };
         var mock = Services.AddMockHttpClient();
-        mock.When(HttpMethod.Get, "/users/mfa-key").RespondJson(response);
+        mock.When(HttpMethod.Get, "/mfa/key").RespondJson(response);
 
         var mfaService = Services.GetService<IMfaService>()!;
 
@@ -35,9 +33,9 @@ public class MfaServiceTests : BunitTestContext
         // Arrange
         Services.AddScoped<IMfaService, MfaService>();
 
-        var response = new MfaSetupOut { Ok = true };
+        var response = new SetupMfaOut { Ok = true };
         var mock = Services.AddMockHttpClient();
-        mock.When(HttpMethod.Post, "/users/mfa-setup").RespondJson(response);
+        mock.When(HttpMethod.Post, "/mfa/setup").RespondJson(response);
 
         var mfaService = Services.GetService<IMfaService>()!;
 

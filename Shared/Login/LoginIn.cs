@@ -1,4 +1,4 @@
-namespace Syki.Shared;
+namespace Syki.Shared.Login;
 
 public class LoginIn
 {

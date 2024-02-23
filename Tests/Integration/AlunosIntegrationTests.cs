@@ -49,7 +49,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new AlunoIn { Nome = "ZA", Email = TestData.Email, OfertaId = oferta.Id };
 
         // Act
-        var response = await client.PostAsync("/alunos", body.ToStringContent());
+        var response = await client.PostHttpAsync("/alunos", body);
 
         await client.LoginAsAdm();
         var users = await client.GetAsync<List<CreateUserOut>>("/users");
@@ -70,7 +70,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new AlunoIn { Nome = "Zaqueu", Email = TestData.Email, OfertaId = Guid.NewGuid() };
 
         // Act
-        var response = await client.PostAsync("/alunos", body.ToStringContent());
+        var response = await client.PostHttpAsync("/alunos", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE012);

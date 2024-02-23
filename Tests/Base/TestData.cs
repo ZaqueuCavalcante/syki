@@ -112,6 +112,23 @@ public static class TestData
         }
     }
 
+    public static IEnumerable<object[]> InvalidMfaTokens()
+    {
+        foreach (var role in new List<string>()
+        {
+            "",
+            " ",
+            "syki",
+            "5464",
+            "lalal.com",
+            "5816811681816",
+            Guid.NewGuid().ToHashCode().ToString()[..6]
+        })
+        {
+            yield return new object[] { role };
+        }
+    }
+
     public static IEnumerable<object[]> AllRolesExceptAcademico()
     {
         foreach (var role in AuthorizationConfigs.AllRoles)
@@ -249,7 +266,7 @@ public static class TestData
             ("/campi", true),
             ("/cursos", true),
             ("/login", false),
-            ("/users/login-mfa", false),
+            ("/mfa/login", false),
             ("/users/reset-password", false),
         })
         {

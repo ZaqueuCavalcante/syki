@@ -7,15 +7,12 @@ namespace Syki.Back.CreateBook;
 
 [ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]
-public class CreateBookController : ControllerBase
+public class CreateBookController(CreateBookService service) : ControllerBase
 {
-    private readonly CreateBookService _service;
-    public CreateBookController(CreateBookService service) => _service = service;
-
     [HttpPost("books")]
     public async Task<IActionResult> Create([FromBody] CreateBookIn data)
     {
-        var book = await _service.Create(User.InstitutionId(), data);
+        var book = await service.Create(User.InstitutionId(), data);
 
         return Ok(book);
     }

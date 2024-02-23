@@ -3,17 +3,14 @@ using Syki.Shared.CreateBook;
 
 namespace Syki.Back.CreateBook;
 
-public class CreateBookService
+public class CreateBookService(SykiDbContext ctx)
 {
-    private readonly SykiDbContext _ctx;
-    public CreateBookService(SykiDbContext ctx) => _ctx = ctx;
-
     public async Task<CreateBookOut> Create(Guid institutionId, CreateBookIn data)
     {
         var book = new Book(institutionId, data.Title);
 
-        _ctx.Add(book);
-        await _ctx.SaveChangesAsync();
+        ctx.Add(book);
+        await ctx.SaveChangesAsync();
 
         return book.ToCreateBookOut();
     }

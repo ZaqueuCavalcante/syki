@@ -12,7 +12,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE010);      
@@ -26,7 +26,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = Guid.NewGuid() };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
         
         // Assert
         await response.AssertBadRequest(Throw.DE010);     
@@ -49,7 +49,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = campusUfpe.Id };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE010);      
@@ -64,7 +64,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = campus.Id };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
         
         // Assert
         await response.AssertBadRequest(Throw.DE005);
@@ -79,7 +79,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = campus.Id, Periodo = "2025.1" };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
         
         // Assert
         await response.AssertBadRequest(Throw.DE005);
@@ -103,7 +103,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = campusNovaRoma.Id, Periodo = periodoUfpe.Id };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE005);
@@ -121,7 +121,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE002);
@@ -138,7 +138,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = Guid.NewGuid() };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE002);
@@ -162,7 +162,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE002);
@@ -180,7 +180,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE011);
@@ -198,7 +198,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = curso.Id, GradeId = Guid.NewGuid(), };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE011);
@@ -218,7 +218,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = cursoDireito.Id, GradeId = grade.Id, };
 
         // Act
-        var response = await client.PostAsync("/ofertas", body.ToStringContent());
+        var response = await client.PostHttpAsync("/ofertas", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE011);

@@ -1,5 +1,6 @@
 using Syki.Shared;
 using Syki.Shared.CreateUser;
+using Syki.Shared.Login;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -64,7 +65,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new ResetPasswordIn { Token = Guid.NewGuid().ToString(), Password = "My@new@strong@P4ssword" };
 
         // Act
-        var response = await client.PostAsync("/users/reset-password", body.ToStringContent());
+        var response = await client.PostHttpAsync("/users/reset-password", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE019);
@@ -149,10 +150,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await client.GetResetPasswordToken(user.Id);
 
         var body = new ResetPasswordIn { Token = token!, Password = "My@new@strong@P4ssword" };
-        await client.PostAsync("/users/reset-password", body.ToStringContent());
+        await client.PostHttpAsync("/users/reset-password", body);
 
         // Act
-        var response = await client.PostAsync("/users/reset-password", body.ToStringContent());
+        var response = await client.PostHttpAsync("/users/reset-password", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE020);
@@ -173,7 +174,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new ResetPasswordIn { Token = token!, Password = password };
 
         // Act
-        var response = await client.PostAsync("/users/reset-password", body.ToStringContent());
+        var response = await client.PostHttpAsync("/users/reset-password", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE015);

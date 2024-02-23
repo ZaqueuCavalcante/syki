@@ -38,7 +38,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var body = new ProfessorIn { Nome = "CC", Email = TestData.Email };
 
-        var response = await client.PostAsync("/professores", body.ToStringContent());
+        var response = await client.PostHttpAsync("/professores", body);
 
         await client.LoginAsAdm();
         var users = await client.GetAsync<List<CreateUserOut>>("/users");

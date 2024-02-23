@@ -29,6 +29,7 @@ public static class Throw
     public const string DE024 = "Demo não encontrada.";
     public const string DE025 = "Demo token inválido.";
     public const string DE026 = "Já existe um período com esse id.";
+    public const string DE027 = "MFA token inválido.";
 
     public static void Now(this string message)
     {

@@ -1,9 +1,9 @@
 using Audit.Core;
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
+using Syki.Shared.GetMfaKey;
+using Syki.Shared.Login;
+using Syki.Shared.LoginMfa;
+using Syki.Shared.SetupMfa;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -62,23 +62,23 @@ public class AuditIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
-        var user = await client.RegisterAndLogin(faculdade.Id, Academico);
+        var institution = await client.CreateInstitution();
+        var user = await client.RegisterAndLogin(institution.Id, Academico);
 
-        var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
+        var keyResponse = await client.GetAsync<GetMfaKeyOut>("/mfa/key");
         var token = keyResponse.Key.ToMfaToken();
-        await client.PostAsync<MfaSetupOut>("/users/mfa-setup", new MfaSetupIn { Token = token });
+        await client.PostAsync<SetupMfaOut>("/mfa/setup", new SetupMfaIn { Token = token });
 
         client.RemoveAuthToken();
 
         var data = new LoginIn { Email = user.Email, Password = user.Password };
-        await client.PostAsync("/login", data.ToStringContent());
+        await client.PostHttpAsync("/login", data);
 
         var body = new LoginMfaIn { Code = Guid.NewGuid().ToHashCode().ToString()[..6] };
 
         // Act
         Configuration.AuditDisabled = false;
-        await client.PostAsync("/users/login-mfa", body.ToStringContent());
+        await client.PostHttpAsync("/login/mfa", body);
         Configuration.AuditDisabled = true;
 
         // Assert

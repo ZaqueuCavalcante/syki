@@ -4,14 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.GetBooks;
 
-public class GetBooksService
+public class GetBooksService(SykiDbContext ctx)
 {
-    private readonly SykiDbContext _ctx;
-    public GetBooksService(SykiDbContext ctx) => _ctx = ctx;
-
     public async Task<List<GetBooksOut>> Get(Guid institutionId)
     {
-        var books = await _ctx.Books.AsNoTracking()
+        var books = await ctx.Books.AsNoTracking()
             .Where(c => c.InstitutionId == institutionId)
             .ToListAsync();
         

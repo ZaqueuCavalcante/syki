@@ -6,24 +6,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.CreatePendingDemo;
 
-public class CreatePendingDemoService
+public class CreatePendingDemoService(SykiDbContext ctx)
 {
-    private readonly SykiDbContext _ctx;
-    public CreatePendingDemoService(SykiDbContext ctx) => _ctx = ctx;
-
     public async Task Create(CreatePendingDemoIn data)
     {
         var email = data.Email.ToLower();
-        var demoExists = await _ctx.Demos.AnyAsync(d => d.Email == email);
+        var demoExists = await ctx.Demos.AnyAsync(d => d.Email == email);
         if (demoExists)
             Throw.DE017.Now();
 
         var demo = new Demo(data.Email);
-        _ctx.Add(demo);
+        ctx.Add(demo);
 
         var task = new SykiTask(new SendDemoEmailConfirmation { Email = demo.Email });
-        _ctx.Add(task);
+        ctx.Add(task);
 
-        await _ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync();
     }
 }

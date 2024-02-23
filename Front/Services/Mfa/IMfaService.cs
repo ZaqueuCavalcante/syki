@@ -1,9 +1,10 @@
-using Syki.Shared;
+using Syki.Shared.SetupMfa;
+using Syki.Shared.GetMfaKey;
 
 namespace Syki.Front.Services;
 
 public interface IMfaService
 {
-    Task<MfaKeyOut> GetMfaKey();
-    Task<MfaSetupOut> EnableUserMfa(string code);
+    Task<GetMfaKeyOut> GetMfaKey();
+    Task<SetupMfaOut> EnableUserMfa(string code);
 }

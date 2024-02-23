@@ -35,43 +35,6 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
-    [Authorize]
-    [HttpGet("mfa-key")]
-    public async Task<IActionResult> GetMfaKey()
-    {
-        var key = await _authService.GetMfaKey(User.Id());
-
-        return Ok(new MfaKeyOut { Key = key });
-    }
-
-    [Authorize]
-    [HttpPost("mfa-setup")]
-    public async Task<IActionResult> SetupMfa([FromBody] MfaSetupIn data)
-    {
-        var ok = await _authService.SetupMfa(User.Id(), data.Token);
-
-        return Ok(ok);
-    }
-
-    [HttpPost("login-mfa")]
-    public async Task<IActionResult> LoginMfa([FromBody] LoginMfaIn data)
-    {
-        // TODO: remove logic from controller
-        var token = data.Code!.OnlyNumbers();
-        var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(token, false, false);
-
-        if (!result.Succeeded)
-        {
-            return BadRequest(new LoginOut { Wrong2FactorCode = true });
-        }
-
-        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
-
-        var jwt = await _authService.GenerateAccessToken(user!.Email!);
-
-        return Ok(new LoginOut { AccessToken = jwt });
-    }
-
     [HttpPost("reset-password")]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordIn data)
     {

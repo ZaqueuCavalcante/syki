@@ -1,9 +1,5 @@
-using System.Net;
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
+using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -21,8 +17,8 @@ public class ExceptionsIntegrationTests : IntegrationTestBase
         ctx.Remove(academicoRole);
         await ctx.SaveChangesAsync();
 
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var user = CreateUserIn.New(faculdade.Id, Academico);
 
         // Act
         var response = await client.PostAsync("/users", user.ToStringContent());

@@ -3,6 +3,7 @@ using Syki.Back.Domain;
 using Syki.Back.Configs;
 using Syki.Back.Database;
 using Microsoft.EntityFrameworkCore;
+using Syki.Shared.CreateUser;
 
 namespace Syki.Back.Services;
 
@@ -22,7 +23,7 @@ public class ProfessoresService : IProfessoresService
     {
         using var transaction = _ctx.Database.BeginTransaction();
 
-        var userIn = new UserIn
+        var userIn = new CreateUserIn
         {
             InstitutionId = faculdadeId,
             Name = data.Nome,
@@ -54,7 +55,7 @@ public class ProfessoresService : IProfessoresService
             INNER JOIN
                 syki.users u ON u.id = p.id
             WHERE
-                u.faculdade_id = {faculdadeId}
+                u.institution_id = {faculdadeId}
         ";
 
         var professores = await _ctx.Database.SqlQuery<ProfessorOut>(sql).ToListAsync();

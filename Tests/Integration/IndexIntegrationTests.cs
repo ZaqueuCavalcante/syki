@@ -3,6 +3,7 @@ using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Shared.CreateUser;
 
 namespace Syki.Tests.Integration;
 
@@ -14,11 +15,11 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
 
-        await client.CreateFaculdade("USP");
-        await client.CreateFaculdade("UFPE");
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var userAcademico = UserIn.New(faculdade.Id, Academico);
-        var userAluno = UserIn.New(faculdade.Id, Aluno);
+        await client.CreateInstitution("USP");
+        await client.CreateInstitution("UFPE");
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var userAcademico = CreateUserIn.New(faculdade.Id, Academico);
+        var userAluno = CreateUserIn.New(faculdade.Id, Aluno);
         await client.RegisterUser(userAcademico);
         await client.RegisterUser(userAluno);
 
@@ -35,7 +36,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         await client.PostAsync("/campi", new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" });
@@ -71,7 +72,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Aluno);
 
         // Act

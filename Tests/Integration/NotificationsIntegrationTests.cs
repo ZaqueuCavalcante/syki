@@ -15,7 +15,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
@@ -34,7 +34,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
@@ -67,7 +67,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         await client.PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" });
@@ -85,7 +85,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });

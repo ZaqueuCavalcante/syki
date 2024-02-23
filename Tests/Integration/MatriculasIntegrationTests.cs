@@ -14,7 +14,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
@@ -32,7 +32,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
@@ -51,7 +51,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Aluno);
 
         // Act
@@ -66,7 +66,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var year = DateTime.Now.Year;
@@ -91,7 +91,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var year = DateTime.Now.Year;
@@ -116,7 +116,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var year = DateTime.Now.Year;

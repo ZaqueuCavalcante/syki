@@ -1,24 +1,25 @@
 using Syki.Shared;
 using Syki.Back.Tasks;
 using Syki.Back.Domain;
-using Syki.Back.Services;
 using Syki.Back.Database;
 using Syki.Back.Exceptions;
+using Syki.Back.CreateUser;
 using Syki.Shared.SetupDemo;
 using Microsoft.EntityFrameworkCore;
+using Syki.Shared.CreateUser;
 
 namespace Syki.Back.SetupDemo;
 
 public class SetupDemoService
 {
     private readonly SykiDbContext _ctx;
-    private readonly IAuthService _authService;
+    private readonly CreateUserService _service;
     public SetupDemoService(
         SykiDbContext ctx,
-        IAuthService authService
+        CreateUserService service
     ) {
         _ctx = ctx;
-        _authService = authService;
+        _service = service;
     }
 
     public async Task Setup(SetupDemoIn data)
@@ -37,8 +38,8 @@ public class SetupDemoService
         _ctx.Add(SykiTask.SeedInstitutionDemoData(institution.Id));
         await _ctx.SaveChangesAsync();
 
-        var userIn = UserIn.NewDemoAcademico(institution.Id, demo.Email, data.Password);
-        var user = await _authService.RegisterUser(userIn);
+        var userIn = CreateUserIn.NewDemoAcademico(institution.Id, demo.Email, data.Password);
+        var user = await _service.Create(userIn);
 
         await _ctx.SaveChangesAsync();
         transaction.Commit();

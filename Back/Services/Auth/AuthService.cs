@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using static Syki.Back.Configs.AuthorizationConfigs;
 using ResetPassword = Syki.Back.Domain.ResetPassword;
+using Syki.Shared.CreateUser;
 
 namespace Syki.Back.Services;
 
@@ -36,12 +37,12 @@ public class AuthService : IAuthService
         _userManager = userManager;
     }
 
-    public async Task<UserOut> RegisterUser(UserIn body)
+    public async Task<CreateUserOut> RegisterUser(CreateUserIn body)
     {
         if (!(body.Role is Academico or Professor or Aluno))
             Throw.DE013.Now();
 
-        var faculdadeOk = await _ctx.Faculdades.AnyAsync(c => c.Id == body.InstitutionId);
+        var faculdadeOk = await _ctx.Institutions.AnyAsync(c => c.Id == body.InstitutionId);
         if (!faculdadeOk)
             Throw.DE014.Now();
 
@@ -63,7 +64,7 @@ public class AuthService : IAuthService
         return user.ToOut();
     }
 
-    public async Task<UserOut> Register(UserIn body)
+    public async Task<CreateUserOut> Register(CreateUserIn body)
     {
         var user = await RegisterUser(body);
 
@@ -168,7 +169,7 @@ public class AuthService : IAuthService
             new("sub", user.Id.ToString()),
             new("name", user.Name),
             new("email", user.Email!),
-            new("faculdade", user.FaculdadeId.ToString()),
+            new("faculdade", user.InstitutionId.ToString()),
         };
 
         var roleNames = await _userManager.GetRolesAsync(user);
@@ -202,7 +203,7 @@ public class AuthService : IAuthService
         return tokenHandler.WriteToken(token);
     }
 
-    public async Task<List<UserOut>> GetAllUsers()
+    public async Task<List<CreateUserOut>> GetAllUsers()
     {
         using var connection = new NpgsqlConnection(_dbSettings.ConnectionString);
 
@@ -216,7 +217,7 @@ public class AuthService : IAuthService
             FROM
                 syki.users u
             INNER JOIN
-                syki.faculdades f ON f.id = u.faculdade_id
+                syki.faculdades f ON f.id = u.institution_id
             INNER JOIN
                 syki.user_roles ur ON ur.user_id = u.id
             INNER JOIN
@@ -225,7 +226,7 @@ public class AuthService : IAuthService
                 u.id, f.nome
         ";
 
-        var data = await connection.QueryAsync<UserOut>(sql);
+        var data = await connection.QueryAsync<CreateUserOut>(sql);
         
         return data.ToList();
     }

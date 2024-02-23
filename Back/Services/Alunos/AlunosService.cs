@@ -4,6 +4,7 @@ using Syki.Back.Configs;
 using Syki.Back.Database;
 using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Syki.Shared.CreateUser;
 
 namespace Syki.Back.Services;
 
@@ -28,7 +29,7 @@ public class AlunosService : IAlunosService
         if (!ofertaOk)
             Throw.DE012.Now();
 
-        var userIn = new UserIn
+        var userIn = new CreateUserIn
         {
             InstitutionId = faculdadeId,
             Name = data.Nome,

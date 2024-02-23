@@ -1,6 +1,3 @@
-using NUnit.Framework;
-using Syki.Tests.Base;
-using FluentAssertions;
 using Syki.Back.Extensions;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;

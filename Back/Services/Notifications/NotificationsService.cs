@@ -25,7 +25,7 @@ public class NotificationsService : INotificationsService
             INNER JOIN
                 syki.user_roles ur ON ur.user_id = u.id AND ur.role_id = r.id
             WHERE
-                u.faculdade_id = {faculdadeId}
+                u.institution_id = {faculdadeId}
         ";
 
         var roleId = await _ctx.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstAsync();

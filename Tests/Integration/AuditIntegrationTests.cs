@@ -15,7 +15,7 @@ public class AuditIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
@@ -37,7 +37,7 @@ public class AuditIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
@@ -62,7 +62,7 @@ public class AuditIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         var user = await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");

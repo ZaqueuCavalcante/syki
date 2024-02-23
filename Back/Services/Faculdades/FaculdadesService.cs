@@ -22,7 +22,7 @@ public class FaculdadesService : IFaculdadesService
 
     public async Task<List<FaculdadeOut>> GetAll()
     {
-        var faculdades = await _ctx.Faculdades
+        var faculdades = await _ctx.Institutions
             .Where(x => x.Id != Guid.Empty)
             .ToListAsync();
 

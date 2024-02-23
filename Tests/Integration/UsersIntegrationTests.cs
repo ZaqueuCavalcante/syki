@@ -1,9 +1,5 @@
-using System.Net;
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using Syki.Back.Exceptions;
+using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -16,18 +12,18 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
 
-        var body = UserIn.New(faculdade.Id, role);
+        var body = CreateUserIn.New(faculdade.Id, role);
 
         // Act
-        var user = await client.PostAsync<UserOut>("/users", body);
+        var user = await client.PostAsync<CreateUserOut>("/users", body);
 
         // Assert
         user.Id.Should().NotBeEmpty();
         user.Nome.Should().Be(body.Name);
         user.Email.Should().Be(body.Email);
-        user.FaculdadeId.Should().Be(body.InstitutionId);
+        user.InstitutionId.Should().Be(body.InstitutionId);
     }
 
     [Test]
@@ -36,9 +32,9 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
 
-        var body = UserIn.New(faculdade.Id, role);
+        var body = CreateUserIn.New(faculdade.Id, role);
 
         // Act
         var response = await client.PostAsync("/users", body.ToStringContent());
@@ -54,7 +50,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = _factory.CreateClient();
         await client.LoginAsAdm();
 
-        var body = UserIn.New(Guid.NewGuid(), Academico);
+        var body = CreateUserIn.New(Guid.NewGuid(), Academico);
 
         // Act
         var response = await client.PostAsync("/users", body.ToStringContent());
@@ -69,9 +65,9 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
 
-        var body = new UserIn
+        var body = new CreateUserIn
         {
             InstitutionId = faculdade.Id,
             Name = "Acadêmico - Nova Roma",
@@ -93,9 +89,9 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
 
-        var body = UserIn.New(faculdade.Id, Academico);
+        var body = CreateUserIn.New(faculdade.Id, Academico);
         body.Password = password;
 
         // Act
@@ -110,9 +106,9 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
 
-        var body = new UserIn
+        var body = new CreateUserIn
         {
             InstitutionId = faculdade.Id,
             Name = "Acadêmico - Nova Roma",
@@ -150,8 +146,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var user = CreateUserIn.New(faculdade.Id, Academico);
         await client.RegisterUser(user);
 
         var data = new LoginIn { Email = user.Email + "lalala", Password = user.Password };
@@ -170,8 +166,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var user = CreateUserIn.New(faculdade.Id, Academico);
         await client.RegisterUser(user);
 
         var data = new LoginIn { Email = user.Email, Password = user.Password + "lalala" };
@@ -190,8 +186,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = UserIn.New(faculdade.Id, Academico);
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var user = CreateUserIn.New(faculdade.Id, Academico);
         await client.RegisterUser(user);
 
         var data = new LoginIn { Email = user.Email, Password = user.Password };
@@ -208,7 +204,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         var user = await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
@@ -233,7 +229,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         var user = await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
@@ -261,7 +257,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
@@ -286,7 +282,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         var user = await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var keyResponse = await client.GetAsync<MfaKeyOut>("/users/mfa-key");
@@ -312,14 +308,14 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
 
-        await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
-        await client.RegisterUser(UserIn.New(faculdade.Id, Professor));
-        await client.RegisterUser(UserIn.New(faculdade.Id, Aluno));
+        await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
+        await client.RegisterUser(CreateUserIn.New(faculdade.Id, Professor));
+        await client.RegisterUser(CreateUserIn.New(faculdade.Id, Aluno));
 
         // Act
-        var users = await client.GetAsync<List<UserOut>>("/users");
+        var users = await client.GetAsync<List<CreateUserOut>>("/users");
 
         // Assert
         users.Count.Should().BeGreaterThanOrEqualTo(4);

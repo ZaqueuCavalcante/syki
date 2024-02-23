@@ -24,7 +24,7 @@ public class SeedInstitutionDemoDataHandler : ISykiTaskHandler<SeedInstitutionDe
     public async Task Handle(SeedInstitutionDemoData task)
     {
         var id = task.InstitutionId;
-        var faculdade = await _ctx.Faculdades.FirstAsync(f => f.Id == id);
+        var faculdade = await _ctx.Institutions.FirstAsync(f => f.Id == id);
 
         var year = DateTime.Now.Year;
         faculdade.Periodos =

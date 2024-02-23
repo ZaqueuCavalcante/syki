@@ -1,6 +1,7 @@
 using Syki.Shared;
 using Syki.Back.Database;
 using Syki.Back.Exceptions;
+using Syki.Shared.CreateUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static Syki.Back.Configs.AuthorizationConfigs;
@@ -19,13 +20,13 @@ public class CreateUserService
         _userManager = userManager;
     }
 
-    public async Task<UserOut> Create(UserIn body)
+    public async Task<CreateUserOut> Create(CreateUserIn body)
     {
         if (!(body.Role is Academico or Professor or Aluno))
             Throw.DE013.Now();
 
-        var faculdadeOk = await _ctx.Faculdades.AnyAsync(c => c.Id == body.InstitutionId);
-        if (!faculdadeOk)
+        var institutionOk = await _ctx.Institutions.AnyAsync(c => c.Id == body.InstitutionId);
+        if (!institutionOk)
             Throw.DE014.Now();
 
         if (!body.Email.IsValidEmail())

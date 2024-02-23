@@ -4,6 +4,7 @@ using Syki.Tests.Base;
 using NUnit.Framework;
 using FluentAssertions;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Shared.CreateUser;
 
 namespace Syki.Tests.Integration;
 
@@ -14,7 +15,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new ProfessorIn { Nome = "Chico", Email = TestData.Email };
@@ -32,7 +33,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var body = new ProfessorIn { Nome = "CC", Email = TestData.Email };
@@ -40,7 +41,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.PostAsync("/professores", body.ToStringContent());
 
         await client.LoginAsAdm();
-        var users = await client.GetAsync<List<UserOut>>("/users");
+        var users = await client.GetAsync<List<CreateUserOut>>("/users");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -52,7 +53,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         // Act
@@ -69,12 +70,12 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var novaRoma = await client.CreateFaculdade("Nova Roma");
-        var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
+        var novaRoma = await client.CreateInstitution("Nova Roma");
+        var userNovaRoma = CreateUserIn.New(novaRoma.Id, Academico);
         await client.RegisterUser(userNovaRoma);
 
-        var ufpe = await client.CreateFaculdade("UFPE");
-        var userUfpe = UserIn.New(ufpe.Id, Academico);
+        var ufpe = await client.CreateInstitution("UFPE");
+        var userUfpe = CreateUserIn.New(ufpe.Id, Academico);
         await client.RegisterUser(userUfpe);
 
         await client.Login(userNovaRoma.Email, userNovaRoma.Password);

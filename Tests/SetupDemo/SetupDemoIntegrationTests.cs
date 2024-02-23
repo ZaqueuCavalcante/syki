@@ -102,7 +102,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.PostHttpAsync("/demos/setup", body);
 
         // Assert
-        var institution = await ctx.Faculdades.FirstOrDefaultAsync(x => x.Nome.Contains(email));
+        var institution = await ctx.Institutions.FirstOrDefaultAsync(x => x.Nome.Contains(email));
         institution.Should().NotBeNull();
     }
 
@@ -123,7 +123,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.PostHttpAsync("/demos/setup", body);
 
         // Assert
-        var institution = await ctx.Faculdades.FirstAsync(x => x.Nome.Contains(email));
+        var institution = await ctx.Institutions.FirstAsync(x => x.Nome.Contains(email));
         var id = $"%{institution.Id}%";
         FormattableString sql = $@"
             SELECT *

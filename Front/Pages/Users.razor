@@ -40,7 +40,7 @@
             </NoRecordsContent>
 
             <PagerContent>
-                <MudDataGridPager T="UserOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+                <MudDataGridPager T="CreateUserOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -53,16 +53,16 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<UserOut> _users = [];
+    private List<CreateUserOut> _users = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _users = await Http.GetFromJsonAsync<List<UserOut>>("/users") ?? [];
+        _users = await Http.GetFromJsonAsync<List<CreateUserOut>>("/users") ?? [];
         _loading = false;
     }
 
-    private Func<UserOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome);
+    private Func<CreateUserOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome);
 
     private async Task OpenDialog()
     {

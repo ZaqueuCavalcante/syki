@@ -1,6 +1,6 @@
-namespace Syki.Shared;
+namespace Syki.Shared.CreateUser;
 
-public class UserIn
+public class CreateUserIn
 {
     public Guid InstitutionId { get; set; }
     public string Name { get; set; }
@@ -8,10 +8,10 @@ public class UserIn
     public string Password { get; set; }
     public string Role { get; set; }
 
-    public static UserIn New(Guid institutionId, string role)
+    public static CreateUserIn New(Guid institutionId, string role)
     {
         var hash = institutionId.ToString().OnlyNumbers();
-        return new UserIn
+        return new CreateUserIn
         {
             InstitutionId = institutionId,
             Name = $"{role} - {hash}",
@@ -21,9 +21,9 @@ public class UserIn
         };
     }
 
-    public static UserIn NewDemoAcademico(Guid institutionId, string email, string password)
+    public static CreateUserIn NewDemoAcademico(Guid institutionId, string email, string password)
     {
-        return new UserIn
+        return new CreateUserIn
         {
             Name = $"DEMO - {email}",
             Email = email,

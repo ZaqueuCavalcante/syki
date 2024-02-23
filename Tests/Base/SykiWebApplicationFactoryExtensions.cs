@@ -9,7 +9,7 @@ public static class SykiWebApplicationFactoryExtensions
     public static async Task<HttpClient> LoggedAsAcademico(this SykiWebApplicationFactory factory)
     {
         var client = factory.CreateClient();
-        var faculdade = await client.CreateFaculdade();
+        var faculdade = await client.CreateInstitution();
         await client.RegisterAndLogin(faculdade.Id, Academico);
         return client;
     }

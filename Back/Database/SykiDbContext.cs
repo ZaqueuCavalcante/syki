@@ -23,7 +23,7 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
     public DbSet<Demo> Demos { get; set; }
 
     public DbSet<AuditLog> AuditLogs { get; set; }
-    public DbSet<Faculdade> Faculdades { get; set; }
+    public DbSet<Faculdade> Institutions { get; set; }
     public DbSet<Campus> Campi { get; set; }
     public DbSet<Curso> Cursos { get; set; }
     public DbSet<Grade> Grades { get; set; }

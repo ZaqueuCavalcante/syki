@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Authorization;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Shared.CreateUser;
 
 namespace Syki.Back.Controllers;
 
@@ -27,7 +28,7 @@ public class UsersController : ControllerBase
 
     [HttpPost()]
     [Authorize(Roles = Adm)]
-    public async Task<IActionResult> Register([FromBody] UserIn data)
+    public async Task<IActionResult> Register([FromBody] CreateUserIn data)
     {
         var user = await _authService.Register(data);
 

@@ -1,21 +1,22 @@
 using Syki.Shared;
 using Syki.Shared.CreateBook;
+using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Base;
 
 public static class HttpClientExtensions
 {
-    public static async Task<UserOut> RegisterUser(this HttpClient client, UserIn body)
+    public static async Task<CreateUserOut> RegisterUser(this HttpClient client, CreateUserIn body)
     {
         var response = await client.PostAsync("/users", body.ToStringContent());
-        return await response.DeserializeTo<UserOut>();
+        return await response.DeserializeTo<CreateUserOut>();
     }
 
-    public static async Task<UserIn> NewAcademico(this HttpClient client, string faculdade)
+    public static async Task<CreateUserIn> NewAcademico(this HttpClient client, string faculdade)
     {
-        var novaRoma = await client.CreateFaculdade(faculdade);
-        var userNovaRoma = UserIn.New(novaRoma.Id, Academico);
+        var novaRoma = await client.CreateInstitution(faculdade);
+        var userNovaRoma = CreateUserIn.New(novaRoma.Id, Academico);
         await client.RegisterUser(userNovaRoma);
         return userNovaRoma;
     }
@@ -36,12 +37,12 @@ public static class HttpClientExtensions
         await client.Login("adm@syki.com", "Admin@123Admin@123");
     }
 
-    public static async Task Login(this HttpClient client, UserIn user)
+    public static async Task Login(this HttpClient client, CreateUserIn user)
     {
         await client.Login(user.Email, user.Password);
     }
 
-    public static async Task<FaculdadeOut> CreateFaculdade(this HttpClient client, string nome = "Nova Roma")
+    public static async Task<FaculdadeOut> CreateInstitution(this HttpClient client, string nome = "Nova Roma")
     {
         await client.LoginAsAdm();
 
@@ -51,11 +52,11 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<FaculdadeOut>();
     }
 
-    public static async Task<UserIn> RegisterAndLogin(this HttpClient client, Guid faculdadeId, string role)
+    public static async Task<CreateUserIn> RegisterAndLogin(this HttpClient client, Guid faculdadeId, string role)
     {
         if (role != "Adm")
         {
-            var user = UserIn.New(faculdadeId, role);
+            var user = CreateUserIn.New(faculdadeId, role);
             await client.RegisterUser(user);
             await client.Login(user.Email, user.Password);
             return user;

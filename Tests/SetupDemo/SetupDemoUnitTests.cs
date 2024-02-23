@@ -1,5 +1,7 @@
 using Syki.Shared;
+using Syki.Shared.SetupDemo;
 using Syki.Back.CreatePendingDemo;
+using Syki.Shared.CreateUser;
 
 namespace Syki.Tests.SetupDemo;
 
@@ -54,7 +56,7 @@ public class SetupDemoUnitTests
         var password = "Test@123";
 
         // Act
-        var user = UserIn.NewDemoAcademico(institutionId, email, password);
+        var user = CreateUserIn.NewDemoAcademico(institutionId, email, password);
 
         // Assert
         user.Name.Should().Be($"DEMO - {email}");
@@ -62,5 +64,19 @@ public class SetupDemoUnitTests
         user.Password.Should().Be(password);
         user.InstitutionId.Should().Be(institutionId);
         user.Role.Should().Be("Academico");
+    }
+
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
+    public void Should_return_false_when_password_for_setup_demo_is_invalid(string password)
+    {
+        // Arrange
+        var setup = new SetupDemoIn { Password = password };
+
+        // Act
+        setup.Validate();
+
+        // Assert
+        setup.IsValid().Should().BeFalse();
     }
 }

@@ -5,6 +5,7 @@ using FluentAssertions;
 using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Shared.CreateUser;
 
 namespace Syki.Tests.Integration;
 
@@ -15,8 +16,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         // Act
         var token = await client.GetResetPasswordToken(user.Id);
@@ -30,8 +31,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         var token = await client.GetResetPasswordToken(user.Id);
         using var ctx = _factory.GetDbContext();
@@ -61,8 +62,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
         var body = new ResetPasswordIn { Token = Guid.NewGuid().ToString(), Password = "My@new@strong@P4ssword" };
@@ -79,8 +80,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
         var token = await client.GetResetPasswordToken(user.Id);
@@ -98,9 +99,9 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
+        var faculdade = await client.CreateInstitution("Nova Roma");
 
-        var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
         var token = await client.GetResetPasswordToken(user.Id);
@@ -122,8 +123,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var userIn = UserIn.New(faculdade.Id, Academico);
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var userIn = CreateUserIn.New(faculdade.Id, Academico);
         var userOut = await client.RegisterUser(userIn);
 
         client.RemoveAuthToken();
@@ -146,8 +147,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
         var token = await client.GetResetPasswordToken(user.Id);
@@ -168,8 +169,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateFaculdade("Nova Roma");
-        var user = await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
+        var faculdade = await client.CreateInstitution("Nova Roma");
+        var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
         var token = await client.GetResetPasswordToken(user.Id);

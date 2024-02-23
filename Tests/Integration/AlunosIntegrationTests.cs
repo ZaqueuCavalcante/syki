@@ -1,11 +1,6 @@
-using System.Net;
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using Syki.Back.Exceptions;
-using static Syki.Back.Configs.AuthorizationConfigs;
 using Syki.Shared.CreateUser;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 

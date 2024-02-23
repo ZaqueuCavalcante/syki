@@ -1,6 +1,6 @@
 using Syki.Shared.GetBooks;
 
-namespace Syki.Tests.GetBooks;
+namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {

@@ -1,7 +1,7 @@
 using Syki.Shared.SetupDemo;
 using Syki.Shared.CreatePendingDemo;
 
-namespace Syki.Tests.SetupDemo;
+namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {

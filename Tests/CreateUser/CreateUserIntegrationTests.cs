@@ -2,7 +2,7 @@ using Syki.Back.CreateUser;
 using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
-namespace Syki.Tests.CreateUser;
+namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {

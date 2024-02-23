@@ -1,5 +1,6 @@
 using Syki.Shared;
 using Syki.Back.Exceptions;
+using Syki.Back.CreateUser;
 
 namespace Syki.Back.Domain;
 

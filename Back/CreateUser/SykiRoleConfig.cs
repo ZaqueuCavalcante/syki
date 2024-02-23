@@ -1,11 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using SykiRole = Syki.Back.Domain.SykiRole;
 using static Syki.Back.Configs.AuthorizationConfigs;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateUser;
 
-public class RoleConfig : IEntityTypeConfiguration<SykiRole>
+public class SykiRoleConfig : IEntityTypeConfiguration<SykiRole>
 {
     public void Configure(EntityTypeBuilder<SykiRole> role)
     {

@@ -1,5 +1,5 @@
-using Syki.Back.Domain;
 using Syki.Back.Database;
+using Syki.Back.CreateUser;
 using Microsoft.AspNetCore.Identity;
 
 namespace Syki.Back.Configs;
@@ -25,7 +25,7 @@ public static class IdentityConfigs
 
         services.Configure<IdentityOptions>(options =>
         {
-            options.Password.RequiredLength = 8;  // The minimum length.
+            options.Password.RequiredLength = 16;  // The minimum length.
             options.Password.RequireDigit = true;  // Requires a number between 0-9.
             options.Password.RequireLowercase = true;  // Requires a lowercase character.
             options.Password.RequireUppercase = true;  // Requires an uppercase character.

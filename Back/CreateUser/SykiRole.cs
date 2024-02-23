@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace Syki.Back.Domain;
+namespace Syki.Back.CreateUser;
 
 public class SykiRole : IdentityRole<Guid>
 {

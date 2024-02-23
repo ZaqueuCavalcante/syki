@@ -16,7 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
         using var ctx = _factory.GetDbContext();
         var token = await ctx.Demos.Where(d => d.Email == email).Select(d => d.Id).FirstAsync();
 
-        var body = new SetupDemoIn { Token = token.ToString(), Password = "Lalala@123" };
+        var body = new SetupDemoIn { Token = token.ToString(), Password = "Lalala@123Lalala@123" };
 
         // Act
         var response = await client.PostHttpAsync("/demos/setup", body);
@@ -33,7 +33,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = _factory.CreateClient();
         await client.PostHttpAsync("/demos", new CreatePendingDemoIn { Email = TestData.Email });
 
-        var body = new SetupDemoIn { Token = token, Password = "Lalala@123" };
+        var body = new SetupDemoIn { Token = token, Password = "Lalala@123Lalala@123" };
 
         // Act
         var response = await client.PostHttpAsync("/demos/setup", body);
@@ -53,7 +53,7 @@ public partial class IntegrationTests : IntegrationTestBase
         using var ctx = _factory.GetDbContext();
         var token = await ctx.Demos.Where(d => d.Email == email).Select(d => d.Id).FirstAsync();
 
-        var body = new SetupDemoIn { Token = token.ToString(), Password = "Lalala@123" };
+        var body = new SetupDemoIn { Token = token.ToString(), Password = "Lalala@123Lalala@123" };
         await client.PostHttpAsync("/demos/setup", body);
 
         // Act
@@ -96,7 +96,7 @@ public partial class IntegrationTests : IntegrationTestBase
         using var ctx = _factory.GetDbContext();
         var token = await ctx.Demos.Where(d => d.Email == email).Select(d => d.Id).FirstAsync();
 
-        var body = new SetupDemoIn { Token = token.ToString(), Password = "Lalala@123" };
+        var body = new SetupDemoIn { Token = token.ToString(), Password = "Lalala@123Lalala@123" };
 
         // Act
         await client.PostHttpAsync("/demos/setup", body);
@@ -117,7 +117,7 @@ public partial class IntegrationTests : IntegrationTestBase
         using var ctx = _factory.GetDbContext();
         var token = await ctx.Demos.Where(d => d.Email == email).Select(d => d.Id).FirstAsync();
 
-        var body = new SetupDemoIn { Token = token.ToString(), Password = "Lalala@123" };
+        var body = new SetupDemoIn { Token = token.ToString(), Password = "Lalala@123Lalala@123" };
 
         // Act
         await client.PostHttpAsync("/demos/setup", body);
@@ -146,7 +146,7 @@ public partial class IntegrationTests : IntegrationTestBase
         using var ctx = _factory.GetDbContext();
         var token = await ctx.Demos.Where(d => d.Email == email).Select(d => d.Id).FirstAsync();
 
-        var body = new SetupDemoIn { Token = token.ToString(), Password = "Lalala@123" };
+        var body = new SetupDemoIn { Token = token.ToString(), Password = "Lalala@123Lalala@123" };
 
         // Act
         await client.PostHttpAsync("/demos/setup", body);

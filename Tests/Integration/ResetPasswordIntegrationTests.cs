@@ -65,7 +65,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterUser(UserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
-        var body = new ResetPasswordIn { Token = Guid.NewGuid().ToString(), Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = Guid.NewGuid().ToString(), Password = "My@new@strong@P4ssword" };
 
         // Act
         var response = await client.PostAsync("/users/reset-password", body.ToStringContent());
@@ -84,7 +84,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         client.RemoveAuthToken();
         var token = await client.GetResetPasswordToken(user.Id);
-        var body = new ResetPasswordIn { Token = token!, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = token!, Password = "My@newP4sswordMy@newP4ssword" };
 
         // Act
         var response = await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
@@ -105,7 +105,7 @@ public partial class IntegrationTests : IntegrationTestBase
         client.RemoveAuthToken();
         var token = await client.GetResetPasswordToken(user.Id);
 
-        var body = new ResetPasswordIn { Token = token!, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = token!, Password = "My@new@strong@P4ssword" };
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
 
         var data = new LoginIn { Email = user.Email, Password = body.Password };
@@ -129,7 +129,7 @@ public partial class IntegrationTests : IntegrationTestBase
         client.RemoveAuthToken();
         var token = await client.GetResetPasswordToken(userOut.Id);
 
-        var body = new ResetPasswordIn { Token = token!, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = token!, Password = "My@new@strong@P4ssword" };
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
 
         var data = new LoginIn { Email = userIn.Email, Password = userIn.Password };
@@ -152,7 +152,7 @@ public partial class IntegrationTests : IntegrationTestBase
         client.RemoveAuthToken();
         var token = await client.GetResetPasswordToken(user.Id);
 
-        var body = new ResetPasswordIn { Token = token!, Password = "My@newP4ssword" };
+        var body = new ResetPasswordIn { Token = token!, Password = "My@new@strong@P4ssword" };
         await client.PostAsync("/users/reset-password", body.ToStringContent());
 
         // Act

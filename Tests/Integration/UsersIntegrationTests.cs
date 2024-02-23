@@ -117,7 +117,7 @@ public partial class IntegrationTests : IntegrationTestBase
             InstitutionId = faculdade.Id,
             Name = "Acadêmico - Nova Roma",
             Email = "academico@novaroma.com",
-            Password = "Academico@123",
+            Password = "Academico@123Academico@123",
             Role = Academico,
         };
         await client.PostAsync("/users", body.ToStringContent());

@@ -1,6 +1,7 @@
 using Syki.Back.Domain;
 using Syki.Back.Database;
 using Syki.Back.Extensions;
+using Syki.Back.CreateUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
@@ -30,7 +31,7 @@ public class IntegrationTestBase
 
         var user = new SykiUser(Guid.Empty, "Syki Adm", "adm@syki.com");
         var _userManager = scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
-        await _userManager.CreateAsync(user, "Admin@123");
+        await _userManager.CreateAsync(user, "Admin@123Admin@123");
         await _userManager.AddToRoleAsync(user, Adm);
     }
 

@@ -1,9 +1,6 @@
 using Syki.Shared;
-using Syki.Back.Database;
 using Syki.Shared.CreateBook;
-using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Tests.Base;
 
@@ -36,7 +33,7 @@ public static class HttpClientExtensions
 
     public static async Task LoginAsAdm(this HttpClient client)
     {
-        await client.Login("adm@syki.com", "Admin@123");
+        await client.Login("adm@syki.com", "Admin@123Admin@123");
     }
 
     public static async Task Login(this HttpClient client, UserIn user)
@@ -189,7 +186,7 @@ public static class HttpClientExtensions
     public static async Task<string> ResetPassword(this HttpClient client, Guid userId)
     {
         var token = await client.GetResetPasswordToken(userId);
-        var bodyReset = new ResetPasswordIn { Token = token!, Password = "My@newP4ssword" };
+        var bodyReset = new ResetPasswordIn { Token = token!, Password = "My@newP4sswordMy@newP4ssword" };
 
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", bodyReset);
 

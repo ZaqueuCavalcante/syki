@@ -1,6 +1,7 @@
 using Syki.Back.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Syki.Back.CreateUser;
 
 namespace Syki.Back.Database;
 

@@ -6,12 +6,12 @@ using Syki.Back.Tasks;
 using Syki.Back.Database;
 using Syki.Back.Settings;
 using Syki.Back.Exceptions;
+using Syki.Back.CreateUser;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using SykiUser = Syki.Back.Domain.SykiUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 using ResetPassword = Syki.Back.Domain.ResetPassword;
 

@@ -16,7 +16,7 @@ public class UserIn
             InstitutionId = institutionId,
             Name = $"{role} - {hash}",
             Email = $"{role.ToLower()}@{hash}.com",
-            Password = $"{role}@123",
+            Password = $"{role}@123{hash}",
             Role = role,
         };
     }

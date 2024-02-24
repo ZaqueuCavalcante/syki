@@ -1,9 +1,6 @@
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using static Syki.Back.Configs.AuthorizationConfigs;
 using Syki.Shared.CreateUser;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
@@ -39,8 +36,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        await client.PostAsync("/campi", new CampusIn { Nome = "Suassuna", Cidade = "Recife - PE" });
-        await client.PostAsync("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
+        await client.NewCampus("Agreste I", "Caruaru - PE");
+        await client.NewCampus("Suassuna I", "Recife - PE");
 
         await client.PostAsync("/cursos", new CursoIn { Nome = "Direito", Tipo = TipoDeCurso.Tecnologo });
         await client.PostAsync("/cursos", new CursoIn { Nome = "Pedagogia", Tipo = TipoDeCurso.Mestrado });

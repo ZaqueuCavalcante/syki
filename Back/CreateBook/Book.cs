@@ -1,4 +1,3 @@
-using Syki.Shared.GetBooks;
 using Syki.Shared.CreateBook;
 
 namespace Syki.Back.CreateBook;
@@ -18,18 +17,9 @@ public class Book
         Title = title;
     }
 
-    public CreateBookOut ToCreateBookOut()
+    public BookOut ToOut()
     {
-        return new CreateBookOut
-        {
-            Id = Id,
-            Title = Title,
-        };
-    }
-
-    public GetBooksOut ToGetBooksOut()
-    {
-        return new GetBooksOut
+        return new BookOut
         {
             Id = Id,
             Title = Title,

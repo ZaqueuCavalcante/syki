@@ -14,7 +14,7 @@ public class OfertasService : IOfertasService
     public async Task<OfertaOut> Create(Guid faculdadeId, OfertaIn data)
     {
         var campusOk = await _ctx.Campi
-            .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.CampusId);
+            .AnyAsync(c => c.InstitutionId == faculdadeId && c.Id == data.CampusId);
         if (!campusOk)
             Throw.DE010.Now();
 

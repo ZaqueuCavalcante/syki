@@ -21,19 +21,4 @@ public class UpdateCampusUnitTests
         campus.Name.Should().Be(nome);
         campus.City.Should().Be(cidade);
     }
-
-    [Test]
-    public void Deve_converter_o_campus_corretamente_pro_out()
-    {
-        // Arrange
-        var campus = new Campus(Guid.NewGuid(), "Agreste II", "Bonito - PE");
-
-        // Act
-        var campusOut = campus.ToUpdateCampusOut();
-
-        // Assert
-        campusOut.Id.Should().Be(campus.Id);
-        campusOut.Name.Should().Be(campus.Name);
-        campusOut.City.Should().Be(campus.City);
-    }
 }

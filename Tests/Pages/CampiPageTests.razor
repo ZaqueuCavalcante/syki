@@ -11,8 +11,8 @@
         var mock = Services.AddMockHttpClient();
         var response = new List<CampusOut>()
         {
-            new CampusOut { Nome = "Agreste I", Cidade = "Caruaru - PE" },
-            new CampusOut { Nome = "Suassuna I", Cidade = "Recife - PE" },
+            new CampusOut { Name = "Agreste I", City = "Caruaru - PE" },
+            new CampusOut { Name = "Suassuna I", City = "Recife - PE" },
         };
         mock.When(HttpMethod.Get, "/campi").RespondJson(response);
 

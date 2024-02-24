@@ -8,7 +8,7 @@
         // Arrange
         AddMudServices();
         var mock = Services.AddMockHttpClient();
-        mock.When(HttpMethod.Get, "/books").RespondJson(new List<GetBooksOut> {});
+        mock.When(HttpMethod.Get, "/books").RespondJson(new List<BookOut> {});
 
         var page = Render(@<Biblioteca />);
         var provider = RenderComponent<MudDialogProvider>();

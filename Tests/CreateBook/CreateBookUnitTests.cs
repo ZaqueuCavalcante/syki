@@ -53,7 +53,7 @@ public class CreateBookUnitTests
         var book = new Book(Guid.NewGuid(), "UFPE");
 
         // Act
-        var bookOut = book.ToCreateBookOut();
+        var bookOut = book.ToOut();
 
         // Assert
         bookOut.Id.Should().Be(book.Id);

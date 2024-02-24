@@ -11,6 +11,9 @@ using Syki.Back.CreateUser;
 using Syki.Back.GenerateJWT;
 using Syki.Back.CreatePendingDemo;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Syki.Back.CreateCampus;
+using Syki.Back.UpdateCampus;
+using Syki.Back.GetCampi;
 
 namespace Syki.Back.Configs;
 
@@ -28,11 +31,13 @@ public static class ServicesConfigs
         services.AddScoped<GetMfaKeyService>();
         services.AddScoped<SetupMfaService>();
         services.AddScoped<LoginMfaService>();
+        services.AddScoped<CreateCampusService>();
+        services.AddScoped<UpdateCampusService>();
+        services.AddScoped<GetCampiService>();
 
 
 
         services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<ICampiService, CampiService>();
         services.AddScoped<IIndexService, IndexService>();
         services.AddScoped<ICursosService, CursosService>();
         services.AddScoped<IGradesService, GradesService>();

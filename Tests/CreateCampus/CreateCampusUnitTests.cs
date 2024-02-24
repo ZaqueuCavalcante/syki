@@ -65,7 +65,7 @@ public class CreateCampusUnitTests
         var campus = new Campus(Guid.NewGuid(), "Agreste II", "Bonito - PE");
 
         // Act
-        var campusOut = campus.ToCreateCampusOut();
+        var campusOut = campus.ToOut();
 
         // Assert
         campusOut.Id.Should().Be(campus.Id);

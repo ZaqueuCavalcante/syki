@@ -1,3 +1,4 @@
+using Syki.Shared.CreateCampus;
 using Syki.Shared.UpdateCampus;
 
 namespace Syki.Tests.Integration;
@@ -14,7 +15,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new UpdateCampusIn { Id = campus.Id, Name = "Agreste II", City = "Bonito - PE" };
 
         // Act
-        var updatedCampus = await client.PutAsync<UpdateCampusOut>("/campi", body);
+        var updatedCampus = await client.PutAsync<CampusOut>("/campi", body);
 
         // Assert
         updatedCampus.Id.Should().Be(campus.Id);

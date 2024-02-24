@@ -9,7 +9,7 @@ namespace Syki.Back.UpdateCampus;
 [EnableRateLimiting("Medium")]
 public class UpdateCampusController(UpdateCampusService service) : ControllerBase
 {
-    [HttpPut("")]
+    [HttpPut("campi")]
     public async Task<IActionResult> Update([FromBody] UpdateCampusIn data)
     {
         var campus = await service.Update(User.Facul(), data);

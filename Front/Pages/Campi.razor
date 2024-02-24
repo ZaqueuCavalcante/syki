@@ -5,10 +5,7 @@
 
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.GroupWork" Title="Campi" ButtonText="Novo Campus" OnClick="OpenDialog"/>
-
-    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>Você pode escolher um dos campus abaixo para que o sistema filtre informações apenas relacionadas à ele.</MudText>
-    </MudAlert>
+    <SykiPageAlert Text="Você pode escolher um dos campus abaixo para que o sistema filtre informações apenas relacionadas à ele." />
 
     <MudContainer Class="mb-8">
         <MudDataGrid
@@ -23,23 +20,11 @@
             RowsPerPage="10"
         >
             <ToolBarContent>
-                <MudSpacer />
-                <MudSpacer />
-                <MudTextField
-                    Margin="Margin.Dense"
-                    Variant="Variant.Outlined"
-                    @bind-Value="_searchString"
-                    Placeholder="Busque por nome ou cidade"
-                    Adornment="Adornment.Start"
-                    Immediate="true"
-                    AdornmentIcon="@Icons.Material.Filled.Search"
-                    IconSize="Size.Medium"
-                    Class="mt-0"
-                />
+                <SykiDataGridSearchTextField @bind-Value="_searchString" Placeholder="Busque por nome ou cidade" />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Nome" Title="Nome" />
-                <PropertyColumn Property="x => x.Cidade" Title="Cidade" />
+                <PropertyColumn Property="x => x.Name" Title="Nome" />
+                <PropertyColumn Property="x => x.City" Title="Cidade" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@(() => OpenEditDialog(context.Item))" />
@@ -52,7 +37,7 @@
             </NoRecordsContent>
 
             <PagerContent>
-                <MudDataGridPager T="CampusOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+                <SykiDataGridPager T="CampusOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -74,7 +59,7 @@
         _loading = false;
     }
 
-    private Func<CampusOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome, x.Cidade);
+    private Func<CampusOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.City);
 
     private async Task OpenDialog()
     {

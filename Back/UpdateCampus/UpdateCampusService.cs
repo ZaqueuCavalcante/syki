@@ -1,13 +1,14 @@
 using Syki.Back.Database;
 using Syki.Back.Exceptions;
 using Syki.Shared.UpdateCampus;
+using Syki.Shared.CreateCampus;
 using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.UpdateCampus;
 
 public class UpdateCampusService(SykiDbContext ctx)
 {
-    public async Task<UpdateCampusOut> Update(Guid institutionId, UpdateCampusIn data)
+    public async Task<CampusOut> Update(Guid institutionId, UpdateCampusIn data)
     {
         var campus = await ctx.Campi
             .FirstOrDefaultAsync(x => x.InstitutionId == institutionId && x.Id == data.Id);
@@ -18,6 +19,6 @@ public class UpdateCampusService(SykiDbContext ctx)
         campus.Update(data.Name, data.City);
         await ctx.SaveChangesAsync();
 
-        return campus.ToUpdateCampusOut();
+        return campus.ToOut();
     }
 }

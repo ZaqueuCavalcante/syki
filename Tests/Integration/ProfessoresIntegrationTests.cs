@@ -1,10 +1,7 @@
-using System.Net;
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using static Syki.Back.Configs.AuthorizationConfigs;
 using Syki.Shared.CreateUser;
+using Syki.Shared.CreateCampus;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 

@@ -1,4 +1,4 @@
-using Syki.Shared.GetBooks;
+using Syki.Shared.CreateBook;
 
 namespace Syki.Tests.Integration;
 
@@ -11,7 +11,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
 
         // Act
-        var books = await client.GetAsync<List<GetBooksOut>>("/books");
+        var books = await client.GetAsync<List<BookOut>>("/books");
 
         // Assert
         books.Should().BeEmpty();
@@ -27,7 +27,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateBook("O Projeto do Projeto");
 
         // Act
-        var books = await client.GetAsync<List<GetBooksOut>>("/books");
+        var books = await client.GetAsync<List<BookOut>>("/books");
 
         // Assert
         books.Should().HaveCount(2);
@@ -51,7 +51,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.Login(userNovaRoma);
 
         // Assert
-        var books = await client.GetAsync<List<GetBooksOut>>("/books");
+        var books = await client.GetAsync<List<BookOut>>("/books");
         books.Should().HaveCount(1);
         books[0].Title.Should().Be("Manual de DevOps");
     }

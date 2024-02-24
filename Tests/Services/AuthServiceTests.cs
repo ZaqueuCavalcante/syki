@@ -73,7 +73,7 @@ public class AuthServiceTests : BunitTestContext
 
         var response = new LoginOut { AccessToken = AuthTestBase.JWTAcademico  };
         var mock = Services.AddMockHttpClient();
-        mock.When(HttpMethod.Post, "/users/login-mfa").RespondJson(response);
+        mock.When(HttpMethod.Post, "/mfa/login").RespondJson(response);
 
         var authService = Services.GetService<IAuthService>()!;
 
@@ -98,7 +98,7 @@ public class AuthServiceTests : BunitTestContext
 
         var response = new LoginOut { AccessToken = AuthTestBase.JWTAcademico  };
         var mock = Services.AddMockHttpClient();
-        mock.When(HttpMethod.Post, "/users/login-mfa").RespondJson(response);
+        mock.When(HttpMethod.Post, "/mfa/login").RespondJson(response);
 
         var authService = Services.GetService<IAuthService>()!;
         await authService.LoginMfa("159753");

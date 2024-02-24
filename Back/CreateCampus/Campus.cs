@@ -1,6 +1,4 @@
-using Syki.Shared.GetCampi;
 using Syki.Shared.CreateCampus;
-using Syki.Shared.UpdateCampus;
 
 namespace Syki.Back.CreateCampus;
 
@@ -27,29 +25,9 @@ public class Campus
         City = city;
     }
 
-    public CreateCampusOut ToCreateCampusOut()
+    public CampusOut ToOut()
     {
-        return new CreateCampusOut
-        {
-            Id = Id,
-            Name = Name,
-            City = City,
-        };
-    }
-
-    public UpdateCampusOut ToUpdateCampusOut()
-    {
-        return new UpdateCampusOut
-        {
-            Id = Id,
-            Name = Name,
-            City = City,
-        };
-    }
-
-    public GetCampusOut ToGetCampusOut()
-    {
-        return new GetCampusOut
+        return new CampusOut
         {
             Id = Id,
             Name = Name,

@@ -157,7 +157,7 @@ public class OfertasUnitTests
 
         // Assert
         ofertaOut.Id.Should().Be(oferta.Id);
-        ofertaOut.Campus.Should().Be(oferta.Campus.Nome);
+        ofertaOut.Campus.Should().Be(oferta.Campus.Name);
         ofertaOut.Curso.Should().Be(oferta.Curso.Nome);
         ofertaOut.GradeId.Should().Be(oferta.GradeId);
         ofertaOut.Grade.Should().Be(oferta.Grade.Nome);

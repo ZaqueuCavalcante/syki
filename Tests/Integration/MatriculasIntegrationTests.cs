@@ -125,7 +125,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(2));
         await client.PostAsync<PeriodoDeMatriculaOut>("/matriculas/periodos", new PeriodoDeMatriculaIn { Id = periodo.Id, Start = start, End = end });
 
-        var campus = await client.PostAsync<CampusOut>("/campi", new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" });
+        var campus = await client.NewCampus("Agreste I", "Caruaru - PE");
         var ads = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });
         var direito = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "Direito", Tipo = TipoDeCurso.Bacharelado });
 

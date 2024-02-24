@@ -4,8 +4,8 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="_form">
-            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="_data.Nome" OnKeyDown="Submit" />
-            <SykiTextField Label="Cidade" @bind-Value="_data.Cidade" OnKeyDown="Submit" />
+            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="_data.Name" OnKeyDown="Submit" />
+            <SykiTextField Label="Cidade" @bind-Value="_data.City" OnKeyDown="Submit" />
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -25,7 +25,7 @@
 
     private MudForm _form;
     private bool _loading;
-    private CampusIn _data = new();
+    private CreateCampusIn _data = new();
 
     async Task Submit()
     {

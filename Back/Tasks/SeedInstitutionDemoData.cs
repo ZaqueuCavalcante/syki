@@ -3,6 +3,7 @@ using Syki.Back.Domain;
 using Syki.Back.Database;
 using Syki.Back.Services;
 using Microsoft.EntityFrameworkCore;
+using Syki.Back.CreateCampus;
 
 namespace Syki.Back.Tasks;
 

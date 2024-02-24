@@ -1,6 +1,6 @@
 namespace Syki.Shared.CreateCampus;
 
-public class CreateCampusOut
+public class CampusOut
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

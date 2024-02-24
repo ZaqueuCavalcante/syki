@@ -67,21 +67,21 @@ public static class HttpClientExtensions
         return null!;
     }
 
-    public static async Task<CreateBookOut> CreateBook(
+    public static async Task<BookOut> CreateBook(
         this HttpClient client,
         string title = "Manual de DevOps"
     ) {
         var body = new CreateBookIn { Title = "Manual de DevOps" };
-        return await client.PostAsync<CreateBookOut>("/books", body);
+        return await client.PostAsync<BookOut>("/books", body);
     }
 
-    public static async Task<CreateCampusOut> NewCampus(
+    public static async Task<CampusOut> NewCampus(
         this HttpClient client,
         string name = "Agreste I",
         string city = "Caruaru - PE"
     ) {
         var body = new CreateCampusIn { Name = name, City = city };
-        return await client.PostAsync<CreateCampusOut>("/campi", body);
+        return await client.PostAsync<CampusOut>("/campi", body);
     }
 
     public static async Task<CursoOut> NewCurso(

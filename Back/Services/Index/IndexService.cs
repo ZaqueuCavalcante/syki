@@ -40,7 +40,7 @@ public class IndexService : IIndexService
 
         const string sql = @"
             SELECT
-                (SELECT COUNT(1) FROM syki.campi WHERE faculdade_id = f.id) AS campus,
+                (SELECT COUNT(1) FROM syki.campi WHERE institution_id = f.id) AS campus,
                 (SELECT COUNT(1) FROM syki.cursos WHERE faculdade_id = f.id) AS cursos,
                 (SELECT COUNT(1) FROM syki.disciplinas WHERE faculdade_id = f.id) AS disciplinas,
                 (SELECT COUNT(1) FROM syki.grades WHERE faculdade_id = f.id) AS grades,

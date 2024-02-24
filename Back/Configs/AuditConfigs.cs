@@ -5,6 +5,7 @@ using Syki.Back.Database;
 using Syki.Back.Extensions;
 using Syki.Back.CreateBook;
 using Syki.Back.CreateUser;
+using Syki.Back.CreateCampus;
 
 namespace Syki.Back.Configs;
 

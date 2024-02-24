@@ -1,5 +1,6 @@
 using Audit.Core;
 using Syki.Shared;
+using Syki.Shared.CreateCampus;
 using Syki.Shared.GetMfaKey;
 using Syki.Shared.Login;
 using Syki.Shared.LoginMfa;
@@ -15,10 +16,10 @@ public class AuditIntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var faculdade = await client.CreateInstitution();
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
+        var body = new CreateCampusIn { Name = "Agreste I", City = "Caruaru - PE" };
 
         // Act
         Configuration.AuditDisabled = false;
@@ -40,12 +41,12 @@ public class AuditIntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var body = new CampusIn { Nome = "Agreste I", Cidade = "Caruaru - PE" };
+        var body = new CreateCampusIn { Name = "Agreste I", City = "Caruaru - PE" };
         var campus = await client.PostAsync<CampusOut>("/campi", body);
 
         // Act
-        campus.Nome = "Agreste II";
-        campus.Cidade = "Bonito - PE";
+        campus.Name = "Agreste II";
+        campus.City = "Bonito - PE";
         Configuration.AuditDisabled = false;
         await client.PutAsync<CampusOut>("/campi", campus);
         Configuration.AuditDisabled = true;

@@ -19,7 +19,7 @@
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="GetBooksOut" />
+                <SykiDataGridPager T="BookOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -32,16 +32,16 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<GetBooksOut> _books = [];
+    private List<BookOut> _books = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _books = await Http.GetFromJsonAsync<List<GetBooksOut>>("/books") ?? [];
+        _books = await Http.GetFromJsonAsync<List<BookOut>>("/books") ?? [];
         _loading = false;
     }
 
-    private Func<GetBooksOut, bool> _quickFilter => x => _searchString.IsIn(x.Title);
+    private Func<BookOut, bool> _quickFilter => x => _searchString.IsIn(x.Title);
 
     private async Task OpenDialog()
     {

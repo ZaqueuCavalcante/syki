@@ -52,4 +52,9 @@
         - Vai receber um sistema totalmente novo/limpo de dados
         - 
 
+# Acesso a outras contas
+
+- Criar endpoint onde um Academico pode chamar (informando o user_id do aluno ou prof) e recebe um link com um token 
+- Ao clicar no link, loga como o aluno ou prof
+- Riscos de seguranca????
 

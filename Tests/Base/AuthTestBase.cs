@@ -6,12 +6,12 @@ namespace Syki.Tests.Base;
 public class AuthTestBase
 {
     protected HttpClient _client = null!;
-    protected SykiWebApplicationFactory _factory = null!;
+    protected BackWebApplicationFactory _factory = null!;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
     {
-        _factory = new SykiWebApplicationFactory();
+        _factory = new BackWebApplicationFactory();
         _client = _factory.CreateClient();
     }
 

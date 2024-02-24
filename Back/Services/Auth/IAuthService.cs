@@ -7,7 +7,6 @@ public interface IAuthService
 {
     Task<CreateUserOut> RegisterUser(CreateUserIn body);
     Task<CreateUserOut> Register(CreateUserIn body);
-    Task<ResetPasswordTokenOut> GetResetPasswordToken(Guid userId);
     Task<ResetPasswordOut> ResetPassword(ResetPasswordIn body);
     Task<List<CreateUserOut>> GetAllUsers();
 }

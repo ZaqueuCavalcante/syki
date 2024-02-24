@@ -180,16 +180,10 @@ public static class HttpClientExtensions
         var response = await client.GetAsync(path);
         return await response.DeserializeTo<T>();
     }
-    public static async Task<string?> GetResetPasswordToken(this HttpClient client, Guid userId)
-    {
-        var tokenResponse = await client.GetAsync<ResetPasswordTokenOut>($"/tests/reset-password-token/{userId}");
-        return tokenResponse.Token;
-    }
 
-    public static async Task<string> ResetPassword(this HttpClient client, Guid userId)
+    public static async Task<string> ResetPassword(this HttpClient client, string token)
     {
-        var token = await client.GetResetPasswordToken(userId);
-        var bodyReset = new ResetPasswordIn { Token = token!, Password = "My@newP4sswordMy@newP4ssword" };
+        var bodyReset = new ResetPasswordIn { Token = token, Password = "My@newP4sswordMy@newP4ssword" };
 
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", bodyReset);
 

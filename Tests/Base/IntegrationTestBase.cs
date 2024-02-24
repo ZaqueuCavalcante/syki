@@ -11,12 +11,12 @@ namespace Syki.Tests.Base;
 [Category("Integration")]
 public class IntegrationTestBase
 {
-    protected SykiWebApplicationFactory _factory = null!;
+    protected BackWebApplicationFactory _factory = null!;
 
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
     {
-        _factory = new SykiWebApplicationFactory();
+        _factory = new BackWebApplicationFactory();
         using var scope = _factory.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 

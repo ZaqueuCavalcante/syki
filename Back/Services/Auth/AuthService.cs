@@ -91,17 +91,6 @@ public class AuthService : IAuthService
         await _ctx.SaveChangesAsync();
     }
 
-    public async Task<ResetPasswordTokenOut> GetResetPasswordToken(Guid userId)
-    {
-        var id = await _ctx.ResetPasswords
-            .Where(r => r.UserId == userId && r.UsedAt == null)
-            .OrderByDescending(r => r.CreatedAt)
-            .Select(r => r.Id)
-            .FirstOrDefaultAsync();
-
-        return new ResetPasswordTokenOut { Token = id == Guid.Empty ? null : id.ToString() };
-    }
-
     public async Task<ResetPasswordOut> ResetPassword(ResetPasswordIn body)
     {
         _ = Guid.TryParse(body.Token, out var id);

@@ -16,7 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         // Act
-        var token = await client.GetResetPasswordToken(user.Id);
+        var token = await _factory.GetResetPasswordToken(user.Id);
 
         // Assert
         token!.Length.Should().Be(36);
@@ -30,7 +30,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateInstitution("Nova Roma");
         var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
-        var token = await client.GetResetPasswordToken(user.Id);
+        var token = await _factory.GetResetPasswordToken(user.Id);
         using var ctx = _factory.GetDbContext();
 
         // Act
@@ -47,7 +47,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = _factory.CreateClient();
 
         // Act
-        var token = await client.GetResetPasswordToken(Guid.NewGuid());
+        var token = await _factory.GetResetPasswordToken(Guid.NewGuid());
 
         // Assert
         token.Should().BeNull();
@@ -80,7 +80,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
-        var token = await client.GetResetPasswordToken(user.Id);
+        var token = await _factory.GetResetPasswordToken(user.Id);
         var body = new ResetPasswordIn { Token = token!, Password = "My@newP4sswordMy@newP4ssword" };
 
         // Act
@@ -100,7 +100,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
-        var token = await client.GetResetPasswordToken(user.Id);
+        var token = await _factory.GetResetPasswordToken(user.Id);
 
         var body = new ResetPasswordIn { Token = token!, Password = "My@new@strong@P4ssword" };
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
@@ -124,7 +124,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var userOut = await client.RegisterUser(userIn);
 
         client.RemoveAuthToken();
-        var token = await client.GetResetPasswordToken(userOut.Id);
+        var token = await _factory.GetResetPasswordToken(userOut.Id);
 
         var body = new ResetPasswordIn { Token = token!, Password = "My@new@strong@P4ssword" };
         await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
@@ -147,7 +147,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
-        var token = await client.GetResetPasswordToken(user.Id);
+        var token = await _factory.GetResetPasswordToken(user.Id);
 
         var body = new ResetPasswordIn { Token = token!, Password = "My@new@strong@P4ssword" };
         await client.PostHttpAsync("/users/reset-password", body);
@@ -169,7 +169,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
-        var token = await client.GetResetPasswordToken(user.Id);
+        var token = await _factory.GetResetPasswordToken(user.Id);
 
         var body = new ResetPasswordIn { Token = token!, Password = password };
 

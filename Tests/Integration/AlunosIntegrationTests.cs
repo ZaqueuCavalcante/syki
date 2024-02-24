@@ -100,7 +100,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new AlunoIn { Nome = "Zaqueu", Email = TestData.Email, OfertaId = oferta.Id };
         var aluno = await client.PostAsync<AlunoOut>("/alunos", body);
 
-        var password = await client.ResetPassword(aluno.Id);
+        var token = await _factory.GetResetPasswordToken(aluno.Id);
+        var password = await client.ResetPassword(token!);
         await client.Login(body.Email, password);
 
         // Act

@@ -1,5 +1,4 @@
 using Syki.Shared;
-using Syki.Shared.CreateCampus;
 using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 

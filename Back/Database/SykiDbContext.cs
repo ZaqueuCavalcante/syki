@@ -5,21 +5,15 @@ using Syki.Back.Settings;
 using Syki.Back.CreateBook;
 using Syki.Back.CreateUser;
 using Audit.EntityFramework;
+using Syki.Back.CreateCampus;
 using Syki.Back.CreatePendingDemo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Syki.Back.CreateCampus;
 
 namespace Syki.Back.Database;
 
-public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
+public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSettings settings) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
 {
-    private readonly DatabaseSettings _settings;
-    public SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSettings settings) : base(options)
-    {
-        _settings = settings;
-    }
-
     public DbSet<Book> Books { get; set; }
     public DbSet<Demo> Demos { get; set; }
 
@@ -44,7 +38,7 @@ public class SykiDbContext : IdentityDbContext<SykiUser, SykiRole, Guid>
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(_settings.ConnectionString);
+        optionsBuilder.UseNpgsql(settings.ConnectionString);
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
     }

@@ -4,6 +4,10 @@ dotnet test --filter TestCategory=Auth
 dotnet test --filter TestCategory=Integration
 dotnet test --filter "FullyQualifiedName~UnitTests"
 
+dotnet test --no-build --filter "FullyQualifiedName~E2ETests"
+pwsh Tests/bin/Debug/net8.0/playwright.ps1 codegen https://localhost:6001
+
+
 dotnet test --logger:"console;verbosity=detailed"
 dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~IntegrationTests"
 dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName!~IntegrationTests"

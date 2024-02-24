@@ -26,7 +26,7 @@
 - Logs (Serilog)
 - Datadog (free?)
 - Reduzir custo de infra por uso excessivo de memoria
-
+- Remover todas as snackbars pq sao dificeis de testar????
 
 
 

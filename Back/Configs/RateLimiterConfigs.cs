@@ -12,7 +12,7 @@ public static class RateLimiterConfigs
         {
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
-            if (Env.IsTesting())
+            if (Env.IsTesting() || Env.IsDevelopment())
             {
                 options.AddFixedWindowLimiter("VerySmall", o => { o.PermitLimit = 1000; o.Window = TimeSpan.FromHours(1); });
                 options.AddFixedWindowLimiter("Small", o => { o.PermitLimit = 1000; o.Window = TimeSpan.FromHours(1); });

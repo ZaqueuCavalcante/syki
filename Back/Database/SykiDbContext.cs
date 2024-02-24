@@ -8,6 +8,7 @@ using Audit.EntityFramework;
 using Syki.Back.CreatePendingDemo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Syki.Back.CreateCampus;
 
 namespace Syki.Back.Database;
 

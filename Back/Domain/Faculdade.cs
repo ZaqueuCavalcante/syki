@@ -1,5 +1,6 @@
 using Syki.Shared;
 using Syki.Back.CreateBook;
+using Syki.Back.CreateCampus;
 
 namespace Syki.Back.Domain;
 

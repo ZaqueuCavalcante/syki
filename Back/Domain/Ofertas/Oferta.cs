@@ -1,4 +1,5 @@
 using Syki.Shared;
+using Syki.Back.CreateCampus;
 
 namespace Syki.Back.Domain;
 
@@ -37,7 +38,7 @@ public class Oferta
         return new OfertaOut
         {
             Id = Id,
-            Campus = Campus.Nome,
+            Campus = Campus.Name,
             Curso = Curso.Nome,
             GradeId = GradeId,
             Grade = Grade.Nome,

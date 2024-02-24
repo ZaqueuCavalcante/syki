@@ -1,10 +1,8 @@
-using NUnit.Framework;
-using Syki.Back.Domain;
-using FluentAssertions;
+using Syki.Back.CreateCampus;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.CreateBook;
 
-public class CampiUnitTests
+public class CreateCampusUnitTests
 {
     [Test]
     public void Deve_criar_um_campus_com_id()
@@ -29,7 +27,7 @@ public class CampiUnitTests
         var campus = new Campus(faculdadeId, "Agreste I", "Caruaru - PE");
 
         // Assert
-        campus.FaculdadeId.Should().Be(faculdadeId);
+        campus.InstitutionId.Should().Be(faculdadeId);
     }
 
     [Test]
@@ -43,7 +41,7 @@ public class CampiUnitTests
         var campus = new Campus(faculdadeId, "Agreste I", "Caruaru - PE");
 
         // Assert
-        campus.Nome.Should().Be(nome);
+        campus.Name.Should().Be(nome);
     }
 
     [Test]
@@ -57,25 +55,7 @@ public class CampiUnitTests
         var campus = new Campus(faculdadeId, "Agreste I", cidade);
 
         // Assert
-        campus.Cidade.Should().Be(cidade);
-    }
-
-    [Test]
-    public void Deve_atualizar_os_dados_do_campus_corretamente()
-    {
-        // Arrange
-        var faculdadeId = Guid.NewGuid();
-        const string nome = "Agreste II";
-        const string cidade = "Bonito - PE";
-
-        var campus = new Campus(faculdadeId, "Agreste I", "Caruaru - PE");
-
-        // Act
-        campus.Update(nome, cidade);
-
-        // Assert
-        campus.Nome.Should().Be(nome);
-        campus.Cidade.Should().Be(cidade);
+        campus.City.Should().Be(cidade);
     }
 
     [Test]
@@ -85,11 +65,11 @@ public class CampiUnitTests
         var campus = new Campus(Guid.NewGuid(), "Agreste II", "Bonito - PE");
 
         // Act
-        var campusOut = campus.ToOut();
+        var campusOut = campus.ToCreateCampusOut();
 
         // Assert
         campusOut.Id.Should().Be(campus.Id);
-        campusOut.Nome.Should().Be(campus.Nome);
-        campusOut.Cidade.Should().Be(campus.Cidade);
+        campusOut.Name.Should().Be(campus.Name);
+        campusOut.City.Should().Be(campus.City);
     }
 }

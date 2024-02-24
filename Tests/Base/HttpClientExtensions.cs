@@ -3,6 +3,7 @@ using Syki.Shared.Login;
 using Syki.Shared.CreateBook;
 using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Shared.CreateCampus;
 
 namespace Syki.Tests.Base;
 
@@ -74,13 +75,13 @@ public static class HttpClientExtensions
         return await client.PostAsync<CreateBookOut>("/books", body);
     }
 
-    public static async Task<CampusOut> NewCampus(
+    public static async Task<CreateCampusOut> NewCampus(
         this HttpClient client,
-        string nome = "Agreste I",
-        string cidade = "Caruaru - PE"
+        string name = "Agreste I",
+        string city = "Caruaru - PE"
     ) {
-        var body = new CampusIn { Nome = nome, Cidade = cidade };
-        return await client.PostAsync<CampusOut>("/campi", body);
+        var body = new CreateCampusIn { Name = name, City = city };
+        return await client.PostAsync<CreateCampusOut>("/campi", body);
     }
 
     public static async Task<CursoOut> NewCurso(

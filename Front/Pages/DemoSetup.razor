@@ -2,7 +2,7 @@
 
 <PageTitle>Demo setup</PageTitle>
 
-<MudContainer Class="mt-16 mb-8" Style="width: 480px">
+<MudContainer Class="mt-8 mb-8" Style="width: 480px">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
@@ -28,10 +28,10 @@
             }
             else
             {
-                <PasswordRequerimentsCard @bind-Validation="_data.Validation" />
-                <MudCardContent Class="mt-4">
+                <MudCardContent Class="mt-4 pb-2 px-0">
                     <PasswordTextField Value="@_data.Password" ValueChanged="HandlePasswordChange" OnKeyDown="Submit" Required="false" />
                 </MudCardContent>
+                <PasswordRequerimentsCard @bind-Validation="_data.Validation" />
                 <MudCardActions>
                     <MudButton
                         Size="Size.Large"

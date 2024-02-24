@@ -2,7 +2,7 @@ using Syki.Back.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateCampus;
 
 public class CampusConfig : IEntityTypeConfiguration<Campus>
 {
@@ -13,8 +13,11 @@ public class CampusConfig : IEntityTypeConfiguration<Campus>
         campus.HasKey(c => c.Id);
         campus.Property(c => c.Id).ValueGeneratedNever();
 
+        campus.Property(c => c.Name);
+        campus.Property(c => c.City);
+
         campus.HasMany<Oferta>()
             .WithOne(o => o.Campus)
-            .HasForeignKey(a => a.CampusId);
+            .HasForeignKey(o => o.CampusId);
     }
 }

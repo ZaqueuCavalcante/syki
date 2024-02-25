@@ -25,7 +25,7 @@
         </MudLayout>
     </Authorized>
     <NotAuthorized>
-        @if (Nav.Uri.EndsWith("/") || Nav.Uri.ToLower().Contains("demo") || Nav.Uri.ToLower().Contains("login") || Nav.Uri.ToLower().Contains("reset-password"))
+        @if (Nav.Uri.EndsWith("/") || Nav.Uri.ToLower().Contains("register") || Nav.Uri.ToLower().Contains("login") || Nav.Uri.ToLower().Contains("reset-password"))
         {
             <MudAppBar Elevation="1" Dense="true">
                 <MudStack Row="true" Class="d-flex justify-space-around flex-grow-1">

@@ -1,3 +1,4 @@
+using Syki.Shared;
 using Syki.Back.Settings;
 using Syki.Back.Database;
 using Microsoft.Playwright;
@@ -65,5 +66,13 @@ public class E2ETestBase : PageTest
         using var ctx = GetDbContext();
         var demo = await ctx.Demos.FirstAsync(d => d.Email == email);
         return demo.Id.ToString();
+    }
+
+    protected async Task<string> GetMfaCode(string email)
+    {
+        using var ctx = GetDbContext();
+        var userId = await ctx.Users.Where(u => u.Email == email).Select(u => u.Id).FirstAsync();
+        var mfaKey = await ctx.UserTokens.Where(t => t.UserId == userId).Select(t => t.Value).FirstAsync();
+        return mfaKey!.ToMfaToken();
     }
 }

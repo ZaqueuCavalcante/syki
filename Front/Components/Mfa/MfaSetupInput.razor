@@ -55,7 +55,7 @@
         _showCodeFeedback = false;
         _userCode = newValue;
 
-        if (_userCode.Length == 7)
+        if (_userCode.OnlyNumbers().Length == 6)
         {
             _validateCodeLoading = true;
             _codeIsCorrect = await Mfa.EnableUserMfa(_userCode);

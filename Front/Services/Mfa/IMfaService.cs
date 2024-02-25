@@ -1,4 +1,3 @@
-using Syki.Shared.SetupMfa;
 using Syki.Shared.GetMfaKey;
 
 namespace Syki.Front.Services;

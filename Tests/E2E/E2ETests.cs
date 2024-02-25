@@ -1,116 +1,69 @@
-using Syki.Back.Settings;
-using Syki.Back.Database;
-using Microsoft.Playwright;
-using Microsoft.Playwright.NUnit;
-
 namespace Syki.Tests.E2E;
 
-[Parallelizable(ParallelScope.Self)]
-public class E2ETests : PageTest
+public class E2ETests : E2ETestBase
 {
     [Test]
     public async Task Should_create_a_pending_register()
     {
-        await Page.GotoAsync("https://localhost:6001");
+        await Goto("/");
 
-        var tryNowButton = Page.GetByRole(AriaRole.Link, new() { Name = "Experimente agora" });
-        await Expect(tryNowButton).ToBeVisibleAsync();
-        await tryNowButton.ClickAsync();
+        await ClickOn(Link("Experimente agora"));
 
-        await Page.GetByRole(AriaRole.Textbox).FillAsync(TestData.Email);
+        await Fill(TestData.Email);
 
-        var registerButton = Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" });
-        await Expect(registerButton).ToBeVisibleAsync();
-        await registerButton.ClickAsync();
+        await ClickOn(Button("Cadastrar"));
 
-        var message = Page.GetByText("Verifique seu email e utilize o link para definir sua senha de acesso.");
-        await Expect(message).ToBeVisibleAsync();
+        await AssertVisibleText("Verifique seu email e utilize o link para definir sua senha de acesso.");
     }
 
     [Test]
     public async Task Should_finish_a_pending_register_by_creating_user_password()
     {
-        await Page.GotoAsync("https://localhost:6001");
+        await Goto("/");
 
-        var tryNowButton = Page.GetByRole(AriaRole.Link, new() { Name = "Experimente agora" });
-        await Expect(tryNowButton).ToBeVisibleAsync();
-        await tryNowButton.ClickAsync();
+        await ClickOn(Link("Experimente agora"));
 
-        var email = TestData.Email;
-        await Page.GetByRole(AriaRole.Textbox).FillAsync(email);
+        var email = await Fill(TestData.Email);
 
-        var registerButton = Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" });
-        await Expect(registerButton).ToBeVisibleAsync();
-        await registerButton.ClickAsync();
+        await ClickOn(Button("Cadastrar"));
+        await AssertVisibleText("Verifique seu email e utilize o link para definir sua senha de acesso.");
 
-        var message = Page.GetByText("Verifique seu email e utilize o link para definir sua senha de acesso.");
-        await Expect(message).ToBeVisibleAsync();
+        var token = await GetDemoToken(email);
+        await Goto($"/demo-setup?token={token}");
 
-        var settings = new DatabaseSettings { ConnectionString = "UserID=postgres;Password=postgres;Host=localhost;Port=5432;Database=syki-db;Pooling=true;" };
-        using var ctx = new SykiDbContext(new DbContextOptions<SykiDbContext>(), settings);
-        var demo = await ctx.Demos.FirstAsync(d => d.Email == email);
-        var token = demo.Id.ToString();
+        await Fill("Test@123Test@123");
 
-        await Page.GotoAsync($"https://localhost:6001/demo-setup?token={token}");
+        await ClickOn(Button("Salvar"));
+        await ClickOn(Button("Ir pro login"));
 
-        await Page.GetByRole(AriaRole.Textbox).FillAsync("Test@123Test@123");
-
-        var savePasswordButton = Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" });
-        await Expect(savePasswordButton).ToBeVisibleAsync();
-        await savePasswordButton.ClickAsync();
-
-        var goToLoginButton = Page.GetByRole(AriaRole.Button, new() { Name = "Ir pro login" });
-        await Expect(goToLoginButton).ToBeVisibleAsync();
-        await goToLoginButton.ClickAsync();
-
-        var loginButton = Page.GetByRole(AriaRole.Button, new() { Name = "Login" });
-        await Expect(loginButton).ToBeVisibleAsync();
+        await AssertVisibleButton("Login");
     }
 
     [Test]
     public async Task Should_login_into_app()
     {
-        await Page.GotoAsync("https://localhost:6001");
+        await Goto("/");
 
-        var tryNowButton = Page.GetByRole(AriaRole.Link, new() { Name = "Experimente agora" });
-        await Expect(tryNowButton).ToBeVisibleAsync();
-        await tryNowButton.ClickAsync();
+        await ClickOn(Link("Experimente agora"));
 
-        var email = TestData.Email;
-        await Page.GetByRole(AriaRole.Textbox).FillAsync(email);
+        var email = await Fill(TestData.Email);
 
-        var registerButton = Page.GetByRole(AriaRole.Button, new() { Name = "Cadastrar" });
-        await Expect(registerButton).ToBeVisibleAsync();
-        await registerButton.ClickAsync();
+        await ClickOn(Button("Cadastrar"));
+        await AssertVisibleText("Verifique seu email e utilize o link para definir sua senha de acesso.");
 
-        var message = Page.GetByText("Verifique seu email e utilize o link para definir sua senha de acesso.");
-        await Expect(message).ToBeVisibleAsync();
+        var token = await GetDemoToken(email);
+        await Goto($"/demo-setup?token={token}");
 
-        var settings = new DatabaseSettings { ConnectionString = "UserID=postgres;Password=postgres;Host=localhost;Port=5432;Database=syki-db;Pooling=true;" };
-        using var ctx = new SykiDbContext(new DbContextOptions<SykiDbContext>(), settings);
-        var demo = await ctx.Demos.FirstAsync(d => d.Email == email);
-        var token = demo.Id.ToString();
+        var password = await Fill("Test@123Test@123");
 
-        await Page.GotoAsync($"https://localhost:6001/demo-setup?token={token}");
-
-        var password = "Test@123Test@123";
-        await Page.GetByRole(AriaRole.Textbox).FillAsync(password);
-
-        var savePasswordButton = Page.GetByRole(AriaRole.Button, new() { Name = "Salvar" });
-        await Expect(savePasswordButton).ToBeVisibleAsync();
-        await savePasswordButton.ClickAsync();
-
-        var goToLoginButton = Page.GetByRole(AriaRole.Button, new() { Name = "Ir pro login" });
-        await Expect(goToLoginButton).ToBeVisibleAsync();
-        await goToLoginButton.ClickAsync();
+        await ClickOn(Button("Salvar"));
+        await ClickOn(Button("Ir pro login"));
 
         await Page.Locator("input[type=\"text\"]").FillAsync(email);
         await Page.Locator("input[type=\"password\"]").FillAsync(password);
 
-        var loginButton = Page.GetByRole(AriaRole.Button, new() { Name = "Login" });
-        await Expect(loginButton).ToBeVisibleAsync();
-        await loginButton.ClickAsync();
+        await ClickOn(Button("Login"));
 
-        await Expect(Page.GetByRole(AriaRole.Link, new() { Name = "Insights" })).ToBeVisibleAsync();
+        await AssertVisibleLink("Insights");
     }
 }

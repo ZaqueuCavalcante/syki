@@ -4,7 +4,7 @@ using Syki.Back.Database;
 using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
 
-namespace Syki.Tests.E2E;
+namespace Syki.Tests.Base;
 
 public class E2ETestBase : PageTest
 {

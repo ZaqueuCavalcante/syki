@@ -3,8 +3,8 @@
 0 - Clone o projeto pra sua máquina usando o git:
     - git clone https://github.com/ZaqueuCavalcante/syki.git
 
-1 - Instale (next, next, finish) o SDK do DotNet 8.0.100:
-    - https://dotnet.microsoft.com/pt-br/download/dotnet/thank-you/sdk-8.0.100-windows-x64-installer
+1 - Instale (next, next, finish) o SDK do DotNet 8.0.200:
+    - https://dotnet.microsoft.com/pt-br/download/dotnet/thank-you/sdk-8.0.200-windows-x64-installer
 
 2 - Instale o Postgres ou rode ele via Docker:
     - https://www.postgresql.org/download/windows/

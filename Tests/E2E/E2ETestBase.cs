@@ -61,11 +61,11 @@ public class E2ETestBase : PageTest
         return new SykiDbContext(new DbContextOptions<SykiDbContext>(), settings);
     }
 
-    protected async Task<string> GetDemoToken(string email)
+    protected async Task<string> GetRegisterToken(string email)
     {
         using var ctx = GetDbContext();
-        var demo = await ctx.Demos.FirstAsync(d => d.Email == email);
-        return demo.Id.ToString();
+        var register = await ctx.Demos.FirstAsync(d => d.Email == email);
+        return register.Id.ToString();
     }
 
     protected async Task<string> GetMfaCode(string email)

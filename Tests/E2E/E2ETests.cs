@@ -21,14 +21,14 @@ public class E2ETests : E2ETestBase
     [Test]
     public async Task Should_finish_a_pending_register_by_creating_user_password()
     {
-        await Goto("/demo");
+        await Goto("/register");
 
         var email = await Fill(TestData.Email);
         await ClickOn(Button("Cadastrar"));
         await AssertVisibleText("Verifique seu email");
 
-        var token = await GetDemoToken(email);
-        await Goto($"/demo-setup?token={token}");
+        var token = await GetRegisterToken(email);
+        await Goto($"/register-setup?token={token}");
 
         await Fill("Test@123Test@123");
 
@@ -41,14 +41,14 @@ public class E2ETests : E2ETestBase
     [Test]
     public async Task Should_login_into_app()
     {
-        await Goto("/demo");
+        await Goto("/register");
 
         var email = await Fill(TestData.Email);
         await ClickOn(Button("Cadastrar"));
         await AssertVisibleText("Verifique seu email");
 
-        var token = await GetDemoToken(email);
-        await Goto($"/demo-setup?token={token}");
+        var token = await GetRegisterToken(email);
+        await Goto($"/register-setup?token={token}");
 
         var password = await Fill("Test@123Test@123");
 
@@ -66,14 +66,14 @@ public class E2ETests : E2ETestBase
     [Test]
     public async Task Should_setup_mfa()
     {
-        await Goto("/demo");
+        await Goto("/register");
 
         var email = await Fill(TestData.Email);
         await ClickOn(Button("Cadastrar"));
         await AssertVisibleText("Verifique seu email");
 
-        var token = await GetDemoToken(email);
-        await Goto($"/demo-setup?token={token}");
+        var token = await GetRegisterToken(email);
+        await Goto($"/register-setup?token={token}");
 
         var password = await Fill("Test@123Test@123");
 
@@ -99,14 +99,14 @@ public class E2ETests : E2ETestBase
     [Test]
     public async Task Should_not_setup_mfa_with_wrong_code()
     {
-        await Goto("/demo");
+        await Goto("/register");
 
         var email = await Fill(TestData.Email);
         await ClickOn(Button("Cadastrar"));
         await AssertVisibleText("Verifique seu email");
 
-        var token = await GetDemoToken(email);
-        await Goto($"/demo-setup?token={token}");
+        var token = await GetRegisterToken(email);
+        await Goto($"/register-setup?token={token}");
 
         var password = await Fill("Test@123Test@123");
 

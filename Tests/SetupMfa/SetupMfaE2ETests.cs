@@ -3,7 +3,7 @@ using Microsoft.Playwright;
 
 namespace Syki.Tests.E2E;
 
-public class LoginMfaE2ETests : E2ETestBase
+public class SetupMfaE2ETests : E2ETestBase
 {
     [Test]
     public async Task Should_setup_mfa()

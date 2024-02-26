@@ -60,8 +60,6 @@
 
 
 
-- [] Finish register
-- [] Get Mfa key
 - [] Setup MFA
 - [] Login
 - [] Login MFA

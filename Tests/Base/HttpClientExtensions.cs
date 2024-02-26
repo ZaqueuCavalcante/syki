@@ -4,11 +4,47 @@ using Syki.Shared.CreateBook;
 using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 using Syki.Shared.CreateCampus;
+using Syki.Front.CreatePendingUserRegister;
+using Syki.Front.FinishUserRegister;
+using Syki.Front.GetMfaKey;
+using Syki.Shared.GetMfaKey;
 
 namespace Syki.Tests.Base;
 
 public static class HttpClientExtensions
 {
+    public static async Task<HttpResponseMessage> CreatePendingUserRegister(this HttpClient http, string email)
+    {
+        var client = new CreatePendingUserRegisterClient(http);
+        return await client.Create(email);
+    }
+
+    public static async Task<HttpResponseMessage> FinishUserRegister(this HttpClient http, string token, string password)
+    {
+        var client = new FinishUserRegisterClient(http);
+        return await client.Finish(token, password);
+    }
+
+    public static async Task<GetMfaKeyOut> GetMfaKey(this HttpClient http)
+    {
+        var client = new GetMfaKeyClient(http);
+        return await client.Get();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public static async Task<CreateUserOut> RegisterUser(this HttpClient client, CreateUserIn body)
     {
         var response = await client.PostHttpAsync("/users", body);

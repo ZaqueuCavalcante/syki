@@ -1,8 +1,3 @@
-using Syki.Back.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.Authorization;
-
 namespace Syki.Back.GetMfaKey;
 
 [ApiController, Authorize]

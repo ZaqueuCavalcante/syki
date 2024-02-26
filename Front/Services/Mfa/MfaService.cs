@@ -1,4 +1,3 @@
-using System.Net.Http.Json;
 using Syki.Shared.SetupMfa;
 using Syki.Shared.GetMfaKey;
 

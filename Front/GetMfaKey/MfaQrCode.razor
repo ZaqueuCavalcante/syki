@@ -20,7 +20,7 @@
     </MudCardContent>
 </MudCard>
 
-@inject IMfaService Mfa
+@inject GetMfaKeyClient Client
 
 @code
 {
@@ -34,13 +34,9 @@
     {
         _qrCodeLoading = true;
 
-        var result = await Mfa.GetMfaKey();
-
-        if (result != null)
-        {
-            var email = await GetUserEmail();
-            _codeBytes = GuidExtensions.GenerateQrCodeBytes(result.Key, email);
-        }
+        var result = await Client.Get();
+        var email = await GetUserEmail();
+        _codeBytes = GuidExtensions.GenerateQrCodeBytes(result.Key, email);
 
         _qrCodeLoading = false;
     }

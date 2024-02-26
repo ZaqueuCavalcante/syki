@@ -1,0 +1,12 @@
+using Syki.Shared.CreatePendingUserRegister;
+
+namespace Syki.Front.CreatePendingUserRegister;
+
+public class CreatePendingUserRegisterClient(HttpClient http)
+{
+    public async Task<HttpResponseMessage> Create(string email)
+    {
+        var data = new CreatePendingUserRegisterIn { Email = email };
+        return await http.PostAsJsonAsync("/user-register", data);
+    }
+}

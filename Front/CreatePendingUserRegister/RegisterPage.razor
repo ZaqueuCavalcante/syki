@@ -21,7 +21,7 @@
                     <MudText>Cadastre seu email para ter acesso ao sistema.</MudText>
                 </MudAlert>
                 <MudCardContent Class="mt-4">
-                    <SykiTextField Label="Email" AutoFocus="true" @bind-Value="_data.Email" OnKeyDown="Submit" />
+                    <SykiTextField Label="Email" AutoFocus="true" @bind-Value="_email" OnKeyDown="Submit" />
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton
@@ -39,15 +39,15 @@
     </MudForm>
 </MudContainer>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject CreatePendingUserRegisterClient Client
 
 @code
 {
     private bool _saved;
     private bool _loading;
     private MudForm _form;
-    CreatePendingDemoIn _data = new();
+    private string _email;
 
     private async Task Submit()
     {
@@ -55,7 +55,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/demos", _data);
+        var response = await Client.Create(_email);
         if (response.IsSuccessStatusCode)
         {
             _saved = true;

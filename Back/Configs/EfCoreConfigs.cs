@@ -1,5 +1,3 @@
-using Syki.Back.Database;
-
 namespace Syki.Back.Configs;
 
 public static class EfCoreConfigs

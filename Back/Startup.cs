@@ -1,6 +1,3 @@
-using Syki.Back.Configs;
-using Syki.Back.Database;
-
 namespace Syki.Back;
 
 public class Startup
@@ -28,7 +25,7 @@ public class Startup
 
     public static void Configure(IApplicationBuilder app, SykiDbContext ctx)
     {
-        // ctx.Database.EnsureDeleted();ctx.Database.EnsureCreated();
+        // ctx.ResetDb();
 
         app.UseCors();
 

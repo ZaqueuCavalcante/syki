@@ -1,5 +1,3 @@
-using Syki.Back.Exceptions;
-
 namespace Syki.Back.Configs;
 
 public static class HttpConfigs

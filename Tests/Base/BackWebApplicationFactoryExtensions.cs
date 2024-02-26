@@ -6,6 +6,15 @@ namespace Syki.Tests.Base;
 
 public static class BackWebApplicationFactoryExtensions
 {
+    public static HttpClient Http(this BackWebApplicationFactory factory)
+    {
+        return factory.CreateClient();
+    }
+
+
+
+
+
     public static async Task<HttpClient> LoggedAsAcademico(this BackWebApplicationFactory factory)
     {
         var client = factory.CreateClient();
@@ -29,7 +38,7 @@ public static class BackWebApplicationFactoryExtensions
     public static async Task<string?> GetDemoSetupToken(this BackWebApplicationFactory factory, string email)
     {
         using var ctx = factory.GetDbContext();
-        var demo = await ctx.Demos.FirstOrDefaultAsync(d => d.Email == email);
+        var demo = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Email == email);
         return demo?.Id.ToString();
     }
 

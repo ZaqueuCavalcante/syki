@@ -1,6 +1,5 @@
 using Syki.Back.Domain;
 using Syki.Back.Database;
-using Syki.Back.Extensions;
 using Syki.Back.CreateUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,11 +19,7 @@ public class IntegrationTestBase
         using var scope = _factory.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 
-        if (Env.IsTesting())
-        {
-            await ctx.Database.EnsureDeletedAsync();
-            await ctx.Database.EnsureCreatedAsync();
-        }
+        await ctx.ResetDbAsync();
 
         ctx.Add(new Faculdade { Id = Guid.Empty, Nome = "Syki" });
         await ctx.SaveChangesAsync();

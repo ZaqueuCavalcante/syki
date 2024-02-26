@@ -1,6 +1,5 @@
 using Syki.Back.Extensions;
 using System.Threading.RateLimiting;
-using Microsoft.AspNetCore.RateLimiting;
 
 namespace Syki.Back.Configs;
 

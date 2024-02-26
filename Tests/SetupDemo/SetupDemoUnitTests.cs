@@ -1,7 +1,6 @@
-using Syki.Shared;
 using Syki.Shared.SetupDemo;
-using Syki.Back.CreatePendingDemo;
 using Syki.Shared.CreateUser;
+using Syki.Back.CreatePendingUserRegister;
 
 namespace Syki.Tests.SetupDemo;
 
@@ -11,33 +10,33 @@ public class SetupDemoUnitTests
     public void Should_set_start_date_on_demo_setup()
     {
         // Arrange
-        var demo = new Demo("demail@syki.com");
+        var demo = new UserRegister("demail@syki.com");
 
         // Act
         demo.Setup();
 
         // Assert
-        demo.Start.Should().Be(DateOnly.FromDateTime(DateTime.Now));
+        demo.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
     }
 
     [Test]
     public void Should_set_end_date_on_demo_setup()
     {
         // Arrange
-        var demo = new Demo("demail@syki.com");
+        var demo = new UserRegister("demail@syki.com");
 
         // Act
         demo.Setup();
 
         // Assert
-        demo.End.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
+        demo.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
     }
 
     [Test]
     public void Should_return_error_when_setup_is_already_done()
     {
         // Arrange
-        var demo = new Demo("demail@syki.com");
+        var demo = new UserRegister("demail@syki.com");
         demo.Setup();
 
         // Act

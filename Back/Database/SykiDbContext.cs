@@ -7,6 +7,7 @@ using Audit.EntityFramework;
 using Syki.Back.CreateCampus;
 using Syki.Back.CreatePendingUserRegister;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Syki.Back.Extensions;
 
 namespace Syki.Back.Database;
 
@@ -58,5 +59,23 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<Enum>().HaveConversion<string>();
+    }
+
+    public async Task ResetDbAsync()
+    {
+        if (Env.IsTesting())
+        {
+            await Database.EnsureDeletedAsync();
+            await Database.EnsureCreatedAsync();
+        }
+    }
+
+    public void ResetDb()
+    {
+        if (Env.IsDevelopment())
+        {
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
+        }
     }
 }

@@ -1,7 +1,6 @@
 using Audit.Core;
 using Syki.Back.Audit;
 using Syki.Back.Domain;
-using Syki.Back.Database;
 using Syki.Back.Extensions;
 using Syki.Back.CreateBook;
 using Syki.Back.CreateUser;

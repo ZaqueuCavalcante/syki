@@ -64,7 +64,7 @@ public class E2ETestBase : PageTest
     protected async Task<string> GetRegisterToken(string email)
     {
         using var ctx = GetDbContext();
-        var register = await ctx.Demos.FirstAsync(d => d.Email == email);
+        var register = await ctx.UserRegisters.FirstAsync(d => d.Email == email);
         return register.Id.ToString();
     }
 

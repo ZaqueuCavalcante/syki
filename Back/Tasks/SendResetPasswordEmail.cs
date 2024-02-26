@@ -1,8 +1,3 @@
-using Syki.Back.Database;
-using Syki.Back.Services;
-using Syki.Back.Exceptions;
-using Microsoft.EntityFrameworkCore;
-
 namespace Syki.Back.Tasks;
 
 public class SendResetPasswordEmail

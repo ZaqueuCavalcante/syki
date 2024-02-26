@@ -70,8 +70,6 @@ public class AuthService : IAuthService
 
         await GenerateResetPasswordToken(user.Id);
 
-        var task = new SykiTask(new SendResetPasswordEmail { UserId = user.Id });
-        _ctx.Add(task);
         await _ctx.SaveChangesAsync();
 
         return user;

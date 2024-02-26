@@ -20,7 +20,7 @@ public class FakeEmailsService : IEmailsService
     public async Task SendUserRegisterEmailConfirmation(string to, string token)
     {
         await Task.Delay(0);
-        var link = $"{_settings.FrontUrl}/demo-setup?token={token}";
+        var link = $"{_settings.FrontUrl}/register-setup?token={token}";
         Console.WriteLine($"[LINK -> {link}]");
     }
 }

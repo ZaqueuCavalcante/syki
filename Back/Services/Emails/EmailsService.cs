@@ -29,7 +29,7 @@ public class EmailsService : IEmailsService
 
     public async Task SendUserRegisterEmailConfirmation(string to, string token)
     {
-        var link = $"{_settings.FrontUrl}/demo-setup?token={token}";
+        var link = $"{_settings.FrontUrl}/register-setup?token={token}";
         var body = new BrevoEmailMessage(
             sender: "syki@zaqbit.com",
             to: to,

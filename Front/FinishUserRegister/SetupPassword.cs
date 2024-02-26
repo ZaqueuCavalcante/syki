@@ -1,11 +1,10 @@
-namespace Syki.Shared.SetupDemo;
+namespace Syki.Front.FinishUserRegister;
 
-public class SetupDemoIn
+public class SetupPassword
 {
-    public string? Token { get; set; }
     public string Password { get; set; }
 
-    public SetupDemoPasswordValidation Validation { get; set; } = new();
+    public SetupPasswordValidation Validation { get; set; } = new();
 
     private readonly string Numbers = "0123456789";
     private readonly string Lowers = "abcdefghijklmnopqrstuvwxyz";

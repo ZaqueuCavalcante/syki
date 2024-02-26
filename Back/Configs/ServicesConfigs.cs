@@ -3,7 +3,6 @@ using Syki.Back.GetBooks;
 using Syki.Back.LoginMfa;
 using Syki.Back.SetupMfa;
 using Syki.Back.GetCampi;
-using Syki.Back.SetupDemo;
 using Syki.Back.GetMfaKey;
 using Syki.Back.CreateBook;
 using Syki.Back.Extensions;
@@ -11,6 +10,7 @@ using Syki.Back.CreateUser;
 using Syki.Back.GenerateJWT;
 using Syki.Back.CreateCampus;
 using Syki.Back.UpdateCampus;
+using Syki.Back.FinishUserRegister;
 using Syki.Back.CreatePendingUserRegister;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -21,13 +21,13 @@ public static class ServicesConfigs
     public static void AddServicesConfigs(this IServiceCollection services)
     {
         services.AddScoped<CreatePendingUserRegisterService>();
+        services.AddScoped<FinishUserRegisterService>();
 
 
 
 
         services.AddScoped<CreateBookService>();
         services.AddScoped<GetBooksService>();
-        services.AddScoped<SetupDemoService>();
         services.AddScoped<CreateUserService>();
         services.AddScoped<GenerateJWTService>();
         services.AddScoped<LoginService>();

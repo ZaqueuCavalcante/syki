@@ -1,4 +1,6 @@
 using Syki.Back.Database;
+using Syki.Front.FinishUserRegister;
+using Syki.Front.CreatePendingUserRegister;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
@@ -6,14 +8,50 @@ namespace Syki.Tests.Base;
 
 public static class BackWebApplicationFactoryExtensions
 {
-    public static HttpClient Http(this BackWebApplicationFactory factory)
+    public static HttpClient GetClient(this BackWebApplicationFactory factory)
     {
         return factory.CreateClient();
+    }
+
+    public static async Task<HttpResponseMessage> CreatePendingUserRegister(this HttpClient http, string email)
+    {
+        var client = new CreatePendingUserRegisterClient(http);
+        return await client.Create(email);
+    }
+
+    public static async Task<HttpResponseMessage> FinishUserRegister(this HttpClient http, string token, string password)
+    {
+        var client = new FinishUserRegisterClient(http);
+        return await client.Finish(token, password);
     }
 
 
 
 
+
+
+
+
+
+
+    public static async Task<string?> GetRegisterSetupToken(this BackWebApplicationFactory factory, string email)
+    {
+        using var ctx = factory.GetDbContext();
+        var register = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Email == email);
+        return register?.Id.ToString();
+    }
+
+
+
+
+
+
+
+
+    public static HttpClient Http(this BackWebApplicationFactory factory)
+    {
+        return factory.CreateClient();
+    }
 
     public static async Task<HttpClient> LoggedAsAcademico(this BackWebApplicationFactory factory)
     {
@@ -33,13 +71,6 @@ public static class BackWebApplicationFactoryExtensions
     {
         var scope = factory.Services.CreateScope();
         return scope.ServiceProvider.GetRequiredService<T>();
-    }
-
-    public static async Task<string?> GetDemoSetupToken(this BackWebApplicationFactory factory, string email)
-    {
-        using var ctx = factory.GetDbContext();
-        var demo = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Email == email);
-        return demo?.Id.ToString();
     }
 
     public static async Task<string?> GetResetPasswordToken(this BackWebApplicationFactory factory, Guid userId)

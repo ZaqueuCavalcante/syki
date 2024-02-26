@@ -21,11 +21,11 @@ public class CreateUserIn
         };
     }
 
-    public static CreateUserIn NewDemoAcademico(Guid institutionId, string email, string password)
+    public static CreateUserIn NewAcademico(Guid institutionId, string email, string password)
     {
         return new CreateUserIn
         {
-            Name = $"DEMO - {email}",
+            Name = email,
             Email = email,
             Password = password,
             InstitutionId = institutionId,

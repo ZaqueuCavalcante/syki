@@ -1,53 +1,53 @@
-using Syki.Shared.SetupDemo;
 using Syki.Shared.CreateUser;
+using Syki.Front.FinishUserRegister;
 using Syki.Back.CreatePendingUserRegister;
 
-namespace Syki.Tests.SetupDemo;
+namespace Syki.Tests.FinishUserRegister;
 
-public class SetupDemoUnitTests
+public class FinishUserRegisterUnitTests
 {
     [Test]
-    public void Should_set_start_date_on_demo_setup()
+    public void Should_set_start_date()
     {
         // Arrange
         var demo = new UserRegister("demail@syki.com");
 
         // Act
-        demo.Setup();
+        demo.Finish();
 
         // Assert
         demo.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
     }
 
     [Test]
-    public void Should_set_end_date_on_demo_setup()
+    public void Should_set_end_date()
     {
         // Arrange
         var demo = new UserRegister("demail@syki.com");
 
         // Act
-        demo.Setup();
+        demo.Finish();
 
         // Assert
         demo.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
     }
 
     [Test]
-    public void Should_return_error_when_setup_is_already_done()
+    public void Should_return_error_when_register_is_already_done()
     {
         // Arrange
         var demo = new UserRegister("demail@syki.com");
-        demo.Setup();
+        demo.Finish();
 
         // Act
-        Action act = () => demo.Setup();
+        Action act = () => demo.Finish();
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE025);
     }
 
     [Test]
-    public void Should_return_a_new_user_in_academico_for_demo()
+    public void Should_return_a_new_user_in_academico()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -55,10 +55,10 @@ public class SetupDemoUnitTests
         var password = "Test@123";
 
         // Act
-        var user = CreateUserIn.NewDemoAcademico(institutionId, email, password);
+        var user = CreateUserIn.NewAcademico(institutionId, email, password);
 
         // Assert
-        user.Name.Should().Be($"DEMO - {email}");
+        user.Name.Should().Be(email);
         user.Email.Should().Be(email);
         user.Password.Should().Be(password);
         user.InstitutionId.Should().Be(institutionId);
@@ -67,10 +67,10 @@ public class SetupDemoUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
-    public void Should_return_false_when_password_for_setup_demo_is_invalid(string password)
+    public void Should_return_false_when_password_is_invalid(string password)
     {
         // Arrange
-        var setup = new SetupDemoIn { Password = password };
+        var setup = new SetupPassword { Password = password };
 
         // Act
         setup.Validate();

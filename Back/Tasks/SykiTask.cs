@@ -1,3 +1,4 @@
+using Syki.Back.FinishUserRegister;
 using Syki.Back.CreatePendingUserRegister;
 
 namespace Syki.Back.Tasks;
@@ -26,8 +27,8 @@ public class SykiTask
         return new SykiTask(new SendUserRegisterEmailConfirmation { Email = email });
     }
 
-    public static SykiTask SeedInstitutionDemoData(Guid institutionId)
+    public static SykiTask SeedInstitutionData(Guid institutionId)
     {
-        return new SykiTask(new SeedInstitutionDemoData { InstitutionId = institutionId });
+        return new SykiTask(new SeedInstitutionData { InstitutionId = institutionId });
     }
 }

@@ -29,14 +29,14 @@
             else
             {
                 <MudCardContent Class="mt-4 pb-2 px-0">
-                    <PasswordTextField Value="@_data.Password" ValueChanged="HandlePasswordChange" OnKeyDown="Submit" Required="false" />
+                    <PasswordTextField Value="@_setup.Password" ValueChanged="HandlePasswordChange" OnKeyDown="Submit" Required="false" />
                 </MudCardContent>
-                <PasswordRequerimentsCard @bind-Validation="_data.Validation" />
+                <PasswordRequerimentsCard @bind-Validation="_setup.Validation" />
                 <MudCardActions>
                     <MudButton
                         Size="Size.Large"
                         OnClick="Submit"
-                        Disabled="@(!_data.IsValid())"
+                        Disabled="@(!_setup.IsValid())"
                         Variant="Variant.Filled"
                         Color="Color.Primary"
                         Class="mx-auto mb-4 px-12"
@@ -49,25 +49,25 @@
     </MudForm>
 </MudContainer>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
 @inject NavigationManager Nav
+@inject FinishUserRegisterClient Client
 
 @code
 {
     [Parameter]
     [SupplyParameterFromQuery]
-    public string Token { get; set; }
+    public string? Token { get; set; }
 
     private bool _saved;
     private bool _loading;
     private MudForm _form;
-    SetupDemoIn _data = new();
+    private SetupPassword _setup = new();
 
     private void HandlePasswordChange(string newValue)
     {
-        _data.Password = newValue;
-        _data.Validate();
+        _setup.Password = newValue;
+        _setup.Validate();
     }
 
     private void GoToLogin()
@@ -77,10 +77,8 @@
 
     private async Task Submit()
     {
-        _data.Token = Token;
-
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/demos/setup", _data);
+        var response = await Client.Finish(Token, _setup.Password );
         if (response.IsSuccessStatusCode)
         {
             _saved = true;

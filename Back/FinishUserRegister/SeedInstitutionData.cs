@@ -1,31 +1,19 @@
-using Syki.Shared;
 using Syki.Back.Domain;
-using Syki.Back.Database;
-using Syki.Back.Services;
-using Microsoft.EntityFrameworkCore;
 using Syki.Back.CreateCampus;
 
-namespace Syki.Back.Tasks;
+namespace Syki.Back.FinishUserRegister;
 
-public class SeedInstitutionDemoData
+public class SeedInstitutionData
 {
     public Guid InstitutionId { get; set; }
 }
 
-public class SeedInstitutionDemoDataHandler : ISykiTaskHandler<SeedInstitutionDemoData>
+public class SeedInstitutionDataHandler(SykiDbContext ctx, IProfessoresService professoresService) : ISykiTaskHandler<SeedInstitutionData>
 {
-    private readonly SykiDbContext _ctx;
-    private readonly IProfessoresService _professoresService;
-    public SeedInstitutionDemoDataHandler(SykiDbContext ctx, IProfessoresService professoresService)
-    {
-        _ctx = ctx;
-        _professoresService = professoresService;
-    }
-
-    public async Task Handle(SeedInstitutionDemoData task)
+    public async Task Handle(SeedInstitutionData task)
     {
         var id = task.InstitutionId;
-        var faculdade = await _ctx.Institutions.FirstAsync(f => f.Id == id);
+        var faculdade = await ctx.Institutions.FirstAsync(f => f.Id == id);
 
         var year = DateTime.Now.Year;
         faculdade.Periodos =
@@ -179,7 +167,7 @@ public class SeedInstitutionDemoDataHandler : ISykiTaskHandler<SeedInstitutionDe
         gradeAds.Vinculos.Add(new GradeDisciplina(faculdade.Disciplinas[28].Id, 5, 5, 45));
         gradeAds.Vinculos.Add(new GradeDisciplina(faculdade.Disciplinas[29].Id, 5, 6, 50));
         gradeAds.Vinculos.Add(new GradeDisciplina(faculdade.Disciplinas[30].Id, 5, 2, 25));
-        _ctx.Add(gradeAds);
+        ctx.Add(gradeAds);
 
         var ofertaAds = new Oferta(
             id,
@@ -189,15 +177,15 @@ public class SeedInstitutionDemoDataHandler : ISykiTaskHandler<SeedInstitutionDe
             faculdade.Periodos[0].Id,
             Turno.Noturno
         );
-        _ctx.Add(ofertaAds);
+        ctx.Add(ofertaAds);
 
-        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Davi Pessoa Ferraz"));
-        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Luciete Bezerra Alves"));
-        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Antonio Marques da Costa Júnior"));
-        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Paulo Marcelo Pedrosa de Almeida"));
-        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Josélia Pachêco de Santana"));
-        await _professoresService.Create(faculdade.Id, ProfessorIn.Demo("Manuela Abath Valença"));
+        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Davi Pessoa Ferraz"));
+        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Luciete Bezerra Alves"));
+        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Antonio Marques da Costa Júnior"));
+        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Paulo Marcelo Pedrosa de Almeida"));
+        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Josélia Pachêco de Santana"));
+        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Manuela Abath Valença"));
 
-        await _ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync();
     }
 }

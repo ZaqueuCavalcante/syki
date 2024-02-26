@@ -1,6 +1,6 @@
-namespace Syki.Shared.SetupDemo;
+namespace Syki.Front.FinishUserRegister;
 
-public class SetupDemoPasswordValidation
+public class SetupPasswordValidation
 {
     public bool HasNumbers { get; set; }
     public bool HasLower { get; set; }

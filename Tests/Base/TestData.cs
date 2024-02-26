@@ -26,7 +26,7 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> InvalidSetupDemoTokens()
+    public static IEnumerable<object[]> InvalidUserRegisterTokens()
     {
         var empty = Guid.Empty.ToString();
         var random = Guid.NewGuid().ToString();

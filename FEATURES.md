@@ -58,3 +58,13 @@
 - Ao clicar no link, loga como o aluno ou prof
 - Riscos de seguranca????
 
+
+
+- [] Finish register
+- [] Get Mfa key
+- [] Setup MFA
+- [] Login
+- [] Login MFA
+
+
+

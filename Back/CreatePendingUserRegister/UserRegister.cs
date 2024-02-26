@@ -15,7 +15,7 @@ public class UserRegister
         Email = email.ToLower();
     }
 
-    public void Setup()
+    public void Finish()
     {
         if (TrialStart != null)
             Throw.DE025.Now();

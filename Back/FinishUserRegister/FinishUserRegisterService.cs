@@ -1,13 +1,13 @@
 using Syki.Back.Domain;
 using Syki.Back.CreateUser;
-using Syki.Shared.SetupDemo;
 using Syki.Shared.CreateUser;
+using Syki.Shared.FinishUserRegister;
 
-namespace Syki.Back.SetupDemo;
+namespace Syki.Back.FinishUserRegister;
 
-public class SetupDemoService(SykiDbContext ctx, CreateUserService service)
+public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService service)
 {
-    public async Task Setup(SetupDemoIn data)
+    public async Task Finish(FinishUserRegisterIn data)
     {
         using var transaction = ctx.Database.BeginTransaction();
 
@@ -16,14 +16,14 @@ public class SetupDemoService(SykiDbContext ctx, CreateUserService service)
         if (demo == null)
             Throw.DE024.Now();
 
-        demo.Setup();
+        demo.Finish();
 
-        var institution = new Faculdade($"DEMO - {demo.Email}");
+        var institution = new Faculdade($"Instituição - {demo.Email}");
         ctx.Add(institution);
-        ctx.Add(SykiTask.SeedInstitutionDemoData(institution.Id));
+        ctx.Add(SykiTask.SeedInstitutionData(institution.Id));
         await ctx.SaveChangesAsync();
 
-        var userIn = CreateUserIn.NewDemoAcademico(institution.Id, demo.Email, data.Password);
+        var userIn = CreateUserIn.NewAcademico(institution.Id, demo.Email, data.Password);
         var user = await service.Create(userIn);
 
         await ctx.SaveChangesAsync();

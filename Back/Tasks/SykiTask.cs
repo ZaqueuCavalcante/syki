@@ -1,4 +1,4 @@
-using Syki.Shared;
+using Syki.Back.CreatePendingUserRegister;
 
 namespace Syki.Back.Tasks;
 
@@ -19,6 +19,11 @@ public class SykiTask
         Type = data.GetType().ToString();
         Data = data.Serialize();
         CreatedAt = DateTime.Now;
+    }
+
+    public static SykiTask SendUserRegisterEmailConfirmation(string email)
+    {
+        return new SykiTask(new SendUserRegisterEmailConfirmation { Email = email });
     }
 
     public static SykiTask SeedInstitutionDemoData(Guid institutionId)

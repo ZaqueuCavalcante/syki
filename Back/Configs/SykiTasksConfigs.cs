@@ -1,4 +1,4 @@
-using Syki.Back.Tasks;
+using Syki.Back.CreatePendingUserRegister;
 
 namespace Syki.Back.Configs;
 
@@ -8,7 +8,7 @@ public static class SykiTasksConfigs
     {
         services.AddTransient<SeedInstitutionDemoDataHandler>();
         services.AddTransient<SendResetPasswordEmailHandler>();
-        services.AddTransient<SendDemoEmailConfirmationHandler>();
+        services.AddTransient<SendUserRegisterEmailConfirmationHandler>();
 
         services.AddHostedService<SykiTasksProcessor>();
     }

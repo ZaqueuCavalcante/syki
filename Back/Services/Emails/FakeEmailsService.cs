@@ -17,7 +17,7 @@ public class FakeEmailsService : IEmailsService
         Console.WriteLine($"[LINK -> {link}]");
     }
 
-    public async Task SendDemoEmailConfirmation(string to, string token)
+    public async Task SendUserRegisterEmailConfirmation(string to, string token)
     {
         await Task.Delay(0);
         var link = $"{_settings.FrontUrl}/demo-setup?token={token}";

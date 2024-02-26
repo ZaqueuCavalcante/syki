@@ -1,0 +1,9 @@
+global using Syki.Shared;
+global using Syki.Back.Tasks;
+global using Syki.Back.Database;
+global using Syki.Back.Services;
+global using Syki.Back.Exceptions;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.RateLimiting;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;

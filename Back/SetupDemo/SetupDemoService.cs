@@ -1,11 +1,7 @@
-using Syki.Back.Tasks;
 using Syki.Back.Domain;
-using Syki.Back.Database;
-using Syki.Back.Exceptions;
 using Syki.Back.CreateUser;
 using Syki.Shared.SetupDemo;
 using Syki.Shared.CreateUser;
-using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.SetupDemo;
 
@@ -16,7 +12,7 @@ public class SetupDemoService(SykiDbContext ctx, CreateUserService service)
         using var transaction = ctx.Database.BeginTransaction();
 
         _ = Guid.TryParse(data.Token, out var id);
-        var demo = await ctx.Demos.FirstOrDefaultAsync(d => d.Id == id);
+        var demo = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Id == id);
         if (demo == null)
             Throw.DE024.Now();
 

@@ -1,4 +1,4 @@
-using Syki.Shared.CreatePendingDemo;
+using Syki.Shared.CreatePendingUserRegister;
 
 namespace Syki.Tests.Integration;
 
@@ -9,7 +9,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new CreatePendingDemoIn { Email = TestData.Email };
+        var body = new CreatePendingUserRegisterIn { Email = TestData.Email };
 
         // Act
         var response = await client.PostHttpAsync("/demos", body);
@@ -23,7 +23,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new CreatePendingDemoIn { Email = "demo.faculsyki.com" };
+        var body = new CreatePendingUserRegisterIn { Email = "demo.faculsyki.com" };
 
         // Act
         var response = await client.PostHttpAsync("/demos", body);
@@ -37,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new CreatePendingDemoIn { Email = TestData.Email };
+        var body = new CreatePendingUserRegisterIn { Email = TestData.Email };
         await client.PostHttpAsync("/demos", body);
 
         // Act
@@ -52,7 +52,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new CreatePendingDemoIn { Email = "6576247542354@gmail.com" };
+        var body = new CreatePendingUserRegisterIn { Email = "6576247542354@gmail.com" };
 
         // Act
         await client.PostHttpAsync("/demos", body);
@@ -67,15 +67,15 @@ public partial class IntegrationTests : IntegrationTestBase
         ";
         var tasks = await ctx.Database.SqlQuery<SykiTask>(sql).ToListAsync();
         tasks.Should().ContainSingle();
-        typeof(SykiTask).Assembly.GetType(tasks[0].Type).Should().Be<SendDemoEmailConfirmation>();
+        typeof(SykiTask).Assembly.GetType(tasks[0].Type).Should().Be<SendUserRegisterEmailConfirmation>();
     }
 
     [Test]
     public async Task Should_return_error_when_demo_not_found()
     {
         // Arrange
-        var task = new SendDemoEmailConfirmation { Email = TestData.Email };
-        var handler = _factory.GetService<SendDemoEmailConfirmationHandler>();
+        var task = new SendUserRegisterEmailConfirmation { Email = TestData.Email };
+        var handler = _factory.GetService<SendUserRegisterEmailConfirmationHandler>();
 
         // Act
         Func<Task> act = async () => { await handler.Handle(task); };
@@ -89,11 +89,11 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var body = new CreatePendingDemoIn { Email = TestData.Email };
+        var body = new CreatePendingUserRegisterIn { Email = TestData.Email };
         await client.PostHttpAsync("/demos", body);
 
-        var task = new SendDemoEmailConfirmation { Email = body.Email };
-        var handler = _factory.GetService<SendDemoEmailConfirmationHandler>();
+        var task = new SendUserRegisterEmailConfirmation { Email = body.Email };
+        var handler = _factory.GetService<SendUserRegisterEmailConfirmationHandler>();
 
         // Act
         Func<Task> act = async () => { await handler.Handle(task); };

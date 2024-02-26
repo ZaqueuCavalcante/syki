@@ -1,5 +1,5 @@
 using Syki.Shared.SetupDemo;
-using Syki.Shared.CreatePendingDemo;
+using Syki.Shared.CreatePendingUserRegister;
 
 namespace Syki.Tests.Integration;
 
@@ -11,7 +11,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var email = TestData.Email;
-        await client.PostHttpAsync("/demos", new CreatePendingDemoIn { Email = email });
+        await client.PostHttpAsync("/demos", new CreatePendingUserRegisterIn { Email = email });
 
         var token = await _factory.GetDemoSetupToken(email);
         var body = new SetupDemoIn { Token = token, Password = "Lalala@123Lalala@123" };
@@ -29,7 +29,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        await client.PostHttpAsync("/demos", new CreatePendingDemoIn { Email = TestData.Email });
+        await client.PostHttpAsync("/demos", new CreatePendingUserRegisterIn { Email = TestData.Email });
 
         var body = new SetupDemoIn { Token = token, Password = "Lalala@123Lalala@123" };
 
@@ -46,7 +46,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var email = TestData.Email;
-        await client.PostHttpAsync("/demos", new CreatePendingDemoIn { Email = email });
+        await client.PostHttpAsync("/demos", new CreatePendingUserRegisterIn { Email = email });
 
         var token = await _factory.GetDemoSetupToken(email);
 
@@ -67,7 +67,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var email = TestData.Email;
-        await client.PostHttpAsync("/demos", new CreatePendingDemoIn { Email = email });
+        await client.PostHttpAsync("/demos", new CreatePendingUserRegisterIn { Email = email });
 
         var token = await _factory.GetDemoSetupToken(email);
 
@@ -87,7 +87,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var email = TestData.Email;
-        await client.PostHttpAsync("/demos", new CreatePendingDemoIn { Email = email });
+        await client.PostHttpAsync("/demos", new CreatePendingUserRegisterIn { Email = email });
 
         var token = await _factory.GetDemoSetupToken(email);
         var body = new SetupDemoIn { Token = token, Password = "Lalala@123Lalala@123" };
@@ -107,7 +107,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var email = TestData.Email;
-        await client.PostHttpAsync("/demos", new CreatePendingDemoIn { Email = email });
+        await client.PostHttpAsync("/demos", new CreatePendingUserRegisterIn { Email = email });
 
         var token = await _factory.GetDemoSetupToken(email);
         var body = new SetupDemoIn { Token = token, Password = "Lalala@123Lalala@123" };
@@ -135,7 +135,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = _factory.CreateClient();
         var email = TestData.Email;
-        await client.PostHttpAsync("/demos", new CreatePendingDemoIn { Email = email });
+        await client.PostHttpAsync("/demos", new CreatePendingUserRegisterIn { Email = email });
 
         var token = await _factory.GetDemoSetupToken(email);
         var body = new SetupDemoIn { Token = token, Password = "Lalala@123Lalala@123" };

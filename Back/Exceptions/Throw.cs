@@ -26,8 +26,8 @@ public static class Throw
     public const string DE021 = "Horário inválido.";
     public const string DE022 = "Horários conflitantes.";
     public const string DE023 = "A data de início deve ser menor que a de fim de período de matrícula.";
-    public const string DE024 = "Demo não encontrada.";
-    public const string DE025 = "Demo token inválido.";
+    public const string DE024 = "Registro não encontrado.";
+    public const string DE025 = "Token de registro inválido.";
     public const string DE026 = "Já existe um período com esse id.";
     public const string DE027 = "MFA token inválido.";
 

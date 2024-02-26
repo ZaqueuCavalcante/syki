@@ -27,7 +27,7 @@ public class EmailsService : IEmailsService
         await _client.PostAsJsonAsync("", body);
     }
 
-    public async Task SendDemoEmailConfirmation(string to, string token)
+    public async Task SendUserRegisterEmailConfirmation(string to, string token)
     {
         var link = $"{_settings.FrontUrl}/demo-setup?token={token}";
         var body = new BrevoEmailMessage(

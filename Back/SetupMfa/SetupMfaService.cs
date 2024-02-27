@@ -1,8 +1,4 @@
-using Syki.Shared;
 using Syki.Back.CreateUser;
-using Syki.Back.Exceptions;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.SetupMfa;
 

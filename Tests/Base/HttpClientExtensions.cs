@@ -1,13 +1,14 @@
 using Syki.Shared;
 using Syki.Shared.Login;
-using Syki.Shared.CreateBook;
-using Syki.Shared.CreateUser;
-using static Syki.Back.Configs.AuthorizationConfigs;
-using Syki.Shared.CreateCampus;
-using Syki.Front.CreatePendingUserRegister;
-using Syki.Front.FinishUserRegister;
+using Syki.Front.SetupMfa;
 using Syki.Front.GetMfaKey;
 using Syki.Shared.GetMfaKey;
+using Syki.Shared.CreateBook;
+using Syki.Shared.CreateUser;
+using Syki.Shared.CreateCampus;
+using Syki.Front.FinishUserRegister;
+using Syki.Front.CreatePendingUserRegister;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Base;
 
@@ -31,6 +32,11 @@ public static class HttpClientExtensions
         return await client.Get();
     }
 
+    public static async Task<bool> SetupMfa(this HttpClient http, string code)
+    {
+        var client = new SetupMfaClient(http);
+        return await client.Setup(code);
+    }
 
 
 

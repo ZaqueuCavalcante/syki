@@ -40,7 +40,7 @@
     </MudCardContent>
 </MudCard>
 
-@inject IMfaService Mfa
+@inject SetupMfaClient Client
 @inject IDialogService DialogService
 
 @code
@@ -58,7 +58,7 @@
         if (_userCode.OnlyNumbers().Length == 6)
         {
             _validateCodeLoading = true;
-            _codeIsCorrect = await Mfa.EnableUserMfa(_userCode);
+            _codeIsCorrect = await Client.Setup(_userCode);
             _showCodeFeedback = true;
             _validateCodeLoading = false;
         }
@@ -77,6 +77,6 @@
             DisableBackdropClick = true,
             MaxWidth = MaxWidth.ExtraSmall,
         };
-        await DialogService.ShowAsync<MfaSetupDialog>("", options);
+        await DialogService.ShowAsync<SetupMfaDialog>("", options);
     }
 }

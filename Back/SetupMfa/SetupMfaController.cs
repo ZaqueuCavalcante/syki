@@ -1,8 +1,4 @@
-using Syki.Back.Extensions;
 using Syki.Shared.SetupMfa;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Syki.Back.SetupMfa;
 

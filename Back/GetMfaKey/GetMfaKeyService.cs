@@ -1,6 +1,5 @@
 using Syki.Back.CreateUser;
 using Syki.Shared.GetMfaKey;
-using Microsoft.AspNetCore.Identity;
 
 namespace Syki.Back.GetMfaKey;
 

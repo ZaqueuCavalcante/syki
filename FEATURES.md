@@ -27,7 +27,6 @@
 - Datadog (free?)
 - Reduzir custo de infra por uso excessivo de memoria
 - Remover todas as snackbars pq sao dificeis de testar????
-- Criar CLIENTS no front e usar em todos os testes pra chamada de API...
 
 
 # Demo
@@ -60,9 +59,5 @@
 
 
 
-- [] Setup MFA
 - [] Login
 - [] Login MFA
-
-
-

@@ -1,4 +1,4 @@
-using Syki.Front.Services;
+using Syki.Front.SetupMfa;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Syki.Front.Configs;
@@ -10,7 +10,6 @@ public static class ServicesConfigs
         builder.Services.AddScoped<CreatePendingUserRegisterClient>();
         builder.Services.AddScoped<FinishUserRegisterClient>();
         builder.Services.AddScoped<GetMfaKeyClient>();
-
-        builder.Services.AddScoped<IMfaService, MfaService>();
+        builder.Services.AddScoped<SetupMfaClient>();
     }
 }

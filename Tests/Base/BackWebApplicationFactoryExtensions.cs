@@ -1,6 +1,4 @@
 using Syki.Back.Database;
-using Syki.Front.FinishUserRegister;
-using Syki.Front.CreatePendingUserRegister;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
@@ -13,33 +11,11 @@ public static class BackWebApplicationFactoryExtensions
         return factory.CreateClient();
     }
 
-
-
-
-
-
-
-
-
-
-
     public static async Task<string?> GetRegisterSetupToken(this BackWebApplicationFactory factory, string email)
     {
         using var ctx = factory.GetDbContext();
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Email == email);
         return register?.Id.ToString();
-    }
-
-
-
-
-
-
-
-
-    public static HttpClient Http(this BackWebApplicationFactory factory)
-    {
-        return factory.CreateClient();
     }
 
     public static async Task<HttpClient> LoggedAsAcademico(this BackWebApplicationFactory factory)

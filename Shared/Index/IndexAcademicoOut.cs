@@ -12,5 +12,5 @@ public class IndexAcademicoOut
 
     public int Professores { get; set; }
     public int Alunos { get; set; }
-    public int Livros { get; set; }
+    public int Notifications { get; set; }
 }

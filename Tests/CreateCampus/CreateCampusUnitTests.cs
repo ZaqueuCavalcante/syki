@@ -1,6 +1,6 @@
 using Syki.Back.CreateCampus;
 
-namespace Syki.Tests.CreateBook;
+namespace Syki.Tests.CreateCampus;
 
 public class CreateCampusUnitTests
 {

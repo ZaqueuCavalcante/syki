@@ -1,11 +1,8 @@
 using Syki.Back.Login;
-using Syki.Back.GetBooks;
 using Syki.Back.LoginMfa;
 using Syki.Back.SetupMfa;
 using Syki.Back.GetCampi;
 using Syki.Back.GetMfaKey;
-using Syki.Back.CreateBook;
-using Syki.Back.Extensions;
 using Syki.Back.CreateUser;
 using Syki.Back.GenerateJWT;
 using Syki.Back.CreateCampus;
@@ -26,8 +23,6 @@ public static class ServicesConfigs
 
 
 
-        services.AddScoped<CreateBookService>();
-        services.AddScoped<GetBooksService>();
         services.AddScoped<CreateUserService>();
         services.AddScoped<GenerateJWTService>();
         services.AddScoped<LoginService>();

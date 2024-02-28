@@ -51,9 +51,9 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.Login(userNovaRoma);
 
         // Assert
-        var books = await client.GetAsync<List<GetCampusOut>>("/campi");
-        books.Should().HaveCount(1);
-        books[0].Name.Should().Be("Agreste I");
-        books[0].City.Should().Be("Caruaru - PE");
+        var campi = await client.GetAsync<List<GetCampusOut>>("/campi");
+        campi.Should().HaveCount(1);
+        campi[0].Name.Should().Be("Agreste I");
+        campi[0].City.Should().Be("Caruaru - PE");
     }
 }

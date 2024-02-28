@@ -1,8 +1,6 @@
 using Audit.Core;
 using Syki.Back.Audit;
 using Syki.Back.Domain;
-using Syki.Back.Extensions;
-using Syki.Back.CreateBook;
 using Syki.Back.CreateUser;
 using Syki.Back.CreateCampus;
 
@@ -27,7 +25,6 @@ public static class AuditConfigs
                 .Map<Faculdade, AuditLog>()
                 .Map<Grade, AuditLog>()
                 .Map<GradeDisciplina, AuditLog>()
-                .Map<Book, AuditLog>()
                 .Map<Oferta, AuditLog>()
                 .Map<Professor, AuditLog>()
                 .Map<SykiUser, AuditLog>()

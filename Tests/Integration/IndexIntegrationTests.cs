@@ -61,7 +61,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Turmas.Should().Be(0);
         response.Professores.Should().Be(0);
         response.Alunos.Should().Be(0);
-        response.Livros.Should().Be(0);
+        response.Notifications.Should().Be(0);
     }
 
     [Test]

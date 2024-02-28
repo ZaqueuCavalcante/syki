@@ -16,7 +16,7 @@
             Turmas = 0,
             Professores = 5,
             Alunos = 45,
-            Livros = 96,
+            Notifications = 96,
         };
 
         var mock = Services.AddMockHttpClient();
@@ -38,6 +38,6 @@
         data[5].TextContent.MarkupMatches("0 Turmas");
         data[6].TextContent.MarkupMatches("5 Professores");
         data[7].TextContent.MarkupMatches("45 Alunos");
-        data[8].TextContent.MarkupMatches("96 Livros");
+        data[8].TextContent.MarkupMatches("96 Notificações");
     }
 }

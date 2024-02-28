@@ -48,7 +48,7 @@ public class IndexService : IIndexService
                 (SELECT COUNT(1) FROM syki.turmas WHERE faculdade_id = f.id) AS turmas,
                 (SELECT COUNT(1) FROM syki.professores WHERE faculdade_id = f.id) AS professores,
                 (SELECT COUNT(1) FROM syki.alunos WHERE faculdade_id = f.id) AS alunos,
-                (SELECT COUNT(1) FROM syki.books WHERE institution_id = f.id) AS livros
+                (SELECT COUNT(1) FROM syki.notifications WHERE faculdade_id = f.id) AS notifications
             FROM
             	syki.faculdades f
             WHERE

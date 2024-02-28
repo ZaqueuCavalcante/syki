@@ -1,7 +1,6 @@
 using Syki.Back.Audit;
 using Syki.Back.Domain;
 using Syki.Back.Settings;
-using Syki.Back.CreateBook;
 using Syki.Back.CreateUser;
 using Audit.EntityFramework;
 using Syki.Back.CreateCampus;
@@ -12,7 +11,6 @@ namespace Syki.Back.Database;
 
 public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSettings settings) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
 {
-    public DbSet<Book> Books { get; set; }
     public DbSet<UserRegister> UserRegisters { get; set; }
 
     public DbSet<AuditLog> AuditLogs { get; set; }

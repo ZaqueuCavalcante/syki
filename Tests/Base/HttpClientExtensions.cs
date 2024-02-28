@@ -3,7 +3,6 @@ using Syki.Shared.Login;
 using Syki.Front.SetupMfa;
 using Syki.Front.GetMfaKey;
 using Syki.Shared.GetMfaKey;
-using Syki.Shared.CreateBook;
 using Syki.Shared.CreateUser;
 using Syki.Shared.CreateCampus;
 using Syki.Front.FinishUserRegister;
@@ -107,14 +106,6 @@ public static class HttpClientExtensions
         }
 
         return null!;
-    }
-
-    public static async Task<BookOut> CreateBook(
-        this HttpClient client,
-        string title = "Manual de DevOps"
-    ) {
-        var body = new CreateBookIn { Title = "Manual de DevOps" };
-        return await client.PostAsync<BookOut>("/books", body);
     }
 
     public static async Task<CampusOut> NewCampus(

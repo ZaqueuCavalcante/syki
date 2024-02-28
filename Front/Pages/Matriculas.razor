@@ -4,7 +4,7 @@
 <PageTitle>Matrículas</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.Article" Title="Matrículas" ButtonText="Nova Matrícula" OnClick="OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.Article" Title="Matrículas" ButtonText="Novo Período de Matrícula" OnClick="OpenDialog"/>
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudText>Utilize os períodos de matrícula para organizar as informações durante o ano letivo.</MudText>
@@ -65,6 +65,7 @@
     private async Task OpenDialog()
     {
         var options = new DialogOptions {
+            Position = DialogPosition.TopCenter,
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };

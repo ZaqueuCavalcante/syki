@@ -9,15 +9,6 @@ public class AlunosController : ControllerBase
     private readonly IAlunosService _service;
     public AlunosController(IAlunosService service) => _service = service;
 
-    [HttpPost("")]
-    [Authorize(Roles = Academico)]
-    public async Task<IActionResult> Create([FromBody] AlunoIn data)
-    {
-        var aluno = await _service.Create(User.Facul(), data);
-
-        return Ok(aluno);
-    }
-
     [HttpGet("disciplinas")]
     [Authorize(Roles = Aluno)]
     public async Task<IActionResult> GetDisciplinas()

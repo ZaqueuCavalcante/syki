@@ -1,15 +1,12 @@
-using Syki.Back.Domain;
 using Syki.Back.CreateUser;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.SendResetPasswordToken;
 
-public class ResetPasswordConfig : IEntityTypeConfiguration<ResetPassword>
+public class ResetPasswordTokenConfig : IEntityTypeConfiguration<ResetPasswordToken>
 {
-    public void Configure(EntityTypeBuilder<ResetPassword> resetPassword)
+    public void Configure(EntityTypeBuilder<ResetPasswordToken> resetPassword)
     {
-        resetPassword.ToTable("reset_passwords");
+        resetPassword.ToTable("reset_password_tokens");
 
         resetPassword.HasKey(rp => rp.Id);
         resetPassword.Property(rp => rp.Id).ValueGeneratedNever();

@@ -1,20 +1,14 @@
 using Dapper;
 using Npgsql;
-using Syki.Shared;
 using System.Text;
-using Syki.Back.Tasks;
-using Syki.Back.Database;
 using Syki.Back.Settings;
-using Syki.Back.Exceptions;
 using Syki.Back.CreateUser;
 using System.Security.Claims;
 using Syki.Shared.CreateUser;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using ResetPassword = Syki.Back.Domain.ResetPassword;
+using Syki.Back.SendResetPasswordToken;
 
 namespace Syki.Back.Services;
 
@@ -66,54 +60,18 @@ public class AuthService : IAuthService
 
     public async Task<CreateUserOut> Register(CreateUserIn body)
     {
-        var user = await RegisterUser(body);
+        var userOut = await RegisterUser(body);
 
-        await GenerateResetPasswordToken(user.Id);
-
-        await _ctx.SaveChangesAsync();
-
-        return user;
-    }
-
-    public async Task GenerateResetPasswordToken(Guid userId)
-    {
-        var user = await _userManager.FindByIdAsync(userId.ToString());
-
-        if (user == null)
-            Throw.DE019.Now();
+        var user = await _userManager.FindByIdAsync(userOut.Id.ToString());
 
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-        var reset = new ResetPassword(user.Id, token);
+        var reset = new ResetPasswordToken(user.Id, token);
         _ctx.Add(reset);
-        await _ctx.SaveChangesAsync();
-    }
 
-    public async Task<ResetPasswordOut> ResetPassword(ResetPasswordIn body)
-    {
-        _ = Guid.TryParse(body.Token, out var id);
-        var reset = await _ctx.ResetPasswords
-            .FirstOrDefaultAsync(r => r.Id == id);
-
-        if (reset == null)
-            Throw.DE019.Now();
-
-        var user = await _userManager.FindByIdAsync(reset!.UserId.ToString());
-
-        var result = await _userManager.ResetPasswordAsync(user!, reset.Token, body.Password);
-
-        if (!result.Succeeded)
-        {
-            if (result.Errors.Any(e => e.Code == "InvalidToken"))
-                Throw.DE020.Now();
-            
-            Throw.DE015.Now();
-        }
-
-        reset.Use();
         await _ctx.SaveChangesAsync();
 
-        return new ResetPasswordOut { Ok = true };
+        return userOut;
     }
 
     public async Task<string> GenerateAccessToken(string email)

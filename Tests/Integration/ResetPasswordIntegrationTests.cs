@@ -1,6 +1,6 @@
 using Syki.Shared;
-using Syki.Shared.CreateUser;
 using Syki.Shared.Login;
+using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -26,15 +26,15 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_salvar_o_reset_password_ao_criar_um_usuario()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var client = _factory.GetClient();
+        var faculdade = await client.CreateInstitution();
         var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         var token = await _factory.GetResetPasswordToken(user.Id);
         using var ctx = _factory.GetDbContext();
 
         // Act
-        var reset = await ctx.ResetPasswords.FirstAsync(r => r.UserId == user.Id);
+        var reset = await ctx.ResetPasswordTokens.FirstAsync(r => r.UserId == user.Id);
 
         // Assert
         reset.Id.Should().Be(token);
@@ -65,7 +65,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new ResetPasswordIn { Token = Guid.NewGuid().ToString(), Password = "My@new@strong@P4ssword" };
 
         // Act
-        var response = await client.PostHttpAsync("/users/reset-password", body);
+        var response = await client.PostHttpAsync("/reset-password", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE019);
@@ -75,8 +75,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_resetar_a_senha_do_usuario()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var client = _factory.GetClient();
+        var faculdade = await client.CreateInstitution();
         var user = await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
 
         client.RemoveAuthToken();
@@ -84,10 +84,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new ResetPasswordIn { Token = token!, Password = "My@newP4sswordMy@newP4ssword" };
 
         // Act
-        var response = await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
+        var response = await client.PostAsync("/reset-password", body.ToStringContent());
 
         // Assert
-        response.Ok.Should().BeTrue();
+        response.IsSuccessStatusCode.Should().BeTrue();
     }
 
     [Test]
@@ -103,7 +103,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await _factory.GetResetPasswordToken(user.Id);
 
         var body = new ResetPasswordIn { Token = token!, Password = "My@new@strong@P4ssword" };
-        await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
+        await client.PostAsync("/reset-password", body);
 
         var data = new LoginIn { Email = user.Email, Password = body.Password };
 
@@ -127,7 +127,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await _factory.GetResetPasswordToken(userOut.Id);
 
         var body = new ResetPasswordIn { Token = token!, Password = "My@new@strong@P4ssword" };
-        await client.PostAsync<ResetPasswordOut>("/users/reset-password", body);
+        await client.PostAsync("/reset-password", body);
 
         var data = new LoginIn { Email = userIn.Email, Password = userIn.Password };
 
@@ -150,10 +150,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await _factory.GetResetPasswordToken(user.Id);
 
         var body = new ResetPasswordIn { Token = token!, Password = "My@new@strong@P4ssword" };
-        await client.PostHttpAsync("/users/reset-password", body);
+        await client.PostHttpAsync("/reset-password", body);
 
         // Act
-        var response = await client.PostHttpAsync("/users/reset-password", body);
+        var response = await client.PostHttpAsync("/reset-password", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE020);
@@ -174,7 +174,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var body = new ResetPasswordIn { Token = token!, Password = password };
 
         // Act
-        var response = await client.PostHttpAsync("/users/reset-password", body);
+        var response = await client.PostHttpAsync("/reset-password", body);
 
         // Assert
         await response.AssertBadRequest(Throw.DE015);

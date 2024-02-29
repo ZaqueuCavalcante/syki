@@ -1,5 +1,4 @@
 using Syki.Shared.CreateUser;
-using Microsoft.AspNetCore.Identity;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.CreateUser;

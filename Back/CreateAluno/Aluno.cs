@@ -1,27 +1,26 @@
-using Syki.Shared;
-using Syki.Back.Exceptions;
+using Syki.Back.Domain;
 using Syki.Back.CreateUser;
 
-namespace Syki.Back.Domain;
+namespace Syki.Back.CreateAluno;
 
 public class Aluno
 {
-    public Guid Id { get; set; }
-    public Guid FaculdadeId { get; set; }
-    public SykiUser User { get; set; }
-    public Guid OfertaId { get; set; }
+    public Guid Id { get; }
+    public Guid InstitutionId { get; }
+    public SykiUser User { get; }
+    public Guid OfertaId { get; }
     public Oferta Oferta { get; set; }
-    public string Nome { get; set; }
-    public string Matricula { get; set; }
+    public string Nome { get; private set; }
+    public string Matricula { get; }
 
     public Aluno(
         Guid id,
-        Guid faculdadeId,
+        Guid institutionId,
         string nome,
         Guid ofertaId
     ) {
         Id = id;
-        FaculdadeId = faculdadeId;
+        InstitutionId = institutionId;
         OfertaId = ofertaId;
         SetNome(nome);
         Matricula = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";

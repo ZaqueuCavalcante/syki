@@ -10,6 +10,9 @@ using Syki.Back.UpdateCampus;
 using Syki.Back.FinishUserRegister;
 using Syki.Back.CreatePendingUserRegister;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Syki.Back.CreateAluno;
+using Syki.Back.ResetPassword;
+using Syki.Back.SendResetPasswordToken;
 
 namespace Syki.Back.Configs;
 
@@ -19,10 +22,10 @@ public static class ServicesConfigs
     {
         services.AddScoped<CreatePendingUserRegisterService>();
         services.AddScoped<FinishUserRegisterService>();
+        services.AddScoped<ResetPasswordService>();
+        services.AddScoped<SendResetPasswordEmailService>();
 
-
-
-
+        services.AddScoped<CreateAlunoService>();
         services.AddScoped<CreateUserService>();
         services.AddScoped<GenerateJWTService>();
         services.AddScoped<LoginService>();

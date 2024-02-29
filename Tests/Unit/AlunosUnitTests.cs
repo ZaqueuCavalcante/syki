@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Syki.Back.Domain;
 using FluentAssertions;
 using Syki.Back.Exceptions;
+using Syki.Back.CreateAluno;
 
 namespace Syki.Tests.Unit;
 
@@ -37,7 +38,7 @@ public class AlunosUnitTests
         var aluno = new Aluno(userId, faculdadeId, nome, ofertaId);
 
         // Assert
-        aluno.FaculdadeId.Should().Be(faculdadeId);
+        aluno.InstitutionId.Should().Be(faculdadeId);
     }
 
     [Test]

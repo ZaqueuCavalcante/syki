@@ -11,8 +11,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_um_aluno_o_vinculando_com_uma_oferta()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var client = _factory.GetClient();
+        var faculdade = await client.CreateInstitution();
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await client.NewCampus("Agreste I", "Caruaru - PE");
@@ -36,8 +36,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_um_aluno_nem_seu_usuario_quando_der_erro()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var client = _factory.GetClient();
+        var faculdade = await client.CreateInstitution();
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await client.NewCampus("Agreste I", "Caruaru - PE");
@@ -80,8 +80,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_as_disciplinas_cursadas_pelo_aluno()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var client = _factory.GetClient();
+        var faculdade = await client.CreateInstitution();
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var campus = await client.NewCampus("Agreste I", "Caruaru - PE");

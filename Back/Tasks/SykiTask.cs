@@ -1,4 +1,5 @@
 using Syki.Back.FinishUserRegister;
+using Syki.Back.SendResetPasswordToken;
 using Syki.Back.CreatePendingUserRegister;
 
 namespace Syki.Back.Tasks;
@@ -25,6 +26,11 @@ public class SykiTask
     public static SykiTask SendUserRegisterEmailConfirmation(string email)
     {
         return new SykiTask(new SendUserRegisterEmailConfirmation { Email = email });
+    }
+
+    public static SykiTask SendResetPasswordEmail(Guid userId)
+    {
+        return new SykiTask(new SendResetPasswordEmail { UserId = userId });
     }
 
     public static SykiTask SeedInstitutionData(Guid institutionId)

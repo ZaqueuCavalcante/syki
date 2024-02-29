@@ -218,7 +218,7 @@ public static class HttpClientExtensions
     {
         var bodyReset = new ResetPasswordIn { Token = token, Password = "My@newP4sswordMy@newP4ssword" };
 
-        await client.PostAsync<ResetPasswordOut>("/users/reset-password", bodyReset);
+        await client.PostAsync("/reset-password", bodyReset);
 
         return bodyReset.Password;
     }

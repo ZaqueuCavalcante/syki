@@ -24,7 +24,7 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
         await ctx.SaveChangesAsync();
 
         var userIn = CreateUserIn.NewAcademico(institution.Id, demo.Email, data.Password);
-        var user = await service.Create(userIn);
+        await service.Create(userIn);
 
         await ctx.SaveChangesAsync();
         transaction.Commit();

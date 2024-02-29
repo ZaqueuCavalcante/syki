@@ -267,7 +267,7 @@ public static class TestData
             ("/cursos", true),
             ("/login", false),
             ("/mfa/login", false),
-            ("/users/reset-password", false),
+            ("/reset-password", false),
         })
         {
             yield return new object[] { text };

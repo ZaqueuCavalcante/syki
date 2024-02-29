@@ -1,3 +1,4 @@
+using Syki.Back.CreateAluno;
 using Syki.Back.CreateCampus;
 
 namespace Syki.Back.Domain;

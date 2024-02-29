@@ -3,7 +3,9 @@ using Syki.Back.Domain;
 using Syki.Back.Settings;
 using Syki.Back.CreateUser;
 using Audit.EntityFramework;
+using Syki.Back.CreateAluno;
 using Syki.Back.CreateCampus;
+using Syki.Back.SendResetPasswordToken;
 using Syki.Back.CreatePendingUserRegister;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
@@ -29,7 +31,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<UserNotification> UserNotifications { get; set; }
     public DbSet<CursoDisciplina> CursosDisciplinas { get; set; }
-    public DbSet<ResetPassword> ResetPasswords { get; set; }
+    public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }
     public DbSet<PeriodoDeMatricula> PeriodosDeMatricula { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

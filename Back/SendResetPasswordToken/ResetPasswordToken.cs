@@ -1,6 +1,6 @@
-namespace Syki.Back.Domain;
+namespace Syki.Back.SendResetPasswordToken;
 
-public class ResetPassword
+public class ResetPasswordToken
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
@@ -8,7 +8,7 @@ public class ResetPassword
     public DateTime CreatedAt { get; set; }
     public DateTime? UsedAt { get; set; }
 
-    public ResetPassword(
+    public ResetPasswordToken(
         Guid userId,
         string token
     ) {

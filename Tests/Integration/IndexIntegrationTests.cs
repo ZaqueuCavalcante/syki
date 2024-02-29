@@ -32,8 +32,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_os_dados_de_index_do_academico()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var client = _factory.GetClient();
+        var faculdade = await client.CreateInstitution();
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         await client.NewCampus("Agreste I", "Caruaru - PE");

@@ -1,9 +1,6 @@
-using Syki.Back.Domain;
 using Syki.Back.CreateUser;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateAluno;
 
 public class AlunoConfig : IEntityTypeConfiguration<Aluno>
 {
@@ -14,9 +11,13 @@ public class AlunoConfig : IEntityTypeConfiguration<Aluno>
         aluno.HasKey(a => a.Id);
         aluno.Property(a => a.Id).ValueGeneratedNever();
 
+        aluno.Property(a => a.OfertaId);
+        aluno.Property(a => a.Nome);
+        aluno.Property(a => a.Matricula);
+
         aluno.HasOne(a => a.User)
             .WithOne()
             .HasPrincipalKey<SykiUser>(u => new { u.InstitutionId, u.Id })
-            .HasForeignKey<Aluno>(a => new { a.FaculdadeId, a.Id });
+            .HasForeignKey<Aluno>(a => new { a.InstitutionId, a.Id });
     }
 }

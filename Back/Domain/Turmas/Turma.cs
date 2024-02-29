@@ -1,5 +1,4 @@
-using Syki.Shared;
-using Syki.Back.Exceptions;
+using Syki.Back.CreateAluno;
 
 namespace Syki.Back.Domain;
 

@@ -32,4 +32,16 @@ public class CreateUserIn
             Role = "Academico",
         };
     }
+
+    public static CreateUserIn NewAluno(Guid institutionId, string email)
+    {
+        return new CreateUserIn
+        {
+            InstitutionId = institutionId,
+            Name = email,
+            Email = email,
+            Password = $"Aluno@{Guid.NewGuid().ToString().OnlyNumbers()}",
+            Role = "Aluno",
+        };
+    }
 }

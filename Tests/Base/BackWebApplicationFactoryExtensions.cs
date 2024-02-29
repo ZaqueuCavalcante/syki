@@ -42,7 +42,7 @@ public static class BackWebApplicationFactoryExtensions
     {
         using var ctx = factory.GetDbContext();
 
-        var id = await ctx.ResetPasswords
+        var id = await ctx.ResetPasswordTokens
             .Where(r => r.UserId == userId && r.UsedAt == null)
             .OrderByDescending(r => r.CreatedAt)
             .Select(r => r.Id)

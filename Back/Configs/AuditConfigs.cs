@@ -3,6 +3,7 @@ using Syki.Back.Audit;
 using Syki.Back.Domain;
 using Syki.Back.CreateUser;
 using Syki.Back.CreateCampus;
+using Syki.Back.CreateAluno;
 
 namespace Syki.Back.Configs;
 

@@ -1,6 +1,4 @@
-using NUnit.Framework;
-using Syki.Back.Domain;
-using FluentAssertions;
+using Syki.Back.SendResetPasswordToken;
 
 namespace Syki.Tests.Unit;
 
@@ -14,7 +12,7 @@ public class ResetPasswordUnitTests
         var token = Guid.NewGuid().ToString();
 
         // Act
-        var reset = new ResetPassword(userId, token);
+        var reset = new ResetPasswordToken(userId, token);
 
         // Assert
         reset.Id.Should().NotBeEmpty();
@@ -28,7 +26,7 @@ public class ResetPasswordUnitTests
         var token = Guid.NewGuid().ToString();
 
         // Act
-        var reset = new ResetPassword(userId, token);
+        var reset = new ResetPasswordToken(userId, token);
 
         // Assert
         reset.UserId.Should().Be(userId);
@@ -42,7 +40,7 @@ public class ResetPasswordUnitTests
         var token = Guid.NewGuid().ToString();
 
         // Act
-        var reset = new ResetPassword(userId, token);
+        var reset = new ResetPasswordToken(userId, token);
 
         // Assert
         reset.Token.Should().Be(token);
@@ -56,7 +54,7 @@ public class ResetPasswordUnitTests
         var token = Guid.NewGuid().ToString();
 
         // Act
-        var reset = new ResetPassword(userId, token);
+        var reset = new ResetPasswordToken(userId, token);
 
         // Assert
         reset.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
@@ -70,7 +68,7 @@ public class ResetPasswordUnitTests
         var token = Guid.NewGuid().ToString();
 
         // Act
-        var reset = new ResetPassword(userId, token);
+        var reset = new ResetPasswordToken(userId, token);
 
         // Assert
         reset.UsedAt.Should().BeNull();
@@ -82,7 +80,7 @@ public class ResetPasswordUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var token = Guid.NewGuid().ToString();
-        var reset = new ResetPassword(userId, token);
+        var reset = new ResetPasswordToken(userId, token);
 
         // Act
         reset.Use();

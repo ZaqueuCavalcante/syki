@@ -1,6 +1,3 @@
-using Syki.Back.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 using Syki.Shared.UpdateCampus;
 
 namespace Syki.Back.UpdateCampus;
@@ -12,7 +9,7 @@ public class UpdateCampusController(UpdateCampusService service) : ControllerBas
     [HttpPut("campi")]
     public async Task<IActionResult> Update([FromBody] UpdateCampusIn data)
     {
-        var campus = await service.Update(User.Facul(), data);
+        var campus = await service.Update(User.InstitutionId(), data);
 
         return Ok(campus);
     }

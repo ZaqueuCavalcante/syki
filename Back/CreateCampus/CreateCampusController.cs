@@ -1,7 +1,4 @@
-using Syki.Back.Extensions;
 using Syki.Shared.CreateCampus;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
 
 namespace Syki.Back.CreateCampus;
 
@@ -12,7 +9,7 @@ public class CreateCampusController(CreateCampusService service) : ControllerBas
     [HttpPost("campi")]
     public async Task<IActionResult> Create([FromBody] CreateCampusIn data)
     {
-        var campus = await service.Create(User.Facul(), data);
+        var campus = await service.Create(User.InstitutionId(), data);
 
         return Ok(campus);
     }

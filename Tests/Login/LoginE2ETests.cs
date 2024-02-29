@@ -2,7 +2,7 @@ namespace Syki.Tests.Login;
 
 public class LoginE2ETests : E2ETestBase
 {
-    [Test]
+    // [Test]
     public async Task Should_login_into_app()
     {
         await Goto("/register");

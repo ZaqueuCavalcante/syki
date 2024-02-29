@@ -1,16 +1,11 @@
 # Setup
 
-0 - Clone o projeto pra sua máquina usando o git:
-    - git clone https://github.com/ZaqueuCavalcante/syki.git
+0 - Clone o projeto pra sua máquina usando o git
 
-1 - Instale (next, next, finish) o SDK do DotNet 8.0.200:
-    - https://dotnet.microsoft.com/pt-br/download/dotnet/thank-you/sdk-8.0.200-windows-x64-installer
+1 - Instale o SDK do DotNet 8.0.200
 
-2 - Instale o Postgres ou rode ele via Docker:
-    - https://www.postgresql.org/download/windows/
+2 - Instale o PostgreSQL ou rode ele via Docker
 
-3 - Entre na pasta do projeto e rode os testes:
-    - dotnet test
+3 - Entre na pasta ./Back e rode "dotnet run" para subir a API
 
-4 - Se quiser debugar os testes ou o sistema, utilize o VS Code com a extensão:
-    - Base language support for C#
+4 - Entre na pasta ./Front e rode "dotnet run" para subir o Frontend

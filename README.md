@@ -4,7 +4,9 @@
 
 ## O que é este projeto?
 
-É um sistema para gerenciamento educacional, usado por gestores, professores e alunos.
+É um sistema para gerenciamento educacional, que pode ser usado por gestores, professores e alunos.
+
+Por ser multi-tenant, suporta a operação de diversas instituições de ensino ao mesmo tempo, seguindo o modelo de SAAS.
 
 ## Quais as funcionalidades?
 

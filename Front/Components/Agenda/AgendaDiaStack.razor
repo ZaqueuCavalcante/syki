@@ -4,8 +4,8 @@
         <MudDivider />
         @foreach (AgendaDisciplinaOut item in Data.Disciplinas)
         {
-            <MudPaper Style="width: 90%">
-                <MudText Class="pa-2" Typo="Typo.body2">@item.Nome</MudText>
+            <MudPaper Class="border-solid" Style="width: 90%; border-width: 1px;">
+                <MudText Align="Align.Center" Class="pa-2" Typo="Typo.body2">@item.Nome</MudText>
                 <MudText Align="Align.Center" Class="px-2 pb-2" Typo="Typo.body2"><strong>@item.Start.GetDescription() - @item.End.GetDescription()</strong></MudText>
             </MudPaper>
         }

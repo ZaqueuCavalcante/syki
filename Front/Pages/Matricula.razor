@@ -7,7 +7,7 @@
     <MudCard Class="mt-8 mb-4 mx-6 px-2">
         <MudCardContent>
             <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.Article" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudIcon Icon="@Icons.Material.Filled.Article" Class="mr-1 mb-1" Size="Size.Large" />
                 <MudText Typo="Typo.h5" Style="font-weight: bold">Matrícula</MudText>
                 <MudSpacer />
             </MudStack>
@@ -26,7 +26,8 @@
     else
     {
         <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-            <MudText>Selecione as disciplinas que você irá cursar nesse semestre. O período de matrícula vai até <strong>@_periodoDeMatricula.End</strong>. </MudText>
+            <MudText>Selecione as disciplinas que você irá cursar nesse semestre. O período de matrícula vai até
+                <strong>@_periodoDeMatricula.End</strong>. </MudText>
         </MudAlert>
 
         <CascadingValue Name="Dias" Value="@_dias">
@@ -34,46 +35,52 @@
         </CascadingValue>
 
         <MudContainer Class="mb-8">
-            <MudDataGrid
-                Class="pa-4"
+            <MudTable
+                T="MatriculaTurmaOut"
                 Items="@_options"
-                Hover="true"
+                Class="pa-4"
+                Breakpoint="Breakpoint.Sm"
                 Dense="true"
+                Hover="true"
                 Loading="_loading"
                 RowsPerPage="100"
-                SortMode="SortMode.None"
             >
-                <Columns>
-                    <PropertyColumn Property="x => x.Disciplina" Title="Disciplina" />
-                    <PropertyColumn Property="x => x.Periodo" Title="Período" />
-                    <PropertyColumn Property="x => x.Creditos" Title="Créditos" />
-                    <PropertyColumn Property="x => x.CargaHoraria" Title="CH" />
-                    <PropertyColumn Property="x => x.Professor" Title="Professor" />
-                    <TemplateColumn>
-                        <CellTemplate>
-                            <MudCheckBox
-                                T="bool"
-                                Checked="@context.Item.IsSelected"
-                                CheckedChanged="x => { context.Item.IsSelected = x; HandleCheckedChanged(); }"
-                                Size="Size.Small"
-                                Dense="true"
-                                Color="Color.Success"
-                            />
-                        </CellTemplate>
-                    </TemplateColumn>
-                </Columns>
-
+                <HeaderContent>
+                    <MudTh>Disciplina</MudTh>
+                    <MudTh>Período</MudTh>
+                    <MudTh>Créditos</MudTh>
+                    <MudTh>CH</MudTh>
+                    <MudTh>Professor</MudTh>
+                    <MudTh></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Disciplina">@context.Disciplina</MudTd>
+                    <MudTd DataLabel="Período">@context.Periodo</MudTd>
+                    <MudTd DataLabel="Créditos">@context.Creditos</MudTd>
+                    <MudTd DataLabel="CH">@context.CargaHoraria</MudTd>
+                    <MudTd DataLabel="Professor">@context.Professor</MudTd>
+                    <MudTd>
+                        <MudCheckBox
+                            T="bool"
+                            Dense="true"
+                            Size="Size.Small"
+                            Color="Color.Success"
+                            Checked="@context.IsSelected"
+                            CheckedChanged="x => { context.IsSelected = x; HandleCheckedChanged(); }"
+                        />
+                    </MudTd>
+                </RowTemplate>
                 <NoRecordsContent>
                     Não existem turmas disponíveis no momento.
                 </NoRecordsContent>
-
                 <PagerContent>
+                    <MudDivider />
                     <MudStack Row="true" Class="mt-2">
                         <DialogProgressCircular Loading="_saving" />
                         <DialogSaveButton OnClick="Submit" />
                     </MudStack>
                 </PagerContent>
-            </MudDataGrid>
+            </MudTable>
         </MudContainer>
     }
 </MudContainer>

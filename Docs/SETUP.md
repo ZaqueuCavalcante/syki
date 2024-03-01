@@ -9,3 +9,5 @@
 3 - Entre na pasta ./Back e rode "dotnet run" para subir a API
 
 4 - Entre na pasta ./Front e rode "dotnet run" para subir o Frontend
+
+5 - Caso dê erro de CORs, acesse o endereço https da API e do Frontend no navegador e aceite o certificado de dev como válido

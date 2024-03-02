@@ -1,9 +1,6 @@
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using static Syki.Back.Configs.AuthorizationConfigs;
 using Syki.Shared.CreateUser;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
@@ -17,10 +14,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var body = new PeriodoIn("2023.2");
-
         // Act
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", body);
+        var periodo = await client.CreateAcademicPeriod("2024.1");
 
         // Assert
         periodo.Id.Should().Be(periodo.Id);
@@ -30,16 +25,16 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_varios_periodos_para_uma_mesma_faculdade()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var client = _factory.GetClient();
+        var faculdade = await client.CreateInstitution();
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         // Act
-        await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2023.1"));
-        await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2023.2"));
+        await client.CreateAcademicPeriod("2023.1");
+        await client.CreateAcademicPeriod("2023.2");
 
         // Assert
-        var periodos = await client.GetAsync<List<PeriodoOut>>("/periodos");
+        var periodos = await client.GetAsync<List<AcademicPeriodOut>>("/periodos");
         periodos.Should().HaveCount(2);
     }
 
@@ -57,18 +52,16 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterUser(userUfpe);
 
         await client.Login(userNovaRoma.Email, userNovaRoma.Password);
-        var bodyNovaRoma = new PeriodoIn("2023.1");
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", bodyNovaRoma);
+        var periodo = await client.CreateAcademicPeriod("2023.1");
 
         await client.Login(userUfpe.Email, userUfpe.Password);
-        var bodyUfpe = new PeriodoIn("2023.2");
-        await client.PostAsync<PeriodoOut>("/periodos", bodyUfpe);
+        await client.CreateAcademicPeriod("2023.2");
 
         // Act
         await client.Login(userNovaRoma.Email, userNovaRoma.Password);
 
         // Assert
-        var periodos = await client.GetAsync<List<PeriodoOut>>("/periodos");
+        var periodos = await client.GetAsync<List<AcademicPeriodOut>>("/periodos");
         periodos.Should().HaveCount(1);
         periodos[0].Id.Should().Be(periodo.Id);
     }

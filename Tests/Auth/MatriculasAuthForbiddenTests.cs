@@ -1,8 +1,3 @@
-using System.Net;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-
 namespace Syki.Tests.Auth;
 
 public partial class AuthForbiddenTests : AuthTestBase
@@ -15,7 +10,7 @@ public partial class AuthForbiddenTests : AuthTestBase
         Login(role);
 
         // Act
-        var response = await _client.PostAsync("/matriculas/periodos", null);
+        var response = await _client.PostAsync("/enrollment-periods", null);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
@@ -29,7 +24,7 @@ public partial class AuthForbiddenTests : AuthTestBase
         Login(role);
 
         // Act
-        var response = await _client.GetAsync("/matriculas/periodos");
+        var response = await _client.GetAsync("/enrollment-periods");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);

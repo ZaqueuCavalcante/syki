@@ -114,7 +114,7 @@
 
     List<DisciplinaOut> Disciplinas = [];
     List<ProfessorOut> Professores = [];
-    List<PeriodoOut> Periodos = [];
+    List<AcademicPeriodOut> Periodos = [];
     List<AlunoOut> Alunos = [];
     List<HorarioIn> Horarios { get; set; } = [];
 
@@ -125,7 +125,7 @@
     {
         await Task.WhenAll(new Task[] { 
             Task.Run(async () => Professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? []),
-            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<PeriodoOut>>("/periodos") ?? []),
+            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic-periods") ?? []),
             Task.Run(async () => Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? []),
             Task.Run(async () => Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? []),
         });

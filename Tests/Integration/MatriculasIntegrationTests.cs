@@ -1,9 +1,5 @@
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using Bunit;
 
 namespace Syki.Tests.Integration;
 
@@ -14,17 +10,16 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var faculdade = await client.CreateInstitution();
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
-        var body = new PeriodoDeMatriculaIn(periodo.Id, "15/01", "28/01");
+        var period = await client.CreateAcademicPeriod("2024.1");
 
         // Act
-        var periodoDeMatricula = await client.PostAsync<PeriodoDeMatriculaOut>("/matriculas/periodos", body);
+        var enrollmentPeriod = await client.CreateEnrollmentPeriod(period.Id, "15/01", "28/01");
 
         // Assert
-        periodoDeMatricula.Id.Should().NotBeEmpty();
+        enrollmentPeriod.Id.Should().NotBeEmpty();
     }
 
     [Test]
@@ -35,15 +30,14 @@ public partial class IntegrationTests : IntegrationTestBase
         var faculdade = await client.CreateInstitution("Nova Roma");
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
-        var body = new PeriodoDeMatriculaIn(periodo.Id, "20/01", "30/12");
-        await client.PostAsync<PeriodoDeMatriculaOut>("/matriculas/periodos", body);
+        var period = await client.CreateAcademicPeriod("2024.1");
+        await client.CreateEnrollmentPeriod(period.Id, "15/01", "28/01");
 
         // Act
-        var periodos = await client.GetAsync<List<PeriodoDeMatriculaOut>>("/matriculas/periodos");
+        var periods = await client.GetEnrollmentPeriods();
 
         // Assert
-        periodos.Should().ContainSingle();
+        periods.Should().ContainSingle();
     }
 
     [Test]
@@ -70,11 +64,11 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var year = DateTime.Now.Year;
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn($"{year}.1"));
+        var period = await client.CreateAcademicPeriod($"{year}.1");
 
         var start = DateOnly.FromDateTime(DateTime.Now.AddDays(2));
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(4));
-        await client.PostAsync<PeriodoDeMatriculaOut>("/matriculas/periodos", new PeriodoDeMatriculaIn { Id = periodo.Id, Start = start, End = end });
+        await client.CreateEnrollmentPeriod(period.Id, start, end);
 
         await client.LoginAsAdm();
         await client.RegisterAndLogin(faculdade.Id, Aluno);
@@ -91,15 +85,15 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var faculdade = await client.CreateInstitution();
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var year = DateTime.Now.Year;
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn($"{year}.1"));
+        var periodo = await client.CreateAcademicPeriod($"{year}.1");
 
         var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-4));
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
-        await client.PostAsync<PeriodoDeMatriculaOut>("/matriculas/periodos", new PeriodoDeMatriculaIn { Id = periodo.Id, Start = start, End = end });
+        await client.CreateEnrollmentPeriod(periodo.Id, start, end);
 
         await client.LoginAsAdm();
         await client.RegisterAndLogin(faculdade.Id, Aluno);
@@ -116,14 +110,14 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
+        var faculdade = await client.CreateInstitution();
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var year = DateTime.Now.Year;
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn($"{year}.1"));
+        var periodo = await client.CreateAcademicPeriod($"{year}.1");
         var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(2));
-        await client.PostAsync<PeriodoDeMatriculaOut>("/matriculas/periodos", new PeriodoDeMatriculaIn { Id = periodo.Id, Start = start, End = end });
+        await client.CreateEnrollmentPeriod(periodo.Id, start, end);
 
         var campus = await client.NewCampus("Agreste I", "Caruaru - PE");
         var ads = await client.PostAsync<CursoOut>("/cursos", new CursoIn { Nome = "ADS", Tipo = TipoDeCurso.Bacharelado });

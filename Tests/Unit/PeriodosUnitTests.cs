@@ -1,8 +1,4 @@
-using NUnit.Framework;
-using Syki.Tests.Base;
-using Syki.Back.Domain;
-using FluentAssertions;
-using Syki.Back.Exceptions;
+using Syki.Back.CreateAcademicPeriod;
 
 namespace Syki.Tests.Unit;
 
@@ -18,7 +14,7 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new Periodo(id, faculdadeId, start, end);
+        var periodo = new AcademicPeriod(id, faculdadeId, start, end);
 
         // Assert
         periodo.Id.Should().Be(id);
@@ -34,10 +30,10 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new Periodo(id, faculdadeId, start, end);
+        var periodo = new AcademicPeriod(id, faculdadeId, start, end);
 
         // Assert
-        periodo.FaculdadeId.Should().Be(faculdadeId);
+        periodo.InstitutionId.Should().Be(faculdadeId);
     }
 
     [Test]
@@ -50,7 +46,7 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new Periodo(id, faculdadeId, start, end);
+        var periodo = new AcademicPeriod(id, faculdadeId, start, end);
 
         // Assert
         periodo.Start.Should().Be(start);
@@ -66,7 +62,7 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new Periodo(id, faculdadeId, start, end);
+        var periodo = new AcademicPeriod(id, faculdadeId, start, end);
 
         // Assert
         periodo.End.Should().Be(end);
@@ -82,7 +78,7 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        Action act = () => new Periodo(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE006);
@@ -99,7 +95,7 @@ public class PeriodosUnitTests
         var end = new DateOnly(year, 06, 01);
 
         // Act
-        Action act = () => new Periodo(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
 
         // Assert
         act.Should().NotThrow<DomainException>();
@@ -115,7 +111,7 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        Action act = () => new Periodo(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE007);
@@ -131,7 +127,7 @@ public class PeriodosUnitTests
         var end = new DateOnly(2024, 06, 01);
 
         // Act
-        Action act = () => new Periodo(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE008);
@@ -147,7 +143,7 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new Periodo(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE009);
@@ -163,7 +159,7 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new Periodo(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE009);
@@ -178,7 +174,7 @@ public class PeriodosUnitTests
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
-        var periodo = new Periodo(id, faculdadeId, start, end);
+        var periodo = new AcademicPeriod(id, faculdadeId, start, end);
 
         // Act
         var periodoOut = periodo.ToOut();

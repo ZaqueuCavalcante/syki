@@ -1,8 +1,4 @@
 using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-using Syki.Back.Exceptions;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
@@ -19,7 +15,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
+        var periodo = await client.CreateAcademicPeriod("2024.1");
         var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
         var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, horarios);
@@ -61,7 +57,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterAndLogin(faculdade.Id, Academico);
 
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
+        var periodo = await client.CreateAcademicPeriod("2024.1");
         var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
         var body = new TurmaIn { DisciplinaId = disciplina.Id, Periodo = periodo.Id, Horarios = horarios };
@@ -104,7 +100,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
+        var periodo = await client.CreateAcademicPeriod("2024.1");
         var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H07_00) };
 
         var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, horarios);
@@ -126,7 +122,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
         var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
-        var periodo = await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn("2024.1"));
+        var periodo = await client.CreateAcademicPeriod("2024.1");
         var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
         var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, horarios);

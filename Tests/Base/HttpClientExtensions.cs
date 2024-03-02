@@ -8,6 +8,8 @@ using Syki.Shared.CreateCampus;
 using Syki.Front.FinishUserRegister;
 using Syki.Front.CreatePendingUserRegister;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Front.CreateAcademicPeriod;
+using Syki.Front.CreateEnrollmentPeriod;
 
 namespace Syki.Tests.Base;
 
@@ -37,10 +39,45 @@ public static class HttpClientExtensions
         return await client.Setup(code);
     }
 
+    public static async Task<AcademicPeriodOut> CreateAcademicPeriod(this HttpClient http, string id)
+    {
+        var client = new CreateAcademicPeriodClient(http);
+        var period = new CreateAcademicPeriodIn(id);
+        var response = await client.Create(id, period.Start, period.End);
+        return await response.DeserializeTo<AcademicPeriodOut>();
+    }
 
+    public static async Task<List<AcademicPeriodOut>> GetAcademicPeriods(this HttpClient http)
+    {
+        var client = new GetAcademicPeriodsClient(http);
+        return await client.Get();
+    }
 
+    public static async Task<EnrollmentPeriodOut> CreateEnrollmentPeriod(this HttpClient http, string id, string start, string end)
+    {
+        var client = new CreateEnrollmentPeriodClient(http);
+        var period = new CreateEnrollmentPeriodIn(id, start, end);
+        var response = await client.Create(id, period.Start, period.End);
+        return await response.DeserializeTo<EnrollmentPeriodOut>();
+    }
+    public static async Task<EnrollmentPeriodOut> CreateEnrollmentPeriod(this HttpClient http, string id, DateOnly start, DateOnly end)
+    {
+        var client = new CreateEnrollmentPeriodClient(http);
+        var response = await client.Create(id, start, end);
+        return await response.DeserializeTo<EnrollmentPeriodOut>();
+    }
 
+    public static async Task<List<EnrollmentPeriodOut>> GetEnrollmentPeriods(this HttpClient http)
+    {
+        var client = new GetEnrollmentPeriodsClient(http);
+        return await client.Get();
+    }
 
+    public static async Task<EnrollmentPeriodOut> GetCurrentEnrollmentPeriod(this HttpClient http)
+    {
+        var client = new GetCurrentEnrollmentPeriodClient(http);
+        return await client.Get();
+    }
 
 
 
@@ -148,13 +185,6 @@ public static class HttpClientExtensions
         };
 
         return await client.PostAsync<GradeOut>("/grades", body);
-    }
-
-    public static async Task<PeriodoOut> NewPeriodo(
-        this HttpClient client,
-        string id
-    ) {
-        return await client.PostAsync<PeriodoOut>("/periodos", new PeriodoIn(id));
     }
 
     public static async Task<OfertaOut> NewOferta(

@@ -135,7 +135,7 @@
     List<CampusOut> Campi = [];
     List<CursoOut> Cursos = [];
     List<GradeOut> Grades = [];
-    List<PeriodoOut> Periodos = [];
+    List<AcademicPeriodOut> Periodos = [];
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
@@ -146,7 +146,7 @@
             Task.Run(async () => Campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? []),
             Task.Run(async () => Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? []),
             Task.Run(async () => Grades = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? []),
-            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<PeriodoOut>>("/periodos") ?? []),
+            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic-periods") ?? []),
         });
     }
 

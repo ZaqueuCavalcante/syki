@@ -1,7 +1,4 @@
-using NUnit.Framework;
-using Syki.Back.Domain;
-using FluentAssertions;
-using Syki.Back.Exceptions;
+using Syki.Back.CreateEnrollmentPeriod;
 
 namespace Syki.Tests.Unit;
 
@@ -17,7 +14,7 @@ public class PeriodosDeMatriculaUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var pm = new PeriodoDeMatricula(id, faculdadeId, start, end);
+        var pm = new EnrollmentPeriod(id, faculdadeId, start, end);
 
         // Assert
         pm.Id.Should().Be(id);
@@ -33,10 +30,10 @@ public class PeriodosDeMatriculaUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var pm = new PeriodoDeMatricula(id, faculdadeId, start, end);
+        var pm = new EnrollmentPeriod(id, faculdadeId, start, end);
 
         // Assert
-        pm.FaculdadeId.Should().Be(faculdadeId);
+        pm.InstitutionId.Should().Be(faculdadeId);
     }
 
     [Test]
@@ -49,7 +46,7 @@ public class PeriodosDeMatriculaUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var pm = new PeriodoDeMatricula(id, faculdadeId, start, end);
+        var pm = new EnrollmentPeriod(id, faculdadeId, start, end);
 
         // Assert
         pm.Start.Should().Be(start);
@@ -65,7 +62,7 @@ public class PeriodosDeMatriculaUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var pm = new PeriodoDeMatricula(id, faculdadeId, start, end);
+        var pm = new EnrollmentPeriod(id, faculdadeId, start, end);
 
         // Assert
         pm.End.Should().Be(end);
@@ -81,7 +78,7 @@ public class PeriodosDeMatriculaUnitTests
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new PeriodoDeMatricula(id, faculdadeId, start, end);
+        Action act = () => new EnrollmentPeriod(id, faculdadeId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE023);
@@ -97,7 +94,7 @@ public class PeriodosDeMatriculaUnitTests
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new PeriodoDeMatricula(id, faculdadeId, start, end);
+        Action act = () => new EnrollmentPeriod(id, faculdadeId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE023);

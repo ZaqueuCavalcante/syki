@@ -2,27 +2,28 @@
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
-            Novo Período
+            Período de Matrícula
         </MudText>
     </TitleContent>
     <DialogContent>
         <MudForm @ref="_form">
-            <MudTextField
-                OnlyValidateIfDirty="true"
-                Immediate="true"
+            <MudSelect
+                Dense="true"
+                AutoFocus="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-4"
-                AutoFocus="true"
-                @bind-Value="data.Id"
-                Counter="6"
-                MaxLength="6"
-                HelperText="Formato de exemplo: 2024.1"
-                T="String"
-                Label="Id"
+                @bind-Value="@_id"
+                Label="Período Acadêmico"
                 Required="true"
                 RequiredError="Informe!"
-            />
+                AdornmentColor="Color.Primary"
+            >
+                @foreach (string? item in _periods.ConvertAll(p => p.Id))
+                {
+                    <MudSelectItem Value="@item">@item</MudSelectItem>
+                }
+            </MudSelect>
             <MudStack Row="true">
                 <MudDatePicker
                     Label="Início"
@@ -31,7 +32,7 @@
                     Editable="true"
                     Required="true"
                     RequiredError="Informe!"
-                    @bind-Date="start"
+                    @bind-Date="@_start"
                     Mask="@(new DateMask("dd/MM/yyyy"))"
                     DateFormat="dd/MM/yyyy"
                     Placeholder="dd/MM/yyyy"
@@ -43,7 +44,7 @@
                     Editable="true"
                     Required="true"
                     RequiredError="Informe!"
-                    @bind-Date="end"
+                    @bind-Date="@_end"
                     Mask="@(new DateMask("dd/MM/yyyy"))"
                     DateFormat="dd/MM/yyyy"
                     Placeholder="dd/MM/yyyy"
@@ -58,20 +59,28 @@
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject GetAcademicPeriodsClient GetClient
+@inject CreateEnrollmentPeriodClient CreateClient
 
 @code
 {
     private MudForm _form;
     private bool _loading;
 
-    private DateTime? start;
-    private DateTime? end;
-    private PeriodoIn data = new();
+    private string _id;
+    private DateTime? _start;
+    private DateTime? _end;
+
+    List<AcademicPeriodOut> _periods = [];
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _periods = await GetClient.Get();
+    }
 
     async Task Submit()
     {
@@ -80,11 +89,11 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        data.Start = DateOnly.FromDateTime(start!.Value);
-        data.End = DateOnly.FromDateTime(end!.Value);
+        var start = DateOnly.FromDateTime(_start!.Value);
+        var end = DateOnly.FromDateTime(_end!.Value);
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/periodos", data);
+        var response = await CreateClient.Create(_id, start, end);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

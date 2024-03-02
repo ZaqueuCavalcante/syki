@@ -87,12 +87,13 @@
 
 @inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject GetCurrentEnrollmentPeriodClient Client
 
 @code
 {
     private bool _loading;
     private bool _saving;
-    PeriodoDeMatriculaOut _periodoDeMatricula;
+    EnrollmentPeriodOut _periodoDeMatricula;
     private List<MatriculaTurmaOut> _options = [];
     private List<AgendaDiaOut> _dias = [];
 
@@ -104,7 +105,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _periodoDeMatricula = await Http.GetFromJsonAsync<PeriodoDeMatriculaOut?>("/matriculas/periodos/atual") ?? new();
+        _periodoDeMatricula = await Client.Get();
         if (_periodoDeMatricula.Id.IsEmpty())
         {
             _loading = false;

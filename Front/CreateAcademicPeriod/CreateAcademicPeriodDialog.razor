@@ -2,28 +2,28 @@
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
-            Novo Período de Matrícula
+            Período Acadêmico
         </MudText>
     </TitleContent>
     <DialogContent>
         <MudForm @ref="_form">
-            <MudSelect
-                Dense="true"
-                AutoFocus="true"
+            <MudTextField
+                OnlyValidateIfDirty="true"
+                Immediate="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-4"
-                @bind-Value="data.Id"
-                Label="Período"
+                AutoFocus="true"
+                @bind-Value="@_id"
+                Counter="6"
+                MaxLength="6"
+                Mask="@(new PatternMask("0000.0"))"
+                HelperText="Exemplo: 2024.1"
+                T="String"
+                Label="Id"
                 Required="true"
                 RequiredError="Informe!"
-                AdornmentColor="Color.Primary"
-            >
-                @foreach (string? item in Periodos.ConvertAll(p => p.Id))
-                {
-                    <MudSelectItem Value="@item">@item</MudSelectItem>
-                }
-            </MudSelect>
+            />
             <MudStack Row="true">
                 <MudDatePicker
                     Label="Início"
@@ -32,7 +32,7 @@
                     Editable="true"
                     Required="true"
                     RequiredError="Informe!"
-                    @bind-Date="start"
+                    @bind-Date="@_start"
                     Mask="@(new DateMask("dd/MM/yyyy"))"
                     DateFormat="dd/MM/yyyy"
                     Placeholder="dd/MM/yyyy"
@@ -44,7 +44,7 @@
                     Editable="true"
                     Required="true"
                     RequiredError="Informe!"
-                    @bind-Date="end"
+                    @bind-Date="@_end"
                     Mask="@(new DateMask("dd/MM/yyyy"))"
                     DateFormat="dd/MM/yyyy"
                     Placeholder="dd/MM/yyyy"
@@ -59,27 +59,20 @@
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject CreateAcademicPeriodClient Client
 
 @code
 {
     private MudForm _form;
     private bool _loading;
 
-    private DateTime? start;
-    private DateTime? end;
-    private PeriodoDeMatriculaIn data = new();
-
-    List<PeriodoOut> Periodos = [];
+    private string _id;
+    private DateTime? _start;
+    private DateTime? _end;
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Periodos = await Http.GetFromJsonAsync<List<PeriodoOut>>("/periodos") ?? [];
-    }
 
     async Task Submit()
     {
@@ -88,15 +81,15 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        data.Start = DateOnly.FromDateTime(start!.Value);
-        data.End = DateOnly.FromDateTime(end!.Value);
+        var start = DateOnly.FromDateTime(_start!.Value);
+        var end = DateOnly.FromDateTime(_end!.Value);
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/matriculas/periodos", data);
+        var response = await Client.Create(_id, start, end);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add("Período cadastrado com sucesso!", Severity.Success);
+            Snackbar.Add("Período acadêmico cadastrado com sucesso!", Severity.Success);
         }
         else
         {

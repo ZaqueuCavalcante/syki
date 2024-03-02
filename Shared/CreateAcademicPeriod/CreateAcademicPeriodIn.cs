@@ -1,14 +1,14 @@
 namespace Syki.Shared;
 
-public class PeriodoIn
+public class CreateAcademicPeriodIn
 {
     public string Id { get; set; }
     public DateOnly Start { get; set; }
     public DateOnly End { get; set; }
 
-    public PeriodoIn() {}
+    public CreateAcademicPeriodIn() {}
 
-    public PeriodoIn(string id)
+    public CreateAcademicPeriodIn(string id)
     {
         Id = id;
         var numbers = id.OnlyNumbers();

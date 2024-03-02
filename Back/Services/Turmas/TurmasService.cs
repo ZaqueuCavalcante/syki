@@ -23,8 +23,8 @@ public class TurmasService : ITurmasService
         if (!professorOk)
             Throw.DE018.Now();
 
-        var periodoOk = await _ctx.Periodos
-            .AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.Periodo);
+        var periodoOk = await _ctx.AcademicPeriods
+            .AnyAsync(p => p.InstitutionId == faculdadeId && p.Id == data.Periodo);
         if (!periodoOk)
             Throw.DE005.Now();
 

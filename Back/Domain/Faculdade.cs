@@ -1,3 +1,4 @@
+using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.CreateAluno;
 using Syki.Back.CreateCampus;
 
@@ -7,7 +8,7 @@ public class Faculdade
 {
     public Guid Id { get; set; }
     public string Nome { get; set; }
-    public List<Periodo> Periodos { get; set; }
+    public List<AcademicPeriod> AcademicPeriods { get; set; }
     public List<Campus> Campi { get; set; }
     public List<Curso> Cursos { get; set; }
     public List<Oferta> Ofertas { get; set; }

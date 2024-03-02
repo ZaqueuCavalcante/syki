@@ -1,7 +1,4 @@
-using Syki.Shared;
 using Syki.Back.Domain;
-using Syki.Back.Database;
-using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.Services;
 
@@ -9,38 +6,6 @@ public class MatriculasService : IMatriculasService
 {
     private readonly SykiDbContext _ctx;
     public MatriculasService(SykiDbContext ctx) => _ctx = ctx;
-
-    public async Task<PeriodoDeMatriculaOut> CreatePeriodoDeMatricula(Guid faculdadeId, PeriodoDeMatriculaIn data)
-    {
-        var periodo = new PeriodoDeMatricula(data.Id, faculdadeId, data.Start, data.End);
-
-        _ctx.Add(periodo);
-        await _ctx.SaveChangesAsync();
-
-        return periodo.ToOut();
-    }
-
-    public async Task<List<PeriodoDeMatriculaOut>> GetPeriodosDeMatricula(Guid faculdadeId)
-    {
-        var periodos = await _ctx.PeriodosDeMatricula
-            .Where(c => c.FaculdadeId == faculdadeId)
-            .ToListAsync();
-
-        return periodos.ConvertAll(p => p.ToOut());
-    }
-
-    public async Task<PeriodoDeMatriculaOut> GetPeriodoDeMatriculaAtual(Guid faculdadeId)
-    {
-        var today = DateOnly.FromDateTime(DateTime.Now);
-        var periodoDeMatricula = await _ctx.PeriodosDeMatricula.AsNoTracking()
-            .Where(p => p.FaculdadeId == faculdadeId && p.Start <= today && p.End >= today)
-            .FirstOrDefaultAsync();
-        
-        if (periodoDeMatricula == null)
-            return new PeriodoDeMatriculaOut { };
-        
-        return periodoDeMatricula.ToOut();
-    }
 
     public async Task Create(Guid faculdadeId, Guid userId, MatriculaTurmaIn data)
     {
@@ -60,8 +25,8 @@ public class MatriculasService : IMatriculasService
     public async Task<List<MatriculaTurmaOut>> GetTurmas(Guid faculdadeId, Guid userId)
     {
         var today = DateOnly.FromDateTime(DateTime.Now);
-        var periodoDeMatricula = await _ctx.PeriodosDeMatricula.AsNoTracking()
-            .Where(p => p.FaculdadeId == faculdadeId && p.Start <= today && p.End >= today)
+        var periodoDeMatricula = await _ctx.EnrollmentPeriods.AsNoTracking()
+            .Where(p => p.InstitutionId == faculdadeId && p.Start <= today && p.End >= today)
             .FirstOrDefaultAsync();
         
         if (periodoDeMatricula == null)

@@ -13,6 +13,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Syki.Back.CreateAluno;
 using Syki.Back.ResetPassword;
 using Syki.Back.SendResetPasswordToken;
+using Syki.Back.CreateAcademicPeriod;
+using Syki.Back.GetAcademicPeriods;
+using Syki.Back.GetEnrollmentPeriods;
 
 namespace Syki.Back.Configs;
 
@@ -24,6 +27,11 @@ public static class ServicesConfigs
         services.AddScoped<FinishUserRegisterService>();
         services.AddScoped<ResetPasswordService>();
         services.AddScoped<SendResetPasswordEmailService>();
+
+        services.AddScoped<CreateAcademicPeriodService>();
+        services.AddScoped<GetAcademicPeriodsService>();
+        services.AddScoped<CreatePendingUserRegisterService>();
+        services.AddScoped<GetEnrollmentPeriodsService>();
 
         services.AddScoped<CreateAlunoService>();
         services.AddScoped<CreateUserService>();
@@ -47,7 +55,6 @@ public static class ServicesConfigs
         services.AddScoped<ITurmasService, TurmasService>();
         services.AddScoped<IOfertasService, OfertasService>();
         services.AddScoped<IAgendasService, AgendasService>();
-        services.AddScoped<IPeriodosService, PeriodosService>();
         services.AddScoped<IFaculdadesService, FaculdadesService>();
         services.AddScoped<IMatriculasService, MatriculasService>();
         services.AddScoped<IDisciplinasService, DisciplinasService>();

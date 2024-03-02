@@ -1,23 +1,20 @@
-using Syki.Shared;
-using Syki.Back.Exceptions;
+namespace Syki.Back.CreateEnrollmentPeriod;
 
-namespace Syki.Back.Domain;
-
-public class PeriodoDeMatricula
+public class EnrollmentPeriod
 {
     public string Id { get; set; }
-    public Guid FaculdadeId { get; set; }
+    public Guid InstitutionId { get; set; }
     public DateOnly Start { get; set; }
     public DateOnly End { get; set; }
 
-    public PeriodoDeMatricula(
+    public EnrollmentPeriod(
         string id,
-        Guid faculdadeId,
+        Guid institutionId,
         DateOnly start,
         DateOnly end
     ) {
         Id = id;
-        FaculdadeId = faculdadeId;
+        InstitutionId = institutionId;
 
         if (start >= end)
             Throw.DE023.Now();
@@ -26,9 +23,9 @@ public class PeriodoDeMatricula
         End = end;
     }
 
-    public PeriodoDeMatriculaOut ToOut()
+    public EnrollmentPeriodOut ToOut()
     {
-        return new PeriodoDeMatriculaOut
+        return new EnrollmentPeriodOut
         {
             Id = Id,
             Start = Start,

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class PeriodoOut
+public class AcademicPeriodOut
 {
     public string Id { get; set; }
     public DateOnly Start { get; set; }

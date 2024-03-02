@@ -1,14 +1,14 @@
 namespace Syki.Shared;
 
-public class PeriodoDeMatriculaIn
+public class CreateEnrollmentPeriodIn
 {
     public string Id { get; set; }
     public DateOnly Start { get; set; }
     public DateOnly End { get; set; }
 
-    public PeriodoDeMatriculaIn() {}
+    public CreateEnrollmentPeriodIn() {}
 
-    public PeriodoDeMatriculaIn(string id, string start, string end)
+    public CreateEnrollmentPeriodIn(string id, string start, string end)
     {
         Id = id;
         var year = int.Parse(id.OnlyNumbers().Substring(0, 4));

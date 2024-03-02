@@ -1,23 +1,20 @@
-using Syki.Shared;
-using Syki.Back.Exceptions;
+namespace Syki.Back.CreateAcademicPeriod;
 
-namespace Syki.Back.Domain;
-
-public class Periodo
+public class AcademicPeriod
 {
     public string Id { get; set; }
-    public Guid FaculdadeId { get; set; }
+    public Guid InstitutionId { get; set; }
     public DateOnly Start { get; set; }
     public DateOnly End { get; set; }
 
-    public Periodo(
+    public AcademicPeriod(
         string id,
-        Guid faculdadeId,
+        Guid institutionId,
         DateOnly start,
         DateOnly end
     ) {
         Id = Validate(id, start, end);
-        FaculdadeId = faculdadeId;
+        InstitutionId = institutionId;
         Start = start;
         End = end;
     }
@@ -53,9 +50,9 @@ public class Periodo
         return $"{year}.{digit}";
     }
 
-    public PeriodoOut ToOut()
+    public AcademicPeriodOut ToOut()
     {
-        return new PeriodoOut
+        return new AcademicPeriodOut
         {
             Id = Id,
             Start = Start,

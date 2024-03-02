@@ -1,5 +1,6 @@
 using Syki.Back.Domain;
 using Syki.Back.CreateCampus;
+using Syki.Back.CreateAcademicPeriod;
 
 namespace Syki.Back.FinishUserRegister;
 
@@ -16,10 +17,10 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, IProfessoresService p
         var faculdade = await ctx.Institutions.FirstAsync(f => f.Id == id);
 
         var year = DateTime.Now.Year;
-        faculdade.Periodos =
+        faculdade.AcademicPeriods =
         [
-            new Periodo($"{year}.1", id, new DateOnly(year, 02, 01), new DateOnly(year, 06, 01)),
-            new Periodo($"{year}.2", id, new DateOnly(year, 07, 01), new DateOnly(year, 12, 01)),
+            new AcademicPeriod($"{year}.1", id, new DateOnly(year, 02, 01), new DateOnly(year, 06, 01)),
+            new AcademicPeriod($"{year}.2", id, new DateOnly(year, 07, 01), new DateOnly(year, 12, 01)),
         ];
 
         faculdade.Campi =
@@ -174,7 +175,7 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, IProfessoresService p
             faculdade.Campi[2].Id,
             faculdade.Cursos[1].Id,
             gradeAds.Id,
-            faculdade.Periodos[0].Id,
+            faculdade.AcademicPeriods[0].Id,
             Turno.Noturno
         );
         ctx.Add(ofertaAds);

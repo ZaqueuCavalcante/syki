@@ -2,6 +2,7 @@ using Syki.Back.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Syki.Back.CreateAluno;
+using Syki.Back.CreateAcademicPeriod;
 
 namespace Syki.Back.Database;
 
@@ -40,7 +41,7 @@ public class TurmaConfig : IEntityTypeConfiguration<Turma>
             .WithOne()
             .HasForeignKey(h => h.TurmaId);
 
-        turma.HasOne<Periodo>()
+        turma.HasOne<AcademicPeriod>()
             .WithMany()
             .HasForeignKey(t => new { t.Periodo, t.FaculdadeId });
     }

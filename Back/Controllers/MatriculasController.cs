@@ -9,33 +9,6 @@ public class MatriculasController : ControllerBase
     private readonly IMatriculasService _service;
     public MatriculasController(IMatriculasService service) => _service = service;
 
-    [HttpPost("periodos")]
-    [Authorize(Roles = Academico)]
-    public async Task<IActionResult> CreatePeriodoDeMatricula([FromBody] PeriodoDeMatriculaIn data)
-    {
-        var periodo = await _service.CreatePeriodoDeMatricula(User.Facul(), data);
-
-        return Ok(periodo);
-    }
-
-    [HttpGet("periodos")]
-    [Authorize(Roles = Academico)]
-    public async Task<IActionResult> GetPeriodosDeMatricula()
-    {
-        var periodos = await _service.GetPeriodosDeMatricula(User.Facul());
-
-        return Ok(periodos);
-    }
-
-    [HttpGet("periodos/atual")]
-    [Authorize(Roles = Aluno)]
-    public async Task<IActionResult> GetPeriodoDeMatriculaAtual()
-    {
-        var periodo = await _service.GetPeriodoDeMatriculaAtual(User.Facul());
-
-        return Ok(periodo);
-    }
-
     [HttpPost()]
     [Authorize(Roles = Aluno)]
     public async Task<IActionResult> Create([FromBody] MatriculaTurmaIn data)

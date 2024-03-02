@@ -14,9 +14,9 @@ public class FaculdadeConfig : IEntityTypeConfiguration<Faculdade>
         faculdade.HasKey(f => f.Id);
         faculdade.Property(f => f.Id).ValueGeneratedNever();
 
-        faculdade.HasMany(f => f.Periodos)
+        faculdade.HasMany(f => f.AcademicPeriods)
             .WithOne()
-            .HasForeignKey(p => p.FaculdadeId);
+            .HasForeignKey(p => p.InstitutionId);
 
         faculdade.HasMany(f => f.Campi)
             .WithOne()

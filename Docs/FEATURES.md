@@ -118,3 +118,6 @@ https://youtu.be/xrDPFEH9yIk
 
 - Professor precisa ver horarios
 - Professor precisar dar aula, fazer chamada, e aplicar provas (e notas)
+
+
+

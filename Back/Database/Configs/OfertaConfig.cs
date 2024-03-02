@@ -1,5 +1,6 @@
 using Syki.Back.Domain;
 using Syki.Back.CreateAluno;
+using Syki.Back.CreateAcademicPeriod;
 
 namespace Syki.Back.Database;
 
@@ -20,7 +21,7 @@ public class OfertaConfig : IEntityTypeConfiguration<Oferta>
             .WithMany()
             .HasForeignKey(o => o.GradeId);
 
-        oferta.HasOne<Periodo>()
+        oferta.HasOne<AcademicPeriod>()
             .WithMany()
             .HasForeignKey(o => new { o.Periodo, o.FaculdadeId });
 

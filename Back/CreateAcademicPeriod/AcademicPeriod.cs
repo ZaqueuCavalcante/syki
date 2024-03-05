@@ -19,7 +19,7 @@ public class AcademicPeriod
         End = end;
     }
 
-    private string Validate(
+    private static string Validate(
         string id,
         DateOnly start,
         DateOnly end

@@ -25,30 +25,8 @@
                 }
             </MudSelect>
             <MudStack Row="true">
-                <MudDatePicker
-                    Label="Início"
-                    Margin="Margin.Dense"
-                    Variant="Variant.Outlined"
-                    Editable="true"
-                    Required="true"
-                    RequiredError="Informe!"
-                    @bind-Date="@_start"
-                    Mask="@(new DateMask("dd/MM/yyyy"))"
-                    DateFormat="dd/MM/yyyy"
-                    Placeholder="dd/MM/yyyy"
-                />
-                <MudDatePicker
-                    Label="Fim"
-                    Margin="Margin.Dense"
-                    Variant="Variant.Outlined"
-                    Editable="true"
-                    Required="true"
-                    RequiredError="Informe!"
-                    @bind-Date="@_end"
-                    Mask="@(new DateMask("dd/MM/yyyy"))"
-                    DateFormat="dd/MM/yyyy"
-                    Placeholder="dd/MM/yyyy"
-                />
+                <SykiDatePicker Label="Início" @bind-Date="@_start"/>
+                <SykiDatePicker Label="Fim" @bind-Date="@_end"/>
             </MudStack>
         </MudForm>
     </DialogContent>

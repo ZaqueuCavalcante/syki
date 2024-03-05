@@ -1,0 +1,24 @@
+<MudDatePicker
+    Margin="Margin.Dense"
+    Variant="Variant.Outlined"
+    Editable="true"
+    Required="true"
+    RequiredError="Informe!"
+    Label="@Label"
+    Date="@Date"
+    DateChanged="DateChanged"
+    Mask="@(new DateMask("dd/MM/yyyy"))"
+    DateFormat="dd/MM/yyyy"
+    Placeholder="dd/MM/yyyy"
+/>
+
+@code
+{
+    [Parameter]
+    public DateTime? Date { get; set; }
+    [Parameter]
+    public EventCallback<DateTime?> DateChanged { get; set; }
+
+    [Parameter]
+    public string Label { get; set; }
+}

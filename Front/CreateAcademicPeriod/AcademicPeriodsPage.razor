@@ -38,7 +38,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _periodos = await Client.Get() ?? [];
+        _periodos = await Client.Get();
         _loading = false;
     }
 

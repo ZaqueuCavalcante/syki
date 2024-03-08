@@ -3,22 +3,24 @@ using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 namespace Syki.Front.Auth;
 
-public class SykiDelegatingHandler : DelegatingHandler
+public class SykiDelegatingHandler(ILocalStorageService localStorage) : DelegatingHandler
 {
-    private readonly ILocalStorageService _localStorage;
-    public SykiDelegatingHandler(ILocalStorageService localStorage)
-    {
-        _localStorage = localStorage;
-    }
-
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         request.SetBrowserRequestCredentials(BrowserRequestCredentials.Include);
 
-        var token = await _localStorage.GetItemAsync("AccessToken");
+        var token = await localStorage.GetItemAsync("AccessToken");
 
         request.Headers.Add("Authorization", $"Bearer {token}");
 
-        return await base.SendAsync(request, cancellationToken);
+        var response = await base.SendAsync(request, cancellationToken);
+
+        // if (response.StatusCode == HttpStatusCode.Unauthorized)
+        // {
+        //     await authService.Logout();
+        //     navigationManager.NavigateTo("/login", forceLoad: true);
+        // }
+
+        return response;
     }
 }

@@ -20,4 +20,3 @@ https://www.youtube.com/watch?v=ExQJljpj1lY&list=PLOeFnOV9YBa4yaz-uIi5T4ZW3QQGHJ
 
 - OAuth 2.0 -> Authorization
 - OIDC -> Authentication
-

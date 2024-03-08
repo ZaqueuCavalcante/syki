@@ -1,7 +1,6 @@
 using Syki.Shared.Login;
 using Syki.Back.CreateUser;
 using Syki.Back.GenerateJWT;
-using Microsoft.AspNetCore.Identity;
 
 namespace Syki.Back.Login;
 

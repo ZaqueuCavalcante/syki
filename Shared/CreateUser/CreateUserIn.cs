@@ -21,13 +21,13 @@ public class CreateUserIn
         };
     }
 
-    public static CreateUserIn NewAcademico(Guid institutionId, string email, string password)
+    public static CreateUserIn NewAcademico(Guid institutionId, string email, string password = "")
     {
         return new CreateUserIn
         {
             Name = email,
             Email = email,
-            Password = password,
+            Password = password.IsEmpty() ? $"Academico@{Guid.NewGuid().ToString().OnlyNumbers()}" : password,
             InstitutionId = institutionId,
             Role = "Academico",
         };

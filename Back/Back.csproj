@@ -1,13 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <Nullable>enable</Nullable>
-		<NoWarn>CS1591;CS8618;CS8602;CS8604;</NoWarn>
     <ImplicitUsings>enable</ImplicitUsings>
     <TargetFramework>net8.0</TargetFramework>
+		<NoWarn>CS1591;CS8618;CS8602;CS8604;</NoWarn>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <InvariantGlobalization>true</InvariantGlobalization>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <UserSecretsId>73852cbc-85df-4a66-b30c-e60af7d726c0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

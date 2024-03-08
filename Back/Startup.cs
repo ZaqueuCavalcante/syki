@@ -31,13 +31,13 @@ public class Startup
 
         app.UseRouting();
         app.UseRateLimiter();
+        app.UseDomainExceptions();
 
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseAudit();
         app.UseSwaggerThings();
-        app.UseDomainExceptions();
 
         app.UseControllers();
     }

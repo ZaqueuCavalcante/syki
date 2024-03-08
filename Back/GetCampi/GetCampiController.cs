@@ -1,7 +1,3 @@
-using Syki.Back.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-
 namespace Syki.Back.GetCampi;
 
 [ApiController, AuthAcademico]

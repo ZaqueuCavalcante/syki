@@ -1,9 +1,10 @@
 using System.Text;
+using System.Text.Json;
 using Syki.Back.Settings;
+using System.Net.Http.Headers;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Syki.Back.Configs;
 
@@ -40,80 +41,35 @@ public static class AuthenticationConfigs
             RoleClaimType = "role",
         };
 
-        // services.AddAccessTokenManagement();
-
-        services.AddAuthentication(options =>
-        {
-            options.DefaultScheme = BearerScheme;
-            options.DefaultSignInScheme = BearerScheme;
-            options.DefaultChallengeScheme = BearerScheme;
-            options.DefaultAuthenticateScheme = BearerScheme;
-        })
-        .AddJwtBearer(BearerScheme, options =>
-        {
-            options.TokenValidationParameters = tokenValidationParameters;
-        })
-        .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
-        {
-            // How middleware persists the user identity? (Cookie)
-            options.SignInScheme = BearerScheme;
-
-            // How Broswer redirects user to authentication provider?
-            options.AuthenticationMethod = OpenIdConnectRedirectBehavior.RedirectGet;
-
-            // How response should be sent back from authentication provider?
-            options.ResponseMode = OpenIdConnectResponseMode.FormPost;
-
-            options.Authority = "https://accounts.google.com";
-            options.ClientId = "lalala";
-            options.ClientSecret = "lalala";
-            options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
-            options.UsePkce = true;
-
-            // Where we would like to get the response after authentication?
-            options.CallbackPath = "/signin-google";
-
-            // Where we would like to get the response after log out?
-            options.SignedOutCallbackPath = "/signout-callback-oidc";
-
-            // Should we persist tokens?
-            options.SaveTokens = true;
-
-            // Should we request user profile details for user end point?
-            options.GetClaimsFromUserInfoEndpoint = true;
-
-            // What scopes do we need?
-            options.Scope.Add("openid");
-            options.Scope.Add("email");
-            options.Scope.Add("phone");
-            options.Scope.Add("profile");
-
-            // What claims from above scopes do we need?
-            // unblock the required claims by using Remove()
-            options.ClaimActions.Remove("openid");
-            options.ClaimActions.Remove("email");
-            options.ClaimActions.Remove("phone");
-            options.ClaimActions.Remove("profile");
-
-            // How to handle OIDC events?
-            options.Events = new OpenIdConnectEvents
+        services.AddAuthentication("Cookie")
+            .AddCookie("Cookie")
+            .AddOAuth("Google", options =>
             {
-                // Where to redirect after we get logout redirection?
-                OnSignedOutCallbackRedirect = context =>
-                {
-                    context.Response.Redirect("/");
-                    context.HandleResponse();
-                    return Task.FromResult(0);
-                },
+                options.Scope.Add("openid");
+                options.Scope.Add("email");
+                options.SaveTokens = true;
+                options.SignInScheme = "Cookie";
+                options.CallbackPath = "/signin-google";
+                options.ClientId = settings.GoogleClientId;
+                options.ClientSecret = settings.GoogleClientSecret;
+                options.TokenEndpoint = "https://oauth2.googleapis.com/token";
+                options.AuthorizationEndpoint = "https://accounts.google.com/o/oauth2/v2/auth";
+                options.UserInformationEndpoint = "https://openidconnect.googleapis.com/v1/userinfo";
 
-                // Where to redirect when we get authentication errors?
-                OnRemoteFailure = context =>
+                options.ClaimActions.MapJsonKey("email", "email");
+
+                options.Events.OnCreatingTicket = async authCtx =>
                 {
-                    context.Response.Redirect("/");
-                    context.HandleResponse();
-                    return Task.FromResult(0);
-                }
-            };
-        });
+                    using var request = new HttpRequestMessage(HttpMethod.Post, authCtx.Options.UserInformationEndpoint);
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authCtx.AccessToken);
+                    using var response = await authCtx.Backchannel.SendAsync(request);
+                    var user = await response.Content.ReadFromJsonAsync<JsonElement>();
+                    authCtx.RunClaimActions(user);
+                };
+            })
+            .AddJwtBearer(BearerScheme, options =>
+            {
+                options.TokenValidationParameters = tokenValidationParameters;
+            });
     }
 }

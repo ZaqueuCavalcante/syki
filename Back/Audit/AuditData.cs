@@ -1,5 +1,4 @@
-﻿using Syki.Shared;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Audit.EntityFramework;
 
 namespace Syki.Back.Audit;

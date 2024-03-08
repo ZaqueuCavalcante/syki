@@ -14,6 +14,11 @@ public static class UserExtensions
         return Guid.Parse(user.FindFirstValue("faculdade")!);
     }
 
+    public static string Email(this ClaimsPrincipal user)
+    {
+        return user.FindFirstValue("email")!;
+    }
+
     public static Guid InstitutionId(this ClaimsPrincipal user)
     {
         // TODO: change faculdade to institutionId in the JWT
@@ -22,6 +27,6 @@ public static class UserExtensions
 
     public static bool IsAuditable(this PathString path)
     {
-        return path != "/login" && path != "/mfa/login" && path != "/reset-password" && path != "/user-register"  && path != "/demos/setup";
+        return path != "/login" && path != "/login-with-google" && path != "/mfa/login" && path != "/reset-password" && path != "/user-register"  && path != "/demos/setup";
     }
 }

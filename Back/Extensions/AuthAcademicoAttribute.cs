@@ -5,5 +5,6 @@ public class AuthAcademicoAttribute : AuthorizeAttribute
 	public AuthAcademicoAttribute()
 	{
 		Roles = AuthorizationConfigs.Academico;
+		AuthenticationSchemes = "Bearer";
 	}
 }

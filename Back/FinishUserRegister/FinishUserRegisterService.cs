@@ -12,18 +12,18 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
         using var transaction = ctx.Database.BeginTransaction();
 
         _ = Guid.TryParse(data.Token, out var id);
-        var demo = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Id == id);
-        if (demo == null)
+        var register = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Id == id);
+        if (register == null)
             Throw.DE024.Now();
 
-        demo.Finish();
+        register.Finish();
 
-        var institution = new Faculdade($"Instituição - {demo.Email}");
+        var institution = new Faculdade($"Instituição - {register.Email}");
         ctx.Add(institution);
         ctx.Add(SykiTask.SeedInstitutionData(institution.Id));
         await ctx.SaveChangesAsync();
 
-        var userIn = CreateUserIn.NewAcademico(institution.Id, demo.Email, data.Password);
+        var userIn = CreateUserIn.NewAcademico(institution.Id, register.Email, data.Password);
         await service.Create(userIn);
 
         await ctx.SaveChangesAsync();

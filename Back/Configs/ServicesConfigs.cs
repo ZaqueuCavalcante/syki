@@ -16,6 +16,7 @@ using Syki.Back.SendResetPasswordToken;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.GetAcademicPeriods;
 using Syki.Back.GetEnrollmentPeriods;
+using Syki.Back.LoginWithGoogle;
 
 namespace Syki.Back.Configs;
 
@@ -37,6 +38,7 @@ public static class ServicesConfigs
         services.AddScoped<CreateUserService>();
         services.AddScoped<GenerateJWTService>();
         services.AddScoped<LoginService>();
+        services.AddScoped<LoginWithGoogleService>();
         services.AddScoped<GetMfaKeyService>();
         services.AddScoped<SetupMfaService>();
         services.AddScoped<LoginMfaService>();

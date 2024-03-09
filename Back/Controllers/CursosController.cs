@@ -1,25 +1,13 @@
 namespace Syki.Back.Controllers;
 
-[AuthAcademico]
+[ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]
-[ApiController, Route("[controller]")]
-public class CursosController : ControllerBase
+public class CursosController(ICursosService service) : ControllerBase
 {
-    private readonly ICursosService _service;
-    public CursosController(ICursosService service) => _service = service;
-
-    [HttpPost("")]
-    public async Task<IActionResult> Create([FromBody] CursoIn data)
-    {
-        var curso = await _service.Create(User.InstitutionId(), data);
-
-        return Ok(curso);
-    }
-
-    [HttpGet("")]
+    [HttpGet()]
     public async Task<IActionResult> GetAll()
     {
-        var cursos = await _service.GetAll(User.InstitutionId());
+        var cursos = await service.GetAll(User.InstitutionId());
 
         return Ok(cursos);
     }
@@ -27,7 +15,7 @@ public class CursosController : ControllerBase
     [HttpGet("disciplinas")]
     public async Task<IActionResult> GetAllWithDisciplinas()
     {
-        var cursos = await _service.GetAllWithDisciplinas(User.InstitutionId());
+        var cursos = await service.GetAllWithDisciplinas(User.InstitutionId());
 
         return Ok(cursos);
     }
@@ -35,7 +23,7 @@ public class CursosController : ControllerBase
     [HttpGet("{id}/disciplinas")]
     public async Task<IActionResult> GetDisciplinas([FromRoute] Guid id)
     {
-        var disciplinas = await _service.GetDisciplinas(id, User.InstitutionId());
+        var disciplinas = await service.GetDisciplinas(id, User.InstitutionId());
 
         return Ok(disciplinas);
     }

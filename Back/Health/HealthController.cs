@@ -1,11 +1,11 @@
-namespace Syki.Back.Controllers;
+namespace Syki.Back.Health;
 
-[ApiController, Route("[controller]")]
+[ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]
 public class HealthController : ControllerBase
 {
-    [HttpGet("")]
-    public IActionResult GetHealth()
+    [HttpGet("health")]
+    public IActionResult Get()
     {
         return Ok(new { Status = "Healthy" });
     }

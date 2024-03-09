@@ -1,17 +1,13 @@
 namespace Syki.Back.Controllers;
 
-[AuthAdm]
+[ApiController, AuthAdm]
 [EnableRateLimiting("Medium")]
-[ApiController, Route("[controller]")]
-public class FaculdadesController : ControllerBase
+public class FaculdadesController(IFaculdadesService service) : ControllerBase
 {
-    private readonly IFaculdadesService _service;
-    public FaculdadesController(IFaculdadesService service) => _service = service;
-
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] FaculdadeIn data)
     {
-        var faculdade = await _service.Create(data);
+        var faculdade = await service.Create(data);
 
         return Ok(faculdade);
     }
@@ -19,7 +15,7 @@ public class FaculdadesController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var faculdades = await _service.GetAll();
+        var faculdades = await service.GetAll();
 
         return Ok(faculdades);
     }

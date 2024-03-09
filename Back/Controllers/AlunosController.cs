@@ -1,7 +1,7 @@
 namespace Syki.Back.Controllers;
 
+[ApiController]
 [EnableRateLimiting("Medium")]
-[ApiController, Route("[controller]")]
 public class AlunosController(IAlunosService service) : ControllerBase
 {
     [AuthAluno]
@@ -13,7 +13,7 @@ public class AlunosController(IAlunosService service) : ControllerBase
         return Ok(disciplinas);
     }
 
-    [HttpGet("")]
+    [HttpGet()]
     [AuthAcademico]
     public async Task<IActionResult> GetAll()
     {

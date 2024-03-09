@@ -1,17 +1,13 @@
 namespace Syki.Back.Controllers;
 
-[AuthAcademico]
+[ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]
-[ApiController, Route("[controller]")]
-public class ProfessoresController : ControllerBase
+public class ProfessoresController(IProfessoresService service) : ControllerBase
 {
-    private readonly IProfessoresService _service;
-    public ProfessoresController(IProfessoresService service) => _service = service;
-
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] ProfessorIn data)
     {
-        var professor = await _service.Create(User.InstitutionId(), data);
+        var professor = await service.Create(User.InstitutionId(), data);
 
         return Ok(professor);
     }
@@ -19,7 +15,7 @@ public class ProfessoresController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var professores = await _service.GetAll(User.InstitutionId());
+        var professores = await service.GetAll(User.InstitutionId());
 
         return Ok(professores);
     }

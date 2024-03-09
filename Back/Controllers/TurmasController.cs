@@ -1,17 +1,13 @@
 namespace Syki.Back.Controllers;
 
-[AuthAcademico]
+[ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]
-[ApiController, Route("[controller]")]
-public class TurmasController : ControllerBase
+public class TurmasController(ITurmasService service) : ControllerBase
 {
-    private readonly ITurmasService _service;
-    public TurmasController(ITurmasService service) => _service = service;
-
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] TurmaIn data)
     {
-        var turma = await _service.Create(User.InstitutionId(), data);
+        var turma = await service.Create(User.InstitutionId(), data);
 
         return Ok(turma);
     }
@@ -19,7 +15,7 @@ public class TurmasController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var turmas = await _service.GetAll(User.InstitutionId());
+        var turmas = await service.GetAll(User.InstitutionId());
 
         return Ok(turmas);
     }

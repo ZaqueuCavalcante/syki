@@ -2,7 +2,7 @@ namespace Syki.Back.GetAlunoAgenda;
 
 public class GetAlunoAgendaService(SykiDbContext ctx)
 {
-    public async Task<List<AgendaDiaOut>> Get(Guid faculdadeId, Guid userId)
+    public async Task<List<AgendaDiaOut>> Get(Guid institution, Guid userId)
     {
         var ids = await ctx.TurmaAlunos.AsNoTracking()
             .Where(x => x.AlunoId == userId && x.Situacao == Situacao.Matriculado)
@@ -12,7 +12,7 @@ public class GetAlunoAgendaService(SykiDbContext ctx)
         var turmas = await ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Horarios)
-            .Where(t => t.FaculdadeId == faculdadeId && ids.Contains(t.Id))
+            .Where(t => t.FaculdadeId == institution && ids.Contains(t.Id))
             .ToListAsync();
 
         var response = turmas.ConvertAll(t =>

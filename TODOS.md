@@ -22,7 +22,7 @@
 - [X] GetAlunoInsights
 - [X] GetAdmInsights
 - [X] UpdateCampus
-- [] GetAlunoAgenda
+- [X] GetAlunoAgenda
 - [] CreateCurso
 - [] GetCursos
 - [] CreateDisciplina

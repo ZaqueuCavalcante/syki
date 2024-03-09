@@ -1,26 +1,21 @@
 namespace Syki.Back.Controllers;
 
+[ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]
-[ApiController, Route("[controller]")]
-public class OfertasController : ControllerBase
+public class OfertasController(IOfertasService service) : ControllerBase
 {
-    private readonly IOfertasService _service;
-    public OfertasController(IOfertasService service) => _service = service;
-
     [HttpPost("")]
-    [AuthAcademico]
     public async Task<IActionResult> Create([FromBody] OfertaIn data)
     {
-        var oferta = await _service.Create(User.InstitutionId(), data);
+        var oferta = await service.Create(User.InstitutionId(), data);
 
         return Ok(oferta);
     }
 
     [HttpGet("")]
-    [AuthAcademico]
     public async Task<IActionResult> GetAll()
     {
-        var ofertas = await _service.GetAll(User.InstitutionId());
+        var ofertas = await service.GetAll(User.InstitutionId());
 
         return Ok(ofertas);
     }

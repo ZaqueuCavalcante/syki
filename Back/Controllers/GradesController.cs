@@ -1,17 +1,13 @@
 namespace Syki.Back.Controllers;
 
-[AuthAcademico]
+[ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]
-[ApiController, Route("[controller]")]
-public class GradesController : ControllerBase
+public class GradesController(IGradesService service) : ControllerBase
 {
-    private readonly IGradesService _service;
-    public GradesController(IGradesService service) => _service = service;
-
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] GradeIn data)
     {
-        var grade = await _service.Create(User.InstitutionId(), data);
+        var grade = await service.Create(User.InstitutionId(), data);
 
         return Ok(grade);
     }
@@ -19,7 +15,7 @@ public class GradesController : ControllerBase
     [HttpGet("{id}/disciplinas")]
     public async Task<IActionResult> GetDisciplinas([FromRoute] Guid id)
     {
-        var grades = await _service.GetDisciplinas(User.InstitutionId(), id);
+        var grades = await service.GetDisciplinas(User.InstitutionId(), id);
 
         return Ok(grades);
     }
@@ -27,7 +23,7 @@ public class GradesController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var grades = await _service.GetAll(User.InstitutionId());
+        var grades = await service.GetAll(User.InstitutionId());
 
         return Ok(grades);
     }

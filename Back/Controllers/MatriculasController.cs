@@ -1,9 +1,7 @@
-using static Syki.Back.Configs.AuthorizationConfigs;
-
 namespace Syki.Back.Controllers;
 
+[ApiController]
 [EnableRateLimiting("Medium")]
-[ApiController, Route("[controller]")]
 public class MatriculasController(IMatriculasService service) : ControllerBase
 {
     [AuthAluno]

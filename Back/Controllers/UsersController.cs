@@ -1,11 +1,10 @@
 namespace Syki.Back.Controllers;
 
+[ApiController, AuthAdm]
 [EnableRateLimiting("Small")]
-[ApiController, Route("[controller]")]
 public class UsersController(IAuthService authService) : ControllerBase
 {
-    [AuthAdm]
-    [HttpPost()]
+    [HttpPost("")]
     public async Task<IActionResult> Register([FromBody] CreateUserIn data)
     {
         var user = await authService.Register(data);
@@ -13,8 +12,7 @@ public class UsersController(IAuthService authService) : ControllerBase
         return Ok(user);
     }
 
-    [AuthAdm]
-    [HttpGet()]
+    [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
         var users = await authService.GetAllUsers();

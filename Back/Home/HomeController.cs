@@ -1,6 +1,6 @@
-namespace Syki.Back.Controllers;
+namespace Syki.Back.Home;
 
-[ApiController, Route("")]
+[ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]
 public class HomeController : ControllerBase
 {

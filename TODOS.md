@@ -24,7 +24,7 @@
 - [X] UpdateCampus
 - [X] GetAlunoAgenda
 - [X] CreateCurso
-- [] GetCursos
+- [X] GetCursos
 - [] CreateDisciplina
 - [] GetDisciplinas
 - [] CreateGrade

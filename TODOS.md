@@ -37,7 +37,8 @@
 - [] GetProfessores
 - [] CreateTurma
 - [] GetTurmas
-- [] GetAlunos
+- [X] GetAlunos
+- [X] GetAlunoDisciplinas
 - [] CreateNotification
 - [] GetNotifications
 

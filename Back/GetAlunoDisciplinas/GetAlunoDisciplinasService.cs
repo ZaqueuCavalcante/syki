@@ -1,8 +1,8 @@
-namespace Syki.Back.Services;
+namespace Syki.Back.GetAlunoDisciplinas;
 
-public class AlunosService(SykiDbContext ctx) : IAlunosService
+public class GetAlunoDisciplinasService(SykiDbContext ctx)
 {
-    public async Task<List<DisciplinaOut>> GetDisciplinas(Guid userId)
+    public async Task<List<DisciplinaOut>> Get(Guid userId)
     {
         var ofertaId = await ctx.Alunos.Where(a => a.Id == userId)
             .Select(a => a.OfertaId).FirstAsync();

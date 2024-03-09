@@ -51,7 +51,6 @@ public static class ServicesConfigs
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ICursosService, CursosService>();
         services.AddScoped<IGradesService, GradesService>();
-        services.AddScoped<IAlunosService, AlunosService>();
         services.AddScoped<IEmailsService, EmailsService>();
         services.AddScoped<ITurmasService, TurmasService>();
         services.AddScoped<IOfertasService, OfertasService>();

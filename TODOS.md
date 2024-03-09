@@ -46,6 +46,8 @@
 - [X] GetInstitutions
 - [X] CreateMatriculaAluno
 - [X] GetMatriculaAlunoTurmas
+- [X] RegisterUser
+- [X] GetUsers
 
 
 - Post sobre features over file types

@@ -1,7 +1,6 @@
 namespace Syki.Back.GetInstitutions;
 
 [ApiController, AuthAdm]
-[EnableRateLimiting("Medium")]
 public class GetInstitutionsController(GetInstitutionsService service) : ControllerBase
 {
     [HttpGet("institutions")]

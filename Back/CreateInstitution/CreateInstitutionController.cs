@@ -1,7 +1,6 @@
 namespace Syki.Back.CreateInstitution;
 
 [ApiController, AuthAdm]
-[EnableRateLimiting("Medium")]
 public class CreateInstitutionController(CreateInstitutionService service) : ControllerBase
 {
     [HttpPost("institutions")]

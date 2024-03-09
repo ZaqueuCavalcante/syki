@@ -32,8 +32,8 @@
 - [X] GetCursosWithDisciplinas
 - [X] GetGrades
 - [X] GetGradeDisciplinas
-- [] CreateOferta
-- [] GetOfertas
+- [X] CreateOferta
+- [X] GetOfertas
 - [] CreateProfessor
 - [] GetProfessores
 - [] CreateTurma

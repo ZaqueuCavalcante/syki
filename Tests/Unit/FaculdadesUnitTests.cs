@@ -1,3 +1,5 @@
+using Syki.Back.CreateInstitution;
+
 namespace Syki.Tests.Unit;
 
 public class FaculdadesUnitTests

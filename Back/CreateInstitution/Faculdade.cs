@@ -3,8 +3,10 @@ using Syki.Back.CreateCampus;
 using Syki.Back.CreateCurso;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateAcademicPeriod;
+using Syki.Back.CreateProfessor;
+using Syki.Back.CreateNotification;
 
-namespace Syki.Back.Domain;
+namespace Syki.Back.CreateInstitution;
 
 public class Faculdade
 {

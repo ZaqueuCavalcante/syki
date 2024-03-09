@@ -10,6 +10,9 @@ using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.CreatePendingUserRegister;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Syki.Back.CreateOferta;
+using Syki.Back.CreateProfessor;
+using Syki.Back.CreateNotification;
+using Syki.Back.CreateInstitution;
 
 namespace Syki.Back.Database;
 

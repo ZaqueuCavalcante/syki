@@ -1,3 +1,5 @@
+using Syki.Back.CreateNotification;
+
 namespace Syki.Tests.Unit;
 
 public class NotificationsUnitTests

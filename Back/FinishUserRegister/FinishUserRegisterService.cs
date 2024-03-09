@@ -1,3 +1,4 @@
+using Syki.Back.CreateInstitution;
 using Syki.Back.CreateUser;
 
 namespace Syki.Back.FinishUserRegister;

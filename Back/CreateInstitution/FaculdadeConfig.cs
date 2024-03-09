@@ -1,6 +1,6 @@
 using Syki.Back.CreateUser;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateInstitution;
 
 public class FaculdadeConfig : IEntityTypeConfiguration<Faculdade>
 {

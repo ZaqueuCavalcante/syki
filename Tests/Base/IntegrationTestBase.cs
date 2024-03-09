@@ -2,6 +2,7 @@ using Syki.Back.CreateUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Back.CreateInstitution;
 
 namespace Syki.Tests.Base;
 

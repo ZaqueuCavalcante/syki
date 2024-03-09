@@ -5,6 +5,9 @@ using Syki.Back.CreateCampus;
 using Syki.Back.CreateAluno;
 using Syki.Back.CreateCurso;
 using Syki.Back.CreateOferta;
+using Syki.Back.CreateProfessor;
+using Syki.Back.CreateNotification;
+using Syki.Back.CreateInstitution;
 
 namespace Syki.Back.Configs;
 

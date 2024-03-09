@@ -1,3 +1,5 @@
+using Syki.Back.CreateProfessor;
+
 namespace Syki.Tests.Unit;
 
 public class TurmasUnitTests

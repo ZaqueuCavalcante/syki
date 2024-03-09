@@ -1,4 +1,5 @@
 using Syki.Back.CreateAluno;
+using Syki.Back.CreateProfessor;
 
 namespace Syki.Back.Domain;
 

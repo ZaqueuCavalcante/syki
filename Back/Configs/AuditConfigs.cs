@@ -53,7 +53,7 @@ public static class AuditConfigs
             }
 
             scope.Event.CustomFields["UserId"] = httpContext.User.Id();
-            scope.Event.CustomFields["FaculdadeId"] = httpContext.User.Facul();
+            scope.Event.CustomFields["FaculdadeId"] = httpContext.User.InstitutionId();
         });
     }
 }

@@ -11,7 +11,7 @@ public class CursosController : ControllerBase
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] CursoIn data)
     {
-        var curso = await _service.Create(User.Facul(), data);
+        var curso = await _service.Create(User.InstitutionId(), data);
 
         return Ok(curso);
     }
@@ -19,7 +19,7 @@ public class CursosController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var cursos = await _service.GetAll(User.Facul());
+        var cursos = await _service.GetAll(User.InstitutionId());
 
         return Ok(cursos);
     }
@@ -27,7 +27,7 @@ public class CursosController : ControllerBase
     [HttpGet("disciplinas")]
     public async Task<IActionResult> GetAllWithDisciplinas()
     {
-        var cursos = await _service.GetAllWithDisciplinas(User.Facul());
+        var cursos = await _service.GetAllWithDisciplinas(User.InstitutionId());
 
         return Ok(cursos);
     }
@@ -35,7 +35,7 @@ public class CursosController : ControllerBase
     [HttpGet("{id}/disciplinas")]
     public async Task<IActionResult> GetDisciplinas([FromRoute] Guid id)
     {
-        var disciplinas = await _service.GetDisciplinas(id, User.Facul());
+        var disciplinas = await _service.GetDisciplinas(id, User.InstitutionId());
 
         return Ok(disciplinas);
     }

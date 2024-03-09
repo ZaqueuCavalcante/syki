@@ -11,7 +11,7 @@ public class ProfessoresController : ControllerBase
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] ProfessorIn data)
     {
-        var professor = await _service.Create(User.Facul(), data);
+        var professor = await _service.Create(User.InstitutionId(), data);
 
         return Ok(professor);
     }
@@ -19,7 +19,7 @@ public class ProfessoresController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var professores = await _service.GetAll(User.Facul());
+        var professores = await _service.GetAll(User.InstitutionId());
 
         return Ok(professores);
     }

@@ -11,7 +11,7 @@ public class NotificationsController : ControllerBase
     [AuthAcademico]
     public async Task<IActionResult> Create([FromBody] NotificationIn data)
     {
-        var notification = await _service.Create(User.Facul(), data);
+        var notification = await _service.Create(User.InstitutionId(), data);
 
         return Ok(notification);
     }
@@ -20,7 +20,7 @@ public class NotificationsController : ControllerBase
     [HttpPut("user")]
     public async Task<IActionResult> ViewByUserId()
     {
-        await _service.ViewByUserId(User.Facul(), User.Id());
+        await _service.ViewByUserId(User.InstitutionId(), User.Id());
 
         return Ok();
     }
@@ -29,7 +29,7 @@ public class NotificationsController : ControllerBase
     [AuthAcademico]
     public async Task<IActionResult> GetAll()
     {
-        var notifications = await _service.GetAll(User.Facul());
+        var notifications = await _service.GetAll(User.InstitutionId());
         
         return Ok(notifications);
     }
@@ -38,7 +38,7 @@ public class NotificationsController : ControllerBase
     [HttpGet("user")]
     public async Task<IActionResult> GetByUserId()
     {
-        var notifications = await _service.GetByUserId(User.Facul(), User.Id());
+        var notifications = await _service.GetByUserId(User.InstitutionId(), User.Id());
         
         return Ok(notifications);
     }

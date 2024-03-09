@@ -17,7 +17,7 @@ public class AlunosController(IAlunosService service) : ControllerBase
     [AuthAcademico]
     public async Task<IActionResult> GetAll()
     {
-        var alunos = await service.GetAll(User.Facul());
+        var alunos = await service.GetAll(User.InstitutionId());
         
         return Ok(alunos);
     }

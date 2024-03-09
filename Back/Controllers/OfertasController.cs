@@ -11,7 +11,7 @@ public class OfertasController : ControllerBase
     [AuthAcademico]
     public async Task<IActionResult> Create([FromBody] OfertaIn data)
     {
-        var oferta = await _service.Create(User.Facul(), data);
+        var oferta = await _service.Create(User.InstitutionId(), data);
 
         return Ok(oferta);
     }
@@ -20,7 +20,7 @@ public class OfertasController : ControllerBase
     [AuthAcademico]
     public async Task<IActionResult> GetAll()
     {
-        var ofertas = await _service.GetAll(User.Facul());
+        var ofertas = await _service.GetAll(User.InstitutionId());
 
         return Ok(ofertas);
     }

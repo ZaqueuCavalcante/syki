@@ -30,7 +30,7 @@ public class UserExtensionsUnitTests
         var user = new ClaimsPrincipal(claimsIdentity);
 
         // Act
-        var result = user.Facul();
+        var result = user.InstitutionId();
 
         // Assert
         result.Should().Be(faculdadeIdClaim.Value);

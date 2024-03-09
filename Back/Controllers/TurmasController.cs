@@ -11,7 +11,7 @@ public class TurmasController : ControllerBase
     [HttpPost("")]
     public async Task<IActionResult> Create([FromBody] TurmaIn data)
     {
-        var turma = await _service.Create(User.Facul(), data);
+        var turma = await _service.Create(User.InstitutionId(), data);
 
         return Ok(turma);
     }
@@ -19,7 +19,7 @@ public class TurmasController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAll()
     {
-        var turmas = await _service.GetAll(User.Facul());
+        var turmas = await _service.GetAll(User.InstitutionId());
 
         return Ok(turmas);
     }

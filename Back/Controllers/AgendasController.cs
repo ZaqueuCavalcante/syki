@@ -11,7 +11,7 @@ public class AgendasController : ControllerBase
     [HttpGet("aluno")]
     public async Task<IActionResult> GetAluno()
     {
-        var agenda = await _service.GetAluno(User.Facul(), User.Id());
+        var agenda = await _service.GetAluno(User.InstitutionId(), User.Id());
         
         return Ok(agenda);
     }

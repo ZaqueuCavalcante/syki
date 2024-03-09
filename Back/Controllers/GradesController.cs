@@ -4,15 +4,7 @@ namespace Syki.Back.Controllers;
 [EnableRateLimiting("Medium")]
 public class GradesController(IGradesService service) : ControllerBase
 {
-    [HttpPost("")]
-    public async Task<IActionResult> Create([FromBody] GradeIn data)
-    {
-        var grade = await service.Create(User.InstitutionId(), data);
-
-        return Ok(grade);
-    }
-
-    [HttpGet("{id}/disciplinas")]
+    [HttpGet("grades/{id}/disciplinas")]
     public async Task<IActionResult> GetDisciplinas([FromRoute] Guid id)
     {
         var grades = await service.GetDisciplinas(User.InstitutionId(), id);
@@ -20,8 +12,8 @@ public class GradesController(IGradesService service) : ControllerBase
         return Ok(grades);
     }
 
-    [HttpGet("")]
-    public async Task<IActionResult> GetAll()
+    [HttpGet("grades")]
+    public async Task<IActionResult> Get()
     {
         var grades = await service.GetAll(User.InstitutionId());
 

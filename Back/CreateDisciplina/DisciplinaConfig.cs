@@ -1,4 +1,4 @@
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateDisciplina;
 
 public class DisciplinaConfig : IEntityTypeConfiguration<Disciplina>
 {

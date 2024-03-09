@@ -5,6 +5,7 @@ using Syki.Back.CreateOferta;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateNotification;
+using Syki.Back.CreateDisciplina;
 
 namespace Syki.Back.CreateInstitution;
 

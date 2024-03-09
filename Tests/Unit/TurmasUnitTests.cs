@@ -1,3 +1,4 @@
+using Syki.Back.CreateDisciplina;
 using Syki.Back.CreateProfessor;
 
 namespace Syki.Tests.Unit;

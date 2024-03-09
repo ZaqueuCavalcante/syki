@@ -1,3 +1,5 @@
+using Syki.Back.CreateDisciplina;
+
 namespace Syki.Back.CreateCurso;
 
 public class Curso

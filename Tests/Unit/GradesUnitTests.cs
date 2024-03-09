@@ -1,4 +1,5 @@
 using Syki.Back.CreateCurso;
+using Syki.Back.CreateDisciplina;
 
 namespace Syki.Tests.Unit;
 

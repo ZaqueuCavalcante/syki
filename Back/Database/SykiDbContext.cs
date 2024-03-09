@@ -13,6 +13,7 @@ using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateNotification;
 using Syki.Back.CreateInstitution;
+using Syki.Back.CreateDisciplina;
 
 namespace Syki.Back.Database;
 

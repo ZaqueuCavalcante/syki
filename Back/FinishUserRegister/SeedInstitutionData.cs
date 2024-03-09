@@ -3,6 +3,7 @@ using Syki.Back.CreateCampus;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.CreateOferta;
+using Syki.Back.CreateDisciplina;
 
 namespace Syki.Back.FinishUserRegister;
 

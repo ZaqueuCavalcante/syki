@@ -55,7 +55,6 @@ public static class ServicesConfigs
         services.AddScoped<IEmailsService, EmailsService>();
         services.AddScoped<ITurmasService, TurmasService>();
         services.AddScoped<IOfertasService, OfertasService>();
-        services.AddScoped<IAgendasService, AgendasService>();
         services.AddScoped<IFaculdadesService, FaculdadesService>();
         services.AddScoped<IMatriculasService, MatriculasService>();
         services.AddScoped<IDisciplinasService, DisciplinasService>();

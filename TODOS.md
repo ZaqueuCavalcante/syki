@@ -1,5 +1,3 @@
-# TODOS
-
 - [] CreateAcademicPeriod
 - [] CreateAluno
 - [] CreateCampus
@@ -20,14 +18,11 @@
 - [] SendResetPasswordToken
 - [] SetupMfa
 - [] UpdateCampus
-
-
-
-
 - [X] GetAcademicInsights
 - [X] GetAlunoInsights
 - [X] GetAdmInsights
-- [] UpdateCampus
+- [X] UpdateCampus
+- [] GetAlunoAgenda
 - [] CreateCurso
 - [] GetCursos
 - [] CreateDisciplina
@@ -45,7 +40,6 @@
 - [] GetAlunos
 - [] CreateNotification
 - [] GetNotifications
-- [] 
 
 
 

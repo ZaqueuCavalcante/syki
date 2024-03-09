@@ -1,18 +1,15 @@
-namespace Syki.Back.Services;
+namespace Syki.Back.GetAlunoAgenda;
 
-public class AgendasService : IAgendasService
+public class GetAlunoAgendaService(SykiDbContext ctx)
 {
-    private readonly SykiDbContext _ctx;
-    public AgendasService(SykiDbContext ctx) => _ctx = ctx;
-
-    public async Task<List<AgendaDiaOut>> GetAluno(Guid faculdadeId, Guid userId)
+    public async Task<List<AgendaDiaOut>> Get(Guid faculdadeId, Guid userId)
     {
-        var ids = await _ctx.TurmaAlunos.AsNoTracking()
+        var ids = await ctx.TurmaAlunos.AsNoTracking()
             .Where(x => x.AlunoId == userId && x.Situacao == Situacao.Matriculado)
             .Select(x => x.TurmaId)
             .ToListAsync();
 
-        var turmas = await _ctx.Turmas.AsNoTracking()
+        var turmas = await ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Horarios)
             .Where(t => t.FaculdadeId == faculdadeId && ids.Contains(t.Id))

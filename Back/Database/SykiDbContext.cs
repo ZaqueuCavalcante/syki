@@ -9,6 +9,7 @@ using Syki.Back.SendResetPasswordToken;
 using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.CreatePendingUserRegister;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Syki.Back.CreateOferta;
 
 namespace Syki.Back.Database;
 

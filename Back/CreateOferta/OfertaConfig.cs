@@ -1,7 +1,7 @@
 using Syki.Back.CreateAluno;
 using Syki.Back.CreateAcademicPeriod;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateOferta;
 
 public class OfertaConfig : IEntityTypeConfiguration<Oferta>
 {

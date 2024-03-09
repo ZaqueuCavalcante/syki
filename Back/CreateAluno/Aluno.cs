@@ -1,4 +1,5 @@
 using Syki.Back.CreateUser;
+using Syki.Back.CreateOferta;
 
 namespace Syki.Back.CreateAluno;
 

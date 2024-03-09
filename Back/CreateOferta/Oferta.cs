@@ -1,7 +1,7 @@
-using Syki.Back.CreateCampus;
 using Syki.Back.CreateCurso;
+using Syki.Back.CreateCampus;
 
-namespace Syki.Back.Domain;
+namespace Syki.Back.CreateOferta;
 
 public class Oferta
 {

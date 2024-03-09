@@ -26,7 +26,7 @@
 
 - [X] GetAcademicInsights
 - [X] GetAlunoInsights
-- [] GetProfessorInsights
+- [X] GetAdmInsights
 - [] UpdateCampus
 - [] CreateCurso
 - [] GetCursos

@@ -1,13 +1,13 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Services;
+namespace Syki.Back.GetAdmInsights;
 
-public class IndexService(DatabaseSettings dbSettings) : IIndexService
+public class GetAdmInsightsService(DatabaseSettings settings)
 {
-    public async Task<IndexAdmOut> GetAllAdm()
+    public async Task<IndexAdmOut> Get()
     {
-        using var connection = new NpgsqlConnection(dbSettings.ConnectionString);
+        using var connection = new NpgsqlConnection(settings.ConnectionString);
 
         const string sql = @"
             SELECT
@@ -24,8 +24,6 @@ public class IndexService(DatabaseSettings dbSettings) : IIndexService
             	syki.faculdades
         ";
 
-        var data = await connection.QueryFirstAsync<IndexAdmOut>(sql);
-        
-        return data;
+        return await connection.QueryFirstAsync<IndexAdmOut>(sql);
     }
 }

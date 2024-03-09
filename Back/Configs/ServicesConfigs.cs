@@ -49,7 +49,6 @@ public static class ServicesConfigs
 
 
         services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<IIndexService, IndexService>();
         services.AddScoped<ICursosService, CursosService>();
         services.AddScoped<IGradesService, GradesService>();
         services.AddScoped<IAlunosService, AlunosService>();

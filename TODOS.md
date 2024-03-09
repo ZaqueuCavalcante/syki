@@ -42,7 +42,8 @@
 - [X] GetAlunoDisciplinas
 - [] CreateNotification
 - [] GetNotifications
-
+- [X] CreateInstitution
+- [X] GetInstitutions
 
 
 

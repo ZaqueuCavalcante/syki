@@ -12,13 +12,4 @@ public class AlunosController(IAlunosService service) : ControllerBase
 
         return Ok(disciplinas);
     }
-
-    [HttpGet()]
-    [AuthAcademico]
-    public async Task<IActionResult> GetAll()
-    {
-        var alunos = await service.GetAll(User.InstitutionId());
-        
-        return Ok(alunos);
-    }
 }

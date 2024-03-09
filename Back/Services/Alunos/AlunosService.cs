@@ -33,17 +33,4 @@ public class AlunosService(SykiDbContext ctx) : IAlunosService
 
         return response;
     }
-
-    public async Task<List<AlunoOut>> GetAll(Guid faculdadeId)
-    {
-        var alunos = await ctx.Alunos
-            .AsNoTracking().AsSplitQuery()
-            .Include(a => a.User)
-            .Include(a => a.Oferta)
-                .ThenInclude(o => o.Curso)
-            .Where(a => a.InstitutionId == faculdadeId)
-            .ToListAsync();
-        
-        return alunos.ConvertAll(p => p.ToOut());
-    }
 }

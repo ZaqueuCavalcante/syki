@@ -11,12 +11,4 @@ public class GradesController(IGradesService service) : ControllerBase
 
         return Ok(grades);
     }
-
-    [HttpGet("grades")]
-    public async Task<IActionResult> Get()
-    {
-        var grades = await service.GetAll(User.InstitutionId());
-
-        return Ok(grades);
-    }
 }

@@ -25,8 +25,8 @@
 - [X] GetAlunoAgenda
 - [X] CreateCurso
 - [X] GetCursos
-- [] CreateDisciplina
-- [] GetDisciplinas
+- [X] CreateDisciplina
+- [X] GetDisciplinas
 - [] CreateGrade
 - [X] GetCursoDisciplinas
 - [X] GetCursosWithDisciplinas

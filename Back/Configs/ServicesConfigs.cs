@@ -17,6 +17,7 @@ using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.SendResetPasswordToken;
 using Syki.Back.CreatePendingUserRegister;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Syki.Back.Emails;
 
 namespace Syki.Back.Configs;
 
@@ -49,8 +50,6 @@ public static class ServicesConfigs
 
 
         services.AddScoped<IEmailsService, EmailsService>();
-        services.AddScoped<INotificationsService, NotificationsService>();
-
         if (Env.IsTesting() || Env.IsDevelopment())
         {
             services.Replace(ServiceDescriptor.Scoped<IEmailsService, FakeEmailsService>());

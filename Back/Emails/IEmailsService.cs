@@ -1,4 +1,4 @@
-namespace Syki.Back.Services;
+namespace Syki.Back.Emails;
 
 public interface IEmailsService
 {

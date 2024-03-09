@@ -1,3 +1,5 @@
+using Syki.Back.Emails;
+
 namespace Syki.Back.SendResetPasswordToken;
 
 public class SendResetPasswordEmail

@@ -1,6 +1,4 @@
-using Syki.Back.Emails;
-
-namespace Syki.Back.Services;
+namespace Syki.Back.Emails;
 
 public class EmailsService : IEmailsService
 {

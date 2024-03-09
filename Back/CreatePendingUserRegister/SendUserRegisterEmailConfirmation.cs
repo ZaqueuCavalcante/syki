@@ -1,3 +1,5 @@
+using Syki.Back.Emails;
+
 namespace Syki.Back.CreatePendingUserRegister;
 
 public class SendUserRegisterEmailConfirmation

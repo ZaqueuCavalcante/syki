@@ -12,6 +12,18 @@ public static class AuthenticationConfigs
 {
     public const string BearerScheme = "Bearer";
 
+    public static AuthenticationBuilder AddOAuthGoogle(this AuthenticationBuilder builder, AuthSettings settings)
+    {
+
+        return builder;
+    }
+
+    public static AuthenticationBuilder AddJwtBearer(this AuthenticationBuilder builder, AuthSettings settings)
+    {
+
+        return builder;
+    }
+
     public static void AddAuthenticationConfigs(this IServiceCollection services)
     {
         var serviceProvider = services.BuildServiceProvider();

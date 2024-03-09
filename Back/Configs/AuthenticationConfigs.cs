@@ -11,6 +11,7 @@ namespace Syki.Back.Configs;
 public static class AuthenticationConfigs
 {
     public const string BearerScheme = "Bearer";
+    public const string CookieScheme = "Cookie";
 
     public static AuthenticationBuilder AddOAuthGoogle(this AuthenticationBuilder builder, AuthSettings settings)
     {
@@ -53,14 +54,14 @@ public static class AuthenticationConfigs
             RoleClaimType = "role",
         };
 
-        services.AddAuthentication("Cookie")
-            .AddCookie("Cookie")
+        services.AddAuthentication(CookieScheme)
+            .AddCookie(CookieScheme)
             .AddOAuth("Google", options =>
             {
                 options.Scope.Add("openid");
                 options.Scope.Add("email");
                 options.SaveTokens = true;
-                options.SignInScheme = "Cookie";
+                options.SignInScheme = CookieScheme;
                 options.CallbackPath = "/signin-google";
                 options.ClientId = settings.GoogleClientId;
                 options.ClientSecret = settings.GoogleClientSecret;

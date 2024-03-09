@@ -4,7 +4,7 @@ namespace Syki.Back.Controllers;
 [EnableRateLimiting("Medium")]
 public class ProfessoresController(IProfessoresService service) : ControllerBase
 {
-    [HttpPost("")]
+    [HttpPost("professores")]
     public async Task<IActionResult> Create([FromBody] ProfessorIn data)
     {
         var professor = await service.Create(User.InstitutionId(), data);
@@ -12,7 +12,7 @@ public class ProfessoresController(IProfessoresService service) : ControllerBase
         return Ok(professor);
     }
 
-    [HttpGet("")]
+    [HttpGet("professores")]
     public async Task<IActionResult> GetAll()
     {
         var professores = await service.GetAll(User.InstitutionId());

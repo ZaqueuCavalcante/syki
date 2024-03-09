@@ -4,7 +4,7 @@ namespace Syki.Back.Controllers;
 [EnableRateLimiting("Medium")]
 public class TurmasController(ITurmasService service) : ControllerBase
 {
-    [HttpPost("")]
+    [HttpPost("turmas")]
     public async Task<IActionResult> Create([FromBody] TurmaIn data)
     {
         var turma = await service.Create(User.InstitutionId(), data);
@@ -12,7 +12,7 @@ public class TurmasController(ITurmasService service) : ControllerBase
         return Ok(turma);
     }
 
-    [HttpGet("")]
+    [HttpGet("turmas")]
     public async Task<IActionResult> GetAll()
     {
         var turmas = await service.GetAll(User.InstitutionId());

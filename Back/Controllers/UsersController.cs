@@ -4,7 +4,7 @@ namespace Syki.Back.Controllers;
 [EnableRateLimiting("Small")]
 public class UsersController(IAuthService authService) : ControllerBase
 {
-    [HttpPost("")]
+    [HttpPost("users")]
     public async Task<IActionResult> Register([FromBody] CreateUserIn data)
     {
         var user = await authService.Register(data);
@@ -12,7 +12,7 @@ public class UsersController(IAuthService authService) : ControllerBase
         return Ok(user);
     }
 
-    [HttpGet("")]
+    [HttpGet("users")]
     public async Task<IActionResult> GetAll()
     {
         var users = await authService.GetAllUsers();

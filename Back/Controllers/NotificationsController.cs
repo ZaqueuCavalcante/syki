@@ -4,7 +4,7 @@ namespace Syki.Back.Controllers;
 [EnableRateLimiting("Medium")]
 public class NotificationsController(INotificationsService service) : ControllerBase
 {
-    [HttpPost("")]
+    [HttpPost("notifications")]
     [AuthAcademico]
     public async Task<IActionResult> Create([FromBody] NotificationIn data)
     {
@@ -14,7 +14,7 @@ public class NotificationsController(INotificationsService service) : Controller
     }
 
     [AuthBearer]
-    [HttpPut("user")]
+    [HttpPut("notifications/user")]
     public async Task<IActionResult> ViewByUserId()
     {
         await service.ViewByUserId(User.InstitutionId(), User.Id());
@@ -22,7 +22,7 @@ public class NotificationsController(INotificationsService service) : Controller
         return Ok();
     }
 
-    [HttpGet("")]
+    [HttpGet("notifications")]
     [AuthAcademico]
     public async Task<IActionResult> GetAll()
     {
@@ -32,7 +32,7 @@ public class NotificationsController(INotificationsService service) : Controller
     }
 
     [AuthBearer]
-    [HttpGet("user")]
+    [HttpGet("notifications/user")]
     public async Task<IActionResult> GetByUserId()
     {
         var notifications = await service.GetByUserId(User.InstitutionId(), User.Id());

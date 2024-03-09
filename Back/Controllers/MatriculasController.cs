@@ -5,7 +5,7 @@ namespace Syki.Back.Controllers;
 public class MatriculasController(IMatriculasService service) : ControllerBase
 {
     [AuthAluno]
-    [HttpPost()]
+    [HttpPost("matriculas/aluno")]
     public async Task<IActionResult> Create([FromBody] MatriculaTurmaIn data)
     {
         await service.Create(User.InstitutionId(), User.Id(), data);
@@ -14,7 +14,7 @@ public class MatriculasController(IMatriculasService service) : ControllerBase
     }
 
     [AuthAluno]
-    [HttpGet("turmas")]
+    [HttpGet("matriculas/aluno/turmas")]
     public async Task<IActionResult> GetTurmas()
     {
         var turmas = await service.GetTurmas(User.InstitutionId(), User.Id());

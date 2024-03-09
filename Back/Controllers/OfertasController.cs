@@ -4,7 +4,7 @@ namespace Syki.Back.Controllers;
 [EnableRateLimiting("Medium")]
 public class OfertasController(IOfertasService service) : ControllerBase
 {
-    [HttpPost("")]
+    [HttpPost("ofertas")]
     public async Task<IActionResult> Create([FromBody] OfertaIn data)
     {
         var oferta = await service.Create(User.InstitutionId(), data);
@@ -12,8 +12,8 @@ public class OfertasController(IOfertasService service) : ControllerBase
         return Ok(oferta);
     }
 
-    [HttpGet("")]
-    public async Task<IActionResult> GetAll()
+    [HttpGet("ofertas")]
+    public async Task<IActionResult> Get()
     {
         var ofertas = await service.GetAll(User.InstitutionId());
 

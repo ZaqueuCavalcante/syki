@@ -29,6 +29,7 @@
 - [] GetDisciplinas
 - [] CreateGrade
 - [] GetCursoDisciplinas
+- [X] GetCursosWithDisciplinas
 - [] GetGrades
 - [] GetGradeDisciplinas
 - [] CreateOferta

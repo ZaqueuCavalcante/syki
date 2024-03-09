@@ -4,14 +4,6 @@ namespace Syki.Back.Controllers;
 [EnableRateLimiting("Medium")]
 public class CursosController(ICursosService service) : ControllerBase
 {
-    [HttpGet("disciplinas")]
-    public async Task<IActionResult> GetAllWithDisciplinas()
-    {
-        var cursos = await service.GetAllWithDisciplinas(User.InstitutionId());
-
-        return Ok(cursos);
-    }
-
     [HttpGet("{id}/disciplinas")]
     public async Task<IActionResult> GetDisciplinas([FromRoute] Guid id)
     {

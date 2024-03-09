@@ -1,6 +1,7 @@
-using Syki.Back.CreateCampus;
-using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.CreateCurso;
+using Syki.Back.CreateCampus;
+using Syki.Back.CreateProfessor;
+using Syki.Back.CreateAcademicPeriod;
 
 namespace Syki.Back.FinishUserRegister;
 
@@ -9,7 +10,7 @@ public class SeedInstitutionData
     public Guid InstitutionId { get; set; }
 }
 
-public class SeedInstitutionDataHandler(SykiDbContext ctx, IProfessoresService professoresService) : ISykiTaskHandler<SeedInstitutionData>
+public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateProfessorService service) : ISykiTaskHandler<SeedInstitutionData>
 {
     public async Task Handle(SeedInstitutionData task)
     {
@@ -180,12 +181,12 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, IProfessoresService p
         );
         ctx.Add(ofertaAds);
 
-        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Davi Pessoa Ferraz"));
-        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Luciete Bezerra Alves"));
-        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Antonio Marques da Costa Júnior"));
-        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Paulo Marcelo Pedrosa de Almeida"));
-        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Josélia Pachêco de Santana"));
-        await professoresService.Create(faculdade.Id, ProfessorIn.Demo("Manuela Abath Valença"));
+        await service.Create(faculdade.Id, ProfessorIn.Demo("Davi Pessoa Ferraz"));
+        await service.Create(faculdade.Id, ProfessorIn.Demo("Luciete Bezerra Alves"));
+        await service.Create(faculdade.Id, ProfessorIn.Demo("Antonio Marques da Costa Júnior"));
+        await service.Create(faculdade.Id, ProfessorIn.Demo("Paulo Marcelo Pedrosa de Almeida"));
+        await service.Create(faculdade.Id, ProfessorIn.Demo("Josélia Pachêco de Santana"));
+        await service.Create(faculdade.Id, ProfessorIn.Demo("Manuela Abath Valença"));
 
         await ctx.SaveChangesAsync();
     }

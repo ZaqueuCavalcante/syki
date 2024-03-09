@@ -1,8 +1,7 @@
-namespace Syki.Back.Services;
+namespace Syki.Back.CreateProfessor;
 
-public class ProfessoresService(SykiDbContext ctx, IAuthService authService) : IProfessoresService
+public class CreateProfessorService(SykiDbContext ctx, IAuthService authService)
 {
-
     public async Task<ProfessorOut> Create(Guid faculdadeId, ProfessorIn data)
     {
         using var transaction = ctx.Database.BeginTransaction();
@@ -25,25 +24,5 @@ public class ProfessoresService(SykiDbContext ctx, IAuthService authService) : I
         transaction.Commit();
 
         return professor.ToOut();
-    }
-
-    public async Task<List<ProfessorOut>> GetAll(Guid faculdadeId)
-    {
-        FormattableString sql = $@"
-            SELECT
-                p.id,
-                p.nome,
-                u.email
-            FROM
-                syki.professores p
-            INNER JOIN
-                syki.users u ON u.id = p.id
-            WHERE
-                u.institution_id = {faculdadeId}
-        ";
-
-        var professores = await ctx.Database.SqlQuery<ProfessorOut>(sql).ToListAsync();
-
-        return professores;
     }
 }

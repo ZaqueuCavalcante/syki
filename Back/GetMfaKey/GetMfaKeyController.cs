@@ -4,8 +4,8 @@ namespace Syki.Back.GetMfaKey;
 [EnableRateLimiting("Small")]
 public class GetMfaKeyController(GetMfaKeyService service) : ControllerBase
 {
+    [AuthBearer]
     [HttpGet("mfa/key")]
-    [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> Get()
     {
         var key = await service.Get(User.Id());

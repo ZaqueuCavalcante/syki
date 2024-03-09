@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-
 namespace Syki.Back.CreateUser;
 
 public class SykiRole : IdentityRole<Guid>

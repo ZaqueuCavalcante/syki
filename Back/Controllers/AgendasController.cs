@@ -1,5 +1,3 @@
-using static Syki.Back.Configs.AuthorizationConfigs;
-
 namespace Syki.Back.Controllers;
 
 [EnableRateLimiting("Medium")]
@@ -9,8 +7,8 @@ public class AgendasController : ControllerBase
     private readonly IAgendasService _service;
     public AgendasController(IAgendasService service) => _service = service;
 
+    [AuthAluno]
     [HttpGet("aluno")]
-    [Authorize(Roles = Aluno)]
     public async Task<IActionResult> GetAluno()
     {
         var agenda = await _service.GetAluno(User.Facul(), User.Id());

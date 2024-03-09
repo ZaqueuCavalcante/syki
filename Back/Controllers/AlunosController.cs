@@ -1,19 +1,14 @@
-using static Syki.Back.Configs.AuthorizationConfigs;
-
 namespace Syki.Back.Controllers;
 
 [EnableRateLimiting("Medium")]
 [ApiController, Route("[controller]")]
-public class AlunosController : ControllerBase
+public class AlunosController(IAlunosService service) : ControllerBase
 {
-    private readonly IAlunosService _service;
-    public AlunosController(IAlunosService service) => _service = service;
-
+    [AuthAluno]
     [HttpGet("disciplinas")]
-    [Authorize(Roles = Aluno)]
     public async Task<IActionResult> GetDisciplinas()
     {
-        var disciplinas = await _service.GetDisciplinas(User.Id());
+        var disciplinas = await service.GetDisciplinas(User.Id());
 
         return Ok(disciplinas);
     }
@@ -22,7 +17,7 @@ public class AlunosController : ControllerBase
     [AuthAcademico]
     public async Task<IActionResult> GetAll()
     {
-        var alunos = await _service.GetAll(User.Facul());
+        var alunos = await service.GetAll(User.Facul());
         
         return Ok(alunos);
     }

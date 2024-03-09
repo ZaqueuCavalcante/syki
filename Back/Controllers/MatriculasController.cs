@@ -4,25 +4,22 @@ namespace Syki.Back.Controllers;
 
 [EnableRateLimiting("Medium")]
 [ApiController, Route("[controller]")]
-public class MatriculasController : ControllerBase
+public class MatriculasController(IMatriculasService service) : ControllerBase
 {
-    private readonly IMatriculasService _service;
-    public MatriculasController(IMatriculasService service) => _service = service;
-
+    [AuthAluno]
     [HttpPost()]
-    [Authorize(Roles = Aluno)]
     public async Task<IActionResult> Create([FromBody] MatriculaTurmaIn data)
     {
-        await _service.Create(User.Facul(), User.Id(), data);
+        await service.Create(User.Facul(), User.Id(), data);
 
         return Ok();
     }
 
+    [AuthAluno]
     [HttpGet("turmas")]
-    [Authorize(Roles = Aluno)]
     public async Task<IActionResult> GetTurmas()
     {
-        var turmas = await _service.GetTurmas(User.Facul(), User.Id());
+        var turmas = await service.GetTurmas(User.Facul(), User.Id());
 
         return Ok(turmas);
     }

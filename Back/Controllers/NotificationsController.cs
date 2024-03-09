@@ -16,8 +16,8 @@ public class NotificationsController : ControllerBase
         return Ok(notification);
     }
 
+    [AuthBearer]
     [HttpPut("user")]
-    [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> ViewByUserId()
     {
         await _service.ViewByUserId(User.Facul(), User.Id());
@@ -34,8 +34,8 @@ public class NotificationsController : ControllerBase
         return Ok(notifications);
     }
 
+    [AuthBearer]
     [HttpGet("user")]
-    [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> GetByUserId()
     {
         var notifications = await _service.GetByUserId(User.Facul(), User.Id());

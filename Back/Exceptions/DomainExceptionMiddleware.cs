@@ -2,11 +2,8 @@ using System.Text.Json;
 
 namespace Syki.Back.Exceptions;
 
-public class DomainExceptionMiddleware
+public class DomainExceptionMiddleware(RequestDelegate next)
 {
-    readonly RequestDelegate next;
-    public DomainExceptionMiddleware(RequestDelegate next) => this.next = next;
-
     public async Task Invoke(HttpContext context)
     {
         try
@@ -34,9 +31,9 @@ public class DomainExceptionMiddleware
         return context.Response.WriteAsync(result);
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception _)
+    private static Task HandleExceptionAsync(HttpContext context, Exception ex)
     {
-        var result = JsonSerializer.Serialize(new ErrorOut { Message = "Internal Server Error" });
+        var result = JsonSerializer.Serialize(new ErrorOut { Message = ex.Message });
 
         context.Response.ContentType = "application/json";
 

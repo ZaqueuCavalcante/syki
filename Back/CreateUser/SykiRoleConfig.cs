@@ -1,6 +1,4 @@
-using Microsoft.EntityFrameworkCore;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Syki.Back.CreateUser;
 

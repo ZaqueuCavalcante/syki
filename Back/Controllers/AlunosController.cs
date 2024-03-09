@@ -19,7 +19,7 @@ public class AlunosController : ControllerBase
     }
 
     [HttpGet("")]
-    [Authorize(Roles = Academico)]
+    [AuthAcademico]
     public async Task<IActionResult> GetAll()
     {
         var alunos = await _service.GetAll(User.Facul());

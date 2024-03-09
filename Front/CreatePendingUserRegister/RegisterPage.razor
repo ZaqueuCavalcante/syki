@@ -2,7 +2,7 @@
 
 <PageTitle>Cadastro</PageTitle>
 
-<MudContainer Class="mt-16 mb-8" Style="width: 460px">
+<MudContainer Class="mt-8 mb-8" Style="width: 460px">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
@@ -18,21 +18,22 @@
             else
             {
                 <MudButton
-                    StartIcon="@Icons.Material.Filled.SportsBaseball"
+                    StartIcon="@Google"
                     Variant="Variant.Filled"
+                    Class="mt-8"
+                    Style="width: 100%"
                     Color="Color.Primary"
                     Href="https://localhost:5001/oauth-google"
                 >
-                    <MudText Typo="Typo.h6">
-                        Cadastre-se com sua conta Google
-                    </MudText>
+                    Cadastrar com Google
                 </MudButton>
 
+                <MudDivider Class="my-6" />
 
                 <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
-                    <MudText>Cadastre seu email para ter acesso ao sistema.</MudText>
+                    <MudText Align="Align.Center">Cadastre seu email para ter acesso ao sistema.</MudText>
                 </MudAlert>
-                <MudCardContent Class="mt-4">
+                <MudCardContent Class="my-0 pb-0">
                     <SykiTextField Label="Email" AutoFocus="true" @bind-Value="_email" OnKeyDown="Submit" />
                 </MudCardContent>
                 <MudCardActions>
@@ -41,7 +42,7 @@
                         Size="Size.Large"
                         Color="Color.Primary"
                         Variant="Variant.Filled"
-                        Class="mx-auto mb-4 px-12 mt-4"
+                        Class="mx-auto mb-4 px-12 my-0"
                     >
                         Cadastrar
                     </MudButton>
@@ -79,4 +80,9 @@
         }
         _loading = false;
     }
+
+    private const string Google = @"
+        <svg style=""width:24px;height:24px"" viewBox=""0 0 24 24"">
+        <path fill=""currentColor"" d=""M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z"" />
+        </svg>";
 }

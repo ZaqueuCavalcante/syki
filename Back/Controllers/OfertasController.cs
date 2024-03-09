@@ -1,11 +1,3 @@
-using Syki.Shared;
-using Syki.Back.Services;
-using Syki.Back.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.Authorization;
-using static Syki.Back.Configs.AuthorizationConfigs;
-
 namespace Syki.Back.Controllers;
 
 [EnableRateLimiting("Medium")]
@@ -16,7 +8,7 @@ public class OfertasController : ControllerBase
     public OfertasController(IOfertasService service) => _service = service;
 
     [HttpPost("")]
-    [Authorize(Roles = Academico)]
+    [AuthAcademico]
     public async Task<IActionResult> Create([FromBody] OfertaIn data)
     {
         var oferta = await _service.Create(User.Facul(), data);
@@ -25,7 +17,7 @@ public class OfertasController : ControllerBase
     }
 
     [HttpGet("")]
-    [Authorize(Roles = Academico)]
+    [AuthAcademico]
     public async Task<IActionResult> GetAll()
     {
         var ofertas = await _service.GetAll(User.Facul());

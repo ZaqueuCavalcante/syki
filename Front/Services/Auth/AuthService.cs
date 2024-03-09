@@ -26,6 +26,12 @@ public class AuthService(HttpClient http, ILocalStorageService localStorage, Syk
         return result;
     }
 
+    public async Task LoginOAuth(string token)
+    {
+        await localStorage.SetItemAsync("AccessToken", token);
+        authStateProvider.MarkUserAsAuthenticated();
+    }
+
     public async Task<LoginMfaOut> LoginMfa(string code)
     {
         var body = new LoginMfaIn { Code = code };

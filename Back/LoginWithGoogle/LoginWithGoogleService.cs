@@ -41,6 +41,7 @@ public class LoginWithGoogleService(SykiDbContext ctx, CreateUserService createU
         transaction.Commit();
 
         var jwt = await generateJWTService.Generate(email);
+
         return new LoginOut { AccessToken = jwt };
     }
 }

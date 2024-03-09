@@ -22,10 +22,8 @@ public class LoginWithGoogleController(LoginWithGoogleService service) : Control
     [Authorize(AuthenticationSchemes = "Cookie")]
     public async Task<IActionResult> LoginWithGoogle()
     {
-        var result = await service.Login(User.Email());
+        var token = await service.Login(User.Email());
 
-        return Ok(result);
+        return Redirect($"https://localhost:6001/login-oauth?token={token.AccessToken}");
     }
 }
-
-// https://localhost:5001/oauth-google

@@ -7,6 +7,7 @@ namespace Syki.Front.Services;
 public interface IAuthService
 {
     Task<LoginOut> Login(string email, string password);
+    Task LoginOAuth(string token);
     Task<LoginMfaOut> LoginMfa(string code);
     Task<ClaimsPrincipal> GetUser();
     Task Logout();

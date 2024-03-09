@@ -1,11 +1,3 @@
-using Syki.Shared;
-using Syki.Back.Services;
-using Syki.Back.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.Authorization;
-using static Syki.Back.Configs.AuthorizationConfigs;
-
 namespace Syki.Back.Controllers;
 
 [EnableRateLimiting("Medium")]
@@ -16,7 +8,7 @@ public class NotificationsController : ControllerBase
     public NotificationsController(INotificationsService service) => _service = service;
 
     [HttpPost("")]
-    [Authorize(Roles = Academico)]
+    [AuthAcademico]
     public async Task<IActionResult> Create([FromBody] NotificationIn data)
     {
         var notification = await _service.Create(User.Facul(), data);
@@ -24,8 +16,8 @@ public class NotificationsController : ControllerBase
         return Ok(notification);
     }
 
-    [Authorize]
     [HttpPut("user")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> ViewByUserId()
     {
         await _service.ViewByUserId(User.Facul(), User.Id());
@@ -34,7 +26,7 @@ public class NotificationsController : ControllerBase
     }
 
     [HttpGet("")]
-    [Authorize(Roles = Academico)]
+    [AuthAcademico]
     public async Task<IActionResult> GetAll()
     {
         var notifications = await _service.GetAll(User.Facul());
@@ -42,8 +34,8 @@ public class NotificationsController : ControllerBase
         return Ok(notifications);
     }
 
-    [Authorize]
     [HttpGet("user")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> GetByUserId()
     {
         var notifications = await _service.GetByUserId(User.Facul(), User.Id());

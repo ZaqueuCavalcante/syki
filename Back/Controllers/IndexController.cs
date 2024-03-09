@@ -1,8 +1,3 @@
-using Syki.Back.Services;
-using Syki.Back.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.Authorization;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.Controllers;
@@ -23,8 +18,8 @@ public class IndexController : ControllerBase
         return Ok(data);
     }
 
+    [AuthAcademico]
     [HttpGet("academico")]
-    [Authorize(Roles = Academico)]
     public async Task<IActionResult> GetAllAcademico()
     {
         var data = await _service.GetAllAcademico(User.Facul());

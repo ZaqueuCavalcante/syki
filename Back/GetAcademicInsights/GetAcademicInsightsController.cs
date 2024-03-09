@@ -4,7 +4,6 @@ namespace Syki.Back.GetAcademicInsights;
 [EnableRateLimiting("Medium")]
 public class GetAcademicInsightsController(GetAcademicInsightsService service) : ControllerBase
 {
-    [AuthAcademico]
     [HttpGet("academic-insights")]
     public async Task<IActionResult> Get()
     {

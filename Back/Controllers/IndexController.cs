@@ -12,12 +12,4 @@ public class IndexController(IIndexService service) : ControllerBase
         
         return Ok(data);
     }
-
-    [AuthAluno]
-    [HttpGet("aluno")]
-    public async Task<IActionResult> GetAllAluno()
-    {
-        var data = await service.GetAllAluno(User.Id());
-        return Ok(data);
-    }
 }

@@ -1,4 +1,3 @@
-using Syki.Shared;
 using System.Text.Json;
 
 namespace Syki.Back.Exceptions;

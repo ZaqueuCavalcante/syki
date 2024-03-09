@@ -1,7 +1,3 @@
-using Syki.Shared;
-using Syki.Back.Database;
-using Microsoft.EntityFrameworkCore;
-
 namespace Syki.Back.Services;
 
 public class AgendasService : IAgendasService

@@ -1,4 +1,3 @@
-using Syki.Back.Database;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
 

@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace Syki.Back.Controllers;
 
 [ApiController, Route("")]

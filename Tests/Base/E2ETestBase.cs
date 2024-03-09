@@ -1,8 +1,5 @@
-using Syki.Shared;
 using Syki.Back.Settings;
-using Syki.Back.Database;
 using Microsoft.Playwright;
-using Microsoft.Playwright.NUnit;
 
 namespace Syki.Tests.Base;
 

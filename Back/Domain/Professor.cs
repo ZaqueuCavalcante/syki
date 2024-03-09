@@ -1,6 +1,3 @@
-using Syki.Shared;
-using Syki.Back.Exceptions;
-
 namespace Syki.Back.Domain;
 
 public class Professor

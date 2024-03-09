@@ -1,6 +1,5 @@
 using System.Text;
 using System.Text.Json;
-using Syki.Back.Settings;
 using System.Net.Http.Headers;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

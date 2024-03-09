@@ -1,5 +1,3 @@
-using Syki.Shared;
-
 namespace Syki.Back.Domain;
 
 public class Grade

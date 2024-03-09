@@ -1,4 +1,3 @@
-using Syki.Shared;
 using Syki.Back.CreateCampus;
 
 namespace Syki.Back.Domain;

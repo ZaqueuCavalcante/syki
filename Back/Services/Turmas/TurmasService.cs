@@ -1,8 +1,4 @@
-using Syki.Shared;
 using Syki.Back.Domain;
-using Syki.Back.Database;
-using Syki.Back.Exceptions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Syki.Back.Services;
 

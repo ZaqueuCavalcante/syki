@@ -1,7 +1,6 @@
 using Dapper;
 using Npgsql;
 using Newtonsoft.Json;
-using Syki.Back.Settings;
 
 namespace Syki.Back.Tasks;
 

@@ -1,5 +1,3 @@
-using Syki.Back.Settings;
-
 namespace Syki.Back.Services;
 
 public class FakeEmailsService : IEmailsService

@@ -1,5 +1,4 @@
 using Syki.Back.Emails;
-using Syki.Back.Settings;
 
 namespace Syki.Back.Services;
 

@@ -1,5 +1,3 @@
-using Syki.Back.Settings;
-
 namespace Syki.Back.Configs;
 
 public static class SettingsConfigs

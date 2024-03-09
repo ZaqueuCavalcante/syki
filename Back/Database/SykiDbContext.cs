@@ -1,6 +1,5 @@
 using Syki.Back.Audit;
 using Syki.Back.Domain;
-using Syki.Back.Settings;
 using Syki.Back.CreateUser;
 using Audit.EntityFramework;
 using Syki.Back.CreateAluno;

@@ -1,4 +1,3 @@
-using Syki.Back.Extensions;
 using System.Threading.RateLimiting;
 
 namespace Syki.Back.Configs;

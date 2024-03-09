@@ -1,27 +1,12 @@
-namespace Syki.Back.Services;
+namespace Syki.Back.GetMatriculaAlunoTurmas;
 
-public class MatriculasService(SykiDbContext ctx) : IMatriculasService
+public class GetMatriculaAlunoTurmasService(SykiDbContext ctx)
 {
-    public async Task Create(Guid faculdadeId, Guid userId, MatriculaTurmaIn data)
-    {
-        var ids = await ctx.Turmas
-            .Where(t => t.FaculdadeId == faculdadeId && data.Turmas.Contains(t.Id))
-            .Select(t => t.Id)
-            .ToListAsync();
-
-        foreach (var id in ids)
-        {
-            ctx.Add(new TurmaAluno(id, userId, Situacao.Matriculado));
-        }
-
-        await ctx.SaveChangesAsync();
-    }
-
-    public async Task<List<MatriculaTurmaOut>> GetTurmas(Guid faculdadeId, Guid userId)
+    public async Task<List<MatriculaTurmaOut>> Get(Guid institutionId, Guid userId)
     {
         var today = DateOnly.FromDateTime(DateTime.Now);
         var periodoDeMatricula = await ctx.EnrollmentPeriods.AsNoTracking()
-            .Where(p => p.InstitutionId == faculdadeId && p.Start <= today && p.End >= today)
+            .Where(p => p.InstitutionId == institutionId && p.Start <= today && p.End >= today)
             .FirstOrDefaultAsync();
         
         if (periodoDeMatricula == null)
@@ -40,7 +25,7 @@ public class MatriculasService(SykiDbContext ctx) : IMatriculasService
             .Include(t => t.Disciplina)
             .Include(t => t.Horarios)
             .Include(t => t.Professor)
-            .Where(t => t.FaculdadeId == faculdadeId && t.Periodo == periodoDeMatricula.Id && ids.Contains(t.DisciplinaId))
+            .Where(t => t.FaculdadeId == institutionId && t.Periodo == periodoDeMatricula.Id && ids.Contains(t.DisciplinaId))
             .ToListAsync();
 
         var response = turmas.ConvertAll(t =>

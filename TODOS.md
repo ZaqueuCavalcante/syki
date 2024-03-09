@@ -44,9 +44,11 @@
 - [] GetNotifications
 - [X] CreateInstitution
 - [X] GetInstitutions
-
+- [X] CreateMatriculaAluno
+- [X] GetMatriculaAlunoTurmas
 
 
 - Post sobre features over file types
 - Post sobre autenticacao com Google
 - Post sobre Docker Compose
+

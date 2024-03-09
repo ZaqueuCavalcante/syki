@@ -1,9 +1,3 @@
-using Syki.Back.Database;
-using Syki.Back.Exceptions;
-using Syki.Shared.UpdateCampus;
-using Syki.Shared.CreateCampus;
-using Microsoft.EntityFrameworkCore;
-
 namespace Syki.Back.UpdateCampus;
 
 public class UpdateCampusService(SykiDbContext ctx)

@@ -1,5 +1,3 @@
-using Syki.Shared.GetMfaKey;
-
 namespace Syki.Front.GetMfaKey;
 
 public class GetMfaKeyClient(HttpClient http)

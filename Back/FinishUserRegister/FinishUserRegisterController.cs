@@ -1,5 +1,3 @@
-using Syki.Shared.FinishUserRegister;
-
 namespace Syki.Back.FinishUserRegister;
 
 [ApiController]

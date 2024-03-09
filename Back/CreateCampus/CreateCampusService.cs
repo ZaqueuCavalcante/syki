@@ -1,6 +1,3 @@
-using Syki.Back.Database;
-using Syki.Shared.CreateCampus;
-
 namespace Syki.Back.CreateCampus;
 
 public class CreateCampusService(SykiDbContext ctx)

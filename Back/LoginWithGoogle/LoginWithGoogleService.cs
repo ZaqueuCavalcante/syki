@@ -1,8 +1,6 @@
 using Syki.Back.Domain;
-using Syki.Shared.Login;
 using Syki.Back.CreateUser;
 using Syki.Back.GenerateJWT;
-using Syki.Shared.CreateUser;
 using Syki.Back.CreatePendingUserRegister;
 
 namespace Syki.Back.LoginWithGoogle;

@@ -1,4 +1,4 @@
-namespace Syki.Shared.CreateCampus;
+namespace Syki.Shared;
 
 public class CreateCampusIn
 {

@@ -1,9 +1,4 @@
-using Syki.Shared;
 using Syki.Back.Domain;
-using Syki.Back.Configs;
-using Syki.Back.Database;
-using Microsoft.EntityFrameworkCore;
-using Syki.Shared.CreateUser;
 
 namespace Syki.Back.Services;
 

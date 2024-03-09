@@ -1,4 +1,3 @@
-using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.CreateUser;

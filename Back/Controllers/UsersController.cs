@@ -1,4 +1,3 @@
-using Syki.Shared.CreateUser;
 namespace Syki.Back.Controllers;
 
 [EnableRateLimiting("Small")]

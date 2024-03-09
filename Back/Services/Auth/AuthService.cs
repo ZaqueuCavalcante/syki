@@ -4,11 +4,10 @@ using System.Text;
 using Syki.Back.Settings;
 using Syki.Back.CreateUser;
 using System.Security.Claims;
-using Syki.Shared.CreateUser;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using static Syki.Back.Configs.AuthorizationConfigs;
 using Syki.Back.SendResetPasswordToken;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.Services;
 

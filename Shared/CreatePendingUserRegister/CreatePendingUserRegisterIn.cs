@@ -1,4 +1,4 @@
-namespace Syki.Shared.CreatePendingUserRegister;
+namespace Syki.Shared;
 
 public class CreatePendingUserRegisterIn
 {

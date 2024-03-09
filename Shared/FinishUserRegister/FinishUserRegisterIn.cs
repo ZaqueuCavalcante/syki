@@ -1,4 +1,4 @@
-namespace Syki.Shared.FinishUserRegister;
+namespace Syki.Shared;
 
 public class FinishUserRegisterIn
 {

@@ -1,5 +1,3 @@
-using Syki.Shared.GetCampi;
-
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase

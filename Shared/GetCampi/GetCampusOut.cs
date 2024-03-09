@@ -1,4 +1,4 @@
-namespace Syki.Shared.GetCampi;
+namespace Syki.Shared;
 
 public class GetCampusOut
 {

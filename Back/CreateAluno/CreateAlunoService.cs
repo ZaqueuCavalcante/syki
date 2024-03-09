@@ -1,5 +1,4 @@
 using Syki.Back.CreateUser;
-using Syki.Shared.CreateUser;
 using Syki.Back.SendResetPasswordToken;
 
 namespace Syki.Back.CreateAluno;

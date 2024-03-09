@@ -1,4 +1,3 @@
-using Syki.Shared.CreateUser;
 using Syki.Front.FinishUserRegister;
 using Syki.Back.CreatePendingUserRegister;
 

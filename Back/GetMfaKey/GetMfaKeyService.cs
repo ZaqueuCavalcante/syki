@@ -1,5 +1,4 @@
 using Syki.Back.CreateUser;
-using Syki.Shared.GetMfaKey;
 
 namespace Syki.Back.GetMfaKey;
 

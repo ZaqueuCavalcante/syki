@@ -1,5 +1,3 @@
-using Syki.Shared.UpdateCampus;
-
 namespace Syki.Back.UpdateCampus;
 
 [ApiController, AuthAcademico]

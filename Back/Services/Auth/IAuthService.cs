@@ -1,5 +1,3 @@
-using Syki.Shared.CreateUser;
-
 namespace Syki.Back.Services;
 
 public interface IAuthService

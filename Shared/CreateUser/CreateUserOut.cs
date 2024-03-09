@@ -1,4 +1,4 @@
-namespace Syki.Shared.CreateUser;
+namespace Syki.Shared;
 
 public class CreateUserOut
 {

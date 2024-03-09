@@ -1,5 +1,3 @@
-using Syki.Shared.LoginMfa;
-
 namespace Syki.Back.LoginMfa;
 
 [ApiController]

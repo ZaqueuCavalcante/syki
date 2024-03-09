@@ -1,7 +1,3 @@
-using Syki.Shared.Login;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-
 namespace Syki.Back.Login;
 
 [ApiController]

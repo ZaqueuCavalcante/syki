@@ -1,6 +1,3 @@
-using Syki.Shared;
-using Syki.Shared.CreateUser;
-using Syki.Shared.CreateCampus;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;

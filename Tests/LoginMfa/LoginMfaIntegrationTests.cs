@@ -1,8 +1,3 @@
-using Syki.Shared;
-using Syki.Shared.Login;
-using Syki.Shared.LoginMfa;
-using Syki.Shared.SetupMfa;
-using Syki.Shared.GetMfaKey;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;

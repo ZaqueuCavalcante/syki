@@ -1,7 +1,3 @@
-using Syki.Back.Database;
-using Syki.Shared.CreateCampus;
-using Microsoft.EntityFrameworkCore;
-
 namespace Syki.Back.GetCampi;
 
 public class GetCampiService(SykiDbContext ctx)

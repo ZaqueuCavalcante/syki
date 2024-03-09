@@ -1,5 +1,3 @@
-using Syki.Shared.CreatePendingUserRegister;
-
 namespace Syki.Back.CreatePendingUserRegister;
 
 [ApiController]

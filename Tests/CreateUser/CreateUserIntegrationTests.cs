@@ -1,5 +1,4 @@
 using Syki.Back.CreateUser;
-using Syki.Shared.CreateUser;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;

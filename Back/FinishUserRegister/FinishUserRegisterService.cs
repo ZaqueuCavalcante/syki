@@ -1,7 +1,5 @@
 using Syki.Back.Domain;
 using Syki.Back.CreateUser;
-using Syki.Shared.CreateUser;
-using Syki.Shared.FinishUserRegister;
 
 namespace Syki.Back.FinishUserRegister;
 

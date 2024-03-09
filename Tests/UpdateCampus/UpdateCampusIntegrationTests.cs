@@ -1,6 +1,3 @@
-using Syki.Shared.CreateCampus;
-using Syki.Shared.UpdateCampus;
-
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase

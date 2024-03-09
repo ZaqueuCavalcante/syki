@@ -1,5 +1,3 @@
-using Syki.Shared.FinishUserRegister;
-
 namespace Syki.Front.FinishUserRegister;
 
 public class FinishUserRegisterClient(HttpClient http)

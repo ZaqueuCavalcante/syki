@@ -1,5 +1,3 @@
-using Syki.Shared.CreateCampus;
-
 namespace Syki.Back.CreateCampus;
 
 public class Campus

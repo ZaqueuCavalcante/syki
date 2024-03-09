@@ -1,4 +1,4 @@
-namespace Syki.Shared.GetMfaKey;
+namespace Syki.Shared;
 
 public class GetMfaKeyOut
 {

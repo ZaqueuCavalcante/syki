@@ -1,6 +1,3 @@
-using Syki.Shared.CreateUser;
-using Microsoft.AspNetCore.Identity;
-
 namespace Syki.Back.CreateUser;
 
 public class SykiUser : IdentityUser<Guid>

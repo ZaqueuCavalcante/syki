@@ -1,4 +1,4 @@
-namespace Syki.Shared.SetupMfa;
+namespace Syki.Shared;
 
 public class SetupMfaOut
 {

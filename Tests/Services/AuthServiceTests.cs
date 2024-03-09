@@ -1,4 +1,3 @@
-using Syki.Shared;
 using Syki.Front.Auth;
 using Syki.Tests.Mock;
 using Syki.Front.Services;
@@ -8,7 +7,6 @@ using RichardSzalay.MockHttp;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Components.Authorization;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using Syki.Shared.Login;
 
 namespace Syki.Tests.Services;
 

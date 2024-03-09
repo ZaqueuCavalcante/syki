@@ -1,4 +1,4 @@
-namespace Syki.Shared.LoginMfa;
+namespace Syki.Shared;
 
 public class LoginMfaIn
 {

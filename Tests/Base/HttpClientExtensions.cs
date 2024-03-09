@@ -1,10 +1,6 @@
 using Syki.Shared;
-using Syki.Shared.Login;
 using Syki.Front.SetupMfa;
 using Syki.Front.GetMfaKey;
-using Syki.Shared.GetMfaKey;
-using Syki.Shared.CreateUser;
-using Syki.Shared.CreateCampus;
 using Syki.Front.FinishUserRegister;
 using Syki.Front.CreatePendingUserRegister;
 using static Syki.Back.Configs.AuthorizationConfigs;

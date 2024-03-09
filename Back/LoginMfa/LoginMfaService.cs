@@ -1,5 +1,4 @@
 using Syki.Back.CreateUser;
-using Syki.Shared.LoginMfa;
 using Syki.Back.GenerateJWT;
 
 namespace Syki.Back.LoginMfa;

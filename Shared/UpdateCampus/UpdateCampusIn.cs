@@ -1,4 +1,4 @@
-namespace Syki.Shared.UpdateCampus;
+namespace Syki.Shared;
 
 public class UpdateCampusIn
 {

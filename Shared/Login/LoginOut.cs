@@ -1,4 +1,4 @@
-namespace Syki.Shared.Login;
+namespace Syki.Shared;
 
 public class LoginOut
 {

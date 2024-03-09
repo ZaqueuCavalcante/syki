@@ -1,28 +1,25 @@
 namespace Syki.Back.Services;
 
-public class OfertasService : IOfertasService
+public class OfertasService(SykiDbContext ctx) : IOfertasService
 {
-    private readonly SykiDbContext _ctx;
-    public OfertasService(SykiDbContext ctx) => _ctx = ctx;
-
     public async Task<OfertaOut> Create(Guid faculdadeId, OfertaIn data)
     {
-        var campusOk = await _ctx.Campi
+        var campusOk = await ctx.Campi
             .AnyAsync(c => c.InstitutionId == faculdadeId && c.Id == data.CampusId);
         if (!campusOk)
             Throw.DE010.Now();
 
-        var periodoOk = await _ctx.AcademicPeriods
+        var periodoOk = await ctx.AcademicPeriods
             .AnyAsync(p => p.InstitutionId == faculdadeId && p.Id == data.Periodo);
         if (!periodoOk)
             Throw.DE005.Now();
 
-        var cursoOk = await _ctx.Cursos
+        var cursoOk = await ctx.Cursos
             .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.CursoId);
         if (!cursoOk)
             Throw.DE002.Now();
 
-        var gradeOk = await _ctx.Grades
+        var gradeOk = await ctx.Grades
             .AnyAsync(g => g.FaculdadeId == faculdadeId && g.Id == data.GradeId && g.CursoId == data.CursoId);
         if (!gradeOk)
             Throw.DE011.Now();
@@ -36,10 +33,10 @@ public class OfertasService : IOfertasService
             data.Turno
         );
 
-        _ctx.Ofertas.Add(oferta);
-        await _ctx.SaveChangesAsync();
+        ctx.Ofertas.Add(oferta);
+        await ctx.SaveChangesAsync();
 
-        oferta = await _ctx.Ofertas.AsNoTracking()
+        oferta = await ctx.Ofertas.AsNoTracking()
             .Include(x => x.Campus)
             .Include(x => x.Curso)
             .Include(x => x.Grade)
@@ -50,7 +47,7 @@ public class OfertasService : IOfertasService
 
     public async Task<List<OfertaOut>> GetAll(Guid faculdadeId)
     {
-        var ofertas = await _ctx.Ofertas.AsNoTracking()
+        var ofertas = await ctx.Ofertas.AsNoTracking()
             .Include(x => x.Campus)
             .Include(x => x.Curso)
             .Include(x => x.Grade)

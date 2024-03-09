@@ -1,45 +1,42 @@
 namespace Syki.Back.Services;
 
-public class MatriculasService : IMatriculasService
+public class MatriculasService(SykiDbContext ctx) : IMatriculasService
 {
-    private readonly SykiDbContext _ctx;
-    public MatriculasService(SykiDbContext ctx) => _ctx = ctx;
-
     public async Task Create(Guid faculdadeId, Guid userId, MatriculaTurmaIn data)
     {
-        var ids = await _ctx.Turmas
+        var ids = await ctx.Turmas
             .Where(t => t.FaculdadeId == faculdadeId && data.Turmas.Contains(t.Id))
             .Select(t => t.Id)
             .ToListAsync();
 
         foreach (var id in ids)
         {
-            _ctx.Add(new TurmaAluno(id, userId, Situacao.Matriculado));
+            ctx.Add(new TurmaAluno(id, userId, Situacao.Matriculado));
         }
 
-        await _ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync();
     }
 
     public async Task<List<MatriculaTurmaOut>> GetTurmas(Guid faculdadeId, Guid userId)
     {
         var today = DateOnly.FromDateTime(DateTime.Now);
-        var periodoDeMatricula = await _ctx.EnrollmentPeriods.AsNoTracking()
+        var periodoDeMatricula = await ctx.EnrollmentPeriods.AsNoTracking()
             .Where(p => p.InstitutionId == faculdadeId && p.Start <= today && p.End >= today)
             .FirstOrDefaultAsync();
         
         if (periodoDeMatricula == null)
             return [];
 
-        var ofertaId = await _ctx.Alunos.Where(a => a.Id == userId)
+        var ofertaId = await ctx.Alunos.Where(a => a.Id == userId)
             .Select(a => a.OfertaId).FirstAsync();
-        var gradeId = await _ctx.Ofertas.Where(o => o.Id == ofertaId)
+        var gradeId = await ctx.Ofertas.Where(o => o.Id == ofertaId)
             .Select(o => o.GradeId).FirstAsync();
-        var grade = await _ctx.Grades.Where(g => g.Id == gradeId).AsNoTracking()
+        var grade = await ctx.Grades.Where(g => g.Id == gradeId).AsNoTracking()
             .Include(g => g.Vinculos)
             .FirstAsync();
         var ids = grade.Vinculos.ConvertAll(d => d.DisciplinaId);
 
-        var turmas = await _ctx.Turmas.AsNoTracking()
+        var turmas = await ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Horarios)
             .Include(t => t.Professor)

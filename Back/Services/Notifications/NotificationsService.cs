@@ -1,10 +1,7 @@
 namespace Syki.Back.Services;
 
-public class NotificationsService : INotificationsService
+public class NotificationsService(SykiDbContext ctx) : INotificationsService
 {
-    private readonly SykiDbContext _ctx;
-    public NotificationsService(SykiDbContext ctx) => _ctx = ctx;
-
     public async Task<NotificationOut> Create(Guid faculdadeId, NotificationIn data)
     {
         var notification = new Notification(faculdadeId, data.Title, data.Description);
@@ -23,20 +20,20 @@ public class NotificationsService : INotificationsService
                 u.institution_id = {faculdadeId}
         ";
 
-        var roleId = await _ctx.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstAsync();
-        var users = await _ctx.Database.SqlQuery<Guid>(sql).ToListAsync();
+        var roleId = await ctx.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstAsync();
+        var users = await ctx.Database.SqlQuery<Guid>(sql).ToListAsync();
 
-        users.ForEach(u => _ctx.UserNotifications.Add(new UserNotification(u, notification.Id)));
+        users.ForEach(u => ctx.UserNotifications.Add(new UserNotification(u, notification.Id)));
 
-        _ctx.Add(notification);
-        await _ctx.SaveChangesAsync();
+        ctx.Add(notification);
+        await ctx.SaveChangesAsync();
 
         return notification.ToOut();
     }
 
     public async Task<List<NotificationOut>> GetAll(Guid faculdadeId)
     {
-        var notifications = await _ctx.Notifications.AsNoTracking()
+        var notifications = await ctx.Notifications.AsNoTracking()
             .Include(x => x.Users)
             .Where(c => c.FaculdadeId == faculdadeId)
             .OrderByDescending(x => x.CreatedAt)
@@ -54,7 +51,7 @@ public class NotificationsService : INotificationsService
 
     public async Task<List<UserNotificationOut>> GetByUserId(Guid faculdadeId, Guid userId)
     {
-        var notifications = await _ctx.UserNotifications.AsNoTracking()
+        var notifications = await ctx.UserNotifications.AsNoTracking()
             .Include(x => x.Notification)
             .Where(c => c.Notification.FaculdadeId == faculdadeId && c.UserId == userId)
             .ToListAsync();
@@ -64,13 +61,13 @@ public class NotificationsService : INotificationsService
 
     public async Task ViewByUserId(Guid faculdadeId, Guid userId)
     {
-        var notifications = await _ctx.UserNotifications
+        var notifications = await ctx.UserNotifications
             .Include(x => x.Notification)
             .Where(c => c.Notification.FaculdadeId == faculdadeId && c.UserId == userId)
             .ToListAsync();
 
         notifications.ForEach(x => x.ViewedAt = DateTime.Now);
 
-        await _ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync();
     }
 }

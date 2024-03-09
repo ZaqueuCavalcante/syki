@@ -1,23 +1,20 @@
 namespace Syki.Back.Services;
 
-public class TurmasService : ITurmasService
+public class TurmasService(SykiDbContext ctx) : ITurmasService
 {
-    private readonly SykiDbContext _ctx;
-    public TurmasService(SykiDbContext ctx) => _ctx = ctx;
-
     public async Task<TurmaOut> Create(Guid faculdadeId, TurmaIn data)
     {
-        var disciplinaOk = await _ctx.Disciplinas
+        var disciplinaOk = await ctx.Disciplinas
             .AnyAsync(x => x.FaculdadeId == faculdadeId && x.Id == data.DisciplinaId);
         if (!disciplinaOk)
             Throw.DE004.Now();
 
-        var professorOk = await _ctx.Professores
+        var professorOk = await ctx.Professores
             .AnyAsync(p => p.FaculdadeId == faculdadeId && p.Id == data.ProfessorId);
         if (!professorOk)
             Throw.DE018.Now();
 
-        var periodoOk = await _ctx.AcademicPeriods
+        var periodoOk = await ctx.AcademicPeriods
             .AnyAsync(p => p.InstitutionId == faculdadeId && p.Id == data.Periodo);
         if (!periodoOk)
             Throw.DE005.Now();
@@ -31,10 +28,10 @@ public class TurmasService : ITurmasService
             horarios
         );
 
-        _ctx.Turmas.Add(turma);
-        await _ctx.SaveChangesAsync();
+        ctx.Turmas.Add(turma);
+        await ctx.SaveChangesAsync();
 
-        turma = await _ctx.Turmas.AsNoTracking()
+        turma = await ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Professor)
             .Include(t => t.Horarios)
@@ -45,7 +42,7 @@ public class TurmasService : ITurmasService
 
     public async Task<List<TurmaOut>> GetAll(Guid faculdadeId)
     {
-        var turmas = await _ctx.Turmas.AsNoTracking()
+        var turmas = await ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Professor)
             .Include(t => t.Horarios)

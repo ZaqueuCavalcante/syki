@@ -1,20 +1,11 @@
 namespace Syki.Back.Services;
 
-public class ProfessoresService : IProfessoresService
+public class ProfessoresService(SykiDbContext ctx, IAuthService authService) : IProfessoresService
 {
-    private readonly SykiDbContext _ctx;
-    private readonly IAuthService _authService;
-    public ProfessoresService(
-        SykiDbContext ctx,
-        IAuthService authService
-    ) {
-        _ctx = ctx;
-        _authService = authService;
-    }
 
     public async Task<ProfessorOut> Create(Guid faculdadeId, ProfessorIn data)
     {
-        using var transaction = _ctx.Database.BeginTransaction();
+        using var transaction = ctx.Database.BeginTransaction();
 
         var userIn = new CreateUserIn
         {
@@ -24,12 +15,12 @@ public class ProfessoresService : IProfessoresService
             Password = $"Professor@{Guid.NewGuid().ToString().OnlyNumbers()}",
             Role = AuthorizationConfigs.Professor,
         };
-        var user = await _authService.Register(userIn);
+        var user = await authService.Register(userIn);
 
         var professor = new Professor(user.Id, faculdadeId, data.Nome);
 
-        _ctx.Add(professor);
-        await _ctx.SaveChangesAsync();
+        ctx.Add(professor);
+        await ctx.SaveChangesAsync();
 
         transaction.Commit();
 
@@ -51,7 +42,7 @@ public class ProfessoresService : IProfessoresService
                 u.institution_id = {faculdadeId}
         ";
 
-        var professores = await _ctx.Database.SqlQuery<ProfessorOut>(sql).ToListAsync();
+        var professores = await ctx.Database.SqlQuery<ProfessorOut>(sql).ToListAsync();
 
         return professores;
     }

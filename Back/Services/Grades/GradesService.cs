@@ -1,13 +1,10 @@
 namespace Syki.Back.Services;
 
-public class GradesService : IGradesService
+public class GradesService(SykiDbContext ctx) : IGradesService
 {
-    private readonly SykiDbContext _ctx;
-    public GradesService(SykiDbContext ctx) => _ctx = ctx;
-
     public async Task<GradeOut> Create(Guid faculdadeId, GradeIn data)
     {
-        var cursoValido = await _ctx.Cursos
+        var cursoValido = await ctx.Cursos
             .AnyAsync(c => c.FaculdadeId == faculdadeId && c.Id == data.CursoId);
 
         if (!cursoValido)
@@ -19,7 +16,7 @@ public class GradesService : IGradesService
             data.Nome
         );
 
-        var disciplinas = await _ctx.CursosDisciplinas.AsNoTracking()
+        var disciplinas = await ctx.CursosDisciplinas.AsNoTracking()
             .Where(x => x.CursoId == data.CursoId)
             .Select(x => x.DisciplinaId)
             .ToListAsync();
@@ -30,10 +27,10 @@ public class GradesService : IGradesService
         data.Disciplinas.ForEach(d => grade.Vinculos.Add(
             new GradeDisciplina(d.Id, d.Periodo, d.Creditos, d.CargaHoraria)));
 
-        _ctx.Grades.Add(grade);
-        await _ctx.SaveChangesAsync();
+        ctx.Grades.Add(grade);
+        await ctx.SaveChangesAsync();
 
-        grade = await _ctx.Grades.AsNoTracking()
+        grade = await ctx.Grades.AsNoTracking()
             .Include(g => g.Curso)
             .Include(x => x.Disciplinas)
             .Include(g => g.Vinculos)
@@ -44,7 +41,7 @@ public class GradesService : IGradesService
 
     public async Task<List<DisciplinaOut>> GetDisciplinas(Guid faculdadeId, Guid id)
     {
-        var grade = await _ctx.Grades.AsNoTracking()
+        var grade = await ctx.Grades.AsNoTracking()
             .Where(g => g.FaculdadeId == faculdadeId && g.Id == id)
             .Include(g => g.Disciplinas)
             .FirstOrDefaultAsync();
@@ -54,7 +51,7 @@ public class GradesService : IGradesService
 
     public async Task<List<GradeOut>> GetAll(Guid faculdadeId)
     {
-        var grades = await _ctx.Grades.AsNoTracking()
+        var grades = await ctx.Grades.AsNoTracking()
             .Where(c => c.FaculdadeId == faculdadeId)
             .Include(g => g.Curso)
             .Include(g => g.Disciplinas)

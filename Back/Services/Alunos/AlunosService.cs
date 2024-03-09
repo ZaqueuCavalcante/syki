@@ -1,21 +1,15 @@
 namespace Syki.Back.Services;
 
-public class AlunosService : IAlunosService
+public class AlunosService(SykiDbContext ctx) : IAlunosService
 {
-    private readonly SykiDbContext _ctx;
-    public AlunosService(SykiDbContext ctx)
-    {
-        _ctx = ctx;
-    }
-
     public async Task<List<DisciplinaOut>> GetDisciplinas(Guid userId)
     {
-        var ofertaId = await _ctx.Alunos.Where(a => a.Id == userId)
+        var ofertaId = await ctx.Alunos.Where(a => a.Id == userId)
             .Select(a => a.OfertaId).FirstAsync();
-        var gradeId = await _ctx.Ofertas.Where(o => o.Id == ofertaId)
+        var gradeId = await ctx.Ofertas.Where(o => o.Id == ofertaId)
             .Select(o => o.GradeId).FirstAsync();
 
-        var grade = await _ctx.Grades.AsNoTracking()
+        var grade = await ctx.Grades.AsNoTracking()
             .Include(g => g.Curso)
             .Include(g => g.Disciplinas)
             .Include(g => g.Vinculos)
@@ -23,12 +17,12 @@ public class AlunosService : IAlunosService
 
         var response = grade.ToOut().Disciplinas.OrderBy(d => d.Periodo).ToList();
 
-        var situacoes = await _ctx.TurmaAlunos.AsNoTracking()
+        var situacoes = await ctx.TurmaAlunos.AsNoTracking()
             .Where(x => x.AlunoId == userId)
             .ToListAsync();
 
         var ids = grade.Disciplinas.ConvertAll(d => d.Id);
-        var turmas = await _ctx.Turmas.Where(t => ids.Contains(t.DisciplinaId))
+        var turmas = await ctx.Turmas.Where(t => ids.Contains(t.DisciplinaId))
             .Select(x => new { x.Id, x.DisciplinaId }).ToListAsync();
 
         response.ForEach(r =>
@@ -42,7 +36,7 @@ public class AlunosService : IAlunosService
 
     public async Task<List<AlunoOut>> GetAll(Guid faculdadeId)
     {
-        var alunos = await _ctx.Alunos
+        var alunos = await ctx.Alunos
             .AsNoTracking().AsSplitQuery()
             .Include(a => a.User)
             .Include(a => a.Oferta)

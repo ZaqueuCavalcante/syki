@@ -9,48 +9,36 @@ using Syki.Back.SendResetPasswordToken;
 
 namespace Syki.Back.Services;
 
-public class AuthService : IAuthService
+public class AuthService(
+    SykiDbContext ctx,
+    AuthSettings settings,
+    DatabaseSettings dbSettings,
+    UserManager<SykiUser> userManager
+    ) : IAuthService
 {
-    private readonly SykiDbContext _ctx;
-    private readonly AuthSettings _settings;
-    private readonly DatabaseSettings _dbSettings;
-    private readonly UserManager<SykiUser> _userManager;
-
-    public AuthService(
-        SykiDbContext ctx,
-        AuthSettings settings,
-        DatabaseSettings dbSettings,
-        UserManager<SykiUser> userManager
-    ) {
-        _ctx = ctx;
-        _settings = settings;
-        _dbSettings = dbSettings;
-        _userManager = userManager;
-    }
-
     public async Task<CreateUserOut> RegisterUser(CreateUserIn body)
     {
         if (!(body.Role is AuthorizationConfigs.Academico or AuthorizationConfigs.Professor or AuthorizationConfigs.Aluno))
             Throw.DE013.Now();
 
-        var faculdadeOk = await _ctx.Institutions.AnyAsync(c => c.Id == body.InstitutionId);
+        var faculdadeOk = await ctx.Institutions.AnyAsync(c => c.Id == body.InstitutionId);
         if (!faculdadeOk)
             Throw.DE014.Now();
 
         if (!body.Email.IsValidEmail())
             Throw.DE016.Now();
 
-        var emailUsed = await _ctx.Users.AnyAsync(u => u.Email == body.Email);
+        var emailUsed = await ctx.Users.AnyAsync(u => u.Email == body.Email);
         if (emailUsed)
             Throw.DE017.Now();
 
         var user = new SykiUser(body.InstitutionId, body.Name, body.Email);
 
-        var result = await _userManager.CreateAsync(user, body.Password);
+        var result = await userManager.CreateAsync(user, body.Password);
         if (!result.Succeeded)
             Throw.DE015.Now();
 
-        await _userManager.AddToRoleAsync(user, body.Role);
+        await userManager.AddToRoleAsync(user, body.Role);
 
         return user.ToOut();
     }
@@ -59,21 +47,21 @@ public class AuthService : IAuthService
     {
         var userOut = await RegisterUser(body);
 
-        var user = await _userManager.FindByIdAsync(userOut.Id.ToString());
+        var user = await userManager.FindByIdAsync(userOut.Id.ToString());
 
-        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
         var reset = new ResetPasswordToken(user.Id, token);
-        _ctx.Add(reset);
+        ctx.Add(reset);
 
-        await _ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync();
 
         return userOut;
     }
 
     public async Task<string> GenerateAccessToken(string email)
     {
-        var user = (await _userManager.FindByEmailAsync(email))!;
+        var user = (await userManager.FindByEmailAsync(email))!;
 
         var claims = new List<Claim>
         {
@@ -84,14 +72,14 @@ public class AuthService : IAuthService
             new("faculdade", user.InstitutionId.ToString()),
         };
 
-        var roles = await _userManager.GetRolesAsync(user);
+        var roles = await userManager.GetRolesAsync(user);
         claims.Add(new Claim("role", roles[0]));
 
         var identityClaims = new ClaimsIdentity();
         identityClaims.AddClaims(claims);
 
-        var key = Encoding.ASCII.GetBytes(_settings.SecurityKey);
-        var expirationTime = _settings.ExpirationTimeInMinutes;
+        var key = Encoding.ASCII.GetBytes(settings.SecurityKey);
+        var expirationTime = settings.ExpirationTimeInMinutes;
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(key),
             SecurityAlgorithms.HmacSha256Signature
@@ -99,8 +87,8 @@ public class AuthService : IAuthService
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Issuer = _settings.Issuer,
-            Audience = _settings.Audience,
+            Issuer = settings.Issuer,
+            Audience = settings.Audience,
             Expires = DateTime.UtcNow.AddMinutes(expirationTime),
             SigningCredentials = signingCredentials,
             Subject = identityClaims
@@ -114,7 +102,7 @@ public class AuthService : IAuthService
 
     public async Task<List<CreateUserOut>> GetAllUsers()
     {
-        using var connection = new NpgsqlConnection(_dbSettings.ConnectionString);
+        using var connection = new NpgsqlConnection(dbSettings.ConnectionString);
 
         const string sql = @"
             SELECT

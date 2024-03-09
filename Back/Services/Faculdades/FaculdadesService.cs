@@ -1,23 +1,20 @@
 namespace Syki.Back.Services;
 
-public class FaculdadesService : IFaculdadesService
+public class FaculdadesService(SykiDbContext ctx) : IFaculdadesService
 {
-    private readonly SykiDbContext _ctx;
-    public FaculdadesService(SykiDbContext ctx) => _ctx = ctx;
-
     public async Task<FaculdadeOut> Create(FaculdadeIn data)
     {
         var faculdade = new Faculdade(data.Nome);
-        _ctx.Add(faculdade);
+        ctx.Add(faculdade);
 
-        await _ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync();
 
         return faculdade.ToOut();
     }
 
     public async Task<List<FaculdadeOut>> GetAll()
     {
-        var faculdades = await _ctx.Institutions
+        var faculdades = await ctx.Institutions
             .Where(x => x.Id != Guid.Empty)
             .ToListAsync();
 

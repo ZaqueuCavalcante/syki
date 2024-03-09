@@ -1,13 +1,6 @@
-using Syki.Shared;
-using Syki.Back.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.AspNetCore.Authorization;
-using static Syki.Back.Configs.AuthorizationConfigs;
-
 namespace Syki.Back.Controllers;
 
-[Authorize(Roles = Adm)]
+[AuthAdm]
 [EnableRateLimiting("Medium")]
 [ApiController, Route("[controller]")]
 public class FaculdadesController : ControllerBase

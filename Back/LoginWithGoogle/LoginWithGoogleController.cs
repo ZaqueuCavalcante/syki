@@ -24,6 +24,8 @@ public class LoginWithGoogleController(LoginWithGoogleService service) : Control
     {
         var token = await service.Login(User.Email());
 
+        // Get from settings
+
         return Redirect($"https://localhost:6001/login-oauth?token={token.AccessToken}");
     }
 }

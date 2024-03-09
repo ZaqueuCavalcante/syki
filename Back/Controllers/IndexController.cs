@@ -1,19 +1,14 @@
-using static Syki.Back.Configs.AuthorizationConfigs;
-
 namespace Syki.Back.Controllers;
 
 [EnableRateLimiting("Medium")]
 [ApiController, Route("[controller]")]
-public class IndexController : ControllerBase
+public class IndexController(IIndexService service) : ControllerBase
 {
-    private readonly IIndexService _service;
-    public IndexController(IIndexService service) => _service = service;
-
+    [AuthAdm]
     [HttpGet("adm")]
-    [Authorize(Roles = Adm)]
     public async Task<IActionResult> GetAllAdm()
     {
-        var data = await _service.GetAllAdm();
+        var data = await service.GetAllAdm();
         
         return Ok(data);
     }
@@ -22,17 +17,16 @@ public class IndexController : ControllerBase
     [HttpGet("academico")]
     public async Task<IActionResult> GetAllAcademico()
     {
-        var data = await _service.GetAllAcademico(User.Facul());
+        var data = await service.GetAllAcademico(User.Facul());
         
         return Ok(data);
     }
 
+    [AuthAluno]
     [HttpGet("aluno")]
-    [Authorize(Roles = Aluno)]
     public async Task<IActionResult> GetAllAluno()
     {
-        var data = await _service.GetAllAluno(User.Id());
-        
+        var data = await service.GetAllAluno(User.Id());
         return Ok(data);
     }
 }

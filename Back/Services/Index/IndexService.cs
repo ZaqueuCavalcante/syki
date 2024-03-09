@@ -1,6 +1,5 @@
 using Dapper;
 using Npgsql;
-using Syki.Shared;
 using Syki.Back.Settings;
 
 namespace Syki.Back.Services;

@@ -1,9 +1,3 @@
-using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using Syki.Back.Domain;
-using FluentAssertions;
-using Syki.Back.Exceptions;
 using Syki.Back.CreateAluno;
 
 namespace Syki.Tests.Unit;

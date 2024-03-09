@@ -1,10 +1,3 @@
-using Syki.Shared;
-using NUnit.Framework;
-using Syki.Back.Domain;
-using FluentAssertions;
-using Syki.Back.Exceptions;
-using Syki.Tests.Base;
-
 namespace Syki.Tests.Unit;
 
 public class TurmasUnitTests

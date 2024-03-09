@@ -1,4 +1,3 @@
-using Syki.Back.Domain;
 using Syki.Back.CreateAluno;
 
 namespace Syki.Back.Database;

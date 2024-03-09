@@ -6,7 +6,6 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Syki.Back.SendResetPasswordToken;
-using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Back.Services;
 
@@ -31,7 +30,7 @@ public class AuthService : IAuthService
 
     public async Task<CreateUserOut> RegisterUser(CreateUserIn body)
     {
-        if (!(body.Role is Academico or Professor or Aluno))
+        if (!(body.Role is AuthorizationConfigs.Academico or AuthorizationConfigs.Professor or AuthorizationConfigs.Aluno))
             Throw.DE013.Now();
 
         var faculdadeOk = await _ctx.Institutions.AnyAsync(c => c.Id == body.InstitutionId);

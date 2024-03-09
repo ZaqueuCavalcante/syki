@@ -1,5 +1,3 @@
-using Syki.Shared;
-using Syki.Back.Domain;
 using Syki.Back.Configs;
 using Microsoft.AspNetCore.Http;
 

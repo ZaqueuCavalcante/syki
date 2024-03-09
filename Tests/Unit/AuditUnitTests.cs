@@ -1,8 +1,5 @@
 using Audit.Core;
 using Syki.Back.Audit;
-using NUnit.Framework;
-using FluentAssertions;
-using Syki.Back.Domain;
 using Audit.EntityFramework;
 
 namespace Syki.Tests.Unit;

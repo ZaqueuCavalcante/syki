@@ -1,4 +1,3 @@
-using Syki.Back.Domain;
 using Syki.Back.CreateUser;
 using Syki.Back.GenerateJWT;
 using Syki.Back.CreatePendingUserRegister;

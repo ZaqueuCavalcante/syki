@@ -1,7 +1,4 @@
-using Syki.Shared;
-using NUnit.Framework;
-using Syki.Back.Domain;
-using FluentAssertions;
+using Syki.Back.CreateCurso;
 
 namespace Syki.Tests.Unit;
 

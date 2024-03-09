@@ -1,4 +1,4 @@
-using Syki.Back.Domain;
+using Syki.Back.CreateCurso;
 
 namespace Syki.Back.Services;
 

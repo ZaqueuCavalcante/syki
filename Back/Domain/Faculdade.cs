@@ -1,6 +1,7 @@
 using Syki.Back.CreateAluno;
 using Syki.Back.CreateCampus;
 using Syki.Back.CreateAcademicPeriod;
+using Syki.Back.CreateCurso;
 
 namespace Syki.Back.Domain;
 

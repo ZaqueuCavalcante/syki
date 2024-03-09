@@ -1,8 +1,3 @@
-using NUnit.Framework;
-using Syki.Tests.Base;
-using Syki.Back.Domain;
-using FluentAssertions;
-
 namespace Syki.Tests.Unit;
 
 public class NotaUnitTests

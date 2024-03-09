@@ -1,4 +1,3 @@
-using Syki.Back.Domain;
 using Syki.Back.CreateUser;
 
 namespace Syki.Back.Database;

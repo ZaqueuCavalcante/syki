@@ -1,5 +1,3 @@
-using Syki.Back.Domain;
-
 namespace Syki.Back.Database;
 
 public class GradeConfig : IEntityTypeConfiguration<Grade>

@@ -1,12 +1,10 @@
-using static Syki.Back.Configs.AuthorizationConfigs;
-
 namespace Syki.Back.CreateUser;
 
 public class CreateUserService(SykiDbContext ctx, UserManager<SykiUser> userManager)
 {
     public async Task<CreateUserOut> Create(CreateUserIn data)
     {
-        if (!(data.Role is Academico or Professor or Aluno))
+        if (!(data.Role is AuthorizationConfigs.Academico or AuthorizationConfigs.Professor or AuthorizationConfigs.Aluno))
             Throw.DE013.Now();
 
         var institutionOk = await ctx.Institutions.AnyAsync(c => c.Id == data.InstitutionId);

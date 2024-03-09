@@ -1,5 +1,3 @@
-using Syki.Back.Domain;
-
 namespace Syki.Back.Services;
 
 public class FaculdadesService : IFaculdadesService

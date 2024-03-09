@@ -1,4 +1,5 @@
 using Syki.Back.CreateCampus;
+using Syki.Back.CreateCurso;
 
 namespace Syki.Back.Domain;
 

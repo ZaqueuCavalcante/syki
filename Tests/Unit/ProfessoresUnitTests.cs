@@ -1,9 +1,3 @@
-using NUnit.Framework;
-using Syki.Back.Domain;
-using FluentAssertions;
-using Syki.Tests.Base;
-using Syki.Back.Exceptions;
-
 namespace Syki.Tests.Unit;
 
 public class ProfessoresUnitTests

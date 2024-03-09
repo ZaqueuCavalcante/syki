@@ -1,9 +1,3 @@
-using Syki.Shared;
-using NUnit.Framework;
-using Syki.Back.Domain;
-using FluentAssertions;
-using Syki.Back.Exceptions;
-
 namespace Syki.Tests.Unit;
 
 public class HorarioUnitTests

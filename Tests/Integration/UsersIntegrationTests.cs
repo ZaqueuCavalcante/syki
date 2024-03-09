@@ -1,4 +1,4 @@
-using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Back.Configs;
 
 namespace Syki.Tests.Integration;
 
@@ -11,9 +11,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = _factory.CreateClient();
         var faculdade = await client.CreateInstitution("Nova Roma");
 
-        await client.RegisterUser(CreateUserIn.New(faculdade.Id, Academico));
-        await client.RegisterUser(CreateUserIn.New(faculdade.Id, Professor));
-        await client.RegisterUser(CreateUserIn.New(faculdade.Id, Aluno));
+        await client.RegisterUser(CreateUserIn.New(faculdade.Id, AuthorizationConfigs.Academico));
+        await client.RegisterUser(CreateUserIn.New(faculdade.Id, AuthorizationConfigs.Professor));
+        await client.RegisterUser(CreateUserIn.New(faculdade.Id, AuthorizationConfigs.Aluno));
 
         // Act
         var users = await client.GetAsync<List<CreateUserOut>>("/users");

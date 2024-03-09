@@ -1,4 +1,4 @@
-using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Back.Configs;
 
 namespace Syki.Tests.Base;
 
@@ -26,10 +26,10 @@ public class AuthTestBase
     {
         var jwt = role switch
         {
-            Adm => JWTAdm,
-            Academico => JWTAcademico,
-            Professor => JWTProfessor,
-            Aluno => JWTAluno,
+            AuthorizationConfigs.Adm => JWTAdm,
+            AuthorizationConfigs.Academico => JWTAcademico,
+            AuthorizationConfigs.Professor => JWTProfessor,
+            AuthorizationConfigs.Aluno => JWTAluno,
             _ => ""
         };
         _client.RemoveAuthToken();

@@ -1,3 +1,5 @@
+using Syki.Back.CreateCurso;
+
 namespace Syki.Back.Domain;
 
 public class Grade

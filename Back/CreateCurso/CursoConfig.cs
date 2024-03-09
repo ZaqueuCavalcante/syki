@@ -1,6 +1,4 @@
-using Syki.Back.Domain;
-
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateCurso;
 
 public class CursoConfig : IEntityTypeConfiguration<Curso>
 {

@@ -1,5 +1,3 @@
-using Syki.Back.Domain;
-using Syki.Back.Database;
 using Syki.Back.CreateUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

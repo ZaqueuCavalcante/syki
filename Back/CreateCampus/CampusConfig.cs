@@ -1,5 +1,3 @@
-using Syki.Back.Domain;
-
 namespace Syki.Back.CreateCampus;
 
 public class CampusConfig : IEntityTypeConfiguration<Campus>

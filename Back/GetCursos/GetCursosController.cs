@@ -4,7 +4,7 @@ namespace Syki.Back.GetCursos;
 [EnableRateLimiting("Medium")]
 public class GetCursosController(GetCursosService service) : ControllerBase
 {
-    [HttpGet("")]
+    [HttpGet("cursos")]
     public async Task<IActionResult> Get()
     {
         var cursos = await service.Get(User.InstitutionId());

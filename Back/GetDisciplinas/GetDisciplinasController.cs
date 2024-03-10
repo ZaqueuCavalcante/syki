@@ -4,7 +4,7 @@ namespace Syki.Back.GetDisciplinas;
 [EnableRateLimiting("Medium")]
 public class GetDisciplinasController(GetDisciplinasService service) : ControllerBase
 {
-    [HttpGet("")]
+    [HttpGet("disciplinas")]
     public async Task<IActionResult> Get([FromQuery] Guid? cursoId)
     {
         var disciplinas = await service.Get(User.InstitutionId(), cursoId);

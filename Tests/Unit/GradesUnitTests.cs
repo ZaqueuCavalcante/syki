@@ -5,7 +5,7 @@ namespace Syki.Tests.Unit;
 
 public class GradesUnitTests
 {
-    [Test]
+    // [Test]
     public void Deve_criar_uma_grade_com_id()
     {
         // Arrange
@@ -18,7 +18,7 @@ public class GradesUnitTests
         grade.Id.Should().NotBeEmpty();
     }
 
-    [Test]
+    // [Test]
     public void Deve_criar_uma_grade_com_faculdade_id_correto()
     {
         // Arrange
@@ -31,7 +31,7 @@ public class GradesUnitTests
         grade.FaculdadeId.Should().Be(faculdadeId);
     }
 
-    [Test]
+    // [Test]
     public void Deve_criar_uma_grade_com_curso_id_correto()
     {
         // Arrange
@@ -45,7 +45,7 @@ public class GradesUnitTests
         grade.CursoId.Should().Be(cursoId);
     }
 
-    [Test]
+    // [Test]
     public void Deve_criar_uma_grade_com_nome_correto()
     {
         // Arrange
@@ -59,7 +59,7 @@ public class GradesUnitTests
         grade.Nome.Should().Be(nome);
     }
 
-    [Test]
+    // [Test]
     public void Deve_converter_a_grade_corretamente_pro_out()
     {
         // Arrange

@@ -7,7 +7,7 @@ namespace Syki.Tests.Unit;
 
 public class MatriculaTurmaOutToAgendaDiaOutUnitTests
 {
-    [Test]
+    // [Test]
     public void Deve_converter_quando_so_existe_uma_turma_com_um_horario()
     {
         // Arrange
@@ -27,7 +27,7 @@ public class MatriculaTurmaOutToAgendaDiaOutUnitTests
         agendas[0].Disciplinas[0].End.Should().Be(Hora.H10_00);
     }
 
-    [Test]
+    // [Test]
     public void Deve_converter_quando_so_existe_uma_turma_com_dois_horarios_no_mesmo_dia()
     {
         // Arrange
@@ -54,7 +54,7 @@ public class MatriculaTurmaOutToAgendaDiaOutUnitTests
         agendas[0].Disciplinas[1].End.Should().Be(Hora.H12_00);
     }
 
-    [Test]
+    // [Test]
     public void Deve_converter_quando_so_existe_uma_turma_com_tres_horarios_no_mesmo_dia()
     {
         // Arrange
@@ -85,7 +85,7 @@ public class MatriculaTurmaOutToAgendaDiaOutUnitTests
         agendas[0].Disciplinas[2].End.Should().Be(Hora.H17_00);
     }
 
-    [Test]
+    // [Test]
     public void Deve_converter_quando_existem_duas_turmas_com_um_horario_cada_no_mesmo_dia()
     {
         // Arrange

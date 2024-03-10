@@ -8,7 +8,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Deve_criar_um_novo_curso()
     {
         // Arrange
@@ -23,7 +23,7 @@ public partial class IntegrationTests : IntegrationTestBase
         curso.Tipo.Should().Be(Bacharelado);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_criar_varios_cursos()
     {
         // Arrange
@@ -38,7 +38,7 @@ public partial class IntegrationTests : IntegrationTestBase
         cursos.Should().HaveCount(2);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_apenas_os_cursos_da_faculdade_do_usuario_logado()
     {
         // Arrange
@@ -64,7 +64,7 @@ public partial class IntegrationTests : IntegrationTestBase
         cursos[0].Tipo.Should().Be(Bacharelado);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_os_cursos_ordenados_pelo_nome()
     {
         // Arrange

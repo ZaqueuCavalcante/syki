@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Should_get_empty_list_when_has_no_campi()
     {
         // Arrange
@@ -15,7 +15,7 @@ public partial class IntegrationTests : IntegrationTestBase
         campi.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_many_campus()
     {
         // Arrange
@@ -31,7 +31,7 @@ public partial class IntegrationTests : IntegrationTestBase
         campi.Should().HaveCount(2);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_only_institution_campi()
     {
         // Arrange

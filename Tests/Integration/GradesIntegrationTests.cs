@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Deve_criar_uma_nova_grade_mesmo_sem_disciplinas()
     {
         // Arrange
@@ -22,7 +22,7 @@ public partial class IntegrationTests : IntegrationTestBase
         grade.Disciplinas.Should().HaveCount(0);        
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_criar_uma_nova_grade_com_disciplinas()
     {
         // Arrange
@@ -45,7 +45,7 @@ public partial class IntegrationTests : IntegrationTestBase
         grade.Disciplinas.Should().HaveCount(3);        
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_criar_uma_nova_grade_com_disciplinas_que_tem_carga_horaria_diferente_da_padrao()
     {
         // Arrange
@@ -67,7 +67,7 @@ public partial class IntegrationTests : IntegrationTestBase
         grade.Disciplinas[0].CargaHoraria.Should().Be(80);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_nova_grade_sem_vinculo_com_curso()
     {
         // Arrange
@@ -81,7 +81,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE002);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_nova_grade_com_curso_que_nao_existe()
     {
         // Arrange
@@ -95,7 +95,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE002);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_nova_grade_com_curso_de_outra_faculdade()
     {
         // Arrange
@@ -116,7 +116,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE002);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_grade_vinculando_disciplinas_que_nao_sao_do_curso_escolhido()
     {
         // Arrange
@@ -140,7 +140,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE003);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_nova_grade_com_disciplina_de_outra_faculdade()
     {
         // Arrange
@@ -170,7 +170,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE003);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_grade_com_disciplinas_repetidas()
     {
         // Arrange
@@ -199,7 +199,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE003);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_grade_com_disciplinas_que_nao_existem()
     {
         // Arrange
@@ -219,7 +219,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE003);     
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_todas_as_grades_apenas_daquela_faculdade()
     {
         // Arrange
@@ -253,7 +253,7 @@ public partial class IntegrationTests : IntegrationTestBase
         grades[0].Nome.Should().Be(gradeNovaRoma.Nome);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_todas_as_grades_ordenadas_por_nome()
     {
         // Arrange

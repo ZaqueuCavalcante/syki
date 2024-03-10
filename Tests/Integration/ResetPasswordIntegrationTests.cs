@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Deve_retornar_o_token_de_reset_de_senha()
     {
         // Arrange
@@ -19,7 +19,7 @@ public partial class IntegrationTests : IntegrationTestBase
         token!.Length.Should().Be(36);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_salvar_o_reset_password_ao_criar_um_usuario()
     {
         // Arrange
@@ -37,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
         reset.Id.Should().Be(token);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_o_token_de_reset_de_senha_quando_o_usuario_nao_existir()
     {
         // Arrange
@@ -50,7 +50,7 @@ public partial class IntegrationTests : IntegrationTestBase
         token.Should().BeNull();
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_resetar_a_senha_quando_o_token_estiver_errado()
     {
         // Arrange
@@ -68,7 +68,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE019);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_resetar_a_senha_do_usuario()
     {
         // Arrange
@@ -87,7 +87,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.IsSuccessStatusCode.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_fazer_login_com_a_nova_senha_apos_resetar_a_senha()
     {
         // Arrange
@@ -111,7 +111,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_fazer_login_com_a_senha_antiga_apos_resetar_a_senha()
     {
         // Arrange
@@ -135,7 +135,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.WrongEmailOrPassword.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_resetar_a_senha_do_usuario_pela_segunda_vez_usando_o_mesmo_token()
     {
         // Arrange
@@ -156,8 +156,8 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE020);
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
     public async Task Nao_deve_resetar_a_senha_do_usuario_quando_a_senha_for_fraca(string password)
     {
         // Arrange

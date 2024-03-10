@@ -1,8 +1,8 @@
 using Syki.Back.CreateUser;
+using Syki.Back.CreateInstitution;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using static Syki.Back.Configs.AuthorizationConfigs;
-using Syki.Back.CreateInstitution;
 
 namespace Syki.Tests.Base;
 
@@ -33,5 +33,22 @@ public class IntegrationTestBase
     public async Task OneTimeTearDown()
     {
         await _factory.DisposeAsync();
+    }
+
+    protected async Task AssertTaskByDataLike<T>(string like)
+    {
+        using var ctx = _factory.GetDbContext();
+
+        var likeFormat = $"%{like}%";
+        FormattableString sql = $@"
+            SELECT *
+            FROM syki.tasks
+            WHERE data LIKE {likeFormat}
+        ";
+
+        var tasks = await ctx.Database.SqlQuery<SykiTask>(sql).ToListAsync();
+
+        tasks.Should().ContainSingle();
+        typeof(SykiTask).Assembly.GetType(tasks[0].Type).Should().Be<T>();
     }
 }

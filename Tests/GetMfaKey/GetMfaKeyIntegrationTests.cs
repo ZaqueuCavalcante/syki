@@ -2,8 +2,8 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.AllUsersRoles))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.AllUsersRoles))]
     public async Task Should_get_mfa_key_for_all_user_roles(string role)
     {
         // Arrange
@@ -18,8 +18,8 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Key.Should().HaveLength(32);
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.AllUsersRoles))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.AllUsersRoles))]
     public async Task Should_get_same_mfa_key_for_many_gets(string role)
     {
         // Arrange

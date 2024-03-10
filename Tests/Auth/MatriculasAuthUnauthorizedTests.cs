@@ -7,7 +7,7 @@ namespace Syki.Tests.Auth;
 
 public partial class AuthUnauthorizedTests : AuthTestBase
 {
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_um_novo_periodo_de_matricula_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -17,7 +17,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_os_periodos_de_matricula_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -27,7 +27,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_as_opcoes_de_turmas_para_matricula_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act

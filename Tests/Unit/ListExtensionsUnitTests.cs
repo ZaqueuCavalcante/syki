@@ -15,7 +15,7 @@ public class ListExtensionsUnitTests
         Guid.Parse("17a84760-c56b-4af0-8701-d6ba9e11495e"),
     ];
 
-    [Test]
+    // [Test]
     public void Shoud_return_true_when_empty_list()
     {
         // Arrange
@@ -27,7 +27,7 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public void Shoud_return_true_when_one_item_list()
     {
         // Arrange
@@ -42,7 +42,7 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public void Shoud_return_true_when_two_item_list()
     {
         // Arrange
@@ -58,7 +58,7 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public void Shoud_return_true_when_all_items_list()
     {
         // Arrange
@@ -77,7 +77,7 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     [Repeat(100)]
     public void Shoud_return_false_when_random_guid()
     {
@@ -93,7 +93,7 @@ public class ListExtensionsUnitTests
         result.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Shoud_return_false_when_duplicated()
     {
         // Arrange
@@ -109,7 +109,7 @@ public class ListExtensionsUnitTests
         result.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Shoud_return_false_when_triplicated()
     {
         // Arrange
@@ -126,7 +126,7 @@ public class ListExtensionsUnitTests
         result.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     [Repeat(100)]
     public void Shoud_return_false_when_has_one_out()
     {

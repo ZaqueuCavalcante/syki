@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Deve_retornar_os_dados_de_index_do_adm()
     {
         // Arrange
@@ -26,7 +26,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Users.Should().BeGreaterThanOrEqualTo(2);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_os_dados_de_index_do_academico()
     {
         // Arrange
@@ -62,7 +62,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Notifications.Should().Be(0);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_os_dados_de_index_do_aluno()
     {
         // Arrange

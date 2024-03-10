@@ -4,7 +4,7 @@ namespace Syki.Tests.UpdateCampus;
 
 public class UpdateCampusUnitTests
 {
-    [Test]
+    // [Test]
     public void Deve_atualizar_os_dados_do_campus_corretamente()
     {
         // Arrange

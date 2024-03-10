@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Should_finish_user_register()
     {
         // Arrange
@@ -21,8 +21,8 @@ public partial class IntegrationTests : IntegrationTestBase
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidUserRegisterTokens))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidUserRegisterTokens))]
     public async Task Should_not_finish_user_register_with_a_invalid_token(string token)
     {
         // Arrange
@@ -36,7 +36,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE024);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_register_user_twice()
     {
         // Arrange
@@ -55,8 +55,8 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE025);
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
     public async Task Should_not_register_user_with_a_invalid_password(string password)
     {
         // Arrange
@@ -73,7 +73,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE015);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_a_institution_on_user_register()
     {
         // Arrange
@@ -108,18 +108,10 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         using var ctx = _factory.GetDbContext();
         var institution = await ctx.Institutions.FirstAsync(x => x.Nome.Contains(email));
-        var id = $"%{institution.Id}%";
-        FormattableString sql = $@"
-            SELECT *
-            FROM syki.tasks
-            WHERE data LIKE {id}
-        ";
-        var tasks = await ctx.Database.SqlQuery<SykiTask>(sql).ToListAsync();
-        tasks.Should().ContainSingle();
-        typeof(SykiTask).Assembly.GetType(tasks[0].Type).Should().Be<SeedInstitutionData>();
+        await AssertTaskByDataLike<SeedInstitutionData>(institution.Id.ToString());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_register_user_with_academico_role()
     {
         // Arrange

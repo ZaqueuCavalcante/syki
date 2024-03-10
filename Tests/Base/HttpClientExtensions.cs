@@ -1,11 +1,10 @@
-using Syki.Shared;
 using Syki.Front.SetupMfa;
 using Syki.Front.GetMfaKey;
 using Syki.Front.FinishUserRegister;
-using Syki.Front.CreatePendingUserRegister;
-using static Syki.Back.Configs.AuthorizationConfigs;
 using Syki.Front.CreateAcademicPeriod;
 using Syki.Front.CreateEnrollmentPeriod;
+using Syki.Front.CreatePendingUserRegister;
+using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Base;
 

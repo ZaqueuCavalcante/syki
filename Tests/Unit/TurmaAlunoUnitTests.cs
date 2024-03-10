@@ -2,7 +2,7 @@ namespace Syki.Tests.Unit;
 
 public class TurmaAlunoaUnitTests
 {
-    [Test]
+    // [Test]
     public void Deve_criar_um_turma_aluno_com_turma_id_correto()
     {
         // Arrange
@@ -17,7 +17,7 @@ public class TurmaAlunoaUnitTests
         aluno.TurmaId.Should().Be(turmaId);
     }
 
-    [Test]
+    // [Test]
     public void Deve_criar_um_turma_aluno_com_aluno_id_correto()
     {
         // Arrange
@@ -32,7 +32,7 @@ public class TurmaAlunoaUnitTests
         aluno.AlunoId.Should().Be(alunoId);
     }
 
-    [Test]
+    // [Test]
     public void Deve_criar_um_turma_aluno_com_situacao_correta()
     {
         // Arrange

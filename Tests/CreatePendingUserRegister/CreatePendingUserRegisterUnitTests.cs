@@ -18,7 +18,7 @@ public class CreatePendingUserRegisterUnitTests
     }
 
     [Test]
-    public void Should_create_a_user_register_with_correct_id()
+    public void Should_create_a_user_register_with_correct_email()
     {
         // Arrange
         const string email = "zaqueu@syki.com";

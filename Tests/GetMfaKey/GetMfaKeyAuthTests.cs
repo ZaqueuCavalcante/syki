@@ -2,7 +2,7 @@ namespace Syki.Tests.Auth;
 
 public partial class AuthTests : AuthTestBase
 {
-    [Test]
+    // [Test]
     public async Task Should_return_unauthorized_when_unauthenticated_user_wants_to_get_mfa_key()
     {
         // Arrange

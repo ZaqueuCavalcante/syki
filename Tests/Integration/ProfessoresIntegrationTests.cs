@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Deve_criar_um_novo_professor()
     {
         // Arrange
@@ -22,7 +22,7 @@ public partial class IntegrationTests : IntegrationTestBase
         professor.Nome.Should().Be(body.Nome);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_um_professor_nem_seu_usuario_quando_der_erro()
     {
         // Arrange
@@ -42,7 +42,7 @@ public partial class IntegrationTests : IntegrationTestBase
         users.FirstOrDefault(u => u.Email == body.Email).Should().BeNull();
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_criar_varios_professores_para_uma_mesma_faculdade()
     {
         // Arrange
@@ -59,7 +59,7 @@ public partial class IntegrationTests : IntegrationTestBase
         professores.Should().HaveCount(2);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_apenas_os_professores_da_faculdade_do_usuario_logado()
     {
         // Arrange

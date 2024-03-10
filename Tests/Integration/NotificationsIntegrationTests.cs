@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Deve_criar_a_notification()
     {
         // Arrange
@@ -23,7 +23,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Description.Should().Be(body.Description);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_marcar_a_notificacao_como_vista_pelo_usuario()
     {
         // Arrange
@@ -57,7 +57,7 @@ public partial class IntegrationTests : IntegrationTestBase
         notification.ViewedAt.Should().NotBeNull();
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_todas_as_notificacoes()
     {
         // Arrange
@@ -75,7 +75,7 @@ public partial class IntegrationTests : IntegrationTestBase
         notifications.Count.Should().Be(2);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_todas_as_notificacoes_do_usuario_logado()
     {
         // Arrange

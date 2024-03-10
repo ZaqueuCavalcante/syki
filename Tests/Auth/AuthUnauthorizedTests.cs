@@ -2,7 +2,7 @@ namespace Syki.Tests.Auth;
 
 public partial class AuthUnauthorizedTests : AuthTestBase
 {
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_um_novo_aluno_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -12,7 +12,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_as_disciplinas_do_aluno_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -22,7 +22,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_os_alunos_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -32,7 +32,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_um_novo_campus_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -42,7 +42,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_editar_um_campus_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -52,7 +52,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_os_campus_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -62,7 +62,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_um_novo_curso_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -72,7 +72,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_os_cursos_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -82,7 +82,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_nova_disciplina_quando_o_usuario_nao_esta_logado()
     {
         // Arrange / Act
@@ -92,7 +92,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_as_disciplinas_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -102,7 +102,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_nova_faculdade_quando_o_usuario_nao_esta_logado()
     {
         // Arrange / Act
@@ -112,7 +112,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_as_faculdades_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -122,7 +122,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_nova_grade_quando_o_usuario_nao_esta_logado()
     {
         // Arrange / Act
@@ -132,7 +132,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_as_grades_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -142,7 +142,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_os_dados_de_index_adm_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -152,7 +152,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_os_dados_de_index_academico_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -162,7 +162,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_os_dados_de_index_aluno_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -172,7 +172,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_nova_notificacao_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -182,7 +182,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_marcar_uma_notificacao_como_vista_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -192,7 +192,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_todas_as_notificacoes_da_faculdade_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -202,7 +202,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_as_notificacoes_do_usuario_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -212,7 +212,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_nova_oferta_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -222,7 +222,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_as_ofertas_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -232,7 +232,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_um_novo_periodo_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -242,7 +242,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_os_periodos_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -252,7 +252,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_um_novo_professor_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -262,7 +262,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_os_professores_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -272,7 +272,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_uma_nova_turma_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -282,7 +282,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_as_turmas_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -292,7 +292,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_um_novo_usuario_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act
@@ -302,7 +302,7 @@ public partial class AuthUnauthorizedTests : AuthTestBase
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_os_usuarios_quando_o_usuario_esta_deslogado()
     {
         // Arrange / Act

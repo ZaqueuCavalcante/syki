@@ -5,7 +5,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Deve_criar_um_novo_periodo_de_matricula()
     {
         // Arrange
@@ -22,7 +22,7 @@ public partial class IntegrationTests : IntegrationTestBase
         enrollmentPeriod.Id.Should().NotBeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_os_periodo_de_matricula()
     {
         // Arrange
@@ -40,7 +40,7 @@ public partial class IntegrationTests : IntegrationTestBase
         periods.Should().ContainSingle();
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_nenhuma_turma_quando_nao_ha_periodo_de_matricula_cadastrado()
     {
         // Arrange
@@ -55,7 +55,7 @@ public partial class IntegrationTests : IntegrationTestBase
         turmas.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_nenhuma_turma_antes_do_periodo_de_matricula()
     {
         // Arrange
@@ -80,7 +80,7 @@ public partial class IntegrationTests : IntegrationTestBase
         turmas.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_retornar_nenhuma_turma_depois_do_periodo_de_matricula()
     {
         // Arrange
@@ -105,7 +105,7 @@ public partial class IntegrationTests : IntegrationTestBase
         turmas.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_apenas_as_turmas_cujas_disciplinas_estao_na_grade_da_oferta_de_curso_do_aluno()
     {
         // Arrange

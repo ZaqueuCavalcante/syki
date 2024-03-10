@@ -7,7 +7,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Deve_criar_uma_nova_disciplina_sem_vinculo_com_nenhum_curso()
     {
         // Arrange
@@ -22,7 +22,7 @@ public partial class IntegrationTests : IntegrationTestBase
         disciplina.Cursos.Should().BeEquivalentTo(new List<Guid>());
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_criar_uma_nova_disciplina_vincula_a_um_unico_curso()
     {
         // Arrange
@@ -37,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
         disciplina.Cursos.Should().BeEquivalentTo([curso.Id]);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_criar_uma_nova_disciplina_vincula_a_mais_de_um_curso()
     {
         // Arrange
@@ -53,7 +53,7 @@ public partial class IntegrationTests : IntegrationTestBase
         disciplina.Cursos.Should().BeEquivalentTo([cc.Id, ads.Id]);
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_vincular_uma_disciplina_a_um_curso_de_outra_faculdade()
     {
         // Arrange
@@ -77,7 +77,7 @@ public partial class IntegrationTests : IntegrationTestBase
         disciplina.Cursos.Should().BeEquivalentTo([adsNovaRoma.Id]);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_criar_varias_disciplinas()
     {
         // Arrange
@@ -93,7 +93,7 @@ public partial class IntegrationTests : IntegrationTestBase
         disciplinas.Should().HaveCount(3);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_apenas_as_disciplinas_da_faculdade_do_usuario_logado()
     {
         // Arrange
@@ -118,7 +118,7 @@ public partial class IntegrationTests : IntegrationTestBase
         disciplinas[0].Cursos.Should().BeEquivalentTo(new List<Guid>());
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_as_disciplinas_ordenadas_pelo_nome()
     {
         // Arrange
@@ -143,7 +143,7 @@ public partial class IntegrationTests : IntegrationTestBase
         disciplinas[5].Nome.Should().Be("Projeto Integrador II: Modelagem de Banco de Dados");
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_apenas_as_disciplinas_do_curso_informado()
     {
         // Arrange

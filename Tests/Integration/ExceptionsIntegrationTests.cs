@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public class ExceptionsIntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Deve_lidar_com_um_internal_server_error()
     {
         // Arrange

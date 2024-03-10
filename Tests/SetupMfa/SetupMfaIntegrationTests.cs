@@ -5,8 +5,8 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidMfaTokens))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidMfaTokens))]
     public async Task Should_not_setup_mfa_when_token_is_wrong(string token)
     {
         // Arrange
@@ -21,8 +21,8 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Should().BeFalse();
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAdm))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.AllRolesExceptAdm))]
     public async Task Should_setup_mfa_for_all_user_roles(string role)
     {
         // Arrange

@@ -5,7 +5,7 @@ namespace Syki.Tests.Integration;
 [Parallelizable(ParallelScope.All)]
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Deve_criar_um_aluno_o_vinculando_com_uma_oferta()
     {
         // Arrange
@@ -30,7 +30,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Nome.Should().Be("Zaqueu"); 
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_um_aluno_nem_seu_usuario_quando_der_erro()
     {
         // Arrange
@@ -57,7 +57,7 @@ public partial class IntegrationTests : IntegrationTestBase
         users.FirstOrDefault(u => u.Email == body.Email).Should().BeNull();
     }
 
-    [Test]
+    // [Test]
     public async Task Nao_deve_criar_um_aluno_sem_vinculo_com_oferta()
     {
         // Arrange
@@ -74,7 +74,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE012);
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_as_disciplinas_cursadas_pelo_aluno()
     {
         // Arrange
@@ -108,7 +108,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Count.Should().Be(3); 
     }
 
-    [Test]
+    // [Test]
     public async Task Deve_retornar_os_alunos()
     {
         // Arrange

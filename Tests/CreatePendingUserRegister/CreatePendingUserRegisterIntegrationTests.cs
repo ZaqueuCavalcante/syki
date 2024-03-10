@@ -56,16 +56,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreatePendingUserRegister(email);
 
         // Assert
-        using var ctx = _factory.GetDbContext();
-        var emailFormat = $"%{email}%";
-        FormattableString sql = $@"
-            SELECT *
-            FROM syki.tasks
-            WHERE data LIKE {emailFormat}
-        ";
-        var tasks = await ctx.Database.SqlQuery<SykiTask>(sql).ToListAsync();
-        tasks.Should().ContainSingle();
-        typeof(SykiTask).Assembly.GetType(tasks[0].Type).Should().Be<SendUserRegisterEmailConfirmation>();
+        await AssertTaskByDataLike<SendUserRegisterEmailConfirmation>(email);
     }
 
     [Test]

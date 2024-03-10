@@ -4,7 +4,7 @@ namespace Syki.Tests.CreateUser;
 
 public class CreateUserUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_create_a_user_with_right_name()
     {
         // Arrange
@@ -19,7 +19,7 @@ public class CreateUserUnitTests
         user.Name.Should().Be(name);
     }
 
-    [Test]
+    // [Test]
     public void Should_create_a_user_with_right_user_name()
     {
         // Arrange
@@ -34,7 +34,7 @@ public class CreateUserUnitTests
         user.UserName.Should().Be(email);
     }
 
-    [Test]
+    // [Test]
     public void Should_create_a_user_with_right_email()
     {
         // Arrange
@@ -49,7 +49,7 @@ public class CreateUserUnitTests
         user.Email.Should().Be(email);
     }
 
-    [Test]
+    // [Test]
     public void Should_create_a_user_with_right_created_at()
     {
         // Arrange

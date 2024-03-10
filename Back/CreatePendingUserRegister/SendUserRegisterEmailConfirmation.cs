@@ -7,7 +7,8 @@ public class SendUserRegisterEmailConfirmation
     public string Email { get; set; }
 }
 
-public class SendUserRegisterEmailConfirmationHandler(SykiDbContext ctx, IEmailsService emailsService): ISykiTaskHandler<SendUserRegisterEmailConfirmation>
+public class SendUserRegisterEmailConfirmationHandler(SykiDbContext ctx, IEmailsService emailsService)
+    : ISykiTaskHandler<SendUserRegisterEmailConfirmation>
 {
     public async Task Handle(SendUserRegisterEmailConfirmation task)
     {

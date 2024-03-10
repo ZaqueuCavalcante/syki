@@ -9,10 +9,10 @@ public class CreatePendingUserRegisterService(SykiDbContext ctx)
         if (registerExists)
             Throw.DE017.Now();
 
-        var register = new UserRegister(data.Email);
+        var register = new UserRegister(email);
         ctx.Add(register);
 
-        ctx.Add(SykiTask.SendUserRegisterEmailConfirmation(register.Email));
+        ctx.Add(SykiTask.SendUserRegisterEmailConfirmation(email));
 
         await ctx.SaveChangesAsync();
     }

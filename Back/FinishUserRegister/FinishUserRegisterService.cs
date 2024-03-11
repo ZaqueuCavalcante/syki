@@ -1,5 +1,5 @@
-using Syki.Back.CreateInstitution;
 using Syki.Back.CreateUser;
+using Syki.Back.CreateInstitution;
 
 namespace Syki.Back.FinishUserRegister;
 

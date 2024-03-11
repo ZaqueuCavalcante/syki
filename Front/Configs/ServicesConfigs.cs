@@ -8,6 +8,8 @@ public static class ServicesConfigs
     {
         builder.Services.AddScoped<CreatePendingUserRegisterClient>();
         builder.Services.AddScoped<FinishUserRegisterClient>();
+        builder.Services.AddScoped<LoginClient>();
+        builder.Services.AddScoped<LoginMfaClient>();
         builder.Services.AddScoped<GetMfaKeyClient>();
         builder.Services.AddScoped<SetupMfaClient>();
 

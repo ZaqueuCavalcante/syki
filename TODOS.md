@@ -1,6 +1,12 @@
 # DONE
 
 - [X] CreatePendingUserRegister
+- [X] FinishUserRegister
+- [X] Login
+- [X] GetMfaKey
+- [X] SetupMfa
+- [X] LoginMfa
+
 
 
 
@@ -11,19 +17,14 @@
 - [] CreateCampus
 - [] CreateEnrollmentPeriod
 - [] CreateUser
-- [] FinishUserRegister
 - [] GenerateJWT
 - [] GetAcademicPeriods
 - [] GetCampi
 - [] GetCurrentEnrollmentPeriod
 - [] GetEnrollmentPeriods
-- [] GetMfaKey
-- [] Login
-- [] LoginMfa
 - [] LoginWithGoogle
 - [] ResetPassword
 - [] SendResetPasswordToken
-- [] SetupMfa
 - [] UpdateCampus
 - [] GetAcademicInsights
 - [] GetAlunoInsights

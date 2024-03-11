@@ -1,10 +1,9 @@
 namespace Syki.Back.SetupMfa;
 
-[ApiController]
+[ApiController, AuthBearer]
 [EnableRateLimiting("Small")]
 public class SetupMfaController(SetupMfaService service) : ControllerBase
 {
-    [AuthBearer]
     [HttpPost("mfa/setup")]
     public async Task<IActionResult> Setup([FromBody] SetupMfaIn data)
     {

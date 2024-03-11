@@ -1,95 +1,80 @@
-using static Syki.Back.Configs.AuthorizationConfigs;
-
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    // [Test]
+    [Test]
     public async Task Should_not_login_random_user()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var data = new LoginIn { Email = "academico@novaroma.com", Password = "Academico@123" };
+        var client = _factory.GetClient();
+        var email = "academico@novaroma.com";
+        var password = "Academico@123";
 
         // Act
-        var result = await client.PostAsync<LoginOut>("/login", data);
+        var result = await client.Login(email, password);
 
         // Assert
         result.WrongEmailOrPassword.Should().BeTrue();
     }
 
-    // [Test]
+    [Test]
     public async Task Should_not_login_user_with_wrong_email()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var institution = await client.CreateInstitution();
-        var user = CreateUserIn.New(institution.Id, Academico);
-        await client.RegisterUser(user);
-
-        var data = new LoginIn { Email = user.Email + "1", Password = user.Password };
+        var client = _factory.GetClient();
+        var user = await client.RegisterUser(_factory);
 
         // Act
-        var result = await client.PostAsync<LoginOut>("/login", data);
+        var result = await client.Login(user.Email + "1", user.Password);
 
         // Assert
         result.WrongEmailOrPassword.Should().BeTrue();
     }
 
-    // [Test]
+    [Test]
     public async Task Should_not_login_user_with_wrong_password()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var institution = await client.CreateInstitution();
-        var user = CreateUserIn.New(institution.Id, Academico);
-        await client.RegisterUser(user);
-
-        var data = new LoginIn { Email = user.Email, Password = user.Password + "1" };
+        var client = _factory.GetClient();
+        var user = await client.RegisterUser(_factory);
 
         // Act
-        var result = await client.PostAsync<LoginOut>("/login", data);
+        var result = await client.Login(user.Email, user.Password + "1");
 
         // Assert
         result.WrongEmailOrPassword.Should().BeTrue();
     }
 
-    // [Test]
-    public async Task Should_login_user_without_mfa()
+    [Test]
+    public async Task Should_login()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var institution = await client.CreateInstitution();
-        var user = CreateUserIn.New(institution.Id, Academico);
-        await client.RegisterUser(user);
-
-        var data = new LoginIn { Email = user.Email, Password = user.Password };
+        var client = _factory.GetClient();
+        var user = await client.RegisterUser(_factory);
 
         // Act
-        var response = await client.PostAsync<LoginOut>("/login", data);
+        var result = await client.Login(user.Email, user.Password);
 
         // Assert
-        response.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+        result.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
     }
 
-    // [Test]
+    [Test]
     public async Task Should_not_login_user_with_correct_email_and_password_but_needs_mfa()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution();
-        var user = await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = _factory.GetClient();
+        var user = await client.RegisterUser(_factory);
+        await client.Login(user.Email, user.Password);
 
-        var keyResponse = await client.GetAsync<GetMfaKeyOut>("/mfa/key");
+        var keyResponse = await client.GetMfaKey();
         var token = keyResponse.Key.ToMfaToken();
-        await client.PostAsync<SetupMfaOut>("/mfa/setup", new SetupMfaIn { Token = token });
+        await client.SetupMfa(token);
 
         client.RemoveAuthToken();
 
-        var data = new LoginIn { Email = user.Email, Password = user.Password };
-
         // Act
-        var result = await client.PostAsync<LoginOut>("/login", data);
+        var result = await client.Login(user.Email, user.Password);
 
         // Assert
         result.RequiresTwoFactor.Should().BeTrue();

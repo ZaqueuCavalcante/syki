@@ -40,8 +40,8 @@
 </MudContainer>
 
 @inject ISnackbar Snackbar
+@inject LoginClient Client
 @inject NavigationManager Nav
-@inject AuthService AuthService
 
 @code
 {
@@ -55,7 +55,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var result = await AuthService.Login(_model.Email, _model.Password);
+        var result = await Client.Login(_model.Email, _model.Password);
         if (result.AccessToken != null)
         {
             Nav.NavigateTo("/");

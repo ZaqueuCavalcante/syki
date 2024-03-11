@@ -5,6 +5,10 @@ using Syki.Front.CreateAcademicPeriod;
 using Syki.Front.CreateEnrollmentPeriod;
 using Syki.Front.CreatePendingUserRegister;
 using static Syki.Back.Configs.AuthorizationConfigs;
+using Syki.Front.Login;
+using Syki.Tests.Mock;
+using Syki.Front.Auth;
+using Syki.Front.LoginMfa;
 
 namespace Syki.Tests.Base;
 
@@ -22,6 +26,31 @@ public static class HttpClientExtensions
         return await client.Finish(token, password);
     }
 
+    public static async Task<CreateUserOut> RegisterUser(this HttpClient client, BackWebApplicationFactory factory)
+    {
+        var email = TestData.Email;
+        var password = "Lalala@123";
+
+        await client.CreatePendingUserRegister(email);
+        var token = await factory.GetRegisterSetupToken(email);
+
+        await client.FinishUserRegister(token!, password);
+
+        return new CreateUserOut { Email = email, Password = password };
+    }
+
+    public static async Task<LoginOut> Login(this HttpClient http, string email, string password)
+    {
+        var storage=  new LocalStorageServiceMock();
+        var client = new LoginClient(http, storage, new SykiAuthStateProvider(storage));
+        var response = await client.Login(email, password);
+
+        http.RemoveAuthToken();
+        http.AddAuthToken(response.AccessToken);
+
+        return response;
+    }
+
     public static async Task<GetMfaKeyOut> GetMfaKey(this HttpClient http)
     {
         var client = new GetMfaKeyClient(http);
@@ -33,6 +62,35 @@ public static class HttpClientExtensions
         var client = new SetupMfaClient(http);
         return await client.Setup(code);
     }
+
+    public static async Task<LoginMfaOut> LoginMfa(this HttpClient http, string code)
+    {
+        var storage=  new LocalStorageServiceMock();
+        var client = new LoginMfaClient(http, storage, new SykiAuthStateProvider(storage));
+        var response = await client.Login(code);
+
+        http.RemoveAuthToken();
+        http.AddAuthToken(response.AccessToken);
+
+        return response;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static async Task<AcademicPeriodOut> CreateAcademicPeriod(this HttpClient http, string id)
     {
@@ -82,6 +140,7 @@ public static class HttpClientExtensions
 
 
 
+
     public static async Task<CreateUserOut> RegisterUser(this HttpClient client, CreateUserIn body)
     {
         var response = await client.PostHttpAsync("/users", body);
@@ -94,17 +153,6 @@ public static class HttpClientExtensions
         var userNovaRoma = CreateUserIn.New(novaRoma.Id, Academico);
         await client.RegisterUser(userNovaRoma);
         return userNovaRoma;
-    }
-
-    public static async Task<string> Login(this HttpClient client, string email, string password)
-    {
-        var data = new LoginIn { Email = email, Password = password };
-        var response = await client.PostAsync<LoginOut>("/login", data);
-
-        client.RemoveAuthToken();
-        client.AddAuthToken(response.AccessToken);
-
-        return response.AccessToken;
     }
 
     public static async Task LoginAsAdm(this HttpClient client)

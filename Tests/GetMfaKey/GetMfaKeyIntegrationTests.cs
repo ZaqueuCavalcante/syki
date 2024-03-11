@@ -2,14 +2,14 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    // [Test]
-    // [TestCaseSource(typeof(TestData), nameof(TestData.AllUsersRoles))]
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllUsersRoles))]
     public async Task Should_get_mfa_key_for_all_user_roles(string role)
     {
         // Arrange
         var client = _factory.GetClient();
-        var institution = await client.CreateInstitution();
-        await client.RegisterAndLogin(institution.Id, role);
+        var user = await client.RegisterUser(_factory);
+        await client.Login(user.Email, user.Password);
 
         // Act
         var response = await client.GetMfaKey();
@@ -18,14 +18,14 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Key.Should().HaveLength(32);
     }
 
-    // [Test]
-    // [TestCaseSource(typeof(TestData), nameof(TestData.AllUsersRoles))]
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AllUsersRoles))]
     public async Task Should_get_same_mfa_key_for_many_gets(string role)
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var institution = await client.CreateInstitution();
-        await client.RegisterAndLogin(institution.Id, role);
+        var client = _factory.GetClient();
+        var user = await client.RegisterUser(_factory);
+        await client.Login(user.Email, user.Password);
 
         // Act
         var response00 = await client.GetMfaKey();

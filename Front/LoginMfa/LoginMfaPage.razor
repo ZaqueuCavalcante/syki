@@ -44,8 +44,8 @@
     </MudCard>
 </MudContainer>
 
+@inject LoginMfaClient Client
 @inject NavigationManager Nav
-@inject AuthService AuthService
 
 @code
 {
@@ -62,7 +62,7 @@
         if (_code.Length == 7)
         {
             _loading = true;
-            var result = await AuthService.LoginMfa(_code);
+            var result = await Client.Login(_code);
 
             if (result.AccessToken != null)
             {

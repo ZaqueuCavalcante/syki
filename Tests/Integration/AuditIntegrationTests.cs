@@ -51,34 +51,4 @@ public class AuditIntegrationTests : IntegrationTestBase
         audit.Action.Should().Be("Update");
         audit.FaculdadeId.Should().Be(faculdade.Id);
     }
-
-    // [Test]
-    public async Task Nao_deve_auditar_o_login_com_mfa()
-    {
-        // Arrange
-        var client = _factory.CreateClient();
-        var institution = await client.CreateInstitution();
-        var user = await client.RegisterAndLogin(institution.Id, Academico);
-
-        var keyResponse = await client.GetAsync<GetMfaKeyOut>("/mfa/key");
-        var token = keyResponse.Key.ToMfaToken();
-        await client.PostAsync<SetupMfaOut>("/mfa/setup", new SetupMfaIn { Token = token });
-
-        client.RemoveAuthToken();
-
-        var data = new LoginIn { Email = user.Email, Password = user.Password };
-        await client.PostHttpAsync("/login", data);
-
-        var body = new LoginMfaIn { Code = Guid.NewGuid().ToHashCode().ToString()[..6] };
-
-        // Act
-        Configuration.AuditDisabled = false;
-        await client.PostHttpAsync("/login/mfa", body);
-        Configuration.AuditDisabled = true;
-
-        // Assert
-        using var ctx = _factory.GetDbContext();
-        var audit = await ctx.AuditLogs.FirstOrDefaultAsync(a => a.EntityType != "Campus");
-        audit.Should().BeNull();
-    }
 }

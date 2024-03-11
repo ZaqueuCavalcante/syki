@@ -16,7 +16,7 @@ public class SetupPassword
         Validation.HasNumbers = Password.IndexOfAny(Numbers.ToCharArray()) >= 0;
         Validation.HasLower = Password.IndexOfAny(Lowers.ToCharArray()) >= 0;
         Validation.HasUpper = Password.IndexOfAny(Uppers.ToCharArray()) >= 0;
-        Validation.HasLength = Password.Length >= 16;
+        Validation.HasLength = Password.Length >= 8;
         Validation.HasNonAlphanumeric = Password.IndexOfAny(NonAlphanumeric.ToCharArray()) >= 0;
     }
 

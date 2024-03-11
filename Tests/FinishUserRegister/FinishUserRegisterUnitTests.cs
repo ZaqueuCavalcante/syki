@@ -5,7 +5,7 @@ namespace Syki.Tests.FinishUserRegister;
 
 public class FinishUserRegisterUnitTests
 {
-    // [Test]
+    [Test]
     public void Should_set_start_date()
     {
         // Arrange
@@ -18,7 +18,7 @@ public class FinishUserRegisterUnitTests
         demo.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
     }
 
-    // [Test]
+    [Test]
     public void Should_set_end_date()
     {
         // Arrange
@@ -31,7 +31,7 @@ public class FinishUserRegisterUnitTests
         demo.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
     }
 
-    // [Test]
+    [Test]
     public void Should_return_error_when_register_is_already_done()
     {
         // Arrange
@@ -45,7 +45,7 @@ public class FinishUserRegisterUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE025);
     }
 
-    // [Test]
+    [Test]
     public void Should_return_a_new_user_in_academico()
     {
         // Arrange
@@ -64,8 +64,8 @@ public class FinishUserRegisterUnitTests
         user.Role.Should().Be("Academico");
     }
 
-    // [Test]
-    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
     public void Should_return_false_when_password_is_invalid(string password)
     {
         // Arrange

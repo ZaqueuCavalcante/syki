@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    // [Test]
+    [Test]
     public async Task Should_finish_user_register()
     {
         // Arrange
@@ -15,14 +15,14 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await _factory.GetRegisterSetupToken(email);
 
         // Act
-        var response = await client.FinishUserRegister(token!, "Lalala@123Lalala@123");
+        var response = await client.FinishUserRegister(token!, "Lalala@123");
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
-    // [Test]
-    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidUserRegisterTokens))]
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidUserRegisterTokens))]
     public async Task Should_not_finish_user_register_with_a_invalid_token(string token)
     {
         // Arrange
@@ -30,13 +30,13 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreatePendingUserRegister(TestData.Email);
 
         // Act
-        var response = await client.FinishUserRegister(token, "Lalala@123Lalala@123");
+        var response = await client.FinishUserRegister(token, "Lalala@123");
 
         // Assert
         await response.AssertBadRequest(Throw.DE024);
     }
 
-    // [Test]
+    [Test]
     public async Task Should_not_register_user_twice()
     {
         // Arrange
@@ -46,17 +46,17 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreatePendingUserRegister(email);
 
         var token = await _factory.GetRegisterSetupToken(email);
-        await client.FinishUserRegister(token!, "Lalala@123Lalala@123");
+        await client.FinishUserRegister(token!, "Lalala@123");
 
         // Act
-        var response = await client.FinishUserRegister(token!, "Lalala@123Lalala@123");
+        var response = await client.FinishUserRegister(token!, "Lalala@123");
 
         // Assert
         await response.AssertBadRequest(Throw.DE025);
     }
 
-    // [Test]
-    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
     public async Task Should_not_register_user_with_a_invalid_password(string password)
     {
         // Arrange
@@ -73,7 +73,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE015);
     }
 
-    // [Test]
+    [Test]
     public async Task Should_create_a_institution_on_user_register()
     {
         // Arrange
@@ -84,7 +84,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await _factory.GetRegisterSetupToken(email);
 
         // Act
-        var response = await client.FinishUserRegister(token!, "Lalala@123Lalala@123");
+        var response = await client.FinishUserRegister(token!, "Lalala@123");
 
         // Assert
         using var ctx = _factory.GetDbContext();
@@ -103,7 +103,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await _factory.GetRegisterSetupToken(email);
 
         // Act
-        var response = await client.FinishUserRegister(token!, "Lalala@123Lalala@123");
+        var response = await client.FinishUserRegister(token!, "Lalala@123");
 
         // Assert
         using var ctx = _factory.GetDbContext();
@@ -111,7 +111,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await AssertTaskByDataLike<SeedInstitutionData>(institution.Id.ToString());
     }
 
-    // [Test]
+    [Test]
     public async Task Should_register_user_with_academico_role()
     {
         // Arrange
@@ -122,7 +122,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await _factory.GetRegisterSetupToken(email);
 
         // Act
-        var response = await client.FinishUserRegister(token!, "Lalala@123Lalala@123");
+        var response = await client.FinishUserRegister(token!, "Lalala@123");
 
         // Assert
         using var ctx = _factory.GetDbContext();

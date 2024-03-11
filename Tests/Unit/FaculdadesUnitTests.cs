@@ -4,7 +4,7 @@ namespace Syki.Tests.Unit;
 
 public class FaculdadesUnitTests
 {
-    // [Test]
+    [Test]
     public void Deve_criar_uma_faculdade_com_id()
     {
         // Arrange
@@ -17,7 +17,7 @@ public class FaculdadesUnitTests
         faculdade.Id.Should().NotBeEmpty();
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_uma_faculdade_com_nome_correto()
     {
         // Arrange
@@ -30,7 +30,7 @@ public class FaculdadesUnitTests
         faculdade.Nome.Should().Be(nome);
     }
 
-    // [Test]
+    [Test]
     public void Deve_converter_o_aluno_corretamente_pro_out()
     {
         // Arrange
@@ -44,7 +44,7 @@ public class FaculdadesUnitTests
         faculdadeOut.Nome.Should().Be(faculdade.Nome);
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_o_nome_da_faculdade_como_to_string()
     {
         // Arrange

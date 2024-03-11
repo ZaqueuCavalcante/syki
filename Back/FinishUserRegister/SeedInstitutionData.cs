@@ -1,9 +1,9 @@
 using Syki.Back.CreateCurso;
 using Syki.Back.CreateCampus;
-using Syki.Back.CreateProfessor;
-using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.CreateOferta;
+using Syki.Back.CreateProfessor;
 using Syki.Back.CreateDisciplina;
+using Syki.Back.CreateAcademicPeriod;
 
 namespace Syki.Back.FinishUserRegister;
 

@@ -1,7 +1,3 @@
-using Syki.Shared;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
 using static Syki.Shared.TipoDeCurso;
 
 namespace Syki.Tests.Integration;

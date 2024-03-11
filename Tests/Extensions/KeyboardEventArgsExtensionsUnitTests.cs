@@ -1,13 +1,11 @@
 using Syki.Front;
-using NUnit.Framework;
-using FluentAssertions;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace Syki.Tests.Unit;
 
 public class KeyboardEventArgsExtensionsUnitTests
 {
-    // [Test]
+    [Test]
     public void Shoud_return_true_when_enter_key_is_pressed()
     {
         // Arrange
@@ -20,7 +18,7 @@ public class KeyboardEventArgsExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    // [Test]
+    [Test]
     public void Shoud_return_false_when_enter_key_is_not_pressed()
     {
         // Arrange

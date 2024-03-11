@@ -1,17 +1,12 @@
-using System.Net;
-using Syki.Tests.Base;
-using NUnit.Framework;
-using FluentAssertions;
-
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    // [Test]
+    [Test]
     public async Task Deve_redirecionar_pro_swagger()
     {
         // Arrange
-        var client = _factory.CreateClient();
+        var client = _factory.GetClient();
 
         // Act
         var response = await client.GetAsync("/");

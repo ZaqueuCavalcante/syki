@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class IndexAcademicoOut
+public class AcademicInsightsOut
 {
     public int Campus { get; set; }
     public int Cursos { get; set; }

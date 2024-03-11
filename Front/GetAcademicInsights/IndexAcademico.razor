@@ -5,33 +5,33 @@
     </MudText>
     <MudAlert Class="mt-4" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudStack Row="true" Justify="Justify.SpaceAround">
-            <MudText>Aqui você encontra dados consolidados sobre todo o sistema, atualizados em tempo real!</MudText>
+            <MudText>Aqui você encontra dados consolidados sobre a sua faculdade, atualizados em tempo real!</MudText>
         </MudStack>
     </MudAlert>
     <MudGrid Class="mt-4">
-        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.School" Value="_data.Faculdades" Text="Faculdades" />
-        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.People" Value="_data.Users" Text="Usuários" />
         <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.GroupWork" Value="_data.Campus" Text="Campus" />
         <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.Class" Value="_data.Cursos" Text="Cursos" />
         <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.Apps" Value="_data.Disciplinas" Text="Disciplinas" />
         <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.AccountTree" Value="_data.Grades" Text="Grades" />
         <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.PlaylistAddCheck" Value="_data.Ofertas" Text="Ofertas" />
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.CenterFocusStrong" Value="_data.Turmas" Text="Turmas" />
         <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.Person4" Value="_data.Professores" Text="Professores" />
         <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.People" Value="_data.Alunos" Text="Alunos" />
+        <IndexCard Loading="_loading" Icon="@Icons.Material.Filled.NotificationsNone" Value="_data.Notifications" Text="Notificações" />
     </MudGrid>
 </MudContainer>
 
-@inject HttpClient Http
+@inject GetAcademicInsightsClient Client
 
 @code
 {
     private bool _loading;
-    private IndexAdmOut _data = new();
+    private AcademicInsightsOut _data = new();
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _data = await Http.GetFromJsonAsync<IndexAdmOut>("/index/adm") ?? new();
+        _data = await Client.Get();
         _loading = false;
     }
 }

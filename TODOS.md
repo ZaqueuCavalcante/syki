@@ -6,7 +6,9 @@
 - [X] GetMfaKey
 - [X] SetupMfa
 - [X] LoginMfa
-
+- [X] GetAcademicInsights
+- [X] GetAlunoInsights
+- [X] GetAdmInsights
 
 
 
@@ -26,9 +28,6 @@
 - [] ResetPassword
 - [] SendResetPasswordToken
 - [] UpdateCampus
-- [] GetAcademicInsights
-- [] GetAlunoInsights
-- [] GetAdmInsights
 - [] UpdateCampus
 - [] GetAlunoAgenda
 - [] CreateCurso

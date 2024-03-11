@@ -6,7 +6,7 @@ namespace Syki.Tests.Unit;
 
 public class UserExtensionsUnitTests
 {
-    // [Test]
+    [Test]
     public void Shoud_get_user_id()
     {
         // Arrange
@@ -21,7 +21,7 @@ public class UserExtensionsUnitTests
         result.Should().Be(userIdClaim.Value);
     }
 
-    // [Test]
+    [Test]
     public void Shoud_get_user_fauldade_id()
     {
         // Arrange
@@ -36,8 +36,8 @@ public class UserExtensionsUnitTests
         result.Should().Be(faculdadeIdClaim.Value);
     }
 
-    // [Test]
-    // [TestCaseSource(typeof(TestData), nameof(TestData.AuditPaths))]
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.AuditPaths))]
     public void Shoud_return_if_path_is_login((PathString path, bool isAuditable) data)
     {
         // Arrange / Act

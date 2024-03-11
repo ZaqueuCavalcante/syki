@@ -264,7 +264,7 @@ public static class TestData
             ("/campi", true),
             ("/cursos", true),
             ("/login", false),
-            ("/mfa/login", false),
+            ("/login/mfa", false),
             ("/reset-password", false),
         })
         {

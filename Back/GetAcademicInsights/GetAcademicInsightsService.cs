@@ -5,7 +5,7 @@ namespace Syki.Back.GetAcademicInsights;
 
 public class GetAcademicInsightsService(DatabaseSettings settings)
 {
-    public async Task<IndexAcademicoOut> Get(Guid institutionId)
+    public async Task<AcademicInsightsOut> Get(Guid institutionId)
     {
         using var connection = new NpgsqlConnection(settings.ConnectionString);
 
@@ -28,6 +28,6 @@ public class GetAcademicInsightsService(DatabaseSettings settings)
 
         var parameters = new { Facul = institutionId };
 
-        return await connection.QueryFirstAsync<IndexAcademicoOut>(sql, parameters);
+        return await connection.QueryFirstAsync<AcademicInsightsOut>(sql, parameters);
     }
 }

@@ -20,12 +20,10 @@ public class LoginWithGoogleController(LoginWithGoogleService service) : Control
 
     [HttpGet("login/google/callback")]
     [Authorize(AuthenticationSchemes = "Cookie")]
-    public async Task<IActionResult> LoginWithGoogleCallback()
+    public async Task<IActionResult> LoginWithGoogleCallback([FromServices] EmailSettings settings)
     {
         var token = await service.Login(User.Email());
 
-        // Get from settings
-
-        return Redirect($"https://localhost:6001/login-oauth?token={token.AccessToken}");
+        return Redirect($"{settings.FrontUrl}/login-oauth?token={token.AccessToken}");
     }
 }

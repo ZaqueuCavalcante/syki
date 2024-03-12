@@ -23,8 +23,8 @@ public static class UserExtensions
     {
         return
             path != "/login" &&
-            path != "/login-with-google" &&
             path != "/login/mfa" &&
+            path != "/login/google/callback" &&
             path != "/reset-password" &&
             path != "/user-register" &&
             path != "/reset-password-token" &&

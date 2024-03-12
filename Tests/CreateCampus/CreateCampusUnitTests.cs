@@ -4,7 +4,7 @@ namespace Syki.Tests.CreateCampus;
 
 public class CreateCampusUnitTests
 {
-    // [Test]
+    [Test]
     public void Deve_criar_um_campus_com_id()
     {
         // Arrange
@@ -17,7 +17,7 @@ public class CreateCampusUnitTests
         campus.Id.Should().NotBeEmpty();
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_um_campus_com_faculdade_id_correto()
     {
         // Arrange
@@ -30,7 +30,7 @@ public class CreateCampusUnitTests
         campus.InstitutionId.Should().Be(faculdadeId);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_um_campus_com_nome_correto()
     {
         // Arrange
@@ -44,7 +44,7 @@ public class CreateCampusUnitTests
         campus.Name.Should().Be(nome);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_um_campus_com_cidade_correta()
     {
         // Arrange
@@ -58,7 +58,7 @@ public class CreateCampusUnitTests
         campus.City.Should().Be(cidade);
     }
 
-    // [Test]
+    [Test]
     public void Deve_converter_o_campus_corretamente_pro_out()
     {
         // Arrange

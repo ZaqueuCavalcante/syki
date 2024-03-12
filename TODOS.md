@@ -11,16 +11,14 @@
 - [X] GetAdmInsights
 - [X] ResetPassword
 - [X] SendResetPasswordToken
+- [X] LoginWithGoogle
 
-
-- [] LoginWithGoogle
-
+- [X] CreateCampus
 
 # TODO
 
 - [] CreateAcademicPeriod
 - [] CreateAluno
-- [] CreateCampus
 - [] CreateEnrollmentPeriod
 - [] CreateUser
 - [] GenerateJWT

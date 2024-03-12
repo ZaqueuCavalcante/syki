@@ -11,6 +11,7 @@ using Syki.Front.Auth;
 using Syki.Front.LoginMfa;
 using Syki.Front.SendResetPasswordToken;
 using Syki.Front.ResetPassword;
+using Syki.Front.CreateCampus;
 
 namespace Syki.Tests.Base;
 
@@ -37,8 +38,6 @@ public static class HttpClientExtensions
         var token = await factory.GetRegisterSetupToken(email);
 
         await client.FinishUserRegister(token!, password);
-
-        
 
         return new CreateUserOut { Email = email, Password = password };
     }
@@ -91,7 +90,12 @@ public static class HttpClientExtensions
         return await client.Reset(token, password);
     }
 
-
+    public static async Task<CampusOut> CreateCampus(this HttpClient http, string name = "Agreste I", string city = "Caruaru - PE")
+    {
+        var client = new CreateCampusClient(http);
+        var response = await client.Create(name, city);
+        return await response.DeserializeTo<CampusOut>();
+    }
 
 
 
@@ -202,14 +206,7 @@ public static class HttpClientExtensions
         return null!;
     }
 
-    public static async Task<CampusOut> NewCampus(
-        this HttpClient client,
-        string name = "Agreste I",
-        string city = "Caruaru - PE"
-    ) {
-        var body = new CreateCampusIn { Name = name, City = city };
-        return await client.PostAsync<CampusOut>("/campi", body);
-    }
+
 
     public static async Task<CursoOut> NewCurso(
         this HttpClient client,

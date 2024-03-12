@@ -7,9 +7,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_mfa_key_for_all_user_roles(string role)
     {
         // Arrange
-        var client = _factory.GetClient();
-        var user = await client.RegisterUser(_factory);
-        await client.Login(user.Email, user.Password);
+        var client = await _factory.LoggedAsAcademico();
 
         // Act
         var response = await client.GetMfaKey();
@@ -23,9 +21,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_same_mfa_key_for_many_gets(string role)
     {
         // Arrange
-        var client = _factory.GetClient();
-        var user = await client.RegisterUser(_factory);
-        await client.Login(user.Email, user.Password);
+        var client = await _factory.LoggedAsAcademico();
 
         // Act
         var response00 = await client.GetMfaKey();

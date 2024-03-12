@@ -19,9 +19,9 @@ public static class BackWebApplicationFactoryExtensions
 
     public static async Task<HttpClient> LoggedAsAcademico(this BackWebApplicationFactory factory)
     {
-        var client = factory.CreateClient();
-        var faculdade = await client.CreateInstitution();
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = factory.GetClient();
+        var user = await client.RegisterUser(factory);
+        await client.Login(user.Email, user.Password);
         return client;
     }
 

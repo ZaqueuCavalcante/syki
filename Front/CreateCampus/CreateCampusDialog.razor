@@ -1,22 +1,22 @@
 <MudDialog Class="pb-2">
     <TitleContent>
-        <SykiDialogTitle Text="Novo Campus" />
+        <SykiDialogTitle Text="Campus" />
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="_form">
-            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="_data.Name" OnKeyDown="Submit" />
-            <SykiTextField Label="Cidade" @bind-Value="_data.City" OnKeyDown="Submit" />
+        <MudForm @ref="@_form">
+            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" OnKeyDown="@Submit" />
+            <SykiTextField Label="Cidade" @bind-Value="@_city" OnKeyDown="@Submit" />
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="Cancel" />
-        <DialogProgressCircular Loading="_loading" />
-        <DialogSaveButton OnClick="Submit" />
+        <DialogCancelButton OnClick="@Cancel" />
+        <DialogProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject CreateCampusClient Client
 
 @code
 {
@@ -25,7 +25,8 @@
 
     private MudForm _form;
     private bool _loading;
-    private CreateCampusIn _data = new();
+    private string _name;
+    private string _city;
 
     async Task Submit()
     {
@@ -35,7 +36,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/campi", _data);
+        var response = await Client.Create(_name, _city);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

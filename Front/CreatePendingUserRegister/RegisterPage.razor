@@ -65,7 +65,7 @@
 
     private string GetGoogleUrl()
     {
-        return builder.HostEnvironment.IsDevelopment() ?
+        return Env.IsDevelopment() ?
             "https://localhost:5001/login/google" : "https://syki-api.zaqbit.com/login/google";
     }
 

@@ -21,8 +21,8 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _factory.LoggedAsAcademico();
 
-        await client.NewCampus("Agreste I", "Caruaru - PE");
-        await client.NewCampus("Suassuna I", "Recife - PE");
+        await client.CreateCampus("Agreste I", "Caruaru - PE");
+        await client.CreateCampus("Suassuna I", "Recife - PE");
 
         // Act
         var campi = await client.GetAsync<List<GetCampusOut>>("/campi");
@@ -40,10 +40,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var userUfpe = await client.NewAcademico("UFPE");
 
         await client.Login(userNovaRoma);
-        await client.NewCampus("Agreste I", "Caruaru - PE");
+        await client.CreateCampus("Agreste I", "Caruaru - PE");
 
         await client.Login(userUfpe);
-        await client.NewCampus("Suassuna I", "Recife - PE");
+        await client.CreateCampus("Suassuna I", "Recife - PE");
 
         // Act
         await client.Login(userNovaRoma);

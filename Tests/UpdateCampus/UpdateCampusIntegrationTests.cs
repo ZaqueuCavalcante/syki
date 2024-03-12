@@ -8,7 +8,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _factory.LoggedAsAcademico();
 
-        var campus = await client.NewCampus("Agreste I", "Caruaru - PE");
+        var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var body = new UpdateCampusIn { Id = campus.Id, Name = "Agreste II", City = "Bonito - PE" };
 
         // Act

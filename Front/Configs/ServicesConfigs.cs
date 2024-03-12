@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-
 namespace Syki.Front.Configs;
 
 public static class ServicesConfigs
@@ -14,6 +12,9 @@ public static class ServicesConfigs
         builder.Services.AddScoped<SetupMfaClient>();
         builder.Services.AddScoped<SendResetPasswordTokenClient>();
         builder.Services.AddScoped<ResetPasswordClient>();
+        builder.Services.AddScoped<GetAcademicInsightsClient>();
+
+        builder.Services.AddScoped<CreateCampusClient>();
 
         builder.Services.AddScoped<CreateAcademicPeriodClient>();
         builder.Services.AddScoped<GetAcademicPeriodsClient>();

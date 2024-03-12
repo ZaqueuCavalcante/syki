@@ -67,7 +67,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true,
         };
-        var dialog = await DialogService.ShowAsync<NewCampusDialog>("", options);
+        var dialog = await DialogService.ShowAsync<CreateCampusDialog>("", options);
 
         var result = await dialog.Result;
 

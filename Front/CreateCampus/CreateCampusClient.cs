@@ -1,4 +1,4 @@
-namespace Syki.Front.CreateCampus;
+namespace Front.CreateCampus;
 
 public class CreateCampusClient(HttpClient http)
 {

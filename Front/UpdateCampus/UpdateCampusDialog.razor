@@ -3,20 +3,20 @@
         <SykiDialogTitle Text="Editar Campus" />
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="_form">
-            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@Campus.Name" OnKeyDown="Submit" />
-            <SykiTextField Label="Cidade" @bind-Value="@Campus.City" OnKeyDown="Submit" />
+        <MudForm @ref="@_form">
+            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@Campus.Name" OnKeyDown="@Submit" />
+            <SykiTextField Label="Cidade" @bind-Value="@Campus.City" OnKeyDown="@Submit" />
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="Cancel" />
-        <DialogProgressCircular Loading="_loading" />
-        <DialogSaveButton OnClick="Submit" />
+        <DialogCancelButton OnClick="@Cancel" />
+        <DialogProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject UpdateCampusClient Client
 
 @code
 {
@@ -37,7 +37,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Http.PutAsJsonAsync("/campi", Campus);
+        var response = await Client.Update(Campus.Id, Campus.Name, Campus.City);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

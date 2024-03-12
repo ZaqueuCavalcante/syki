@@ -4,8 +4,8 @@
 <PageTitle>Campi</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.GroupWork" Title="Campi" ButtonText="Novo Campus" OnClick="OpenDialog"/>
-    <SykiPageAlert Text="Você pode escolher um dos campus abaixo para que o sistema filtre informações apenas relacionadas à ele." />
+    <SykiPageHeader Icon="@Icons.Material.Filled.GroupWork" Title="Campi" ButtonText="Campus" OnClick="@OpenDialog"/>
+    <SykiPageAlert Text="Sua instituição pode ser formada por vários campus/filiais." />
 
     <MudContainer Class="mb-8">
         <MudDataGrid
@@ -16,11 +16,11 @@
             Dense="true"
             Hover="true"
             ReadOnly="true"
-            Loading="_loading"
+            Loading="@_loading"
             RowsPerPage="10"
         >
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="_searchString" Placeholder="Busque por nome ou cidade" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou cidade" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
@@ -78,14 +78,14 @@
 
     private async Task OpenEditDialog(CampusOut item)
     {
-        var parameters = new DialogParameters<EditCampusDialog>();
+        var parameters = new DialogParameters<UpdateCampusDialog>();
         parameters.Add(x => x.Campus, item);
 
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Small,
             FullWidth = true,
         };
-        var dialog = await DialogService.ShowAsync<EditCampusDialog>("", parameters, options);
+        var dialog = await DialogService.ShowAsync<UpdateCampusDialog>("", parameters, options);
 
         var result = await dialog.Result;
 

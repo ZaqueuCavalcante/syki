@@ -12,8 +12,10 @@
 - [X] ResetPassword
 - [X] SendResetPasswordToken
 - [X] LoginWithGoogle
-
 - [X] CreateCampus
+- [X] UpdateCampus
+
+
 
 # TODO
 
@@ -26,7 +28,6 @@
 - [] GetCampi
 - [] GetCurrentEnrollmentPeriod
 - [] GetEnrollmentPeriods
-- [] UpdateCampus
 - [] UpdateCampus
 - [] GetAlunoAgenda
 - [] CreateCurso

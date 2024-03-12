@@ -11,7 +11,8 @@ using Syki.Front.Auth;
 using Syki.Front.LoginMfa;
 using Syki.Front.SendResetPasswordToken;
 using Syki.Front.ResetPassword;
-using Syki.Front.CreateCampus;
+using Front.CreateCampus;
+using Front.UpdateCampus;
 
 namespace Syki.Tests.Base;
 
@@ -97,8 +98,12 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<CampusOut>();
     }
 
-
-
+    public static async Task<CampusOut> UpdateCampus(this HttpClient http, Guid id, string name = "Agreste I", string city = "Caruaru - PE")
+    {
+        var client = new UpdateCampusClient(http);
+        var response = await client.Update(id, name, city);
+        return await response.DeserializeTo<CampusOut>();
+    }
 
 
 

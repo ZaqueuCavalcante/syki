@@ -1,7 +1,7 @@
 using Syki.Back.CreateUser;
 using Syki.Back.GenerateJWT;
-using Syki.Back.CreatePendingUserRegister;
 using Syki.Back.CreateInstitution;
+using Syki.Back.CreatePendingUserRegister;
 
 namespace Syki.Back.LoginWithGoogle;
 

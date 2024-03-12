@@ -13,6 +13,8 @@
 - [X] SendResetPasswordToken
 
 
+- [] LoginWithGoogle
+
 
 # TODO
 
@@ -26,7 +28,6 @@
 - [] GetCampi
 - [] GetCurrentEnrollmentPeriod
 - [] GetEnrollmentPeriods
-- [] LoginWithGoogle
 - [] UpdateCampus
 - [] UpdateCampus
 - [] GetAlunoAgenda

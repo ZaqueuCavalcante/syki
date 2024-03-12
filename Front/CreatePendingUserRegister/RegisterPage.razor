@@ -23,7 +23,7 @@
                     Class="mt-8"
                     Style="width: 100%"
                     Color="Color.Primary"
-                    Href="https://localhost:5001/oauth-google"
+                    Href="@GetGoogleUrl()"
                 >
                     Cadastrar com Google
                 </MudButton>
@@ -54,6 +54,7 @@
 
 @inject ISnackbar Snackbar
 @inject CreatePendingUserRegisterClient Client
+@inject IWebAssemblyHostEnvironment Env
 
 @code
 {
@@ -61,6 +62,12 @@
     private bool _loading;
     private MudForm _form;
     private string _email;
+
+    private string GetGoogleUrl()
+    {
+        return builder.HostEnvironment.IsDevelopment() ?
+            "https://localhost:5001/login/google" : "https://syki-api.zaqbit.com/login/google";
+    }
 
     private async Task Submit()
     {

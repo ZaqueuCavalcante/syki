@@ -6,21 +6,21 @@ namespace Syki.Back.LoginWithGoogle;
 [EnableRateLimiting("Small")]
 public class LoginWithGoogleController(LoginWithGoogleService service) : ControllerBase
 {
-    [HttpGet("oauth-google")]
-    public IActionResult OAuthGoogle()
+    [HttpGet("login/google")]
+    public IActionResult LoginWithGoogle()
     {
         return Challenge(
             new AuthenticationProperties
             {
-                RedirectUri = "/login-with-google"
+                RedirectUri = "/login/google/callback"
             },
             [ "Google" ]
         );  
     }
 
-    [HttpGet("login-with-google")]
+    [HttpGet("login/google/callback")]
     [Authorize(AuthenticationSchemes = "Cookie")]
-    public async Task<IActionResult> LoginWithGoogle()
+    public async Task<IActionResult> LoginWithGoogleCallback()
     {
         var token = await service.Login(User.Email());
 

@@ -15,6 +15,6 @@
             "type": "blazorwasm",
             "request": "attach",
             "url": "https://localhost:6001"
-          }
+        }
     ]
 }

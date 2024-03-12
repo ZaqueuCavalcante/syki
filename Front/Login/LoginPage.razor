@@ -24,16 +24,19 @@
                 />
                 <PasswordTextField @bind-Value="_model.Password" />
             </MudCardContent>
-            <MudCardActions>
-                <MudButton
-                    Size="Size.Large"
-                    OnClick="OnClick"
-                    Variant="Variant.Filled"
-                    Color="Color.Primary"
-                    Class="mx-auto mb-4 px-12"
-                >
-                    Login
-                </MudButton>
+            <MudCardActions Class="justify-center">
+                <MudStack Spacing="1">
+                    <MudButton
+                        Size="Size.Large"
+                        OnClick="OnClick"
+                        Variant="Variant.Filled"
+                        Color="Color.Primary"
+                        Class="mx-auto mb-4 px-12"
+                    >
+                        Login
+                    </MudButton>
+                    <MudLink Href="/reset-password-token">Esqueci minha senha</MudLink>
+                </MudStack>
             </MudCardActions>
         </MudCard>
     </MudForm>

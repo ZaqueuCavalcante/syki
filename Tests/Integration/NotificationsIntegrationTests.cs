@@ -45,7 +45,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
-        var token = await _factory.GetResetPasswordToken(aluno.Id);
+        var token = await _factory.GetResetPasswordToken(aluno.Email);
         var password = await client.ResetPassword(token!);
         await client.Login(bodyAluno.Email, password);
         var response = await client.PutAsync("/notifications/user", null);
@@ -97,7 +97,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
-        var token = await _factory.GetResetPasswordToken(aluno.Id);
+        var token = await _factory.GetResetPasswordToken(aluno.Email);
         var password = await client.ResetPassword(token!);
         await client.Login(bodyAluno.Email, password);
         var response = await client.GetAsync<List<UserNotificationOut>>("/notifications/user");

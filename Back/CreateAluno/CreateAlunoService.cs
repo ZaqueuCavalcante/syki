@@ -21,7 +21,7 @@ public class CreateAlunoService(SykiDbContext ctx, CreateUserService service, Se
         ctx.Add(aluno);
         await ctx.SaveChangesAsync();
 
-        await sendService.Send(user.Id);
+        await sendService.Send(new SendResetPasswordTokenIn { Email = user.Email });
 
         transaction.Commit();
 

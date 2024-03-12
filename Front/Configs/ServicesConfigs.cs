@@ -12,6 +12,8 @@ public static class ServicesConfigs
         builder.Services.AddScoped<LoginMfaClient>();
         builder.Services.AddScoped<GetMfaKeyClient>();
         builder.Services.AddScoped<SetupMfaClient>();
+        builder.Services.AddScoped<SendResetPasswordTokenClient>();
+        builder.Services.AddScoped<ResetPasswordClient>();
 
         builder.Services.AddScoped<CreateAcademicPeriodClient>();
         builder.Services.AddScoped<GetAcademicPeriodsClient>();

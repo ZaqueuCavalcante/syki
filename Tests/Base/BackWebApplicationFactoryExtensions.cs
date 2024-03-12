@@ -37,12 +37,16 @@ public static class BackWebApplicationFactoryExtensions
         return scope.ServiceProvider.GetRequiredService<T>();
     }
 
-    public static async Task<string?> GetResetPasswordToken(this BackWebApplicationFactory factory, Guid userId)
+    public static async Task<string?> GetResetPasswordToken(this BackWebApplicationFactory factory, string email)
     {
         using var ctx = factory.GetDbContext();
 
+        var user = await ctx.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
+        if (user == null)
+            return null;
+
         var id = await ctx.ResetPasswordTokens
-            .Where(r => r.UserId == userId && r.UsedAt == null)
+            .Where(r => r.UserId == user.Id && r.UsedAt == null)
             .OrderByDescending(r => r.CreatedAt)
             .Select(r => r.Id)
             .FirstOrDefaultAsync();

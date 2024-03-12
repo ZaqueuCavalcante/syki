@@ -7,9 +7,7 @@ public class ResetPasswordService(SykiDbContext ctx, UserManager<SykiUser> userM
     public async Task Reset(ResetPasswordIn body)
     {
         _ = Guid.TryParse(body.Token, out var id);
-        var reset = await ctx.ResetPasswordTokens
-            .FirstOrDefaultAsync(r => r.Id == id);
-
+        var reset = await ctx.ResetPasswordTokens.FirstOrDefaultAsync(r => r.Id == id);
         if (reset == null)
             Throw.DE019.Now();
 

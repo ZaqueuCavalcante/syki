@@ -4,9 +4,9 @@ namespace Syki.Back.SendResetPasswordToken;
 
 public class SendResetPasswordEmailService(SykiDbContext ctx, UserManager<SykiUser> userManager)
 {
-    public async Task Send(Guid userId)
+    public async Task Send(SendResetPasswordTokenIn data)
     {
-        var user = await userManager.FindByIdAsync(userId.ToString());
+        var user = await userManager.FindByEmailAsync(data.Email);
         if (user == null)
             Throw.DE019.Now();
 
@@ -14,8 +14,8 @@ public class SendResetPasswordEmailService(SykiDbContext ctx, UserManager<SykiUs
 
         var reset = new ResetPasswordToken(user.Id, token);
         ctx.Add(reset);
-        await ctx.SaveChangesAsync();
+        ctx.Add(SykiTask.SendResetPasswordEmail(user.Id));
 
-        ctx.Add(SykiTask.SendResetPasswordEmail(userId));
+        await ctx.SaveChangesAsync();
     }
 }

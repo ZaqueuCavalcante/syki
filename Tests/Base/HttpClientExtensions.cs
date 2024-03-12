@@ -9,6 +9,8 @@ using Syki.Front.Login;
 using Syki.Tests.Mock;
 using Syki.Front.Auth;
 using Syki.Front.LoginMfa;
+using Syki.Front.SendResetPasswordToken;
+using Syki.Front.ResetPassword;
 
 namespace Syki.Tests.Base;
 
@@ -35,6 +37,8 @@ public static class HttpClientExtensions
         var token = await factory.GetRegisterSetupToken(email);
 
         await client.FinishUserRegister(token!, password);
+
+        
 
         return new CreateUserOut { Email = email, Password = password };
     }
@@ -75,7 +79,17 @@ public static class HttpClientExtensions
         return response;
     }
 
+    public static async Task<HttpResponseMessage> SendResetPasswordToken(this HttpClient http, string email)
+    {
+        var client = new SendResetPasswordTokenClient(http);
+        return await client.Send(email);
+    }
 
+    public static async Task<HttpResponseMessage> ResetPassword(this HttpClient http, string token, string password)
+    {
+        var client = new ResetPasswordClient(http);
+        return await client.Reset(token, password);
+    }
 
 
 

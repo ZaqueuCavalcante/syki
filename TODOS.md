@@ -9,6 +9,8 @@
 - [X] GetAcademicInsights
 - [X] GetAlunoInsights
 - [X] GetAdmInsights
+- [X] ResetPassword
+- [X] SendResetPasswordToken
 
 
 
@@ -25,8 +27,6 @@
 - [] GetCurrentEnrollmentPeriod
 - [] GetEnrollmentPeriods
 - [] LoginWithGoogle
-- [] ResetPassword
-- [] SendResetPasswordToken
 - [] UpdateCampus
 - [] UpdateCampus
 - [] GetAlunoAgenda

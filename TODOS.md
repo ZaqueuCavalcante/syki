@@ -2,16 +2,20 @@
 
 - [X] CreatePendingUserRegister
 - [X] FinishUserRegister
+
 - [X] Login
+- [X] GenerateJWT
 - [X] GetMfaKey
 - [X] SetupMfa
 - [X] LoginMfa
-- [X] GetAcademicInsights
-- [X] GetAlunoInsights
-- [X] GetAdmInsights
 - [X] ResetPassword
 - [X] SendResetPasswordToken
 - [X] LoginWithGoogle
+
+- [X] GetAcademicInsights
+- [X] GetAlunoInsights
+- [X] GetAdmInsights
+
 - [X] CreateCampus
 - [X] UpdateCampus
 - [X] GetCampi
@@ -23,11 +27,9 @@
 - [] CreateAluno
 - [] CreateEnrollmentPeriod
 - [] CreateUser
-- [] GenerateJWT
 - [] GetAcademicPeriods
 - [] GetCurrentEnrollmentPeriod
 - [] GetEnrollmentPeriods
-- [] UpdateCampus
 - [] GetAlunoAgenda
 - [] CreateCurso
 - [] GetCursos

@@ -48,7 +48,6 @@ using Syki.Back.GetAdmInsights;
 using Syki.Back.GetTurmas;
 using Syki.Back.GetUserNotifications;
 using Syki.Back.GetUsers;
-using Syki.Back.RegisterUser;
 using Syki.Back.ViewNotification;
 
 namespace Syki.Back.Configs;
@@ -64,7 +63,6 @@ public static class ServicesConfigs
         services.AddScoped<CreateDisciplinaService>();
         services.AddScoped<CreateEnrollmentPeriodService>();
         services.AddScoped<CreateGradeService>();
-        services.AddScoped<CreateInstitutionService>();
         services.AddScoped<CreateMatriculaAlunoService>();
         services.AddScoped<CreateNotificationService>();
         services.AddScoped<CreateOfertaService>();
@@ -105,7 +103,6 @@ public static class ServicesConfigs
         services.AddScoped<LoginService>();
         services.AddScoped<LoginMfaService>();
 
-        services.AddScoped<RegisterUserService>();
         services.AddScoped<ResetPasswordService>();
         services.AddScoped<SendResetPasswordEmailService>();
 

@@ -1,6 +1,7 @@
 # DONE
 
 - [X] CreatePendingUserRegister
+- [X] CreateUser
 - [X] FinishUserRegister
 
 - [X] Login
@@ -25,35 +26,40 @@
 
 # TODO
 
-- [] CreateAcademicPeriod
-- [] CreateAluno
-- [] CreateEnrollmentPeriod
-- [] CreateUser
-- [] GetAcademicPeriods
-- [] GetCurrentEnrollmentPeriod
-- [] GetEnrollmentPeriods
-- [] GetAlunoAgenda
-
 - [] CreateDisciplina
 - [] GetDisciplinas
-- [] CreateGrade
 - [] GetCursoDisciplinas
 - [] GetCursosWithDisciplinas
+
+- [] CreateGrade
 - [] GetGrades
 - [] GetGradeDisciplinas
+
 - [] CreateOferta
 - [] GetOfertas
+
 - [] CreateProfessor
 - [] GetProfessores
+
 - [] CreateTurma
 - [] GetTurmas
+
+- [] CreateAluno
 - [] GetAlunos
-- [] GetAlunoDisciplinas
+
+- [] CreateAcademicPeriod
+- [] GetAcademicPeriods
+- [] CreateEnrollmentPeriod
+- [] GetEnrollmentPeriods
+- [] GetCurrentEnrollmentPeriod
+
 - [] CreateNotification
 - [] GetNotifications
-- [] CreateInstitution
-- [] GetInstitutions
+
+- [] GetAlunoAgenda
+- [] GetAlunoDisciplinas
 - [] CreateMatriculaAluno
 - [] GetMatriculaAlunoTurmas
-- [] RegisterUser
+
+- [] GetInstitutions
 - [] GetUsers

@@ -1,8 +1,8 @@
-using Syki.Back.RegisterUser;
+using Syki.Back.CreateUser;
 
 namespace Syki.Back.CreateProfessor;
 
-public class CreateProfessorService(SykiDbContext ctx, RegisterUserService service)
+public class CreateProfessorService(SykiDbContext ctx, CreateUserService service)
 {
     public async Task<ProfessorOut> Create(Guid faculdadeId, ProfessorIn data)
     {
@@ -16,7 +16,7 @@ public class CreateProfessorService(SykiDbContext ctx, RegisterUserService servi
             Password = $"Professor@{Guid.NewGuid().ToString().OnlyNumbers()}",
             Role = AuthorizationConfigs.Professor,
         };
-        var user = await service.Register(userIn);
+        var user = await service.Create(userIn);
 
         var professor = new Professor(user.Id, faculdadeId, data.Nome);
 

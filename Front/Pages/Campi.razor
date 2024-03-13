@@ -5,7 +5,7 @@
 
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.GroupWork" Title="Campi" ButtonText="Campus" OnClick="@OpenDialog"/>
-    <SykiPageAlert Text="Sua instituição pode ser formada por vários campus/filiais." />
+    <SykiPageAlert Text="Sua instituição pode ser formada por vários campus." />
 
     <MudContainer Class="mb-8">
         <MudDataGrid
@@ -43,7 +43,7 @@
     </MudContainer>
 </MudContainer>
 
-@inject HttpClient Http
+@inject GetCampiClient Client
 @inject IDialogService DialogService
 
 @code
@@ -55,7 +55,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? [];
+        _campi = await Client.Get();
         _loading = false;
     }
 

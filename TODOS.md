@@ -14,7 +14,7 @@
 - [X] LoginWithGoogle
 - [X] CreateCampus
 - [X] UpdateCampus
-
+- [X] GetCampi
 
 
 # TODO
@@ -25,7 +25,6 @@
 - [] CreateUser
 - [] GenerateJWT
 - [] GetAcademicPeriods
-- [] GetCampi
 - [] GetCurrentEnrollmentPeriod
 - [] GetEnrollmentPeriods
 - [] UpdateCampus

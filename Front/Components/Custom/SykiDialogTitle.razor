@@ -1,10 +1,13 @@
 <MudText Typo="Typo.h6">
-    <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
+    <MudIcon Icon="@Icon" Class="mr-1 mb-n1" />
     @Text
 </MudText>
 
 @code
 {
+    [Parameter]
+    public string Icon { get; set; } = Icons.Material.Filled.Add;
+
     [Parameter]
     public string Text { get; set; }
 }

@@ -6,6 +6,7 @@ global using System.Net.Http.Json;
 global using Syki.Front.GetMfaKey;
 global using Front.CreateCampus;
 global using Front.UpdateCampus;
+global using Front.GetCampi;
 global using Syki.Front.FinishUserRegister;
 global using Syki.Front.GetAdmInsights;
 global using Syki.Front.GetAcademicInsights;

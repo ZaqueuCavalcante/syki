@@ -18,6 +18,9 @@ public static class ServicesConfigs
         builder.Services.AddScoped<UpdateCampusClient>();
         builder.Services.AddScoped<GetCampiClient>();
 
+        builder.Services.AddScoped<CreateCursoClient>();
+        builder.Services.AddScoped<GetCursosClient>();
+
         builder.Services.AddScoped<CreateAcademicPeriodClient>();
         builder.Services.AddScoped<GetAcademicPeriodsClient>();
         builder.Services.AddScoped<CreateEnrollmentPeriodClient>();

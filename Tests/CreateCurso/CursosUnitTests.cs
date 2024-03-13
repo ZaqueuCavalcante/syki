@@ -5,7 +5,7 @@ namespace Syki.Tests.Unit;
 
 public class CursosUnitTests
 {
-    // [Test]
+    [Test]
     public void Deve_criar_um_curso_com_id()
     {
         // Arrange
@@ -19,7 +19,7 @@ public class CursosUnitTests
         curso.Id.Should().NotBeEmpty();
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_um_curso_com_faculdade_id_correto()
     {
         // Arrange
@@ -33,7 +33,7 @@ public class CursosUnitTests
         curso.FaculdadeId.Should().Be(faculdadeId);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_um_curso_com_nome_correto()
     {
         // Arrange
@@ -47,7 +47,7 @@ public class CursosUnitTests
         curso.Nome.Should().Be(nome);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_um_curso_com_tipo_correto()
     {
         // Arrange
@@ -61,7 +61,7 @@ public class CursosUnitTests
         curso.Tipo.Should().Be(Bacharelado);
     }
 
-    // [Test]
+    [Test]
     public void Deve_converter_o_curso_corretamente_pro_out()
     {
         // Arrange
@@ -78,7 +78,7 @@ public class CursosUnitTests
         cursoOut.Tipo.Should().Be(curso.Tipo);
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_true_quando_for_o_mesmo_curso()
     {
         // Arrange
@@ -93,7 +93,7 @@ public class CursosUnitTests
         equals.Should().BeTrue();
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_false_quando_nao_for_o_mesmo_curso()
     {
         // Arrange
@@ -109,7 +109,7 @@ public class CursosUnitTests
         equals.Should().BeFalse();
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_false_quando_o_outro_curso_for_nulo()
     {
         // Arrange
@@ -123,7 +123,7 @@ public class CursosUnitTests
         equals.Should().BeFalse();
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_o_hash_code_correto()
     {
         // Arrange
@@ -136,7 +136,7 @@ public class CursosUnitTests
         hashCode.Should().Be(4523_9002);
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_o_nome_do_curso_como_to_string()
     {
         // Arrange

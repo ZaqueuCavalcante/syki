@@ -20,6 +20,9 @@
 - [X] UpdateCampus
 - [X] GetCampi
 
+- [X] CreateCurso
+- [X] GetCursos
+
 
 # TODO
 
@@ -31,8 +34,7 @@
 - [] GetCurrentEnrollmentPeriod
 - [] GetEnrollmentPeriods
 - [] GetAlunoAgenda
-- [] CreateCurso
-- [] GetCursos
+
 - [] CreateDisciplina
 - [] GetDisciplinas
 - [] CreateGrade

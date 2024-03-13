@@ -9,7 +9,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         // Act
         var grade = await client.NewGrade("Grade de ADS 1.0", curso.Id);
@@ -27,7 +27,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         var bd = await client.NewDisciplina("Banco de Dados", [curso.Id]);
         var ed = await client.NewDisciplina("Estrutura de Dados", [curso.Id]);
@@ -50,7 +50,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         var bd = await client.NewDisciplina("Banco de Dados", [curso.Id]);
         var disciplinas = new List<GradeDisciplinaIn> { new(bd.Id, 1, 10, 80) };
@@ -104,7 +104,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var userUfpe = await client.NewAcademico("UFPE");
 
         await client.Login(userUfpe);
-        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         await client.Login(userNovaRoma);
         var body = new GradeIn { Nome = "Grade de ADS 1.0", CursoId = curso.Id };
@@ -122,8 +122,8 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _factory.LoggedAsAcademico();
 
-        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
-        var direito = await client.NewCurso("Direito");
+        var ads = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
+        var direito = await client.CreateCurso("Direito");
 
         var bd = await client.NewDisciplina("Banco de Dados", [ads.Id]);
 
@@ -154,7 +154,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.Login(userUfpe);
         var disciplinaUfpe = await client.NewDisciplina("Banco de Dados");
 
-        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         var body = new GradeIn
         {
@@ -175,7 +175,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         var bd = await client.NewDisciplina("Banco de Dados", [curso.Id]);
         var ed = await client.NewDisciplina("Estrutura de Dados", [curso.Id]);
@@ -204,7 +204,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         var bd = await client.NewDisciplina("Banco de Dados", [curso.Id]);
         var poo = await client.NewDisciplina("Programação Orientada a Objetos", [curso.Id]);
@@ -259,10 +259,10 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _factory.LoggedAsAcademico();
 
-        var direito = await client.NewCurso("Direito");
+        var direito = await client.CreateCurso("Direito");
         var gradeDireito = await client.NewGrade("Grade de Direito 1.0", direito.Id);
 
-        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var ads = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
         var gradeAds = await client.NewGrade("Grade de ADS 1.0", ads.Id);
 
         // Act

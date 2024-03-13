@@ -27,7 +27,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-        var curso = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         // Act
         var disciplina = await client.NewDisciplina("Banco de Dados", [curso.Id]);
@@ -42,8 +42,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
-        var cc = await client.NewCurso("Ciência da Computação");
+        var ads = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
+        var cc = await client.CreateCurso("Ciência da Computação");
 
         // Act
         var disciplina = await client.NewDisciplina("Banco de Dados", [ads.Id, cc.Id]);
@@ -62,10 +62,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var userUfpe = await client.NewAcademico("UFPE");
 
         await client.Login(userNovaRoma);
-        var adsNovaRoma = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var adsNovaRoma = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         await client.Login(userUfpe);
-        var adsUfpe = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
+        var adsUfpe = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         await client.Login(userNovaRoma);
 
@@ -148,8 +148,8 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
-        var ads = await client.NewCurso("Análise e Desenvolvimento de Sistemas");
-        var cc = await client.NewCurso("Ciência da Computação");
+        var ads = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
+        var cc = await client.CreateCurso("Ciência da Computação");
 
         await client.NewDisciplina("Banco de Dados", [ads.Id, cc.Id]);
         await client.NewDisciplina("Informática e Sociedade", [ads.Id]);

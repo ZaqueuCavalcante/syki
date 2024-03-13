@@ -8,15 +8,15 @@
     <Authorized>
         <MudLayout>
             <MudAppBar Elevation="1" Dense="true">
-                <MudIconButton OnClick="ToggleOpen" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Style="margin-left: -20px;" />
+                <MudIconButton OnClick="@ToggleOpen" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Style="margin-left: -20px;" />
                 <HomeButton />
                 <MudSpacer />
                 <NotificationsIcon />
                 <SegurancaIconButton />
-                <ThemeIconButton @bind-IsDark="_isDark" OnClick="ChangeTheme" />
-                <LogoutIconButton OnClick="Logout" />
+                <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ChangeTheme" />
+                <LogoutIconButton OnClick="@Logout" />
             </MudAppBar>
-            <MudDrawer @bind-Open="_open" ClipMode="DrawerClipMode.Always" Elevation="2" Width="190px">
+            <MudDrawer @bind-Open="@_open" ClipMode="DrawerClipMode.Always" Elevation="2" Width="190px">
                 <NavMenu />
             </MudDrawer>
             <MudMainContent>
@@ -31,7 +31,7 @@
                 <MudStack Row="true" Class="d-flex justify-space-around flex-grow-1">
                     <HomeButton />
                     <MudSpacer />
-                    <ThemeIconButton @bind-IsDark="_isDark" OnClick="ChangeTheme" />
+                    <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ChangeTheme" />
                     <LoginButton />
                 </MudStack>
             </MudAppBar>

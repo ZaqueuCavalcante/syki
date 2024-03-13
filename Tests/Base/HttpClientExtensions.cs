@@ -13,6 +13,8 @@ using Syki.Front.SendResetPasswordToken;
 using Syki.Front.ResetPassword;
 using Front.CreateCampus;
 using Front.UpdateCampus;
+using Front.CreateCurso;
+using Front.GetCursos;
 
 namespace Syki.Tests.Base;
 
@@ -105,8 +107,21 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<CampusOut>();
     }
 
+    public static async Task<CursoOut> CreateCurso(
+        this HttpClient http,
+        string nome = "Análise e Desenvolvimento de Sistemas",
+        TipoDeCurso tipo = TipoDeCurso.Bacharelado
+    ) {
+        var client = new CreateCursoClient(http);
+        var response = await client.Create(nome, tipo);
+        return await response.DeserializeTo<CursoOut>();
+    }
 
-
+    public static async Task<List<CursoOut>> GetCursos(this HttpClient http)
+    {
+        var client = new GetCursosClient(http);
+        return await client.Get();
+    }
 
 
 
@@ -213,14 +228,7 @@ public static class HttpClientExtensions
 
 
 
-    public static async Task<CursoOut> NewCurso(
-        this HttpClient client,
-        string nome = "Análise e Desenvolvimento de Sistemas",
-        TipoDeCurso tipo = TipoDeCurso.Bacharelado
-    ) {
-        var body = new CursoIn { Nome = nome, Tipo = tipo };
-        return await client.PostAsync<CursoOut>("/cursos", body);
-    }
+
 
     public static async Task<DisciplinaOut> NewDisciplina(
         this HttpClient client,

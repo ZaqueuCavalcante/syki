@@ -9,21 +9,7 @@
     <MudForm @ref="_form">
         <MudCard Class="px-16 pt-16 pb-8">
             <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
-
-            <MudButton
-                StartIcon="@SykiIcons.Google"
-                Variant="Variant.Filled"
-                Class="mt-6"
-                Style="width: 100%"
-                Color="Color.Primary"
-                Href="@GetGoogleUrl()"
-            >
-                Entrar com Google
-            </MudButton>
-
-            <MudDivider Class="my-6" />
-
-            <MudCardContent Class="pt-0">
+            <MudCardContent>
                 <MudTextField
                     InputType="InputType.Email"
                     Margin="Margin.Dense"
@@ -59,19 +45,12 @@
 @inject ISnackbar Snackbar
 @inject LoginClient Client
 @inject NavigationManager Nav
-@inject IWebAssemblyHostEnvironment Env
 
 @code
 {
     private bool _loading;
     private MudForm _form;
     LoginIn _model = new();
-
-    private string GetGoogleUrl()
-    {
-        return Env.IsDevelopment() ?
-            "https://localhost:5001/login/google" : "https://syki-api.zaqbit.com/login/google";
-    }
 
     private async Task OnClick()
     {

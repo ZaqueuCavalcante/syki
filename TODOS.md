@@ -10,7 +10,6 @@
 - [X] LoginMfa
 - [X] ResetPassword
 - [X] SendResetPasswordToken
-- [X] LoginWithGoogle
 
 - [X] GetAcademicInsights
 - [X] GetAlunoInsights

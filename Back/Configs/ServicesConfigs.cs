@@ -9,7 +9,6 @@ using Syki.Back.CreateCampus;
 using Syki.Back.UpdateCampus;
 using Syki.Back.CreateAluno;
 using Syki.Back.ResetPassword;
-using Syki.Back.LoginWithGoogle;
 using Syki.Back.FinishUserRegister;
 using Syki.Back.GetEnrollmentPeriods;
 using Syki.Back.CreateAcademicPeriod;
@@ -105,7 +104,6 @@ public static class ServicesConfigs
 
         services.AddScoped<LoginService>();
         services.AddScoped<LoginMfaService>();
-        services.AddScoped<LoginWithGoogleService>();
 
         services.AddScoped<RegisterUserService>();
         services.AddScoped<ResetPasswordService>();

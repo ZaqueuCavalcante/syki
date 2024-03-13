@@ -17,19 +17,6 @@
             }
             else
             {
-                <MudButton
-                    StartIcon="@SykiIcons.Google"
-                    Variant="Variant.Filled"
-                    Class="mt-8"
-                    Style="width: 100%"
-                    Color="Color.Primary"
-                    Href="@GetGoogleUrl()"
-                >
-                    Cadastrar com Google
-                </MudButton>
-
-                <MudDivider Class="my-6" />
-
                 <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                     <MudText Align="Align.Center">Cadastre seu email para ter acesso ao sistema.</MudText>
                 </MudAlert>
@@ -53,7 +40,6 @@
 </MudContainer>
 
 @inject ISnackbar Snackbar
-@inject IWebAssemblyHostEnvironment Env
 @inject CreatePendingUserRegisterClient Client
 
 @code
@@ -62,12 +48,6 @@
     private bool _loading;
     private MudForm _form;
     private string _email;
-
-    private string GetGoogleUrl()
-    {
-        return Env.IsDevelopment() ?
-            "https://localhost:5001/login/google" : "https://syki-api.zaqbit.com/login/google";
-    }
 
     private async Task Submit()
     {

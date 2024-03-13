@@ -21,7 +21,6 @@ using Syki.Back.CreateCurso;
 using Syki.Back.CreateDisciplina;
 using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.CreateGrade;
-using Syki.Back.CreateInstitution;
 using Syki.Back.CreateMatriculaAluno;
 using Syki.Back.CreateNotification;
 using Syki.Back.CreateOferta;

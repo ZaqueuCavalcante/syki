@@ -65,7 +65,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewDisciplinaDialog>("", options);
+        var dialog = await DialogService.ShowAsync<CreateDisciplinaDialog>("", options);
 
         var result = await dialog.Result;
 

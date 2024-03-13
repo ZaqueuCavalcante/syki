@@ -4,7 +4,7 @@ namespace Syki.Tests.Unit;
 
 public class DisciplinasUnitTests
 {
-    // [Test]
+    [Test]
     public void Deve_criar_uma_disciplina_com_id()
     {
         // Arrange
@@ -17,7 +17,7 @@ public class DisciplinasUnitTests
         disciplina.Id.Should().NotBeEmpty();
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_uma_disciplina_com_faculdade_id_correto()
     {
         // Arrange
@@ -30,7 +30,7 @@ public class DisciplinasUnitTests
         disciplina.FaculdadeId.Should().Be(faculdadeId);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_uma_disciplina_com_nome_correto()
     {
         // Arrange
@@ -44,7 +44,7 @@ public class DisciplinasUnitTests
         disciplina.Nome.Should().Be(nome);
     }
 
-    // [Test]
+    [Test]
     public void Deve_converter_a_disciplina_corretamente_pro_out()
     {
         // Arrange
@@ -61,7 +61,7 @@ public class DisciplinasUnitTests
         disciplinaOut.Cursos.Should().BeEquivalentTo(disciplina.Vinculos.ConvertAll(x => x.CursoId));
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_true_quando_for_a_mesma_disciplina()
     {
         // Arrange
@@ -76,7 +76,7 @@ public class DisciplinasUnitTests
         equals.Should().BeTrue();
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_false_quando_nao_for_a_mesma_disciplina()
     {
         // Arrange
@@ -92,7 +92,7 @@ public class DisciplinasUnitTests
         equals.Should().BeFalse();
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_false_quando_a_outra_disciplina_for_nula()
     {
         // Arrange
@@ -106,7 +106,7 @@ public class DisciplinasUnitTests
         equals.Should().BeFalse();
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_o_hash_code_correto()
     {
         // Arrange
@@ -119,7 +119,7 @@ public class DisciplinasUnitTests
         hashCode.Should().Be(4523_9002);
     }
 
-    // [Test]
+    [Test]
     public void Deve_retornar_o_nome_da_disciplina_como_to_string()
     {
         // Arrange

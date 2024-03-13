@@ -15,6 +15,7 @@ using Front.CreateCampus;
 using Front.UpdateCampus;
 using Front.CreateCurso;
 using Front.GetCursos;
+using Front.CreateDisciplina;
 
 namespace Syki.Tests.Base;
 
@@ -123,7 +124,15 @@ public static class HttpClientExtensions
         return await client.Get();
     }
 
-
+    public static async Task<DisciplinaOut> CreateDisciplina(
+        this HttpClient http,
+        string nome = "Banco de Dados",
+        List<Guid> cursos = null
+    ) {
+        var client = new CreateDisciplinaClient(http);
+        var response = await client.Create(nome, cursos ?? []);
+        return await response.DeserializeTo<DisciplinaOut>();
+    }
 
 
 
@@ -230,14 +239,7 @@ public static class HttpClientExtensions
 
 
 
-    public static async Task<DisciplinaOut> NewDisciplina(
-        this HttpClient client,
-        string nome = "Banco de Dados",
-        List<Guid> cursos = null
-    ) {
-        var body = new DisciplinaIn { Nome = nome, Cursos = cursos ?? [] };
-        return await client.PostAsync<DisciplinaOut>("/disciplinas", body);
-    }
+
 
     public static async Task<GradeOut> NewGrade(
         this HttpClient client,

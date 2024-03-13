@@ -26,7 +26,7 @@
 
 # TODO
 
-- [] CreateDisciplina
+- [X] CreateDisciplina
 - [] GetDisciplinas
 - [] GetCursoDisciplinas
 - [] GetCursosWithDisciplinas

@@ -28,6 +28,7 @@ public class AuditLog
         UserId = Guid.Parse(evt.CustomFields["UserId"].ToString()!);
         FaculdadeId = Guid.Parse(evt.CustomFields["FaculdadeId"].ToString()!);
         Data = AuditData.NewAsJson(entry);
+
         return true;
     }
 }

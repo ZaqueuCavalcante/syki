@@ -1,25 +1,10 @@
 <MudDialog Class="pb-2">
     <TitleContent>
-        <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
-            Nova Disciplina
-        </MudText>
+        <SykiDialogTitle Text="Nova Disciplina" />
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="_form">
-            <MudTextField
-                OnlyValidateIfDirty="true"
-                Immediate="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-4"
-                AutoFocus="true"
-                @bind-Value="data.Nome"
-                T="String"
-                Label="Nome"
-                Required="true"
-                RequiredError="Informe!"
-            />
+        <MudForm @ref="@_form">
+            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" OnKeyDown="@Submit" />
             <MudSelect
                 Dense="true"
                 Margin="Margin.Dense"
@@ -28,7 +13,7 @@
                 T="CursoOut"
                 Label="Cursos"
                 MultiSelection="true"
-                @bind-SelectedValues="SelectedCursos"
+                @bind-SelectedValues="@SelectedCursos"
                 AnchorOrigin="Origin.BottomCenter"
             >
                 @foreach (var curso in Cursos)
@@ -39,31 +24,31 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="Cancel" />
-        <DialogProgressCircular Loading="_loading" />
-        <DialogSaveButton OnClick="Submit" />
+        <DialogCancelButton OnClick="@Cancel" />
+        <DialogProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject GetCursosClient GetCursosClient
+@inject CreateDisciplinaClient CreateDisciplinaClient
 
 @code
 {
-    MudForm _form;
-    private bool _loading;
-
-    DisciplinaIn data = new();
-
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 
-    IEnumerable<CursoOut> SelectedCursos { get; set; } = new HashSet<CursoOut>() { };
+    MudForm _form;
+    private bool _loading;
+    private string _name;
+
     private List<CursoOut> Cursos = [];
+    IEnumerable<CursoOut> SelectedCursos { get; set; } = new HashSet<CursoOut>() { };
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? [];
+        Cursos = await GetCursosClient.Get();
     }
 
     async Task Submit()
@@ -73,10 +58,8 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        data.Cursos = SelectedCursos.ToList().ConvertAll(c => c.Id);
-
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/disciplinas", data);
+        var response = await CreateDisciplinaClient.Create(_name, SelectedCursos.ToList().ConvertAll(c => c.Id));
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

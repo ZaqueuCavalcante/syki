@@ -2,9 +2,9 @@ namespace Syki.Back.GetEnrollmentPeriods;
 
 public class GetEnrollmentPeriodsService(SykiDbContext ctx)
 {
-    public async Task<List<AcademicPeriodOut>> Get(Guid institutionId)
+    public async Task<List<EnrollmentPeriodOut>> Get(Guid institutionId)
     {
-        var periods = await ctx.AcademicPeriods.AsNoTracking()
+        var periods = await ctx.EnrollmentPeriods.AsNoTracking()
             .Where(c => c.InstitutionId == institutionId)
             .ToListAsync();
         

@@ -112,6 +112,7 @@
             return;
         }
         _options = await Http.GetFromJsonAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas") ?? [];
+        HandleCheckedChanged();
         _loading = false;
     }
 

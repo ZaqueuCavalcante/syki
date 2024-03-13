@@ -100,7 +100,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos/disciplinas") ?? [];
+        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos/with-disciplinas") ?? [];
     }
 
     // TODO: adicionar botao para remover disciplina

@@ -28,6 +28,8 @@ public class GetMatriculaAlunoTurmasService(SykiDbContext ctx)
             .Where(t => t.FaculdadeId == institutionId && t.Periodo == periodoDeMatricula.Id && ids.Contains(t.DisciplinaId))
             .ToListAsync();
 
+        var selecteds = await ctx.TurmaAlunos.Where(x => x.AlunoId == userId).Select(x => x.TurmaId).ToListAsync();
+
         var response = turmas.ConvertAll(t =>
         {
             var vinculo = grade.Vinculos.First(v => v.DisciplinaId == t.DisciplinaId);
@@ -40,6 +42,7 @@ public class GetMatriculaAlunoTurmasService(SykiDbContext ctx)
                 CargaHoraria = vinculo.CargaHoraria,
                 Professor = t.Professor.Nome,
                 Horarios = t.Horarios.ConvertAll(h => h.ToOut()),
+                IsSelected = selecteds.Contains(t.Id),
             };
         });
 

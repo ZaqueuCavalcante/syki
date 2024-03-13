@@ -9,6 +9,9 @@ public class CreateMatriculaAlunoService(SykiDbContext ctx)
             .Select(t => t.Id)
             .ToListAsync();
 
+        var turmas = await ctx.TurmaAlunos.Where(x => x.AlunoId == userId).ToListAsync();
+        ctx.RemoveRange(turmas);
+
         foreach (var id in ids)
         {
             ctx.Add(new TurmaAluno(id, userId, Situacao.Matriculado));

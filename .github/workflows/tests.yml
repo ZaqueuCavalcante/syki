@@ -29,10 +29,10 @@ jobs:
       - name: Setup
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 888.0.200
+          dotnet-version: 8.0.200
       - name: Restore
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
       - name: Tests
-        run: dotnet test --no-build --filter "FullyQualifiedName!~E2ETests"
+        run: dotnet test --no-build

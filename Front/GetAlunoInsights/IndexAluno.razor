@@ -59,7 +59,7 @@
     protected override async Task OnInitializedAsync()
     {
         await SetUserName();
-        _data = await Http.GetFromJsonAsync<IndexAlunoOut>("/index/aluno") ?? new();
+        _data = await Http.GetFromJsonAsync<IndexAlunoOut>("/aluno-insights") ?? new();
     }
 
     private async Task SetUserName()

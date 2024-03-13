@@ -23,13 +23,13 @@
 - [X] CreateCurso
 - [X] GetCursos
 
-
-# TODO
-
 - [X] CreateDisciplina
 - [] GetDisciplinas
 - [] GetCursoDisciplinas
 - [] GetCursosWithDisciplinas
+
+
+# TODO
 
 - [] CreateGrade
 - [] GetGrades

@@ -27,6 +27,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Dias = await Http.GetFromJsonAsync<List<AgendaDiaOut>>("/agendas/aluno") ?? [];
+        Dias = await Http.GetFromJsonAsync<List<AgendaDiaOut>>("/aluno-agenda") ?? [];
     }
 }

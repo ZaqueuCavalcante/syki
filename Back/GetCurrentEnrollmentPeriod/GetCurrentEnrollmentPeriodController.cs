@@ -1,6 +1,6 @@
 namespace Syki.Back.GetCurrentEnrollmentPeriod;
 
-[ApiController, AuthAcademico]
+[ApiController, AuthAluno]
 [EnableRateLimiting("Medium")]
 public class GetEnrollmentPeriodsController(GetCurrentEnrollmentPeriodService service) : ControllerBase
 {

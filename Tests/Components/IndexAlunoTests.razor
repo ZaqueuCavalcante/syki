@@ -18,7 +18,7 @@
         };
 
         var mock = Services.AddMockHttpClient();
-        mock.When(HttpMethod.Get, "/index/aluno").RespondJson(response);
+        mock.When(HttpMethod.Get, "/aluno-insights").RespondJson(response);
 
         // Act
         var cut = Render(@<IndexAluno />);

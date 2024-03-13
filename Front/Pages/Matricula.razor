@@ -111,7 +111,7 @@
             _loading = false;
             return;
         }
-        _options = await Http.GetFromJsonAsync<List<MatriculaTurmaOut>>("/matriculas/turmas") ?? [];
+        _options = await Http.GetFromJsonAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas") ?? [];
         _loading = false;
     }
 
@@ -124,7 +124,7 @@
         {
             Turmas = _options.Where(o => o.IsSelected).Select(o => o.Id).ToList()
         };
-        var response = await Http.PostAsJsonAsync("/matriculas", data);
+        var response = await Http.PostAsJsonAsync("/matriculas/aluno", data);
         if (response.IsSuccessStatusCode)
         {
             Snackbar.Add("Matrícula salva com sucesso!", Severity.Success);

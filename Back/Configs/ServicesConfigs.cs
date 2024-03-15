@@ -48,6 +48,7 @@ using Syki.Back.GetTurmas;
 using Syki.Back.GetUserNotifications;
 using Syki.Back.GetUsers;
 using Syki.Back.ViewNotification;
+using Syki.Back.GetCursosWithGrades;
 
 namespace Syki.Back.Configs;
 
@@ -84,6 +85,7 @@ public static class ServicesConfigs
         services.AddScoped<GetCursoDisciplinasService>();
         services.AddScoped<GetCursosService>();
         services.AddScoped<GetCursosWithDisciplinasService>();
+        services.AddScoped<GetCursosWithGradesService>();
         services.AddScoped<GetDisciplinasService>();
         services.AddScoped<GetEnrollmentPeriodsService>();
         services.AddScoped<GetGradeDisciplinasService>();

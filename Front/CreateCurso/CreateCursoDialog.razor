@@ -16,7 +16,7 @@
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary
             ">
-                @foreach (TipoDeCurso item in Enum.GetValues<TipoDeCurso>())
+                @foreach (TipoDeCurso? item in Enum.GetValues<TipoDeCurso>())
                 {
                     <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
                 }

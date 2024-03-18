@@ -85,4 +85,12 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
             Database.EnsureCreated();
         }
     }
+
+    public void MigrateDb()
+    {
+        if (!Env.IsTesting())
+        {
+            Database.Migrate();
+        }
+    }
 }

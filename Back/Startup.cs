@@ -23,8 +23,10 @@ public class Startup
         services.AddCorsConfigs();
     }
 
-    public static void Configure(IApplicationBuilder app)
+    public static void Configure(IApplicationBuilder app, SykiDbContext context)
     {
+        context.MigrateDb();
+
         app.UseCors();
 
         app.UseRouting();

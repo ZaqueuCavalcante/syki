@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-
 namespace Syki.Front.Configs;
 
 public static class LocalStorageConfigs

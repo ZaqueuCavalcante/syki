@@ -9,37 +9,37 @@ public class FinishUserRegisterUnitTests
     public void Should_set_start_date()
     {
         // Arrange
-        var demo = new UserRegister("demail@syki.com");
+        var register = new UserRegister("demail@syki.com");
 
         // Act
-        demo.Finish();
+        register.Finish();
 
         // Assert
-        demo.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
+        register.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
     }
 
     [Test]
     public void Should_set_end_date()
     {
         // Arrange
-        var demo = new UserRegister("demail@syki.com");
+        var register = new UserRegister("demail@syki.com");
 
         // Act
-        demo.Finish();
+        register.Finish();
 
         // Assert
-        demo.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
+        register.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
     }
 
     [Test]
     public void Should_return_error_when_register_is_already_done()
     {
         // Arrange
-        var demo = new UserRegister("demail@syki.com");
-        demo.Finish();
+        var register = new UserRegister("demail@syki.com");
+        register.Finish();
 
         // Act
-        Action act = () => demo.Finish();
+        Action act = () => register.Finish();
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE025);

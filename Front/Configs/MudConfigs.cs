@@ -1,6 +1,5 @@
 using MudBlazor;
 using MudBlazor.Services;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Syki.Front.Configs;
 

@@ -39,17 +39,11 @@ O módulo acadêmico conta com:
 
 ## Como rodar?
 
-- 0 - Clone o projeto pra sua máquina usando o git
+- Clone o projeto pra sua máquina
 
-- 1 - Instale o SDK do DotNet 8.0.200
+- Para subir banco + back + front, rode o comando: `docker-compose up`
 
-- 2 - Instale o PostgreSQL ou rode ele via Docker
-
-- 3 - Entre na pasta ./Back e rode "dotnet run" para subir a API
-
-- 4 - Entre na pasta ./Front e rode "dotnet run" para subir o Frontend
-
-- 5 - Caso dê erro de CORs, acesse o endereço https da API e do Frontend no navegador e aceite o certificado de dev como válido
+- O back vai subir na porta 5001 e o front na 6001
 
 ## Overview
 

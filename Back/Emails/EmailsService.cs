@@ -30,7 +30,7 @@ public class EmailsService : IEmailsService
         var body = new BrevoEmailMessage(
             sender: "syki@zaqbit.com",
             to: to,
-            subject: "Syki Demo",
+            subject: "Syki Cadastro",
             content: $"<html><head></head><body>Crie sua senha aqui: <a href=\"{link}\"><strong>{link}</strong></a></body></html>"
         );
 

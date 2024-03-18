@@ -1,25 +1,21 @@
-version: "3.5"
+version: '3.5'
 
 services:
   db:
-    image: postgres:latest
+    image: 'postgres:latest'
     container_name: db
-    env:
+    hostname: db_host
+    environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-    options: >-
-      --health-cmd pg_isready
-      --health-interval 10s
-      --health-timeout 5s
-      --health-retries 5
     ports:
-      - 5432:5432
+      - '5432:5432'
     networks:
       - sykinet
+    command: ["postgres","-c","max_connections=1500","-c","max_prepared_transactions=64","-c","log_statement=all"]
 
   back:
-    image: docker.io/library/back
     container_name: back
     build:
       context: .
@@ -27,10 +23,25 @@ services:
     depends_on:
       - db
     environment:
-      - ASPNETCORE_URLS=http://+:80
-      - DB_CONNECTION_STRING=Host=db;Username=postgres;Password=postgres;Port=5432;Database=rinha-db;Minimum Pool Size=10;Maximum Pool Size=10;Multiplexing=true;
+      - 'ASPNETCORE_URLS=http://+:80'
+      - 'ASPNETCORE_ENVIRONMENT=Development'
+      - 'Database__ConnectionString=UserID=postgres;Password=postgres;Host=db_host;Port=5432;Database=syki-db;Pooling=true;'
     ports:
-      - "8081:80"
+      - '5001:80'
+    networks:
+      - sykinet
+
+  front:
+    container_name: front
+    build:
+      context: .
+      dockerfile: Dockerfile.front
+    depends_on:
+      - back
+    environment:
+      - 'ASPNETCORE_URLS=http://+:80'
+    ports:
+      - '6001:80'
     networks:
       - sykinet
 

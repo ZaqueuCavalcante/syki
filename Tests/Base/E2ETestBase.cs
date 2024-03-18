@@ -5,7 +5,7 @@ namespace Syki.Tests.Base;
 
 public class E2ETestBase : PageTest
 {
-    private readonly string _url = "https://localhost:6001";
+    private readonly string _url = "http://localhost:6001";
     private readonly string _database = "UserID=postgres;Password=postgres;Host=localhost;Port=5432;Database=syki-db;Pooling=true;";
 
     protected async Task Goto(string path)

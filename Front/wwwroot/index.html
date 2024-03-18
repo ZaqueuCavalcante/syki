@@ -20,7 +20,14 @@
             <a href="" class="reload">Reload</a>
             <a class="dismiss">🗙</a>
         </div>
-        <script src="_framework/blazor.webassembly.js"></script>
+        <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+        <script>
+            if (window.location.hostname.includes("localhost")) {
+                Blazor.start({
+                    environment: "Development"
+                });
+            }
+        </script>
         <script src="_content/MudBlazor/MudBlazor.min.js"></script>
         <script src="/_framework/aspnetcore-browser-refresh.js"></script>
     </body>

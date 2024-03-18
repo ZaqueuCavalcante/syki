@@ -22,9 +22,16 @@
         </div>
         <script src="_framework/blazor.webassembly.js" autostart="false"></script>
         <script>
-            if (window.location.hostname.includes("localhost")) {
+            if (window.location.hostname.includes("localhost"))
+            {
                 Blazor.start({
                     environment: "Development"
+                });
+            } 
+            else
+            {
+                Blazor.start({
+                    environment: "Production"
                 });
             }
         </script>

@@ -37,6 +37,8 @@ O módulo acadêmico conta com:
 - Docker para buildar back e front
 - Deploy no Railway
 
+<img src="./Docs/images/docker-compose.png" width="600" height="300" style="border-radius: 6px">
+
 ## Como rodar?
 
 - Clone o projeto pra sua máquina
@@ -49,4 +51,4 @@ O módulo acadêmico conta com:
 
 Se cadastre em https://syki.zaqbit.com e teste o sistema em produção.
 
-![Overview](/Docs/images/syki_overview.gif "Overview")
+<img src="./Docs/images/syki_overview.gif" style="border-radius: 6px">

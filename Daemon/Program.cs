@@ -14,16 +14,19 @@ var builder = Host.CreateDefaultBuilder(args);
 
 Configuration.AuditDisabled = true;
 
-builder.ConfigureAppConfiguration(config =>
+if (Env.IsDevelopment())
 {
-    var configPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Development.json");
+    builder.ConfigureAppConfiguration(config =>
+    {
+        var configPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Development.json");
 
-    var configuration = new ConfigurationBuilder()
-        .AddJsonFile(configPath)
-        .Build();
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile(configPath)
+            .Build();
 
-    config.AddConfiguration(configuration);
-});
+        config.AddConfiguration(configuration);
+    });
+}
 
 builder.ConfigureServices((ctx, services) =>
 {

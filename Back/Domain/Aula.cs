@@ -4,17 +4,19 @@ public class Aula
 {
     public Guid Id { get; set; }
     public Guid TurmaId { get; set; }
-    // public AulaStatus Status { get; set; } // Dada, Marcada, Cancelada...
-    public DateTime Start { get; set; }
-    public DateTime End { get; set; } // Precisa? Todas tem a mesma duracao...
+    public DateOnly Day { get; set; }
+    public Hora Start { get; set; }
+    public Hora End { get; set; }
 
     public Aula(
         Guid turmaId,
-        DateTime start,
-        DateTime end
+        DateOnly day,
+        Hora start,
+        Hora end
     ) {
         Id = Guid.NewGuid();
         TurmaId = turmaId;
+        Day = day;
         Start = start;
         End = end;
     }

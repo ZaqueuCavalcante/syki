@@ -2,63 +2,67 @@ namespace Syki.Tests.Unit;
 
 public class AulaUnitTests
 {
-    // [Test]
+    [Test]
     public void Deve_criar_um_aula_com_id()
     {
         // Arrange
         var turmaId = Guid.NewGuid();
-        var start = DateTime.Now;
-        var end = DateTime.Now.AddHours(2);
+        var day = DateOnly.FromDateTime(DateTime.Now);
+        var start = Hora.H07_00;
+        var end = Hora.H10_00;
 
         // Act
-        var aluno = new Aula(turmaId, start, end);
+        var aluno = new Aula(turmaId, day, start, end);
 
         // Assert
         aluno.Id.Should().NotBeEmpty();
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_um_aula_com_turma_id_correto()
     {
         // Arrange
         var turmaId = Guid.NewGuid();
-        var start = DateTime.Now;
-        var end = DateTime.Now.AddHours(2);
+        var day = DateOnly.FromDateTime(DateTime.Now);
+        var start = Hora.H07_00;
+        var end = Hora.H10_00;
 
         // Act
-        var aluno = new Aula(turmaId, start, end);
+        var aluno = new Aula(turmaId, day, start, end);
 
         // Assert
         aluno.TurmaId.Should().Be(turmaId);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_um_aula_com_start_correto()
     {
         // Arrange
         var turmaId = Guid.NewGuid();
-        var start = DateTime.Now;
-        var end = DateTime.Now.AddHours(2);
+        var day = DateOnly.FromDateTime(DateTime.Now);
+        var start = Hora.H07_00;
+        var end = Hora.H10_00;
 
         // Act
-        var aluno = new Aula(turmaId, start, end);
+        var aluno = new Aula(turmaId, day, start, end);
 
         // Assert
-        aluno.Start.Should().BeCloseTo(start, TimeSpan.FromSeconds(1));
+        aluno.Start.Should().Be(start);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_um_aula_com_end_correto()
     {
         // Arrange
         var turmaId = Guid.NewGuid();
-        var start = DateTime.Now;
-        var end = DateTime.Now.AddHours(2);
+        var day = DateOnly.FromDateTime(DateTime.Now);
+        var start = Hora.H07_00;
+        var end = Hora.H10_00;
 
         // Act
-        var aluno = new Aula(turmaId, start, end);
+        var aluno = new Aula(turmaId, day, start, end);
 
         // Assert
-        aluno.End.Should().BeCloseTo(end, TimeSpan.FromSeconds(1));
+        aluno.End.Should().Be(end);
     }
 }

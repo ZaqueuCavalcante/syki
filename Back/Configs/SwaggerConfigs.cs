@@ -1,4 +1,6 @@
 using System.Reflection;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
 
 namespace Syki.Back.Configs;
@@ -11,13 +13,17 @@ public static class SwaggerConfigs
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Syki",
-                Version = "1.0",
-                Description = "Syki API.",
-                Contact = new OpenApiContact() { Name = "Zaqueu Cavalcante", Email = "zaqueudovale@gmail.com" },
-                TermsOfService = new Uri("https://docs.github.com"),
-                License = new OpenApiLicense() { Name = "License", Url = new Uri("https://opensource.org/licenses/MIT") }
+                Description = ReadResource("api-intro.md"),
+                Extensions = new Dictionary<string, IOpenApiExtension>
+                {
+                    { "x-logo", new OpenApiObject
+                    {
+                        { "url", new OpenApiString("/syki-logo.png") },
+                    }}
+                },
             });
+
+            options.OrderActionsBy(api => api.ActionDescriptor.AttributeRouteInfo.Order.ToString());
 
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
@@ -53,6 +59,8 @@ public static class SwaggerConfigs
 
     public static void UseSwaggerThings(this IApplicationBuilder app)
     {
+        app.UseStaticFiles();
+
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
@@ -60,5 +68,23 @@ public static class SwaggerConfigs
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Syki 1.0");
             options.DefaultModelsExpandDepth(-1);
         });
+
+        app.UseReDoc(c =>
+        {
+            c.RoutePrefix = "docs";
+            c.DocumentTitle = "Syki API";
+            c.SpecUrl = "/swagger/v1/swagger.json";
+        });
+    }
+
+    public static string ReadResource(string name)
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourcePath = assembly.GetManifestResourceNames().Single(str => str.EndsWith(name));
+
+        using Stream stream = assembly.GetManifestResourceStream(resourcePath)!;
+        using StreamReader reader = new(stream);
+
+        return reader.ReadToEnd();
     }
 }

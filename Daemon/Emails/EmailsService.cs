@@ -1,4 +1,7 @@
-namespace Syki.Back.Emails;
+using System.Net.Http.Json;
+using Syki.Daemon.Settings;
+
+namespace Syki.Daemon.Emails;
 
 public class EmailsService : IEmailsService
 {

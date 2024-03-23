@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Back\Back.csproj" />
     <ProjectReference Include="..\Front\Front.csproj" />
+    <ProjectReference Include="..\Daemon\Daemon.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 

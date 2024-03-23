@@ -11,6 +11,15 @@
             "program": "${workspaceFolder}/Back/bin/Debug/net8.0/Back.dll",
         },
         {
+            "name": "DAEMON",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "requireExactSource": false,
+            "cwd": "${workspaceFolder}/Daemon",
+            "program": "${workspaceFolder}/Daemon/bin/Debug/net8.0/Daemon.dll",
+        },
+        {
             "name": "FRONT",
             "type": "blazorwasm",
             "request": "attach",

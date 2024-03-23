@@ -1,19 +1,28 @@
 using Dapper;
 using Npgsql;
 using Newtonsoft.Json;
+using Syki.Back.Tasks;
+using Syki.Back.Settings;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Syki.Daemon.Settings;
 
-namespace Syki.Back.Tasks;
+namespace Syki.Daemon;
 
 public class SykiTasksProcessor : BackgroundService
 {
     private readonly TasksSettings _settings;
     private readonly DatabaseSettings _dbSettings;
-    private readonly  IServiceScopeFactory _serviceScopeFactory;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
+    private readonly IConfiguration _config;
     public SykiTasksProcessor(
         TasksSettings settings,
         DatabaseSettings dbSettings,
-        IServiceScopeFactory serviceScopeFactory
+        IServiceScopeFactory serviceScopeFactory,
+        IConfiguration config
     ) {
+        _config = config;
         _settings = settings;
         _dbSettings = dbSettings;
         _serviceScopeFactory = serviceScopeFactory;
@@ -57,7 +66,8 @@ public class SykiTasksProcessor : BackgroundService
 
     private static dynamic GetHanlder(IServiceScope scope, SykiTask task)
     {
-        var handlerType = typeof(SykiTask).Assembly.GetType($"{task.Type}Handler")!;
+        var type = task.Type.Split(".").Last();
+        var handlerType = typeof(SykiTasksProcessor).Assembly.GetType($"Syki.Daemon.Tasks.{type}Handler")!;
         dynamic handler = scope.ServiceProvider.GetRequiredService(handlerType);
         return handler;
     }

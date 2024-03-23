@@ -1,4 +1,4 @@
-namespace Syki.Back.Emails;
+namespace Syki.Daemon.Emails;
 
 public class BrevoEmail
 {

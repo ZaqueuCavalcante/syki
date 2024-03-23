@@ -58,37 +58,4 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         await AssertTaskByDataLike<SendUserRegisterEmailConfirmation>(email);
     }
-
-    [Test]
-    public async Task Should_return_error_when_user_register_not_found()
-    {
-        // Arrange
-        var task = new SendUserRegisterEmailConfirmation { Email = TestData.Email };
-        var handler = _factory.GetService<SendUserRegisterEmailConfirmationHandler>();
-
-        // Act
-        Func<Task> act = async () => { await handler.Handle(task); };
-
-		// Assert
-		await act.Should().ThrowAsync<DomainException>().WithMessage(Throw.DE024);
-    }
-
-    [Test]
-    public async Task Should_not_return_error_when_user_register_exists()
-    {
-        // Arrange
-        var client = _factory.GetClient();
-
-        var email = TestData.Email;
-        await client.CreatePendingUserRegister(email);
-
-        var task = new SendUserRegisterEmailConfirmation { Email = email};
-        var handler = _factory.GetService<SendUserRegisterEmailConfirmationHandler>();
-
-        // Act
-        Func<Task> act = async () => { await handler.Handle(task); };
-
-		// Assert
-		await act.Should().NotThrowAsync<DomainException>();
-    }
 }

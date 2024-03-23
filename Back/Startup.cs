@@ -6,7 +6,6 @@ public class Startup
     {
         services.AddSettingsConfigs();
         services.AddServicesConfigs();
-        services.AddSykiTasksConfigs();
         services.AddRateLimiterConfigs();
 
         services.AddIdentityConfigs();

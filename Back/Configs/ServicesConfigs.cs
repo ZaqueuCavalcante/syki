@@ -14,8 +14,6 @@ using Syki.Back.GetEnrollmentPeriods;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.SendResetPasswordToken;
 using Syki.Back.CreatePendingUserRegister;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Syki.Back.Emails;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateCurso;
 using Syki.Back.CreateDisciplina;
@@ -110,11 +108,5 @@ public static class ServicesConfigs
         services.AddScoped<SetupMfaService>();
         services.AddScoped<UpdateCampusService>();
         services.AddScoped<ViewNotificationService>();
-
-        services.AddScoped<IEmailsService, EmailsService>();
-        if (Env.IsTesting() || Env.IsDevelopment())
-        {
-            services.Replace(ServiceDescriptor.Scoped<IEmailsService, FakeEmailsService>());
-        }
     }
 }

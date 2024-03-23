@@ -45,6 +45,19 @@ services:
     networks:
       - sykinet
 
+  daemon:
+    container_name: daemon
+    build:
+      context: .
+      dockerfile: Dockerfile.daemon
+    depends_on:
+      - db
+    environment:
+      - 'ASPNETCORE_ENVIRONMENT=Development'
+      - 'Database__ConnectionString=UserID=postgres;Password=postgres;Host=db_host;Port=5432;Database=syki-db;Pooling=true;'
+    networks:
+      - sykinet
+
 networks:
   sykinet:
     driver: bridge

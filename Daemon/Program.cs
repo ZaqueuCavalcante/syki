@@ -14,19 +14,16 @@ var builder = Host.CreateDefaultBuilder(args);
 
 Configuration.AuditDisabled = true;
 
-if (Env.IsDevelopment())
+builder.ConfigureAppConfiguration(config =>
 {
-    builder.ConfigureAppConfiguration(config =>
-    {
-        var configPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Development.json");
+    var configPath = Path.Combine(Directory.GetCurrentDirectory(), $"appsettings.{Env.Get()}.json");
 
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile(configPath)
-            .Build();
+    var configuration = new ConfigurationBuilder()
+        .AddJsonFile(configPath)
+        .Build();
 
-        config.AddConfiguration(configuration);
-    });
-}
+    config.AddConfiguration(configuration);
+});
 
 builder.ConfigureServices((ctx, services) =>
 {
@@ -34,6 +31,7 @@ builder.ConfigureServices((ctx, services) =>
 
     services.AddScoped<CreateUserService>();
     services.AddScoped<CreateProfessorService>();
+
     services.AddScoped<IEmailsService, EmailsService>();
     if (Env.IsDevelopment())
     {

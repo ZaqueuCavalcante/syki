@@ -5,5 +5,5 @@ namespace Syki.Back.Home;
 public class HomeController : ControllerBase
 {
     [HttpGet("")]
-    public IActionResult Get() => Redirect("/swagger");
+    public IActionResult Get() => Redirect("/docs");
 }

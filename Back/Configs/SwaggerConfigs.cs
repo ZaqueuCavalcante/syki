@@ -1,13 +1,14 @@
 using System.Reflection;
 using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Interfaces;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Syki.Back.Configs;
 
 public static class SwaggerConfigs
 {
-    public static void AddSwaggerConfigs(this IServiceCollection services)
+    public static void AddDocsConfigs(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>
         {
@@ -23,7 +24,7 @@ public static class SwaggerConfigs
                 },
             });
 
-            options.OrderActionsBy(api => api.ActionDescriptor.AttributeRouteInfo.Order.ToString());
+            options.ExampleFilters();
 
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
@@ -55,9 +56,11 @@ public static class SwaggerConfigs
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
         });
+
+        services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
     }
 
-    public static void UseSwaggerThings(this IApplicationBuilder app)
+    public static void UseDocs(this IApplicationBuilder app)
     {
         app.UseStaticFiles();
 

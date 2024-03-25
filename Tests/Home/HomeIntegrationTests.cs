@@ -13,6 +13,6 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        response.RequestMessage!.RequestUri!.ToString().Should().Contain("/swagger");
+        response.RequestMessage!.RequestUri!.ToString().Should().Contain("/docs");
     }
 }

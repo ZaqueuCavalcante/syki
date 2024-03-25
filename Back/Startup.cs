@@ -18,14 +18,12 @@ public class Startup
         services.AddAuditConfigs();
         services.AddEfCoreConfigs();
 
-        services.AddSwaggerConfigs();
+        services.AddDocsConfigs();
         services.AddCorsConfigs();
     }
 
-    public static void Configure(IApplicationBuilder app, SykiDbContext context)
+    public static void Configure(IApplicationBuilder app)
     {
-        context.MigrateDb();
-
         app.UseCors();
 
         app.UseRouting();
@@ -36,7 +34,7 @@ public class Startup
         app.UseAuthorization();
 
         app.UseAudit();
-        app.UseSwaggerThings();
+        app.UseDocs();
 
         app.UseControllers();
     }

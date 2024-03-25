@@ -5,7 +5,7 @@
 
     <MudAlert Class="mt-4" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudStack Row="true" Justify="Justify.SpaceAround">
-            <MudText>Aqui você encontra dados consolidados sobre seu curso, atualizados em tempo real!</MudText>
+            <MudText>Aqui você encontra dados consolidados sobre suas turmas, atualizados em tempo real!</MudText>
         </MudStack>
     </MudAlert>
 
@@ -14,7 +14,7 @@
             <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
                 <MudStack AlignItems="AlignItems.Center">
                     <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.DisciplinasConcluidas Concluídas</MudText>
+                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Turmas Turmas</MudText>
                 </MudStack>
             </MudPaper>
         </MudItem>
@@ -22,7 +22,15 @@
             <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
                 <MudStack AlignItems="AlignItems.Center">
                     <MudIcon Icon="@Icons.Material.Filled.School" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.DisciplinasTotal Disciplinas</MudText>
+                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Alunos Alunos</MudText>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="6" sm="6" md="6">
+            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
+                <MudStack AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Filled.Class" Size="Size.Large" Color="Color.Primary"/>
+                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Aulas Aulas</MudText>
                 </MudStack>
             </MudPaper>
         </MudItem>
@@ -34,19 +42,10 @@
                 </MudStack>
             </MudPaper>
         </MudItem>
-
-        <MudItem xs="6" sm="6" md="6">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.Class" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.CR.Format() CR</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
     </MudGrid>
 </MudContainer>
 
-@inject GetAlunoInsightsClient Client
+@inject GetProfessorInsightsClient Client
 
 @code
 {
@@ -54,7 +53,7 @@
     public Task<AuthenticationState> AuthState { get; set; }
 
     private string _userName = "";
-    private IndexAlunoOut _data = new();
+    private IndexProfessorOut _data = new();
 
     protected override async Task OnInitializedAsync()
     {

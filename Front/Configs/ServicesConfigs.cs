@@ -13,6 +13,7 @@ public static class ServicesConfigs
         builder.Services.AddScoped<SendResetPasswordTokenClient>();
         builder.Services.AddScoped<ResetPasswordClient>();
         builder.Services.AddScoped<GetAcademicInsightsClient>();
+        builder.Services.AddScoped<GetProfessorInsightsClient>();
 
         builder.Services.AddScoped<CreateCampusClient>();
         builder.Services.AddScoped<UpdateCampusClient>();
@@ -22,8 +23,6 @@ public static class ServicesConfigs
         builder.Services.AddScoped<GetCursosClient>();
 
         builder.Services.AddScoped<CreateDisciplinaClient>();
-
-
 
 
         builder.Services.AddScoped<CreateAcademicPeriodClient>();

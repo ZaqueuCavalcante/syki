@@ -47,6 +47,7 @@ using Syki.Back.GetUserNotifications;
 using Syki.Back.GetUsers;
 using Syki.Back.ViewNotification;
 using Syki.Back.GetCursosWithGrades;
+using Syki.Back.GetProfessorInsights;
 
 namespace Syki.Back.Configs;
 
@@ -108,5 +109,7 @@ public static class ServicesConfigs
         services.AddScoped<SetupMfaService>();
         services.AddScoped<UpdateCampusService>();
         services.AddScoped<ViewNotificationService>();
+
+        services.AddScoped<GetProfessorInsightsService>();
     }
 }

@@ -1,5 +1,6 @@
 ﻿@using Front.GetAdmInsights
 @using Front.GetAlunoInsights
+@using Front.GetProfessorInsights
 @using Front.Components.Indexes
 @using Front.Components.Onboarding
 
@@ -25,7 +26,13 @@
     </Authorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="Adm, Academico, Aluno">
+<AuthorizeView Roles="Professor">
+    <Authorized>
+        <IndexProfessor />
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Adm, Academico, Aluno, Professor">
     <NotAuthorized>
         <IndexAnonymous />
     </NotAuthorized>

@@ -50,7 +50,7 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateProfessorServic
 
         faculdade.Disciplinas =
         [
-            new Disciplina(id, "Matemática Discreta"),
+            new Disciplina(id, "Matemática Discreta", "MATDISC"),
             new Disciplina(id, "Introdução ao Desenvolvimento Web"),
             new Disciplina(id, "Design de Interação Humano-Máquina"),
             new Disciplina(id, "Introdução à Redes de Computadores"),

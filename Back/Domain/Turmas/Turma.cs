@@ -1,6 +1,6 @@
 using Syki.Back.CreateAluno;
-using Syki.Back.CreateDisciplina;
 using Syki.Back.CreateProfessor;
+using Syki.Back.CreateDisciplina;
 
 namespace Syki.Back.Domain;
 

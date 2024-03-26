@@ -1,34 +1,18 @@
-﻿@using Front.Components.Agenda
+﻿@using Front.GetAlunoAgenda
+@using Front.GetProfessorAgenda
 
 @page "/agenda"
-@attribute [Authorize(Roles = "Aluno")]
 
 <PageTitle>Agenda</PageTitle>
 
-<MudContainer>
-    <MudCard Class="mt-8 mb-4 mx-6 px-2">
-        <MudCardContent>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Class="mr-1 mb-1" Size="Size.Large"/>
-                <MudText Typo="Typo.h5" Style="font-weight: bold">Agenda</MudText>
-                <MudSpacer />
-            </MudStack>
-        </MudCardContent>
-    </MudCard>
-    <CascadingValue Name="Dias" Value="@Dias">
-        <AgendaSemanal />
-    </CascadingValue>
-</MudContainer>
+<AuthorizeView Roles="Aluno">
+    <Authorized>
+        <AlunoAgenda />
+    </Authorized>
+</AuthorizeView>
 
-@inject HttpClient Http
-@inject IDialogService DialogService
-
-@code
-{
-    private List<AgendaDiaOut> Dias = [];
-
-    protected override async Task OnInitializedAsync()
-    {
-        Dias = await Http.GetFromJsonAsync<List<AgendaDiaOut>>("/aluno-agenda") ?? [];
-    }
-}
+<AuthorizeView Roles="Professor">
+    <Authorized>
+        <ProfessorAgenda />
+    </Authorized>
+</AuthorizeView>

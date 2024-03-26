@@ -1,0 +1,86 @@
+@using Front.CreateTurma
+@using Front.Components.Custom
+
+<MudContainer>
+    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">Turmas</MudText>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_turmas" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <MudSpacer />
+                <MudSpacer />
+                <MudTextField
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    @bind-Value="_searchString"
+                    Placeholder="Busque por disciplina ou período"
+                    Adornment="Adornment.Start"
+                    Immediate="true"
+                    AdornmentIcon="@Icons.Material.Filled.Search"
+                    IconSize="Size.Medium"
+                    Class="mt-0"
+                />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Disciplina" Title="Disciplina" />
+                <PropertyColumn Property="x => x.Periodo" Title="Período" />
+                <PropertyColumn Property="x => x.HorariosInline" Title="Horário" />
+            </Columns>
+
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+
+            <PagerContent>
+                <MudDataGridPager T="ProfessorTurmaOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject HttpClient Http
+@inject IDialogService DialogService
+
+@code
+{
+    private bool _loading;
+    private string _searchString;
+    private List<ProfessorTurmaOut> _turmas = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _turmas = await Http.GetFromJsonAsync<List<ProfessorTurmaOut>>("/professor-turmas") ?? [];
+        _loading = false;
+    }
+
+    private Func<ProfessorTurmaOut, bool> _quickFilter => x =>
+        _searchString.IsIn(x.Disciplina, x.Periodo);
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = await DialogService.ShowAsync<CreateTurmaDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem turmas cadastradas ainda." : "Nenhuma turma encontrada.";
+    }
+}

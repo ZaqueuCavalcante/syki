@@ -1,0 +1,11 @@
+﻿@page "/turmas/{Sigla}"
+
+<PageTitle>Turmas</PageTitle>
+
+<MudText Typo="Typo.h1">@Sigla</MudText>
+
+@code
+{
+    [Parameter]
+    public string Sigla { get; set; }
+}

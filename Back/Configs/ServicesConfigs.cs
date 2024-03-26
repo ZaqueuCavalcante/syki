@@ -48,6 +48,8 @@ using Syki.Back.GetUsers;
 using Syki.Back.ViewNotification;
 using Syki.Back.GetCursosWithGrades;
 using Syki.Back.GetProfessorInsights;
+using Syki.Back.GetProfessorAgenda;
+using Syki.Back.GetProfessorTurmas;
 
 namespace Syki.Back.Configs;
 
@@ -111,5 +113,7 @@ public static class ServicesConfigs
         services.AddScoped<ViewNotificationService>();
 
         services.AddScoped<GetProfessorInsightsService>();
+        services.AddScoped<GetProfessorAgendaService>();
+        services.AddScoped<GetProfessorTurmasService>();
     }
 }

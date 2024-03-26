@@ -30,7 +30,7 @@
     {
         <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
             <MudText>Selecione as disciplinas que você irá cursar nesse semestre. O período de matrícula vai até
-                <strong>@_periodoDeMatricula.End</strong>. </MudText>
+                <strong>@_periodoDeMatricula.End.ToString("dd/MM/yyyy")</strong>. </MudText>
         </MudAlert>
 
         <CascadingValue Name="Dias" Value="@_dias">

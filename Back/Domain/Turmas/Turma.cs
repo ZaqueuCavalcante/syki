@@ -65,4 +65,16 @@ public class Turma
             HorariosInline = GetHorarioAsString(),
         };
     }
+
+    public ProfessorTurmaOut ToProfessorTurmaOut()
+    {
+        return new ProfessorTurmaOut
+        {
+            Id = Id,
+            Disciplina = Disciplina.Nome,
+            Periodo = Periodo,
+            Horarios = Horarios.ConvertAll(h => h.ToOut()),
+            HorariosInline = GetHorarioAsString(),
+        };
+    }
 }

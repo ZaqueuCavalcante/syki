@@ -15,6 +15,8 @@ global using Syki.Front.GetProfessorInsights;
 global using Syki.Front.GetAlunoInsights;
 global using Syki.Front.GetAcademicInsights;
 global using Syki.Front.ResetPassword;
+global using Syki.Front.GetAlunoAgenda;
+global using Syki.Front.GetProfessorAgenda;
 global using Syki.Front.SendResetPasswordToken;
 global using Syki.Front.CreateAcademicPeriod;
 global using Syki.Front.CreateEnrollmentPeriod;

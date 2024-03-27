@@ -1,33 +1,29 @@
-using Syki.Shared;
 using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    // [Test]
+    [Test]
     public async Task Deve_criar_uma_turma()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = await _factory.LoggedAsAcademico();
 
-        var disciplina = await client.PostAsync<DisciplinaOut>("/disciplinas", new DisciplinaIn { Nome = "Banco de Dados" });
-        var professor = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
+        var disciplina = await client.CreateDisciplina();
+        var professor = await client.CreateProfessor();
         var periodo = await client.CreateAcademicPeriod("2024.1");
         var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
 
-        var body = new TurmaIn(disciplina.Id, professor.Id, periodo.Id, horarios);
-
         // Act
-        var turma = await client.PostAsync<TurmaOut>("/turmas", body);
+        var turma = await client.Createturma(disciplina.Id, professor.Id, periodo.Id, horarios);
 
         // Assert
         turma.Id.Should().NotBeEmpty();
         turma.Disciplina.Should().Be(disciplina.Nome);
         turma.Professor.Should().Be(professor.Nome);
         turma.Periodo.Should().Be(periodo.Id);
+        turma.Horarios.Should().ContainSingle();
     }
 
     // [Test]

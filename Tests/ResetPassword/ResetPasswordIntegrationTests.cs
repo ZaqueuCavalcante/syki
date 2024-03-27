@@ -38,7 +38,7 @@ public partial class IntegrationTests : IntegrationTestBase
         client.RemoveAuthToken();
 
         // Act
-        var response = await client.ResetPassword(TestData.Email, "My@new@strong@P4ssword");
+        var response = await client.ResetPassword(Guid.NewGuid().ToString(), "My@new@strong@P4ssword");
 
         // Assert
         await response.AssertBadRequest(Throw.DE019);

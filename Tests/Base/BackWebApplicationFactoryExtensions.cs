@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using static Syki.Back.Configs.AuthorizationConfigs;
 
 namespace Syki.Tests.Base;
 

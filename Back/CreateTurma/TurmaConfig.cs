@@ -1,7 +1,7 @@
 using Syki.Back.CreateAluno;
 using Syki.Back.CreateAcademicPeriod;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateTurma;
 
 public class TurmaConfig : IEntityTypeConfiguration<Turma>
 {
@@ -37,6 +37,10 @@ public class TurmaConfig : IEntityTypeConfiguration<Turma>
         turma.HasMany(t => t.Horarios)
             .WithOne()
             .HasForeignKey(h => h.TurmaId);
+
+        turma.HasMany(t => t.Units)
+            .WithOne()
+            .HasForeignKey(u => u.TurmaId);
 
         turma.HasOne<AcademicPeriod>()
             .WithMany()

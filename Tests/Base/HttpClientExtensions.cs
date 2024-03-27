@@ -16,6 +16,8 @@ using Front.UpdateCampus;
 using Front.CreateCurso;
 using Front.GetCursos;
 using Front.CreateDisciplina;
+using Front.CreateEvaluationUnits;
+using Front.CreateProfessor;
 
 namespace Syki.Tests.Base;
 
@@ -134,7 +136,38 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<DisciplinaOut>();
     }
 
+    public static async Task<ProfessorOut> CreateProfessor(
+        this HttpClient http,
+        string name = "Chico",
+        string email = ""
+    ) {
+        email = email.HasValue() ? email : TestData.Email;
+        var client = new CreateProfessorClient(http);
+        var response = await client.Create(name, email);
+        var professor= await response.DeserializeTo<ProfessorOut>();
+        professor.Email = email;
+        return professor;
+    }
 
+    public static async Task<TurmaOut> Createturma(
+        this HttpClient http,
+        Guid disciplinaId,
+        Guid professorId,
+        string periodoId,
+        List<HorarioIn> horarios
+    ) {
+        var body = new TurmaIn(disciplinaId, professorId, periodoId, horarios);
+        return await http.PostAsync<TurmaOut>("/turmas", body);
+    }
+
+    public static async Task<HttpResponseMessage> CreateEvaluationUnits(
+        this HttpClient http,
+        Guid turmaId,
+        List<EvaluationUnitIn> units
+    ) {
+        var client = new CreateEvaluationUnitsClient(http);
+        return await client.Create(turmaId, units ?? []);
+    }
 
 
 

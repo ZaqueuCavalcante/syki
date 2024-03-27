@@ -5,7 +5,7 @@ namespace Syki.Tests.Unit;
 
 public class TurmasUnitTests
 {
-    // [Test]
+    [Test]
     public void Deve_criar_uma_turma_com_id()
     {
         // Arrange
@@ -21,7 +21,7 @@ public class TurmasUnitTests
         turma.Id.Should().NotBeEmpty();
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_uma_turma_com_faculdade_id_correto()
     {
         // Arrange
@@ -37,7 +37,7 @@ public class TurmasUnitTests
         turma.FaculdadeId.Should().Be(faculdadeId);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_uma_turma_com_disciplina_id_correto()
     {
         // Arrange
@@ -53,7 +53,7 @@ public class TurmasUnitTests
         turma.DisciplinaId.Should().Be(disciplinaId);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_uma_turma_com_professor_id_correto()
     {
         // Arrange
@@ -69,7 +69,7 @@ public class TurmasUnitTests
         turma.ProfessorId.Should().Be(professorId);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_uma_turma_com_periodo_correto()
     {
         // Arrange
@@ -85,7 +85,7 @@ public class TurmasUnitTests
         turma.Periodo.Should().Be(periodo);
     }
 
-    // [Test]
+    [Test]
     public void Deve_criar_uma_turma_com_horarios_corretos()
     {
         // Arrange
@@ -102,7 +102,7 @@ public class TurmasUnitTests
         turma.Horarios.Should().BeEquivalentTo(horarios);
     }
 
-    // [Test]
+    [Test]
     public void Nao_deve_criar_uma_turma_com_horarios_totalmente_conflitantes()
     {
         // Arrange
@@ -123,8 +123,8 @@ public class TurmasUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE022);
     }
 
-    // [Test]
-    // [TestCaseSource(typeof(TestData), nameof(TestData.HorariosConflitantes))]
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.HorariosConflitantes))]
     public void Nao_deve_criar_uma_turma_com_horarios_parcialmente_conflitantes(List<Horario> horarios)
     {
         // Arrange
@@ -140,8 +140,8 @@ public class TurmasUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE022);
     }
 
-    // [Test]
-    // [TestCaseSource(typeof(TestData), nameof(TestData.HorariosValidos))]
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.HorariosValidos))]
     public void Deve_criar_uma_turma_com_horarios_validos(List<Horario> horarios)
     {
         // Arrange
@@ -157,7 +157,7 @@ public class TurmasUnitTests
         turma.Horarios.Should().BeEquivalentTo(horarios);
     }
 
-    // [Test]
+    [Test]
     public void Deve_converter_a_turma_corretamente_pro_out()
     {
         // Arrange

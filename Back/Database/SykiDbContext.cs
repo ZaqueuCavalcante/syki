@@ -14,6 +14,7 @@ using Syki.Back.CreateProfessor;
 using Syki.Back.CreateNotification;
 using Syki.Back.CreateInstitution;
 using Syki.Back.CreateDisciplina;
+using Syki.Back.CreateTurma;
 
 namespace Syki.Back.Database;
 

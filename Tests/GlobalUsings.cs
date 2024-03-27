@@ -8,5 +8,6 @@ global using FluentAssertions;
 global using Syki.Back.Domain;
 global using Syki.Back.Database;
 global using Syki.Back.Exceptions;
+global using Syki.Back.CreateTurma;
 global using Microsoft.Playwright.NUnit;
 global using Microsoft.EntityFrameworkCore;

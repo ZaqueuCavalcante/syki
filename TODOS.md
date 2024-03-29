@@ -31,6 +31,10 @@
 
 
 
+
+
+# TODO
+
 - [] CreateUser
 - [] FinishUserRegister
 
@@ -59,7 +63,6 @@
 - [] GetCursosWithDisciplinas
 
 
-# TODO
 
 - [] CreateGrade
 - [] GetGrades

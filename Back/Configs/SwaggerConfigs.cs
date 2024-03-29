@@ -57,7 +57,7 @@ public static class SwaggerConfigs
             options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
         });
 
-        services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
+        services.AddSwaggerExamplesFromAssemblyOf(typeof(Program));
     }
 
     public static void UseDocs(this IApplicationBuilder app)

@@ -8,9 +8,6 @@ public class UserRegisterConfig : IEntityTypeConfiguration<UserRegister>
 
         register.HasKey(r => r.Id);
 
-        register.Property(r => r.TrialStart);
-        register.Property(r => r.TrialEnd);
-
         register.HasIndex(r => r.Email).IsUnique();
     }
 }

@@ -70,6 +70,7 @@ public static class StringExtensions
 	{
 		Converters = [new StringEnumConverter()],
 	};
+
 	public static string Serialize(this object obj)
 	{
 		return JsonConvert.SerializeObject(obj, _settings);

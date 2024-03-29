@@ -1,14 +1,13 @@
+using Syki.Back.Tasks;
+using Syki.Back.Database;
+using Syki.Daemon.Emails;
+using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Syki.Back.CreatePendingUserRegister;
-using Syki.Back.Database;
-using Syki.Back.Exceptions;
-using Syki.Back.Tasks;
-using Syki.Daemon.Emails;
 
 namespace Syki.Daemon.Tasks;
 
-public class SendUserRegisterEmailConfirmationHandler(SykiDbContext ctx, IEmailsService emailsService)
-    : ISykiTaskHandler<SendUserRegisterEmailConfirmation>
+public class SendUserRegisterEmailConfirmationHandler(SykiDbContext ctx, IEmailsService emailsService) : ISykiTaskHandler<SendUserRegisterEmailConfirmation>
 {
     public async Task Handle(SendUserRegisterEmailConfirmation task)
     {

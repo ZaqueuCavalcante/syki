@@ -1,29 +1,59 @@
+# STRUCTURE
+
+- Back
+    - Controller
+    - Service
+    - Entity
+    - DbConfig
+    - Task?
+    - Examples?
+- Shared
+    - Dtos
+- Front
+    - Client
+    - Page
+    - Component
+- Daemon
+    - TaskHandler
+- Tests
+    - Unit
+    - Integration
+    - BUnit?
+    - E2E?
+    - Mutation?
+
 # DONE
 
 - [X] CreatePendingUserRegister
-- [X] CreateUser
-- [X] FinishUserRegister
 
-- [X] Login
-- [X] GenerateJWT
-- [X] GetMfaKey
-- [X] SetupMfa
-- [X] LoginMfa
-- [X] ResetPassword
-- [X] SendResetPasswordToken
 
-- [X] GetAcademicInsights
-- [X] GetAlunoInsights
-- [X] GetAdmInsights
 
-- [X] CreateCampus
-- [X] UpdateCampus
-- [X] GetCampi
 
-- [X] CreateCurso
-- [X] GetCursos
 
-- [X] CreateDisciplina
+
+- [] CreateUser
+- [] FinishUserRegister
+
+- [] Login
+- [] GenerateJWT
+- [] GetMfaKey
+- [] SetupMfa
+- [] LoginMfa
+- [] ResetPassword
+- [] SendResetPasswordToken
+
+- [] GetAcademicInsights
+- [] GetAlunoInsights
+- [] GetAdmInsights
+
+- [] CreateCampus
+- [] UpdateCampus
+- [] GetCampi
+
+- [] CreateCurso
+- [] GetCursos
+
+- [] CreateDisciplina
 - [] GetDisciplinas
 - [] GetCursoDisciplinas
 - [] GetCursosWithDisciplinas

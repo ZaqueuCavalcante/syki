@@ -2,10 +2,10 @@ namespace Syki.Back.CreatePendingUserRegister;
 
 public class UserRegister
 {
-    public Guid Id { get; }
-    public string Email { get; }
-    public DateOnly? TrialStart { get; private set; }
-    public DateOnly? TrialEnd { get; private set; }
+    public Guid Id { get; set; }
+    public string Email { get; set; }
+    public DateOnly? TrialStart { get; set; }
+    public DateOnly? TrialEnd { get; set; }
 
     public UserRegister(string email)
     {

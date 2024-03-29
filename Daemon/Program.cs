@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
+﻿using Audit.Core;
 using Syki.Back.Configs;
-using Microsoft.Extensions.DependencyInjection;
-using Syki.Back.Extensions;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Syki.Daemon.Emails;
 using Syki.Daemon.Configs;
-using Syki.Back.CreateProfessor;
 using Syki.Back.CreateUser;
-using Audit.Core;
+using Syki.Back.Extensions;
+using Syki.Back.CreateProfessor;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = Host.CreateDefaultBuilder(args);
 

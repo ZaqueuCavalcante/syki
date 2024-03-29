@@ -25,7 +25,7 @@ public static class UserExtensions
             path != "/login" &&
             path != "/login/mfa" &&
             path != "/reset-password" &&
-            path != "/user-register" &&
+            path != "/users" &&
             path != "/reset-password-token";
     }
 }

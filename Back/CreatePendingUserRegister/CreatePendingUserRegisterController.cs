@@ -1,3 +1,5 @@
+using Swashbuckle.AspNetCore.Filters;
+
 namespace Syki.Back.CreatePendingUserRegister;
 
 /// <summary>
@@ -8,7 +10,9 @@ namespace Syki.Back.CreatePendingUserRegister;
 [Consumes("application/json"), Produces("application/json")]
 public class CreatePendingUserRegisterController(CreatePendingUserRegisterService service) : ControllerBase
 {
-    [HttpPost("user-register")]
+    [HttpPost("users")]
+    [ProducesResponseType(typeof(ErrorOut), 400)]
+    [SwaggerResponseExample(400, typeof(CreatePendingUserRegisterErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreatePendingUserRegisterIn data)
     {
         await service.Create(data);

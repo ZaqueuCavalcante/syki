@@ -2,7 +2,7 @@
 
 namespace Syki.Back.CreatePendingUserRegister;
 
-public class CreatePendingUserRegisterInExamples : IMultipleExamplesProvider<CreatePendingUserRegisterIn>
+public class CreatePendingUserRegisterRequestsExamples : IMultipleExamplesProvider<CreatePendingUserRegisterIn>
 {
     public IEnumerable<SwaggerExample<CreatePendingUserRegisterIn>> GetExamples()
     {

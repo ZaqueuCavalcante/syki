@@ -25,7 +25,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         // Act
-        var disciplina = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
+        var disciplina = await client.CreateDisciplina("Banco de Dados", "BD", [curso.Id]);
 
         // Assert
         disciplina.Nome.Should().Be("Banco de Dados");
@@ -41,7 +41,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var cc = await client.CreateCurso("Ciência da Computação");
 
         // Act
-        var disciplina = await client.CreateDisciplina("Banco de Dados", [ads.Id, cc.Id]);
+        var disciplina = await client.CreateDisciplina("Banco de Dados", "BD", [ads.Id, cc.Id]);
 
         // Assert
         disciplina.Nome.Should().Be("Banco de Dados");
@@ -97,10 +97,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var ads = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
         var cc = await client.CreateCurso("Ciência da Computação");
 
-        await client.CreateDisciplina("Banco de Dados", [ads.Id, cc.Id]);
-        await client.CreateDisciplina("Informática e Sociedade", [ads.Id]);
-        await client.CreateDisciplina("Programação Orientada a Objetos", [cc.Id]);
-        await client.CreateDisciplina("Projeto Integrador II: Modelagem de Banco de Dados", [cc.Id]);
+        await client.CreateDisciplina("Banco de Dados", "BD", [ads.Id, cc.Id]);
+        await client.CreateDisciplina("Informática e Sociedade", "IS", [ads.Id]);
+        await client.CreateDisciplina("Programação Orientada a Objetos", "POO", [cc.Id]);
+        await client.CreateDisciplina("Projeto Integrador II: Modelagem de Banco de Dados", "PI-MBD", [cc.Id]);
 
         // Act
         var disciplinas = await client.GetAsync<List<DisciplinaOut>>($"/disciplinas?cursoId={ads.Id}");

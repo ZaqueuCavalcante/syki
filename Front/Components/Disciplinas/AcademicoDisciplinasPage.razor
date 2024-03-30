@@ -20,7 +20,7 @@
                     Margin="Margin.Dense"
                     Variant="Variant.Outlined"
                     @bind-Value="_searchString"
-                    Placeholder="Busque por nome"
+                    Placeholder="Busque por nome ou código"
                     Adornment="Adornment.Start"
                     Immediate="true"
                     AdornmentIcon="@Icons.Material.Filled.Search"
@@ -30,6 +30,7 @@
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.Code" Title="Código" />
             </Columns>
 
             <NoRecordsContent>
@@ -59,7 +60,7 @@
         _loading = false;
     }
 
-    private Func<DisciplinaOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome);
+    private Func<DisciplinaOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome, x.Code);
 
     private async Task OpenDialog()
     {

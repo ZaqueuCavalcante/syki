@@ -8,6 +8,7 @@
     <DialogContent>
         <MudForm @ref="@_form">
             <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" OnKeyDown="@Submit" />
+            <SykiTextField Label="Código" @bind-Value="@_code" OnKeyDown="@Submit" MaxLength="7" />
             <MudSelect
                 Dense="true"
                 Margin="Margin.Dense"
@@ -45,6 +46,7 @@
     MudForm _form;
     private bool _loading;
     private string _name;
+    private string _code;
 
     private List<CursoOut> Cursos = [];
     IEnumerable<CursoOut> SelectedCursos { get; set; } = new HashSet<CursoOut>() { };
@@ -62,7 +64,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await CreateDisciplinaClient.Create(_name, SelectedCursos.ToList().ConvertAll(c => c.Id));
+        var response = await CreateDisciplinaClient.Create(_name, _code, SelectedCursos.ToList().ConvertAll(c => c.Id));
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

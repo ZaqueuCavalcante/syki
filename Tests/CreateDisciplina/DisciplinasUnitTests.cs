@@ -11,7 +11,7 @@ public class DisciplinasUnitTests
         var faculdadeId = Guid.NewGuid();
 
         // Act
-        var disciplina = new Disciplina(faculdadeId, "Banco de Dados");
+        var disciplina = new Disciplina(faculdadeId, "Banco de Dados", "BD");
 
         // Assert
         disciplina.Id.Should().NotBeEmpty();
@@ -24,7 +24,7 @@ public class DisciplinasUnitTests
         var faculdadeId = Guid.NewGuid();
 
         // Act
-        var disciplina = new Disciplina(faculdadeId, "Banco de Dados");
+        var disciplina = new Disciplina(faculdadeId, "Banco de Dados", "BD");
 
         // Assert
         disciplina.FaculdadeId.Should().Be(faculdadeId);
@@ -38,7 +38,7 @@ public class DisciplinasUnitTests
         const string nome = "Banco de Dados";
 
         // Act
-        var disciplina = new Disciplina(faculdadeId, nome);
+        var disciplina = new Disciplina(faculdadeId, nome, "BD");
 
         // Assert
         disciplina.Nome.Should().Be(nome);
@@ -48,7 +48,7 @@ public class DisciplinasUnitTests
     public void Deve_converter_a_disciplina_corretamente_pro_out()
     {
         // Arrange
-        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados");
+        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados", "BD");
         disciplina.Vinculos.Add(new() { CursoId = Guid.NewGuid() });
         disciplina.Vinculos.Add(new() { CursoId = Guid.NewGuid() });
 
@@ -65,7 +65,7 @@ public class DisciplinasUnitTests
     public void Deve_retornar_true_quando_for_a_mesma_disciplina()
     {
         // Arrange
-        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados");
+        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados", "BD");
         var disciplinaOut1 = disciplina.ToOut();
         var disciplinaOut2 = disciplina.ToOut();
 
@@ -80,8 +80,8 @@ public class DisciplinasUnitTests
     public void Deve_retornar_false_quando_nao_for_a_mesma_disciplina()
     {
         // Arrange
-        var disciplina1 = new Disciplina(Guid.NewGuid(), "Banco de Dados");
-        var disciplina2 = new Disciplina(Guid.NewGuid(), "Banco de Dados");
+        var disciplina1 = new Disciplina(Guid.NewGuid(), "Banco de Dados", "BD");
+        var disciplina2 = new Disciplina(Guid.NewGuid(), "Banco de Dados", "BD");
         var disciplinaOut1 = disciplina1.ToOut();
         var disciplinaOut2 = disciplina2.ToOut();
 
@@ -96,7 +96,7 @@ public class DisciplinasUnitTests
     public void Deve_retornar_false_quando_a_outra_disciplina_for_nula()
     {
         // Arrange
-        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados");
+        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados", "BD");
         var disciplinaOut = disciplina.ToOut();
 
         // Act

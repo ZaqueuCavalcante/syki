@@ -6,6 +6,7 @@
     Required="true"
     Immediate="true"
     Margin="Margin.Dense"
+    MaxLength="@MaxLength"
     AutoFocus="@AutoFocus"
     RequiredError="Informe!"
     OnlyValidateIfDirty="true"
@@ -26,6 +27,9 @@
 
     [Parameter]
     public bool AutoFocus { get; set; }
+
+    [Parameter]
+    public int MaxLength { get; set; } = 100;
 
     [Parameter]
     public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }

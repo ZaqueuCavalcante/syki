@@ -10,16 +10,6 @@ public class Disciplina
 
     public Disciplina(
         Guid faculdadeId,
-        string nome
-    ) {
-        Id = Guid.NewGuid();
-        FaculdadeId = faculdadeId;
-        Nome = nome;
-        Vinculos = [];
-    }
-
-    public Disciplina(
-        Guid faculdadeId,
         string nome,
         string code
     ) {

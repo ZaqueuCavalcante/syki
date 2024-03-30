@@ -129,10 +129,11 @@ public static class HttpClientExtensions
     public static async Task<DisciplinaOut> CreateDisciplina(
         this HttpClient http,
         string nome = "Banco de Dados",
+        string code = "BD",
         List<Guid> cursos = null
     ) {
         var client = new CreateDisciplinaClient(http);
-        var response = await client.Create(nome, cursos ?? []);
+        var response = await client.Create(nome, code, cursos ?? []);
         return await response.DeserializeTo<DisciplinaOut>();
     }
 

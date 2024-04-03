@@ -1,5 +1,5 @@
 using Syki.Front.FinishUserRegister;
-using Syki.Back.CreatePendingUserRegister;
+using Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 namespace Syki.Tests.FinishUserRegister;
 

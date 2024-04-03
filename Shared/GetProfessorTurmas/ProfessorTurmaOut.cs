@@ -4,6 +4,7 @@ public class ProfessorTurmaOut
 {
     public Guid Id { get; set; }
     public string Disciplina { get; set; }
+    public string Code { get; set; }
     public string Periodo { get; set; }
     public List<HorarioOut> Horarios { get; set; }
     public string HorariosInline { get; set; }

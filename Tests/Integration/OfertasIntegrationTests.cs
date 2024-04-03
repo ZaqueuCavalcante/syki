@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_sem_vinculo_com_campus()
     {
         // Arrange
@@ -18,7 +18,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE010);      
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_quando_o_campus_nao_existe()
     {
         // Arrange
@@ -32,7 +32,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE010);     
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_quando_o_campus_pertence_a_outra_faculdade()
     {
         // Arrange
@@ -55,7 +55,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE010);      
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_sem_vinculo_com_periodo()
     {
         // Arrange
@@ -70,7 +70,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE005);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_com_periodo_que_nao_existe()
     {
         // Arrange
@@ -85,7 +85,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE005);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_com_periodo_de_outra_faculdade()
     {
         // Arrange
@@ -109,7 +109,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE005);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_sem_vinculo_com_curso()
     {
         // Arrange
@@ -126,7 +126,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE002);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_com_curso_que_nao_existe()
     {
         // Arrange
@@ -143,7 +143,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE002);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_com_curso_de_outra_faculdade()
     {
         // Arrange
@@ -167,7 +167,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE002);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_com_curso_sem_grade_vinculada()
     {
         // Arrange
@@ -185,7 +185,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE011);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_com_curso_com_grade_que_nao_existe()
     {
         // Arrange
@@ -203,7 +203,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE011);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_oferta_com_curso_com_grade_que_nao_eh_do_curso_escolhido()
     {
         // Arrange
@@ -223,7 +223,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE011);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Deve_criar_uma_oferta()
     {
         // Arrange
@@ -242,7 +242,7 @@ public partial class IntegrationTests : IntegrationTestBase
         oferta.Periodo.Should().Be(periodo.Id);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Deve_retornar_todas_as_ofertas()
     {
         // Arrange

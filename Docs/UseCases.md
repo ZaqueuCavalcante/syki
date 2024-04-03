@@ -17,4 +17,3 @@
 - [ ] Patrimonio / Inventario da instituicao?
 - [ ] Restaurante / cantina?
 - [ ] Eleicoes?
-- [ ] 

@@ -4,7 +4,7 @@ namespace Syki.Tests.Unit;
 
 public class OfertasUnitTests
 {
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_oferta_com_id()
     {
         // Arrange
@@ -22,7 +22,7 @@ public class OfertasUnitTests
         oferta.Id.Should().NotBeEmpty();
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_oferta_com_faculdade_id_correto()
     {
         // Arrange
@@ -40,7 +40,7 @@ public class OfertasUnitTests
         oferta.FaculdadeId.Should().Be(faculdadeId);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_oferta_com_campus_id_correto()
     {
         // Arrange
@@ -58,7 +58,7 @@ public class OfertasUnitTests
         oferta.CampusId.Should().Be(campusId);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_oferta_com_curso_id_correto()
     {
         // Arrange
@@ -76,7 +76,7 @@ public class OfertasUnitTests
         oferta.CursoId.Should().Be(cursoId);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_oferta_com_grade_id_correto()
     {
         // Arrange
@@ -94,7 +94,7 @@ public class OfertasUnitTests
         oferta.GradeId.Should().Be(gradeId);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_oferta_com_periodo_correto()
     {
         // Arrange
@@ -112,7 +112,7 @@ public class OfertasUnitTests
         oferta.Periodo.Should().Be(periodo);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_oferta_com_turno_correto()
     {
         // Arrange
@@ -130,7 +130,7 @@ public class OfertasUnitTests
         oferta.Turno.Should().Be(turno);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_converter_a_oferta_corretamente_pro_out()
     {
         // Arrange
@@ -162,7 +162,7 @@ public class OfertasUnitTests
         ofertaOut.Turno.Should().Be(oferta.Turno);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_converter_o_get_line_correto()
     {
         // Arrange

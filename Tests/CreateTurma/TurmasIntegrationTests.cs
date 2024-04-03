@@ -26,7 +26,7 @@ public partial class IntegrationTests : IntegrationTestBase
         turma.Horarios.Should().ContainSingle();
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_disciplina()
     {
         // Arrange
@@ -44,7 +44,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE004);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_professor()
     {
         // Arrange
@@ -65,7 +65,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE018);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_periodo()
     {
         // Arrange
@@ -86,7 +86,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE005);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_turma_com_horario_invalido()
     {
         // Arrange
@@ -108,7 +108,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE021);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Deve_retornar_todas_as_turmas_da_faculdade()
     {
         // Arrange

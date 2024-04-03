@@ -4,7 +4,7 @@ namespace Syki.Tests.Unit;
 
 public class NotificationsUnitTests
 {
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_notification_com_id()
     {
         // Arrange
@@ -19,7 +19,7 @@ public class NotificationsUnitTests
         notification.Id.Should().NotBeEmpty();
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_notification_com_faculdade_id_correto()
     {
         // Arrange
@@ -34,7 +34,7 @@ public class NotificationsUnitTests
         notification.FaculdadeId.Should().Be(faculdadeId);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_notification_com_title_correto()
     {
         // Arrange
@@ -49,7 +49,7 @@ public class NotificationsUnitTests
         notification.Title.Should().Be(title);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_notification_com_description_correta()
     {
         // Arrange
@@ -64,7 +64,7 @@ public class NotificationsUnitTests
         notification.Description.Should().Be(description);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_notification_com_created_at_correta()
     {
         // Arrange
@@ -79,7 +79,7 @@ public class NotificationsUnitTests
         notification.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_converter_a_notification_corretamente_pro_out()
     {
         // Arrange

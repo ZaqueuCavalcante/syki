@@ -4,7 +4,7 @@
 
 @code
 {
-    // [Test]
+    [Test, Ignore("")]
     public void Should_renders_the_default_text()
     {
         // Arrange / Act
@@ -14,7 +14,7 @@
         cut.Find("span").TextContent.MarkupMatches("Salvar");
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Should_renders_the_provided_text()
     {
         // Arrange
@@ -27,7 +27,7 @@
         cut.Find("span").TextContent.MarkupMatches(text);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Should_call_on_click_method()
     {
         // Arrange

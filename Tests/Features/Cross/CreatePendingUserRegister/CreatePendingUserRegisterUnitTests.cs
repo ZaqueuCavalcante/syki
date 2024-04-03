@@ -1,6 +1,6 @@
-using Syki.Back.CreatePendingUserRegister;
+using Syki.Back.Features.Cross.CreatePendingUserRegister;
 
-namespace Syki.Tests.CreatePendingUserRegister;
+namespace Syki.Tests.Features.Cross.CreatePendingUserRegister;
 
 public class CreatePendingUserRegisterUnitTests
 {

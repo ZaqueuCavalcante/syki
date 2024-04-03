@@ -1,8 +1,8 @@
-namespace Syki.Tests.CreatePendingUserRegister;
+namespace Syki.Tests.Features.Cross.CreatePendingUserRegister;
 
 public class CreatePendingUserRegisterE2ETests : E2ETestBase
 {
-    // [Test]
+    [Test, Ignore("")]
     public async Task Should_create_a_pending_register()
     {
         await Goto("/");

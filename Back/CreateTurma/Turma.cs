@@ -74,6 +74,7 @@ public class Turma
         {
             Id = Id,
             Disciplina = Disciplina.Nome,
+            Code = Disciplina.Code,
             Periodo = Periodo,
             Horarios = Horarios.ConvertAll(h => h.ToOut()),
             HorariosInline = GetHorarioAsString(),

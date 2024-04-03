@@ -5,7 +5,7 @@ namespace Syki.Tests.Integration;
 
 public class AuditIntegrationTests : IntegrationTestBase
 {
-    // [Test]
+    [Test, Ignore("")]
     public async Task Deve_auditar_a_criacao_de_um_campus()
     {
         // Arrange
@@ -27,7 +27,7 @@ public class AuditIntegrationTests : IntegrationTestBase
         audit.FaculdadeId.Should().Be(faculdade.Id);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Deve_auditar_a_atualizacao_de_um_campus()
     {
         // Arrange

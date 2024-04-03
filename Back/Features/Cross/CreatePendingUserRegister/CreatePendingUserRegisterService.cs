@@ -1,4 +1,4 @@
-namespace Syki.Back.CreatePendingUserRegister;
+namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 public class CreatePendingUserRegisterService(SykiDbContext ctx)
 {

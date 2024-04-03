@@ -1,4 +1,6 @@
-﻿<MudNavMenu>
+﻿@using Front.GetProfessorTurmas
+
+<MudNavMenu>
     <AuthorizeView Roles="Adm">
         <MudNavLink Href="users" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Users</MudNavLink>
         <MudNavLink Href="faculdades" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.School" IconColor="Color.Inherit">Faculdades</MudNavLink>
@@ -20,12 +22,7 @@
     </AuthorizeView>
 
     <AuthorizeView Roles="Professor">
-        <MudNavLink Href="agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
-        <MudNavGroup Icon="@Icons.Material.Filled.CenterFocusStrong" Title="Turmas" Expanded="true">
-            <MudNavLink Href="turmas/poo">POO</MudNavLink>
-            <MudNavLink Href="turmas/bdd">BDD</MudNavLink>
-            <MudNavLink Href="turmas/edd">EDD</MudNavLink>
-        </MudNavGroup>
+        <ProfessorNav />
     </AuthorizeView>
 
     <AuthorizeView Roles="Aluno">

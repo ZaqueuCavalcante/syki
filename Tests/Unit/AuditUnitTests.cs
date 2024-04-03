@@ -32,7 +32,7 @@ public class AuditUnitTests
         ]
     };
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_audit_change_com_valores_corretos()
     {
         // Arrange
@@ -52,7 +52,7 @@ public class AuditUnitTests
         audit.New.Should().Be("Recife");
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_um_audit_data_com_valores_corretos()
     {
         // Arrange / Act
@@ -64,7 +64,7 @@ public class AuditUnitTests
         audit.RootElement.GetProperty("Schema").ToString().Should().Be(_eventEntry.Schema);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_audit_log_com_id_correto()
     {
         // Arrange
@@ -80,7 +80,7 @@ public class AuditUnitTests
         audit.Id.Should().NotBeEmpty();
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_audit_log_com_entity_id_correto()
     {
         // Arrange
@@ -96,7 +96,7 @@ public class AuditUnitTests
         audit.EntityId.Should().Be(Guid.Parse("0346158a-f03f-4d95-b627-a154876c3f5b"));
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_audit_log_com_entity_type_correto()
     {
         // Arrange
@@ -112,7 +112,7 @@ public class AuditUnitTests
         audit.EntityType.Should().Be("Turma");
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_audit_log_com_action_correta()
     {
         // Arrange
@@ -128,7 +128,7 @@ public class AuditUnitTests
         audit.Action.Should().Be("Insert");
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_audit_log_com_created_at_correto()
     {
         // Arrange
@@ -144,7 +144,7 @@ public class AuditUnitTests
         audit.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_audit_log_com_user_id_correto()
     {
         // Arrange
@@ -162,7 +162,7 @@ public class AuditUnitTests
         audit.UserId.Should().Be(userId);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_uma_audit_log_com_faculdade_id_correto()
     {
         // Arrange
@@ -180,7 +180,7 @@ public class AuditUnitTests
         audit.FaculdadeId.Should().Be(faculdadeId);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_retornar_false_quando_eh_um_request_de_login()
     {
         // Arrange
@@ -197,7 +197,7 @@ public class AuditUnitTests
         result.Should().BeFalse();
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_retornar_true_quando_nao_eh_um_request_de_login()
     {
         // Arrange

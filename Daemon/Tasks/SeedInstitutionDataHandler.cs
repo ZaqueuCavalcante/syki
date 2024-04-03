@@ -1,15 +1,15 @@
+using Syki.Shared;
+using Syki.Back.Tasks;
+using Syki.Back.Domain;
+using Syki.Back.Database;
 using Syki.Back.CreateCurso;
 using Syki.Back.CreateCampus;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateDisciplina;
-using Syki.Back.CreateAcademicPeriod;
-using Syki.Back.Database;
 using Syki.Back.FinishUserRegister;
 using Microsoft.EntityFrameworkCore;
-using Syki.Back.Tasks;
-using Syki.Shared;
-using Syki.Back.Domain;
+using Syki.Back.CreateAcademicPeriod;
 
 namespace Syki.Daemon.Tasks;
 

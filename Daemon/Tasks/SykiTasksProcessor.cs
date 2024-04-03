@@ -3,12 +3,12 @@ using Npgsql;
 using Newtonsoft.Json;
 using Syki.Back.Tasks;
 using Syki.Back.Settings;
+using Syki.Daemon.Settings;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Syki.Daemon.Settings;
 
-namespace Syki.Daemon;
+namespace Syki.Daemon.Tasks;
 
 public class SykiTasksProcessor : BackgroundService
 {

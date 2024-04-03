@@ -12,7 +12,7 @@ namespace Syki.Tests.Services;
 
 public class AuthServiceTests : BunitTestContext
 {
-    // [Test]
+    [Test, Ignore("")]
     public async Task Should_login()
     {
         // Arrange
@@ -37,7 +37,7 @@ public class AuthServiceTests : BunitTestContext
         token.Should().Be(AuthTestBase.JWTAcademico);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Should_create_user_on_login()
     {
         // Arrange
@@ -60,7 +60,7 @@ public class AuthServiceTests : BunitTestContext
         user.FindFirstValue("role").Should().Be(Academico);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Should_login_with_mfa()
     {
         // Arrange
@@ -85,7 +85,7 @@ public class AuthServiceTests : BunitTestContext
         token.Should().Be(AuthTestBase.JWTAcademico);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Should_create_user_on_login_with_mfa()
     {
         // Arrange
@@ -108,7 +108,7 @@ public class AuthServiceTests : BunitTestContext
         user.FindFirstValue("role").Should().Be(Academico);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Should_logout()
     {
         // Arrange

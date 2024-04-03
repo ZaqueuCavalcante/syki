@@ -7,7 +7,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    // [Test]
+    [Test, Ignore("")]
     public async Task Deve_criar_uma_nova_faculdade()
     {
         // Arrange
@@ -23,7 +23,7 @@ public partial class IntegrationTests : IntegrationTestBase
         faculdade.Nome.Should().Be(body.Nome);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Deve_criar_varias_faculdades()
     {
         // Arrange

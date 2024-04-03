@@ -4,7 +4,7 @@ namespace Syki.Tests.Unit;
 
 public class PeriodosUnitTests
 {
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_um_periodo_com_id()
     {
         // Arrange
@@ -20,7 +20,7 @@ public class PeriodosUnitTests
         periodo.Id.Should().Be(id);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_um_periodo_com_faculdade_id_correto()
     {
         // Arrange
@@ -36,7 +36,7 @@ public class PeriodosUnitTests
         periodo.InstitutionId.Should().Be(faculdadeId);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_um_periodo_com_start_correto()
     {
         // Arrange
@@ -52,7 +52,7 @@ public class PeriodosUnitTests
         periodo.Start.Should().Be(start);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_um_periodo_com_end_correto()
     {
         // Arrange
@@ -68,8 +68,8 @@ public class PeriodosUnitTests
         periodo.End.Should().Be(end);
     }
 
-    // [Test]
-    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPeriods))]
+    [Test, Ignore("")]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPeriods))]
     public void Nao_deve_criar_um_periodo_com_id_invalido(string id)
     {
         // Arrange
@@ -84,8 +84,8 @@ public class PeriodosUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE006);
     }
 
-    // [Test]
-    // [TestCaseSource(typeof(TestData), nameof(TestData.ValidPeriods))]
+    [Test, Ignore("")]
+    [TestCaseSource(typeof(TestData), nameof(TestData.ValidPeriods))]
     public void Deve_criar_um_periodo_com_id_valido(string id)
     {
         // Arrange
@@ -101,7 +101,7 @@ public class PeriodosUnitTests
         act.Should().NotThrow<DomainException>();
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Nao_deve_criar_um_periodo_com_start_invalido()
     {
         // Arrange
@@ -117,7 +117,7 @@ public class PeriodosUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE007);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Nao_deve_criar_um_periodo_com_end_invalido()
     {
         // Arrange
@@ -133,7 +133,7 @@ public class PeriodosUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE008);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Nao_deve_criar_um_periodo_com_datas_iguais()
     {
         // Arrange
@@ -149,7 +149,7 @@ public class PeriodosUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE009);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Nao_deve_criar_um_periodo_com_datas_invalidas()
     {
         // Arrange
@@ -165,7 +165,7 @@ public class PeriodosUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE009);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_converter_o_periodo_corretamente_pro_out()
     {
         // Arrange

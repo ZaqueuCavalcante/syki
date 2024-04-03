@@ -4,7 +4,7 @@ namespace Syki.Tests.Unit;
 
 public class PeriodosDeMatriculaUnitTests
 {
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_um_periodo_de_matricula_com_id()
     {
         // Arrange
@@ -20,7 +20,7 @@ public class PeriodosDeMatriculaUnitTests
         pm.Id.Should().Be(id);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_um_periodo_de_matricula_com_faculdade_id_correto()
     {
         // Arrange
@@ -36,7 +36,7 @@ public class PeriodosDeMatriculaUnitTests
         pm.InstitutionId.Should().Be(faculdadeId);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_um_periodo_de_matricula_com_start_correto()
     {
         // Arrange
@@ -52,7 +52,7 @@ public class PeriodosDeMatriculaUnitTests
         pm.Start.Should().Be(start);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Deve_criar_um_periodo_de_matricula_com_end_correto()
     {
         // Arrange
@@ -68,7 +68,7 @@ public class PeriodosDeMatriculaUnitTests
         pm.End.Should().Be(end);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Nao_deve_criar_um_periodo_de_matricula_com_datas_iguais()
     {
         // Arrange
@@ -84,7 +84,7 @@ public class PeriodosDeMatriculaUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE023);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public void Nao_deve_criar_um_periodo_de_matricula_com_datas_invalidas()
     {
         // Arrange

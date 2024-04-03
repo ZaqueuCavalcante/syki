@@ -24,7 +24,8 @@
 
 # DONE
 
-- [X] CreatePendingUserRegister
+- [X] 00 CreatePendingUserRegister
+- [] 01 FinishUserRegister
 
 
 
@@ -36,7 +37,6 @@
 # TODO
 
 - [] CreateUser
-- [] FinishUserRegister
 
 - [] Login
 - [] GenerateJWT
@@ -96,3 +96,56 @@
 
 - [] GetInstitutions
 - [] GetUsers
+
+
+
+# IDEAS
+
+- N colocar o JWT no local storage
+- Parar de fazer polling no banco (usar events?)
+- Adicionar paginacao nos GETs
+- Redis?
+- RabbitMQ?
+- Load Balancer?
+- Monitoring? DataDog
+- Optimize Queries
+- Logs
+- Use Result Pattern instead throw exceptions
+- Load testing (K6)
+
+# YouTube
+
+- Features:
+    - User register
+    - CRUDs
+    - Flow...
+
+- Stack:
+    - C#, ASP.NET, Blazor Wasm, NGINX, PostgreSQL
+    - Docker, Docker-Compose
+    - Tests (unit, integration, E2E, Mutation...)
+    - Libs
+    - Documentation
+    - Infra (Railway), CI/CD (GitHub Actions)
+
+- Code:
+    - Auditoria
+    - Autenticacao / autorizacao
+    - Autenticacao / autorizacao (roles)
+    - RateLimit
+    - Tarefas em background'
+    - ER do banco de dados
+
+
+
+
+## 00 CreatePendingUserRegister
+    - Cadastrar email do academico da instituicao
+    - Mostrar erros de email invalido e email duplicado
+
+## 01 FinishUserRegister
+    - 
+
+
+
+

@@ -24,7 +24,7 @@ public class Startup
 
     public static void Configure(IApplicationBuilder app, SykiDbContext ctx)
     {
-        ctx.MigrateDb();
+        ctx.ResetDb();
 
         app.UseCors();
 

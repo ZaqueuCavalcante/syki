@@ -3,8 +3,8 @@
     "tasks": [
         {
             "label": "build",
-            "command": "dotnet",
             "type": "process",
+            "command": "dotnet",
             "args": [
                 "build",
                 "${workspaceFolder}/SYKI.sln",

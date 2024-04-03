@@ -1,11 +1,81 @@
-﻿@page "/turmas/{Sigla}"
+﻿@using Front.Components.Custom
+
+@page "/turmas/{Id}"
 
 <PageTitle>Turmas</PageTitle>
 
-<MudText Typo="Typo.h1">@Sigla</MudText>
+<MudContainer>
+    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">@_turma.Disciplina</MudText>
+                <MudSpacer />
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="mb-8">
+        <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanel IsInitiallyExpanded="true">
+                <TitleContent>
+                    <div class="d-flex">
+                        <MudIcon Icon="@Icons.Material.Filled.ArrowRight" class="mr-3"></MudIcon>
+                        <MudText><strong>Avaliações</strong></MudText>
+                    </div>
+                </TitleContent>
+                <ChildContent>
+
+
+                    <MudPaper Elevation="2" Class="mt-6" Width="700px">
+                        <MudGrid>
+                            <MudItem xs="10">
+                                <SykiTextField Label="Nome" @bind-Value="@_nome" />
+                            </MudItem>
+                            <MudItem xs="2">
+                                <MudNumericField
+                                    MaxLength="3"
+                                    Min="0"
+                                    Max="100"
+                                    HideSpinButtons="true"
+                                    Margin="Margin.Dense"
+                                    Variant="Variant.Outlined"
+                                    T="ushort?"
+                                    @bind-Value="@_peso"
+                                    Label="Peso"
+                                    Required="true"
+                                    RequiredError="Informe!"
+                                />
+                            </MudItem>
+                        </MudGrid>
+                    </MudPaper>
+
+
+                   
+
+
+
+                </ChildContent>
+            </MudExpansionPanel>
+        </MudExpansionPanels>
+    </MudContainer>
+</MudContainer>
+
+@inject HttpClient Http
 
 @code
 {
     [Parameter]
-    public string Sigla { get; set; }
+    public string Id { get; set; }
+    private bool _loading;
+    private ProfessorTurmaOut _turma = new();
+    private string _nome;
+    private ushort? _peso;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        _turma = await Http.GetFromJsonAsync<ProfessorTurmaOut>($"/professor-turma?turmaId={Id}") ?? new();
+        _loading = false;
+    }
 }

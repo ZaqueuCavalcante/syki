@@ -3,7 +3,7 @@ using Syki.Back.Database;
 using Syki.Daemon.Emails;
 using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using Syki.Back.CreatePendingUserRegister;
+using Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 namespace Syki.Daemon.Tasks;
 

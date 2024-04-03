@@ -13,7 +13,7 @@ using Syki.Back.FinishUserRegister;
 using Syki.Back.GetEnrollmentPeriods;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.SendResetPasswordToken;
-using Syki.Back.CreatePendingUserRegister;
+using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateCurso;
 using Syki.Back.CreateDisciplina;
@@ -51,6 +51,7 @@ using Syki.Back.GetProfessorInsights;
 using Syki.Back.GetProfessorAgenda;
 using Syki.Back.GetProfessorTurmas;
 using Syki.Back.CreateEvaluationUnits;
+using Syki.Back.GetProfessorTurma;
 
 namespace Syki.Back.Configs;
 
@@ -116,6 +117,7 @@ public static class ServicesConfigs
         services.AddScoped<GetProfessorInsightsService>();
         services.AddScoped<GetProfessorAgendaService>();
         services.AddScoped<GetProfessorTurmasService>();
+        services.AddScoped<GetProfessorTurmaService>();
         services.AddScoped<CreateEvaluationUnitsService>();
     }
 }

@@ -7,7 +7,7 @@ using Syki.Back.CreateCampus;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.SendResetPasswordToken;
 using Syki.Back.CreateEnrollmentPeriod;
-using Syki.Back.CreatePendingUserRegister;
+using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;

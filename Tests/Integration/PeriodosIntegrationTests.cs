@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    // [Test]
+    [Test, Ignore("")]
     public async Task Deve_criar_um_novo_periodo()
     {
         // Arrange
@@ -19,7 +19,7 @@ public partial class IntegrationTests : IntegrationTestBase
         periodo.Id.Should().Be(periodo.Id);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Deve_criar_varios_periodos_para_uma_mesma_faculdade()
     {
         // Arrange
@@ -36,7 +36,7 @@ public partial class IntegrationTests : IntegrationTestBase
         periodos.Should().HaveCount(2);
     }
 
-    // [Test]
+    [Test, Ignore("")]
     public async Task Deve_retornar_apenas_os_periodos_da_faculdade_do_usuario_logado()
     {
         // Arrange

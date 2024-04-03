@@ -29,7 +29,7 @@ jobs:
       - name: Setup
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 8.0.200
+          dotnet-version: 8888.0.200
       - name: Restore
         run: dotnet restore
       - name: Build

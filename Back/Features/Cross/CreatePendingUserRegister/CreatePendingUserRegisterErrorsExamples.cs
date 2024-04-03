@@ -1,6 +1,6 @@
 ﻿using Swashbuckle.AspNetCore.Filters;
 
-namespace Syki.Back.CreatePendingUserRegister;
+namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 public class CreatePendingUserRegisterErrorsExamples : IMultipleExamplesProvider<ErrorOut>
 {

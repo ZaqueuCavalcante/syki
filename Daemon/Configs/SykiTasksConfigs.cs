@@ -1,7 +1,7 @@
-using Syki.Back.Settings;
-using Microsoft.Extensions.DependencyInjection;
-using Syki.Daemon.Settings;
 using Syki.Daemon.Tasks;
+using Syki.Back.Settings;
+using Syki.Daemon.Settings;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Daemon.Configs;
 

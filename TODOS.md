@@ -27,10 +27,14 @@
 - [X] 00 CreatePendingUserRegister
 - [X] 01 FinishUserRegister
 - [X] 02 CreateUser
+- [X] 03 Login
+- [] GenerateJWT
 
-
-
-
+- [] GetMfaKey
+- [] SetupMfa
+- [] LoginMfa (n aparece msg de erro ao informar codigo errado)
+- [] ResetPassword
+- [] SendResetPasswordToken
 
 
 
@@ -38,13 +42,8 @@
 # TODO
 
 
-- [] Login
-- [] GenerateJWT
-- [] GetMfaKey
-- [] SetupMfa
-- [] LoginMfa
-- [] ResetPassword
-- [] SendResetPasswordToken
+
+
 
 - [] GetAcademicInsights
 - [] GetAlunoInsights

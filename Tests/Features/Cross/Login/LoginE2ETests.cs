@@ -1,4 +1,4 @@
-namespace Syki.Tests.Login;
+namespace Syki.Tests.Features.Cross.Login;
 
 public class LoginE2ETests : E2ETestBase
 {

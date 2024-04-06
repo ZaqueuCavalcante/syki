@@ -1,4 +1,3 @@
-using Syki.Back.Login;
 using Syki.Back.LoginMfa;
 using Syki.Back.SetupMfa;
 using Syki.Back.GetCampi;
@@ -51,6 +50,7 @@ using Syki.Back.GetProfessorTurmas;
 using Syki.Back.CreateEvaluationUnits;
 using Syki.Back.GetProfessorTurma;
 using Syki.Back.Features.Cross.FinishUserRegister;
+using Syki.Back.Features.Cross.Login;
 
 namespace Syki.Back.Configs;
 

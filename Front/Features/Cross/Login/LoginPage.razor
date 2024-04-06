@@ -8,7 +8,7 @@
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
-    <MudForm @ref="_form">
+    <MudForm @ref="@_form">
         <MudCard Class="px-16 pt-16 pb-8">
             <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
             <MudCardContent>
@@ -19,18 +19,18 @@
                     Label="Email"
                     Class="mt-3"
                     OnlyValidateIfDirty="true"
-                    @bind-Value="_model.Email"
+                    @bind-Value="@_email"
                     Variant="Variant.Outlined"
                     Required="true"
                     RequiredError="Informe!"
                 />
-                <PasswordTextField @bind-Value="_model.Password" />
+                <PasswordTextField @bind-Value="@_password" />
             </MudCardContent>
             <MudCardActions Class="justify-center">
                 <MudStack Spacing="1">
                     <MudButton
                         Size="Size.Large"
-                        OnClick="OnClick"
+                        OnClick="@OnClick"
                         Variant="Variant.Filled"
                         Color="Color.Primary"
                         Class="mx-auto mb-4 px-12"
@@ -52,7 +52,8 @@
 {
     private bool _loading;
     private MudForm _form;
-    LoginIn _model = new();
+    private string _email;
+    private string _password;
 
     private async Task OnClick()
     {
@@ -60,18 +61,18 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var result = await Client.Login(_model.Email, _model.Password);
+        var result = await Client.Login(_email, _password);
         if (result.AccessToken != null)
         {
             Nav.NavigateTo("/");
         }
-        else if (result.WrongEmailOrPassword)
-        {
-            Snackbar.Add("Email ou senha inválidos!", Severity.Error);
-        }
-        else if (result.RequiresTwoFactor)
+        if (result.RequiresTwoFactor)
         {
             Nav.NavigateTo("/login-mfa");
+        }
+        if (result.WrongEmailOrPassword)
+        {
+            Snackbar.Add("Email ou senha inválidos!", Severity.Error);
         }
         _loading = false;
     }

@@ -1,6 +1,6 @@
 using Syki.Back.GenerateJWT;
 
-namespace Syki.Back.Login;
+namespace Syki.Back.Features.Cross.Login;
 
 public class LoginService(GenerateJWTService service, SignInManager<SykiUser> signInManager)
 {

@@ -1,4 +1,3 @@
-using Syki.Back.LoginMfa;
 using Syki.Back.GetCampi;
 using Syki.Back.Features.Cross.GenerateJWT;
 using Syki.Back.CreateCampus;
@@ -51,6 +50,7 @@ using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Cross.Login;
 using Syki.Back.Features.Cross.GetMfaKey;
 using Syki.Back.Features.Cross.SetupMfa;
+using Syki.Back.Features.Cross.LoginMfa;
 
 namespace Syki.Back.Configs;
 
@@ -58,6 +58,17 @@ public static class ServicesConfigs
 {
     public static void AddServicesConfigs(this IServiceCollection services)
     {
+        services.AddScoped<CreatePendingUserRegisterService>();
+        services.AddScoped<CreateUserService>();
+        services.AddScoped<FinishUserRegisterService>();
+        services.AddScoped<GenerateJWTService>();
+        services.AddScoped<GetMfaKeyService>();
+        services.AddScoped<LoginService>();
+        services.AddScoped<LoginMfaService>();
+        services.AddScoped<SetupMfaService>();
+
+
+
         services.AddScoped<CreateAcademicPeriodService>();
         services.AddScoped<CreateAlunoService>();
         services.AddScoped<CreateCampusService>();
@@ -68,13 +79,8 @@ public static class ServicesConfigs
         services.AddScoped<CreateMatriculaAlunoService>();
         services.AddScoped<CreateNotificationService>();
         services.AddScoped<CreateOfertaService>();
-        services.AddScoped<CreatePendingUserRegisterService>();
         services.AddScoped<CreateProfessorService>();
         services.AddScoped<CreateTurmaService>();
-        services.AddScoped<CreateUserService>();
-
-        services.AddScoped<FinishUserRegisterService>();
-        services.AddScoped<GenerateJWTService>();
 
         services.AddScoped<GetAcademicInsightsService>();
         services.AddScoped<GetAcademicPeriodsService>();
@@ -94,7 +100,6 @@ public static class ServicesConfigs
         services.AddScoped<GetGradesService>();
         services.AddScoped<GetInstitutionsService>();
         services.AddScoped<GetMatriculaAlunoTurmasService>();
-        services.AddScoped<GetMfaKeyService>();
         services.AddScoped<GetNotificationsService>();
         services.AddScoped<GetOfertasService>();
         services.AddScoped<GetProfessoresService>();
@@ -103,13 +108,9 @@ public static class ServicesConfigs
         services.AddScoped<GetUserNotificationsService>();
         services.AddScoped<GetUsersService>();
 
-        services.AddScoped<LoginService>();
-        services.AddScoped<LoginMfaService>();
-
         services.AddScoped<ResetPasswordService>();
         services.AddScoped<SendResetPasswordEmailService>();
 
-        services.AddScoped<SetupMfaService>();
         services.AddScoped<UpdateCampusService>();
         services.AddScoped<ViewNotificationService>();
 

@@ -30,20 +30,18 @@
 - [X] 03 Login
 - [X] 04 GenerateJWT
 - [X] 05 GetMfaKey
+- [X] 06 SetupMfa
+- [X] 07 LoginMfa
 
-- [] SetupMfa
-- [] LoginMfa (n aparece msg de erro ao informar codigo errado)
 - [] ResetPassword
 - [] SendResetPasswordToken
 
 
 
 
+
+
 # TODO
-
-
-
-
 
 - [] GetAcademicInsights
 - [] GetAlunoInsights

@@ -18,20 +18,19 @@
                 </MudAlert>
                 <MudForm>
                     <MudTextField
-                        Immediate="true"
                         Placeholder="_ _ _  _ _ _"
                         OnlyValidateIfDirty="true"
                         Variant="Variant.Outlined"
                         Style="width: 200px;"
-                        Class="mt-8 pt-16"
+                        Class="mt-8 pt-8"
                         AutoFocus="true"
-                        Value="_code"
-                        ValueChanged="x => HandleCodeChanged(x)"
+                        Value="@_code"
+                        ValueChanged="@HandleCodeChanged"
                         T="String"
                         Mask="@(new PatternMask("000 000"))"
                     />
                 </MudForm>
-                @if (_showCodeFeedback && !_codeIsCorrect)
+                @if (_showCodeFeedback)
                 {
                     <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Text">
                         <MudStack Row="true" Justify="Justify.SpaceAround">
@@ -49,17 +48,16 @@
 
 @code
 {
+    private string _code;
     private bool _loading;
     private bool _showCodeFeedback;
-    private bool _codeIsCorrect;
-    private string _code;
 
     private async Task HandleCodeChanged(string newValue)
     {
         _showCodeFeedback = false;
         _code = newValue;
 
-        if (_code.Length == 7)
+        if (_code.OnlyNumbers().Length == 6)
         {
             _loading = true;
             var result = await Client.Login(_code);
@@ -68,13 +66,9 @@
             {
                 Nav.NavigateTo("/");
             }
-            else if (result.Wrong2FactorCode)
-            {
-                _codeIsCorrect = false;
-            }
-
-            _loading = false;
+   
             _showCodeFeedback = true;
+            _loading = false;
         }
     }
 }

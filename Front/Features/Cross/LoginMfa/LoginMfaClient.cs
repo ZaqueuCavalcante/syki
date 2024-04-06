@@ -8,13 +8,13 @@ public class LoginMfaClient(HttpClient http, ILocalStorageService localStorage, 
 {
     public async Task<LoginMfaOut> Login(string code)
     {
-        var body = new LoginMfaIn { Code = code };
+        var body = new LoginMfaIn { Token = code };
         var response = await http.PostAsJsonAsync("/login/mfa", body);
 
         var responseAsString = await response.Content.ReadAsStringAsync();
         var result = JsonConvert.DeserializeObject<LoginMfaOut>(responseAsString)!;
 
-        if (response.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode && result.AccessToken != null)
         {
             await localStorage.SetItemAsync("AccessToken", result.AccessToken);
             authStateProvider.MarkUserAsAuthenticated();

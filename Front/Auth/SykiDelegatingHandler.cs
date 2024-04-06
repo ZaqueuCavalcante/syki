@@ -13,7 +13,10 @@ public class SykiDelegatingHandler(ILocalStorageService storage, NavigationManag
 
         var token = await storage.GetItemAsync("AccessToken");
 
-        request.Headers.Add("Authorization", $"Bearer {token}");
+        if (token != null)
+        {
+            request.Headers.Add("Authorization", $"Bearer {token}");
+        }
 
         var response = await base.SendAsync(request, cancellationToken);
 

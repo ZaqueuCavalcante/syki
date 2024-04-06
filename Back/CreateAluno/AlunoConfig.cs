@@ -1,5 +1,3 @@
-using Syki.Back.CreateUser;
-
 namespace Syki.Back.CreateAluno;
 
 public class AlunoConfig : IEntityTypeConfiguration<Aluno>

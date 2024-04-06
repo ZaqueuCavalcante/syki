@@ -1,9 +1,9 @@
 using Syki.Back.Configs;
 using Syki.Daemon.Emails;
-using Syki.Back.CreateUser;
 using Syki.Back.Extensions;
 using Syki.Back.CreateProfessor;
 using Microsoft.Extensions.Hosting;
+using Syki.Back.Features.Cross.CreateUser;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

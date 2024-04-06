@@ -1,5 +1,3 @@
-using Syki.Back.CreateUser;
-
 namespace Syki.Back.GetMfaKey;
 
 public class GetMfaKeyService(UserManager<SykiUser> userManager)

@@ -1,5 +1,3 @@
-using Syki.Back.CreateUser;
-
 namespace Syki.Back.ResetPassword;
 
 public class ResetPasswordService(SykiDbContext ctx, UserManager<SykiUser> userManager)

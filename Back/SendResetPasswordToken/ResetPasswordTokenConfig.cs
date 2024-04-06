@@ -1,5 +1,3 @@
-using Syki.Back.CreateUser;
-
 namespace Syki.Back.SendResetPasswordToken;
 
 public class ResetPasswordTokenConfig : IEntityTypeConfiguration<ResetPasswordToken>

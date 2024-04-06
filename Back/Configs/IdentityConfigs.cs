@@ -1,5 +1,3 @@
-using Syki.Back.CreateUser;
-
 namespace Syki.Back.Configs;
 
 public static class IdentityConfigs

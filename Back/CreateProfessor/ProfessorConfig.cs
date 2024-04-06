@@ -1,5 +1,4 @@
 using Syki.Back.CreateProfessor;
-using Syki.Back.CreateUser;
 
 namespace Syki.Back.Database;
 

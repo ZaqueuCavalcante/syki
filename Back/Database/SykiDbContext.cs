@@ -1,5 +1,4 @@
 using Syki.Back.Audit;
-using Syki.Back.CreateUser;
 using Audit.EntityFramework;
 using Syki.Back.CreateAluno;
 using Syki.Back.CreateCurso;

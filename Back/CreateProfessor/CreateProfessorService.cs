@@ -1,5 +1,3 @@
-using Syki.Back.CreateUser;
-
 namespace Syki.Back.CreateProfessor;
 
 public class CreateProfessorService(SykiDbContext ctx, CreateUserService service)

@@ -25,7 +25,8 @@
 # DONE
 
 - [X] 00 CreatePendingUserRegister
-- [] 01 FinishUserRegister
+- [X] 01 FinishUserRegister
+- [X] 02 CreateUser
 
 
 
@@ -36,7 +37,6 @@
 
 # TODO
 
-- [] CreateUser
 
 - [] Login
 - [] GenerateJWT

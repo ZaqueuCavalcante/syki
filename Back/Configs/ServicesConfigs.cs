@@ -3,7 +3,6 @@ using Syki.Back.LoginMfa;
 using Syki.Back.SetupMfa;
 using Syki.Back.GetCampi;
 using Syki.Back.GetMfaKey;
-using Syki.Back.CreateUser;
 using Syki.Back.GenerateJWT;
 using Syki.Back.CreateCampus;
 using Syki.Back.UpdateCampus;

@@ -1,5 +1,3 @@
-using Syki.Back.CreateUser;
-
 namespace Syki.Back.SetupMfa;
 
 public class SetupMfaService(UserManager<SykiUser> userManager)

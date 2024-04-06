@@ -1,5 +1,3 @@
-using Syki.Back.CreateUser;
-
 namespace Syki.Back.SendResetPasswordToken;
 
 public class SendResetPasswordEmailService(SykiDbContext ctx, UserManager<SykiUser> userManager)

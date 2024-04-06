@@ -1,4 +1,4 @@
-namespace Syki.Back.CreateUser;
+namespace Syki.Back.Features.Cross.CreateUser;
 
 public class SykiRoleConfig : IEntityTypeConfiguration<SykiRole>
 {

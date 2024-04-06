@@ -1,4 +1,3 @@
-using Syki.Back.CreateUser;
 using Syki.Back.GenerateJWT;
 
 namespace Syki.Back.Login;

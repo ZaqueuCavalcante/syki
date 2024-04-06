@@ -1,5 +1,4 @@
 using System.Text;
-using Syki.Back.CreateUser;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

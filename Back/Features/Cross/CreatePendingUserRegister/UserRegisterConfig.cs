@@ -7,6 +7,7 @@ public class UserRegisterConfig : IEntityTypeConfiguration<UserRegister>
         register.ToTable("user_registers");
 
         register.HasKey(r => r.Id);
+        register.Property(r => r.Id).ValueGeneratedNever();
 
         register.HasIndex(r => r.Email).IsUnique();
     }

@@ -2,7 +2,6 @@ using Syki.Back.Audit;
 using Audit.EntityFramework;
 using Syki.Back.CreateAluno;
 using Syki.Back.CreateCurso;
-using Syki.Back.CreateCampus;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
@@ -14,6 +13,7 @@ using Syki.Back.CreateInstitution;
 using Syki.Back.CreateDisciplina;
 using Syki.Back.CreateTurma;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
+using Syki.Back.Features.Academico.CreateCampus;
 
 namespace Syki.Back.Database;
 

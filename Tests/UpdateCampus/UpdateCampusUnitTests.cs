@@ -1,4 +1,4 @@
-using Syki.Back.CreateCampus;
+using Syki.Back.Features.Academico.CreateCampus;
 
 namespace Syki.Tests.UpdateCampus;
 

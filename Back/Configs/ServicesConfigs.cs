@@ -1,7 +1,7 @@
 using Syki.Back.GetCampi;
 using Syki.Back.Features.Cross.GenerateJWT;
 using Syki.Back.Features.Academico.CreateCampus;
-using Syki.Back.UpdateCampus;
+using Syki.Back.Features.Academico.UpdateCampus;
 using Syki.Back.CreateAluno;
 using Syki.Back.GetEnrollmentPeriods;
 using Syki.Back.CreateAcademicPeriod;

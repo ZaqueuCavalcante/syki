@@ -1,4 +1,4 @@
-namespace Syki.Back.UpdateCampus;
+namespace Syki.Back.Features.Academico.UpdateCampus;
 
 public class UpdateCampusService(SykiDbContext ctx)
 {

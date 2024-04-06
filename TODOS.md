@@ -36,7 +36,9 @@
 - [X] 09 ResetPassword
 
 - [X] 10 GetAcademicInsights
-
+- [X] 11 CreateCampus
+- [] 12 UpdateCampus
+- [] 13 GetCampi
 
 
 
@@ -45,9 +47,7 @@
 - [] GetAlunoInsights
 - [] GetAdmInsights
 
-- [] CreateCampus
-- [] UpdateCampus
-- [] GetCampi
+
 
 - [] CreateCurso
 - [] GetCursos

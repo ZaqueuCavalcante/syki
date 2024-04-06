@@ -3,7 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Deve_atualizar_um_campus()
+    public async Task Should_update_a_campus()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();

@@ -1,4 +1,4 @@
-namespace Syki.Back.GetCampi;
+namespace Syki.Back.Features.Academico.GetCampi;
 
 public class GetCampiService(SykiDbContext ctx)
 {

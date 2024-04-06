@@ -1,4 +1,4 @@
-using Syki.Back.GetCampi;
+using Syki.Back.Features.Academico.GetCampi;
 using Syki.Back.Features.Cross.GenerateJWT;
 using Syki.Back.Features.Academico.CreateCampus;
 using Syki.Back.Features.Academico.UpdateCampus;

@@ -37,8 +37,10 @@
 
 - [X] 10 GetAcademicInsights
 - [X] 11 CreateCampus
-- [] 12 UpdateCampus
-- [] 13 GetCampi
+- [X] 12 UpdateCampus
+- [X] 13 GetCampi
+
+
 
 
 

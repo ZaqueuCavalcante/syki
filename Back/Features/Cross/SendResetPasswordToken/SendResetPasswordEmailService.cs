@@ -1,4 +1,4 @@
-namespace Syki.Back.SendResetPasswordToken;
+namespace Syki.Back.Features.Cross.SendResetPasswordToken;
 
 public class SendResetPasswordEmailService(SykiDbContext ctx, UserManager<SykiUser> userManager)
 {

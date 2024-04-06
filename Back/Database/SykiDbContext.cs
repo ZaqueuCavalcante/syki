@@ -4,7 +4,6 @@ using Syki.Back.CreateAluno;
 using Syki.Back.CreateCurso;
 using Syki.Back.CreateCampus;
 using Syki.Back.CreateAcademicPeriod;
-using Syki.Back.SendResetPasswordToken;
 using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -14,6 +13,7 @@ using Syki.Back.CreateNotification;
 using Syki.Back.CreateInstitution;
 using Syki.Back.CreateDisciplina;
 using Syki.Back.CreateTurma;
+using Syki.Back.Features.Cross.SendResetPasswordToken;
 
 namespace Syki.Back.Database;
 

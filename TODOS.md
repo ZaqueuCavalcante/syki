@@ -32,9 +32,8 @@
 - [X] 05 GetMfaKey
 - [X] 06 SetupMfa
 - [X] 07 LoginMfa
-
-- [] ResetPassword
-- [] SendResetPasswordToken
+- [X] 08 SendResetPasswordToken
+- [X] 09 ResetPassword
 
 
 

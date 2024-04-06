@@ -1,4 +1,4 @@
-using Syki.Back.SendResetPasswordToken;
+using Syki.Back.Features.Cross.SendResetPasswordToken;
 
 namespace Syki.Tests.Unit;
 

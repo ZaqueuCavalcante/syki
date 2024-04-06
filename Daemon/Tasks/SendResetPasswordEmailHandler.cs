@@ -3,7 +3,7 @@ using Syki.Back.Database;
 using Syki.Daemon.Emails;
 using Syki.Back.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using Syki.Back.SendResetPasswordToken;
+using Syki.Back.Features.Cross.SendResetPasswordToken;
 
 namespace Syki.Daemon.Tasks;
 

@@ -3,10 +3,8 @@ using Syki.Back.Features.Cross.GenerateJWT;
 using Syki.Back.CreateCampus;
 using Syki.Back.UpdateCampus;
 using Syki.Back.CreateAluno;
-using Syki.Back.ResetPassword;
 using Syki.Back.GetEnrollmentPeriods;
 using Syki.Back.CreateAcademicPeriod;
-using Syki.Back.SendResetPasswordToken;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateCurso;
@@ -51,6 +49,8 @@ using Syki.Back.Features.Cross.Login;
 using Syki.Back.Features.Cross.GetMfaKey;
 using Syki.Back.Features.Cross.SetupMfa;
 using Syki.Back.Features.Cross.LoginMfa;
+using Syki.Back.Features.Cross.ResetPassword;
+using Syki.Back.Features.Cross.SendResetPasswordToken;
 
 namespace Syki.Back.Configs;
 
@@ -66,7 +66,10 @@ public static class ServicesConfigs
         services.AddScoped<LoginService>();
         services.AddScoped<LoginMfaService>();
         services.AddScoped<SetupMfaService>();
+        services.AddScoped<ResetPasswordService>();
+        services.AddScoped<SendResetPasswordEmailService>();
 
+        
 
 
         services.AddScoped<CreateAcademicPeriodService>();
@@ -108,8 +111,7 @@ public static class ServicesConfigs
         services.AddScoped<GetUserNotificationsService>();
         services.AddScoped<GetUsersService>();
 
-        services.AddScoped<ResetPasswordService>();
-        services.AddScoped<SendResetPasswordEmailService>();
+
 
         services.AddScoped<UpdateCampusService>();
         services.AddScoped<ViewNotificationService>();

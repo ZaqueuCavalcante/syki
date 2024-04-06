@@ -1,4 +1,4 @@
-namespace Syki.Back.GetMfaKey;
+namespace Syki.Back.Features.Cross.GetMfaKey;
 
 public class GetMfaKeyService(UserManager<SykiUser> userManager)
 {

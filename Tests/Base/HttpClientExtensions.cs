@@ -18,6 +18,7 @@ using Front.GetCursos;
 using Front.CreateDisciplina;
 using Front.CreateEvaluationUnits;
 using Front.CreateProfessor;
+using Syki.Front.GetAcademicInsights;
 
 namespace Syki.Tests.Base;
 
@@ -58,6 +59,12 @@ public static class HttpClientExtensions
         http.AddAuthToken(response.AccessToken);
 
         return response;
+    }
+
+    public static async Task<AcademicInsightsOut> GetAcademicInsights(this HttpClient http)
+    {
+        var client = new GetAcademicInsightsClient(http);
+        return await client.Get();
     }
 
     public static async Task<GetMfaKeyOut> GetMfaKey(this HttpClient http)

@@ -27,7 +27,6 @@ public static class ServicesConfigs
         builder.Services.AddScoped<GetAlunoAgendaClient>();
         builder.Services.AddScoped<GetProfessorAgendaClient>();
 
-
         builder.Services.AddScoped<CreateAcademicPeriodClient>();
         builder.Services.AddScoped<GetAcademicPeriodsClient>();
         builder.Services.AddScoped<CreateEnrollmentPeriodClient>();

@@ -35,14 +35,13 @@
 - [X] 08 SendResetPasswordToken
 - [X] 09 ResetPassword
 
-
+- [X] 10 GetAcademicInsights
 
 
 
 
 # TODO
 
-- [] GetAcademicInsights
 - [] GetAlunoInsights
 - [] GetAdmInsights
 

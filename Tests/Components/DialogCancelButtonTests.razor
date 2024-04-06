@@ -4,7 +4,7 @@
 
 @code
 {
-    [Test, Ignore("")]
+    [Test]
     public void Should_renders_the_default_text()
     {
         // Arrange / Act
@@ -14,7 +14,7 @@
         cut.Find("span").TextContent.MarkupMatches("Cancelar");
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Should_call_on_click_method()
     {
         // Arrange

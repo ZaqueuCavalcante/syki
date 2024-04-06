@@ -15,7 +15,6 @@ using Syki.Back.CreateMatriculaAluno;
 using Syki.Back.CreateNotification;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateTurma;
-using Syki.Back.GetAcademicInsights;
 using Syki.Back.GetAcademicPeriods;
 using Syki.Back.GetAlunoAgenda;
 using Syki.Back.GetAlunoDisciplinas;
@@ -51,6 +50,7 @@ using Syki.Back.Features.Cross.SetupMfa;
 using Syki.Back.Features.Cross.LoginMfa;
 using Syki.Back.Features.Cross.ResetPassword;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
+using Syki.Back.Features.Academico.GetAcademicInsights;
 
 namespace Syki.Back.Configs;
 
@@ -69,7 +69,7 @@ public static class ServicesConfigs
         services.AddScoped<ResetPasswordService>();
         services.AddScoped<SendResetPasswordEmailService>();
 
-        
+        services.AddScoped<GetAcademicInsightsService>();
 
 
         services.AddScoped<CreateAcademicPeriodService>();
@@ -85,7 +85,6 @@ public static class ServicesConfigs
         services.AddScoped<CreateProfessorService>();
         services.AddScoped<CreateTurmaService>();
 
-        services.AddScoped<GetAcademicInsightsService>();
         services.AddScoped<GetAcademicPeriodsService>();
         services.AddScoped<GetAlunoAgendaService>();
         services.AddScoped<GetAlunoDisciplinasService>();

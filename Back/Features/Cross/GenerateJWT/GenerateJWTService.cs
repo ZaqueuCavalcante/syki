@@ -3,7 +3,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace Syki.Back.GenerateJWT;
+namespace Syki.Back.Features.Cross.GenerateJWT;
 
 public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> userManager)
 {

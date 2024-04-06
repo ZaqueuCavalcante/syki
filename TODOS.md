@@ -28,7 +28,7 @@
 - [X] 01 FinishUserRegister
 - [X] 02 CreateUser
 - [X] 03 Login
-- [] GenerateJWT
+- [X] 04 GenerateJWT
 
 - [] GetMfaKey
 - [] SetupMfa

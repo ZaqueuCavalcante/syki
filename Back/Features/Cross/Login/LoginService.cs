@@ -1,4 +1,4 @@
-using Syki.Back.GenerateJWT;
+using Syki.Back.Features.Cross.GenerateJWT;
 
 namespace Syki.Back.Features.Cross.Login;
 

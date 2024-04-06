@@ -14,14 +14,10 @@
 
 @code
 {
-    private bool _loading;
-    private string _searchString;
     private List<ProfessorTurmaOut> _turmas = [];
 
     protected override async Task OnInitializedAsync()
     {
-        _loading = true;
         _turmas = await Http.GetFromJsonAsync<List<ProfessorTurmaOut>>("/professor-turmas") ?? [];
-        _loading = false;
     }
 }

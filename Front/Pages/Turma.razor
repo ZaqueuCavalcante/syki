@@ -67,15 +67,12 @@
 {
     [Parameter]
     public string Id { get; set; }
-    private bool _loading;
     private ProfessorTurmaOut _turma = new();
     private string _nome;
     private ushort? _peso;
 
     protected override async Task OnParametersSetAsync()
     {
-        _loading = true;
         _turma = await Http.GetFromJsonAsync<ProfessorTurmaOut>($"/professor-turma?turmaId={Id}") ?? new();
-        _loading = false;
     }
 }

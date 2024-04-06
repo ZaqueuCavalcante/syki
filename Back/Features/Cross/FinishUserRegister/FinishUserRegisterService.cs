@@ -1,7 +1,7 @@
 using Syki.Back.CreateUser;
 using Syki.Back.CreateInstitution;
 
-namespace Syki.Back.FinishUserRegister;
+namespace Syki.Back.Features.Cross.FinishUserRegister;
 
 public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService service)
 {

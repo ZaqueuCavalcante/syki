@@ -9,6 +9,7 @@ global using Syki.Back.Extensions;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Identity;
+global using Swashbuckle.AspNetCore.Filters;
 global using Microsoft.AspNetCore.RateLimiting;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;

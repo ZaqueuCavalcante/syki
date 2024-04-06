@@ -1,5 +1,3 @@
-using Swashbuckle.AspNetCore.Filters;
-
 namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 /// <summary>

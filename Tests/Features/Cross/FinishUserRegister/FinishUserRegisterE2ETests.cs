@@ -1,4 +1,4 @@
-namespace Syki.Tests.FinishUserRegister;
+namespace Syki.Tests.Features.Cross.FinishUserRegister;
 
 public class FinishUserRegisterE2ETests : E2ETestBase
 {

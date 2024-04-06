@@ -1,4 +1,4 @@
-using Syki.Back.FinishUserRegister;
+using Syki.Back.Features.Cross.FinishUserRegister;
 
 namespace Syki.Tests.Integration;
 

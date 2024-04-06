@@ -9,7 +9,6 @@ using Syki.Back.CreateCampus;
 using Syki.Back.UpdateCampus;
 using Syki.Back.CreateAluno;
 using Syki.Back.ResetPassword;
-using Syki.Back.FinishUserRegister;
 using Syki.Back.GetEnrollmentPeriods;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.SendResetPasswordToken;
@@ -52,6 +51,7 @@ using Syki.Back.GetProfessorAgenda;
 using Syki.Back.GetProfessorTurmas;
 using Syki.Back.CreateEvaluationUnits;
 using Syki.Back.GetProfessorTurma;
+using Syki.Back.Features.Cross.FinishUserRegister;
 
 namespace Syki.Back.Configs;
 

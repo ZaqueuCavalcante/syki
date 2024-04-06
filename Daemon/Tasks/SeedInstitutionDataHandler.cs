@@ -7,9 +7,9 @@ using Syki.Back.CreateCampus;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateDisciplina;
-using Syki.Back.FinishUserRegister;
 using Microsoft.EntityFrameworkCore;
 using Syki.Back.CreateAcademicPeriod;
+using Syki.Back.Features.Cross.FinishUserRegister;
 
 namespace Syki.Daemon.Tasks;
 

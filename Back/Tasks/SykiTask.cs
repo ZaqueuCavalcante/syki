@@ -1,5 +1,5 @@
-using Syki.Back.FinishUserRegister;
 using Syki.Back.SendResetPasswordToken;
+using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 namespace Syki.Back.Tasks;

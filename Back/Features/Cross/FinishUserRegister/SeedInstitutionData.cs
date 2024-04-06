@@ -1,4 +1,4 @@
-namespace Syki.Back.FinishUserRegister;
+namespace Syki.Back.Features.Cross.FinishUserRegister;
 
 public class SeedInstitutionData
 {

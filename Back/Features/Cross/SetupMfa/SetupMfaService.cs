@@ -1,4 +1,4 @@
-namespace Syki.Back.SetupMfa;
+namespace Syki.Back.Features.Cross.SetupMfa;
 
 public class SetupMfaService(UserManager<SykiUser> userManager)
 {

@@ -29,8 +29,8 @@
 - [X] 02 CreateUser
 - [X] 03 Login
 - [X] 04 GenerateJWT
+- [X] 05 GetMfaKey
 
-- [] GetMfaKey
 - [] SetupMfa
 - [] LoginMfa (n aparece msg de erro ao informar codigo errado)
 - [] ResetPassword

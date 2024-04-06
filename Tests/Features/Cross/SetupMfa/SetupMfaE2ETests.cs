@@ -1,7 +1,6 @@
-using Syki.Shared;
 using Microsoft.Playwright;
 
-namespace Syki.Tests.E2E;
+namespace Syki.Tests.Features.Cross.SetupMfa;
 
 public class SetupMfaE2ETests : E2ETestBase
 {

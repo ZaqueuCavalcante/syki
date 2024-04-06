@@ -1,5 +1,4 @@
 using Syki.Back.LoginMfa;
-using Syki.Back.SetupMfa;
 using Syki.Back.GetCampi;
 using Syki.Back.Features.Cross.GenerateJWT;
 using Syki.Back.CreateCampus;
@@ -51,6 +50,7 @@ using Syki.Back.GetProfessorTurma;
 using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Cross.Login;
 using Syki.Back.Features.Cross.GetMfaKey;
+using Syki.Back.Features.Cross.SetupMfa;
 
 namespace Syki.Back.Configs;
 

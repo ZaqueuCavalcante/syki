@@ -1,10 +1,10 @@
 using Syki.Back.CreateAluno;
-using Syki.Back.CreateCurso;
 using Syki.Back.CreateOferta;
-using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.CreateProfessor;
-using Syki.Back.CreateNotification;
 using Syki.Back.CreateDisciplina;
+using Syki.Back.CreateNotification;
+using Syki.Back.CreateAcademicPeriod;
+using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateCampus;
 
 namespace Syki.Back.CreateInstitution;

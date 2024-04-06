@@ -7,7 +7,7 @@ using Syki.Back.GetEnrollmentPeriods;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Syki.Back.CreateProfessor;
-using Syki.Back.CreateCurso;
+using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.CreateDisciplina;
 using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.CreateGrade;

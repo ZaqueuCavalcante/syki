@@ -1,7 +1,7 @@
 using Syki.Back.Audit;
 using Audit.EntityFramework;
 using Syki.Back.CreateAluno;
-using Syki.Back.CreateCurso;
+using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;

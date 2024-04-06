@@ -1,5 +1,5 @@
-using Syki.Back.CreateCurso;
 using static Syki.Shared.TipoDeCurso;
+using Syki.Back.Features.Academico.CreateCurso;
 
 namespace Syki.Tests.Unit;
 

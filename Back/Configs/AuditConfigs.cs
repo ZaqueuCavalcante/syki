@@ -1,13 +1,13 @@
 using Audit.Core;
 using Syki.Back.Audit;
 using Syki.Back.CreateAluno;
-using Syki.Back.CreateCurso;
+using Syki.Back.CreateTurma;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
-using Syki.Back.CreateNotification;
-using Syki.Back.CreateInstitution;
 using Syki.Back.CreateDisciplina;
-using Syki.Back.CreateTurma;
+using Syki.Back.CreateInstitution;
+using Syki.Back.CreateNotification;
+using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateCampus;
 
 namespace Syki.Back.Configs;

@@ -1,4 +1,4 @@
-using Syki.Back.CreateCurso;
+using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateCampus;
 
 namespace Syki.Back.CreateOferta;

@@ -39,8 +39,8 @@
 - [X] 11 CreateCampus
 - [X] 12 UpdateCampus
 - [X] 13 GetCampi
-
-
+- [X] 14 CreateCurso
+- [] 15 GetCursos
 
 
 
@@ -51,8 +51,7 @@
 
 
 
-- [] CreateCurso
-- [] GetCursos
+
 
 - [] CreateDisciplina
 - [] GetDisciplinas

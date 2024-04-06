@@ -1,5 +1,5 @@
-using Syki.Back.CreateCurso;
 using Syki.Back.CreateDisciplina;
+using Syki.Back.Features.Academico.CreateCurso;
 
 namespace Syki.Back.Domain;
 

@@ -1,10 +1,15 @@
-namespace Syki.Back.CreateCurso;
+namespace Syki.Back.Features.Academico.CreateCurso;
 
+/// <summary>
+/// Cria um novo curso.
+/// </summary>
 [ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]
+[Consumes("application/json"), Produces("application/json")]
 public class CreateCursoController(CreateCursoService service) : ControllerBase
 {
     [HttpPost("cursos")]
+    [ProducesResponseType(200)]
     public async Task<IActionResult> Create([FromBody] CursoIn data)
     {
         var curso = await service.Create(User.InstitutionId(), data);

@@ -1,4 +1,4 @@
-namespace Syki.Back.GetCursos;
+namespace Syki.Back.Features.Academico.GetCursos;
 
 public class GetCursosService(SykiDbContext ctx)
 {

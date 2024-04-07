@@ -22,7 +22,7 @@ using Syki.Back.GetAlunoInsights;
 using Syki.Back.GetAlunos;
 using Syki.Back.GetCurrentEnrollmentPeriod;
 using Syki.Back.GetCursoDisciplinas;
-using Syki.Back.GetCursos;
+using Syki.Back.Features.Academico.GetCursos;
 using Syki.Back.GetCursosWithDisciplinas;
 using Syki.Back.GetDisciplinas;
 using Syki.Back.GetGradeDisciplinas;
@@ -69,13 +69,16 @@ public static class ServicesConfigs
         services.AddScoped<ResetPasswordService>();
         services.AddScoped<SendResetPasswordEmailService>();
 
+        services.AddScoped<CreateCampusService>();
+        services.AddScoped<CreateCursoService>();
         services.AddScoped<GetAcademicInsightsService>();
+        services.AddScoped<GetCampiService>();
+        services.AddScoped<GetCursosService>();
+        services.AddScoped<UpdateCampusService>();
 
 
         services.AddScoped<CreateAcademicPeriodService>();
         services.AddScoped<CreateAlunoService>();
-        services.AddScoped<CreateCampusService>();
-        services.AddScoped<CreateCursoService>();
         services.AddScoped<CreateDisciplinaService>();
         services.AddScoped<CreateEnrollmentPeriodService>();
         services.AddScoped<CreateGradeService>();
@@ -90,10 +93,8 @@ public static class ServicesConfigs
         services.AddScoped<GetAlunoDisciplinasService>();
         services.AddScoped<GetAlunoInsightsService>();
         services.AddScoped<GetAlunosService>();
-        services.AddScoped<GetCampiService>();
         services.AddScoped<GetCurrentEnrollmentPeriodService>();
         services.AddScoped<GetCursoDisciplinasService>();
-        services.AddScoped<GetCursosService>();
         services.AddScoped<GetCursosWithDisciplinasService>();
         services.AddScoped<GetCursosWithGradesService>();
         services.AddScoped<GetDisciplinasService>();
@@ -110,9 +111,6 @@ public static class ServicesConfigs
         services.AddScoped<GetUserNotificationsService>();
         services.AddScoped<GetUsersService>();
 
-
-
-        services.AddScoped<UpdateCampusService>();
         services.AddScoped<ViewNotificationService>();
 
         services.AddScoped<GetProfessorInsightsService>();

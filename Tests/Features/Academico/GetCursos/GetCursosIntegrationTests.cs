@@ -5,37 +5,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Deve_criar_um_novo_curso()
-    {
-        // Arrange
-        var client = await _factory.LoggedAsAcademico();
-
-        // Act
-        var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
-
-        // Assert
-        curso.Id.Should().NotBeEmpty();
-        curso.Nome.Should().Be("Análise e Desenvolvimento de Sistemas");
-        curso.Tipo.Should().Be(Bacharelado);
-    }
-
-    [Test]
-    public async Task Deve_criar_varios_cursos()
-    {
-        // Arrange
-        var client = await _factory.LoggedAsAcademico();
-
-        // Act
-        await client.CreateCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
-        await client.CreateCurso("Direito", Licenciatura);
-        
-        // Assert
-        var cursos = await client.GetCursos();
-        cursos.Should().HaveCount(2);
-    }
-
-    [Test]
-    public async Task Deve_retornar_os_cursos_ordenados_pelo_nome()
+    public async Task Should_get_all_courses_ordered_by_name()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();

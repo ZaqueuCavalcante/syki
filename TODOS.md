@@ -43,6 +43,9 @@
 - [X] 15 GetCursos
 - [X] 16 CreateDisciplina
 - [X] 17 GetDisciplinas
+- [X] 18 CreateGrade
+
+
 
 
 
@@ -58,7 +61,6 @@
 
 
 
-- [] CreateGrade
 - [] GetGrades
 - [] GetGradeDisciplinas
 

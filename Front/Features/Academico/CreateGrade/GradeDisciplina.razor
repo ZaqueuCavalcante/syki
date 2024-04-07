@@ -1,6 +1,6 @@
 <MudForm @ref="form">
     <MudStack Row="true">
-        <MudItem xs="6">
+        <MudItem xs="5">
             <MudAutocomplete
                 MaxItems="50"
                 T="GradeDisciplinaFillable"
@@ -65,6 +65,9 @@
                 RequiredError="Informe!"
             />
         </MudItem>
+        <MudItem>
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" OnClick="@HandleDeleteClick" />
+        </MudItem>
     </MudStack>
 </MudForm>
 
@@ -78,7 +81,11 @@
     [CascadingParameter(Name = "Disciplinas")]
     public List<GradeDisciplinaFillable> Disciplinas { get; set; }
 
-    GradeDisciplinaFillable Data = new();
+    [Parameter]
+    public EventCallback<Guid> OnDeleteClick { get; set; }
+
+    [Parameter]
+    public GradeDisciplinaFillable Data { get; set; }
 
     private async Task<IEnumerable<GradeDisciplinaFillable>> SearchDisciplina(string value)
     {
@@ -95,45 +102,34 @@
 
     void HandleDisciplinaChanged(GradeDisciplinaFillable newValue)
     {
-        if (Data.Id == Guid.Empty)
+        Options.First(d => d.Id == newValue.Id).IsSelected = true;
+
+        if (Options.Any(x => x.Id == Data.Id))
         {
-            Options.First(d => d.Id == newValue.Id).IsSelected = true;
-            Disciplinas.First(d => d.Id == Data.Id).Nome = newValue.Nome;
-            Disciplinas.First(d => d.Id == Data.Id).Id = newValue.Id;
-            Data = newValue;
-            return;
+            Options.First(d => d.Id == Data.Id).IsSelected = false;
         }
 
-        Options.First(d => d.Id == Data.Id).IsSelected = false;
-        Disciplinas.First(d => d.Id == Data.Id).Nome = newValue.Nome;
-        Disciplinas.First(d => d.Id == Data.Id).Id = newValue.Id;
-        Data = newValue;
+        Data.Id = newValue.Id;
+        Data.Nome = newValue.Nome;
     }
 
     void HandlePeriodoChanged(byte? newValue)
     {
         Data.Periodo = newValue;
-
-        if (Data.Id == Guid.Empty) return;
-
-        Disciplinas.First(d => d.Id == Data.Id).Periodo = newValue;
     }
 
     void HandleCreditosChanged(byte? newValue)
     {
         Data.Creditos = newValue;
-
-        if (Data.Id == Guid.Empty) return;
-
-        Disciplinas.First(d => d.Id == Data.Id).Creditos = newValue;
     }
 
     void HandleCargaHorariaChanged(ushort? newValue)
     {
         Data.CargaHoraria = newValue;
+    }
 
-        if (Data.Id == Guid.Empty) return;
-
-        Disciplinas.First(d => d.Id == Data.Id).CargaHoraria = newValue;
+    private async Task HandleDeleteClick()
+    {
+        await OnDeleteClick.InvokeAsync(Data.Id);
     }
 }

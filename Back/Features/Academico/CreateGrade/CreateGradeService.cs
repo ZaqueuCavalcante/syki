@@ -1,4 +1,4 @@
-namespace Syki.Back.CreateGrade;
+namespace Syki.Back.Features.Academico.CreateGrade;
 
 public class CreateGradeService(SykiDbContext ctx)
 {

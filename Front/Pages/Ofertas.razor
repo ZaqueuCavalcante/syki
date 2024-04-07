@@ -16,19 +16,7 @@
     <MudContainer Class="mb-8">
         <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <MudSpacer />
-                <MudSpacer />
-                <MudTextField
-                    Margin="Margin.Dense"
-                    Variant="Variant.Outlined"
-                    @bind-Value="_searchString"
-                    Placeholder="Busque por qualquer atributo"
-                    Adornment="Adornment.Start"
-                    Immediate="true"
-                    AdornmentIcon="@Icons.Material.Filled.Search"
-                    IconSize="Size.Medium"
-                    Class="mt-0"
-                />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Campus" Title="Campus" />

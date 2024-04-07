@@ -14,6 +14,7 @@ using Syki.Back.CreateTurma;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Academico.CreateCampus;
 using Syki.Back.Features.Academico.CreateDisciplina;
+using Syki.Back.Features.Academico.CreateGrade;
 
 namespace Syki.Back.Database;
 

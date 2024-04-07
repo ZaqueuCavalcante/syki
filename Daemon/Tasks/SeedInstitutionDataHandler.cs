@@ -10,6 +10,7 @@ using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateCampus;
 using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Academico.CreateDisciplina;
+using Syki.Back.Features.Academico.CreateGrade;
 
 namespace Syki.Daemon.Tasks;
 

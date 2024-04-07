@@ -19,6 +19,7 @@ using Front.CreateDisciplina;
 using Front.CreateEvaluationUnits;
 using Front.CreateProfessor;
 using Syki.Front.GetAcademicInsights;
+using Front.CreateGrade;
 
 namespace Syki.Tests.Base;
 
@@ -168,6 +169,70 @@ public static class HttpClientExtensions
         return await http.PostAsync<TurmaOut>("/turmas", body);
     }
 
+    public static async Task<HttpResponseMessage> CreateGradeHttp(
+        this HttpClient http,
+        string nome,
+        Guid cursoId,
+        List<GradeDisciplinaIn> disciplinas = null
+    ) {
+        var client = new CreateGradeClient(http);
+
+        return await client.Create(nome, cursoId, disciplinas ?? []);
+    }
+
+    public static async Task<GradeOut> CreateGrade(
+        this HttpClient http,
+        string nome,
+        Guid cursoId,
+        List<GradeDisciplinaIn> disciplinas = null
+    ) {
+        var client = new CreateGradeClient(http);
+
+        var result = await client.Create(nome, cursoId, disciplinas ?? []);
+
+        return await result.DeserializeTo<GradeOut>();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public static async Task<HttpResponseMessage> CreateEvaluationUnits(
         this HttpClient http,
         Guid turmaId,
@@ -282,20 +347,7 @@ public static class HttpClientExtensions
 
 
 
-    public static async Task<GradeOut> NewGrade(
-        this HttpClient client,
-        string nome,
-        Guid cursoId,
-        List<GradeDisciplinaIn> disciplinas = null
-    ) {
-        var body = new GradeIn {
-            Nome = nome,
-            CursoId = cursoId,
-            Disciplinas = disciplinas ?? []
-        };
 
-        return await client.PostAsync<GradeOut>("/grades", body);
-    }
 
     public static async Task<OfertaOut> NewOferta(
         this HttpClient client,

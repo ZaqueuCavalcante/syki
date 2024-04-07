@@ -1,11 +1,12 @@
 using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateDisciplina;
+using Syki.Back.Features.Academico.CreateGrade;
 
 namespace Syki.Tests.Unit;
 
-public class GradesUnitTests
+public class CreateGradeUnitTests
 {
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_grade_com_id()
     {
         // Arrange
@@ -18,7 +19,7 @@ public class GradesUnitTests
         grade.Id.Should().NotBeEmpty();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_grade_com_faculdade_id_correto()
     {
         // Arrange
@@ -31,7 +32,7 @@ public class GradesUnitTests
         grade.FaculdadeId.Should().Be(faculdadeId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_grade_com_curso_id_correto()
     {
         // Arrange
@@ -45,7 +46,7 @@ public class GradesUnitTests
         grade.CursoId.Should().Be(cursoId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_grade_com_nome_correto()
     {
         // Arrange
@@ -59,7 +60,7 @@ public class GradesUnitTests
         grade.Nome.Should().Be(nome);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_converter_a_grade_corretamente_pro_out()
     {
         // Arrange

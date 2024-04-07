@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain;
+namespace Syki.Back.Features.Academico.CreateGrade;
 
 public class GradeDisciplina
 {

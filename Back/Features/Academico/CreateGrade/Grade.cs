@@ -1,7 +1,7 @@
 using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateDisciplina;
 
-namespace Syki.Back.Domain;
+namespace Syki.Back.Features.Academico.CreateGrade;
 
 public class Grade
 {

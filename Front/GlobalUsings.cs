@@ -10,6 +10,7 @@ global using Front.GetCampi;
 global using Front.GetDisciplinas;
 global using Syki.Front.GetAdmInsights;
 global using Front.CreateCurso;
+global using Front.CreateGrade;
 global using Front.GetCursos;
 global using Syki.Front.FinishUserRegister;
 global using Syki.Front.GetProfessorInsights;

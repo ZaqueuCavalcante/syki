@@ -6,6 +6,7 @@ using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateCampus;
 using Syki.Back.Features.Academico.CreateDisciplina;
+using Syki.Back.Features.Academico.CreateGrade;
 
 namespace Syki.Back.CreateInstitution;
 

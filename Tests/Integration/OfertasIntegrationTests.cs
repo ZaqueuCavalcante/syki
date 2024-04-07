@@ -212,7 +212,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var periodo = await client.CreateAcademicPeriod("2024.1");
         var cursoAds = await client.CreateCurso("ADS");
         var cursoDireito = await client.CreateCurso("Direito");
-        var grade = await client.NewGrade("Grade de ADS 1.0", cursoAds.Id);
+        var grade = await client.CreateGrade("Grade de ADS 1.0", cursoAds.Id);
 
         var body = new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = cursoDireito.Id, GradeId = grade.Id, };
 
@@ -231,7 +231,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
-        var grade = await client.NewGrade("Grade de ADS 1.0", curso.Id);
+        var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
 
         // Act
         var oferta = await client.NewOferta(campus.Id, curso.Id, grade.Id, periodo.Id);
@@ -250,7 +250,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
-        var grade = await client.NewGrade("Grade de ADS 1.0", curso.Id);
+        var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
         await client.NewOferta(campus.Id, curso.Id, grade.Id, periodo.Id);
 
         // Act

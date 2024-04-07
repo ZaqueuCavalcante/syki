@@ -1,27 +1,14 @@
+@using Front.Components.Custom
 @using Front.Components.Buttons
 
 <MudDialog Class="pb-2">
     <TitleContent>
-        <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
-            Nova Grade
-        </MudText>
+        <SykiDialogTitle Text="Nova Grade" />
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="_form">
+        <MudForm @ref="@_form">
             <MudStack Row="true">
-                <MudTextField
-                    OnlyValidateIfDirty="true"
-                    Immediate="true"
-                    Margin="Margin.Dense"
-                    Variant="Variant.Outlined"
-                    AutoFocus="true"
-                    @bind-Value="data.Nome"
-                    T="String"
-                    Label="Nome"
-                    Required="true"
-                    RequiredError="Informe!"
-                />
+                <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@data.Nome" />
                 <MudSelect
                     Dense="true"
                     Margin="Margin.Dense"
@@ -51,9 +38,9 @@
                     <MudItem xs="12">
                         <CascadingValue Name="Options" Value="@Options">
                             <CascadingValue Name="Disciplinas" Value="@Disciplinas">
-                                @foreach (var _ in Disciplinas)
+                                @foreach (var disciplina in Disciplinas)
                                 {
-                                    <GradeDisciplina />
+                                    <GradeDisciplina Data="@disciplina" OnDeleteClick="@DeleteGradeDisciplina" />
                                 }
                             </CascadingValue>
                         </CascadingValue>
@@ -65,7 +52,7 @@
                             FullWidth="true"
                             Class="mt-2 border-dashed border-2 mud-border-secundary"
                             Color="Color.Primary"
-                            @onclick="NewGradeDisciplina"
+                            @onclick="@NewGradeDisciplina"
                         >
                             NOVA DISCIPLINA
                         </MudButton>
@@ -75,18 +62,19 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="Cancel" />
-        <DialogProgressCircular Loading="_loading" />
-        <DialogSaveButton OnClick="Submit" />
+        <DialogCancelButton OnClick="@Cancel" />
+        <DialogProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
     </DialogActions>
 </MudDialog>
 
 @inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject CreateGradeClient Client
 
 @code
 {
-    MudForm _form;
+    private MudForm _form;
     private bool _loading;
 
     CursoOut? _curso;
@@ -105,15 +93,23 @@
         Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos/with-disciplinas") ?? [];
     }
 
-    // TODO: adicionar botao para remover disciplina
     void NewGradeDisciplina()
     {
-        Disciplinas.Add(new GradeDisciplinaFillable { });
+        Disciplinas.Add(new() { Id = Guid.NewGuid() });
+    }
+
+    void DeleteGradeDisciplina(Guid id)
+    {
+        Disciplinas.Remove(Disciplinas.First(f => f.Id == id));
+        if (Options.Any(x => x.Id == id))
+        {
+            Options.First(d => d.Id == id).IsSelected = false;
+        }
     }
 
     bool GetNewDisciplinaDisabled()
     {
-        return _curso == null;
+        return _curso == null || Options.Count == Disciplinas.Count;
     }
 
     async Task HandleSelectCurso(CursoOut newValue)
@@ -141,7 +137,7 @@
             ));
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/grades", data);
+        var response = await Client.Create(data.Nome, data.CursoId, data.Disciplinas);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

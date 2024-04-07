@@ -1,6 +1,6 @@
 using Syki.Back.Features.Academico.CreateDisciplina;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.Features.Academico.CreateGrade;
 
 public class GradeConfig : IEntityTypeConfiguration<Grade>
 {

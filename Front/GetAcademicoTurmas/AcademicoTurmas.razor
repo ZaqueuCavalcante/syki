@@ -11,19 +11,7 @@
     <MudContainer Class="mb-8">
         <MudDataGrid Class="pa-4" Items="@_turmas" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <MudSpacer />
-                <MudSpacer />
-                <MudTextField
-                    Margin="Margin.Dense"
-                    Variant="Variant.Outlined"
-                    @bind-Value="_searchString"
-                    Placeholder="Busque por disciplina, professor ou período"
-                    Adornment="Adornment.Start"
-                    Immediate="true"
-                    AdornmentIcon="@Icons.Material.Filled.Search"
-                    IconSize="Size.Medium"
-                    Class="mt-0"
-                />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por disciplina, professor ou período" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Disciplina" Title="Disciplina" />

@@ -9,7 +9,7 @@ using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Syki.Back.CreateProfessor;
 using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.CreateEnrollmentPeriod;
-using Syki.Back.CreateGrade;
+using Syki.Back.Features.Academico.CreateGrade;
 using Syki.Back.CreateMatriculaAluno;
 using Syki.Back.CreateNotification;
 using Syki.Back.CreateOferta;

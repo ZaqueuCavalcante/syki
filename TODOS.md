@@ -41,6 +41,7 @@
 - [X] 13 GetCampi
 - [X] 14 CreateCurso
 - [X] 15 GetCursos
+- [X] 16 CreateDisciplina
 
 
 
@@ -51,7 +52,6 @@
 
 
 
-- [] CreateDisciplina
 - [] GetDisciplinas
 - [] GetCursoDisciplinas
 - [] GetCursosWithDisciplinas

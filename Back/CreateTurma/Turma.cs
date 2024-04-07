@@ -1,7 +1,7 @@
 using Syki.Back.CreateAluno;
 using Syki.Back.CreateProfessor;
-using Syki.Back.CreateDisciplina;
 using Syki.Back.CreateEvaluationUnits;
+using Syki.Back.Features.Academico.CreateDisciplina;
 
 namespace Syki.Back.CreateTurma;
 

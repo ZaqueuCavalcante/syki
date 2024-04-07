@@ -1,5 +1,5 @@
-using Syki.Back.CreateDisciplina;
 using Syki.Back.CreateProfessor;
+using Syki.Back.Features.Academico.CreateDisciplina;
 
 namespace Syki.Tests.Unit;
 

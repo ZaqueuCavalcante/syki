@@ -4,12 +4,12 @@ using Syki.Back.Domain;
 using Syki.Back.Database;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
-using Syki.Back.CreateDisciplina;
 using Microsoft.EntityFrameworkCore;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateCampus;
 using Syki.Back.Features.Cross.FinishUserRegister;
+using Syki.Back.Features.Academico.CreateDisciplina;
 
 namespace Syki.Daemon.Tasks;
 

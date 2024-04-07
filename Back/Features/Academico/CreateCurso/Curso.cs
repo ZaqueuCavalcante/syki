@@ -1,4 +1,4 @@
-using Syki.Back.CreateDisciplina;
+using Syki.Back.Features.Academico.CreateDisciplina;
 
 namespace Syki.Back.Features.Academico.CreateCurso;
 

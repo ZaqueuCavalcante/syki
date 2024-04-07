@@ -8,7 +8,6 @@ using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Syki.Back.CreateProfessor;
 using Syki.Back.Features.Academico.CreateCurso;
-using Syki.Back.CreateDisciplina;
 using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.CreateGrade;
 using Syki.Back.CreateMatriculaAluno;
@@ -51,6 +50,7 @@ using Syki.Back.Features.Cross.LoginMfa;
 using Syki.Back.Features.Cross.ResetPassword;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Academico.GetAcademicInsights;
+using Syki.Back.Features.Academico.CreateDisciplina;
 
 namespace Syki.Back.Configs;
 
@@ -75,11 +75,11 @@ public static class ServicesConfigs
         services.AddScoped<GetCampiService>();
         services.AddScoped<GetCursosService>();
         services.AddScoped<UpdateCampusService>();
+        services.AddScoped<CreateDisciplinaService>();
 
 
         services.AddScoped<CreateAcademicPeriodService>();
         services.AddScoped<CreateAlunoService>();
-        services.AddScoped<CreateDisciplinaService>();
         services.AddScoped<CreateEnrollmentPeriodService>();
         services.AddScoped<CreateGradeService>();
         services.AddScoped<CreateMatriculaAlunoService>();

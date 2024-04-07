@@ -7,6 +7,7 @@ global using Syki.Front.GetMfaKey;
 global using Front.CreateCampus;
 global using Front.UpdateCampus;
 global using Front.GetCampi;
+global using Front.GetDisciplinas;
 global using Syki.Front.GetAdmInsights;
 global using Front.CreateCurso;
 global using Front.GetCursos;

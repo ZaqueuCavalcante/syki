@@ -1,66 +1,26 @@
 @using Front.Components.Custom
+@using Front.Features.Academico.GetDisciplinas
 
 @attribute [Authorize(Roles = "Academico")]
 
 <PageTitle>Disciplinas</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" ButtonText="Nova Disciplina" OnClick="OpenDialog" />
+    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" ButtonText="Nova Disciplina" OnClick="@OpenDialog" />
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudText>Uma mesma disciplina pode compor a grade de cursos diferentes. A carga horária definida aqui é apenas um valor de referência.</MudText>
     </MudAlert>
 
-    <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_disciplinas" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
-            <ToolBarContent>
-                <MudSpacer />
-                <MudSpacer />
-                <MudTextField
-                    Margin="Margin.Dense"
-                    Variant="Variant.Outlined"
-                    @bind-Value="_searchString"
-                    Placeholder="Busque por nome ou código"
-                    Adornment="Adornment.Start"
-                    Immediate="true"
-                    AdornmentIcon="@Icons.Material.Filled.Search"
-                    IconSize="Size.Medium"
-                    Class="mt-0"
-                />
-            </ToolBarContent>
-            <Columns>
-                <PropertyColumn Property="x => x.Nome" Title="Nome" />
-                <PropertyColumn Property="x => x.Code" Title="Código" />
-            </Columns>
-
-            <NoRecordsContent>
-                @(GetNotFoundMessage())
-            </NoRecordsContent>
-
-            <PagerContent>
-                <MudDataGridPager T="DisciplinaOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
-            </PagerContent>
-        </MudDataGrid>
-    </MudContainer>
+    <AcademicoDisciplinasDataGrid @ref="@_grid" />
 </MudContainer>
 
-@inject HttpClient Http
+@inject GetDisciplinasClient Client
 @inject IDialogService DialogService
 
 @code
 {
-    private bool _loading;
-    private string _searchString;
-    private List<DisciplinaOut> _disciplinas = [];
-
-    protected override async Task OnInitializedAsync()
-    {
-        _loading = true;
-        _disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? [];
-        _loading = false;
-    }
-
-    private Func<DisciplinaOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome, x.Code);
+    private AcademicoDisciplinasDataGrid _grid;
 
     private async Task OpenDialog()
     {
@@ -74,11 +34,6 @@
 
         if (result.Canceled) return;
         
-        await OnInitializedAsync();
-    }
-
-    private string GetNotFoundMessage()
-    {
-        return (_searchString.IsEmpty()) ? "Não existem disciplinas cadastradas ainda." : "Nenhuma disciplina encontrada.";
+        await _grid.Reload();
     }
 }

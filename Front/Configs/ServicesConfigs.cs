@@ -21,6 +21,7 @@ public static class ServicesConfigs
 
         builder.Services.AddScoped<CreateCursoClient>();
         builder.Services.AddScoped<GetCursosClient>();
+        builder.Services.AddScoped<GetDisciplinasClient>();
 
         builder.Services.AddScoped<CreateDisciplinaClient>();
         builder.Services.AddScoped<GetAlunoInsightsClient>();

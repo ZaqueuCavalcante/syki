@@ -16,7 +16,6 @@ using Front.UpdateCampus;
 using Front.CreateCurso;
 using Front.GetCursos;
 using Front.CreateDisciplina;
-using Front.CreateEvaluationUnits;
 using Front.CreateProfessor;
 using Syki.Front.GetAcademicInsights;
 using Front.CreateGrade;
@@ -197,50 +196,6 @@ public static class HttpClientExtensions
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public static async Task<HttpResponseMessage> CreateEvaluationUnits(
-        this HttpClient http,
-        Guid turmaId,
-        List<EvaluationUnitIn> units
-    ) {
-        var client = new CreateEvaluationUnitsClient(http);
-        return await client.Create(turmaId, units ?? []);
-    }
 
 
 

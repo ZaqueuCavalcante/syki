@@ -40,7 +40,6 @@ using Syki.Back.GetCursosWithGrades;
 using Syki.Back.GetProfessorInsights;
 using Syki.Back.GetProfessorAgenda;
 using Syki.Back.GetProfessorTurmas;
-using Syki.Back.CreateEvaluationUnits;
 using Syki.Back.GetProfessorTurma;
 using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Cross.Login;
@@ -117,6 +116,5 @@ public static class ServicesConfigs
         services.AddScoped<GetProfessorAgendaService>();
         services.AddScoped<GetProfessorTurmasService>();
         services.AddScoped<GetProfessorTurmaService>();
-        services.AddScoped<CreateEvaluationUnitsService>();
     }
 }

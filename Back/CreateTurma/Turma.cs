@@ -1,6 +1,5 @@
 using Syki.Back.CreateAluno;
 using Syki.Back.CreateProfessor;
-using Syki.Back.CreateEvaluationUnits;
 using Syki.Back.Features.Academico.CreateDisciplina;
 
 namespace Syki.Back.CreateTurma;
@@ -17,7 +16,6 @@ public class Turma
     public List<Aula> Aulas { get; set; }
     public List<Aluno> Alunos { get; set; }
     public List<Horario> Horarios { get; set; }
-    public List<EvaluationUnit> Units { get; set; } = [];
 
     private Turma() {}
 

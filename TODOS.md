@@ -47,6 +47,9 @@
 
 
 
+- [] ?? CreateTurma
+
+
 
 
 # TODO
@@ -54,12 +57,8 @@
 - [] GetAlunoInsights
 - [] GetAdmInsights
 
-
-
 - [] GetCursoDisciplinas
 - [] GetCursosWithDisciplinas
-
-
 
 - [] GetGrades
 - [] GetGradeDisciplinas
@@ -70,7 +69,7 @@
 - [] CreateProfessor
 - [] GetProfessores
 
-- [] CreateTurma
+
 - [] GetTurmas
 
 - [] CreateAluno

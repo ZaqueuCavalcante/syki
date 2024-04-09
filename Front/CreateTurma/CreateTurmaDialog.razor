@@ -69,20 +69,19 @@
                     <MudContainer Class="px-0">
                         <MudGrid Justify="Justify.FlexStart">
                             <MudItem xs="12">
-                                <CascadingValue Name="Horarios" Value="@Horarios">
-                                    @for (var i = 0; i < _count; i++)
-                                    {
-                                        <TurmaHorario />
-                                    }
-                                </CascadingValue>
+                                @foreach (var horario in Horarios)
+                                {
+                                    <TurmaHorario Data="@horario" OnDeleteClick="@DeleteHorario" />
+                                }
                                 <MudButton
+                                    Disabled="(GetNewHorarioDisabled())"
                                     StartIcon="@Icons.Material.Outlined.Add"
                                     IconSize="Size.Large"
                                     Variant="Variant.Outlined"
                                     FullWidth="true"
                                     Class="mt-2 border-dashed border-2 mud-border-secundary"
                                     Color="Color.Primary"
-                                    @onclick="NewTurmaHorario"
+                                    @onclick="@NewHorario"
                                 >
                                     NOVO HORÁRIO
                                 </MudButton>
@@ -118,13 +117,14 @@
     List<ProfessorOut> Professores = [];
     List<AcademicPeriodOut> Periodos = [];
     List<AlunoOut> Alunos = [];
-    List<HorarioIn> Horarios { get; set; } = [];
+    List<HorarioInFillable> Horarios { get; set; } = [];
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        NewHorario();
         await Task.WhenAll(new Task[] { 
             Task.Run(async () => Professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? []),
             Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic-periods") ?? []),
@@ -133,11 +133,19 @@
         });
     }
 
-    // TODO: criar botao para remover horario
-    int _count = 1;
-    void NewTurmaHorario()
+    bool GetNewHorarioDisabled()
     {
-        _count ++;
+        return Horarios.Count == 3;
+    }
+
+    void NewHorario()
+    {
+        Horarios.Add(new());
+    }
+
+    void DeleteHorario(Guid id)
+    {
+        Horarios.Remove(Horarios.First(f => f.Id == id));
     }
 
     private async Task<IEnumerable<DisciplinaOut>> SearchDisciplina(string value)
@@ -162,7 +170,7 @@
             DisciplinaId = _disciplina!.Id,
             ProfessorId = _professor!.Id,
             Periodo = _periodo!,
-            Horarios = Horarios,
+            Horarios = Horarios.ConvertAll(x => new HorarioIn(x.Dia!.Value, x.Start!.Value, x.End!.Value)),
         };
 
         _loading = true;

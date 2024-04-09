@@ -37,12 +37,10 @@
                 <MudGrid Justify="Justify.FlexStart">
                     <MudItem xs="12">
                         <CascadingValue Name="Options" Value="@Options">
-                            <CascadingValue Name="Disciplinas" Value="@Disciplinas">
-                                @foreach (var disciplina in Disciplinas)
-                                {
-                                    <GradeDisciplina Data="@disciplina" OnDeleteClick="@DeleteGradeDisciplina" />
-                                }
-                            </CascadingValue>
+                            @foreach (var disciplina in Disciplinas)
+                            {
+                                <GradeDisciplina Data="@disciplina" OnDeleteClick="@DeleteGradeDisciplina" />
+                            }
                         </CascadingValue>
                         <MudButton
                             Disabled="(GetNewDisciplinaDisabled())"

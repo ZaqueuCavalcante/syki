@@ -1,13 +1,12 @@
 <MudStack Row="true" Class="mb-2">
-    <MudItem xs="4">
+    <MudItem xs="5">
         <MudSelect
             Dense="true"
             Margin="Margin.Dense"
             Class="py-0 my-0"
             Variant="Variant.Outlined"
             T="Dia?"
-            Value="_dia"
-            ValueChanged="x => HandleDiaChanged(x)"
+            @bind-Value="@Data.Dia"
             Label="Dia"
             Required="true"
             RequiredError="Informe!"
@@ -19,15 +18,14 @@
             }
         </MudSelect>
     </MudItem>
-    <MudItem xs="4">
+    <MudItem xs="3">
         <MudSelect
             Dense="true"
             Margin="Margin.Dense"
             Class="py-0 my-0"
             Variant="Variant.Outlined"
             T="Hora?"
-            Value="_start"
-            ValueChanged="x => HandleStartChanged(x)"
+            @bind-Value="@Data.Start"
             Label="Início"
             Required="true"
             RequiredError="Informe!"
@@ -39,15 +37,14 @@
             }
         </MudSelect>
     </MudItem>
-    <MudItem xs="4">
+    <MudItem xs="3">
         <MudSelect
             Dense="true"
             Margin="Margin.Dense"
             Class="py-0 my-0"
             Variant="Variant.Outlined"
             T="Hora?"
-            Value="_end"
-            ValueChanged="x => HandleEndChanged(x)"
+            @bind-Value="@Data.End"
             Label="Fim"
             Required="true"
             RequiredError="Informe!"
@@ -55,42 +52,26 @@
         >
             @foreach (Hora? hora in Enum.GetValues<Hora>())
             {
-                if (_start == null || hora <= _start) continue;
+                if (Data.Start == null || hora <= Data.Start) continue;
                 <MudSelectItem Value="@hora">@hora.GetDescription()</MudSelectItem>
             }
         </MudSelect>
+    </MudItem>
+    <MudItem xs="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" OnClick="@HandleDeleteClick" />
     </MudItem>
 </MudStack>
 
 @code
 {
-    [CascadingParameter(Name = "Horarios")]
-    public List<HorarioIn> Horarios { get; set; }
+    [Parameter]
+    public HorarioInFillable Data { get; set; }
 
-    Dia? _dia;
-    Hora? _start;
-    Hora? _end;
-    HorarioIn _horario = new();
+    [Parameter]
+    public EventCallback<Guid> OnDeleteClick { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    async Task HandleDeleteClick()
     {
-        await Task.Delay(0);
-        Horarios.Add(_horario);
-    }
-
-    void HandleDiaChanged(Dia? newValue)
-    {
-        _dia = newValue;
-        _horario.Dia = _dia!.Value;
-    }
-    void HandleStartChanged(Hora? newValue)
-    {
-        _start = newValue;
-        _horario.Start = _start!.Value;
-    }
-    void HandleEndChanged(Hora? newValue)
-    {
-        _end = newValue;
-        _horario.End = _end!.Value;
+        await OnDeleteClick.InvokeAsync(Data.Id);
     }
 }

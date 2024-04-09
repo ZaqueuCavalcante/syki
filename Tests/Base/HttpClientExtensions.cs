@@ -277,8 +277,7 @@ public static class HttpClientExtensions
     {
         await client.LoginAsAdm();
 
-        var body = new FaculdadeIn { Nome = nome };
-        var response = await client.PostHttpAsync("/faculdades", body);
+        var response = await client.PostHttpAsync("/faculdades", null);
 
         return await response.DeserializeTo<FaculdadeOut>();
     }

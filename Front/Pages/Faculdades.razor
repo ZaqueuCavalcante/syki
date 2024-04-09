@@ -1,5 +1,4 @@
 ﻿@using Front.Components.Custom
-@using Front.Components.Faculdades
 
 @page "/faculdades"
 @attribute [Authorize(Roles = "Adm")]
@@ -7,7 +6,7 @@
 <PageTitle>Faculdades</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.School" Title="Faculdades" ButtonText="Nova Faculdade" OnClick="OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.School" Title="Faculdades" />
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudText>Uma faculdade pode conter vários campus e ofertar vários cursos.</MudText>
@@ -51,21 +50,6 @@
     }
 
     private Func<FaculdadeOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome);
-
-    private async Task OpenDialog()
-    {
-        var options = new DialogOptions {
-            MaxWidth = MaxWidth.Small,
-            FullWidth = true
-        };
-        var dialog = await DialogService.ShowAsync<NewFaculdadeDialog>("", options);
-
-        var result = await dialog.Result;
-
-        if (result.Canceled) return;
-        
-        await OnInitializedAsync();
-    }
 
     private string GetNotFoundMessage()
     {

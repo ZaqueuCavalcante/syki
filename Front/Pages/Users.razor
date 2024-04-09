@@ -1,5 +1,4 @@
-﻿@using Front.Components.Users
-@using Front.Components.Custom
+﻿@using Front.Components.Custom
 
 @page "/users"
 @attribute [Authorize(Roles = "Adm")]
@@ -7,7 +6,7 @@
 <PageTitle>Usuários</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Usuários" ButtonText="Novo Usuário" OnClick="OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Usuários" />
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudText>Um usuário necessariamente precisa estar vinculado à uma faculdade.</MudText>
@@ -54,21 +53,6 @@
     }
 
     private Func<CreateUserOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome);
-
-    private async Task OpenDialog()
-    {
-        var options = new DialogOptions {
-            MaxWidth = MaxWidth.Small,
-            FullWidth = true
-        };
-        var dialog = await DialogService.ShowAsync<NewUserDialog>("", options);
-
-        var result = await dialog.Result;
-
-        if (result.Canceled) return;
-        
-        await OnInitializedAsync();
-    }
 
     private string GetNotFoundMessage()
     {

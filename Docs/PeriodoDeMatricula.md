@@ -1,16 +1,3 @@
-# Periodo de Matricula
-
-- Pensando na jornada de uma instituicao totalmente nova:
-    - Para alunos calouros, a matricula em turma eh feita pelo sistema
-
-- Ao criar um aluno, informar campus onde ele vai estudar
-- Ao criar a turma, informar o campus onde ela vai ser ministrada
-
-# Ir pra feature de provas e notas
-
-- 
-
-
 # Do segundo periodo em diante, para todos os curso/alunos:
 
 - Para o periodo atual:
@@ -48,6 +35,3 @@
 - Se n tiver periodo de matricula aberto:
     - A opcao de matricula deve aparecer uma mensagem informando que n ta aberto
     - Ou nem mostrar a opcao?
-
-
-

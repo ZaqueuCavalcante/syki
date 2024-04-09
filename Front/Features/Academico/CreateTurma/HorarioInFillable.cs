@@ -1,4 +1,4 @@
-namespace Front.CreateTurma;
+namespace Front.Features.Academico.CreateTurma;
 
 public class HorarioInFillable
 {

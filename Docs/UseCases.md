@@ -13,7 +13,3 @@
 - [ ] Expedicao de diplomas?
 - [ ] Indicadores academicos?
 - [ ] Gerenciamento dos funcionarios?
-- [ ] Processos Administrativos?
-- [ ] Patrimonio / Inventario da instituicao?
-- [ ] Restaurante / cantina?
-- [ ] Eleicoes?

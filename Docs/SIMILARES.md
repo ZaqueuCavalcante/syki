@@ -9,23 +9,6 @@ https://www.sistemasiga.net.br/ensino-superior/
 - Controle de notas, lançamento de conteúdo ministrado e emissão de boletim, diário, histórico escolar e diversos relatórios.
 - Módulos administrativos, financeiros e pedagógicos.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 - Academico:
     Manutenção do Boletim (lançamento de notas, faltas)
     Mapa de Identificação Pessoal (carômetro)

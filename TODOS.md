@@ -45,12 +45,13 @@
 - [X] 17 GetDisciplinas
 - [X] 18 CreateGrade
 
+- [] GetGrades
+- [] GetGradeDisciplinas
+
+
 
 
 - [] ?? CreateTurma
-
-
-
 
 # TODO
 
@@ -60,15 +61,11 @@
 - [] GetCursoDisciplinas
 - [] GetCursosWithDisciplinas
 
-- [] GetGrades
-- [] GetGradeDisciplinas
-
 - [] CreateOferta
 - [] GetOfertas
 
 - [] CreateProfessor
 - [] GetProfessores
-
 
 - [] GetTurmas
 

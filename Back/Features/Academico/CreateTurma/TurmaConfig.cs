@@ -30,10 +30,6 @@ public class TurmaConfig : IEntityTypeConfiguration<Turma>
                 }
             );
 
-        turma.HasMany(t => t.Aulas)
-            .WithOne()
-            .HasForeignKey(a => a.TurmaId);
-
         turma.HasMany(t => t.Horarios)
             .WithOne()
             .HasForeignKey(h => h.TurmaId);

@@ -13,7 +13,6 @@ public class Turma
     public Guid ProfessorId { get; set; }
     public Professor Professor { get; set; }
     public string Periodo { get; set; }
-    public List<Aula> Aulas { get; set; }
     public List<Aluno> Alunos { get; set; }
     public List<Horario> Horarios { get; set; }
 

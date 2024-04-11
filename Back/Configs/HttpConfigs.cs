@@ -4,6 +4,7 @@ public static class HttpConfigs
 {
     public static void AddHttpConfigs(this IServiceCollection services)
     {
+        services.AddControllers();
         services.AddHttpContextAccessor();
         services.AddRouting(options => options.LowercaseUrls = true);
     }

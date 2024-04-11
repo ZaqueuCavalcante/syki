@@ -1,16 +1,12 @@
-using static Syki.Back.Configs.AuthorizationConfigs;
-
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test, Ignore("")]
+    [Test]
     public async Task Deve_criar_a_notification()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = await _factory.LoggedAsAcademico();
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
 
@@ -23,13 +19,11 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Description.Should().Be(body.Description);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public async Task Deve_marcar_a_notificacao_como_vista_pelo_usuario()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = await _factory.LoggedAsAcademico();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
@@ -57,13 +51,11 @@ public partial class IntegrationTests : IntegrationTestBase
         notification.ViewedAt.Should().NotBeNull();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public async Task Deve_retornar_todas_as_notificacoes()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = await _factory.LoggedAsAcademico();
 
         await client.PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" });
         await client.PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Ola", Description = "O", UsersGroup = "Alunos" });
@@ -75,13 +67,11 @@ public partial class IntegrationTests : IntegrationTestBase
         notifications.Count.Should().Be(2);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public async Task Deve_retornar_todas_as_notificacoes_do_usuario_logado()
     {
         // Arrange
-        var client = _factory.CreateClient();
-        var faculdade = await client.CreateInstitution("Nova Roma");
-        await client.RegisterAndLogin(faculdade.Id, Academico);
+        var client = await _factory.LoggedAsAcademico();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");

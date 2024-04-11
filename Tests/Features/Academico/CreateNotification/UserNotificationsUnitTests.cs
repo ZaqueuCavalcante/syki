@@ -4,7 +4,7 @@ namespace Syki.Tests.Unit;
 
 public class UserNotificationsUnitTests
 {
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_user_notification_com_user_id_correto()
     {
         // Arrange
@@ -18,7 +18,7 @@ public class UserNotificationsUnitTests
         userNotification.UserId.Should().Be(userId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_user_notification_com_notification_id_correto()
     {
         // Arrange
@@ -32,7 +32,7 @@ public class UserNotificationsUnitTests
         userNotification.NotificationId.Should().Be(notificationId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_user_notification_com_viewed_at_nulo()
     {
         // Arrange
@@ -46,7 +46,7 @@ public class UserNotificationsUnitTests
         userNotification.ViewedAt.Should().BeNull();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_converter_a_user_notification_corretamente_pro_out()
     {
         var userId = Guid.NewGuid();

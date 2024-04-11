@@ -5,7 +5,7 @@ namespace Syki.Tests.Unit;
 
 public class OfertasUnitTests
 {
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_oferta_com_id()
     {
         // Arrange
@@ -23,7 +23,7 @@ public class OfertasUnitTests
         oferta.Id.Should().NotBeEmpty();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_oferta_com_faculdade_id_correto()
     {
         // Arrange
@@ -41,7 +41,7 @@ public class OfertasUnitTests
         oferta.FaculdadeId.Should().Be(faculdadeId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_oferta_com_campus_id_correto()
     {
         // Arrange
@@ -59,7 +59,7 @@ public class OfertasUnitTests
         oferta.CampusId.Should().Be(campusId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_oferta_com_curso_id_correto()
     {
         // Arrange
@@ -77,7 +77,7 @@ public class OfertasUnitTests
         oferta.CursoId.Should().Be(cursoId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_oferta_com_grade_id_correto()
     {
         // Arrange
@@ -95,7 +95,7 @@ public class OfertasUnitTests
         oferta.GradeId.Should().Be(gradeId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_oferta_com_periodo_correto()
     {
         // Arrange
@@ -113,7 +113,7 @@ public class OfertasUnitTests
         oferta.Periodo.Should().Be(periodo);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_uma_oferta_com_turno_correto()
     {
         // Arrange
@@ -131,7 +131,7 @@ public class OfertasUnitTests
         oferta.Turno.Should().Be(turno);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_converter_a_oferta_corretamente_pro_out()
     {
         // Arrange
@@ -163,7 +163,7 @@ public class OfertasUnitTests
         ofertaOut.Turno.Should().Be(oferta.Turno);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_converter_o_get_line_correto()
     {
         // Arrange

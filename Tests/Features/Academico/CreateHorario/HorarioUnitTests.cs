@@ -2,7 +2,7 @@ namespace Syki.Tests.Unit;
 
 public class HorarioUnitTests
 {
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_um_horario_com_id()
     {
         // Arrange
@@ -17,7 +17,7 @@ public class HorarioUnitTests
         horario.Id.Should().NotBeEmpty();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_um_horario_com_dia_correto()
     {
         // Arrange
@@ -32,7 +32,7 @@ public class HorarioUnitTests
         horario.Dia.Should().Be(dia);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_um_horario_com_start_correto()
     {
         // Arrange
@@ -47,7 +47,7 @@ public class HorarioUnitTests
         horario.Start.Should().Be(start);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_um_horario_com_end_correto()
     {
         // Arrange
@@ -62,7 +62,7 @@ public class HorarioUnitTests
         horario.End.Should().Be(end);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Nao_deve_criar_um_horario_quando_start_e_end_forem_iguais()
     {
         // Arrange
@@ -77,7 +77,7 @@ public class HorarioUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE021);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Nao_deve_criar_um_horario_quando_end_for_menor_que_start()
     {
         // Arrange
@@ -92,7 +92,7 @@ public class HorarioUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE021);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Horarios_em_dias_diferentes_nao_devem_conflitar()
     {
         // Arrange
@@ -109,7 +109,7 @@ public class HorarioUnitTests
         result.Should().BeFalse();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Horarios_validos_nao_devem_conflitar()
     {
         // Arrange
@@ -123,7 +123,7 @@ public class HorarioUnitTests
         result.Should().BeFalse();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Horarios_exatamente_iguais_devem_conflitar()
     {
         // Arrange
@@ -140,7 +140,7 @@ public class HorarioUnitTests
         result.Should().BeTrue();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Horarios_parcialmente_iguais_devem_conflitar()
     {
         // Arrange
@@ -154,7 +154,7 @@ public class HorarioUnitTests
         result.Should().BeTrue();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Horarios_cujo_segundo_esta_contido_no_primeiro_devem_conflitar()
     {
         // Arrange
@@ -168,7 +168,7 @@ public class HorarioUnitTests
         result.Should().BeTrue();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Horarios_cujo_primeiro_esta_contido_no_segundo_devem_conflitar()
     {
         // Arrange

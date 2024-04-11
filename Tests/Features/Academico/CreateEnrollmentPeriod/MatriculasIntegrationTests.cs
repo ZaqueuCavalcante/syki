@@ -149,8 +149,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var ofertaAds = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = ads.Id, GradeId = gradeAds.Id, });
         var ofertaDireito = await client.PostAsync<OfertaOut>("/ofertas", new OfertaIn { CampusId = campus.Id, Periodo = periodo.Id, CursoId = direito.Id, GradeId = gradeDireito.Id, });
 
-        var chico = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Chico", Email = TestData.Email });
-        var ana = await client.PostAsync<ProfessorOut>("/professores", new ProfessorIn { Nome = "Ana", Email = TestData.Email });
+        var chico = await client.CreateProfessor("Chico");
+        var ana = await client.CreateProfessor("Ana");
 
         var turmaMatematica = await client.PostAsync<TurmaOut>("/turmas", new TurmaIn(matematica.Id, chico.Id, periodo.Id, [new(Dia.Segunda, Hora.H07_00, Hora.H10_00)]));
         var turmaBancoDeDados = await client.PostAsync<TurmaOut>("/turmas", new TurmaIn(bancoDeDados.Id, chico.Id, periodo.Id, [new(Dia.Terca, Hora.H07_00, Hora.H10_00)]));

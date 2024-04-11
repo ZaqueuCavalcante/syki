@@ -168,6 +168,17 @@ public static class HttpClientExtensions
         return await http.PostAsync<TurmaOut>("/turmas", body);
     }
 
+    public static async Task<HttpResponseMessage> CreateturmaHttp(
+        this HttpClient http,
+        Guid disciplinaId,
+        Guid professorId,
+        string periodoId,
+        List<HorarioIn> horarios
+    ) {
+        var body = new TurmaIn(disciplinaId, professorId, periodoId, horarios);
+        return await http.PostAsJsonAsync("/turmas", body);
+    }
+
     public static async Task<GradeOut> CreateGrade(
         this HttpClient http,
         string nome,

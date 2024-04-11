@@ -4,7 +4,7 @@ namespace Syki.Tests.Unit;
 
 public class AlunosUnitTests
 {
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_um_aluno_com_id()
     {
         // Arrange
@@ -19,7 +19,7 @@ public class AlunosUnitTests
         aluno.Id.Should().NotBeEmpty();
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_um_aluno_com_faculdade_id_correto()
     {
         // Arrange
@@ -35,7 +35,7 @@ public class AlunosUnitTests
         aluno.InstitutionId.Should().Be(faculdadeId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_um_aluno_com_user_id_correto()
     {
         // Arrange
@@ -51,7 +51,7 @@ public class AlunosUnitTests
         aluno.Id.Should().Be(userId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_um_aluno_com_nome_correto()
     {
         // Arrange
@@ -67,7 +67,7 @@ public class AlunosUnitTests
         aluno.Nome.Should().Be(nome);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_um_aluno_com_oferta_id_correto()
     {
         // Arrange
@@ -83,7 +83,7 @@ public class AlunosUnitTests
         aluno.OfertaId.Should().Be(ofertaId);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_criar_um_aluno_com_matricula()
     {
         // Arrange
@@ -100,7 +100,7 @@ public class AlunosUnitTests
         aluno.Matricula.Should().StartWith(DateTime.Now.Year.ToString());
     }
 
-    [Test, Ignore("")]
+    [Test]
     [Repeat(100)]
     public void Deve_criar_alunos_com_matriculas_diferentes()
     {
@@ -117,7 +117,7 @@ public class AlunosUnitTests
         aluna.Matricula.Should().NotBeSameAs(aluno.Matricula);
     }
 
-    [Test, Ignore("")]
+    [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.ValidNames))]
     public void Deve_criar_um_aluno_com_nome_valido(string nome)
     {
@@ -133,7 +133,7 @@ public class AlunosUnitTests
         act.Should().NotThrow<DomainException>();
     }
 
-    [Test, Ignore("")]
+    [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.InvalidNames))]
     public void Nao_deve_criar_um_aluno_com_nome_invalido(string nome)
     {
@@ -149,7 +149,7 @@ public class AlunosUnitTests
         act.Should().Throw<DomainException>().WithMessage(Throw.DE000);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_converter_o_aluno_corretamente_pro_out_sem_oferta()
     {
         // Arrange
@@ -166,7 +166,7 @@ public class AlunosUnitTests
         alunoOut.Matricula.Should().Be(aluno.Matricula);
     }
 
-    [Test, Ignore("")]
+    [Test]
     public void Deve_converter_o_aluno_corretamente_pro_out_com_oferta()
     {
         // Arrange

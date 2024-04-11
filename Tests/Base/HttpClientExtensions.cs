@@ -243,7 +243,33 @@ public static class HttpClientExtensions
         return await http.PostAsJsonAsync("/ofertas", body);
     }
 
+    public static async Task<AlunoOut> CreateAluno(
+        this HttpClient http,
+        Guid ofertaId,
+        string name = "Zezin",
+        string email = ""
+    ) {
+        email = email.HasValue() ? email : TestData.Email;
 
+        var body = new AlunoIn { Nome = name, Email = email, OfertaId = ofertaId };
+
+        var aluno = await http.PostAsync<AlunoOut>("/alunos", body);
+        aluno.Email = email;
+        return aluno;
+    }
+
+    public static async Task<HttpResponseMessage> CreateAlunoHttp(
+        this HttpClient http,
+        Guid ofertaId,
+        string name = "Zezin",
+        string email = ""
+    ) {
+        email = email.HasValue() ? email : TestData.Email;
+
+        var body = new AlunoIn { Nome = name, Email = email, OfertaId = ofertaId };
+
+        return await http.PostAsJsonAsync("/alunos", body);
+    }
 
 
 

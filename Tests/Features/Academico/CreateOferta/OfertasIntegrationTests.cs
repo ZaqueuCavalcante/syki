@@ -136,6 +136,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
+
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
@@ -155,6 +156,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
+
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");

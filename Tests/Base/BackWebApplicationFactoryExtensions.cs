@@ -26,6 +26,17 @@ public static class BackWebApplicationFactoryExtensions
         return client;
     }
 
+    public static async Task<HttpClient> LoggedAsAluno(this BackWebApplicationFactory factory, string email)
+    {
+        var client = factory.GetClient();
+
+        var token = await factory.GetResetPasswordToken(email);
+        var password = await client.ResetPassword(token!);
+        await client.Login(email, password);
+    
+        return client;
+    }
+
     public static SykiDbContext GetDbContext(this BackWebApplicationFactory factory)
     {
         var scope = factory.Services.CreateScope();

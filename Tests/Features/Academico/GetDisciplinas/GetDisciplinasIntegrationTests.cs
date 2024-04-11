@@ -35,10 +35,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var ads = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
         var cc = await client.CreateCurso("Ciência da Computação");
 
-        await client.CreateDisciplina("Banco de Dados", "BD", [ads.Id, cc.Id]);
-        await client.CreateDisciplina("Informática e Sociedade", "IS", [ads.Id]);
-        await client.CreateDisciplina("Programação Orientada a Objetos", "POO", [cc.Id]);
-        await client.CreateDisciplina("Projeto Integrador II: Modelagem de Banco de Dados", "PI-MBD", [cc.Id]);
+        await client.CreateDisciplina("Banco de Dados", [ads.Id, cc.Id]);
+        await client.CreateDisciplina("Informática e Sociedade", [ads.Id]);
+        await client.CreateDisciplina("Programação Orientada a Objetos", [cc.Id]);
+        await client.CreateDisciplina("Projeto Integrador II: Modelagem de Banco de Dados", [cc.Id]);
 
         // Act
         var disciplinas = await client.GetAsync<List<DisciplinaOut>>($"/disciplinas?cursoId={ads.Id}");

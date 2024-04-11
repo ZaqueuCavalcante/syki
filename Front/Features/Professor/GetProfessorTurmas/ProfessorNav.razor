@@ -3,21 +3,3 @@
 
 <MudNavLink Href="agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
 <MudNavLink Href="turmas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CenterFocusStrong" IconColor="Color.Inherit">Turmas</MudNavLink>
-
-@foreach (var turma in _turmas)
-{
-    var link = $"turmas/{turma.Id}";
-    <MudNavLink Href="@link">@turma.Code</MudNavLink>
-}
-
-@inject HttpClient Http
-
-@code
-{
-    private List<ProfessorTurmaOut> _turmas = [];
-
-    protected override async Task OnInitializedAsync()
-    {
-        _turmas = await Http.GetFromJsonAsync<List<ProfessorTurmaOut>>("/professor-turmas") ?? [];
-    }
-}

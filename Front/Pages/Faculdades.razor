@@ -45,7 +45,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _faculdades = await Http.GetFromJsonAsync<List<FaculdadeOut>>("/faculdades") ?? [];
+        _faculdades = await Http.GetFromJsonAsync<List<FaculdadeOut>>("/institutions") ?? [];
         _loading = false;
     }
 

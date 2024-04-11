@@ -27,21 +27,21 @@ public class CreateUserIn
         {
             Name = email,
             Email = email,
+            Role = "Academico",
             Password = password,
             InstitutionId = institutionId,
-            Role = "Academico",
         };
     }
 
-    public static CreateUserIn NewAcademico(Guid institutionId, string email)
+    public static CreateUserIn NewProfessor(Guid institutionId, string email)
     {
         return new CreateUserIn
         {
             Name = email,
             Email = email,
-            Password = $"Academico@{Guid.NewGuid().ToString().OnlyNumbers()}",
+            Role = "Professor",
             InstitutionId = institutionId,
-            Role = "Academico",
+            Password = $"Professor@{Guid.NewGuid().ToString().OnlyNumbers()}",
         };
     }
 
@@ -49,11 +49,11 @@ public class CreateUserIn
     {
         return new CreateUserIn
         {
-            InstitutionId = institutionId,
             Name = email,
             Email = email,
-            Password = $"Aluno@{Guid.NewGuid().ToString().OnlyNumbers()}",
             Role = "Aluno",
+            InstitutionId = institutionId,
+            Password = $"Aluno@{Guid.NewGuid().ToString().OnlyNumbers()}",
         };
     }
 }

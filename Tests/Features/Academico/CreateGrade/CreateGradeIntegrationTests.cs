@@ -27,9 +27,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.CreateDisciplina("Banco de Dados", "BD", [curso.Id]);
-        var ed = await client.CreateDisciplina("Estrutura de Dados", "ED", [curso.Id]);
-        var poo = await client.CreateDisciplina("Programação Orientada a Objetos", "POO", [curso.Id]);
+        var bd = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
+        var ed = await client.CreateDisciplina("Estrutura de Dados", [curso.Id]);
+        var poo = await client.CreateDisciplina("Programação Orientada a Objetos", [curso.Id]);
         var disciplinas = new List<GradeDisciplinaIn> { new(bd.Id, 1, 10, 70), new(ed.Id, 2, 8, 55), new(poo.Id, 3, 12, 60) };
 
         // Act
@@ -50,7 +50,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.CreateDisciplina("Banco de Dados", "BD", [curso.Id]);
+        var bd = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
         var disciplinas = new List<GradeDisciplinaIn> { new(bd.Id, 1, 10, 80) };
 
         // Act
@@ -103,7 +103,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var ads = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
         var direito = await client.CreateCurso("Direito");
 
-        var bd = await client.CreateDisciplina("Banco de Dados", "BD", [ads.Id]);
+        var bd = await client.CreateDisciplina("Banco de Dados", [ads.Id]);
 
         // Act
         var response = await client.CreateGradeHttp("Grade de Direito 1.0", direito.Id, [ new(bd.Id, 1, 10, 70) ]);
@@ -120,10 +120,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var clientUfpe = await _factory.LoggedAsAcademico();
 
         var cursoNovaRoma = await clientNovaRoma.CreateCurso("Análise e Desenvolvimento de Sistemas");
-        await clientNovaRoma.CreateDisciplina("Banco de Dados", "BDD", [cursoNovaRoma.Id]);
+        await clientNovaRoma.CreateDisciplina("Banco de Dados", [cursoNovaRoma.Id]);
 
         var cursoUfpe = await clientUfpe.CreateCurso("Análise e Desenvolvimento de Sistemas");
-        var disciplinaUfpe = await clientUfpe.CreateDisciplina("Banco de Dados", "BDD", [cursoUfpe.Id]);
+        var disciplinaUfpe = await clientUfpe.CreateDisciplina("Banco de Dados", [cursoUfpe.Id]);
 
         // Act
         var response = await clientNovaRoma.CreateGradeHttp("Grade ADS", cursoNovaRoma.Id, [ new(disciplinaUfpe.Id, 1, 10, 70) ]);
@@ -139,9 +139,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.CreateDisciplina("Banco de Dados", "BD", [curso.Id]);
-        var ed = await client.CreateDisciplina("Estrutura de Dados", "ED", [curso.Id]);
-        var poo = await client.CreateDisciplina("Programação Orientada a Objetos", "POO", [curso.Id]);
+        var bd = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
+        var ed = await client.CreateDisciplina("Estrutura de Dados", [curso.Id]);
+        var poo = await client.CreateDisciplina("Programação Orientada a Objetos", [curso.Id]);
 
         var disciplinas = new List<GradeDisciplinaIn>
         {
@@ -165,8 +165,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademico();
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
-        var bd = await client.CreateDisciplina("Banco de Dados", "BD", [curso.Id]);
-        var poo = await client.CreateDisciplina("Programação Orientada a Objetos", "POO", [curso.Id]);
+        var bd = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
+        var poo = await client.CreateDisciplina("Programação Orientada a Objetos", [curso.Id]);
         var disciplinas = new List<GradeDisciplinaIn>
         {
             new(bd.Id, 1, 10, 70),

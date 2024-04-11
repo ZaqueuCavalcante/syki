@@ -7,7 +7,7 @@ public class GetProfessorInsightsController(GetProfessorInsightsService service)
     [HttpGet("professor-insights")]
     public async Task<IActionResult> Get()
     {
-        var data = await service.Get(User.Id());
+        var data = await service.Get(User.InstitutionId(), User.Id());
         
         return Ok(data);
     }

@@ -10,13 +10,12 @@ public class Disciplina
 
     public Disciplina(
         Guid faculdadeId,
-        string nome,
-        string code
+        string nome
     ) {
         Id = Guid.NewGuid();
         FaculdadeId = faculdadeId;
         Nome = nome;
-        Code = code;
+        Code = $"{Guid.NewGuid().ToString()[..8].ToUpper()}";
         Vinculos = [];
     }
 

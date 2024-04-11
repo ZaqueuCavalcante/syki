@@ -7,6 +7,6 @@ public class ProfessorIn
 
     public static ProfessorIn Demo(string nome)
     {
-        return new ProfessorIn { Nome = nome, Email = $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.demo.com" };
+        return new ProfessorIn { Nome = nome, Email = $"{Guid.NewGuid().ToString().OnlyNumbers()[..8]}@syki.demo.com" };
     }
 }

@@ -10,23 +10,20 @@ public class GetAlunoInsightsService(DatabaseSettings settings)
         using var connection = new NpgsqlConnection(settings.ConnectionString);
 
         const string sql = @"
-            SELECT COUNT(1)
-            FROM syki.users
-            WHERE id = @Id
+            SELECT COUNT(1) AS DisciplinasTotal
+            FROM syki.grades__disciplinas
+            WHERE grade_id =
+            (
+                SELECT o.grade_id
+                FROM syki.ofertas o
+                WHERE id = (SELECT oferta_id FROM syki.alunos a WHERE a.id = @Id)
+            )
         ";
 
         var parameters = new { Id = id };
 
         var data = await connection.QueryFirstAsync<IndexAlunoOut>(sql, parameters);
 
-        data = new IndexAlunoOut
-        {
-            DisciplinasConcluidas = 5,
-            DisciplinasTotal = 78,
-            Media = 7.9M,
-            CR = 6.5M,
-        };
-        
         return data;
     }
 }

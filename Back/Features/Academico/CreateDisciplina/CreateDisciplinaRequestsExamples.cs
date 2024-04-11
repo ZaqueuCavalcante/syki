@@ -8,7 +8,6 @@ public class CreateDisciplinaRequestsExamples : IMultipleExamplesProvider<Discip
 			"Banco de Dados",
 			new DisciplinaIn
 			{
-				Code = "BDD",
 				Nome = "Banco de Dados",
 				Cursos = [Guid.NewGuid(), Guid.NewGuid()]
 			}
@@ -17,7 +16,6 @@ public class CreateDisciplinaRequestsExamples : IMultipleExamplesProvider<Discip
 			"Programação Orientada a Objetos",
 			new DisciplinaIn
 			{
-				Code = "POO",
 				Nome = "Programação Orientada a Objetos",
 				Cursos = [Guid.NewGuid()]
 			}

@@ -20,6 +20,7 @@ public static class ServicesConfigs
         builder.Services.AddScoped<GetCampiClient>();
 
         builder.Services.AddScoped<CreateGradeClient>();
+        builder.Services.AddScoped<GetAdmInsightsClient>();
 
         builder.Services.AddScoped<CreateCursoClient>();
         builder.Services.AddScoped<GetCursosClient>();

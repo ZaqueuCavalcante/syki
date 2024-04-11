@@ -6,8 +6,7 @@ public class CreateDisciplinaService(SykiDbContext ctx)
     {
         var disciplina = new Disciplina(
             faculdadeId,
-            data.Nome,
-            data.Code
+            data.Nome
         );
 
         var cursos = await ctx.Cursos

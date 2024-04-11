@@ -25,7 +25,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         // Act
-        var disciplina = await client.CreateDisciplina("Banco de Dados", "BD", [curso.Id]);
+        var disciplina = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
 
         // Assert
         disciplina.Nome.Should().Be("Banco de Dados");
@@ -41,7 +41,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var cc = await client.CreateCurso("Ciência da Computação");
 
         // Act
-        var disciplina = await client.CreateDisciplina("Banco de Dados", "BD", [ads.Id, cc.Id]);
+        var disciplina = await client.CreateDisciplina("Banco de Dados", [ads.Id, cc.Id]);
 
         // Assert
         disciplina.Nome.Should().Be("Banco de Dados");

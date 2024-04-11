@@ -50,22 +50,6 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> AllUsersRoles()
-    {
-        foreach (var role in AuthorizationConfigs.AllRoles)
-        {
-            yield return new object[] { role };
-        }
-    }
-
-    public static IEnumerable<object[]> InvalidRoles()
-    {
-        foreach (var role in new List<string>() { "a", "4", "", "  ", "lalala", "Adm" })
-        {
-            yield return new object[] { role };
-        }
-    }
-
     public static IEnumerable<object[]> InvalidEmails()
     {
         foreach (var role in new List<string>()
@@ -123,33 +107,6 @@ public static class TestData
             Guid.NewGuid().ToHashCode().ToString()[..6]
         })
         {
-            yield return new object[] { role };
-        }
-    }
-
-    public static IEnumerable<object[]> AllRolesExceptAcademico()
-    {
-        foreach (var role in AuthorizationConfigs.AllRoles)
-        {
-            if (role == AuthorizationConfigs.Academico) continue;
-            yield return new object[] { role };
-        }
-    }
-
-    public static IEnumerable<object[]> AllRolesExceptAdm()
-    {
-        foreach (var role in AuthorizationConfigs.AllRoles)
-        {
-            if (role == AuthorizationConfigs.Adm) continue;
-            yield return new object[] { role };
-        }
-    }
-
-    public static IEnumerable<object[]> AllRolesExceptAluno()
-    {
-        foreach (var role in AuthorizationConfigs.AllRoles)
-        {
-            if (role == AuthorizationConfigs.Aluno) continue;
             yield return new object[] { role };
         }
     }
@@ -280,21 +237,6 @@ public static class TestData
             (0.23M, "0.23"),
             (9.85M, "9.85"),
             (15.74M, "15.74"),
-        })
-        {
-            yield return new object[] { text };
-        }
-    }
-
-    public static IEnumerable<object[]> Notas()
-    {
-        foreach (var text in new List<(decimal, decimal, decimal, decimal)>()
-        {
-            (0.00M, 0.00M, 0.00M, 0.00M),
-            (10.00M, 10.00M, 0.00M, 10.00M),
-            (6.00M, 7.00M, 0.00M, 6.50M),
-            (9.00M, 0.00M, 0.00M, 4.50M),
-            (0.00M, 10.00M, 0.00M, 5.00M),
         })
         {
             yield return new object[] { text };

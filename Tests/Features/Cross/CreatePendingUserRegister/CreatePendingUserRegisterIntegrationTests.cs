@@ -18,13 +18,14 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Should_not_create_a_pending_user_register_with_invalid_email()
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidEmails))]
+    public async Task Should_not_create_a_pending_user_register_with_invalid_email(string email)
     {
         // Arrange
         var client = _factory.GetClient();
 
         // Act
-        var response = await client.CreatePendingUserRegister("zaqueu.com");
+        var response = await client.CreatePendingUserRegister(email);
 
         // Assert
         await response.AssertBadRequest(Throw.DE016);

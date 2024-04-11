@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Tests.Base;
 
@@ -30,10 +32,10 @@ public static class BackWebApplicationFactoryExtensions
         return scope.ServiceProvider.GetRequiredService<SykiDbContext>();
     }
 
-    public static T GetService<T>(this BackWebApplicationFactory factory) where T : notnull
+    public static UserManager<SykiUser> GetUserManager(this BackWebApplicationFactory factory)
     {
         var scope = factory.Services.CreateScope();
-        return scope.ServiceProvider.GetRequiredService<T>();
+        return scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
     }
 
     public static async Task<string?> GetResetPasswordToken(this BackWebApplicationFactory factory, string email)

@@ -122,11 +122,12 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await _factory.GetRegisterSetupToken(email);
 
         // Act
-        var response = await client.FinishUserRegister(token!, "Lalala@123");
+        await client.FinishUserRegister(token!, "Lalala@123");
 
         // Assert
-        using var ctx = _factory.GetDbContext();
-        var user = await ctx.Users.FirstOrDefaultAsync(x => x.Email == email);
-        user.Should().NotBeNull();
+        using var userManager = _factory.GetUserManager();
+        var user = await userManager.FindByEmailAsync(email);
+        var isInAcademicoRole = await userManager.IsInRoleAsync(user!, "Academico");
+        isInAcademicoRole.Should().BeTrue();
     }
 }

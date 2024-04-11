@@ -4,7 +4,6 @@ using Syki.Front.FinishUserRegister;
 using Syki.Front.CreateAcademicPeriod;
 using Syki.Front.CreateEnrollmentPeriod;
 using Syki.Front.CreatePendingUserRegister;
-using static Syki.Back.Configs.AuthorizationConfigs;
 using Syki.Front.Login;
 using Syki.Tests.Mock;
 using Syki.Front.Auth;
@@ -19,6 +18,8 @@ using Front.CreateDisciplina;
 using Front.CreateProfessor;
 using Syki.Front.GetAcademicInsights;
 using Front.CreateGrade;
+using static Syki.Back.Configs.AuthorizationConfigs;
+using System.Net.Http.Json;
 
 namespace Syki.Tests.Base;
 
@@ -167,17 +168,6 @@ public static class HttpClientExtensions
         return await http.PostAsync<TurmaOut>("/turmas", body);
     }
 
-    public static async Task<HttpResponseMessage> CreateGradeHttp(
-        this HttpClient http,
-        string nome,
-        Guid cursoId,
-        List<GradeDisciplinaIn> disciplinas = null
-    ) {
-        var client = new CreateGradeClient(http);
-
-        return await client.Create(nome, cursoId, disciplinas ?? []);
-    }
-
     public static async Task<GradeOut> CreateGrade(
         this HttpClient http,
         string nome,
@@ -190,6 +180,61 @@ public static class HttpClientExtensions
 
         return await result.DeserializeTo<GradeOut>();
     }
+
+    public static async Task<HttpResponseMessage> CreateGradeHttp(
+        this HttpClient http,
+        string nome,
+        Guid cursoId,
+        List<GradeDisciplinaIn> disciplinas = null
+    ) {
+        var client = new CreateGradeClient(http);
+
+        return await client.Create(nome, cursoId, disciplinas ?? []);
+    }
+
+    public static async Task<OfertaOut> CreateOferta(
+        this HttpClient http,
+        Guid campusId,
+        Guid cursoId,
+        Guid gradeId,
+        string? periodo,
+        Turno turno
+    ) {
+        var body = new OfertaIn
+        {
+            CampusId = campusId,
+            CursoId = cursoId,
+            GradeId = gradeId,
+            Periodo = periodo,
+            Turno = turno,
+        };
+
+        return await http.PostAsync<OfertaOut>("/ofertas", body);
+    }
+
+    public static async Task<HttpResponseMessage> CreateOfertaHttp(
+        this HttpClient http,
+        Guid campusId,
+        Guid cursoId,
+        Guid gradeId,
+        string? periodo,
+        Turno turno
+    ) {
+        var body = new OfertaIn
+        {
+            CampusId = campusId,
+            CursoId = cursoId,
+            GradeId = gradeId,
+            Periodo = periodo,
+            Turno = turno,
+        };
+
+        return await http.PostAsJsonAsync("/ofertas", body);
+    }
+
+
+
+
 
 
 
@@ -300,26 +345,6 @@ public static class HttpClientExtensions
 
 
 
-
-
-    public static async Task<OfertaOut> NewOferta(
-        this HttpClient client,
-        Guid campusId,
-        Guid cursoId,
-        Guid gradeId,
-        string? periodo,
-        Turno turno = Turno.Noturno
-    ) {
-        var body = new OfertaIn {
-            CampusId = campusId,
-            Periodo = periodo,
-            CursoId = cursoId,
-            GradeId = gradeId,
-            Turno = turno,
-        };
-
-        return await client.PostAsync<OfertaOut>("/ofertas", body);
-    }
 
     public static void RemoveAuthToken(this HttpClient client)
     {

@@ -12,7 +12,6 @@ public class Startup
         services.AddAuthenticationConfigs();
         services.AddAuthorizationConfigs();
 
-        services.AddControllers();
         services.AddHttpConfigs();
 
         services.AddAuditConfigs();

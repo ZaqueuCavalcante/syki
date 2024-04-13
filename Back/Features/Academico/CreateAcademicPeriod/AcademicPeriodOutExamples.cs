@@ -1,6 +1,4 @@
-﻿using Swashbuckle.AspNetCore.Filters;
-
-namespace Syki.Back.CreateAcademicPeriod;
+﻿namespace Syki.Back.CreateAcademicPeriod;
 
 public class AcademicPeriodOutExamples : IMultipleExamplesProvider<AcademicPeriodOut>
 {

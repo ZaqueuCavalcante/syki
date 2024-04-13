@@ -1,6 +1,7 @@
+using Syki.Back.CreateInstitution;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 using Syki.Back.Features.Cross.CreateUser;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
 
@@ -16,6 +17,37 @@ public static class BackWebApplicationFactoryExtensions
         using var ctx = factory.GetDbContext();
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Email == email);
         return register?.Id.ToString();
+    }
+
+    public static async Task RegisterAdm(this BackWebApplicationFactory factory)
+    {
+        using var ctx = factory.GetDbContext();
+        using var userManager = factory.GetUserManager();
+
+        var institution = new Faculdade { Id = Guid.Empty, Nome = "Syki" };
+        ctx.Add(institution);
+        await ctx.SaveChangesAsync();
+
+        var userIn = new CreateUserIn
+        {
+            Name = "Adm",
+            Email = "adm@syki.com",
+            Role = "Adm",
+            Password = "Test@123",
+            InstitutionId = institution.Id,
+        };
+
+        var user = new SykiUser(institution.Id, userIn.Name, userIn.Email);
+        await userManager.CreateAsync(user, userIn.Password);
+
+        await userManager.AddToRoleAsync(user, userIn.Role);
+    }
+
+    public static async Task<HttpClient> LoggedAsAdm(this BackWebApplicationFactory factory)
+    {
+        var client = factory.GetClient();
+        await client.Login("adm@syki.com", "Test@123");
+        return client;
     }
 
     public static async Task<HttpClient> LoggedAsAcademico(this BackWebApplicationFactory factory)

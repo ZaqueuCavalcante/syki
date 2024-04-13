@@ -15,6 +15,8 @@ public class IntegrationTestBase
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 
         await ctx.ResetDbAsync();
+
+        await _factory.RegisterAdm();
     }
 
     [OneTimeTearDown]

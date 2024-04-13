@@ -336,14 +336,6 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<CreateUserOut>();
     }
 
-    public static async Task<CreateUserIn> NewAcademico(this HttpClient client, string faculdade)
-    {
-        var novaRoma = await client.CreateInstitution(faculdade);
-        var userNovaRoma = CreateUserIn.New(novaRoma.Id, Academico);
-        await client.RegisterUser(userNovaRoma);
-        return userNovaRoma;
-    }
-
     public static async Task LoginAsAdm(this HttpClient client)
     {
         await client.Login("adm@syki.com", "Admin@123Admin@123");
@@ -361,19 +353,6 @@ public static class HttpClientExtensions
         var response = await client.PostHttpAsync("/faculdades", null);
 
         return await response.DeserializeTo<FaculdadeOut>();
-    }
-
-    public static async Task<CreateUserIn> RegisterAndLogin(this HttpClient client, Guid faculdadeId, string role)
-    {
-        if (role != "Adm")
-        {
-            var user = CreateUserIn.New(faculdadeId, role);
-            await client.RegisterUser(user);
-            await client.Login(user.Email, user.Password);
-            return user;
-        }
-
-        return null!;
     }
 
 

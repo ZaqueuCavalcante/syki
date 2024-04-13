@@ -1,5 +1,61 @@
 # DONE
 
+- [] Cadastro informando meu email
+- [] Definir minha senha
+- [] Fazer login
+- [] Configurar o segundo fator de autenticacao
+- [] Fazer login usando minha senha + token
+- [] Insights sumario dos dados cadastrados (dados de teste)
+- [] Campus
+    - Criar Agreste II
+    - Editar pra Agreste I
+    - Buscar por nome e cidade
+- [] Cursos
+    - Criar bacharelado em medicina
+    - Buscar medicina
+- [] Disciplinas
+    - Criar geometria analítica
+    - Vincular com os cursos de exatas
+- [] Grades
+    - Mostrar a grade de ADS ja criada
+    - Dos 10 cursos, apenas 4 possuem disciplinas vinculadas
+    - Mostrar selecionando varios cursos
+    - Criar grade de direito com 10 disciplinas
+- [] Ofertas
+    - Ofertar curso de direito matutino garoa
+    - Dos 10 cursos, so mostra os que possuem grade
+- [] Professores
+    - Criar professor Reginaldo
+        - reginaldo@syki.com
+    - Acessar link, criar senha e logar
+- [] Turmas
+    - Criar todas essas em timelapse
+    - Design de Interação Humano-Máquina (Joselia, 19-21)
+    - Introdução à Redes de Computadores (Antonio, 19-22)
+    - Introdução ao Desenvolvimento Web (Davi, 19-22)
+    - Matemática Discreta (Reginaldo, 21-22, 19-22)
+    - Pensamento Computacional e Algoritmos (Manu, 19-22)
+    - Projeto Integrador I: Concepção e Prototipação (Reginaldo, 9-11)
+    - Direito e Economia (Luciete, 830-12)
+    - Introdução ao Direito (Paulo, 830-12)
+- [] Alunos
+    - Criar aluno Chico
+        - chico@syki.com
+- [] Periodos academicos
+    - Criar o 2025.1 01/02 ate 05/06
+- [] Matriculas 
+- [] Notificacoes
+
+
+- [] 
+- [] 
+- [] 
+- [] 
+- [] 
+
+
+
+
 - [X] 00 CreatePendingUserRegister
 - [X] 01 FinishUserRegister
 - [X] 02 CreateUser

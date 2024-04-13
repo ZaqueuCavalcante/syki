@@ -10,13 +10,13 @@ public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> use
     public async Task<string> Generate(string email)
     {
         var user = (await userManager.FindByEmailAsync(email))!;
-        var roles = await userManager.GetRolesAsync(user);
+        var role = (await userManager.GetRolesAsync(user))[0];
 
         var claims = new List<Claim>
         {
             new("jti", Guid.NewGuid().ToString()),
             new("sub", user.Id.ToString()),
-            new("role", roles[0]),
+            new("role", role),
             new("name", user.Name),
             new("email", user.Email!),
             new("faculdade", user.InstitutionId.ToString()),

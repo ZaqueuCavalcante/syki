@@ -33,11 +33,11 @@ public class CreateUserIn
         };
     }
 
-    public static CreateUserIn NewProfessor(Guid institutionId, string email)
+    public static CreateUserIn NewProfessor(Guid institutionId, string name, string email)
     {
         return new CreateUserIn
         {
-            Name = email,
+            Name = name,
             Email = email,
             Role = "Professor",
             InstitutionId = institutionId,
@@ -45,11 +45,11 @@ public class CreateUserIn
         };
     }
 
-    public static CreateUserIn NewAluno(Guid institutionId, string email)
+    public static CreateUserIn NewAluno(Guid institutionId, string name, string email)
     {
         return new CreateUserIn
         {
-            Name = email,
+            Name = name,
             Email = email,
             Role = "Aluno",
             InstitutionId = institutionId,

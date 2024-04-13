@@ -8,7 +8,7 @@ public class CreateProfessorService(SykiDbContext ctx, CreateUserService service
     {
         using var transaction = ctx.Database.BeginTransaction();
 
-        var userIn = CreateUserIn.NewProfessor(institutionId, data.Email);
+        var userIn = CreateUserIn.NewProfessor(institutionId, data.Nome, data.Email);
         var user = await service.Create(userIn);
 
         var professor = new Professor(user.Id, institutionId, data.Nome);
@@ -16,7 +16,10 @@ public class CreateProfessorService(SykiDbContext ctx, CreateUserService service
         ctx.Add(professor);
         await ctx.SaveChangesAsync();
 
-        await sendService.Send(new SendResetPasswordTokenIn { Email = user.Email });
+        if (!data.Email.EndsWith("syki.demo.com"))
+        {
+            await sendService.Send(new SendResetPasswordTokenIn { Email = user.Email });
+        }
 
         transaction.Commit();
 

@@ -15,3 +15,11 @@ dotnet test --collect:"XPlat Code Coverage"
 dotnet test --logger:"console;verbosity=detailed" --collect:"XPlat Code Coverage"
 
 reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\*\coverage.cobertura.xml" -targetdir:"./Tests/Reports" -reporttypes:Html
+
+
+
+
+# Mutation
+
+dotnet stryker -o -f "./Tests/stryker-config.json"
+

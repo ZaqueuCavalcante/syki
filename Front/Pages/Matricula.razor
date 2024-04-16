@@ -26,6 +26,12 @@
             <MudText>Período de matrícula encerrado!</MudText>
         </MudAlert>
     }
+    else if (_finished)
+    {
+        <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Success" Variant="Variant.Text" Elevation="1">
+            <MudText>Matrícula realizada com sucesso!</MudText>
+        </MudAlert>
+    }
     else
     {
         <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
@@ -96,6 +102,7 @@
 {
     private bool _loading;
     private bool _saving;
+    private bool _finished;
     EnrollmentPeriodOut _periodoDeMatricula;
     private List<MatriculaTurmaOut> _options = [];
     private List<AgendaDiaOut> _dias = [];
@@ -131,6 +138,7 @@
         var response = await Http.PostAsJsonAsync("/matriculas/aluno", data);
         if (response.IsSuccessStatusCode)
         {
+            _finished = true;
             Snackbar.Add("Matrícula salva com sucesso!", Severity.Success);
         }
         else

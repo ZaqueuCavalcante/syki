@@ -7,7 +7,7 @@ namespace Syki.Back.CreateOferta;
 public class Oferta
 {
     public Guid Id { get; set; }
-    public Guid FaculdadeId { get; set; }
+    public Guid InstitutionId { get; set; }
     public Guid CampusId { get; set; }
     public Campus Campus { get; set; }
     public Guid CursoId { get; set; }
@@ -18,7 +18,7 @@ public class Oferta
     public Turno Turno { get; set; }
 
     public Oferta(
-        Guid faculdadeId,
+        Guid institutionId,
         Guid campusId,
         Guid cursoId,
         Guid gradeId,
@@ -26,7 +26,7 @@ public class Oferta
         Turno turno
     ) {
         Id = Guid.NewGuid();
-        FaculdadeId = faculdadeId;
+        InstitutionId = institutionId;
         CampusId = campusId;
         CursoId = cursoId;
         GradeId = gradeId;

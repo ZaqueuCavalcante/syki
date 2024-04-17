@@ -25,7 +25,7 @@ public class GetMatriculaAlunoTurmasService(SykiDbContext ctx)
             .Include(t => t.Disciplina)
             .Include(t => t.Horarios)
             .Include(t => t.Professor)
-            .Where(t => t.FaculdadeId == institutionId && t.Periodo == periodoDeMatricula.Id && ids.Contains(t.DisciplinaId))
+            .Where(t => t.InstitutionId == institutionId && t.Periodo == periodoDeMatricula.Id && ids.Contains(t.DisciplinaId))
             .ToListAsync();
 
         var selecteds = await ctx.TurmaAlunos.Where(x => x.AlunoId == userId).Select(x => x.TurmaId).ToListAsync();

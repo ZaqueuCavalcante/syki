@@ -3,16 +3,16 @@ namespace Syki.Back.CreateProfessor;
 public class Professor
 {
     public Guid Id { get; set; }
-    public Guid FaculdadeId { get; set; }
+    public Guid InstitutionId { get; set; }
     public string Nome { get; set; }
 
     public Professor(
         Guid id,
-        Guid faculdadeId,
+        Guid institutionId,
         string nome
     ) {
         Id = id;
-        FaculdadeId = faculdadeId;
+        InstitutionId = institutionId;
         SetNome(nome);
     }
 

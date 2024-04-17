@@ -9,31 +9,31 @@ public class PeriodosDeMatriculaUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var pm = new EnrollmentPeriod(id, faculdadeId, start, end);
+        var pm = new EnrollmentPeriod(id, institutionId, start, end);
 
         // Assert
         pm.Id.Should().Be(id);
     }
 
     [Test]
-    public void Deve_criar_um_periodo_de_matricula_com_faculdade_id_correto()
+    public void Deve_criar_um_periodo_de_matricula_com_institution_id_correto()
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var pm = new EnrollmentPeriod(id, faculdadeId, start, end);
+        var pm = new EnrollmentPeriod(id, institutionId, start, end);
 
         // Assert
-        pm.InstitutionId.Should().Be(faculdadeId);
+        pm.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
@@ -41,12 +41,12 @@ public class PeriodosDeMatriculaUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var pm = new EnrollmentPeriod(id, faculdadeId, start, end);
+        var pm = new EnrollmentPeriod(id, institutionId, start, end);
 
         // Assert
         pm.Start.Should().Be(start);
@@ -57,12 +57,12 @@ public class PeriodosDeMatriculaUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var pm = new EnrollmentPeriod(id, faculdadeId, start, end);
+        var pm = new EnrollmentPeriod(id, institutionId, start, end);
 
         // Assert
         pm.End.Should().Be(end);
@@ -73,12 +73,12 @@ public class PeriodosDeMatriculaUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new EnrollmentPeriod(id, faculdadeId, start, end);
+        Action act = () => new EnrollmentPeriod(id, institutionId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE023);
@@ -89,12 +89,12 @@ public class PeriodosDeMatriculaUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 06, 01);
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new EnrollmentPeriod(id, faculdadeId, start, end);
+        Action act = () => new EnrollmentPeriod(id, institutionId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE023);

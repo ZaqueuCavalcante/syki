@@ -8,7 +8,7 @@ public class GetProfessorTurmaService(SykiDbContext ctx)
         var turma = await ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Horarios)
-            .Where(t => t.FaculdadeId == institutionId && t.ProfessorId == userId && t.Id == id)
+            .Where(t => t.InstitutionId == institutionId && t.ProfessorId == userId && t.Id == id)
             .FirstOrDefaultAsync();
 
         if (turma == null)

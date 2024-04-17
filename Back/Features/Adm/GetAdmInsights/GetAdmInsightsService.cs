@@ -11,7 +11,7 @@ public class GetAdmInsightsService(DatabaseSettings settings)
 
         const string sql = @"
             SELECT
-                COUNT(1)-1 AS faculdades,
+                COUNT(1)-1                              AS institutions,
                 (SELECT COUNT(1)-1 FROM syki.users)     AS users,
                 (SELECT COUNT(1) FROM syki.campi)       AS campus,
                 (SELECT COUNT(1) FROM syki.cursos)      AS cursos,
@@ -21,7 +21,7 @@ public class GetAdmInsightsService(DatabaseSettings settings)
                 (SELECT COUNT(1) FROM syki.professores) AS professores,
                 (SELECT COUNT(1) FROM syki.alunos)      AS alunos
             FROM
-            	syki.faculdades
+            	syki.institutions
         ";
 
         return await connection.QueryFirstAsync<IndexAdmOut>(sql);

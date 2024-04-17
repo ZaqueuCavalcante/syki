@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Academico.CreateGrade;
 public class Grade
 {
     public Guid Id { get; set; }
-    public Guid FaculdadeId { get; set; }
+    public Guid InstitutionId { get; set; }
     public Guid CursoId { get; set; }
     public Curso Curso { get; set; }
     public string Nome { get; set; }
@@ -14,12 +14,12 @@ public class Grade
     public List<GradeDisciplina> Vinculos { get; set; }
 
     public Grade(
-        Guid faculdadeId,
+        Guid institutionId,
         Guid cursoId,
         string nome
     ) {
         Id = Guid.NewGuid();
-        FaculdadeId = faculdadeId;
+        InstitutionId = institutionId;
         CursoId = cursoId;
         Nome = nome;
         Disciplinas = [];

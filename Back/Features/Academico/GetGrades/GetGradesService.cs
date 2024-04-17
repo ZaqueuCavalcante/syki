@@ -5,7 +5,7 @@ public class GetGradesService(SykiDbContext ctx)
     public async Task<List<GradeOut>> Get(Guid institutionId)
     {
         var grades = await ctx.Grades.AsNoTracking()
-            .Where(c => c.FaculdadeId == institutionId)
+            .Where(c => c.InstitutionId == institutionId)
             .Include(g => g.Curso)
             .Include(g => g.Disciplinas)
             .Include(g => g.Vinculos)

@@ -10,12 +10,12 @@ public class CreateOfertaService(SykiDbContext ctx)
             Throw.DE010.Now();
 
         var cursoOk = await ctx.Cursos
-            .AnyAsync(c => c.FaculdadeId == institutionId && c.Id == data.CursoId);
+            .AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CursoId);
         if (!cursoOk)
             Throw.DE002.Now();
 
         var gradeOk = await ctx.Grades
-            .AnyAsync(g => g.FaculdadeId == institutionId && g.Id == data.GradeId && g.CursoId == data.CursoId);
+            .AnyAsync(g => g.InstitutionId == institutionId && g.Id == data.GradeId && g.CursoId == data.CursoId);
         if (!gradeOk)
             Throw.DE011.Now();
 

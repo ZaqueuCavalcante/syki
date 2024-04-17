@@ -9,39 +9,39 @@ public class CursosUnitTests
     public void Deve_criar_um_curso_com_id()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string nome = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(faculdadeId, nome, Bacharelado);
+        var curso = new Curso(institutionId, nome, Bacharelado);
 
         // Assert
         curso.Id.Should().NotBeEmpty();
     }
 
     [Test]
-    public void Deve_criar_um_curso_com_faculdade_id_correto()
+    public void Deve_criar_um_curso_com_institution_id_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string nome = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(faculdadeId, nome, Bacharelado);
+        var curso = new Curso(institutionId, nome, Bacharelado);
 
         // Assert
-        curso.FaculdadeId.Should().Be(faculdadeId);
+        curso.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
     public void Deve_criar_um_curso_com_nome_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string nome = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(faculdadeId, nome, Bacharelado);
+        var curso = new Curso(institutionId, nome, Bacharelado);
 
         // Assert
         curso.Nome.Should().Be(nome);
@@ -51,11 +51,11 @@ public class CursosUnitTests
     public void Deve_criar_um_curso_com_tipo_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string nome = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(faculdadeId, nome, Bacharelado);
+        var curso = new Curso(institutionId, nome, Bacharelado);
 
         // Assert
         curso.Tipo.Should().Be(Bacharelado);
@@ -65,9 +65,9 @@ public class CursosUnitTests
     public void Deve_converter_o_curso_corretamente_pro_out()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string nome = "Análise e Desenvolvimento de Sistemas";
-        var curso = new Curso(faculdadeId, nome, Bacharelado);
+        var curso = new Curso(institutionId, nome, Bacharelado);
 
         // Act
         var cursoOut = curso.ToOut();

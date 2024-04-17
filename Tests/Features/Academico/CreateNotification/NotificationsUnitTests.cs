@@ -8,42 +8,42 @@ public class NotificationsUnitTests
     public void Deve_criar_uma_notification_com_id()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
 
         // Act
-        var notification = new Notification(faculdadeId, title, description);
+        var notification = new Notification(institutionId, title, description);
 
         // Assert
         notification.Id.Should().NotBeEmpty();
     }
 
     [Test]
-    public void Deve_criar_uma_notification_com_faculdade_id_correto()
+    public void Deve_criar_uma_notification_com_institution_id_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
 
         // Act
-        var notification = new Notification(faculdadeId, title, description);
+        var notification = new Notification(institutionId, title, description);
 
         // Assert
-        notification.FaculdadeId.Should().Be(faculdadeId);
+        notification.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
     public void Deve_criar_uma_notification_com_title_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
 
         // Act
-        var notification = new Notification(faculdadeId, title, description);
+        var notification = new Notification(institutionId, title, description);
 
         // Assert
         notification.Title.Should().Be(title);
@@ -53,12 +53,12 @@ public class NotificationsUnitTests
     public void Deve_criar_uma_notification_com_description_correta()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
 
         // Act
-        var notification = new Notification(faculdadeId, title, description);
+        var notification = new Notification(institutionId, title, description);
 
         // Assert
         notification.Description.Should().Be(description);
@@ -68,12 +68,12 @@ public class NotificationsUnitTests
     public void Deve_criar_uma_notification_com_created_at_correta()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
 
         // Act
-        var notification = new Notification(faculdadeId, title, description);
+        var notification = new Notification(institutionId, title, description);
 
         // Assert
         notification.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
@@ -83,11 +83,11 @@ public class NotificationsUnitTests
     public void Deve_converter_a_notification_corretamente_pro_out()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
 
-        var notification = new Notification(faculdadeId, title, description)
+        var notification = new Notification(institutionId, title, description)
         {
             Views = "2/15"
         };

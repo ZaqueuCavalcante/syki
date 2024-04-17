@@ -2,11 +2,11 @@ namespace Syki.Back.GetNotifications;
 
 public class GetNotificationsService(SykiDbContext ctx)
 {
-    public async Task<List<NotificationOut>> Get(Guid faculdadeId)
+    public async Task<List<NotificationOut>> Get(Guid institutionId)
     {
         var notifications = await ctx.Notifications.AsNoTracking()
             .Include(x => x.Users)
-            .Where(c => c.FaculdadeId == faculdadeId)
+            .Where(c => c.InstitutionId == institutionId)
             .OrderByDescending(x => x.CreatedAt)
             .ToListAsync();
 

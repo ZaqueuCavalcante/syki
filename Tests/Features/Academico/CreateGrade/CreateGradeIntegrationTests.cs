@@ -79,7 +79,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_uma_nova_grade_com_curso_de_outra_faculdade()
+    public async Task Nao_deve_criar_uma_nova_grade_com_curso_de_outra_institution()
     {
         // Arrange
         var clientNovaRoma = await _factory.LoggedAsAcademico();
@@ -113,7 +113,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_uma_nova_grade_com_disciplina_de_outra_faculdade()
+    public async Task Nao_deve_criar_uma_nova_grade_com_disciplina_de_outra_institution()
     {
         // Arrange
         var clientNovaRoma = await _factory.LoggedAsAcademico();
@@ -182,7 +182,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_retornar_todas_as_grades_apenas_daquela_faculdade()
+    public async Task Deve_retornar_todas_as_grades_apenas_daquela_institution()
     {
         // Arrange
         var clientNovaRoma = await _factory.LoggedAsAcademico();

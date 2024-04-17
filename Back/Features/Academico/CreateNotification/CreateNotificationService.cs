@@ -2,9 +2,9 @@ namespace Syki.Back.CreateNotification;
 
 public class CreateNotificationService(SykiDbContext ctx)
 {
-    public async Task<NotificationOut> Create(Guid faculdadeId, NotificationIn data)
+    public async Task<NotificationOut> Create(Guid institutionId, NotificationIn data)
     {
-        var notification = new Notification(faculdadeId, data.Title, data.Description);
+        var notification = new Notification(institutionId, data.Title, data.Description);
 
         var roleName = data.UsersGroup == "Alunos" ? "Aluno" : "Professor";
         FormattableString sql = $@"
@@ -17,7 +17,7 @@ public class CreateNotificationService(SykiDbContext ctx)
             INNER JOIN
                 syki.user_roles ur ON ur.user_id = u.id AND ur.role_id = r.id
             WHERE
-                u.institution_id = {faculdadeId}
+                u.institution_id = {institutionId}
         ";
 
         var roleId = await ctx.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstAsync();

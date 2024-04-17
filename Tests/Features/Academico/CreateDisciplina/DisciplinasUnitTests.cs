@@ -8,37 +8,37 @@ public class DisciplinasUnitTests
     public void Deve_criar_uma_disciplina_com_id()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
 
         // Act
-        var disciplina = new Disciplina(faculdadeId, "Banco de Dados");
+        var disciplina = new Disciplina(institutionId, "Banco de Dados");
 
         // Assert
         disciplina.Id.Should().NotBeEmpty();
     }
 
     [Test]
-    public void Deve_criar_uma_disciplina_com_faculdade_id_correto()
+    public void Deve_criar_uma_disciplina_com_institution_id_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
 
         // Act
-        var disciplina = new Disciplina(faculdadeId, "Banco de Dados");
+        var disciplina = new Disciplina(institutionId, "Banco de Dados");
 
         // Assert
-        disciplina.FaculdadeId.Should().Be(faculdadeId);
+        disciplina.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
     public void Deve_criar_uma_disciplina_com_nome_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string nome = "Banco de Dados";
 
         // Act
-        var disciplina = new Disciplina(faculdadeId, nome);
+        var disciplina = new Disciplina(institutionId, nome);
 
         // Assert
         disciplina.Nome.Should().Be(nome);

@@ -5,7 +5,7 @@ public class CreateGradeService(SykiDbContext ctx)
     public async Task<GradeOut> Create(Guid institutionId, GradeIn data)
     {
         var cursoValido = await ctx.Cursos
-            .AnyAsync(c => c.FaculdadeId == institutionId && c.Id == data.CursoId);
+            .AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CursoId);
 
         if (!cursoValido)
             Throw.DE002.Now();

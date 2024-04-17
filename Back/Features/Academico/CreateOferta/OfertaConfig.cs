@@ -22,7 +22,7 @@ public class OfertaConfig : IEntityTypeConfiguration<Oferta>
 
         oferta.HasOne<AcademicPeriod>()
             .WithMany()
-            .HasForeignKey(o => new { o.Periodo, o.FaculdadeId });
+            .HasForeignKey(o => new { o.Periodo, o.InstitutionId });
 
         oferta.HasMany<Aluno>()
             .WithOne(a => a.Oferta)

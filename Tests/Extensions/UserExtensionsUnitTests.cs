@@ -22,18 +22,18 @@ public class UserExtensionsUnitTests
     }
 
     [Test]
-    public void Shoud_get_user_fauldade_id()
+    public void Shoud_get_user_institution_id()
     {
         // Arrange
-        var faculdadeIdClaim = new Claim("faculdade", Guid.NewGuid().ToString());
-        var claimsIdentity = new ClaimsIdentity([faculdadeIdClaim]);
+        var institutionIdClaim = new Claim("institution", Guid.NewGuid().ToString());
+        var claimsIdentity = new ClaimsIdentity([institutionIdClaim]);
         var user = new ClaimsPrincipal(claimsIdentity);
 
         // Act
         var result = user.InstitutionId();
 
         // Assert
-        result.Should().Be(faculdadeIdClaim.Value);
+        result.Should().Be(institutionIdClaim.Value);
     }
 
     [Test]

@@ -8,7 +8,7 @@ public class GetTurmasService(SykiDbContext ctx)
             .Include(t => t.Disciplina)
             .Include(t => t.Professor)
             .Include(t => t.Horarios)
-            .Where(c => c.FaculdadeId == institutionId)
+            .Where(c => c.InstitutionId == institutionId)
             .ToListAsync();
 
         return turmas.ConvertAll(t => t.ToOut());

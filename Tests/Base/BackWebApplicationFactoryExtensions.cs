@@ -24,7 +24,7 @@ public static class BackWebApplicationFactoryExtensions
         using var ctx = factory.GetDbContext();
         using var userManager = factory.GetUserManager();
 
-        var institution = new Faculdade { Id = Guid.Empty, Nome = "Syki" };
+        var institution = new Institution { Id = Guid.Empty, Nome = "Syki" };
         ctx.Add(institution);
         await ctx.SaveChangesAsync();
 

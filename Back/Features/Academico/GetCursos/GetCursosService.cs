@@ -5,7 +5,7 @@ public class GetCursosService(SykiDbContext ctx)
     public async Task<List<CursoOut>> Get(Guid institutionId)
     {
         var cursos = await ctx.Cursos
-            .Where(c => c.FaculdadeId == institutionId)
+            .Where(c => c.InstitutionId == institutionId)
             .OrderBy(c => c.Nome)
             .ToListAsync();
 

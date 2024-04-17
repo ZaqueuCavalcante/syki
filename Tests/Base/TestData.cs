@@ -87,6 +87,7 @@ public static class TestData
             "syki123",
             "Syki123",
             "lalal.com",
+            "12@3lalala",
             "5816811681816",
         })
         {

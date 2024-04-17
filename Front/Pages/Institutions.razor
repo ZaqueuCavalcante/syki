@@ -1,25 +1,25 @@
 ﻿@using Front.Components.Custom
 
-@page "/faculdades"
+@page "/institutions"
 @attribute [Authorize(Roles = "Adm")]
 
-<PageTitle>Faculdades</PageTitle>
+<PageTitle>Instituições</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.School" Title="Faculdades" />
+    <SykiPageHeader Icon="@Icons.Material.Filled.School" Title="Instituições" />
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>Uma faculdade pode conter vários campus e ofertar vários cursos.</MudText>
+        <MudText>Uma instituição pode conter vários campus e ofertar vários cursos.</MudText>
     </MudAlert>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_faculdades" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_institutions" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Id" Title="Id" />
-                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.Name" Title="Nome" />
             </Columns>
 
             <NoRecordsContent>
@@ -27,7 +27,7 @@
             </NoRecordsContent>
 
             <PagerContent>
-                <MudDataGridPager T="FaculdadeOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+                <SykiDataGridPager T="InstitutionOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -40,19 +40,19 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<FaculdadeOut> _faculdades = [];
+    private List<InstitutionOut> _institutions = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _faculdades = await Http.GetFromJsonAsync<List<FaculdadeOut>>("/institutions") ?? [];
+        _institutions = await Http.GetFromJsonAsync<List<InstitutionOut>>("/institutions") ?? [];
         _loading = false;
     }
 
-    private Func<FaculdadeOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome);
+    private Func<InstitutionOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
 
     private string GetNotFoundMessage()
     {
-        return (_searchString.IsEmpty()) ? "Não existem faculdades cadastradas ainda." : "Nenhuma faculdade encontrada.";
+        return (_searchString.IsEmpty()) ? "Não existem instituições cadastradas ainda." : "Nenhuma instituição encontrada.";
     }
 }

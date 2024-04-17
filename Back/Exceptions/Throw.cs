@@ -16,7 +16,7 @@ public static class Throw
     public const string DE011 = "Grade não encontrada.";
     public const string DE012 = "Oferta não encontrada.";
     public const string DE013 = "Role inválida.";
-    public const string DE014 = "Faculdade não encontrada.";
+    public const string DE014 = "Instituição não encontrada.";
     public const string DE015 = "Senha fraca.";
     public const string DE016 = "Email inválido.";
     public const string DE017 = "Email já utilizado.";

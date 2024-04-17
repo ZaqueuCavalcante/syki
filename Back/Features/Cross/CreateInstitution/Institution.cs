@@ -10,7 +10,7 @@ using Syki.Back.Features.Academico.CreateDisciplina;
 
 namespace Syki.Back.CreateInstitution;
 
-public class Faculdade
+public class Institution
 {
     public Guid Id { get; set; }
     public string Nome { get; set; }
@@ -24,20 +24,20 @@ public class Faculdade
     public List<Aluno> Alunos { get; set; }
     public List<Notification> Notifications { get; set; }
 
-    public Faculdade() { }
+    public Institution() { }
 
-    public Faculdade(string nome)
+    public Institution(string nome)
     {
         Id = Guid.NewGuid();
         Nome = nome;
     }
 
-    public FaculdadeOut ToOut()
+    public InstitutionOut ToOut()
     {
-        return new FaculdadeOut
+        return new InstitutionOut
         {
             Id = Id,
-            Nome = Nome,
+            Name = Nome,
         };
     }
 }

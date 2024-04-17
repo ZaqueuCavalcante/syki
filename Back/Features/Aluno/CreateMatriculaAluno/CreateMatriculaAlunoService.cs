@@ -5,7 +5,7 @@ public class CreateMatriculaAlunoService(SykiDbContext ctx)
     public async Task Create(Guid institutionId, Guid userId, MatriculaTurmaIn data)
     {
         var ids = await ctx.Turmas
-            .Where(t => t.FaculdadeId == institutionId && data.Turmas.Contains(t.Id))
+            .Where(t => t.InstitutionId == institutionId && data.Turmas.Contains(t.Id))
             .Select(t => t.Id)
             .ToListAsync();
 

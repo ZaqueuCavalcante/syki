@@ -19,7 +19,7 @@ public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> use
             new("role", role),
             new("name", user.Name),
             new("email", user.Email!),
-            new("faculdade", user.InstitutionId.ToString()),
+            new("institution", user.InstitutionId.ToString()),
         };
 
         var identityClaims = new ClaimsIdentity();

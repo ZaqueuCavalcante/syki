@@ -8,37 +8,37 @@ public class CreateCampusUnitTests
     public void Deve_criar_um_campus_com_id()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
 
         // Act
-        var campus = new Campus(faculdadeId, "Agreste I", "Caruaru - PE");
+        var campus = new Campus(institutionId, "Agreste I", "Caruaru - PE");
 
         // Assert
         campus.Id.Should().NotBeEmpty();
     }
 
     [Test]
-    public void Deve_criar_um_campus_com_faculdade_id_correto()
+    public void Deve_criar_um_campus_com_institution_id_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
 
         // Act
-        var campus = new Campus(faculdadeId, "Agreste I", "Caruaru - PE");
+        var campus = new Campus(institutionId, "Agreste I", "Caruaru - PE");
 
         // Assert
-        campus.InstitutionId.Should().Be(faculdadeId);
+        campus.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
     public void Deve_criar_um_campus_com_nome_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string nome = "Agreste I";
 
         // Act
-        var campus = new Campus(faculdadeId, "Agreste I", "Caruaru - PE");
+        var campus = new Campus(institutionId, "Agreste I", "Caruaru - PE");
 
         // Assert
         campus.Name.Should().Be(nome);
@@ -48,11 +48,11 @@ public class CreateCampusUnitTests
     public void Deve_criar_um_campus_com_cidade_correta()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string cidade = "Caruaru - PE";
 
         // Act
-        var campus = new Campus(faculdadeId, "Agreste I", cidade);
+        var campus = new Campus(institutionId, "Agreste I", cidade);
 
         // Assert
         campus.City.Should().Be(cidade);

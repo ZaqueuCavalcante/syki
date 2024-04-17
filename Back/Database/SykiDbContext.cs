@@ -21,7 +21,7 @@ namespace Syki.Back.Database;
 public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSettings settings) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
 {
     public DbSet<UserRegister> UserRegisters { get; set; }
-    public DbSet<Faculdade> Institutions { get; set; }
+    public DbSet<Institution> Institutions { get; set; }
     public DbSet<AcademicPeriod> AcademicPeriods { get; set; }
     public DbSet<EnrollmentPeriod> EnrollmentPeriods { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }

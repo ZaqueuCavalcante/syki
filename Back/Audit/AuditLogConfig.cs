@@ -14,6 +14,6 @@ public class AuditLogConfig : IEntityTypeConfiguration<AuditLog>
         auditLog.HasOne<SykiUser>()
             .WithMany()
             .HasPrincipalKey(u => new { u.InstitutionId, u.Id })
-            .HasForeignKey(a => new { a.FaculdadeId, a.UserId });
+            .HasForeignKey(a => new { a.InstitutionId, a.UserId });
     }
 }

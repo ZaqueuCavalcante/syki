@@ -18,7 +18,6 @@ using Front.CreateDisciplina;
 using Front.CreateProfessor;
 using Syki.Front.GetAcademicInsights;
 using Front.CreateGrade;
-using static Syki.Back.Configs.AuthorizationConfigs;
 using System.Net.Http.Json;
 
 namespace Syki.Tests.Base;
@@ -36,6 +35,30 @@ public static class HttpClientExtensions
         var client = new FinishUserRegisterClient(http);
         return await client.Finish(token, password);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static async Task<CreateUserOut> RegisterUser(this HttpClient client, BackWebApplicationFactory factory)
     {
@@ -330,32 +353,6 @@ public static class HttpClientExtensions
 
 
 
-    public static async Task<CreateUserOut> RegisterUser(this HttpClient client, CreateUserIn body)
-    {
-        var response = await client.PostHttpAsync("/users", body);
-        return await response.DeserializeTo<CreateUserOut>();
-    }
-
-    public static async Task LoginAsAdm(this HttpClient client)
-    {
-        await client.Login("adm@syki.com", "Admin@123Admin@123");
-    }
-
-    public static async Task Login(this HttpClient client, CreateUserIn user)
-    {
-        await client.Login(user.Email, user.Password);
-    }
-
-    public static async Task<FaculdadeOut> CreateInstitution(this HttpClient client, string nome = "Nova Roma")
-    {
-        await client.LoginAsAdm();
-
-        var response = await client.PostHttpAsync("/faculdades", null);
-
-        return await response.DeserializeTo<FaculdadeOut>();
-    }
-
-
 
 
 
@@ -386,12 +383,6 @@ public static class HttpClientExtensions
     public static async Task<HttpResponseMessage> PostHttpAsync(this HttpClient client, string path, object obj)
     {
         return await client.PostAsync(path, obj.ToStringContent());
-    }
-
-    public static async Task<T> PutAsync<T>(this HttpClient client, string path, object obj)
-    {
-        var response = await client.PutAsync(path, obj.ToStringContent());
-        return await response.DeserializeTo<T>();
     }
 
     public static async Task<T> GetAsync<T>(this HttpClient client, string path)

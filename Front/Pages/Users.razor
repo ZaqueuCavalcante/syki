@@ -9,7 +9,7 @@
     <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Usuários" />
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>Um usuário necessariamente precisa estar vinculado à uma faculdade.</MudText>
+        <MudText>Um usuário necessariamente precisa estar vinculado à uma instituição.</MudText>
     </MudAlert>
 
     <MudContainer Class="mb-8">
@@ -20,7 +20,7 @@
             <Columns>
                 <PropertyColumn Property="x => x.Nome" Title="Nome" />
                 <PropertyColumn Property="x => x.Email" Title="Email" />
-                <PropertyColumn Property="x => x.Faculdade" Title="Faculdade" />
+                <PropertyColumn Property="x => x.Institution" Title="Instituição" />
                 <PropertyColumn Property="x => x.Role" Title="Role" />
             </Columns>
 
@@ -29,7 +29,7 @@
             </NoRecordsContent>
 
             <PagerContent>
-                <MudDataGridPager T="CreateUserOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+                <SykiDataGridPager T="CreateUserOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>

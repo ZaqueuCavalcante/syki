@@ -12,7 +12,7 @@ public class GetAlunoAgendaService(SykiDbContext ctx)
         var turmas = await ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Horarios)
-            .Where(t => t.FaculdadeId == institution && ids.Contains(t.Id))
+            .Where(t => t.InstitutionId == institution && ids.Contains(t.Id))
             .ToListAsync();
 
         var response = turmas.ConvertAll(t =>

@@ -3,17 +3,17 @@ namespace Syki.Back.Features.Academico.CreateDisciplina;
 public class Disciplina
 {
     public Guid Id { get; set; }
-    public Guid FaculdadeId { get; set; }
+    public Guid InstitutionId { get; set; }
     public string Nome { get; set; }
     public string Code { get; set; }
     public List<CursoDisciplina> Vinculos { get; set; }
 
     public Disciplina(
-        Guid faculdadeId,
+        Guid institutionId,
         string nome
     ) {
         Id = Guid.NewGuid();
-        FaculdadeId = faculdadeId;
+        InstitutionId = institutionId;
         Nome = nome;
         Code = $"{Guid.NewGuid().ToString()[..8].ToUpper()}";
         Vinculos = [];

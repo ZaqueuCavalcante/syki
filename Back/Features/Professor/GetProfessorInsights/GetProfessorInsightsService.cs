@@ -11,15 +11,15 @@ public class GetProfessorInsightsService(DatabaseSettings settings)
 
         const string sql = @"
             SELECT
-                (SELECT COUNT(1) FROM syki.turmas WHERE faculdade_id = f.id AND professor_id = @Id) AS turmas,
+                (SELECT COUNT(1) FROM syki.turmas WHERE institution_id = i.id AND professor_id = @Id) AS turmas,
                 (
                     SELECT COUNT(1) FROM syki.turmas__alunos ta WHERE ta.turma_id IN
-                        (SELECT id FROM syki.turmas WHERE faculdade_id = f.id AND professor_id = @Id)
+                        (SELECT id FROM syki.turmas WHERE institution_id = i.id AND professor_id = @Id)
                 ) AS alunos
             FROM
-            	syki.faculdades f
+            	syki.institutions i
             WHERE
-            	f.id = @InstitutionId
+            	i.id = @InstitutionId
         ";
 
         var parameters = new { InstitutionId = institutionId, Id = id };

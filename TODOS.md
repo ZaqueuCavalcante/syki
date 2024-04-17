@@ -1,8 +1,7 @@
 # DONE
 
-
-- [] 00 CreatePendingUserRegister
-- [] 01 FinishUserRegister
+- [X] 00 CreatePendingUserRegister
+- [X] 01 FinishUserRegister
 - [] 02 CreateUser
 - [] 03 Login
 - [] 04 GenerateJWT

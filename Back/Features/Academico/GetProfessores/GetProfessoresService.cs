@@ -2,7 +2,7 @@ namespace Syki.Back.GetProfessores;
 
 public class GetProfessoresService(SykiDbContext ctx)
 {
-    public async Task<List<ProfessorOut>> Get(Guid faculdadeId)
+    public async Task<List<ProfessorOut>> Get(Guid institutionId)
     {
         FormattableString sql = $@"
             SELECT
@@ -14,7 +14,7 @@ public class GetProfessoresService(SykiDbContext ctx)
             INNER JOIN
                 syki.users u ON u.id = p.id
             WHERE
-                u.institution_id = {faculdadeId}
+                u.institution_id = {institutionId}
         ";
 
         var professores = await ctx.Database.SqlQuery<ProfessorOut>(sql).ToListAsync();

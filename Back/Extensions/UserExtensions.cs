@@ -6,17 +6,12 @@ public static class UserExtensions
 {
     public static Guid InstitutionId(this ClaimsPrincipal user)
     {
-        return Guid.Parse(user.FindFirstValue("faculdade")!);
+        return Guid.Parse(user.FindFirstValue("institution")!);
     }
 
     public static Guid Id(this ClaimsPrincipal user)
     {
         return Guid.Parse(user.FindFirstValue("sub")!);
-    }
-
-    public static string Email(this ClaimsPrincipal user)
-    {
-        return user.FindFirstValue("email")!;
     }
 
     public static bool IsAuditable(this PathString path)

@@ -10,37 +10,37 @@ public class CreateGradeUnitTests
     public void Deve_criar_uma_grade_com_id()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
 
         // Act
-        var grade = new Grade(faculdadeId, Guid.NewGuid(), "Grade de ADS - 1.0");
+        var grade = new Grade(institutionId, Guid.NewGuid(), "Grade de ADS - 1.0");
 
         // Assert
         grade.Id.Should().NotBeEmpty();
     }
 
     [Test]
-    public void Deve_criar_uma_grade_com_faculdade_id_correto()
+    public void Deve_criar_uma_grade_com_institution_id_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
 
         // Act
-        var grade = new Grade(faculdadeId, Guid.NewGuid(), "Grade de ADS - 1.0");
+        var grade = new Grade(institutionId, Guid.NewGuid(), "Grade de ADS - 1.0");
 
         // Assert
-        grade.FaculdadeId.Should().Be(faculdadeId);
+        grade.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
     public void Deve_criar_uma_grade_com_curso_id_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var cursoId = Guid.NewGuid();
 
         // Act
-        var grade = new Grade(faculdadeId, cursoId, "Grade de ADS - 1.0");
+        var grade = new Grade(institutionId, cursoId, "Grade de ADS - 1.0");
 
         // Assert
         grade.CursoId.Should().Be(cursoId);
@@ -50,11 +50,11 @@ public class CreateGradeUnitTests
     public void Deve_criar_uma_grade_com_nome_correto()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         const string nome = "Grade de ADS - 1.0";
 
         // Act
-        var grade = new Grade(faculdadeId, Guid.NewGuid(), nome);
+        var grade = new Grade(institutionId, Guid.NewGuid(), nome);
 
         // Assert
         grade.Nome.Should().Be(nome);
@@ -64,16 +64,16 @@ public class CreateGradeUnitTests
     public void Deve_converter_a_grade_corretamente_pro_out()
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var cursoId = Guid.NewGuid();
         const string nome = "Grade de ADS - 1.0";
 
-        var grade = new Grade(faculdadeId, cursoId, nome)
+        var grade = new Grade(institutionId, cursoId, nome)
         {
-            Curso = new Curso(faculdadeId, "ADS", TipoDeCurso.Bacharelado),
+            Curso = new Curso(institutionId, "ADS", TipoDeCurso.Bacharelado),
             Disciplinas = [
-                new Disciplina(faculdadeId, "Banco de Dados"),
-                new Disciplina(faculdadeId, "Estrutura de Dados"),
+                new Disciplina(institutionId, "Banco de Dados"),
+                new Disciplina(institutionId, "Estrutura de Dados"),
             ],
         };
 

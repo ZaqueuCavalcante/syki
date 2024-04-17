@@ -5,12 +5,12 @@ public class CreateTurmaService(SykiDbContext ctx)
     public async Task<TurmaOut> Create(Guid institutionId, TurmaIn data)
     {
         var disciplinaOk = await ctx.Disciplinas
-            .AnyAsync(x => x.FaculdadeId == institutionId && x.Id == data.DisciplinaId);
+            .AnyAsync(x => x.InstitutionId == institutionId && x.Id == data.DisciplinaId);
         if (!disciplinaOk)
             Throw.DE004.Now();
 
         var professorOk = await ctx.Professores
-            .AnyAsync(p => p.FaculdadeId == institutionId && p.Id == data.ProfessorId);
+            .AnyAsync(p => p.InstitutionId == institutionId && p.Id == data.ProfessorId);
         if (!professorOk)
             Throw.DE018.Now();
 

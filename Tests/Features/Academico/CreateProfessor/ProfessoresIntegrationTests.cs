@@ -17,7 +17,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_criar_varios_professores_para_uma_mesma_faculdade()
+    public async Task Deve_criar_varios_professores_para_uma_mesma_institution()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
@@ -32,7 +32,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_retornar_apenas_os_professores_da_faculdade_do_usuario_logado()
+    public async Task Deve_retornar_apenas_os_professores_da_institution_do_usuario_logado()
     {
         // Arrange
         var clientNovaRoma = await _factory.LoggedAsAcademico();

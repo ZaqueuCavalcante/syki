@@ -7,7 +7,7 @@ namespace Syki.Back.CreateTurma;
 public class Turma
 {
     public Guid Id { get; set; }
-    public Guid FaculdadeId { get; set; }
+    public Guid InstitutionId { get; set; }
     public Guid DisciplinaId { get; set; }
     public Disciplina Disciplina { get; set; }
     public Guid ProfessorId { get; set; }
@@ -19,14 +19,14 @@ public class Turma
     private Turma() {}
 
     public Turma(
-        Guid faculdadeId,
+        Guid institutionId,
         Guid disciplinaId,
         Guid professorId,
         string periodo,
         List<Horario> horarios
     ) {
         Id = Guid.NewGuid();
-        FaculdadeId = faculdadeId;
+        InstitutionId = institutionId;
         DisciplinaId = disciplinaId;
         ProfessorId = professorId;
         Periodo = periodo;

@@ -87,7 +87,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_retornar_todas_as_turmas_da_faculdade()
+    public async Task Deve_retornar_todas_as_turmas_da_institution()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();

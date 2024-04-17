@@ -21,7 +21,7 @@
             Dense="true"
             Hover="true"
             ReadOnly="true"
-            Loading="_loading"
+            Loading="@_loading"
             RowsPerPage="10"
         >
             <ToolBarContent>
@@ -39,7 +39,7 @@
             </NoRecordsContent>
 
             <PagerContent>
-                <MudDataGridPager T="NotificationOut" RowsPerPageString="Linhas por página:" InfoFormat="{first_item}-{last_item} de {all_items}" />
+                <SykiDataGridPager T="NotificationOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>

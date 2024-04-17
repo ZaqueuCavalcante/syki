@@ -16,7 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_uma_oferta_quando_o_campus_pertence_a_outra_faculdade()
+    public async Task Nao_deve_criar_uma_oferta_quando_o_campus_pertence_a_outra_institution()
     {
         // Arrange
         var clientNovaRoma = await _factory.LoggedAsAcademico();
@@ -47,7 +47,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_uma_oferta_com_curso_de_outra_faculdade()
+    public async Task Nao_deve_criar_uma_oferta_com_curso_de_outra_institution()
     {
         // Arrange
         var clientNovaRoma = await _factory.LoggedAsAcademico();
@@ -112,7 +112,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_uma_oferta_com_periodo_de_outra_faculdade()
+    public async Task Nao_deve_criar_uma_oferta_com_periodo_de_outra_institution()
     {
         // Arrange
         var clientNovaRoma = await _factory.LoggedAsAcademico();

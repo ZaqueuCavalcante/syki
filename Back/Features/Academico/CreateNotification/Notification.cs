@@ -3,7 +3,7 @@ namespace Syki.Back.CreateNotification;
 public class Notification
 {
     public Guid Id { get; set; }
-    public Guid FaculdadeId { get; set; }
+    public Guid InstitutionId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public DateTime CreatedAt { get; set; }
@@ -11,10 +11,10 @@ public class Notification
 
     public string Views { get; set; }
 
-    public Notification(Guid faculdadeId, string title, string description)
+    public Notification(Guid institutionId, string title, string description)
     {
         Id = Guid.NewGuid();
-        FaculdadeId = faculdadeId;
+        InstitutionId = institutionId;
         Title = title;
         Description = description;
         CreatedAt = DateTime.Now;

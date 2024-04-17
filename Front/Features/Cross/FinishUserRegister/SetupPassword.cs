@@ -3,7 +3,6 @@ namespace Syki.Front.FinishUserRegister;
 public class SetupPassword
 {
     public string Password { get; set; }
-
     public SetupPasswordValidation Validation { get; set; } = new();
 
     private readonly string Numbers = "0123456789";

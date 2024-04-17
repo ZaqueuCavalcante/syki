@@ -17,6 +17,6 @@ public class GetUsersIntegrationTests : IntegrationTestBase
         // Assert
         users.Should().HaveCount(2);
         var academic = users.First(x => x.Role == "Academico");
-        academic.Faculdade.Should().EndWith(user.Email);
+        academic.Institution.Should().EndWith(user.Email);
     }
 }

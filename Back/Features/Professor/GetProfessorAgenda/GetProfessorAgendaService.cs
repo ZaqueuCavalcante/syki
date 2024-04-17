@@ -7,7 +7,7 @@ public class GetProfessorAgendaService(SykiDbContext ctx)
         var turmas = await ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
             .Include(t => t.Horarios)
-            .Where(t => t.FaculdadeId == institution && t.ProfessorId == userId)
+            .Where(t => t.InstitutionId == institution && t.ProfessorId == userId)
             .ToListAsync();
 
         var response = turmas.ConvertAll(t =>

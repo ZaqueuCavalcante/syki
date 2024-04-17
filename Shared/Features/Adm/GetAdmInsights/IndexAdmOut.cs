@@ -2,7 +2,7 @@ namespace Syki.Shared;
 
 public class IndexAdmOut
 {
-    public int Faculdades { get; set; }
+    public int Institutions { get; set; }
     public int Users { get; set; }
     public int Campus { get; set; }
 

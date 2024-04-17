@@ -12,7 +12,7 @@ public class AuditLog
     public string Action { get; set; }
     public DateTime CreatedAt { get; set; }
     public Guid UserId { get; set; }
-    public Guid FaculdadeId { get; set; }
+    public Guid InstitutionId { get; set; }
     public JsonDocument Data { get; set; }
 
     public bool Fill(AuditEvent evt, EventEntry entry)
@@ -26,7 +26,7 @@ public class AuditLog
         Action = entry.Action;
         CreatedAt = DateTime.Now;
         UserId = Guid.Parse(evt.CustomFields["UserId"].ToString()!);
-        FaculdadeId = Guid.Parse(evt.CustomFields["FaculdadeId"].ToString()!);
+        InstitutionId = Guid.Parse(evt.CustomFields["InstitutionId"].ToString()!);
         Data = AuditData.NewAsJson(entry);
 
         return true;

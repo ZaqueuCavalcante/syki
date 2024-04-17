@@ -1,12 +1,12 @@
 namespace Syki.Shared;
 
-public class FaculdadeOut
+public class InstitutionOut
 {
     public Guid Id { get; set; }
-    public string Nome { get; set; }
+    public string Name { get; set; }
 
     public override string ToString()
     {
-        return Nome;
+        return Name;
     }
 }

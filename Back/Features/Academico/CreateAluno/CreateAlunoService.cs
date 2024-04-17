@@ -9,7 +9,7 @@ public class CreateAlunoService(SykiDbContext ctx, CreateUserService service, Se
         using var transaction = ctx.Database.BeginTransaction();
 
         var ofertaOk = await ctx.Ofertas
-            .AnyAsync(o => o.FaculdadeId == institutionId && o.Id == data.OfertaId);
+            .AnyAsync(o => o.InstitutionId == institutionId && o.Id == data.OfertaId);
         if (!ofertaOk)
             Throw.DE012.Now();
 

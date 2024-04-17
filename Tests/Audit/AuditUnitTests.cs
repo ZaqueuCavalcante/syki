@@ -21,7 +21,7 @@ public class AuditUnitTests
         {
             { "id", "0346158a-f03f-4d95-b627-a154876c3f5b" },
             { "periodo", "2023.2" },
-            { "faculdade_id", "8d08e437-8b18-4a15-a231-4a2260e60432" },
+            { "institution_id", "8d08e437-8b18-4a15-a231-4a2260e60432" },
             { "professor_id", "4ce214d0-cf13-453f-8543-7696d71827c5" },
             { "disciplina_id", "2dd62a1e-e8ed-4d39-ae76-59a3c9983235" },
         },
@@ -70,7 +70,7 @@ public class AuditUnitTests
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
         evt.CustomFields["UserId"] = Guid.NewGuid();
-        evt.CustomFields["FaculdadeId"] = Guid.NewGuid();
+        evt.CustomFields["InstitutionId"] = Guid.NewGuid();
 
         // Act
         var audit = new AuditLog();
@@ -86,7 +86,7 @@ public class AuditUnitTests
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
         evt.CustomFields["UserId"] = Guid.NewGuid();
-        evt.CustomFields["FaculdadeId"] = Guid.NewGuid();
+        evt.CustomFields["InstitutionId"] = Guid.NewGuid();
 
         // Act
         var audit = new AuditLog();
@@ -102,7 +102,7 @@ public class AuditUnitTests
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
         evt.CustomFields["UserId"] = Guid.NewGuid();
-        evt.CustomFields["FaculdadeId"] = Guid.NewGuid();
+        evt.CustomFields["InstitutionId"] = Guid.NewGuid();
 
         // Act
         var audit = new AuditLog();
@@ -118,7 +118,7 @@ public class AuditUnitTests
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
         evt.CustomFields["UserId"] = Guid.NewGuid();
-        evt.CustomFields["FaculdadeId"] = Guid.NewGuid();
+        evt.CustomFields["InstitutionId"] = Guid.NewGuid();
 
         // Act
         var audit = new AuditLog();
@@ -134,7 +134,7 @@ public class AuditUnitTests
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
         evt.CustomFields["UserId"] = Guid.NewGuid();
-        evt.CustomFields["FaculdadeId"] = Guid.NewGuid();
+        evt.CustomFields["InstitutionId"] = Guid.NewGuid();
 
         // Act
         var audit = new AuditLog();
@@ -150,9 +150,9 @@ public class AuditUnitTests
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
         var userId = Guid.NewGuid();
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         evt.CustomFields["UserId"] = userId;
-        evt.CustomFields["FaculdadeId"] = faculdadeId;
+        evt.CustomFields["InstitutionId"] = institutionId;
 
         // Act
         var audit = new AuditLog();
@@ -163,21 +163,21 @@ public class AuditUnitTests
     }
 
     [Test]
-    public void Deve_criar_uma_audit_log_com_faculdade_id_correto()
+    public void Deve_criar_uma_audit_log_com_institution_id_correto()
     {
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
         var userId = Guid.NewGuid();
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         evt.CustomFields["UserId"] = userId;
-        evt.CustomFields["FaculdadeId"] = faculdadeId;
+        evt.CustomFields["InstitutionId"] = institutionId;
 
         // Act
         var audit = new AuditLog();
         audit.Fill(evt, _eventEntry);
 
         // Assert
-        audit.FaculdadeId.Should().Be(faculdadeId);
+        audit.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
@@ -186,7 +186,7 @@ public class AuditUnitTests
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
         var userId = Guid.NewGuid();
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         evt.CustomFields["Skip"] = true;
 
         // Act
@@ -203,9 +203,9 @@ public class AuditUnitTests
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
         var userId = Guid.NewGuid();
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         evt.CustomFields["UserId"] = userId;
-        evt.CustomFields["FaculdadeId"] = faculdadeId;
+        evt.CustomFields["InstitutionId"] = institutionId;
 
         // Act
         var audit = new AuditLog();

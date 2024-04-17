@@ -9,31 +9,31 @@ public class PeriodosUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new AcademicPeriod(id, faculdadeId, start, end);
+        var periodo = new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
         periodo.Id.Should().Be(id);
     }
 
     [Test]
-    public void Deve_criar_um_periodo_com_faculdade_id_correto()
+    public void Deve_criar_um_periodo_com_institution_id_correto()
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new AcademicPeriod(id, faculdadeId, start, end);
+        var periodo = new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
-        periodo.InstitutionId.Should().Be(faculdadeId);
+        periodo.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
@@ -41,12 +41,12 @@ public class PeriodosUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new AcademicPeriod(id, faculdadeId, start, end);
+        var periodo = new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
         periodo.Start.Should().Be(start);
@@ -57,12 +57,12 @@ public class PeriodosUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new AcademicPeriod(id, faculdadeId, start, end);
+        var periodo = new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
         periodo.End.Should().Be(end);
@@ -73,12 +73,12 @@ public class PeriodosUnitTests
     public void Nao_deve_criar_um_periodo_com_id_invalido(string id)
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE006);
@@ -89,13 +89,13 @@ public class PeriodosUnitTests
     public void Deve_criar_um_periodo_com_id_valido(string id)
     {
         // Arrange
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var year = int.Parse(id.Substring(0, 4));
         var start = new DateOnly(year, 02, 01);
         var end = new DateOnly(year, 06, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
         act.Should().NotThrow<DomainException>();
@@ -106,12 +106,12 @@ public class PeriodosUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2022, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE007);
@@ -122,12 +122,12 @@ public class PeriodosUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2024, 06, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE008);
@@ -138,12 +138,12 @@ public class PeriodosUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE009);
@@ -154,12 +154,12 @@ public class PeriodosUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 06, 01);
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, faculdadeId, start, end);
+        Action act = () => new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE009);
@@ -170,11 +170,11 @@ public class PeriodosUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var faculdadeId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
-        var periodo = new AcademicPeriod(id, faculdadeId, start, end);
+        var periodo = new AcademicPeriod(id, institutionId, start, end);
 
         // Act
         var periodoOut = periodo.ToOut();

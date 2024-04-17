@@ -27,7 +27,7 @@ public static class AuditConfigs
                 .Map<Curso, AuditLog>()
                 .Map<CursoDisciplina, AuditLog>()
                 .Map<Disciplina, AuditLog>()
-                .Map<Faculdade, AuditLog>()
+                .Map<Institution, AuditLog>()
                 .Map<Grade, AuditLog>()
                 .Map<GradeDisciplina, AuditLog>()
                 .Map<Oferta, AuditLog>()
@@ -57,7 +57,7 @@ public static class AuditConfigs
             }
 
             scope.Event.CustomFields["UserId"] = httpContext.User.Id();
-            scope.Event.CustomFields["FaculdadeId"] = httpContext.User.InstitutionId();
+            scope.Event.CustomFields["InstitutionId"] = httpContext.User.InstitutionId();
         });
     }
 }

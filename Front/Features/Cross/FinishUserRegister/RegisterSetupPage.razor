@@ -19,7 +19,7 @@
                     </MudAlert>
                     <MudButton
                         Size="Size.Large"
-                        OnClick="GoToLogin"
+                        OnClick="@GoToLogin"
                         Variant="Variant.Filled"
                         Color="Color.Primary"
                         Class="mx-auto my-4 px-12"
@@ -31,13 +31,13 @@
             else
             {
                 <MudCardContent Class="mt-4 pb-2 px-0">
-                    <PasswordTextField Value="@_setup.Password" ValueChanged="HandlePasswordChange" Required="false" />
+                    <PasswordTextField Value="@_setup.Password" ValueChanged="@HandlePasswordChange" Required="false" />
                 </MudCardContent>
-                <PasswordRequerimentsCard @bind-Validation="_setup.Validation" />
+                <PasswordRequerimentsCard @bind-Validation="@_setup.Validation" />
                 <MudCardActions>
                     <MudButton
                         Size="Size.Large"
-                        OnClick="Submit"
+                        OnClick="@Submit"
                         Disabled="@(!_setup.IsValid())"
                         Variant="Variant.Filled"
                         Color="Color.Primary"
@@ -79,7 +79,7 @@
     private async Task Submit()
     {
         _loading = true;
-        var response = await Client.Finish(Token, _setup.Password );
+        var response = await Client.Finish(Token, _setup.Password);
         if (response.IsSuccessStatusCode)
         {
             _saved = true;

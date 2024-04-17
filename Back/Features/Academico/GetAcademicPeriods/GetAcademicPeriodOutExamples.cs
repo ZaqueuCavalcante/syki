@@ -1,6 +1,4 @@
-﻿using Swashbuckle.AspNetCore.Filters;
-
-namespace Syki.Back.GetAcademicPeriods;
+﻿namespace Syki.Back.GetAcademicPeriods;
 
 public class GetAcademicPeriodOutExamples : IMultipleExamplesProvider<List<AcademicPeriodOut>>
 {

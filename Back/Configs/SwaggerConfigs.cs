@@ -2,7 +2,6 @@ using System.Reflection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Interfaces;
-using Swashbuckle.AspNetCore.Filters;
 
 namespace Syki.Back.Configs;
 

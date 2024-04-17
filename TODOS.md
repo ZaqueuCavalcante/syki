@@ -6,8 +6,8 @@
 - [X] 03 Login
 - [X] 04 GenerateJWT
 - [X] 05 GetMfaKey
+- [X] 06 SetupMfa
 
-- [] 06 SetupMfa
 - [] 07 LoginMfa
 - [] 08 SendResetPasswordToken
 - [] 09 ResetPassword

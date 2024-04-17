@@ -1,6 +1,4 @@
-﻿using Swashbuckle.AspNetCore.Filters;
-
-namespace Syki.Back.CreateTurma;
+﻿namespace Syki.Back.CreateTurma;
 
 public class TurmaInExamples : IMultipleExamplesProvider<TurmaIn>
 {

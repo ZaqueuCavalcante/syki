@@ -2,10 +2,11 @@
 
 - [X] 00 CreatePendingUserRegister
 - [X] 01 FinishUserRegister
-- [] 02 CreateUser
-- [] 03 Login
-- [] 04 GenerateJWT
-- [] 05 GetMfaKey
+- [X] 02 CreateUser
+- [X] 03 Login
+- [X] 04 GenerateJWT
+- [X] 05 GetMfaKey
+
 - [] 06 SetupMfa
 - [] 07 LoginMfa
 - [] 08 SendResetPasswordToken

@@ -1,24 +1,24 @@
-using Syki.Front.SetupMfa;
-using Syki.Front.GetMfaKey;
-using Syki.Front.FinishUserRegister;
-using Syki.Front.CreateAcademicPeriod;
-using Syki.Front.CreateEnrollmentPeriod;
-using Syki.Front.CreatePendingUserRegister;
-using Syki.Front.Login;
+using Front.GetCursos;
 using Syki.Tests.Mock;
 using Syki.Front.Auth;
-using Syki.Front.LoginMfa;
-using Syki.Front.SendResetPasswordToken;
-using Syki.Front.ResetPassword;
-using Front.CreateCampus;
-using Front.UpdateCampus;
+using Syki.Front.Login;
 using Front.CreateCurso;
-using Front.GetCursos;
-using Front.CreateDisciplina;
-using Front.CreateProfessor;
-using Syki.Front.GetAcademicInsights;
 using Front.CreateGrade;
+using Front.UpdateCampus;
+using Front.CreateCampus;
+using Syki.Front.SetupMfa;
+using Syki.Front.LoginMfa;
+using Syki.Front.GetMfaKey;
 using System.Net.Http.Json;
+using Front.CreateProfessor;
+using Front.CreateDisciplina;
+using Syki.Front.ResetPassword;
+using Syki.Front.FinishUserRegister;
+using Syki.Front.GetAcademicInsights;
+using Syki.Front.CreateAcademicPeriod;
+using Syki.Front.CreateEnrollmentPeriod;
+using Syki.Front.SendResetPasswordToken;
+using Syki.Front.CreatePendingUserRegister;
 
 namespace Syki.Tests.Base;
 
@@ -36,30 +36,6 @@ public static class HttpClientExtensions
         return await client.Finish(token, password);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static async Task<CreateUserOut> RegisterUser(this HttpClient client, BackWebApplicationFactory factory)
     {
         var email = TestData.Email;
@@ -75,7 +51,7 @@ public static class HttpClientExtensions
 
     public static async Task<LoginOut> Login(this HttpClient http, string email, string password)
     {
-        var storage=  new LocalStorageServiceMock();
+        var storage = new LocalStorageServiceMock();
         var client = new LoginClient(http, storage, new SykiAuthStateProvider(storage));
         var response = await client.Login(email, password);
 
@@ -83,12 +59,6 @@ public static class HttpClientExtensions
         http.AddAuthToken(response.AccessToken);
 
         return response;
-    }
-
-    public static async Task<AcademicInsightsOut> GetAcademicInsights(this HttpClient http)
-    {
-        var client = new GetAcademicInsightsClient(http);
-        return await client.Get();
     }
 
     public static async Task<GetMfaKeyOut> GetMfaKey(this HttpClient http)
@@ -125,6 +95,36 @@ public static class HttpClientExtensions
     {
         var client = new ResetPasswordClient(http);
         return await client.Reset(token, password);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static async Task<AcademicInsightsOut> GetAcademicInsights(this HttpClient http)
+    {
+        var client = new GetAcademicInsightsClient(http);
+        return await client.Get();
     }
 
     public static async Task<CampusOut> CreateCampus(this HttpClient http, string name = "Agreste I", string city = "Caruaru - PE")

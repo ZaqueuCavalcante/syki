@@ -15,7 +15,7 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
 
         register.Finish();
 
-        var institution = new Institution($"Instituição - {register.Email}");
+        var institution = new Institution($"Institution - {register.Email}");
         ctx.Add(institution);
         ctx.Add(SykiTask.SeedInstitutionData(institution.Id));
         await ctx.SaveChangesAsync();

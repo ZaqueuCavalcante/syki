@@ -2,7 +2,7 @@
   "profiles": {
     "dev": {
       "commandName": "Project",
-      "launchBrowser": false,
+      "launchBrowser": true,
       "hotReloadEnabled": true,
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:6001",

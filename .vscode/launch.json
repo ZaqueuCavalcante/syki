@@ -21,8 +21,10 @@
         },
         {
             "name": "FRONT",
+            "browser": "chrome",
             "type": "blazorwasm",
             "request": "attach",
+            "cwd": "${workspaceFolder}",
             "url": "http://localhost:6001"
         }
     ]

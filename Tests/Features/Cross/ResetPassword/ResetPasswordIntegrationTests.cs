@@ -3,7 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Deve_retornar_o_token_de_reset_de_senha()
+    public async Task Should_get_the_reset_password_token()
     {
         // Arrange
         var client = _factory.GetClient();
@@ -18,7 +18,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_retornar_o_token_de_reset_de_senha_quando_o_usuario_nao_existir()
+    public async Task Should_not_get_the_reset_password_token_when_user_not_exists()
     {
         // Arrange / Act
         var token = await _factory.GetResetPasswordToken(TestData.Email);
@@ -28,7 +28,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_resetar_a_senha_quando_o_token_estiver_errado()
+    public async Task Should_not_reset_password_with_wrong_token()
     {
         // Arrange
         var client = _factory.GetClient();
@@ -45,7 +45,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_resetar_a_senha_do_usuario()
+    public async Task Should_reset_password()
     {
         // Arrange
         var client = _factory.GetClient();
@@ -63,7 +63,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_fazer_login_com_a_nova_senha_apos_resetar_a_senha()
+    public async Task Should_login_using_the_new_password()
     {
         // Arrange
         var client = _factory.GetClient();
@@ -83,7 +83,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_fazer_login_com_a_senha_antiga_apos_resetar_a_senha()
+    public async Task Should_not_login_using_the_old_password()
     {
         // Arrange
         var client = _factory.GetClient();
@@ -103,7 +103,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Nao_deve_resetar_a_senha_do_usuario_pela_segunda_vez_usando_o_mesmo_token()
+    public async Task Should_not_reset_password_twice_with_same_token()
     {
         // Arrange
         var client = _factory.GetClient();
@@ -124,7 +124,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
-    public async Task Nao_deve_resetar_a_senha_do_usuario_quando_a_senha_for_fraca(string password)
+    public async Task Should_not_reset_password_to_a_weak_one(string password)
     {
         // Arrange
         var client = _factory.GetClient();

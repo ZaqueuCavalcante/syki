@@ -97,6 +97,15 @@ public static class HttpClientExtensions
         return await client.Reset(token, password);
     }
 
+    public static void RemoveAuthToken(this HttpClient client)
+    {
+        client.DefaultRequestHeaders.Remove("Authorization");
+    }
+
+    public static void AddAuthToken(this HttpClient client, string token)
+    {
+        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+    }
 
 
 
@@ -359,15 +368,7 @@ public static class HttpClientExtensions
 
 
 
-    public static void RemoveAuthToken(this HttpClient client)
-    {
-        client.DefaultRequestHeaders.Remove("Authorization");
-    }
 
-    public static void AddAuthToken(this HttpClient client, string token)
-    {
-        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-    }
 
     public static async Task PostAsync(this HttpClient client, string path, object obj)
     {

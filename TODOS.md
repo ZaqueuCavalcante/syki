@@ -7,10 +7,9 @@
 - [X] 04 GenerateJWT
 - [X] 05 GetMfaKey
 - [X] 06 SetupMfa
-
-- [] 07 LoginMfa
-- [] 08 SendResetPasswordToken
-- [] 09 ResetPassword
+- [X] 07 LoginMfa
+- [X] 08 SendResetPasswordToken
+- [X] 09 ResetPassword
 
 - [] 10 GetAcademicInsights
 - [] 11 CreateCampus

@@ -6,10 +6,10 @@ using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateInstitution;
 using Syki.Back.CreateNotification;
+using Syki.Back.Features.Academico.CreateGrade;
 using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateCampus;
 using Syki.Back.Features.Academico.CreateDisciplina;
-using Syki.Back.Features.Academico.CreateGrade;
 
 namespace Syki.Back.Configs;
 

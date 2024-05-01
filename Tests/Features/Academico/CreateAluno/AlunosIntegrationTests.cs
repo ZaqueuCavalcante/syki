@@ -63,10 +63,13 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.Login(aluno.Email, password);
 
         // Act
-        var response = await client.GetAsync<List<DisciplinaOut>>("/alunos/disciplinas");
+        var response = await client.GetAlunoDisciplinas();
 
         // Assert
-        response.Count.Should().Be(3); 
+        response.Count.Should().Be(3);
+        response[0].Nome.Should().Be("Banco de Dados");
+        response[1].Nome.Should().Be("Estrutura de Dados");
+        response[2].Nome.Should().Be("Programação Orientada a Objetos");
     }
 
     [Test]

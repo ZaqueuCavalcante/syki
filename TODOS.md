@@ -1,30 +1,32 @@
 # DONE
 
-- [X] 00 CreatePendingUserRegister
-- [X] 01 FinishUserRegister
-- [X] 02 CreateUser
-- [X] 03 Login
-- [X] 04 GenerateJWT
-- [X] 05 GetMfaKey
-- [X] 06 SetupMfa
-- [X] 07 LoginMfa
-- [X] 08 SendResetPasswordToken
-- [X] 09 ResetPassword
+## Cross
+- [X] CreatePendingUserRegister
+- [X] FinishUserRegister
+- [X] CreateUser
+- [X] Login
+- [X] GenerateJWT
+- [X] GetMfaKey
+- [X] SetupMfa
+- [X] LoginMfa
+- [X] SendResetPasswordToken
+- [X] ResetPassword
+- [] GetUserNotifications
+- [] ViewNotification
 
-- [] 10 GetAcademicInsights
-- [] 11 CreateCampus
-- [] 12 UpdateCampus
-- [] 13 GetCampi
-- [] 14 CreateCurso
-- [] 15 GetCursos
-- [] 16 CreateDisciplina
-- [] 17 GetDisciplinas
-- [] 18 CreateGrade
+## Academico
+- [] GetAcademicInsights
+- [] CreateCampus
+- [] UpdateCampus
+- [] GetCampi
+- [] CreateCurso
+- [] GetCursos
+- [] CreateDisciplina
+- [] GetDisciplinas
+- [] CreateGrade
 
 - [] GetGrades
 - [] GetGradeDisciplinas
-
-
 
 
 - [] ?? CreateTurma
@@ -48,14 +50,14 @@
 - [] CreateAluno
 - [] GetAlunos
 
+- [] CreateNotification
 - [] CreateAcademicPeriod
 - [] GetAcademicPeriods
 - [] CreateEnrollmentPeriod
 - [] GetEnrollmentPeriods
 - [] GetCurrentEnrollmentPeriod
 
-- [] CreateNotification
-- [] GetNotifications
+
 
 - [] GetAlunoAgenda
 - [] GetAlunoDisciplinas
@@ -64,8 +66,6 @@
 
 - [] GetInstitutions
 - [] GetUsers
-
-
 
 # IDEAS
 
@@ -80,103 +80,3 @@
 - Logs
 - Use Result Pattern instead throw exceptions
 - Load testing (K6)
-
-# YouTube
-
-- Thumb: imagem com todas as tecnologia
-- Minutagem na descricao
-
-- Features:
-    - Cross, Academico, Professor, Aluno, Adm
-    - Mostrar todos os erros possíveis?
-    - 00 CreatePending user register
-    - 01 FinishUserRegister
-    - 02 CreateUser
-    - 03 Login
-    - 04 GenerateJWT
-    - 05 GetMfaKey
-    - 06 SetupMfa
-    - 07 LoginMfa
-    - 08 SendResetPasswordToken
-    - 09 ResetPassword
-
-    - 10 GetAcademicInsights
-    - 11 CreateCampus
-    - 12 UpdateCampus
-    - 13 GetCampi
-    - 14 CreateCurso
-    - 15 GetCursos
-    - 16 CreateDisciplina
-    - 17 GetDisciplinas
-    - 18 CreateGrade
-
-
-
-
-- Arquitetura:
-    - Back
-    - Front (ngnix)
-    - Daemon
-    - Banco
-    - *Tests
-
-- Stack:
-    - Back:
-        - C#
-        - ASP.NET
-        - EF Core
-        - Identity
-        - Docs (Swagger + Redoc)
-    - Front:
-        - Blazor WebAssembly
-        - MudBlazor
-        - NGINX
-    - Daemon:
-        - C# Hosted App
-    - Tests:
-        - NUnit
-        - Fluent Assertions
-        - BUnit
-        - Playwright
-        - Stryker.NET
-    - Banco:
-        - PostgreSQL
-    - Deploy:
-        - CI/CD GitHub Actions
-        - Docker
-        - Docker-Compose
-        - Railway
-
-- Code:
-    - Cada pasta é um projeto
-    - Dockerfiles
-    - Docker-Compose
-    - Vertical Slices (todos os projetos)
-    - Back:
-        - Startup
-            - ConfigureServices (Configs)
-            - Configure (Middlewares)
-        - Variáveis de ambiente
-        - Features
-        - Database (modelo ER)
-        - Auditoria
-        - Autenticacao / autorizacao
-        - RateLimit
-        - Exceptions
-    - Front:
-        - MudBlazor based
-        - Clients (uso nos testes)
-        - JWT no local storage?
-        - Autenticacao / autorizacao
-    - Daemon:
-        - Pooling no banco
-        - Processamento de tasks
-    - Shared:
-        - Código utilizado no back e no front
-        - Tipicamente DTOs da API
-    - Tests:
-        - Unit
-        - WebFactory, Base, Extensions, Integration
-        - Components
-        - E2E
-        - Mutation

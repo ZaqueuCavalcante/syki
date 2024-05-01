@@ -1,4 +1,4 @@
-namespace Syki.Back.GetUserNotifications;
+namespace Syki.Back.Features.Cross.GetUserNotifications;
 
 [ApiController, AuthBearer]
 [EnableRateLimiting("Medium")]

@@ -6,7 +6,7 @@
     RequiredError="Informe!"
     Label="@Label"
     Date="@Date"
-    DateChanged="DateChanged"
+    DateChanged="@DateChanged"
     Mask="@(new DateMask("dd/MM/yyyy"))"
     DateFormat="dd/MM/yyyy"
     Placeholder="dd/MM/yyyy"
@@ -16,6 +16,7 @@
 {
     [Parameter]
     public DateTime? Date { get; set; }
+
     [Parameter]
     public EventCallback<DateTime?> DateChanged { get; set; }
 

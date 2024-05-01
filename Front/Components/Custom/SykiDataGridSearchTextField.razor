@@ -2,13 +2,13 @@
 <MudSpacer />
 <MudTextField
     Class="mt-0"
-    Value="Value"
+    Value="@Value"
     Immediate="true"
     Margin="Margin.Dense"
     IconSize="Size.Medium"
     Placeholder="@Placeholder"
     Variant="Variant.Outlined"
-    ValueChanged="ValueChanged"
+    ValueChanged="@ValueChanged"
     Adornment="Adornment.Start"
     AdornmentIcon="@Icons.Material.Filled.Search"
 />
@@ -17,6 +17,7 @@
 {
     [Parameter]
     public string Value { get; set; }
+
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
 

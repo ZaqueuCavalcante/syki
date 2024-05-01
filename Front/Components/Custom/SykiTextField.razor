@@ -11,14 +11,15 @@
     RequiredError="Informe!"
     OnlyValidateIfDirty="true"
     Variant="Variant.Outlined"
-    ValueChanged="ValueChanged"
-    OnKeyDown="HandleOnKeyDown"
+    ValueChanged="@ValueChanged"
+    OnKeyDown="@HandleOnKeyDown"
 />
 
 @code
 {
     [Parameter]
     public string Value { get; set; }
+
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
 

@@ -35,13 +35,11 @@
                     </CellTemplate>
                 </TemplateColumn>
             </Columns>
- 
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
-
             <PagerContent>
-                <SykiDataGridPager T="CampusOut" />
+                <SykiDataGridPager T="@CampusOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>

@@ -1,3 +1,4 @@
+@using Front.Components.Custom
 @using Front.Components.Buttons
 
 <MudDialog Class="pb-2">
@@ -8,40 +9,15 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="_form">
-            <MudTextField
-                OnKeyDown="HandleOnKeyDown"
-                OnlyValidateIfDirty="true"
-                Immediate="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-4"
-                AutoFocus="true"
-                @bind-Value="data.Title"
-                T="String"
-                Label="Título"
-                Required="true"
-                RequiredError="Informe!"
-            />
-            <MudTextField
-                OnKeyDown="HandleOnKeyDown"
-                OnlyValidateIfDirty="true"
-                Immediate="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-2"
-                @bind-Value="data.Description"
-                T="String"
-                Label="Descrição"
-                Required="true"
-                RequiredError="Informe!"
-            />
+        <MudForm @ref="@_form">
+            <SykiTextField Label="Título" AutoFocus="true" @bind-Value="@_data.Title" />
+            <SykiTextField Label="Descrição" @bind-Value="@_data.Description" />
             <MudSelect
                 Dense="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-4"
-                @bind-Value="data.UsersGroup"
+                @bind-Value="@_data.UsersGroup"
                 Label="Usuários"
                 Required="true"
                 RequiredError="Informe!"
@@ -53,9 +29,9 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="Cancel" />
-        <DialogProgressCircular Loading="_loading" />
-        <DialogSaveButton OnClick="Submit" />
+        <DialogCancelButton OnClick="@Cancel" />
+        <DialogProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
     </DialogActions>
 </MudDialog>
 
@@ -66,18 +42,10 @@
 {
     private MudForm _form;
     private bool _loading;
-    private NotificationIn data = new();
+    private NotificationIn _data = new();
 
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
-
-    async Task HandleOnKeyDown(KeyboardEventArgs args)
-    {
-        if (args.IsEnter())
-        {
-            await Submit();
-        }
-    }
 
     async Task Submit()
     {
@@ -87,7 +55,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/notifications", data);
+        var response = await Http.PostAsJsonAsync("/notifications", _data);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

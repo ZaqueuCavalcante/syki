@@ -7,8 +7,8 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="_form">
-            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="_data.Nome" OnKeyDown="Submit" />
-            <SykiTextField Label="Email" @bind-Value="_data.Email" OnKeyDown="Submit" />
+            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="_data.Nome" OnKeyDown="@Submit" />
+            <SykiTextField Label="Email" @bind-Value="_data.Email" OnKeyDown="@Submit" />
             <MudSelect
                 Dense="true"
                 Disabled="@(_ofertas.Count == 0)"

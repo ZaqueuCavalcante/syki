@@ -1,4 +1,4 @@
-namespace Syki.Back.ViewNotification;
+namespace Syki.Back.Features.Cross.ViewNotification;
 
 [ApiController, AuthBearer]
 [EnableRateLimiting("Medium")]

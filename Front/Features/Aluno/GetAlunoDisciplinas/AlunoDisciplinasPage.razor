@@ -1,18 +1,12 @@
+@using Front.Components.Custom;
+@using Syki.Front.GetAlunoDisciplinas;
+
 @attribute [Authorize(Roles = "Aluno")]
 
 <PageTitle>Disciplinas</PageTitle>
 
 <MudContainer>
-    <MudCard Class="mt-8 mb-4 mx-6 px-2">
-        <MudCardContent>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.Apps" Class="mr-1 mb-1" Size="Size.Large"/>
-                <MudText Typo="Typo.h5" Style="font-weight: bold">Disciplinas</MudText>
-                <MudSpacer />
-            </MudStack>
-        </MudCardContent>
-    </MudCard>
-
+    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" />
     <MudContainer Class="mb-8">
         <MudExpansionPanels MultiExpansion="true">
             @foreach(var periodo in _disciplinas.ConvertAll(d => d.Periodo).Distinct().Order())
@@ -32,7 +26,6 @@
                                 <col style="width: 15%;" />
                                 <col style="width: 20%;" />
                             </ColGroup>
-
                             <HeaderContent>
                                 <MudTh>Nome</MudTh>
                                 <MudTh>Créditos</MudTh>
@@ -53,8 +46,7 @@
     </MudContainer>
 </MudContainer>
 
-@inject HttpClient Http
-@inject IDialogService DialogService
+@inject GetAlunoDisciplinasClient Client
 
 @code
 {
@@ -62,6 +54,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("alunos/disciplinas") ?? [];
+        _disciplinas = await Client.Get();
     }
 }

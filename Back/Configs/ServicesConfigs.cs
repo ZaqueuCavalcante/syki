@@ -1,11 +1,9 @@
 using Syki.Back.Features.Academico.GetCampi;
-using Syki.Back.Features.Cross.GenerateJWT;
 using Syki.Back.Features.Academico.CreateCampus;
 using Syki.Back.Features.Academico.UpdateCampus;
 using Syki.Back.CreateAluno;
 using Syki.Back.GetEnrollmentPeriods;
 using Syki.Back.CreateAcademicPeriod;
-using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Syki.Back.CreateProfessor;
 using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.CreateEnrollmentPeriod;
@@ -33,23 +31,25 @@ using Syki.Back.GetOfertas;
 using Syki.Back.GetProfessores;
 using Syki.Back.GetAdmInsights;
 using Syki.Back.GetTurmas;
-using Syki.Back.GetUserNotifications;
 using Syki.Back.GetUsers;
-using Syki.Back.ViewNotification;
 using Syki.Back.GetCursosWithGrades;
 using Syki.Back.GetProfessorInsights;
 using Syki.Back.GetProfessorAgenda;
 using Syki.Back.GetProfessorTurmas;
 using Syki.Back.GetProfessorTurma;
-using Syki.Back.Features.Cross.FinishUserRegister;
-using Syki.Back.Features.Cross.Login;
-using Syki.Back.Features.Cross.GetMfaKey;
-using Syki.Back.Features.Cross.SetupMfa;
-using Syki.Back.Features.Cross.LoginMfa;
-using Syki.Back.Features.Cross.ResetPassword;
-using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Academico.GetAcademicInsights;
 using Syki.Back.Features.Academico.CreateDisciplina;
+using Syki.Back.Features.Cross.Login;
+using Syki.Back.Features.Cross.SetupMfa;
+using Syki.Back.Features.Cross.LoginMfa;
+using Syki.Back.Features.Cross.GetMfaKey;
+using Syki.Back.Features.Cross.GenerateJWT;
+using Syki.Back.Features.Cross.ResetPassword;
+using Syki.Back.Features.Cross.ViewNotification;
+using Syki.Back.Features.Cross.FinishUserRegister;
+using Syki.Back.Features.Cross.GetUserNotifications;
+using Syki.Back.Features.Cross.SendResetPasswordToken;
+using Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 namespace Syki.Back.Configs;
 
@@ -57,6 +57,7 @@ public static class ServicesConfigs
 {
     public static void AddServicesConfigs(this IServiceCollection services)
     {
+        // Cross
         services.AddScoped<CreatePendingUserRegisterService>();
         services.AddScoped<CreateUserService>();
         services.AddScoped<FinishUserRegisterService>();
@@ -67,7 +68,10 @@ public static class ServicesConfigs
         services.AddScoped<SetupMfaService>();
         services.AddScoped<ResetPasswordService>();
         services.AddScoped<SendResetPasswordEmailService>();
+        services.AddScoped<ViewNotificationService>();
+        services.AddScoped<GetUserNotificationsService>();
 
+        // Academico
         services.AddScoped<CreateCampusService>();
         services.AddScoped<CreateCursoService>();
         services.AddScoped<GetAcademicInsightsService>();
@@ -76,6 +80,7 @@ public static class ServicesConfigs
         services.AddScoped<UpdateCampusService>();
         services.AddScoped<CreateDisciplinaService>();
 
+        // Professor
 
         services.AddScoped<CreateAcademicPeriodService>();
         services.AddScoped<CreateAlunoService>();
@@ -87,6 +92,7 @@ public static class ServicesConfigs
         services.AddScoped<CreateProfessorService>();
         services.AddScoped<CreateTurmaService>();
 
+        // Aluno
         services.AddScoped<GetAcademicPeriodsService>();
         services.AddScoped<GetAlunoAgendaService>();
         services.AddScoped<GetAlunoDisciplinasService>();
@@ -107,10 +113,8 @@ public static class ServicesConfigs
         services.AddScoped<GetProfessoresService>();
         services.AddScoped<GetAdmInsightsService>();
         services.AddScoped<GetTurmasService>();
-        services.AddScoped<GetUserNotificationsService>();
         services.AddScoped<GetUsersService>();
 
-        services.AddScoped<ViewNotificationService>();
 
         services.AddScoped<GetProfessorInsightsService>();
         services.AddScoped<GetProfessorAgendaService>();

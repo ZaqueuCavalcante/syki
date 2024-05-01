@@ -1,3 +1,5 @@
+using Syki.Front.GetAlunoDisciplinas;
+
 namespace Syki.Front.Configs;
 
 public static class ServicesConfigs
@@ -29,6 +31,7 @@ public static class ServicesConfigs
         builder.Services.AddScoped<CreateDisciplinaClient>();
         builder.Services.AddScoped<GetAlunoInsightsClient>();
         builder.Services.AddScoped<GetAlunoAgendaClient>();
+        builder.Services.AddScoped<GetAlunoDisciplinasClient>();
         builder.Services.AddScoped<GetProfessorAgendaClient>();
 
         builder.Services.AddScoped<CreateAcademicPeriodClient>();

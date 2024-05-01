@@ -2,7 +2,7 @@
     <MudGrid Spacing="0" Justify="Justify.SpaceBetween">
         @foreach (AgendaDiaOut dia in GetDias())
         {
-            <AgendaDiaStack Data="dia" />
+            <AgendaDiaStack Data="@dia" />
         }
     </MudGrid>
 </MudContainer>

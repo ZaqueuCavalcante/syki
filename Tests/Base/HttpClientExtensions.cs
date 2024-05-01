@@ -14,6 +14,7 @@ using Front.CreateProfessor;
 using Front.CreateDisciplina;
 using Syki.Front.ResetPassword;
 using Syki.Front.FinishUserRegister;
+using Syki.Front.GetAlunoDisciplinas;
 using Syki.Front.GetAcademicInsights;
 using Syki.Front.CreateAcademicPeriod;
 using Syki.Front.CreateEnrollmentPeriod;
@@ -303,7 +304,11 @@ public static class HttpClientExtensions
         return await http.PostAsJsonAsync("/alunos", body);
     }
 
-
+    public static async Task<List<DisciplinaOut>> GetAlunoDisciplinas(this HttpClient http)
+    {
+        var client = new GetAlunoDisciplinasClient(http);
+        return await client.Get();
+    }
 
 
 

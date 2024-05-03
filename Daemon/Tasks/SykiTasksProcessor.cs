@@ -5,7 +5,6 @@ using Syki.Back.Tasks;
 using Syki.Back.Settings;
 using Syki.Daemon.Settings;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Daemon.Tasks;
@@ -15,14 +14,11 @@ public class SykiTasksProcessor : BackgroundService
     private readonly TasksSettings _settings;
     private readonly DatabaseSettings _dbSettings;
     private readonly IServiceScopeFactory _serviceScopeFactory;
-    private readonly IConfiguration _config;
     public SykiTasksProcessor(
         TasksSettings settings,
         DatabaseSettings dbSettings,
-        IServiceScopeFactory serviceScopeFactory,
-        IConfiguration config
+        IServiceScopeFactory serviceScopeFactory
     ) {
-        _config = config;
         _settings = settings;
         _dbSettings = dbSettings;
         _serviceScopeFactory = serviceScopeFactory;

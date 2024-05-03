@@ -1,5 +1,4 @@
 using Syki.Front.Auth;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Syki.Front.Configs;
 

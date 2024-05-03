@@ -1,4 +1,3 @@
-using Syki.Back.Configs;
 using Microsoft.AspNetCore.Http;
 
 namespace Syki.Tests.Base;

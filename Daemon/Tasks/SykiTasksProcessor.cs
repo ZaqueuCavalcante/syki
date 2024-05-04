@@ -9,26 +9,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Daemon.Tasks;
 
-public class SykiTasksProcessor : BackgroundService
+public class SykiTasksProcessor(
+    TasksSettings settings,
+    DatabaseSettings dbSettings,
+    IServiceScopeFactory serviceScopeFactory)
+    : BackgroundService
 {
-    private readonly TasksSettings _settings;
-    private readonly DatabaseSettings _dbSettings;
-    private readonly IServiceScopeFactory _serviceScopeFactory;
-    public SykiTasksProcessor(
-        TasksSettings settings,
-        DatabaseSettings dbSettings,
-        IServiceScopeFactory serviceScopeFactory
-    ) {
-        _settings = settings;
-        _dbSettings = dbSettings;
-        _serviceScopeFactory = serviceScopeFactory;
-    }
-
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        using var scope = _serviceScopeFactory.CreateScope();
-        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(_settings.Delay));
-        using var connection = new NpgsqlConnection(_dbSettings.ConnectionString);
+        using var scope = serviceScopeFactory.CreateScope();
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(settings.Delay));
+        using var connection = new NpgsqlConnection(dbSettings.ConnectionString);
 
         while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
         {

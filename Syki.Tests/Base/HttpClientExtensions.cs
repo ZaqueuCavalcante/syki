@@ -16,10 +16,10 @@ using Syki.Front.ResetPassword;
 using Syki.Front.FinishUserRegister;
 using Syki.Front.GetAlunoDisciplinas;
 using Syki.Front.GetAcademicInsights;
-using Syki.Front.CreateAcademicPeriod;
 using Syki.Front.CreateEnrollmentPeriod;
 using Syki.Front.SendResetPasswordToken;
 using Syki.Front.CreatePendingUserRegister;
+using Front.Features.Academico.CreateAcademicPeriod;
 
 namespace Syki.Tests.Base;
 

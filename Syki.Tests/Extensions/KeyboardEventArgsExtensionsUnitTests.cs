@@ -1,4 +1,4 @@
-using Syki.Front;
+using Syki.Front.Extensions;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace Syki.Tests.Unit;

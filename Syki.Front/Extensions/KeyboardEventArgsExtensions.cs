@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 
-namespace Syki.Front;
+namespace Syki.Front.Extensions;
 
 public static class KeyboardEventArgsExtensions
 {

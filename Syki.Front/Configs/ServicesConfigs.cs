@@ -1,4 +1,5 @@
 using Syki.Front.GetAlunoDisciplinas;
+using Front.Features.Academico.CreateAcademicPeriod;
 
 namespace Syki.Front.Configs;
 

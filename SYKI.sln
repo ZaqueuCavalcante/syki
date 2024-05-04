@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Back", "Back\Back.csproj", "{3F0DD891-34C8-490B-A57A-4DA2F28AAD21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Back", "Syki.Back\Back.csproj", "{3F0DD891-34C8-490B-A57A-4DA2F28AAD21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{45F89C48-F90A-447F-86E5-43D3F1DCAA70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Syki.Tests\Tests.csproj", "{45F89C48-F90A-447F-86E5-43D3F1DCAA70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Front", "Front\Front.csproj", "{108C6749-6910-4852-80D4-EF60ACCAA17E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Front", "Syki.Front\Front.csproj", "{108C6749-6910-4852-80D4-EF60ACCAA17E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{239752E6-AB06-4B02-B432-1833371618B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Syki.Shared\Shared.csproj", "{239752E6-AB06-4B02-B432-1833371618B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daemon", "Daemon\Daemon.csproj", "{DE6B549B-DB7C-4C9F-8861-F942A77C64FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daemon", "Syki.Daemon\Daemon.csproj", "{DE6B549B-DB7C-4C9F-8861-F942A77C64FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

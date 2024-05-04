@@ -23,10 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Back\Back.csproj" />
-    <ProjectReference Include="..\Front\Front.csproj" />
-    <ProjectReference Include="..\Daemon\Daemon.csproj" />
-    <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\Syki.Back\Back.csproj" />
+    <ProjectReference Include="..\Syki.Front\Front.csproj" />
+    <ProjectReference Include="..\Syki.Daemon\Daemon.csproj" />
+    <ProjectReference Include="..\Syki.Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

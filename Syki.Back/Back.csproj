@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\api-intro.md" />
-    <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\Syki.Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

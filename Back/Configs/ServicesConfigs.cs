@@ -1,13 +1,16 @@
 using Syki.Back.Features.Academico.GetCampi;
-using Syki.Back.Features.Academico.CreateCampus;
+using Syki.Back.Features.Academico.GetCursos;
+using Syki.Back.Features.Academico.CreateCurso;
+using Syki.Back.Features.Academico.CreateGrade;
 using Syki.Back.Features.Academico.UpdateCampus;
+using Syki.Back.Features.Academico.CreateCampus;
+using Syki.Back.Features.Academico.CreateDisciplina;
+using Syki.Back.Features.Academico.GetAcademicInsights;
 using Syki.Back.CreateAluno;
 using Syki.Back.GetEnrollmentPeriods;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.CreateProfessor;
-using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.CreateEnrollmentPeriod;
-using Syki.Back.Features.Academico.CreateGrade;
 using Syki.Back.CreateMatriculaAluno;
 using Syki.Back.CreateNotification;
 using Syki.Back.CreateOferta;
@@ -19,7 +22,6 @@ using Syki.Back.GetAlunoInsights;
 using Syki.Back.GetAlunos;
 using Syki.Back.GetCurrentEnrollmentPeriod;
 using Syki.Back.GetCursoDisciplinas;
-using Syki.Back.Features.Academico.GetCursos;
 using Syki.Back.GetCursosWithDisciplinas;
 using Syki.Back.GetDisciplinas;
 using Syki.Back.GetGradeDisciplinas;
@@ -37,8 +39,6 @@ using Syki.Back.GetProfessorInsights;
 using Syki.Back.GetProfessorAgenda;
 using Syki.Back.GetProfessorTurmas;
 using Syki.Back.GetProfessorTurma;
-using Syki.Back.Features.Academico.GetAcademicInsights;
-using Syki.Back.Features.Academico.CreateDisciplina;
 using Syki.Back.Features.Cross.Login;
 using Syki.Back.Features.Cross.SetupMfa;
 using Syki.Back.Features.Cross.LoginMfa;
@@ -71,7 +71,7 @@ public static class ServicesConfigs
         services.AddScoped<ViewNotificationService>();
         services.AddScoped<GetUserNotificationsService>();
 
-        // Academico
+        // Academic
         services.AddScoped<CreateCampusService>();
         services.AddScoped<CreateCursoService>();
         services.AddScoped<GetAcademicInsightsService>();
@@ -80,7 +80,7 @@ public static class ServicesConfigs
         services.AddScoped<UpdateCampusService>();
         services.AddScoped<CreateDisciplinaService>();
 
-        // Professor
+        // Teacher
         services.AddScoped<CreateAcademicPeriodService>();
         services.AddScoped<CreateAlunoService>();
         services.AddScoped<CreateEnrollmentPeriodService>();
@@ -91,7 +91,7 @@ public static class ServicesConfigs
         services.AddScoped<CreateProfessorService>();
         services.AddScoped<CreateTurmaService>();
 
-        // Aluno
+        // Student
         services.AddScoped<GetAcademicPeriodsService>();
         services.AddScoped<GetAlunoAgendaService>();
         services.AddScoped<GetAlunoDisciplinasService>();
@@ -114,6 +114,7 @@ public static class ServicesConfigs
         services.AddScoped<GetTurmasService>();
         services.AddScoped<GetUsersService>();
 
+        // Adm
         services.AddScoped<GetProfessorInsightsService>();
         services.AddScoped<GetProfessorAgendaService>();
         services.AddScoped<GetProfessorTurmasService>();

@@ -5,7 +5,7 @@ using Microsoft.OpenApi.Interfaces;
 
 namespace Syki.Back.Configs;
 
-public static class SwaggerConfigs
+public static class DocsConfigs
 {
     public static void AddDocsConfigs(this IServiceCollection services)
     {

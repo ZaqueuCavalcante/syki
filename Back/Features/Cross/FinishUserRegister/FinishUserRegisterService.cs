@@ -17,7 +17,12 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
 
         var institution = new Institution($"Institution - {register.Email}");
         ctx.Add(institution);
-        ctx.Add(SykiTask.SeedInstitutionData(institution.Id));
+
+        if (Env.IsNotProduction())
+        {
+            ctx.Add(SykiTask.SeedInstitutionData(institution.Id));
+        }
+
         await ctx.SaveChangesAsync();
 
         var userIn = CreateUserIn.NewAcademico(institution.Id, register.Email, data.Password);

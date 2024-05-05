@@ -24,4 +24,9 @@ public static class Env
     {
         return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Development;
     }
+
+    public static bool IsNotProduction()
+    {
+        return IsTesting() || IsDevelopment();
+    }
 }

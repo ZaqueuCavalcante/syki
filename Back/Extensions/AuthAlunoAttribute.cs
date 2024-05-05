@@ -5,6 +5,6 @@ public class AuthAlunoAttribute : AuthorizeAttribute
 	public AuthAlunoAttribute()
 	{
 		Roles = AuthorizationConfigs.Aluno;
-		AuthenticationSchemes = "Bearer";
+		AuthenticationSchemes = AuthenticationConfigs.BearerScheme;
 	}
 }

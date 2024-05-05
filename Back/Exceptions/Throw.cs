@@ -30,8 +30,7 @@ public static class Throw
     public const string DE025 = "Token de registro inválido.";
     public const string DE026 = "Já existe um período com esse id.";
     public const string DE027 = "MFA token inválido.";
-    public const string DE028 = "Erro ao tentar registrar usuário.";
-    public const string DE029 = "Turma não encontrada.";
+    public const string DE028 = "Turma não encontrada.";
 
     public static void Now(this string message)
     {

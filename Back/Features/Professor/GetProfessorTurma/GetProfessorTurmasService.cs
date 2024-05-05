@@ -12,7 +12,7 @@ public class GetProfessorTurmaService(SykiDbContext ctx)
             .FirstOrDefaultAsync();
 
         if (turma == null)
-            Throw.DE029.Now();
+            Throw.DE028.Now();
 
         return turma.ToProfessorTurmaOut();
     }

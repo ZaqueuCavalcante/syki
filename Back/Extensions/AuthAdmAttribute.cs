@@ -5,6 +5,6 @@ public class AuthAdmAttribute : AuthorizeAttribute
 	public AuthAdmAttribute()
 	{
 		Roles = AuthorizationConfigs.Adm;
-		AuthenticationSchemes = "Bearer";
+		AuthenticationSchemes = AuthenticationConfigs.BearerScheme;
 	}
 }

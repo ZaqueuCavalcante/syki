@@ -4,6 +4,6 @@ public class AuthBearerAttribute : AuthorizeAttribute
 {
 	public AuthBearerAttribute()
 	{
-		AuthenticationSchemes = "Bearer";
+		AuthenticationSchemes = AuthenticationConfigs.BearerScheme;
 	}
 }

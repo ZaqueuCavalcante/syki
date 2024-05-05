@@ -5,6 +5,6 @@ public class AuthProfessorAttribute : AuthorizeAttribute
 	public AuthProfessorAttribute()
 	{
 		Roles = AuthorizationConfigs.Professor;
-		AuthenticationSchemes = "Bearer";
+		AuthenticationSchemes = AuthenticationConfigs.BearerScheme;
 	}
 }

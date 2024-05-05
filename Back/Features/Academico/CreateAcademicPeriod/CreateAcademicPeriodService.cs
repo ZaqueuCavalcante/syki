@@ -1,4 +1,4 @@
-namespace Syki.Back.CreateAcademicPeriod;
+namespace Syki.Back.Features.Academic.CreateAcademicPeriod;
 
 public class CreateAcademicPeriodService(SykiDbContext ctx)
 {

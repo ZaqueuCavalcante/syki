@@ -1,6 +1,6 @@
 using Syki.Back.CreateEnrollmentPeriod;
 
-namespace Syki.Back.CreateAcademicPeriod;
+namespace Syki.Back.Features.Academic.CreateAcademicPeriod;
 
 public class AcademicPeriodConfig : IEntityTypeConfiguration<AcademicPeriod>
 {

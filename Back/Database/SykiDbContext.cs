@@ -6,7 +6,7 @@ using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateInstitution;
 using Syki.Back.CreateNotification;
-using Syki.Back.CreateAcademicPeriod;
+using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.CreateMatriculaAluno;
 using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.Features.Academico.CreateGrade;

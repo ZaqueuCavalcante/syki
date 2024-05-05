@@ -1,4 +1,4 @@
-using Syki.Back.CreateAcademicPeriod;
+using Syki.Back.Features.Academic.CreateAcademicPeriod;
 
 namespace Syki.Tests.Unit;
 

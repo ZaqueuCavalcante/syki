@@ -8,7 +8,7 @@ using Syki.Back.Features.Academico.CreateDisciplina;
 using Syki.Back.Features.Academico.GetAcademicInsights;
 using Syki.Back.CreateAluno;
 using Syki.Back.GetEnrollmentPeriods;
-using Syki.Back.CreateAcademicPeriod;
+using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.CreateMatriculaAluno;

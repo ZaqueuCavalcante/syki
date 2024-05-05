@@ -1,11 +1,11 @@
 using Audit.Core;
 
-namespace Syki.Tests.Integration;
+namespace Syki.Tests.Audit;
 
 public class AuditIntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Deve_auditar_a_criacao_de_um_campus()
+    public async Task Should_audit_a_campus_creation()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademico();
@@ -22,10 +22,9 @@ public class AuditIntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_auditar_a_atualizacao_de_um_campus()
+    public async Task Should_audit_a_campus_update()
     {
         // Arrange
-
         var client = await _factory.LoggedAsAcademico();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
 

@@ -4,7 +4,7 @@ public class CreateCursoService(SykiDbContext ctx)
 {
     public async Task<CursoOut> Create(Guid institutionId, CursoIn data)
     {
-        var curso = new Curso(institutionId, data.Nome, data.Tipo);
+        var curso = new Curso(institutionId, data.Name, data.Tipo);
 
         ctx.Add(curso);
         await ctx.SaveChangesAsync();

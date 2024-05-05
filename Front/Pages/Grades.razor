@@ -1,4 +1,4 @@
-﻿@using Front.Components.Custom
+﻿@using Syki.Front.Components.Custom
 @using Front.Features.Academico.CreateGrade
 
 @page "/grades"
@@ -16,10 +16,10 @@
     <MudContainer Class="mb-8">
         <MudDataGrid Class="pa-4" T="GradeOut" Items="@_grades" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo nome do curso ou da grade" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo name do curso ou da grade" />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.Name" Title="Name" />
                 <PropertyColumn Property="x => x.CursoNome" Title="Curso" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
@@ -64,10 +64,10 @@
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };
-        await DialogService.ShowAsync<DisciplinasDaGradeDialog>(grade.Nome, parameters, options);
+        await DialogService.ShowAsync<DisciplinasDaGradeDialog>(grade.Name, parameters, options);
     }
 
-    private Func<GradeOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome, x.CursoNome);
+    private Func<GradeOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.CursoNome);
 
     private async Task OpenDialog()
     {

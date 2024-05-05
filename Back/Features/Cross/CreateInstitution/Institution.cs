@@ -13,7 +13,7 @@ namespace Syki.Back.CreateInstitution;
 public class Institution
 {
     public Guid Id { get; set; }
-    public string Nome { get; set; }
+    public string Name { get; set; }
     public List<AcademicPeriod> AcademicPeriods { get; set; }
     public List<Campus> Campi { get; set; }
     public List<Curso> Cursos { get; set; }
@@ -26,10 +26,10 @@ public class Institution
 
     public Institution() { }
 
-    public Institution(string nome)
+    public Institution(string name)
     {
         Id = Guid.NewGuid();
-        Nome = nome;
+        Name = name;
     }
 
     public InstitutionOut ToOut()
@@ -37,7 +37,7 @@ public class Institution
         return new InstitutionOut
         {
             Id = Id,
-            Name = Nome,
+            Name = Name,
         };
     }
 }

@@ -20,10 +20,10 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var cursos = await client.GetCursos();
         cursos.Should().HaveCount(5);
-        cursos[0].Nome.Should().Be("Administração");
-        cursos[1].Nome.Should().Be("Análise e Desenvolvimento de Sistemas");
-        cursos[2].Nome.Should().Be("Ciência da Computação");
-        cursos[3].Nome.Should().Be("Direito");
-        cursos[4].Nome.Should().Be("Pedagogia");
+        cursos[0].Name.Should().Be("Administração");
+        cursos[1].Name.Should().Be("Análise e Desenvolvimento de Sistemas");
+        cursos[2].Name.Should().Be("Ciência da Computação");
+        cursos[3].Name.Should().Be("Direito");
+        cursos[4].Name.Should().Be("Pedagogia");
     }
 }

@@ -35,13 +35,13 @@ public class CreateCampusUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        const string nome = "Agreste I";
+        const string name = "Agreste I";
 
         // Act
         var campus = new Campus(institutionId, "Agreste I", "Caruaru - PE");
 
         // Assert
-        campus.Name.Should().Be(nome);
+        campus.Name.Should().Be(name);
     }
 
     [Test]

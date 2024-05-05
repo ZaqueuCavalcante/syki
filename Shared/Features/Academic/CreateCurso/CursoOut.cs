@@ -3,7 +3,7 @@ namespace Syki.Shared;
 public class CursoOut
 {
     public Guid Id { get; set; }
-    public string Nome { get; set; }
+    public string Name { get; set; }
     public TipoDeCurso Tipo { get; set; }
 
     public override bool Equals(object? obj)
@@ -19,6 +19,6 @@ public class CursoOut
 
     public override string ToString()
     {
-        return Nome;
+        return Name;
     }
 }

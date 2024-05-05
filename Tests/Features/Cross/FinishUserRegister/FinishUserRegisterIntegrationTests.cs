@@ -88,7 +88,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         using var ctx = _factory.GetDbContext();
-        var institution = await ctx.Institutions.FirstOrDefaultAsync(x => x.Nome.Contains(email));
+        var institution = await ctx.Institutions.FirstOrDefaultAsync(x => x.Name.Contains(email));
         institution.Should().NotBeNull();
     }
 
@@ -107,7 +107,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         using var ctx = _factory.GetDbContext();
-        var institution = await ctx.Institutions.FirstAsync(x => x.Nome.Contains(email));
+        var institution = await ctx.Institutions.FirstAsync(x => x.Name.Contains(email));
         await AssertTaskByDataLike<SeedInstitutionData>(institution.Id.ToString());
     }
 

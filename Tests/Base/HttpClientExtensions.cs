@@ -153,11 +153,11 @@ public static class HttpClientExtensions
 
     public static async Task<CursoOut> CreateCurso(
         this HttpClient http,
-        string nome = "Análise e Desenvolvimento de Sistemas",
+        string name = "Análise e Desenvolvimento de Sistemas",
         TipoDeCurso tipo = TipoDeCurso.Bacharelado
     ) {
         var client = new CreateCursoClient(http);
-        var response = await client.Create(nome, tipo);
+        var response = await client.Create(name, tipo);
         return await response.DeserializeTo<CursoOut>();
     }
 
@@ -169,11 +169,11 @@ public static class HttpClientExtensions
 
     public static async Task<DisciplinaOut> CreateDisciplina(
         this HttpClient http,
-        string nome = "Banco de Dados",
+        string name = "Banco de Dados",
         List<Guid> cursos = null
     ) {
         var client = new CreateDisciplinaClient(http);
-        var response = await client.Create(nome, cursos ?? []);
+        var response = await client.Create(name, cursos ?? []);
         return await response.DeserializeTo<DisciplinaOut>();
     }
 
@@ -214,26 +214,26 @@ public static class HttpClientExtensions
 
     public static async Task<GradeOut> CreateGrade(
         this HttpClient http,
-        string nome,
+        string name,
         Guid cursoId,
         List<GradeDisciplinaIn> disciplinas = null
     ) {
         var client = new CreateGradeClient(http);
 
-        var result = await client.Create(nome, cursoId, disciplinas ?? []);
+        var result = await client.Create(name, cursoId, disciplinas ?? []);
 
         return await result.DeserializeTo<GradeOut>();
     }
 
     public static async Task<HttpResponseMessage> CreateGradeHttp(
         this HttpClient http,
-        string nome,
+        string name,
         Guid cursoId,
         List<GradeDisciplinaIn> disciplinas = null
     ) {
         var client = new CreateGradeClient(http);
 
-        return await client.Create(nome, cursoId, disciplinas ?? []);
+        return await client.Create(name, cursoId, disciplinas ?? []);
     }
 
     public static async Task<OfertaOut> CreateOferta(
@@ -284,7 +284,7 @@ public static class HttpClientExtensions
     ) {
         email = email.HasValue() ? email : TestData.Email;
 
-        var body = new AlunoIn { Nome = name, Email = email, OfertaId = ofertaId };
+        var body = new AlunoIn { Name = name, Email = email, OfertaId = ofertaId };
 
         var aluno = await http.PostAsync<AlunoOut>("/alunos", body);
         aluno.Email = email;
@@ -299,7 +299,7 @@ public static class HttpClientExtensions
     ) {
         email = email.HasValue() ? email : TestData.Email;
 
-        var body = new AlunoIn { Nome = name, Email = email, OfertaId = ofertaId };
+        var body = new AlunoIn { Name = name, Email = email, OfertaId = ofertaId };
 
         return await http.PostAsJsonAsync("/alunos", body);
     }

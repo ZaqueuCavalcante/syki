@@ -51,13 +51,13 @@ public class CreateGradeUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        const string nome = "Grade de ADS - 1.0";
+        const string name = "Grade de ADS - 1.0";
 
         // Act
-        var grade = new Grade(institutionId, Guid.NewGuid(), nome);
+        var grade = new Grade(institutionId, Guid.NewGuid(), name);
 
         // Assert
-        grade.Nome.Should().Be(nome);
+        grade.Name.Should().Be(name);
     }
 
     [Test]
@@ -66,9 +66,9 @@ public class CreateGradeUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         var cursoId = Guid.NewGuid();
-        const string nome = "Grade de ADS - 1.0";
+        const string name = "Grade de ADS - 1.0";
 
-        var grade = new Grade(institutionId, cursoId, nome)
+        var grade = new Grade(institutionId, cursoId, name)
         {
             Curso = new Curso(institutionId, "ADS", TipoDeCurso.Bacharelado),
             Disciplinas = [
@@ -86,15 +86,15 @@ public class CreateGradeUnitTests
         // Assert
         gradeOut.Id.Should().Be(grade.Id);
         gradeOut.CursoId.Should().Be(grade.CursoId);
-        gradeOut.CursoNome.Should().Be(grade.Curso.Nome);
-        gradeOut.Nome.Should().Be(grade.Nome);
+        gradeOut.CursoNome.Should().Be(grade.Curso.Name);
+        gradeOut.Name.Should().Be(grade.Name);
 
         gradeOut.Disciplinas.Should().HaveCount(2);
-        gradeOut.Disciplinas[0].Nome.Should().Be("Banco de Dados");
+        gradeOut.Disciplinas[0].Name.Should().Be("Banco de Dados");
         gradeOut.Disciplinas[0].Periodo.Should().Be(2);
         gradeOut.Disciplinas[0].Creditos.Should().Be(12);
         gradeOut.Disciplinas[0].CargaHoraria.Should().Be(80);
-        gradeOut.Disciplinas[1].Nome.Should().Be("Estrutura de Dados");
+        gradeOut.Disciplinas[1].Name.Should().Be("Estrutura de Dados");
         gradeOut.Disciplinas[1].Periodo.Should().Be(1);
         gradeOut.Disciplinas[1].Creditos.Should().Be(8);
         gradeOut.Disciplinas[1].CargaHoraria.Should().Be(50);

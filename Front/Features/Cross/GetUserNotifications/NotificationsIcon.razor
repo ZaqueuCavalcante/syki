@@ -1,0 +1,68 @@
+@namespace Syki.Front.Components.Notifications
+
+<div>
+    @if (GetCount() > 0)
+    {
+        <div class="d-flex justify-space-around flex-wrap mt-2" style="width: 50px">
+            <MudTooltip Text="Notificações">
+                <MudButton OnClick="@ViewAndOpenDialog" Class="rounded-circle hover:mud-inherit-hover mud-ripple mud-ripple-icon">
+                    <MudBadge Content="@GetCount()" Overlap="true" Class="mx-3 my-4" Color="Color.Secondary" Max="9">
+                        <MudIcon Icon="@Icons.Material.Filled.NotificationsActive" Style="color: #FFF" />
+                    </MudBadge>
+                </MudButton>
+            </MudTooltip>
+        </div>
+    }
+    else
+    {
+        <MudTooltip Text="Notificações">
+            <MudIconButton Icon="@Icons.Material.Filled.NotificationsNone" OnClick="@OpenDialog" Color="Color.Inherit" />
+        </MudTooltip>
+    }
+</div>
+
+@inject HttpClient Http
+@inject IDialogService DialogService
+
+@code
+{
+    private List<UserNotificationOut> _notifications = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetNotifications();
+    }
+
+    private async Task GetNotifications()
+    {
+        _notifications = await Http.GetFromJsonAsync<List<UserNotificationOut>>("/notifications/user") ?? [];
+    }
+
+    private int GetCount()
+    {
+        return _notifications.Count(x => x.ViewedAt == null);
+    }
+
+    private async Task ViewAndOpenDialog()
+    {
+        await Http.PutAsJsonAsync("/notifications/user", new {});
+        await GetNotifications();
+        StateHasChanged();
+        await OpenDialog();
+    }
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true
+        };
+        var dialog = await DialogService.ShowAsync<ViewNotificationsDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled) return;
+        
+        await GetNotifications();
+    }
+}

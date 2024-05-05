@@ -36,11 +36,11 @@ public class GetMatriculaAlunoTurmasService(SykiDbContext ctx)
             return new MatriculaTurmaOut
             {
                 Id = t.Id,
-                Disciplina = t.Disciplina.Nome,
+                Disciplina = t.Disciplina.Name,
                 Periodo = vinculo.Periodo,
                 Creditos = vinculo.Creditos,
                 CargaHoraria = vinculo.CargaHoraria,
-                Professor = t.Professor.Nome,
+                Professor = t.Professor.Name,
                 Horarios = t.Horarios.ConvertAll(h => h.ToOut()),
                 IsSelected = selecteds.Contains(t.Id),
             };

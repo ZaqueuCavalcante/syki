@@ -1,0 +1,132 @@
+<MudForm @ref="form">
+    <MudStack Row="true">
+        <MudItem xs="5">
+            <MudAutocomplete
+                MaxItems="50"
+                T="GradeDisciplinaFillable"
+                SearchFunc="@SearchDisciplina"
+                Dense="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                ShowProgressIndicator="true"
+                Class="mb-2"
+                Value="@Data"
+                ValueChanged="(GradeDisciplinaFillable newValue) => HandleDisciplinaChanged(newValue)"
+                Label="Disciplina"
+                Required="true"
+                RequiredError="Informe!"
+                AdornmentColor="Color.Primary"
+            />
+        </MudItem>
+        <MudItem xs="2">
+            <MudSelect
+                Dense="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                T="byte?"
+                Value="@Data.Periodo"
+                ValueChanged="x => HandlePeriodoChanged(x)"
+                Label="Período"
+                Required="true"
+                RequiredError="Informe!"
+                AdornmentColor="Color.Primary"
+            >
+                @foreach (byte? item in Enumerable.Range(1, 10).ToList())
+                {
+                    <MudSelectItem Value="@item">@($"{item}º")</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="2">
+            <MudNumericField
+                MaxLength="2"
+                HideSpinButtons="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                T="byte?"
+                Value="@Data.Creditos"
+                ValueChanged="x => HandleCreditosChanged(x)"
+                Label="Créditos"
+                Required="true"
+                RequiredError="Informe!"
+            />
+        </MudItem>
+        <MudItem xs="2">
+            <MudNumericField
+                MaxLength="3"
+                HideSpinButtons="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                T="ushort?"
+                Value="@Data.CargaHoraria"
+                ValueChanged="x => HandleCargaHorariaChanged(x)"
+                Label="Carga Horária"
+                Required="true"
+                RequiredError="Informe!"
+            />
+        </MudItem>
+        <MudItem>
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" OnClick="@HandleDeleteClick" />
+        </MudItem>
+    </MudStack>
+</MudForm>
+
+@code
+{
+    MudForm form;
+
+    [CascadingParameter(Name = "Options")]
+    public List<CursoDisciplinaOut> Options { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid> OnDeleteClick { get; set; }
+
+    [Parameter]
+    public GradeDisciplinaFillable Data { get; set; }
+
+    private async Task<IEnumerable<GradeDisciplinaFillable>> SearchDisciplina(string value)
+    {
+        await Task.Delay(0);
+
+        var filtered = Options.Where(d => !d.IsSelected || (d.IsSelected && d.Id == Data.Id))
+            .ToList().ConvertAll(x => new GradeDisciplinaFillable { Id = x.Id, Name = x.Name });
+
+        if (string.IsNullOrEmpty(value))
+            return filtered;
+
+        return filtered.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    void HandleDisciplinaChanged(GradeDisciplinaFillable newValue)
+    {
+        Options.First(d => d.Id == newValue.Id).IsSelected = true;
+
+        if (Options.Any(x => x.Id == Data.Id))
+        {
+            Options.First(d => d.Id == Data.Id).IsSelected = false;
+        }
+
+        Data.Id = newValue.Id;
+        Data.Name = newValue.Name;
+    }
+
+    void HandlePeriodoChanged(byte? newValue)
+    {
+        Data.Periodo = newValue;
+    }
+
+    void HandleCreditosChanged(byte? newValue)
+    {
+        Data.Creditos = newValue;
+    }
+
+    void HandleCargaHorariaChanged(ushort? newValue)
+    {
+        Data.CargaHoraria = newValue;
+    }
+
+    private async Task HandleDeleteClick()
+    {
+        await OnDeleteClick.InvokeAsync(Data.Id);
+    }
+}

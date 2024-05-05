@@ -15,7 +15,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         curso.Id.Should().NotBeEmpty();
-        curso.Nome.Should().Be("Análise e Desenvolvimento de Sistemas");
+        curso.Name.Should().Be("Análise e Desenvolvimento de Sistemas");
         curso.Tipo.Should().Be(Bacharelado);
     }
 

@@ -12,9 +12,9 @@ public class GetUsersService(DatabaseSettings dbSettings)
         const string sql = @"
             SELECT
                 u.id,
-                u.name AS nome,
+                u.name AS name,
                 u.email,
-                i.nome AS institution,
+                i.name AS institution,
                 STRING_AGG(r.name, ',') AS role
             FROM
                 syki.users u
@@ -25,7 +25,7 @@ public class GetUsersService(DatabaseSettings dbSettings)
             INNER JOIN
                 syki.roles r ON r.id = ur.role_id
             GROUP BY
-                u.id, i.nome
+                u.id, i.name
         ";
 
         var data = await connection.QueryAsync<CreateUserOut>(sql);

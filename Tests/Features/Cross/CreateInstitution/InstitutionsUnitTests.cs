@@ -8,10 +8,10 @@ public class InstitutionsUnitTests
     public void Deve_criar_uma_institution_com_id()
     {
         // Arrange
-        const string nome = "UFPE";
+        const string name = "UFPE";
 
         // Act
-        var institution = new Institution(nome);
+        var institution = new Institution(name);
 
         // Assert
         institution.Id.Should().NotBeEmpty();
@@ -21,13 +21,13 @@ public class InstitutionsUnitTests
     public void Deve_criar_uma_institution_com_nome_correto()
     {
         // Arrange
-        const string nome = "UFPE";
+        const string name = "UFPE";
 
         // Act
-        var institution = new Institution(nome);
+        var institution = new Institution(name);
 
         // Assert
-        institution.Nome.Should().Be(nome);
+        institution.Name.Should().Be(name);
     }
 
     [Test]
@@ -41,7 +41,7 @@ public class InstitutionsUnitTests
 
         // Assert
         institutionOut.Id.Should().Be(institution.Id);
-        institutionOut.Name.Should().Be(institution.Nome);
+        institutionOut.Name.Should().Be(institution.Name);
     }
 
     [Test]
@@ -52,9 +52,9 @@ public class InstitutionsUnitTests
         var institutionOut = institution.ToOut();
 
         // Act
-        var nome = institutionOut.ToString();
+        var name = institutionOut.ToString();
 
         // Assert
-        nome.Should().Be(institution.Nome);
+        name.Should().Be(institution.Name);
     }
 }

@@ -2,18 +2,18 @@ namespace Syki.Shared;
 
 public class HorarioOut
 {
-    public Dia Dia { get; set; }
+    public Day Day { get; set; }
     public Hora Start { get; set; }
     public Hora End { get; set; }
 
     public HorarioOut() { }
 
     public HorarioOut(
-        Dia dia,
+        Day dia,
         Hora start,
         Hora end
     ) {
-        Dia = dia;
+        Day = dia;
         Start = start;
         End = end;
     }

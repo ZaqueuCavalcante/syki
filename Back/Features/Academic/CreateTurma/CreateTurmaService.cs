@@ -19,7 +19,7 @@ public class CreateTurmaService(SykiDbContext ctx)
         if (!periodoOk)
             Throw.DE005.Now();
 
-        var horarios = data.Horarios.ConvertAll(h => new Horario(h.Dia, h.Start, h.End));
+        var horarios = data.Horarios.ConvertAll(h => new Horario(h.Day, h.Start, h.End));
         var turma = new Turma(
             institutionId,
             data.DisciplinaId,

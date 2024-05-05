@@ -4,17 +4,17 @@ public class Disciplina
 {
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
-    public string Nome { get; set; }
+    public string Name { get; set; }
     public string Code { get; set; }
     public List<CursoDisciplina> Vinculos { get; set; }
 
     public Disciplina(
         Guid institutionId,
-        string nome
+        string name
     ) {
         Id = Guid.NewGuid();
         InstitutionId = institutionId;
-        Nome = nome;
+        Name = name;
         Code = $"{Guid.NewGuid().ToString()[..8].ToUpper()}";
         Vinculos = [];
     }
@@ -24,7 +24,7 @@ public class Disciplina
         return new DisciplinaOut
         {
             Id = Id,
-            Nome = Nome,
+            Name = Name,
             Code = Code,
             Cursos = Vinculos.ConvertAll(v => v.CursoId),
         };

@@ -1,4 +1,4 @@
-﻿@using Front.Components.Custom
+﻿@using Syki.Front.Components.Custom
 
 @page "/institutions"
 @attribute [Authorize(Roles = "Adm")]
@@ -15,11 +15,11 @@
     <MudContainer Class="mb-8">
         <MudDataGrid Class="pa-4" Items="@_institutions" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por name" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Id" Title="Id" />
-                <PropertyColumn Property="x => x.Name" Title="Nome" />
+                <PropertyColumn Property="x => x.Name" Title="Name" />
             </Columns>
 
             <NoRecordsContent>

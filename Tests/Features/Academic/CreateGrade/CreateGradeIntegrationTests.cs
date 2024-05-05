@@ -14,9 +14,9 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         grade.Id.Should().NotBeEmpty();
-        grade.Nome.Should().Be("Grade de ADS 1.0");
+        grade.Name.Should().Be("Grade de ADS 1.0");
         grade.CursoId.Should().Be(curso.Id);
-        grade.CursoNome.Should().Be(curso.Nome);
+        grade.CursoNome.Should().Be(curso.Name);
         grade.Disciplinas.Should().HaveCount(0);        
     }
 
@@ -37,9 +37,9 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         grade.Id.Should().NotBeEmpty();
-        grade.Nome.Should().Be("Grade de ADS 1.0");
+        grade.Name.Should().Be("Grade de ADS 1.0");
         grade.CursoId.Should().Be(curso.Id);
-        grade.CursoNome.Should().Be(curso.Nome);
+        grade.CursoNome.Should().Be(curso.Name);
         grade.Disciplinas.Should().HaveCount(3);        
     }
 
@@ -58,9 +58,9 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         grade.Id.Should().NotBeEmpty();
-        grade.Nome.Should().Be("Grade de ADS 1.0");
+        grade.Name.Should().Be("Grade de ADS 1.0");
         grade.CursoId.Should().Be(curso.Id);
-        grade.CursoNome.Should().Be(curso.Nome);
+        grade.CursoNome.Should().Be(curso.Name);
         grade.Disciplinas.Should().HaveCount(1);
         grade.Disciplinas[0].CargaHoraria.Should().Be(80);
     }
@@ -200,7 +200,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         grades.Should().HaveCount(1);
         grades[0].Id.Should().Be(gradeNovaRoma.Id);
-        grades[0].Nome.Should().Be(gradeNovaRoma.Nome);
+        grades[0].Name.Should().Be(gradeNovaRoma.Name);
     }
 
     [Test]
@@ -221,8 +221,8 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         grades.Should().HaveCount(2);
         grades[0].Id.Should().Be(gradeAds.Id);
-        grades[0].Nome.Should().Be(gradeAds.Nome);
+        grades[0].Name.Should().Be(gradeAds.Name);
         grades[1].Id.Should().Be(gradeDireito.Id);
-        grades[1].Nome.Should().Be(gradeDireito.Nome);
+        grades[1].Name.Should().Be(gradeDireito.Name);
     }
 }

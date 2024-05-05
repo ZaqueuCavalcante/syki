@@ -8,7 +8,7 @@ public class CreateDisciplinaRequestsExamples : IMultipleExamplesProvider<GradeI
 			"Grade ADS - 1.0",
 			new GradeIn
 			{
-				Nome = "Grade ADS - 1.0",
+				Name = "Grade ADS - 1.0",
 				CursoId = Guid.NewGuid(),
 				Disciplinas = [new(Guid.NewGuid(), 1, 55, 70)]
 			}

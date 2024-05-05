@@ -4,26 +4,26 @@ public class Professor
 {
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
-    public string Nome { get; set; }
+    public string Name { get; set; }
 
     public Professor(
         Guid id,
         Guid institutionId,
-        string nome
+        string name
     ) {
         Id = id;
         InstitutionId = institutionId;
-        SetNome(nome);
+        SetNome(name);
     }
 
-    private void SetNome(string nome)
+    private void SetNome(string name)
     {
-        if (nome.IsEmpty() || nome.Length < 3)
+        if (name.IsEmpty() || name.Length < 3)
         {
             Throw.DE001.Now();
         }
 
-        Nome = nome;
+        Name = name;
     }
 
     public ProfessorOut ToOut()
@@ -31,7 +31,7 @@ public class Professor
         return new ProfessorOut
         {
             Id = Id,
-            Nome = Nome,
+            Name = Name,
         };
     }
 }

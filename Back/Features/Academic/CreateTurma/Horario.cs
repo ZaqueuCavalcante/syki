@@ -4,17 +4,17 @@ public class Horario
 {
     public Guid Id { get; set; }
     public Guid TurmaId { get; set; }
-    public Dia Dia { get; set; }
+    public Day Day { get; set; }
     public Hora Start { get; set; }
     public Hora End { get; set; }
 
     public Horario(
-        Dia dia,
+        Day dia,
         Hora start,
         Hora end
     ) {
         Id = Guid.NewGuid();
-        Dia = dia;
+        Day = dia;
 
         if (start == end || end < start)
             Throw.DE021.Now();
@@ -25,7 +25,7 @@ public class Horario
 
     public bool Conflict(Horario other)
     {
-        if (Dia != other.Dia)
+        if (Day != other.Day)
             return false;
 
         if (Start == other.Start || End == other.End)
@@ -48,14 +48,14 @@ public class Horario
 
     public override string ToString()
     {
-        return $"{Dia.GetDescription()} {Start.GetDescription()}-{End.GetDescription()}";
+        return $"{Day.GetDescription()} {Start.GetDescription()}-{End.GetDescription()}";
     }
 
     public HorarioOut ToOut()
     {
         return new HorarioOut
         {
-            Dia = Dia,
+            Day = Day,
             Start = Start,
             End = End,
         };

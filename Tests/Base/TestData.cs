@@ -279,29 +279,29 @@ public static class TestData
         foreach (var list in new List<List<Horario>>()
         {
             new() {
-                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
-                new Horario(Dia.Segunda, Hora.H07_30, Hora.H07_45),
+                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Day.Segunda, Hora.H07_30, Hora.H07_45),
             },
             new() {
-                new Horario(Dia.Segunda, Hora.H10_00, Hora.H11_00),
-                new Horario(Dia.Segunda, Hora.H09_30, Hora.H12_15),
+                new Horario(Day.Segunda, Hora.H10_00, Hora.H11_00),
+                new Horario(Day.Segunda, Hora.H09_30, Hora.H12_15),
             },
             new() {
-                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
-                new Horario(Dia.Segunda, Hora.H07_30, Hora.H08_30),
+                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Day.Segunda, Hora.H07_30, Hora.H08_30),
             },
             new() {
-                new Horario(Dia.Segunda, Hora.H07_30, Hora.H08_30),
-                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Day.Segunda, Hora.H07_30, Hora.H08_30),
+                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
             },
             new() {
-                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
-                new Horario(Dia.Terca, Hora.H08_00, Hora.H09_00),
-                new Horario(Dia.Segunda, Hora.H07_15, Hora.H07_45),
+                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Day.Terca, Hora.H08_00, Hora.H09_00),
+                new Horario(Day.Segunda, Hora.H07_15, Hora.H07_45),
             },
             new() {
-                new Horario(Dia.Quarta, Hora.H12_00, Hora.H15_30),
-                new Horario(Dia.Quarta, Hora.H13_00, Hora.H14_15),
+                new Horario(Day.Quarta, Hora.H12_00, Hora.H15_30),
+                new Horario(Day.Quarta, Hora.H13_00, Hora.H14_15),
             },
         })
         {
@@ -314,21 +314,21 @@ public static class TestData
         foreach (var list in new List<List<Horario>>()
         {
             new() {
-                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
-                new Horario(Dia.Segunda, Hora.H08_00, Hora.H09_00),
+                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Day.Segunda, Hora.H08_00, Hora.H09_00),
             },
             new() {
-                new Horario(Dia.Segunda, Hora.H08_00, Hora.H09_00),
-                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Day.Segunda, Hora.H08_00, Hora.H09_00),
+                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
             },
             new() {
-                new Horario(Dia.Segunda, Hora.H07_00, Hora.H08_00),
-                new Horario(Dia.Terca, Hora.H08_00, Hora.H09_00),
-                new Horario(Dia.Segunda, Hora.H09_45, Hora.H10_15),
+                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
+                new Horario(Day.Terca, Hora.H08_00, Hora.H09_00),
+                new Horario(Day.Segunda, Hora.H09_45, Hora.H10_15),
             },
             new() {
-                new Horario(Dia.Quarta, Hora.H12_00, Hora.H15_30),
-                new Horario(Dia.Quarta, Hora.H11_15, Hora.H12_00),
+                new Horario(Day.Quarta, Hora.H12_00, Hora.H15_30),
+                new Horario(Day.Quarta, Hora.H11_15, Hora.H12_00),
             },
         })
         {

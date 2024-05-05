@@ -9,8 +9,8 @@ public class GetCursoDisciplinasService(SykiDbContext ctx)
 
         var disciplinas = await ctx.Disciplinas
             .Where(d => d.InstitutionId == institutionId && ids.Contains(d.Id))
-            .Select(d => new CursoDisciplinaOut { Id = d.Id, Nome = d.Nome })
-            .OrderBy(d => d.Nome)
+            .Select(d => new CursoDisciplinaOut { Id = d.Id, Name = d.Name })
+            .OrderBy(d => d.Name)
             .ToListAsync();
 
         return disciplinas;

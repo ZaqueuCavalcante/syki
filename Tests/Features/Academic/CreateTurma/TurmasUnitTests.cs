@@ -93,7 +93,7 @@ public class TurmasUnitTests
         var disciplinaId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
         const string periodo = "2023.2";
-        var horarios = new List<Horario>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
+        var horarios = new List<Horario>() { new(Day.Segunda, Hora.H07_00, Hora.H08_00) };
 
         // Act
         var turma = new Turma(institutionId, disciplinaId, professorId, periodo, horarios);
@@ -112,8 +112,8 @@ public class TurmasUnitTests
         const string periodo = "2023.2";
         var horarios = new List<Horario>()
         {
-            new(Dia.Segunda, Hora.H07_00, Hora.H08_00),
-            new(Dia.Segunda, Hora.H07_00, Hora.H08_00),
+            new(Day.Segunda, Hora.H07_00, Hora.H08_00),
+            new(Day.Segunda, Hora.H07_00, Hora.H08_00),
         };
 
         // Act
@@ -169,7 +169,7 @@ public class TurmasUnitTests
 
         var disciplina = new Disciplina(institutionId, "Banco de Dados");
         var professor = new Professor(userId, institutionId, "Chico Science");
-        var horarios = new List<Horario>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
+        var horarios = new List<Horario>() { new(Day.Segunda, Hora.H07_00, Hora.H08_00) };
 
         var turma = new Turma(institutionId, disciplinaId, professorId, periodo, horarios)
         {
@@ -182,8 +182,8 @@ public class TurmasUnitTests
 
         // Assert
         turmaOut.Id.Should().Be(turma.Id);
-        turmaOut.Disciplina.Should().Be(turma.Disciplina.Nome);
-        turmaOut.Professor.Should().Be(turma.Professor.Nome);
+        turmaOut.Disciplina.Should().Be(turma.Disciplina.Name);
+        turmaOut.Professor.Should().Be(turma.Professor.Name);
         turmaOut.Periodo.Should().Be(turma.Periodo);
         turmaOut.Horarios.Should().HaveCount(1);
     }

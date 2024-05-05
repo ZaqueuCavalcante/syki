@@ -9,19 +9,19 @@ public class Grade
     public Guid InstitutionId { get; set; }
     public Guid CursoId { get; set; }
     public Curso Curso { get; set; }
-    public string Nome { get; set; }
+    public string Name { get; set; }
     public List<Disciplina> Disciplinas { get; set; }
     public List<GradeDisciplina> Vinculos { get; set; }
 
     public Grade(
         Guid institutionId,
         Guid cursoId,
-        string nome
+        string name
     ) {
         Id = Guid.NewGuid();
         InstitutionId = institutionId;
         CursoId = cursoId;
-        Nome = nome;
+        Name = name;
         Disciplinas = [];
         Vinculos = [];
     }
@@ -32,8 +32,8 @@ public class Grade
         {
             Id = Id,
             CursoId = CursoId,
-            CursoNome = Curso.Nome,
-            Nome = Nome,
+            CursoNome = Curso.Name,
+            Name = Name,
             Disciplinas = Disciplinas.ConvertAll(d => d.ToOut()),
         };
 

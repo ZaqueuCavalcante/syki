@@ -10,10 +10,10 @@ public class CursosUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        const string nome = "Análise e Desenvolvimento de Sistemas";
+        const string name = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(institutionId, nome, Bacharelado);
+        var curso = new Curso(institutionId, name, Bacharelado);
 
         // Assert
         curso.Id.Should().NotBeEmpty();
@@ -24,10 +24,10 @@ public class CursosUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        const string nome = "Análise e Desenvolvimento de Sistemas";
+        const string name = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(institutionId, nome, Bacharelado);
+        var curso = new Curso(institutionId, name, Bacharelado);
 
         // Assert
         curso.InstitutionId.Should().Be(institutionId);
@@ -38,13 +38,13 @@ public class CursosUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        const string nome = "Análise e Desenvolvimento de Sistemas";
+        const string name = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(institutionId, nome, Bacharelado);
+        var curso = new Curso(institutionId, name, Bacharelado);
 
         // Assert
-        curso.Nome.Should().Be(nome);
+        curso.Name.Should().Be(name);
     }
 
     [Test]
@@ -52,10 +52,10 @@ public class CursosUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        const string nome = "Análise e Desenvolvimento de Sistemas";
+        const string name = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(institutionId, nome, Bacharelado);
+        var curso = new Curso(institutionId, name, Bacharelado);
 
         // Assert
         curso.Tipo.Should().Be(Bacharelado);
@@ -66,15 +66,15 @@ public class CursosUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        const string nome = "Análise e Desenvolvimento de Sistemas";
-        var curso = new Curso(institutionId, nome, Bacharelado);
+        const string name = "Análise e Desenvolvimento de Sistemas";
+        var curso = new Curso(institutionId, name, Bacharelado);
 
         // Act
         var cursoOut = curso.ToOut();
 
         // Assert
         cursoOut.Id.Should().Be(curso.Id);
-        cursoOut.Nome.Should().Be(curso.Nome);
+        cursoOut.Name.Should().Be(curso.Name);
         cursoOut.Tipo.Should().Be(curso.Tipo);
     }
 
@@ -140,12 +140,12 @@ public class CursosUnitTests
     public void Deve_retornar_o_nome_do_curso_como_to_string()
     {
         // Arrange
-        var cursoOut = new CursoOut { Nome = "Curso" };
+        var cursoOut = new CursoOut { Name = "Curso" };
 
         // Act
-        var nome = cursoOut.ToString();
+        var name = cursoOut.ToString();
 
         // Assert
-        nome.Should().Be("Curso");
+        name.Should().Be("Curso");
     }
 }

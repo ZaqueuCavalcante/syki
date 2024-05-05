@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace Syki.Shared;
 
-public enum Dia
+public enum Day
 {
     [Description("Segunda")]
     Segunda,

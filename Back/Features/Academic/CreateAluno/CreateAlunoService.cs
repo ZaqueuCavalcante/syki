@@ -13,10 +13,10 @@ public class CreateAlunoService(SykiDbContext ctx, CreateUserService service, Se
         if (!ofertaOk)
             Throw.DE012.Now();
 
-        var userIn = CreateUserIn.NewAluno(institutionId, data.Nome, data.Email);
+        var userIn = CreateUserIn.NewAluno(institutionId, data.Name, data.Email);
         var user = await service.Create(userIn);
 
-        var aluno = new Aluno(user.Id, institutionId, data.Nome, data.OfertaId);
+        var aluno = new Aluno(user.Id, institutionId, data.Name, data.OfertaId);
         ctx.Add(aluno);
         await ctx.SaveChangesAsync();
 

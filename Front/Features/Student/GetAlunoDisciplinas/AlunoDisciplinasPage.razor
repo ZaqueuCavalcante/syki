@@ -1,0 +1,59 @@
+@using Syki.Front.Components.Custom;
+@using Syki.Front.GetAlunoDisciplinas;
+
+@attribute [Authorize(Roles = "Aluno")]
+
+<PageTitle>Disciplinas</PageTitle>
+
+<MudContainer>
+    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" />
+    <MudContainer Class="mb-8">
+        <MudExpansionPanels MultiExpansion="true">
+            @foreach(var periodo in _disciplinas.ConvertAll(d => d.Periodo).Distinct().Order())
+            {
+                <MudExpansionPanel IsInitiallyExpanded="@(periodo==1)">
+                    <TitleContent>
+                        <div class="d-flex">
+                            <MudIcon Icon="@Icons.Material.Filled.ArrowRight" class="mr-3"></MudIcon>
+                            <MudText><strong>@($"{periodo}º Período")</strong></MudText>
+                        </div>
+                    </TitleContent>
+                    <ChildContent>
+                        <MudTable Items="@_disciplinas.Where(x => x.Periodo == periodo).OrderBy(x => x.Name)" Breakpoint="Breakpoint.Sm" Dense="true">
+                            <ColGroup>
+                                <col style="width: 50%;" />
+                                <col style="width: 15%;" />
+                                <col style="width: 15%;" />
+                                <col style="width: 20%;" />
+                            </ColGroup>
+                            <HeaderContent>
+                                <MudTh>Name</MudTh>
+                                <MudTh>Créditos</MudTh>
+                                <MudTh>CH</MudTh>
+                                <MudTh>Situação</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Name">@context.Name</MudTd>
+                                <MudTd DataLabel="Créditos">@context.Creditos</MudTd>
+                                <MudTd DataLabel="CH">@context.CargaHoraria</MudTd>
+                                <MudTd DataLabel="Situação">@context.Situacao</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    </ChildContent>
+                </MudExpansionPanel>
+            }
+        </MudExpansionPanels>
+    </MudContainer>
+</MudContainer>
+
+@inject GetAlunoDisciplinasClient Client
+
+@code
+{
+    private List<DisciplinaOut> _disciplinas = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _disciplinas = await Client.Get();
+    }
+}

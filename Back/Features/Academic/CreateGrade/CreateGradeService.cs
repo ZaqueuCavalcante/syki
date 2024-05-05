@@ -13,7 +13,7 @@ public class CreateGradeService(SykiDbContext ctx)
         var grade = new Grade(
             institutionId,
             data.CursoId,
-            data.Nome
+            data.Name
         );
 
         var disciplinas = await ctx.CursosDisciplinas.AsNoTracking()

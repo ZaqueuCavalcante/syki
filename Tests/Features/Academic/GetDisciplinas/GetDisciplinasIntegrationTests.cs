@@ -19,12 +19,12 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         var disciplinas = await client.GetAsync<List<DisciplinaOut>>("/disciplinas");
         disciplinas.Should().HaveCount(6);
-        disciplinas[0].Nome.Should().Be("Arquitetura de Computadores e Sistemas Operacionais");
-        disciplinas[1].Nome.Should().Be("Banco de Dados");
-        disciplinas[2].Nome.Should().Be("Estrutura de Dados");
-        disciplinas[3].Nome.Should().Be("Informática e Sociedade");
-        disciplinas[4].Nome.Should().Be("Programação Orientada a Objetos");
-        disciplinas[5].Nome.Should().Be("Projeto Integrador II: Modelagem de Banco de Dados");
+        disciplinas[0].Name.Should().Be("Arquitetura de Computadores e Sistemas Operacionais");
+        disciplinas[1].Name.Should().Be("Banco de Dados");
+        disciplinas[2].Name.Should().Be("Estrutura de Dados");
+        disciplinas[3].Name.Should().Be("Informática e Sociedade");
+        disciplinas[4].Name.Should().Be("Programação Orientada a Objetos");
+        disciplinas[5].Name.Should().Be("Projeto Integrador II: Modelagem de Banco de Dados");
     }
 
     [Test]
@@ -45,7 +45,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         disciplinas.Should().HaveCount(2);
-        disciplinas[0].Nome.Should().Be("Banco de Dados");
-        disciplinas[1].Nome.Should().Be("Informática e Sociedade");
+        disciplinas[0].Name.Should().Be("Banco de Dados");
+        disciplinas[1].Name.Should().Be("Informática e Sociedade");
     }
 }

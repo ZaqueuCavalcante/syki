@@ -2,7 +2,7 @@ namespace Syki.Back.GetProfessorAgenda;
 
 public class GetProfessorAgendaService(SykiDbContext ctx)
 {
-    public async Task<List<AgendaDiaOut>> Get(Guid institution, Guid userId)
+    public async Task<List<AgendaDayOut>> Get(Guid institution, Guid userId)
     {
         var turmas = await ctx.Turmas.AsNoTracking()
             .Include(t => t.Disciplina)
@@ -14,7 +14,7 @@ public class GetProfessorAgendaService(SykiDbContext ctx)
         {
             return new MatriculaTurmaOut
             {
-                Disciplina = t.Disciplina.Nome,
+                Disciplina = t.Disciplina.Name,
                 Horarios = t.Horarios.ConvertAll(h => h.ToOut()),
             };
         });

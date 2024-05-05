@@ -159,13 +159,13 @@ public partial class IntegrationTests : IntegrationTestBase
         var chico = await client.CreateProfessor("Chico");
         var ana = await client.CreateProfessor("Ana");
 
-        var turmaMatematica = await client.Createturma(matematica.Id, chico.Id, periodo.Id, [new(Dia.Segunda, Hora.H07_00, Hora.H10_00)]);
-        var turmaBancoDeDados = await client.Createturma(bancoDeDados.Id, chico.Id, periodo.Id, [new(Dia.Terca, Hora.H07_00, Hora.H10_00)]);
-        var turmaEstruturaDeDados = await client.Createturma(estruturaDeDados.Id, chico.Id, periodo.Id, [new(Dia.Quarta, Hora.H07_00, Hora.H10_00)]);
-        var turmaInfoSociedade = await client.Createturma(infoSociedade.Id, ana.Id, periodo.Id, [new(Dia.Segunda, Hora.H07_00, Hora.H08_00)]);
-        var turmaDireitoEconomia = await client.Createturma(direitoEconomia.Id, ana.Id, periodo.Id, [new(Dia.Terca, Hora.H07_00, Hora.H08_00)]);
-        var turmaIntroDireito = await client.Createturma(introDireito.Id, ana.Id, periodo.Id, [new(Dia.Quarta, Hora.H07_00, Hora.H08_00)]);
-        var turmaDireitoFinanceiro = await client.Createturma(direitoFinanceiro.Id, ana.Id, periodo.Id, [new(Dia.Quinta, Hora.H07_00, Hora.H08_00)]);
+        var turmaMatematica = await client.Createturma(matematica.Id, chico.Id, periodo.Id, [new(Day.Segunda, Hora.H07_00, Hora.H10_00)]);
+        var turmaBancoDeDados = await client.Createturma(bancoDeDados.Id, chico.Id, periodo.Id, [new(Day.Terca, Hora.H07_00, Hora.H10_00)]);
+        var turmaEstruturaDeDados = await client.Createturma(estruturaDeDados.Id, chico.Id, periodo.Id, [new(Day.Quarta, Hora.H07_00, Hora.H10_00)]);
+        var turmaInfoSociedade = await client.Createturma(infoSociedade.Id, ana.Id, periodo.Id, [new(Day.Segunda, Hora.H07_00, Hora.H08_00)]);
+        var turmaDireitoEconomia = await client.Createturma(direitoEconomia.Id, ana.Id, periodo.Id, [new(Day.Terca, Hora.H07_00, Hora.H08_00)]);
+        var turmaIntroDireito = await client.Createturma(introDireito.Id, ana.Id, periodo.Id, [new(Day.Quarta, Hora.H07_00, Hora.H08_00)]);
+        var turmaDireitoFinanceiro = await client.Createturma(direitoFinanceiro.Id, ana.Id, periodo.Id, [new(Day.Quinta, Hora.H07_00, Hora.H08_00)]);
 
         var zaqueu = await client.CreateAluno(ofertaAds.Id, "Zaqueu");
         var maju = await client.CreateAluno(ofertaDireito.Id, "Maju");

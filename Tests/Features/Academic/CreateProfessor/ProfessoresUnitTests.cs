@@ -10,10 +10,10 @@ public class ProfessoresUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
-        const string nome = "Chico Science";
+        const string name = "Chico Science";
 
         // Act
-        var professor = new Professor(userId, institutionId, nome);
+        var professor = new Professor(userId, institutionId, name);
 
         // Assert
         professor.Id.Should().NotBeEmpty();
@@ -25,10 +25,10 @@ public class ProfessoresUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
-        const string nome = "Chico Science";
+        const string name = "Chico Science";
 
         // Act
-        var professor = new Professor(userId, institutionId, nome);
+        var professor = new Professor(userId, institutionId, name);
 
         // Assert
         professor.InstitutionId.Should().Be(institutionId);
@@ -40,10 +40,10 @@ public class ProfessoresUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
-        const string nome = "Chico Science";
+        const string name = "Chico Science";
 
         // Act
-        var professor = new Professor(userId, institutionId, nome);
+        var professor = new Professor(userId, institutionId, name);
 
         // Assert
         professor.Id.Should().Be(userId);
@@ -55,25 +55,25 @@ public class ProfessoresUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
-        const string nome = "Chico Science";
+        const string name = "Chico Science";
 
         // Act
-        var professor = new Professor(userId, institutionId, nome);
+        var professor = new Professor(userId, institutionId, name);
 
         // Assert
-        professor.Nome.Should().Be(nome);
+        professor.Name.Should().Be(name);
     }
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.InvalidNames))]
-    public void Nao_deve_criar_um_professor_com_nome_invalido(string nome)
+    public void Nao_deve_criar_um_professor_com_nome_invalido(string name)
     {
         // Arrange
         var institutionId = Guid.NewGuid();
         var userId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Professor(userId, institutionId, nome);
+        Action act = () => new Professor(userId, institutionId, name);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE001);
@@ -85,14 +85,14 @@ public class ProfessoresUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         var userId = Guid.NewGuid();
-        const string nome = "Chico Science";
-        var professor = new Professor(userId, institutionId, nome);
+        const string name = "Chico Science";
+        var professor = new Professor(userId, institutionId, name);
 
         // Act
         var professorOut = professor.ToOut();
 
         // Assert
         professorOut.Id.Should().Be(professor.Id);
-        professorOut.Nome.Should().Be(professor.Nome);
+        professorOut.Name.Should().Be(professor.Name);
     }
 }

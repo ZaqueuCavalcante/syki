@@ -2,6 +2,6 @@ namespace Syki.Shared;
 
 public class DisciplinaIn
 {
-    public string Nome { get; set; }
+    public string Name { get; set; }
     public List<Guid> Cursos { get; set; } = [];
 }

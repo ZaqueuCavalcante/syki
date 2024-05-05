@@ -15,11 +15,11 @@
         const string grade = "Grade de ADS - 1.0";
         var disciplinas = new List<DisciplinaOut>
         {
-            new DisciplinaOut { Nome = "Matemática Discreta", Periodo = 1, Creditos = 6, CargaHoraria = 60, },
-            new DisciplinaOut { Nome = "Introdução à Redes de Computadores", Periodo = 5, Creditos = 4, CargaHoraria = 50, },
-            new DisciplinaOut { Nome = "Pensamento Computacional e Algoritmos", Periodo = 3, Creditos = 7, CargaHoraria = 25, },
-            new DisciplinaOut { Nome = "Design de Interação Humano-Máquina", Periodo = 2, Creditos = 6, CargaHoraria = 90, },
-            new DisciplinaOut { Nome = "Projeto Integrador I: Concepção e Prototipação", Periodo = 4, Creditos = 6, CargaHoraria = 60, },
+            new DisciplinaOut { Name = "Matemática Discreta", Periodo = 1, Creditos = 6, CargaHoraria = 60, },
+            new DisciplinaOut { Name = "Introdução à Redes de Computadores", Periodo = 5, Creditos = 4, CargaHoraria = 50, },
+            new DisciplinaOut { Name = "Pensamento Computacional e Algoritmos", Periodo = 3, Creditos = 7, CargaHoraria = 25, },
+            new DisciplinaOut { Name = "Design de Interação Humano-Máquina", Periodo = 2, Creditos = 6, CargaHoraria = 90, },
+            new DisciplinaOut { Name = "Projeto Integrador I: Concepção e Prototipação", Periodo = 4, Creditos = 6, CargaHoraria = 60, },
         };
         var parameters = new DialogParameters<DisciplinasDaGradeDialog>();
         parameters.Add(x => x.Disciplinas, disciplinas);

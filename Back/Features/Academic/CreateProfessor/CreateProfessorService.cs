@@ -8,10 +8,10 @@ public class CreateProfessorService(SykiDbContext ctx, CreateUserService service
     {
         using var transaction = ctx.Database.BeginTransaction();
 
-        var userIn = CreateUserIn.NewProfessor(institutionId, data.Nome, data.Email);
+        var userIn = CreateUserIn.NewProfessor(institutionId, data.Name, data.Email);
         var user = await service.Create(userIn);
 
-        var professor = new Professor(user.Id, institutionId, data.Nome);
+        var professor = new Professor(user.Id, institutionId, data.Name);
 
         ctx.Add(professor);
         await ctx.SaveChangesAsync();

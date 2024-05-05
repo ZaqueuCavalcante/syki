@@ -13,7 +13,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         disciplina.Id.Should().NotBeEmpty();
-        disciplina.Nome.Should().Be("Banco de Dados");
+        disciplina.Name.Should().Be("Banco de Dados");
         disciplina.Cursos.Should().BeEquivalentTo(new List<Guid>());
     }
 
@@ -28,7 +28,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var disciplina = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
 
         // Assert
-        disciplina.Nome.Should().Be("Banco de Dados");
+        disciplina.Name.Should().Be("Banco de Dados");
         disciplina.Cursos.Should().BeEquivalentTo([curso.Id]);
     }
 
@@ -44,7 +44,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var disciplina = await client.CreateDisciplina("Banco de Dados", [ads.Id, cc.Id]);
 
         // Assert
-        disciplina.Nome.Should().Be("Banco de Dados");
+        disciplina.Name.Should().Be("Banco de Dados");
         disciplina.Cursos.Should().BeEquivalentTo([cc.Id, ads.Id]);
     }
 

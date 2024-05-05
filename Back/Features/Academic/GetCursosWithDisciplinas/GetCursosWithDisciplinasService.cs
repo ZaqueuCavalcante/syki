@@ -6,7 +6,7 @@ public class GetCursosWithDisciplinasService(SykiDbContext ctx)
     {
         var cursos = await ctx.Cursos
             .Where(c => c.InstitutionId == institutionId && c.Disciplinas.Count > 0)
-            .OrderBy(c => c.Nome)
+            .OrderBy(c => c.Name)
             .ToListAsync();
 
         return cursos.ConvertAll(c => c.ToOut());

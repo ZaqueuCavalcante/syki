@@ -11,8 +11,8 @@ public class TurmaInExamples : IMultipleExamplesProvider<TurmaIn>
 				Guid.NewGuid(),
 				"2024.1",
 				[
-					new(Dia.Segunda, Hora.H07_00, Hora.H10_00),
-					new(Dia.Quinta, Hora.H08_00, Hora.H10_30),
+					new(Day.Segunda, Hora.H07_00, Hora.H10_00),
+					new(Day.Quinta, Hora.H08_00, Hora.H10_30),
 				]
 			)
 		);
@@ -24,7 +24,7 @@ public class TurmaInExamples : IMultipleExamplesProvider<TurmaIn>
 				Guid.NewGuid(),
 				"2024.2",
 				[
-					new(Dia.Terca, Hora.H19_15, Hora.H22_00),
+					new(Day.Terca, Hora.H19_15, Hora.H22_00),
 				]
 			)
 		);

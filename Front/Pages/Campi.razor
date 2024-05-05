@@ -1,4 +1,4 @@
-﻿@using Front.Components.Custom
+﻿@using Syki.Front.Components.Custom
 @using Front.Features.Academico.CreateCampus
 @using Front.Features.Academico.UpdateCampus
 
@@ -31,10 +31,10 @@
             RowsPerPage="10"
         >
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou cidade" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por name ou cidade" />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Name" Title="Nome" />
+                <PropertyColumn Property="x => x.Name" Title="Name" />
                 <PropertyColumn Property="x => x.City" Title="Cidade" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>

@@ -35,13 +35,13 @@ public class DisciplinasUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        const string nome = "Banco de Dados";
+        const string name = "Banco de Dados";
 
         // Act
-        var disciplina = new Disciplina(institutionId, nome);
+        var disciplina = new Disciplina(institutionId, name);
 
         // Assert
-        disciplina.Nome.Should().Be(nome);
+        disciplina.Name.Should().Be(name);
     }
 
     [Test]
@@ -57,7 +57,7 @@ public class DisciplinasUnitTests
 
         // Assert
         disciplinaOut.Id.Should().Be(disciplina.Id);
-        disciplinaOut.Nome.Should().Be(disciplina.Nome);
+        disciplinaOut.Name.Should().Be(disciplina.Name);
         disciplinaOut.Cursos.Should().BeEquivalentTo(disciplina.Vinculos.ConvertAll(x => x.CursoId));
     }
 
@@ -123,12 +123,12 @@ public class DisciplinasUnitTests
     public void Deve_retornar_o_nome_da_disciplina_como_to_string()
     {
         // Arrange
-        var disciplinaOut = new DisciplinaOut { Nome = "Banco de Dados" };
+        var disciplinaOut = new DisciplinaOut { Name = "Banco de Dados" };
 
         // Act
-        var nome = disciplinaOut.ToString();
+        var name = disciplinaOut.ToString();
 
         // Assert
-        nome.Should().Be("Banco de Dados");
+        name.Should().Be("Banco de Dados");
     }
 }

@@ -1,4 +1,4 @@
-﻿@using Front.Components.Custom
+﻿@using Syki.Front.Components.Custom
 
 @page "/turmas/{Id}"
 
@@ -30,7 +30,7 @@
                     <MudPaper Elevation="2" Class="mt-6" Width="700px">
                         <MudGrid>
                             <MudItem xs="10">
-                                <SykiTextField Label="Nome" @bind-Value="@_nome" />
+                                <SykiTextField Label="Name" @bind-Value="@_nome" />
                             </MudItem>
                             <MudItem xs="2">
                                 <MudNumericField

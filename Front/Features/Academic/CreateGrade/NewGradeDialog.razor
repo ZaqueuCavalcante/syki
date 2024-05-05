@@ -1,0 +1,153 @@
+@using Syki.Front.Components.Custom
+@using Front.Components.Buttons
+
+<MudDialog Class="pb-2">
+    <TitleContent>
+        <SykiDialogTitle Text="Nova Grade" />
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="@_form">
+            <MudStack Row="true">
+                <SykiTextField Label="Name" AutoFocus="true" @bind-Value="@data.Name" />
+                <MudSelect
+                    Dense="true"
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    Value="@_curso"
+                    ValueChanged="@((CursoOut newValue) => HandleSelectCurso(newValue))"
+                    Label="Curso"
+                    Required="true"
+                    RequiredError="Informe!"
+                    AdornmentColor="Color.Primary"
+                >
+                    @foreach (CursoOut? item in Cursos)
+                    {
+                        <MudSelectItem Value="@item">@item.Name</MudSelectItem>
+                    }
+                    @if (Cursos.Count == 0)
+                    {
+                        <MudSelectItem Value="@_curso" Disabled="true">Não existem cursos com disciplinas ainda.</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudStack>
+
+            <MudDivider Class="my-4"/>
+
+            <MudContainer Class="px-0">
+                <MudGrid Justify="Justify.FlexStart">
+                    <MudItem xs="12">
+                        <CascadingValue Name="Options" Value="@Options">
+                            @foreach (var disciplina in Disciplinas)
+                            {
+                                <GradeDisciplina Data="@disciplina" OnDeleteClick="@DeleteGradeDisciplina" />
+                            }
+                        </CascadingValue>
+                        <MudButton
+                            Disabled="(GetNewDisciplinaDisabled())"
+                            StartIcon="@Icons.Material.Outlined.Add"
+                            IconSize="Size.Large"
+                            Variant="Variant.Outlined"
+                            FullWidth="true"
+                            Class="mt-2 border-dashed border-2 mud-border-secundary"
+                            Color="Color.Primary"
+                            @onclick="@NewGradeDisciplina"
+                        >
+                            NOVA DISCIPLINA
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudContainer>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Cancel" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject CreateGradeClient Client
+
+@code
+{
+    private MudForm _form;
+    private bool _loading;
+
+    CursoOut? _curso;
+    List<CursoOut> Cursos = [];
+
+    List<CursoDisciplinaOut> Options = [];
+    List<GradeDisciplinaFillable> Disciplinas = [];
+
+    GradeIn data = new();
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos/with-disciplinas") ?? [];
+    }
+
+    void NewGradeDisciplina()
+    {
+        Disciplinas.Add(new() { Id = Guid.NewGuid() });
+    }
+
+    void DeleteGradeDisciplina(Guid id)
+    {
+        Disciplinas.Remove(Disciplinas.First(f => f.Id == id));
+        if (Options.Any(x => x.Id == id))
+        {
+            Options.First(d => d.Id == id).IsSelected = false;
+        }
+    }
+
+    bool GetNewDisciplinaDisabled()
+    {
+        return _curso == null || Options.Count == Disciplinas.Count;
+    }
+
+    async Task HandleSelectCurso(CursoOut newValue)
+    {
+        _curso = newValue;
+        Options = await Http.GetFromJsonAsync<List<CursoDisciplinaOut>>($"/cursos/{_curso!.Id}/disciplinas") ?? [];
+        Disciplinas = [];
+    }
+
+    async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        data.CursoId = _curso!.Id;
+        data.Disciplinas = Disciplinas
+            .ConvertAll(d => new GradeDisciplinaIn
+            (
+                d.Id,
+                d.Periodo!.Value,
+                d.Creditos!.Value,
+                d.CargaHoraria!.Value
+            ));
+
+        _loading = true;
+        var response = await Client.Create(data.Name, data.CursoId, data.Disciplinas);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Grade cadastrada com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

@@ -13,7 +13,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         professor.Id.Should().NotBeEmpty();
-        professor.Nome.Should().Be("Chico");
+        professor.Name.Should().Be("Chico");
     }
 
     [Test]
@@ -46,6 +46,6 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         professores.Should().HaveCount(1);
-        professores[0].Nome.Should().Be("Chico");
+        professores[0].Name.Should().Be("Chico");
     }
 }

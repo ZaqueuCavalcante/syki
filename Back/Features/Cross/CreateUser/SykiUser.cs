@@ -24,7 +24,7 @@ public class SykiUser : IdentityUser<Guid>
         {
             Id = Id,
             InstitutionId = InstitutionId,
-            Nome = Name,
+            Name = Name,
             Email = Email!,
         };
     }

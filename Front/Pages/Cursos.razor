@@ -1,4 +1,4 @@
-﻿@using Front.Components.Custom
+﻿@using Syki.Front.Components.Custom
 @using Front.Features.Academico.CreateCurso
 
 @page "/cursos"
@@ -21,10 +21,10 @@
             RowsPerPage="10"
         >
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou tipo" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por name ou tipo" />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.Name" Title="Name" />
                 <PropertyColumn Property="x => x.Tipo.GetDescription()" Title="Tipo" />
             </Columns>
 
@@ -55,7 +55,7 @@
         _loading = false;
     }
 
-    private Func<CursoOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome, x.Tipo.GetDescription());
+    private Func<CursoOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Tipo.GetDescription());
 
     private async Task OpenDialog()
     {

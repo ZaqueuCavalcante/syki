@@ -13,7 +13,7 @@ public class GetDisciplinasService(SykiDbContext ctx)
 
         var disciplinas = await ctx.Disciplinas
             .Where(d => d.InstitutionId == institutionId && (ids.Count == 0 || ids.Contains(d.Id)))
-            .OrderBy(d => d.Nome)
+            .OrderBy(d => d.Name)
             .ToListAsync();
 
         return disciplinas.ConvertAll(d => d.ToOut());

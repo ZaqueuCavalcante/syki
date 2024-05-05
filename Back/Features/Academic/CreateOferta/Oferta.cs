@@ -40,9 +40,9 @@ public class Oferta
         {
             Id = Id,
             Campus = Campus.Name,
-            Curso = Curso.Nome,
+            Curso = Curso.Name,
             GradeId = GradeId,
-            Grade = Grade.Nome,
+            Grade = Grade.Name,
             Periodo = Periodo,
             Turno = Turno,
         };

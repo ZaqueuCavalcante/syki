@@ -9,7 +9,7 @@ public class GetGradesService(SykiDbContext ctx)
             .Include(g => g.Curso)
             .Include(g => g.Disciplinas)
             .Include(g => g.Vinculos)
-            .OrderBy(g => g.Nome)
+            .OrderBy(g => g.Name)
             .ToListAsync();
 
         return grades.ConvertAll(g => g.ToOut());

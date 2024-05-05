@@ -31,6 +31,6 @@ public class GetAlunoDisciplinasService(SykiDbContext ctx)
             r.Situacao = situacoes.FirstOrDefault(x => x.TurmaId == turmaId)?.Situacao ?? Situacao.Pendente;
         });
 
-        return response.OrderBy(x => x.Nome).ToList();
+        return response.OrderBy(x => x.Name).ToList();
     }
 }

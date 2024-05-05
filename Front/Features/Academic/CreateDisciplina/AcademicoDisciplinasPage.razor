@@ -1,0 +1,39 @@
+@using Syki.Front.Components.Custom
+@using Front.Features.Academico.GetDisciplinas
+
+@attribute [Authorize(Roles = "Academico")]
+
+<PageTitle>Disciplinas</PageTitle>
+
+<MudContainer>
+    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" ButtonText="Nova Disciplina" OnClick="@OpenDialog" />
+
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
+        <MudText>Uma mesma disciplina pode compor a grade de cursos diferentes. A carga horária definida aqui é apenas um valor de referência.</MudText>
+    </MudAlert>
+
+    <AcademicoDisciplinasDataGrid @ref="@_grid" />
+</MudContainer>
+
+@inject GetDisciplinasClient Client
+@inject IDialogService DialogService
+
+@code
+{
+    private AcademicoDisciplinasDataGrid _grid;
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = await DialogService.ShowAsync<CreateDisciplinaDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled) return;
+        
+        await _grid.Reload();
+    }
+}

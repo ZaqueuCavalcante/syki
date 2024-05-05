@@ -15,33 +15,33 @@ public static class ListExtensions
         return true;
     }
 
-    public static List<AgendaDiaOut> ToAgendas(this List<MatriculaTurmaOut> turmas)
+    public static List<AgendaDayOut> ToAgendas(this List<MatriculaTurmaOut> turmas)
     {
-        var agendas = new List<AgendaDiaOut>();
+        var agendas = new List<AgendaDayOut>();
 
         foreach (var turma in turmas)
         {
             foreach (var horario in turma.Horarios)
             {
-                var disciplina = new AgendaDisciplinaOut { Nome = turma.Disciplina, Start = horario.Start, End = horario.End };
+                var disciplina = new AgendaDisciplineOut { Name = turma.Disciplina, Start = horario.Start, End = horario.End };
 
-                var agenda = agendas.FirstOrDefault(a => a.Dia == horario.Dia);
+                var agenda = agendas.FirstOrDefault(a => a.Day == horario.Day);
                 if (agenda == null)
                 {
-                    agenda = new AgendaDiaOut { Dia = horario.Dia };
-                    agenda.Disciplinas.Add(disciplina);
+                    agenda = new AgendaDayOut { Day = horario.Day };
+                    agenda.Disciplines.Add(disciplina);
                     agendas.Add(agenda);
                     continue;
                 }
 
-                agenda.Disciplinas.Add(disciplina);
+                agenda.Disciplines.Add(disciplina);
             }
         }
 
-        agendas = agendas.OrderBy(a => a.Dia).ToList();
+        agendas = agendas.OrderBy(a => a.Day).ToList();
         foreach (var agenda in agendas)
         {
-            agenda.Disciplinas = agenda.Disciplinas.OrderBy(d => d.Start).ToList();
+            agenda.Disciplines = agenda.Disciplines.OrderBy(d => d.Start).ToList();
         }
 
         return agendas;

@@ -1,4 +1,4 @@
-﻿@using Front.Components.Custom
+﻿@using Syki.Front.Components.Custom
 
 @page "/users"
 @attribute [Authorize(Roles = "Adm")]
@@ -15,10 +15,10 @@
     <MudContainer Class="mb-8">
         <MudDataGrid Class="pa-4" Items="@_users" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo nome" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo name" />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.Name" Title="Name" />
                 <PropertyColumn Property="x => x.Email" Title="Email" />
                 <PropertyColumn Property="x => x.Institution" Title="Instituição" />
                 <PropertyColumn Property="x => x.Role" Title="Role" />
@@ -51,7 +51,7 @@
         _loading = false;
     }
 
-    private Func<CreateUserOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome);
+    private Func<CreateUserOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
 
     private string GetNotFoundMessage()
     {

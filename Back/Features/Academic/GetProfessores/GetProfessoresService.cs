@@ -7,7 +7,7 @@ public class GetProfessoresService(SykiDbContext ctx)
         FormattableString sql = $@"
             SELECT
                 p.id,
-                p.nome,
+                p.name,
                 u.email
             FROM
                 syki.professores p

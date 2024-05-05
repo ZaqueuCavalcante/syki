@@ -3,7 +3,7 @@ namespace Syki.Shared;
 public class HorarioIn
 {
     public Guid Id { get; set; }
-    public Dia Dia { get; set; }
+    public Day Day { get; set; }
     public Hora Start { get; set; }
     public Hora End { get; set; }
 
@@ -13,12 +13,12 @@ public class HorarioIn
     }
 
     public HorarioIn(
-        Dia dia,
+        Day dia,
         Hora start,
         Hora end
     ) {
         Id = Guid.NewGuid();
-        Dia = dia;
+        Day = dia;
         Start = start;
         End = end;
     }
@@ -32,7 +32,7 @@ public class HorarioIn
         if (other.Id == Id)
             return true;
 
-        return other.Dia == Dia && other.Start == Start && other.End == End;
+        return other.Day == Day && other.Start == Start && other.End == End;
     }
 
     public override int GetHashCode()

@@ -45,7 +45,7 @@ using Syki.Back.Features.Cross.LoginMfa;
 using Syki.Back.Features.Cross.GetMfaKey;
 using Syki.Back.Features.Cross.GenerateJWT;
 using Syki.Back.Features.Cross.ResetPassword;
-using Syki.Back.Features.Cross.ViewNotification;
+using Syki.Back.Features.Cross.ViewNotifications;
 using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Cross.GetUserNotifications;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
@@ -68,7 +68,7 @@ public static class ServicesConfigs
         services.AddScoped<SetupMfaService>();
         services.AddScoped<ResetPasswordService>();
         services.AddScoped<SendResetPasswordEmailService>();
-        services.AddScoped<ViewNotificationService>();
+        services.AddScoped<ViewNotificationsService>();
         services.AddScoped<GetUserNotificationsService>();
 
         // Academic

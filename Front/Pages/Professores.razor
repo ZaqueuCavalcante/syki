@@ -1,4 +1,4 @@
-﻿@using Front.Components.Custom
+﻿@using Syki.Front.Components.Custom
 @using Front.Components.Professores
 
 @page "/professores"
@@ -16,10 +16,10 @@
     <MudContainer Class="mb-8">
         <MudDataGrid Class="pa-4" Items="@_professores" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo nome" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo name" />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Nome" Title="Nome" />
+                <PropertyColumn Property="x => x.Name" Title="Name" />
                 <PropertyColumn Property="x => x.Email" Title="Email" />
             </Columns>
 
@@ -50,7 +50,7 @@
         _loading = false;
     }
 
-    private Func<ProfessorOut, bool> _quickFilter => x => _searchString.IsIn(x.Nome);
+    private Func<ProfessorOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
 
     private async Task OpenDialog()
     {

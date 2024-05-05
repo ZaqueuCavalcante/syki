@@ -25,11 +25,11 @@ public class AlunosUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
-        const string nome = "Zaqueu";
+        const string name = "Zaqueu";
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, nome, ofertaId);
+        var aluno = new Aluno(userId, institutionId, name, ofertaId);
 
         // Assert
         aluno.InstitutionId.Should().Be(institutionId);
@@ -41,11 +41,11 @@ public class AlunosUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
-        const string nome = "Zaqueu";
+        const string name = "Zaqueu";
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, nome, ofertaId);
+        var aluno = new Aluno(userId, institutionId, name, ofertaId);
 
         // Assert
         aluno.Id.Should().Be(userId);
@@ -57,14 +57,14 @@ public class AlunosUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
-        const string nome = "Zaqueu";
+        const string name = "Zaqueu";
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, nome, ofertaId);
+        var aluno = new Aluno(userId, institutionId, name, ofertaId);
 
         // Assert
-        aluno.Nome.Should().Be(nome);
+        aluno.Name.Should().Be(name);
     }
 
     [Test]
@@ -73,11 +73,11 @@ public class AlunosUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
-        const string nome = "Zaqueu";
+        const string name = "Zaqueu";
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, nome, ofertaId);
+        var aluno = new Aluno(userId, institutionId, name, ofertaId);
 
         // Assert
         aluno.OfertaId.Should().Be(ofertaId);
@@ -89,11 +89,11 @@ public class AlunosUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
-        const string nome = "Zaqueu";
+        const string name = "Zaqueu";
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, nome, ofertaId);
+        var aluno = new Aluno(userId, institutionId, name, ofertaId);
 
         // Assert
         aluno.Matricula.Should().HaveLength(12);
@@ -119,7 +119,7 @@ public class AlunosUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.ValidNames))]
-    public void Deve_criar_um_aluno_com_nome_valido(string nome)
+    public void Deve_criar_um_aluno_com_nome_valido(string name)
     {
         // Arrange
         var userId = Guid.NewGuid();
@@ -127,7 +127,7 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Aluno(userId, institutionId, nome, ofertaId);
+        Action act = () => new Aluno(userId, institutionId, name, ofertaId);
 
         // Assert
         act.Should().NotThrow<DomainException>();
@@ -135,7 +135,7 @@ public class AlunosUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.InvalidNames))]
-    public void Nao_deve_criar_um_aluno_com_nome_invalido(string nome)
+    public void Nao_deve_criar_um_aluno_com_nome_invalido(string name)
     {
         // Arrange
         var userId = Guid.NewGuid();
@@ -143,7 +143,7 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Aluno(userId, institutionId, nome, ofertaId);
+        Action act = () => new Aluno(userId, institutionId, name, ofertaId);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE000);
@@ -161,7 +161,7 @@ public class AlunosUnitTests
         // Assert
         alunoOut.Id.Should().Be(aluno.Id);
         alunoOut.OfertaId.Should().Be(aluno.OfertaId);
-        alunoOut.Nome.Should().Be(aluno.Nome);
+        alunoOut.Name.Should().Be(aluno.Name);
         alunoOut.Oferta.Should().Be("-");
         alunoOut.Matricula.Should().Be(aluno.Matricula);
     }
@@ -192,7 +192,7 @@ public class AlunosUnitTests
         // Assert
         alunoOut.Id.Should().Be(aluno.Id);
         alunoOut.OfertaId.Should().Be(aluno.OfertaId);
-        alunoOut.Nome.Should().Be(aluno.Nome);
+        alunoOut.Name.Should().Be(aluno.Name);
         alunoOut.Oferta.Should().Be("Direito");
         alunoOut.Matricula.Should().Be(aluno.Matricula);
     }

@@ -1,0 +1,80 @@
+@using Syki.Front.Components.Custom
+@using Front.Components.Buttons
+
+<MudDialog Class="pb-2">
+    <TitleContent>
+        <SykiDialogTitle Text="Nova Disciplina" />
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="@_form">
+            <SykiTextField Label="Name" AutoFocus="true" @bind-Value="@_name" OnKeyDown="@Submit" />
+            <MudSelect
+                Dense="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-2"
+                T="CursoOut"
+                Label="Cursos"
+                MultiSelection="true"
+                @bind-SelectedValues="@SelectedCursos"
+                AnchorOrigin="Origin.BottomCenter"
+            >
+                @foreach (var curso in Cursos)
+                {
+                    <MudSelectItem T="CursoOut" Value="@curso">@curso.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Cancel" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject GetCursosClient GetCursosClient
+@inject CreateDisciplinaClient CreateDisciplinaClient
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    MudForm _form;
+    private bool _loading;
+    private string _name;
+
+    private List<CursoOut> Cursos = [];
+    IEnumerable<CursoOut> SelectedCursos { get; set; } = new HashSet<CursoOut>() { };
+
+    protected override async Task OnInitializedAsync()
+    {
+        Cursos = await GetCursosClient.Get();
+    }
+
+    async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+        var response = await CreateDisciplinaClient.Create(_name, SelectedCursos.ToList().ConvertAll(c => c.Id));
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Disciplina cadastrada com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

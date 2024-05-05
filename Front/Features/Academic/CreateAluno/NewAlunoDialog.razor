@@ -1,0 +1,84 @@
+@using Syki.Front.Components.Custom
+@using Syki.Front.Components.Buttons
+
+<MudDialog Class="pb-2">
+    <TitleContent>
+        <SykiDialogTitle Text="Novo Aluno" />
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="_form">
+            <SykiTextField Label="Name" AutoFocus="true" @bind-Value="_data.Name" OnKeyDown="@Submit" />
+            <SykiTextField Label="Email" @bind-Value="_data.Email" OnKeyDown="@Submit" />
+            <MudSelect
+                Dense="true"
+                Disabled="@(_ofertas.Count == 0)"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="mb-2"
+                @bind-Value="_oferta"
+                Label="Oferta"
+                Required="true"
+                RequiredError="Informe!"
+                AdornmentColor="Color.Primary
+            ">
+                @foreach (OfertaOut? item in _ofertas)
+                {
+                    <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
+                }
+            </MudSelect>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="Cancel" />
+        <SykiProgressCircular Loading="_loading" />
+        <DialogSaveButton OnClick="Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    private MudForm _form;
+    private bool _loading;
+
+    private OfertaOut? _oferta;
+    private List<OfertaOut> _ofertas = [];
+
+    private AlunoIn _data = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? [];
+    }
+
+    async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _data.OfertaId = _oferta!.Id;
+
+        _loading = true;
+        var response = await Http.PostAsJsonAsync("/alunos", _data);
+        if (response.IsSuccessStatusCode)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Aluno cadastrado com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = await response.ToError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

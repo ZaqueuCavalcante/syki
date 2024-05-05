@@ -21,7 +21,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         response.Id.Should().NotBeEmpty(); 
         response.OfertaId.Should().Be(oferta.Id); 
-        response.Nome.Should().Be("Zezin"); 
+        response.Name.Should().Be("Zezin"); 
     }
 
     [Test]
@@ -67,9 +67,9 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         response.Count.Should().Be(3);
-        response[0].Nome.Should().Be("Banco de Dados");
-        response[1].Nome.Should().Be("Estrutura de Dados");
-        response[2].Nome.Should().Be("Programação Orientada a Objetos");
+        response[0].Name.Should().Be("Banco de Dados");
+        response[1].Name.Should().Be("Estrutura de Dados");
+        response[2].Name.Should().Be("Programação Orientada a Objetos");
     }
 
     [Test]

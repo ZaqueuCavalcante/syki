@@ -40,7 +40,7 @@
         </MudAlert>
 
         <CascadingValue Name="Dias" Value="@_dias">
-            <AgendaSemanal />
+            <WeeklyAgenda />
         </CascadingValue>
 
         <MudContainer Class="mb-8">
@@ -85,7 +85,7 @@
                 <PagerContent>
                     <MudDivider />
                     <MudStack Row="true" Class="mt-2">
-                        <DialogProgressCircular Loading="_saving" />
+                        <SykiProgressCircular Loading="_saving" />
                         <DialogSaveButton OnClick="Submit" />
                     </MudStack>
                 </PagerContent>
@@ -105,7 +105,7 @@
     private bool _finished;
     EnrollmentPeriodOut _periodoDeMatricula;
     private List<MatriculaTurmaOut> _options = [];
-    private List<AgendaDiaOut> _dias = [];
+    private List<AgendaDayOut> _dias = [];
 
     void HandleCheckedChanged()
     {

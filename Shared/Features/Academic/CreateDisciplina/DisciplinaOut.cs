@@ -3,7 +3,7 @@ namespace Syki.Shared;
 public class DisciplinaOut
 {
     public Guid Id { get; set; }
-    public string Nome { get; set; }
+    public string Name { get; set; }
     public string Code { get; set; }
     public byte Periodo { get; set; }
     public byte Creditos { get; set; }
@@ -24,6 +24,6 @@ public class DisciplinaOut
 
     public override string ToString()
     {
-        return Nome;
+        return Name;
     }
 }

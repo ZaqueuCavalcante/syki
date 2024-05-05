@@ -11,15 +11,15 @@ public partial class IntegrationTests : IntegrationTestBase
         var disciplina = await client.CreateDisciplina();
         var professor = await client.CreateProfessor();
         var periodo = await client.CreateAcademicPeriod("2024.1");
-        var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
+        var horarios = new List<HorarioIn>() { new(Day.Segunda, Hora.H07_00, Hora.H08_00) };
 
         // Act
         var turma = await client.Createturma(disciplina.Id, professor.Id, periodo.Id, horarios);
 
         // Assert
         turma.Id.Should().NotBeEmpty();
-        turma.Disciplina.Should().Be(disciplina.Nome);
-        turma.Professor.Should().Be(professor.Nome);
+        turma.Disciplina.Should().Be(disciplina.Name);
+        turma.Professor.Should().Be(professor.Name);
         turma.Periodo.Should().Be(periodo.Id);
         turma.Horarios.Should().ContainSingle();
     }
@@ -77,7 +77,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var disciplina = await client.CreateDisciplina();
         var professor = await client.CreateProfessor();
         var periodo = await client.CreateAcademicPeriod("2024.1");
-        var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H07_00) };
+        var horarios = new List<HorarioIn>() { new(Day.Segunda, Hora.H07_00, Hora.H07_00) };
 
         // Act
         var response = await client.CreateturmaHttp(disciplina.Id, professor.Id, periodo.Id, horarios);
@@ -95,7 +95,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var disciplina = await client.CreateDisciplina();
         var professor = await client.CreateProfessor();
         var periodo = await client.CreateAcademicPeriod("2024.1");
-        var horarios = new List<HorarioIn>() { new(Dia.Segunda, Hora.H07_00, Hora.H08_00) };
+        var horarios = new List<HorarioIn>() { new(Day.Segunda, Hora.H07_00, Hora.H08_00) };
 
         var turma = await client.Createturma(disciplina.Id, professor.Id, periodo.Id, horarios);
 

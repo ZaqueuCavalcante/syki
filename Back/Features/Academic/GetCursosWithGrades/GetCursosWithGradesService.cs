@@ -6,7 +6,7 @@ public class GetCursosWithGradesService(SykiDbContext ctx)
     {
         var cursos = await ctx.Cursos
             .Where(c => c.InstitutionId == institutionId && c.Grades.Count > 0)
-            .OrderBy(c => c.Nome)
+            .OrderBy(c => c.Name)
             .ToListAsync();
 
         return cursos.ConvertAll(c => c.ToOut());

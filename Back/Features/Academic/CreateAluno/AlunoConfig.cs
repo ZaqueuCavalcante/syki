@@ -10,7 +10,7 @@ public class AlunoConfig : IEntityTypeConfiguration<Aluno>
         aluno.Property(a => a.Id).ValueGeneratedNever();
 
         aluno.Property(a => a.OfertaId);
-        aluno.Property(a => a.Nome);
+        aluno.Property(a => a.Name);
         aluno.Property(a => a.Matricula);
 
         aluno.HasOne(a => a.User)

@@ -1,6 +1,4 @@
-using Syki.Back.CreateNotification;
-
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateNotification;
 
 public class UserNotificationConfig : IEntityTypeConfiguration<UserNotification>
 {

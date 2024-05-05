@@ -1,4 +1,4 @@
-namespace Syki.Back.Database;
+namespace Syki.Back.Tasks;
 
 public class SykiTaskConfig : IEntityTypeConfiguration<SykiTask>
 {

@@ -1,9 +1,5 @@
-using Syki.Shared;
-using Syki.Back.Tasks;
-using Syki.Back.Database;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
-using Microsoft.EntityFrameworkCore;
 using Syki.Back.CreateAcademicPeriod;
 using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateGrade;

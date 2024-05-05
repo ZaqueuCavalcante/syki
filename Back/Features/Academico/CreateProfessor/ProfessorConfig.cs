@@ -1,6 +1,4 @@
-using Syki.Back.CreateProfessor;
-
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateProfessor;
 
 public class ProfessorConfig : IEntityTypeConfiguration<Professor>
 {

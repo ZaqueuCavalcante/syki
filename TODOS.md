@@ -15,8 +15,8 @@
 - [] ViewNotification
 
 ## Academic
-- [] GetAcademicInsights
-- [] CreateCampus
+- [X] GetAcademicInsights
+- [X] CreateCampus
 - [] UpdateCampus
 - [] GetCampi
 - [] CreateCurso

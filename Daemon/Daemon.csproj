@@ -1,8 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <Nullable>enable</Nullable>
-    <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <TargetFramework>net8.0</TargetFramework>
     <NoWarn>CS1591;CS8618;CS8602;CS8604;</NoWarn>
@@ -13,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Syki.Back\Back.csproj" />
+    <ProjectReference Include="..\Back\Back.csproj" />
   </ItemGroup>
 
 </Project>

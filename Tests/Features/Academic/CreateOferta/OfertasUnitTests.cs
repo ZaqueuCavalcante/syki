@@ -146,7 +146,7 @@ public class OfertasUnitTests
         var oferta = new Oferta(institutionId, campusId, cursoId, grade.Id, periodo, turno)
         {
             Campus = new(institutionId, "Agreste I", "Caruaru - PE"),
-            Curso = new(institutionId, "ADS", TipoDeCurso.Bacharelado),
+            Curso = new(institutionId, "ADS", CourseType.Bacharelado),
             Grade = grade,
         };
 

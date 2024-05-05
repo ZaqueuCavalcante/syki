@@ -1,4 +1,7 @@
-@using Front.Components.Buttons
+@using Syki.Front.Components.Custom
+@using Syki.Front.Components.Buttons
+
+@namespace Syki.Front.Features.Academic.CreateCourseOffering
 
 <MudDialog Class="pb-2">
     <TitleContent>
@@ -35,7 +38,7 @@
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Class="mb-4"
-                        @bind-Value="_periodo"
+                        @bind-Value="@_periodo"
                         Label="Período"
                         Required="true"
                         RequiredError="Informe!"
@@ -112,9 +115,9 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="Cancel" />
-        <SykiProgressCircular Loading="_loading" />
-        <DialogSaveButton OnClick="Submit" />
+        <DialogCancelButton OnClick="@Cancel" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
     </DialogActions>
 </MudDialog>
 

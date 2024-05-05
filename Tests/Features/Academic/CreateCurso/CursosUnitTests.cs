@@ -1,4 +1,4 @@
-using static Syki.Shared.TipoDeCurso;
+using static Syki.Shared.CourseType;
 using Syki.Back.Features.Academico.CreateCurso;
 
 namespace Syki.Tests.Unit;

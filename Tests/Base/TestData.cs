@@ -243,30 +243,30 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> TipoDeCursoEnumToDescription()
+    public static IEnumerable<object[]> CourseTypeEnumToDescription()
     {
-        foreach (var text in new List<(TipoDeCurso, string)>()
+        foreach (var text in new List<(CourseType, string)>()
         {
-            (TipoDeCurso.Bacharelado, "Bacharelado"),
-            (TipoDeCurso.Licenciatura, "Licenciatura"),
-            (TipoDeCurso.Tecnologo, "Tecnólogo"),
-            (TipoDeCurso.Especializacao, "Especialização"),
-            (TipoDeCurso.Mestrado, "Mestrado"),
-            (TipoDeCurso.Doutorado, "Doutorado"),
-            (TipoDeCurso.PosDoutorado, "Pós-Doutorado"),
+            (CourseType.Bacharelado, "Bacharelado"),
+            (CourseType.Licenciatura, "Licenciatura"),
+            (CourseType.Tecnologo, "Tecnólogo"),
+            (CourseType.Especializacao, "Especialização"),
+            (CourseType.Mestrado, "Mestrado"),
+            (CourseType.Doutorado, "Doutorado"),
+            (CourseType.PosDoutorado, "Pós-Doutorado"),
         })
         {
             yield return new object[] { text };
         }
     }
 
-    public static IEnumerable<object[]> TipoDeCursoEnumForIsIn()
+    public static IEnumerable<object[]> CourseTypeEnumForIsIn()
     {
         foreach (var text in new List<(Enum, bool)>()
         {
-            (TipoDeCurso.Bacharelado, true),
+            (CourseType.Bacharelado, true),
             (Situacao.Matriculado, false),
-            (TipoDeCurso.Tecnologo, true),
+            (CourseType.Tecnologo, true),
             (Turno.Vespertino, false),
         })
         {

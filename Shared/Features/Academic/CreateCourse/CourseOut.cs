@@ -1,15 +1,15 @@
 namespace Syki.Shared;
 
-public class CursoOut
+public class CourseOut
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public TipoDeCurso Tipo { get; set; }
+    public CourseType Type { get; set; }
 
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;
-        return Id == ((CursoOut)obj).Id;
+        return Id == ((CourseOut)obj).Id;
     }
 
     public override int GetHashCode()

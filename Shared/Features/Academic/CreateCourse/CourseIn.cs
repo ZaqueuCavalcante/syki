@@ -1,7 +1,7 @@
 namespace Syki.Shared;
 
-public class CursoIn
+public class CourseIn
 {
     public string Name { get; set; }
-    public TipoDeCurso Tipo { get; set; }
+    public CourseType Type { get; set; }
 }

@@ -154,7 +154,7 @@ public static class HttpClientExtensions
     public static async Task<CursoOut> CreateCurso(
         this HttpClient http,
         string name = "Análise e Desenvolvimento de Sistemas",
-        TipoDeCurso tipo = TipoDeCurso.Bacharelado
+        CourseType tipo = CourseType.Bacharelado
     ) {
         var client = new CreateCursoClient(http);
         var response = await client.Create(name, tipo);

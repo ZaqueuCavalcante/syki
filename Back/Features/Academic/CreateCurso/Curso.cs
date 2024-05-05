@@ -8,12 +8,12 @@ public class Curso
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
     public string Name { get; set; }
-    public TipoDeCurso Tipo { get; set; }
+    public CourseType Tipo { get; set; }
     public List<Disciplina> Disciplinas { get; set; }
     public List<CursoDisciplina> Vinculos { get; set; }
     public List<Grade> Grades { get; set; }
 
-    public Curso(Guid institutionId, string name, TipoDeCurso tipo)
+    public Curso(Guid institutionId, string name, CourseType tipo)
     {
         Id = Guid.NewGuid();
         InstitutionId = institutionId;

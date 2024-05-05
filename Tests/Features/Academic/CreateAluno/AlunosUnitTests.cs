@@ -182,7 +182,7 @@ public class AlunosUnitTests
         {
             Oferta = new(institutionId, campusId, cursoId, gradeId, periodo, turno)
             {
-                Curso = new(institutionId, "Direito", TipoDeCurso.Doutorado)
+                Curso = new(institutionId, "Direito", CourseType.Doutorado)
             }
         };
 

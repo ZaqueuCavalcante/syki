@@ -33,15 +33,15 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateProfessorServic
 
         institution.Cursos =
         [
-            new Curso(id, "Administração", TipoDeCurso.Mestrado),
-            new Curso(id, "Análise e Desenvolvimento de Sistemas", TipoDeCurso.Bacharelado),
-            new Curso(id, "Arquitetura e Urbanismo", TipoDeCurso.Tecnologo),
-            new Curso(id, "Ciência da Computação", TipoDeCurso.Bacharelado),
-            new Curso(id, "Direito", TipoDeCurso.Licenciatura),
-            new Curso(id, "Engenharia Civil", TipoDeCurso.Bacharelado),
-            new Curso(id, "Engenharia Mecânica", TipoDeCurso.Bacharelado),
-            new Curso(id, "Engenharia de Produção", TipoDeCurso.PosDoutorado),
-            new Curso(id, "Pedagogia", TipoDeCurso.Licenciatura),
+            new Curso(id, "Administração", CourseType.Mestrado),
+            new Curso(id, "Análise e Desenvolvimento de Sistemas", CourseType.Bacharelado),
+            new Curso(id, "Arquitetura e Urbanismo", CourseType.Tecnologo),
+            new Curso(id, "Ciência da Computação", CourseType.Bacharelado),
+            new Curso(id, "Direito", CourseType.Licenciatura),
+            new Curso(id, "Engenharia Civil", CourseType.Bacharelado),
+            new Curso(id, "Engenharia Mecânica", CourseType.Bacharelado),
+            new Curso(id, "Engenharia de Produção", CourseType.PosDoutorado),
+            new Curso(id, "Pedagogia", CourseType.Licenciatura),
         ];
 
         institution.Disciplinas =

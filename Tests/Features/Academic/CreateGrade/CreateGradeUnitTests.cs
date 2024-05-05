@@ -70,7 +70,7 @@ public class CreateGradeUnitTests
 
         var grade = new Grade(institutionId, cursoId, name)
         {
-            Curso = new Curso(institutionId, "ADS", TipoDeCurso.Bacharelado),
+            Curso = new Curso(institutionId, "ADS", CourseType.Bacharelado),
             Disciplinas = [
                 new Disciplina(institutionId, "Banco de Dados"),
                 new Disciplina(institutionId, "Estrutura de Dados"),

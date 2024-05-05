@@ -14,12 +14,12 @@
     </MudAlert>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_alunos" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_alunos" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por name ou matrícula" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou matrícula" />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Name" Title="Name" />
+                <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.Email" Title="Email" />
                 <PropertyColumn Property="x => x.Matricula" Title="Matrícula" />
                 <PropertyColumn Property="x => x.Oferta" Title="Oferta" />

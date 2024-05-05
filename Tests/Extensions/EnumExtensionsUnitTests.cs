@@ -28,8 +28,8 @@ public class EnumExtensionsUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.TipoDeCursoEnumToDescription))]
-    public void Shoud_get_enum_description((TipoDeCurso tipo, string description) data)
+    [TestCaseSource(typeof(TestData), nameof(TestData.CourseTypeEnumToDescription))]
+    public void Shoud_get_enum_description((CourseType tipo, string description) data)
     {
         // Arrange / Act
         var result = data.tipo.GetDescription();
@@ -39,11 +39,11 @@ public class EnumExtensionsUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.TipoDeCursoEnumForIsIn))]
+    [TestCaseSource(typeof(TestData), nameof(TestData.CourseTypeEnumForIsIn))]
     public void Shoud_get_if_value_is_in_list((Enum value, bool isIn) data)
     {
         // Arrange / Act
-        var result = data.value.IsIn(TipoDeCurso.Bacharelado, TipoDeCurso.Tecnologo);
+        var result = data.value.IsIn(CourseType.Bacharelado, CourseType.Tecnologo);
 
         // Assert
         result.Should().Be(data.isIn);
@@ -53,7 +53,7 @@ public class EnumExtensionsUnitTests
     public void Shoud_return_false_when_value_is_null()
     {
         // Arrange / Act
-        var result = TipoDeCurso.Bacharelado.IsIn(null);
+        var result = CourseType.Bacharelado.IsIn(null);
 
         // Assert
         result.Should().BeFalse();
@@ -63,7 +63,7 @@ public class EnumExtensionsUnitTests
     public void Shoud_return_false_when_value_is_empty()
     {
         // Arrange / Act
-        var result = TipoDeCurso.Bacharelado.IsIn([]);
+        var result = CourseType.Bacharelado.IsIn([]);
 
         // Assert
         result.Should().BeFalse();

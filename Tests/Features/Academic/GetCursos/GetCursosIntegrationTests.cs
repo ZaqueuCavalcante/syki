@@ -1,4 +1,4 @@
-using static Syki.Shared.TipoDeCurso;
+using static Syki.Shared.CourseType;
 
 namespace Syki.Tests.Integration;
 

@@ -1,12 +1,10 @@
-using Syki.Front.GetAlunoDisciplinas;
-using Front.Features.Academico.CreateAcademicPeriod;
-
 namespace Syki.Front.Configs;
 
 public static class ServicesConfigs
 {
     public static void AddServicesConfigs(this WebAssemblyHostBuilder builder)
     {
+        // Cross
         builder.Services.AddScoped<CreatePendingUserRegisterClient>();
         builder.Services.AddScoped<FinishUserRegisterClient>();
         builder.Services.AddScoped<LoginClient>();
@@ -18,6 +16,7 @@ public static class ServicesConfigs
         builder.Services.AddScoped<GetAcademicInsightsClient>();
         builder.Services.AddScoped<GetProfessorInsightsClient>();
 
+        // Academic
         builder.Services.AddScoped<CreateCampusClient>();
         builder.Services.AddScoped<UpdateCampusClient>();
         builder.Services.AddScoped<GetCampiClient>();
@@ -40,5 +39,11 @@ public static class ServicesConfigs
         builder.Services.AddScoped<CreateEnrollmentPeriodClient>();
         builder.Services.AddScoped<GetEnrollmentPeriodsClient>();
         builder.Services.AddScoped<GetCurrentEnrollmentPeriodClient>();
+
+        // Student
+
+        // Teacher
+
+        // Adm
     }
 }

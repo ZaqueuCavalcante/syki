@@ -1,17 +1,17 @@
 ﻿@using Syki.Front.Components.Custom
 
-@namespace @Syki.Front.Features.Academic.CreateAcademicPeriod
+@namespace Syki.Front.Features.Academic.CreateAcademicPeriod
 
-@page "/periodos"
-@attribute [Authorize(Roles = "Academico")]
+@page "/academic-periods"
+@attribute [Authorize(Roles = "Academic")]
 
 <PageTitle>Período Acadêmico</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.CalendarMonth" Title="Período Acadêmico" ButtonText="Período Acadêmico" OnClick="OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.CalendarMonth" Title="Período Acadêmico" ButtonText="Período Acadêmico" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Utilize os períodos acadêmicos para organizar as informações durante o ano letivo." />
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_periodos" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_periods" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por ano" />
             </ToolBarContent>
@@ -37,12 +37,12 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<AcademicPeriodOut> _periodos = [];
+    private List<AcademicPeriodOut> _periods = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _periodos = await Client.Get();
+        _periods = await Client.Get();
         _loading = false;
     }
 

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Cross.ViewNotification;
+namespace Syki.Back.Features.Cross.ViewNotifications;
 
 public class ViewNotificationsService(SykiDbContext ctx)
 {

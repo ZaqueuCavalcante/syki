@@ -25,3 +25,5 @@ global using Syki.Front.CreateEnrollmentPeriod;
 global using Syki.Front.CreatePendingUserRegister;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 global using Front.CreateDisciplina;
+global using Syki.Front.GetAlunoDisciplinas;
+global using Syki.Front.Features.Academic.CreateAcademicPeriod;

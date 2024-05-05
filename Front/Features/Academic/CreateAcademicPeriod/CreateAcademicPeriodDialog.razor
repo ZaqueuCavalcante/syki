@@ -1,7 +1,7 @@
-@using Syki.Front.Components.Custom
 @using Front.Components.Buttons
+@using Syki.Front.Components.Custom
 
-@namespace @Syki.Front.Features.Academic.CreateAcademicPeriod
+@namespace Syki.Front.Features.Academic.CreateAcademicPeriod
 
 <MudDialog Class="pb-2">
     <TitleContent>
@@ -11,7 +11,7 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="_form">
+        <MudForm @ref="@_form">
             <MudTextField
                 OnlyValidateIfDirty="true"
                 Immediate="true"
@@ -36,9 +36,9 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="Cancel" />
-        <SykiProgressCircular Loading="_loading" />
-        <DialogSaveButton OnClick="Submit" />
+        <DialogCancelButton OnClick="@Cancel" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
     </DialogActions>
 </MudDialog>
 

@@ -1,3 +1,5 @@
+using Syki.Back.CreateMatriculaAluno;
+
 namespace Syki.Tests.Unit;
 
 public class TurmaAlunoaUnitTests

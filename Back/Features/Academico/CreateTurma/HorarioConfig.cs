@@ -1,4 +1,4 @@
-namespace Syki.Back.Database;
+namespace Syki.Back.CreateTurma;
 
 public class HorarioConfig : IEntityTypeConfiguration<Horario>
 {

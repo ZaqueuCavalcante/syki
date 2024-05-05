@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain;
+namespace Syki.Back.CreateTurma;
 
 public class Horario
 {

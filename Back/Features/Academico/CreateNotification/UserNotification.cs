@@ -1,6 +1,4 @@
-using Syki.Back.CreateNotification;
-
-namespace Syki.Back.Domain;
+namespace Syki.Back.CreateNotification;
 
 public class UserNotification
 {

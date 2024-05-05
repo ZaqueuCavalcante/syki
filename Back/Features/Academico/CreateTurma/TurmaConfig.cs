@@ -1,5 +1,6 @@
 using Syki.Back.CreateAluno;
 using Syki.Back.CreateAcademicPeriod;
+using Syki.Back.CreateMatriculaAluno;
 
 namespace Syki.Back.CreateTurma;
 

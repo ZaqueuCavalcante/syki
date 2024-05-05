@@ -30,8 +30,8 @@ O módulo acadêmico conta com:
 
 ## Qual a tech stack?
 
-- Backend feito em C#/.NET
-- Frontend feito em C#/Blazor Webassembly
+- Backend em C#/.NET
+- Frontend em C#/Blazor Webassembly
 - Testes automatizados com NUnit
 - Banco PostgreSQL
 - Docker para buildar back e front

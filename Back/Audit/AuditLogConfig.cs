@@ -1,6 +1,4 @@
-using Syki.Back.Audit;
-
-namespace Syki.Back.Database;
+namespace Syki.Back.Audit;
 
 public class AuditLogConfig : IEntityTypeConfiguration<AuditLog>
 {

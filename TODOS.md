@@ -14,7 +14,7 @@
 - [] GetUserNotifications
 - [] ViewNotification
 
-## Academico
+## Academic
 - [] GetAcademicInsights
 - [] CreateCampus
 - [] UpdateCampus
@@ -24,20 +24,19 @@
 - [] CreateDisciplina
 - [] GetDisciplinas
 - [] CreateGrade
-
 - [] GetGrades
 - [] GetGradeDisciplinas
+- [] CreateTurma
 
-
-- [] ?? CreateTurma
-
-# TODO
+## Teacher
 
 - [] GetAlunoInsights
 - [] GetAdmInsights
 
 - [] GetCursoDisciplinas
 - [] GetCursosWithDisciplinas
+
+## Student
 
 - [] CreateOferta
 - [] GetOfertas
@@ -57,8 +56,6 @@
 - [] GetEnrollmentPeriods
 - [] GetCurrentEnrollmentPeriod
 
-
-
 - [] GetAlunoAgenda
 - [] GetAlunoDisciplinas
 - [] CreateMatriculaAluno
@@ -66,17 +63,3 @@
 
 - [] GetInstitutions
 - [] GetUsers
-
-# IDEAS
-
-- N colocar o JWT no local storage
-- Parar de fazer polling no banco (usar events?)
-- Adicionar paginacao nos GETs
-- Redis?
-- RabbitMQ?
-- Load Balancer?
-- Monitoring? DataDog
-- Optimize Queries
-- Logs
-- Use Result Pattern instead throw exceptions
-- Load testing (K6)

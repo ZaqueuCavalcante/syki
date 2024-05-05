@@ -81,7 +81,6 @@ public static class ServicesConfigs
         services.AddScoped<CreateDisciplinaService>();
 
         // Professor
-
         services.AddScoped<CreateAcademicPeriodService>();
         services.AddScoped<CreateAlunoService>();
         services.AddScoped<CreateEnrollmentPeriodService>();
@@ -114,7 +113,6 @@ public static class ServicesConfigs
         services.AddScoped<GetAdmInsightsService>();
         services.AddScoped<GetTurmasService>();
         services.AddScoped<GetUsersService>();
-
 
         services.AddScoped<GetProfessorInsightsService>();
         services.AddScoped<GetProfessorAgendaService>();

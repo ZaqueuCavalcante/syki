@@ -1,8 +1,6 @@
 using Dapper;
 using Npgsql;
 using Newtonsoft.Json;
-using Syki.Back.Tasks;
-using Syki.Back.Settings;
 using Syki.Daemon.Settings;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;

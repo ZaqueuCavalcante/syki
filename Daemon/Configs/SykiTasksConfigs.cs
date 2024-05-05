@@ -1,5 +1,4 @@
 using Syki.Daemon.Tasks;
-using Syki.Back.Settings;
 using Syki.Daemon.Settings;
 using Microsoft.Extensions.DependencyInjection;
 

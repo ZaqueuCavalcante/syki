@@ -8,6 +8,8 @@ public class Horario
     public Hora Start { get; set; }
     public Hora End { get; set; }
 
+    private Horario() {}
+
     public Horario(
         Day dia,
         Hora start,

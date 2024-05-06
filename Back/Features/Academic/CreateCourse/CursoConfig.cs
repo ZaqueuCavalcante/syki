@@ -1,6 +1,6 @@
-using Syki.Back.Features.Academico.CreateDisciplina;
+using Syki.Back.Features.Academic.CreateDisciplina;
 
-namespace Syki.Back.Features.Academico.CreateCurso;
+namespace Syki.Back.Features.Academic.CreateCurso;
 
 public class CursoConfig : IEntityTypeConfiguration<Curso>
 {

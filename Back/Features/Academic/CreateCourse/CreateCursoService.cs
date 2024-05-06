@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academico.CreateCurso;
+namespace Syki.Back.Features.Academic.CreateCurso;
 
 public class CreateCursoService(SykiDbContext ctx)
 {

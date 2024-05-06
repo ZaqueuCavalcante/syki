@@ -1,5 +1,5 @@
 using Syki.Back.CreateOferta;
-using Syki.Back.Features.Academico.CreateGrade;
+using Syki.Back.Features.Academic.CreateGrade;
 
 namespace Syki.Tests.Unit;
 

@@ -1,10 +1,10 @@
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
-using Syki.Back.Features.Academico.CreateCurso;
-using Syki.Back.Features.Academico.CreateGrade;
-using Syki.Back.Features.Academico.CreateCampus;
+using Syki.Back.Features.Academic.CreateCurso;
+using Syki.Back.Features.Academic.CreateGrade;
+using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Cross.FinishUserRegister;
-using Syki.Back.Features.Academico.CreateDisciplina;
+using Syki.Back.Features.Academic.CreateDisciplina;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 
 namespace Syki.Daemon.Tasks;

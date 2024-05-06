@@ -1,4 +1,4 @@
-﻿namespace Syki.Back.Features.Academico.CreateGrade;
+﻿namespace Syki.Back.Features.Academic.CreateGrade;
 
 public class CreateDisciplinaRequestsExamples : IMultipleExamplesProvider<GradeIn>
 {

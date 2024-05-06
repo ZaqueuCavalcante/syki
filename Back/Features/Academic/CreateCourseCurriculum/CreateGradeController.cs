@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academico.CreateGrade;
+namespace Syki.Back.Features.Academic.CreateGrade;
 
 [ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]

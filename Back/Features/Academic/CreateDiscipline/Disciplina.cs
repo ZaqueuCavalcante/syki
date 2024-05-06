@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academico.CreateDisciplina;
+namespace Syki.Back.Features.Academic.CreateDisciplina;
 
 public class Disciplina
 {

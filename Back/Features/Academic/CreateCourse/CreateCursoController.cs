@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academico.CreateCurso;
+namespace Syki.Back.Features.Academic.CreateCurso;
 
 /// <summary>
 /// Cria um novo curso.

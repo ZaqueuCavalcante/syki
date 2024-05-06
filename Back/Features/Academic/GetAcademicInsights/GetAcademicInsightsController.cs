@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academico.GetAcademicInsights;
+namespace Syki.Back.Features.Academic.GetAcademicInsights;
 
 /// <summary>
 /// Retorna os insights do usuário do tipo acadêmico.

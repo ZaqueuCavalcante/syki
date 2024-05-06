@@ -1,7 +1,7 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Academico.GetAcademicInsights;
+namespace Syki.Back.Features.Academic.GetAcademicInsights;
 
 public class GetAcademicInsightsService(DatabaseSettings settings)
 {

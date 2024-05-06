@@ -1,4 +1,4 @@
-using Syki.Back.Features.Academico.CreateDisciplina;
+using Syki.Back.Features.Academic.CreateDisciplina;
 
 namespace Syki.Tests.Unit;
 

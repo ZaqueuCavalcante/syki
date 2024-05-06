@@ -1,6 +1,6 @@
 using Syki.Back.CreateOferta;
 
-namespace Syki.Back.Features.Academico.CreateCampus;
+namespace Syki.Back.Features.Academic.CreateCampus;
 
 public class CampusConfig : IEntityTypeConfiguration<Campus>
 {

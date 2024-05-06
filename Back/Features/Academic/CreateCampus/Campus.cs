@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academico.CreateCampus;
+namespace Syki.Back.Features.Academic.CreateCampus;
 
 public class Campus
 {

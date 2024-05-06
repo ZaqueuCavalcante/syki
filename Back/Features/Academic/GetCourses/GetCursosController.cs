@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academico.GetCursos;
+namespace Syki.Back.Features.Academic.GetCursos;
 
 /// <summary>
 /// Retorna todos os cursos da instituição.

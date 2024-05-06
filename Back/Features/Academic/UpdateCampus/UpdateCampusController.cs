@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academico.UpdateCampus;
+namespace Syki.Back.Features.Academic.UpdateCampus;
 
 /// <summary>
 /// Atualiza os dados de um campus.

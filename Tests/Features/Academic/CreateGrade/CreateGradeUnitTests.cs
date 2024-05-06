@@ -1,6 +1,6 @@
-using Syki.Back.Features.Academico.CreateCurso;
-using Syki.Back.Features.Academico.CreateDisciplina;
-using Syki.Back.Features.Academico.CreateGrade;
+using Syki.Back.Features.Academic.CreateCurso;
+using Syki.Back.Features.Academic.CreateDisciplina;
+using Syki.Back.Features.Academic.CreateGrade;
 
 namespace Syki.Tests.Unit;
 

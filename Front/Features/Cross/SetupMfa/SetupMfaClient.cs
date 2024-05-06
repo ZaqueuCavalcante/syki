@@ -1,4 +1,4 @@
-namespace Syki.Front.SetupMfa;
+namespace Syki.Front.Features.Cross.SetupMfa;
 
 public class SetupMfaClient(HttpClient http)
 {

@@ -1,5 +1,7 @@
 ﻿@using Syki.Front.Components.Custom
-@using Front.Components.Ofertas
+@using Syki.Front.Features.Academic.CreateCourseOffering
+
+@namespace Syki.Front.Pages.Academic
 
 @page "/ofertas"
 @attribute [Authorize(Roles = "Academic")]
@@ -62,7 +64,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true,
         };
-        var dialog = await DialogService.ShowAsync<NewOfertaDialog>("", options);
+        var dialog = await DialogService.ShowAsync<CreateCourseOfferingDialog>("", options);
 
         var result = await dialog.Result;
 

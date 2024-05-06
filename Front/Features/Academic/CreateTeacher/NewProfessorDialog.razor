@@ -1,4 +1,6 @@
-@using Front.Components.Buttons
+@using Syki.Front.Components.Buttons
+
+@namespace Syki.Front.Features.Academic.CreateTeacher
 
 <MudDialog Class="pb-2">
     <TitleContent>
@@ -8,7 +10,7 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="_form">
+        <MudForm @ref="@_form">
             <MudTextField
                 OnlyValidateIfDirty="true"
                 Immediate="true"
@@ -16,7 +18,7 @@
                 Variant="Variant.Outlined"
                 Class="mb-4"
                 AutoFocus="true"
-                @bind-Value="data.Name"
+                @bind-Value="@data.Name"
                 T="String"
                 Label="Nome"
                 Required="true"
@@ -28,7 +30,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
-                @bind-Value="data.Email"
+                @bind-Value="@data.Email"
                 T="String"
                 Label="Email"
                 Required="true"
@@ -37,9 +39,9 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="Cancel" />
-        <SykiProgressCircular Loading="_loading" />
-        <DialogSaveButton OnClick="Submit" />
+        <DialogCancelButton OnClick="@Cancel" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
     </DialogActions>
 </MudDialog>
 

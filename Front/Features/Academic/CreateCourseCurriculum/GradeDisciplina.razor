@@ -1,4 +1,6 @@
-<MudForm @ref="form">
+@namespace Syki.Front.Features.Academic.CreateCourseCurriculum
+
+<MudForm @ref="@_form">
     <MudStack Row="true">
         <MudItem xs="5">
             <MudAutocomplete
@@ -73,7 +75,7 @@
 
 @code
 {
-    MudForm form;
+    MudForm _form;
 
     [CascadingParameter(Name = "Options")]
     public List<CursoDisciplinaOut> Options { get; set; }

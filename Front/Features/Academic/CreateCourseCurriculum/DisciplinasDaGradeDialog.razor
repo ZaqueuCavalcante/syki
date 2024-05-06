@@ -1,3 +1,5 @@
+@namespace Syki.Front.Features.Academic.CreateCourseCurriculum
+
 <MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h6">
@@ -13,7 +15,7 @@
             Items="@Disciplinas.OrderBy(d => d.Periodo).ThenBy(d => d.Name)"
         >
             <Columns>
-                <PropertyColumn Property="x => x.Name" Title="Name" />
+                <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.Periodo" Title="Período" />
                 <PropertyColumn Property="x => x.Creditos" Title="Créditos" />
                 <PropertyColumn Property="x => x.CargaHoraria" Title="CH" />

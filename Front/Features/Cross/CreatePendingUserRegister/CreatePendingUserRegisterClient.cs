@@ -1,4 +1,4 @@
-namespace Syki.Front.CreatePendingUserRegister;
+namespace Syki.Front.Features.Cross.CreatePendingUserRegister;
 
 public class CreatePendingUserRegisterClient(HttpClient http)
 {

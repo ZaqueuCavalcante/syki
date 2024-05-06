@@ -1,4 +1,4 @@
-namespace Front.CreateGrade;
+namespace Syki.Front.Features.Academic.CreateCourseCurriculum;
 
 public class CreateGradeClient(HttpClient http)
 {

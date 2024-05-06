@@ -1,4 +1,4 @@
-﻿@using Front.Features.Professor.GetProfessorTurmas
+﻿@namespace Syki.Front.Shared
 
 <MudNavMenu>
     <AuthorizeView Roles="Adm">
@@ -22,7 +22,8 @@
     </AuthorizeView>
 
     <AuthorizeView Roles="Professor">
-        <ProfessorNav />
+        <MudNavLink Href="agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
+        <MudNavLink Href="turmas" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CenterFocusStrong" IconColor="Color.Inherit">Turmas</MudNavLink>
     </AuthorizeView>
 
     <AuthorizeView Roles="Aluno">

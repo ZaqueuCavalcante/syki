@@ -1,4 +1,8 @@
-﻿<CascadingAuthenticationState>
+﻿@using Syki.Front.Shared
+
+@namespace Syki.Front
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />

@@ -1,4 +1,6 @@
-﻿<MudContainer Class="mt-8 px-12">
+﻿@namespace Syki.Front.Features.Teacher.GetTeacherInsights
+
+<MudContainer Class="mt-8 px-12">
     <MudText Typo="Typo.h4" Style="font-weight: bold" Class="ml-4">
         Olá, @_userName
     </MudText>
@@ -45,7 +47,7 @@
     </MudGrid>
 </MudContainer>
 
-@inject GetProfessorInsightsClient Client
+@inject GetTeacherInsights Client
 
 @code
 {

@@ -1,4 +1,4 @@
-namespace Syki.Front.SendResetPasswordToken;
+namespace Syki.Front.Features.Cross.SendResetPasswordToken;
 
 public class SendResetPasswordTokenClient(HttpClient http)
 {

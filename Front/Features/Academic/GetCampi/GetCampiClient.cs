@@ -1,4 +1,4 @@
-namespace Front.GetCampi;
+namespace Syki.Front.Features.Academic.GetCampi;
 
 public class GetCampiClient(HttpClient http)
 {

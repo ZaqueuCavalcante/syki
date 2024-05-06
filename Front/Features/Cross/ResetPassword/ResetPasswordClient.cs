@@ -1,4 +1,4 @@
-namespace Syki.Front.ResetPassword;
+namespace Syki.Front.Features.Cross.ResetPassword;
 
 public class ResetPasswordClient(HttpClient http)
 {

@@ -1,4 +1,4 @@
-namespace Front.CreateProfessor;
+namespace Syki.Front.Features.Academic.CreateTeacher;
 
 public class CreateProfessorClient(HttpClient http)
 {

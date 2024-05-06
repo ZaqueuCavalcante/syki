@@ -1,4 +1,4 @@
-namespace Syki.Front.GetProfessorAgenda;
+namespace Syki.Front.Features.Teacher.GetTeacherAgenda;
 
 public class GetProfessorAgendaClient(HttpClient http)
 {

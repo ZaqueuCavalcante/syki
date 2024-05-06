@@ -1,4 +1,4 @@
-namespace Front.CreateDisciplina;
+namespace Syki.Front.Features.Academic.CreateDiscipline;
 
 public class CreateDisciplinaClient(HttpClient http)
 {

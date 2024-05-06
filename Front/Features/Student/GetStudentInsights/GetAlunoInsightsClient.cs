@@ -1,4 +1,4 @@
-namespace Syki.Front.GetAlunoInsights;
+namespace Syki.Front.Features.Student.GetStudentInsights;
 
 public class GetAlunoInsightsClient(HttpClient http)
 {

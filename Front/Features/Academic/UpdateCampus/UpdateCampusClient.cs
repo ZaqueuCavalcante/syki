@@ -1,4 +1,4 @@
-namespace Front.UpdateCampus;
+namespace Syki.Front.Features.Academic.UpdateCampus;
 
 public class UpdateCampusClient(HttpClient http)
 {

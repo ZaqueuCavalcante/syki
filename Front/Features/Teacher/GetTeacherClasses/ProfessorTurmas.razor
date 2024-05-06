@@ -1,5 +1,6 @@
 @using Syki.Front.Components.Custom
-@using Front.Features.Academico.CreateTurma
+
+@namespace Syki.Front.Features.Teacher.GetTeacherClasses
 
 <MudContainer>
     <MudCard Class="mt-8 mb-4 mx-6 px-2">
@@ -24,7 +25,7 @@
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="ProfessorTurmaOut" />
+                <SykiDataGridPager T="@ProfessorTurmaOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>

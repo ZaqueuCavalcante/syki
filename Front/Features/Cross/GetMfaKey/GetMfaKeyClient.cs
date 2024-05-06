@@ -1,4 +1,4 @@
-namespace Syki.Front.GetMfaKey;
+namespace Syki.Front.Features.Cross.GetMfaKey;
 
 public class GetMfaKeyClient(HttpClient http)
 {

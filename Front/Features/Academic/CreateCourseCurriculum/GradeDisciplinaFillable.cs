@@ -1,4 +1,4 @@
-namespace Syki.Front.Domain;
+namespace Syki.Front.Features.Academic.CreateCourseCurriculum;
 
 public class GradeDisciplinaFillable
 {

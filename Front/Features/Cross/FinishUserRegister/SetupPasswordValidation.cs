@@ -1,4 +1,4 @@
-namespace Syki.Front.FinishUserRegister;
+namespace Syki.Front.Features.Cross.FinishUserRegister;
 
 public class SetupPasswordValidation
 {

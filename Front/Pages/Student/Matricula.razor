@@ -1,5 +1,8 @@
-﻿@using Front.Components.Agenda
-@using Front.Components.Buttons
+﻿@using Syki.Front.Components.Agenda
+@using Syki.Front.Components.Buttons
+@using Syki.Front.Features.Academic.CreateEnrollmentPeriod
+
+@namespace Syki.Front.Pages.Student
 
 @page "/matricula"
 @attribute [Authorize(Roles = "Aluno")]
@@ -85,8 +88,8 @@
                 <PagerContent>
                     <MudDivider />
                     <MudStack Row="true" Class="mt-2">
-                        <SykiProgressCircular Loading="_saving" />
-                        <DialogSaveButton OnClick="Submit" />
+                        <SykiProgressCircular Loading="@_loading" />
+                        <DialogSaveButton OnClick="@Submit" />
                     </MudStack>
                 </PagerContent>
             </MudTable>
@@ -101,7 +104,7 @@
 @code
 {
     private bool _loading;
-    private bool _saving;
+    private bool _loading;
     private bool _finished;
     EnrollmentPeriodOut _periodoDeMatricula;
     private List<MatriculaTurmaOut> _options = [];
@@ -128,9 +131,9 @@
 
     async Task Submit()
     {
-        if (_saving) return;
+        if (_loading) return;
 
-        _saving = true;
+        _loading = true;
         var data = new MatriculaTurmaIn
         {
             Turmas = _options.Where(o => o.IsSelected).Select(o => o.Id).ToList()
@@ -146,6 +149,6 @@
             var error = await response.ToError();
             Snackbar.Add(error.Message, Severity.Error);
         }
-        _saving = false;
+        _loading = false;
     }
 }

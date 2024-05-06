@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using Syki.Front.Auth;
 using Microsoft.JSInterop;
 
-namespace Syki.Front.Login;
+namespace Syki.Front.Features.Cross.Login;
 
 public class LoginClient(HttpClient http, ILocalStorageService localStorage, SykiAuthStateProvider authStateProvider)
 {

@@ -1,4 +1,4 @@
-namespace Syki.Back.CreateInstitution;
+namespace Syki.Back.Features.Cross.CreateInstitution;
 
 public class InstitutionConfig : IEntityTypeConfiguration<Institution>
 {

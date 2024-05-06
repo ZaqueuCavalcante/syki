@@ -1,7 +1,7 @@
 # DONE
 
 ## Cross
-- [] CreateInstitution
+- [X] CreateInstitution
 - [] CreatePendingUserRegister
 - [] CreateUser
 - [] FinishUserRegister

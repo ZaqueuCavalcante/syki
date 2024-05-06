@@ -1,4 +1,4 @@
-using Syki.Back.CreateInstitution;
+using Syki.Back.Features.Cross.CreateInstitution;
 
 namespace Syki.Back.Features.Cross.FinishUserRegister;
 

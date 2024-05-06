@@ -3,7 +3,7 @@ using Syki.Back.Audit;
 using Syki.Back.CreateTurma;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
-using Syki.Back.CreateInstitution;
+using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.CreateNotification;
 using Syki.Back.Features.Academic.CreateGrade;
 using Syki.Back.Features.Academic.CreateCurso;

@@ -8,7 +8,7 @@ using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateDisciplina;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 
-namespace Syki.Back.CreateInstitution;
+namespace Syki.Back.Features.Cross.CreateInstitution;
 
 public class Institution
 {

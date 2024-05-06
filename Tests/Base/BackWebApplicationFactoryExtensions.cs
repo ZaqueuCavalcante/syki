@@ -1,4 +1,4 @@
-using Syki.Back.CreateInstitution;
+using Syki.Back.Features.Cross.CreateInstitution;
 using Microsoft.AspNetCore.Identity;
 using Syki.Back.Features.Cross.CreateUser;
 using Microsoft.Extensions.DependencyInjection;

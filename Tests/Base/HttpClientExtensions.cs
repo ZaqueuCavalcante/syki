@@ -20,7 +20,7 @@ using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Academic.GetDisciplines;
 using Syki.Front.Features.Academic.CreateAcademicPeriod;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
-
+using Syki.Front.Features.Academic.GetAcademicPeriods;
 
 namespace Syki.Tests.Base;
 

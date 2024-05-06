@@ -1,8 +1,4 @@
-using Syki.Front.Features.Academic.GetAdmInsights;
-using Syki.Front.Features.Academic.GetCampi;
-using Syki.Front.Features.Academic.GetCourses;
-using Syki.Front.Features.Academic.GetDisciplines;
-using Syki.Front.Features.Academic.UpdateCampus;
+
 
 namespace Syki.Front.Configs;
 

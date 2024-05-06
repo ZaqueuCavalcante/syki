@@ -80,7 +80,7 @@
     CourseOut? _curso;
     List<CourseOut> Cursos = [];
 
-    List<CursoDisciplinaOut> Options = [];
+    List<CourseDisciplineOut> Options = [];
     List<GradeDisciplinaFillable> Disciplinas = [];
 
     GradeIn data = new();
@@ -115,7 +115,7 @@
     async Task HandleSelectCurso(CourseOut newValue)
     {
         _curso = newValue;
-        Options = await Http.GetFromJsonAsync<List<CursoDisciplinaOut>>($"/cursos/{_curso!.Id}/disciplinas") ?? [];
+        Options = await Http.GetFromJsonAsync<List<CourseDisciplineOut>>($"/cursos/{_curso!.Id}/disciplinas") ?? [];
         Disciplinas = [];
     }
 

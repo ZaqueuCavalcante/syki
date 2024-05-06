@@ -9,6 +9,6 @@ public class GetGradeDisciplinasService(SykiDbContext ctx)
             .Include(g => g.Disciplinas)
             .FirstOrDefaultAsync();
 
-        return grade== null ? [] : grade.Disciplinas.ConvertAll(d => d.ToOut()).OrderBy(d => d.Name).ToList();
+        return grade == null ? [] : grade.Disciplinas.ConvertAll(d => d.ToOut()).OrderBy(d => d.Name).ToList();
     }
 }

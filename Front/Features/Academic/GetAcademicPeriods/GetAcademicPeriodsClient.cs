@@ -1,4 +1,4 @@
-namespace Syki.Front.Features.Academic.CreateAcademicPeriod;
+namespace Syki.Front.Features.Academic.GetAcademicPeriods;
 
 public class GetAcademicPeriodsClient(HttpClient http)
 {

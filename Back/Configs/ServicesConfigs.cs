@@ -6,7 +6,6 @@ using Syki.Back.Features.Academico.UpdateCampus;
 using Syki.Back.Features.Academico.CreateCampus;
 using Syki.Back.Features.Academico.CreateDisciplina;
 using Syki.Back.Features.Academico.GetAcademicInsights;
-using Syki.Back.CreateAluno;
 using Syki.Back.GetEnrollmentPeriods;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.CreateProfessor;
@@ -50,6 +49,7 @@ using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Cross.GetUserNotifications;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
+using Syki.Back.Features.Academic.CreateStudent;
 
 namespace Syki.Back.Configs;
 

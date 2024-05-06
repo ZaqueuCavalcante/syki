@@ -2,7 +2,7 @@ namespace Syki.Back.GetCursosWithGrades;
 
 public class GetCursosWithGradesService(SykiDbContext ctx)
 {
-    public async Task<List<CursoOut>> Get(Guid institutionId)
+    public async Task<List<CourseOut>> Get(Guid institutionId)
     {
         var cursos = await ctx.Cursos
             .Where(c => c.InstitutionId == institutionId && c.Grades.Count > 0)

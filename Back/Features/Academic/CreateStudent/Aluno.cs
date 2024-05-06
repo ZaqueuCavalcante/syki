@@ -1,6 +1,6 @@
 using Syki.Back.CreateOferta;
 
-namespace Syki.Back.CreateAluno;
+namespace Syki.Back.Features.Academic.CreateStudent;
 
 public class Aluno
 {

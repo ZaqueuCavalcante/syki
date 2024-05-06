@@ -9,7 +9,7 @@
 <PageTitle>Cursos</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.Class" Title="Cursos" ButtonText="Novo Curso" OnClick="OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.Class" Title="Cursos" ButtonText="Novo Curso" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Note que um mesmo curso pode ser ofertado em mais de um campus." />
 
     <MudContainer Class="mb-8">
@@ -27,7 +27,7 @@
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Name" />
-                <PropertyColumn Property="x => x.Tipo.GetDescription()" Title="Tipo" />
+                <PropertyColumn Property="x => x.Type.GetDescription()" Title="Tipo" />
             </Columns>
 
             <NoRecordsContent>
@@ -35,7 +35,7 @@
             </NoRecordsContent>
 
             <PagerContent>
-                <SykiDataGridPager T="CursoOut" />
+                <SykiDataGridPager T="CourseOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -48,16 +48,16 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<CursoOut> _cursos = [];
+    private List<CourseOut> _cursos = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos") ?? [];
+        _cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/cursos") ?? [];
         _loading = false;
     }
 
-    private Func<CursoOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Tipo.GetDescription());
+    private Func<CourseOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Type.GetDescription());
 
     private async Task OpenDialog()
     {
@@ -65,7 +65,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<CreateCursoDialog>("", options);
+        var dialog = await DialogService.ShowAsync<NewCourseDialog>("", options);
 
         var result = await dialog.Result;
 

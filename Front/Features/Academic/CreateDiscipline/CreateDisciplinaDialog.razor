@@ -1,5 +1,6 @@
 @using Syki.Front.Components.Custom
 @using Syki.Front.Components.Buttons
+@using Syki.Front.Features.Academic.GetCourses
 
 @namespace Syki.Front.Features.Academic.CreateDiscipline
 
@@ -15,7 +16,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
-                T="CursoOut"
+                T="CourseOut"
                 Label="Cursos"
                 MultiSelection="true"
                 @bind-SelectedValues="@SelectedCursos"
@@ -23,7 +24,7 @@
             >
                 @foreach (var curso in Cursos)
                 {
-                    <MudSelectItem T="CursoOut" Value="@curso">@curso.Name</MudSelectItem>
+                    <MudSelectItem T="CourseOut" Value="@curso">@curso.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudForm>
@@ -36,7 +37,7 @@
 </MudDialog>
 
 @inject ISnackbar Snackbar
-@inject GetCursosClient GetCursosClient
+@inject GetCoursesClient GetCoursesClient
 @inject CreateDisciplinaClient CreateDisciplinaClient
 
 @code
@@ -48,12 +49,12 @@
     private bool _loading;
     private string _name;
 
-    private List<CursoOut> Cursos = [];
-    IEnumerable<CursoOut> SelectedCursos { get; set; } = new HashSet<CursoOut>() { };
+    private List<CourseOut> Cursos = [];
+    IEnumerable<CourseOut> SelectedCursos { get; set; } = new HashSet<CourseOut>() { };
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await GetCursosClient.Get();
+        Cursos = await GetCoursesClient.Get();
     }
 
     async Task Submit()

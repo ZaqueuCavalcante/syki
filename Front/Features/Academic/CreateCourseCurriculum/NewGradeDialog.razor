@@ -16,13 +16,13 @@
                     Margin="Margin.Dense"
                     Variant="Variant.Outlined"
                     Value="@_curso"
-                    ValueChanged="@((CursoOut newValue) => HandleSelectCurso(newValue))"
+                    ValueChanged="@((CourseOut newValue) => HandleSelectCurso(newValue))"
                     Label="Curso"
                     Required="true"
                     RequiredError="Informe!"
                     AdornmentColor="Color.Primary"
                 >
-                    @foreach (CursoOut? item in Cursos)
+                    @foreach (CourseOut? item in Cursos)
                     {
                         <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                     }
@@ -77,8 +77,8 @@
     private MudForm _form;
     private bool _loading;
 
-    CursoOut? _curso;
-    List<CursoOut> Cursos = [];
+    CourseOut? _curso;
+    List<CourseOut> Cursos = [];
 
     List<CursoDisciplinaOut> Options = [];
     List<GradeDisciplinaFillable> Disciplinas = [];
@@ -90,7 +90,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos/with-disciplinas") ?? [];
+        Cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/cursos/with-disciplinas") ?? [];
     }
 
     void NewGradeDisciplina()
@@ -112,7 +112,7 @@
         return _curso == null || Options.Count == Disciplinas.Count;
     }
 
-    async Task HandleSelectCurso(CursoOut newValue)
+    async Task HandleSelectCurso(CourseOut newValue)
     {
         _curso = newValue;
         Options = await Http.GetFromJsonAsync<List<CursoDisciplinaOut>>($"/cursos/{_curso!.Id}/disciplinas") ?? [];

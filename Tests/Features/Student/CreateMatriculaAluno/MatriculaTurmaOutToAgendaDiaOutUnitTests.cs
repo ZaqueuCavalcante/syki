@@ -17,9 +17,9 @@ public class MatriculaTurmaOutToAgendaDayOutUnitTests
         // Assert
         agendas.Should().ContainSingle();
         agendas[0].Day.Should().Be(Day.Segunda);
-        agendas[0].Disciplinas[0].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplinas[0].Start.Should().Be(Hora.H07_00);
-        agendas[0].Disciplinas[0].End.Should().Be(Hora.H10_00);
+        agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
+        agendas[0].Disciplines[0].Start.Should().Be(Hora.H07_00);
+        agendas[0].Disciplines[0].End.Should().Be(Hora.H10_00);
     }
 
     [Test]
@@ -41,12 +41,12 @@ public class MatriculaTurmaOutToAgendaDayOutUnitTests
         // Assert
         agendas.Should().ContainSingle();
         agendas[0].Day.Should().Be(Day.Segunda);
-        agendas[0].Disciplinas[0].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplinas[0].Start.Should().Be(Hora.H07_00);
-        agendas[0].Disciplinas[0].End.Should().Be(Hora.H10_00);
-        agendas[0].Disciplinas[1].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplinas[1].Start.Should().Be(Hora.H10_15);
-        agendas[0].Disciplinas[1].End.Should().Be(Hora.H12_00);
+        agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
+        agendas[0].Disciplines[0].Start.Should().Be(Hora.H07_00);
+        agendas[0].Disciplines[0].End.Should().Be(Hora.H10_00);
+        agendas[0].Disciplines[1].Name.Should().Be("Banco de Dados");
+        agendas[0].Disciplines[1].Start.Should().Be(Hora.H10_15);
+        agendas[0].Disciplines[1].End.Should().Be(Hora.H12_00);
     }
 
     [Test]
@@ -69,15 +69,15 @@ public class MatriculaTurmaOutToAgendaDayOutUnitTests
         // Assert
         agendas.Should().ContainSingle();
         agendas[0].Day.Should().Be(Day.Segunda);
-        agendas[0].Disciplinas[0].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplinas[0].Start.Should().Be(Hora.H07_00);
-        agendas[0].Disciplinas[0].End.Should().Be(Hora.H10_00);
-        agendas[0].Disciplinas[1].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplinas[1].Start.Should().Be(Hora.H10_15);
-        agendas[0].Disciplinas[1].End.Should().Be(Hora.H12_00);
-        agendas[0].Disciplinas[2].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplinas[2].Start.Should().Be(Hora.H15_00);
-        agendas[0].Disciplinas[2].End.Should().Be(Hora.H17_00);
+        agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
+        agendas[0].Disciplines[0].Start.Should().Be(Hora.H07_00);
+        agendas[0].Disciplines[0].End.Should().Be(Hora.H10_00);
+        agendas[0].Disciplines[1].Name.Should().Be("Banco de Dados");
+        agendas[0].Disciplines[1].Start.Should().Be(Hora.H10_15);
+        agendas[0].Disciplines[1].End.Should().Be(Hora.H12_00);
+        agendas[0].Disciplines[2].Name.Should().Be("Banco de Dados");
+        agendas[0].Disciplines[2].Start.Should().Be(Hora.H15_00);
+        agendas[0].Disciplines[2].End.Should().Be(Hora.H17_00);
     }
 
     [Test]
@@ -96,11 +96,11 @@ public class MatriculaTurmaOutToAgendaDayOutUnitTests
         // Assert
         agendas.Should().ContainSingle();
         agendas[0].Day.Should().Be(Day.Segunda);
-        agendas[0].Disciplinas[0].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplinas[0].Start.Should().Be(Hora.H07_00);
-        agendas[0].Disciplinas[0].End.Should().Be(Hora.H10_00);
-        agendas[0].Disciplinas[1].Name.Should().Be("POO");
-        agendas[0].Disciplinas[1].Start.Should().Be(Hora.H10_00);
-        agendas[0].Disciplinas[1].End.Should().Be(Hora.H12_00);
+        agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
+        agendas[0].Disciplines[0].Start.Should().Be(Hora.H07_00);
+        agendas[0].Disciplines[0].End.Should().Be(Hora.H10_00);
+        agendas[0].Disciplines[1].Name.Should().Be("POO");
+        agendas[0].Disciplines[1].Start.Should().Be(Hora.H10_00);
+        agendas[0].Disciplines[1].End.Should().Be(Hora.H12_00);
     }
 }

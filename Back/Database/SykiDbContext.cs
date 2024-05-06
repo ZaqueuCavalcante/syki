@@ -1,6 +1,6 @@
 using Syki.Back.Audit;
 using Audit.EntityFramework;
-using Syki.Back.CreateAluno;
+using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.CreateTurma;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;

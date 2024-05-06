@@ -1,6 +1,5 @@
 using Audit.Core;
 using Syki.Back.Audit;
-using Syki.Back.CreateAluno;
 using Syki.Back.CreateTurma;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
@@ -9,6 +8,7 @@ using Syki.Back.CreateNotification;
 using Syki.Back.Features.Academico.CreateGrade;
 using Syki.Back.Features.Academico.CreateCurso;
 using Syki.Back.Features.Academico.CreateCampus;
+using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academico.CreateDisciplina;
 
 namespace Syki.Back.Configs;

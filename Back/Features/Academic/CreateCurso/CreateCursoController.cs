@@ -10,7 +10,7 @@ public class CreateCursoController(CreateCursoService service) : ControllerBase
 {
     [HttpPost("cursos")]
     [ProducesResponseType(200)]
-    public async Task<IActionResult> Create([FromBody] CursoIn data)
+    public async Task<IActionResult> Create([FromBody] CourseIn data)
     {
         var curso = await service.Create(User.InstitutionId(), data);
 

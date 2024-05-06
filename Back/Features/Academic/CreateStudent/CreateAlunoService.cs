@@ -1,6 +1,6 @@
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 
-namespace Syki.Back.CreateAluno;
+namespace Syki.Back.Features.Academic.CreateStudent;
 
 public class CreateAlunoService(SykiDbContext ctx, CreateUserService service, SendResetPasswordEmailService sendService)
 {

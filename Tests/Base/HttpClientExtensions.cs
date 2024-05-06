@@ -1,25 +1,26 @@
-using Front.GetCursos;
 using Syki.Tests.Mock;
 using Syki.Front.Auth;
-using Syki.Front.Login;
-using Front.CreateCurso;
-using Front.CreateGrade;
-using Front.UpdateCampus;
-using Front.CreateCampus;
-using Syki.Front.SetupMfa;
-using Syki.Front.LoginMfa;
-using Syki.Front.GetMfaKey;
 using System.Net.Http.Json;
-using Front.CreateProfessor;
-using Front.CreateDisciplina;
-using Syki.Front.ResetPassword;
-using Syki.Front.FinishUserRegister;
-using Syki.Front.GetAlunoDisciplinas;
-using Syki.Front.GetAcademicInsights;
-using Syki.Front.CreateEnrollmentPeriod;
-using Syki.Front.SendResetPasswordToken;
-using Syki.Front.CreatePendingUserRegister;
-using Front.Features.Academico.CreateAcademicPeriod;
+using Syki.Front.Features.Cross.CreatePendingUserRegister;
+using Syki.Front.Features.Cross.FinishUserRegister;
+using Syki.Front.Features.Cross.Login;
+using Syki.Front.Features.Cross.GetMfaKey;
+using Syki.Front.Features.Cross.SetupMfa;
+using Syki.Front.Features.Cross.LoginMfa;
+using Syki.Front.Features.Cross.SendResetPasswordToken;
+using Syki.Front.Features.Cross.ResetPassword;
+using Syki.Front.Features.Academic.GetAcademicInsights;
+using Syki.Front.Features.Academic.CreateCampus;
+using Syki.Front.Features.Academic.UpdateCampus;
+using Syki.Front.Features.Academic.CreateCourse;
+using Syki.Front.Features.Academic.GetCourses;
+using Syki.Front.Features.Academic.CreateDiscipline;
+using Syki.Front.Features.Academic.CreateTeacher;
+using Syki.Front.Features.Academic.CreateCourseCurriculum;
+using Syki.Front.Features.Academic.GetDisciplines;
+using Syki.Front.Features.Academic.CreateAcademicPeriod;
+using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
+
 
 namespace Syki.Tests.Base;
 
@@ -151,19 +152,19 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<CampusOut>();
     }
 
-    public static async Task<CursoOut> CreateCurso(
+    public static async Task<CourseOut> CreateCurso(
         this HttpClient http,
         string name = "Análise e Desenvolvimento de Sistemas",
         CourseType tipo = CourseType.Bacharelado
     ) {
-        var client = new CreateCursoClient(http);
+        var client = new CreateCourseClient(http);
         var response = await client.Create(name, tipo);
-        return await response.DeserializeTo<CursoOut>();
+        return await response.DeserializeTo<CourseOut>();
     }
 
-    public static async Task<List<CursoOut>> GetCursos(this HttpClient http)
+    public static async Task<List<CourseOut>> GetCursos(this HttpClient http)
     {
-        var client = new GetCursosClient(http);
+        var client = new GetCoursesClient(http);
         return await client.Get();
     }
 
@@ -306,7 +307,7 @@ public static class HttpClientExtensions
 
     public static async Task<List<DisciplinaOut>> GetAlunoDisciplinas(this HttpClient http)
     {
-        var client = new GetAlunoDisciplinasClient(http);
+        var client = new GetDisciplinesClient(http);
         return await client.Get();
     }
 

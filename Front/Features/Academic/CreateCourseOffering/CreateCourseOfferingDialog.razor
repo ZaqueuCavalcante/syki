@@ -70,7 +70,7 @@
                 </MudItem>
             </MudGrid>
             <MudAutocomplete
-                T="CursoOut"
+                T="CourseOut"
                 MaxItems="50"
                 SearchFunc="@SearchCurso"
                 Dense="true"
@@ -130,7 +130,7 @@
     private bool _loading;
 
     CampusOut? _campus;
-    CursoOut? _curso;
+    CourseOut? _curso;
     GradeOut? _grade;
     string? _periodo;
     Turno? _turno;
@@ -138,7 +138,7 @@
     OfertaIn data = new();
 
     List<CampusOut> Campi = [];
-    List<CursoOut> Cursos = [];
+    List<CourseOut> Cursos = [];
     List<GradeOut> Grades = [];
     List<AcademicPeriodOut> Periodos = [];
 
@@ -149,13 +149,13 @@
     {
         await Task.WhenAll(new Task[] { 
             Task.Run(async () => Campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? []),
-            Task.Run(async () => Cursos = await Http.GetFromJsonAsync<List<CursoOut>>("/cursos/with-grades") ?? []),
+            Task.Run(async () => Cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/cursos/with-grades") ?? []),
             Task.Run(async () => Grades = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? []),
             Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic-periods") ?? []),
         });
     }
 
-    private async Task<IEnumerable<CursoOut>> SearchCurso(string value)
+    private async Task<IEnumerable<CourseOut>> SearchCurso(string value)
     {
         await Task.Delay(0);
 

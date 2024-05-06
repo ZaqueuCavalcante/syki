@@ -1,4 +1,4 @@
-using Syki.Back.CreateAluno;
+using Syki.Back.Features.Academic.CreateStudent;
 
 namespace Syki.Tests.Unit;
 

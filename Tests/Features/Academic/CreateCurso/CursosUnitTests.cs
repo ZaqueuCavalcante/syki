@@ -58,7 +58,7 @@ public class CursosUnitTests
         var curso = new Curso(institutionId, name, Bacharelado);
 
         // Assert
-        curso.Tipo.Should().Be(Bacharelado);
+        curso.Type.Should().Be(Bacharelado);
     }
 
     [Test]
@@ -75,7 +75,7 @@ public class CursosUnitTests
         // Assert
         cursoOut.Id.Should().Be(curso.Id);
         cursoOut.Name.Should().Be(curso.Name);
-        cursoOut.Tipo.Should().Be(curso.Tipo);
+        cursoOut.Type.Should().Be(curso.Type);
     }
 
     [Test]
@@ -127,7 +127,7 @@ public class CursosUnitTests
     public void Deve_retornar_o_hash_code_correto()
     {
         // Arrange
-        var cursoOut = new CursoOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
+        var cursoOut = new CourseOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
 
         // Act
         var hashCode = cursoOut.GetHashCode();
@@ -140,7 +140,7 @@ public class CursosUnitTests
     public void Deve_retornar_o_nome_do_curso_como_to_string()
     {
         // Arrange
-        var cursoOut = new CursoOut { Name = "Curso" };
+        var cursoOut = new CourseOut { Name = "Curso" };
 
         // Act
         var name = cursoOut.ToString();

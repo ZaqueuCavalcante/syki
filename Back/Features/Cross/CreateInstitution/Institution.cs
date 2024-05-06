@@ -1,4 +1,4 @@
-using Syki.Back.CreateAluno;
+using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateNotification;

@@ -1,4 +1,4 @@
-namespace Syki.Back.CreateAluno;
+namespace Syki.Back.Features.Academic.CreateStudent;
 
 [ApiController, AuthAcademico]
 [EnableRateLimiting("Medium")]

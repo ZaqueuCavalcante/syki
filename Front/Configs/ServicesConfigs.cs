@@ -1,3 +1,9 @@
+using Syki.Front.Features.Academic.GetAdmInsights;
+using Syki.Front.Features.Academic.GetCampi;
+using Syki.Front.Features.Academic.GetCourses;
+using Syki.Front.Features.Academic.GetDisciplines;
+using Syki.Front.Features.Academic.UpdateCampus;
+
 namespace Syki.Front.Configs;
 
 public static class ServicesConfigs
@@ -14,7 +20,7 @@ public static class ServicesConfigs
         builder.Services.AddScoped<SendResetPasswordTokenClient>();
         builder.Services.AddScoped<ResetPasswordClient>();
         builder.Services.AddScoped<GetAcademicInsightsClient>();
-        builder.Services.AddScoped<GetProfessorInsightsClient>();
+        builder.Services.AddScoped<GetTeacherInsightsClient>();
 
         // Academic
         builder.Services.AddScoped<CreateCampusClient>();
@@ -24,14 +30,14 @@ public static class ServicesConfigs
         builder.Services.AddScoped<CreateGradeClient>();
         builder.Services.AddScoped<GetAdmInsightsClient>();
 
-        builder.Services.AddScoped<CreateCursoClient>();
-        builder.Services.AddScoped<GetCursosClient>();
-        builder.Services.AddScoped<GetDisciplinasClient>();
+        builder.Services.AddScoped<CreateCourseClient>();
+        builder.Services.AddScoped<GetCoursesClient>();
+        builder.Services.AddScoped<GetDisciplinesClient>();
 
         builder.Services.AddScoped<CreateDisciplinaClient>();
         builder.Services.AddScoped<GetAlunoInsightsClient>();
-        builder.Services.AddScoped<GetAlunoAgendaClient>();
-        builder.Services.AddScoped<GetAlunoDisciplinasClient>();
+        builder.Services.AddScoped<GetStudentAgendaClient>();
+        builder.Services.AddScoped<GetStudentDisciplinesClient>();
         builder.Services.AddScoped<GetProfessorAgendaClient>();
 
         builder.Services.AddScoped<CreateAcademicPeriodClient>();

@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Configuration;
-
 namespace Syki.Daemon.Settings;
 
 public class EmailSettings

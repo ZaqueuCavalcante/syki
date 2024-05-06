@@ -1,4 +1,3 @@
-using System.Net.Http.Json;
 using Syki.Daemon.Settings;
 
 namespace Syki.Daemon.Emails;

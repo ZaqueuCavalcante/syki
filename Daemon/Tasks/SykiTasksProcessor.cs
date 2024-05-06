@@ -2,8 +2,6 @@ using Dapper;
 using Npgsql;
 using Newtonsoft.Json;
 using Syki.Daemon.Settings;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Daemon.Tasks;
 

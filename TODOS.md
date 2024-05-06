@@ -1,65 +1,69 @@
 # DONE
 
 ## Cross
-- [X] CreatePendingUserRegister
-- [X] FinishUserRegister
-- [X] CreateUser
-- [X] Login
-- [X] GenerateJWT
-- [X] GetMfaKey
-- [X] SetupMfa
-- [X] LoginMfa
-- [X] SendResetPasswordToken
-- [X] ResetPassword
+- [] CreateInstitution
+- [] CreatePendingUserRegister
+- [] CreateUser
+- [] FinishUserRegister
+- [] GenerateJWT
+- [] GetMfaKey
 - [] GetUserNotifications
-- [] ViewNotification
+- [] Health
+- [] Home
+- [] Login
+- [] LoginMfa
+- [] ResetPassword
+- [] SendResetPasswordToken
+- [] SetupMfa
+- [] ViewNotifications
 
 ## Academic
-- [X] GetAcademicInsights
-- [X] CreateCampus
-- [] UpdateCampus
+- [] CreateAcademicPeriod
+- [] CreateCampus
+- [] CreateClass
+- [] CreateCourse
+- [] CreateCourseCurriculum
+- [] CreateCourseOffering
+- [] CreateDiscipline
+- [] CreateEnrollmentPeriod
+- [] CreateNotification
+- [] CreateStudent
+- [] CreateTeacher
+- [] GetAcademicInsights
+- [] GetAcademicPeriods
 - [] GetCampi
-- [] CreateCurso
-- [] GetCursos
-- [] CreateDisciplina
-- [] GetDisciplinas
-- [] CreateGrade
-- [] GetGrades
-- [] GetGradeDisciplinas
-- [] CreateTurma
+- [] GetClasses
+- [] GetCourseCurriculumDisciplines
+- [] GetCourseCurriculums
+- [] GetCourseDisciplines
+- [] GetCourseOfferings
+- [] GetCourses
+- [] GetCoursesWithCurriculums
+- [] GetCoursesWithDisciplines
+- [] GetDisciplines
+- [] GetEnrollmentPeriods
+- [] GetNotifications
+- [] GetStudents
+- [] GetTeachers
+- [] UpdateCampus
 
 ## Teacher
 
-- [] GetAlunoInsights
-- [] GetAdmInsights
-
-- [] GetCursoDisciplinas
-- [] GetCursosWithDisciplinas
+- [] GetTeacherAgenda
+- [] GetTeacherClass
+- [] GetTeacherClasses
+- [] GetTeacherInsights
 
 ## Student
 
-- [] CreateOferta
-- [] GetOfertas
-
-- [] CreateProfessor
-- [] GetProfessores
-
-- [] GetTurmas
-
-- [] CreateAluno
-- [] GetAlunos
-
-- [] CreateNotification
-- [] CreateAcademicPeriod
-- [] GetAcademicPeriods
-- [] CreateEnrollmentPeriod
-- [] GetEnrollmentPeriods
+- [] CreateStudentEnrollment
 - [] GetCurrentEnrollmentPeriod
+- [] GetStudentAgenda
+- [] GetStudentDisciplines
+- [] GetStudentEnrollmentClasses
+- [] GetStudentInsights
 
-- [] GetAlunoAgenda
-- [] GetAlunoDisciplinas
-- [] CreateMatriculaAluno
-- [] GetMatriculaAlunoTurmas
-
+## Adm
+- [] GetAdmInsights
 - [] GetInstitutions
 - [] GetUsers

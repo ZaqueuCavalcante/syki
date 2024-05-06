@@ -1,5 +1,4 @@
 ﻿using Syki.Daemon.Configs;
-using Microsoft.Extensions.Hosting;
 
 var builder = Host.CreateDefaultBuilder(args);
 

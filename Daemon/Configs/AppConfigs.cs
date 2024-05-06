@@ -1,7 +1,5 @@
 using Audit.Core;
 using Syki.Back.Extensions;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
 
 namespace Syki.Daemon.Configs;
 

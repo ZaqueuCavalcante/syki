@@ -16,12 +16,12 @@ public class Institution
     public string Name { get; set; }
     public List<AcademicPeriod> AcademicPeriods { get; set; }
     public List<Campus> Campi { get; set; }
-    public List<Curso> Cursos { get; set; }
-    public List<Oferta> Ofertas { get; set; }
-    public List<Grade> Grades { get; set; }
-    public List<Disciplina> Disciplinas { get; set; }
-    public List<Professor> Professores { get; set; }
-    public List<Aluno> Alunos { get; set; }
+    public List<Curso> Courses { get; set; }
+    public List<Oferta> CourseOfferings { get; set; }
+    public List<Grade> CourseCurriculums { get; set; }
+    public List<Disciplina> Disciplines { get; set; }
+    public List<Professor> Teachers { get; set; }
+    public List<Aluno> Students { get; set; }
     public List<Notification> Notifications { get; set; }
 
     public Institution() { }

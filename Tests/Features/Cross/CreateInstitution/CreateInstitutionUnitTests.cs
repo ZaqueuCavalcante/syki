@@ -1,11 +1,11 @@
 using Syki.Back.CreateInstitution;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.CreateInstitution;
 
-public class InstitutionsUnitTests
+public class CreateInstitutionUnitTests
 {
     [Test]
-    public void Deve_criar_uma_institution_com_id()
+    public void Should_create_institution_with_id()
     {
         // Arrange
         const string name = "UFPE";
@@ -18,7 +18,7 @@ public class InstitutionsUnitTests
     }
 
     [Test]
-    public void Deve_criar_uma_institution_com_nome_correto()
+    public void Should_create_institution_with_correct_name()
     {
         // Arrange
         const string name = "UFPE";
@@ -31,7 +31,7 @@ public class InstitutionsUnitTests
     }
 
     [Test]
-    public void Deve_converter_o_aluno_corretamente_pro_out()
+    public void Should_convert_institution_to_out()
     {
         // Arrange
         var institution = new Institution("UFPE");
@@ -45,7 +45,7 @@ public class InstitutionsUnitTests
     }
 
     [Test]
-    public void Deve_retornar_o_nome_da_institution_como_to_string()
+    public void Should_return_institution_name_on_to_string()
     {
         // Arrange
         var institution = new Institution("UFPE");

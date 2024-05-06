@@ -31,7 +31,7 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateProfessorServic
             new Campus(id, "Suassuna", "Recife - PE"),
         ];
 
-        institution.Cursos =
+        institution.Courses =
         [
             new Curso(id, "Administração", CourseType.Mestrado),
             new Curso(id, "Análise e Desenvolvimento de Sistemas", CourseType.Bacharelado),
@@ -44,7 +44,7 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateProfessorServic
             new Curso(id, "Pedagogia", CourseType.Licenciatura),
         ];
 
-        institution.Disciplinas =
+        institution.Disciplines =
         [
             new Disciplina(id, "Matemática Discreta"),
             new Disciplina(id, "Introdução ao Desenvolvimento Web"),
@@ -129,51 +129,51 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateProfessorServic
             new Disciplina(id, "Monografia Final"),
         ];
 
-        institution.Cursos[1].Disciplinas = institution.Disciplinas.Take(31).ToList(); // ADS
-        institution.Cursos[4].Disciplinas = institution.Disciplinas.Skip(31).ToList(); // Direito
+        institution.Courses[1].Disciplinas = institution.Disciplines.Take(31).ToList(); // ADS
+        institution.Courses[4].Disciplinas = institution.Disciplines.Skip(31).ToList(); // Direito
 
-        var gradeAds = new Grade(id, institution.Cursos[1].Id, "Grade ADS 1.0");
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[00].Id, 1, 5, 60));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[01].Id, 1, 4, 40));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[02].Id, 1, 5, 60));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[03].Id, 1, 5, 55));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[04].Id, 1, 4, 45));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[05].Id, 1, 3, 25));
+        var gradeAds = new Grade(id, institution.Courses[1].Id, "Grade ADS 1.0");
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[00].Id, 1, 5, 60));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[01].Id, 1, 4, 40));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[02].Id, 1, 5, 60));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[03].Id, 1, 5, 55));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[04].Id, 1, 4, 45));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[05].Id, 1, 3, 25));
         //
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[06].Id, 2, 5, 60));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[07].Id, 2, 4, 40));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[08].Id, 2, 5, 60));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[09].Id, 2, 5, 55));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[10].Id, 2, 5, 45));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[11].Id, 2, 2, 25));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[06].Id, 2, 5, 60));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[07].Id, 2, 4, 40));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[08].Id, 2, 5, 60));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[09].Id, 2, 5, 55));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[10].Id, 2, 5, 45));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[11].Id, 2, 2, 25));
         //
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[12].Id, 3, 5, 60));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[13].Id, 3, 4, 40));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[14].Id, 3, 5, 60));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[15].Id, 3, 5, 55));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[16].Id, 3, 5, 45));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[17].Id, 3, 2, 25));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[12].Id, 3, 5, 60));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[13].Id, 3, 4, 40));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[14].Id, 3, 5, 60));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[15].Id, 3, 5, 55));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[16].Id, 3, 5, 45));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[17].Id, 3, 2, 25));
         //
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[18].Id, 4, 5, 60));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[19].Id, 4, 4, 40));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[20].Id, 4, 5, 60));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[21].Id, 4, 5, 55));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[22].Id, 4, 5, 45));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[23].Id, 4, 2, 25));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[18].Id, 4, 5, 60));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[19].Id, 4, 4, 40));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[20].Id, 4, 5, 60));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[21].Id, 4, 5, 55));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[22].Id, 4, 5, 45));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[23].Id, 4, 2, 25));
         //
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[24].Id, 5, 5, 60));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[25].Id, 5, 4, 40));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[26].Id, 5, 5, 60));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[27].Id, 5, 5, 55));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[28].Id, 5, 5, 45));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[29].Id, 5, 6, 50));
-        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplinas[30].Id, 5, 2, 25));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[24].Id, 5, 5, 60));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[25].Id, 5, 4, 40));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[26].Id, 5, 5, 60));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[27].Id, 5, 5, 55));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[28].Id, 5, 5, 45));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[29].Id, 5, 6, 50));
+        gradeAds.Vinculos.Add(new GradeDisciplina(institution.Disciplines[30].Id, 5, 2, 25));
         ctx.Add(gradeAds);
 
         var ofertaAds = new Oferta(
             id,
             institution.Campi[2].Id,
-            institution.Cursos[1].Id,
+            institution.Courses[1].Id,
             gradeAds.Id,
             institution.AcademicPeriods[0].Id,
             Turno.Noturno

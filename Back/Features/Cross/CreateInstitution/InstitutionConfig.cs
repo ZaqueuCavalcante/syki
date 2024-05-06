@@ -17,27 +17,27 @@ public class InstitutionConfig : IEntityTypeConfiguration<Institution>
             .WithOne()
             .HasForeignKey(c => c.InstitutionId);
 
-        institution.HasMany(f => f.Cursos)
+        institution.HasMany(f => f.Courses)
             .WithOne()
             .HasForeignKey(c => c.InstitutionId);
 
-        institution.HasMany(f => f.Ofertas)
+        institution.HasMany(f => f.CourseOfferings)
             .WithOne()
             .HasForeignKey(co => co.InstitutionId);
 
-        institution.HasMany(f => f.Grades)
+        institution.HasMany(f => f.CourseCurriculums)
             .WithOne()
             .HasForeignKey(g => g.InstitutionId);
 
-        institution.HasMany(f => f.Disciplinas)
+        institution.HasMany(f => f.Disciplines)
             .WithOne()
             .HasForeignKey(d => d.InstitutionId);
 
-        institution.HasMany(f => f.Professores)
+        institution.HasMany(f => f.Teachers)
             .WithOne()
             .HasForeignKey(p => p.InstitutionId);
 
-        institution.HasMany(f => f.Alunos)
+        institution.HasMany(f => f.Students)
             .WithOne()
             .HasForeignKey(a => a.InstitutionId);
 

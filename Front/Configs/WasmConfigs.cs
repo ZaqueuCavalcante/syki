@@ -1,4 +1,3 @@
-using Front;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace Syki.Front.Configs;

@@ -15,3 +15,4 @@
 - Logs?
 - Load testing (K6)?
 - NUnit Parallelizable(ParallelScope.All) for fix namespaces
+- Use records on all Dtos?

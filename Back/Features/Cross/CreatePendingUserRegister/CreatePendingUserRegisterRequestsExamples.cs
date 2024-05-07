@@ -6,24 +6,15 @@ public class CreatePendingUserRegisterRequestsExamples : IMultipleExamplesProvid
     {
         yield return SwaggerExample.Create(
 			"Acadêmico",
-			new CreatePendingUserRegisterIn
-			{
-				Email = "academico@syki.com"
-			}
+			new CreatePendingUserRegisterIn("academico@syki.com")
 		);
         yield return SwaggerExample.Create(
 			"Professor",
-			new CreatePendingUserRegisterIn
-			{
-				Email = "professor@syki.com"
-			}
+			new CreatePendingUserRegisterIn("professor@syki.com")
 		);
         yield return SwaggerExample.Create(
 			"Aluno",
-			new CreatePendingUserRegisterIn
-			{
-				Email = "aluno@syki.com"
-			}
+			new CreatePendingUserRegisterIn("aluno@syki.com")
 		);
     }
 }

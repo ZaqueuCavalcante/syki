@@ -47,7 +47,23 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Should_enqueue_a_send_user_register_email_confirmation_task_on_pending_user_register_creation()
+    public async Task Should_not_create_a_pending_user_register_with_duplicated_case_insensitive_email()
+    {
+        // Arrange
+        var client = _factory.GetClient();
+        const string email = "zaqueu.648618168711@syki.com";
+        const string email2 = "ZaqueU.648618168711@syki.com";
+
+        // Act
+        await client.CreatePendingUserRegister(email);
+        var response = await client.CreatePendingUserRegister(email2);
+
+        // Assert
+        await response.AssertBadRequest(Throw.DE017);
+    }
+
+    [Test]
+    public async Task Should_enqueue_a_send_user_register_email_confirmation_task_on_pending_user_registration()
     {
         // Arrange
         var client = _factory.GetClient();

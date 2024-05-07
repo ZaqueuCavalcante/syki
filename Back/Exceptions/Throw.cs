@@ -36,4 +36,9 @@ public static class Throw
     {
         throw new DomainException(message);
     }
+
+    public static SwaggerExample<ErrorOut> ToSwaggerExampleErrorOut(this string message)
+    {
+        return SwaggerExample.Create(message, new ErrorOut { Message = message });
+    }
 }

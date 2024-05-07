@@ -14,3 +14,4 @@
 - Optimize Queries?
 - Logs?
 - Load testing (K6)?
+- NUnit Parallelizable(ParallelScope.All) for fix namespaces

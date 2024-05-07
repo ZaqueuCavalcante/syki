@@ -5,7 +5,7 @@ namespace Syki.Tests.Features.Cross.CreatePendingUserRegister;
 public class CreatePendingUserRegisterUnitTests
 {
     [Test]
-    public void Should_create_a_user_register_with_not_empty_id()
+    public void Should_create_a_user_register_with_id()
     {
         // Arrange
         const string email = "zaqueu@syki.com";
@@ -31,12 +31,10 @@ public class CreatePendingUserRegisterUnitTests
     }
 
     [Test]
-    public void Should_not_create_a_user_register_with_invalid_email()
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidEmails))]
+    public void Should_not_create_a_user_register_with_invalid_email(string email)
     {
-        // Arrange
-        const string email = "zaqueu.com";
-
-        // Act
+        // Arrange // Act
         Action act = () => new UserRegister(email);
 
         // Assert

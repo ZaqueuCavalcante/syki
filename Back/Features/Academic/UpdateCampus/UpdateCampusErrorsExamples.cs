@@ -4,12 +4,6 @@ public class UpdateCampusErrorsExamples : IMultipleExamplesProvider<ErrorOut>
 {
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {
-        yield return SwaggerExample.Create(
-			Throw.DE010,
-			new ErrorOut
-			{
-				Message = Throw.DE010
-			}
-		);
+		yield return Throw.DE010.ToSwaggerExampleErrorOut();
     }
 }

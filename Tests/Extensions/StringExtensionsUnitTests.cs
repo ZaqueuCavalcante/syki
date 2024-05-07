@@ -72,4 +72,15 @@ public class StringExtensionsUnitTests
         // Assert
         result.Should().BeTrue();
     }
+
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidEmails))]
+    public void Shoud_return_false_when_email_is_invalid(string email)
+    {
+        // Arrange // Act
+        var result = email.IsValidEmail();
+
+        // Assert
+        result.Should().BeFalse();
+    }
 }

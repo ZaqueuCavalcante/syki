@@ -4,19 +4,7 @@ public class CreatePendingUserRegisterErrorsExamples : IMultipleExamplesProvider
 {
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {
-        yield return SwaggerExample.Create(
-			Throw.DE017,
-			new ErrorOut
-			{
-				Message = Throw.DE017
-			}
-		);
-        yield return SwaggerExample.Create(
-			Throw.DE016,
-			new ErrorOut
-			{
-				Message = Throw.DE016
-			}
-		);
+        yield return Throw.DE016.ToSwaggerExampleErrorOut();
+        yield return Throw.DE017.ToSwaggerExampleErrorOut();
     }
 }

@@ -4,12 +4,6 @@ public class SendResetPasswordTokenErrorsExamples : IMultipleExamplesProvider<Er
 {
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {
-        yield return SwaggerExample.Create(
-			Throw.DE019,
-			new ErrorOut
-			{
-				Message = Throw.DE019
-			}
-		);
+		yield return Throw.DE019.ToSwaggerExampleErrorOut();
     }
 }

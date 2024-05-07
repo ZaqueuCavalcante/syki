@@ -2,7 +2,7 @@
 
 ## Cross
 - [X] CreateInstitution
-- [] CreatePendingUserRegister
+- [X] CreatePendingUserRegister
 - [] CreateUser
 - [] FinishUserRegister
 - [] GenerateJWT

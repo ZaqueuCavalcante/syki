@@ -1,26 +1,26 @@
 using Syki.Tests.Mock;
 using Syki.Front.Auth;
 using System.Net.Http.Json;
-using Syki.Front.Features.Cross.CreatePendingUserRegister;
-using Syki.Front.Features.Cross.FinishUserRegister;
 using Syki.Front.Features.Cross.Login;
-using Syki.Front.Features.Cross.GetMfaKey;
 using Syki.Front.Features.Cross.SetupMfa;
 using Syki.Front.Features.Cross.LoginMfa;
-using Syki.Front.Features.Cross.SendResetPasswordToken;
+using Syki.Front.Features.Cross.GetMfaKey;
 using Syki.Front.Features.Cross.ResetPassword;
-using Syki.Front.Features.Academic.GetAcademicInsights;
+using Syki.Front.Features.Academic.GetCourses;
 using Syki.Front.Features.Academic.CreateCampus;
 using Syki.Front.Features.Academic.UpdateCampus;
 using Syki.Front.Features.Academic.CreateCourse;
-using Syki.Front.Features.Academic.GetCourses;
-using Syki.Front.Features.Academic.CreateDiscipline;
 using Syki.Front.Features.Academic.CreateTeacher;
-using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Academic.GetDisciplines;
+using Syki.Front.Features.Cross.FinishUserRegister;
+using Syki.Front.Features.Academic.CreateDiscipline;
+using Syki.Front.Features.Academic.GetAcademicPeriods;
+using Syki.Front.Features.Cross.SendResetPasswordToken;
+using Syki.Front.Features.Academic.GetAcademicInsights;
 using Syki.Front.Features.Academic.CreateAcademicPeriod;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
-using Syki.Front.Features.Academic.GetAcademicPeriods;
+using Syki.Front.Features.Academic.CreateCourseCurriculum;
+using Syki.Front.Features.Cross.CreatePendingUserRegister;
 
 namespace Syki.Tests.Base;
 
@@ -31,6 +31,9 @@ public static class HttpClientExtensions
         var client = new CreatePendingUserRegisterClient(http);
         return await client.Create(email);
     }
+
+
+    // -------------------------------------------------------------------------------------------- //
 
     public static async Task<HttpResponseMessage> FinishUserRegister(this HttpClient http, string token, string password)
     {

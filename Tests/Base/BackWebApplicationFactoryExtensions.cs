@@ -12,6 +12,10 @@ public static class BackWebApplicationFactoryExtensions
         return factory.CreateClient();
     }
 
+
+    // -------------------------------------------------------------------------------------------- //
+
+
     public static async Task<string?> GetRegisterSetupToken(this BackWebApplicationFactory factory, string email)
     {
         using var ctx = factory.GetDbContext();

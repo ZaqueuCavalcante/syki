@@ -1,6 +1,6 @@
 namespace Syki.Back.GetProfessorAgenda;
 
-[ApiController, AuthProfessor]
+[ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
 public class GetProfessorAgendaController(GetProfessorAgendaService service) : ControllerBase
 {

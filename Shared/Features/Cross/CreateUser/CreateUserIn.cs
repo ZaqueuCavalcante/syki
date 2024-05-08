@@ -6,41 +6,41 @@ public class CreateUserIn
     public string Name { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
-    public string Role { get; set; }
+    public UserRole Role { get; set; }
 
-    public static CreateUserIn NewAcademico(Guid institutionId, string email, string password)
+    public static CreateUserIn NewAcademic(Guid institutionId, string email, string password)
     {
         return new CreateUserIn
         {
             Name = email,
             Email = email,
-            Role = "Academico",
+            Role = UserRole.Academic,
             Password = password,
             InstitutionId = institutionId,
         };
     }
 
-    public static CreateUserIn NewProfessor(Guid institutionId, string name, string email)
+    public static CreateUserIn NewTeacher(Guid institutionId, string name, string email)
     {
         return new CreateUserIn
         {
             Name = name,
             Email = email,
-            Role = "Professor",
+            Role = UserRole.Teacher,
             InstitutionId = institutionId,
-            Password = $"Professor@{Guid.NewGuid().ToString().OnlyNumbers()}",
+            Password = $"Teacher@{Guid.NewGuid().ToString().OnlyNumbers()}",
         };
     }
 
-    public static CreateUserIn NewAluno(Guid institutionId, string name, string email)
+    public static CreateUserIn NewStudent(Guid institutionId, string name, string email)
     {
         return new CreateUserIn
         {
             Name = name,
             Email = email,
-            Role = "Aluno",
+            Role = UserRole.Student,
             InstitutionId = institutionId,
-            Password = $"Aluno@{Guid.NewGuid().ToString().OnlyNumbers()}",
+            Password = $"Student@{Guid.NewGuid().ToString().OnlyNumbers()}",
         };
     }
 }

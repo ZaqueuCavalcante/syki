@@ -4,9 +4,9 @@ public class SykiRoleConfig : IEntityTypeConfiguration<SykiRole>
 {
     public void Configure(EntityTypeBuilder<SykiRole> role)
     {
-        role.HasData(new SykiRole(AuthorizationConfigs.Adm));
-        role.HasData(new SykiRole(AuthorizationConfigs.Academico));
-        role.HasData(new SykiRole(AuthorizationConfigs.Professor));
-        role.HasData(new SykiRole(AuthorizationConfigs.Aluno));
+        role.HasData(new SykiRole(UserRole.Adm));
+        role.HasData(new SykiRole(UserRole.Academic));
+        role.HasData(new SykiRole(UserRole.Teacher));
+        role.HasData(new SykiRole(UserRole.Student));
     }
 }

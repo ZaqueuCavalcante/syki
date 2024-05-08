@@ -7,13 +7,13 @@
 
 <PageTitle>Turmas</PageTitle>
 
-<AuthorizeView Roles="Academico">
+<AuthorizeView Roles="@UserRole.Academic.ToString()">
     <Authorized>
         <AcademicoTurmas />
     </Authorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="Professor">
+<AuthorizeView Roles="@UserRole.Teacher.ToString()">
     <Authorized>
         <ProfessorTurmas />
     </Authorized>

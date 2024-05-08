@@ -1,6 +1,6 @@
 namespace Syki.Back.CreateMatriculaAluno;
 
-[ApiController, AuthAluno]
+[ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 public class CreateMatriculaAlunoController(CreateMatriculaAlunoService service) : ControllerBase
 {

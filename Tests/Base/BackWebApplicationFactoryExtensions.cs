@@ -1,7 +1,7 @@
-using Syki.Back.Features.Cross.CreateInstitution;
 using Microsoft.AspNetCore.Identity;
 using Syki.Back.Features.Cross.CreateUser;
 using Microsoft.Extensions.DependencyInjection;
+using Syki.Back.Features.Cross.CreateInstitution;
 
 namespace Syki.Tests.Base;
 
@@ -12,16 +12,15 @@ public static class BackWebApplicationFactoryExtensions
         return factory.CreateClient();
     }
 
-
-    // -------------------------------------------------------------------------------------------- //
-
-
     public static async Task<string?> GetRegisterSetupToken(this BackWebApplicationFactory factory, string email)
     {
         using var ctx = factory.GetDbContext();
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Email == email);
         return register?.Id.ToString();
     }
+
+    // -------------------------------------------------------------------------------------------- //
+
 
     public static async Task RegisterAdm(this BackWebApplicationFactory factory)
     {
@@ -36,7 +35,7 @@ public static class BackWebApplicationFactoryExtensions
         {
             Name = "Adm",
             Email = "adm@syki.com",
-            Role = "Adm",
+            Role = UserRole.Adm,
             Password = "Test@123",
             InstitutionId = institution.Id,
         };
@@ -44,7 +43,7 @@ public static class BackWebApplicationFactoryExtensions
         var user = new SykiUser(institution.Id, userIn.Name, userIn.Email);
         await userManager.CreateAsync(user, userIn.Password);
 
-        await userManager.AddToRoleAsync(user, userIn.Role);
+        await userManager.AddToRoleAsync(user, userIn.Role.ToString());
     }
 
     public static async Task<HttpClient> LoggedAsAdm(this BackWebApplicationFactory factory)

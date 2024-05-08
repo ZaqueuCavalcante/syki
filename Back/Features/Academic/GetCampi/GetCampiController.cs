@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Academic.GetCampi;
 /// <summary>
 /// Retorna todos os campus da instituição.
 /// </summary>
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetCampiController(GetCampiService service) : ControllerBase

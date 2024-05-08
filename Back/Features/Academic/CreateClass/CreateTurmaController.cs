@@ -3,7 +3,7 @@ namespace Syki.Back.CreateTurma;
 /// <summary>
 /// Cria uma nova turma.
 /// </summary>
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class CreateTurmaController(CreateTurmaService service) : ControllerBase

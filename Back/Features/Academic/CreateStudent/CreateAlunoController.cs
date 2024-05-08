@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateStudent;
 
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 public class CreateAlunoController(CreateAlunoService service) : ControllerBase
 {

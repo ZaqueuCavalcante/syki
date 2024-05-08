@@ -1,6 +1,6 @@
 namespace Syki.Back.GetProfessorTurmas;
 
-[ApiController, AuthProfessor]
+[ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
 public class GetProfessorTurmasController(GetProfessorTurmasService service) : ControllerBase
 {

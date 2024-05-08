@@ -1,6 +1,6 @@
 namespace Syki.Back.GetAlunoInsights;
 
-[ApiController, AuthAluno]
+[ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 public class GetAlunoInsightsController(GetAlunoInsightsService service) : ControllerBase
 {

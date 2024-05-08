@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Academic.GetCursos;
 /// <summary>
 /// Retorna todos os cursos da instituição.
 /// </summary>
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetCursosController(GetCursosService service) : ControllerBase

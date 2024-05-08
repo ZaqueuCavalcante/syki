@@ -3,7 +3,7 @@ namespace Syki.Back.GetAcademicPeriods;
 /// <summary>
 /// Retorna todos os períodos acadêmicos.
 /// </summary>
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetAcademicPeriods(GetAcademicPeriodsService service) : ControllerBase

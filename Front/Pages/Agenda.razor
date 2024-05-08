@@ -7,13 +7,13 @@
 
 <PageTitle>Agenda</PageTitle>
 
-<AuthorizeView Roles="Aluno">
+<AuthorizeView Roles="@UserRole.Student.ToString()">
     <Authorized>
         <AlunoAgenda />
     </Authorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="Professor">
+<AuthorizeView Roles="@UserRole.Teacher.ToString()">
     <Authorized>
         <ProfessorAgenda />
     </Authorized>

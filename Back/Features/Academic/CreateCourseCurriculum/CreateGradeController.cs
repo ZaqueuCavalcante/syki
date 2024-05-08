@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateGrade;
 
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class CreateGradeController(CreateGradeService service) : ControllerBase

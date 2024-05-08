@@ -1,6 +1,6 @@
 namespace Syki.Back.CreateEnrollmentPeriod;
 
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 public class CreateEnrollmentPeriodController(CreateEnrollmentPeriodService service) : ControllerBase
 {

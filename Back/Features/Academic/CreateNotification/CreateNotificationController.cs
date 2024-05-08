@@ -1,6 +1,6 @@
 namespace Syki.Back.CreateNotification;
 
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 public class CreateNotificationController(CreateNotificationService service) : ControllerBase
 {

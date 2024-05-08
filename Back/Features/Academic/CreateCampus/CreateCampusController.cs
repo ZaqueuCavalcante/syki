@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Academic.CreateCampus;
 /// <summary>
 /// Cria um novo campus.
 /// </summary>
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class CreateCampusController(CreateCampusService service) : ControllerBase

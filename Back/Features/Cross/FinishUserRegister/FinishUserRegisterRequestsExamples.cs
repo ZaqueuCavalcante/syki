@@ -6,11 +6,10 @@ public class FinishUserRegisterRequestsExamples : IMultipleExamplesProvider<Fini
     {
         yield return SwaggerExample.Create(
 			"Acadêmico",
-			new FinishUserRegisterIn
-			{
-				Token = Guid.NewGuid().ToString(),
-				Password = "M1@Str0ngP4ssword#"
-			}
+			new FinishUserRegisterIn(
+				Guid.NewGuid().ToString(),
+				"M1@Str0ngP4ssword#"
+			)
 		);
     }
 }

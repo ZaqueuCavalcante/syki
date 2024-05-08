@@ -84,7 +84,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await _factory.GetRegisterSetupToken(email);
 
         // Act
-        var response = await client.FinishUserRegister(token!, "Lalala@123");
+        await client.FinishUserRegister(token!, "Lalala@123");
 
         // Assert
         using var ctx = _factory.GetDbContext();
@@ -103,7 +103,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var token = await _factory.GetRegisterSetupToken(email);
 
         // Act
-        var response = await client.FinishUserRegister(token!, "Lalala@123");
+        await client.FinishUserRegister(token!, "Lalala@123");
 
         // Assert
         using var ctx = _factory.GetDbContext();
@@ -112,7 +112,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Should_register_user_with_academico_role()
+    public async Task Should_register_user_with_academic_role()
     {
         // Arrange
         var client = _factory.GetClient();
@@ -127,7 +127,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         using var userManager = _factory.GetUserManager();
         var user = await userManager.FindByEmailAsync(email);
-        var isInAcademicoRole = await userManager.IsInRoleAsync(user!, "Academico");
-        isInAcademicoRole.Should().BeTrue();
+        var isInAcademicRole = await userManager.IsInRoleAsync(user!, UserRole.Academic.ToString());
+        isInAcademicRole.Should().BeTrue();
     }
 }

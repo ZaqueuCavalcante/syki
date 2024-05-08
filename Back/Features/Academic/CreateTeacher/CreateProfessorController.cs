@@ -1,6 +1,6 @@
 namespace Syki.Back.CreateProfessor;
 
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 public class CreateProfessorController(CreateProfessorService service) : ControllerBase
 {

@@ -1,6 +1,6 @@
 namespace Syki.Back.GetAlunos;
 
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 public class GetAlunosController(GetAlunosService service) : ControllerBase
 {

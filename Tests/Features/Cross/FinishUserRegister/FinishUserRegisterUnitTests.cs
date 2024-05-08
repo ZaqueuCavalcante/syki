@@ -46,7 +46,7 @@ public class FinishUserRegisterUnitTests
     }
 
     [Test]
-    public void Should_return_a_new_user_in_academico()
+    public void Should_return_a_new_academic_user_in()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -54,14 +54,14 @@ public class FinishUserRegisterUnitTests
         var password = "Test@123";
 
         // Act
-        var user = CreateUserIn.NewAcademico(institutionId, email, password);
+        var user = CreateUserIn.NewAcademic(institutionId, email, password);
 
         // Assert
         user.Name.Should().Be(email);
         user.Email.Should().Be(email);
         user.Password.Should().Be(password);
         user.InstitutionId.Should().Be(institutionId);
-        user.Role.Should().Be("Academico");
+        user.Role.Should().Be(UserRole.Academic);
     }
 
     [Test]

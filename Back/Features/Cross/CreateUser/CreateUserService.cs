@@ -4,9 +4,6 @@ public class CreateUserService(SykiDbContext ctx, UserManager<SykiUser> userMana
 {
     public async Task<CreateUserOut> Create(CreateUserIn data)
     {
-        if (!(data.Role is AuthorizationConfigs.Academico or AuthorizationConfigs.Professor or AuthorizationConfigs.Aluno))
-            Throw.DE013.Now();
-
         var institutionOk = await ctx.Institutions.AnyAsync(c => c.Id == data.InstitutionId);
         if (!institutionOk)
             Throw.DE014.Now();
@@ -24,7 +21,7 @@ public class CreateUserService(SykiDbContext ctx, UserManager<SykiUser> userMana
         if (!result.Succeeded)
             Throw.DE015.Now();
 
-        await userManager.AddToRoleAsync(user, data.Role);
+        await userManager.AddToRoleAsync(user, data.Role.ToString());
 
         return user.ToOut();
     }

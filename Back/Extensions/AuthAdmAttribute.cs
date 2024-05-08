@@ -4,7 +4,7 @@ public class AuthAdmAttribute : AuthorizeAttribute
 {
 	public AuthAdmAttribute()
 	{
-		Roles = AuthorizationConfigs.Adm;
+		Roles = UserRole.Adm.ToString();
 		AuthenticationSchemes = AuthenticationConfigs.BearerScheme;
 	}
 }

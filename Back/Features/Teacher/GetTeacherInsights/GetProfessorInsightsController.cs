@@ -1,6 +1,6 @@
 namespace Syki.Back.GetProfessorInsights;
 
-[ApiController, AuthProfessor]
+[ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
 public class GetProfessorInsightsController(GetProfessorInsightsService service) : ControllerBase
 {

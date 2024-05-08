@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Academic.CreateDisciplina;
 /// <summary>
 /// Cria uma nova disciplina.
 /// </summary>
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class CreateDisciplinaController(CreateDisciplinaService service) : ControllerBase

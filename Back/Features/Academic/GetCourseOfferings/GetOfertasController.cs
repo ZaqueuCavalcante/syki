@@ -1,6 +1,6 @@
 namespace Syki.Back.GetOfertas;
 
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 public class GetOfertasController(GetOfertasService service) : ControllerBase
 {

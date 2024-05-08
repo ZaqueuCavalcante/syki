@@ -1,6 +1,6 @@
 namespace Syki.Back.GetAlunoAgenda;
 
-[ApiController, AuthAluno]
+[ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 public class GetAlunoAgendaController(GetAlunoAgendaService service) : ControllerBase
 {

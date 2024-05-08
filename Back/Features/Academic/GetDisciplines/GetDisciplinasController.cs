@@ -3,7 +3,7 @@ namespace Syki.Back.GetDisciplinas;
 /// <summary>
 /// Retorna todas as disciplinas.
 /// </summary>
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetDisciplinasController(GetDisciplinasService service) : ControllerBase

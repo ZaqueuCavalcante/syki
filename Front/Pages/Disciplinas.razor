@@ -5,10 +5,10 @@
 
 @page "/disciplinas"
 
-<AuthorizeView Roles="Academico">
+<AuthorizeView Roles="@UserRole.Academic.ToString()">
     <AcademicoDisciplinasPage />
 </AuthorizeView>
 
-<AuthorizeView Roles="Aluno">
+<AuthorizeView Roles="@UserRole.Student.ToString()">
     <AlunoDisciplinasPage />
 </AuthorizeView>

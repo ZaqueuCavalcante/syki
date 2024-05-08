@@ -1,6 +1,6 @@
 namespace Syki.Back.GetMatriculaAlunoTurmas;
 
-[ApiController, AuthAluno]
+[ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 public class GetMatriculaAlunoTurmasController(GetMatriculaAlunoTurmasService service) : ControllerBase
 {

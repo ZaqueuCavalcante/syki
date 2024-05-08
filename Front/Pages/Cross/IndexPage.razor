@@ -10,31 +10,31 @@
 
 <PageTitle>Syki</PageTitle>
 
-<AuthorizeView Roles="Adm">
+<AuthorizeView Roles="@UserRole.Adm.ToString()">
     <Authorized>
         <IndexAdm />
     </Authorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="Academico">
+<AuthorizeView Roles="@UserRole.Academic.ToString()">
     <Authorized>
         <IndexAcademico />
     </Authorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="Aluno">
+<AuthorizeView Roles="@UserRole.Student.ToString()">
     <Authorized>
         <IndexAluno />
     </Authorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="Professor">
+<AuthorizeView Roles="@UserRole.Teacher.ToString()">
     <Authorized>
         <IndexProfessor />
     </Authorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="Adm, Academico, Aluno, Professor">
+<AuthorizeView Roles="Adm, Academic, Teacher, Student">
     <NotAuthorized>
         <IndexAnonymous />
     </NotAuthorized>

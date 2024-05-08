@@ -3,8 +3,8 @@
 ## Cross
 - [X] CreateInstitution
 - [X] CreatePendingUserRegister
-- [] CreateUser
-- [] FinishUserRegister
+- [X] CreateUser
+- [X] FinishUserRegister
 - [] GenerateJWT
 - [] GetMfaKey
 - [] GetUserNotifications

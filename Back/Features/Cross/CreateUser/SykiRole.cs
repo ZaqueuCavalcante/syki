@@ -2,11 +2,13 @@ namespace Syki.Back.Features.Cross.CreateUser;
 
 public class SykiRole : IdentityRole<Guid>
 {
-    public SykiRole(string name)
+    private SykiRole() {}
+
+    public SykiRole(UserRole role)
     {
         Id = Guid.NewGuid();
-        Name = name;
-        NormalizedName = name.ToUpper();
+        Name = role.ToString();
+        NormalizedName = role.ToString().ToUpper();
         ConcurrencyStamp = Guid.NewGuid().ToString();
     }
 }

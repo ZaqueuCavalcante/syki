@@ -1,6 +1,6 @@
 namespace Syki.Back.CreateOferta;
 
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 public class CreateOfertaController(CreateOfertaService service) : ControllerBase
 {

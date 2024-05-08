@@ -1,6 +1,6 @@
 namespace Syki.Back.GetCursoDisciplinas;
 
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 public class GetCursoDisciplinasController(GetCursoDisciplinasService service) : ControllerBase
 {

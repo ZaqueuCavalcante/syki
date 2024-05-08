@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Academic.GetAcademicInsights;
 /// <summary>
 /// Retorna os insights do usuário do tipo acadêmico.
 /// </summary>
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetAcademicInsightsController(GetAcademicInsightsService service) : ControllerBase

@@ -32,14 +32,14 @@ public static class HttpClientExtensions
         return await client.Create(email);
     }
 
-
-    // -------------------------------------------------------------------------------------------- //
-
     public static async Task<HttpResponseMessage> FinishUserRegister(this HttpClient http, string token, string password)
     {
         var client = new FinishUserRegisterClient(http);
         return await client.Finish(token, password);
     }
+
+    // -------------------------------------------------------------------------------------------- //
+
 
     public static async Task<CreateUserOut> RegisterUser(this HttpClient client, BackWebApplicationFactory factory)
     {

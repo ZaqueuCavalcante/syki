@@ -13,7 +13,7 @@ public class CreateAlunoService(SykiDbContext ctx, CreateUserService service, Se
         if (!ofertaOk)
             Throw.DE012.Now();
 
-        var userIn = CreateUserIn.NewAluno(institutionId, data.Name, data.Email);
+        var userIn = CreateUserIn.NewStudent(institutionId, data.Name, data.Email);
         var user = await service.Create(userIn);
 
         var aluno = new Aluno(user.Id, institutionId, data.Name, data.OfertaId);

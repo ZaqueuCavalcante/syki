@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Academic.CreateAcademicPeriod;
 /// <summary>
 /// Cria um novo período acadêmico.
 /// </summary>
-[ApiController, AuthAcademico]
+[ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class CreateAcademicPeriodController(CreateAcademicPeriodService service) : ControllerBase

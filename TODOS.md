@@ -5,12 +5,12 @@
 - [X] CreatePendingUserRegister
 - [X] CreateUser
 - [X] FinishUserRegister
-- [] GenerateJWT
+- [X] GenerateJWT
 - [] GetMfaKey
 - [] GetUserNotifications
 - [X] Health
 - [X] Home
-- [] Login
+- [X] Login
 - [] LoginMfa
 - [] ResetPassword
 - [] SendResetPasswordToken

@@ -6,11 +6,7 @@ public class LoginRequestsExamples : IMultipleExamplesProvider<LoginIn>
     {
         yield return SwaggerExample.Create(
 			"Acadêmico",
-			new LoginIn
-			{
-				Email = "academico@syki.com",
-				Password = "M1@Str0ngP4ssword#",
-			}
+			new LoginIn("academico@syki.com", "M1@Str0ngP4ssword#")
 		);
     }
 }

@@ -3,10 +3,25 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
+    public async Task Should_login()
+    {
+        // Arrange
+        var client = _factory.GetClient();
+        var user = await client.RegisterUser(_factory);
+
+        // Act
+        var result = await client.Login(user.Email, user.Password);
+
+        // Assert
+        result.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+    }
+
+    [Test]
     public async Task Should_not_login_random_user()
     {
         // Arrange
         var client = _factory.GetClient();
+        await client.RegisterUser(_factory);
         var email = "academico@novaroma.com";
         var password = "Academico@123";
 
@@ -43,20 +58,6 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         result.WrongEmailOrPassword.Should().BeTrue();
-    }
-
-    [Test]
-    public async Task Should_login()
-    {
-        // Arrange
-        var client = _factory.GetClient();
-        var user = await client.RegisterUser(_factory);
-
-        // Act
-        var result = await client.Login(user.Email, user.Password);
-
-        // Assert
-        result.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
     }
 
     [Test]

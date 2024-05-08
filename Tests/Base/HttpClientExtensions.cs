@@ -38,9 +38,6 @@ public static class HttpClientExtensions
         return await client.Finish(token, password);
     }
 
-    // -------------------------------------------------------------------------------------------- //
-
-
     public static async Task<CreateUserOut> RegisterUser(this HttpClient client, BackWebApplicationFactory factory)
     {
         var email = TestData.Email;
@@ -115,14 +112,7 @@ public static class HttpClientExtensions
 
 
 
-
-
-
-
-
-
-
-
+    // -------------------------------------------------------------------------------------------- //
 
 
 

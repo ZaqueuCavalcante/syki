@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using Syki.Front.Auth;
 using Microsoft.JSInterop;
 
 namespace Syki.Front.Features.Cross.Login;
@@ -8,7 +7,7 @@ public class LoginClient(HttpClient http, ILocalStorageService localStorage, Syk
 {
     public async Task<LoginOut> Login(string email, string password)
     {
-        var body = new LoginIn { Email = email, Password = password };
+        var body = new LoginIn(email, password);
         var response = await http.PostAsJsonAsync("/login", body);
 
         var responseAsString = await response.Content.ReadAsStringAsync();

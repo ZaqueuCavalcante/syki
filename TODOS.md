@@ -8,8 +8,8 @@
 - [] GenerateJWT
 - [] GetMfaKey
 - [] GetUserNotifications
-- [] Health
-- [] Home
+- [X] Health
+- [X] Home
 - [] Login
 - [] LoginMfa
 - [] ResetPassword

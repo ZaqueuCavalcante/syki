@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_turma()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var disciplina = await client.CreateDisciplina();
         var professor = await client.CreateProfessor();
@@ -28,7 +28,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_disciplina()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateturmaHttp(Guid.NewGuid(), Guid.NewGuid(), "2024.1", []);
@@ -41,7 +41,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_professor()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var disciplina = await client.CreateDisciplina();
 
@@ -56,7 +56,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_periodo()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var disciplina = await client.CreateDisciplina();
         var professor = await client.CreateProfessor();
@@ -72,7 +72,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_turma_com_horario_invalido()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var disciplina = await client.CreateDisciplina();
         var professor = await client.CreateProfessor();
@@ -90,7 +90,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_todas_as_turmas_da_institution()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var disciplina = await client.CreateDisciplina();
         var professor = await client.CreateProfessor();

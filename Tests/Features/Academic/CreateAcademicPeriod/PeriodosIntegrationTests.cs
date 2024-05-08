@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_um_novo_periodo()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         var periodo = await client.CreateAcademicPeriod("2024.1");
@@ -19,7 +19,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_varios_periodos_para_uma_mesma_institution()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         await client.CreateAcademicPeriod("2023.1");
@@ -34,8 +34,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_apenas_os_periodos_da_institution_do_usuario_logado()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademico();
-        var clientUfpe = await _factory.LoggedAsAcademico();
+        var clientNovaRoma = await _factory.LoggedAsAcademic();
+        var clientUfpe = await _factory.LoggedAsAcademic();
 
         var periodo = await clientNovaRoma.CreateAcademicPeriod("2023.1");
 

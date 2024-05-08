@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_academic_insights()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         await client.CreateCampus();
         await client.CreateDisciplina();
         await client.CreateCurso();

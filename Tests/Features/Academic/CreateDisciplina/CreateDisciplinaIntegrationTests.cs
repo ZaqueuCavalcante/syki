@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_nova_disciplina_sem_vinculo_com_nenhum_curso()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         var disciplina = await client.CreateDisciplina("Banco de Dados");
@@ -21,7 +21,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_nova_disciplina_vincula_a_um_unico_curso()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         // Act
@@ -36,7 +36,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_nova_disciplina_vincula_a_mais_de_um_curso()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var ads = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
         var cc = await client.CreateCurso("Ciência da Computação");
 
@@ -52,7 +52,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_varias_disciplinas()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         await client.CreateDisciplina("Banco de Dados");

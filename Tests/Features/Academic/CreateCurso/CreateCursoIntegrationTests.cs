@@ -8,7 +8,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_create_a_bew_course()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
@@ -23,7 +23,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_create_many_courses()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         await client.CreateCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);

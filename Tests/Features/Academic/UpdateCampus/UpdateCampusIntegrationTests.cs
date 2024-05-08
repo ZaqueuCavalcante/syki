@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_update_a_campus()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
 
         // Act

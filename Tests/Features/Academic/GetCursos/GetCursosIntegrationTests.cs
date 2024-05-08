@@ -8,7 +8,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_all_courses_ordered_by_name()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         await client.CreateCurso("Direito", Tecnologo);

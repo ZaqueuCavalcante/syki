@@ -8,7 +8,7 @@ public class AuditIntegrationTests : IntegrationTestBase
     public async Task Should_audit_a_campus_creation()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         Configuration.AuditDisabled = false;
@@ -25,7 +25,7 @@ public class AuditIntegrationTests : IntegrationTestBase
     public async Task Should_audit_a_campus_update()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
 
         // Act

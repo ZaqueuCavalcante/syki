@@ -53,7 +53,7 @@ public static class BackWebApplicationFactoryExtensions
         return client;
     }
 
-    public static async Task<HttpClient> LoggedAsAcademico(this BackWebApplicationFactory factory)
+    public static async Task<HttpClient> LoggedAsAcademic(this BackWebApplicationFactory factory)
     {
         var client = factory.GetClient();
         var user = await client.RegisterUser(factory);

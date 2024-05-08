@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_mfa_key()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         var response = await client.GetMfaKey();
@@ -19,7 +19,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_same_mfa_key_for_many_gets()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         var response00 = await client.GetMfaKey();

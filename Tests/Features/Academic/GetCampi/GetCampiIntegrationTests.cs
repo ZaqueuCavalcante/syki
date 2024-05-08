@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_empty_list_when_has_no_campi()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         var campi = await client.GetAsync<List<GetCampusOut>>("/campi");
@@ -19,7 +19,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_many_campus()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         await client.CreateCampus("Agreste I", "Caruaru - PE");
         await client.CreateCampus("Suassuna I", "Recife - PE");

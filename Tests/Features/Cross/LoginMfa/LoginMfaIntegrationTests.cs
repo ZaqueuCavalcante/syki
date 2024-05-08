@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_login_when_try_get_jwt_with_right_mfa_code_but_without_supply_email_and_password()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var keyResponse = await client.GetMfaKey();
         var token = keyResponse.Key.ToMfaToken();

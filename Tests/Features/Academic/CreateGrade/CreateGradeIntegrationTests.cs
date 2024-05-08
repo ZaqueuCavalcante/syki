@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_nova_grade_mesmo_sem_disciplinas()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         // Act
@@ -24,7 +24,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_nova_grade_com_disciplinas()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         var bd = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
@@ -47,7 +47,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_nova_grade_com_disciplinas_que_tem_carga_horaria_diferente_da_padrao()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         var bd = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
@@ -69,7 +69,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_nova_grade_sem_vinculo_com_curso()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateGradeHttp("Grade de ADS 1.0", Guid.NewGuid(), []);
@@ -82,8 +82,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_nova_grade_com_curso_de_outra_institution()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademico();
-        var clientUfpe = await _factory.LoggedAsAcademico();
+        var clientNovaRoma = await _factory.LoggedAsAcademic();
+        var clientUfpe = await _factory.LoggedAsAcademic();
 
         var curso = await clientUfpe.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
@@ -98,7 +98,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_grade_vinculando_disciplinas_que_nao_sao_do_curso_escolhido()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var ads = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
         var direito = await client.CreateCurso("Direito");
@@ -116,8 +116,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_nova_grade_com_disciplina_de_outra_institution()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademico();
-        var clientUfpe = await _factory.LoggedAsAcademico();
+        var clientNovaRoma = await _factory.LoggedAsAcademic();
+        var clientUfpe = await _factory.LoggedAsAcademic();
 
         var cursoNovaRoma = await clientNovaRoma.CreateCurso("Análise e Desenvolvimento de Sistemas");
         await clientNovaRoma.CreateDisciplina("Banco de Dados", [cursoNovaRoma.Id]);
@@ -136,7 +136,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_grade_com_disciplinas_repetidas()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         var bd = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
@@ -162,7 +162,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_grade_com_disciplinas_que_nao_existem()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
 
         var bd = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
@@ -185,8 +185,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_todas_as_grades_apenas_daquela_institution()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademico();
-        var clientUfpe = await _factory.LoggedAsAcademico();
+        var clientNovaRoma = await _factory.LoggedAsAcademic();
+        var clientUfpe = await _factory.LoggedAsAcademic();
 
         var cursoNovaRoma = await clientNovaRoma.CreateCurso("Análise e Desenvolvimento de Sistemas");
         var gradeNovaRoma = await clientNovaRoma.CreateGrade("NR - Grade de ADS - 1.0", cursoNovaRoma.Id);
@@ -207,7 +207,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_todas_as_grades_ordenadas_por_nome()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var direito = await client.CreateCurso("Direito");
         var gradeDireito = await client.CreateGrade("Grade de Direito 1.0", direito.Id);

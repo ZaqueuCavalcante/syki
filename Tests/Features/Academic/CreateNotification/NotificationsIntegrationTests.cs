@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_a_notification()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
 
@@ -23,7 +23,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_marcar_a_notificacao_como_vista_pelo_usuario()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
@@ -55,7 +55,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_todas_as_notificacoes()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         await client.PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" });
         await client.PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Ola", Description = "O", UsersGroup = "Alunos" });
@@ -71,7 +71,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_todas_as_notificacoes_do_usuario_logado()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");

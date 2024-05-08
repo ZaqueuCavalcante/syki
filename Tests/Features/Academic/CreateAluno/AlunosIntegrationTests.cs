@@ -7,7 +7,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_um_aluno_o_vinculando_com_uma_oferta()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
@@ -28,7 +28,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_um_aluno_sem_vinculo_com_oferta()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateAlunoHttp(Guid.NewGuid());
@@ -41,7 +41,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_as_disciplinas_cursadas_pelo_aluno()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
@@ -76,7 +76,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_os_alunos()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");

@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_um_novo_periodo_de_matricula()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var period = await client.CreateAcademicPeriod("2024.1");
 
@@ -21,7 +21,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_os_periodos_de_matricula()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var period = await client.CreateAcademicPeriod("2024.1");
         await client.CreateEnrollmentPeriod(period.Id, "15/01", "28/01");
@@ -37,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_retornar_nenhuma_turma_quando_nao_ha_periodo_de_matricula_cadastrado()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
@@ -59,7 +59,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_retornar_nenhuma_turma_antes_do_periodo_de_matricula()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
@@ -88,7 +88,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_retornar_nenhuma_turma_depois_do_periodo_de_matricula()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
@@ -117,7 +117,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_apenas_as_turmas_cujas_disciplinas_estao_na_grade_da_oferta_de_curso_do_aluno()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var year = DateTime.Now.Year;
         var periodo = await client.CreateAcademicPeriod($"{year}.1");

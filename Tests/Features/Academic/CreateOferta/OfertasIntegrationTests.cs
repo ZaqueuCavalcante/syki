@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_oferta_sem_vinculo_com_campus()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateOfertaHttp(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "2024.1", Turno.Matutino);
@@ -19,8 +19,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_oferta_quando_o_campus_pertence_a_outra_institution()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademico();
-        var clientUfpe = await _factory.LoggedAsAcademico();
+        var clientNovaRoma = await _factory.LoggedAsAcademic();
+        var clientUfpe = await _factory.LoggedAsAcademic();
 
         await clientNovaRoma.CreateCampus("Agreste I", "Caruaru - PE");
         var campusUfpe = await clientUfpe.CreateCampus("Suassuna", "Recife - PE");
@@ -36,7 +36,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_oferta_sem_vinculo_com_curso()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
 
         // Act
@@ -50,8 +50,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_oferta_com_curso_de_outra_institution()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademico();
-        var clientUfpe = await _factory.LoggedAsAcademico();
+        var clientNovaRoma = await _factory.LoggedAsAcademic();
+        var clientUfpe = await _factory.LoggedAsAcademic();
 
         var cursoUfpe = await clientUfpe.CreateCurso("Direito");
         var campusNovaRoma = await clientNovaRoma.CreateCampus("Agreste I", "Caruaru - PE");
@@ -67,7 +67,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_oferta_sem_grade_vinculada()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var curso = await client.CreateCurso("Direito");
 
@@ -82,7 +82,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_oferta_com_grade_que_nao_eh_do_curso_escolhido()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var cursoAds = await client.CreateCurso("ADS");
         var cursoDireito = await client.CreateCurso("Direito");
@@ -99,7 +99,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_oferta_sem_vinculo_com_periodo()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var curso = await client.CreateCurso("Direito");
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
@@ -115,8 +115,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Nao_deve_criar_uma_oferta_com_periodo_de_outra_institution()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademico();
-        var clientUfpe = await _factory.LoggedAsAcademico();
+        var clientNovaRoma = await _factory.LoggedAsAcademic();
+        var clientUfpe = await _factory.LoggedAsAcademic();
 
         await clientUfpe.CreateAcademicPeriod("2023.1");
 
@@ -135,7 +135,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_criar_uma_oferta()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");
@@ -155,7 +155,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_todas_as_ofertas()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var periodo = await client.CreateAcademicPeriod("2024.1");

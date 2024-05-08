@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_as_disciplinas_ordenadas_pelo_nome()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
 
         // Act
         await client.CreateDisciplina("Estrutura de Dados");
@@ -31,7 +31,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Deve_retornar_apenas_as_disciplinas_do_curso_informado()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademico();
+        var client = await _factory.LoggedAsAcademic();
         var ads = await client.CreateCurso("Análise e Desenvolvimento de Sistemas");
         var cc = await client.CreateCurso("Ciência da Computação");
 

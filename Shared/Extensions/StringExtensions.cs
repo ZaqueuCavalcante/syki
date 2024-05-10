@@ -1,4 +1,5 @@
 using OtpNet;
+using QRCoder;
 using Newtonsoft.Json;
 using System.Globalization;
 using Newtonsoft.Json.Converters;
@@ -75,4 +76,19 @@ public static class StringExtensions
 	{
 		return JsonConvert.SerializeObject(obj, _settings);
 	}
+
+    public static Byte[] GenerateQrCodeBytes(this string key, string email)
+    {
+        const string provider = "Syki";
+
+        using var qrGenerator = new QRCodeGenerator();
+        using var qrCodeData = qrGenerator.CreateQrCode(
+            $"otpauth://totp/{provider}:{email}?secret={key}&issuer={provider}",
+            QRCodeGenerator.ECCLevel.Q
+        );
+        
+        var qrCode = new PngByteQRCode(qrCodeData);
+
+        return qrCode.GetGraphic(20);
+    }
 }

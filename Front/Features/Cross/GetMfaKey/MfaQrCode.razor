@@ -38,7 +38,7 @@
 
         var result = await Client.Get();
         var email = await GetUserEmail();
-        _codeBytes = GuidExtensions.GenerateQrCodeBytes(result.Key, email);
+        _codeBytes = result.Key.GenerateQrCodeBytes(email);
 
         _qrCodeLoading = false;
     }

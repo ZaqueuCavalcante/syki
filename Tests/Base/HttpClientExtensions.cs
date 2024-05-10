@@ -69,17 +69,17 @@ public static class HttpClientExtensions
         return await client.Get();
     }
 
-    public static async Task<bool> SetupMfa(this HttpClient http, string code)
+    public static async Task<bool> SetupMfa(this HttpClient http, string token)
     {
         var client = new SetupMfaClient(http);
-        return await client.Setup(code);
+        return await client.Setup(token);
     }
 
-    public static async Task<LoginMfaOut> LoginMfa(this HttpClient http, string code)
+    public static async Task<LoginMfaOut> LoginMfa(this HttpClient http, string token)
     {
         var storage=  new LocalStorageServiceMock();
         var client = new LoginMfaClient(http, storage, new SykiAuthStateProvider(storage));
-        var response = await client.Login(code);
+        var response = await client.Login(token);
 
         http.RemoveAuthToken();
         http.AddAuthToken(response.AccessToken);

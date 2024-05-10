@@ -14,7 +14,7 @@
 - [] LoginMfa
 - [] ResetPassword
 - [] SendResetPasswordToken
-- [] SetupMfa
+- [X] SetupMfa
 - [] ViewNotifications
 
 ## Academic

@@ -46,7 +46,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
 
         var aluno = await client.CreateAluno(oferta.Id, "Zaqueu");
-        var clientAluno = await _factory.LoggedAsAluno(aluno.Email);
+        var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
         var turmas = await clientAluno.GetAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas");
@@ -75,7 +75,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateEnrollmentPeriod(period.Id, start, end);
 
         var aluno = await client.CreateAluno(oferta.Id, "Zaqueu");
-        var clientAluno = await _factory.LoggedAsAluno(aluno.Email);
+        var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
         var turmas = await clientAluno.GetAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas");
@@ -104,7 +104,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateEnrollmentPeriod(period.Id, start, end);
 
         var aluno = await client.CreateAluno(oferta.Id, "Zaqueu");
-        var clientAluno = await _factory.LoggedAsAluno(aluno.Email);
+        var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
         var turmas = await clientAluno.GetAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas");
@@ -170,7 +170,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var zaqueu = await client.CreateAluno(ofertaAds.Id, "Zaqueu");
         var maju = await client.CreateAluno(ofertaDireito.Id, "Maju");
 
-        var clientAluno = await _factory.LoggedAsAluno(zaqueu.Email);
+        var clientAluno = await _factory.LoggedAsStudent(zaqueu.Email);
 
         // Act
         var turmas = await clientAluno.GetAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas");

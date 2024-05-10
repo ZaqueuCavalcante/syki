@@ -19,8 +19,13 @@ public static class BackWebApplicationFactoryExtensions
         return register?.Id.ToString();
     }
 
-    // -------------------------------------------------------------------------------------------- //
-
+    public static async Task<HttpClient> LoggedAsAcademic(this BackWebApplicationFactory factory)
+    {
+        var client = factory.GetClient();
+        var user = await client.RegisterUser(factory);
+        await client.Login(user.Email, user.Password);
+        return client;
+    }
 
     public static async Task RegisterAdm(this BackWebApplicationFactory factory)
     {
@@ -53,15 +58,7 @@ public static class BackWebApplicationFactoryExtensions
         return client;
     }
 
-    public static async Task<HttpClient> LoggedAsAcademic(this BackWebApplicationFactory factory)
-    {
-        var client = factory.GetClient();
-        var user = await client.RegisterUser(factory);
-        await client.Login(user.Email, user.Password);
-        return client;
-    }
-
-    public static async Task<HttpClient> LoggedAsAluno(this BackWebApplicationFactory factory, string email)
+    public static async Task<HttpClient> LoggedAsStudent(this BackWebApplicationFactory factory, string email)
     {
         var client = factory.GetClient();
 

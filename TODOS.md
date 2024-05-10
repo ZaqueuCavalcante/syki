@@ -6,12 +6,12 @@
 - [X] CreateUser
 - [X] FinishUserRegister
 - [X] GenerateJWT
-- [] GetMfaKey
+- [X] GetMfaKey
 - [] GetUserNotifications
 - [X] Health
 - [X] Home
 - [X] Login
-- [] LoginMfa
+- [X] LoginMfa
 - [] ResetPassword
 - [] SendResetPasswordToken
 - [X] SetupMfa

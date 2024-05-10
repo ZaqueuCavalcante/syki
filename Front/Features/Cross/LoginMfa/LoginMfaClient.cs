@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using Syki.Front.Auth;
 using Microsoft.JSInterop;
 
 namespace Syki.Front.Features.Cross.LoginMfa;

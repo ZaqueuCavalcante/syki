@@ -12,8 +12,8 @@
 - [X] Home
 - [X] Login
 - [X] LoginMfa
-- [] ResetPassword
-- [] SendResetPasswordToken
+- [X] ResetPassword
+- [X] SendResetPasswordToken
 - [X] SetupMfa
 - [] ViewNotifications
 

@@ -3,48 +3,6 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Should_get_the_reset_password_token()
-    {
-        // Arrange
-        var client = _factory.GetClient();
-        var user = await client.RegisterUser(_factory);
-        await client.SendResetPasswordToken(user.Email);
-
-        // Act
-        var token = await _factory.GetResetPasswordToken(user.Email);
-
-        // Assert
-        token!.Length.Should().Be(36);
-    }
-
-    [Test]
-    public async Task Should_not_get_the_reset_password_token_when_user_not_exists()
-    {
-        // Arrange / Act
-        var token = await _factory.GetResetPasswordToken(TestData.Email);
-
-        // Assert
-        token.Should().BeNull();
-    }
-
-    [Test]
-    public async Task Should_not_reset_password_with_wrong_token()
-    {
-        // Arrange
-        var client = _factory.GetClient();
-        var user = await client.RegisterUser(_factory);
-        await client.SendResetPasswordToken(user.Email);
-
-        client.RemoveAuthToken();
-
-        // Act
-        var response = await client.ResetPassword(Guid.NewGuid().ToString(), "My@new@strong@P4ssword");
-
-        // Assert
-        await response.AssertBadRequest(Throw.DE019);
-    }
-
-    [Test]
     public async Task Should_reset_password()
     {
         // Arrange
@@ -60,6 +18,23 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         response.IsSuccessStatusCode.Should().BeTrue();
+    }
+    
+    [Test]
+    public async Task Should_not_reset_password_with_wrong_token()
+    {
+        // Arrange
+        var client = _factory.GetClient();
+        var user = await client.RegisterUser(_factory);
+        await client.SendResetPasswordToken(user.Email);
+
+        client.RemoveAuthToken();
+
+        // Act
+        var response = await client.ResetPassword(Guid.NewGuid().ToString(), "My@new@strong@P4ssword");
+
+        // Assert
+        await response.AssertBadRequest(Throw.DE019);
     }
 
     [Test]

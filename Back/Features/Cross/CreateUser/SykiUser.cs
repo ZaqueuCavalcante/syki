@@ -18,7 +18,7 @@ public class SykiUser : IdentityUser<Guid>
         CreatedAt = DateTime.Now;
     }
 
-    public CreateUserOut ToOut()
+    public UserOut ToOut()
     {
         return new()
         {

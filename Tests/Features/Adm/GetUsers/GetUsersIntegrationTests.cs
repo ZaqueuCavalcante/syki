@@ -12,11 +12,11 @@ public class GetUsersIntegrationTests : IntegrationTestBase
         var admClient = await _factory.LoggedAsAdm();
 
         // Act
-        var users = await admClient.GetAsync<List<CreateUserOut>>("/users");
+        var users = await admClient.GetAsync<List<UserOut>>("/users");
 
         // Assert
         users.Should().HaveCount(2);
-        var academic = users.First(x => x.Role == "Academico");
+        var academic = users.First(x => x.Role == "Academic");
         academic.Institution.Should().EndWith(user.Email);
     }
 }

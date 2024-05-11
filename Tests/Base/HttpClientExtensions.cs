@@ -21,6 +21,7 @@ using Syki.Front.Features.Academic.CreateAcademicPeriod;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Cross.CreatePendingUserRegister;
+using Syki.Front.Features.Academic.CreateNotification;
 
 namespace Syki.Tests.Base;
 
@@ -38,7 +39,7 @@ public static class HttpClientExtensions
         return await client.Finish(token, password);
     }
 
-    public static async Task<CreateUserOut> RegisterUser(this HttpClient client, BackWebApplicationFactory factory)
+    public static async Task<UserOut> RegisterUser(this HttpClient client, BackWebApplicationFactory factory)
     {
         var email = TestData.Email;
         var password = "Lalala@123";
@@ -48,7 +49,7 @@ public static class HttpClientExtensions
 
         await client.FinishUserRegister(token!, password);
 
-        return new CreateUserOut { Email = email, Password = password };
+        return new UserOut { Email = email, Password = password };
     }
 
     public static async Task<LoginOut> Login(this HttpClient http, string email, string password)
@@ -109,6 +110,12 @@ public static class HttpClientExtensions
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
     }
 
+    public static async Task<NotificationOut> CreateNotification(this HttpClient http, string title, string description, UsersGroup targetUsers)
+    {
+        var client = new CreateNotificationClient(http);
+        var response = await client.Create(title, description, targetUsers);
+        return await response.DeserializeTo<NotificationOut>();
+    }
 
     // -------------------------------------------------------------------------------------------- //
 
@@ -268,7 +275,7 @@ public static class HttpClientExtensions
         return await http.PostAsJsonAsync("/ofertas", body);
     }
 
-    public static async Task<AlunoOut> CreateAluno(
+    public static async Task<AlunoOut> CreateStudent(
         this HttpClient http,
         Guid ofertaId,
         string name = "Zezin",

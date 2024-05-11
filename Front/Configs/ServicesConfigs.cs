@@ -1,5 +1,3 @@
-
-
 namespace Syki.Front.Configs;
 
 public static class ServicesConfigs
@@ -19,6 +17,13 @@ public static class ServicesConfigs
         builder.Services.AddScoped<GetTeacherInsightsClient>();
 
         // Academic
+        builder.Services.AddScoped<CreateEnrollmentPeriodClient>();
+        builder.Services.AddScoped<CreateNotificationClient>();
+
+
+
+
+
         builder.Services.AddScoped<CreateCampusClient>();
         builder.Services.AddScoped<UpdateCampusClient>();
         builder.Services.AddScoped<GetCampiClient>();
@@ -38,7 +43,6 @@ public static class ServicesConfigs
 
         builder.Services.AddScoped<CreateAcademicPeriodClient>();
         builder.Services.AddScoped<GetAcademicPeriodsClient>();
-        builder.Services.AddScoped<CreateEnrollmentPeriodClient>();
         builder.Services.AddScoped<GetEnrollmentPeriodsClient>();
         builder.Services.AddScoped<GetCurrentEnrollmentPeriodClient>();
 

@@ -107,6 +107,9 @@
 
 @code
 {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
     MudForm _form;
     private bool _loading;
 
@@ -121,9 +124,6 @@
     List<AcademicPeriodOut> Periodos = [];
     List<AlunoOut> Alunos = [];
     List<HorarioInFillable> Horarios { get; set; } = [];
-
-    [CascadingParameter]
-    MudDialogInstance MudDialog { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

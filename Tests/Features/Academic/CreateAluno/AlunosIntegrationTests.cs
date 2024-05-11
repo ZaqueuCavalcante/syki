@@ -16,7 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
 
         // Act
-        var response = await client.CreateAluno(oferta.Id);
+        var response = await client.CreateStudent(oferta.Id);
 
         // Assert
         response.Id.Should().NotBeEmpty(); 
@@ -56,7 +56,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id, disciplinas);
         var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
 
-        var aluno = await client.CreateAluno(oferta.Id, "Zaqueu");
+        var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
 
         var token = await _factory.GetResetPasswordToken(aluno.Email);
         var password = await client.ResetPassword(token!);
@@ -84,8 +84,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
         var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
 
-        await client.CreateAluno(oferta.Id, "Zaqueu");
-        await client.CreateAluno(oferta.Id, "Maju");
+        await client.CreateStudent(oferta.Id, "Zaqueu");
+        await client.CreateStudent(oferta.Id, "Maju");
 
         // Act
         var response = await client.GetAsync<List<AlunoOut>>("/alunos");

@@ -5,7 +5,7 @@ using Syki.Back.CreateTurma;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
 using Syki.Back.Features.Cross.CreateInstitution;
-using Syki.Back.CreateNotification;
+using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.CreateMatriculaAluno;
 using Syki.Back.CreateEnrollmentPeriod;

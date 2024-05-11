@@ -3,21 +3,35 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Deve_criar_a_notification()
+    public async Task Should_create_a_notification_without_target_users()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
 
-        var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
-
         // Act
-        var response = await client.PostAsync<NotificationOut>("/notifications", body);
+        var response = await client.CreateNotification("Hello", "Hi", UsersGroup.All);
 
         // Assert
         response.Id.Should().NotBeEmpty();
-        response.Title.Should().Be(body.Title);
-        response.Description.Should().Be(body.Description);
+        response.Title.Should().Be("Hello");
+        response.Description.Should().Be("Hi");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     [Test]
     public async Task Deve_marcar_a_notificacao_como_vista_pelo_usuario()
@@ -35,7 +49,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var bodyAluno = new AlunoIn { Name = "Zaqueu", Email = TestData.Email, OfertaId = oferta.Id };
         var aluno = await client.PostAsync<AlunoOut>("/alunos", bodyAluno);
 
-        var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
+        var body = new CreateNotificationIn("Hello", "Hi", UsersGroup.Students);
         await client.PostAsync<NotificationOut>("/notifications", body);
 
         // Act
@@ -57,8 +71,8 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _factory.LoggedAsAcademic();
 
-        await client.PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" });
-        await client.PostAsync<NotificationOut>("/notifications", new NotificationIn { Title = "Ola", Description = "O", UsersGroup = "Alunos" });
+        await client.CreateNotification("Hello", "Hi", UsersGroup.Students);
+        await client.CreateNotification("Olá", "Olá", UsersGroup.Teachers);
 
         // Act
         var notifications = await client.GetAsync<List<NotificationOut>>("/notifications");
@@ -83,8 +97,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var bodyAluno = new AlunoIn { Name = "Zaqueu", Email = TestData.Email, OfertaId = oferta.Id };
         var aluno = await client.PostAsync<AlunoOut>("/alunos", bodyAluno);
 
-        var body = new NotificationIn { Title = "Hello", Description = "Hi", UsersGroup = "Alunos" };
-        await client.PostAsync<NotificationOut>("/notifications", body);
+        await client.CreateNotification("Hello", "Hi", UsersGroup.Students);
 
         // Act
         var token = await _factory.GetResetPasswordToken(aluno.Email);

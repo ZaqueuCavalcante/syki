@@ -49,6 +49,9 @@
 
 @code
 {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
     private MudForm _form;
     private bool _loading;
 
@@ -57,9 +60,6 @@
     private DateTime? _end;
 
     List<AcademicPeriodOut> _periods = [];
-
-    [CascadingParameter]
-    MudDialogInstance MudDialog { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

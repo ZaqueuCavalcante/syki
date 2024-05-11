@@ -11,7 +11,7 @@ using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.CreateProfessor;
 using Syki.Back.CreateEnrollmentPeriod;
 using Syki.Back.CreateMatriculaAluno;
-using Syki.Back.CreateNotification;
+using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateTurma;
 using Syki.Back.GetAcademicPeriods;

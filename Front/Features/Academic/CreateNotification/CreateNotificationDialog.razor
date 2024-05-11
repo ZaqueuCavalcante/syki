@@ -12,21 +12,23 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form">
-            <SykiTextField Label="Título" AutoFocus="true" @bind-Value="@_data.Title" />
-            <SykiTextField Label="Descrição" @bind-Value="@_data.Description" />
+            <SykiTextField Label="Título" AutoFocus="true" @bind-Value="@_title" />
+            <SykiTextField Label="Descrição" @bind-Value="@_description" />
             <MudSelect
                 Dense="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-4"
-                @bind-Value="@_data.UsersGroup"
+                @bind-Value="@_targetUsers"
                 Label="Usuários"
                 Required="true"
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
-                <MudSelectItem Value="@("Alunos")">Alunos</MudSelectItem>
-                <MudSelectItem Value="@("Professores")">Professores</MudSelectItem>
+                @foreach (UsersGroup? item in Enum.GetValues<UsersGroup>())
+                {
+                    <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
+                }
             </MudSelect>
         </MudForm>
     </DialogContent>
@@ -37,17 +39,20 @@
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject CreateNotificationClient Client
 
 @code
 {
-    private MudForm _form;
-    private bool _loading;
-    private NotificationIn _data = new();
-
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
+
+    private MudForm _form;
+    private bool _loading;
+
+    private string _title;
+    private string _description;
+    private UsersGroup? _targetUsers;
 
     async Task Submit()
     {
@@ -57,7 +62,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/notifications", _data);
+        var response = await Client.Create(_title, _description, _targetUsers!.Value);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

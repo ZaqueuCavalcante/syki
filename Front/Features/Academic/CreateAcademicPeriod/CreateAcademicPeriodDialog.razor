@@ -47,15 +47,15 @@
 
 @code
 {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
     private MudForm _form;
     private bool _loading;
 
     private string _id;
     private DateTime? _start;
     private DateTime? _end;
-
-    [CascadingParameter]
-    MudDialogInstance MudDialog { get; set; }
 
     async Task Submit()
     {

@@ -1,6 +1,6 @@
 using Syki.Back.CreateOferta;
 using Syki.Back.CreateProfessor;
-using Syki.Back.CreateNotification;
+using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Academic.CreateCurso;
 using Syki.Back.Features.Academic.CreateGrade;
 using Syki.Back.Features.Academic.CreateCampus;

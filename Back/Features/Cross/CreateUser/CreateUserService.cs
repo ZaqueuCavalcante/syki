@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Cross.CreateUser;
 
 public class CreateUserService(SykiDbContext ctx, UserManager<SykiUser> userManager)
 {
-    public async Task<CreateUserOut> Create(CreateUserIn data)
+    public async Task<UserOut> Create(CreateUserIn data)
     {
         var institutionOk = await ctx.Institutions.AnyAsync(c => c.Id == data.InstitutionId);
         if (!institutionOk)

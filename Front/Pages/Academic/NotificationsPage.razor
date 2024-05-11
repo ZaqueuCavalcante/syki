@@ -3,16 +3,13 @@
 
 @namespace Syki.Front.Pages.Academic
 
-@page "/notificacoes"
+@page "/academic/notifications"
 
 <PageTitle>Notificações</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.Notifications" Title="Notificações" ButtonText="Nova Notificação" OnClick="OpenDialog" />
-
-    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>Aqui você pode escolher quais usuários serão notificados e acompanhar o status de visualização das mensagens.</MudText>
-    </MudAlert>
+    <SykiPageHeader Icon="@Icons.Material.Filled.Notifications" Title="Notificações" ButtonText="Nova Notificação" OnClick="@OpenDialog" />
+    <SykiPageAlert Text="Aqui você pode escolher quais usuários serão notificados e acompanhar o status de visualização das mensagens." />
 
     <MudContainer Class="mb-8">
         <MudDataGrid
@@ -35,11 +32,9 @@
                 <PropertyColumn Property="x => x.CreatedAt" Title="Criada em" />
                 <PropertyColumn Property="x => x.Views" Title="Visualizações" />
             </Columns>
- 
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
-
             <PagerContent>
                 <SykiDataGridPager T="NotificationOut" />
             </PagerContent>
@@ -59,7 +54,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _notifications = await Http.GetFromJsonAsync<List<NotificationOut>>("/notifications") ?? [];
+        _notifications = await Http.GetFromJsonAsync<List<NotificationOut>>("/academic/notifications") ?? [];
         _loading = false;
     }
 
@@ -69,7 +64,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true,
         };
-        var dialog = await DialogService.ShowAsync<NewNotificationDialog>("", options);
+        var dialog = await DialogService.ShowAsync<CreateNotificationDialog>("", options);
 
         var result = await dialog.Result;
 

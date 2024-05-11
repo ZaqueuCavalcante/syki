@@ -5,7 +5,7 @@ namespace Syki.Back.GetUsers;
 
 public class GetUsersService(DatabaseSettings dbSettings)
 {
-    public async Task<List<CreateUserOut>> Get()
+    public async Task<List<UserOut>> Get()
     {
         using var connection = new NpgsqlConnection(dbSettings.ConnectionString);
 
@@ -28,7 +28,7 @@ public class GetUsersService(DatabaseSettings dbSettings)
                 u.id, i.name
         ";
 
-        var data = await connection.QueryAsync<CreateUserOut>(sql);
+        var data = await connection.QueryAsync<UserOut>(sql);
         
         return data.ToList();
     }

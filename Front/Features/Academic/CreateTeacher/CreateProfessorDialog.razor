@@ -51,13 +51,13 @@
 
 @code
 {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
     private MudForm _form;
     private bool _loading;
 
     private ProfessorIn data = new();
-
-    [CascadingParameter]
-    MudDialogInstance MudDialog { get; set; }
 
     async Task Submit()
     {

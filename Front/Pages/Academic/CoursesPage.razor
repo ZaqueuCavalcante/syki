@@ -3,7 +3,7 @@
 
 @namespace Syki.Front.Pages.Academic
 
-@page "/cursos"
+@page "/academic/courses"
 @attribute [Authorize(Roles = "Academic")]
 
 <PageTitle>Cursos</PageTitle>
@@ -65,7 +65,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewCourseDialog>("", options);
+        var dialog = await DialogService.ShowAsync<CreateCourseDialog>("", options);
 
         var result = await dialog.Result;
 

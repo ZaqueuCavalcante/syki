@@ -60,7 +60,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewProfessorDialog>("", options);
+        var dialog = await DialogService.ShowAsync<CreateProfessorDialog>("", options);
 
         var result = await dialog.Result;
 

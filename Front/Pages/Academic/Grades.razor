@@ -77,7 +77,7 @@
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<NewGradeDialog>("", options);
+        var dialog = await DialogService.ShowAsync<CreateGradeDialog>("", options);
 
         var result = await dialog.Result;
 

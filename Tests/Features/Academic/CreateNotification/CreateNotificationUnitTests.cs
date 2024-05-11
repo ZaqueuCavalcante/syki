@@ -1,11 +1,11 @@
-using Syki.Back.CreateNotification;
+using Syki.Back.Features.Academic.CreateNotification;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.Academic.CreateNotification;
 
-public class NotificationsUnitTests
+public class CreateNotificationUnitTests
 {
     [Test]
-    public void Deve_criar_uma_notification_com_id()
+    public void Should_create_a_notification_with_not_empty_id()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -20,7 +20,7 @@ public class NotificationsUnitTests
     }
 
     [Test]
-    public void Deve_criar_uma_notification_com_institution_id_correto()
+    public void Should_create_a_notification_with_correct_institution_id()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -35,7 +35,7 @@ public class NotificationsUnitTests
     }
 
     [Test]
-    public void Deve_criar_uma_notification_com_title_correto()
+    public void Should_create_a_notification_with_correct_title()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -50,7 +50,7 @@ public class NotificationsUnitTests
     }
 
     [Test]
-    public void Deve_criar_uma_notification_com_description_correta()
+    public void Should_create_a_notification_with_correct_description()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -65,7 +65,7 @@ public class NotificationsUnitTests
     }
 
     [Test]
-    public void Deve_criar_uma_notification_com_created_at_correta()
+    public void Should_create_a_notification_with_correct_created_at()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -80,7 +80,7 @@ public class NotificationsUnitTests
     }
 
     [Test]
-    public void Deve_converter_a_notification_corretamente_pro_out()
+    public void Should_convert_notification_to_out()
     {
         // Arrange
         var institutionId = Guid.NewGuid();

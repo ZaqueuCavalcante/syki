@@ -45,7 +45,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
         var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
 
-        var aluno = await client.CreateAluno(oferta.Id, "Zaqueu");
+        var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
@@ -74,7 +74,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(4));
         await client.CreateEnrollmentPeriod(period.Id, start, end);
 
-        var aluno = await client.CreateAluno(oferta.Id, "Zaqueu");
+        var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
@@ -103,7 +103,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
         await client.CreateEnrollmentPeriod(period.Id, start, end);
 
-        var aluno = await client.CreateAluno(oferta.Id, "Zaqueu");
+        var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
@@ -167,8 +167,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var turmaIntroDireito = await client.Createturma(introDireito.Id, ana.Id, periodo.Id, [new(Day.Quarta, Hora.H07_00, Hora.H08_00)]);
         var turmaDireitoFinanceiro = await client.Createturma(direitoFinanceiro.Id, ana.Id, periodo.Id, [new(Day.Quinta, Hora.H07_00, Hora.H08_00)]);
 
-        var zaqueu = await client.CreateAluno(ofertaAds.Id, "Zaqueu");
-        var maju = await client.CreateAluno(ofertaDireito.Id, "Maju");
+        var zaqueu = await client.CreateStudent(ofertaAds.Id, "Zaqueu");
+        var maju = await client.CreateStudent(ofertaDireito.Id, "Maju");
 
         var clientAluno = await _factory.LoggedAsStudent(zaqueu.Email);
 

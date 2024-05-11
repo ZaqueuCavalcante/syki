@@ -74,6 +74,9 @@
 
 @code
 {
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
     private MudForm _form;
     private bool _loading;
 
@@ -84,9 +87,6 @@
     List<GradeDisciplinaFillable> Disciplinas = [];
 
     GradeIn data = new();
-
-    [CascadingParameter]
-    MudDialogInstance MudDialog { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

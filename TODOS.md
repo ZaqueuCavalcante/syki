@@ -19,7 +19,7 @@
 
 ## Academic
 - [] CreateAcademicPeriod
-- [] CreateCampus
+- [X] CreateCampus
 - [] CreateClass
 - [] CreateCourse
 - [] CreateCourseCurriculum

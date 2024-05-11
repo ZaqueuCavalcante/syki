@@ -8,7 +8,7 @@ namespace Syki.Back.Features.Academic.CreateCampus;
 [Consumes("application/json"), Produces("application/json")]
 public class CreateCampusController(CreateCampusService service) : ControllerBase
 {
-    [HttpPost("campi")]
+    [HttpPost("academic/campi")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> Create([FromBody] CreateCampusIn data)
     {

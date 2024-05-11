@@ -117,6 +117,13 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<NotificationOut>();
     }
 
+    public static async Task<CampusOut> CreateCampus(this HttpClient http, string name = "Agreste I", string city = "Caruaru - PE")
+    {
+        var client = new CreateCampusClient(http);
+        var response = await client.Create(name, city);
+        return await response.DeserializeTo<CampusOut>();
+    }
+
     // -------------------------------------------------------------------------------------------- //
 
 
@@ -134,13 +141,6 @@ public static class HttpClientExtensions
     {
         var client = new GetAcademicInsightsClient(http);
         return await client.Get();
-    }
-
-    public static async Task<CampusOut> CreateCampus(this HttpClient http, string name = "Agreste I", string city = "Caruaru - PE")
-    {
-        var client = new CreateCampusClient(http);
-        var response = await client.Create(name, city);
-        return await response.DeserializeTo<CampusOut>();
     }
 
     public static async Task<CampusOut> UpdateCampus(this HttpClient http, Guid id, string name = "Agreste I", string city = "Caruaru - PE")

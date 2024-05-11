@@ -1,11 +1,11 @@
 using Syki.Back.Features.Academic.CreateCampus;
 
-namespace Syki.Tests.CreateCampus;
+namespace Syki.Tests.Features.Academic.CreateCampus;
 
 public class CreateCampusUnitTests
 {
     [Test]
-    public void Deve_criar_um_campus_com_id()
+    public void Should_create_a_campus_with_id()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -18,7 +18,7 @@ public class CreateCampusUnitTests
     }
 
     [Test]
-    public void Deve_criar_um_campus_com_institution_id_correto()
+    public void Should_create_a_campus_with_correct_institution_id()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -31,7 +31,7 @@ public class CreateCampusUnitTests
     }
 
     [Test]
-    public void Deve_criar_um_campus_com_nome_correto()
+    public void Should_create_a_campus_with_correct_name()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -45,7 +45,7 @@ public class CreateCampusUnitTests
     }
 
     [Test]
-    public void Deve_criar_um_campus_com_cidade_correta()
+    public void Should_create_a_campus_with_correct_city()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -59,7 +59,7 @@ public class CreateCampusUnitTests
     }
 
     [Test]
-    public void Deve_converter_o_campus_corretamente_pro_out()
+    public void Should_convert_campus_to_out()
     {
         // Arrange
         var campus = new Campus(Guid.NewGuid(), "Agreste II", "Bonito - PE");

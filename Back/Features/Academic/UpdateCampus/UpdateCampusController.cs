@@ -8,7 +8,7 @@ namespace Syki.Back.Features.Academic.UpdateCampus;
 [Consumes("application/json"), Produces("application/json")]
 public class UpdateCampusController(UpdateCampusService service) : ControllerBase
 {
-    [HttpPut("campi")]
+    [HttpPut("academic/campi")]
     [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]
     [SwaggerResponseExample(400, typeof(UpdateCampusErrorsExamples))]

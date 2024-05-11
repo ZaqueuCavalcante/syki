@@ -45,7 +45,7 @@
 - [] GetNotifications
 - [] GetStudents
 - [] GetTeachers
-- [] UpdateCampus
+- [X] UpdateCampus
 
 ## Teacher
 

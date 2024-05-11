@@ -1,6 +1,6 @@
 using Syki.Back.Features.Academic.CreateCampus;
 
-namespace Syki.Tests.UpdateCampus;
+namespace Syki.Tests.Features.Academic.UpdateCampus;
 
 public class UpdateCampusUnitTests
 {

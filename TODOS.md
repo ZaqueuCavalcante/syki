@@ -31,7 +31,7 @@
 - [] CreateTeacher
 - [] GetAcademicInsights
 - [] GetAcademicPeriods
-- [] GetCampi
+- [X] GetCampi
 - [] GetClasses
 - [] GetCourseCurriculumDisciplines
 - [] GetCourseCurriculums

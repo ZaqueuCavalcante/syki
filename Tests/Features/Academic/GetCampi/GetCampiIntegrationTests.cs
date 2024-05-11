@@ -9,7 +9,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        var campi = await client.GetAsync<List<GetCampusOut>>("/campi");
+        var campi = await client.GetCampi();
 
         // Assert
         campi.Should().BeEmpty();
@@ -25,9 +25,27 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateCampus("Suassuna I", "Recife - PE");
 
         // Act
-        var campi = await client.GetAsync<List<GetCampusOut>>("/campi");
+        var campi = await client.GetCampi();
 
         // Assert
         campi.Should().HaveCount(2);
+    }
+
+    [Test]
+    public async Task Should_get_only_institution_campus()
+    {
+        // Arrange
+        var novaRoma = await _factory.LoggedAsAcademic();
+        var ufpe = await _factory.LoggedAsAcademic();
+
+        await novaRoma.CreateCampus("Agreste I", "Caruaru - PE");
+        await ufpe.CreateCampus("Suassuna I", "Recife - PE");
+
+        // Act
+        var campi = await novaRoma.GetCampi();
+
+        // Assert
+        campi.Should().HaveCount(1);
+        campi[0].Name.Should().Be("Agreste I");
     }
 }

@@ -8,7 +8,7 @@ namespace Syki.Back.Features.Academic.GetCampi;
 [Consumes("application/json"), Produces("application/json")]
 public class GetCampiController(GetCampiService service) : ControllerBase
 {
-    [HttpGet("campi")]
+    [HttpGet("academic/campi")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> Get()
     {

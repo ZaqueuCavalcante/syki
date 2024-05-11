@@ -22,6 +22,7 @@ using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Cross.CreatePendingUserRegister;
 using Syki.Front.Features.Academic.CreateNotification;
+using Syki.Front.Features.Academic.GetCampi;
 
 namespace Syki.Tests.Base;
 
@@ -122,6 +123,12 @@ public static class HttpClientExtensions
         var client = new CreateCampusClient(http);
         var response = await client.Create(name, city);
         return await response.DeserializeTo<CampusOut>();
+    }
+
+    public static async Task<List<CampusOut>> GetCampi(this HttpClient http)
+    {
+        var client = new GetCampiClient(http);
+        return await client.Get();
     }
 
     // -------------------------------------------------------------------------------------------- //

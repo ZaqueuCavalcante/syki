@@ -1,5 +1,7 @@
 # SYKI - Sistema de Gerenciamento Acadêmico
 
+https://stackify.com/opentelemetry-dotnet/
+
 [![Tests](https://github.com/ZaqueuCavalcante/syki/actions/workflows/tests.yml/badge.svg)](https://github.com/ZaqueuCavalcante/syki/actions/workflows/tests.yml)
 
 ## O que é este projeto?

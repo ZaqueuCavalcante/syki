@@ -12,12 +12,15 @@ public partial class IntegrationTests : IntegrationTestBase
 
         client.RemoveAuthToken();
         var token = await _factory.GetResetPasswordToken(user.Email);
+        var password = "My@new@strong@P4ssword";
 
         // Act
-        var response = await client.ResetPassword(token!, "My@new@strong@P4ssword");
+        var response = await client.ResetPassword(token!, password);
 
         // Assert
-        response.IsSuccessStatusCode.Should().BeTrue();
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var login = await client.Login(user.Email, password);
+        login.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
     }
     
     [Test]
@@ -35,26 +38,6 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         await response.AssertBadRequest(Throw.DE019);
-    }
-
-    [Test]
-    public async Task Should_login_using_the_new_password()
-    {
-        // Arrange
-        var client = _factory.GetClient();
-        var user = await client.RegisterUser(_factory);
-        await client.SendResetPasswordToken(user.Email);
-
-        client.RemoveAuthToken();
-        var token = await _factory.GetResetPasswordToken(user.Email);
-        var password = "My@new@strong@P4ssword";
-        await client.ResetPassword(token!, password);
-
-        // Act
-        var response = await client.Login(user.Email, password);
-
-        // Assert
-        response.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
     }
 
     [Test]

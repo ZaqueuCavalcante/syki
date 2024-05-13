@@ -1,8 +1,8 @@
-using Syki.Back.Features.Academic.CreateCourseOffering;
-using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateDiscipline;
+using Syki.Back.Features.Academic.CreateNotification;
+using Syki.Back.Features.Academic.CreateCourseOffering;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.Features.Academic.CreateCourseCurriculum;
 

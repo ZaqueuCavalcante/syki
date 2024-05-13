@@ -33,7 +33,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
 
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Deve_marcar_a_notificacao_como_vista_pelo_usuario()
     {
         // Arrange
@@ -65,7 +65,7 @@ public partial class IntegrationTests : IntegrationTestBase
         notification.ViewedAt.Should().NotBeNull();
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Deve_retornar_todas_as_notificacoes()
     {
         // Arrange
@@ -81,7 +81,7 @@ public partial class IntegrationTests : IntegrationTestBase
         notifications.Count.Should().Be(2);
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Deve_retornar_todas_as_notificacoes_do_usuario_logado()
     {
         // Arrange

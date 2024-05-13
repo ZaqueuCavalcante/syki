@@ -7,7 +7,7 @@ public class OfertaConfig : IEntityTypeConfiguration<CourseOffering>
 {
     public void Configure(EntityTypeBuilder<CourseOffering> courseOffering)
     {
-        courseOffering.ToTable("course-offerings");
+        courseOffering.ToTable("course_offerings");
 
         courseOffering.HasKey(o => o.Id);
         courseOffering.Property(o => o.Id).ValueGeneratedNever();

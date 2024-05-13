@@ -167,7 +167,7 @@ public static class HttpClientExtensions
         return await response.DeserializeTo<CampusOut>();
     }
 
-    public static async Task<CourseOut> CreateCurso(
+    public static async Task<CourseOut> CreateCourse(
         this HttpClient http,
         string name = "Análise e Desenvolvimento de Sistemas",
         CourseType tipo = CourseType.Bacharelado

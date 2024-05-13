@@ -6,7 +6,7 @@ public class CourseCurriculumConfig : IEntityTypeConfiguration<CourseCurriculum>
 {
     public void Configure(EntityTypeBuilder<CourseCurriculum> courseCurriculum)
     {
-        courseCurriculum.ToTable("course-curriculums");
+        courseCurriculum.ToTable("course_curriculums");
 
         courseCurriculum.HasKey(g => g.Id);
         courseCurriculum.Property(g => g.Id).ValueGeneratedNever();

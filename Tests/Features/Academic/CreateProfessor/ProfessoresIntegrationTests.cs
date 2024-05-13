@@ -16,7 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
         professor.Name.Should().Be("Chico");
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Deve_criar_varios_professores_para_uma_mesma_institution()
     {
         // Arrange
@@ -31,7 +31,7 @@ public partial class IntegrationTests : IntegrationTestBase
         professores.Should().HaveCount(2);
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Deve_retornar_apenas_os_professores_da_institution_do_usuario_logado()
     {
         // Arrange

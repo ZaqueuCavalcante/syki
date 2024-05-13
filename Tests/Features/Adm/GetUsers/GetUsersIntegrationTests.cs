@@ -12,7 +12,7 @@ public class GetUsersIntegrationTests : IntegrationTestBase
         var admClient = await _factory.LoggedAsAdm();
 
         // Act
-        var users = await admClient.GetAsync<List<UserOut>>("/users");
+        var users = await admClient.GetAsync<List<UserOut>>("/adm/users");
 
         // Assert
         users.Should().HaveCount(2);

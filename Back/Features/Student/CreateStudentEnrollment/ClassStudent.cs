@@ -6,6 +6,8 @@ public class ClassStudent
     public Guid StudentId { get; set; }
     public StudentDisciplineStatus StudentDisciplineStatus { get; set; }
 
+    public ClassStudent() {}
+
     public ClassStudent(
         Guid classId,
         Guid studentId,

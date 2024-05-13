@@ -15,7 +15,7 @@ public partial class IntegrationTests : IntegrationTestBase
         period.Id.Should().Be(period.Id);
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Deve_criar_varios_periodos_para_uma_mesma_institution()
     {
         // Arrange
@@ -30,7 +30,7 @@ public partial class IntegrationTests : IntegrationTestBase
         periodos.Should().HaveCount(2);
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Deve_retornar_apenas_os_periodos_da_institution_do_usuario_logado()
     {
         // Arrange

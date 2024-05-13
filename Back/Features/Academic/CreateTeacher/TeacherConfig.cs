@@ -6,7 +6,7 @@ public class ProfessorConfig : IEntityTypeConfiguration<Teacher>
 {
     public void Configure(EntityTypeBuilder<Teacher> professor)
     {
-        professor.ToTable("professores");
+        professor.ToTable("teachers");
 
         professor.HasKey(p => p.Id);
         professor.Property(p => p.Id).ValueGeneratedNever();

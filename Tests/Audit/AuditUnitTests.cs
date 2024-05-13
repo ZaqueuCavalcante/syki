@@ -83,7 +83,7 @@ public class AuditUnitTests
         audit.Fill(evt, _eventEntry);
 
         // Assert
-        audit.EntityType.Should().Be("Turma");
+        audit.EntityType.Should().Be("Class");
     }
 
     [Test]

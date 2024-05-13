@@ -4,6 +4,6 @@ public class GetCoursesClient(HttpClient http)
 {
     public async Task<List<CourseOut>> Get()
     {
-        return await http.GetFromJsonAsync<List<CourseOut>>("/courses") ?? [];
+        return await http.GetFromJsonAsync<List<CourseOut>>("/academic/courses") ?? [];
     }
 }

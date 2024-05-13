@@ -9,7 +9,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
         await client.CreateCampus();
         await client.CreateDiscipline();
-        await client.CreateCurso();
+        await client.CreateCourse();
 
         // Act
         var response = await client.GetAcademicInsights();

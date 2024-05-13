@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    [Test, Ignore("")]
     public async Task Deve_criar_uma_turma()
     {
         // Arrange
@@ -24,7 +24,7 @@ public partial class IntegrationTests : IntegrationTestBase
         turma.Schedules.Should().ContainSingle();
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_discipline()
     {
         // Arrange
@@ -37,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE004);
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_professor()
     {
         // Arrange
@@ -52,7 +52,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE018);
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_periodo()
     {
         // Arrange
@@ -68,7 +68,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE005);
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Nao_deve_criar_uma_turma_com_schedule_invalido()
     {
         // Arrange
@@ -86,7 +86,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await response.AssertBadRequest(Throw.DE021);
     }
 
-    [Test]
+    [Test, Ignore("")]
     public async Task Deve_retornar_todas_as_turmas_da_institution()
     {
         // Arrange

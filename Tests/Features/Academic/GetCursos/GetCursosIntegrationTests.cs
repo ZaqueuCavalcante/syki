@@ -11,11 +11,11 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        await client.CreateCurso("Direito", Tecnologo);
-        await client.CreateCurso("Pedagogia", Mestrado);
-        await client.CreateCurso("Ciência da Computação", Especializacao);
-        await client.CreateCurso("Administração", Doutorado);
-        await client.CreateCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
+        await client.CreateCourse("Direito", Tecnologo);
+        await client.CreateCourse("Pedagogia", Mestrado);
+        await client.CreateCourse("Ciência da Computação", Especializacao);
+        await client.CreateCourse("Administração", Doutorado);
+        await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
 
         // Assert
         var cursos = await client.GetCursos();

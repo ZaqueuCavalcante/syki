@@ -11,7 +11,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        var curso = await client.CreateCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
+        var curso = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
 
         // Assert
         curso.Id.Should().NotBeEmpty();
@@ -26,8 +26,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        await client.CreateCurso("Análise e Desenvolvimento de Sistemas", Bacharelado);
-        await client.CreateCurso("Direito", Licenciatura);
+        await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
+        await client.CreateCourse("Direito", Licenciatura);
         
         // Assert
         var cursos = await client.GetCursos();

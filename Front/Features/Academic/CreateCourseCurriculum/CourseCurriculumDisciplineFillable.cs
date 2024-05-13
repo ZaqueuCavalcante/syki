@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.CreateCourseCurriculum;
 
-public class GradeDisciplineFillable
+public class CourseCurriculumDisciplineFillable
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -11,7 +11,7 @@ public class GradeDisciplineFillable
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;
-        return Id == ((GradeDisciplineFillable)obj).Id;
+        return Id == ((CourseCurriculumDisciplineFillable)obj).Id;
     }
 
     public override int GetHashCode()

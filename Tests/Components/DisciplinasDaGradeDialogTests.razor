@@ -21,12 +21,12 @@
             new DisciplineOut { Name = "Design de Interação Humano-Máquina", Period = 2, Credits = 6, Workload = 90, },
             new DisciplineOut { Name = "Projeto Integrador I: Concepção e Prototipação", Period = 4, Credits = 6, Workload = 60, },
         };
-        var parameters = new DialogParameters<DisciplinesDaGradeDialog>();
+        var parameters = new DialogParameters<CourseCurriculumDisciplinesDialog>();
         parameters.Add(x => x.Disciplines, disciplines);
 
         // Act
         IDialogReference dialog = null!;
-        await provider.InvokeAsync(() => dialog = service!.Show<DisciplinesDaGradeDialog>(grade, parameters));
+        await provider.InvokeAsync(() => dialog = service!.Show<CourseCurriculumDisciplinesDialog>(grade, parameters));
 
         // Assert
         provider.Find("h6").MarkupMatches(

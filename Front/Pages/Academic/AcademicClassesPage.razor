@@ -3,19 +3,22 @@
 
 @namespace Syki.Front.Features.Academic.GetClasses
 
+@page "/academic/classes"
+@attribute [Authorize(Roles = "Academic")]
+
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="Turmas" ButtonText="Nova Turma" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Em uma mesma turma podem estudar alunos de diferentes cursos." />
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_turmas" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_classes" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por disciplina, professor ou período" />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Discipline" Title="Discipline" />
+                <PropertyColumn Property="x => x.Discipline" Title="Disciplina" />
                 <PropertyColumn Property="x => x.Teacher" Title="Professor" />
                 <PropertyColumn Property="x => x.Period" Title="Período" />
-                <PropertyColumn Property="x => x.Worload" Title="Horário" />
+                <PropertyColumn Property="x => x.SchedulesInline" Title="Horário" />
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -34,17 +37,16 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<ClassOut> _turmas = [];
+    private List<ClassOut> _classes = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _turmas = await Http.GetFromJsonAsync<List<ClassOut>>("/turmas") ?? [];
+        _classes = await Http.GetFromJsonAsync<List<ClassOut>>("/academic/classes") ?? [];
         _loading = false;
     }
 
-    private Func<ClassOut, bool> _quickFilter => x =>
-        _searchString.IsIn(x.Discipline, x.Professor, x.Period);
+    private Func<ClassOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Teacher, x.Period);
 
     private async Task OpenDialog()
     {
@@ -52,7 +54,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<CreateTurmaDialog>("", options);
+        var dialog = await DialogService.ShowAsync<CreateClassDialog>("", options);
 
         var result = await dialog.Result;
 

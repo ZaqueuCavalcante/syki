@@ -19,7 +19,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         turma.Id.Should().NotBeEmpty();
         turma.Discipline.Should().Be(discipline.Name);
-        turma.Professor.Should().Be(professor.Name);
+        turma.Teacher.Should().Be(professor.Name);
         turma.Period.Should().Be(period.Id);
         turma.Schedules.Should().ContainSingle();
     }

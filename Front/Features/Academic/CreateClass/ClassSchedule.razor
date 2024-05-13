@@ -14,9 +14,9 @@
             RequiredError="Informe!"
             AdornmentColor="Color.Primary"
         >
-            @foreach (Day? dia in Enum.GetValues<Day>())
+            @foreach (Day? day in Enum.GetValues<Day>())
             {
-                <MudSelectItem Value="@dia">@dia.GetDescription()</MudSelectItem>
+                <MudSelectItem Value="@day">@day.GetDescription()</MudSelectItem>
             }
         </MudSelect>
     </MudItem>
@@ -72,7 +72,7 @@
     [Parameter]
     public EventCallback<Guid> OnDeleteClick { get; set; }
 
-    async Task HandleDeleteClick()
+    private async Task HandleDeleteClick()
     {
         await OnDeleteClick.InvokeAsync(Data.Id);
     }

@@ -5,7 +5,7 @@
         <MudItem xs="5">
             <MudAutocomplete
                 MaxItems="50"
-                T="GradeDisciplineFillable"
+                T="CourseCurriculumDisciplineFillable"
                 SearchFunc="@SearchDiscipline"
                 Dense="true"
                 Margin="Margin.Dense"
@@ -13,7 +13,7 @@
                 ShowProgressIndicator="true"
                 Class="mb-2"
                 Value="@Data"
-                ValueChanged="(GradeDisciplineFillable newValue) => HandleDisciplineChanged(newValue)"
+                ValueChanged="(CourseCurriculumDisciplineFillable newValue) => HandleDisciplineChanged(newValue)"
                 Label="Discipline"
                 Required="true"
                 RequiredError="Informe!"
@@ -84,14 +84,14 @@
     public EventCallback<Guid> OnDeleteClick { get; set; }
 
     [Parameter]
-    public GradeDisciplineFillable Data { get; set; }
+    public CourseCurriculumDisciplineFillable Data { get; set; }
 
-    private async Task<IEnumerable<GradeDisciplineFillable>> SearchDiscipline(string value)
+    private async Task<IEnumerable<CourseCurriculumDisciplineFillable>> SearchDiscipline(string value)
     {
         await Task.Delay(0);
 
         var filtered = Options.Where(d => !d.IsSelected || (d.IsSelected && d.Id == Data.Id))
-            .ToList().ConvertAll(x => new GradeDisciplineFillable { Id = x.Id, Name = x.Name });
+            .ToList().ConvertAll(x => new CourseCurriculumDisciplineFillable { Id = x.Id, Name = x.Name });
 
         if (string.IsNullOrEmpty(value))
             return filtered;
@@ -99,7 +99,7 @@
         return filtered.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    void HandleDisciplineChanged(GradeDisciplineFillable newValue)
+    void HandleDisciplineChanged(CourseCurriculumDisciplineFillable newValue)
     {
         Options.First(d => d.Id == newValue.Id).IsSelected = true;
 

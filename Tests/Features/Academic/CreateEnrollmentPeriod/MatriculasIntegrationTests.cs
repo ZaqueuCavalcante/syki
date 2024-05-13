@@ -68,7 +68,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
 
         var year = DateTime.Now.Year;
-        var period = await client.CreateAcademicPeriod($"{year}.1");
+        var periodo = await client.CreateAcademicPeriod($"{year}.1");
 
         var start = DateOnly.FromDateTime(DateTime.Now.AddDays(2));
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(4));
@@ -97,7 +97,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
 
         var year = DateTime.Now.Year;
-        var period = await client.CreateAcademicPeriod($"{year}.1");
+        var periodo = await client.CreateAcademicPeriod($"{year}.1");
 
         var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-4));
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));

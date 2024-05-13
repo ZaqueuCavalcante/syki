@@ -1,17 +1,10 @@
 ﻿@using Syki.Front.Features.Academic.GetClasses
-@using Syki.Front.Features.Teacher.GetTeacherClasses
 
 @namespace Syki.Front.Pages
 
 @page "/turmas"
 
 <PageTitle>Turmas</PageTitle>
-
-<AuthorizeView Roles="@UserRole.Academic.ToString()">
-    <Authorized>
-        <AcademicoTurmas />
-    </Authorized>
-</AuthorizeView>
 
 <AuthorizeView Roles="@UserRole.Teacher.ToString()">
     <Authorized>

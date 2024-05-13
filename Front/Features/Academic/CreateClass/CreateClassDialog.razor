@@ -34,13 +34,13 @@
                         Dense="true"
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
-                        @bind-Value="_professor"
+                        @bind-Value="@_teacher"
                         Label="Professor"
                         Required="true"
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (TeacherOut? item in Professores)
+                        @foreach (TeacherOut? item in Teachers)
                         {
                             <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                         }
@@ -51,13 +51,13 @@
                         Dense="true"
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
-                        @bind-Value="_periodo"
+                        @bind-Value="@_period"
                         Label="Período"
                         Required="true"
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (string? item in Periodos.ConvertAll(p => p.Id))
+                        @foreach (string? item in Periods.ConvertAll(p => p.Id))
                         {
                             <MudSelectItem Value="@item">@item</MudSelectItem>
                         }
@@ -74,7 +74,7 @@
                             <MudItem xs="12">
                                 @foreach (var schedule in Schedules)
                                 {
-                                    <TurmaSchedule Data="@schedule" OnDeleteClick="@DeleteSchedule" />
+                                    <ClassSchedule Data="@schedule" OnDeleteClick="@DeleteSchedule" />
                                 }
                                 <MudButton
                                     Disabled="(GetNewScheduleDisabled())"
@@ -114,25 +114,25 @@
     private bool _loading;
 
     DisciplineOut? _discipline;
-    TeacherOut? _professor;
-    string? _periodo;
+    TeacherOut? _teacher;
+    string? _period;
 
     CreateClassIn data = new();
 
     List<DisciplineOut> Disciplines = [];
-    List<TeacherOut> Professores = [];
-    List<AcademicPeriodOut> Periodos = [];
-    List<StudentOut> Alunos = [];
+    List<TeacherOut> Teachers = [];
+    List<AcademicPeriodOut> Periods = [];
+    List<StudentOut> Students = [];
     List<ScheduleInFillable> Schedules { get; set; } = [];
 
     protected override async Task OnInitializedAsync()
     {
         NewSchedule();
         await Task.WhenAll(new Task[] { 
-            Task.Run(async () => Professores = await Http.GetFromJsonAsync<List<TeacherOut>>("/professores") ?? []),
-            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic-periods") ?? []),
-            Task.Run(async () => Alunos = await Http.GetFromJsonAsync<List<StudentOut>>("/alunos") ?? []),
-            Task.Run(async () => Disciplines = await Http.GetFromJsonAsync<List<DisciplineOut>>("/disciplines") ?? []),
+            Task.Run(async () => Teachers = await Http.GetFromJsonAsync<List<TeacherOut>>("/academic/teachers") ?? []),
+            Task.Run(async () => Periods = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic/academic-periods") ?? []),
+            Task.Run(async () => Students = await Http.GetFromJsonAsync<List<StudentOut>>("/academic/students") ?? []),
+            Task.Run(async () => Disciplines = await Http.GetFromJsonAsync<List<DisciplineOut>>("/academic/disciplines") ?? []),
         });
     }
 
@@ -171,13 +171,13 @@
         data = new()
         {
             DisciplineId = _discipline!.Id,
-            ProfessorId = _professor!.Id,
-            Period = _periodo!,
+            TeacherId = _teacher!.Id,
+            Period = _period!,
             Schedules = Schedules.ConvertAll(x => new ScheduleIn(x.Day!.Value, x.Start!.Value, x.End!.Value)),
         };
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/turmas", data);
+        var response = await Http.PostAsJsonAsync("/academic/classes", data);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

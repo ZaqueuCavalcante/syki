@@ -1,6 +1,6 @@
 using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateDiscipline;
-using Syki.Back.Features.Academic.CreateGrade;
+using Syki.Back.Features.Academic.CreateCourseCurriculum;
 
 namespace Syki.Tests.Unit;
 
@@ -13,7 +13,7 @@ public class CreateGradeUnitTests
         var institutionId = Guid.NewGuid();
 
         // Act
-        var grade = new Grade(institutionId, Guid.NewGuid(), "Grade de ADS - 1.0");
+        var grade = new CourseCurriculum(institutionId, Guid.NewGuid(), "Grade de ADS - 1.0");
 
         // Assert
         grade.Id.Should().NotBeEmpty();
@@ -26,7 +26,7 @@ public class CreateGradeUnitTests
         var institutionId = Guid.NewGuid();
 
         // Act
-        var grade = new Grade(institutionId, Guid.NewGuid(), "Grade de ADS - 1.0");
+        var grade = new CourseCurriculum(institutionId, Guid.NewGuid(), "Grade de ADS - 1.0");
 
         // Assert
         grade.InstitutionId.Should().Be(institutionId);
@@ -40,7 +40,7 @@ public class CreateGradeUnitTests
         var cursoId = Guid.NewGuid();
 
         // Act
-        var grade = new Grade(institutionId, cursoId, "Grade de ADS - 1.0");
+        var grade = new CourseCurriculum(institutionId, cursoId, "Grade de ADS - 1.0");
 
         // Assert
         grade.CourseId.Should().Be(cursoId);
@@ -54,7 +54,7 @@ public class CreateGradeUnitTests
         const string name = "Grade de ADS - 1.0";
 
         // Act
-        var grade = new Grade(institutionId, Guid.NewGuid(), name);
+        var grade = new CourseCurriculum(institutionId, Guid.NewGuid(), name);
 
         // Assert
         grade.Name.Should().Be(name);
@@ -68,9 +68,9 @@ public class CreateGradeUnitTests
         var cursoId = Guid.NewGuid();
         const string name = "Grade de ADS - 1.0";
 
-        var grade = new Grade(institutionId, cursoId, name)
+        var grade = new CourseCurriculum(institutionId, cursoId, name)
         {
-            Curso = new Course(institutionId, "ADS", CourseType.Bacharelado),
+            Course = new Course(institutionId, "ADS", CourseType.Bacharelado),
             Disciplines = [
                 new Discipline(institutionId, "Banco de Dados"),
                 new Discipline(institutionId, "Estrutura de Dados"),
@@ -86,7 +86,7 @@ public class CreateGradeUnitTests
         // Assert
         gradeOut.Id.Should().Be(grade.Id);
         gradeOut.CourseId.Should().Be(grade.CourseId);
-        gradeOut.CursoNome.Should().Be(grade.Curso.Name);
+        gradeOut.CourseName.Should().Be(grade.Course.Name);
         gradeOut.Name.Should().Be(grade.Name);
 
         gradeOut.Disciplines.Should().HaveCount(2);

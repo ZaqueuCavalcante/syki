@@ -9,11 +9,7 @@
 
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.School" Title="Instituições" />
-
-    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>Uma instituição pode conter vários campus e ofertar vários cursos.</MudText>
-    </MudAlert>
-
+    <SykiPageAlert Text="Uma instituição pode conter vários campus e ofertar vários cursos." />
     <MudContainer Class="mb-8">
         <MudDataGrid Class="pa-4" Items="@_institutions" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
@@ -23,11 +19,9 @@
                 <PropertyColumn Property="x => x.Id" Title="Id" />
                 <PropertyColumn Property="x => x.Name" Title="Name" />
             </Columns>
-
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
-
             <PagerContent>
                 <SykiDataGridPager T="InstitutionOut" />
             </PagerContent>

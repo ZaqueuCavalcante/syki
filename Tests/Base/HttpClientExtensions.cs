@@ -191,7 +191,7 @@ public static class HttpClientExtensions
         string email = ""
     ) {
         email = email.HasValue() ? email : TestData.Email;
-        var client = new CreateProfessorClient(http);
+        var client = new CreateTeacherClient(http);
         var response = await client.Create(name, email);
         var professor= await response.DeserializeTo<TeacherOut>();
         professor.Email = email;
@@ -226,7 +226,7 @@ public static class HttpClientExtensions
         Guid cursoId,
         List<CreateCourseCurriculumDisciplineIn> disciplines = null
     ) {
-        var client = new CreateGradeClient(http);
+        var client = new CreateCourseCurriculumClient(http);
 
         var result = await client.Create(name, cursoId, disciplines ?? []);
 
@@ -239,7 +239,7 @@ public static class HttpClientExtensions
         Guid cursoId,
         List<CreateCourseCurriculumDisciplineIn> disciplines = null
     ) {
-        var client = new CreateGradeClient(http);
+        var client = new CreateCourseCurriculumClient(http);
 
         return await client.Create(name, cursoId, disciplines ?? []);
     }

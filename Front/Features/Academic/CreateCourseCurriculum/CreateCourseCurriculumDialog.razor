@@ -1,5 +1,5 @@
-@using Syki.Front.Components.Buttons
 @using Syki.Front.Components.Custom
+@using Syki.Front.Components.Buttons
 
 @namespace Syki.Front.Features.Academic.CreateCourseCurriculum
 
@@ -70,7 +70,7 @@
 
 @inject HttpClient Http
 @inject ISnackbar Snackbar
-@inject CreateGradeClient Client
+@inject CreateCourseCurriculumClient Client
 
 @code
 {
@@ -84,13 +84,13 @@
     List<CourseOut> Cursos = [];
 
     List<CourseDisciplineOut> Options = [];
-    List<GradeDisciplineFillable> Disciplines = [];
+    List<CourseCurriculumDisciplineFillable> Disciplines = [];
 
     CreateCourseCurriculumIn data = new();
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/cursos/with-disciplines") ?? [];
+        Cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/academic/courses/with-disciplines") ?? [];
     }
 
     void NewGradeDiscipline()
@@ -115,7 +115,7 @@
     async Task HandleSelectCurso(CourseOut newValue)
     {
         _curso = newValue;
-        Options = await Http.GetFromJsonAsync<List<CourseDisciplineOut>>($"/cursos/{_curso!.Id}/disciplines") ?? [];
+        Options = await Http.GetFromJsonAsync<List<CourseDisciplineOut>>($"/academic/courses/{_curso!.Id}/disciplines") ?? [];
         Disciplines = [];
     }
 

@@ -4,6 +4,6 @@ public class GetTeacherInsightsClient(HttpClient http)
 {
     public async Task<IndexTeacherOut> Get()
     {
-        return await http.GetFromJsonAsync<IndexTeacherOut>("/professor-insights") ?? new();
+        return await http.GetFromJsonAsync<IndexTeacherOut>("/teacher/insights") ?? new();
     }
 }

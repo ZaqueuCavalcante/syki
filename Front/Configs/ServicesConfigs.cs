@@ -28,7 +28,7 @@ public static class ServicesConfigs
         builder.Services.AddScoped<UpdateCampusClient>();
         builder.Services.AddScoped<GetCampiClient>();
 
-        builder.Services.AddScoped<CreateGradeClient>();
+        builder.Services.AddScoped<CreateCourseCurriculumClient>();
         builder.Services.AddScoped<GetAdmInsightsClient>();
 
         builder.Services.AddScoped<CreateCourseClient>();
@@ -39,7 +39,7 @@ public static class ServicesConfigs
         builder.Services.AddScoped<GetAlunoInsightsClient>();
         builder.Services.AddScoped<GetStudentAgendaClient>();
         builder.Services.AddScoped<GetStudentDisciplinesClient>();
-        builder.Services.AddScoped<GetProfessorAgendaClient>();
+        builder.Services.AddScoped<GetTeacherAgendaClient>();
 
         builder.Services.AddScoped<CreateAcademicPeriodClient>();
         builder.Services.AddScoped<GetAcademicPeriodsClient>();

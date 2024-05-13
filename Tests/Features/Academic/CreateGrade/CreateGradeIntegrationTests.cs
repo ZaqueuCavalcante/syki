@@ -16,7 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
         grade.Id.Should().NotBeEmpty();
         grade.Name.Should().Be("Grade de ADS 1.0");
         grade.CourseId.Should().Be(curso.Id);
-        grade.CursoNome.Should().Be(curso.Name);
+        grade.CourseName.Should().Be(curso.Name);
         grade.Disciplines.Should().HaveCount(0);        
     }
 
@@ -39,7 +39,7 @@ public partial class IntegrationTests : IntegrationTestBase
         grade.Id.Should().NotBeEmpty();
         grade.Name.Should().Be("Grade de ADS 1.0");
         grade.CourseId.Should().Be(curso.Id);
-        grade.CursoNome.Should().Be(curso.Name);
+        grade.CourseName.Should().Be(curso.Name);
         grade.Disciplines.Should().HaveCount(3);        
     }
 
@@ -60,7 +60,7 @@ public partial class IntegrationTests : IntegrationTestBase
         grade.Id.Should().NotBeEmpty();
         grade.Name.Should().Be("Grade de ADS 1.0");
         grade.CourseId.Should().Be(curso.Id);
-        grade.CursoNome.Should().Be(curso.Name);
+        grade.CourseName.Should().Be(curso.Name);
         grade.Disciplines.Should().HaveCount(1);
         grade.Disciplines[0].Workload.Should().Be(80);
     }

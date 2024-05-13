@@ -16,7 +16,7 @@ public class TurmaAlunoaUnitTests
         var aluno = new ClassStudent(turmaId, alunoId, situacao);
 
         // Assert
-        aluno.TurmaId.Should().Be(turmaId);
+        aluno.ClassId.Should().Be(turmaId);
     }
 
     [Test]

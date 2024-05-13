@@ -6,7 +6,7 @@
 
 <MudDialog Class="pb-2">
     <TitleContent>
-        <SykiDialogTitle Text="Nova Discipline" />
+        <SykiDialogTitle Text="Nova Disciplina" />
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form">
@@ -17,12 +17,12 @@
                 Variant="Variant.Outlined"
                 Class="mb-2"
                 T="CourseOut"
-                Label="Cursos"
+                Label="Courses"
                 MultiSelection="true"
-                @bind-SelectedValues="@SelectedCursos"
+                @bind-SelectedValues="@SelectedCourses"
                 AnchorOrigin="Origin.BottomCenter"
             >
-                @foreach (var curso in Cursos)
+                @foreach (var curso in Courses)
                 {
                     <MudSelectItem T="CourseOut" Value="@curso">@curso.Name</MudSelectItem>
                 }
@@ -49,12 +49,12 @@
     private bool _loading;
     private string _name;
 
-    private List<CourseOut> Cursos = [];
-    IEnumerable<CourseOut> SelectedCursos { get; set; } = new HashSet<CourseOut>() { };
+    private List<CourseOut> Courses = [];
+    IEnumerable<CourseOut> SelectedCourses { get; set; } = new HashSet<CourseOut>() { };
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await GetCoursesClient.Get();
+        Courses = await GetCoursesClient.Get();
     }
 
     async Task Submit()
@@ -65,11 +65,11 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await CreateDisciplineClient.Create(_name, SelectedCursos.ToList().ConvertAll(c => c.Id));
+        var response = await CreateDisciplineClient.Create(_name, SelectedCourses.ToList().ConvertAll(c => c.Id));
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add("Discipline cadastrada com sucesso!", Severity.Success);
+            Snackbar.Add("Disciplina cadastrada com sucesso!", Severity.Success);
         }
         else
         {

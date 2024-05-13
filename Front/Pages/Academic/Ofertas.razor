@@ -9,29 +9,23 @@
 <PageTitle>Ofertas</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.PlaylistAddCheck" Title="Ofertas" ButtonText="Nova Oferta" OnClick="OpenDialog"/>
-
-    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>Uma oferta de curso pode acontecer a cada período, com variações de campus e de shift.</MudText>
-    </MudAlert>
-
+    <SykiPageHeader Icon="@Icons.Material.Filled.PlaylistAddCheck" Title="Ofertas" ButtonText="Nova Oferta" OnClick="@OpenDialog"/>
+    <SykiPageAlert Text="Uma oferta de curso pode acontecer a cada período, com variações de campus e de turno" />
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Campus" Title="Campus" />
                 <PropertyColumn Property="x => x.Period" Title="Período" />
-                <PropertyColumn Property="x => x.Shift.GetDescription()" Title="Shift" />
-                <PropertyColumn Property="x => x.Curso" Title="Curso" />
-                <PropertyColumn Property="x => x.Grade" Title="Grade" />
+                <PropertyColumn Property="x => x.Shift.GetDescription()" Title="Turno" />
+                <PropertyColumn Property="x => x.Course" Title="Curso" />
+                <PropertyColumn Property="x => x.CourseCurriculum" Title="Grade" />
             </Columns>
-
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
-
             <PagerContent>
                 <SykiDataGridPager T="CourseOfferingOut" />
             </PagerContent>
@@ -56,7 +50,7 @@
     }
 
     private Func<CourseOfferingOut, bool> _quickFilter => x =>
-        _searchString.IsIn(x.Campus, x.Period, x.Shift.GetDescription(), x.Curso, x.Grade);
+        _searchString.IsIn(x.Campus, x.Period, x.Shift.GetDescription(), x.Course, x.CourseCurriculum);
 
     private async Task OpenDialog()
     {

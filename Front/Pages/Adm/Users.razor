@@ -9,27 +9,21 @@
 
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Usuários" />
-
-    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>Um usuário necessariamente precisa estar vinculado à uma instituição.</MudText>
-    </MudAlert>
-
+    <SykiPageAlert Text="Um usuário necessariamente precisa estar vinculado à uma instituição." />
     <MudContainer Class="mb-8">
         <MudDataGrid Class="pa-4" Items="@_users" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo name" />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Name" Title="Name" />
+                <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.Email" Title="Email" />
                 <PropertyColumn Property="x => x.Institution" Title="Instituição" />
                 <PropertyColumn Property="x => x.Role" Title="Role" />
             </Columns>
-
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
-
             <PagerContent>
                 <SykiDataGridPager T="UserOut" />
             </PagerContent>

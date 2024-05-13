@@ -9,14 +9,10 @@
 <PageTitle>Professores</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.Person4" Title="Professores" ButtonText="Novo Professor" OnClick="OpenDialog"/>
-
-    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>Um professor pode lecionar várias disciplinas ao longo de um período, inclusive em mais de um campus.</MudText>
-    </MudAlert>
-
+    <SykiPageHeader Icon="@Icons.Material.Filled.Person4" Title="Professores" ButtonText="Novo Professor" OnClick="@OpenDialog"/>
+    <SykiPageAlert Text="Um professor pode lecionar várias disciplinas ao longo de um período, inclusive em mais de um campus." />
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_professores" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_teachers" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo name" />
             </ToolBarContent>
@@ -24,11 +20,9 @@
                 <PropertyColumn Property="x => x.Name" Title="Name" />
                 <PropertyColumn Property="x => x.Email" Title="Email" />
             </Columns>
-
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
-
             <PagerContent>
                 <SykiDataGridPager T="TeacherOut" />
             </PagerContent>
@@ -43,12 +37,12 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<TeacherOut> _professores = [];
+    private List<TeacherOut> _teachers = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _professores = await Http.GetFromJsonAsync<List<TeacherOut>>("/professores") ?? [];
+        _teachers = await Http.GetFromJsonAsync<List<TeacherOut>>("/academic/teachers") ?? [];
         _loading = false;
     }
 
@@ -60,7 +54,7 @@
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialog = await DialogService.ShowAsync<CreateProfessorDialog>("", options);
+        var dialog = await DialogService.ShowAsync<CreateTeacherDialog>("", options);
 
         var result = await dialog.Result;
 

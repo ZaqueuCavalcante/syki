@@ -16,13 +16,13 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         response.Campus.Should().Be(1);
-        response.Cursos.Should().Be(1);
+        response.Courses.Should().Be(1);
         response.Disciplines.Should().Be(1);
-        response.Grades.Should().Be(0);
-        response.Ofertas.Should().Be(0);
-        response.Turmas.Should().Be(0);
-        response.Professores.Should().Be(0);
-        response.Alunos.Should().Be(0);
+        response.CourseCurriculums.Should().Be(0);
+        response.CourseOfferings.Should().Be(0);
+        response.Classes.Should().Be(0);
+        response.Teachers.Should().Be(0);
+        response.Students.Should().Be(0);
         response.Notifications.Should().Be(0);
     }
 }

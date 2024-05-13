@@ -183,7 +183,7 @@ public class TurmasUnitTests
         // Assert
         turmaOut.Id.Should().Be(turma.Id);
         turmaOut.Discipline.Should().Be(turma.Discipline.Name);
-        turmaOut.Professor.Should().Be(turma.Teacher.Name);
+        turmaOut.Teacher.Should().Be(turma.Teacher.Name);
         turmaOut.Period.Should().Be(turma.Period);
         turmaOut.Schedules.Should().HaveCount(1);
     }

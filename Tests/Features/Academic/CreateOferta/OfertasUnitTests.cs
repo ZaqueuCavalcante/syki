@@ -1,5 +1,5 @@
+using Syki.Back.Features.Academic.CreateCourseCurriculum;
 using Syki.Back.Features.Academic.CreateCourseOffering;
-using Syki.Back.Features.Academic.CreateGrade;
 
 namespace Syki.Tests.Unit;
 
@@ -141,7 +141,7 @@ public class OfertasUnitTests
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
-        var grade = new Grade(institutionId, cursoId, "Grade de ADS - 1.0");
+        var grade = new CourseCurriculum(institutionId, cursoId, "Grade de ADS - 1.0");
 
         var oferta = new CourseOffering(institutionId, campusId, cursoId, grade.Id, period, shift)
         {
@@ -156,9 +156,9 @@ public class OfertasUnitTests
         // Assert
         CourseOfferingOut.Id.Should().Be(oferta.Id);
         CourseOfferingOut.Campus.Should().Be(oferta.Campus.Name);
-        CourseOfferingOut.Curso.Should().Be(oferta.Course.Name);
+        CourseOfferingOut.Course.Should().Be(oferta.Course.Name);
         CourseOfferingOut.CourseCurriculumId.Should().Be(oferta.CourseCurriculumId);
-        CourseOfferingOut.Grade.Should().Be(oferta.CourseCurriculum.Name);
+        CourseOfferingOut.CourseCurriculum.Should().Be(oferta.CourseCurriculum.Name);
         CourseOfferingOut.Period.Should().Be(oferta.Period);
         CourseOfferingOut.Shift.Should().Be(oferta.Shift);
     }
@@ -169,7 +169,7 @@ public class OfertasUnitTests
         // Arrange
         var CourseOfferingOut = new CourseOfferingOut
         {
-            Grade = "Grade de ADS - 1.0",
+            CourseCurriculum = "Grade de ADS - 1.0",
             Campus = "Agreste I",
             Period = "2024.1",
             Shift = Shift.Matutino,

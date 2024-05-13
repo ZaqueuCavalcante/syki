@@ -7,7 +7,7 @@
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
-            Nova CourseOffering
+            Nova Oferta
         </MudText>
     </TitleContent>
     <DialogContent>
@@ -38,13 +38,13 @@
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Class="mb-4"
-                        @bind-Value="@_periodo"
+                        @bind-Value="@_period"
                         Label="Período"
                         Required="true"
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (string? item in Periodos.ConvertAll(p => p.Id))
+                        @foreach (string? item in Periods.ConvertAll(p => p.Id))
                         {
                             <MudSelectItem Value="@item">@item</MudSelectItem>
                         }
@@ -56,7 +56,7 @@
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Class="mb-4"
-                        @bind-Value="_turno"
+                        @bind-Value="_shift"
                         Label="Shift"
                         Required="true"
                         RequiredError="Informe!"
@@ -77,7 +77,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-4"
-                @bind-Value="_curso"
+                @bind-Value="_course"
                 Label="Curso"
                 Required="true"
                 RequiredError="Informe!"
@@ -89,23 +89,23 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
-                @bind-Value="_grade"
+                @bind-Value="_courseCurriculum"
                 Label="Grade"
                 Required="true"
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
-                @if (_curso == null)
+                @if (_course == null)
                 {
-                    <MudSelectItem Value="@_grade" Disabled="true">Selecione o curso!</MudSelectItem>
+                    <MudSelectItem Value="@_courseCurriculum" Disabled="true">Selecione o curso!</MudSelectItem>
                 }
-                @if (_curso != null && Grades.Where(x => x.CourseId == _curso.Id).Count() == 0)
+                @if (_course != null && CourseCurriculums.Where(x => x.CourseId == _course.Id).Count() == 0)
                 {
-                    <MudSelectItem Value="@_grade" Disabled="true">Este curso não possui grades vinculadas.</MudSelectItem>
+                    <MudSelectItem Value="@_courseCurriculum" Disabled="true">Este curso não possui grades vinculadas.</MudSelectItem>
                 }
-                @if (_curso != null)
+                @if (_course != null)
                 {
-                    @foreach (CourseCurriculumOut? item in Grades.Where(x => x.CourseId == _curso.Id))
+                    @foreach (CourseCurriculumOut? item in CourseCurriculums.Where(x => x.CourseId == _course.Id))
                     {
                         <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                     }
@@ -133,25 +133,25 @@
     private bool _loading;
 
     CampusOut? _campus;
-    CourseOut? _curso;
-    CourseCurriculumOut? _grade;
-    string? _periodo;
-    Shift? _turno;
+    CourseOut? _course;
+    CourseCurriculumOut? _courseCurriculum;
+    string? _period;
+    Shift? _shift;
 
     CreateCourseOfferingIn data = new();
 
     List<CampusOut> Campi = [];
-    List<CourseOut> Cursos = [];
-    List<CourseCurriculumOut> Grades = [];
-    List<AcademicPeriodOut> Periodos = [];
+    List<CourseOut> Courses = [];
+    List<CourseCurriculumOut> CourseCurriculums = [];
+    List<AcademicPeriodOut> Periods = [];
 
     protected override async Task OnInitializedAsync()
     {
         await Task.WhenAll(new Task[] { 
-            Task.Run(async () => Campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? []),
-            Task.Run(async () => Cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/cursos/with-grades") ?? []),
-            Task.Run(async () => Grades = await Http.GetFromJsonAsync<List<CourseCurriculumOut>>("/grades") ?? []),
-            Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic-periods") ?? []),
+            Task.Run(async () => Campi = await Http.GetFromJsonAsync<List<CampusOut>>("/academic/campi") ?? []),
+            Task.Run(async () => Courses = await Http.GetFromJsonAsync<List<CourseOut>>("/academic/courses/with-curriculums") ?? []),
+            Task.Run(async () => CourseCurriculums = await Http.GetFromJsonAsync<List<CourseCurriculumOut>>("/academic/course-curriculums") ?? []),
+            Task.Run(async () => Periods = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic/academic-periods") ?? []),
         });
     }
 
@@ -160,9 +160,9 @@
         await Task.Delay(0);
 
         if (string.IsNullOrEmpty(value))
-            return Cursos;
+            return Courses;
 
-        return Cursos.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        return Courses.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
     async Task Submit()
@@ -175,14 +175,14 @@
         data = new()
         {
             CampusId = _campus!.Id,
-            CourseId = _curso!.Id,
-            CourseCurriculumId = _grade!.Id,
-            Period = _periodo!,
-            Shift = _turno!.Value,
+            CourseId = _course!.Id,
+            CourseCurriculumId = _courseCurriculum!.Id,
+            Period = _period!,
+            Shift = _shift!.Value,
         };
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/ofertas", data);
+        var response = await Http.PostAsJsonAsync("/academic/course-offerings", data);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

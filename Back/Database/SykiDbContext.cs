@@ -1,42 +1,43 @@
 using Syki.Back.Audit;
 using Audit.EntityFramework;
-using Syki.Back.Features.Academic.CreateStudent;
-using Syki.Back.CreateTurma;
-using Syki.Back.CreateOferta;
-using Syki.Back.CreateProfessor;
+using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Cross.CreateInstitution;
+using Syki.Back.Features.Cross.SendResetPasswordToken;
+using Syki.Back.Features.Cross.CreatePendingUserRegister;
+using Syki.Back.Features.Academic.CreateClass;
+using Syki.Back.Features.Academic.CreateCourse;
+using Syki.Back.Features.Academic.CreateCampus;
+using Syki.Back.Features.Academic.CreateStudent;
+using Syki.Back.Features.Academic.CreateTeacher;
+using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
-using Syki.Back.CreateMatriculaAluno;
-using Syki.Back.CreateEnrollmentPeriod;
-using Syki.Back.Features.Academic.CreateGrade;
-using Syki.Back.Features.Academic.CreateCurso;
-using Syki.Back.Features.Academic.CreateCampus;
-using Syki.Back.Features.Academic.CreateDisciplina;
-using Syki.Back.Features.Cross.SendResetPasswordToken;
+using Syki.Back.Features.Academic.CreateCourseOffering;
+using Syki.Back.Features.Academic.CreateCourseCurriculum;
+using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
+using Syki.Back.Features.Student.CreateStudentEnrollment;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 namespace Syki.Back.Database;
 
 public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSettings settings) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
 {
     public DbSet<Campus> Campi { get; set; }
-    public DbSet<Curso> Cursos { get; set; }
-    public DbSet<Grade> Grades { get; set; }
-    public DbSet<Aluno> Alunos { get; set; }
-    public DbSet<Turma> Turmas { get; set; }
-    public DbSet<Oferta> Ofertas { get; set; }
+    public DbSet<Course> Courses { get; set; }
+    public DbSet<CourseCurriculum> CourseCurriculums { get; set; }
+    public DbSet<Student> Students { get; set; }
+    public DbSet<Class> Classes { get; set; }
+    public DbSet<CourseOffering> CourseOfferings { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
-    public DbSet<Professor> Professores { get; set; }
-    public DbSet<TurmaAluno> TurmaAlunos { get; set; }
-    public DbSet<Disciplina> Disciplinas { get; set; }
+    public DbSet<Teacher> Teachers { get; set; }
+    public DbSet<ClassStudent> ClassesStudents { get; set; }
+    public DbSet<Discipline> Disciplines { get; set; }
     public DbSet<Institution> Institutions { get; set; }
     public DbSet<UserRegister> UserRegisters { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<AcademicPeriod> AcademicPeriods { get; set; }
-    public DbSet<CursoDisciplina> CursosDisciplinas { get; set; }
-    public DbSet<GradeDisciplina> GradesDisciplinas { get; set; }
+    public DbSet<CourseDiscipline> CoursesDisciplines { get; set; }
+    public DbSet<CourseCurriculumDiscipline> CourseCurriculumDisciplines { get; set; }
     public DbSet<EnrollmentPeriod> EnrollmentPeriods { get; set; }
     public DbSet<UserNotification> UserNotifications { get; set; }
     public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }

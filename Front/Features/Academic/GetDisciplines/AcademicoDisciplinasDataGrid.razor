@@ -3,7 +3,7 @@
 @namespace Syki.Front.Features.Academic.GetDisciplines
 
 <MudContainer Class="mb-8">
-    <MudDataGrid Class="pa-4" Items="@_disciplinas" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+    <MudDataGrid Class="pa-4" Items="@_disciplines" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
         <ToolBarContent>
             <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por name ou código" />
         </ToolBarContent>
@@ -15,7 +15,7 @@
             @(GetNotFoundMessage())
         </NoRecordsContent>
         <PagerContent>
-            <SykiDataGridPager T="DisciplinaOut" />
+            <SykiDataGridPager T="DisciplineOut" />
         </PagerContent>
     </MudDataGrid>
 </MudContainer>
@@ -26,12 +26,12 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<DisciplinaOut> _disciplinas = [];
+    private List<DisciplineOut> _disciplines = [];
 
     public async Task Reload()
     {
         _loading = true;
-        _disciplinas = await Client.Get();
+        _disciplines = await Client.Get();
         _loading = false;
     }
 
@@ -40,7 +40,7 @@
         await Reload();
     }
 
-    private Func<DisciplinaOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Code);
+    private Func<DisciplineOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Code);
 
     private string GetNotFoundMessage()
     {

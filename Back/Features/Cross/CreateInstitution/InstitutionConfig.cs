@@ -1,3 +1,5 @@
+using Syki.Back.Features.Cross.CreateUser;
+
 namespace Syki.Back.Features.Cross.CreateInstitution;
 
 public class InstitutionConfig : IEntityTypeConfiguration<Institution>

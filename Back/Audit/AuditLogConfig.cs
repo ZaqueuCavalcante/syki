@@ -1,3 +1,5 @@
+using Syki.Back.Features.Cross.CreateUser;
+
 namespace Syki.Back.Audit;
 
 public class AuditLogConfig : IEntityTypeConfiguration<AuditLog>

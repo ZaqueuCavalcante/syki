@@ -23,7 +23,7 @@
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary
             ">
-                @foreach (OfertaOut? item in _ofertas)
+                @foreach (CourseOfferingOut? item in _ofertas)
                 {
                     <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
                 }
@@ -48,14 +48,14 @@
     private MudForm _form;
     private bool _loading;
 
-    private OfertaOut? _oferta;
-    private List<OfertaOut> _ofertas = [];
+    private CourseOfferingOut? _oferta;
+    private List<CourseOfferingOut> _ofertas = [];
 
-    private AlunoIn _data = new();
+    private CreateStudentIn _data = new();
 
     protected override async Task OnInitializedAsync()
     {
-        _ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? [];
+        _ofertas = await Http.GetFromJsonAsync<List<CourseOfferingOut>>("/ofertas") ?? [];
     }
 
     async Task Submit()
@@ -65,7 +65,7 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        _data.OfertaId = _oferta!.Id;
+        _data.CourseOfferingId = _oferta!.Id;
 
         _loading = true;
         var response = await Http.PostAsJsonAsync("/alunos", _data);

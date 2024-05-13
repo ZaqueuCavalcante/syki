@@ -1,7 +1,7 @@
-using Syki.Back.CreateProfessor;
-using Syki.Back.Features.Academic.CreateDisciplina;
+using Syki.Back.Features.Academic.CreateTeacher;
+using Syki.Back.Features.Academic.CreateDiscipline;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.Academic.CreateClass;
 
 public class TurmasUnitTests
 {
@@ -10,12 +10,12 @@ public class TurmasUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        var disciplinaId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        const string periodo = "2023.2";
+        const string period = "2023.2";
 
         // Act
-        var turma = new Turma(institutionId, disciplinaId, professorId, periodo, []);
+        var turma = new Class(institutionId, disciplineId, professorId, period, []);
 
         // Assert
         turma.Id.Should().NotBeEmpty();
@@ -26,31 +26,31 @@ public class TurmasUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        var disciplinaId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        const string periodo = "2023.2";
+        const string period = "2023.2";
 
         // Act
-        var turma = new Turma(institutionId, disciplinaId, professorId, periodo, []);
+        var turma = new Class(institutionId, disciplineId, professorId, period, []);
 
         // Assert
         turma.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
-    public void Deve_criar_uma_turma_com_disciplina_id_correto()
+    public void Deve_criar_uma_turma_com_discipline_id_correto()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        var disciplinaId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        const string periodo = "2023.2";
+        const string period = "2023.2";
 
         // Act
-        var turma = new Turma(institutionId, disciplinaId, professorId, periodo, []);
+        var turma = new Class(institutionId, disciplineId, professorId, period, []);
 
         // Assert
-        turma.DisciplinaId.Should().Be(disciplinaId);
+        turma.DisciplineId.Should().Be(disciplineId);
     }
 
     [Test]
@@ -58,15 +58,15 @@ public class TurmasUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        var disciplinaId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        const string periodo = "2023.2";
+        const string period = "2023.2";
 
         // Act
-        var turma = new Turma(institutionId, disciplinaId, professorId, periodo, []);
+        var turma = new Class(institutionId, disciplineId, professorId, period, []);
 
         // Assert
-        turma.ProfessorId.Should().Be(professorId);
+        turma.TeacherId.Should().Be(professorId);
     }
 
     [Test]
@@ -74,87 +74,87 @@ public class TurmasUnitTests
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        var disciplinaId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        const string periodo = "2023.2";
+        const string period = "2023.2";
 
         // Act
-        var turma = new Turma(institutionId, disciplinaId, professorId, periodo, []);
+        var turma = new Class(institutionId, disciplineId, professorId, period, []);
 
         // Assert
-        turma.Periodo.Should().Be(periodo);
+        turma.Period.Should().Be(period);
     }
 
     [Test]
-    public void Deve_criar_uma_turma_com_horarios_corretos()
+    public void Deve_criar_uma_turma_com_schedules_corretos()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        var disciplinaId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        const string periodo = "2023.2";
-        var horarios = new List<Horario>() { new(Day.Segunda, Hora.H07_00, Hora.H08_00) };
+        const string period = "2023.2";
+        var schedules = new List<Schedule>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
         // Act
-        var turma = new Turma(institutionId, disciplinaId, professorId, periodo, horarios);
+        var turma = new Class(institutionId, disciplineId, professorId, period, schedules);
 
         // Assert
-        turma.Horarios.Should().BeEquivalentTo(horarios);
+        turma.Schedules.Should().BeEquivalentTo(schedules);
     }
 
     [Test]
-    public void Nao_deve_criar_uma_turma_com_horarios_totalmente_conflitantes()
+    public void Nao_deve_criar_uma_turma_com_schedules_totalmente_conflitantes()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        var disciplinaId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        const string periodo = "2023.2";
-        var horarios = new List<Horario>()
+        const string period = "2023.2";
+        var schedules = new List<Schedule>()
         {
-            new(Day.Segunda, Hora.H07_00, Hora.H08_00),
-            new(Day.Segunda, Hora.H07_00, Hora.H08_00),
+            new(Day.Segunda, Hour.H07_00, Hour.H08_00),
+            new(Day.Segunda, Hour.H07_00, Hour.H08_00),
         };
 
         // Act
-        Action act = () => new Turma(institutionId, disciplinaId, professorId, periodo, horarios);
+        Action act = () => new Class(institutionId, disciplineId, professorId, period, schedules);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE022);
     }
 
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.HorariosConflitantes))]
-    public void Nao_deve_criar_uma_turma_com_horarios_parcialmente_conflitantes(List<Horario> horarios)
+    [TestCaseSource(typeof(TestData), nameof(TestData.SchedulesConflitantes))]
+    public void Nao_deve_criar_uma_turma_com_schedules_parcialmente_conflitantes(List<Schedule> schedules)
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        var disciplinaId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        const string periodo = "2023.2";
+        const string period = "2023.2";
 
         // Act
-        Action act = () => new Turma(institutionId, disciplinaId, professorId, periodo, horarios);
+        Action act = () => new Class(institutionId, disciplineId, professorId, period, schedules);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE022);
     }
 
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.HorariosValidos))]
-    public void Deve_criar_uma_turma_com_horarios_validos(List<Horario> horarios)
+    [TestCaseSource(typeof(TestData), nameof(TestData.SchedulesValidos))]
+    public void Deve_criar_uma_turma_com_schedules_validos(List<Schedule> schedules)
     {
         // Arrange
         var institutionId = Guid.NewGuid();
-        var disciplinaId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        const string periodo = "2023.2";
+        const string period = "2023.2";
 
         // Act
-        var turma = new Turma(institutionId, disciplinaId, professorId, periodo, horarios);
+        var turma = new Class(institutionId, disciplineId, professorId, period, schedules);
 
         // Assert
-        turma.Horarios.Should().BeEquivalentTo(horarios);
+        turma.Schedules.Should().BeEquivalentTo(schedules);
     }
 
     [Test]
@@ -163,18 +163,18 @@ public class TurmasUnitTests
         // Arrange
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
-        var disciplinaId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
         var professorId = Guid.NewGuid();
-        const string periodo = "2023.2";
+        const string period = "2023.2";
 
-        var disciplina = new Disciplina(institutionId, "Banco de Dados");
-        var professor = new Professor(userId, institutionId, "Chico Science");
-        var horarios = new List<Horario>() { new(Day.Segunda, Hora.H07_00, Hora.H08_00) };
+        var discipline = new Discipline(institutionId, "Banco de Dados");
+        var professor = new Teacher(userId, institutionId, "Chico Science");
+        var schedules = new List<Schedule>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
-        var turma = new Turma(institutionId, disciplinaId, professorId, periodo, horarios)
+        var turma = new Class(institutionId, disciplineId, professorId, period, schedules)
         {
-            Disciplina = disciplina,
-            Professor = professor,
+            Discipline = discipline,
+            Teacher = professor,
         };
 
         // Act
@@ -182,9 +182,9 @@ public class TurmasUnitTests
 
         // Assert
         turmaOut.Id.Should().Be(turma.Id);
-        turmaOut.Disciplina.Should().Be(turma.Disciplina.Name);
-        turmaOut.Professor.Should().Be(turma.Professor.Name);
-        turmaOut.Periodo.Should().Be(turma.Periodo);
-        turmaOut.Horarios.Should().HaveCount(1);
+        turmaOut.Discipline.Should().Be(turma.Discipline.Name);
+        turmaOut.Professor.Should().Be(turma.Teacher.Name);
+        turmaOut.Period.Should().Be(turma.Period);
+        turmaOut.Schedules.Should().HaveCount(1);
     }
 }

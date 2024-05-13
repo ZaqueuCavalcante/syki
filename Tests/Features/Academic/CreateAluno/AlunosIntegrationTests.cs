@@ -10,17 +10,17 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var periodo = await client.CreateAcademicPeriod("2024.1");
+        var period = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
-        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
+        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
 
         // Act
         var response = await client.CreateStudent(oferta.Id);
 
         // Assert
         response.Id.Should().NotBeEmpty(); 
-        response.OfertaId.Should().Be(oferta.Id); 
+        response.CourseOfferingId.Should().Be(oferta.Id); 
         response.Name.Should().Be("Zezin"); 
     }
 
@@ -38,23 +38,23 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_retornar_as_disciplinas_cursadas_pelo_aluno()
+    public async Task Deve_retornar_as_disciplines_cursadas_pelo_aluno()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var periodo = await client.CreateAcademicPeriod("2024.1");
+        var period = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
 
-        var disciplina01 = await client.CreateDisciplina("Banco de Dados", [curso.Id]);
-        var disciplina02 = await client.CreateDisciplina("Estrutura de Dados", [curso.Id]);
-        var disciplina03 = await client.CreateDisciplina("Programação Orientada a Objetos", [curso.Id]);
+        var discipline01 = await client.CreateDiscipline("Banco de Dados", [curso.Id]);
+        var discipline02 = await client.CreateDiscipline("Estrutura de Dados", [curso.Id]);
+        var discipline03 = await client.CreateDiscipline("Programação Orientada a Objetos", [curso.Id]);
 
-        var disciplinas = new List<GradeDisciplinaIn>() { new() { Id = disciplina01.Id }, new() { Id = disciplina02.Id }, new() { Id = disciplina03.Id } };
+        var disciplines = new List<CreateCourseCurriculumDisciplineIn>() { new() { Id = discipline01.Id }, new() { Id = discipline02.Id }, new() { Id = discipline03.Id } };
 
-        var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id, disciplinas);
-        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
+        var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id, disciplines);
+        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
 
         var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
 
@@ -63,7 +63,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.Login(aluno.Email, password);
 
         // Act
-        var response = await client.GetAlunoDisciplinas();
+        var response = await client.GetAlunoDisciplines();
 
         // Assert
         response.Count.Should().Be(3);
@@ -79,16 +79,16 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var periodo = await client.CreateAcademicPeriod("2024.1");
+        var period = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
-        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
+        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
 
         await client.CreateStudent(oferta.Id, "Zaqueu");
         await client.CreateStudent(oferta.Id, "Maju");
 
         // Act
-        var response = await client.GetAsync<List<AlunoOut>>("/alunos");
+        var response = await client.GetAsync<List<StudentOut>>("/alunos");
 
         // Assert
         response.Count.Should().Be(2); 

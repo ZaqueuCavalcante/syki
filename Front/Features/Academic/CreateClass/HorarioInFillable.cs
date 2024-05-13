@@ -1,13 +1,13 @@
 namespace Syki.Front.Features.Academic.CreateClass;
 
-public class HorarioInFillable
+public class ScheduleInFillable
 {
     public Guid Id { get; set; }
     public Day? Day { get; set; }
-    public Hora? Start { get; set; }
-    public Hora? End { get; set; }
+    public Hour? Start { get; set; }
+    public Hour? End { get; set; }
 
-    public HorarioInFillable()
+    public ScheduleInFillable()
     {
         Id = Guid.NewGuid();
     }
@@ -15,7 +15,7 @@ public class HorarioInFillable
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;
-        return Id == ((HorarioInFillable)obj).Id;
+        return Id == ((ScheduleInFillable)obj).Id;
     }
 
     public override int GetHashCode()

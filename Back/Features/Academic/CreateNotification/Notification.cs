@@ -11,8 +11,11 @@ public class Notification
 
     public string Views { get; set; }
 
-    public Notification(Guid institutionId, string title, string description)
-    {
+    public Notification(
+        Guid institutionId,
+        string title,
+        string description
+    ) {
         Id = Guid.NewGuid();
         InstitutionId = institutionId;
         Title = title;

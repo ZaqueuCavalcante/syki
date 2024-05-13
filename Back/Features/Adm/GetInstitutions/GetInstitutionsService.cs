@@ -1,4 +1,4 @@
-namespace Syki.Back.GetInstitutions;
+namespace Syki.Back.Features.Adm.GetInstitutions;
 
 public class GetInstitutionsService(SykiDbContext ctx)
 {

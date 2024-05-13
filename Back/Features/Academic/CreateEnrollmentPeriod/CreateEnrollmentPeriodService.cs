@@ -1,4 +1,4 @@
-namespace Syki.Back.CreateEnrollmentPeriod;
+namespace Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 
 public class CreateEnrollmentPeriodService(SykiDbContext ctx)
 {

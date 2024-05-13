@@ -2,13 +2,13 @@ namespace Syki.Front.Features.Academic.CreateCourseCurriculum;
 
 public class CreateGradeClient(HttpClient http)
 {
-    public async Task<HttpResponseMessage> Create(string name, Guid cursoId, List<GradeDisciplinaIn> disciplinas)
+    public async Task<HttpResponseMessage> Create(string name, Guid cursoId, List<CreateCourseCurriculumDisciplineIn> disciplines)
     {
-        var data = new GradeIn
+        var data = new CreateCourseCurriculumIn
         {
             Name = name,
-            CursoId = cursoId,
-            Disciplinas = disciplinas
+            CourseId = cursoId,
+            Disciplines = disciplines
         };
         return await http.PostAsJsonAsync("/grades", data);
     }

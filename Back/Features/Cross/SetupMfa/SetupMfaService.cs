@@ -1,3 +1,5 @@
+using Syki.Back.Features.Cross.CreateUser;
+
 namespace Syki.Back.Features.Cross.SetupMfa;
 
 public class SetupMfaService(UserManager<SykiUser> userManager)

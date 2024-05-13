@@ -1,10 +1,10 @@
-namespace Syki.Back.GetCurrentEnrollmentPeriod;
+namespace Syki.Back.Features.Student.GetCurrentEnrollmentPeriod;
 
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 public class GetEnrollmentPeriodsController(GetCurrentEnrollmentPeriodService service) : ControllerBase
 {
-    [HttpGet("enrollment-periods/current")]
+    [HttpGet("student/enrollment-periods/current")]
     public async Task<IActionResult> Get()
     {
         var period = await service.Get(User.InstitutionId());

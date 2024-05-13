@@ -8,7 +8,7 @@ namespace Syki.Back.Features.Academic.CreateAcademicPeriod;
 [Consumes("application/json"), Produces("application/json")]
 public class CreateAcademicPeriodController(CreateAcademicPeriodService service) : ControllerBase
 {
-    [HttpPost("academic-periods")]
+    [HttpPost("academic/academic-periods")]
     [ProducesResponseType(typeof(AcademicPeriodOut), 200)]
     public async Task<IActionResult> Create([FromBody] CreateAcademicPeriodIn data)
     {

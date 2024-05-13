@@ -9,10 +9,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        var periodo = await client.CreateAcademicPeriod("2024.1");
+        var period = await client.CreateAcademicPeriod("2024.1");
 
         // Assert
-        periodo.Id.Should().Be(periodo.Id);
+        period.Id.Should().Be(period.Id);
     }
 
     [Test]
@@ -37,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var clientNovaRoma = await _factory.LoggedAsAcademic();
         var clientUfpe = await _factory.LoggedAsAcademic();
 
-        var periodo = await clientNovaRoma.CreateAcademicPeriod("2023.1");
+        var period = await clientNovaRoma.CreateAcademicPeriod("2023.1");
 
         await clientUfpe.CreateAcademicPeriod("2023.2");
 
@@ -46,6 +46,6 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         periodos.Should().HaveCount(1);
-        periodos[0].Id.Should().Be(periodo.Id);
+        periodos[0].Id.Should().Be(period.Id);
     }
 }

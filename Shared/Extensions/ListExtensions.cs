@@ -15,26 +15,26 @@ public static class ListExtensions
         return true;
     }
 
-    public static List<AgendaDayOut> ToAgendas(this List<MatriculaTurmaOut> turmas)
+    public static List<AgendaDayOut> ToAgendas(this List<EnrollmentClassOut> classes)
     {
         var agendas = new List<AgendaDayOut>();
 
-        foreach (var turma in turmas)
+        foreach (var @class in classes)
         {
-            foreach (var horario in turma.Horarios)
+            foreach (var schedule in @class.Schedules)
             {
-                var disciplina = new AgendaDisciplineOut { Name = turma.Disciplina, Start = horario.Start, End = horario.End };
+                var discipline = new AgendaDisciplineOut { Name = @class.Discipline, Start = schedule.Start, End = schedule.End };
 
-                var agenda = agendas.FirstOrDefault(a => a.Day == horario.Day);
+                var agenda = agendas.FirstOrDefault(a => a.Day == schedule.Day);
                 if (agenda == null)
                 {
-                    agenda = new AgendaDayOut { Day = horario.Day };
-                    agenda.Disciplines.Add(disciplina);
+                    agenda = new AgendaDayOut { Day = schedule.Day };
+                    agenda.Disciplines.Add(discipline);
                     agendas.Add(agenda);
                     continue;
                 }
 
-                agenda.Disciplines.Add(disciplina);
+                agenda.Disciplines.Add(discipline);
             }
         }
 

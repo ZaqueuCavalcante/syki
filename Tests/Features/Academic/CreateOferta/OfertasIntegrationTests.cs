@@ -9,7 +9,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateOfertaHttp(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "2024.1", Turno.Matutino);
+        var response = await client.CreateOfertaHttp(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
         await response.AssertBadRequest(Throw.DE010);      
@@ -26,7 +26,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var campusUfpe = await clientUfpe.CreateCampus("Suassuna", "Recife - PE");
 
         // Act
-        var response = await clientNovaRoma.CreateOfertaHttp(campusUfpe.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Turno.Matutino);
+        var response = await clientNovaRoma.CreateOfertaHttp(campusUfpe.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
         await response.AssertBadRequest(Throw.DE010);      
@@ -40,7 +40,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
 
         // Act
-        var response = await client.CreateOfertaHttp(campus.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Turno.Matutino);
+        var response = await client.CreateOfertaHttp(campus.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
         await response.AssertBadRequest(Throw.DE002);
@@ -57,7 +57,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var campusNovaRoma = await clientNovaRoma.CreateCampus("Agreste I", "Caruaru - PE");
 
         // Act
-        var response = await clientNovaRoma.CreateOfertaHttp(campusNovaRoma.Id, cursoUfpe.Id, Guid.NewGuid(), "2024.1", Turno.Matutino);
+        var response = await clientNovaRoma.CreateOfertaHttp(campusNovaRoma.Id, cursoUfpe.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
         await response.AssertBadRequest(Throw.DE002);
@@ -72,7 +72,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var curso = await client.CreateCurso("Direito");
 
         // Act
-        var response = await client.CreateOfertaHttp(campus.Id, curso.Id, Guid.NewGuid(), "2024.1", Turno.Matutino);
+        var response = await client.CreateOfertaHttp(campus.Id, curso.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
         await response.AssertBadRequest(Throw.DE011);
@@ -89,7 +89,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var grade = await client.CreateGrade("Grade de ADS 1.0", cursoAds.Id);
 
         // Act
-        var response = await client.CreateOfertaHttp(campus.Id, cursoDireito.Id, grade.Id, "2024.1", Turno.Matutino);
+        var response = await client.CreateOfertaHttp(campus.Id, cursoDireito.Id, grade.Id, "2024.1", Shift.Matutino);
 
         // Assert
         await response.AssertBadRequest(Throw.DE011);
@@ -105,7 +105,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
 
         // Act
-        var response = await client.CreateOfertaHttp(campus.Id, curso.Id, grade.Id, "2024.1", Turno.Matutino);
+        var response = await client.CreateOfertaHttp(campus.Id, curso.Id, grade.Id, "2024.1", Shift.Matutino);
         
         // Assert
         await response.AssertBadRequest(Throw.DE005);
@@ -125,7 +125,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var grade = await clientNovaRoma.CreateGrade("Grade de ADS 1.0", curso.Id);
 
         // Act
-        var response = await clientNovaRoma.CreateOfertaHttp(campus.Id, curso.Id, grade.Id, "2023.1", Turno.Matutino);
+        var response = await clientNovaRoma.CreateOfertaHttp(campus.Id, curso.Id, grade.Id, "2023.1", Shift.Matutino);
 
         // Assert
         await response.AssertBadRequest(Throw.DE005);
@@ -138,17 +138,17 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var periodo = await client.CreateAcademicPeriod("2024.1");
+        var period = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
 
         // Act
-        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Matutino);
+        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Matutino);
 
         // Assert
         oferta.Id.Should().NotBeEmpty();
-        oferta.GradeId.Should().Be(grade.Id);
-        oferta.Periodo.Should().Be(periodo.Id);
+        oferta.CourseCurriculumId.Should().Be(grade.Id);
+        oferta.Period.Should().Be(period.Id);
     }
 
     [Test]
@@ -158,13 +158,13 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var periodo = await client.CreateAcademicPeriod("2024.1");
+        var period = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
-        await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
+        await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
 
         // Act
-        var ofertas = await client.GetAsync<List<OfertaOut>>("/ofertas");
+        var ofertas = await client.GetAsync<List<CourseOfferingOut>>("/ofertas");
 
         // Assert
         ofertas.Count.Should().Be(1);

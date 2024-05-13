@@ -2,8 +2,8 @@ namespace Syki.Front.Features.Teacher.GetTeacherInsights;
 
 public class GetTeacherInsightsClient(HttpClient http)
 {
-    public async Task<IndexProfessorOut> Get()
+    public async Task<IndexTeacherOut> Get()
     {
-        return await http.GetFromJsonAsync<IndexProfessorOut>("/professor-insights") ?? new();
+        return await http.GetFromJsonAsync<IndexTeacherOut>("/professor-insights") ?? new();
     }
 }

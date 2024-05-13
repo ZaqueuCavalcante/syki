@@ -1,0 +1,76 @@
+﻿@using Syki.Front.Components.Custom
+@using Syki.Front.Features.Academic.CreateTeacher
+
+@namespace Syki.Front.Pages.Academic
+
+@page "/academic/teachers"
+@attribute [Authorize(Roles = "Academic")]
+
+<PageTitle>Professores</PageTitle>
+
+<MudContainer>
+    <SykiPageHeader Icon="@Icons.Material.Filled.Person4" Title="Professores" ButtonText="Novo Professor" OnClick="OpenDialog"/>
+
+    <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
+        <MudText>Um professor pode lecionar várias disciplinas ao longo de um período, inclusive em mais de um campus.</MudText>
+    </MudAlert>
+
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_professores" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo name" />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Name" Title="Name" />
+                <PropertyColumn Property="x => x.Email" Title="Email" />
+            </Columns>
+
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+
+            <PagerContent>
+                <SykiDataGridPager T="TeacherOut" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject HttpClient Http
+@inject IDialogService DialogService
+
+@code
+{
+    private bool _loading;
+    private string _searchString;
+    private List<TeacherOut> _professores = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _professores = await Http.GetFromJsonAsync<List<TeacherOut>>("/professores") ?? [];
+        _loading = false;
+    }
+
+    private Func<TeacherOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
+
+    private async Task OpenDialog()
+    {
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialog = await DialogService.ShowAsync<CreateProfessorDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem professores cadastrados ainda." : "Nenhum professor encontrado.";
+    }
+}

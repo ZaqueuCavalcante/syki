@@ -2,6 +2,7 @@ using System.Text;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Cross.GenerateJWT;
 

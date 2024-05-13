@@ -1,15 +1,16 @@
 using Audit.Core;
 using Syki.Back.Audit;
-using Syki.Back.CreateTurma;
-using Syki.Back.CreateOferta;
-using Syki.Back.CreateProfessor;
+using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Cross.CreateInstitution;
-using Syki.Back.Features.Academic.CreateNotification;
-using Syki.Back.Features.Academic.CreateGrade;
-using Syki.Back.Features.Academic.CreateCurso;
+using Syki.Back.Features.Academic.CreateClass;
+using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
+using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
-using Syki.Back.Features.Academic.CreateDisciplina;
+using Syki.Back.Features.Academic.CreateDiscipline;
+using Syki.Back.Features.Academic.CreateNotification;
+using Syki.Back.Features.Academic.CreateCourseOffering;
+using Syki.Back.Features.Academic.CreateCourseCurriculum;
 
 namespace Syki.Back.Configs;
 
@@ -22,20 +23,20 @@ public static class AuditConfigs
         Configuration.Setup().UseEntityFramework(_ => _
             .UseDbContext(_ => context)
             .AuditTypeExplicitMapper(_ => _
-                .Map<Aluno, AuditLog>()
-                .Map<Curso, AuditLog>()
-                .Map<Grade, AuditLog>()
-                .Map<Turma, AuditLog>()
+                .Map<Class, AuditLog>()
                 .Map<Campus, AuditLog>()
-                .Map<Oferta, AuditLog>()
-                .Map<Horario, AuditLog>()
+                .Map<Course, AuditLog>()
+                .Map<Teacher, AuditLog>()
+                .Map<Student, AuditLog>()
+                .Map<Schedule, AuditLog>()
                 .Map<SykiUser, AuditLog>()
-                .Map<Professor, AuditLog>()
-                .Map<Disciplina, AuditLog>()
+                .Map<Discipline, AuditLog>()
                 .Map<Institution, AuditLog>()
                 .Map<Notification, AuditLog>()
-                .Map<CursoDisciplina, AuditLog>()
-                .Map<GradeDisciplina, AuditLog>()
+                .Map<CourseOffering, AuditLog>()
+                .Map<CourseCurriculum, AuditLog>()
+                .Map<CourseDiscipline, AuditLog>()
+                .Map<CourseCurriculumDiscipline, AuditLog>()
                 .AuditEntityAction<AuditLog>((evt, entry, log) => log.Fill(evt, entry)))
             .IgnoreMatchedProperties(true));
     }

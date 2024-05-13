@@ -1,5 +1,5 @@
-using Syki.Back.Features.Academic.CreateCurso;
-using Syki.Back.Features.Academic.CreateDisciplina;
+using Syki.Back.Features.Academic.CreateCourse;
+using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateGrade;
 
 namespace Syki.Tests.Unit;
@@ -43,7 +43,7 @@ public class CreateGradeUnitTests
         var grade = new Grade(institutionId, cursoId, "Grade de ADS - 1.0");
 
         // Assert
-        grade.CursoId.Should().Be(cursoId);
+        grade.CourseId.Should().Be(cursoId);
     }
 
     [Test]
@@ -70,33 +70,33 @@ public class CreateGradeUnitTests
 
         var grade = new Grade(institutionId, cursoId, name)
         {
-            Curso = new Curso(institutionId, "ADS", CourseType.Bacharelado),
-            Disciplinas = [
-                new Disciplina(institutionId, "Banco de Dados"),
-                new Disciplina(institutionId, "Estrutura de Dados"),
+            Curso = new Course(institutionId, "ADS", CourseType.Bacharelado),
+            Disciplines = [
+                new Discipline(institutionId, "Banco de Dados"),
+                new Discipline(institutionId, "Estrutura de Dados"),
             ],
         };
 
-        grade.Vinculos.Add(new(grade.Disciplinas[0].Id, 2, 12, 80));
-        grade.Vinculos.Add(new(grade.Disciplinas[1].Id, 1, 8, 50));
+        grade.Links.Add(new(grade.Disciplines[0].Id, 2, 12, 80));
+        grade.Links.Add(new(grade.Disciplines[1].Id, 1, 8, 50));
 
         // Act
         var gradeOut = grade.ToOut();
 
         // Assert
         gradeOut.Id.Should().Be(grade.Id);
-        gradeOut.CursoId.Should().Be(grade.CursoId);
+        gradeOut.CourseId.Should().Be(grade.CourseId);
         gradeOut.CursoNome.Should().Be(grade.Curso.Name);
         gradeOut.Name.Should().Be(grade.Name);
 
-        gradeOut.Disciplinas.Should().HaveCount(2);
-        gradeOut.Disciplinas[0].Name.Should().Be("Banco de Dados");
-        gradeOut.Disciplinas[0].Periodo.Should().Be(2);
-        gradeOut.Disciplinas[0].Creditos.Should().Be(12);
-        gradeOut.Disciplinas[0].CargaHoraria.Should().Be(80);
-        gradeOut.Disciplinas[1].Name.Should().Be("Estrutura de Dados");
-        gradeOut.Disciplinas[1].Periodo.Should().Be(1);
-        gradeOut.Disciplinas[1].Creditos.Should().Be(8);
-        gradeOut.Disciplinas[1].CargaHoraria.Should().Be(50);
+        gradeOut.Disciplines.Should().HaveCount(2);
+        gradeOut.Disciplines[0].Name.Should().Be("Banco de Dados");
+        gradeOut.Disciplines[0].Period.Should().Be(2);
+        gradeOut.Disciplines[0].Credits.Should().Be(12);
+        gradeOut.Disciplines[0].Workload.Should().Be(80);
+        gradeOut.Disciplines[1].Name.Should().Be("Estrutura de Dados");
+        gradeOut.Disciplines[1].Period.Should().Be(1);
+        gradeOut.Disciplines[1].Credits.Should().Be(8);
+        gradeOut.Disciplines[1].Workload.Should().Be(50);
     }
 }

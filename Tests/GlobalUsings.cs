@@ -6,6 +6,6 @@ global using NUnit.Framework;
 global using FluentAssertions;
 global using Syki.Back.Database;
 global using Syki.Back.Exceptions;
-global using Syki.Back.CreateTurma;
+global using Syki.Back.Features.Academic.CreateClass;
 global using Microsoft.Playwright.NUnit;
 global using Microsoft.EntityFrameworkCore;

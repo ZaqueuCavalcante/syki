@@ -49,7 +49,7 @@
 
         <MudContainer Class="mb-8">
             <MudTable
-                T="MatriculaTurmaOut"
+                T="EnrollmentClassOut"
                 Items="@_options"
                 Class="pa-4"
                 Breakpoint="Breakpoint.Sm"
@@ -67,10 +67,10 @@
                     <MudTh></MudTh>
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd DataLabel="Disciplina">@context.Disciplina</MudTd>
-                    <MudTd DataLabel="Período">@context.Periodo</MudTd>
-                    <MudTd DataLabel="Créditos">@context.Creditos</MudTd>
-                    <MudTd DataLabel="CH">@context.CargaHoraria</MudTd>
+                    <MudTd DataLabel="Disciplina">@context.Discipline</MudTd>
+                    <MudTd DataLabel="Período">@context.Period</MudTd>
+                    <MudTd DataLabel="Créditos">@context.Credits</MudTd>
+                    <MudTd DataLabel="CH">@context.Workload</MudTd>
                     <MudTd DataLabel="Professor">@context.Professor</MudTd>
                     <MudTd>
                         <MudCheckBox
@@ -107,7 +107,7 @@
     private bool _loading;
     private bool _finished;
     EnrollmentPeriodOut _periodoDeMatricula;
-    private List<MatriculaTurmaOut> _options = [];
+    private List<EnrollmentClassOut> _options = [];
     private List<AgendaDayOut> _dias = [];
 
     void HandleCheckedChanged()
@@ -124,7 +124,7 @@
             _loading = false;
             return;
         }
-        _options = await Http.GetFromJsonAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas") ?? [];
+        _options = await Http.GetFromJsonAsync<List<EnrollmentClassOut>>("/matriculas/aluno/turmas") ?? [];
         HandleCheckedChanged();
         _loading = false;
     }
@@ -134,7 +134,7 @@
         if (_loading) return;
 
         _loading = true;
-        var data = new MatriculaTurmaIn
+        var data = new CreateStudentEnrollmentIn
         {
             Turmas = _options.Where(o => o.IsSelected).Select(o => o.Id).ToList()
         };

@@ -193,7 +193,7 @@ public class AuditUnitTests
         Table = "turmas",
         Action = "Insert",
         Schema = "syki",
-        EntityType = typeof(Turma),
+        EntityType = typeof(Class),
         PrimaryKey = new Dictionary<string, object>()
         {
             { "Id", "0346158a-f03f-4d95-b627-a154876c3f5b" },
@@ -201,10 +201,10 @@ public class AuditUnitTests
         ColumnValues = new Dictionary<string, object>()
         {
             { "id", "0346158a-f03f-4d95-b627-a154876c3f5b" },
-            { "periodo", "2023.2" },
+            { "period", "2023.2" },
             { "institution_id", "8d08e437-8b18-4a15-a231-4a2260e60432" },
             { "professor_id", "4ce214d0-cf13-453f-8543-7696d71827c5" },
-            { "disciplina_id", "2dd62a1e-e8ed-4d39-ae76-59a3c9983235" },
+            { "discipline_id", "2dd62a1e-e8ed-4d39-ae76-59a3c9983235" },
         },
         Changes =
         [

@@ -3,7 +3,7 @@
 
 @namespace Syki.Front.Pages.Academic
 
-@page "/ofertas"
+@page "/academic/course-offerings"
 @attribute [Authorize(Roles = "Academic")]
 
 <PageTitle>Ofertas</PageTitle>
@@ -12,7 +12,7 @@
     <SykiPageHeader Icon="@Icons.Material.Filled.PlaylistAddCheck" Title="Ofertas" ButtonText="Nova Oferta" OnClick="OpenDialog"/>
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>Uma oferta de curso pode acontecer a cada período, com variações de campus e de turno.</MudText>
+        <MudText>Uma oferta de curso pode acontecer a cada período, com variações de campus e de shift.</MudText>
     </MudAlert>
 
     <MudContainer Class="mb-8">
@@ -22,8 +22,8 @@
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Campus" Title="Campus" />
-                <PropertyColumn Property="x => x.Periodo" Title="Período" />
-                <PropertyColumn Property="x => x.Turno.GetDescription()" Title="Turno" />
+                <PropertyColumn Property="x => x.Period" Title="Período" />
+                <PropertyColumn Property="x => x.Shift.GetDescription()" Title="Shift" />
                 <PropertyColumn Property="x => x.Curso" Title="Curso" />
                 <PropertyColumn Property="x => x.Grade" Title="Grade" />
             </Columns>
@@ -33,7 +33,7 @@
             </NoRecordsContent>
 
             <PagerContent>
-                <SykiDataGridPager T="OfertaOut" />
+                <SykiDataGridPager T="CourseOfferingOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -46,17 +46,17 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<OfertaOut> _ofertas = [];
+    private List<CourseOfferingOut> _ofertas = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _ofertas = await Http.GetFromJsonAsync<List<OfertaOut>>("/ofertas") ?? [];
+        _ofertas = await Http.GetFromJsonAsync<List<CourseOfferingOut>>("/academic/course-offerings") ?? [];
         _loading = false;
     }
 
-    private Func<OfertaOut, bool> _quickFilter => x =>
-        _searchString.IsIn(x.Campus, x.Periodo, x.Turno.GetDescription(), x.Curso, x.Grade);
+    private Func<CourseOfferingOut, bool> _quickFilter => x =>
+        _searchString.IsIn(x.Campus, x.Period, x.Shift.GetDescription(), x.Curso, x.Grade);
 
     private async Task OpenDialog()
     {

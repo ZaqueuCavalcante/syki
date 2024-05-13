@@ -8,12 +8,12 @@ namespace Syki.Back.Features.Academic.GetAcademicInsights;
 [Consumes("application/json"), Produces("application/json")]
 public class GetAcademicInsightsController(GetAcademicInsightsService service) : ControllerBase
 {
-    [HttpGet("academic-insights")]
+    [HttpGet("academic/insights")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> Get()
     {
-        var data = await service.Get(User.InstitutionId());
+        var insights = await service.Get(User.InstitutionId());
         
-        return Ok(data);
+        return Ok(insights);
     }
 }

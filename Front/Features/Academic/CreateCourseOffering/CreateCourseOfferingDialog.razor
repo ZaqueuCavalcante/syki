@@ -7,7 +7,7 @@
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
-            Nova Oferta
+            Nova CourseOffering
         </MudText>
     </TitleContent>
     <DialogContent>
@@ -57,12 +57,12 @@
                         Variant="Variant.Outlined"
                         Class="mb-4"
                         @bind-Value="_turno"
-                        Label="Turno"
+                        Label="Shift"
                         Required="true"
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (Turno? item in Enum.GetValues<Turno>())
+                        @foreach (Shift? item in Enum.GetValues<Shift>())
                         {
                             <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
                         }
@@ -99,13 +99,13 @@
                 {
                     <MudSelectItem Value="@_grade" Disabled="true">Selecione o curso!</MudSelectItem>
                 }
-                @if (_curso != null && Grades.Where(x => x.CursoId == _curso.Id).Count() == 0)
+                @if (_curso != null && Grades.Where(x => x.CourseId == _curso.Id).Count() == 0)
                 {
                     <MudSelectItem Value="@_grade" Disabled="true">Este curso não possui grades vinculadas.</MudSelectItem>
                 }
                 @if (_curso != null)
                 {
-                    @foreach (GradeOut? item in Grades.Where(x => x.CursoId == _curso.Id))
+                    @foreach (CourseCurriculumOut? item in Grades.Where(x => x.CourseId == _curso.Id))
                     {
                         <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                     }
@@ -134,15 +134,15 @@
 
     CampusOut? _campus;
     CourseOut? _curso;
-    GradeOut? _grade;
+    CourseCurriculumOut? _grade;
     string? _periodo;
-    Turno? _turno;
+    Shift? _turno;
 
-    OfertaIn data = new();
+    CreateCourseOfferingIn data = new();
 
     List<CampusOut> Campi = [];
     List<CourseOut> Cursos = [];
-    List<GradeOut> Grades = [];
+    List<CourseCurriculumOut> Grades = [];
     List<AcademicPeriodOut> Periodos = [];
 
     protected override async Task OnInitializedAsync()
@@ -150,7 +150,7 @@
         await Task.WhenAll(new Task[] { 
             Task.Run(async () => Campi = await Http.GetFromJsonAsync<List<CampusOut>>("/campi") ?? []),
             Task.Run(async () => Cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/cursos/with-grades") ?? []),
-            Task.Run(async () => Grades = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? []),
+            Task.Run(async () => Grades = await Http.GetFromJsonAsync<List<CourseCurriculumOut>>("/grades") ?? []),
             Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic-periods") ?? []),
         });
     }
@@ -175,10 +175,10 @@
         data = new()
         {
             CampusId = _campus!.Id,
-            CursoId = _curso!.Id,
-            GradeId = _grade!.Id,
-            Periodo = _periodo!,
-            Turno = _turno!.Value,
+            CourseId = _curso!.Id,
+            CourseCurriculumId = _grade!.Id,
+            Period = _periodo!,
+            Shift = _turno!.Value,
         };
 
         _loading = true;
@@ -186,7 +186,7 @@
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add("Oferta cadastrada com sucesso!", Severity.Success);
+            Snackbar.Add("CourseOffering cadastrada com sucesso!", Severity.Success);
         }
         else
         {

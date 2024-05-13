@@ -265,43 +265,43 @@ public static class TestData
         foreach (var text in new List<(Enum, bool)>()
         {
             (CourseType.Bacharelado, true),
-            (Situacao.Matriculado, false),
+            (StudentDisciplineStatus.Matriculado, false),
             (CourseType.Tecnologo, true),
-            (Turno.Vespertino, false),
+            (Shift.Vespertino, false),
         })
         {
             yield return new object[] { text };
         }
     }
 
-    public static IEnumerable<object[]> HorariosConflitantes()
+    public static IEnumerable<object[]> SchedulesConflitantes()
     {
-        foreach (var list in new List<List<Horario>>()
+        foreach (var list in new List<List<Schedule>>()
         {
             new() {
-                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
-                new Horario(Day.Segunda, Hora.H07_30, Hora.H07_45),
+                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Segunda, Hour.H07_30, Hour.H07_45),
             },
             new() {
-                new Horario(Day.Segunda, Hora.H10_00, Hora.H11_00),
-                new Horario(Day.Segunda, Hora.H09_30, Hora.H12_15),
+                new Schedule(Day.Segunda, Hour.H10_00, Hour.H11_00),
+                new Schedule(Day.Segunda, Hour.H09_30, Hour.H12_15),
             },
             new() {
-                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
-                new Horario(Day.Segunda, Hora.H07_30, Hora.H08_30),
+                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Segunda, Hour.H07_30, Hour.H08_30),
             },
             new() {
-                new Horario(Day.Segunda, Hora.H07_30, Hora.H08_30),
-                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
+                new Schedule(Day.Segunda, Hour.H07_30, Hour.H08_30),
+                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
             },
             new() {
-                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
-                new Horario(Day.Terca, Hora.H08_00, Hora.H09_00),
-                new Horario(Day.Segunda, Hora.H07_15, Hora.H07_45),
+                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Terca, Hour.H08_00, Hour.H09_00),
+                new Schedule(Day.Segunda, Hour.H07_15, Hour.H07_45),
             },
             new() {
-                new Horario(Day.Quarta, Hora.H12_00, Hora.H15_30),
-                new Horario(Day.Quarta, Hora.H13_00, Hora.H14_15),
+                new Schedule(Day.Quarta, Hour.H12_00, Hour.H15_30),
+                new Schedule(Day.Quarta, Hour.H13_00, Hour.H14_15),
             },
         })
         {
@@ -309,26 +309,26 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> HorariosValidos()
+    public static IEnumerable<object[]> SchedulesValidos()
     {
-        foreach (var list in new List<List<Horario>>()
+        foreach (var list in new List<List<Schedule>>()
         {
             new() {
-                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
-                new Horario(Day.Segunda, Hora.H08_00, Hora.H09_00),
+                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Segunda, Hour.H08_00, Hour.H09_00),
             },
             new() {
-                new Horario(Day.Segunda, Hora.H08_00, Hora.H09_00),
-                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
+                new Schedule(Day.Segunda, Hour.H08_00, Hour.H09_00),
+                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
             },
             new() {
-                new Horario(Day.Segunda, Hora.H07_00, Hora.H08_00),
-                new Horario(Day.Terca, Hora.H08_00, Hora.H09_00),
-                new Horario(Day.Segunda, Hora.H09_45, Hora.H10_15),
+                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Terca, Hour.H08_00, Hour.H09_00),
+                new Schedule(Day.Segunda, Hour.H09_45, Hour.H10_15),
             },
             new() {
-                new Horario(Day.Quarta, Hora.H12_00, Hora.H15_30),
-                new Horario(Day.Quarta, Hora.H11_15, Hora.H12_00),
+                new Schedule(Day.Quarta, Hour.H12_00, Hour.H15_30),
+                new Schedule(Day.Quarta, Hour.H11_15, Hour.H12_00),
             },
         })
         {

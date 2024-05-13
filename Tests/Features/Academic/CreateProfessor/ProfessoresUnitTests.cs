@@ -1,4 +1,4 @@
-using Syki.Back.CreateProfessor;
+using Syki.Back.Features.Academic.CreateTeacher;
 
 namespace Syki.Tests.Unit;
 
@@ -13,7 +13,7 @@ public class ProfessoresUnitTests
         const string name = "Chico Science";
 
         // Act
-        var professor = new Professor(userId, institutionId, name);
+        var professor = new Teacher(userId, institutionId, name);
 
         // Assert
         professor.Id.Should().NotBeEmpty();
@@ -28,7 +28,7 @@ public class ProfessoresUnitTests
         const string name = "Chico Science";
 
         // Act
-        var professor = new Professor(userId, institutionId, name);
+        var professor = new Teacher(userId, institutionId, name);
 
         // Assert
         professor.InstitutionId.Should().Be(institutionId);
@@ -43,7 +43,7 @@ public class ProfessoresUnitTests
         const string name = "Chico Science";
 
         // Act
-        var professor = new Professor(userId, institutionId, name);
+        var professor = new Teacher(userId, institutionId, name);
 
         // Assert
         professor.Id.Should().Be(userId);
@@ -58,7 +58,7 @@ public class ProfessoresUnitTests
         const string name = "Chico Science";
 
         // Act
-        var professor = new Professor(userId, institutionId, name);
+        var professor = new Teacher(userId, institutionId, name);
 
         // Assert
         professor.Name.Should().Be(name);
@@ -73,7 +73,7 @@ public class ProfessoresUnitTests
         var userId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Professor(userId, institutionId, name);
+        Action act = () => new Teacher(userId, institutionId, name);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE001);
@@ -86,7 +86,7 @@ public class ProfessoresUnitTests
         var institutionId = Guid.NewGuid();
         var userId = Guid.NewGuid();
         const string name = "Chico Science";
-        var professor = new Professor(userId, institutionId, name);
+        var professor = new Teacher(userId, institutionId, name);
 
         // Act
         var professorOut = professor.ToOut();

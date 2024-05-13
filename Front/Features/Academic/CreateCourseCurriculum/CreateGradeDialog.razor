@@ -39,20 +39,20 @@
                 <MudGrid Justify="Justify.FlexStart">
                     <MudItem xs="12">
                         <CascadingValue Name="Options" Value="@Options">
-                            @foreach (var disciplina in Disciplinas)
+                            @foreach (var discipline in Disciplines)
                             {
-                                <GradeDisciplina Data="@disciplina" OnDeleteClick="@DeleteGradeDisciplina" />
+                                <CourseCurriculumDiscipline Data="@discipline" OnDeleteClick="@DeleteGradeDiscipline" />
                             }
                         </CascadingValue>
                         <MudButton
-                            Disabled="(GetNewDisciplinaDisabled())"
+                            Disabled="(GetNewDisciplineDisabled())"
                             StartIcon="@Icons.Material.Outlined.Add"
                             IconSize="Size.Large"
                             Variant="Variant.Outlined"
                             FullWidth="true"
                             Class="mt-2 border-dashed border-2 mud-border-secundary"
                             Color="Color.Primary"
-                            @onclick="@NewGradeDisciplina"
+                            @onclick="@NewGradeDiscipline"
                         >
                             NOVA DISCIPLINA
                         </MudButton>
@@ -84,39 +84,39 @@
     List<CourseOut> Cursos = [];
 
     List<CourseDisciplineOut> Options = [];
-    List<GradeDisciplinaFillable> Disciplinas = [];
+    List<GradeDisciplineFillable> Disciplines = [];
 
-    GradeIn data = new();
+    CreateCourseCurriculumIn data = new();
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/cursos/with-disciplinas") ?? [];
+        Cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/cursos/with-disciplines") ?? [];
     }
 
-    void NewGradeDisciplina()
+    void NewGradeDiscipline()
     {
-        Disciplinas.Add(new() { Id = Guid.NewGuid() });
+        Disciplines.Add(new() { Id = Guid.NewGuid() });
     }
 
-    void DeleteGradeDisciplina(Guid id)
+    void DeleteGradeDiscipline(Guid id)
     {
-        Disciplinas.Remove(Disciplinas.First(f => f.Id == id));
+        Disciplines.Remove(Disciplines.First(f => f.Id == id));
         if (Options.Any(x => x.Id == id))
         {
             Options.First(d => d.Id == id).IsSelected = false;
         }
     }
 
-    bool GetNewDisciplinaDisabled()
+    bool GetNewDisciplineDisabled()
     {
-        return _curso == null || Options.Count == Disciplinas.Count;
+        return _curso == null || Options.Count == Disciplines.Count;
     }
 
     async Task HandleSelectCurso(CourseOut newValue)
     {
         _curso = newValue;
-        Options = await Http.GetFromJsonAsync<List<CourseDisciplineOut>>($"/cursos/{_curso!.Id}/disciplinas") ?? [];
-        Disciplinas = [];
+        Options = await Http.GetFromJsonAsync<List<CourseDisciplineOut>>($"/cursos/{_curso!.Id}/disciplines") ?? [];
+        Disciplines = [];
     }
 
     async Task Submit()
@@ -126,18 +126,18 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        data.CursoId = _curso!.Id;
-        data.Disciplinas = Disciplinas
-            .ConvertAll(d => new GradeDisciplinaIn
+        data.CourseId = _curso!.Id;
+        data.Disciplines = Disciplines
+            .ConvertAll(d => new CreateCourseCurriculumDisciplineIn
             (
                 d.Id,
-                d.Periodo!.Value,
-                d.Creditos!.Value,
-                d.CargaHoraria!.Value
+                d.Period!.Value,
+                d.Credits!.Value,
+                d.Workload!.Value
             ));
 
         _loading = true;
-        var response = await Client.Create(data.Name, data.CursoId, data.Disciplinas);
+        var response = await Client.Create(data.Name, data.CourseId, data.Disciplines);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

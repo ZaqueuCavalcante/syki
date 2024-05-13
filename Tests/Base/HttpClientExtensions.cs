@@ -131,6 +131,16 @@ public static class HttpClientExtensions
         return await client.Get();
     }
 
+    public static async Task<DisciplineOut> CreateDiscipline(
+        this HttpClient http,
+        string name = "Banco de Dados",
+        List<Guid> courses = null
+    ) {
+        var client = new CreateDisciplineClient(http);
+        var response = await client.Create(name, courses ?? []);
+        return await response.DeserializeTo<DisciplineOut>();
+    }
+
     // -------------------------------------------------------------------------------------------- //
 
 
@@ -173,17 +183,9 @@ public static class HttpClientExtensions
         return await client.Get();
     }
 
-    public static async Task<DisciplinaOut> CreateDisciplina(
-        this HttpClient http,
-        string name = "Banco de Dados",
-        List<Guid> cursos = null
-    ) {
-        var client = new CreateDisciplinaClient(http);
-        var response = await client.Create(name, cursos ?? []);
-        return await response.DeserializeTo<DisciplinaOut>();
-    }
 
-    public static async Task<ProfessorOut> CreateProfessor(
+
+    public static async Task<TeacherOut> CreateProfessor(
         this HttpClient http,
         string name = "Chico",
         string email = ""
@@ -191,98 +193,98 @@ public static class HttpClientExtensions
         email = email.HasValue() ? email : TestData.Email;
         var client = new CreateProfessorClient(http);
         var response = await client.Create(name, email);
-        var professor= await response.DeserializeTo<ProfessorOut>();
+        var professor= await response.DeserializeTo<TeacherOut>();
         professor.Email = email;
         return professor;
     }
 
-    public static async Task<TurmaOut> Createturma(
+    public static async Task<ClassOut> Createturma(
         this HttpClient http,
-        Guid disciplinaId,
+        Guid disciplineId,
         Guid professorId,
         string periodoId,
-        List<HorarioIn> horarios
+        List<ScheduleIn> schedules
     ) {
-        var body = new TurmaIn(disciplinaId, professorId, periodoId, horarios);
-        return await http.PostAsync<TurmaOut>("/turmas", body);
+        var body = new CreateClassIn(disciplineId, professorId, periodoId, schedules);
+        return await http.PostAsync<ClassOut>("/turmas", body);
     }
 
     public static async Task<HttpResponseMessage> CreateturmaHttp(
         this HttpClient http,
-        Guid disciplinaId,
+        Guid disciplineId,
         Guid professorId,
         string periodoId,
-        List<HorarioIn> horarios
+        List<ScheduleIn> schedules
     ) {
-        var body = new TurmaIn(disciplinaId, professorId, periodoId, horarios);
+        var body = new CreateClassIn(disciplineId, professorId, periodoId, schedules);
         return await http.PostAsJsonAsync("/turmas", body);
     }
 
-    public static async Task<GradeOut> CreateGrade(
+    public static async Task<CourseCurriculumOut> CreateGrade(
         this HttpClient http,
         string name,
         Guid cursoId,
-        List<GradeDisciplinaIn> disciplinas = null
+        List<CreateCourseCurriculumDisciplineIn> disciplines = null
     ) {
         var client = new CreateGradeClient(http);
 
-        var result = await client.Create(name, cursoId, disciplinas ?? []);
+        var result = await client.Create(name, cursoId, disciplines ?? []);
 
-        return await result.DeserializeTo<GradeOut>();
+        return await result.DeserializeTo<CourseCurriculumOut>();
     }
 
     public static async Task<HttpResponseMessage> CreateGradeHttp(
         this HttpClient http,
         string name,
         Guid cursoId,
-        List<GradeDisciplinaIn> disciplinas = null
+        List<CreateCourseCurriculumDisciplineIn> disciplines = null
     ) {
         var client = new CreateGradeClient(http);
 
-        return await client.Create(name, cursoId, disciplinas ?? []);
+        return await client.Create(name, cursoId, disciplines ?? []);
     }
 
-    public static async Task<OfertaOut> CreateOferta(
+    public static async Task<CourseOfferingOut> CreateOferta(
         this HttpClient http,
         Guid campusId,
         Guid cursoId,
-        Guid gradeId,
-        string? periodo,
-        Turno turno
+        Guid courseCurriculumId,
+        string? period,
+        Shift shift
     ) {
-        var body = new OfertaIn
+        var body = new CreateCourseOfferingIn
         {
             CampusId = campusId,
-            CursoId = cursoId,
-            GradeId = gradeId,
-            Periodo = periodo,
-            Turno = turno,
+            CourseId = cursoId,
+            CourseCurriculumId = courseCurriculumId,
+            Period = period,
+            Shift = shift,
         };
 
-        return await http.PostAsync<OfertaOut>("/ofertas", body);
+        return await http.PostAsync<CourseOfferingOut>("/ofertas", body);
     }
 
     public static async Task<HttpResponseMessage> CreateOfertaHttp(
         this HttpClient http,
         Guid campusId,
         Guid cursoId,
-        Guid gradeId,
-        string? periodo,
-        Turno turno
+        Guid courseCurriculumId,
+        string? period,
+        Shift shift
     ) {
-        var body = new OfertaIn
+        var body = new CreateCourseOfferingIn
         {
             CampusId = campusId,
-            CursoId = cursoId,
-            GradeId = gradeId,
-            Periodo = periodo,
-            Turno = turno,
+            CourseId = cursoId,
+            CourseCurriculumId = courseCurriculumId,
+            Period = period,
+            Shift = shift,
         };
 
         return await http.PostAsJsonAsync("/ofertas", body);
     }
 
-    public static async Task<AlunoOut> CreateStudent(
+    public static async Task<StudentOut> CreateStudent(
         this HttpClient http,
         Guid ofertaId,
         string name = "Zezin",
@@ -290,9 +292,9 @@ public static class HttpClientExtensions
     ) {
         email = email.HasValue() ? email : TestData.Email;
 
-        var body = new AlunoIn { Name = name, Email = email, OfertaId = ofertaId };
+        var body = new CreateStudentIn { Name = name, Email = email, CourseOfferingId = ofertaId };
 
-        var aluno = await http.PostAsync<AlunoOut>("/alunos", body);
+        var aluno = await http.PostAsync<StudentOut>("/alunos", body);
         aluno.Email = email;
         return aluno;
     }
@@ -305,12 +307,12 @@ public static class HttpClientExtensions
     ) {
         email = email.HasValue() ? email : TestData.Email;
 
-        var body = new AlunoIn { Name = name, Email = email, OfertaId = ofertaId };
+        var body = new CreateStudentIn { Name = name, Email = email, CourseOfferingId = ofertaId };
 
         return await http.PostAsJsonAsync("/alunos", body);
     }
 
-    public static async Task<List<DisciplinaOut>> GetAlunoDisciplinas(this HttpClient http)
+    public static async Task<List<DisciplineOut>> GetAlunoDisciplines(this HttpClient http)
     {
         var client = new GetDisciplinesClient(http);
         return await client.Get();

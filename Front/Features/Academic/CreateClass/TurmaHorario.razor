@@ -26,16 +26,16 @@
             Margin="Margin.Dense"
             Class="py-0 my-0"
             Variant="Variant.Outlined"
-            T="Hora?"
+            T="Hour?"
             @bind-Value="@Data.Start"
             Label="Início"
             Required="true"
             RequiredError="Informe!"
             AdornmentColor="Color.Primary"
         >
-            @foreach (Hora? hora in Enum.GetValues<Hora>())
+            @foreach (Hour? hour in Enum.GetValues<Hour>())
             {
-                <MudSelectItem Value="@hora">@hora.GetDescription()</MudSelectItem>
+                <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
             }
         </MudSelect>
     </MudItem>
@@ -45,17 +45,17 @@
             Margin="Margin.Dense"
             Class="py-0 my-0"
             Variant="Variant.Outlined"
-            T="Hora?"
+            T="Hour?"
             @bind-Value="@Data.End"
             Label="Fim"
             Required="true"
             RequiredError="Informe!"
             AdornmentColor="Color.Primary"
         >
-            @foreach (Hora? hora in Enum.GetValues<Hora>())
+            @foreach (Hour? hour in Enum.GetValues<Hour>())
             {
-                if (Data.Start == null || hora <= Data.Start) continue;
-                <MudSelectItem Value="@hora">@hora.GetDescription()</MudSelectItem>
+                if (Data.Start == null || hour <= Data.Start) continue;
+                <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
             }
         </MudSelect>
     </MudItem>
@@ -67,7 +67,7 @@
 @code
 {
     [Parameter]
-    public HorarioInFillable Data { get; set; }
+    public ScheduleInFillable Data { get; set; }
 
     [Parameter]
     public EventCallback<Guid> OnDeleteClick { get; set; }

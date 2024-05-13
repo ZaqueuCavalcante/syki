@@ -1,4 +1,4 @@
-namespace Syki.Back.GetEnrollmentPeriods;
+namespace Syki.Back.Features.Academic.GetEnrollmentPeriods;
 
 public class GetEnrollmentPeriodsService(SykiDbContext ctx)
 {

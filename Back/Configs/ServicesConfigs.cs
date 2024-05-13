@@ -1,43 +1,30 @@
 using Syki.Back.Features.Academic.GetCampi;
-using Syki.Back.Features.Academic.GetCursos;
-using Syki.Back.Features.Academic.CreateCurso;
-using Syki.Back.Features.Academic.CreateGrade;
 using Syki.Back.Features.Academic.UpdateCampus;
 using Syki.Back.Features.Academic.CreateCampus;
-using Syki.Back.Features.Academic.CreateDisciplina;
-using Syki.Back.Features.Academic.GetAcademicInsights;
-using Syki.Back.GetEnrollmentPeriods;
+using Syki.Back.Features.Academic.CreateDiscipline;
+using Syki.Back.Features.Academic.GetEnrollmentPeriods;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
-using Syki.Back.CreateProfessor;
-using Syki.Back.CreateEnrollmentPeriod;
-using Syki.Back.CreateMatriculaAluno;
+using Syki.Back.Features.Academic.CreateTeacher;
+using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
+using Syki.Back.Features.Student.CreateStudentEnrollment;
 using Syki.Back.Features.Academic.CreateNotification;
-using Syki.Back.CreateOferta;
-using Syki.Back.CreateTurma;
-using Syki.Back.GetAcademicPeriods;
-using Syki.Back.GetAlunoAgenda;
-using Syki.Back.GetAlunoDisciplinas;
-using Syki.Back.GetAlunoInsights;
-using Syki.Back.GetAlunos;
-using Syki.Back.GetCurrentEnrollmentPeriod;
-using Syki.Back.GetCursoDisciplinas;
-using Syki.Back.GetCursosWithDisciplinas;
-using Syki.Back.GetDisciplinas;
-using Syki.Back.GetGradeDisciplinas;
-using Syki.Back.GetGrades;
-using Syki.Back.GetInstitutions;
-using Syki.Back.GetMatriculaAlunoTurmas;
-using Syki.Back.GetNotifications;
-using Syki.Back.GetOfertas;
-using Syki.Back.GetProfessores;
-using Syki.Back.GetAdmInsights;
-using Syki.Back.GetTurmas;
-using Syki.Back.GetUsers;
-using Syki.Back.GetCursosWithGrades;
-using Syki.Back.GetProfessorInsights;
-using Syki.Back.GetProfessorAgenda;
-using Syki.Back.GetProfessorTurmas;
-using Syki.Back.GetProfessorTurma;
+using Syki.Back.Features.Academic.CreateCourseOffering;
+using Syki.Back.Features.Academic.CreateClass;
+using Syki.Back.Features.Academic.GetAcademicPeriods;
+using Syki.Back.Features.Student.GetStudentAgenda;
+using Syki.Back.Features.Student.GetStudentDisciplines;
+using Syki.Back.Features.Academic.GetStudents;
+using Syki.Back.Features.Student.GetCurrentEnrollmentPeriod;
+using Syki.Back.Features.Academic.GetCoursesWithDisciplines;
+using Syki.Back.Features.Academic.GetDisciplines;
+using Syki.Back.Features.Adm.GetInstitutions;
+using Syki.Back.Features.Academic.GetNotifications;
+using Syki.Back.Features.Academic.GetTeachers;
+using Syki.Back.Features.Adm.GetInsights;
+using Syki.Back.Features.Academic.GetClasses;
+using Syki.Back.Features.Adm.GetUsers;
+using Syki.Back.Features.Academic.GetCoursesWithCurriculums;
+using Syki.Back.Features.Teacher.GetTeacherAgenda;
 using Syki.Back.Features.Cross.Login;
 using Syki.Back.Features.Cross.SetupMfa;
 using Syki.Back.Features.Cross.LoginMfa;
@@ -50,6 +37,20 @@ using Syki.Back.Features.Cross.GetUserNotifications;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Syki.Back.Features.Academic.CreateStudent;
+using Syki.Back.Features.Cross.CreateUser;
+using Syki.Back.Features.Academic.CreateCourse;
+using Syki.Back.Features.Academic.GetAcademicInsights;
+using Syki.Back.Features.Academic.GetCourses;
+using Syki.Back.Features.Academic.CreateCourseCurriculum;
+using Syki.Back.Features.Student.GetStudentInsights;
+using Syki.Back.Features.Academic.GetCourseDisciplines;
+using Syki.Back.Features.Teacher.GetTeacherInsights;
+using Syki.Back.Features.Teacher.GetTeacherClasses;
+using Syki.Back.Features.Teacher.GetTeacherClass;
+using Syki.Back.Features.Academic.GetCourseOfferings;
+using Syki.Back.Features.Academic.GetCourseCurriculumDisciplines;
+using Syki.Back.Features.Academic.GetCourseCurriculums;
+using Syki.Back.Features.Student.GetStudentEnrollmentClasses;
 
 namespace Syki.Back.Configs;
 
@@ -57,67 +58,67 @@ public static class ServicesConfigs
 {
     public static void AddServicesConfigs(this IServiceCollection services)
     {
+        // Academic
+        services.AddScoped<CreateAcademicPeriodService>();
+        services.AddScoped<CreateCampusService>();
+        services.AddScoped<CreateClassService>();
+        services.AddScoped<CreateCourseService>();
+        services.AddScoped<CreateCourseCurriculumService>();
+        services.AddScoped<CreateCourseOfferingService>();
+        services.AddScoped<CreateDisciplineService>();
+        services.AddScoped<CreateEnrollmentPeriodService>();
+        services.AddScoped<CreateNotificationService>();
+        services.AddScoped<CreateStudentService>();
+        services.AddScoped<CreateTeacherService>();
+        services.AddScoped<GetAcademicInsightsService>();
+        services.AddScoped<GetAcademicPeriodsService>();
+        services.AddScoped<GetCampiService>();
+        services.AddScoped<GetClassesService>();
+        services.AddScoped<GetCourseCurriculumDisciplinesService>();
+        services.AddScoped<GetCourseCurriculumsService>();
+        services.AddScoped<GetCourseDisciplinesService>();
+        services.AddScoped<GetCourseOfferingsService>();
+        services.AddScoped<GetCoursesService>();
+        services.AddScoped<GetCoursesWithCurriculumsService>();
+        services.AddScoped<GetCoursesWithDisciplinesService>();
+        services.AddScoped<GetDisciplinesService>();
+        services.AddScoped<GetEnrollmentPeriodsService>();
+        services.AddScoped<GetNotificationsService>();
+        services.AddScoped<GetStudentsService>();
+        services.AddScoped<GetTeachersService>();
+        services.AddScoped<UpdateCampusService>();
+
+        // Adm
+        services.AddScoped<GetAdmInsightsService>();
+        services.AddScoped<GetInstitutionsService>();
+        services.AddScoped<GetUsersService>();
+
         // Cross
         services.AddScoped<CreatePendingUserRegisterService>();
         services.AddScoped<CreateUserService>();
         services.AddScoped<FinishUserRegisterService>();
         services.AddScoped<GenerateJWTService>();
         services.AddScoped<GetMfaKeyService>();
+        services.AddScoped<GetUserNotificationsService>();
         services.AddScoped<LoginService>();
         services.AddScoped<LoginMfaService>();
-        services.AddScoped<SetupMfaService>();
         services.AddScoped<ResetPasswordService>();
-        services.AddScoped<SendResetPasswordEmailService>();
+        services.AddScoped<SendResetPasswordTokenService>();
+        services.AddScoped<SetupMfaService>();
         services.AddScoped<ViewNotificationsService>();
-        services.AddScoped<GetUserNotificationsService>();
-
-        // Academic
-        services.AddScoped<CreateCampusService>();
-        services.AddScoped<CreateCursoService>();
-        services.AddScoped<GetAcademicInsightsService>();
-        services.AddScoped<GetCampiService>();
-        services.AddScoped<GetCursosService>();
-        services.AddScoped<UpdateCampusService>();
-        services.AddScoped<CreateDisciplinaService>();
-
-        // Teacher
-        services.AddScoped<CreateAcademicPeriodService>();
-        services.AddScoped<CreateAlunoService>();
-        services.AddScoped<CreateEnrollmentPeriodService>();
-        services.AddScoped<CreateGradeService>();
-        services.AddScoped<CreateMatriculaAlunoService>();
-        services.AddScoped<CreateNotificationService>();
-        services.AddScoped<CreateOfertaService>();
-        services.AddScoped<CreateProfessorService>();
-        services.AddScoped<CreateTurmaService>();
 
         // Student
-        services.AddScoped<GetAcademicPeriodsService>();
-        services.AddScoped<GetAlunoAgendaService>();
-        services.AddScoped<GetAlunoDisciplinasService>();
-        services.AddScoped<GetAlunoInsightsService>();
-        services.AddScoped<GetAlunosService>();
+        services.AddScoped<CreateStudentEnrollmentService>();
         services.AddScoped<GetCurrentEnrollmentPeriodService>();
-        services.AddScoped<GetCursoDisciplinasService>();
-        services.AddScoped<GetCursosWithDisciplinasService>();
-        services.AddScoped<GetCursosWithGradesService>();
-        services.AddScoped<GetDisciplinasService>();
-        services.AddScoped<GetEnrollmentPeriodsService>();
-        services.AddScoped<GetGradeDisciplinasService>();
-        services.AddScoped<GetGradesService>();
-        services.AddScoped<GetInstitutionsService>();
-        services.AddScoped<GetMatriculaAlunoTurmasService>();
-        services.AddScoped<GetNotificationsService>();
-        services.AddScoped<GetOfertasService>();
-        services.AddScoped<GetProfessoresService>();
-        services.AddScoped<GetAdmInsightsService>();
-        services.AddScoped<GetTurmasService>();
-        services.AddScoped<GetUsersService>();
+        services.AddScoped<GetStudentAgendaService>();
+        services.AddScoped<GetStudentDisciplinesService>();
+        services.AddScoped<GetStudentEnrollmentClassesService>();
+        services.AddScoped<GetStudentInsightsService>();
 
-        // Adm
-        services.AddScoped<GetProfessorInsightsService>();
-        services.AddScoped<GetProfessorAgendaService>();
-        services.AddScoped<GetProfessorTurmasService>();
-        services.AddScoped<GetProfessorTurmaService>();
+        // Teacher
+        services.AddScoped<GetTeacherAgendaService>();
+        services.AddScoped<GetTeacherClassService>();
+        services.AddScoped<GetTeacherClassesService>();
+        services.AddScoped<GetTeacherInsightsService>();
     }
 }

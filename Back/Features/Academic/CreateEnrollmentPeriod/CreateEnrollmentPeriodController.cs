@@ -1,10 +1,10 @@
-namespace Syki.Back.CreateEnrollmentPeriod;
+namespace Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 public class CreateEnrollmentPeriodController(CreateEnrollmentPeriodService service) : ControllerBase
 {
-    [HttpPost("enrollment-periods")]
+    [HttpPost("academic/enrollment-periods")]
     public async Task<IActionResult> Create([FromBody] CreateEnrollmentPeriodIn data)
     {
         var period = await service.Create(User.InstitutionId(), data);

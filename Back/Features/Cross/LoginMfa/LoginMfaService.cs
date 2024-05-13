@@ -1,3 +1,4 @@
+using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Cross.GenerateJWT;
 
 namespace Syki.Back.Features.Cross.LoginMfa;

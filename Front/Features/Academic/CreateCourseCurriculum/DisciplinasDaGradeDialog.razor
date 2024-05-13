@@ -12,13 +12,13 @@
             Class="mb-4"
             Dense="true"
             Hover="true"
-            Items="@Disciplinas.OrderBy(d => d.Periodo).ThenBy(d => d.Name)"
+            Items="@Disciplines.OrderBy(d => d.Period).ThenBy(d => d.Name)"
         >
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
-                <PropertyColumn Property="x => x.Periodo" Title="Período" />
-                <PropertyColumn Property="x => x.Creditos" Title="Créditos" />
-                <PropertyColumn Property="x => x.CargaHoraria" Title="CH" />
+                <PropertyColumn Property="x => x.Period" Title="Período" />
+                <PropertyColumn Property="x => x.Credits" Title="Créditos" />
+                <PropertyColumn Property="x => x.Workload" Title="CH" />
             </Columns>
         </MudDataGrid>
     </DialogContent>
@@ -30,5 +30,5 @@
     MudDialogInstance MudDialog { get; set; }
 
     [Parameter]
-    public List<DisciplinaOut> Disciplinas { get; set; }
+    public List<DisciplineOut> Disciplines { get; set; }
 }

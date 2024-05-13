@@ -8,24 +8,24 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _factory.LoggedAsAcademic();
 
-        var disciplina = await client.CreateDisciplina();
+        var discipline = await client.CreateDiscipline();
         var professor = await client.CreateProfessor();
-        var periodo = await client.CreateAcademicPeriod("2024.1");
-        var horarios = new List<HorarioIn>() { new(Day.Segunda, Hora.H07_00, Hora.H08_00) };
+        var period = await client.CreateAcademicPeriod("2024.1");
+        var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
         // Act
-        var turma = await client.Createturma(disciplina.Id, professor.Id, periodo.Id, horarios);
+        var turma = await client.Createturma(discipline.Id, professor.Id, period.Id, schedules);
 
         // Assert
         turma.Id.Should().NotBeEmpty();
-        turma.Disciplina.Should().Be(disciplina.Name);
+        turma.Discipline.Should().Be(discipline.Name);
         turma.Professor.Should().Be(professor.Name);
-        turma.Periodo.Should().Be(periodo.Id);
-        turma.Horarios.Should().ContainSingle();
+        turma.Period.Should().Be(period.Id);
+        turma.Schedules.Should().ContainSingle();
     }
 
     [Test]
-    public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_disciplina()
+    public async Task Nao_deve_criar_uma_turma_sem_vinculo_com_discipline()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
@@ -43,10 +43,10 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _factory.LoggedAsAcademic();
 
-        var disciplina = await client.CreateDisciplina();
+        var discipline = await client.CreateDiscipline();
 
         // Act
-        var response = await client.CreateturmaHttp(disciplina.Id, Guid.NewGuid(), "2024.1", []);
+        var response = await client.CreateturmaHttp(discipline.Id, Guid.NewGuid(), "2024.1", []);
 
         // Assert
         await response.AssertBadRequest(Throw.DE018);
@@ -58,29 +58,29 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _factory.LoggedAsAcademic();
 
-        var disciplina = await client.CreateDisciplina();
+        var discipline = await client.CreateDiscipline();
         var professor = await client.CreateProfessor();
         
         // Act
-        var response = await client.CreateturmaHttp(disciplina.Id, professor.Id, "2024.1", []);
+        var response = await client.CreateturmaHttp(discipline.Id, professor.Id, "2024.1", []);
 
         // Assert
         await response.AssertBadRequest(Throw.DE005);
     }
 
     [Test]
-    public async Task Nao_deve_criar_uma_turma_com_horario_invalido()
+    public async Task Nao_deve_criar_uma_turma_com_schedule_invalido()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
 
-        var disciplina = await client.CreateDisciplina();
+        var discipline = await client.CreateDiscipline();
         var professor = await client.CreateProfessor();
-        var periodo = await client.CreateAcademicPeriod("2024.1");
-        var horarios = new List<HorarioIn>() { new(Day.Segunda, Hora.H07_00, Hora.H07_00) };
+        var period = await client.CreateAcademicPeriod("2024.1");
+        var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H07_00) };
 
         // Act
-        var response = await client.CreateturmaHttp(disciplina.Id, professor.Id, periodo.Id, horarios);
+        var response = await client.CreateturmaHttp(discipline.Id, professor.Id, period.Id, schedules);
 
         // Assert
         await response.AssertBadRequest(Throw.DE021);
@@ -92,15 +92,15 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _factory.LoggedAsAcademic();
 
-        var disciplina = await client.CreateDisciplina();
+        var discipline = await client.CreateDiscipline();
         var professor = await client.CreateProfessor();
-        var periodo = await client.CreateAcademicPeriod("2024.1");
-        var horarios = new List<HorarioIn>() { new(Day.Segunda, Hora.H07_00, Hora.H08_00) };
+        var period = await client.CreateAcademicPeriod("2024.1");
+        var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
-        var turma = await client.Createturma(disciplina.Id, professor.Id, periodo.Id, horarios);
+        var turma = await client.Createturma(discipline.Id, professor.Id, period.Id, schedules);
 
         // Act
-        var turmas = await client.GetAsync<List<TurmaOut>>("/turmas");
+        var turmas = await client.GetAsync<List<ClassOut>>("/turmas");
 
         // Assert
         turmas.Count.Should().Be(1);

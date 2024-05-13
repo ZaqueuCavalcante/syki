@@ -1,14 +1,14 @@
 namespace Syki.Tests.Unit;
 
-public class MatriculaTurmaOutToAgendaDayOutUnitTests
+public class MatriculaClassOutToAgendaDayOutUnitTests
 {
     [Test]
-    public void Deve_converter_quando_so_existe_uma_turma_com_um_horario()
+    public void Deve_converter_quando_so_existe_uma_turma_com_um_schedule()
     {
         // Arrange
-        var turmas = new List<MatriculaTurmaOut>
+        var turmas = new List<EnrollmentClassOut>
         {
-            new() { Disciplina = "Banco de Dados", Horarios = [ new(Day.Segunda, Hora.H07_00, Hora.H10_00) ] }
+            new() { Discipline = "Banco de Dados", Schedules = [ new(Day.Segunda, Hour.H07_00, Hour.H10_00) ] }
         };
 
         // Act
@@ -18,20 +18,20 @@ public class MatriculaTurmaOutToAgendaDayOutUnitTests
         agendas.Should().ContainSingle();
         agendas[0].Day.Should().Be(Day.Segunda);
         agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplines[0].Start.Should().Be(Hora.H07_00);
-        agendas[0].Disciplines[0].End.Should().Be(Hora.H10_00);
+        agendas[0].Disciplines[0].Start.Should().Be(Hour.H07_00);
+        agendas[0].Disciplines[0].End.Should().Be(Hour.H10_00);
     }
 
     [Test]
-    public void Deve_converter_quando_so_existe_uma_turma_com_dois_horarios_no_mesmo_dia()
+    public void Deve_converter_quando_so_existe_uma_turma_com_dois_schedules_no_mesmo_dia()
     {
         // Arrange
-        var turmas = new List<MatriculaTurmaOut>
+        var turmas = new List<EnrollmentClassOut>
         {
-            new() { Disciplina = "Banco de Dados", Horarios =
+            new() { Discipline = "Banco de Dados", Schedules =
             [
-                new(Day.Segunda, Hora.H10_15, Hora.H12_00),
-                new(Day.Segunda, Hora.H07_00, Hora.H10_00),
+                new(Day.Segunda, Hour.H10_15, Hour.H12_00),
+                new(Day.Segunda, Hour.H07_00, Hour.H10_00),
             ]}
         };
 
@@ -42,24 +42,24 @@ public class MatriculaTurmaOutToAgendaDayOutUnitTests
         agendas.Should().ContainSingle();
         agendas[0].Day.Should().Be(Day.Segunda);
         agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplines[0].Start.Should().Be(Hora.H07_00);
-        agendas[0].Disciplines[0].End.Should().Be(Hora.H10_00);
+        agendas[0].Disciplines[0].Start.Should().Be(Hour.H07_00);
+        agendas[0].Disciplines[0].End.Should().Be(Hour.H10_00);
         agendas[0].Disciplines[1].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplines[1].Start.Should().Be(Hora.H10_15);
-        agendas[0].Disciplines[1].End.Should().Be(Hora.H12_00);
+        agendas[0].Disciplines[1].Start.Should().Be(Hour.H10_15);
+        agendas[0].Disciplines[1].End.Should().Be(Hour.H12_00);
     }
 
     [Test]
-    public void Deve_converter_quando_so_existe_uma_turma_com_tres_horarios_no_mesmo_dia()
+    public void Deve_converter_quando_so_existe_uma_turma_com_tres_schedules_no_mesmo_dia()
     {
         // Arrange
-        var turmas = new List<MatriculaTurmaOut>
+        var turmas = new List<EnrollmentClassOut>
         {
-            new() { Disciplina = "Banco de Dados", Horarios =
+            new() { Discipline = "Banco de Dados", Schedules =
             [
-                new(Day.Segunda, Hora.H10_15, Hora.H12_00),
-                new(Day.Segunda, Hora.H07_00, Hora.H10_00),
-                new(Day.Segunda, Hora.H15_00, Hora.H17_00),
+                new(Day.Segunda, Hour.H10_15, Hour.H12_00),
+                new(Day.Segunda, Hour.H07_00, Hour.H10_00),
+                new(Day.Segunda, Hour.H15_00, Hour.H17_00),
             ]}
         };
 
@@ -70,24 +70,24 @@ public class MatriculaTurmaOutToAgendaDayOutUnitTests
         agendas.Should().ContainSingle();
         agendas[0].Day.Should().Be(Day.Segunda);
         agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplines[0].Start.Should().Be(Hora.H07_00);
-        agendas[0].Disciplines[0].End.Should().Be(Hora.H10_00);
+        agendas[0].Disciplines[0].Start.Should().Be(Hour.H07_00);
+        agendas[0].Disciplines[0].End.Should().Be(Hour.H10_00);
         agendas[0].Disciplines[1].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplines[1].Start.Should().Be(Hora.H10_15);
-        agendas[0].Disciplines[1].End.Should().Be(Hora.H12_00);
+        agendas[0].Disciplines[1].Start.Should().Be(Hour.H10_15);
+        agendas[0].Disciplines[1].End.Should().Be(Hour.H12_00);
         agendas[0].Disciplines[2].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplines[2].Start.Should().Be(Hora.H15_00);
-        agendas[0].Disciplines[2].End.Should().Be(Hora.H17_00);
+        agendas[0].Disciplines[2].Start.Should().Be(Hour.H15_00);
+        agendas[0].Disciplines[2].End.Should().Be(Hour.H17_00);
     }
 
     [Test]
-    public void Deve_converter_quando_existem_duas_turmas_com_um_horario_cada_no_mesmo_dia()
+    public void Deve_converter_quando_existem_duas_turmas_com_um_schedule_cada_no_mesmo_dia()
     {
         // Arrange
-        var turmas = new List<MatriculaTurmaOut>
+        var turmas = new List<EnrollmentClassOut>
         {
-            new() { Disciplina = "POO", Horarios = [ new(Day.Segunda, Hora.H10_00, Hora.H12_00) ] },
-            new() { Disciplina = "Banco de Dados", Horarios = [ new(Day.Segunda, Hora.H07_00, Hora.H10_00) ] },
+            new() { Discipline = "POO", Schedules = [ new(Day.Segunda, Hour.H10_00, Hour.H12_00) ] },
+            new() { Discipline = "Banco de Dados", Schedules = [ new(Day.Segunda, Hour.H07_00, Hour.H10_00) ] },
         };
 
         // Act
@@ -97,10 +97,10 @@ public class MatriculaTurmaOutToAgendaDayOutUnitTests
         agendas.Should().ContainSingle();
         agendas[0].Day.Should().Be(Day.Segunda);
         agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
-        agendas[0].Disciplines[0].Start.Should().Be(Hora.H07_00);
-        agendas[0].Disciplines[0].End.Should().Be(Hora.H10_00);
+        agendas[0].Disciplines[0].Start.Should().Be(Hour.H07_00);
+        agendas[0].Disciplines[0].End.Should().Be(Hour.H10_00);
         agendas[0].Disciplines[1].Name.Should().Be("POO");
-        agendas[0].Disciplines[1].Start.Should().Be(Hora.H10_00);
-        agendas[0].Disciplines[1].End.Should().Be(Hora.H12_00);
+        agendas[0].Disciplines[1].Start.Should().Be(Hour.H10_00);
+        agendas[0].Disciplines[1].End.Should().Be(Hour.H12_00);
     }
 }

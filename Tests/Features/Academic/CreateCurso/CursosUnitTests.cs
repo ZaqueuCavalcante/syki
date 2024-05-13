@@ -1,5 +1,5 @@
 using static Syki.Shared.CourseType;
-using Syki.Back.Features.Academic.CreateCurso;
+using Syki.Back.Features.Academic.CreateCourse;
 
 namespace Syki.Tests.Unit;
 
@@ -13,7 +13,7 @@ public class CursosUnitTests
         const string name = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(institutionId, name, Bacharelado);
+        var curso = new Course(institutionId, name, Bacharelado);
 
         // Assert
         curso.Id.Should().NotBeEmpty();
@@ -27,7 +27,7 @@ public class CursosUnitTests
         const string name = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(institutionId, name, Bacharelado);
+        var curso = new Course(institutionId, name, Bacharelado);
 
         // Assert
         curso.InstitutionId.Should().Be(institutionId);
@@ -41,7 +41,7 @@ public class CursosUnitTests
         const string name = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(institutionId, name, Bacharelado);
+        var curso = new Course(institutionId, name, Bacharelado);
 
         // Assert
         curso.Name.Should().Be(name);
@@ -55,7 +55,7 @@ public class CursosUnitTests
         const string name = "Análise e Desenvolvimento de Sistemas";
 
         // Act
-        var curso = new Curso(institutionId, name, Bacharelado);
+        var curso = new Course(institutionId, name, Bacharelado);
 
         // Assert
         curso.Type.Should().Be(Bacharelado);
@@ -67,7 +67,7 @@ public class CursosUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         const string name = "Análise e Desenvolvimento de Sistemas";
-        var curso = new Curso(institutionId, name, Bacharelado);
+        var curso = new Course(institutionId, name, Bacharelado);
 
         // Act
         var cursoOut = curso.ToOut();
@@ -82,7 +82,7 @@ public class CursosUnitTests
     public void Deve_retornar_true_quando_for_o_mesmo_curso()
     {
         // Arrange
-        var curso = new Curso(Guid.NewGuid(), "Curso", Bacharelado);
+        var curso = new Course(Guid.NewGuid(), "Curso", Bacharelado);
         var cursoOut1 = curso.ToOut();
         var cursoOut2 = curso.ToOut();
 
@@ -97,8 +97,8 @@ public class CursosUnitTests
     public void Deve_retornar_false_quando_nao_for_o_mesmo_curso()
     {
         // Arrange
-        var curso1 = new Curso(Guid.NewGuid(), "Curso1", Bacharelado);
-        var curso2 = new Curso(Guid.NewGuid(), "Curso2", Bacharelado);
+        var curso1 = new Course(Guid.NewGuid(), "Curso1", Bacharelado);
+        var curso2 = new Course(Guid.NewGuid(), "Curso2", Bacharelado);
         var cursoOut1 = curso1.ToOut();
         var cursoOut2 = curso2.ToOut();
 
@@ -113,7 +113,7 @@ public class CursosUnitTests
     public void Deve_retornar_false_quando_o_outro_curso_for_nulo()
     {
         // Arrange
-        var curso = new Curso(Guid.NewGuid(), "Curso1", Bacharelado);
+        var curso = new Course(Guid.NewGuid(), "Curso1", Bacharelado);
         var cursoOut = curso.ToOut();
 
         // Act

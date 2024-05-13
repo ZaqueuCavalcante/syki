@@ -4,23 +4,23 @@
 
 @attribute [Authorize(Roles = "Student")]
 
-<PageTitle>Disciplinas</PageTitle>
+<PageTitle>Disciplines</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" />
+    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplines" />
     <MudContainer Class="mb-8">
         <MudExpansionPanels MultiExpansion="true">
-            @foreach(var periodo in _disciplinas.ConvertAll(d => d.Periodo).Distinct().Order())
+            @foreach(var period in _disciplines.ConvertAll(d => d.Period).Distinct().Order())
             {
-                <MudExpansionPanel IsInitiallyExpanded="@(periodo==1)">
+                <MudExpansionPanel IsInitiallyExpanded="@(period==1)">
                     <TitleContent>
                         <div class="d-flex">
                             <MudIcon Icon="@Icons.Material.Filled.ArrowRight" class="mr-3"></MudIcon>
-                            <MudText><strong>@($"{periodo}º Período")</strong></MudText>
+                            <MudText><strong>@($"{period}º Período")</strong></MudText>
                         </div>
                     </TitleContent>
                     <ChildContent>
-                        <MudTable Items="@_disciplinas.Where(x => x.Periodo == periodo).OrderBy(x => x.Name)" Breakpoint="Breakpoint.Sm" Dense="true">
+                        <MudTable Items="@_disciplines.Where(x => x.Period == period).OrderBy(x => x.Name)" Breakpoint="Breakpoint.Sm" Dense="true">
                             <ColGroup>
                                 <col style="width: 50%;" />
                                 <col style="width: 15%;" />
@@ -35,9 +35,9 @@
                             </HeaderContent>
                             <RowTemplate>
                                 <MudTd DataLabel="Nome">@context.Name</MudTd>
-                                <MudTd DataLabel="Créditos">@context.Creditos</MudTd>
-                                <MudTd DataLabel="CH">@context.CargaHoraria</MudTd>
-                                <MudTd DataLabel="Situação">@context.Situacao</MudTd>
+                                <MudTd DataLabel="Créditos">@context.Credits</MudTd>
+                                <MudTd DataLabel="CH">@context.Workload</MudTd>
+                                <MudTd DataLabel="Situação">@context.StudentDisciplineStatus</MudTd>
                             </RowTemplate>
                         </MudTable>
                     </ChildContent>
@@ -51,10 +51,10 @@
 
 @code
 {
-    private List<DisciplinaOut> _disciplinas = [];
+    private List<DisciplineOut> _disciplines = [];
 
     protected override async Task OnInitializedAsync()
     {
-        _disciplinas = await Client.Get();
+        _disciplines = await Client.Get();
     }
 }

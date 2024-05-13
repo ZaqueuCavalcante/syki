@@ -1,9 +1,9 @@
-namespace Syki.Back.GetUsers;
+namespace Syki.Back.Features.Adm.GetUsers;
 
 [ApiController, AuthAdm]
 public class GetUsersController(GetUsersService service) : ControllerBase
 {
-    [HttpGet("users")]
+    [HttpGet("adm/users")]
     public async Task<IActionResult> Get()
     {
         var users = await service.Get();

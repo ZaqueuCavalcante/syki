@@ -1,7 +1,7 @@
 using Syki.Back.Configs;
 using Syki.Daemon.Emails;
 using Syki.Back.Extensions;
-using Syki.Back.CreateProfessor;
+using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -17,8 +17,8 @@ public static class ServicesConfigs
             services.AddEfCoreConfigs();
 
             services.AddScoped<CreateUserService>();
-            services.AddScoped<CreateProfessorService>();
-            services.AddScoped<SendResetPasswordEmailService>();
+            services.AddScoped<CreateTeacherService>();
+            services.AddScoped<SendResetPasswordTokenService>();
 
             services.AddScoped<IEmailsService, EmailsService>();
             if (Env.IsDevelopment())

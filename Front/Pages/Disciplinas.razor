@@ -3,12 +3,12 @@
 
 @namespace Syki.Front.Pages
 
-@page "/disciplinas"
+@page "/disciplines"
 
 <AuthorizeView Roles="@UserRole.Academic.ToString()">
-    <AcademicoDisciplinasPage />
+    <AcademicoDisciplinesPage />
 </AuthorizeView>
 
 <AuthorizeView Roles="@UserRole.Student.ToString()">
-    <AlunoDisciplinasPage />
+    <AlunoDisciplinesPage />
 </AuthorizeView>

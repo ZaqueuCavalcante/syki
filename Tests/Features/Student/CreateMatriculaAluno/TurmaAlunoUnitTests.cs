@@ -1,4 +1,4 @@
-using Syki.Back.CreateMatriculaAluno;
+using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Tests.Unit;
 
@@ -10,10 +10,10 @@ public class TurmaAlunoaUnitTests
         // Arrange
         var turmaId = Guid.NewGuid();
         var alunoId = Guid.NewGuid();
-        var situacao = Situacao.Matriculado;
+        var situacao = StudentDisciplineStatus.Matriculado;
 
         // Act
-        var aluno = new TurmaAluno(turmaId, alunoId, situacao);
+        var aluno = new ClassStudent(turmaId, alunoId, situacao);
 
         // Assert
         aluno.TurmaId.Should().Be(turmaId);
@@ -25,13 +25,13 @@ public class TurmaAlunoaUnitTests
         // Arrange
         var turmaId = Guid.NewGuid();
         var alunoId = Guid.NewGuid();
-        var situacao = Situacao.Matriculado;
+        var situacao = StudentDisciplineStatus.Matriculado;
 
         // Act
-        var aluno = new TurmaAluno(turmaId, alunoId, situacao);
+        var aluno = new ClassStudent(turmaId, alunoId, situacao);
 
         // Assert
-        aluno.AlunoId.Should().Be(alunoId);
+        aluno.StudentId.Should().Be(alunoId);
     }
 
     [Test]
@@ -40,12 +40,12 @@ public class TurmaAlunoaUnitTests
         // Arrange
         var turmaId = Guid.NewGuid();
         var alunoId = Guid.NewGuid();
-        var situacao = Situacao.Matriculado;
+        var situacao = StudentDisciplineStatus.Matriculado;
 
         // Act
-        var aluno = new TurmaAluno(turmaId, alunoId, situacao);
+        var aluno = new ClassStudent(turmaId, alunoId, situacao);
 
         // Assert
-        aluno.Situacao.Should().Be(situacao);
+        aluno.StudentDisciplineStatus.Should().Be(situacao);
     }
 }

@@ -3,20 +3,20 @@
 
 @namespace Syki.Front.Pages.Academic
 
-@page "/grades"
+@page "/academic/course-curriculums"
 @attribute [Authorize(Roles = "Academic")]
 
 <PageTitle>Grades</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.AccountTree" Title="Grades" ButtonText="Nova Grade" OnClick="OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.AccountTree" Title="Grades" ButtonText="Nova Grade" OnClick="@OpenDialog"/>
 
     <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudText>Um mesmo curso pode ter várias grades diferentes ao longo do tempo, com diferentes disciplinas.</MudText>
     </MudAlert>
 
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" T="GradeOut" Items="@_grades" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" T="CourseCurriculumOut" Items="@_grades" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo name do curso ou da grade" />
             </ToolBarContent>
@@ -25,7 +25,7 @@
                 <PropertyColumn Property="x => x.CursoNome" Title="Curso" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenDisciplinasDialog(context.Item))" />
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenDisciplinesDialog(context.Item))" />
                     </CellTemplate>
                 </TemplateColumn>
             </Columns>
@@ -35,7 +35,7 @@
             </NoRecordsContent>
 
             <PagerContent>
-                <SykiDataGridPager T="GradeOut" />
+                <SykiDataGridPager T="CourseCurriculumOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -48,28 +48,28 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<GradeOut> _grades = [];
+    private List<CourseCurriculumOut> _grades = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _grades = await Http.GetFromJsonAsync<List<GradeOut>>("/grades") ?? [];
+        _grades = await Http.GetFromJsonAsync<List<CourseCurriculumOut>>("/grades") ?? [];
         _loading = false;
     }
 
-    private async Task OpenDisciplinasDialog(GradeOut grade)
+    private async Task OpenDisciplinesDialog(CourseCurriculumOut grade)
     {
-        var parameters = new DialogParameters<DisciplinasDaGradeDialog>();
-        parameters.Add(x => x.Disciplinas, grade.Disciplinas);
+        var parameters = new DialogParameters<DisciplinesDaGradeDialog>();
+        parameters.Add(x => x.Disciplines, grade.Disciplines);
 
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };
-        await DialogService.ShowAsync<DisciplinasDaGradeDialog>(grade.Name, parameters, options);
+        await DialogService.ShowAsync<DisciplinesDaGradeDialog>(grade.Name, parameters, options);
     }
 
-    private Func<GradeOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.CursoNome);
+    private Func<CourseCurriculumOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.CursoNome);
 
     private async Task OpenDialog()
     {

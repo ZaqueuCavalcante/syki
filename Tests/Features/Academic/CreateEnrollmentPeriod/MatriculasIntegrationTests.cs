@@ -40,16 +40,16 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var periodo = await client.CreateAcademicPeriod("2024.1");
+        var period = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
-        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
+        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
 
         var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
-        var turmas = await clientAluno.GetAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas");
+        var turmas = await clientAluno.GetAsync<List<EnrollmentClassOut>>("/matriculas/aluno/turmas");
 
         // Assert
         turmas.Should().BeEmpty();
@@ -62,10 +62,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var periodo = await client.CreateAcademicPeriod("2024.1");
+        var period = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
-        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
+        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
 
         var year = DateTime.Now.Year;
         var period = await client.CreateAcademicPeriod($"{year}.1");
@@ -78,7 +78,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
-        var turmas = await clientAluno.GetAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas");
+        var turmas = await clientAluno.GetAsync<List<EnrollmentClassOut>>("/matriculas/aluno/turmas");
 
         // Assert
         turmas.Should().BeEmpty();
@@ -91,10 +91,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var periodo = await client.CreateAcademicPeriod("2024.1");
+        var period = await client.CreateAcademicPeriod("2024.1");
         var curso = await client.CreateCurso("ADS");
         var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
-        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, periodo.Id, Turno.Noturno);
+        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
 
         var year = DateTime.Now.Year;
         var period = await client.CreateAcademicPeriod($"{year}.1");
@@ -107,35 +107,35 @@ public partial class IntegrationTests : IntegrationTestBase
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
-        var turmas = await clientAluno.GetAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas");
+        var turmas = await clientAluno.GetAsync<List<EnrollmentClassOut>>("/matriculas/aluno/turmas");
 
         // Assert
         turmas.Should().BeEmpty();
     }
 
     [Test]
-    public async Task Deve_retornar_apenas_as_turmas_cujas_disciplinas_estao_na_grade_da_oferta_de_curso_do_aluno()
+    public async Task Deve_retornar_apenas_as_turmas_cujas_disciplines_estao_na_grade_da_oferta_de_curso_do_aluno()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
 
         var year = DateTime.Now.Year;
-        var periodo = await client.CreateAcademicPeriod($"{year}.1");
+        var period = await client.CreateAcademicPeriod($"{year}.1");
         var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(2));
-        await client.CreateEnrollmentPeriod(periodo.Id, start, end);
+        await client.CreateEnrollmentPeriod(period.Id, start, end);
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var ads = await client.CreateCurso("ADS");
         var direito = await client.CreateCurso("Direito");
 
-        var matematica = await client.CreateDisciplina("Matemática Discreta", [ads.Id]);
-        var bancoDeDados = await client.CreateDisciplina("Banco de Dados", [ads.Id]);
-        var estruturaDeDados = await client.CreateDisciplina("Estrutura de Dados", [ads.Id]);
-        var infoSociedade = await client.CreateDisciplina("Informática e Sociedade", [ads.Id, direito.Id]);
-        var direitoEconomia = await client.CreateDisciplina("Direito e Economia", [direito.Id]);
-        var introDireito = await client.CreateDisciplina("Introdução ao Direito", [direito.Id]);
-        var direitoFinanceiro = await client.CreateDisciplina("Direito Financeiro", [direito.Id]);
+        var matematica = await client.CreateDiscipline("Matemática Discreta", [ads.Id]);
+        var bancoDeDados = await client.CreateDiscipline("Banco de Dados", [ads.Id]);
+        var estruturaDeDados = await client.CreateDiscipline("Estrutura de Dados", [ads.Id]);
+        var infoSociedade = await client.CreateDiscipline("Informática e Sociedade", [ads.Id, direito.Id]);
+        var direitoEconomia = await client.CreateDiscipline("Direito e Economia", [direito.Id]);
+        var introDireito = await client.CreateDiscipline("Introdução ao Direito", [direito.Id]);
+        var direitoFinanceiro = await client.CreateDiscipline("Direito Financeiro", [direito.Id]);
 
         var gradeAds = await client.CreateGrade("Grade ADS 1.0", ads.Id,
         [
@@ -153,19 +153,19 @@ public partial class IntegrationTests : IntegrationTestBase
             new(direitoFinanceiro.Id, 1, 7, 73),
         ]);
 
-        var ofertaAds = await client.CreateOferta(campus.Id, ads.Id, gradeAds.Id, periodo.Id, Turno.Noturno);
-        var ofertaDireito = await client.CreateOferta(campus.Id, direito.Id, gradeDireito.Id, periodo.Id, Turno.Noturno);
+        var ofertaAds = await client.CreateOferta(campus.Id, ads.Id, gradeAds.Id, period.Id, Shift.Noturno);
+        var ofertaDireito = await client.CreateOferta(campus.Id, direito.Id, gradeDireito.Id, period.Id, Shift.Noturno);
 
         var chico = await client.CreateProfessor("Chico");
         var ana = await client.CreateProfessor("Ana");
 
-        var turmaMatematica = await client.Createturma(matematica.Id, chico.Id, periodo.Id, [new(Day.Segunda, Hora.H07_00, Hora.H10_00)]);
-        var turmaBancoDeDados = await client.Createturma(bancoDeDados.Id, chico.Id, periodo.Id, [new(Day.Terca, Hora.H07_00, Hora.H10_00)]);
-        var turmaEstruturaDeDados = await client.Createturma(estruturaDeDados.Id, chico.Id, periodo.Id, [new(Day.Quarta, Hora.H07_00, Hora.H10_00)]);
-        var turmaInfoSociedade = await client.Createturma(infoSociedade.Id, ana.Id, periodo.Id, [new(Day.Segunda, Hora.H07_00, Hora.H08_00)]);
-        var turmaDireitoEconomia = await client.Createturma(direitoEconomia.Id, ana.Id, periodo.Id, [new(Day.Terca, Hora.H07_00, Hora.H08_00)]);
-        var turmaIntroDireito = await client.Createturma(introDireito.Id, ana.Id, periodo.Id, [new(Day.Quarta, Hora.H07_00, Hora.H08_00)]);
-        var turmaDireitoFinanceiro = await client.Createturma(direitoFinanceiro.Id, ana.Id, periodo.Id, [new(Day.Quinta, Hora.H07_00, Hora.H08_00)]);
+        var turmaMatematica = await client.Createturma(matematica.Id, chico.Id, period.Id, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
+        var turmaBancoDeDados = await client.Createturma(bancoDeDados.Id, chico.Id, period.Id, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
+        var turmaEstruturaDeDados = await client.Createturma(estruturaDeDados.Id, chico.Id, period.Id, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
+        var turmaInfoSociedade = await client.Createturma(infoSociedade.Id, ana.Id, period.Id, [new(Day.Segunda, Hour.H07_00, Hour.H08_00)]);
+        var turmaDireitoEconomia = await client.Createturma(direitoEconomia.Id, ana.Id, period.Id, [new(Day.Terca, Hour.H07_00, Hour.H08_00)]);
+        var turmaIntroDireito = await client.Createturma(introDireito.Id, ana.Id, period.Id, [new(Day.Quarta, Hour.H07_00, Hour.H08_00)]);
+        var turmaDireitoFinanceiro = await client.Createturma(direitoFinanceiro.Id, ana.Id, period.Id, [new(Day.Quinta, Hour.H07_00, Hour.H08_00)]);
 
         var zaqueu = await client.CreateStudent(ofertaAds.Id, "Zaqueu");
         var maju = await client.CreateStudent(ofertaDireito.Id, "Maju");
@@ -173,7 +173,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var clientAluno = await _factory.LoggedAsStudent(zaqueu.Email);
 
         // Act
-        var turmas = await clientAluno.GetAsync<List<MatriculaTurmaOut>>("/matriculas/aluno/turmas");
+        var turmas = await clientAluno.GetAsync<List<EnrollmentClassOut>>("/matriculas/aluno/turmas");
 
         // Assert
         turmas.Should().HaveCount(4);

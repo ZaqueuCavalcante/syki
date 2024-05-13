@@ -13,7 +13,7 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, "Zaqueu", ofertaId);
+        var aluno = new Student(userId, institutionId, "Zaqueu", ofertaId);
 
         // Assert
         aluno.Id.Should().NotBeEmpty();
@@ -29,7 +29,7 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, name, ofertaId);
+        var aluno = new Student(userId, institutionId, name, ofertaId);
 
         // Assert
         aluno.InstitutionId.Should().Be(institutionId);
@@ -45,7 +45,7 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, name, ofertaId);
+        var aluno = new Student(userId, institutionId, name, ofertaId);
 
         // Assert
         aluno.Id.Should().Be(userId);
@@ -61,7 +61,7 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, name, ofertaId);
+        var aluno = new Student(userId, institutionId, name, ofertaId);
 
         // Assert
         aluno.Name.Should().Be(name);
@@ -77,10 +77,10 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, name, ofertaId);
+        var aluno = new Student(userId, institutionId, name, ofertaId);
 
         // Assert
-        aluno.OfertaId.Should().Be(ofertaId);
+        aluno.CourseOfferingId.Should().Be(ofertaId);
     }
 
     [Test]
@@ -93,11 +93,11 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluno = new Aluno(userId, institutionId, name, ofertaId);
+        var aluno = new Student(userId, institutionId, name, ofertaId);
 
         // Assert
-        aluno.Matricula.Should().HaveLength(12);
-        aluno.Matricula.Should().StartWith(DateTime.Now.Year.ToString());
+        aluno.EnrollmentCode.Should().HaveLength(12);
+        aluno.EnrollmentCode.Should().StartWith(DateTime.Now.Year.ToString());
     }
 
     [Test]
@@ -110,11 +110,11 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        var aluna = new Aluno(userId, institutionId, "Maria", ofertaId);
-        var aluno = new Aluno(userId, institutionId, "Zaqueu", ofertaId);
+        var aluna = new Student(userId, institutionId, "Maria", ofertaId);
+        var aluno = new Student(userId, institutionId, "Zaqueu", ofertaId);
 
         // Assert
-        aluna.Matricula.Should().NotBeSameAs(aluno.Matricula);
+        aluna.EnrollmentCode.Should().NotBeSameAs(aluno.EnrollmentCode);
     }
 
     [Test]
@@ -127,7 +127,7 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Aluno(userId, institutionId, name, ofertaId);
+        Action act = () => new Student(userId, institutionId, name, ofertaId);
 
         // Assert
         act.Should().NotThrow<DomainException>();
@@ -143,7 +143,7 @@ public class AlunosUnitTests
         var ofertaId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Aluno(userId, institutionId, name, ofertaId);
+        Action act = () => new Student(userId, institutionId, name, ofertaId);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE000);
@@ -153,17 +153,17 @@ public class AlunosUnitTests
     public void Deve_converter_o_aluno_corretamente_pro_out_sem_oferta()
     {
         // Arrange
-        var aluno = new Aluno(Guid.NewGuid(), Guid.NewGuid(), "Zaqueu", Guid.NewGuid());
+        var aluno = new Student(Guid.NewGuid(), Guid.NewGuid(), "Zaqueu", Guid.NewGuid());
 
         // Act
         var alunoOut = aluno.ToOut();
 
         // Assert
         alunoOut.Id.Should().Be(aluno.Id);
-        alunoOut.OfertaId.Should().Be(aluno.OfertaId);
+        alunoOut.CourseOfferingId.Should().Be(aluno.CourseOfferingId);
         alunoOut.Name.Should().Be(aluno.Name);
-        alunoOut.Oferta.Should().Be("-");
-        alunoOut.Matricula.Should().Be(aluno.Matricula);
+        alunoOut.CourseOffering.Should().Be("-");
+        alunoOut.EnrollmentCode.Should().Be(aluno.EnrollmentCode);
     }
 
     [Test]
@@ -174,15 +174,15 @@ public class AlunosUnitTests
         var institutionId = Guid.NewGuid();
         var campusId = Guid.NewGuid();
         var cursoId = Guid.NewGuid();
-        var gradeId = Guid.NewGuid();
-        const string periodo = "2024.1";
-        var turno = Turno.Matutino;
+        var courseCurriculumId = Guid.NewGuid();
+        const string period = "2024.1";
+        var shift = Shift.Matutino;
 
-        var aluno = new Aluno(userId, institutionId, "Zaqueu", Guid.NewGuid())
+        var aluno = new Student(userId, institutionId, "Zaqueu", Guid.NewGuid())
         {
-            Oferta = new(institutionId, campusId, cursoId, gradeId, periodo, turno)
+            CourseOffering = new(institutionId, campusId, cursoId, courseCurriculumId, period, shift)
             {
-                Curso = new(institutionId, "Direito", CourseType.Doutorado)
+                Course = new(institutionId, "Direito", CourseType.Doutorado)
             }
         };
 
@@ -191,9 +191,9 @@ public class AlunosUnitTests
 
         // Assert
         alunoOut.Id.Should().Be(aluno.Id);
-        alunoOut.OfertaId.Should().Be(aluno.OfertaId);
+        alunoOut.CourseOfferingId.Should().Be(aluno.CourseOfferingId);
         alunoOut.Name.Should().Be(aluno.Name);
-        alunoOut.Oferta.Should().Be("Direito");
-        alunoOut.Matricula.Should().Be(aluno.Matricula);
+        alunoOut.CourseOffering.Should().Be("Direito");
+        alunoOut.EnrollmentCode.Should().Be(aluno.EnrollmentCode);
     }
 }

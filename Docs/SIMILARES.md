@@ -25,8 +25,8 @@ https://www.sistemasiga.net.br/ensino-superior/
     Controle de Conselho de Classe
     Controle de Progressão Parcial
     Controle de Reserva de Vagas
-    Controle de Disciplinas Eletivas
-    Controle de Agregação de Disciplinas (frentes)
+    Controle de Disciplines Eletivas
+    Controle de Agregação de Disciplines (frentes)
     Controle de Ocorrências dos alunos
     Controle de Avaliações Substitutivas
     Controle de Específicas de Pré-vestibular

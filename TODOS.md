@@ -1,25 +1,25 @@
 # DONE
 
 ## Cross
-- [X] CreateInstitution
-- [X] CreatePendingUserRegister
-- [X] CreateUser
-- [X] FinishUserRegister
-- [X] GenerateJWT
-- [X] GetMfaKey
+- [] CreateInstitution
+- [] CreatePendingUserRegister
+- [] CreateUser
+- [] FinishUserRegister
+- [] GenerateJWT
+- [] GetMfaKey
 - [] GetUserNotifications
-- [X] Health
-- [X] Home
-- [X] Login
-- [X] LoginMfa
-- [X] ResetPassword
-- [X] SendResetPasswordToken
-- [X] SetupMfa
+- [] Health
+- [] Home
+- [] Login
+- [] LoginMfa
+- [] ResetPassword
+- [] SendResetPasswordToken
+- [] SetupMfa
 - [] ViewNotifications
 
 ## Academic
 - [] CreateAcademicPeriod
-- [X] CreateCampus
+- [] CreateCampus
 - [] CreateClass
 - [] CreateCourse
 - [] CreateCourseCurriculum
@@ -31,7 +31,7 @@
 - [] CreateTeacher
 - [] GetAcademicInsights
 - [] GetAcademicPeriods
-- [X] GetCampi
+- [] GetCampi
 - [] GetClasses
 - [] GetCourseCurriculumDisciplines
 - [] GetCourseCurriculums
@@ -45,7 +45,7 @@
 - [] GetNotifications
 - [] GetStudents
 - [] GetTeachers
-- [X] UpdateCampus
+- [] UpdateCampus
 
 ## Teacher
 

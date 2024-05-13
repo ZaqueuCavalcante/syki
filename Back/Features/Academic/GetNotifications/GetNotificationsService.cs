@@ -1,4 +1,4 @@
-namespace Syki.Back.GetNotifications;
+namespace Syki.Back.Features.Academic.GetNotifications;
 
 public class GetNotificationsService(SykiDbContext ctx)
 {

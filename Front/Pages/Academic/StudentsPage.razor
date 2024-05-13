@@ -3,7 +3,7 @@
 
 @namespace Syki.Front.Pages.Academic
 
-@page "/alunos"
+@page "/academic/students"
 @attribute [Authorize(Roles = "Academic")]
 
 <PageTitle>Alunos</PageTitle>
@@ -23,8 +23,8 @@
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.Email" Title="Email" />
-                <PropertyColumn Property="x => x.Matricula" Title="Matrícula" />
-                <PropertyColumn Property="x => x.Oferta" Title="Oferta" />
+                <PropertyColumn Property="x => x.EnrollmentCode" Title="Matrícula" />
+                <PropertyColumn Property="x => x.CourseOffering" Title="CourseOffering" />
             </Columns>
 
             <NoRecordsContent>
@@ -32,7 +32,7 @@
             </NoRecordsContent>
 
             <PagerContent>
-                <SykiDataGridPager T="AlunoOut" />
+                <SykiDataGridPager T="StudentOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -45,16 +45,16 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<AlunoOut> _alunos = [];
+    private List<StudentOut> _alunos = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? [];
+        _alunos = await Http.GetFromJsonAsync<List<StudentOut>>("/alunos") ?? [];
         _loading = false;
     }
 
-    private Func<AlunoOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Matricula);
+    private Func<StudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.EnrollmentCode);
 
     private async Task OpenDialog()
     {

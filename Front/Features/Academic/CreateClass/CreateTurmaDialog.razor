@@ -15,15 +15,15 @@
             <MudGrid>
                 <MudItem xs="12" Class="pb-2">
                     <MudAutocomplete
-                        T="DisciplinaOut"
+                        T="DisciplineOut"
                         MaxItems="50"
                         AutoFocus="true"
-                        SearchFunc="@SearchDisciplina"
+                        SearchFunc="@SearchDiscipline"
                         Dense="true"
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
-                        @bind-Value="_disciplina"
-                        Label="Disciplina"
+                        @bind-Value="@_discipline"
+                        Label="Discipline"
                         Required="true"
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
@@ -40,7 +40,7 @@
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (ProfessorOut? item in Professores)
+                        @foreach (TeacherOut? item in Professores)
                         {
                             <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                         }
@@ -72,19 +72,19 @@
                     <MudContainer Class="px-0">
                         <MudGrid Justify="Justify.FlexStart">
                             <MudItem xs="12">
-                                @foreach (var horario in Horarios)
+                                @foreach (var schedule in Schedules)
                                 {
-                                    <TurmaHorario Data="@horario" OnDeleteClick="@DeleteHorario" />
+                                    <TurmaSchedule Data="@schedule" OnDeleteClick="@DeleteSchedule" />
                                 }
                                 <MudButton
-                                    Disabled="(GetNewHorarioDisabled())"
+                                    Disabled="(GetNewScheduleDisabled())"
                                     StartIcon="@Icons.Material.Outlined.Add"
                                     IconSize="Size.Large"
                                     Variant="Variant.Outlined"
                                     FullWidth="true"
                                     Class="mt-2 border-dashed border-2 mud-border-secundary"
                                     Color="Color.Primary"
-                                    @onclick="@NewHorario"
+                                    @onclick="@NewSchedule"
                                 >
                                     NOVO HORÁRIO
                                 </MudButton>
@@ -113,52 +113,52 @@
     MudForm _form;
     private bool _loading;
 
-    DisciplinaOut? _disciplina;
-    ProfessorOut? _professor;
+    DisciplineOut? _discipline;
+    TeacherOut? _professor;
     string? _periodo;
 
-    TurmaIn data = new();
+    CreateClassIn data = new();
 
-    List<DisciplinaOut> Disciplinas = [];
-    List<ProfessorOut> Professores = [];
+    List<DisciplineOut> Disciplines = [];
+    List<TeacherOut> Professores = [];
     List<AcademicPeriodOut> Periodos = [];
-    List<AlunoOut> Alunos = [];
-    List<HorarioInFillable> Horarios { get; set; } = [];
+    List<StudentOut> Alunos = [];
+    List<ScheduleInFillable> Schedules { get; set; } = [];
 
     protected override async Task OnInitializedAsync()
     {
-        NewHorario();
+        NewSchedule();
         await Task.WhenAll(new Task[] { 
-            Task.Run(async () => Professores = await Http.GetFromJsonAsync<List<ProfessorOut>>("/professores") ?? []),
+            Task.Run(async () => Professores = await Http.GetFromJsonAsync<List<TeacherOut>>("/professores") ?? []),
             Task.Run(async () => Periodos = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic-periods") ?? []),
-            Task.Run(async () => Alunos = await Http.GetFromJsonAsync<List<AlunoOut>>("/alunos") ?? []),
-            Task.Run(async () => Disciplinas = await Http.GetFromJsonAsync<List<DisciplinaOut>>("/disciplinas") ?? []),
+            Task.Run(async () => Alunos = await Http.GetFromJsonAsync<List<StudentOut>>("/alunos") ?? []),
+            Task.Run(async () => Disciplines = await Http.GetFromJsonAsync<List<DisciplineOut>>("/disciplines") ?? []),
         });
     }
 
-    bool GetNewHorarioDisabled()
+    bool GetNewScheduleDisabled()
     {
-        return Horarios.Count == 3;
+        return Schedules.Count == 3;
     }
 
-    void NewHorario()
+    void NewSchedule()
     {
-        Horarios.Add(new());
+        Schedules.Add(new());
     }
 
-    void DeleteHorario(Guid id)
+    void DeleteSchedule(Guid id)
     {
-        Horarios.Remove(Horarios.First(f => f.Id == id));
+        Schedules.Remove(Schedules.First(f => f.Id == id));
     }
 
-    private async Task<IEnumerable<DisciplinaOut>> SearchDisciplina(string value)
+    private async Task<IEnumerable<DisciplineOut>> SearchDiscipline(string value)
     {
         await Task.Delay(0);
 
         if (string.IsNullOrEmpty(value))
-            return Disciplinas;
+            return Disciplines;
 
-        return Disciplinas.Where(x => value.IsIn(x.Name));
+        return Disciplines.Where(x => value.IsIn(x.Name));
     }
 
     async Task Submit()
@@ -170,10 +170,10 @@
 
         data = new()
         {
-            DisciplinaId = _disciplina!.Id,
+            DisciplineId = _discipline!.Id,
             ProfessorId = _professor!.Id,
-            Periodo = _periodo!,
-            Horarios = Horarios.ConvertAll(x => new HorarioIn(x.Day!.Value, x.Start!.Value, x.End!.Value)),
+            Period = _periodo!,
+            Schedules = Schedules.ConvertAll(x => new ScheduleIn(x.Day!.Value, x.Start!.Value, x.End!.Value)),
         };
 
         _loading = true;

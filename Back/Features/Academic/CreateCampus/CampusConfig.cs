@@ -1,4 +1,4 @@
-using Syki.Back.CreateOferta;
+using Syki.Back.Features.Academic.CreateCourseOffering;
 
 namespace Syki.Back.Features.Academic.CreateCampus;
 
@@ -14,7 +14,7 @@ public class CampusConfig : IEntityTypeConfiguration<Campus>
         campus.Property(c => c.Name);
         campus.Property(c => c.City);
 
-        campus.HasMany<Oferta>()
+        campus.HasMany<CourseOffering>()
             .WithOne(o => o.Campus)
             .HasForeignKey(o => o.CampusId);
     }

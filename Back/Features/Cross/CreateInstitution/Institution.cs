@@ -1,12 +1,10 @@
-using Syki.Back.CreateOferta;
-using Syki.Back.CreateProfessor;
+using Syki.Back.Features.Academic.CreateCourseOffering;
 using Syki.Back.Features.Academic.CreateNotification;
-using Syki.Back.Features.Academic.CreateCurso;
-using Syki.Back.Features.Academic.CreateGrade;
+using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
-using Syki.Back.Features.Academic.CreateStudent;
-using Syki.Back.Features.Academic.CreateDisciplina;
+using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
+using Syki.Back.Features.Academic.CreateCourseCurriculum;
 
 namespace Syki.Back.Features.Cross.CreateInstitution;
 
@@ -16,12 +14,12 @@ public class Institution
     public string Name { get; set; }
     public List<AcademicPeriod> AcademicPeriods { get; set; }
     public List<Campus> Campi { get; set; }
-    public List<Curso> Courses { get; set; }
-    public List<Oferta> CourseOfferings { get; set; }
-    public List<Grade> CourseCurriculums { get; set; }
-    public List<Disciplina> Disciplines { get; set; }
-    public List<Professor> Teachers { get; set; }
-    public List<Aluno> Students { get; set; }
+    public List<Course> Courses { get; set; }
+    public List<CourseOffering> CourseOfferings { get; set; }
+    public List<CourseCurriculum> CourseCurriculums { get; set; }
+    public List<Discipline> Disciplines { get; set; }
+    public List<Academic.CreateTeacher.Teacher> Teachers { get; set; }
+    public List<Academic.CreateStudent.Student> Students { get; set; }
     public List<Notification> Notifications { get; set; }
 
     public Institution() { }

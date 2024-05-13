@@ -14,10 +14,10 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new AcademicPeriod(id, institutionId, start, end);
+        var period = new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
-        periodo.Id.Should().Be(id);
+        period.Id.Should().Be(id);
     }
 
     [Test]
@@ -30,10 +30,10 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new AcademicPeriod(id, institutionId, start, end);
+        var period = new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
-        periodo.InstitutionId.Should().Be(institutionId);
+        period.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
@@ -46,10 +46,10 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new AcademicPeriod(id, institutionId, start, end);
+        var period = new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
-        periodo.Start.Should().Be(start);
+        period.Start.Should().Be(start);
     }
 
     [Test]
@@ -62,10 +62,10 @@ public class PeriodosUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        var periodo = new AcademicPeriod(id, institutionId, start, end);
+        var period = new AcademicPeriod(id, institutionId, start, end);
 
         // Assert
-        periodo.End.Should().Be(end);
+        period.End.Should().Be(end);
     }
 
     [Test]
@@ -174,13 +174,13 @@ public class PeriodosUnitTests
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
-        var periodo = new AcademicPeriod(id, institutionId, start, end);
+        var period = new AcademicPeriod(id, institutionId, start, end);
 
         // Act
-        var periodoOut = periodo.ToOut();
+        var periodoOut = period.ToOut();
 
         // Assert
-        periodoOut.Id.Should().Be(periodo.Id);
+        periodoOut.Id.Should().Be(period.Id);
         periodoOut.Start.Should().Be(start);
         periodoOut.End.Should().Be(end);
     }

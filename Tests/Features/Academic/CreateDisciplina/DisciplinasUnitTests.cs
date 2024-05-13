@@ -1,106 +1,106 @@
-using Syki.Back.Features.Academic.CreateDisciplina;
+using Syki.Back.Features.Academic.CreateDiscipline;
 
 namespace Syki.Tests.Unit;
 
-public class DisciplinasUnitTests
+public class DisciplinesUnitTests
 {
     [Test]
-    public void Deve_criar_uma_disciplina_com_id()
+    public void Deve_criar_uma_discipline_com_id()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
 
         // Act
-        var disciplina = new Disciplina(institutionId, "Banco de Dados");
+        var discipline = new Discipline(institutionId, "Banco de Dados");
 
         // Assert
-        disciplina.Id.Should().NotBeEmpty();
+        discipline.Id.Should().NotBeEmpty();
     }
 
     [Test]
-    public void Deve_criar_uma_disciplina_com_institution_id_correto()
+    public void Deve_criar_uma_discipline_com_institution_id_correto()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
 
         // Act
-        var disciplina = new Disciplina(institutionId, "Banco de Dados");
+        var discipline = new Discipline(institutionId, "Banco de Dados");
 
         // Assert
-        disciplina.InstitutionId.Should().Be(institutionId);
+        discipline.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
-    public void Deve_criar_uma_disciplina_com_nome_correto()
+    public void Deve_criar_uma_discipline_com_nome_correto()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
         const string name = "Banco de Dados";
 
         // Act
-        var disciplina = new Disciplina(institutionId, name);
+        var discipline = new Discipline(institutionId, name);
 
         // Assert
-        disciplina.Name.Should().Be(name);
+        discipline.Name.Should().Be(name);
     }
 
     [Test]
-    public void Deve_converter_a_disciplina_corretamente_pro_out()
+    public void Deve_converter_a_discipline_corretamente_pro_out()
     {
         // Arrange
-        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados");
-        disciplina.Vinculos.Add(new() { CursoId = Guid.NewGuid() });
-        disciplina.Vinculos.Add(new() { CursoId = Guid.NewGuid() });
+        var discipline = new Discipline(Guid.NewGuid(), "Banco de Dados");
+        discipline.Links.Add(new() { CourseId = Guid.NewGuid() });
+        discipline.Links.Add(new() { CourseId = Guid.NewGuid() });
 
         // Act
-        var disciplinaOut = disciplina.ToOut();
+        var disciplineOut = discipline.ToOut();
 
         // Assert
-        disciplinaOut.Id.Should().Be(disciplina.Id);
-        disciplinaOut.Name.Should().Be(disciplina.Name);
-        disciplinaOut.Cursos.Should().BeEquivalentTo(disciplina.Vinculos.ConvertAll(x => x.CursoId));
+        disciplineOut.Id.Should().Be(discipline.Id);
+        disciplineOut.Name.Should().Be(discipline.Name);
+        disciplineOut.Courses.Should().BeEquivalentTo(discipline.Links.ConvertAll(x => x.CourseId));
     }
 
     [Test]
-    public void Deve_retornar_true_quando_for_a_mesma_disciplina()
+    public void Deve_retornar_true_quando_for_a_mesma_discipline()
     {
         // Arrange
-        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados");
-        var disciplinaOut1 = disciplina.ToOut();
-        var disciplinaOut2 = disciplina.ToOut();
+        var discipline = new Discipline(Guid.NewGuid(), "Banco de Dados");
+        var disciplineOut1 = discipline.ToOut();
+        var disciplineOut2 = discipline.ToOut();
 
         // Act
-        var equals = disciplinaOut1.Equals(disciplinaOut2);
+        var equals = disciplineOut1.Equals(disciplineOut2);
 
         // Assert
         equals.Should().BeTrue();
     }
 
     [Test]
-    public void Deve_retornar_false_quando_nao_for_a_mesma_disciplina()
+    public void Deve_retornar_false_quando_nao_for_a_mesma_discipline()
     {
         // Arrange
-        var disciplina1 = new Disciplina(Guid.NewGuid(), "Banco de Dados");
-        var disciplina2 = new Disciplina(Guid.NewGuid(), "Banco de Dados");
-        var disciplinaOut1 = disciplina1.ToOut();
-        var disciplinaOut2 = disciplina2.ToOut();
+        var discipline1 = new Discipline(Guid.NewGuid(), "Banco de Dados");
+        var discipline2 = new Discipline(Guid.NewGuid(), "Banco de Dados");
+        var disciplineOut1 = discipline1.ToOut();
+        var disciplineOut2 = discipline2.ToOut();
 
         // Act
-        var equals = disciplinaOut1.Equals(disciplinaOut2);
+        var equals = disciplineOut1.Equals(disciplineOut2);
 
         // Assert
         equals.Should().BeFalse();
     }
 
     [Test]
-    public void Deve_retornar_false_quando_a_outra_disciplina_for_nula()
+    public void Deve_retornar_false_quando_a_outra_discipline_for_nula()
     {
         // Arrange
-        var disciplina = new Disciplina(Guid.NewGuid(), "Banco de Dados");
-        var disciplinaOut = disciplina.ToOut();
+        var discipline = new Discipline(Guid.NewGuid(), "Banco de Dados");
+        var disciplineOut = discipline.ToOut();
 
         // Act
-        var equals = disciplinaOut.Equals(null);
+        var equals = disciplineOut.Equals(null);
 
         // Assert
         equals.Should().BeFalse();
@@ -110,23 +110,23 @@ public class DisciplinasUnitTests
     public void Deve_retornar_o_hash_code_correto()
     {
         // Arrange
-        var disciplinaOut = new DisciplinaOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
+        var disciplineOut = new DisciplineOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
 
         // Act
-        var hashCode = disciplinaOut.GetHashCode();
+        var hashCode = disciplineOut.GetHashCode();
 
         // Assert
         hashCode.Should().Be(4523_9002);
     }
 
     [Test]
-    public void Deve_retornar_o_nome_da_disciplina_como_to_string()
+    public void Deve_retornar_o_nome_da_discipline_como_to_string()
     {
         // Arrange
-        var disciplinaOut = new DisciplinaOut { Name = "Banco de Dados" };
+        var disciplineOut = new DisciplineOut { Name = "Banco de Dados" };
 
         // Act
-        var name = disciplinaOut.ToString();
+        var name = disciplineOut.ToString();
 
         // Assert
         name.Should().Be("Banco de Dados");

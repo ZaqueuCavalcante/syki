@@ -1,10 +1,10 @@
-namespace Syki.Back.GetNotifications;
+namespace Syki.Back.Features.Academic.GetNotifications;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 public class GetNotificationsController(GetNotificationsService service) : ControllerBase
 {
-    [HttpGet("notifications")]
+    [HttpGet("academic/notifications")]
     public async Task<IActionResult> Get()
     {
         var notifications = await service.Get(User.InstitutionId());

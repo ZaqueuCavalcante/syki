@@ -1,4 +1,4 @@
-using Syki.Back.CreateEnrollmentPeriod;
+using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 
 namespace Syki.Tests.Unit;
 

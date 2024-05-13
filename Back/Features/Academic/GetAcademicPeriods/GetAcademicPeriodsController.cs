@@ -1,4 +1,4 @@
-namespace Syki.Back.GetAcademicPeriods;
+namespace Syki.Back.Features.Academic.GetAcademicPeriods;
 
 /// <summary>
 /// Retorna todos os períodos acadêmicos.
@@ -8,7 +8,7 @@ namespace Syki.Back.GetAcademicPeriods;
 [Consumes("application/json"), Produces("application/json")]
 public class GetAcademicPeriods(GetAcademicPeriodsService service) : ControllerBase
 {
-    [HttpGet("academic-periods")]
+    [HttpGet("academic/academic-periods")]
     [ProducesResponseType(typeof(List<AcademicPeriodOut>), 200)]
     public async Task<IActionResult> Get()
     {

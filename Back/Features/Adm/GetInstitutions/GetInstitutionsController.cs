@@ -1,9 +1,9 @@
-namespace Syki.Back.GetInstitutions;
+namespace Syki.Back.Features.Adm.GetInstitutions;
 
 [ApiController, AuthAdm]
 public class GetInstitutionsController(GetInstitutionsService service) : ControllerBase
 {
-    [HttpGet("institutions")]
+    [HttpGet("adm/institutions")]
     public async Task<IActionResult> Get()
     {
         var institutions = await service.Get();

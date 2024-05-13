@@ -11,15 +11,15 @@ public class GetAcademicInsightsService(DatabaseSettings settings)
 
         const string sql = @"
             SELECT
-                (SELECT COUNT(1) FROM syki.campi WHERE institution_id = i.id)         AS campus,
-                (SELECT COUNT(1) FROM syki.cursos WHERE institution_id = i.id)        AS cursos,
-                (SELECT COUNT(1) FROM syki.disciplinas WHERE institution_id = i.id)   AS disciplinas,
-                (SELECT COUNT(1) FROM syki.grades WHERE institution_id = i.id)        AS grades,
-                (SELECT COUNT(1) FROM syki.ofertas WHERE institution_id = i.id)       AS ofertas,
-                (SELECT COUNT(1) FROM syki.turmas WHERE institution_id = i.id)        AS turmas,
-                (SELECT COUNT(1) FROM syki.professores WHERE institution_id = i.id)   AS professores,
-                (SELECT COUNT(1) FROM syki.alunos WHERE institution_id = i.id)        AS alunos,
-                (SELECT COUNT(1) FROM syki.notifications WHERE institution_id = i.id) AS notifications
+                (SELECT COUNT(1) FROM syki.campi WHERE institution_id = i.id)              AS campus,
+                (SELECT COUNT(1) FROM syki.courses WHERE institution_id = i.id)            AS courses,
+                (SELECT COUNT(1) FROM syki.disciplines WHERE institution_id = i.id)        AS disciplines,
+                (SELECT COUNT(1) FROM syki.course-curriculums WHERE institution_id = i.id) AS course-curriculums,
+                (SELECT COUNT(1) FROM syki.course-offerings WHERE institution_id = i.id)   AS course-offerings,
+                (SELECT COUNT(1) FROM syki.classes WHERE institution_id = i.id)            AS classes,
+                (SELECT COUNT(1) FROM syki.teachers WHERE institution_id = i.id)           AS teachers,
+                (SELECT COUNT(1) FROM syki.students WHERE institution_id = i.id)           AS students,
+                (SELECT COUNT(1) FROM syki.notifications WHERE institution_id = i.id)      AS notifications
             FROM
             	syki.institutions i
             WHERE

@@ -1,3 +1,5 @@
+using Syki.Back.Features.Cross.CreateUser;
+
 namespace Syki.Back.Features.Academic.CreateNotification;
 
 public class UserNotificationConfig : IEntityTypeConfiguration<UserNotification>

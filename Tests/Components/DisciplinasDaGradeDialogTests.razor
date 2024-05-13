@@ -13,20 +13,20 @@
         var service = Services.GetService<IDialogService>() as DialogService;
 
         const string grade = "Grade de ADS - 1.0";
-        var disciplinas = new List<DisciplinaOut>
+        var disciplines = new List<DisciplineOut>
         {
-            new DisciplinaOut { Name = "Matemática Discreta", Periodo = 1, Creditos = 6, CargaHoraria = 60, },
-            new DisciplinaOut { Name = "Introdução à Redes de Computadores", Periodo = 5, Creditos = 4, CargaHoraria = 50, },
-            new DisciplinaOut { Name = "Pensamento Computacional e Algoritmos", Periodo = 3, Creditos = 7, CargaHoraria = 25, },
-            new DisciplinaOut { Name = "Design de Interação Humano-Máquina", Periodo = 2, Creditos = 6, CargaHoraria = 90, },
-            new DisciplinaOut { Name = "Projeto Integrador I: Concepção e Prototipação", Periodo = 4, Creditos = 6, CargaHoraria = 60, },
+            new DisciplineOut { Name = "Matemática Discreta", Period = 1, Credits = 6, Workload = 60, },
+            new DisciplineOut { Name = "Introdução à Redes de Computadores", Period = 5, Credits = 4, Workload = 50, },
+            new DisciplineOut { Name = "Pensamento Computacional e Algoritmos", Period = 3, Credits = 7, Workload = 25, },
+            new DisciplineOut { Name = "Design de Interação Humano-Máquina", Period = 2, Credits = 6, Workload = 90, },
+            new DisciplineOut { Name = "Projeto Integrador I: Concepção e Prototipação", Period = 4, Credits = 6, Workload = 60, },
         };
-        var parameters = new DialogParameters<DisciplinasDaGradeDialog>();
-        parameters.Add(x => x.Disciplinas, disciplinas);
+        var parameters = new DialogParameters<DisciplinesDaGradeDialog>();
+        parameters.Add(x => x.Disciplines, disciplines);
 
         // Act
         IDialogReference dialog = null!;
-        await provider.InvokeAsync(() => dialog = service!.Show<DisciplinasDaGradeDialog>(grade, parameters));
+        await provider.InvokeAsync(() => dialog = service!.Show<DisciplinesDaGradeDialog>(grade, parameters));
 
         // Assert
         provider.Find("h6").MarkupMatches(

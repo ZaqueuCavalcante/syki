@@ -9,6 +9,6 @@ public class AgendaDayOut
 public class AgendaDisciplineOut
 {
     public string Name { get; set; }
-    public Hora Start { get; set; }
-    public Hora End { get; set; }
+    public Hour Start { get; set; }
+    public Hour End { get; set; }
 }

@@ -1,7 +1,7 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.GetUsers;
+namespace Syki.Back.Features.Adm.GetUsers;
 
 public class GetUsersService(DatabaseSettings dbSettings)
 {

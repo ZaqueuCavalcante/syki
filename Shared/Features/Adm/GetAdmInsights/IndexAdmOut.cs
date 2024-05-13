@@ -6,11 +6,11 @@ public class IndexAdmOut
     public int Users { get; set; }
     public int Campus { get; set; }
 
-    public int Cursos { get; set; }
-    public int Disciplinas { get; set; }
-    public int Grades { get; set; }
+    public int Courses { get; set; }
+    public int Disciplines { get; set; }
+    public int CourseCurriculums { get; set; }
 
-    public int Ofertas { get; set; }
-    public int Professores { get; set; }
-    public int Alunos { get; set; }
+    public int CourseOfferings { get; set; }
+    public int Teachers { get; set; }
+    public int Students { get; set; }
 }

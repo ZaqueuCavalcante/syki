@@ -27,7 +27,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateProfessor("Ana");
 
         // Assert
-        var professores = await client.GetAsync<List<ProfessorOut>>("/professores");
+        var professores = await client.GetAsync<List<TeacherOut>>("/professores");
         professores.Should().HaveCount(2);
     }
 
@@ -42,7 +42,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await clientUfpe.CreateProfessor("Ana");
 
         // Act
-        var professores = await clientNovaRoma.GetAsync<List<ProfessorOut>>("/professores");
+        var professores = await clientNovaRoma.GetAsync<List<TeacherOut>>("/professores");
 
         // Assert
         professores.Should().HaveCount(1);

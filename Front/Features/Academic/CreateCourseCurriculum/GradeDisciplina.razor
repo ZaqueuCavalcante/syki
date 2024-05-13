@@ -5,16 +5,16 @@
         <MudItem xs="5">
             <MudAutocomplete
                 MaxItems="50"
-                T="GradeDisciplinaFillable"
-                SearchFunc="@SearchDisciplina"
+                T="GradeDisciplineFillable"
+                SearchFunc="@SearchDiscipline"
                 Dense="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 ShowProgressIndicator="true"
                 Class="mb-2"
                 Value="@Data"
-                ValueChanged="(GradeDisciplinaFillable newValue) => HandleDisciplinaChanged(newValue)"
-                Label="Disciplina"
+                ValueChanged="(GradeDisciplineFillable newValue) => HandleDisciplineChanged(newValue)"
+                Label="Discipline"
                 Required="true"
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
@@ -26,7 +26,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 T="byte?"
-                Value="@Data.Periodo"
+                Value="@Data.Period"
                 ValueChanged="x => HandlePeriodoChanged(x)"
                 Label="Período"
                 Required="true"
@@ -46,7 +46,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 T="byte?"
-                Value="@Data.Creditos"
+                Value="@Data.Credits"
                 ValueChanged="x => HandleCreditosChanged(x)"
                 Label="Créditos"
                 Required="true"
@@ -60,7 +60,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 T="ushort?"
-                Value="@Data.CargaHoraria"
+                Value="@Data.Workload"
                 ValueChanged="x => HandleCargaHorariaChanged(x)"
                 Label="Carga Horária"
                 Required="true"
@@ -84,14 +84,14 @@
     public EventCallback<Guid> OnDeleteClick { get; set; }
 
     [Parameter]
-    public GradeDisciplinaFillable Data { get; set; }
+    public GradeDisciplineFillable Data { get; set; }
 
-    private async Task<IEnumerable<GradeDisciplinaFillable>> SearchDisciplina(string value)
+    private async Task<IEnumerable<GradeDisciplineFillable>> SearchDiscipline(string value)
     {
         await Task.Delay(0);
 
         var filtered = Options.Where(d => !d.IsSelected || (d.IsSelected && d.Id == Data.Id))
-            .ToList().ConvertAll(x => new GradeDisciplinaFillable { Id = x.Id, Name = x.Name });
+            .ToList().ConvertAll(x => new GradeDisciplineFillable { Id = x.Id, Name = x.Name });
 
         if (string.IsNullOrEmpty(value))
             return filtered;
@@ -99,7 +99,7 @@
         return filtered.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    void HandleDisciplinaChanged(GradeDisciplinaFillable newValue)
+    void HandleDisciplineChanged(GradeDisciplineFillable newValue)
     {
         Options.First(d => d.Id == newValue.Id).IsSelected = true;
 
@@ -114,17 +114,17 @@
 
     void HandlePeriodoChanged(byte? newValue)
     {
-        Data.Periodo = newValue;
+        Data.Period = newValue;
     }
 
     void HandleCreditosChanged(byte? newValue)
     {
-        Data.Creditos = newValue;
+        Data.Credits = newValue;
     }
 
     void HandleCargaHorariaChanged(ushort? newValue)
     {
-        Data.CargaHoraria = newValue;
+        Data.Workload = newValue;
     }
 
     private async Task HandleDeleteClick()

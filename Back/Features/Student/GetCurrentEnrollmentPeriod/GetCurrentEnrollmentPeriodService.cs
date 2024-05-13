@@ -1,4 +1,4 @@
-namespace Syki.Back.GetCurrentEnrollmentPeriod;
+namespace Syki.Back.Features.Student.GetCurrentEnrollmentPeriod;
 
 public class GetCurrentEnrollmentPeriodService(SykiDbContext ctx)
 {

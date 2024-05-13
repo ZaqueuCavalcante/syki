@@ -49,30 +49,32 @@ public static class TestData
         }
     }
 
+    public static List<string> InvalidEmailsList =
+    [
+        "",
+        " ",
+        "zaqueugmail",
+        "majuasp.net",
+        "#@%^%#$@#$@#.com",
+        "@example.com",
+        "Joe Smith <email@example.com>",
+        "email.example.com",
+        "email@example@example.com",
+        ".email@example.com",
+        "email.@example.com",
+        "email..email@example.com",
+        "email@example.com (Joe Smith)",
+        "email@example",
+        "email@-example.com",
+        "email@example..com",
+        "Abc..123@example.com",
+    ];
+
     public static IEnumerable<object[]> InvalidEmails()
     {
-        foreach (var role in new List<string>()
+        foreach (var email in InvalidEmailsList)
         {
-            "",
-            " ",
-            "zaqueugmail",
-            "majuasp.net",
-            "#@%^%#$@#$@#.com",
-            "@example.com",
-            "Joe Smith <email@example.com>",
-            "email.example.com",
-            "email@example@example.com",
-            ".email@example.com",
-            "email.@example.com",
-            "email..email@example.com",
-            "email@example.com (Joe Smith)",
-            "email@example",
-            "email@-example.com",
-            "email@example..com",
-            "Abc..123@example.com",
-        })
-        {
-            yield return new object[] { role };
+            yield return new object[] { email };
         }
     }
 

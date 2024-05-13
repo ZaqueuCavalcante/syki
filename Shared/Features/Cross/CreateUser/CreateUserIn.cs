@@ -14,8 +14,8 @@ public class CreateUserIn
         {
             Name = email,
             Email = email,
-            Role = UserRole.Academic,
             Password = password,
+            Role = UserRole.Academic,
             InstitutionId = institutionId,
         };
     }

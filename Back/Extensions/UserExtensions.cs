@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Extensions;
 
@@ -22,5 +23,17 @@ public static class UserExtensions
             path != "/reset-password" &&
             path != "/users" &&
             path != "/reset-password-token";
+    }
+
+    public static async Task<bool> IsOnlyInRole(this UserManager<SykiUser> userManager, SykiUser user, UserRole role)
+    {
+        var adm = await userManager.IsInRoleAsync(user!, UserRole.Adm.ToString());
+        var student = await userManager.IsInRoleAsync(user!, UserRole.Student.ToString());
+        var teacher = await userManager.IsInRoleAsync(user!, UserRole.Teacher.ToString());
+        var academic = await userManager.IsInRoleAsync(user!, UserRole.Academic.ToString());
+
+        if (role is UserRole.Academic) return academic && !(adm || student || teacher);
+
+        return false;
     }
 }

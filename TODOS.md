@@ -1,10 +1,10 @@
 # DONE
 
 ## Cross
-- [] CreateInstitution
-- [] CreatePendingUserRegister
-- [] CreateUser
-- [] FinishUserRegister
+- [X] CreateInstitution
+- [X] CreatePendingUserRegister
+- [X] CreateUser
+- [X] FinishUserRegister
 - [] GenerateJWT
 - [] GetMfaKey
 - [] GetUserNotifications

@@ -1,3 +1,5 @@
+using Syki.Back.Features.Academic.CreateClass;
+
 namespace Syki.Tests.Unit;
 
 public class ScheduleUnitTests

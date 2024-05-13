@@ -1,6 +1,7 @@
 using Audit.Core;
 using Syki.Back.Audit;
 using Audit.EntityFramework;
+using Syki.Back.Features.Academic.CreateClass;
 
 namespace Syki.Tests.Audit;
 

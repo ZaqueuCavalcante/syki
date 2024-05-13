@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Syki.Back.Features.Academic.CreateClass;
 
 namespace Syki.Tests.Base;
 

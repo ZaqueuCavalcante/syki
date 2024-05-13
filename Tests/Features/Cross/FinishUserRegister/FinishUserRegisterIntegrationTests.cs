@@ -19,6 +19,24 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        using var ctx = _factory.GetDbContext();
+        using var userManager = _factory.GetUserManager();
+
+        var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
+        register.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
+        register.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
+
+        var institution = await ctx.Institutions.SingleAsync(x => x.Name.Contains(email));
+        institution.Id.Should().NotBeEmpty();
+
+        var user = await userManager.FindByEmailAsync(email);
+        user!.Name.Should().Be(email);
+        user!.Email.Should().Be(email);
+        user!.TwoFactorEnabled.Should().BeFalse();
+
+        var isOnlyInAcademicRole = await userManager.IsOnlyInRole(user!, UserRole.Academic);
+        isOnlyInAcademicRole.Should().BeTrue();
     }
 
     [Test]
@@ -27,13 +45,28 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _factory.GetClient();
-        await client.CreatePendingUserRegister(TestData.Email);
+
+        var email = TestData.Email;
+        await client.CreatePendingUserRegister(email);
 
         // Act
         var response = await client.FinishUserRegister(token, "Lalala@123");
 
         // Assert
         await response.AssertBadRequest(Throw.DE024);
+
+        using var ctx = _factory.GetDbContext();
+        using var userManager = _factory.GetUserManager();
+
+        var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
+        register.TrialStart.Should().BeNull();
+        register.TrialEnd.Should().BeNull();
+
+        var institution = await ctx.Institutions.FirstOrDefaultAsync(x => x.Name.Contains(email));
+        institution.Should().BeNull();
+
+        var user = await userManager.FindByEmailAsync(email);
+        user.Should().BeNull();
     }
 
     [Test]
@@ -46,13 +79,32 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreatePendingUserRegister(email);
 
         var token = await _factory.GetRegisterSetupToken(email);
-        await client.FinishUserRegister(token!, "Lalala@123");
+        var firstResponse = await client.FinishUserRegister(token!, "Lalala@123");
 
         // Act
-        var response = await client.FinishUserRegister(token!, "Lalala@123");
+        var secondResponse = await client.FinishUserRegister(token!, "Lalala@123");
 
         // Assert
-        await response.AssertBadRequest(Throw.DE025);
+        firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        await secondResponse.AssertBadRequest(Throw.DE025);
+
+        using var ctx = _factory.GetDbContext();
+        using var userManager = _factory.GetUserManager();
+
+        var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
+        register.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
+        register.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
+
+        var institution = await ctx.Institutions.SingleAsync(x => x.Name.Contains(email));
+        institution.Id.Should().NotBeEmpty();
+
+        var user = await userManager.FindByEmailAsync(email);
+        user!.Name.Should().Be(email);
+        user!.Email.Should().Be(email);
+        user!.TwoFactorEnabled.Should().BeFalse();
+
+        var isOnlyInAcademicRole = await userManager.IsOnlyInRole(user!, UserRole.Academic);
+        isOnlyInAcademicRole.Should().BeTrue();
     }
 
     [Test]
@@ -71,25 +123,19 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         await response.AssertBadRequest(Throw.DE015);
-    }
 
-    [Test]
-    public async Task Should_create_a_institution_on_user_register()
-    {
-        // Arrange
-        var client = _factory.GetClient();
-
-        var email = TestData.Email;
-        await client.CreatePendingUserRegister(email);
-        var token = await _factory.GetRegisterSetupToken(email);
-
-        // Act
-        await client.FinishUserRegister(token!, "Lalala@123");
-
-        // Assert
         using var ctx = _factory.GetDbContext();
+        using var userManager = _factory.GetUserManager();
+
+        var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
+        register.TrialStart.Should().BeNull();
+        register.TrialEnd.Should().BeNull();
+
         var institution = await ctx.Institutions.FirstOrDefaultAsync(x => x.Name.Contains(email));
-        institution.Should().NotBeNull();
+        institution.Should().BeNull();
+
+        var user = await userManager.FindByEmailAsync(email);
+        user.Should().BeNull();
     }
 
     [Test]
@@ -109,25 +155,5 @@ public partial class IntegrationTests : IntegrationTestBase
         using var ctx = _factory.GetDbContext();
         var institution = await ctx.Institutions.FirstAsync(x => x.Name.Contains(email));
         await AssertTaskByDataLike<SeedInstitutionData>(institution.Id.ToString());
-    }
-
-    [Test]
-    public async Task Should_register_user_with_academic_role()
-    {
-        // Arrange
-        var client = _factory.GetClient();
-
-        var email = TestData.Email;
-        await client.CreatePendingUserRegister(email);
-        var token = await _factory.GetRegisterSetupToken(email);
-
-        // Act
-        await client.FinishUserRegister(token!, "Lalala@123");
-
-        // Assert
-        using var userManager = _factory.GetUserManager();
-        var user = await userManager.FindByEmailAsync(email);
-        var isInAcademicRole = await userManager.IsInRoleAsync(user!, UserRole.Academic.ToString());
-        isInAcademicRole.Should().BeTrue();
     }
 }

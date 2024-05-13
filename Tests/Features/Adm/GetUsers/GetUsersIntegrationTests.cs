@@ -1,4 +1,4 @@
-namespace Syki.Tests.Integration;
+namespace Syki.Tests.Features.Adm.GetUsers;
 
 public class GetUsersIntegrationTests : IntegrationTestBase
 {
@@ -16,7 +16,7 @@ public class GetUsersIntegrationTests : IntegrationTestBase
 
         // Assert
         users.Should().HaveCount(2);
-        var academic = users.First(x => x.Role == "Academic");
+        var academic = users.First(x => x.Role == UserRole.Academic.ToString());
         academic.Institution.Should().EndWith(user.Email);
     }
 }

@@ -1,3 +1,4 @@
+using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateDiscipline;
 

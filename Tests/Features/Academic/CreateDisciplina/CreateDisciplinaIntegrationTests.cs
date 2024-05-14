@@ -11,11 +11,17 @@ public partial class IntegrationTests : IntegrationTestBase
         // Act
         var discipline = await client.CreateDiscipline("Banco de Dados");
 
+        using var ctx = _factory.GetDbContext();
+        var all = await ctx.Disciplines.ToListAsync();
+
         // Assert
         discipline.Id.Should().NotBeEmpty();
         discipline.Name.Should().Be("Banco de Dados");
         discipline.Courses.Should().BeEquivalentTo(new List<Guid>());
     }
+
+
+
 
     [Test]
     public async Task Deve_criar_uma_nova_discipline_vincula_a_um_unico_curso()

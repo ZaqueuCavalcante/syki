@@ -15,7 +15,7 @@ public class CourseCurriculumConfig : IEntityTypeConfiguration<CourseCurriculum>
             .WithMany()
             .UsingEntity<CourseCurriculumDiscipline>(gd =>
                 {
-                    gd.ToTable("course-curriculums__disciplines");
+                    gd.ToTable("course_curriculums__disciplines");
                     gd.HasOne<CourseCurriculum>().WithMany(g => g.Links).HasForeignKey(x => x.CourseCurriculumId);
                     gd.HasOne<Discipline>().WithMany().HasForeignKey(x => x.DisciplineId);
                 }

@@ -19,6 +19,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         using var ctx = _factory.GetDbContext();
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
+        register.Id.Should().NotBeEmpty();
         register.TrialStart.Should().BeNull();
         register.TrialEnd.Should().BeNull();
     }

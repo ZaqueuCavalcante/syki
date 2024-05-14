@@ -19,7 +19,7 @@
 
 ## Academic
 - [] CreateAcademicPeriod
-- [] CreateCampus
+- [X] CreateCampus
 - [] CreateClass
 - [] CreateCourse
 - [] CreateCourseCurriculum
@@ -31,7 +31,7 @@
 - [] CreateTeacher
 - [] GetAcademicInsights
 - [] GetAcademicPeriods
-- [] GetCampi
+- [X] GetCampi
 - [] GetClasses
 - [] GetCourseCurriculumDisciplines
 - [] GetCourseCurriculums
@@ -45,7 +45,7 @@
 - [] GetNotifications
 - [] GetStudents
 - [] GetTeachers
-- [] UpdateCampus
+- [X] UpdateCampus
 
 ## Teacher
 

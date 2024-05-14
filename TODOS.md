@@ -21,7 +21,7 @@
 - [] CreateAcademicPeriod
 - [X] CreateCampus
 - [] CreateClass
-- [] CreateCourse
+- [X] CreateCourse
 - [] CreateCourseCurriculum
 - [] CreateCourseOffering
 - [X] CreateDiscipline
@@ -37,7 +37,7 @@
 - [] GetCourseCurriculums
 - [X] GetCourseDisciplines
 - [] GetCourseOfferings
-- [] GetCourses
+- [X] GetCourses
 - [] GetCoursesWithCurriculums
 - [] GetCoursesWithDisciplines
 - [X] GetDisciplines

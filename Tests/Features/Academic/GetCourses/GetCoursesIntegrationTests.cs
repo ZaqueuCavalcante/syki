@@ -18,7 +18,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
 
         // Assert
-        var cursos = await client.GetCursos();
+        var cursos = await client.GetCourses();
         cursos.Should().HaveCount(5);
         cursos[0].Name.Should().Be("Administração");
         cursos[1].Name.Should().Be("Análise e Desenvolvimento de Sistemas");

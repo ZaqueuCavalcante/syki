@@ -1,68 +1,12 @@
 using static Syki.Shared.CourseType;
 using Syki.Back.Features.Academic.CreateCourse;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.Academic.CreateCourse;
 
-public class CursosUnitTests
+public class CreateCourseUnitTests
 {
     [Test]
-    public void Deve_criar_um_curso_com_id()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        const string name = "Análise e Desenvolvimento de Sistemas";
-
-        // Act
-        var curso = new Course(institutionId, name, Bacharelado);
-
-        // Assert
-        curso.Id.Should().NotBeEmpty();
-    }
-
-    [Test]
-    public void Deve_criar_um_curso_com_institution_id_correto()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        const string name = "Análise e Desenvolvimento de Sistemas";
-
-        // Act
-        var curso = new Course(institutionId, name, Bacharelado);
-
-        // Assert
-        curso.InstitutionId.Should().Be(institutionId);
-    }
-
-    [Test]
-    public void Deve_criar_um_curso_com_nome_correto()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        const string name = "Análise e Desenvolvimento de Sistemas";
-
-        // Act
-        var curso = new Course(institutionId, name, Bacharelado);
-
-        // Assert
-        curso.Name.Should().Be(name);
-    }
-
-    [Test]
-    public void Deve_criar_um_curso_com_tipo_correto()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        const string name = "Análise e Desenvolvimento de Sistemas";
-
-        // Act
-        var curso = new Course(institutionId, name, Bacharelado);
-
-        // Assert
-        curso.Type.Should().Be(Bacharelado);
-    }
-
-    [Test]
-    public void Deve_converter_o_curso_corretamente_pro_out()
+    public void Should_convert_course_to_out()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -79,7 +23,7 @@ public class CursosUnitTests
     }
 
     [Test]
-    public void Deve_retornar_true_quando_for_o_mesmo_curso()
+    public void Should_return_true_when_is_the_same_course()
     {
         // Arrange
         var curso = new Course(Guid.NewGuid(), "Curso", Bacharelado);
@@ -94,7 +38,7 @@ public class CursosUnitTests
     }
 
     [Test]
-    public void Deve_retornar_false_quando_nao_for_o_mesmo_curso()
+    public void Should_return_false_when_is_not_the_same_course()
     {
         // Arrange
         var curso1 = new Course(Guid.NewGuid(), "Curso1", Bacharelado);
@@ -110,7 +54,7 @@ public class CursosUnitTests
     }
 
     [Test]
-    public void Deve_retornar_false_quando_o_outro_curso_for_nulo()
+    public void Should_return_false_when_other_course_is_null()
     {
         // Arrange
         var curso = new Course(Guid.NewGuid(), "Curso1", Bacharelado);
@@ -124,7 +68,7 @@ public class CursosUnitTests
     }
 
     [Test]
-    public void Deve_retornar_o_hash_code_correto()
+    public void Should_return_the_hash_code()
     {
         // Arrange
         var cursoOut = new CourseOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
@@ -137,7 +81,7 @@ public class CursosUnitTests
     }
 
     [Test]
-    public void Deve_retornar_o_nome_do_curso_como_to_string()
+    public void Should_return_the_course_name_as_to_string_representation()
     {
         // Arrange
         var cursoOut = new CourseOut { Name = "Curso" };

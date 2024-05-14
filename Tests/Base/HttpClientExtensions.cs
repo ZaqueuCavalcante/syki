@@ -132,11 +132,8 @@ public static class HttpClientExtensions
         return await client.Get();
     }
 
-    public static async Task<DisciplineOut> CreateDiscipline(
-        this HttpClient http,
-        string name = "Banco de Dados",
-        List<Guid> courses = null
-    ) {
+    public static async Task<DisciplineOut> CreateDiscipline(this HttpClient http, string name = "Banco de Dados", List<Guid> courses = null)
+    {
         var client = new CreateDisciplineClient(http);
         var response = await client.Create(name, courses ?? []);
         return await response.DeserializeTo<DisciplineOut>();
@@ -152,6 +149,26 @@ public static class HttpClientExtensions
     {
         var client = new GetCourseDisciplinesClient(http);
         return await client.Get(courseId);
+    }
+
+    public static async Task<CampusOut> UpdateCampus(this HttpClient http, Guid id, string name = "Agreste I", string city = "Caruaru - PE")
+    {
+        var client = new UpdateCampusClient(http);
+        var response = await client.Update(id, name, city);
+        return await response.DeserializeTo<CampusOut>();
+    }
+
+    public static async Task<CourseOut> CreateCourse(this HttpClient http, string name = "ADS", CourseType tipo = CourseType.Bacharelado)
+    {
+        var client = new CreateCourseClient(http);
+        var response = await client.Create(name, tipo);
+        return await response.DeserializeTo<CourseOut>();
+    }
+
+    public static async Task<List<CourseOut>> GetCourses(this HttpClient http)
+    {
+        var client = new GetCoursesClient(http);
+        return await client.Get();
     }
 
     // -------------------------------------------------------------------------------------------- //
@@ -173,28 +190,7 @@ public static class HttpClientExtensions
         return await client.Get();
     }
 
-    public static async Task<CampusOut> UpdateCampus(this HttpClient http, Guid id, string name = "Agreste I", string city = "Caruaru - PE")
-    {
-        var client = new UpdateCampusClient(http);
-        var response = await client.Update(id, name, city);
-        return await response.DeserializeTo<CampusOut>();
-    }
 
-    public static async Task<CourseOut> CreateCourse(
-        this HttpClient http,
-        string name = "Análise e Desenvolvimento de Sistemas",
-        CourseType tipo = CourseType.Bacharelado
-    ) {
-        var client = new CreateCourseClient(http);
-        var response = await client.Create(name, tipo);
-        return await response.DeserializeTo<CourseOut>();
-    }
-
-    public static async Task<List<CourseOut>> GetCursos(this HttpClient http)
-    {
-        var client = new GetCoursesClient(http);
-        return await client.Get();
-    }
 
 
 

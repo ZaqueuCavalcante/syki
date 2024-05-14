@@ -15,7 +15,7 @@
     <MudContainer Class="mb-8">
         <MudDataGrid
             Class="pa-4"
-            Items="@_cursos"
+            Items="@_courses"
             QuickFilter="@_quickFilter"
             Hover="true"
             Dense="true"
@@ -23,10 +23,10 @@
             RowsPerPage="10"
         >
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por name ou tipo" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou tipo" />
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Name" Title="Name" />
+                <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.Type.GetDescription()" Title="Tipo" />
             </Columns>
 
@@ -41,19 +41,19 @@
     </MudContainer>
 </MudContainer>
 
-@inject HttpClient Http
+@inject GetCoursesClient Client
 @inject IDialogService DialogService
 
 @code
 {
     private bool _loading;
     private string _searchString;
-    private List<CourseOut> _cursos = [];
+    private List<CourseOut> _courses = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/cursos") ?? [];
+        _courses = await Client.Get() ?? [];
         _loading = false;
     }
 

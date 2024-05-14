@@ -5,7 +5,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Should_create_a_bew_course()
+    public async Task Should_create_a_new_course()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
@@ -30,7 +30,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateCourse("Direito", Licenciatura);
         
         // Assert
-        var cursos = await client.GetCursos();
+        var cursos = await client.GetCourses();
         cursos.Should().HaveCount(2);
     }
 }

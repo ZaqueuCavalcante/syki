@@ -18,12 +18,12 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
 
         // Assert
-        var cursos = await client.GetCourses();
-        cursos.Should().HaveCount(5);
-        cursos[0].Name.Should().Be("Administração");
-        cursos[1].Name.Should().Be("Análise e Desenvolvimento de Sistemas");
-        cursos[2].Name.Should().Be("Ciência da Computação");
-        cursos[3].Name.Should().Be("Direito");
-        cursos[4].Name.Should().Be("Pedagogia");
+        var courses = await client.GetCourses();
+        courses.Should().HaveCount(5);
+        courses[0].Name.Should().Be("Administração");
+        courses[1].Name.Should().Be("Análise e Desenvolvimento de Sistemas");
+        courses[2].Name.Should().Be("Ciência da Computação");
+        courses[3].Name.Should().Be("Direito");
+        courses[4].Name.Should().Be("Pedagogia");
     }
 }

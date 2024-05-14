@@ -11,13 +11,13 @@ public class OfertasUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         var campusId = Guid.NewGuid();
-        var cursoId = Guid.NewGuid();
+        var courseId = Guid.NewGuid();
         var courseCurriculumId = Guid.NewGuid();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
         // Act
-        var oferta = new CourseOffering(institutionId, campusId, cursoId, courseCurriculumId, period, shift);
+        var oferta = new CourseOffering(institutionId, campusId, courseId, courseCurriculumId, period, shift);
 
         // Assert
         oferta.Id.Should().NotBeEmpty();
@@ -29,13 +29,13 @@ public class OfertasUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         var campusId = Guid.NewGuid();
-        var cursoId = Guid.NewGuid();
+        var courseId = Guid.NewGuid();
         var courseCurriculumId = Guid.NewGuid();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
         // Act
-        var oferta = new CourseOffering(institutionId, campusId, cursoId, courseCurriculumId, period, shift);
+        var oferta = new CourseOffering(institutionId, campusId, courseId, courseCurriculumId, period, shift);
 
         // Assert
         oferta.InstitutionId.Should().Be(institutionId);
@@ -47,13 +47,13 @@ public class OfertasUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         var campusId = Guid.NewGuid();
-        var cursoId = Guid.NewGuid();
+        var courseId = Guid.NewGuid();
         var courseCurriculumId = Guid.NewGuid();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
         // Act
-        var oferta = new CourseOffering(institutionId, campusId, cursoId, courseCurriculumId, period, shift);
+        var oferta = new CourseOffering(institutionId, campusId, courseId, courseCurriculumId, period, shift);
 
         // Assert
         oferta.CampusId.Should().Be(campusId);
@@ -65,16 +65,16 @@ public class OfertasUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         var campusId = Guid.NewGuid();
-        var cursoId = Guid.NewGuid();
+        var courseId = Guid.NewGuid();
         var courseCurriculumId = Guid.NewGuid();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
         // Act
-        var oferta = new CourseOffering(institutionId, campusId, cursoId, courseCurriculumId, period, shift);
+        var oferta = new CourseOffering(institutionId, campusId, courseId, courseCurriculumId, period, shift);
 
         // Assert
-        oferta.CourseId.Should().Be(cursoId);
+        oferta.CourseId.Should().Be(courseId);
     }
 
     [Test]
@@ -83,13 +83,13 @@ public class OfertasUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         var campusId = Guid.NewGuid();
-        var cursoId = Guid.NewGuid();
+        var courseId = Guid.NewGuid();
         var courseCurriculumId = Guid.NewGuid();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
         // Act
-        var oferta = new CourseOffering(institutionId, campusId, cursoId, courseCurriculumId, period, shift);
+        var oferta = new CourseOffering(institutionId, campusId, courseId, courseCurriculumId, period, shift);
 
         // Assert
         oferta.CourseCurriculumId.Should().Be(courseCurriculumId);
@@ -101,13 +101,13 @@ public class OfertasUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         var campusId = Guid.NewGuid();
-        var cursoId = Guid.NewGuid();
+        var courseId = Guid.NewGuid();
         var courseCurriculumId = Guid.NewGuid();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
         // Act
-        var oferta = new CourseOffering(institutionId, campusId, cursoId, courseCurriculumId, period, shift);
+        var oferta = new CourseOffering(institutionId, campusId, courseId, courseCurriculumId, period, shift);
 
         // Assert
         oferta.Period.Should().Be(period);
@@ -119,13 +119,13 @@ public class OfertasUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         var campusId = Guid.NewGuid();
-        var cursoId = Guid.NewGuid();
+        var courseId = Guid.NewGuid();
         var courseCurriculumId = Guid.NewGuid();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
         // Act
-        var oferta = new CourseOffering(institutionId, campusId, cursoId, courseCurriculumId, period, shift);
+        var oferta = new CourseOffering(institutionId, campusId, courseId, courseCurriculumId, period, shift);
 
         // Assert
         oferta.Shift.Should().Be(shift);
@@ -137,13 +137,13 @@ public class OfertasUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         var campusId = Guid.NewGuid();
-        var cursoId = Guid.NewGuid();
+        var courseId = Guid.NewGuid();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
-        var grade = new CourseCurriculum(institutionId, cursoId, "Grade de ADS - 1.0");
+        var grade = new CourseCurriculum(institutionId, courseId, "Grade de ADS - 1.0");
 
-        var oferta = new CourseOffering(institutionId, campusId, cursoId, grade.Id, period, shift)
+        var oferta = new CourseOffering(institutionId, campusId, courseId, grade.Id, period, shift)
         {
             Campus = new(institutionId, "Agreste I", "Caruaru - PE"),
             Course = new(institutionId, "ADS", CourseType.Bacharelado),

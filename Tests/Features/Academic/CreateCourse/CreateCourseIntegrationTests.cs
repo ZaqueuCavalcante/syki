@@ -11,12 +11,12 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        var curso = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
+        var course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
 
         // Assert
-        curso.Id.Should().NotBeEmpty();
-        curso.Name.Should().Be("Análise e Desenvolvimento de Sistemas");
-        curso.Type.Should().Be(Bacharelado);
+        course.Id.Should().NotBeEmpty();
+        course.Name.Should().Be("Análise e Desenvolvimento de Sistemas");
+        course.Type.Should().Be(Bacharelado);
     }
 
     [Test]
@@ -28,9 +28,9 @@ public partial class IntegrationTests : IntegrationTestBase
         // Act
         await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
         await client.CreateCourse("Direito", Licenciatura);
-        
+
         // Assert
-        var cursos = await client.GetCourses();
-        cursos.Should().HaveCount(2);
+        var courses = await client.GetCourses();
+        courses.Should().HaveCount(2);
     }
 }

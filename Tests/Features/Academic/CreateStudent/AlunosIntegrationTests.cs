@@ -11,9 +11,9 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
-        var curso = await client.CreateCourse("ADS");
-        var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
-        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
+        var course = await client.CreateCourse("ADS");
+        var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        var oferta = await client.CreateOferta(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
 
         // Act
         var response = await client.CreateStudent(oferta.Id);
@@ -45,16 +45,16 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
-        var curso = await client.CreateCourse("ADS");
+        var course = await client.CreateCourse("ADS");
 
-        var discipline01 = await client.CreateDiscipline("Banco de Dados", [curso.Id]);
-        var discipline02 = await client.CreateDiscipline("Estrutura de Dados", [curso.Id]);
-        var discipline03 = await client.CreateDiscipline("Programação Orientada a Objetos", [curso.Id]);
+        var discipline01 = await client.CreateDiscipline("Banco de Dados", [course.Id]);
+        var discipline02 = await client.CreateDiscipline("Estrutura de Dados", [course.Id]);
+        var discipline03 = await client.CreateDiscipline("Programação Orientada a Objetos", [course.Id]);
 
         var disciplines = new List<CreateCourseCurriculumDisciplineIn>() { new() { Id = discipline01.Id }, new() { Id = discipline02.Id }, new() { Id = discipline03.Id } };
 
-        var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id, disciplines);
-        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
+        var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, disciplines);
+        var oferta = await client.CreateOferta(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
 
         var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
 
@@ -80,9 +80,9 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
-        var curso = await client.CreateCourse("ADS");
-        var grade = await client.CreateGrade("Grade de ADS 1.0", curso.Id);
-        var oferta = await client.CreateOferta(campus.Id, curso.Id, grade.Id, period.Id, Shift.Noturno);
+        var course = await client.CreateCourse("ADS");
+        var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        var oferta = await client.CreateOferta(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
 
         await client.CreateStudent(oferta.Id, "Zaqueu");
         await client.CreateStudent(oferta.Id, "Maju");

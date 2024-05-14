@@ -22,7 +22,7 @@
 - [X] CreateCampus
 - [] CreateClass
 - [X] CreateCourse
-- [] CreateCourseCurriculum
+- [X] CreateCourseCurriculum
 - [] CreateCourseOffering
 - [X] CreateDiscipline
 - [] CreateEnrollmentPeriod
@@ -33,13 +33,13 @@
 - [] GetAcademicPeriods
 - [X] GetCampi
 - [] GetClasses
-- [] GetCourseCurriculumDisciplines
-- [] GetCourseCurriculums
+- [X] GetCourseCurriculumDisciplines
+- [X] GetCourseCurriculums
 - [X] GetCourseDisciplines
 - [] GetCourseOfferings
 - [X] GetCourses
 - [] GetCoursesWithCurriculums
-- [] GetCoursesWithDisciplines
+- [X] GetCoursesWithDisciplines
 - [X] GetDisciplines
 - [] GetEnrollmentPeriods
 - [] GetNotifications

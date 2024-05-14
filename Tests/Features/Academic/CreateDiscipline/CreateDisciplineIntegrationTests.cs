@@ -23,14 +23,14 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
-        var curso = await client.CreateCourse("Análise e Desenvolvimento de Sistemas");
+        var course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas");
 
         // Act
-        var discipline = await client.CreateDiscipline("Banco de Dados", [curso.Id]);
+        var discipline = await client.CreateDiscipline("Banco de Dados", [course.Id]);
 
         // Assert
         discipline.Name.Should().Be("Banco de Dados");
-        discipline.Courses.Should().BeEquivalentTo([curso.Id]);
+        discipline.Courses.Should().BeEquivalentTo([course.Id]);
     }
 
     [Test]

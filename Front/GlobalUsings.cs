@@ -11,6 +11,7 @@ global using Syki.Front.Features.Cross.FinishUserRegister;
 global using Syki.Front.Features.Cross.SendResetPasswordToken;
 global using Syki.Front.Features.Cross.CreatePendingUserRegister;
 
+global using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
 global using Syki.Front.Features.Academic.GetCampi;
 global using Syki.Front.Features.Academic.GetCourses;
 global using Syki.Front.Features.Academic.CreateClass;
@@ -26,6 +27,8 @@ global using Syki.Front.Features.Academic.GetAcademicPeriods;
 global using Syki.Front.Features.Academic.CreateNotification;
 global using Syki.Front.Features.Academic.GetAcademicInsights;
 global using Syki.Front.Features.Academic.CreateAcademicPeriod;
+global using Syki.Front.Features.Academic.GetCourseDisciplines;
+global using Syki.Front.Features.Academic.GetCourseCurriculums;
 global using Syki.Front.Features.Academic.CreateCourseOffering;
 global using Syki.Front.Features.Academic.CreateCourseCurriculum;
 global using Syki.Front.Features.Academic.CreateEnrollmentPeriod;

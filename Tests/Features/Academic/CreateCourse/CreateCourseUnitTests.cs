@@ -11,27 +11,27 @@ public class CreateCourseUnitTests
         // Arrange
         var institutionId = Guid.NewGuid();
         const string name = "Análise e Desenvolvimento de Sistemas";
-        var curso = new Course(institutionId, name, Bacharelado);
+        var course = new Course(institutionId, name, Bacharelado);
 
         // Act
-        var cursoOut = curso.ToOut();
+        var courseOut = course.ToOut();
 
         // Assert
-        cursoOut.Id.Should().Be(curso.Id);
-        cursoOut.Name.Should().Be(curso.Name);
-        cursoOut.Type.Should().Be(curso.Type);
+        courseOut.Id.Should().Be(course.Id);
+        courseOut.Name.Should().Be(course.Name);
+        courseOut.Type.Should().Be(course.Type);
     }
 
     [Test]
     public void Should_return_true_when_is_the_same_course()
     {
         // Arrange
-        var curso = new Course(Guid.NewGuid(), "Curso", Bacharelado);
-        var cursoOut1 = curso.ToOut();
-        var cursoOut2 = curso.ToOut();
+        var course = new Course(Guid.NewGuid(), "Curso", Bacharelado);
+        var courseOut1 = course.ToOut();
+        var courseOut2 = course.ToOut();
 
         // Act
-        var equals = cursoOut1.Equals(cursoOut2);
+        var equals = courseOut1.Equals(courseOut2);
 
         // Assert
         equals.Should().BeTrue();
@@ -41,13 +41,13 @@ public class CreateCourseUnitTests
     public void Should_return_false_when_is_not_the_same_course()
     {
         // Arrange
-        var curso1 = new Course(Guid.NewGuid(), "Curso1", Bacharelado);
-        var curso2 = new Course(Guid.NewGuid(), "Curso2", Bacharelado);
-        var cursoOut1 = curso1.ToOut();
-        var cursoOut2 = curso2.ToOut();
+        var course1 = new Course(Guid.NewGuid(), "Course1", Bacharelado);
+        var course2 = new Course(Guid.NewGuid(), "Course2", Bacharelado);
+        var courseOut1 = course1.ToOut();
+        var courseOut2 = course2.ToOut();
 
         // Act
-        var equals = cursoOut1.Equals(cursoOut2);
+        var equals = courseOut1.Equals(courseOut2);
 
         // Assert
         equals.Should().BeFalse();
@@ -57,11 +57,11 @@ public class CreateCourseUnitTests
     public void Should_return_false_when_other_course_is_null()
     {
         // Arrange
-        var curso = new Course(Guid.NewGuid(), "Curso1", Bacharelado);
-        var cursoOut = curso.ToOut();
+        var course = new Course(Guid.NewGuid(), "Course1", Bacharelado);
+        var courseOut = course.ToOut();
 
         // Act
-        var equals = cursoOut.Equals(null);
+        var equals = courseOut.Equals(null);
 
         // Assert
         equals.Should().BeFalse();
@@ -71,10 +71,10 @@ public class CreateCourseUnitTests
     public void Should_return_the_hash_code()
     {
         // Arrange
-        var cursoOut = new CourseOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
+        var courseOut = new CourseOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
 
         // Act
-        var hashCode = cursoOut.GetHashCode();
+        var hashCode = courseOut.GetHashCode();
 
         // Assert
         hashCode.Should().Be(4523_9002);
@@ -84,12 +84,12 @@ public class CreateCourseUnitTests
     public void Should_return_the_course_name_as_to_string_representation()
     {
         // Arrange
-        var cursoOut = new CourseOut { Name = "Curso" };
+        var courseOut = new CourseOut { Name = "Course" };
 
         // Act
-        var name = cursoOut.ToString();
+        var name = courseOut.ToString();
 
         // Assert
-        name.Should().Be("Curso");
+        name.Should().Be("Course");
     }
 }

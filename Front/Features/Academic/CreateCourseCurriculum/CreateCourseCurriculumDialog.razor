@@ -15,20 +15,20 @@
                     Dense="true"
                     Margin="Margin.Dense"
                     Variant="Variant.Outlined"
-                    Value="@_curso"
+                    Value="@_course"
                     ValueChanged="@((CourseOut newValue) => HandleSelectCurso(newValue))"
                     Label="Curso"
                     Required="true"
                     RequiredError="Informe!"
                     AdornmentColor="Color.Primary"
                 >
-                    @foreach (CourseOut? item in Cursos)
+                    @foreach (CourseOut? item in Courses)
                     {
                         <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                     }
-                    @if (Cursos.Count == 0)
+                    @if (Courses.Count == 0)
                     {
-                        <MudSelectItem Value="@_curso" Disabled="true">Não existem cursos com disciplinas ainda.</MudSelectItem>
+                        <MudSelectItem Value="@_course" Disabled="true">Não existem cursos com disciplinas ainda.</MudSelectItem>
                     }
                 </MudSelect>
             </MudStack>
@@ -68,9 +68,10 @@
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
-@inject CreateCourseCurriculumClient Client
+@inject GetCourseDisciplinesClient GetCourseDisciplinesClient
+@inject CreateCourseCurriculumClient CreateCourseCurriculumClient
+@inject GetCoursesWithDisciplinesClient GetCoursesWithDisciplinesClient
 
 @code
 {
@@ -80,8 +81,8 @@
     private MudForm _form;
     private bool _loading;
 
-    CourseOut? _curso;
-    List<CourseOut> Cursos = [];
+    CourseOut? _course;
+    List<CourseOut> Courses = [];
 
     List<CourseDisciplineOut> Options = [];
     List<CourseCurriculumDisciplineFillable> Disciplines = [];
@@ -90,7 +91,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Cursos = await Http.GetFromJsonAsync<List<CourseOut>>("/academic/courses/with-disciplines") ?? [];
+        Courses = await GetCoursesWithDisciplinesClient.Get();
     }
 
     void NewGradeDiscipline()
@@ -109,13 +110,13 @@
 
     bool GetNewDisciplineDisabled()
     {
-        return _curso == null || Options.Count == Disciplines.Count;
+        return _course == null || Options.Count == Disciplines.Count;
     }
 
     async Task HandleSelectCurso(CourseOut newValue)
     {
-        _curso = newValue;
-        Options = await Http.GetFromJsonAsync<List<CourseDisciplineOut>>($"/academic/courses/{_curso!.Id}/disciplines") ?? [];
+        _course = newValue;
+        Options = await GetCourseDisciplinesClient.Get(_course!.Id);
         Disciplines = [];
     }
 
@@ -126,7 +127,7 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        data.CourseId = _curso!.Id;
+        data.CourseId = _course!.Id;
         data.Disciplines = Disciplines
             .ConvertAll(d => new CreateCourseCurriculumDisciplineIn
             (
@@ -137,7 +138,7 @@
             ));
 
         _loading = true;
-        var response = await Client.Create(data.Name, data.CourseId, data.Disciplines);
+        var response = await CreateCourseCurriculumClient.Create(data.Name, data.CourseId, data.Disciplines);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

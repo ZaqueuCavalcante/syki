@@ -1,5 +1,3 @@
-using Syki.Front.Features.Academic.GetCourseDisciplines;
-
 namespace Syki.Front.Configs;
 
 public static class ServicesConfigs
@@ -31,12 +29,14 @@ public static class ServicesConfigs
         builder.Services.AddScoped<GetCampiClient>();
 
         builder.Services.AddScoped<CreateCourseCurriculumClient>();
+        builder.Services.AddScoped<GetCoursesWithDisciplinesClient>();
         builder.Services.AddScoped<GetAdmInsightsClient>();
 
         builder.Services.AddScoped<CreateCourseClient>();
         builder.Services.AddScoped<GetCoursesClient>();
         builder.Services.AddScoped<GetDisciplinesClient>();
         builder.Services.AddScoped<GetCourseDisciplinesClient>();
+        builder.Services.AddScoped<GetCourseCurriculumsClient>();
 
         builder.Services.AddScoped<CreateDisciplineClient>();
         builder.Services.AddScoped<GetStudentInsightsClient>();

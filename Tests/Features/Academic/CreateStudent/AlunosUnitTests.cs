@@ -173,14 +173,14 @@ public class AlunosUnitTests
         var userId = Guid.NewGuid();
         var institutionId = Guid.NewGuid();
         var campusId = Guid.NewGuid();
-        var cursoId = Guid.NewGuid();
+        var courseId = Guid.NewGuid();
         var courseCurriculumId = Guid.NewGuid();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
         var aluno = new Student(userId, institutionId, "Zaqueu", Guid.NewGuid())
         {
-            CourseOffering = new(institutionId, campusId, cursoId, courseCurriculumId, period, shift)
+            CourseOffering = new(institutionId, campusId, courseId, courseCurriculumId, period, shift)
             {
                 Course = new(institutionId, "Direito", CourseType.Doutorado)
             }

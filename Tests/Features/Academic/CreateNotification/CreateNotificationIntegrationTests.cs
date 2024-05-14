@@ -41,10 +41,10 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
-        var curso = await client.PostAsync<CourseOut>("/cursos", new CreateCourseIn { Name = "ADS", Type = CourseType.Bacharelado });
+        var course = await client.PostAsync<CourseOut>("/cursos", new CreateCourseIn { Name = "ADS", Type = CourseType.Bacharelado });
 
-        var grade = await client.PostAsync<CourseCurriculumOut>("/grades", new CreateCourseCurriculumIn { Name = "Grade de ADS - 1.0", CourseId = curso.Id });
-        var oferta = await client.PostAsync<CourseOfferingOut>("/ofertas", new CreateCourseOfferingIn { CampusId = campus.Id, Period = period.Id, CourseId = curso.Id, CourseCurriculumId = grade.Id });
+        var grade = await client.PostAsync<CourseCurriculumOut>("/grades", new CreateCourseCurriculumIn { Name = "Grade de ADS - 1.0", CourseId = course.Id });
+        var oferta = await client.PostAsync<CourseOfferingOut>("/ofertas", new CreateCourseOfferingIn { CampusId = campus.Id, Period = period.Id, CourseId = course.Id, CourseCurriculumId = grade.Id });
 
         var bodyAluno = new CreateStudentIn { Name = "Zaqueu", Email = TestData.Email, CourseOfferingId = oferta.Id };
         var aluno = await client.PostAsync<StudentOut>("/alunos", bodyAluno);
@@ -89,10 +89,10 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
-        var curso = await client.PostAsync<CourseOut>("/cursos", new CreateCourseIn { Name = "ADS", Type = CourseType.Bacharelado });
+        var course = await client.PostAsync<CourseOut>("/cursos", new CreateCourseIn { Name = "ADS", Type = CourseType.Bacharelado });
 
-        var grade = await client.PostAsync<CourseCurriculumOut>("/grades", new CreateCourseCurriculumIn { Name = "Grade de ADS - 1.0", CourseId = curso.Id });
-        var oferta = await client.PostAsync<CourseOfferingOut>("/ofertas", new CreateCourseOfferingIn { CampusId = campus.Id, Period = period.Id, CourseId = curso.Id, CourseCurriculumId = grade.Id });
+        var grade = await client.PostAsync<CourseCurriculumOut>("/grades", new CreateCourseCurriculumIn { Name = "Grade de ADS - 1.0", CourseId = course.Id });
+        var oferta = await client.PostAsync<CourseOfferingOut>("/ofertas", new CreateCourseOfferingIn { CampusId = campus.Id, Period = period.Id, CourseId = course.Id, CourseCurriculumId = grade.Id });
 
         var bodyAluno = new CreateStudentIn { Name = "Zaqueu", Email = TestData.Email, CourseOfferingId = oferta.Id };
         var aluno = await client.PostAsync<StudentOut>("/alunos", bodyAluno);

@@ -20,10 +20,11 @@ using Syki.Front.Features.Academic.CreateNotification;
 using Syki.Front.Features.Cross.SendResetPasswordToken;
 using Syki.Front.Features.Academic.GetAcademicInsights;
 using Syki.Front.Features.Academic.CreateAcademicPeriod;
+using Syki.Front.Features.Academic.GetCourseDisciplines;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Cross.CreatePendingUserRegister;
-using Syki.Front.Features.Academic.GetCourseDisciplines;
+using Syki.Front.Features.Academic.GetCourseCurriculums;
 
 namespace Syki.Tests.Base;
 
@@ -171,6 +172,33 @@ public static class HttpClientExtensions
         return await client.Get();
     }
 
+    public static async Task<HttpResponseMessage> CreateCourseCurriculumHttp(
+        this HttpClient http,
+        string name,
+        Guid courseId,
+        List<CreateCourseCurriculumDisciplineIn> disciplines = null
+    ) {
+        var client = new CreateCourseCurriculumClient(http);
+        return await client.Create(name, courseId, disciplines ?? []);
+    }
+
+    public static async Task<CourseCurriculumOut> CreateCourseCurriculum(
+        this HttpClient http,
+        string name,
+        Guid courseId,
+        List<CreateCourseCurriculumDisciplineIn> disciplines = null
+    ) {
+        var result = await http.CreateCourseCurriculumHttp(name, courseId, disciplines ?? []);
+        return await result.DeserializeTo<CourseCurriculumOut>();
+    }
+
+    public static async Task<List<CourseCurriculumOut>> GetCourseCurriculums(this HttpClient http)
+    {
+        var client = new GetCourseCurriculumsClient(http);
+        return await client.Get();
+    }
+
+
     // -------------------------------------------------------------------------------------------- //
 
 
@@ -189,9 +217,6 @@ public static class HttpClientExtensions
         var client = new GetAcademicInsightsClient(http);
         return await client.Get();
     }
-
-
-
 
 
     public static async Task<TeacherOut> CreateProfessor(
@@ -229,34 +254,14 @@ public static class HttpClientExtensions
         return await http.PostAsJsonAsync("/turmas", body);
     }
 
-    public static async Task<CourseCurriculumOut> CreateGrade(
-        this HttpClient http,
-        string name,
-        Guid cursoId,
-        List<CreateCourseCurriculumDisciplineIn> disciplines = null
-    ) {
-        var client = new CreateCourseCurriculumClient(http);
 
-        var result = await client.Create(name, cursoId, disciplines ?? []);
 
-        return await result.DeserializeTo<CourseCurriculumOut>();
-    }
 
-    public static async Task<HttpResponseMessage> CreateGradeHttp(
-        this HttpClient http,
-        string name,
-        Guid cursoId,
-        List<CreateCourseCurriculumDisciplineIn> disciplines = null
-    ) {
-        var client = new CreateCourseCurriculumClient(http);
-
-        return await client.Create(name, cursoId, disciplines ?? []);
-    }
 
     public static async Task<CourseOfferingOut> CreateOferta(
         this HttpClient http,
         Guid campusId,
-        Guid cursoId,
+        Guid courseId,
         Guid courseCurriculumId,
         string? period,
         Shift shift
@@ -264,7 +269,7 @@ public static class HttpClientExtensions
         var body = new CreateCourseOfferingIn
         {
             CampusId = campusId,
-            CourseId = cursoId,
+            CourseId = courseId,
             CourseCurriculumId = courseCurriculumId,
             Period = period,
             Shift = shift,
@@ -276,7 +281,7 @@ public static class HttpClientExtensions
     public static async Task<HttpResponseMessage> CreateOfertaHttp(
         this HttpClient http,
         Guid campusId,
-        Guid cursoId,
+        Guid courseId,
         Guid courseCurriculumId,
         string? period,
         Shift shift
@@ -284,7 +289,7 @@ public static class HttpClientExtensions
         var body = new CreateCourseOfferingIn
         {
             CampusId = campusId,
-            CourseId = cursoId,
+            CourseId = courseId,
             CourseCurriculumId = courseCurriculumId,
             Period = period,
             Shift = shift,
@@ -390,7 +395,7 @@ public static class HttpClientExtensions
 
 
 
-
+    // -------------------------------------------------------------------------------------------- //
 
     public static async Task PostAsync(this HttpClient client, string path, object obj)
     {

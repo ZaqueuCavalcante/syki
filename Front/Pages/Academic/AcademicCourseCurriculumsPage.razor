@@ -35,8 +35,8 @@
     </MudContainer>
 </MudContainer>
 
-@inject HttpClient Http
 @inject IDialogService DialogService
+@inject GetCourseCurriculumsClient Client
 
 @code
 {
@@ -47,7 +47,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _grades = await Http.GetFromJsonAsync<List<CourseCurriculumOut>>("/academic/course-curriculums") ?? [];
+        _grades = await Client.Get();
         _loading = false;
     }
 

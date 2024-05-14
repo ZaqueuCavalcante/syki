@@ -1,51 +1,11 @@
 using Syki.Back.Features.Academic.CreateDiscipline;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.Academic.CreateDiscipline;
 
-public class DisciplinesUnitTests
+public class CreateDisciplineUnitTests
 {
     [Test]
-    public void Deve_criar_uma_discipline_com_id()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-
-        // Act
-        var discipline = new Discipline(institutionId, "Banco de Dados");
-
-        // Assert
-        discipline.Id.Should().NotBeEmpty();
-    }
-
-    [Test]
-    public void Deve_criar_uma_discipline_com_institution_id_correto()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-
-        // Act
-        var discipline = new Discipline(institutionId, "Banco de Dados");
-
-        // Assert
-        discipline.InstitutionId.Should().Be(institutionId);
-    }
-
-    [Test]
-    public void Deve_criar_uma_discipline_com_nome_correto()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        const string name = "Banco de Dados";
-
-        // Act
-        var discipline = new Discipline(institutionId, name);
-
-        // Assert
-        discipline.Name.Should().Be(name);
-    }
-
-    [Test]
-    public void Deve_converter_a_discipline_corretamente_pro_out()
+    public void Should_convert_discipline_to_out()
     {
         // Arrange
         var discipline = new Discipline(Guid.NewGuid(), "Banco de Dados");
@@ -62,7 +22,7 @@ public class DisciplinesUnitTests
     }
 
     [Test]
-    public void Deve_retornar_true_quando_for_a_mesma_discipline()
+    public void Should_return_true_when_is_the_same_discipline()
     {
         // Arrange
         var discipline = new Discipline(Guid.NewGuid(), "Banco de Dados");
@@ -77,7 +37,7 @@ public class DisciplinesUnitTests
     }
 
     [Test]
-    public void Deve_retornar_false_quando_nao_for_a_mesma_discipline()
+    public void Should_return_false_when_is_not_the_same_discipline()
     {
         // Arrange
         var discipline1 = new Discipline(Guid.NewGuid(), "Banco de Dados");
@@ -93,7 +53,7 @@ public class DisciplinesUnitTests
     }
 
     [Test]
-    public void Deve_retornar_false_quando_a_outra_discipline_for_nula()
+    public void Should_return_false_when_other_discipline_is_null()
     {
         // Arrange
         var discipline = new Discipline(Guid.NewGuid(), "Banco de Dados");
@@ -107,7 +67,7 @@ public class DisciplinesUnitTests
     }
 
     [Test]
-    public void Deve_retornar_o_hash_code_correto()
+    public void Should_return_the_hash_code()
     {
         // Arrange
         var disciplineOut = new DisciplineOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
@@ -120,7 +80,7 @@ public class DisciplinesUnitTests
     }
 
     [Test]
-    public void Deve_retornar_o_nome_da_discipline_como_to_string()
+    public void Should_return_the_discipline_name_as_to_string_representation()
     {
         // Arrange
         var disciplineOut = new DisciplineOut { Name = "Banco de Dados" };

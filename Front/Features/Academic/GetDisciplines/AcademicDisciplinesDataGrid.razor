@@ -5,10 +5,10 @@
 <MudContainer Class="mb-8">
     <MudDataGrid Class="pa-4" Items="@_disciplines" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
         <ToolBarContent>
-            <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por name ou código" />
+            <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou código" />
         </ToolBarContent>
         <Columns>
-            <PropertyColumn Property="x => x.Name" Title="Name" />
+            <PropertyColumn Property="x => x.Name" Title="Nome" />
             <PropertyColumn Property="x => x.Code" Title="Código" />
         </Columns>
         <NoRecordsContent>

@@ -22,9 +22,9 @@
                 @bind-SelectedValues="@SelectedCourses"
                 AnchorOrigin="Origin.BottomCenter"
             >
-                @foreach (var curso in Courses)
+                @foreach (var course in Courses)
                 {
-                    <MudSelectItem T="CourseOut" Value="@curso">@curso.Name</MudSelectItem>
+                    <MudSelectItem T="CourseOut" Value="@course">@course.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudForm>

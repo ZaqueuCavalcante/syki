@@ -24,7 +24,7 @@
 - [] CreateCourse
 - [] CreateCourseCurriculum
 - [] CreateCourseOffering
-- [] CreateDiscipline
+- [X] CreateDiscipline
 - [] CreateEnrollmentPeriod
 - [] CreateNotification
 - [] CreateStudent
@@ -35,12 +35,12 @@
 - [] GetClasses
 - [] GetCourseCurriculumDisciplines
 - [] GetCourseCurriculums
-- [] GetCourseDisciplines
+- [X] GetCourseDisciplines
 - [] GetCourseOfferings
 - [] GetCourses
 - [] GetCoursesWithCurriculums
 - [] GetCoursesWithDisciplines
-- [] GetDisciplines
+- [X] GetDisciplines
 - [] GetEnrollmentPeriods
 - [] GetNotifications
 - [] GetStudents

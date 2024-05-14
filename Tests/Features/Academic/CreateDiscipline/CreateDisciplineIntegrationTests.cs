@@ -3,7 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Deve_criar_uma_nova_discipline_sem_vinculo_com_nenhum_curso()
+    public async Task Should_create_a_new_discipline_without_course()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
@@ -11,20 +11,15 @@ public partial class IntegrationTests : IntegrationTestBase
         // Act
         var discipline = await client.CreateDiscipline("Banco de Dados");
 
-        using var ctx = _factory.GetDbContext();
-        var all = await ctx.Disciplines.ToListAsync();
-
         // Assert
         discipline.Id.Should().NotBeEmpty();
         discipline.Name.Should().Be("Banco de Dados");
+        discipline.Code.Should().NotBeEmpty();
         discipline.Courses.Should().BeEquivalentTo(new List<Guid>());
     }
 
-
-
-
     [Test]
-    public async Task Deve_criar_uma_nova_discipline_vincula_a_um_unico_curso()
+    public async Task Should_create_a_new_discipline_with_only_one_course()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
@@ -39,7 +34,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_criar_uma_nova_discipline_vincula_a_mais_de_um_curso()
+    public async Task Should_create_a_new_discipline_with_many_courses()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
@@ -54,8 +49,8 @@ public partial class IntegrationTests : IntegrationTestBase
         discipline.Courses.Should().BeEquivalentTo([cc.Id, ads.Id]);
     }
 
-    [Test, Ignore("")]
-    public async Task Deve_criar_varias_disciplines()
+    [Test]
+    public async Task Should_create_many_disciplines()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
@@ -66,7 +61,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateDiscipline("Programação Orientada a Objetos");
 
         // Assert
-        var disciplines = await client.GetAsync<List<DisciplineOut>>("/disciplines");
+        var disciplines = await client.GetDisciplines();
         disciplines.Should().HaveCount(3);
     }
 }

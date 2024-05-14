@@ -5,6 +5,7 @@ using Syki.Front.Features.Cross.Login;
 using Syki.Front.Features.Cross.SetupMfa;
 using Syki.Front.Features.Cross.LoginMfa;
 using Syki.Front.Features.Cross.GetMfaKey;
+using Syki.Front.Features.Academic.GetCampi;
 using Syki.Front.Features.Cross.ResetPassword;
 using Syki.Front.Features.Academic.GetCourses;
 using Syki.Front.Features.Academic.CreateCampus;
@@ -15,14 +16,14 @@ using Syki.Front.Features.Academic.GetDisciplines;
 using Syki.Front.Features.Cross.FinishUserRegister;
 using Syki.Front.Features.Academic.CreateDiscipline;
 using Syki.Front.Features.Academic.GetAcademicPeriods;
+using Syki.Front.Features.Academic.CreateNotification;
 using Syki.Front.Features.Cross.SendResetPasswordToken;
 using Syki.Front.Features.Academic.GetAcademicInsights;
 using Syki.Front.Features.Academic.CreateAcademicPeriod;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Cross.CreatePendingUserRegister;
-using Syki.Front.Features.Academic.CreateNotification;
-using Syki.Front.Features.Academic.GetCampi;
+using Syki.Front.Features.Academic.GetCourseDisciplines;
 
 namespace Syki.Tests.Base;
 
@@ -139,6 +140,18 @@ public static class HttpClientExtensions
         var client = new CreateDisciplineClient(http);
         var response = await client.Create(name, courses ?? []);
         return await response.DeserializeTo<DisciplineOut>();
+    }
+
+    public static async Task<List<DisciplineOut>> GetDisciplines(this HttpClient http)
+    {
+        var client = new GetDisciplinesClient(http);
+        return await client.Get();
+    }
+
+    public static async Task<List<CourseDisciplineOut>> GetCourseDisciplines(this HttpClient http, Guid courseId)
+    {
+        var client = new GetCourseDisciplinesClient(http);
+        return await client.Get(courseId);
     }
 
     // -------------------------------------------------------------------------------------------- //

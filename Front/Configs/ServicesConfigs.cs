@@ -36,7 +36,7 @@ public static class ServicesConfigs
         builder.Services.AddScoped<GetDisciplinesClient>();
 
         builder.Services.AddScoped<CreateDisciplineClient>();
-        builder.Services.AddScoped<GetAlunoInsightsClient>();
+        builder.Services.AddScoped<GetStudentInsightsClient>();
         builder.Services.AddScoped<GetStudentAgendaClient>();
         builder.Services.AddScoped<GetStudentDisciplinesClient>();
         builder.Services.AddScoped<GetTeacherAgendaClient>();

@@ -25,7 +25,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Deve_retornar_todas_as_grades_ordenadas_por_nome()
+    public async Task Should_return_all_course_curriculums_ordered_by_name()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();

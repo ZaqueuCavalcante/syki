@@ -1,4 +1,3 @@
-using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 
 namespace Syki.Back.Features.Academic.CreateCourseOffering;

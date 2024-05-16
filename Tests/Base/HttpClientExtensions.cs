@@ -21,10 +21,12 @@ using Syki.Front.Features.Cross.SendResetPasswordToken;
 using Syki.Front.Features.Academic.GetAcademicInsights;
 using Syki.Front.Features.Academic.CreateAcademicPeriod;
 using Syki.Front.Features.Academic.GetCourseDisciplines;
+using Syki.Front.Features.Academic.GetCourseCurriculums;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Cross.CreatePendingUserRegister;
-using Syki.Front.Features.Academic.GetCourseCurriculums;
+using Syki.Front.Features.Academic.CreateCourseOffering;
+using Syki.Front.Features.Academic.GetCourseOfferings;
 
 namespace Syki.Tests.Base;
 
@@ -198,6 +200,46 @@ public static class HttpClientExtensions
         return await client.Get();
     }
 
+    public static async Task<HttpResponseMessage> CreateCourseOfferingHttp(
+        this HttpClient http,
+        Guid campusId,
+        Guid courseId,
+        Guid courseCurriculumId,
+        string? period,
+        Shift shift
+    ) {
+        var body = new CreateCourseOfferingIn
+        {
+            CampusId = campusId,
+            CourseId = courseId,
+            CourseCurriculumId = courseCurriculumId,
+            Period = period,
+            Shift = shift,
+        };
+
+        var client = new CreateCourseOfferingClient(http);
+
+        return await client.Create(body);
+    }
+
+    public static async Task<CourseOfferingOut> CreateCourseOffering(
+        this HttpClient http,
+        Guid campusId,
+        Guid courseId,
+        Guid courseCurriculumId,
+        string? period,
+        Shift shift
+    ) {
+        var result = await http.CreateCourseOfferingHttp(campusId, courseId, courseCurriculumId, period, shift);
+        return await result.DeserializeTo<CourseOfferingOut>();
+    }
+
+    public static async Task<List<CourseOfferingOut>> GetCourseOfferings(this HttpClient http)
+    {
+        var client = new GetCourseOfferingsClient(http);
+        return await client.Get();
+    }
+
 
     // -------------------------------------------------------------------------------------------- //
 
@@ -258,45 +300,7 @@ public static class HttpClientExtensions
 
 
 
-    public static async Task<CourseOfferingOut> CreateOferta(
-        this HttpClient http,
-        Guid campusId,
-        Guid courseId,
-        Guid courseCurriculumId,
-        string? period,
-        Shift shift
-    ) {
-        var body = new CreateCourseOfferingIn
-        {
-            CampusId = campusId,
-            CourseId = courseId,
-            CourseCurriculumId = courseCurriculumId,
-            Period = period,
-            Shift = shift,
-        };
 
-        return await http.PostAsync<CourseOfferingOut>("/ofertas", body);
-    }
-
-    public static async Task<HttpResponseMessage> CreateOfertaHttp(
-        this HttpClient http,
-        Guid campusId,
-        Guid courseId,
-        Guid courseCurriculumId,
-        string? period,
-        Shift shift
-    ) {
-        var body = new CreateCourseOfferingIn
-        {
-            CampusId = campusId,
-            CourseId = courseId,
-            CourseCurriculumId = courseCurriculumId,
-            Period = period,
-            Shift = shift,
-        };
-
-        return await http.PostAsJsonAsync("/ofertas", body);
-    }
 
     public static async Task<StudentOut> CreateStudent(
         this HttpClient http,

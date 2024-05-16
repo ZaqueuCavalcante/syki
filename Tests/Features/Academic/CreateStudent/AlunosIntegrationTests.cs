@@ -13,7 +13,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
         var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var oferta = await client.CreateOferta(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
+        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
 
         // Act
         var response = await client.CreateStudent(oferta.Id);
@@ -54,7 +54,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var disciplines = new List<CreateCourseCurriculumDisciplineIn>() { new() { Id = discipline01.Id }, new() { Id = discipline02.Id }, new() { Id = discipline03.Id } };
 
         var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, disciplines);
-        var oferta = await client.CreateOferta(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
+        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
 
         var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
 
@@ -82,7 +82,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
         var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var oferta = await client.CreateOferta(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
+        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
 
         await client.CreateStudent(oferta.Id, "Zaqueu");
         await client.CreateStudent(oferta.Id, "Maju");

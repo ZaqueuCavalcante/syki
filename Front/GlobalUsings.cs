@@ -10,7 +10,7 @@ global using Syki.Front.Features.Cross.ResetPassword;
 global using Syki.Front.Features.Cross.FinishUserRegister;
 global using Syki.Front.Features.Cross.SendResetPasswordToken;
 global using Syki.Front.Features.Cross.CreatePendingUserRegister;
-
+global using Syki.Front.Features.Academic.GetCourseOfferings;
 global using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
 global using Syki.Front.Features.Academic.GetCampi;
 global using Syki.Front.Features.Academic.GetCourses;

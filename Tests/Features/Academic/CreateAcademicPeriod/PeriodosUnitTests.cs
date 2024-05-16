@@ -166,7 +166,7 @@ public class PeriodosUnitTests
     }
 
     [Test]
-    public void Deve_converter_o_periodo_corretamente_pro_out()
+    public void Should_convert_period_to_out()
     {
         // Arrange
         const string id = "2023.1";

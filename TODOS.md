@@ -23,7 +23,7 @@
 - [] CreateClass
 - [X] CreateCourse
 - [X] CreateCourseCurriculum
-- [] CreateCourseOffering
+- [X] CreateCourseOffering
 - [X] CreateDiscipline
 - [] CreateEnrollmentPeriod
 - [] CreateNotification
@@ -36,7 +36,7 @@
 - [X] GetCourseCurriculumDisciplines
 - [X] GetCourseCurriculums
 - [X] GetCourseDisciplines
-- [] GetCourseOfferings
+- [X] GetCourseOfferings
 - [X] GetCourses
 - [] GetCoursesWithCurriculums
 - [X] GetCoursesWithDisciplines

@@ -39,6 +39,7 @@
 
 @inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject GetCourseOfferingsClient Client
 
 @code
 {
@@ -55,7 +56,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _ofertas = await Http.GetFromJsonAsync<List<CourseOfferingOut>>("/ofertas") ?? [];
+        _ofertas = await Client.Get();
     }
 
     async Task Submit()

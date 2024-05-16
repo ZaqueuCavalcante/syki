@@ -16,7 +16,7 @@
                     Margin="Margin.Dense"
                     Variant="Variant.Outlined"
                     Value="@_course"
-                    ValueChanged="@((CourseOut newValue) => HandleSelectCurso(newValue))"
+                    ValueChanged="@((CourseOut newValue) => HandleSelectCourse(newValue))"
                     Label="Curso"
                     Required="true"
                     RequiredError="Informe!"
@@ -113,7 +113,7 @@
         return _course == null || Options.Count == Disciplines.Count;
     }
 
-    async Task HandleSelectCurso(CourseOut newValue)
+    async Task HandleSelectCourse(CourseOut newValue)
     {
         _course = newValue;
         Options = await GetCourseDisciplinesClient.Get(_course!.Id);

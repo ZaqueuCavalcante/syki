@@ -43,7 +43,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
         var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var oferta = await client.CreateOferta(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
+        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
 
         var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
@@ -65,7 +65,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
         var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var oferta = await client.CreateOferta(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
+        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
 
         var year = DateTime.Now.Year;
         var periodo = await client.CreateAcademicPeriod($"{year}.1");
@@ -94,7 +94,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
         var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var oferta = await client.CreateOferta(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
+        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
 
         var year = DateTime.Now.Year;
         var periodo = await client.CreateAcademicPeriod($"{year}.1");
@@ -153,8 +153,8 @@ public partial class IntegrationTests : IntegrationTestBase
             new(direitoFinanceiro.Id, 1, 7, 73),
         ]);
 
-        var ofertaAds = await client.CreateOferta(campus.Id, ads.Id, gradeAds.Id, period.Id, Shift.Noturno);
-        var ofertaDireito = await client.CreateOferta(campus.Id, direito.Id, gradeDireito.Id, period.Id, Shift.Noturno);
+        var ofertaAds = await client.CreateCourseOffering(campus.Id, ads.Id, gradeAds.Id, period.Id, Shift.Noturno);
+        var ofertaDireito = await client.CreateCourseOffering(campus.Id, direito.Id, gradeDireito.Id, period.Id, Shift.Noturno);
 
         var chico = await client.CreateProfessor("Chico");
         var ana = await client.CreateProfessor("Ana");

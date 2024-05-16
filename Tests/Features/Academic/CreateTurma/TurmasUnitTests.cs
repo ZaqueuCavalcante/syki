@@ -159,7 +159,7 @@ public class TurmasUnitTests
     }
 
     [Test]
-    public void Deve_converter_a_turma_corretamente_pro_out()
+    public void Should_convert_class_to_out()
     {
         // Arrange
         var userId = Guid.NewGuid();

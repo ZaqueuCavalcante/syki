@@ -80,7 +80,7 @@ public class ProfessoresUnitTests
     }
 
     [Test]
-    public void Deve_converter_o_professor_corretamente_pro_out()
+    public void Should_convert_teacher_to_out()
     {
         // Arrange
         var institutionId = Guid.NewGuid();

@@ -8,7 +8,7 @@ namespace Syki.Tests.Audit;
 public class AuditUnitTests
 {
     [Test]
-    public void Deve_criar_uma_audit_change_com_valores_corretos()
+    public void Should_create_audit_change_with_correct_values()
     {
         // Arrange
         var change = new EventEntryChange
@@ -28,7 +28,7 @@ public class AuditUnitTests
     }
 
     [Test]
-    public void Deve_criar_um_audit_data_com_valores_corretos()
+    public void Should_create_audit_data_with_correct_values()
     {
         // Arrange / Act
         var audit = AuditData.NewAsJson(_eventEntry);
@@ -40,12 +40,14 @@ public class AuditUnitTests
     }
 
     [Test]
-    public void Deve_criar_uma_audit_log_com_id_correto()
+    public void Should_create_audit_log_with_correct_values()
     {
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
-        evt.CustomFields["UserId"] = Guid.NewGuid();
-        evt.CustomFields["InstitutionId"] = Guid.NewGuid();
+        var userId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
+        evt.CustomFields["UserId"] = userId;
+        evt.CustomFields["InstitutionId"] = institutionId;;
 
         // Act
         var audit = new AuditLog();
@@ -53,110 +55,16 @@ public class AuditUnitTests
 
         // Assert
         audit.Id.Should().NotBeEmpty();
-    }
-
-    [Test]
-    public void Deve_criar_uma_audit_log_com_entity_id_correto()
-    {
-        // Arrange
-        var evt = new AuditEvent { CustomFields = [] };
-        evt.CustomFields["UserId"] = Guid.NewGuid();
-        evt.CustomFields["InstitutionId"] = Guid.NewGuid();
-
-        // Act
-        var audit = new AuditLog();
-        audit.Fill(evt, _eventEntry);
-
-        // Assert
         audit.EntityId.Should().Be(Guid.Parse("0346158a-f03f-4d95-b627-a154876c3f5b"));
-    }
-
-    [Test]
-    public void Deve_criar_uma_audit_log_com_entity_type_correto()
-    {
-        // Arrange
-        var evt = new AuditEvent { CustomFields = [] };
-        evt.CustomFields["UserId"] = Guid.NewGuid();
-        evt.CustomFields["InstitutionId"] = Guid.NewGuid();
-
-        // Act
-        var audit = new AuditLog();
-        audit.Fill(evt, _eventEntry);
-
-        // Assert
         audit.EntityType.Should().Be("Class");
-    }
-
-    [Test]
-    public void Deve_criar_uma_audit_log_com_action_correta()
-    {
-        // Arrange
-        var evt = new AuditEvent { CustomFields = [] };
-        evt.CustomFields["UserId"] = Guid.NewGuid();
-        evt.CustomFields["InstitutionId"] = Guid.NewGuid();
-
-        // Act
-        var audit = new AuditLog();
-        audit.Fill(evt, _eventEntry);
-
-        // Assert
         audit.Action.Should().Be("Insert");
-    }
-
-    [Test]
-    public void Deve_criar_uma_audit_log_com_created_at_correto()
-    {
-        // Arrange
-        var evt = new AuditEvent { CustomFields = [] };
-        evt.CustomFields["UserId"] = Guid.NewGuid();
-        evt.CustomFields["InstitutionId"] = Guid.NewGuid();
-
-        // Act
-        var audit = new AuditLog();
-        audit.Fill(evt, _eventEntry);
-
-        // Assert
         audit.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
-    }
-
-    [Test]
-    public void Deve_criar_uma_audit_log_com_user_id_correto()
-    {
-        // Arrange
-        var evt = new AuditEvent { CustomFields = [] };
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
-        evt.CustomFields["UserId"] = userId;
-        evt.CustomFields["InstitutionId"] = institutionId;
-
-        // Act
-        var audit = new AuditLog();
-        audit.Fill(evt, _eventEntry);
-
-        // Assert
         audit.UserId.Should().Be(userId);
-    }
-
-    [Test]
-    public void Deve_criar_uma_audit_log_com_institution_id_correto()
-    {
-        // Arrange
-        var evt = new AuditEvent { CustomFields = [] };
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
-        evt.CustomFields["UserId"] = userId;
-        evt.CustomFields["InstitutionId"] = institutionId;
-
-        // Act
-        var audit = new AuditLog();
-        audit.Fill(evt, _eventEntry);
-
-        // Assert
         audit.InstitutionId.Should().Be(institutionId);
     }
 
     [Test]
-    public void Deve_retornar_false_quando_eh_um_request_de_login()
+    public void Should_return_false_on_login_request()
     {
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
@@ -171,7 +79,7 @@ public class AuditUnitTests
     }
 
     [Test]
-    public void Deve_retornar_true_quando_nao_eh_um_request_de_login()
+    public void Should_return_true_on_non_login_request()
     {
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };

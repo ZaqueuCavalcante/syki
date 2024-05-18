@@ -4,7 +4,7 @@ namespace Syki.Tests.Features.Cross.SetupMfa;
 
 public class SetupMfaE2ETests : E2ETestBase
 {
-    [Test, Ignore("")]
+    [Test, Ignore("E2E")]
     public async Task Should_setup_mfa()
     {
         await Goto("/register");
@@ -37,7 +37,7 @@ public class SetupMfaE2ETests : E2ETestBase
         await ClickOn(Button("Continuar"));
     }
 
-    [Test, Ignore("")]
+    [Test, Ignore("E2E")]
     public async Task Should_not_setup_mfa_with_wrong_code()
     {
         await Goto("/register");

@@ -1,4 +1,3 @@
-using Syki.Back.Extensions;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
@@ -38,12 +37,12 @@ public class UserExtensionsUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.AuditPaths))]
-    public void Shoud_return_if_path_is_login((PathString path, bool isAuditable) data)
+    public void Shoud_return_if_path_is_auditable((PathString path, bool isAuditable) x)
     {
         // Arrange / Act
-        var result = data.path.IsAuditable();
+        var result = x.path.IsAuditable();
 
         // Assert
-        result.Should().Be(data.isAuditable);
+        result.Should().Be(x.isAuditable);
     }
 }

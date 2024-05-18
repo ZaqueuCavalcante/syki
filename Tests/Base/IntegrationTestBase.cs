@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
 
-[Category("Integration")]
 public class IntegrationTestBase
 {
     protected BackWebApplicationFactory _factory = null!;
@@ -10,7 +9,6 @@ public class IntegrationTestBase
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
     {
-        Console.WriteLine("OneTimeSetUp");
         _factory = new BackWebApplicationFactory();
         using var scope = _factory.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();

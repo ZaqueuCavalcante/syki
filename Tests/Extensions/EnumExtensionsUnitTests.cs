@@ -2,11 +2,6 @@ namespace Syki.Tests.Unit;
 
 public class EnumExtensionsUnitTests
 {
-    private enum TestEnum
-    {
-        WithoutDescription
-    }
-
     [Test]
     public void Shoud_get_enum_description_when_null()
     {
@@ -67,5 +62,10 @@ public class EnumExtensionsUnitTests
 
         // Assert
         result.Should().BeFalse();
+    }
+
+    private enum TestEnum
+    {
+        WithoutDescription
     }
 }

@@ -173,13 +173,13 @@ public partial class IntegrationTests : IntegrationTestBase
         var clientAluno = await _factory.LoggedAsStudent(zaqueu.Email);
 
         // Act
-        var turmas = await clientAluno.GetAsync<List<EnrollmentClassOut>>("/matriculas/aluno/turmas");
+        var classes = await clientAluno.GetAsync<List<EnrollmentClassOut>>("/matriculas/aluno/turmas");
 
         // Assert
-        turmas.Should().HaveCount(4);
-        turmas.Should().Contain(t => t.Id == turmaMatematica.Id);
-        turmas.Should().Contain(t => t.Id == turmaBancoDeDados.Id);
-        turmas.Should().Contain(t => t.Id == turmaEstruturaDeDados.Id);
-        turmas.Should().Contain(t => t.Id == turmaInfoSociedade.Id);
+        classes.Should().HaveCount(4);
+        classes.Should().Contain(t => t.Id == turmaMatematica.Id);
+        classes.Should().Contain(t => t.Id == turmaBancoDeDados.Id);
+        classes.Should().Contain(t => t.Id == turmaEstruturaDeDados.Id);
+        classes.Should().Contain(t => t.Id == turmaInfoSociedade.Id);
     }
 }

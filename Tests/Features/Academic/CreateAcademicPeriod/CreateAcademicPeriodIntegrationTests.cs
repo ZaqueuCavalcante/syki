@@ -3,7 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Deve_criar_um_novo_periodo()
+    public async Task Should_create_academic_period()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
@@ -15,8 +15,8 @@ public partial class IntegrationTests : IntegrationTestBase
         period.Id.Should().Be(period.Id);
     }
 
-    [Test, Ignore("")]
-    public async Task Deve_criar_varios_periodos_para_uma_mesma_institution()
+    [Test]
+    public async Task Should_create_many_academic_periods()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
@@ -26,12 +26,12 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateAcademicPeriod("2023.2");
 
         // Assert
-        var periodos = await client.GetAcademicPeriods();
-        periodos.Should().HaveCount(2);
+        var periods = await client.GetAcademicPeriods();
+        periods.Should().HaveCount(2);
     }
 
-    [Test, Ignore("")]
-    public async Task Deve_retornar_apenas_os_periodos_da_institution_do_usuario_logado()
+    [Test]
+    public async Task Should_return_only_institution_academic_periods()
     {
         // Arrange
         var clientNovaRoma = await _factory.LoggedAsAcademic();
@@ -42,10 +42,10 @@ public partial class IntegrationTests : IntegrationTestBase
         await clientUfpe.CreateAcademicPeriod("2023.2");
 
         // Act
-        var periodos = await clientNovaRoma.GetAcademicPeriods();
+        var periods = await clientNovaRoma.GetAcademicPeriods();
 
         // Assert
-        periodos.Should().HaveCount(1);
-        periodos[0].Id.Should().Be(period.Id);
+        periods.Should().HaveCount(1);
+        periods[0].Id.Should().Be(period.Id);
     }
 }

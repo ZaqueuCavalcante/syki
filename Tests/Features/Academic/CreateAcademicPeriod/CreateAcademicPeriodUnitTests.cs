@@ -1,92 +1,12 @@
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.Academic.CreateAcademicPeriod;
 
-public class PeriodosUnitTests
+public class CreateAcademicPeriodUnitTests
 {
     [Test]
-    public void Deve_criar_um_periodo_com_id()
-    {
-        // Arrange
-        const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
-        var start = new DateOnly(2023, 02, 01);
-        var end = new DateOnly(2023, 06, 01);
-
-        // Act
-        var period = new AcademicPeriod(id, institutionId, start, end);
-
-        // Assert
-        period.Id.Should().Be(id);
-    }
-
-    [Test]
-    public void Deve_criar_um_periodo_com_institution_id_correto()
-    {
-        // Arrange
-        const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
-        var start = new DateOnly(2023, 02, 01);
-        var end = new DateOnly(2023, 06, 01);
-
-        // Act
-        var period = new AcademicPeriod(id, institutionId, start, end);
-
-        // Assert
-        period.InstitutionId.Should().Be(institutionId);
-    }
-
-    [Test]
-    public void Deve_criar_um_periodo_com_start_correto()
-    {
-        // Arrange
-        const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
-        var start = new DateOnly(2023, 02, 01);
-        var end = new DateOnly(2023, 06, 01);
-
-        // Act
-        var period = new AcademicPeriod(id, institutionId, start, end);
-
-        // Assert
-        period.Start.Should().Be(start);
-    }
-
-    [Test]
-    public void Deve_criar_um_periodo_com_end_correto()
-    {
-        // Arrange
-        const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
-        var start = new DateOnly(2023, 02, 01);
-        var end = new DateOnly(2023, 06, 01);
-
-        // Act
-        var period = new AcademicPeriod(id, institutionId, start, end);
-
-        // Assert
-        period.End.Should().Be(end);
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPeriods))]
-    public void Nao_deve_criar_um_periodo_com_id_invalido(string id)
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        var start = new DateOnly(2023, 02, 01);
-        var end = new DateOnly(2023, 06, 01);
-
-        // Act
-        Action act = () => new AcademicPeriod(id, institutionId, start, end);
-
-        // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE006);
-    }
-
-    [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.ValidPeriods))]
-    public void Deve_criar_um_periodo_com_id_valido(string id)
+    public void Should_create_academic_period_with_valid_id(string id)
     {
         // Arrange
         var institutionId = Guid.NewGuid();
@@ -102,7 +22,23 @@ public class PeriodosUnitTests
     }
 
     [Test]
-    public void Nao_deve_criar_um_periodo_com_start_invalido()
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPeriods))]
+    public void Should_not_create_academic_period_with_invalid_id(string id)
+    {
+        // Arrange
+        var institutionId = Guid.NewGuid();
+        var start = new DateOnly(2023, 02, 01);
+        var end = new DateOnly(2023, 06, 01);
+
+        // Act
+        Action act = () => new AcademicPeriod(id, institutionId, start, end);
+
+        // Assert
+        act.Should().Throw<DomainException>().WithMessage(Throw.DE006);
+    }
+
+    [Test]
+    public void Should_not_create_academic_period_with_invalid_start()
     {
         // Arrange
         const string id = "2023.1";
@@ -118,7 +54,7 @@ public class PeriodosUnitTests
     }
 
     [Test]
-    public void Nao_deve_criar_um_periodo_com_end_invalido()
+    public void Should_not_create_academic_period_with_invalid_end()
     {
         // Arrange
         const string id = "2023.1";
@@ -134,7 +70,7 @@ public class PeriodosUnitTests
     }
 
     [Test]
-    public void Nao_deve_criar_um_periodo_com_datas_iguais()
+    public void Should_not_create_academic_period_with_invalid_start_equal_to_end()
     {
         // Arrange
         const string id = "2023.1";
@@ -150,7 +86,7 @@ public class PeriodosUnitTests
     }
 
     [Test]
-    public void Nao_deve_criar_um_periodo_com_datas_invalidas()
+    public void Should_not_create_academic_period_with_start_after_end()
     {
         // Arrange
         const string id = "2023.1";
@@ -166,7 +102,7 @@ public class PeriodosUnitTests
     }
 
     [Test]
-    public void Should_convert_period_to_out()
+    public void Should_convert_academic_period_to_out()
     {
         // Arrange
         const string id = "2023.1";

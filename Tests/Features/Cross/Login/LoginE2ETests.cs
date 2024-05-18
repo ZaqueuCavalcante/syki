@@ -2,7 +2,7 @@ namespace Syki.Tests.Features.Cross.Login;
 
 public class LoginE2ETests : E2ETestBase
 {
-    [Test, Ignore("")]
+    [Test, Ignore("E2E")]
     public async Task Should_login_into_app()
     {
         await Goto("/register");

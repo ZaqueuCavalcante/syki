@@ -5,8 +5,7 @@ namespace Syki.Tests.Base;
 
 public static class TestData
 {
-    public static string Email => 
-        $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com";
+    public static string Email => $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com";
 
     public static IEnumerable<object[]> ValidNames()
     {
@@ -221,11 +220,13 @@ public static class TestData
     {
         foreach (var text in new List<(PathString, bool)>()
         {
-            ("/campi", true),
-            ("/cursos", true),
+            ("/academic/campi", true),
+            ("/academic/courses", true),
             ("/login", false),
+            ("/users", false),
             ("/login/mfa", false),
             ("/reset-password", false),
+            ("/reset-password-token", false),
         })
         {
             yield return new object[] { text };
@@ -240,6 +241,7 @@ public static class TestData
             (0.23M, "0.23"),
             (9.85M, "9.85"),
             (15.74M, "15.74"),
+            (153.87M, "153.87"),
         })
         {
             yield return new object[] { text };

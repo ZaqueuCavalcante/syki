@@ -2,22 +2,13 @@ namespace Syki.Tests.Unit;
 
 public class ListExtensionsUnitTests
 {
-    public static List<Guid> Guids =
-    [
-        Guid.Parse("e2e833ce-9eee-4755-96be-66c52d7dc260"),
-        Guid.Parse("bab5f379-ac8b-446d-9325-13d18cd42227"),
-        Guid.Parse("439f1f9d-5be0-4456-8364-a2a2391953bb"),
-        Guid.Parse("0e88b426-f78b-42f2-a7b7-3bc1d8508ef1"),
-        Guid.Parse("17a84760-c56b-4af0-8701-d6ba9e11495e"),
-    ];
-
     [Test]
     public void Shoud_return_true_when_empty_list()
     {
         // Arrange
         var guids = new List<Guid>();
 
-        var result = guids.IsSubsetOf(Guids);
+        var result = guids.IsSubsetOf(_guids);
 
         // Assert
         result.Should().BeTrue();
@@ -32,7 +23,7 @@ public class ListExtensionsUnitTests
             Guid.Parse("0e88b426-f78b-42f2-a7b7-3bc1d8508ef1"),
         ];
 
-        var result = guids.IsSubsetOf(Guids);
+        var result = guids.IsSubsetOf(_guids);
 
         // Assert
         result.Should().BeTrue();
@@ -48,7 +39,7 @@ public class ListExtensionsUnitTests
             Guid.Parse("e2e833ce-9eee-4755-96be-66c52d7dc260"),
         ];
 
-        var result = guids.IsSubsetOf(Guids);
+        var result = guids.IsSubsetOf(_guids);
 
         // Assert
         result.Should().BeTrue();
@@ -67,7 +58,7 @@ public class ListExtensionsUnitTests
             Guid.Parse("439f1f9d-5be0-4456-8364-a2a2391953bb"),
         ];
 
-        var result = guids.IsSubsetOf(Guids);
+        var result = guids.IsSubsetOf(_guids);
 
         // Assert
         result.Should().BeTrue();
@@ -83,7 +74,7 @@ public class ListExtensionsUnitTests
             Guid.NewGuid(),
         ];
 
-        var result = guids.IsSubsetOf(Guids);
+        var result = guids.IsSubsetOf(_guids);
 
         // Assert
         result.Should().BeFalse();
@@ -99,7 +90,7 @@ public class ListExtensionsUnitTests
             Guid.Parse("e2e833ce-9eee-4755-96be-66c52d7dc260"),
         ];
 
-        var result = guids.IsSubsetOf(Guids);
+        var result = guids.IsSubsetOf(_guids);
 
         // Assert
         result.Should().BeFalse();
@@ -116,7 +107,7 @@ public class ListExtensionsUnitTests
             Guid.Parse("e2e833ce-9eee-4755-96be-66c52d7dc260"),
         ];
 
-        var result = guids.IsSubsetOf(Guids);
+        var result = guids.IsSubsetOf(_guids);
 
         // Assert
         result.Should().BeFalse();
@@ -134,9 +125,18 @@ public class ListExtensionsUnitTests
             Guid.Parse("0e88b426-f78b-42f2-a7b7-3bc1d8508ef1"),
         ];
 
-        var result = guids.IsSubsetOf(Guids);
+        var result = guids.IsSubsetOf(_guids);
 
         // Assert
         result.Should().BeFalse();
     }
+
+    private static readonly List<Guid> _guids =
+    [
+        Guid.Parse("e2e833ce-9eee-4755-96be-66c52d7dc260"),
+        Guid.Parse("bab5f379-ac8b-446d-9325-13d18cd42227"),
+        Guid.Parse("439f1f9d-5be0-4456-8364-a2a2391953bb"),
+        Guid.Parse("0e88b426-f78b-42f2-a7b7-3bc1d8508ef1"),
+        Guid.Parse("17a84760-c56b-4af0-8701-d6ba9e11495e"),
+    ];
 }

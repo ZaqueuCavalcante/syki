@@ -3,7 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Should_audit_a_campus_creation()
+    public async Task Should_audit_campus_creation()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
@@ -18,7 +18,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task Should_audit_a_campus_update()
+    public async Task Should_audit_campus_update()
     {
         // Arrange
         var client = await _factory.LoggedAsAcademic();
@@ -29,7 +29,9 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         using var ctx = _factory.GetDbContext();
-        var audit = await ctx.AuditLogs.OrderByDescending(x => x.CreatedAt).FirstAsync(a => a.EntityId == campus.Id);
+        var audit = await ctx.AuditLogs
+            .OrderByDescending(x => x.CreatedAt)
+            .FirstAsync(a => a.EntityId == campus.Id);
         audit.Action.Should().Be("Update");
     }
 }

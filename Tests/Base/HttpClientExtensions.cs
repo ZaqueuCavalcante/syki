@@ -30,6 +30,8 @@ using Syki.Front.Features.Academic.GetCourseCurriculums;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
+using Syki.Front.Features.Adm.GetUsers;
+using Syki.Front.Features.Adm.GetInstitutions;
 
 namespace Syki.Tests.Base;
 
@@ -343,6 +345,18 @@ public static class HttpClientExtensions
     public static async Task<EnrollmentPeriodOut> GetCurrentEnrollmentPeriod(this HttpClient http)
     {
         var client = new GetCurrentEnrollmentPeriodClient(http);
+        return await client.Get();
+    }
+
+    public static async Task<List<UserOut>> GetUsers(this HttpClient http)
+    {
+        var client = new GetUsersClient(http);
+        return await client.Get();
+    }
+
+    public static async Task<List<InstitutionOut>> GetInstitutions(this HttpClient http)
+    {
+        var client = new GetInstitutionsClient(http);
         return await client.Get();
     }
 

@@ -1,8 +1,6 @@
-using Audit.Core;
+namespace Syki.Tests.Integration;
 
-namespace Syki.Tests.Audit;
-
-public class AuditIntegrationTests : IntegrationTestBase
+public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
     public async Task Should_audit_a_campus_creation()
@@ -11,9 +9,7 @@ public class AuditIntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        Configuration.AuditDisabled = false;
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        Configuration.AuditDisabled = true;
 
         // Assert
         using var ctx = _factory.GetDbContext();
@@ -29,13 +25,11 @@ public class AuditIntegrationTests : IntegrationTestBase
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
 
         // Act
-        Configuration.AuditDisabled = false;
         await client.UpdateCampus(campus.Id, "Agreste II", "Bonito - PE");
-        Configuration.AuditDisabled = true;
 
         // Assert
         using var ctx = _factory.GetDbContext();
-        var audit = await ctx.AuditLogs.FirstAsync(a => a.EntityId == campus.Id);
+        var audit = await ctx.AuditLogs.OrderByDescending(x => x.CreatedAt).FirstAsync(a => a.EntityId == campus.Id);
         audit.Action.Should().Be("Update");
     }
 }

@@ -3,7 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Should_return_all_users()
+    public async Task Should_return_all_institutions()
     {
         // Arrange
         var client = _factory.GetClient();
@@ -12,9 +12,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var admClient = await _factory.LoggedAsAdm();
 
         // Act
-        var users = await admClient.GetUsers();
+        var institutions = await admClient.GetInstitutions();
 
         // Assert
-        users.Should().HaveCountGreaterThanOrEqualTo(2);
+        institutions.Should().HaveCountGreaterThanOrEqualTo(1);
     }
 }

@@ -12,7 +12,7 @@
         </MudCardContent>
     </MudCard>
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_turmas" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_classes" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por disciplina ou período" />
             </ToolBarContent>
@@ -31,39 +31,23 @@
     </MudContainer>
 </MudContainer>
 
-@inject HttpClient Http
 @inject IDialogService DialogService
+@inject GetTeacherClassesClient GetTeacherClassesClient
 
 @code
 {
     private bool _loading;
     private string _searchString;
-    private List<TeacherClassOut> _turmas = [];
+    private List<TeacherClassOut> _classes = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _turmas = await Http.GetFromJsonAsync<List<TeacherClassOut>>("/teacher/classes") ?? [];
+        _classes = await GetTeacherClassesClient.Get();
         _loading = false;
     }
 
-    private Func<TeacherClassOut, bool> _quickFilter => x =>
-        _searchString.IsIn(x.Discipline, x.Period);
-
-    private async Task OpenDialog()
-    {
-        var options = new DialogOptions {
-            MaxWidth = MaxWidth.Small,
-            FullWidth = true
-        };
-        var dialog = await DialogService.ShowAsync<CreateClassDialog>("", options);
-
-        var result = await dialog.Result;
-
-        if (result.Canceled) return;
-        
-        await OnInitializedAsync();
-    }
+    private Func<TeacherClassOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Period);
 
     private string GetNotFoundMessage()
     {

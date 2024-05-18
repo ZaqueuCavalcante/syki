@@ -2,7 +2,7 @@
 
 @namespace Syki.Front.Pages.Adm
 
-@page "/users"
+@page "/adm/users"
 @attribute [Authorize(Roles = "Adm")]
 
 <PageTitle>Usuários</PageTitle>
@@ -31,8 +31,8 @@
     </MudContainer>
 </MudContainer>
 
-@inject HttpClient Http
 @inject IDialogService DialogService
+@inject GetUsersClient GetUsersClient
 
 @code
 {
@@ -43,7 +43,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _users = await Http.GetFromJsonAsync<List<UserOut>>("/users") ?? [];
+        _users = await GetUsersClient.Get();
         _loading = false;
     }
 

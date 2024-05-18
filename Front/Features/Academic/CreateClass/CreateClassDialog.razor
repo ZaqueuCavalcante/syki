@@ -72,7 +72,7 @@
                     <MudContainer Class="px-0">
                         <MudGrid Justify="Justify.FlexStart">
                             <MudItem xs="12">
-                                @foreach (var schedule in Schedules)
+                                @foreach (var schedule in _schedules)
                                 {
                                     <ClassSchedule Data="@schedule" OnDeleteClick="@DeleteSchedule" />
                                 }
@@ -102,8 +102,12 @@
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject CreateClassClient CreateClassClient
+@inject GetTeachersClient GetTeachersClient
+@inject GetStudentsClient GetStudentsClient
+@inject GetDisciplinesClient GetDisciplinesClient
+@inject GetAcademicPeriodsClient GetAcademicPeriodsClient
 
 @code
 {
@@ -116,39 +120,37 @@
     DisciplineOut? _discipline;
     TeacherOut? _teacher;
     string? _period;
-
-    CreateClassIn data = new();
+    List<ScheduleInFillable> _schedules { get; set; } = [];
 
     List<DisciplineOut> Disciplines = [];
     List<TeacherOut> Teachers = [];
     List<AcademicPeriodOut> Periods = [];
     List<StudentOut> Students = [];
-    List<ScheduleInFillable> Schedules { get; set; } = [];
 
     protected override async Task OnInitializedAsync()
     {
         NewSchedule();
         await Task.WhenAll(new Task[] { 
-            Task.Run(async () => Teachers = await Http.GetFromJsonAsync<List<TeacherOut>>("/academic/teachers") ?? []),
-            Task.Run(async () => Periods = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic/academic-periods") ?? []),
-            Task.Run(async () => Students = await Http.GetFromJsonAsync<List<StudentOut>>("/academic/students") ?? []),
-            Task.Run(async () => Disciplines = await Http.GetFromJsonAsync<List<DisciplineOut>>("/academic/disciplines") ?? []),
+            Task.Run(async () => Teachers = await GetTeachersClient.Get()),
+            Task.Run(async () => Periods = await GetAcademicPeriodsClient.Get()),
+            Task.Run(async () => Students = await GetStudentsClient.Get()),
+            Task.Run(async () => Disciplines = await GetDisciplinesClient.Get()),
         });
     }
 
     bool GetNewScheduleDisabled()
     {
-        return Schedules.Count == 3;
+        return _schedules.Count == 3;
     }
 
     void NewSchedule()
     {
-        Schedules.Add(new());
+        _schedules.Add(new());
     }
 
     void DeleteSchedule(Guid id)
     {
-        Schedules.Remove(Schedules.First(f => f.Id == id));
+        _schedules.Remove(_schedules.First(f => f.Id == id));
     }
 
     private async Task<IEnumerable<DisciplineOut>> SearchDiscipline(string value)
@@ -168,16 +170,13 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        data = new()
-        {
-            DisciplineId = _discipline!.Id,
-            TeacherId = _teacher!.Id,
-            Period = _period!,
-            Schedules = Schedules.ConvertAll(x => new ScheduleIn(x.Day!.Value, x.Start!.Value, x.End!.Value)),
-        };
+        var disciplineId = _discipline!.Id;
+        var teacherId = _teacher!.Id;
+        var period = _period!;
+        var schedules = _schedules.ConvertAll(x => new ScheduleIn(x.Day!.Value, x.Start!.Value, x.End!.Value));
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/academic/classes", data);
+        var response = await CreateClassClient.Create(disciplineId, teacherId, period, schedules);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

@@ -1,32 +1,35 @@
 using Syki.Tests.Mock;
 using Syki.Front.Auth;
-using System.Net.Http.Json;
 using Syki.Front.Features.Cross.Login;
 using Syki.Front.Features.Cross.SetupMfa;
 using Syki.Front.Features.Cross.LoginMfa;
 using Syki.Front.Features.Cross.GetMfaKey;
-using Syki.Front.Features.Academic.GetCampi;
 using Syki.Front.Features.Cross.ResetPassword;
+using Syki.Front.Features.Cross.FinishUserRegister;
+using Syki.Front.Features.Cross.SendResetPasswordToken;
+using Syki.Front.Features.Cross.CreatePendingUserRegister;
+using Syki.Front.Features.Academic.GetCampi;
 using Syki.Front.Features.Academic.GetCourses;
+using Syki.Front.Features.Academic.CreateClass;
 using Syki.Front.Features.Academic.CreateCampus;
 using Syki.Front.Features.Academic.UpdateCampus;
 using Syki.Front.Features.Academic.CreateCourse;
+using Syki.Front.Features.Academic.CreateStudent;
 using Syki.Front.Features.Academic.CreateTeacher;
 using Syki.Front.Features.Academic.GetDisciplines;
-using Syki.Front.Features.Cross.FinishUserRegister;
 using Syki.Front.Features.Academic.CreateDiscipline;
+using Syki.Front.Features.Academic.GetCourseOfferings;
 using Syki.Front.Features.Academic.GetAcademicPeriods;
 using Syki.Front.Features.Academic.CreateNotification;
-using Syki.Front.Features.Cross.SendResetPasswordToken;
 using Syki.Front.Features.Academic.GetAcademicInsights;
 using Syki.Front.Features.Academic.CreateAcademicPeriod;
 using Syki.Front.Features.Academic.GetCourseDisciplines;
+using Syki.Front.Features.Academic.CreateCourseOffering;
+using Syki.Front.Features.Academic.GetEnrollmentPeriods;
 using Syki.Front.Features.Academic.GetCourseCurriculums;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
-using Syki.Front.Features.Cross.CreatePendingUserRegister;
-using Syki.Front.Features.Academic.CreateCourseOffering;
-using Syki.Front.Features.Academic.GetCourseOfferings;
+using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 
 namespace Syki.Tests.Base;
 
@@ -208,18 +211,9 @@ public static class HttpClientExtensions
         string? period,
         Shift shift
     ) {
-        var body = new CreateCourseOfferingIn
-        {
-            CampusId = campusId,
-            CourseId = courseId,
-            CourseCurriculumId = courseCurriculumId,
-            Period = period,
-            Shift = shift,
-        };
-
         var client = new CreateCourseOfferingClient(http);
 
-        return await client.Create(body);
+        return await client.Create(campusId, courseId, courseCurriculumId, period, shift);
     }
 
     public static async Task<CourseOfferingOut> CreateCourseOffering(
@@ -240,28 +234,13 @@ public static class HttpClientExtensions
         return await client.Get();
     }
 
-
-    // -------------------------------------------------------------------------------------------- //
-
-
-
-
-
-
-
-
-
-
-
-
     public static async Task<AcademicInsightsOut> GetAcademicInsights(this HttpClient http)
     {
         var client = new GetAcademicInsightsClient(http);
         return await client.Get();
     }
 
-
-    public static async Task<TeacherOut> CreateProfessor(
+    public static async Task<TeacherOut> CreateTeacher(
         this HttpClient http,
         string name = "Chico",
         string email = ""
@@ -274,75 +253,58 @@ public static class HttpClientExtensions
         return professor;
     }
 
-    public static async Task<ClassOut> Createturma(
+    public static async Task<HttpResponseMessage> CreateClassHttp(
         this HttpClient http,
         Guid disciplineId,
-        Guid professorId,
-        string periodoId,
+        Guid teacherId,
+        string period,
         List<ScheduleIn> schedules
     ) {
-        var body = new CreateClassIn(disciplineId, professorId, periodoId, schedules);
-        return await http.PostAsync<ClassOut>("/turmas", body);
+        var client = new CreateClassClient(http);
+        return await client.Create(disciplineId, teacherId, period, schedules);
     }
 
-    public static async Task<HttpResponseMessage> CreateturmaHttp(
+    public static async Task<ClassOut> CreateClass(
         this HttpClient http,
         Guid disciplineId,
-        Guid professorId,
-        string periodoId,
+        Guid teacherId,
+        string period,
         List<ScheduleIn> schedules
     ) {
-        var body = new CreateClassIn(disciplineId, professorId, periodoId, schedules);
-        return await http.PostAsJsonAsync("/turmas", body);
+        var result = await http.CreateClassHttp(disciplineId, teacherId, period, schedules);
+        return await result.DeserializeTo<ClassOut>();
     }
 
-
-
-
-
-
+    public static async Task<HttpResponseMessage> CreateStudentHttp(
+        this HttpClient http,
+        Guid courseOfferingId,
+        string name = "Zezin",
+        string email = ""
+    ) {
+        var client = new CreateStudentClient(http);
+        email = email.HasValue() ? email : TestData.Email;
+        return await client.Create(name, email, courseOfferingId);
+    }
 
     public static async Task<StudentOut> CreateStudent(
         this HttpClient http,
-        Guid ofertaId,
+        Guid courseOfferingId,
         string name = "Zezin",
         string email = ""
     ) {
         email = email.HasValue() ? email : TestData.Email;
 
-        var body = new CreateStudentIn { Name = name, Email = email, CourseOfferingId = ofertaId };
-
-        var aluno = await http.PostAsync<StudentOut>("/alunos", body);
-        aluno.Email = email;
-        return aluno;
+        var result = await http.CreateStudentHttp(courseOfferingId, name, email);
+        var student = await result.DeserializeTo<StudentOut>();
+        student.Email = email;
+        return student;
     }
 
-    public static async Task<HttpResponseMessage> CreateAlunoHttp(
-        this HttpClient http,
-        Guid ofertaId,
-        string name = "Zezin",
-        string email = ""
-    ) {
-        email = email.HasValue() ? email : TestData.Email;
-
-        var body = new CreateStudentIn { Name = name, Email = email, CourseOfferingId = ofertaId };
-
-        return await http.PostAsJsonAsync("/alunos", body);
-    }
-
-    public static async Task<List<DisciplineOut>> GetAlunoDisciplines(this HttpClient http)
+    public static async Task<List<DisciplineOut>> GetStudentDisciplines(this HttpClient http)
     {
         var client = new GetDisciplinesClient(http);
         return await client.Get();
     }
-
-
-
-
-
-
-
-
 
     public static async Task<AcademicPeriodOut> CreateAcademicPeriod(this HttpClient http, string id)
     {
@@ -383,21 +345,6 @@ public static class HttpClientExtensions
         var client = new GetCurrentEnrollmentPeriodClient(http);
         return await client.Get();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // -------------------------------------------------------------------------------------------- //
 

@@ -23,8 +23,9 @@
     }
 </div>
 
-@inject HttpClient Http
 @inject IDialogService DialogService
+@inject ViewNotificationsClient ViewNotificationsClient
+@inject GetUserNotificationsClient GetUserNotificationsClient
 
 @code
 {
@@ -37,7 +38,7 @@
 
     private async Task GetNotifications()
     {
-        _notifications = await Http.GetFromJsonAsync<List<UserNotificationOut>>("/notifications/user") ?? [];
+        _notifications = await GetUserNotificationsClient.Get();
     }
 
     private int GetCount()
@@ -47,7 +48,7 @@
 
     private async Task ViewAndOpenDialog()
     {
-        await Http.PutAsJsonAsync("/notifications/user", new {});
+        await ViewNotificationsClient.View();
         await GetNotifications();
         StateHasChanged();
         await OpenDialog();

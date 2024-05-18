@@ -5,7 +5,7 @@
 
 @namespace Syki.Front.Pages.Student
 
-@page "/matricula"
+@page "/student/enrollments"
 @attribute [Authorize(Roles = "Student")]
 
 <PageTitle>Matrícula</PageTitle>
@@ -21,10 +21,10 @@
         </MudCardContent>
     </MudCard>
 
-    @if (_periodoDeMatricula == null)
+    @if (_enrollmentPeriod == null)
     {
     }
-    else if (_periodoDeMatricula.Id.IsEmpty())
+    else if (_enrollmentPeriod.Id.IsEmpty())
     {
         <SykiPageAlert Text="Período de matrícula encerrado!" />
     }
@@ -38,10 +38,10 @@
     {
         <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
             <MudText>Selecione as disciplinas que você irá cursar nesse semestre. O período de matrícula vai até
-                <strong>@_periodoDeMatricula.End.ToString("dd/MM/yyyy")</strong>. </MudText>
+                <strong>@_enrollmentPeriod.End.ToString("dd/MM/yyyy")</strong>. </MudText>
         </MudAlert>
 
-        <CascadingValue Name="Dias" Value="@_dias">
+        <CascadingValue Name="Dias" Value="@_days">
             <WeeklyAgenda />
         </CascadingValue>
 
@@ -53,7 +53,7 @@
                 Breakpoint="Breakpoint.Sm"
                 Dense="true"
                 Hover="true"
-                Loading="_loading"
+                Loading="@_loading"
                 RowsPerPage="100"
             >
                 <HeaderContent>
@@ -96,33 +96,34 @@
     }
 </MudContainer>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
-@inject GetCurrentEnrollmentPeriodClient Client
+@inject CreateStudentEnrollmentClient CreateStudentEnrollmentClient
+@inject GetCurrentEnrollmentPeriodClient GetCurrentEnrollmentPeriodClient
+@inject GetStudentEnrollmentClassesClient GetStudentEnrollmentClassesClient
 
 @code
 {
     private bool _loading;
     private bool _finished;
-    EnrollmentPeriodOut _periodoDeMatricula;
+    EnrollmentPeriodOut _enrollmentPeriod;
     private List<EnrollmentClassOut> _options = [];
-    private List<AgendaDayOut> _dias = [];
+    private List<AgendaDayOut> _days = [];
 
     void HandleCheckedChanged()
     {
-        _dias = _options.Where(o => o.IsSelected).ToList().ToAgendas();
+        _days = _options.Where(o => o.IsSelected).ToList().ToAgendas();
     }
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _periodoDeMatricula = await Client.Get();
-        if (_periodoDeMatricula.Id.IsEmpty())
+        _enrollmentPeriod = await GetCurrentEnrollmentPeriodClient.Get();
+        if (_enrollmentPeriod.Id.IsEmpty())
         {
             _loading = false;
             return;
         }
-        _options = await Http.GetFromJsonAsync<List<EnrollmentClassOut>>("/student/enrollment-classes") ?? [];
+        _options = await GetStudentEnrollmentClassesClient.Get();
         HandleCheckedChanged();
         _loading = false;
     }
@@ -132,11 +133,8 @@
         if (_loading) return;
 
         _loading = true;
-        var data = new CreateStudentEnrollmentIn
-        {
-            Classes = _options.Where(o => o.IsSelected).Select(o => o.Id).ToList()
-        };
-        var response = await Http.PostAsJsonAsync("/matriculas/aluno", data);
+        var classes = _options.Where(o => o.IsSelected).Select(o => o.Id).ToList();
+        var response = await CreateStudentEnrollmentClient.Create(classes);
         if (response.IsSuccessStatusCode)
         {
             _finished = true;

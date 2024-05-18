@@ -9,12 +9,12 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
-        var professor = await client.CreateProfessor();
+        var professor = await client.CreateTeacher();
         var period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
         // Act
-        var turma = await client.Createturma(discipline.Id, professor.Id, period.Id, schedules);
+        var turma = await client.CreateClass(discipline.Id, professor.Id, period.Id, schedules);
 
         // Assert
         turma.Id.Should().NotBeEmpty();
@@ -31,7 +31,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateturmaHttp(Guid.NewGuid(), Guid.NewGuid(), "2024.1", []);
+        var response = await client.CreateClassHttp(Guid.NewGuid(), Guid.NewGuid(), "2024.1", []);
 
         // Assert
         await response.AssertBadRequest(Throw.DE004);
@@ -46,7 +46,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var discipline = await client.CreateDiscipline();
 
         // Act
-        var response = await client.CreateturmaHttp(discipline.Id, Guid.NewGuid(), "2024.1", []);
+        var response = await client.CreateClassHttp(discipline.Id, Guid.NewGuid(), "2024.1", []);
 
         // Assert
         await response.AssertBadRequest(Throw.DE018);
@@ -59,10 +59,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
-        var professor = await client.CreateProfessor();
+        var professor = await client.CreateTeacher();
         
         // Act
-        var response = await client.CreateturmaHttp(discipline.Id, professor.Id, "2024.1", []);
+        var response = await client.CreateClassHttp(discipline.Id, professor.Id, "2024.1", []);
 
         // Assert
         await response.AssertBadRequest(Throw.DE005);
@@ -75,12 +75,12 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
-        var professor = await client.CreateProfessor();
+        var professor = await client.CreateTeacher();
         var period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H07_00) };
 
         // Act
-        var response = await client.CreateturmaHttp(discipline.Id, professor.Id, period.Id, schedules);
+        var response = await client.CreateClassHttp(discipline.Id, professor.Id, period.Id, schedules);
 
         // Assert
         await response.AssertBadRequest(Throw.DE021);
@@ -93,11 +93,11 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
-        var professor = await client.CreateProfessor();
+        var professor = await client.CreateTeacher();
         var period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
-        var turma = await client.Createturma(discipline.Id, professor.Id, period.Id, schedules);
+        var turma = await client.CreateClass(discipline.Id, professor.Id, period.Id, schedules);
 
         // Act
         var turmas = await client.GetAsync<List<ClassOut>>("/turmas");

@@ -4,13 +4,13 @@
 @namespace Syki.Front.Pages.Academic
 
 @page "/academic/notifications"
+@attribute [Authorize(Roles = "Academic")]
 
 <PageTitle>Notificações</PageTitle>
 
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.Notifications" Title="Notificações" ButtonText="Nova Notificação" OnClick="@OpenDialog" />
     <SykiPageAlert Text="Aqui você pode escolher quais usuários serão notificados e acompanhar o status de visualização das mensagens." />
-
     <MudContainer Class="mb-8">
         <MudDataGrid
             T="NotificationOut"
@@ -42,8 +42,8 @@
     </MudContainer>
 </MudContainer>
 
-@inject HttpClient Http
 @inject IDialogService DialogService
+@inject GetNotificationsClient GetNotificationsClient
 
 @code
 {
@@ -54,7 +54,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _notifications = await Http.GetFromJsonAsync<List<NotificationOut>>("/academic/notifications") ?? [];
+        _notifications = await GetNotificationsClient.Get();
         _loading = false;
     }
 

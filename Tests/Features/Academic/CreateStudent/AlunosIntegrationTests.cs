@@ -31,7 +31,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateAlunoHttp(Guid.NewGuid());
+        var response = await client.CreateStudentHttp(Guid.NewGuid());
 
         // Assert
         await response.AssertBadRequest(Throw.DE012);
@@ -63,7 +63,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.Login(aluno.Email, password);
 
         // Act
-        var response = await client.GetAlunoDisciplines();
+        var response = await client.GetStudentDisciplines();
 
         // Assert
         response.Count.Should().Be(3);

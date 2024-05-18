@@ -9,7 +9,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        var professor = await client.CreateProfessor("Chico");
+        var professor = await client.CreateTeacher("Chico");
 
         // Assert
         professor.Id.Should().NotBeEmpty();
@@ -23,8 +23,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
 
         // Act
-        await client.CreateProfessor("Chico");
-        await client.CreateProfessor("Ana");
+        await client.CreateTeacher("Chico");
+        await client.CreateTeacher("Ana");
 
         // Assert
         var professores = await client.GetAsync<List<TeacherOut>>("/professores");
@@ -38,8 +38,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var clientNovaRoma = await _factory.LoggedAsAcademic();
         var clientUfpe = await _factory.LoggedAsAcademic();
 
-        await clientNovaRoma.CreateProfessor("Chico");
-        await clientUfpe.CreateProfessor("Ana");
+        await clientNovaRoma.CreateTeacher("Chico");
+        await clientUfpe.CreateTeacher("Ana");
 
         // Act
         var professores = await clientNovaRoma.GetAsync<List<TeacherOut>>("/professores");

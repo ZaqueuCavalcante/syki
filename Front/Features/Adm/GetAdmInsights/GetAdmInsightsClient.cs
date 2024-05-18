@@ -1,4 +1,4 @@
-namespace Syki.Front.Features.Academic.GetAdmInsights;
+namespace Syki.Front.Features.Adm.GetAdmInsights;
 
 public class GetAdmInsightsClient(HttpClient http)
 {

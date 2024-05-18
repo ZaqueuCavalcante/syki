@@ -72,7 +72,7 @@
             <MudAutocomplete
                 T="CourseOut"
                 MaxItems="50"
-                SearchFunc="@SearchCurso"
+                SearchFunc="@SearchCourse"
                 Dense="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
@@ -121,8 +121,12 @@
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject GetCampiClient GetCampiClient
+@inject GetAcademicPeriodsClient GetAcademicPeriodsClient
+@inject GetCourseCurriculumsClient GetCourseCurriculumsClient
+@inject CreateCourseOfferingClient CreateCourseOfferingClient
+@inject GetCoursesWithCurriculumsClient GetCoursesWithCurriculumsClient
 
 @code
 {
@@ -132,30 +136,28 @@
     MudForm _form;
     private bool _loading;
 
-    CampusOut? _campus;
-    CourseOut? _course;
-    CourseCurriculumOut? _courseCurriculum;
-    string? _period;
-    Shift? _shift;
-
-    CreateCourseOfferingIn data = new();
+    private CampusOut? _campus;
+    private CourseOut? _course;
+    private CourseCurriculumOut? _courseCurriculum;
+    private string? _period;
+    private Shift? _shift;
 
     List<CampusOut> Campi = [];
     List<CourseOut> Courses = [];
-    List<CourseCurriculumOut> CourseCurriculums = [];
     List<AcademicPeriodOut> Periods = [];
+    List<CourseCurriculumOut> CourseCurriculums = [];
 
     protected override async Task OnInitializedAsync()
     {
         await Task.WhenAll(new Task[] { 
-            Task.Run(async () => Campi = await Http.GetFromJsonAsync<List<CampusOut>>("/academic/campi") ?? []),
-            Task.Run(async () => Courses = await Http.GetFromJsonAsync<List<CourseOut>>("/academic/courses/with-curriculums") ?? []),
-            Task.Run(async () => CourseCurriculums = await Http.GetFromJsonAsync<List<CourseCurriculumOut>>("/academic/course-curriculums") ?? []),
-            Task.Run(async () => Periods = await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic/academic-periods") ?? []),
+            Task.Run(async () => Campi = await GetCampiClient.Get()),
+            Task.Run(async () => Periods = await GetAcademicPeriodsClient.Get()),
+            Task.Run(async () => Courses = await GetCoursesWithCurriculumsClient.Get()),
+            Task.Run(async () => CourseCurriculums = await GetCourseCurriculumsClient.Get()),
         });
     }
 
-    private async Task<IEnumerable<CourseOut>> SearchCurso(string value)
+    private async Task<IEnumerable<CourseOut>> SearchCourse(string value)
     {
         await Task.Delay(0);
 
@@ -172,17 +174,14 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        data = new()
-        {
-            CampusId = _campus!.Id,
-            CourseId = _course!.Id,
-            CourseCurriculumId = _courseCurriculum!.Id,
-            Period = _period!,
-            Shift = _shift!.Value,
-        };
+        var campusId = _campus!.Id;
+        var courseId = _course!.Id;
+        var courseCurriculumId = _courseCurriculum!.Id;
+        var period = _period!;
+        var shift = _shift!.Value;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/academic/course-offerings", data);
+        var response = await CreateCourseOfferingClient.Create(campusId, courseId, courseCurriculumId, period, shift);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

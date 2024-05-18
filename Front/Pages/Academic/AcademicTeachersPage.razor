@@ -30,8 +30,8 @@
     </MudContainer>
 </MudContainer>
 
-@inject HttpClient Http
 @inject IDialogService DialogService
+@inject GetTeachersClient GetTeachersClient
 
 @code
 {
@@ -42,7 +42,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _teachers = await Http.GetFromJsonAsync<List<TeacherOut>>("/academic/teachers") ?? [];
+        _teachers = await GetTeachersClient.Get();
         _loading = false;
     }
 

@@ -2,6 +2,9 @@
 
 @namespace Syki.Front.Features.Student.GetStudentAgenda
 
+@page "/student/agenda"
+@attribute [Authorize(Roles = "Student")]
+
 <MudContainer>
     <MudCard Class="mt-8 mb-4 mx-6 px-2">
         <MudCardContent>

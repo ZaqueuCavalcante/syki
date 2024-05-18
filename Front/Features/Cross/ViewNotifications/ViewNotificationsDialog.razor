@@ -25,7 +25,7 @@
     </DialogContent>
 </MudDialog>
 
-@inject HttpClient Http
+@inject GetUserNotificationsClient GetUserNotificationsClient
 
 @code
 {
@@ -35,7 +35,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _notifications = await Http.GetFromJsonAsync<List<UserNotificationOut>>("/notifications/user") ?? [];
+        _notifications = await GetUserNotificationsClient.Get();
         _loading = false;
     }
 

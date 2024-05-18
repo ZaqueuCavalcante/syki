@@ -12,7 +12,7 @@
     <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Alunos" ButtonText="Novo Aluno" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Um aluno precisa necessariamente estar vinculado à uma oferta de curso." />
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_alunos" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_students" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou matrícula" />
             </ToolBarContent>
@@ -20,7 +20,7 @@
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.Email" Title="Email" />
                 <PropertyColumn Property="x => x.EnrollmentCode" Title="Matrícula" />
-                <PropertyColumn Property="x => x.CourseOffering" Title="CourseOffering" />
+                <PropertyColumn Property="x => x.CourseOffering" Title="Curso" />
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -32,19 +32,19 @@
     </MudContainer>
 </MudContainer>
 
-@inject HttpClient Http
+@inject GetStudentsClient Client
 @inject IDialogService DialogService
 
 @code
 {
     private bool _loading;
     private string _searchString;
-    private List<StudentOut> _alunos = [];
+    private List<StudentOut> _students = [];
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _alunos = await Http.GetFromJsonAsync<List<StudentOut>>("/alunos") ?? [];
+        _students = await Client.Get();
         _loading = false;
     }
 

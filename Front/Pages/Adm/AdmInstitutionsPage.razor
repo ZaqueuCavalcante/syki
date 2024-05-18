@@ -2,7 +2,7 @@
 
 @namespace Syki.Front.Pages.Adm
 
-@page "/institutions"
+@page "/adm/institutions"
 @attribute [Authorize(Roles = "Adm")]
 
 <PageTitle>Instituições</PageTitle>
@@ -17,7 +17,7 @@
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Id" Title="Id" />
-                <PropertyColumn Property="x => x.Name" Title="Name" />
+                <PropertyColumn Property="x => x.Name" Title="Nome" />
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -29,8 +29,8 @@
     </MudContainer>
 </MudContainer>
 
-@inject HttpClient Http
 @inject IDialogService DialogService
+@inject GetInstitutionsClient GetInstitutionsClient
 
 @code
 {
@@ -41,7 +41,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _institutions = await Http.GetFromJsonAsync<List<InstitutionOut>>("/institutions") ?? [];
+        _institutions = await GetInstitutionsClient.Get();
         _loading = false;
     }
 

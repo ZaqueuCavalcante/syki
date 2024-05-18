@@ -19,7 +19,7 @@
                 Variant="Variant.Outlined"
                 Class="mb-4"
                 AutoFocus="true"
-                @bind-Value="@data.Name"
+                @bind-Value="@_name"
                 T="String"
                 Label="Nome"
                 Required="true"
@@ -31,7 +31,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
-                @bind-Value="@data.Email"
+                @bind-Value="@_email"
                 T="String"
                 Label="Email"
                 Required="true"
@@ -46,8 +46,8 @@
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
+@inject CreateTeacherClient Client
 
 @code
 {
@@ -56,8 +56,8 @@
 
     private MudForm _form;
     private bool _loading;
-
-    private CreateTeacherIn data = new();
+    private string _name;
+    private string _email;
 
     async Task Submit()
     {
@@ -67,7 +67,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/professores", data);
+        var response = await Client.Create(_name, _email);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

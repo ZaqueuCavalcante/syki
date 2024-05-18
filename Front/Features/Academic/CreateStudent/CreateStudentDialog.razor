@@ -9,21 +9,21 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form">
-            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="_data.Name" OnKeyDown="@Submit" />
-            <SykiTextField Label="Email" @bind-Value="_data.Email" OnKeyDown="@Submit" />
+            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" OnKeyDown="@Submit" />
+            <SykiTextField Label="Email" @bind-Value="@_email" OnKeyDown="@Submit" />
             <MudSelect
                 Dense="true"
-                Disabled="@(_ofertas.Count == 0)"
+                Disabled="@(_courseOfferings.Count == 0)"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
-                @bind-Value="_oferta"
+                @bind-Value="@_courseOffering"
                 Label="Oferta"
                 Required="true"
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary
             ">
-                @foreach (CourseOfferingOut? item in _ofertas)
+                @foreach (CourseOfferingOut? item in _courseOfferings)
                 {
                     <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
                 }
@@ -37,9 +37,9 @@
     </DialogActions>
 </MudDialog>
 
-@inject HttpClient Http
 @inject ISnackbar Snackbar
-@inject GetCourseOfferingsClient Client
+@inject CreateStudentClient CreateStudentClient
+@inject GetCourseOfferingsClient GetCourseOfferingsClient
 
 @code
 {
@@ -49,14 +49,15 @@
     private MudForm _form;
     private bool _loading;
 
-    private CourseOfferingOut? _oferta;
-    private List<CourseOfferingOut> _ofertas = [];
+    private CourseOfferingOut? _courseOffering;
+    private List<CourseOfferingOut> _courseOfferings = [];
 
-    private CreateStudentIn _data = new();
+    private string _name;
+    private string _email;
 
     protected override async Task OnInitializedAsync()
     {
-        _ofertas = await Client.Get();
+        _courseOfferings = await GetCourseOfferingsClient.Get();
     }
 
     async Task Submit()
@@ -66,10 +67,10 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-        _data.CourseOfferingId = _oferta!.Id;
+        var courseOfferingId = _courseOffering!.Id;
 
         _loading = true;
-        var response = await Http.PostAsJsonAsync("/alunos", _data);
+        var response = await CreateStudentClient.Create(_name, _email, courseOfferingId);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

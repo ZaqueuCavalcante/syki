@@ -20,7 +20,7 @@ using Syki.Back.Features.Academic.GetDisciplines;
 using Syki.Back.Features.Adm.GetInstitutions;
 using Syki.Back.Features.Academic.GetNotifications;
 using Syki.Back.Features.Academic.GetTeachers;
-using Syki.Back.Features.Adm.GetInsights;
+using Syki.Back.Features.Adm.GetAdmInsights;
 using Syki.Back.Features.Academic.GetClasses;
 using Syki.Back.Features.Adm.GetUsers;
 using Syki.Back.Features.Academic.GetCoursesWithCurriculums;

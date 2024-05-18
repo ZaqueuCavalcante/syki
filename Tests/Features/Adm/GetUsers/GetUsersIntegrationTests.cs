@@ -8,10 +8,10 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         await _factory.LoggedAsAcademic();
 
-        var admClient = await _factory.LoggedAsAdm();
+        var client = await _factory.LoggedAsAdm();
 
         // Act
-        var users = await admClient.GetUsers();
+        var users = await client.GetUsers();
 
         // Assert
         users.Should().HaveCountGreaterThanOrEqualTo(2);

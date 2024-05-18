@@ -64,6 +64,6 @@
 - [] GetStudentInsights
 
 ## Adm
-- [] GetAdmInsights
-- [] GetInstitutions
+- [X] GetAdmInsights
+- [X] GetInstitutions
 - [X] GetUsers

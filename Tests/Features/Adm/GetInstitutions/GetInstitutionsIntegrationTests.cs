@@ -6,13 +6,12 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_return_all_institutions()
     {
         // Arrange
-        var client = _factory.GetClient();
-        await client.RegisterUser(_factory);
+        await _factory.LoggedAsAcademic();
 
-        var admClient = await _factory.LoggedAsAdm();
+        var client = await _factory.LoggedAsAdm();
 
         // Act
-        var institutions = await admClient.GetInstitutions();
+        var institutions = await client.GetInstitutions();
 
         // Assert
         institutions.Should().HaveCountGreaterThanOrEqualTo(1);

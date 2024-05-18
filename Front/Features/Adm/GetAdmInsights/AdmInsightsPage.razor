@@ -16,9 +16,9 @@
     <MudGrid Class="mt-4">
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.School" Value="@_data.Institutions" Text="Instituições" />
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.People" Value="@_data.Users" Text="Usuários" />
-        <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.GroupWork" Value="@_data.Campus" Text="Campus" />
+        <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.GroupWork" Value="@_data.Campi" Text="Campus" />
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.Class" Value="@_data.Courses" Text="Cursos" />
-        <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.Apps" Value="@_data.Disciplines" Text="Disciplines" />
+        <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.Apps" Value="@_data.Disciplines" Text="Disciplinas" />
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.AccountTree" Value="@_data.CourseCurriculums" Text="Grades" />
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.PlaylistAddCheck" Value="@_data.CourseOfferings" Text="Ofertas" />
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.Person4" Value="@_data.Teachers" Text="Professores" />
@@ -26,17 +26,17 @@
     </MudGrid>
 </MudContainer>
 
-@inject GetAdmInsightsClient Client
+@inject GetAdmInsightsClient GetAdmInsightsClient
 
 @code
 {
     private bool _loading;
-    private IndexAdmOut _data = new();
+    private AdmInsightsOut _data = new();
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _data = await Client.Get();
+        _data = await GetAdmInsightsClient.Get();
         _loading = false;
     }
 }

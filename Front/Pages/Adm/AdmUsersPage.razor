@@ -11,9 +11,9 @@
     <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Usuários" />
     <SykiPageAlert Text="Um usuário necessariamente precisa estar vinculado à uma instituição." />
     <MudContainer Class="mb-8">
-        <MudDataGrid Class="pa-4" Items="@_users" QuickFilter="@_quickFilter" Hover="true" Loading="_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_users" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo name" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
@@ -47,7 +47,7 @@
         _loading = false;
     }
 
-    private Func<UserOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
+    private Func<UserOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Email, x.Institution, x.Role);
 
     private string GetNotFoundMessage()
     {

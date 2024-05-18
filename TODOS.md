@@ -1,51 +1,51 @@
 # DONE
 
 ## Cross
-- [X] CreateInstitution
-- [X] CreatePendingUserRegister
-- [X] CreateUser
-- [X] FinishUserRegister
-- [X] GenerateJWT
-- [X] GetMfaKey
+- [] CreateInstitution
+- [] CreatePendingUserRegister
+- [] CreateUser
+- [] FinishUserRegister
+- [] GenerateJWT
+- [] GetMfaKey
 - [] GetUserNotifications
-- [X] Health
-- [X] Home
-- [X] Login
-- [X] LoginMfa
-- [X] ResetPassword
-- [X] SendResetPasswordToken
-- [X] SetupMfa
+- [] Health
+- [] Home
+- [] Login
+- [] LoginMfa
+- [] ResetPassword
+- [] SendResetPasswordToken
+- [] SetupMfa
 - [] ViewNotifications
 
 ## Academic
 - [] CreateAcademicPeriod
-- [X] CreateCampus
+- [] CreateCampus
 - [] CreateClass
-- [X] CreateCourse
-- [X] CreateCourseCurriculum
-- [X] CreateCourseOffering
-- [X] CreateDiscipline
+- [] CreateCourse
+- [] CreateCourseCurriculum
+- [] CreateCourseOffering
+- [] CreateDiscipline
 - [] CreateEnrollmentPeriod
 - [] CreateNotification
 - [] CreateStudent
 - [] CreateTeacher
 - [] GetAcademicInsights
 - [] GetAcademicPeriods
-- [X] GetCampi
+- [] GetCampi
 - [] GetClasses
-- [X] GetCourseCurriculumDisciplines
-- [X] GetCourseCurriculums
-- [X] GetCourseDisciplines
-- [X] GetCourseOfferings
-- [X] GetCourses
+- [] GetCourseCurriculumDisciplines
+- [] GetCourseCurriculums
+- [] GetCourseDisciplines
+- [] GetCourseOfferings
+- [] GetCourses
 - [] GetCoursesWithCurriculums
-- [X] GetCoursesWithDisciplines
-- [X] GetDisciplines
+- [] GetCoursesWithDisciplines
+- [] GetDisciplines
 - [] GetEnrollmentPeriods
 - [] GetNotifications
 - [] GetStudents
 - [] GetTeachers
-- [X] UpdateCampus
+- [] UpdateCampus
 
 ## Teacher
 
@@ -66,4 +66,4 @@
 ## Adm
 - [] GetAdmInsights
 - [] GetInstitutions
-- [] GetUsers
+- [X] GetUsers

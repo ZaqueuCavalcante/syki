@@ -58,7 +58,7 @@
 
 - [X] CreateStudentEnrollment
 - [X] GetCurrentEnrollmentPeriod
-- [] GetStudentAgenda
+- [X] GetStudentAgenda
 - [X] GetStudentDisciplines
 - [X] GetStudentEnrollmentClasses
 - [X] GetStudentInsights

@@ -20,7 +20,7 @@
 ## Academic
 - [] CreateAcademicPeriod
 - [X] CreateCampus
-- [] CreateClass
+- [X] CreateClass
 - [X] CreateCourse
 - [X] CreateCourseCurriculum
 - [X] CreateCourseOffering
@@ -32,7 +32,7 @@
 - [] GetAcademicInsights
 - [] GetAcademicPeriods
 - [X] GetCampi
-- [] GetClasses
+- [X] GetClasses
 - [] GetCourseCurriculumDisciplines
 - [X] GetCourseCurriculums
 - [] GetCourseDisciplines

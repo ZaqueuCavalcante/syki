@@ -279,7 +279,7 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> SchedulesConflitantes()
+    public static IEnumerable<object[]> ConflictingSchedules()
     {
         foreach (var list in new List<List<Schedule>>()
         {
@@ -314,7 +314,7 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> SchedulesValidos()
+    public static IEnumerable<object[]> ValidSchedules()
     {
         foreach (var list in new List<List<Schedule>>()
         {

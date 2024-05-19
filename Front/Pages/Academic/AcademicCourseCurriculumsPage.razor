@@ -21,7 +21,11 @@
                 <PropertyColumn Property="x => x.CourseName" Title="Curso" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenDisciplinesDialog(context.Item))" />
+                        <MudIconButton
+                            Size="@Size.Small"
+                            Icon="@Icons.Material.Filled.RemoveRedEye"
+                            OnClick="@(() => OpenDisciplinesDialog(context.Item))"
+                        />
                     </CellTemplate>
                 </TemplateColumn>
             </Columns>
@@ -51,16 +55,16 @@
         _loading = false;
     }
 
-    private async Task OpenDisciplinesDialog(CourseCurriculumOut grade)
+    private async Task OpenDisciplinesDialog(CourseCurriculumOut courseCurriculum)
     {
         var parameters = new DialogParameters<CourseCurriculumDisciplinesDialog>();
-        parameters.Add(x => x.Disciplines, grade.Disciplines);
+        parameters.Add(x => x.Disciplines, courseCurriculum.Disciplines);
 
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Medium,
             FullWidth = true
         };
-        await DialogService.ShowAsync<CourseCurriculumDisciplinesDialog>(grade.Name, parameters, options);
+        await DialogService.ShowAsync<CourseCurriculumDisciplinesDialog>(courseCurriculum.Name, parameters, options);
     }
 
     private Func<CourseCurriculumOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.CourseName);

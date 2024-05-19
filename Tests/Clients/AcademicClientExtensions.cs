@@ -22,6 +22,8 @@ using Syki.Front.Features.Academic.GetCourseCurriculums;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Academic.GetStudents;
+using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
+using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
 
 namespace Syki.Tests.Clients;
 
@@ -86,6 +88,18 @@ public static class AcademicClientExtensions
         return await client.Get();
     }
 
+    public static async Task<List<CourseOut>> GetCoursesWithCurriculums(this HttpClient http)
+    {
+        var client = new GetCoursesWithCurriculumsClient(http);
+        return await client.Get();
+    }
+
+    public static async Task<List<CourseOut>> GetCoursesWithDisciplines(this HttpClient http)
+    {
+        var client = new GetCoursesWithDisciplinesClient(http);
+        return await client.Get();
+    }
+
     public static async Task<HttpResponseMessage> CreateCourseCurriculumHttp(
         this HttpClient http,
         string name,
@@ -111,6 +125,12 @@ public static class AcademicClientExtensions
         var client = new GetCourseCurriculumsClient(http);
         return await client.Get();
     }
+
+    // public static async Task<List<CourseCurriculumOut>> GetCourseCurriculumDisciplines(this HttpClient http)
+    // {
+    //     var client = new GetCourseCurriculumDisciplinesClient(http);
+    //     return await client.Get();
+    // }
 
     public static async Task<HttpResponseMessage> CreateCourseOfferingHttp(
         this HttpClient http,

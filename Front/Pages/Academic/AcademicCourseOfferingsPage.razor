@@ -10,7 +10,7 @@
 
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.PlaylistAddCheck" Title="Ofertas" ButtonText="Nova Oferta" OnClick="@OpenDialog"/>
-    <SykiPageAlert Text="Uma oferta de curso pode acontecer a cada período, com variações de campus e de turno" />
+    <SykiPageAlert Text="Uma oferta de curso pode acontecer a cada período, com variações de campus, turno e grade." />
     <MudContainer Class="mb-8">
         <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>

@@ -48,7 +48,6 @@ using Syki.Back.Features.Teacher.GetTeacherInsights;
 using Syki.Back.Features.Teacher.GetTeacherClasses;
 using Syki.Back.Features.Teacher.GetTeacherClass;
 using Syki.Back.Features.Academic.GetCourseOfferings;
-using Syki.Back.Features.Academic.GetCourseCurriculumDisciplines;
 using Syki.Back.Features.Academic.GetCourseCurriculums;
 using Syki.Back.Features.Student.GetStudentEnrollmentClasses;
 
@@ -74,7 +73,6 @@ public static class ServicesConfigs
         services.AddScoped<GetAcademicPeriodsService>();
         services.AddScoped<GetCampiService>();
         services.AddScoped<GetClassesService>();
-        services.AddScoped<GetCourseCurriculumDisciplinesService>();
         services.AddScoped<GetCourseCurriculumsService>();
         services.AddScoped<GetCourseDisciplinesService>();
         services.AddScoped<GetCourseOfferingsService>();

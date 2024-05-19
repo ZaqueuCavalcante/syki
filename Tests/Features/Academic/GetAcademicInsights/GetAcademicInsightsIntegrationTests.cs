@@ -11,6 +11,9 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateDiscipline();
         await client.CreateCourse();
 
+        await client.CreateTeacher();
+        await client.CreateTeacher();
+
         // Act
         var response = await client.GetAcademicInsights();
 
@@ -21,7 +24,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.CourseCurriculums.Should().Be(0);
         response.CourseOfferings.Should().Be(0);
         response.Classes.Should().Be(0);
-        response.Teachers.Should().Be(0);
+        response.Teachers.Should().Be(2);
         response.Students.Should().Be(0);
         response.Notifications.Should().Be(0);
     }

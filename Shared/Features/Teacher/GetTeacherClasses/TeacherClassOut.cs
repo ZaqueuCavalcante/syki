@@ -12,7 +12,7 @@ public class TeacherClassOut
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;
-        return Id == ((ClassOut)obj).Id;
+        return Id == ((TeacherClassOut)obj).Id;
     }
 
     public override int GetHashCode()

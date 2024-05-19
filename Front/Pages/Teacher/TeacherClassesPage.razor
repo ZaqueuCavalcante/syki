@@ -1,4 +1,5 @@
-﻿@using Syki.Front.Features.Academic.GetClasses
+﻿@using Syki.Front.Components.Custom
+@using Syki.Front.Features.Academic.CreateClass
 
 @namespace Syki.Front.Pages.Teacher
 
@@ -6,3 +7,50 @@
 @attribute [Authorize(Roles = "Teacher")]
 
 <PageTitle>Turmas</PageTitle>
+
+<MudContainer>
+    <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="Turmas" />
+    <SykiPageAlert Text="Em uma mesma turma podem estudar alunos de diferentes cursos." />
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_classes" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por disciplina ou período" />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Discipline" Title="Disciplina" />
+                <PropertyColumn Property="x => x.Period" Title="Período" />
+                <PropertyColumn Property="x => x.SchedulesInline" Title="Horário" />
+            </Columns>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiDataGridPager T="TeacherClassOut" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject IDialogService DialogService
+@inject GetTeacherClassesClient GetTeacherClassesClient
+
+@code
+{
+    private bool _loading;
+    private string _searchString;
+    private List<TeacherClassOut> _classes = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _classes = await GetTeacherClassesClient.Get();
+        _loading = false;
+    }
+
+    private Func<TeacherClassOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Period);
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem turmas cadastradas ainda." : "Nenhuma turma encontrada.";
+    }
+}

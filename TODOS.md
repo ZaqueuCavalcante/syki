@@ -49,9 +49,9 @@
 
 ## Teacher
 
-- [] GetTeacherAgenda
+- [X] GetTeacherAgenda
 - [] GetTeacherClass
-- [] GetTeacherClasses
+- [X] GetTeacherClasses
 - [X] GetTeacherInsights
 
 ## Student

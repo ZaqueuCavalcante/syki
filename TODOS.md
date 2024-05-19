@@ -18,19 +18,19 @@
 - [] ViewNotifications
 
 ## Academic
-- [] CreateAcademicPeriod
+- [X] CreateAcademicPeriod
 - [X] CreateCampus
 - [X] CreateClass
 - [X] CreateCourse
 - [X] CreateCourseCurriculum
 - [X] CreateCourseOffering
 - [X] CreateDiscipline
-- [] CreateEnrollmentPeriod
+- [X] CreateEnrollmentPeriod
 - [] CreateNotification
 - [X] CreateStudent
 - [X] CreateTeacher
 - [] GetAcademicInsights
-- [] GetAcademicPeriods
+- [X] GetAcademicPeriods
 - [X] GetCampi
 - [X] GetClasses
 - [] GetCourseCurriculumDisciplines
@@ -41,7 +41,7 @@
 - [] GetCoursesWithCurriculums
 - [] GetCoursesWithDisciplines
 - [X] GetDisciplines
-- [] GetEnrollmentPeriods
+- [X] GetEnrollmentPeriods
 - [] GetNotifications
 - [X] GetStudents
 - [X] GetTeachers
@@ -60,7 +60,7 @@
 - [] GetCurrentEnrollmentPeriod
 - [] GetStudentAgenda
 - [X] GetStudentDisciplines
-- [] GetStudentEnrollmentClasses
+- [X] GetStudentEnrollmentClasses
 - [] GetStudentInsights
 
 ## Adm

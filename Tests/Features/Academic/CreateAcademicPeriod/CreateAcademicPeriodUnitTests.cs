@@ -70,7 +70,7 @@ public class CreateAcademicPeriodUnitTests
     }
 
     [Test]
-    public void Should_not_create_academic_period_with_invalid_start_equal_to_end()
+    public void Should_not_create_academic_period_with_start_equal_to_end()
     {
         // Arrange
         const string id = "2023.1";
@@ -113,11 +113,11 @@ public class CreateAcademicPeriodUnitTests
         var period = new AcademicPeriod(id, institutionId, start, end);
 
         // Act
-        var periodoOut = period.ToOut();
+        var periodOut = period.ToOut();
 
         // Assert
-        periodoOut.Id.Should().Be(period.Id);
-        periodoOut.Start.Should().Be(start);
-        periodoOut.End.Should().Be(end);
+        periodOut.Id.Should().Be(period.Id);
+        periodOut.Start.Should().Be(start);
+        periodOut.End.Should().Be(end);
     }
 }

@@ -21,13 +21,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
 
         var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
-
-        var token = await _factory.GetResetPasswordToken(student.Email);
-        var password = await client.ResetPassword(token!);
-        await client.Login(student.Email, password);
+        var studentClient = await _factory.LoggedAsStudent(student.Email);
 
         // Act
-        var response = await client.GetStudentDisciplines();
+        var response = await studentClient.GetStudentDisciplines();
 
         // Assert
         response.Count.Should().Be(3);

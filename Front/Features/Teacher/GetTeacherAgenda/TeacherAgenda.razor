@@ -12,7 +12,7 @@
             </MudStack>
         </MudCardContent>
     </MudCard>
-    <CascadingValue Name="Dias" Value="@Dias">
+    <CascadingValue Name="Days" Value="@Days">
         <WeeklyAgenda />
     </CascadingValue>
 </MudContainer>
@@ -21,10 +21,10 @@
 
 @code
 {
-    private List<AgendaDayOut> Dias = [];
+    private List<AgendaDayOut> Days = [];
 
     protected override async Task OnInitializedAsync()
     {
-        Dias = await Client.Get();
+        Days = await Client.Get();
     }
 }

@@ -56,7 +56,7 @@
 
 ## Student
 
-- [] CreateStudentEnrollment
+- [X] CreateStudentEnrollment
 - [X] GetCurrentEnrollmentPeriod
 - [] GetStudentAgenda
 - [X] GetStudentDisciplines

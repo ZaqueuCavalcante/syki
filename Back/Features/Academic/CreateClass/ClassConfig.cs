@@ -26,7 +26,7 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
                 {
                     cs.ToTable("classes__students");
                     cs.HasOne<Class>().WithMany().HasForeignKey(x => x.ClassId);
-                    cs.HasOne<CreateStudent.Student>().WithMany().HasForeignKey(x => x.StudentId);
+                    cs.HasOne<CreateStudent.Student>().WithMany().HasPrincipalKey(x => x.Id).HasForeignKey(x => x.StudentId);
                 }
             );
 

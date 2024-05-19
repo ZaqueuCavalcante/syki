@@ -5,10 +5,10 @@
 @page "/student/disciplines"
 @attribute [Authorize(Roles = "Student")]
 
-<PageTitle>Disciplines</PageTitle>
+<PageTitle>Disciplinas</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplines" />
+    <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" />
     <MudContainer Class="mb-8">
         <MudExpansionPanels MultiExpansion="true">
             @foreach(var period in _disciplines.ConvertAll(d => d.Period).Distinct().Order())
@@ -38,7 +38,7 @@
                                 <MudTd DataLabel="Nome">@context.Name</MudTd>
                                 <MudTd DataLabel="Créditos">@context.Credits</MudTd>
                                 <MudTd DataLabel="CH">@context.Workload</MudTd>
-                                <MudTd DataLabel="Situação">@context.StudentDisciplineStatus</MudTd>
+                                <MudTd DataLabel="Status">@context.StudentDisciplineStatus</MudTd>
                             </RowTemplate>
                         </MudTable>
                     </ChildContent>

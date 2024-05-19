@@ -2,6 +2,7 @@ using Syki.Front.Features.Student.GetStudentInsights;
 using Syki.Front.Features.Student.GetStudentDisciplines;
 using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 using Syki.Front.Features.Student.GetStudentEnrollmentClasses;
+using Syki.Front.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Tests.Clients;
 
@@ -29,5 +30,11 @@ public static class StudentClientExtensions
     {
         var client = new GetStudentInsightsClient(http);
         return await client.Get();
+    }
+
+    public static async Task<HttpResponseMessage> CreateStudentEnrollment(this HttpClient http, List<Guid> classes)
+    {
+        var client = new CreateStudentEnrollmentClient(http);
+        return await client.Create(classes);
     }
 }

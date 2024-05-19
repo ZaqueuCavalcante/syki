@@ -24,16 +24,37 @@ using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Academic.GetStudents;
 using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
+using Syki.Front.Features.Academic.GetNotifications;
+using Syki.Front.Features.Cross.GetUserNotifications;
+using Syki.Front.Features.Cross.ViewNotifications;
 
 namespace Syki.Tests.Clients;
 
 public static class AcademicClientExtensions
 {
-    public static async Task<NotificationOut> CreateNotification(this HttpClient http, string title, string description, UsersGroup targetUsers)
+    public static async Task<NotificationOut> CreateNotification(this HttpClient http, string title, string description, UsersGroup targetUsers, bool timeless)
     {
         var client = new CreateNotificationClient(http);
-        var response = await client.Create(title, description, targetUsers);
+        var response = await client.Create(title, description, targetUsers, timeless);
         return await response.DeserializeTo<NotificationOut>();
+    }
+
+    public static async Task<List<NotificationOut>> GetNotifications(this HttpClient http)
+    {
+        var client = new GetNotificationsClient(http);
+        return await client.Get();
+    }
+
+    public static async Task<List<UserNotificationOut>> GetUserNotifications(this HttpClient http)
+    {
+        var client = new GetUserNotificationsClient(http);
+        return await client.Get();
+    }
+
+    public static async Task ViewNotifications(this HttpClient http)
+    {
+        var client = new ViewNotificationsClient(http);
+        await client.View();
     }
 
     public static async Task<CampusOut> CreateCampus(this HttpClient http, string name = "Agreste I", string city = "Caruaru - PE")

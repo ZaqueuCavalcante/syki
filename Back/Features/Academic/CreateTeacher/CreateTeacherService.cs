@@ -19,6 +19,8 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
 
         await sendService.Send(new SendResetPasswordTokenIn { Email = user.Email });
 
+        // TODO: Link old messages?
+
         transaction.Commit();
 
         return teacher.ToOut();

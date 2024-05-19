@@ -30,6 +30,7 @@
                     <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
                 }
             </MudSelect>
+            <MudCheckBox @bind-Value="@_timeless" Label="Atemporal (se marcado, antigos e novos usuários receberão esta notificação)" Color="Color.Primary" />
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -53,6 +54,7 @@
     private string _title;
     private string _description;
     private UsersGroup? _targetUsers;
+    private bool _timeless;
 
     async Task Submit()
     {
@@ -62,7 +64,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Client.Create(_title, _description, _targetUsers!.Value);
+        var response = await Client.Create(_title, _description, _targetUsers!.Value, _timeless);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

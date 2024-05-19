@@ -7,7 +7,7 @@
 - [X] FinishUserRegister
 - [X] GenerateJWT
 - [X] GetMfaKey
-- [] GetUserNotifications
+- [X] GetUserNotifications
 - [X] Health
 - [X] Home
 - [X] Login
@@ -15,7 +15,7 @@
 - [X] ResetPassword
 - [X] SendResetPasswordToken
 - [X] SetupMfa
-- [] ViewNotifications
+- [X] ViewNotifications
 
 ## Academic
 - [X] CreateAcademicPeriod
@@ -26,7 +26,7 @@
 - [X] CreateCourseOffering
 - [X] CreateDiscipline
 - [X] CreateEnrollmentPeriod
-- [] CreateNotification
+- [X] CreateNotification
 - [X] CreateStudent
 - [X] CreateTeacher
 - [X] GetAcademicInsights
@@ -42,7 +42,7 @@
 - [X] GetCoursesWithDisciplines
 - [X] GetDisciplines
 - [X] GetEnrollmentPeriods
-- [] GetNotifications
+- [X] GetNotifications
 - [X] GetStudents
 - [X] GetTeachers
 - [X] UpdateCampus

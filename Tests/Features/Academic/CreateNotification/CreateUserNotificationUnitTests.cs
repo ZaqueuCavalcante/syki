@@ -5,14 +5,29 @@ namespace Syki.Tests.Features.Academic.CreateNotification;
 public class CreateUserNotificationUnitTests
 {
     [Test]
-    public void Deve_converter_a_user_notification_corretamente_pro_out()
+    public void Should_create_notification_with_correct_data()
     {
+        // Arrange
         var userId = Guid.NewGuid();
+        var notificationId = Guid.NewGuid();
 
+        // Act
+        var userNotification = new UserNotification(userId, notificationId);
+
+        // Assert
+        userNotification.UserId.Should().Be(userId);
+        userNotification.NotificationId.Should().Be(notificationId);
+        userNotification.ViewedAt.Should().BeNull();
+    }
+
+    [Test]
+    public void Should_convert_user_notification_to_out()
+    {
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
-        var notification = new Notification(Guid.NewGuid(), title, description);
+        var notification = new Notification(Guid.NewGuid(), title, description, true);
 
+        var userId = Guid.NewGuid();
         var userNotification = new UserNotification(userId, notification.Id)
         {
             Notification = notification,
@@ -28,47 +43,5 @@ public class CreateUserNotificationUnitTests
         userNotificationOut.Description.Should().Be(notification.Description);
         userNotificationOut.CreatedAt.Should().Be(notification.CreatedAt);
         userNotificationOut.ViewedAt.Should().Be(userNotification.ViewedAt);
-    }
-
-    [Test]
-    public void Should_create_notification_with_correct_user_id()
-    {
-        // Arrange
-        var userId = Guid.NewGuid();
-        var notificationId = Guid.NewGuid();
-
-        // Act
-        var userNotification = new UserNotification(userId, notificationId);
-
-        // Assert
-        userNotification.UserId.Should().Be(userId);
-    }
-
-    [Test]
-    public void Should_create_notification_with_correct_notification_id()
-    {
-        // Arrange
-        var userId = Guid.NewGuid();
-        var notificationId = Guid.NewGuid();
-
-        // Act
-        var userNotification = new UserNotification(userId, notificationId);
-
-        // Assert
-        userNotification.NotificationId.Should().Be(notificationId);
-    }
-
-    [Test]
-    public void Deve_criar_uma_user_notification_com_viewed_at_nulo()
-    {
-        // Arrange
-        var userId = Guid.NewGuid();
-        var notificationId = Guid.NewGuid();
-
-        // Act
-        var userNotification = new UserNotification(userId, notificationId);
-
-        // Assert
-        userNotification.ViewedAt.Should().BeNull();
     }
 }

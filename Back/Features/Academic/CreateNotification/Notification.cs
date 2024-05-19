@@ -6,6 +6,7 @@ public class Notification
     public Guid InstitutionId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
+    public bool Timeless { get; set; }
     public DateTime CreatedAt { get; set; }
     public List<UserNotification> Users { get; set; }
 
@@ -14,12 +15,14 @@ public class Notification
     public Notification(
         Guid institutionId,
         string title,
-        string description
+        string description,
+        bool timeless
     ) {
         Id = Guid.NewGuid();
         InstitutionId = institutionId;
         Title = title;
         Description = description;
+        Timeless = timeless;
         CreatedAt = DateTime.Now;
     }
 
@@ -30,6 +33,7 @@ public class Notification
             Id = Id,
             Title = Title,
             Description = Description,
+            Timeless = Timeless,
             CreatedAt = CreatedAt,
             Views = Views,
         };

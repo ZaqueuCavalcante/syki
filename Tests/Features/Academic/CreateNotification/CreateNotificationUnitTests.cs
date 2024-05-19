@@ -5,77 +5,22 @@ namespace Syki.Tests.Features.Academic.CreateNotification;
 public class CreateNotificationUnitTests
 {
     [Test]
-    public void Should_create_a_notification_with_not_empty_id()
+    public void Should_create_a_notification_with_correct_data()
     {
         // Arrange
         var institutionId = Guid.NewGuid();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
+        var timeless = true;
 
         // Act
-        var notification = new Notification(institutionId, title, description);
+        var notification = new Notification(institutionId, title, description, timeless);
 
         // Assert
         notification.Id.Should().NotBeEmpty();
-    }
-
-    [Test]
-    public void Should_create_a_notification_with_correct_institution_id()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        const string title = "Boas-vindas!";
-        const string description = "Seja muito bem-vindo(a)!";
-
-        // Act
-        var notification = new Notification(institutionId, title, description);
-
-        // Assert
         notification.InstitutionId.Should().Be(institutionId);
-    }
-
-    [Test]
-    public void Should_create_a_notification_with_correct_title()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        const string title = "Boas-vindas!";
-        const string description = "Seja muito bem-vindo(a)!";
-
-        // Act
-        var notification = new Notification(institutionId, title, description);
-
-        // Assert
         notification.Title.Should().Be(title);
-    }
-
-    [Test]
-    public void Should_create_a_notification_with_correct_description()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        const string title = "Boas-vindas!";
-        const string description = "Seja muito bem-vindo(a)!";
-
-        // Act
-        var notification = new Notification(institutionId, title, description);
-
-        // Assert
         notification.Description.Should().Be(description);
-    }
-
-    [Test]
-    public void Should_create_a_notification_with_correct_created_at()
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        const string title = "Boas-vindas!";
-        const string description = "Seja muito bem-vindo(a)!";
-
-        // Act
-        var notification = new Notification(institutionId, title, description);
-
-        // Assert
         notification.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
     }
 
@@ -86,8 +31,9 @@ public class CreateNotificationUnitTests
         var institutionId = Guid.NewGuid();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
+        var timeless = true;
 
-        var notification = new Notification(institutionId, title, description)
+        var notification = new Notification(institutionId, title, description, timeless)
         {
             Views = "2/15"
         };
@@ -99,6 +45,7 @@ public class CreateNotificationUnitTests
         notificationOut.Id.Should().Be(notification.Id);
         notificationOut.Title.Should().Be(notification.Title);
         notificationOut.Description.Should().Be(notification.Description);
+        notificationOut.Timeless.Should().Be(notification.Timeless);
         notificationOut.CreatedAt.Should().Be(notification.CreatedAt);
         notificationOut.Views.Should().Be(notification.Views);
     }

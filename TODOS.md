@@ -27,7 +27,7 @@
 - [X] CreateDiscipline
 - [] CreateEnrollmentPeriod
 - [] CreateNotification
-- [] CreateStudent
+- [X] CreateStudent
 - [X] CreateTeacher
 - [] GetAcademicInsights
 - [] GetAcademicPeriods
@@ -43,7 +43,7 @@
 - [X] GetDisciplines
 - [] GetEnrollmentPeriods
 - [] GetNotifications
-- [] GetStudents
+- [X] GetStudents
 - [X] GetTeachers
 - [X] UpdateCampus
 
@@ -59,7 +59,7 @@
 - [] CreateStudentEnrollment
 - [] GetCurrentEnrollmentPeriod
 - [] GetStudentAgenda
-- [] GetStudentDisciplines
+- [X] GetStudentDisciplines
 - [] GetStudentEnrollmentClasses
 - [] GetStudentInsights
 

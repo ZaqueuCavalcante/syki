@@ -1,5 +1,6 @@
 namespace Syki.Tests.Integration;
 
+[Parallelizable(ParallelScope.All)]
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]

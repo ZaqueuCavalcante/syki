@@ -170,7 +170,7 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateTeacherService 
         cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[30].Id, 5, 2, 25));
         ctx.Add(cc);
 
-        var ofertaAds = new CourseOffering(
+        var courseOfferingAds = new CourseOffering(
             id,
             institution.Campi[2].Id,
             institution.Courses[1].Id,
@@ -178,7 +178,7 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateTeacherService 
             institution.AcademicPeriods[0].Id,
             Shift.Noturno
         );
-        ctx.Add(ofertaAds);
+        ctx.Add(courseOfferingAds);
 
         await service.Create(institution.Id, CreateTeacherIn.Demo("Davi Pessoa Ferraz"));
         await service.Create(institution.Id, CreateTeacherIn.Demo("Luciete Bezerra Alves"));

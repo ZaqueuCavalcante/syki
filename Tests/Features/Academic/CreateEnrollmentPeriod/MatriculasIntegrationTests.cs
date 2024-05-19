@@ -43,9 +43,9 @@ public partial class IntegrationTests : IntegrationTestBase
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
         var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
+        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
 
-        var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
+        var aluno = await client.CreateStudent(courseOffering.Id, "Zaqueu");
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
@@ -93,8 +93,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
-        var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
+        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
 
         var year = DateTime.Now.Year;
         var periodo = await client.CreateAcademicPeriod($"{year}.1");
@@ -103,7 +103,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
         await client.CreateEnrollmentPeriod(period.Id, start, end);
 
-        var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
+        var aluno = await client.CreateStudent(courseOffering.Id, "Zaqueu");
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act
@@ -137,7 +137,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var introDireito = await client.CreateDiscipline("Introdução ao Direito", [direito.Id]);
         var direitoFinanceiro = await client.CreateDiscipline("Direito Financeiro", [direito.Id]);
 
-        var gradeAds = await client.CreateCourseCurriculum("Grade ADS 1.0", ads.Id,
+        var courseCurriculumAds = await client.CreateCourseCurriculum("Grade ADS 1.0", ads.Id,
         [
             new(matematica.Id, 1, 7, 73),
             new(bancoDeDados.Id, 1, 7, 73),
@@ -145,7 +145,7 @@ public partial class IntegrationTests : IntegrationTestBase
             new(infoSociedade.Id, 2, 7, 73),
         ]);
 
-        var gradeDireito = await client.CreateCourseCurriculum("Grade Direito 1.0", direito.Id,
+        var courseCurriculumDireito = await client.CreateCourseCurriculum("Grade Direito 1.0", direito.Id,
         [
             new(direitoEconomia.Id, 1, 7, 73),
             new(infoSociedade.Id, 2, 7, 73),
@@ -153,8 +153,8 @@ public partial class IntegrationTests : IntegrationTestBase
             new(direitoFinanceiro.Id, 1, 7, 73),
         ]);
 
-        var ofertaAds = await client.CreateCourseOffering(campus.Id, ads.Id, gradeAds.Id, period.Id, Shift.Noturno);
-        var ofertaDireito = await client.CreateCourseOffering(campus.Id, direito.Id, gradeDireito.Id, period.Id, Shift.Noturno);
+        var courseOfferingAds = await client.CreateCourseOffering(campus.Id, ads.Id, courseCurriculumAds.Id, period.Id, Shift.Noturno);
+        var courseOfferingDireito = await client.CreateCourseOffering(campus.Id, direito.Id, courseCurriculumDireito.Id, period.Id, Shift.Noturno);
 
         var chico = await client.CreateTeacher("Chico");
         var ana = await client.CreateTeacher("Ana");
@@ -167,8 +167,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var turmaIntroDireito = await client.CreateClass(introDireito.Id, ana.Id, period.Id, [new(Day.Quarta, Hour.H07_00, Hour.H08_00)]);
         var turmaDireitoFinanceiro = await client.CreateClass(direitoFinanceiro.Id, ana.Id, period.Id, [new(Day.Quinta, Hour.H07_00, Hour.H08_00)]);
 
-        var zaqueu = await client.CreateStudent(ofertaAds.Id, "Zaqueu");
-        var maju = await client.CreateStudent(ofertaDireito.Id, "Maju");
+        var zaqueu = await client.CreateStudent(courseOfferingAds.Id, "Zaqueu");
+        var maju = await client.CreateStudent(courseOfferingDireito.Id, "Maju");
 
         var clientAluno = await _factory.LoggedAsStudent(zaqueu.Email);
 

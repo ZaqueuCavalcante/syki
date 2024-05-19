@@ -1,5 +1,6 @@
 using Syki.Front.Features.Academic.GetCampi;
 using Syki.Front.Features.Academic.GetCourses;
+using Syki.Front.Features.Academic.GetClasses;
 using Syki.Front.Features.Academic.CreateClass;
 using Syki.Front.Features.Academic.GetTeachers;
 using Syki.Front.Features.Academic.CreateCampus;
@@ -20,7 +21,7 @@ using Syki.Front.Features.Academic.GetEnrollmentPeriods;
 using Syki.Front.Features.Academic.GetCourseCurriculums;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
-using Syki.Front.Features.Academic.GetClasses;
+using Syki.Front.Features.Academic.GetStudents;
 
 namespace Syki.Tests.Clients;
 
@@ -220,9 +221,9 @@ public static class AcademicClientExtensions
         return student;
     }
 
-    public static async Task<List<DisciplineOut>> GetStudentDisciplines(this HttpClient http)
+    public static async Task<List<StudentOut>> GetStudents(this HttpClient http)
     {
-        var client = new GetDisciplinesClient(http);
+        var client = new GetStudentsClient(http);
         return await client.Get();
     }
 

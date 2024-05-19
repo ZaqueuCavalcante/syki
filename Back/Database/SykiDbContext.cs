@@ -60,6 +60,16 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
         foreach (var entity in builder.Model.GetEntityTypes())
         {
             entity.SetTableName(entity.GetTableName()!.ToSnakeCase().Replace("asp_net_", ""));
+
+            foreach (var fk in entity.GetForeignKeys())
+            {
+                fk.SetConstraintName(fk.GetConstraintName().Replace("1", ""));
+            }
+
+            foreach (var index in entity.GetIndexes())
+            {
+                index.SetDatabaseName(index.GetDatabaseName()?.ToSnakeCase());
+            }
         }
     }
 

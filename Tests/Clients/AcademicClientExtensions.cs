@@ -301,25 +301,4 @@ public static class AcademicClientExtensions
         var client = new GetEnrollmentPeriodsClient(http);
         return await client.Get();
     }
-
-
-
-    // -------------------------------------------------------------------------------------------- //
-
-    public static async Task<T> PostAsync<T>(this HttpClient client, string path, object obj)
-    {
-        var response = await client.PostHttpAsync(path, obj);
-        return await response.DeserializeTo<T>();
-    }
-
-    public static async Task<HttpResponseMessage> PostHttpAsync(this HttpClient client, string path, object obj)
-    {
-        return await client.PostAsync(path, obj.ToStringContent());
-    }
-
-    public static async Task<T> GetAsync<T>(this HttpClient client, string path)
-    {
-        var response = await client.GetAsync(path);
-        return await response.DeserializeTo<T>();
-    }
 }

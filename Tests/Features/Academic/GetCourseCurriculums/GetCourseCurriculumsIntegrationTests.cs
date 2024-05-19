@@ -10,7 +10,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var clientUfpe = await _factory.LoggedAsAcademic();
 
         var courseNovaRoma = await clientNovaRoma.CreateCourse("Análise e Desenvolvimento de Sistemas");
-        var gradeNovaRoma = await clientNovaRoma.CreateCourseCurriculum("NR - Grade de ADS - 1.0", courseNovaRoma.Id);
+        var courseCurriculumNovaRoma = await clientNovaRoma.CreateCourseCurriculum("NR - Grade de ADS - 1.0", courseNovaRoma.Id);
 
         var courseUfpe = await clientUfpe.CreateCourse("Análise e Desenvolvimento de Sistemas");
         await clientUfpe.CreateCourseCurriculum("UFPE - Grade de ADS - 1.0", courseUfpe.Id);
@@ -20,8 +20,8 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         courseCurriculums.Should().HaveCount(1);
-        courseCurriculums[0].Id.Should().Be(gradeNovaRoma.Id);
-        courseCurriculums[0].Name.Should().Be(gradeNovaRoma.Name);
+        courseCurriculums[0].Id.Should().Be(courseCurriculumNovaRoma.Id);
+        courseCurriculums[0].Name.Should().Be(courseCurriculumNovaRoma.Name);
     }
 
     [Test]

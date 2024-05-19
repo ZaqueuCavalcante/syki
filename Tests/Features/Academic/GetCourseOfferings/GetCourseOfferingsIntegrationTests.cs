@@ -11,8 +11,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
-        var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        await client.CreateCourseOffering(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
+        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
 
         // Act
         var courseOfferings = await client.GetCourseOfferings();

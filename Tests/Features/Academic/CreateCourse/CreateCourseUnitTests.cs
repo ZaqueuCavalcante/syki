@@ -84,12 +84,12 @@ public class CreateCourseUnitTests
     public void Should_return_the_course_name_as_to_string_representation()
     {
         // Arrange
-        var courseOut = new CourseOut { Name = "Course" };
+        var courseOut = new CourseOut { Name = "Direito" };
 
         // Act
         var name = courseOut.ToString();
 
         // Assert
-        name.Should().Be("Course");
+        name.Should().Be("Direito");
     }
 }

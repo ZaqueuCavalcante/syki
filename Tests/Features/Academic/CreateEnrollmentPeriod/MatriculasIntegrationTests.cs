@@ -42,8 +42,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
-        var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
+        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
 
         var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
@@ -64,8 +64,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
-        var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var oferta = await client.CreateCourseOffering(campus.Id, course.Id, grade.Id, period.Id, Shift.Noturno);
+        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        var co = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
 
         var year = DateTime.Now.Year;
         var periodo = await client.CreateAcademicPeriod($"{year}.1");
@@ -74,7 +74,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var end = DateOnly.FromDateTime(DateTime.Now.AddDays(4));
         await client.CreateEnrollmentPeriod(period.Id, start, end);
 
-        var aluno = await client.CreateStudent(oferta.Id, "Zaqueu");
+        var aluno = await client.CreateStudent(co.Id, "Zaqueu");
         var clientAluno = await _factory.LoggedAsStudent(aluno.Email);
 
         // Act

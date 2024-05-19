@@ -83,7 +83,6 @@
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             />
-
             <MudSelect
                 Dense="true"
                 Margin="Margin.Dense"
@@ -185,7 +184,7 @@
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add("CourseOffering cadastrada com sucesso!", Severity.Success);
+            Snackbar.Add("Oferta cadastrada com sucesso!", Severity.Success);
         }
         else
         {

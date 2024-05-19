@@ -14,7 +14,7 @@ public class CreateCourseCurriculumUnitTests
         var courseId = Guid.NewGuid();
         const string name = "Grade de ADS - 1.0";
 
-        var grade = new CourseCurriculum(institutionId, courseId, name)
+        var cc = new CourseCurriculum(institutionId, courseId, name)
         {
             Course = new Course(institutionId, "ADS", CourseType.Bacharelado),
             Disciplines = [
@@ -23,26 +23,26 @@ public class CreateCourseCurriculumUnitTests
             ],
         };
 
-        grade.Links.Add(new(grade.Disciplines[0].Id, 2, 12, 80));
-        grade.Links.Add(new(grade.Disciplines[1].Id, 1, 8, 50));
+        cc.Links.Add(new(cc.Disciplines[0].Id, 2, 12, 80));
+        cc.Links.Add(new(cc.Disciplines[1].Id, 1, 8, 50));
 
         // Act
-        var gradeOut = grade.ToOut();
+        var ccOut = cc.ToOut();
 
         // Assert
-        gradeOut.Id.Should().Be(grade.Id);
-        gradeOut.CourseId.Should().Be(grade.CourseId);
-        gradeOut.CourseName.Should().Be(grade.Course.Name);
-        gradeOut.Name.Should().Be(grade.Name);
+        ccOut.Id.Should().Be(cc.Id);
+        ccOut.CourseId.Should().Be(cc.CourseId);
+        ccOut.CourseName.Should().Be(cc.Course.Name);
+        ccOut.Name.Should().Be(cc.Name);
 
-        gradeOut.Disciplines.Should().HaveCount(2);
-        gradeOut.Disciplines[0].Name.Should().Be("Banco de Dados");
-        gradeOut.Disciplines[0].Period.Should().Be(2);
-        gradeOut.Disciplines[0].Credits.Should().Be(12);
-        gradeOut.Disciplines[0].Workload.Should().Be(80);
-        gradeOut.Disciplines[1].Name.Should().Be("Estrutura de Dados");
-        gradeOut.Disciplines[1].Period.Should().Be(1);
-        gradeOut.Disciplines[1].Credits.Should().Be(8);
-        gradeOut.Disciplines[1].Workload.Should().Be(50);
+        ccOut.Disciplines.Should().HaveCount(2);
+        ccOut.Disciplines[0].Name.Should().Be("Banco de Dados");
+        ccOut.Disciplines[0].Period.Should().Be(2);
+        ccOut.Disciplines[0].Credits.Should().Be(12);
+        ccOut.Disciplines[0].Workload.Should().Be(80);
+        ccOut.Disciplines[1].Name.Should().Be("Estrutura de Dados");
+        ccOut.Disciplines[1].Period.Should().Be(1);
+        ccOut.Disciplines[1].Credits.Should().Be(8);
+        ccOut.Disciplines[1].Workload.Should().Be(50);
     }
 }

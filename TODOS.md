@@ -19,33 +19,33 @@
 
 ## Academic
 - [] CreateAcademicPeriod
-- [] CreateCampus
+- [X] CreateCampus
 - [] CreateClass
-- [] CreateCourse
-- [] CreateCourseCurriculum
-- [] CreateCourseOffering
-- [] CreateDiscipline
+- [X] CreateCourse
+- [X] CreateCourseCurriculum
+- [X] CreateCourseOffering
+- [X] CreateDiscipline
 - [] CreateEnrollmentPeriod
 - [] CreateNotification
 - [] CreateStudent
-- [] CreateTeacher
+- [X] CreateTeacher
 - [] GetAcademicInsights
 - [] GetAcademicPeriods
-- [] GetCampi
+- [X] GetCampi
 - [] GetClasses
 - [] GetCourseCurriculumDisciplines
-- [] GetCourseCurriculums
+- [X] GetCourseCurriculums
 - [] GetCourseDisciplines
-- [] GetCourseOfferings
-- [] GetCourses
+- [X] GetCourseOfferings
+- [X] GetCourses
 - [] GetCoursesWithCurriculums
 - [] GetCoursesWithDisciplines
-- [] GetDisciplines
+- [X] GetDisciplines
 - [] GetEnrollmentPeriods
 - [] GetNotifications
 - [] GetStudents
-- [] GetTeachers
-- [] UpdateCampus
+- [X] GetTeachers
+- [X] UpdateCampus
 
 ## Teacher
 

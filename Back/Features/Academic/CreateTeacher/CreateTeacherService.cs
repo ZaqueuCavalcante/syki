@@ -17,10 +17,7 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
         ctx.Add(teacher);
         await ctx.SaveChangesAsync();
 
-        if (!data.Email.EndsWith("syki.demo.com"))
-        {
-            await sendService.Send(new SendResetPasswordTokenIn { Email = user.Email });
-        }
+        await sendService.Send(new SendResetPasswordTokenIn { Email = user.Email });
 
         transaction.Commit();
 

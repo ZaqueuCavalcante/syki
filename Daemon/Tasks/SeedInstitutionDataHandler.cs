@@ -132,49 +132,49 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateTeacherService 
         institution.Courses[1].Disciplines = institution.Disciplines.Take(31).ToList(); // ADS
         institution.Courses[4].Disciplines = institution.Disciplines.Skip(31).ToList(); // Direito
 
-        var gradeAds = new CourseCurriculum(id, institution.Courses[1].Id, "Grade ADS 1.0");
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[00].Id, 1, 5, 60));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[01].Id, 1, 4, 40));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[02].Id, 1, 5, 60));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[03].Id, 1, 5, 55));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[04].Id, 1, 4, 45));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[05].Id, 1, 3, 25));
+        var cc = new CourseCurriculum(id, institution.Courses[1].Id, "Grade ADS 1.0");
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[00].Id, 1, 5, 60));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[01].Id, 1, 4, 40));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[02].Id, 1, 5, 60));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[03].Id, 1, 5, 55));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[04].Id, 1, 4, 45));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[05].Id, 1, 3, 25));
         //
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[06].Id, 2, 5, 60));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[07].Id, 2, 4, 40));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[08].Id, 2, 5, 60));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[09].Id, 2, 5, 55));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[10].Id, 2, 5, 45));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[11].Id, 2, 2, 25));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[06].Id, 2, 5, 60));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[07].Id, 2, 4, 40));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[08].Id, 2, 5, 60));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[09].Id, 2, 5, 55));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[10].Id, 2, 5, 45));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[11].Id, 2, 2, 25));
         //
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[12].Id, 3, 5, 60));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[13].Id, 3, 4, 40));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[14].Id, 3, 5, 60));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[15].Id, 3, 5, 55));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[16].Id, 3, 5, 45));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[17].Id, 3, 2, 25));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[12].Id, 3, 5, 60));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[13].Id, 3, 4, 40));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[14].Id, 3, 5, 60));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[15].Id, 3, 5, 55));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[16].Id, 3, 5, 45));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[17].Id, 3, 2, 25));
         //
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[18].Id, 4, 5, 60));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[19].Id, 4, 4, 40));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[20].Id, 4, 5, 60));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[21].Id, 4, 5, 55));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[22].Id, 4, 5, 45));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[23].Id, 4, 2, 25));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[18].Id, 4, 5, 60));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[19].Id, 4, 4, 40));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[20].Id, 4, 5, 60));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[21].Id, 4, 5, 55));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[22].Id, 4, 5, 45));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[23].Id, 4, 2, 25));
         //
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[24].Id, 5, 5, 60));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[25].Id, 5, 4, 40));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[26].Id, 5, 5, 60));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[27].Id, 5, 5, 55));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[28].Id, 5, 5, 45));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[29].Id, 5, 6, 50));
-        gradeAds.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[30].Id, 5, 2, 25));
-        ctx.Add(gradeAds);
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[24].Id, 5, 5, 60));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[25].Id, 5, 4, 40));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[26].Id, 5, 5, 60));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[27].Id, 5, 5, 55));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[28].Id, 5, 5, 45));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[29].Id, 5, 6, 50));
+        cc.Links.Add(new CourseCurriculumDiscipline(institution.Disciplines[30].Id, 5, 2, 25));
+        ctx.Add(cc);
 
         var ofertaAds = new CourseOffering(
             id,
             institution.Campi[2].Id,
             institution.Courses[1].Id,
-            gradeAds.Id,
+            cc.Id,
             institution.AcademicPeriods[0].Id,
             Shift.Noturno
         );

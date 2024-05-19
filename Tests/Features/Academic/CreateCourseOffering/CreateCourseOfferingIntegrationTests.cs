@@ -106,10 +106,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var courseAds = await client.CreateCourse("ADS");
         var courseDireito = await client.CreateCourse("Direito");
-        var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", courseAds.Id);
+        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", courseAds.Id);
 
         // Act
-        var response = await client.CreateCourseOfferingHttp(campus.Id, courseDireito.Id, grade.Id, "2024.1", Shift.Matutino);
+        var response = await client.CreateCourseOfferingHttp(campus.Id, courseDireito.Id, cc.Id, "2024.1", Shift.Matutino);
 
         // Assert
         await response.AssertBadRequest(Throw.DE011);
@@ -122,10 +122,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _factory.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var course = await client.CreateCourse("Direito");
-        var grade = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
-        var response = await client.CreateCourseOfferingHttp(campus.Id, course.Id, grade.Id, "2024.1", Shift.Matutino);
+        var response = await client.CreateCourseOfferingHttp(campus.Id, course.Id, cc.Id, "2024.1", Shift.Matutino);
         
         // Assert
         await response.AssertBadRequest(Throw.DE005);
@@ -142,10 +142,10 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var campus = await clientNovaRoma.CreateCampus("Agreste I", "Caruaru - PE");
         var course = await clientNovaRoma.CreateCourse("Direito");
-        var grade = await clientNovaRoma.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        var cc = await clientNovaRoma.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
-        var response = await clientNovaRoma.CreateCourseOfferingHttp(campus.Id, course.Id, grade.Id, "2023.1", Shift.Matutino);
+        var response = await clientNovaRoma.CreateCourseOfferingHttp(campus.Id, course.Id, cc.Id, "2023.1", Shift.Matutino);
 
         // Assert
         await response.AssertBadRequest(Throw.DE005);

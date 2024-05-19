@@ -5,7 +5,7 @@ namespace Syki.Tests.Features.CreateInstitution;
 public class CreateInstitutionUnitTests
 {
     [Test]
-    public void Should_create_institution_with_id()
+    public void Should_create_institution_with_correct_data()
     {
         // Arrange
         const string name = "UFPE";
@@ -15,18 +15,6 @@ public class CreateInstitutionUnitTests
 
         // Assert
         institution.Id.Should().NotBeEmpty();
-    }
-
-    [Test]
-    public void Should_create_institution_with_correct_name()
-    {
-        // Arrange
-        const string name = "UFPE";
-
-        // Act
-        var institution = new Institution(name);
-
-        // Assert
         institution.Name.Should().Be(name);
     }
 

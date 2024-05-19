@@ -1,6 +1,7 @@
 namespace Syki.Back.Features.Adm.GetInstitutions;
 
 [ApiController, AuthAdm]
+[Consumes("application/json"), Produces("application/json")]
 public class GetInstitutionsController(GetInstitutionsService service) : ControllerBase
 {
     [HttpGet("adm/institutions")]

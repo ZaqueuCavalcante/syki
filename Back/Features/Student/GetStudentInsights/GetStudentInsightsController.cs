@@ -2,6 +2,7 @@ namespace Syki.Back.Features.Student.GetStudentInsights;
 
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
+[Consumes("application/json"), Produces("application/json")]
 public class GetStudentInsightsController(GetStudentInsightsService service) : ControllerBase
 {
     [HttpGet("student/insights")]

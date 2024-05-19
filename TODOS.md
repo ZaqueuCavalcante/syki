@@ -1,20 +1,20 @@
 # DONE
 
 ## Cross
-- [] CreateInstitution
-- [] CreatePendingUserRegister
-- [] CreateUser
-- [] FinishUserRegister
-- [] GenerateJWT
-- [] GetMfaKey
+- [X] CreateInstitution
+- [X] CreatePendingUserRegister
+- [X] CreateUser
+- [X] FinishUserRegister
+- [X] GenerateJWT
+- [X] GetMfaKey
 - [] GetUserNotifications
-- [] Health
-- [] Home
-- [] Login
-- [] LoginMfa
-- [] ResetPassword
-- [] SendResetPasswordToken
-- [] SetupMfa
+- [X] Health
+- [X] Home
+- [X] Login
+- [X] LoginMfa
+- [X] ResetPassword
+- [X] SendResetPasswordToken
+- [X] SetupMfa
 - [] ViewNotifications
 
 ## Academic

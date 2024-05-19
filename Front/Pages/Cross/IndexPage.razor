@@ -18,19 +18,19 @@
 
 <AuthorizeView Roles="@UserRole.Academic.ToString()">
     <Authorized>
-        <IndexAcademic />
+        <AcademicInsightsPage />
     </Authorized>
 </AuthorizeView>
 
 <AuthorizeView Roles="@UserRole.Student.ToString()">
     <Authorized>
-        <IndexStudent />
+        <StudentInsightsPage />
     </Authorized>
 </AuthorizeView>
 
 <AuthorizeView Roles="@UserRole.Teacher.ToString()">
     <Authorized>
-        <IndexTeacher />
+        <TeacherInsightsPage />
     </Authorized>
 </AuthorizeView>
 

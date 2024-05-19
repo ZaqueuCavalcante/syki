@@ -2,6 +2,7 @@ namespace Syki.Back.Features.Teacher.GetTeacherAgenda;
 
 [ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
+[Consumes("application/json"), Produces("application/json")]
 public class GetTeacherAgendaController(GetTeacherAgendaService service) : ControllerBase
 {
     [HttpGet("teacher/agenda")]

@@ -198,9 +198,9 @@ public static class AcademicClientExtensions
         email = email.HasValue() ? email : TestData.Email;
         var client = new CreateTeacherClient(http);
         var response = await client.Create(name, email);
-        var professor= await response.DeserializeTo<TeacherOut>();
-        professor.Email = email;
-        return professor;
+        var teacher= await response.DeserializeTo<TeacherOut>();
+        teacher.Email = email;
+        return teacher;
     }
 
     public static async Task<List<TeacherOut>> GetTeachers(this HttpClient http)

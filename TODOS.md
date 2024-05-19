@@ -52,7 +52,7 @@
 - [] GetTeacherAgenda
 - [] GetTeacherClass
 - [] GetTeacherClasses
-- [] GetTeacherInsights
+- [X] GetTeacherInsights
 
 ## Student
 
@@ -61,7 +61,7 @@
 - [] GetStudentAgenda
 - [X] GetStudentDisciplines
 - [X] GetStudentEnrollmentClasses
-- [] GetStudentInsights
+- [X] GetStudentInsights
 
 ## Adm
 - [X] GetAdmInsights

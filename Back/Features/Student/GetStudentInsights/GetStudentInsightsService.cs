@@ -1,29 +1,17 @@
-using Dapper;
-using Npgsql;
-
 namespace Syki.Back.Features.Student.GetStudentInsights;
 
-public class GetStudentInsightsService(DatabaseSettings settings)
+public class GetStudentInsightsService(SykiDbContext ctx)
 {
-    public async Task<IndexStudentOut> Get(Guid id)
+    public async Task<StudentInsightsOut> Get(Guid userId)
     {
-        using var connection = new NpgsqlConnection(settings.ConnectionString);
+        var courseOfferingId = await ctx.Students.Where(a => a.Id == userId)
+            .Select(a => a.CourseOfferingId).FirstAsync();
+        var courseCurriculumId = await ctx.CourseOfferings.Where(o => o.Id == courseOfferingId)
+            .Select(o => o.CourseCurriculumId).FirstAsync();
+        var totalDisciplines = await ctx.CourseCurriculumDisciplines.AsNoTracking()
+            .Where(g => g.CourseCurriculumId == courseCurriculumId)
+            .CountAsync();
 
-        const string sql = @"
-            SELECT COUNT(1) AS DisciplinesTotal
-            FROM syki.grades__disciplines
-            WHERE grade_id =
-            (
-                SELECT o.grade_id
-                FROM syki.ofertas o
-                WHERE id = (SELECT oferta_id FROM syki.alunos a WHERE a.id = @Id)
-            )
-        ";
-
-        var parameters = new { Id = id };
-
-        var data = await connection.QueryFirstAsync<IndexStudentOut>(sql, parameters);
-
-        return data;
+        return new() { TotalDisciplines = totalDisciplines };
     }
 }

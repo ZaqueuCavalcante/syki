@@ -1,3 +1,4 @@
+using Syki.Front.Features.Student.GetStudentInsights;
 using Syki.Front.Features.Student.GetStudentDisciplines;
 using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 using Syki.Front.Features.Student.GetStudentEnrollmentClasses;
@@ -21,6 +22,12 @@ public static class StudentClientExtensions
     public static async Task<EnrollmentPeriodOut> GetCurrentEnrollmentPeriod(this HttpClient http)
     {
         var client = new GetCurrentEnrollmentPeriodClient(http);
+        return await client.Get();
+    }
+
+    public static async Task<StudentInsightsOut> GetStudentInsights(this HttpClient http)
+    {
+        var client = new GetStudentInsightsClient(http);
         return await client.Get();
     }
 }

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class IndexTeacherOut
+public class TeacherInsightsOut
 {
     public int Classes { get; set; }
     public int Students { get; set; }

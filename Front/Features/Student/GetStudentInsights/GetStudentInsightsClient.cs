@@ -2,8 +2,8 @@ namespace Syki.Front.Features.Student.GetStudentInsights;
 
 public class GetStudentInsightsClient(HttpClient http)
 {
-    public async Task<IndexStudentOut> Get()
+    public async Task<StudentInsightsOut> Get()
     {
-        return await http.GetFromJsonAsync<IndexStudentOut>("/student/insights") ?? new();
+        return await http.GetFromJsonAsync<StudentInsightsOut>("/student/insights") ?? new();
     }
 }

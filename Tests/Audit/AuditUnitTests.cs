@@ -98,8 +98,8 @@ public class AuditUnitTests
 
     private static EventEntry _eventEntry = new()
     {
-        Name = "Turma",
-        Table = "turmas",
+        Name = "Class",
+        Table = "classes",
         Action = "Insert",
         Schema = "syki",
         EntityType = typeof(Class),
@@ -112,13 +112,12 @@ public class AuditUnitTests
             { "id", "0346158a-f03f-4d95-b627-a154876c3f5b" },
             { "period", "2023.2" },
             { "institution_id", "8d08e437-8b18-4a15-a231-4a2260e60432" },
-            { "professor_id", "4ce214d0-cf13-453f-8543-7696d71827c5" },
+            { "teacher_id", "4ce214d0-cf13-453f-8543-7696d71827c5" },
             { "discipline_id", "2dd62a1e-e8ed-4d39-ae76-59a3c9983235" },
         },
         Changes =
         [
-            new EventEntryChange { ColumnName = "name", OriginalValue = "Caruaru", NewValue = "Recife", },
-            new EventEntryChange { ColumnName = "id", OriginalValue = "2023.1", NewValue = "2023.2", },
+            new EventEntryChange { ColumnName = "period", OriginalValue = "2023.1", NewValue = "2023.2", },
         ]
     };
 }

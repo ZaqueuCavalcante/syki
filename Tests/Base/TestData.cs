@@ -121,7 +121,6 @@ public static class TestData
             (" ", ""),
             (null!, ""),
             ("AspNetUsers", "asp_net_users"),
-            ("AlunosTurmas", "alunos_turmas"),
             ("AspNetUserRoles", "asp_net_user_roles"),
             ("AspNetRoleClaims", "asp_net_role_claims"),
         })

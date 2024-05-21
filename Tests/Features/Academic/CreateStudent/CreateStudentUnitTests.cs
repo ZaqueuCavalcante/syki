@@ -1,8 +1,8 @@
 using Syki.Back.Features.Academic.CreateStudent;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.Academic.CreateStudent;
 
-public class AlunosUnitTests
+public class CreateStudentUnitTests
 {
     [Test]
     public void Should_create_student_with_correct_data()

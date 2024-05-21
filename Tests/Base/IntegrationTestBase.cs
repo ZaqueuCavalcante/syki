@@ -15,6 +15,10 @@ public class IntegrationTestBase
 
         await ctx.ResetDbAsync();
 
+
+
+
+
         await _factory.RegisterAdm();
     }
 

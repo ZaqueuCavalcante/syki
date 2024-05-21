@@ -8,3 +8,5 @@ builder.AddServicesConfigs();
 using var host = builder.Build();
 
 await host.RunAsync();
+
+public partial class Program { }

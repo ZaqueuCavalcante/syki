@@ -30,7 +30,12 @@
                     <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
                 }
             </MudSelect>
-            <MudCheckBox @bind-Value="@_timeless" Label="Atemporal (se marcado, antigos e novos usuários receberão esta notificação)" Color="Color.Primary" />
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Class="pl-0">
+                <MudCheckBox @bind-Value="@_timeless" Label="Notificar novos usuários?" Color="Color.Primary" />
+                <MudTooltip Text="Se marcado, usuários criados após a notificação também irão recebê-la." Arrow="true" Placement="Placement.Bottom">
+                    <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+                </MudTooltip>
+            </MudStack>
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -56,7 +61,7 @@
     private UsersGroup? _targetUsers;
     private bool _timeless;
 
-    async Task Submit()
+    private async Task Submit()
     {
         if (_loading) return;
 
@@ -78,5 +83,5 @@
         _loading = false;
     }
 
-    void Cancel() => MudDialog.Cancel();
+    private void Cancel() => MudDialog.Cancel();
 }

@@ -4,25 +4,25 @@ public class AcademicPeriod
 {
     public string Id { get; set; }
     public Guid InstitutionId { get; set; }
-    public DateOnly Start { get; set; }
-    public DateOnly End { get; set; }
+    public DateOnly StartAt { get; set; }
+    public DateOnly EndAt { get; set; }
 
     public AcademicPeriod(
         string id,
         Guid institutionId,
-        DateOnly start,
-        DateOnly end
+        DateOnly startAt,
+        DateOnly endAt
     ) {
-        Id = Validate(id, start, end);
+        Id = Validate(id, startAt, endAt);
         InstitutionId = institutionId;
-        Start = start;
-        End = end;
+        StartAt = startAt;
+        EndAt = endAt;
     }
 
     private static string Validate(
         string id,
-        DateOnly start,
-        DateOnly end
+        DateOnly startAt,
+        DateOnly endAt
     ) {
         var numbers = id.OnlyNumbers();
 
@@ -38,13 +38,13 @@ public class AcademicPeriod
         if (digit < 1 || digit > 2)
             Throw.DE006.Now();
 
-        if (start.Year != year)
+        if (startAt.Year != year)
             Throw.DE007.Now();
 
-        if (end.Year != year)
+        if (endAt.Year != year)
             Throw.DE008.Now();
 
-        if (start >= end)
+        if (startAt >= endAt)
             Throw.DE009.Now();
 
         return $"{year}.{digit}";
@@ -55,8 +55,8 @@ public class AcademicPeriod
         return new AcademicPeriodOut
         {
             Id = Id,
-            Start = Start,
-            End = End,
+            StartAt = StartAt,
+            EndAt = EndAt,
         };
     }
 }

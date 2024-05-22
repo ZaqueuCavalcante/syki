@@ -5,24 +5,24 @@ public class Schedule
     public Guid Id { get; set; }
     public Guid ClassId { get; set; }
     public Day Day { get; set; }
-    public Hour Start { get; set; }
-    public Hour End { get; set; }
+    public Hour StartAt { get; set; }
+    public Hour EndAt { get; set; }
 
     private Schedule() {}
 
     public Schedule(
         Day dia,
-        Hour start,
-        Hour end
+        Hour startAt,
+        Hour endAt
     ) {
         Id = Guid.NewGuid();
         Day = dia;
 
-        if (start == end || end < start)
+        if (startAt == endAt || endAt < startAt)
             Throw.DE021.Now();
 
-        Start = start;
-        End = end;
+        StartAt = startAt;
+        EndAt = endAt;
     }
 
     public bool Conflict(Schedule other)
@@ -30,19 +30,19 @@ public class Schedule
         if (Day != other.Day)
             return false;
 
-        if (Start == other.Start || End == other.End)
+        if (StartAt == other.StartAt || EndAt == other.EndAt)
             return true;
 
-        if (Start < other.Start && other.Start < End)
+        if (StartAt < other.StartAt && other.StartAt < EndAt)
             return true;
 
-        if (Start < other.End && other.End < End)
+        if (StartAt < other.EndAt && other.EndAt < EndAt)
             return true;
 
-        if (other.Start < Start && Start < other.End)
+        if (other.StartAt < StartAt && StartAt < other.EndAt)
             return true;
 
-        if (other.Start < End && End < other.End)
+        if (other.StartAt < EndAt && EndAt < other.EndAt)
             return true;
 
         return false;
@@ -50,7 +50,7 @@ public class Schedule
 
     public override string ToString()
     {
-        return $"{Day.GetDescription()} {Start.GetDescription()}-{End.GetDescription()}";
+        return $"{Day.GetDescription()} {StartAt.GetDescription()}-{EndAt.GetDescription()}";
     }
 
     public ScheduleOut ToOut()
@@ -58,8 +58,8 @@ public class Schedule
         return new ScheduleOut
         {
             Day = Day,
-            Start = Start,
-            End = End,
+            StartAt = StartAt,
+            EndAt = EndAt,
         };
     }
 }

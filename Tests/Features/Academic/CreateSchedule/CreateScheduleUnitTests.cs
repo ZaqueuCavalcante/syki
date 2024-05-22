@@ -18,8 +18,8 @@ public class CreateScheduleUnitTests
         // Assert
         schedule.Id.Should().NotBeEmpty();
         schedule.Day.Should().Be(day);
-        schedule.Start.Should().Be(start);
-        schedule.End.Should().Be(end);
+        schedule.StartAt.Should().Be(start);
+        schedule.EndAt.Should().Be(end);
     }
 
     [Test]

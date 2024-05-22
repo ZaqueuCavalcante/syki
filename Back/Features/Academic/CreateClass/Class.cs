@@ -49,7 +49,7 @@ public class Class
 
     public string GetScheduleAsString()
     {
-        return string.Join(" | ", Schedules.OrderBy(h => h.Day).ThenBy(h => h.Start).ToList().ConvertAll(h => h.ToString()));
+        return string.Join(" | ", Schedules.OrderBy(h => h.Day).ThenBy(h => h.StartAt).ToList().ConvertAll(h => h.ToString()));
     }
 
     public ClassOut ToOut()

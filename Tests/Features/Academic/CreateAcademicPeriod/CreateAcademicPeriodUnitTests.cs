@@ -117,7 +117,7 @@ public class CreateAcademicPeriodUnitTests
 
         // Assert
         periodOut.Id.Should().Be(period.Id);
-        periodOut.Start.Should().Be(start);
-        periodOut.End.Should().Be(end);
+        periodOut.StartAt.Should().Be(start);
+        periodOut.EndAt.Should().Be(end);
     }
 }

@@ -12,14 +12,14 @@ public class GetAcademicPeriodsExamples : IMultipleExamplesProvider<List<Academi
 					new AcademicPeriodOut
 					{
 						Id = "2024.1",
-						Start = new DateOnly(2024, 02, 01),
-						End = new DateOnly(2024, 06, 05),
+						StartAt = new DateOnly(2024, 02, 01),
+						EndAt = new DateOnly(2024, 06, 05),
 					},
 					new AcademicPeriodOut
 					{
 						Id = "2024.2",
-						Start = new DateOnly(2024, 07, 08),
-						End = new DateOnly(2024, 12, 10),
+						StartAt = new DateOnly(2024, 07, 08),
+						EndAt = new DateOnly(2024, 12, 10),
 					}
 				]
 			)

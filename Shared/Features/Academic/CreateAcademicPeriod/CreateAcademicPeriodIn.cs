@@ -3,8 +3,8 @@ namespace Syki.Shared;
 public class CreateAcademicPeriodIn
 {
     public string Id { get; set; }
-    public DateOnly Start { get; set; }
-    public DateOnly End { get; set; }
+    public DateOnly StartAt { get; set; }
+    public DateOnly EndAt { get; set; }
 
     public CreateAcademicPeriodIn() {}
 
@@ -14,7 +14,7 @@ public class CreateAcademicPeriodIn
         var numbers = id.OnlyNumbers();
         var year = int.Parse(numbers.Substring(0, 4));
         var digit = int.Parse(numbers.Substring(4, 1));
-        Start = digit == 1 ? new DateOnly(year, 02, 01) : new DateOnly(year, 06, 01);
-        End = digit == 1 ? new DateOnly(year, 07, 01) : new DateOnly(year, 12, 01);
+        StartAt = digit == 1 ? new DateOnly(year, 02, 01) : new DateOnly(year, 06, 01);
+        EndAt = digit == 1 ? new DateOnly(year, 07, 01) : new DateOnly(year, 12, 01);
     }
 }

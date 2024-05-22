@@ -4,23 +4,23 @@ public class EnrollmentPeriod
 {
     public string Id { get; set; }
     public Guid InstitutionId { get; set; }
-    public DateOnly Start { get; set; }
-    public DateOnly End { get; set; }
+    public DateOnly StartAt { get; set; }
+    public DateOnly EndAt { get; set; }
 
     public EnrollmentPeriod(
         string id,
         Guid institutionId,
-        DateOnly start,
-        DateOnly end
+        DateOnly startAt,
+        DateOnly endAt
     ) {
         Id = id;
         InstitutionId = institutionId;
 
-        if (start >= end)
+        if (startAt >= endAt)
             Throw.DE023.Now();
 
-        Start = start;
-        End = end;
+        StartAt = startAt;
+        EndAt = endAt;
     }
 
     public EnrollmentPeriodOut ToOut()
@@ -28,8 +28,8 @@ public class EnrollmentPeriod
         return new EnrollmentPeriodOut
         {
             Id = Id,
-            Start = Start,
-            End = End,
+            StartAt = StartAt,
+            EndAt = EndAt,
         };
     }
 }

@@ -272,7 +272,7 @@ public static class AcademicClientExtensions
     {
         var client = new CreateAcademicPeriodClient(http);
         var period = new CreateAcademicPeriodIn(id);
-        var response = await client.Create(id, period.Start, period.End);
+        var response = await client.Create(id, period.StartAt, period.EndAt);
         return await response.DeserializeTo<AcademicPeriodOut>();
     }
 
@@ -286,7 +286,7 @@ public static class AcademicClientExtensions
     {
         var client = new CreateEnrollmentPeriodClient(http);
         var period = new CreateEnrollmentPeriodIn(id, start, end);
-        var response = await client.Create(id, period.Start, period.End);
+        var response = await client.Create(id, period.StartAt, period.EndAt);
         return await response.DeserializeTo<EnrollmentPeriodOut>();
     }
     public static async Task<EnrollmentPeriodOut> CreateEnrollmentPeriod(this HttpClient http, string id, DateOnly start, DateOnly end)

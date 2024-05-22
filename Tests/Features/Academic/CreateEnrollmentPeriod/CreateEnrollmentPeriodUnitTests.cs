@@ -19,8 +19,8 @@ public class CreateEnrollmentPeriodUnitTests
         // Assert
         period.Id.Should().Be(id);
         period.InstitutionId.Should().Be(institutionId);
-        period.Start.Should().Be(start);
-        period.End.Should().Be(end);
+        period.StartAt.Should().Be(start);
+        period.EndAt.Should().Be(end);
     }
 
     [Test]

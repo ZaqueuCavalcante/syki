@@ -6,7 +6,7 @@ public class GetStudentEnrollmentClassesService(SykiDbContext ctx)
     {
         var today = DateOnly.FromDateTime(DateTime.Now);
         var enrollmentPeriod = await ctx.EnrollmentPeriods.AsNoTracking()
-            .Where(p => p.InstitutionId == institutionId && p.Start <= today && p.End >= today)
+            .Where(p => p.InstitutionId == institutionId && p.StartAt <= today && p.EndAt >= today)
             .FirstOrDefaultAsync();
 
         if (enrollmentPeriod == null)

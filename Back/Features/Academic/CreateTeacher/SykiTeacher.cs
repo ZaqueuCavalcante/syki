@@ -1,12 +1,12 @@
 namespace Syki.Back.Features.Academic.CreateTeacher;
 
-public class Teacher
+public class SykiTeacher
 {
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
     public string Name { get; set; }
 
-    public Teacher(
+    public SykiTeacher(
         Guid id,
         Guid institutionId,
         string name

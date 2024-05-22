@@ -12,7 +12,7 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
         var userIn = CreateUserIn.NewTeacher(institutionId, data.Name, data.Email);
         var user = await service.Create(userIn);
 
-        var teacher = new Teacher(user.Id, institutionId, data.Name);
+        var teacher = new SykiTeacher(user.Id, institutionId, data.Name);
         ctx.Add(teacher);
 
         ctx.Add(SykiTask.LinkOldNotifications(user.Id));

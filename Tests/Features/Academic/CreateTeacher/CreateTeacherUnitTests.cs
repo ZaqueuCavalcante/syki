@@ -13,7 +13,7 @@ public class CreateTeacherUnitTests
         const string name = "Chico Science";
 
         // Act
-        var teacher = new Teacher(userId, institutionId, name);
+        var teacher = new SykiTeacher(userId, institutionId, name);
 
         // Assert
         teacher.Id.Should().NotBeEmpty();
@@ -31,7 +31,7 @@ public class CreateTeacherUnitTests
         var userId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Teacher(userId, institutionId, name);
+        Action act = () => new SykiTeacher(userId, institutionId, name);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE001);
@@ -44,7 +44,7 @@ public class CreateTeacherUnitTests
         var institutionId = Guid.NewGuid();
         var userId = Guid.NewGuid();
         const string name = "Chico Science";
-        var teacher = new Teacher(userId, institutionId, name);
+        var teacher = new SykiTeacher(userId, institutionId, name);
 
         // Act
         var teacherOut = teacher.ToOut();

@@ -94,7 +94,7 @@ public class CreateClassUnitTests
         const string period = "2023.2";
 
         var discipline = new Discipline(institutionId, "Banco de Dados");
-        var teacher = new Teacher(userId, institutionId, "Chico Science");
+        var teacher = new SykiTeacher(userId, institutionId, "Chico Science");
         var schedules = new List<Schedule>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
         var @class = new Class(institutionId, disciplineId, teacherId, period, schedules)

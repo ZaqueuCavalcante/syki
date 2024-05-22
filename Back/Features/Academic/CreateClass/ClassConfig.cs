@@ -1,3 +1,4 @@
+using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 
@@ -19,16 +20,6 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
         @class.HasOne(t => t.Discipline)
             .WithMany()
             .HasForeignKey(t => t.DisciplineId);
-
-        @class.HasMany(t => t.Students)
-            .WithMany()
-            .UsingEntity<ClassStudent>(cs =>
-                {
-                    cs.ToTable("classes__students");
-                    cs.HasOne<Class>().WithMany().HasForeignKey(x => x.ClassId);
-                    cs.HasOne<CreateStudent.Student>().WithMany().HasPrincipalKey(x => x.Id).HasForeignKey(x => x.StudentId);
-                }
-            );
 
         @class.HasMany(t => t.Schedules)
             .WithOne()

@@ -1,3 +1,4 @@
+using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 
 namespace Syki.Back.Features.Academic.CreateCourseOffering;
@@ -23,7 +24,7 @@ public class OfertaConfig : IEntityTypeConfiguration<CourseOffering>
             .WithMany()
             .HasForeignKey(o => new { o.Period, o.InstitutionId });
 
-        courseOffering.HasMany<CreateStudent.Student>()
+        courseOffering.HasMany<SykiStudent>()
             .WithOne(a => a.CourseOffering)
             .HasForeignKey(a => a.CourseOfferingId);
     }

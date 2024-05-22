@@ -26,9 +26,9 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     public DbSet<Class> Classes { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<SykiTask> Tasks { get; set; }
-    public DbSet<Student> Students { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<SykiTeacher> Teachers { get; set; }
+    public DbSet<SykiStudent> Students { get; set; }
     public DbSet<Discipline> Disciplines { get; set; }
     public DbSet<Institution> Institutions { get; set; }
     public DbSet<UserRegister> UserRegisters { get; set; }

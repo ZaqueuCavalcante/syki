@@ -3,7 +3,7 @@ using Syki.Back.Features.Academic.CreateCourseOffering;
 
 namespace Syki.Back.Features.Academic.CreateStudent;
 
-public class Student
+public class SykiStudent
 {
     public Guid Id { get; }
     public Guid InstitutionId { get; }
@@ -13,7 +13,7 @@ public class Student
     public string Name { get; private set; }
     public string EnrollmentCode { get; }
 
-    public Student(
+    public SykiStudent(
         Guid id,
         Guid institutionId,
         string name,

@@ -1,4 +1,5 @@
 using Syki.Back.Features.Academic.CreateTeacher;
+using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateDiscipline;
 
 namespace Syki.Back.Features.Academic.CreateClass;
@@ -12,7 +13,7 @@ public class Class
     public Guid TeacherId { get; set; }
     public SykiTeacher Teacher { get; set; }
     public string Period { get; set; }
-    public List<CreateStudent.Student> Students { get; set; }
+    public List<SykiStudent> Students { get; set; }
     public List<Schedule> Schedules { get; set; }
 
     private Class() {}

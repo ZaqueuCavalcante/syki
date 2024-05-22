@@ -1,6 +1,7 @@
 using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateTeacher;
+using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Academic.CreateCourseOffering;
@@ -20,7 +21,7 @@ public class Institution
     public List<CourseCurriculum> CourseCurriculums { get; set; }
     public List<Discipline> Disciplines { get; set; }
     public List<SykiTeacher> Teachers { get; set; }
-    public List<Academic.CreateStudent.Student> Students { get; set; }
+    public List<SykiStudent> Students { get; set; }
     public List<Notification> Notifications { get; set; }
 
     public Institution() { }

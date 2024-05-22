@@ -14,7 +14,7 @@ public class CreateStudentUnitTests
         var courseOfferingId = Guid.NewGuid();
 
         // Act
-        var student = new Student(userId, institutionId, "Zaqueu", courseOfferingId);
+        var student = new SykiStudent(userId, institutionId, "Zaqueu", courseOfferingId);
 
         // Assert
         student.Id.Should().NotBeEmpty();
@@ -36,8 +36,8 @@ public class CreateStudentUnitTests
         var courseOfferingId = Guid.NewGuid();
 
         // Act
-        var maria = new Student(userId, institutionId, "Maria", courseOfferingId);
-        var zaqueu = new Student(userId, institutionId, "Zaqueu", courseOfferingId);
+        var maria = new SykiStudent(userId, institutionId, "Maria", courseOfferingId);
+        var zaqueu = new SykiStudent(userId, institutionId, "Zaqueu", courseOfferingId);
 
         // Assert
         maria.EnrollmentCode.Should().NotBeSameAs(zaqueu.EnrollmentCode);
@@ -53,7 +53,7 @@ public class CreateStudentUnitTests
         var courseOfferingId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Student(userId, institutionId, name, courseOfferingId);
+        Action act = () => new SykiStudent(userId, institutionId, name, courseOfferingId);
 
         // Assert
         act.Should().NotThrow<DomainException>();
@@ -69,7 +69,7 @@ public class CreateStudentUnitTests
         var courseOfferingId = Guid.NewGuid();
 
         // Act
-        Action act = () => new Student(userId, institutionId, name, courseOfferingId);
+        Action act = () => new SykiStudent(userId, institutionId, name, courseOfferingId);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE000);
@@ -79,7 +79,7 @@ public class CreateStudentUnitTests
     public void Should_convert_student_to_out_without_course_offering()
     {
         // Arrange
-        var student = new Student(Guid.NewGuid(), Guid.NewGuid(), "Zaqueu", Guid.NewGuid());
+        var student = new SykiStudent(Guid.NewGuid(), Guid.NewGuid(), "Zaqueu", Guid.NewGuid());
 
         // Act
         var studentOut = student.ToOut();
@@ -104,7 +104,7 @@ public class CreateStudentUnitTests
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
-        var student = new Student(userId, institutionId, "Zaqueu", Guid.NewGuid())
+        var student = new SykiStudent(userId, institutionId, "Zaqueu", Guid.NewGuid())
         {
             CourseOffering = new(institutionId, campusId, courseId, courseCurriculumId, period, shift)
             {

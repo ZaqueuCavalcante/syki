@@ -2,9 +2,9 @@ using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Academic.CreateStudent;
 
-public class StudentConfig : IEntityTypeConfiguration<Student>
+public class SykiStudentConfig : IEntityTypeConfiguration<SykiStudent>
 {
-    public void Configure(EntityTypeBuilder<Student> student)
+    public void Configure(EntityTypeBuilder<SykiStudent> student)
     {
         student.ToTable("students");
 
@@ -18,6 +18,6 @@ public class StudentConfig : IEntityTypeConfiguration<Student>
         student.HasOne(a => a.User)
             .WithOne()
             .HasPrincipalKey<SykiUser>(u => new { u.InstitutionId, u.Id })
-            .HasForeignKey<Student>(a => new { a.InstitutionId, a.Id });
+            .HasForeignKey<SykiStudent>(a => new { a.InstitutionId, a.Id });
     }
 }

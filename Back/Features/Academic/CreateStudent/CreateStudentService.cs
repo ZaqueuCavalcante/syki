@@ -17,7 +17,7 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService service, 
         var userIn = CreateUserIn.NewStudent(institutionId, data.Name, data.Email);
         var user = await service.Create(userIn);
 
-        var student = new Student(user.Id, institutionId, data.Name, data.CourseOfferingId);
+        var student = new SykiStudent(user.Id, institutionId, data.Name, data.CourseOfferingId);
         ctx.Add(student);
 
         ctx.Add(SykiTask.LinkOldNotifications(user.Id));

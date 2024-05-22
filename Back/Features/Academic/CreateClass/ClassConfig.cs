@@ -1,6 +1,4 @@
-using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
-using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Back.Features.Academic.CreateClass;
 

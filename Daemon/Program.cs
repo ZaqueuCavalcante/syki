@@ -1,9 +1,12 @@
-﻿namespace Syki.Daemon;
+﻿using Audit.Core;
+
+namespace Syki.Daemon;
 
 public static class Program
 {
     public static void Main(string[] args)
     {
+        Configuration.AuditDisabled = true;
         CreateHostBuilder(args).Build().Run();
     }
 

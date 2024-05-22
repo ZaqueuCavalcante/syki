@@ -1,12 +1,12 @@
 using Audit.Core;
 using Syki.Back.Audit;
 using Syki.Back.Features.Cross.CreateUser;
-using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
+using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Academic.CreateCourseOffering;

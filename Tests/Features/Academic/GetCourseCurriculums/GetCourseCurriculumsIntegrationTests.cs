@@ -6,8 +6,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_return_all_institution_course_curriculums()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademic();
-        var clientUfpe = await _factory.LoggedAsAcademic();
+        var clientNovaRoma = await _back.LoggedAsAcademic();
+        var clientUfpe = await _back.LoggedAsAcademic();
 
         var courseNovaRoma = await clientNovaRoma.CreateCourse("Análise e Desenvolvimento de Sistemas");
         var courseCurriculumNovaRoma = await clientNovaRoma.CreateCourseCurriculum("NR - Grade de ADS - 1.0", courseNovaRoma.Id);
@@ -28,7 +28,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_return_all_course_curriculums_ordered_by_name()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var direito = await client.CreateCourse("Direito");
         var direitoCourseCurriculum = await client.CreateCourseCurriculum("Grade de Direito 1.0", direito.Id);

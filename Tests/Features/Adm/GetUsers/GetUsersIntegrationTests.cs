@@ -6,9 +6,9 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_return_all_users()
     {
         // Arrange
-        await _factory.LoggedAsAcademic();
+        await _back.LoggedAsAcademic();
 
-        var client = await _factory.LoggedAsAdm();
+        var client = await _back.LoggedAsAdm();
 
         // Act
         var users = await client.GetUsers();

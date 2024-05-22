@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_return_only_classes_of_student_course_curriculum()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var period = await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
         var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
@@ -58,7 +58,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var zaqueu = await client.CreateStudent(courseOfferingAds.Id, "Zaqueu");
         var maju = await client.CreateStudent(courseOfferingDireito.Id, "Maju");
 
-        var studentClient = await _factory.LoggedAsStudent(zaqueu.Email);
+        var studentClient = await _back.LoggedAsStudent(zaqueu.Email);
 
         // Act
         var classes = await studentClient.GetStudentEnrollmentClasses();
@@ -75,7 +75,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_return_any_class_without_enrollment_period()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
@@ -84,7 +84,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
 
         var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
-        var studentClient = await _factory.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var classes = await studentClient.GetStudentEnrollmentClasses();
@@ -97,7 +97,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_return_any_class_before_enrollment_period_start()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
@@ -112,7 +112,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateEnrollmentPeriod(period.Id, start, end);
 
         var student = await client.CreateStudent(co.Id, "Zaqueu");
-        var studentClient = await _factory.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var classes = await studentClient.GetStudentEnrollmentClasses();
@@ -125,7 +125,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_return_any_class_after_enrollment_period_end()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
@@ -140,7 +140,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateEnrollmentPeriod(period.Id, start, end);
 
         var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
-        var studentClient = await _factory.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var classes = await studentClient.GetStudentEnrollmentClasses();

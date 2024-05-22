@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_student_agenda()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var period = await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
         var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
@@ -42,7 +42,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var zaqueu = await client.CreateStudent(courseOfferingAds.Id, "Zaqueu");
 
-        var studentClient = await _factory.LoggedAsStudent(zaqueu.Email);
+        var studentClient = await _back.LoggedAsStudent(zaqueu.Email);
 
         // Act
         await studentClient.CreateStudentEnrollment([classMatematica.Id, classBancoDeDados.Id, classEstruturaDeDados.Id]);

@@ -6,8 +6,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_login_when_supply_right_mfa_token()
     {
         // Arrange
-        var client = _factory.GetClient();
-        var user = await client.RegisterUser(_factory);
+        var client = _back.GetClient();
+        var user = await client.RegisterUser(_back);
         await client.Login(user.Email, user.Password);
 
         var keyResponse = await client.GetMfaKey();
@@ -29,7 +29,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_login_when_try_get_jwt_with_right_mfa_token_but_without_supply_email_and_password()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var keyResponse = await client.GetMfaKey();
         var token = keyResponse.Key.ToMfaToken();
@@ -49,8 +49,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_login_when_supply_wrong_mfa_token()
     {
         // Arrange
-        var client = _factory.GetClient();
-        var user = await client.RegisterUser(_factory);
+        var client = _back.GetClient();
+        var user = await client.RegisterUser(_back);
         await client.Login(user.Email, user.Password);
 
         var keyResponse = await client.GetMfaKey();

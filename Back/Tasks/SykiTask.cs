@@ -1,4 +1,5 @@
 using Syki.Back.Features.Cross.FinishUserRegister;
+using Syki.Back.Features.Cross.LinkOldNotifications;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
 
@@ -36,5 +37,10 @@ public class SykiTask
     public static SykiTask SeedInstitutionData(Guid institutionId)
     {
         return new SykiTask(new SeedInstitutionData { InstitutionId = institutionId });
+    }
+
+    public static SykiTask LinkOldNotifications(Guid userId)
+    {
+        return new SykiTask(new LinkOldNotifications { UserId = userId });
     }
 }

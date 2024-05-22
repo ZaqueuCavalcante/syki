@@ -4,7 +4,7 @@ public class CreateNotificationService(SykiDbContext ctx)
 {
     public async Task<NotificationOut> Create(Guid institutionId, CreateNotificationIn data)
     {
-        var notification = new Notification(institutionId, data.Title, data.Description, data.Timeless);
+        var notification = new Notification(institutionId, data.Title, data.Description, data.TargetUsers, data.Timeless);
 
         if (data.TargetUsers is UsersGroup.All or UsersGroup.Teachers)
         {

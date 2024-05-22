@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_create_class()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         var teacher = await client.CreateTeacher();
@@ -28,7 +28,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_class_without_discipline()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateClassHttp(Guid.NewGuid(), Guid.NewGuid(), "2024.1", []);
@@ -41,7 +41,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_class_without_teacher()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
 
@@ -56,7 +56,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_class_without_period()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         var teacher = await client.CreateTeacher();
@@ -72,7 +72,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_class_with_invalid_schedule()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         var teacher = await client.CreateTeacher();

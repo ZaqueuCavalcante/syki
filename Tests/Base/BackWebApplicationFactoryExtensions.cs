@@ -108,4 +108,14 @@ public static class BackWebApplicationFactoryExtensions
 
         return id == Guid.Empty ? null : id.ToString();
     }
+
+    public static async Task AwaitTasksProcessing(this BackWebApplicationFactory factory)
+    {
+        using var ctx = factory.GetDbContext();
+        while (true)
+        {
+            var tasks = await ctx.Tasks.CountAsync(x => x.ProcessedAt == null);
+            if (tasks == 0) break;
+        }
+    }
 }

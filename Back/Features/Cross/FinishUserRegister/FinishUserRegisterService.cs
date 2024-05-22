@@ -19,7 +19,7 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
         var institution = new Institution($"Institution - {register.Email}");
         ctx.Add(institution);
 
-        if (Env.IsTesting() || Env.IsDevelopment())
+        if (Env.IsDevelopment())
         {
             ctx.Add(SykiTask.SeedInstitutionData(institution.Id));
         }

@@ -1,66 +1,24 @@
 using Syki.Back.Features.Academic.CreateClass;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.Academic.CreateSchedule;
 
-public class ScheduleUnitTests
+public class CreateScheduleUnitTests
 {
     [Test]
-    public void Deve_criar_um_schedule_com_id()
+    public void Should_create_schedule_with_correct_data()
     {
         // Arrange
-        var dia = Day.Segunda;
+        var day = Day.Segunda;
         var start = Hour.H07_00;
         var end = Hour.H08_00;
 
         // Act
-        var schedule = new Schedule(dia, start, end);
+        var schedule = new Schedule(day, start, end);
 
         // Assert
         schedule.Id.Should().NotBeEmpty();
-    }
-
-    [Test]
-    public void Deve_criar_um_schedule_com_dia_correto()
-    {
-        // Arrange
-        var dia = Day.Terca;
-        var start = Hour.H07_00;
-        var end = Hour.H08_00;
-
-        // Act
-        var schedule = new Schedule(dia, start, end);
-
-        // Assert
-        schedule.Day.Should().Be(dia);
-    }
-
-    [Test]
-    public void Deve_criar_um_schedule_com_start_correto()
-    {
-        // Arrange
-        var dia = Day.Terca;
-        var start = Hour.H07_00;
-        var end = Hour.H08_00;
-
-        // Act
-        var schedule = new Schedule(dia, start, end);
-
-        // Assert
+        schedule.Day.Should().Be(day);
         schedule.Start.Should().Be(start);
-    }
-
-    [Test]
-    public void Deve_criar_um_schedule_com_end_correto()
-    {
-        // Arrange
-        var dia = Day.Terca;
-        var start = Hour.H07_00;
-        var end = Hour.H08_00;
-
-        // Act
-        var schedule = new Schedule(dia, start, end);
-
-        // Assert
         schedule.End.Should().Be(end);
     }
 
@@ -68,12 +26,12 @@ public class ScheduleUnitTests
     public void Nao_deve_criar_um_schedule_quando_start_e_end_forem_iguais()
     {
         // Arrange
-        var dia = Day.Terca;
+        var day = Day.Terca;
         var start = Hour.H07_00;
         var end = Hour.H07_00;
 
         // Act
-        Action act = () => new Schedule(dia, start, end);
+        Action act = () => new Schedule(day, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE021);
@@ -83,19 +41,19 @@ public class ScheduleUnitTests
     public void Nao_deve_criar_um_schedule_quando_end_for_menor_que_start()
     {
         // Arrange
-        var dia = Day.Terca;
+        var day = Day.Terca;
         var start = Hour.H10_00;
         var end = Hour.H07_00;
 
         // Act
-        Action act = () => new Schedule(dia, start, end);
+        Action act = () => new Schedule(day, start, end);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE021);
     }
 
     [Test]
-    public void Schedules_em_dias_diferentes_nao_devem_conflitar()
+    public void Schedules_em_days_diferentes_nao_devem_conflitar()
     {
         // Arrange
         var start = Hour.H07_00;

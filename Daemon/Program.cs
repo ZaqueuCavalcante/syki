@@ -1,12 +1,15 @@
-﻿using Syki.Daemon.Configs;
+﻿namespace Syki.Daemon;
 
-var builder = Host.CreateDefaultBuilder(args);
+public static class Program
+{
+    public static void Main(string[] args)
+    {
+        CreateHostBuilder(args).Build().Run();
+    }
 
-builder.AddAppConfigs();
-builder.AddServicesConfigs();
-
-using var host = builder.Build();
-
-await host.RunAsync();
-
-public partial class Program { }
+    private static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+                webBuilder.UseStartup<Startup>()
+            );
+}

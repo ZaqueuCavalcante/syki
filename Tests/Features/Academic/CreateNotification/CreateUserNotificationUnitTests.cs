@@ -25,7 +25,8 @@ public class CreateUserNotificationUnitTests
     {
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
-        var notification = new Notification(Guid.NewGuid(), title, description, true);
+        var target = UsersGroup.Students;
+        var notification = new Notification(Guid.NewGuid(), title, description, target, true);
 
         var userId = Guid.NewGuid();
         var userNotification = new UserNotification(userId, notification.Id)

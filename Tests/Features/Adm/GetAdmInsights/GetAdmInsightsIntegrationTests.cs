@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_return_adm_insights()
     {
         // Arrange
-        var academicClient = await _factory.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
 
         var campus = await academicClient.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await academicClient.CreateAcademicPeriod("2024.1");
@@ -26,7 +26,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await academicClient.CreateStudent(courseOffering.Id, "Zaqueu");
         await academicClient.CreateStudent(courseOffering.Id, "Maju");
 
-        var admClient = await _factory.LoggedAsAdm();
+        var admClient = await _back.LoggedAsAdm();
 
         // Act
         var insights = await admClient.GetAdmInsights();

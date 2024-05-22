@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_healthy_status()
     {
         // Arrange
-        var client = _factory.GetClient();
+        var client = _back.GetClient();
 
         // Act
         var response = await client.GetAsync("/health");

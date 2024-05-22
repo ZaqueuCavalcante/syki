@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_create_a_notification_for_all_users()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
@@ -21,7 +21,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateNotification("Hello", "Hi", UsersGroup.All, true);
 
         // Assert
-        using var ctx = _factory.GetDbContext();
+        using var ctx = _back.GetDbContext();
 
         var notification = await ctx.Notifications.FirstAsync(x => x.Id == response.Id);
         notification.Title.Should().Be("Hello");
@@ -37,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_create_a_notification_only_for_teachers()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
@@ -52,7 +52,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateNotification("Hello", "Hi", UsersGroup.Teachers, true);
 
         // Assert
-        using var ctx = _factory.GetDbContext();
+        using var ctx = _back.GetDbContext();
 
         var notification = await ctx.Notifications.FirstAsync(x => x.Id == response.Id);
         notification.Title.Should().Be("Hello");
@@ -69,7 +69,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_create_a_notification_only_for_students()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
@@ -84,7 +84,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateNotification("Hello", "Hi", UsersGroup.Students, true);
 
         // Assert
-        using var ctx = _factory.GetDbContext();
+        using var ctx = _back.GetDbContext();
 
         var notification = await ctx.Notifications.FirstAsync(x => x.Id == response.Id);
         notification.Title.Should().Be("Hello");

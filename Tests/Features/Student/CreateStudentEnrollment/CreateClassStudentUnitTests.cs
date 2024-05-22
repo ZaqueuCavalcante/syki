@@ -1,6 +1,6 @@
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.CreateStudentEnrollment;
 
 public class CreateClassStudentUnitTests
 {

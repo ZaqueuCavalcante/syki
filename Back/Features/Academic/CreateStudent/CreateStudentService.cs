@@ -19,11 +19,11 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService service, 
 
         var student = new Student(user.Id, institutionId, data.Name, data.CourseOfferingId);
         ctx.Add(student);
+
+        ctx.Add(SykiTask.LinkOldNotifications(user.Id));
         await ctx.SaveChangesAsync();
 
         await sendService.Send(new SendResetPasswordTokenIn { Email = user.Email });
-
-        // TODO: Link old messages?
 
         transaction.Commit();
 

@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_teacher_agenda()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var period = await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
         var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
@@ -29,7 +29,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.CreateClass(estruturaDeDados.Id, chico.Id, period.Id, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
         await client.CreateClass(infoSociedade.Id, ana.Id, period.Id, [new(Day.Segunda, Hour.H07_00, Hour.H08_00)]);
 
-        var teacherClient = await _factory.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Assert
         var agenda = await teacherClient.GetTeacherAgenda();

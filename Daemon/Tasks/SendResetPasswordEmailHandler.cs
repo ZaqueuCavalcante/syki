@@ -13,7 +13,7 @@ public class SendResetPasswordEmailHandler(SykiDbContext ctx, IEmailsService ema
 
         var reset = await ctx.ResetPasswordTokens
             .OrderByDescending(r => r.CreatedAt)
-            .FirstAsync(r => r.UserId == user.Id && r.UsedAt == null);
+            .FirstAsync(r => r.UserId == user.Id);
 
         await emailsService.SendResetPasswordEmail(user.Email, reset.Id.ToString());
     }

@@ -11,10 +11,11 @@ public class CreateNotificationUnitTests
         var institutionId = Guid.NewGuid();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
+        var target = UsersGroup.Students;
         var timeless = true;
 
         // Act
-        var notification = new Notification(institutionId, title, description, timeless);
+        var notification = new Notification(institutionId, title, description, target, timeless);
 
         // Assert
         notification.Id.Should().NotBeEmpty();
@@ -31,9 +32,10 @@ public class CreateNotificationUnitTests
         var institutionId = Guid.NewGuid();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
+        var target = UsersGroup.Students;
         var timeless = true;
 
-        var notification = new Notification(institutionId, title, description, timeless)
+        var notification = new Notification(institutionId, title, description, target, timeless)
         {
             Views = "2/15"
         };

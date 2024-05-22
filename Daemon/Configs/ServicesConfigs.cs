@@ -10,24 +10,21 @@ namespace Syki.Daemon.Configs;
 
 public static class ServicesConfigs
 {
-    public static void AddServicesConfigs(this IHostBuilder builder)
+    public static void AddServicesConfigs(this IServiceCollection services)
     {
-        builder.ConfigureServices((ctx, services) =>
+        services.AddEfCoreConfigs();
+
+        services.AddScoped<CreateUserService>();
+        services.AddScoped<CreateTeacherService>();
+        services.AddScoped<SendResetPasswordTokenService>();
+
+        services.AddScoped<IEmailsService, EmailsService>();
+        if (Env.IsDevelopment() || Env.IsTesting())
         {
-            services.AddEfCoreConfigs();
+            services.Replace(ServiceDescriptor.Scoped<IEmailsService, FakeEmailsService>());
+        }
 
-            services.AddScoped<CreateUserService>();
-            services.AddScoped<CreateTeacherService>();
-            services.AddScoped<SendResetPasswordTokenService>();
-
-            services.AddScoped<IEmailsService, EmailsService>();
-            if (Env.IsDevelopment() || Env.IsTesting())
-            {
-                services.Replace(ServiceDescriptor.Scoped<IEmailsService, FakeEmailsService>());
-            }
-
-            services.AddIdentityConfigs();
-            services.AddSykiTasksConfigs();
-        });
+        services.AddIdentityConfigs();
+        services.AddSykiTasksConfigs();
     }
 }

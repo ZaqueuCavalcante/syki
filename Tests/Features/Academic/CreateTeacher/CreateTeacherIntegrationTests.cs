@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_create_teacher()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var teacher = await client.CreateTeacher("Chico");
@@ -20,7 +20,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_create_many_teachers()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         await client.CreateTeacher("Chico");

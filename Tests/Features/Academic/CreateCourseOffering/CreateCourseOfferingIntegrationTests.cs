@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_create_course_offering()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
@@ -26,7 +26,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_course_offering_without_campus()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateCourseOfferingHttp(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
@@ -39,8 +39,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_course_offering_with_other_institution_campus()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademic();
-        var clientUfpe = await _factory.LoggedAsAcademic();
+        var clientNovaRoma = await _back.LoggedAsAcademic();
+        var clientUfpe = await _back.LoggedAsAcademic();
 
         await clientNovaRoma.CreateCampus("Agreste I", "Caruaru - PE");
         var campusUfpe = await clientUfpe.CreateCampus("Suassuna", "Recife - PE");
@@ -56,7 +56,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_course_offering_without_course()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
 
         // Act
@@ -70,8 +70,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_course_offering_with_other_institution_course()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademic();
-        var clientUfpe = await _factory.LoggedAsAcademic();
+        var clientNovaRoma = await _back.LoggedAsAcademic();
+        var clientUfpe = await _back.LoggedAsAcademic();
 
         var courseUfpe = await clientUfpe.CreateCourse("Direito");
         var campusNovaRoma = await clientNovaRoma.CreateCampus("Agreste I", "Caruaru - PE");
@@ -87,7 +87,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_course_offering_without_course_curriculum()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var course = await client.CreateCourse("Direito");
 
@@ -102,7 +102,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_course_offering_with_other_course_curriculum()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var courseAds = await client.CreateCourse("ADS");
         var courseDireito = await client.CreateCourse("Direito");
@@ -119,7 +119,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_course_offering_without_period()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var course = await client.CreateCourse("Direito");
         var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
@@ -135,8 +135,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_course_offering_with_other_institution_period()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademic();
-        var clientUfpe = await _factory.LoggedAsAcademic();
+        var clientNovaRoma = await _back.LoggedAsAcademic();
+        var clientUfpe = await _back.LoggedAsAcademic();
 
         await clientUfpe.CreateAcademicPeriod("2023.1");
 

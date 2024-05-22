@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_get_student_disciplines()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
@@ -21,7 +21,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
 
         var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
-        var studentClient = await _factory.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var response = await studentClient.GetStudentDisciplines();

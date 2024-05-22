@@ -8,11 +8,11 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_finish_user_register()
     {
         // Arrange
-        var client = _factory.GetClient();
+        var client = _back.GetClient();
 
         var email = TestData.Email;
         await client.CreatePendingUserRegister(email);
-        var token = await _factory.GetRegisterSetupToken(email);
+        var token = await _back.GetRegisterSetupToken(email);
 
         // Act
         var response = await client.FinishUserRegister(token!, "Lalala@123");
@@ -20,8 +20,8 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        using var ctx = _factory.GetDbContext();
-        using var userManager = _factory.GetUserManager();
+        using var ctx = _back.GetDbContext();
+        using var userManager = _back.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
@@ -44,7 +44,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_finish_user_register_with_a_invalid_token(string token)
     {
         // Arrange
-        var client = _factory.GetClient();
+        var client = _back.GetClient();
 
         var email = TestData.Email;
         await client.CreatePendingUserRegister(email);
@@ -55,8 +55,8 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         await response.AssertBadRequest(Throw.DE024);
 
-        using var ctx = _factory.GetDbContext();
-        using var userManager = _factory.GetUserManager();
+        using var ctx = _back.GetDbContext();
+        using var userManager = _back.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.TrialStart.Should().BeNull();
@@ -73,12 +73,12 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_register_user_twice()
     {
         // Arrange
-        var client = _factory.GetClient();
+        var client = _back.GetClient();
 
         var email = TestData.Email;
         await client.CreatePendingUserRegister(email);
 
-        var token = await _factory.GetRegisterSetupToken(email);
+        var token = await _back.GetRegisterSetupToken(email);
         var firstResponse = await client.FinishUserRegister(token!, "Lalala@123");
 
         // Act
@@ -88,8 +88,8 @@ public partial class IntegrationTests : IntegrationTestBase
         firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         await secondResponse.AssertBadRequest(Throw.DE025);
 
-        using var ctx = _factory.GetDbContext();
-        using var userManager = _factory.GetUserManager();
+        using var ctx = _back.GetDbContext();
+        using var userManager = _back.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
@@ -112,11 +112,11 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_register_user_with_a_invalid_password(string password)
     {
         // Arrange
-        var client = _factory.GetClient();
+        var client = _back.GetClient();
 
         var email = TestData.Email;
         await client.CreatePendingUserRegister(email);
-        var token = await _factory.GetRegisterSetupToken(email);
+        var token = await _back.GetRegisterSetupToken(email);
 
         // Act
         var response = await client.FinishUserRegister(token!, password);
@@ -124,8 +124,8 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         await response.AssertBadRequest(Throw.DE015);
 
-        using var ctx = _factory.GetDbContext();
-        using var userManager = _factory.GetUserManager();
+        using var ctx = _back.GetDbContext();
+        using var userManager = _back.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.TrialStart.Should().BeNull();
@@ -136,24 +136,5 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var user = await userManager.FindByEmailAsync(email);
         user.Should().BeNull();
-    }
-
-    [Test]
-    public async Task Should_enqueue_seed_institution_data_task_on_user_register()
-    {
-        // Arrange
-        var client = _factory.GetClient();
-
-        var email = TestData.Email;
-        await client.CreatePendingUserRegister(email);
-        var token = await _factory.GetRegisterSetupToken(email);
-
-        // Act
-        await client.FinishUserRegister(token!, "Lalala@123");
-
-        // Assert
-        using var ctx = _factory.GetDbContext();
-        var institution = await ctx.Institutions.FirstAsync(x => x.Name.Contains(email));
-        await AssertTaskByDataLike<SeedInstitutionData>(institution.Id.ToString());
     }
 }

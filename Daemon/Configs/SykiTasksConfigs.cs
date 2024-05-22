@@ -14,6 +14,7 @@ public static class SykiTasksConfigs
         services.AddHostedService<SykiTasksProcessor>();
 
         services.AddTransient<SeedInstitutionDataHandler>();
+        services.AddTransient<LinkOldNotificationsHandler>();
         services.AddTransient<SendResetPasswordEmailHandler>();
         services.AddTransient<SendUserRegisterEmailConfirmationHandler>();
     }

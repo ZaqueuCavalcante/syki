@@ -6,8 +6,8 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_return_all_institution_teachers()
     {
         // Arrange
-        var clientNovaRoma = await _factory.LoggedAsAcademic();
-        var clientUfpe = await _factory.LoggedAsAcademic();
+        var clientNovaRoma = await _back.LoggedAsAcademic();
+        var clientUfpe = await _back.LoggedAsAcademic();
 
         await clientNovaRoma.CreateTeacher("Chico");
         await clientUfpe.CreateTeacher("Ana");

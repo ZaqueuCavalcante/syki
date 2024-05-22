@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_return_teacher_insights()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         var teacher = await client.CreateTeacher();
@@ -14,7 +14,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
         await client.CreateClass(discipline.Id, teacher.Id, period.Id, schedules);
 
-        var teacherClient = await _factory.LoggedAsTeacher(teacher.Email);
+        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
 
         // Act
         var insights = await teacherClient.GetTeacherInsights();

@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_view_user_notifications()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
@@ -16,7 +16,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
         await client.CreateNotification("Hello", "Hi", UsersGroup.Students, true);
 
-        var studentClient = await _factory.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         await studentClient.ViewNotifications();

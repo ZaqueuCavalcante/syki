@@ -8,7 +8,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_create_a_pending_user_register()
     {
         // Arrange
-        var client = _factory.GetClient();
+        var client = _back.GetClient();
         var email = TestData.Email;
 
         // Act
@@ -17,7 +17,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        using var ctx = _factory.GetDbContext();
+        using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.Id.Should().NotBeEmpty();
         register.TrialStart.Should().BeNull();
@@ -28,7 +28,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_a_pending_user_register_with_invalid_email()
     {
         // Arrange
-        var client = _factory.GetClient();
+        var client = _back.GetClient();
         var email = TestData.InvalidEmailsList.OrderBy(x => Guid.NewGuid()).First();
 
         // Act
@@ -37,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         await response.AssertBadRequest(Throw.DE016);
 
-        using var ctx = _factory.GetDbContext();
+        using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(x => x.Email == email);
         register.Should().BeNull();
     }
@@ -46,7 +46,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_a_pending_user_register_with_duplicated_email()
     {
         // Arrange
-        var client = _factory.GetClient();
+        var client = _back.GetClient();
         var email = TestData.Email;
 
         // Act
@@ -57,7 +57,7 @@ public partial class IntegrationTests : IntegrationTestBase
         firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         await secondResponse.AssertBadRequest(Throw.DE017);
 
-        using var ctx = _factory.GetDbContext();
+        using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.SingleAsync(x => x.Email == email);
         register.TrialStart.Should().BeNull();
         register.TrialEnd.Should().BeNull();
@@ -67,7 +67,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_not_create_a_pending_user_register_with_duplicated_case_insensitive_email()
     {
         // Arrange
-        var client = _factory.GetClient();
+        var client = _back.GetClient();
         const string email = "zaqueu.648618168711@syki.com";
         const string email2 = "ZaqueU.648618168711@syki.com";
 
@@ -79,7 +79,7 @@ public partial class IntegrationTests : IntegrationTestBase
         firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         await secondResponse.AssertBadRequest(Throw.DE017);
 
-        using var ctx = _factory.GetDbContext();
+        using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.SingleAsync(x => x.Email == email);
         register.TrialStart.Should().BeNull();
         register.TrialEnd.Should().BeNull();
@@ -89,7 +89,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_enqueue_a_send_user_register_email_confirmation_task_on_pending_user_registration()
     {
         // Arrange
-        var client = _factory.GetClient();
+        var client = _back.GetClient();
         var email = TestData.Email;
 
         // Act

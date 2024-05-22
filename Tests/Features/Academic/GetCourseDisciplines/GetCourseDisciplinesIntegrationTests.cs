@@ -6,7 +6,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_return_course_disciplines()
     {
         // Arrange
-        var client = await _factory.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas");
         var cc = await client.CreateCourse("Ciência da Computação");
 

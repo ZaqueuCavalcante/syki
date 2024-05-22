@@ -19,24 +19,27 @@ public class SykiTasksProcessor(
 
         while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
         {
-            var task = await connection.QueryFirstOrDefaultAsync<SykiTask>(sql);
-            if (task == null)
+            var tasks = await connection.QueryAsync<SykiTask>(sql);
+            if (!tasks.Any())
                 continue;
 
-            dynamic data = GetData(task);
-            dynamic handler = GetHanlder(scope, task);
-            string? error = null;
-
-            try
+            foreach (var task in tasks)
             {
-                await handler.Handle(data);
-            }
-            catch (Exception ex)
-            {
-                error = ex.Message + ex.InnerException?.Message;
-            }
+                dynamic data = GetData(task);
+                dynamic handler = GetHanlder(scope, task);
+                string? error = null;
 
-            await connection.ExecuteAsync(update, new { task.Id, error });
+                try
+                {
+                    await handler.Handle(data);
+                }
+                catch (Exception ex)
+                {
+                    error = ex.Message + ex.InnerException?.Message;
+                }
+
+                await connection.ExecuteAsync(update, new { task.Id, error });
+            }
         }
     }
 
@@ -65,8 +68,8 @@ public class SykiTasksProcessor(
         ORDER BY
             created_at ASC
         LIMIT
-            1
-        FOR UPDATE
+            500
+        FOR UPDATE SKIP LOCKED
     ";
 
     private const string update = @"

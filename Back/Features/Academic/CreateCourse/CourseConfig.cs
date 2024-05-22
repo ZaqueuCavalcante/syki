@@ -17,12 +17,6 @@ public class CourseConfig : IEntityTypeConfiguration<Course>
 
         course.HasMany(c => c.Disciplines)
             .WithMany()
-            .UsingEntity<CourseDiscipline>(cd =>
-                {
-                    cd.ToTable("courses__disciplines");
-                    cd.HasOne<Course>().WithMany(c => c.Links).HasForeignKey(x => x.CourseId);
-                    cd.HasOne<Discipline>().WithMany(d => d.Links).HasForeignKey(x => x.DisciplineId);
-                }
-            );
+            .UsingEntity<CourseDiscipline>();
     }
 }

@@ -5,7 +5,13 @@ public class Startup
     public static void ConfigureServices(IServiceCollection services)
     {
         services.AddSettingsConfigs();
-        services.AddServicesConfigs();
+
+        services.AddAcademicServicesConfigs();
+        services.AddCrossServicesConfigs();
+        services.AddAdmServicesConfigs();
+        services.AddTeacherServicesConfigs();
+        services.AddStudentServicesConfigs();
+
         services.AddRateLimiterConfigs();
 
         services.AddIdentityConfigs();

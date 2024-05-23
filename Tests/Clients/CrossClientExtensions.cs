@@ -5,7 +5,9 @@ using Syki.Front.Features.Cross.SetupMfa;
 using Syki.Front.Features.Cross.LoginMfa;
 using Syki.Front.Features.Cross.GetMfaKey;
 using Syki.Front.Features.Cross.ResetPassword;
+using Syki.Front.Features.Cross.ViewNotifications;
 using Syki.Front.Features.Cross.FinishUserRegister;
+using Syki.Front.Features.Cross.GetUserNotifications;
 using Syki.Front.Features.Cross.SendResetPasswordToken;
 using Syki.Front.Features.Cross.CreatePendingUserRegister;
 
@@ -91,6 +93,18 @@ public static class CrossClientExtensions
         var password = "My@newP4sswordMy@newP4ssword";
         await client.ResetPassword(token, password);
         return password;
+    }
+
+    public static async Task<List<UserNotificationOut>> GetUserNotifications(this HttpClient http)
+    {
+        var client = new GetUserNotificationsClient(http);
+        return await client.Get();
+    }
+
+    public static async Task ViewNotifications(this HttpClient http)
+    {
+        var client = new ViewNotificationsClient(http);
+        await client.View();
     }
 
     public static void RemoveAuthToken(this HttpClient client)

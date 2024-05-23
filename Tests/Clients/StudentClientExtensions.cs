@@ -1,9 +1,9 @@
+using Syki.Front.Features.Student.GetStudentAgenda;
 using Syki.Front.Features.Student.GetStudentInsights;
 using Syki.Front.Features.Student.GetStudentDisciplines;
+using Syki.Front.Features.Student.CreateStudentEnrollment;
 using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 using Syki.Front.Features.Student.GetStudentEnrollmentClasses;
-using Syki.Front.Features.Student.CreateStudentEnrollment;
-using Syki.Front.Features.Student.GetStudentAgenda;
 
 namespace Syki.Tests.Clients;
 

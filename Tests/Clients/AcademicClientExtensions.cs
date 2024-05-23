@@ -3,6 +3,7 @@ using Syki.Front.Features.Academic.GetCourses;
 using Syki.Front.Features.Academic.GetClasses;
 using Syki.Front.Features.Academic.CreateClass;
 using Syki.Front.Features.Academic.GetTeachers;
+using Syki.Front.Features.Academic.GetStudents;
 using Syki.Front.Features.Academic.CreateCampus;
 using Syki.Front.Features.Academic.UpdateCampus;
 using Syki.Front.Features.Academic.CreateCourse;
@@ -10,6 +11,7 @@ using Syki.Front.Features.Academic.CreateStudent;
 using Syki.Front.Features.Academic.CreateTeacher;
 using Syki.Front.Features.Academic.GetDisciplines;
 using Syki.Front.Features.Academic.CreateDiscipline;
+using Syki.Front.Features.Academic.GetNotifications;
 using Syki.Front.Features.Academic.GetCourseOfferings;
 using Syki.Front.Features.Academic.GetAcademicPeriods;
 using Syki.Front.Features.Academic.CreateNotification;
@@ -21,12 +23,8 @@ using Syki.Front.Features.Academic.GetEnrollmentPeriods;
 using Syki.Front.Features.Academic.GetCourseCurriculums;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
-using Syki.Front.Features.Academic.GetStudents;
 using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
-using Syki.Front.Features.Academic.GetNotifications;
-using Syki.Front.Features.Cross.GetUserNotifications;
-using Syki.Front.Features.Cross.ViewNotifications;
 
 namespace Syki.Tests.Clients;
 
@@ -43,18 +41,6 @@ public static class AcademicClientExtensions
     {
         var client = new GetNotificationsClient(http);
         return await client.Get();
-    }
-
-    public static async Task<List<UserNotificationOut>> GetUserNotifications(this HttpClient http)
-    {
-        var client = new GetUserNotificationsClient(http);
-        return await client.Get();
-    }
-
-    public static async Task ViewNotifications(this HttpClient http)
-    {
-        var client = new ViewNotificationsClient(http);
-        await client.View();
     }
 
     public static async Task<CampusOut> CreateCampus(this HttpClient http, string name = "Agreste I", string city = "Caruaru - PE")
@@ -146,12 +132,6 @@ public static class AcademicClientExtensions
         var client = new GetCourseCurriculumsClient(http);
         return await client.Get();
     }
-
-    // public static async Task<List<CourseCurriculumOut>> GetCourseCurriculumDisciplines(this HttpClient http)
-    // {
-    //     var client = new GetCourseCurriculumDisciplinesClient(http);
-    //     return await client.Get();
-    // }
 
     public static async Task<HttpResponseMessage> CreateCourseOfferingHttp(
         this HttpClient http,

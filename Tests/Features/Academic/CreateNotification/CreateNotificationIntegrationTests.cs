@@ -30,6 +30,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var userNotifications = await ctx.UserNotifications
             .Where(x => x.NotificationId == notification.Id)
             .ToListAsync();
+
         userNotifications.Should().HaveCount(2);
     }
 
@@ -61,6 +62,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var userNotifications = await ctx.UserNotifications
             .Where(x => x.NotificationId == notification.Id)
             .ToListAsync();
+
         userNotifications.Should().HaveCount(1);
         userNotifications[0].UserId.Should().Be(teacher.Id);
     }
@@ -93,6 +95,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var userNotifications = await ctx.UserNotifications
             .Where(x => x.NotificationId == notification.Id)
             .ToListAsync();
+
         userNotifications.Should().HaveCount(1);
         userNotifications[0].UserId.Should().Be(student.Id);
     }

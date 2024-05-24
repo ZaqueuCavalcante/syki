@@ -11,12 +11,12 @@ public class Schedule
     private Schedule() {}
 
     public Schedule(
-        Day dia,
+        Day day,
         Hour startAt,
         Hour endAt
     ) {
         Id = Guid.NewGuid();
-        Day = dia;
+        Day = day;
 
         if (startAt == endAt || endAt < startAt)
             Throw.DE021.Now();

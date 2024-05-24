@@ -3,7 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Should_create_student_enrollment_period()
+    public async Task Should_create_student_enrollment()
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();

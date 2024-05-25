@@ -15,16 +15,6 @@ public static class UserExtensions
         return Guid.Parse(user.FindFirstValue("sub")!);
     }
 
-    public static bool IsAuditable(this PathString path)
-    {
-        return
-            path != "/login" &&
-            path != "/login/mfa" &&
-            path != "/reset-password" &&
-            path != "/users" &&
-            path != "/reset-password-token";
-    }
-
     public static async Task<bool> IsOnlyInRole(this UserManager<SykiUser> userManager, SykiUser user, UserRole role)
     {
         var adm = await userManager.IsInRoleAsync(user!, UserRole.Adm.ToString());
@@ -35,5 +25,15 @@ public static class UserExtensions
         if (role is UserRole.Academic) return academic && !(adm || student || teacher);
 
         return false;
+    }
+
+    public static bool IsAuditable(this PathString path)
+    {
+        return
+            path != "/login" &&
+            path != "/login/mfa" &&
+            path != "/reset-password" &&
+            path != "/users" &&
+            path != "/reset-password-token";
     }
 }

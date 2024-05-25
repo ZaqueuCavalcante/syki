@@ -1,7 +1,7 @@
-using Syki.Back.Features.Teacher.GetTeacherAgenda;
-using Syki.Back.Features.Teacher.GetTeacherInsights;
-using Syki.Back.Features.Teacher.GetTeacherClasses;
 using Syki.Back.Features.Teacher.GetTeacherClass;
+using Syki.Back.Features.Teacher.GetTeacherAgenda;
+using Syki.Back.Features.Teacher.GetTeacherClasses;
+using Syki.Back.Features.Teacher.GetTeacherInsights;
 
 namespace Syki.Back.Configs;
 

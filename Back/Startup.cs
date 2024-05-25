@@ -21,6 +21,7 @@ public class Startup
         services.AddHttpConfigs();
 
         services.AddAuditConfigs();
+        services.AddDapperConfigs();
         services.AddEfCoreConfigs();
 
         services.AddDocsConfigs();

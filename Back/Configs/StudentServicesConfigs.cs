@@ -1,8 +1,8 @@
-using Syki.Back.Features.Student.CreateStudentEnrollment;
 using Syki.Back.Features.Student.GetStudentAgenda;
-using Syki.Back.Features.Student.GetStudentDisciplines;
-using Syki.Back.Features.Student.GetCurrentEnrollmentPeriod;
 using Syki.Back.Features.Student.GetStudentInsights;
+using Syki.Back.Features.Student.GetStudentDisciplines;
+using Syki.Back.Features.Student.CreateStudentEnrollment;
+using Syki.Back.Features.Student.GetCurrentEnrollmentPeriod;
 
 using Syki.Back.Features.Student.GetStudentEnrollmentClasses;
 

@@ -1,7 +1,7 @@
 using Syki.Back.Features.Academic.CreateCourseOffering;
 using Syki.Back.Features.Academic.CreateCourseCurriculum;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.Academic.CreateCourseOffering;
 
 public class CreateCourseOfferingUnitTests
 {

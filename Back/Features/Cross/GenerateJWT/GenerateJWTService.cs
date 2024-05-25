@@ -36,10 +36,10 @@ public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> use
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Issuer = settings.Issuer,
+            Subject = identityClaims,
             Audience = settings.Audience,
-            Expires = DateTime.UtcNow.AddMinutes(expirationTime),
             SigningCredentials = signingCredentials,
-            Subject = identityClaims
+            Expires = DateTime.UtcNow.AddMinutes(expirationTime),
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();

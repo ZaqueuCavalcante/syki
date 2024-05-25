@@ -10,6 +10,10 @@ public static class Program
     private static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
-                webBuilder.UseStartup<Startup>()
+            {
+                webBuilder.UseStartup<Startup>();
+            })
+            .UseSerilog((context, config) => 
+                config.ReadFrom.Configuration(context.Configuration)
             );
 }

@@ -58,6 +58,15 @@ services:
     networks:
       - sykinet
 
+  seq:
+    image: 'datalust/seq:latest'
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 5341:5341
+      - 8081:80
+
 networks:
   sykinet:
     driver: bridge

@@ -1,6 +1,6 @@
 using Syki.Back.Features.Cross.CreateInstitution;
 
-namespace Syki.Tests.Features.CreateInstitution;
+namespace Syki.Tests.Features.Cross.CreateInstitution;
 
 public class CreateInstitutionUnitTests
 {

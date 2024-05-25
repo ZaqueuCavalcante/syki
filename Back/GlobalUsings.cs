@@ -1,3 +1,4 @@
+global using Serilog;
 global using Syki.Shared;
 global using Syki.Back.Tasks;
 global using Syki.Back.Configs;

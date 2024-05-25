@@ -1,4 +1,4 @@
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Extensions;
 
 public class GuidExtensionsUnitTests
 {

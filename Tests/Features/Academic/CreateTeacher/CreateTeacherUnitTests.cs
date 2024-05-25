@@ -1,6 +1,6 @@
 using Syki.Back.Features.Academic.CreateTeacher;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Features.Academic.CreateTeacher;
 
 public class CreateTeacherUnitTests
 {

@@ -1,7 +1,7 @@
 using Syki.Front.Extensions;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Extensions;
 
 public class KeyboardEventArgsExtensionsUnitTests
 {

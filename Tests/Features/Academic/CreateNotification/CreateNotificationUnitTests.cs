@@ -48,6 +48,7 @@ public class CreateNotificationUnitTests
         notificationOut.Title.Should().Be(notification.Title);
         notificationOut.Description.Should().Be(notification.Description);
         notificationOut.Timeless.Should().Be(notification.Timeless);
+        notificationOut.Target.Should().Be(notification.Target);
         notificationOut.CreatedAt.Should().Be(notification.CreatedAt);
         notificationOut.Views.Should().Be(notification.Views);
     }

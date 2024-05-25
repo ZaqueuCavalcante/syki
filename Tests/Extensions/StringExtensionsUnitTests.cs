@@ -1,6 +1,6 @@
 using Bogus;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Extensions;
 
 public class StringExtensionsUnitTests
 {

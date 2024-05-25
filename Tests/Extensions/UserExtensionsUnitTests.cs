@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
-namespace Syki.Tests.Unit;
+namespace Syki.Tests.Extensions;
 
 public class UserExtensionsUnitTests
 {

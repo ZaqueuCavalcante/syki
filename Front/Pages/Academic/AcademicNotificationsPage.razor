@@ -29,7 +29,8 @@
             <Columns>
                 <PropertyColumn Property="x => x.Title" Title="Título" />
                 <PropertyColumn Property="x => x.Description" Title="Descrição" />
-                <PropertyColumn Property="x => x.CreatedAt" Title="Criada em" />
+                <PropertyColumn Property="x => x.CreatedAt.Format()" Title="Criada em" />
+                <PropertyColumn Property="x => x.Target.GetDescription()" Title="Audiência" />
                 <PropertyColumn Property="x => x.Views" Title="Visualizações" />
             </Columns>
             <NoRecordsContent>

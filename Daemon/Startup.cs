@@ -11,6 +11,5 @@ public class Startup
 
     public static void Configure(IApplicationBuilder app)
     {
-        
     }
 }

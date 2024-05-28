@@ -66,6 +66,8 @@ services:
     ports:
       - 5341:5341
       - 8081:80
+    networks:
+      - sykinet
 
 networks:
   sykinet:

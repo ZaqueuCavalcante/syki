@@ -16,12 +16,9 @@ namespace Syki.Back.Configs;
 
 public static class AuditConfigs
 {
-    public static void AddAuditConfigs(this IServiceCollection services)
+    public static void AddAuditConfigs(this IServiceCollection _)
     {
-        var context = services.BuildServiceProvider().GetService<SykiDbContext>();
-
         Configuration.Setup().UseEntityFramework(_ => _
-            .UseDbContext(_ => context)
             .AuditTypeExplicitMapper(_ => _
                 .Map<Class, AuditLog>()
                 .Map<Campus, AuditLog>()

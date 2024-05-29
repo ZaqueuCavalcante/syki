@@ -11,7 +11,7 @@ public static class SykiTasksConfigs
         services.AddSingleton<EmailSettings>();
         services.AddSingleton<DatabaseSettings>();
 
-        services.AddHostedService<SykiTasksProcessor>();
+        services.AddTransient<SykiTasksProcessor>();
 
         services.AddTransient<SeedInstitutionDataHandler>();
         services.AddTransient<LinkOldNotificationsHandler>();

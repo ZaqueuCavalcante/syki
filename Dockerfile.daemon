@@ -8,4 +8,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /app ./
 
+EXPOSE 7001
+
 ENTRYPOINT [ "dotnet", "Daemon.dll" ]

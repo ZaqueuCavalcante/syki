@@ -1,45 +1,35 @@
 using Dapper;
 using Npgsql;
 using Newtonsoft.Json;
-using Syki.Daemon.Settings;
 
 namespace Syki.Daemon.Tasks;
 
-public class SykiTasksProcessor(
-    TasksSettings settings,
-    DatabaseSettings dbSettings,
-    IServiceScopeFactory serviceScopeFactory)
-    : BackgroundService
+public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
 {
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    public async Task Run()
     {
         using var scope = serviceScopeFactory.CreateScope();
-        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(settings.Delay));
-        using var connection = new NpgsqlConnection(dbSettings.ConnectionString);
+        using var connection = new NpgsqlConnection(configuration.DbCnnString());
 
-        while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
+        var tasks = await connection.QueryAsync<SykiTask>(sql);
+        if (!tasks.Any()) return;
+
+        foreach (var task in tasks)
         {
-            var tasks = await connection.QueryAsync<SykiTask>(sql);
-            if (!tasks.Any())
-                continue;
+            dynamic data = GetData(task);
+            dynamic handler = GetHanlder(scope, task);
+            string? error = null;
 
-            foreach (var task in tasks)
+            try
             {
-                dynamic data = GetData(task);
-                dynamic handler = GetHanlder(scope, task);
-                string? error = null;
-
-                try
-                {
-                    await handler.Handle(data);
-                }
-                catch (Exception ex)
-                {
-                    error = ex.Message + ex.InnerException?.Message;
-                }
-
-                await connection.ExecuteAsync(update, new { task.Id, error });
+                await handler.Handle(data);
             }
+            catch (Exception ex)
+            {
+                error = ex.Message + ex.InnerException?.Message;
+            }
+
+            await connection.ExecuteAsync(update, new { task.Id, error });
         }
     }
 
@@ -68,7 +58,7 @@ public class SykiTasksProcessor(
         ORDER BY
             created_at ASC
         LIMIT
-            500
+            300
         FOR UPDATE SKIP LOCKED
     ";
 

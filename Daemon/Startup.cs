@@ -15,8 +15,8 @@ public class Startup(IConfiguration configuration)
         {
             x.UseRecommendedSerializerSettings();
             x.UseSimpleAssemblyNameTypeSerializer();
-            // x.UsePostgreSqlStorage(x => x.UseNpgsqlConnection(configuration.DbCnnString()));
             x.UseMemoryStorage();
+            // x.UsePostgreSqlStorage(x => x.UseNpgsqlConnection(configuration.DbCnnString()));
         });
 
         services.AddHangfireServer(x =>

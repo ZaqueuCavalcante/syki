@@ -1,7 +1,7 @@
 using Hangfire;
 using Syki.Daemon.Tasks;
 using Syki.Daemon.Configs;
-using Hangfire.MemoryStorage;
+using Hangfire.PostgreSql;
 
 namespace Syki.Daemon;
 
@@ -15,8 +15,7 @@ public class Startup(IConfiguration configuration)
         {
             x.UseRecommendedSerializerSettings();
             x.UseSimpleAssemblyNameTypeSerializer();
-            x.UseMemoryStorage();
-            // x.UsePostgreSqlStorage(x => x.UseNpgsqlConnection(configuration.DbCnnString()));
+            x.UsePostgreSqlStorage(x => x.UseNpgsqlConnection(configuration.DbCnnString()));
         });
 
         services.AddHangfireServer(x =>

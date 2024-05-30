@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Hangfire.AspNetCore" Version="1.8.12" />
     <PackageReference Include="Hangfire.PostgreSql" Version="1.20.8" />
+    <PackageReference Include="Hangfire.MemoryStorage" Version="1.8.1.1" />
   </ItemGroup>
 
   <ItemGroup>

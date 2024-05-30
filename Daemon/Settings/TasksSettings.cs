@@ -8,4 +8,9 @@ public class TasksSettings
     {
         configuration.GetSection("Tasks").Bind(this);
     }
+
+    public string DelayCron()
+    {
+        return $"*/{Delay} * * * * *";
+    }
 }

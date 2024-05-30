@@ -9,7 +9,7 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
     public async Task Run()
     {
         using var scope = serviceScopeFactory.CreateScope();
-        using var connection = new NpgsqlConnection(configuration.DbCnnString());
+        using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
 
         var tasks = await connection.QueryAsync<SykiTask>(sql);
         if (!tasks.Any()) return;

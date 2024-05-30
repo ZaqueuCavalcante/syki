@@ -10,6 +10,7 @@ public static class SykiTasksConfigs
         services.AddSingleton<TasksSettings>();
         services.AddSingleton<EmailSettings>();
         services.AddSingleton<DatabaseSettings>();
+        services.AddSingleton<HangfireSettings>();
 
         services.AddTransient<SykiTasksProcessor>();
 

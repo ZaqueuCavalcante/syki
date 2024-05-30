@@ -15,7 +15,7 @@ public class Startup(IConfiguration configuration)
         {
             x.UseRecommendedSerializerSettings();
             x.UseSimpleAssemblyNameTypeSerializer();
-            x.UsePostgreSqlStorage(x => x.UseNpgsqlConnection(configuration.DbCnnString()));
+            x.UsePostgreSqlStorage(x => x.UseNpgsqlConnection(configuration.Database().ConnectionString));
         });
 
         services.AddHangfireServer(x =>
@@ -27,13 +27,13 @@ public class Startup(IConfiguration configuration)
 
     public void Configure(IApplicationBuilder app)
     {
-        RecurringJob.AddOrUpdate<SykiTasksProcessor>("tasks-processor", x => x.Run(), configuration.Delay());
+        RecurringJob.AddOrUpdate<SykiTasksProcessor>("tasks-processor", x => x.Run(), configuration.Tasks().DelayCron());
 
         app.UseHangfireDashboard(
             pathMatch: "",
             options: new DashboardOptions()
             {
-                Authorization = [ new HangfireAuthFilter(configuration.HangfireUser(), configuration.HangfirePassword()) ]
+                Authorization = [ new HangfireAuthFilter(configuration.Hangfire().User, configuration.Hangfire().Password) ]
             }
         );
     }

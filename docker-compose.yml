@@ -23,11 +23,11 @@ services:
     depends_on:
       - db
     environment:
-      - 'ASPNETCORE_URLS=http://+:80'
+      - 'ASPNETCORE_URLS=http://+:5001'
       - 'ASPNETCORE_ENVIRONMENT=Development'
       - 'Database__ConnectionString=UserID=postgres;Password=postgres;Host=db_host;Port=5432;Database=syki-db;Pooling=true;'
     ports:
-      - '5001:80'
+      - '5001:5001'
     networks:
       - sykinet
 
@@ -39,9 +39,9 @@ services:
     depends_on:
       - back
     environment:
-      - 'ASPNETCORE_URLS=http://+:80'
+      - 'ASPNETCORE_URLS=http://+:6001'
     ports:
-      - '6001:80'
+      - '6001:6001'
     networks:
       - sykinet
 
@@ -53,11 +53,11 @@ services:
     depends_on:
       - back
     environment:
-      - 'ASPNETCORE_URLS=http://+:80'
+      - 'ASPNETCORE_URLS=http://+:7001'
       - 'ASPNETCORE_ENVIRONMENT=Development'
       - 'Database__ConnectionString=UserID=postgres;Password=postgres;Host=db_host;Port=5432;Database=syki-db;Pooling=true;'
     ports:
-      - '7001:80'
+      - '7001:7001'
     networks:
       - sykinet
 

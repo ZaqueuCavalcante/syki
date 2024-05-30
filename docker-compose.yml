@@ -51,11 +51,13 @@ services:
       context: .
       dockerfile: Dockerfile.daemon
     depends_on:
-      - db
+      - back
     environment:
       - 'ASPNETCORE_URLS=http://+:80'
       - 'ASPNETCORE_ENVIRONMENT=Development'
       - 'Database__ConnectionString=UserID=postgres;Password=postgres;Host=db_host;Port=5432;Database=syki-db;Pooling=true;'
+    ports:
+      - '7001:80'
     networks:
       - sykinet
 

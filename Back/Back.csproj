@@ -39,4 +39,17 @@
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Content Update="appsettings.Development.json">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Update="appsettings.Testing.json">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+
 </Project>

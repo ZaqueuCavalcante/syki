@@ -29,6 +29,12 @@ public class Startup(IConfiguration configuration)
     {
         RecurringJob.AddOrUpdate<SykiTasksProcessor>("tasks-processor", x => x.Run(), configuration.Delay());
 
-        app.UseHangfireDashboard("");
+        app.UseHangfireDashboard(
+            pathMatch: "",
+            options: new DashboardOptions()
+            {
+                Authorization = [ new HangfireAuthFilter(configuration.HangfireUser(), configuration.HangfirePassword()) ]
+            }
+        );
     }
 }

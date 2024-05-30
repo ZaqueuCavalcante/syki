@@ -29,10 +29,13 @@ public class Startup(IConfiguration configuration)
     {
         RecurringJob.AddOrUpdate<SykiTasksProcessor>("tasks-processor", x => x.Run(), configuration.Tasks().DelayCron());
 
+        app.UseStaticFiles();
+
         app.UseHangfireDashboard(
             pathMatch: "",
             options: new DashboardOptions()
             {
+                FaviconPath = "/favicon.ico",
                 Authorization = [ new HangfireAuthFilter(configuration.Hangfire().User, configuration.Hangfire().Password) ]
             }
         );

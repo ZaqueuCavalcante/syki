@@ -1,0 +1,40 @@
+﻿@namespace Syki.Front.Components.Indexes
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="Typo.h5" Class="mt-4 mb-3">
+        <strong>Gerencie sua instituição de ensino com maestria</strong>
+    </MudText>
+    <MudText Typo="Typo.h6" Class="mb-6">
+        Acadêmico, financeiro, secretaria, professores e alunos: tudo integrado de maneira fácil e intuitiva.
+    </MudText>
+    <MudStack AlignItems="AlignItems.Center">
+        <MudButton
+            EndIcon="@Icons.Material.Filled.ArrowForward"
+            IconSize="Size.Large"
+            Variant="Variant.Filled"
+            Style="height: 50px;"
+            Color="Color.Primary"
+            Href="/register"
+        >
+            <MudText Typo="Typo.h6">
+                Experimente agora
+            </MudText>
+        </MudButton>
+    </MudStack>
+    <MudPaper Class="mt-6 pa-4" Elevation="3">
+        @if (IsDarkTheme)
+        {
+            <img src="syki_home_gif_dark.gif" width="100%">
+        }
+        else
+        {
+            <img src="syki_home_gif_light.gif" width="100%">
+        }
+    </MudPaper>
+</MudContainer>
+
+@code
+{
+    [CascadingParameter(Name = "IsDarkTheme")]
+    public bool IsDarkTheme { get; set; }
+}

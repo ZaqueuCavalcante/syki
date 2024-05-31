@@ -1,0 +1,11 @@
+﻿@namespace Syki.Front.Shared
+
+<MudContainer Class="d-none d-md-block">
+   @ChildContent
+</MudContainer>
+
+@code
+{
+	[Parameter]
+	public RenderFragment ChildContent { get; set; }
+}

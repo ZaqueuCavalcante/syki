@@ -20,8 +20,8 @@ public class Startup(IConfiguration configuration)
 
         services.AddHangfireServer(x =>
         {
-            x.HeartbeatInterval = TimeSpan.FromSeconds(5);
-            x.SchedulePollingInterval = TimeSpan.FromSeconds(5);
+            x.HeartbeatInterval = TimeSpan.FromMinutes(30);
+            x.SchedulePollingInterval = TimeSpan.FromMinutes(30);
         });
     }
 

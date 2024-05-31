@@ -12,12 +12,12 @@ public class CreateCourseCurriculumDisciplineIn
     public CreateCourseCurriculumDisciplineIn(
         Guid disciplineId,
         byte period,
-        byte creditos,
+        byte credits,
         ushort cargaHoraria
     ) {
         Id = disciplineId;
         Period = period;
-        Credits = creditos;
+        Credits = credits;
         Workload = cargaHoraria;
     }
 }

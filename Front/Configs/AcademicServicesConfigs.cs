@@ -1,10 +1,9 @@
 namespace Syki.Front.Configs;
 
-public static class ServicesConfigs
+public static class AcademicServicesConfigs
 {
-    public static void AddServicesConfigs(this WebAssemblyHostBuilder builder)
+    public static void AddAcademicServicesConfigs(this WebAssemblyHostBuilder builder)
     {
-        // Academic
         builder.Services.AddScoped<CreateAcademicPeriodClient>();
         builder.Services.AddScoped<CreateCampusClient>();
         builder.Services.AddScoped<CreateClassClient>();
@@ -32,38 +31,5 @@ public static class ServicesConfigs
         builder.Services.AddScoped<GetStudentsClient>();
         builder.Services.AddScoped<GetTeachersClient>();
         builder.Services.AddScoped<UpdateCampusClient>();
-
-        // Adm
-        builder.Services.AddScoped<GetAdmInsightsClient>();
-        builder.Services.AddScoped<GetInstitutionsClient>();
-        builder.Services.AddScoped<GetUsersClient>();
-
-        // Cross
-        builder.Services.AddScoped<CreatePendingUserRegisterClient>();
-        builder.Services.AddScoped<FinishUserRegisterClient>();
-        builder.Services.AddScoped<GetMfaKeyClient>();
-        builder.Services.AddScoped<GetUserNotificationsClient>();
-        builder.Services.AddScoped<LoginClient>();
-        builder.Services.AddScoped<LoginMfaClient>();
-        builder.Services.AddScoped<ResetPasswordClient>();
-        builder.Services.AddScoped<SendResetPasswordTokenClient>();
-        builder.Services.AddScoped<SetupMfaClient>();
-        builder.Services.AddScoped<ViewNotificationsClient>();
-
-        // Student
-        builder.Services.AddScoped<CreateStudentEnrollmentClient>();
-        builder.Services.AddScoped<GetCurrentEnrollmentPeriodClient>();
-        builder.Services.AddScoped<GetStudentAgendaClient>();
-        builder.Services.AddScoped<GetStudentDisciplinesClient>();
-        builder.Services.AddScoped<GetStudentEnrollmentClassesClient>();
-        builder.Services.AddScoped<GetStudentInsightsClient>();
-
-        // Teacher
-        builder.Services.AddScoped<GetTeacherAgendaClient>();
-        builder.Services.AddScoped<GetTeacherClassesClient>();
-        builder.Services.AddScoped<GetTeacherInsightsClient>();
-
-        // Seller
-        builder.Services.AddScoped<GetSellerCourseOfferingsClient>();
     }
 }

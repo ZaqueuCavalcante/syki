@@ -1,0 +1,56 @@
+﻿@using Syki.Front.Components.Custom
+
+@namespace Syki.Front.Pages.Seller
+
+@page "/seller/course-offerings"
+@attribute [Authorize(Roles = "Seller")]
+
+<PageTitle>Ofertas</PageTitle>
+
+<MudContainer>
+    <SykiPageHeader Icon="@Icons.Material.Filled.PlaylistAddCheck" Title="Ofertas" />
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo" />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Campus" Title="Campus" />
+                <PropertyColumn Property="x => x.Period" Title="Período" />
+                <PropertyColumn Property="x => x.Shift.GetDescription()" Title="Turno" />
+                <PropertyColumn Property="x => x.Course" Title="Curso" />
+                <PropertyColumn Property="x => x.CourseCurriculum" Title="Grade" />
+            </Columns>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiDataGridPager T="CourseOfferingOut" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject GetSellerCourseOfferingsClient Client
+
+@code
+{
+    private bool _loading;
+    private string _searchString;
+    private List<CourseOfferingOut> _ofertas = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _ofertas = await Client.Get();
+        _loading = false;
+    }
+
+    private Func<CourseOfferingOut, bool> _quickFilter => x =>
+        _searchString.IsIn(x.Campus, x.Period, x.Shift.GetDescription(), x.Course, x.CourseCurriculum);
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem ofertas cadastradas ainda." : "Nenhuma oferta encontrada.";
+    }
+}

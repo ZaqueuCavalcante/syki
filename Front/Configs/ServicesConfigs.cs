@@ -62,5 +62,8 @@ public static class ServicesConfigs
         builder.Services.AddScoped<GetTeacherAgendaClient>();
         builder.Services.AddScoped<GetTeacherClassesClient>();
         builder.Services.AddScoped<GetTeacherInsightsClient>();
+
+        // Seller
+        builder.Services.AddScoped<GetSellerCourseOfferingsClient>();
     }
 }

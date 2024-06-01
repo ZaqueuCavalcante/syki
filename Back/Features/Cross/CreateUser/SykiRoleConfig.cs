@@ -8,5 +8,6 @@ public class SykiRoleConfig : IEntityTypeConfiguration<SykiRole>
         role.HasData(new SykiRole(UserRole.Academic));
         role.HasData(new SykiRole(UserRole.Teacher));
         role.HasData(new SykiRole(UserRole.Student));
+        role.HasData(new SykiRole(UserRole.Seller));
     }
 }

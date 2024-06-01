@@ -11,6 +11,7 @@ public class Startup
         services.AddAdmServicesConfigs();
         services.AddTeacherServicesConfigs();
         services.AddStudentServicesConfigs();
+        services.AddSellerServicesConfigs();
 
         services.AddRateLimiterConfigs();
 

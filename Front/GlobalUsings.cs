@@ -56,5 +56,7 @@ global using Syki.Front.Features.Teacher.GetTeacherAgenda;
 global using Syki.Front.Features.Teacher.GetTeacherClasses;
 global using Syki.Front.Features.Teacher.GetTeacherInsights;
 
+global using Syki.Front.Features.Seller.GetSellerCourseOfferings;
+
 global using System.Net.Http.Json;
 global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

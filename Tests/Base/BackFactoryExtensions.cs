@@ -80,6 +80,17 @@ public static class BackFactoryExtensions
         return client;
     }
 
+    public static async Task<HttpClient> LoggedAsSeller(this BackFactory factory, string email)
+    {
+        var client = factory.GetClient();
+
+        var token = await factory.GetResetPasswordToken(email);
+        var password = await client.ResetPassword(token!);
+        await client.Login(email, password);
+    
+        return client;
+    }
+
     public static SykiDbContext GetDbContext(this BackFactory factory)
     {
         var scope = factory.Services.CreateScope();

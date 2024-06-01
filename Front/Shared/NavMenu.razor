@@ -30,4 +30,8 @@
         <MudNavLink Href="student/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
         <MudNavLink Href="student/enrollments" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrícula</MudNavLink>
     </AuthorizeView>
+
+    <AuthorizeView Roles="@UserRole.Seller.ToString()">
+        <MudNavLink Href="seller/course-offerings" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.PlaylistAddCheck" IconColor="Color.Inherit">Ofertas</MudNavLink>
+    </AuthorizeView>
 </MudNavMenu>

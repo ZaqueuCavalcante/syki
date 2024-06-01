@@ -21,8 +21,9 @@ public static class UserExtensions
         var student = await userManager.IsInRoleAsync(user!, UserRole.Student.ToString());
         var teacher = await userManager.IsInRoleAsync(user!, UserRole.Teacher.ToString());
         var academic = await userManager.IsInRoleAsync(user!, UserRole.Academic.ToString());
+        var seller = await userManager.IsInRoleAsync(user!, UserRole.Seller.ToString());
 
-        if (role is UserRole.Academic) return academic && !(adm || student || teacher);
+        if (role is UserRole.Academic) return academic && !(adm || student || teacher || seller);
 
         return false;
     }

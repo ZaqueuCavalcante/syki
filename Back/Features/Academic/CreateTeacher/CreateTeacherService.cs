@@ -18,7 +18,7 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
         ctx.Add(SykiTask.LinkOldNotifications(user.Id));
         await ctx.SaveChangesAsync();
 
-        await sendService.Send(new SendResetPasswordTokenIn { Email = user.Email });
+        await sendService.Send(new() { Email = user.Email });
 
         transaction.Commit();
 

@@ -7,8 +7,7 @@ public class CreatePendingUserRegisterService(SykiDbContext ctx)
         var email = data.Email.ToLower();
 
         var registerExists = await ctx.UserRegisters.AnyAsync(d => d.Email == email);
-        if (registerExists)
-            Throw.DE017.Now();
+        if (registerExists) Throw.DE017.Now();
 
         var register = new UserRegister(email);
         ctx.Add(register);

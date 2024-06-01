@@ -7,8 +7,7 @@ public class SendResetPasswordTokenService(SykiDbContext ctx, UserManager<SykiUs
     public async Task Send(SendResetPasswordTokenIn data)
     {
         var user = await userManager.FindByEmailAsync(data.Email);
-        if (user == null)
-            Throw.DE019.Now();
+        if (user == null) Throw.DE019.Now();
 
         var token = await userManager.GeneratePasswordResetTokenAsync(user);
 

@@ -11,18 +11,14 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
 
         _ = Guid.TryParse(data.Token, out var id);
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Id == id);
-        if (register == null)
-            Throw.DE024.Now();
+        if (register == null) Throw.DE024.Now();
 
         register.Finish();
 
         var institution = new Institution($"Institution - {register.Email}");
         ctx.Add(institution);
 
-        if (Env.IsDevelopment())
-        {
-            ctx.Add(SykiTask.SeedInstitutionData(institution.Id));
-        }
+        if (Env.IsDevelopment()) ctx.Add(SykiTask.SeedInstitutionData(institution.Id));
 
         await ctx.SaveChangesAsync();
 

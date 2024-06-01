@@ -1,7 +1,7 @@
 using Hangfire;
 using Syki.Daemon.Tasks;
 using Syki.Daemon.Configs;
-using Hangfire.PostgreSql;
+using Hangfire.MemoryStorage;
 
 namespace Syki.Daemon;
 
@@ -13,15 +13,15 @@ public class Startup(IConfiguration configuration)
 
         services.AddHangfire(x =>
         {
+            x.UseMemoryStorage();
             x.UseRecommendedSerializerSettings();
             x.UseSimpleAssemblyNameTypeSerializer();
-            x.UsePostgreSqlStorage(x => x.UseNpgsqlConnection(configuration.Database().ConnectionString));
         });
 
         services.AddHangfireServer(x =>
         {
-            x.HeartbeatInterval = TimeSpan.FromMinutes(30);
-            x.SchedulePollingInterval = TimeSpan.FromMinutes(30);
+            x.ServerName = "Daemon";
+            x.SchedulePollingInterval = TimeSpan.FromSeconds(1);
         });
     }
 
@@ -29,7 +29,13 @@ public class Startup(IConfiguration configuration)
     {
         RecurringJob.AddOrUpdate<SykiTasksProcessor>("tasks-processor", x => x.Run(), configuration.Tasks().DelayCron());
 
+        app.UseRouting();
         app.UseStaticFiles();
+
+        app.UseEndpoints(x =>
+        {
+            x.MapGet("/health", () => Results.Ok(new { Status = "Healthy" }));
+        });
 
         app.UseHangfireDashboard(
             pathMatch: "",

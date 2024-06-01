@@ -4,21 +4,21 @@ namespace Syki.Tests.Base;
 
 public class IntegrationTestBase
 {
-    protected BackWebApplicationFactory _back = null!;
-    protected DaemonWebApplicationFactory _daemon = null!;
+    protected BackFactory _back = null!;
+    protected DaemonFactory _daemon = null!;
 
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
     {
-        _back = new BackWebApplicationFactory();
-        _daemon = new DaemonWebApplicationFactory();
+        _back = new BackFactory();
         using var scope = _back.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 
         await ctx.ResetDbAsync();
-        _daemon.Services.CreateScope();
-
         await _back.RegisterAdm();
+
+        _daemon = new DaemonFactory();
+        _daemon.Services.CreateScope();
     }
 
     [OneTimeTearDown]

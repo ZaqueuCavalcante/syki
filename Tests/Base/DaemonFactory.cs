@@ -1,4 +1,4 @@
-using Syki.Back;
+using Syki.Daemon;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Syki.Tests.Base;
 
-public class BackWebApplicationFactory : WebApplicationFactory<Startup>
+public class DaemonFactory : WebApplicationFactory<Startup>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {

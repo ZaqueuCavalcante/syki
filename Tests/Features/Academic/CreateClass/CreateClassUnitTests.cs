@@ -14,10 +14,11 @@ public class CreateClassUnitTests
         var disciplineId = Guid.NewGuid();
         var teacherId = Guid.NewGuid();
         const string period = "2023.2";
+        const int vacancies = 40;
         var schedules = new List<Schedule>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
         // Act
-        var @class = new Class(institutionId, disciplineId, teacherId, period, schedules);
+        var @class = new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
 
         // Assert
         @class.Id.Should().NotBeEmpty();
@@ -25,6 +26,7 @@ public class CreateClassUnitTests
         @class.DisciplineId.Should().Be(disciplineId);
         @class.TeacherId.Should().Be(teacherId);
         @class.Period.Should().Be(period);
+        @class.Vacancies.Should().Be(vacancies);
         @class.Schedules.Should().BeEquivalentTo(schedules);
     }
 
@@ -36,6 +38,7 @@ public class CreateClassUnitTests
         var disciplineId = Guid.NewGuid();
         var teacherId = Guid.NewGuid();
         const string period = "2023.2";
+        const int vacancies = 40;
         var schedules = new List<Schedule>()
         {
             new(Day.Segunda, Hour.H07_00, Hour.H08_00),
@@ -43,7 +46,7 @@ public class CreateClassUnitTests
         };
 
         // Act
-        Action act = () => new Class(institutionId, disciplineId, teacherId, period, schedules);
+        Action act = () => new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE022);
@@ -58,9 +61,10 @@ public class CreateClassUnitTests
         var disciplineId = Guid.NewGuid();
         var teacherId = Guid.NewGuid();
         const string period = "2023.2";
+        const int vacancies = 40;
 
         // Act
-        Action act = () => new Class(institutionId, disciplineId, teacherId, period, schedules);
+        Action act = () => new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
 
         // Assert
         act.Should().Throw<DomainException>().WithMessage(Throw.DE022);
@@ -75,9 +79,10 @@ public class CreateClassUnitTests
         var disciplineId = Guid.NewGuid();
         var teacherId = Guid.NewGuid();
         const string period = "2023.2";
+        const int vacancies = 40;
 
         // Act
-        var @class = new Class(institutionId, disciplineId, teacherId, period, schedules);
+        var @class = new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
 
         // Assert
         @class.Schedules.Should().BeEquivalentTo(schedules);
@@ -92,12 +97,13 @@ public class CreateClassUnitTests
         var disciplineId = Guid.NewGuid();
         var teacherId = Guid.NewGuid();
         const string period = "2023.2";
+        const int vacancies = 40;
 
         var discipline = new Discipline(institutionId, "Banco de Dados");
         var teacher = new SykiTeacher(userId, institutionId, "Chico Science");
         var schedules = new List<Schedule>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
-        var @class = new Class(institutionId, disciplineId, teacherId, period, schedules)
+        var @class = new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules)
         {
             Discipline = discipline,
             Teacher = teacher,

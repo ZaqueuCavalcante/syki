@@ -25,6 +25,7 @@ public class CreateClassService(SykiDbContext ctx)
             data.DisciplineId,
             data.TeacherId,
             data.Period,
+            data.Vacancies,
             schedules
         );
 

@@ -13,6 +13,7 @@ public class Class
     public Guid TeacherId { get; set; }
     public SykiTeacher Teacher { get; set; }
     public string Period { get; set; }
+    public int Vacancies { get; set; }
     public List<SykiStudent> Students { get; set; }
     public List<Schedule> Schedules { get; set; }
 
@@ -23,6 +24,7 @@ public class Class
         Guid disciplineId,
         Guid teacherId,
         string period,
+        int vacancies,
         List<Schedule> schedules
     ) {
         Id = Guid.NewGuid();
@@ -30,6 +32,7 @@ public class Class
         DisciplineId = disciplineId;
         TeacherId = teacherId;
         Period = period;
+        Vacancies = vacancies;
         SetSchedules(schedules);
     }
 
@@ -60,6 +63,7 @@ public class Class
             Discipline = Discipline.Name,
             Teacher = Teacher.Name,
             Period = Period,
+            Vacancies = Vacancies,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
             SchedulesInline = GetScheduleAsString(),
         };

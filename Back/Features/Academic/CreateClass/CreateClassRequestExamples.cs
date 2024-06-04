@@ -10,6 +10,7 @@ public class CreateClassRequestExamples : IMultipleExamplesProvider<CreateClassI
 				Guid.NewGuid(),
 				Guid.NewGuid(),
 				"2024.1",
+				40,
 				[
 					new(Day.Segunda, Hour.H07_00, Hour.H10_00),
 					new(Day.Quinta, Hour.H08_00, Hour.H10_30),
@@ -23,6 +24,7 @@ public class CreateClassRequestExamples : IMultipleExamplesProvider<CreateClassI
 				Guid.NewGuid(),
 				Guid.NewGuid(),
 				"2024.2",
+				40,
 				[
 					new(Day.Terca, Hour.H19_15, Hour.H22_00),
 				]

@@ -35,10 +35,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var chico = await academicClient.CreateTeacher("Chico");
         var ana = await academicClient.CreateTeacher("Ana");
 
-        var mathClass = await academicClient.CreateClass(math.Id, chico.Id, period.Id, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
-        var databaseClass = await academicClient.CreateClass(database.Id, chico.Id, period.Id, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
-        var dataStructuresClass = await academicClient.CreateClass(dataStructures.Id, chico.Id, period.Id, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
-        var infoSocietyClass = await academicClient.CreateClass(infoSociety.Id, ana.Id, period.Id, [new(Day.Segunda, Hour.H07_00, Hour.H08_00)]);
+        var mathClass = await academicClient.CreateClass(math.Id, chico.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
+        var databaseClass = await academicClient.CreateClass(database.Id, chico.Id, period.Id, 40, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
+        var dataStructuresClass = await academicClient.CreateClass(dataStructures.Id, chico.Id, period.Id, 40, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
+        var infoSocietyClass = await academicClient.CreateClass(infoSociety.Id, ana.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H08_00)]);
 
         var student = await academicClient.CreateStudent(courseOfferingAds.Id, "Zaqueu");
 

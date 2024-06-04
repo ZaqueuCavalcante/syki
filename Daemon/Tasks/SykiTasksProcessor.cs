@@ -6,6 +6,7 @@ namespace Syki.Daemon.Tasks;
 
 public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
 {
+    // TODO: ter uma fila pros emails e outra pras demais tasks?
     public async Task Run()
     {
         using var scope = serviceScopeFactory.CreateScope();

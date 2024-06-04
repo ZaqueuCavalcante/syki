@@ -13,7 +13,7 @@
     <DialogContent>
         <MudForm @ref="@_form">
             <MudGrid>
-                <MudItem xs="12" Class="pb-2">
+                <MudItem xs="9" Class="pb-2">
                     <MudAutocomplete
                         T="DisciplineOut"
                         MaxItems="50"
@@ -27,6 +27,19 @@
                         Required="true"
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
+                    />
+                </MudItem>
+                <MudItem xs="3">
+                    <MudNumericField
+                        MaxLength="2"
+                        HideSpinButtons="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="byte?"
+                        @bind-Value="@_vacancies"
+                        Label="Vagas"
+                        Required="true"
+                        RequiredError="Informe!"
                     />
                 </MudItem>
                 <MudItem xs="8" Class="py-0">
@@ -120,6 +133,7 @@
     DisciplineOut? _discipline;
     TeacherOut? _teacher;
     string? _period;
+    byte? _vacancies;
     List<ScheduleInFillable> _schedules { get; set; } = [];
 
     List<DisciplineOut> Disciplines = [];
@@ -173,10 +187,11 @@
         var disciplineId = _discipline!.Id;
         var teacherId = _teacher!.Id;
         var period = _period!;
+        var vacancies = _vacancies!.Value;
         var schedules = _schedules.ConvertAll(x => new ScheduleIn(x.Day!.Value, x.Start!.Value, x.End!.Value));
 
         _loading = true;
-        var response = await CreateClassClient.Create(disciplineId, teacherId, period, schedules);
+        var response = await CreateClassClient.Create(disciplineId, teacherId, period, vacancies, schedules);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

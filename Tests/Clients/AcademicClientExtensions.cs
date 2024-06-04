@@ -194,10 +194,11 @@ public static class AcademicClientExtensions
         Guid disciplineId,
         Guid teacherId,
         string period,
+        int vacancies,
         List<ScheduleIn> schedules
     ) {
         var client = new CreateClassClient(http);
-        return await client.Create(disciplineId, teacherId, period, schedules);
+        return await client.Create(disciplineId, teacherId, period, vacancies, schedules);
     }
 
     public static async Task<ClassOut> CreateClass(
@@ -205,9 +206,10 @@ public static class AcademicClientExtensions
         Guid disciplineId,
         Guid teacherId,
         string period,
+        int vacancies,
         List<ScheduleIn> schedules
     ) {
-        var result = await http.CreateClassHttp(disciplineId, teacherId, period, schedules);
+        var result = await http.CreateClassHttp(disciplineId, teacherId, period, vacancies, schedules);
         return await result.DeserializeTo<ClassOut>();
     }
 

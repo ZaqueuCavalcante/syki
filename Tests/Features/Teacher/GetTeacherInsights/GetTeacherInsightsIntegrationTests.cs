@@ -12,7 +12,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var teacher = await client.CreateTeacher();
         var period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
-        await client.CreateClass(discipline.Id, teacher.Id, period.Id, schedules);
+        await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
 

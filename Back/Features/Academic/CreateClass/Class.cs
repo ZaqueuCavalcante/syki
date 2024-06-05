@@ -1,3 +1,4 @@
+using Syki.Back.Features.Academic.StartClass;
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateDiscipline;
@@ -14,8 +15,10 @@ public class Class
     public SykiTeacher Teacher { get; set; }
     public string Period { get; set; }
     public int Vacancies { get; set; }
+    public ClassStatus Status { get; set; }
     public List<SykiStudent> Students { get; set; }
     public List<Schedule> Schedules { get; set; }
+    public List<ExamGrade> ExamGrades { get; set; }
 
     private Class() {}
 
@@ -33,6 +36,7 @@ public class Class
         TeacherId = teacherId;
         Period = period;
         Vacancies = vacancies;
+        Status = ClassStatus.OnEnrollmentPeriod;
         SetSchedules(schedules);
     }
 
@@ -55,6 +59,18 @@ public class Class
         return string.Join(" | ", Schedules.OrderBy(h => h.Day).ThenBy(h => h.StartAt).ToList().ConvertAll(h => h.ToString()));
     }
 
+    public void Start()
+    {
+        ExamGrades = [];
+        foreach (var student in Students)
+        {
+            ExamGrades.Add(new(Id, student.Id, ExamType.N1));
+            ExamGrades.Add(new(Id, student.Id, ExamType.N2));
+            ExamGrades.Add(new(Id, student.Id, ExamType.Final));
+        }
+        Status = ClassStatus.Started;
+    }
+
     public ClassOut ToOut()
     {
         return new ClassOut
@@ -64,6 +80,7 @@ public class Class
             Teacher = Teacher.Name,
             Period = Period,
             Vacancies = Vacancies,
+            Status = Status,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
             SchedulesInline = GetScheduleAsString(),
         };

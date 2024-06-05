@@ -1,7 +1,6 @@
-using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateStudent;
 
-namespace Syki.Back.Features.Academic.CreateExamGrade;
+namespace Syki.Back.Features.Academic.StartClass;
 
 public class ExamGradeConfig : IEntityTypeConfiguration<ExamGrade>
 {
@@ -14,10 +13,6 @@ public class ExamGradeConfig : IEntityTypeConfiguration<ExamGrade>
 
         examGrade.HasIndex(t => new { t.ClassId, t.StudentId, t.ExamType })
             .IsUnique();
-
-        examGrade.HasOne<Class>()
-            .WithMany()
-            .HasForeignKey(t => t.ClassId);
 
         examGrade.HasOne<SykiStudent>()
             .WithMany()

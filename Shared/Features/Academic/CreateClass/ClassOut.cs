@@ -7,6 +7,7 @@ public class ClassOut
     public string Teacher { get; set; }
     public string Period { get; set; }
     public int Vacancies { get; set; }
+    public ClassStatus Status { get; set; }
     public List<ScheduleOut> Schedules { get; set; }
     public string SchedulesInline { get; set; }
 

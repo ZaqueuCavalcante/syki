@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.CreateExamGrade;
+namespace Syki.Back.Features.Academic.StartClass;
 
 public class ExamGrade
 {

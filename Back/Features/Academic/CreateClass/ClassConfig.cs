@@ -26,5 +26,9 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
         @class.HasOne<AcademicPeriod>()
             .WithMany()
             .HasForeignKey(t => new { t.Period, t.InstitutionId });
+
+        @class.HasMany(t => t.ExamGrades)
+            .WithOne()
+            .HasForeignKey(eg => eg.ClassId);
     }
 }

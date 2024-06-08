@@ -1,8 +1,6 @@
 # CHANGES
 
 - Domain Events + Transactional Outbox Pattern
-- 
-
 - Use Result Pattern instead throw exceptions?
 - Monitoring? DataDog
 - RabbitMQ?

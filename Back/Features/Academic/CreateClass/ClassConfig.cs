@@ -8,27 +8,29 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
     {
         @class.ToTable("classes");
 
-        @class.HasKey(t => t.Id);
-        @class.Property(t => t.Id).ValueGeneratedNever();
+        @class.HasKey(c => c.Id);
+        @class.Property(c => c.Id).ValueGeneratedNever();
 
-        @class.HasOne(t => t.Teacher)
+        @class.HasOne(c => c.Teacher)
             .WithMany()
-            .HasForeignKey(t => t.TeacherId);
+            .HasForeignKey(c => c.TeacherId);
 
-        @class.HasOne(t => t.Discipline)
+        @class.HasOne(c => c.Discipline)
             .WithMany()
-            .HasForeignKey(t => t.DisciplineId);
+            .HasForeignKey(c => c.DisciplineId);
 
-        @class.HasMany(t => t.Schedules)
+        @class.HasMany(c => c.Schedules)
             .WithOne()
             .HasForeignKey(h => h.ClassId);
 
         @class.HasOne<AcademicPeriod>()
             .WithMany()
-            .HasForeignKey(t => new { t.Period, t.InstitutionId });
+            .HasForeignKey(c => new { c.Period, c.InstitutionId });
 
-        @class.HasMany(t => t.ExamGrades)
+        @class.HasMany(c => c.ExamGrades)
             .WithOne()
             .HasForeignKey(eg => eg.ClassId);
+
+        @class.Ignore(c => c.FillRatio);
     }
 }

@@ -10,6 +10,14 @@ public class GetClassesService(SykiDbContext ctx)
             .Include(t => t.Schedules)
             .Where(c => c.InstitutionId == institutionId)
             .ToListAsync();
+        
+        var ids = classes.ConvertAll(x => x.Id);
+        var links = await ctx.ClassesStudents.Where(x => ids.Contains(x.ClassId)).ToListAsync();
+        foreach (var @class in classes)
+        {
+            var count = links.Count(x => x.ClassId == @class.Id);
+            @class.FillRatio = $"{count}/{@class.Vacancies}";
+        }
 
         return classes.ConvertAll(t => t.ToOut());
     }

@@ -20,6 +20,8 @@ public class Class
     public List<Schedule> Schedules { get; set; }
     public List<ExamGrade> ExamGrades { get; set; }
 
+    public string FillRatio { get; set; }
+
     private Class() {}
 
     public Class(
@@ -83,6 +85,7 @@ public class Class
             Status = Status,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
             SchedulesInline = GetScheduleAsString(),
+            FillRatio = FillRatio,
         };
     }
 

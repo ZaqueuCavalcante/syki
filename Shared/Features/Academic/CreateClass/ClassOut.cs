@@ -11,6 +11,8 @@ public class ClassOut
     public List<ScheduleOut> Schedules { get; set; }
     public string SchedulesInline { get; set; }
 
+    public string FillRatio { get; set; }
+
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;

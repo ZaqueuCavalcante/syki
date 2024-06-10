@@ -10,7 +10,10 @@
 - Redis?
 - Load Balancer?
 - Optimize Queries?
-- Logs?
 - Load testing (K6)?
 - NUnit Parallelizable(ParallelScope.All) for fix namespaces
 - Use records on all Dtos?
+- Servidor exclusivo para SignalR?
+- Customizar palleta de cores?
+- Adicionar visualizacao no mobile para todas as telas
+

@@ -45,6 +45,8 @@ O módulo acadêmico conta com:
 
 - Para subir banco + back + front, rode o comando: `docker-compose up`
 
+- Para rebuildar caso tenha alguma alteração no código: `docker-compose build --no-cache`
+
 - O back vai subir na porta 5001 e o front na 6001
 
 ## Overview

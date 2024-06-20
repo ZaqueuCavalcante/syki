@@ -38,10 +38,8 @@ services:
       dockerfile: Dockerfile.front
     depends_on:
       - back
-    environment:
-      - 'ASPNETCORE_URLS=http://+:6001'
     ports:
-      - '6001:6001'
+      - '6001:80'
     networks:
       - sykinet
 

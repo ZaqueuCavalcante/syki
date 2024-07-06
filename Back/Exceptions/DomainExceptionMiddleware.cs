@@ -1,8 +1,9 @@
 using System.Text.Json;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Syki.Back.Exceptions;
 
-public class DomainExceptionMiddleware(RequestDelegate next)
+public class DomainExceptionMiddleware(RequestDelegate next, ILogger logger)
 {
     public async Task Invoke(HttpContext context)
     {
@@ -25,19 +26,19 @@ public class DomainExceptionMiddleware(RequestDelegate next)
         var result = JsonSerializer.Serialize(new ErrorOut { Message = ex.Message });
 
         context.Response.ContentType = "application/json";
-
         context.Response.StatusCode = ex.StatusCode;
 
         return context.Response.WriteAsync(result);
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, Exception ex)
+    private Task HandleExceptionAsync(HttpContext context, Exception ex)
     {
-        var result = JsonSerializer.Serialize(new ErrorOut { Message = ex.Message });
+        var result = JsonSerializer.Serialize(new ErrorOut { Message = "Internal Server Error" });
 
         context.Response.ContentType = "application/json";
-
         context.Response.StatusCode = 500;
+
+        logger.LogError("Internal Server Error -> {Message}", ex.Message);
 
         return context.Response.WriteAsync(result);
     }

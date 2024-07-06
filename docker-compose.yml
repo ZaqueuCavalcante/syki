@@ -70,6 +70,13 @@ services:
     networks:
       - sykinet
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rasykimq
+    ports:
+      - 15672:15672
+      - 5672:5672
+
 networks:
   sykinet:
     driver: bridge

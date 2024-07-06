@@ -90,8 +90,8 @@
                             Dense="true"
                             Size="Size.Small"
                             Color="Color.Success"
-                            Checked="@context.IsSelected"
-                            CheckedChanged="x => { context.IsSelected = x; HandleCheckedChanged(); }"
+                            Value="@context.IsSelected"
+                            ValueChanged="x => { context.IsSelected = x; HandleCheckedChanged(); }"
                         />
                     </MudTd>
                 </RowTemplate>

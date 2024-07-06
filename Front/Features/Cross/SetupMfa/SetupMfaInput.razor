@@ -76,7 +76,6 @@
         var options = new DialogOptions {
             FullWidth = true,
             CloseButton = false,
-            DisableBackdropClick = true,
             MaxWidth = MaxWidth.ExtraSmall,
         };
         await DialogService.ShowAsync<SetupMfaDialog>("", options);

@@ -13,7 +13,7 @@
         <MudExpansionPanels MultiExpansion="true">
             @foreach(var period in _disciplines.ConvertAll(d => d.Period).Distinct().Order())
             {
-                <MudExpansionPanel IsInitiallyExpanded="@(period==1)">
+                <MudExpansionPanel Expanded="@(period==1)">
                     <TitleContent>
                         <div class="d-flex">
                             <MudIcon Icon="@Icons.Material.Filled.ArrowRight" class="mr-3"></MudIcon>

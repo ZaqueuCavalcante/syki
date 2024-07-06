@@ -155,7 +155,7 @@
         });
     }
 
-    private async Task<IEnumerable<CourseOut>> SearchCourse(string value)
+    private async Task<IEnumerable<CourseOut>> SearchCourse(string value, CancellationToken cancellationToken)
     {
         await Task.Delay(0);
 

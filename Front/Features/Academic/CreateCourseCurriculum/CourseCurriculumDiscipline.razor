@@ -86,7 +86,7 @@
     [Parameter]
     public CourseCurriculumDisciplineFillable Data { get; set; }
 
-    private async Task<IEnumerable<CourseCurriculumDisciplineFillable>> SearchDiscipline(string value)
+    private async Task<IEnumerable<CourseCurriculumDisciplineFillable>> SearchDiscipline(string value, CancellationToken cancellationToken)
     {
         await Task.Delay(0);
 

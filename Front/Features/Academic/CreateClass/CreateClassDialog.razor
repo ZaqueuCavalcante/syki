@@ -29,7 +29,7 @@
                         AdornmentColor="Color.Primary"
                     />
                 </MudItem>
-                <MudItem xs="3">
+                <MudItem xs="3" Class="pl-3">
                     <MudNumericField
                         MaxLength="2"
                         HideSpinButtons="true"
@@ -42,7 +42,7 @@
                         RequiredError="Informe!"
                     />
                 </MudItem>
-                <MudItem xs="8" Class="py-0">
+                <MudItem xs="9" Class="py-0">
                     <MudSelect
                         Dense="true"
                         Margin="Margin.Dense"
@@ -59,7 +59,7 @@
                         }
                     </MudSelect>
                 </MudItem>
-                <MudItem xs="4" Class="py-0">
+                <MudItem xs="3" Class="pl-3 py-0">
                     <MudSelect
                         Dense="true"
                         Margin="Margin.Dense"
@@ -77,7 +77,7 @@
                     </MudSelect>
                 </MudItem>
 
-                <MudItem xs="12" Class="pt-2 pb-0">
+                <MudItem xs="12" Class="pt-3 pb-0">
                     <MudDivider />
                 </MudItem>
 
@@ -167,7 +167,7 @@
         _schedules.Remove(_schedules.First(f => f.Id == id));
     }
 
-    private async Task<IEnumerable<DisciplineOut>> SearchDiscipline(string value)
+    private async Task<IEnumerable<DisciplineOut>> SearchDiscipline(string value, CancellationToken cancellationToken)
     {
         await Task.Delay(0);
 

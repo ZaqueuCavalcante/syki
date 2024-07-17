@@ -9,7 +9,7 @@ public class CreateStudentEnrollmentService(SykiDbContext ctx)
             .Select(t => t.Id)
             .ToListAsync();
 
-        var classes = await ctx.ClassesStudents.Where(x => x.StudentId == userId).ToListAsync();
+        var classes = await ctx.ClassesStudents.Where(x => x.SykiStudentId == userId).ToListAsync();
         ctx.RemoveRange(classes);
 
         foreach (var id in ids)

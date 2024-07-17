@@ -24,11 +24,12 @@ global using Syki.Front.Features.Academic.GetCourses;
 global using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 global using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
 global using Syki.Front.Features.Academic.GetDisciplines;
+global using Syki.Front.Features.Academic.GetEnrollmentPeriods;
 global using Syki.Front.Features.Academic.GetNotifications;
 global using Syki.Front.Features.Academic.GetStudents;
 global using Syki.Front.Features.Academic.GetTeachers;
+global using Syki.Front.Features.Academic.StartClass;
 global using Syki.Front.Features.Academic.UpdateCampus;
-global using Syki.Front.Features.Academic.GetEnrollmentPeriods;
 
 global using Syki.Front.Features.Adm.GetAdmInsights;
 global using Syki.Front.Features.Adm.GetInstitutions;

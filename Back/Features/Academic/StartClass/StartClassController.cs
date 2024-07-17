@@ -8,11 +8,11 @@ namespace Syki.Back.Features.Academic.StartClass;
 [Consumes("application/json"), Produces("application/json")]
 public class StartClassController(StartClassService service) : ControllerBase
 {
-    [HttpPut("academic/classes/start")]
+    [HttpPut("academic/classes/{id}/start")]
     [ProducesResponseType(204)]
-    public async Task<IActionResult> Start([FromBody] StartClassIn data)
+    public async Task<IActionResult> Start([FromRoute] Guid id)
     {
-        await service.Start(User.InstitutionId(), data);
+        await service.Start(User.InstitutionId(), id);
 
         return NoContent();
     }

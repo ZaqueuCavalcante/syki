@@ -25,6 +25,7 @@ using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
+using Syki.Front.Features.Academic.StartClass;
 
 namespace Syki.Tests.Clients;
 
@@ -282,5 +283,11 @@ public static class AcademicClientExtensions
     {
         var client = new GetEnrollmentPeriodsClient(http);
         return await client.Get();
+    }
+
+    public static async Task<HttpResponseMessage> StartClass(this HttpClient http, Guid id)
+    {
+        var client = new StartClassClient(http);
+        return await client.Start(id);
     }
 }

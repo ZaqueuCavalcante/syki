@@ -1,5 +1,5 @@
 using System.Text.Json;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
+using ILogger = Serilog.ILogger;
 
 namespace Syki.Back.Exceptions;
 
@@ -38,7 +38,7 @@ public class DomainExceptionMiddleware(RequestDelegate next, ILogger logger)
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = 500;
 
-        logger.LogError("Internal Server Error -> {Message}", ex.Message);
+        logger.Error("Internal Server Error -> {Message}", ex.Message);
 
         return context.Response.WriteAsync(result);
     }

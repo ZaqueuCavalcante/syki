@@ -17,7 +17,7 @@ public class CreateClassStudentUnitTests
 
         // Assert
         student.ClassId.Should().Be(classId);
-        student.StudentId.Should().Be(studentId);
+        student.SykiStudentId.Should().Be(studentId);
         student.StudentDisciplineStatus.Should().Be(status);
     }
 }

@@ -5,7 +5,7 @@ public class GetStudentAgendaService(SykiDbContext ctx)
     public async Task<List<AgendaDayOut>> Get(Guid institution, Guid userId)
     {
         var ids = await ctx.ClassesStudents.AsNoTracking()
-            .Where(x => x.StudentId == userId && x.StudentDisciplineStatus == StudentDisciplineStatus.Matriculado)
+            .Where(x => x.SykiStudentId == userId && x.StudentDisciplineStatus == StudentDisciplineStatus.Matriculado)
             .Select(x => x.ClassId)
             .ToListAsync();
 

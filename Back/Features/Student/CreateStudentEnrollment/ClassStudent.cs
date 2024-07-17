@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 public class ClassStudent
 {
     public Guid ClassId { get; set; }
-    public Guid StudentId { get; set; }
+    public Guid SykiStudentId { get; set; }
     public StudentDisciplineStatus StudentDisciplineStatus { get; set; }
 
     public ClassStudent() {}
@@ -14,7 +14,7 @@ public class ClassStudent
         StudentDisciplineStatus status
     ) {
         ClassId = classId;
-        StudentId = studentId;
+        SykiStudentId = studentId;
         StudentDisciplineStatus = status;
     }
 }

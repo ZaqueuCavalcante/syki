@@ -1,6 +1,7 @@
 using Syki.Back.Audit;
 using Audit.EntityFramework;
 using Syki.Back.Features.Cross.CreateUser;
+using Syki.Back.Features.Academic.StartClass;
 using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
@@ -29,6 +30,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<SykiTeacher> Teachers { get; set; }
     public DbSet<SykiStudent> Students { get; set; }
+    public DbSet<ExamGrade> ExamGrades { get; set; }
     public DbSet<Discipline> Disciplines { get; set; }
     public DbSet<Institution> Institutions { get; set; }
     public DbSet<UserRegister> UserRegisters { get; set; }

@@ -9,7 +9,7 @@ public class ClassStudentConfig : IEntityTypeConfiguration<ClassStudent>
     {
         classStudent.ToTable("classes__students");
 
-        classStudent.HasKey(t => new { t.ClassId, t.StudentId });
+        classStudent.HasKey(t => new { t.ClassId, t.SykiStudentId });
 
         classStudent.HasOne<Class>()
             .WithMany()
@@ -19,6 +19,6 @@ public class ClassStudentConfig : IEntityTypeConfiguration<ClassStudent>
         classStudent.HasOne<SykiStudent>()
             .WithMany()
             .HasPrincipalKey(x => x.Id)
-            .HasForeignKey(x => x.StudentId);
+            .HasForeignKey(x => x.SykiStudentId);
     }
 }

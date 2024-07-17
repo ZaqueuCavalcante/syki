@@ -18,7 +18,7 @@ public class GetStudentDisciplinesService(SykiDbContext ctx)
         var response = courseCurriculum.ToOut().Disciplines.OrderBy(d => d.Period).ToList();
 
         var studentClassesStatus = await ctx.ClassesStudents.AsNoTracking()
-            .Where(x => x.StudentId == userId)
+            .Where(x => x.SykiStudentId == userId)
             .ToListAsync();
 
         var ids = courseCurriculum.Disciplines.ConvertAll(d => d.Id);

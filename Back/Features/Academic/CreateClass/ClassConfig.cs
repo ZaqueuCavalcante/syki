@@ -1,4 +1,5 @@
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
+using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Back.Features.Academic.CreateClass;
 
@@ -30,6 +31,10 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
         @class.HasMany(c => c.ExamGrades)
             .WithOne()
             .HasForeignKey(eg => eg.ClassId);
+
+        @class.HasMany(c => c.Students)
+            .WithMany()
+            .UsingEntity<ClassStudent>();
 
         @class.Ignore(c => c.FillRatio);
     }

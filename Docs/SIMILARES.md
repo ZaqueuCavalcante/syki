@@ -6,6 +6,9 @@ https://fedena.com/feature-tour
 
 - Load sample data (14 days Trial option)
 
+## Gennera
+
+https://www.gennera.com.br/
 
 ## Sistema SIGA
 

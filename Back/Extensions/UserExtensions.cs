@@ -15,6 +15,11 @@ public static class UserExtensions
         return Guid.Parse(user.FindFirstValue("sub")!);
     }
 
+    public static Guid GetCourseCurriculumId(this ClaimsPrincipal user)
+    {
+        return Guid.Parse(user.FindFirstValue("CourseCurriculumId")!);
+    }
+
     public static async Task<bool> IsOnlyInRole(this UserManager<SykiUser> userManager, SykiUser user, UserRole role)
     {
         var adm = await userManager.IsInRoleAsync(user!, UserRole.Adm.ToString());

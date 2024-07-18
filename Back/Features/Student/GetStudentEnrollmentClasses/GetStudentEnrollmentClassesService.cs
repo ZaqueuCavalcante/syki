@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Student.GetStudentEnrollmentClasses;
 
 public class GetStudentEnrollmentClassesService(SykiDbContext ctx)
 {
-    public async Task<List<EnrollmentClassOut>> Get(Guid institutionId, Guid userId)
+    public async Task<List<EnrollmentClassOut>> Get(Guid institutionId, Guid userId, Guid courseCurriculumId)
     {
         var today = DateOnly.FromDateTime(DateTime.Now);
         var enrollmentPeriod = await ctx.EnrollmentPeriods.AsNoTracking()
@@ -12,10 +12,6 @@ public class GetStudentEnrollmentClassesService(SykiDbContext ctx)
         if (enrollmentPeriod == null)
             return [];
 
-        var courseOfferingId = await ctx.Students.Where(a => a.Id == userId)
-            .Select(a => a.CourseOfferingId).FirstAsync();
-        var courseCurriculumId = await ctx.CourseOfferings.Where(o => o.Id == courseOfferingId)
-            .Select(o => o.CourseCurriculumId).FirstAsync();
         var courseCurriculum = await ctx.CourseCurriculums.Where(g => g.Id == courseCurriculumId).AsNoTracking()
             .Include(g => g.Links)
             .FirstAsync();

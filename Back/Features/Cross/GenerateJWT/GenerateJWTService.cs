@@ -6,7 +6,7 @@ using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Cross.GenerateJWT;
 
-public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> userManager)
+public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> userManager, SykiDbContext ctx)
 {
     public async Task<string> Generate(string email)
     {
@@ -22,6 +22,7 @@ public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> use
             new("email", user.Email!),
             new("institution", user.InstitutionId.ToString()),
         };
+        claims.AddRange(await GetDbClaims(user.Id, role));
 
         var identityClaims = new ClaimsIdentity();
         identityClaims.AddClaims(claims);
@@ -46,5 +47,20 @@ public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> use
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
         return tokenHandler.WriteToken(token);
+    }
+
+    private async Task<List<Claim>> GetDbClaims(Guid userId, string role)
+    {
+        if (role.ToEnum<UserRole>() is UserRole.Student)
+        {
+            var courseOfferingId = await ctx.Students.Where(a => a.Id == userId)
+                .Select(a => a.CourseOfferingId).FirstAsync();
+            var courseCurriculumId = await ctx.CourseOfferings.Where(o => o.Id == courseOfferingId)
+                .Select(o => o.CourseCurriculumId).FirstAsync();
+            
+            return [ new("CourseCurriculumId", courseCurriculumId.ToString()) ];
+        }
+
+        return [];
     }
 }

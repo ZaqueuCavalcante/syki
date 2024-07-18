@@ -63,7 +63,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseOfferingHttp(campus.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
-        await response.AssertBadRequest(Throw.DE002);
+        await response.AssertBadRequest(new CourseNotFound().Message);
     }
 
     [Test]
@@ -80,7 +80,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await clientNovaRoma.CreateCourseOfferingHttp(campusNovaRoma.Id, courseUfpe.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
-        await response.AssertBadRequest(Throw.DE002);
+        await response.AssertBadRequest(new CourseNotFound().Message);
     }
 
     [Test]

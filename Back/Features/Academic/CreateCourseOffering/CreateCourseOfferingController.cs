@@ -8,8 +8,10 @@ public class CreateCourseOfferingController(CreateCourseOfferingService service)
     [HttpPost("academic/course-offerings")]
     public async Task<IActionResult> Create([FromBody] CreateCourseOfferingIn data)
     {
-        var courseOffering = await service.Create(User.InstitutionId(), data);
+        var result = await service.Create(User.InstitutionId(), data);
 
-        return Ok(courseOffering);
+        return result.Match<IActionResult>(Ok,
+            courseNotFound  => BadRequest(new ErrorOut { Message = courseNotFound.Message })
+        );
     }
 }

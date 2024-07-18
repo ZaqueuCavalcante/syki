@@ -10,9 +10,8 @@ public class CreateStudentController(CreateStudentService service) : ControllerB
     {
         var result = await service.Create(User.InstitutionId(), data);
 
-        return result.Match<IActionResult>(
-            student => Ok(student),
-            error => BadRequest(new ErrorOut { Message = error.Message })
+        return result.Match<IActionResult>(Ok,
+            courseOfferingNotFound  => BadRequest(new ErrorOut { Message = courseOfferingNotFound.Message })
         );
     }
 }

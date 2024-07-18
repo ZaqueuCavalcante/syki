@@ -9,8 +9,11 @@ public class CreateCourseCurriculumController(CreateCourseCurriculumService serv
     [ProducesResponseType(200)]
     public async Task<IActionResult> Create([FromBody] CreateCourseCurriculumIn data)
     {
-        var courseCurriculum = await service.Create(User.InstitutionId(), data);
+        var result = await service.Create(User.InstitutionId(), data);
 
-        return Ok(courseCurriculum);
+        return result.Match<IActionResult>(Ok,
+            courseNotFound  => BadRequest(new ErrorOut { Message = courseNotFound.Message }),
+            invalidDisciplinesList  => BadRequest(new ErrorOut { Message = invalidDisciplinesList.Message })
+        );
     }
 }

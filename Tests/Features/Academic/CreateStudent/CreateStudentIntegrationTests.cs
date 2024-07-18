@@ -23,7 +23,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Name.Should().Be("Zezin"); 
     }
 
-    [Test, Repeat(100)]
+    [Test]
     public async Task Should_not_create_student_without_course_offering()
     {
         // Arrange

@@ -2,13 +2,11 @@ namespace Syki.Back.Features.Academic.CreateCourseCurriculum;
 
 public class CreateCourseCurriculumService(SykiDbContext ctx)
 {
-    public async Task<CourseCurriculumOut> Create(Guid institutionId, CreateCourseCurriculumIn data)
+    public async Task<OneOf<CourseCurriculumOut, CourseNotFound, InvalidDisciplinesList>> Create(Guid institutionId, CreateCourseCurriculumIn data)
     {
         var courseOk = await ctx.Courses
             .AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CourseId);
-
-        if (!courseOk)
-            Throw.DE002.Now();
+        if (!courseOk) return new CourseNotFound();
 
         var courseCurriculum = new CourseCurriculum(
             institutionId,
@@ -22,10 +20,11 @@ public class CreateCourseCurriculumService(SykiDbContext ctx)
             .ToListAsync();
 
         if (!data.Disciplines.ConvertAll(d => d.Id).IsSubsetOf(disciplines))
-            Throw.DE003.Now();
+            return new InvalidDisciplinesList();
 
-        data.Disciplines.ForEach(d => courseCurriculum.Links.Add(
-            new CourseCurriculumDiscipline(d.Id, d.Period, d.Credits, d.Workload)));
+        data.Disciplines.ForEach(d =>
+            courseCurriculum.Links.Add(new(d.Id, d.Period, d.Credits, d.Workload))
+        );
 
         ctx.CourseCurriculums.Add(courseCurriculum);
         await ctx.SaveChangesAsync();

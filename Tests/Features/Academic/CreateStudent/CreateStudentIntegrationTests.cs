@@ -23,7 +23,7 @@ public partial class IntegrationTests : IntegrationTestBase
         response.Name.Should().Be("Zezin"); 
     }
 
-    [Test]
+    [Test, Repeat(100)]
     public async Task Should_not_create_student_without_course_offering()
     {
         // Arrange
@@ -33,6 +33,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateStudentHttp(Guid.NewGuid());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE012);
+        await response.AssertBadRequest(new CourseOfferingNotFound().Message);
     }
 }

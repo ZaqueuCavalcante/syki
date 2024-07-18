@@ -5,13 +5,13 @@ namespace Syki.Back.Features.Academic.CreateStudent;
 
 public class CreateStudentService(SykiDbContext ctx, CreateUserService service, SendResetPasswordTokenService sendService)
 {
-    public async Task<StudentOut> Create(Guid institutionId, CreateStudentIn data)
+    public async Task<OneOf<StudentOut, CourseOfferingNotFound>> Create(Guid institutionId, CreateStudentIn data)
     {
         using var transaction = ctx.Database.BeginTransaction();
 
         var courseOfferingOk = await ctx.CourseOfferings
             .AnyAsync(o => o.InstitutionId == institutionId && o.Id == data.CourseOfferingId);
-        if (!courseOfferingOk) Throw.DE012.Now();
+        if (!courseOfferingOk) return new CourseOfferingNotFound();
 
         var userIn = CreateUserIn.NewStudent(institutionId, data.Name, data.Email);
         var user = await service.Create(userIn);

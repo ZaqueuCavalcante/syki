@@ -8,8 +8,11 @@ public class CreateStudentController(CreateStudentService service) : ControllerB
     [HttpPost("academic/students")]
     public async Task<IActionResult> Create([FromBody] CreateStudentIn data)
     {
-        var student = await service.Create(User.InstitutionId(), data);
+        var result = await service.Create(User.InstitutionId(), data);
 
-        return Ok(student);
+        return result.Match<IActionResult>(
+            student => Ok(student),
+            error => BadRequest(new ErrorOut { Message = error.Message })
+        );
     }
 }

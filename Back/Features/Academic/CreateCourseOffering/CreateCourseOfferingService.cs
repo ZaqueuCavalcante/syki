@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Academic.CreateCourseOffering;
 
 public class CreateCourseOfferingService(SykiDbContext ctx)
 {
-    public async Task<OneOf<CourseOfferingOut, CourseNotFound>> Create(Guid institutionId, CreateCourseOfferingIn data)
+    public async Task<OneOf<CourseOfferingOut, CourseNotFound, AcademicPeriodNotFound>> Create(Guid institutionId, CreateCourseOfferingIn data)
     {
         var campusOk = await ctx.Campi
             .AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CampusId);
@@ -20,8 +20,7 @@ public class CreateCourseOfferingService(SykiDbContext ctx)
 
         var periodOk = await ctx.AcademicPeriods
             .AnyAsync(p => p.InstitutionId == institutionId && p.Id == data.Period);
-        if (!periodOk)
-            Throw.DE005.Now();
+        if (!periodOk) return new AcademicPeriodNotFound();
 
         var courseOffering = new CourseOffering(
             institutionId,

@@ -67,7 +67,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateClassHttp(discipline.Id, teacher.Id, "2024.1", 40, []);
 
         // Assert
-        await response.AssertBadRequest(Throw.DE005);
+        await response.AssertBadRequest(new AcademicPeriodNotFound().Message);
     }
 
     [Test]

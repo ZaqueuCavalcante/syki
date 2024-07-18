@@ -128,7 +128,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseOfferingHttp(campus.Id, course.Id, cc.Id, "2024.1", Shift.Matutino);
         
         // Assert
-        await response.AssertBadRequest(Throw.DE005);
+        await response.AssertBadRequest(new AcademicPeriodNotFound().Message);
     }
 
     [Test]
@@ -148,6 +148,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await clientNovaRoma.CreateCourseOfferingHttp(campus.Id, course.Id, cc.Id, "2023.1", Shift.Matutino);
 
         // Assert
-        await response.AssertBadRequest(Throw.DE005);
+        await response.AssertBadRequest(new AcademicPeriodNotFound().Message);
     }
 }

@@ -13,7 +13,7 @@ public class CreateCourseCurriculumController(CreateCourseCurriculumService serv
 
         return result.Match<IActionResult>(Ok,
             courseNotFound  => BadRequest(new ErrorOut { Message = courseNotFound.Message }),
-            invalidDisciplinesList  => BadRequest(new ErrorOut { Message = invalidDisciplinesList.Message })
+            invalidDisciplinesList => BadRequest(new ErrorOut { Message = invalidDisciplinesList.Message })
         );
     }
 }

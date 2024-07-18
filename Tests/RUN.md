@@ -26,8 +26,3 @@ reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\*\coverage.cobe
 
 cd tests
 dotnet stryker -o
-
-
-
-Singleton pra subir app + banco
-Rodar com audit ligada direto?

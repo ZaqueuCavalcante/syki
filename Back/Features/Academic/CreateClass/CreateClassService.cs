@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Academic.CreateClass;
 
 public class CreateClassService(SykiDbContext ctx)
 {
-    public async Task<OneOf<ClassOut, DisciplineNotFound>> Create(Guid institutionId, CreateClassIn data)
+    public async Task<OneOf<ClassOut, DisciplineNotFound, TeacherNotFound, AcademicPeriodNotFound>> Create(Guid institutionId, CreateClassIn data)
     {
         var disciplineOk = await ctx.Disciplines
             .AnyAsync(x => x.InstitutionId == institutionId && x.Id == data.DisciplineId);
@@ -10,13 +10,11 @@ public class CreateClassService(SykiDbContext ctx)
 
         var teacherOk = await ctx.Teachers
             .AnyAsync(p => p.InstitutionId == institutionId && p.Id == data.TeacherId);
-        if (!teacherOk)
-            Throw.DE018.Now();
+        if (!teacherOk) return new TeacherNotFound();
 
         var periodOk = await ctx.AcademicPeriods
             .AnyAsync(p => p.InstitutionId == institutionId && p.Id == data.Period);
-        if (!periodOk)
-            Throw.DE005.Now();
+        if (!periodOk) return new AcademicPeriodNotFound();
 
         var schedules = data.Schedules.ConvertAll(h => new Schedule(h.Day, h.Start, h.End));
         var @class = new Class(

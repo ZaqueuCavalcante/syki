@@ -15,7 +15,9 @@ public class CreateClassController(CreateClassService service) : ControllerBase
         var result = await service.Create(User.InstitutionId(), data);
 
         return result.Match<IActionResult>(Ok,
-            disciplineNotFound  => BadRequest(new ErrorOut { Message = disciplineNotFound.Message })
+            disciplineNotFound => BadRequest(new ErrorOut { Message = disciplineNotFound.Message }),
+            teacherNotFound => BadRequest(new ErrorOut { Message = teacherNotFound.Message }),
+            academicPeriodNotFound => BadRequest(new ErrorOut { Message = academicPeriodNotFound.Message })
         );
     }
 }

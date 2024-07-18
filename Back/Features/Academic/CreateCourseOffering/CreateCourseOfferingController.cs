@@ -11,7 +11,8 @@ public class CreateCourseOfferingController(CreateCourseOfferingService service)
         var result = await service.Create(User.InstitutionId(), data);
 
         return result.Match<IActionResult>(Ok,
-            courseNotFound  => BadRequest(new ErrorOut { Message = courseNotFound.Message })
+            courseNotFound => BadRequest(new ErrorOut { Message = courseNotFound.Message }),
+            academicPeriodNotFound  => BadRequest(new ErrorOut { Message = academicPeriodNotFound.Message })
         );
     }
 }

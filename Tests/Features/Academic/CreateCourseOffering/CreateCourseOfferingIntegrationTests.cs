@@ -32,7 +32,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseOfferingHttp(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
-        await response.AssertBadRequest(new CampusNotFound().Message);      
+        await response.AssertBadRequest(new CampusNotFound());      
     }
 
     [Test]
@@ -49,7 +49,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await clientNovaRoma.CreateCourseOfferingHttp(campusUfpe.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
-        await response.AssertBadRequest(new CampusNotFound().Message);      
+        await response.AssertBadRequest(new CampusNotFound());      
     }
 
     [Test]
@@ -63,7 +63,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseOfferingHttp(campus.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
-        await response.AssertBadRequest(new CourseNotFound().Message);
+        await response.AssertBadRequest(new CourseNotFound());
     }
 
     [Test]
@@ -80,7 +80,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await clientNovaRoma.CreateCourseOfferingHttp(campusNovaRoma.Id, courseUfpe.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
-        await response.AssertBadRequest(new CourseNotFound().Message);
+        await response.AssertBadRequest(new CourseNotFound());
     }
 
     [Test]
@@ -95,7 +95,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseOfferingHttp(campus.Id, course.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
-        await response.AssertBadRequest(new CourseCurriculumNotFound().Message);
+        await response.AssertBadRequest(new CourseCurriculumNotFound());
     }
 
     [Test]
@@ -112,7 +112,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseOfferingHttp(campus.Id, courseDireito.Id, cc.Id, "2024.1", Shift.Matutino);
 
         // Assert
-        await response.AssertBadRequest(new CourseCurriculumNotFound().Message);
+        await response.AssertBadRequest(new CourseCurriculumNotFound());
     }
 
     [Test]
@@ -128,7 +128,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseOfferingHttp(campus.Id, course.Id, cc.Id, "2024.1", Shift.Matutino);
         
         // Assert
-        await response.AssertBadRequest(new AcademicPeriodNotFound().Message);
+        await response.AssertBadRequest(new AcademicPeriodNotFound());
     }
 
     [Test]
@@ -148,6 +148,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await clientNovaRoma.CreateCourseOfferingHttp(campus.Id, course.Id, cc.Id, "2023.1", Shift.Matutino);
 
         // Assert
-        await response.AssertBadRequest(new AcademicPeriodNotFound().Message);
+        await response.AssertBadRequest(new AcademicPeriodNotFound());
     }
 }

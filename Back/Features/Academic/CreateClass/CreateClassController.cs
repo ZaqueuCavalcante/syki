@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Academic.CreateClass;
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
-public class CreateClassController(CreateClassService service) : SykiController
+public class CreateClassController(CreateClassService service) : ControllerBase
 {
     [HttpPost("academic/classes")]
     [ProducesResponseType(typeof(ClassOut), 200)]

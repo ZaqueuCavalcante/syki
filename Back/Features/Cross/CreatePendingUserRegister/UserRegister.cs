@@ -13,12 +13,14 @@ public class UserRegister
         Email = email.ToLower();
     }
 
-    public void Finish()
+    public OneOf<SykiSuccess, SykiError> Finish()
     {
         if (TrialStart != null)
-            Throw.DE025.Now();
+            return new UserAlreadyRegistered();
 
         TrialStart = DateOnly.FromDateTime(DateTime.Now);
         TrialEnd = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
+
+        return new SykiSuccess();
     }
 }

@@ -18,11 +18,11 @@ public static class JsonExtensions
         return JsonConvert.DeserializeObject<T>(responseAsString)!;
     }
 
-    public static async Task AssertBadRequest(this HttpResponseMessage httpResponse, string message)
+    public static async Task AssertBadRequest(this HttpResponseMessage httpResponse, SykiError sykiError)
     {
         var error = await httpResponse.DeserializeTo<ErrorOut>();
         httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(message);
+        error.Message.Should().Be(sykiError.Message);
     }
 
     public static void ShouldBeSuccess<S, E>(this OneOf<S, E> oneOf)

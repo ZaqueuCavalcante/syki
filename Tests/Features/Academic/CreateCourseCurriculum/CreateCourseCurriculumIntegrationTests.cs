@@ -77,7 +77,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseCurriculumHttp("Grade de ADS 1.0", Guid.NewGuid(), []);
         
         // Assert
-        await response.AssertBadRequest(new CourseNotFound().Message);
+        await response.AssertBadRequest(new CourseNotFound());
     }
 
     [Test]
@@ -93,7 +93,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await clientNovaRoma.CreateCourseCurriculumHttp("Grade de ADS 1.0", course.Id, []);
         
         // Assert
-        await response.AssertBadRequest(new CourseNotFound().Message);
+        await response.AssertBadRequest(new CourseNotFound());
     }
 
     [Test]
@@ -111,7 +111,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseCurriculumHttp("Grade de Direito 1.0", direito.Id, [ new(bd.Id, 1, 10, 70) ]);
 
         // Assert
-        await response.AssertBadRequest(new InvalidDisciplinesList().Message);
+        await response.AssertBadRequest(new InvalidDisciplinesList());
     }
 
     [Test]
@@ -131,7 +131,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await clientNovaRoma.CreateCourseCurriculumHttp("Grade ADS", courseNovaRoma.Id, [ new(disciplineUfpe.Id, 1, 10, 70) ]);
 
         // Assert
-        await response.AssertBadRequest(new InvalidDisciplinesList().Message);
+        await response.AssertBadRequest(new InvalidDisciplinesList());
     }
 
     [Test]
@@ -157,7 +157,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseCurriculumHttp("Grade de Direito 1.0", course.Id, disciplines);
 
         // Assert
-        await response.AssertBadRequest(new InvalidDisciplinesList().Message);
+        await response.AssertBadRequest(new InvalidDisciplinesList());
     }
 
     [Test]
@@ -180,6 +180,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateCourseCurriculumHttp("Grade de Direito 1.0", course.Id, disciplines);
 
         // Assert
-        await response.AssertBadRequest(new InvalidDisciplinesList().Message);     
+        await response.AssertBadRequest(new InvalidDisciplinesList());     
     }
 }

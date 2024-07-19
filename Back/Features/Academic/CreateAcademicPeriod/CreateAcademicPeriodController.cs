@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Academic.CreateAcademicPeriod;
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
-public class CreateAcademicPeriodController(CreateAcademicPeriodService service) : SykiController
+public class CreateAcademicPeriodController(CreateAcademicPeriodService service) : ControllerBase
 {
     [HttpPost("academic/academic-periods")]
     [ProducesResponseType(typeof(AcademicPeriodOut), 200)]

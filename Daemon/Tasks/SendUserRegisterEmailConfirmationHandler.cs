@@ -7,9 +7,7 @@ public class SendUserRegisterEmailConfirmationHandler(SykiDbContext ctx, IEmails
 {
     public async Task Handle(SendUserRegisterEmailConfirmation task)
     {
-        var register = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Email == task.Email);
-        if (register == null)
-            Throw.DE024.Now();
+        var register = await ctx.UserRegisters.FirstAsync(d => d.Email == task.Email);
 
         await emailsService.SendUserRegisterEmailConfirmation(register.Email, register.Id.ToString());
     }

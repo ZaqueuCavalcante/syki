@@ -12,8 +12,8 @@ public class StartClassController(StartClassService service) : ControllerBase
     [ProducesResponseType(204)]
     public async Task<IActionResult> Start([FromRoute] Guid id)
     {
-        await service.Start(User.InstitutionId(), id);
+        var result = await service.Start(User.InstitutionId(), id);
 
-        return NoContent();
+        return result.Match<IActionResult>(_ => NoContent(), BadRequest);
     }
 }

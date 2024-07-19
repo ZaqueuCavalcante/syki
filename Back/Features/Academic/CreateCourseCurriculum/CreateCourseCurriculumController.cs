@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Academic.CreateCourseCurriculum;
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
-public class CreateCourseCurriculumController(CreateCourseCurriculumService service) : SykiController
+public class CreateCourseCurriculumController(CreateCourseCurriculumService service) : ControllerBase
 {
     [HttpPost("academic/course-curriculums")]
     [ProducesResponseType(200)]

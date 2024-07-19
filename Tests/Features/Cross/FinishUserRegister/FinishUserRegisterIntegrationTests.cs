@@ -51,7 +51,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.FinishUserRegister(token, "Lalala@123");
 
         // Assert
-        await response.AssertBadRequest(new InvalidRegistrationToken().Message);
+        await response.AssertBadRequest(new InvalidRegistrationToken());
 
         using var ctx = _back.GetDbContext();
         using var userManager = _back.GetUserManager();
@@ -84,7 +84,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        await secondResponse.AssertBadRequest(new UserAlreadyRegistered().Message);
+        await secondResponse.AssertBadRequest(new UserAlreadyRegistered());
 
         using var ctx = _back.GetDbContext();
         using var userManager = _back.GetUserManager();
@@ -120,7 +120,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.FinishUserRegister(token!, password);
 
         // Assert
-        await response.AssertBadRequest(new WeakPassword().Message);
+        await response.AssertBadRequest(new WeakPassword());
 
         using var ctx = _back.GetDbContext();
         using var userManager = _back.GetUserManager();

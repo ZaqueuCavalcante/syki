@@ -29,6 +29,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.UpdateCampusHttp(Guid.NewGuid(), "Agreste II", "Bonito - PE");
 
         // Assert
-        await response.AssertBadRequest(new CampusNotFound().Message); 
+        await response.AssertBadRequest(new CampusNotFound()); 
     }
 }

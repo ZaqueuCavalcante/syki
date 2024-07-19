@@ -36,7 +36,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateClassHttp(Guid.NewGuid(), Guid.NewGuid(), "2024.1", 40, []);
 
         // Assert
-        await response.AssertBadRequest(new DisciplineNotFound().Message);
+        await response.AssertBadRequest(new DisciplineNotFound());
     }
 
     [Test]
@@ -51,7 +51,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateClassHttp(discipline.Id, Guid.NewGuid(), "2024.1", 40, []);
 
         // Assert
-        await response.AssertBadRequest(new TeacherNotFound().Message);
+        await response.AssertBadRequest(new TeacherNotFound());
     }
 
     [Test]
@@ -67,7 +67,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateClassHttp(discipline.Id, teacher.Id, "2024.1", 40, []);
 
         // Assert
-        await response.AssertBadRequest(new AcademicPeriodNotFound().Message);
+        await response.AssertBadRequest(new AcademicPeriodNotFound());
     }
 
     [Test]
@@ -85,6 +85,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateClassHttp(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
-        await response.AssertBadRequest(new InvalidSchedule().Message);
+        await response.AssertBadRequest(new InvalidSchedule());
     }
 }

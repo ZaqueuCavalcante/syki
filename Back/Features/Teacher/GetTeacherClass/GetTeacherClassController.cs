@@ -8,8 +8,8 @@ public class GetTeacherClassController(GetTeacherClassService service) : Control
     [HttpGet("teacher/classes/{classId}")]
     public async Task<IActionResult> Get([FromRoute] string classId)
     {
-        var @class = await service.Get(User.InstitutionId(), User.Id(), classId);
+        var result = await service.Get(User.InstitutionId(), User.Id(), classId);
 
-        return Ok(@class);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

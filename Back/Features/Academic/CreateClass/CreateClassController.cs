@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Academic.CreateClass;
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
-public class CreateClassController(CreateClassService service) : ControllerBase
+public class CreateClassController(CreateClassService service) : SykiController
 {
     [HttpPost("academic/classes")]
     [ProducesResponseType(typeof(ClassOut), 200)]
@@ -14,10 +14,6 @@ public class CreateClassController(CreateClassService service) : ControllerBase
     {
         var result = await service.Create(User.InstitutionId(), data);
 
-        return result.Match<IActionResult>(Ok,
-            disciplineNotFound => BadRequest(new ErrorOut { Message = disciplineNotFound.Message }),
-            teacherNotFound => BadRequest(new ErrorOut { Message = teacherNotFound.Message }),
-            academicPeriodNotFound => BadRequest(new ErrorOut { Message = academicPeriodNotFound.Message })
-        );
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

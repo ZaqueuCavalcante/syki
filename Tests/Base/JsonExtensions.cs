@@ -1,3 +1,4 @@
+using OneOf;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -22,5 +23,18 @@ public static class JsonExtensions
         var error = await httpResponse.DeserializeTo<ErrorOut>();
         httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         error.Message.Should().Be(message);
+    }
+
+    public static void ShouldBeSuccess<S, E>(this OneOf<S, E> oneOf)
+    {
+        oneOf.IsT0.Should().BeTrue();
+        oneOf.IsT1.Should().BeFalse();
+    }
+
+    public static void ShouldBeError<S>(this OneOf<S, SykiError> oneOf, SykiError error)
+    {
+        oneOf.IsT0.Should().BeFalse();
+        oneOf.IsT1.Should().BeTrue();
+        oneOf.AsT1.Should().BeOfType(error.GetType());
     }
 }

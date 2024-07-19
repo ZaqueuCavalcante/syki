@@ -15,10 +15,16 @@ public class CreateAcademicPeriodUnitTests
         var end = new DateOnly(year, 06, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, institutionId, start, end);
+        var result = AcademicPeriod.New(id, institutionId, start, end);
 
         // Assert
-        act.Should().NotThrow<DomainException>();
+        result.ShouldBeSuccess();
+
+        var academicPeriod = result.AsT0;
+        academicPeriod.Id.Should().Be(id);
+        academicPeriod.InstitutionId.Should().Be(institutionId);
+        academicPeriod.StartAt.Should().Be(start);
+        academicPeriod.EndAt.Should().Be(end);
     }
 
     [Test]
@@ -31,10 +37,10 @@ public class CreateAcademicPeriodUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, institutionId, start, end);
+        var result = AcademicPeriod.New(id, institutionId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE006);
+        result.ShouldBeError(new InvalidAcademicPeriod());
     }
 
     [Test]
@@ -47,10 +53,10 @@ public class CreateAcademicPeriodUnitTests
         var end = new DateOnly(2023, 06, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, institutionId, start, end);
+        var result = AcademicPeriod.New(id, institutionId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE007);
+        result.ShouldBeError(new InvalidAcademicPeriodStartDate());
     }
 
     [Test]
@@ -63,10 +69,10 @@ public class CreateAcademicPeriodUnitTests
         var end = new DateOnly(2024, 06, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, institutionId, start, end);
+        var result = AcademicPeriod.New(id, institutionId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE008);
+        result.ShouldBeError(new InvalidAcademicPeriodEndDate());
     }
 
     [Test]
@@ -79,10 +85,10 @@ public class CreateAcademicPeriodUnitTests
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, institutionId, start, end);
+        var result = AcademicPeriod.New(id, institutionId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE009);
+        result.ShouldBeError(new AcademicPeriodStartDateShouldBeLessThanEndDate());
     }
 
     [Test]
@@ -95,10 +101,10 @@ public class CreateAcademicPeriodUnitTests
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new AcademicPeriod(id, institutionId, start, end);
+        var result = AcademicPeriod.New(id, institutionId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE009);
+        result.ShouldBeError(new AcademicPeriodStartDateShouldBeLessThanEndDate());
     }
 
     [Test]

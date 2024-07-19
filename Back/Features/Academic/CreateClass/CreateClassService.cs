@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Academic.CreateClass;
 
 public class CreateClassService(SykiDbContext ctx)
 {
-    public async Task<OneOf<ClassOut, DisciplineNotFound, TeacherNotFound, AcademicPeriodNotFound>> Create(Guid institutionId, CreateClassIn data)
+    public async Task<OneOf<ClassOut, SykiError>> Create(Guid institutionId, CreateClassIn data)
     {
         var disciplineOk = await ctx.Disciplines
             .AnyAsync(x => x.InstitutionId == institutionId && x.Id == data.DisciplineId);

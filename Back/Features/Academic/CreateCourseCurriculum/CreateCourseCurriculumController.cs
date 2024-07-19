@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Academic.CreateCourseCurriculum;
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
-public class CreateCourseCurriculumController(CreateCourseCurriculumService service) : ControllerBase
+public class CreateCourseCurriculumController(CreateCourseCurriculumService service) : SykiController
 {
     [HttpPost("academic/course-curriculums")]
     [ProducesResponseType(200)]
@@ -11,9 +11,6 @@ public class CreateCourseCurriculumController(CreateCourseCurriculumService serv
     {
         var result = await service.Create(User.InstitutionId(), data);
 
-        return result.Match<IActionResult>(Ok,
-            courseNotFound  => BadRequest(new ErrorOut { Message = courseNotFound.Message }),
-            invalidDisciplinesList => BadRequest(new ErrorOut { Message = invalidDisciplinesList.Message })
-        );
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

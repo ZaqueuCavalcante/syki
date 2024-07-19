@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Academic.CreateCourseCurriculum;
 
 public class CreateCourseCurriculumService(SykiDbContext ctx)
 {
-    public async Task<OneOf<CourseCurriculumOut, CourseNotFound, InvalidDisciplinesList>> Create(Guid institutionId, CreateCourseCurriculumIn data)
+    public async Task<OneOf<CourseCurriculumOut, SykiError>> Create(Guid institutionId, CreateCourseCurriculumIn data)
     {
         var courseOk = await ctx.Courses
             .AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CourseId);

@@ -1,131 +1,136 @@
 namespace Syki.Back.Exceptions;
 
-public class CourseOfferingNotFound
+public abstract class SykiError
 {
-    public string Message = "Oferta de curso não encontrada.";
+    public abstract string Message { get; set; }
 }
 
-public class CourseNotFound
+public class CourseOfferingNotFound : SykiError
 {
-    public string Message = "Curso não encontrado.";
+    public override string Message { get; set; } = "Oferta de curso não encontrada.";
 }
 
-public class InvalidDisciplinesList
+public class CourseNotFound : SykiError
 {
-    public string Message = "Lista de disciplinas inválida.";
+    public override string Message { get; set; } = "Curso não encontrado.";
 }
 
-public class DisciplineNotFound
+public class InvalidDisciplinesList : SykiError
 {
-    public string Message = "Disciplina não encontrada.";
+    public override string Message { get; set; } = "Lista de disciplinas inválida.";
 }
 
-public class AcademicPeriodNotFound
+public class DisciplineNotFound : SykiError
 {
-    public string Message = "Período acadêmico não encontrado.";
+    public override string Message { get; set; } = "Disciplina não encontrada.";
 }
 
-public class InvalidAcademicPeriod
+public class AcademicPeriodNotFound : SykiError
 {
-    public string Message = "Período acadêmico inválido.";
+    public override string Message { get; set; } = "Período acadêmico não encontrado.";
 }
 
-public class InvalidAcademicPeriodStartDate
+public class InvalidAcademicPeriod : SykiError
 {
-    public string Message = "Data de início de período acadêmico inválida.";
+    public override string Message { get; set; } = "Período acadêmico inválido.";
 }
 
-public class InvalidAcademicPeriodEndDate
+public class InvalidAcademicPeriodStartDate : SykiError
 {
-    public string Message = "Data de fim de período acadêmico inválida.";
+    public override string Message { get; set; } = "Data de início de período acadêmico inválida.";
 }
 
-public class AcademicPeriodStartDateShouldBeLessThanEndDate
+public class InvalidAcademicPeriodEndDate : SykiError
 {
-    public string Message = "A data de início deve ser menor que a de fim de período acadêmico.";
+    public override string Message { get; set; } = "Data de fim de período acadêmico inválida.";
 }
 
-public class CampusNotFound
+public class AcademicPeriodStartDateShouldBeLessThanEndDate : SykiError
 {
-    public string Message = "Campus não encontrado.";
+    public override string Message { get; set; } = "A data de início deve ser menor que a de fim de período acadêmico.";
 }
 
-public class CourseCurriculumNotFound
+public class CampusNotFound : SykiError
 {
-    public string Message = "Grade curricular não encontrada.";
+    public override string Message { get; set; } = "Campus não encontrado.";
 }
 
-public class InstitutionNotFound
+public class CourseCurriculumNotFound : SykiError
 {
-    public string Message = "Instituição não encontrada.";
+    public override string Message { get; set; } = "Grade curricular não encontrada.";
 }
 
-public class WeakPassword
+public class InstitutionNotFound : SykiError
 {
-    public string Message = "Senha fraca.";
+    public override string Message { get; set; } = "Instituição não encontrada.";
 }
 
-public class InvalidEmail
+public class WeakPassword : SykiError
 {
-    public string Message = "Email inválido.";
+    public override string Message { get; set; } = "Senha fraca.";
 }
 
-public class EmailAlreadyUsed
+public class InvalidEmail : SykiError
 {
-    public string Message = "Email já utilizado.";
+    public override string Message { get; set; } = "Email inválido.";
 }
 
-public class TeacherNotFound
+public class EmailAlreadyUsed : SykiError
 {
-    public string Message = "Professor não encontrado.";
+    public override string Message { get; set; } = "Email já utilizado.";
 }
 
-public class UserNotFound
+public class TeacherNotFound : SykiError
 {
-    public string Message = "Usuário não encontrado.";
+    public override string Message { get; set; } = "Professor não encontrado.";
 }
 
-public class InvalidResetToken
+public class UserNotFound : SykiError
 {
-    public string Message = "Reset token inválido.";
+    public override string Message { get; set; } = "Usuário não encontrado.";
 }
 
-public class InvalidSchedule
+public class InvalidResetToken : SykiError
 {
-    public string Message = "Horário inválido.";
+    public override string Message { get; set; } = "Reset token inválido.";
 }
 
-public class ConflictingSchedules
+public class InvalidSchedule : SykiError
 {
-    public string Message = "Horários conflitantes.";
+    public override string Message { get; set; } = "Horário inválido.";
 }
 
-public class EnrollmentPeriodStartDateShouldBeLessThanEndDate
+public class ConflictingSchedules : SykiError
 {
-    public string Message = "A data de início deve ser menor que a de fim de período de matrícula.";
+    public override string Message { get; set; } = "Horários conflitantes.";
 }
 
-public class InvalidRegistrationToken
+public class EnrollmentPeriodStartDateShouldBeLessThanEndDate : SykiError
 {
-    public string Message = "Token de registro inválido.";
+    public override string Message { get; set; } = "A data de início deve ser menor que a de fim de período de matrícula.";
 }
 
-public class UserAlreadyRegistered
+public class InvalidRegistrationToken : SykiError
 {
-    public string Message = "Usuário já cadastrado.";
+    public override string Message { get; set; } = "Token de registro inválido.";
 }
 
-public class AcademicPeriodAlreadyExists
+public class UserAlreadyRegistered : SykiError
 {
-    public string Message = "Já existe um período acadêmico com esse id.";
+    public override string Message { get; set; } = "Usuário já cadastrado.";
 }
 
-public class InvalidMfaToken
+public class AcademicPeriodAlreadyExists : SykiError
 {
-    public string Message = "MFA token inválido.";
+    public override string Message { get; set; } = "Já existe um período acadêmico com esse id.";
 }
 
-public class ClassNotFound
+public class InvalidMfaToken : SykiError
 {
-    public string Message = "Turma não encontrada.";
+    public override string Message { get; set; } = "MFA token inválido.";
+}
+
+public class ClassNotFound : SykiError
+{
+    public override string Message { get; set; } = "Turma não encontrada.";
 }

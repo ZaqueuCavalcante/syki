@@ -6,10 +6,6 @@ public static class Throw
     public const string DE001 = "O nome do professor deve ter ao menos 3 caracteres.";
 
 
-    public const string DE006 = "Período inválido.";
-    public const string DE007 = "Data de início de período inválida.";
-    public const string DE008 = "Data de fim de período inválida.";
-    public const string DE009 = "A data de início deve ser menor que a de fim de período.";
     public const string DE010 = "Campus não encontrado.";
     public const string DE011 = "Grade não encontrada.";
     public const string DE014 = "Instituição não encontrada.";

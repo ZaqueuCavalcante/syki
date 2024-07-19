@@ -5,7 +5,7 @@ namespace Syki.Back.Features.Academic.CreateStudent;
 
 public class CreateStudentService(SykiDbContext ctx, CreateUserService service, SendResetPasswordTokenService sendService)
 {
-    public async Task<OneOf<StudentOut, CourseOfferingNotFound>> Create(Guid institutionId, CreateStudentIn data)
+    public async Task<OneOf<StudentOut, SykiError>> Create(Guid institutionId, CreateStudentIn data)
     {
         using var transaction = ctx.Database.BeginTransaction();
 

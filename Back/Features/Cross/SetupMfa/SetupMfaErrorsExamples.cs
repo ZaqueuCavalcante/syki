@@ -4,6 +4,6 @@ public class SetupMfaErrorsExamples : IMultipleExamplesProvider<ErrorOut>
 {
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {
-        yield return Throw.DE027.ToSwaggerExampleErrorOut();
+        yield return new InvalidMfaToken().ToSwaggerExampleErrorOut();
     }
 }

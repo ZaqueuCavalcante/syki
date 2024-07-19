@@ -14,18 +14,24 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService service, 
         if (!courseOfferingOk) return new CourseOfferingNotFound();
 
         var userIn = CreateUserIn.NewStudent(institutionId, data.Name, data.Email);
-        var user = await service.Create(userIn);
+        var result = await service.Create(userIn);
 
-        var student = new SykiStudent(user.Id, institutionId, data.Name, data.CourseOfferingId);
-        ctx.Add(student);
+        return await result.Match<Task<OneOf<StudentOut, SykiError>>>(
+            async user =>
+            {
+                var student = new SykiStudent(user.Id, institutionId, data.Name, data.CourseOfferingId);
+                ctx.Add(student);
 
-        ctx.Add(SykiTask.LinkOldNotifications(user.Id));
-        await ctx.SaveChangesAsync();
+                ctx.Add(SykiTask.LinkOldNotifications(user.Id));
+                await ctx.SaveChangesAsync();
 
-        await sendService.Send(new() { Email = user.Email });
+                await sendService.Send(new() { Email = user.Email });
 
-        transaction.Commit();
+                transaction.Commit();
 
-        return student.ToOut();
+                return student.ToOut();
+            },
+            error => Task.FromResult<OneOf<StudentOut, SykiError>>(error)
+        );
     }
 }

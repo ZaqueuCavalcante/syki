@@ -14,8 +14,8 @@ public class FinishUserRegisterController(FinishUserRegisterService service) : C
     [SwaggerResponseExample(400, typeof(FinishUserRegisterErrorsExamples))]
     public async Task<IActionResult> Finish([FromBody] FinishUserRegisterIn data)
     {
-        await service.Finish(data);
+        var result = await service.Finish(data);
 
-        return Ok();
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

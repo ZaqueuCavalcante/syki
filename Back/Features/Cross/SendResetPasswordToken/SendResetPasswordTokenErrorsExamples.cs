@@ -4,6 +4,6 @@ public class SendResetPasswordTokenErrorsExamples : IMultipleExamplesProvider<Er
 {
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {
-		yield return Throw.DE019.ToSwaggerExampleErrorOut();
+        yield return new UserNotFound().ToSwaggerExampleErrorOut();
     }
 }

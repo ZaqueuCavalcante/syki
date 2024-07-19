@@ -1,5 +1,7 @@
 namespace Syki.Back.Exceptions;
 
+public class SykiSuccess { }
+
 public abstract class SykiError
 {
     public abstract string Message { get; set; }

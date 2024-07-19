@@ -10,8 +10,6 @@ public class UserRegister
     public UserRegister(string email)
     {
         Id = Guid.NewGuid();
-        if (!email.IsValidEmail())
-            Throw.DE016.Now();
         Email = email.ToLower();
     }
 

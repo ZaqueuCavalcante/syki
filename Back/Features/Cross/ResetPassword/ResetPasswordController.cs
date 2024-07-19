@@ -14,8 +14,8 @@ public class ResetPasswordController(ResetPasswordService service) : ControllerB
     [SwaggerResponseExample(400, typeof(ResetPasswordErrorsExamples))]
     public async Task<IActionResult> Reset([FromBody] ResetPasswordIn data)
     {
-        await service.Reset(data);
+        var result = await service.Reset(data);
 
-        return Ok();
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

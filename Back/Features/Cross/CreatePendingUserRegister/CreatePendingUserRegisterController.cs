@@ -14,8 +14,8 @@ public class CreatePendingUserRegisterController(CreatePendingUserRegisterServic
     [SwaggerResponseExample(400, typeof(CreatePendingUserRegisterErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreatePendingUserRegisterIn data)
     {
-        await service.Create(data);
+        var result = await service.Create(data);
 
-        return Ok();
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

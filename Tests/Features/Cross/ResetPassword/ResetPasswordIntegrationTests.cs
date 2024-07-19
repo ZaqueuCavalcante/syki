@@ -37,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.ResetPassword(Guid.NewGuid().ToString(), "My@new@strong@P4ssword");
 
         // Assert
-        await response.AssertBadRequest(Throw.DE019);
+        await response.AssertBadRequest(new UserNotFound().Message);
     }
 
     [Test]
@@ -77,7 +77,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.ResetPassword(token!, password);
 
         // Assert
-        await response.AssertBadRequest(Throw.DE020);
+        await response.AssertBadRequest(new InvalidResetToken().Message);
     }
 
     [Test]
@@ -96,6 +96,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.ResetPassword(token!, password);
 
         // Assert
-        await response.AssertBadRequest(Throw.DE015);
+        await response.AssertBadRequest(new WeakPassword().Message);
     }
 }

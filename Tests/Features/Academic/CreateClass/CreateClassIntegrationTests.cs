@@ -85,6 +85,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateClassHttp(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
-        await response.AssertBadRequest(Throw.DE021);
+        await response.AssertBadRequest(new InvalidSchedule().Message);
     }
 }

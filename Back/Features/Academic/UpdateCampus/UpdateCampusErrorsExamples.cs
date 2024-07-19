@@ -4,6 +4,6 @@ public class UpdateCampusErrorsExamples : IMultipleExamplesProvider<ErrorOut>
 {
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {
-        yield return Throw.DE010.ToSwaggerExampleErrorOut();
+        yield return new CampusNotFound().ToSwaggerExampleErrorOut();
     }
 }

@@ -6,7 +6,6 @@ public static class Throw
     public const string DE001 = "O nome do professor deve ter ao menos 3 caracteres.";
 
 
-    public const string DE010 = "Campus não encontrado.";
     public const string DE011 = "Grade não encontrada.";
     public const string DE014 = "Instituição não encontrada.";
     public const string DE015 = "Senha fraca.";

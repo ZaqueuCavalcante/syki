@@ -76,10 +76,15 @@ public static class AcademicClientExtensions
         return await client.Get(courseId);
     }
 
-    public static async Task<CampusOut> UpdateCampus(this HttpClient http, Guid id, string name = "Agreste I", string city = "Caruaru - PE")
+    public static async Task<HttpResponseMessage> UpdateCampusHttp(this HttpClient http, Guid id, string name = "Agreste I", string city = "Caruaru - PE")
     {
         var client = new UpdateCampusClient(http);
-        var response = await client.Update(id, name, city);
+        return await client.Update(id, name, city);
+    }
+
+    public static async Task<CampusOut> UpdateCampus(this HttpClient http, Guid id, string name = "Agreste I", string city = "Caruaru - PE")
+    {
+        var response = await http.UpdateCampusHttp(id, name, city);
         return await response.DeserializeTo<CampusOut>();
     }
 

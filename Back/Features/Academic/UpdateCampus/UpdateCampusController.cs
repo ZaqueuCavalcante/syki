@@ -14,8 +14,8 @@ public class UpdateCampusController(UpdateCampusService service) : ControllerBas
     [SwaggerResponseExample(400, typeof(UpdateCampusErrorsExamples))]
     public async Task<IActionResult> Update([FromBody] UpdateCampusIn data)
     {
-        var campus = await service.Update(User.InstitutionId(), data);
+        var result = await service.Update(User.InstitutionId(), data);
 
-        return Ok(campus);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

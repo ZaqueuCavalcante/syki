@@ -33,10 +33,10 @@ public class CreateEnrollmentPeriodUnitTests
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new EnrollmentPeriod(id, institutionId, start, end);
+        var result = EnrollmentPeriod.New(id, institutionId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE023);
+        result.ShouldBeError(new EnrollmentPeriodStartDateShouldBeLessThanEndDate());
     }
 
     [Test]
@@ -49,9 +49,9 @@ public class CreateEnrollmentPeriodUnitTests
         var end = new DateOnly(2023, 02, 01);
 
         // Act
-        Action act = () => new EnrollmentPeriod(id, institutionId, start, end);
+        var result = EnrollmentPeriod.New(id, institutionId, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE023);
+        result.ShouldBeError(new EnrollmentPeriodStartDateShouldBeLessThanEndDate());
     }
 }

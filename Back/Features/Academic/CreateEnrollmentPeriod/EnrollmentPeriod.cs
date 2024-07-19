@@ -15,12 +15,20 @@ public class EnrollmentPeriod
     ) {
         Id = id;
         InstitutionId = institutionId;
-
-        if (startAt >= endAt)
-            Throw.DE023.Now();
-
         StartAt = startAt;
         EndAt = endAt;
+    }
+
+    public static OneOf<EnrollmentPeriod, SykiError> New(
+        string id,
+        Guid institutionId,
+        DateOnly startAt,
+        DateOnly endAt
+    ) {
+        if (startAt >= endAt)
+            return new EnrollmentPeriodStartDateShouldBeLessThanEndDate();
+
+        return new EnrollmentPeriod(id, institutionId, startAt, endAt);
     }
 
     public EnrollmentPeriodOut ToOut()

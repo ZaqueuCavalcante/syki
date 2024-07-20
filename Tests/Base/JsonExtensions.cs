@@ -27,14 +27,14 @@ public static class JsonExtensions
 
     public static void ShouldBeSuccess<S, E>(this OneOf<S, E> oneOf)
     {
-        oneOf.IsT0.Should().BeTrue();
-        oneOf.IsT1.Should().BeFalse();
+        oneOf.IsSuccess().Should().BeTrue();
+        oneOf.IsError().Should().BeFalse();
     }
 
     public static void ShouldBeError<S>(this OneOf<S, SykiError> oneOf, SykiError error)
     {
-        oneOf.IsT0.Should().BeFalse();
-        oneOf.IsT1.Should().BeTrue();
-        oneOf.AsT1.Should().BeOfType(error.GetType());
+        oneOf.IsSuccess().Should().BeFalse();
+        oneOf.IsError().Should().BeTrue();
+        oneOf.GetError().Should().BeOfType(error.GetType());
     }
 }

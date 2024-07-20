@@ -16,14 +16,19 @@ public class CreateClassService(SykiDbContext ctx)
             .AnyAsync(p => p.InstitutionId == institutionId && p.Id == data.Period);
         if (!periodOk) return new AcademicPeriodNotFound();
 
-        var schedules = data.Schedules.ConvertAll(h => new Schedule(h.Day, h.Start, h.End));
+        var schedules = data.Schedules.ConvertAll(h => Schedule.New(h.Day, h.Start, h.End));
+        foreach (var schedule in schedules)
+        {
+            if (schedule.IsError()) return schedule.GetError();
+        }
+
         var @class = new Class(
             institutionId,
             data.DisciplineId,
             data.TeacherId,
             data.Period,
             data.Vacancies,
-            schedules
+            schedules.ConvertAll(x => x.AsT0)
         );
 
         ctx.Classes.Add(@class);

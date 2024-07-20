@@ -31,10 +31,10 @@ public class CreateScheduleUnitTests
         var end = Hour.H07_00;
 
         // Act
-        Action act = () => new Schedule(day, start, end);
+        var result = Schedule.New(day, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE021);
+        result.ShouldBeError(new InvalidSchedule());
     }
 
     [Test]
@@ -46,10 +46,10 @@ public class CreateScheduleUnitTests
         var end = Hour.H07_00;
 
         // Act
-        Action act = () => new Schedule(day, start, end);
+        var result = Schedule.New(day, start, end);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE021);
+        result.ShouldBeError(new InvalidSchedule());
     }
 
     [Test]

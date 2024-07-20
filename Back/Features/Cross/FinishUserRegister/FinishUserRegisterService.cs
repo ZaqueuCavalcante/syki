@@ -14,7 +14,7 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
         if (register == null) return new InvalidRegistrationToken();
 
         var finish = register.Finish();
-        if (finish.IsT1) return finish.AsT1;
+        if (finish.IsError()) return finish.GetError();
 
         var institution = new Institution($"Institution - {register.Email}");
         ctx.Add(institution);

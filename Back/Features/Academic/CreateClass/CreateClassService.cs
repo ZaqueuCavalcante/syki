@@ -22,7 +22,7 @@ public class CreateClassService(SykiDbContext ctx)
             if (schedule.IsError()) return schedule.GetError();
         }
 
-        var @class = new Class(
+        var result = Class.New(
             institutionId,
             data.DisciplineId,
             data.TeacherId,
@@ -31,15 +31,21 @@ public class CreateClassService(SykiDbContext ctx)
             schedules.ConvertAll(x => x.AsT0)
         );
 
-        ctx.Classes.Add(@class);
-        await ctx.SaveChangesAsync();
+        return await result.Match<Task<OneOf<ClassOut, SykiError>>>(
+            async @class =>
+            {
+                ctx.Classes.Add(@class);
+                await ctx.SaveChangesAsync();
 
-        @class = await ctx.Classes.AsNoTracking()
-            .Include(t => t.Discipline)
-            .Include(t => t.Teacher)
-            .Include(t => t.Schedules)
-            .FirstAsync(x => x.Id == @class.Id);
+                @class = await ctx.Classes.AsNoTracking()
+                    .Include(t => t.Discipline)
+                    .Include(t => t.Teacher)
+                    .Include(t => t.Schedules)
+                    .FirstAsync(x => x.Id == @class.Id);
 
-        return @class.ToOut();
+                return @class.ToOut();
+            },
+            error => Task.FromResult<OneOf<ClassOut, SykiError>>(error)
+        );
     }
 }

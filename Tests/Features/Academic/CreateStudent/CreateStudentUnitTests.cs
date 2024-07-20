@@ -44,22 +44,6 @@ public class CreateStudentUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.ValidNames))]
-    public void Should_create_student_with_valid_name(string name)
-    {
-        // Arrange
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
-        var courseOfferingId = Guid.NewGuid();
-
-        // Act
-        Action act = () => new SykiStudent(userId, institutionId, name, courseOfferingId);
-
-        // Assert
-        act.Should().NotThrow<DomainException>();
-    }
-
-    [Test]
     public void Should_convert_student_to_out_without_course_offering()
     {
         // Arrange

@@ -4,15 +4,17 @@ namespace Syki.Back.Features.Cross.SetupMfa;
 
 public class SetupMfaService(UserManager<SykiUser> userManager)
 {
-    public async Task Setup(Guid userId, string token)
+    public async Task<OneOf<SykiSuccess, SykiError>> Setup(Guid userId, string token)
     {
         var user = await userManager.Users.FirstAsync(u => u.Id == userId);
 
         var tokenProvider = userManager.Options.Tokens.AuthenticatorTokenProvider;
         var ok = await userManager.VerifyTwoFactorTokenAsync(user, tokenProvider, token.OnlyNumbers());
 
-        if (!ok) Throw.DE027.Now();
+        if (!ok) return new InvalidMfaToken();
         
         await userManager.SetTwoFactorEnabledAsync(user, true);
+
+        return new SykiSuccess();
     }
 }

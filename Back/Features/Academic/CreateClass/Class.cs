@@ -39,21 +39,37 @@ public class Class
         Period = period;
         Vacancies = vacancies;
         Status = ClassStatus.OnEnrollmentPeriod;
-        SetSchedules(schedules);
+        Schedules = schedules;
     }
 
-    private void SetSchedules(List<Schedule> schedules)
+    public static OneOf<Class, SykiError> New(
+        Guid institutionId,
+        Guid disciplineId,
+        Guid teacherId,
+        string period,
+        int vacancies,
+        List<Schedule> schedules
+    ) {
+        var result = Validate(schedules);
+
+        return result.Match<OneOf<Class, SykiError>>(
+            _ => new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules),
+            error => error
+        );
+    }
+
+    private static OneOf<SykiSuccess, SykiError> Validate(List<Schedule> schedules)
     {
         for (int i = 0; i < schedules.Count-1; i++)
         {
             for (int j = i+1; j < schedules.Count; j++)
             {
                 if (schedules[i].Conflict(schedules[j]))
-                    Throw.DE022.Now();
+                    return new ConflictingSchedules();
             }
         }
 
-        Schedules = schedules;
+        return new SykiSuccess();
     }
 
     public string GetScheduleAsString()

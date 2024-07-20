@@ -17,12 +17,19 @@ public class Schedule
     ) {
         Id = Guid.NewGuid();
         Day = day;
-
-        if (startAt == endAt || endAt < startAt)
-            Throw.DE021.Now();
-
         StartAt = startAt;
         EndAt = endAt;
+    }
+
+    public static OneOf<Schedule, SykiError> New(
+        Day day,
+        Hour startAt,
+        Hour endAt
+    ) {
+        if (startAt == endAt || endAt < startAt)
+            return new InvalidSchedule();
+
+        return new Schedule(day, startAt, endAt);
     }
 
     public bool Conflict(Schedule other)

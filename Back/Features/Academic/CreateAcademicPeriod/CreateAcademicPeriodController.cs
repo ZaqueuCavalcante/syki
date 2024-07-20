@@ -12,8 +12,8 @@ public class CreateAcademicPeriodController(CreateAcademicPeriodService service)
     [ProducesResponseType(typeof(AcademicPeriodOut), 200)]
     public async Task<IActionResult> Create([FromBody] CreateAcademicPeriodIn data)
     {
-        var period = await service.Create(User.InstitutionId(), data);
+        var result = await service.Create(User.InstitutionId(), data);
 
-        return Ok(period);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

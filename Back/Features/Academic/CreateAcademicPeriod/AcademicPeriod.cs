@@ -13,13 +13,27 @@ public class AcademicPeriod
         DateOnly startAt,
         DateOnly endAt
     ) {
-        Id = Validate(id, startAt, endAt);
+        Id = id;
         InstitutionId = institutionId;
         StartAt = startAt;
         EndAt = endAt;
     }
 
-    private static string Validate(
+    public static OneOf<AcademicPeriod, SykiError> New(
+        string id,
+        Guid institutionId,
+        DateOnly startAt,
+        DateOnly endAt
+    ) {
+        var result = Validate(id, startAt, endAt);
+
+        return result.Match<OneOf<AcademicPeriod, SykiError>>(
+            validId => new AcademicPeriod(validId, institutionId, startAt, endAt),
+            error => error
+        );
+    }
+
+    private static OneOf<string, SykiError> Validate(
         string id,
         DateOnly startAt,
         DateOnly endAt
@@ -27,25 +41,25 @@ public class AcademicPeriod
         var numbers = id.OnlyNumbers();
 
         if (numbers.Length != 5)
-            Throw.DE006.Now();
+            return new InvalidAcademicPeriod();
 
         var year = int.Parse(numbers.Substring(0, 4));
         var digit = int.Parse(numbers.Substring(4, 1));
 
         if (year < 1970 || year > 2070)
-            Throw.DE006.Now();
+            return new InvalidAcademicPeriod();
 
         if (digit < 1 || digit > 2)
-            Throw.DE006.Now();
+            return new InvalidAcademicPeriod();
 
         if (startAt.Year != year)
-            Throw.DE007.Now();
+            return new InvalidAcademicPeriodStartDate();
 
         if (endAt.Year != year)
-            Throw.DE008.Now();
+            return new InvalidAcademicPeriodEndDate();
 
         if (startAt >= endAt)
-            Throw.DE009.Now();
+            return new AcademicPeriodStartDateShouldBeLessThanEndDate();
 
         return $"{year}.{digit}";
     }

@@ -13,14 +13,6 @@ public class SykiTeacher
     ) {
         Id = id;
         InstitutionId = institutionId;
-        SetName(name);
-    }
-
-    private void SetName(string name)
-    {
-        if (name.IsEmpty() || name.Length < 3)
-            Throw.DE001.Now();
-
         Name = name;
     }
 

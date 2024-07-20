@@ -12,8 +12,8 @@ public class CreateClassController(CreateClassService service) : ControllerBase
     [ProducesResponseType(typeof(ClassOut), 200)]
     public async Task<IActionResult> Create([FromBody] CreateClassIn data)
     {
-        var @class = await service.Create(User.InstitutionId(), data);
+        var result = await service.Create(User.InstitutionId(), data);
 
-        return Ok(@class);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

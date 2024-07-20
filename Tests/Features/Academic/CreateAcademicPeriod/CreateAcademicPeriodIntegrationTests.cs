@@ -29,4 +29,18 @@ public partial class IntegrationTests : IntegrationTestBase
         var periods = await client.GetAcademicPeriods();
         periods.Should().HaveCount(2);
     }
+
+    [Test]
+    public async Task Should_not_create_duplicated_academic_period()
+    {
+        // Arrange
+        var client = await _back.LoggedAsAcademic();
+
+        // Act
+        await client.CreateAcademicPeriod("2024.1");
+        var response = await client.CreateAcademicPeriodHttp("2024.1");
+
+        // Assert
+        await response.AssertBadRequest(new AcademicPeriodAlreadyExists());
+    }
 }

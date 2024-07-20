@@ -4,7 +4,7 @@ public class CreatePendingUserRegisterErrorsExamples : IMultipleExamplesProvider
 {
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {
-        yield return Throw.DE016.ToSwaggerExampleErrorOut();
-        yield return Throw.DE017.ToSwaggerExampleErrorOut();
+        yield return new InvalidEmail().ToSwaggerExampleErrorOut();
+        yield return new EmailAlreadyUsed().ToSwaggerExampleErrorOut();
     }
 }

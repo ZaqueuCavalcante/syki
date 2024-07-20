@@ -2,42 +2,50 @@ namespace Syki.Back.Features.Academic.CreateClass;
 
 public class CreateClassService(SykiDbContext ctx)
 {
-    public async Task<ClassOut> Create(Guid institutionId, CreateClassIn data)
+    public async Task<OneOf<ClassOut, SykiError>> Create(Guid institutionId, CreateClassIn data)
     {
         var disciplineOk = await ctx.Disciplines
             .AnyAsync(x => x.InstitutionId == institutionId && x.Id == data.DisciplineId);
-        if (!disciplineOk)
-            Throw.DE004.Now();
+        if (!disciplineOk) return new DisciplineNotFound();
 
         var teacherOk = await ctx.Teachers
             .AnyAsync(p => p.InstitutionId == institutionId && p.Id == data.TeacherId);
-        if (!teacherOk)
-            Throw.DE018.Now();
+        if (!teacherOk) return new TeacherNotFound();
 
         var periodOk = await ctx.AcademicPeriods
             .AnyAsync(p => p.InstitutionId == institutionId && p.Id == data.Period);
-        if (!periodOk)
-            Throw.DE005.Now();
+        if (!periodOk) return new AcademicPeriodNotFound();
 
-        var schedules = data.Schedules.ConvertAll(h => new Schedule(h.Day, h.Start, h.End));
-        var @class = new Class(
+        var schedules = data.Schedules.ConvertAll(h => Schedule.New(h.Day, h.Start, h.End));
+        foreach (var schedule in schedules)
+        {
+            if (schedule.IsError()) return schedule.GetError();
+        }
+
+        var result = Class.New(
             institutionId,
             data.DisciplineId,
             data.TeacherId,
             data.Period,
             data.Vacancies,
-            schedules
+            schedules.ConvertAll(x => x.AsT0)
         );
 
-        ctx.Classes.Add(@class);
-        await ctx.SaveChangesAsync();
+        return await result.Match<Task<OneOf<ClassOut, SykiError>>>(
+            async @class =>
+            {
+                ctx.Classes.Add(@class);
+                await ctx.SaveChangesAsync();
 
-        @class = await ctx.Classes.AsNoTracking()
-            .Include(t => t.Discipline)
-            .Include(t => t.Teacher)
-            .Include(t => t.Schedules)
-            .FirstAsync(x => x.Id == @class.Id);
+                @class = await ctx.Classes.AsNoTracking()
+                    .Include(t => t.Discipline)
+                    .Include(t => t.Teacher)
+                    .Include(t => t.Schedules)
+                    .FirstAsync(x => x.Id == @class.Id);
 
-        return @class.ToOut();
+                return @class.ToOut();
+            },
+            error => Task.FromResult<OneOf<ClassOut, SykiError>>(error)
+        );
     }
 }

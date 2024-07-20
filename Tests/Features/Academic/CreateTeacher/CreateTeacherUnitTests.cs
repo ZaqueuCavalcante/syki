@@ -23,21 +23,6 @@ public class CreateTeacherUnitTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidNames))]
-    public void Should_not_create_teacher_with_invalid_name(string name)
-    {
-        // Arrange
-        var institutionId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
-
-        // Act
-        Action act = () => new SykiTeacher(userId, institutionId, name);
-
-        // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE001);
-    }
-
-    [Test]
     public void Should_convert_teacher_to_out()
     {
         // Arrange

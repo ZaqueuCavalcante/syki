@@ -46,10 +46,10 @@ public class CreateClassUnitTests
         };
 
         // Act
-        Action act = () => new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
+        var result = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE022);
+        result.ShouldBeError(new ConflictingSchedules());
     }
 
     [Test]
@@ -64,10 +64,10 @@ public class CreateClassUnitTests
         const int vacancies = 40;
 
         // Act
-        Action act = () => new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
+        var result = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE022);
+        result.ShouldBeError(new ConflictingSchedules());
     }
 
     [Test]

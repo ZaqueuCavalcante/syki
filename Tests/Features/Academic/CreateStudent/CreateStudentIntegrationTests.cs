@@ -33,6 +33,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.CreateStudentHttp(Guid.NewGuid());
 
         // Assert
-        await response.AssertBadRequest(Throw.DE012);
+        await response.AssertBadRequest(new CourseOfferingNotFound());
     }
 }

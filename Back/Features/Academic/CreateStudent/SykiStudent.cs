@@ -22,16 +22,8 @@ public class SykiStudent
         Id = id;
         InstitutionId = institutionId;
         CourseOfferingId = courseOfferingId;
-        SetName(name);
-        EnrollmentCode = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
-    }
-
-    private void SetName(string name)
-    {
-        if (name.IsEmpty() || name.Length < 3)
-            Throw.DE000.Now();
-
         Name = name;
+        EnrollmentCode = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
     }
 
     public StudentOut ToOut()

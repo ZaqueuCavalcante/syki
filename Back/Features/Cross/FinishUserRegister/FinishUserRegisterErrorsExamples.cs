@@ -4,8 +4,8 @@ public class FinishUserRegisterErrorsExamples : IMultipleExamplesProvider<ErrorO
 {
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {
-        yield return Throw.DE015.ToSwaggerExampleErrorOut();
-        yield return Throw.DE024.ToSwaggerExampleErrorOut();
-        yield return Throw.DE025.ToSwaggerExampleErrorOut();
+        yield return new WeakPassword().ToSwaggerExampleErrorOut();
+        yield return new InvalidRegistrationToken().ToSwaggerExampleErrorOut();
+        yield return new UserAlreadyRegistered().ToSwaggerExampleErrorOut();
     }
 }

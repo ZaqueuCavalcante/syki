@@ -5,23 +5,29 @@ namespace Syki.Back.Features.Academic.CreateTeacher;
 
 public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, SendResetPasswordTokenService sendService)
 {
-    public async Task<TeacherOut> Create(Guid institutionId, CreateTeacherIn data)
+    public async Task<OneOf<TeacherOut, SykiError>> Create(Guid institutionId, CreateTeacherIn data)
     {
         using var transaction = ctx.Database.BeginTransaction();
 
         var userIn = CreateUserIn.NewTeacher(institutionId, data.Name, data.Email);
-        var user = await service.Create(userIn);
+        var result = await service.Create(userIn);
 
-        var teacher = new SykiTeacher(user.Id, institutionId, data.Name);
-        ctx.Add(teacher);
+        return await result.Match<Task<OneOf<TeacherOut, SykiError>>>(
+            async user =>
+            {
+                var teacher = new SykiTeacher(user.Id, institutionId, data.Name);
+                ctx.Add(teacher);
 
-        ctx.Add(SykiTask.LinkOldNotifications(user.Id));
-        await ctx.SaveChangesAsync();
+                ctx.Add(SykiTask.LinkOldNotifications(user.Id));
+                await ctx.SaveChangesAsync();
 
-        await sendService.Send(new() { Email = user.Email });
+                await sendService.Send(new() { Email = user.Email });
 
-        transaction.Commit();
+                transaction.Commit();
 
-        return teacher.ToOut();
+                return teacher.ToOut();
+            },
+            error => Task.FromResult<OneOf<TeacherOut, SykiError>>(error)
+        );
     }
 }

@@ -5,13 +5,18 @@ namespace Syki.Tests.Features.Cross.CreatePendingUserRegister;
 public class CreatePendingUserRegisterUnitTests
 {
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidEmails))]
-    public void Should_not_create_a_user_register_with_invalid_email(string email)
+    public void Should_create_user_register_with_correct_data()
     {
-        // Arrange // Act
-        Action act = () => new UserRegister(email);
+        // Arrange
+        var email = TestData.Email;
+
+        // Act
+        var institution = new UserRegister(email);
 
         // Assert
-        act.Should().Throw<DomainException>().WithMessage(Throw.DE016);
+        institution.Id.Should().NotBeEmpty();
+        institution.Email.Should().Be(email);
+        institution.TrialStart.Should().BeNull();
+        institution.TrialEnd.Should().BeNull();
     }
 }

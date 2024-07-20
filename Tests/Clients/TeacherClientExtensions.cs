@@ -1,3 +1,4 @@
+using Syki.Front.Features.Teacher.GetTeacherClass;
 using Syki.Front.Features.Teacher.GetTeacherAgenda;
 using Syki.Front.Features.Teacher.GetTeacherClasses;
 using Syki.Front.Features.Teacher.GetTeacherInsights;
@@ -10,6 +11,12 @@ public static class TeacherClientExtensions
     {
         var client = new GetTeacherInsightsClient(http);
         return await client.Get();
+    }
+
+    public static async Task<TeacherClassOut> GetTeacherClass(this HttpClient http, Guid id)
+    {
+        var client = new GetTeacherClassClient(http);
+        return await client.Get(id);
     }
 
     public static async Task<List<TeacherClassOut>> GetTeacherClasses(this HttpClient http)

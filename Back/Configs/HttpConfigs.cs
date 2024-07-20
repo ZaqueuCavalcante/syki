@@ -11,7 +11,7 @@ public static class HttpConfigs
 
     public static void UseDomainExceptions(this IApplicationBuilder app)
     {
-        app.UseMiddleware<DomainExceptionMiddleware>();
+        app.UseMiddleware<ExceptionsMiddleware>();
     }
 
     public static void UseControllers(this IApplicationBuilder app)

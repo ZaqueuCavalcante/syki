@@ -18,7 +18,7 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
                 var teacher = new SykiTeacher(user.Id, institutionId, data.Name);
                 ctx.Add(teacher);
 
-                ctx.Add(SykiTask.LinkOldNotifications(user.Id));
+                ctx.Add(SykiTask.LinkOldNotifications(user.Id, institutionId));
                 await ctx.SaveChangesAsync();
 
                 await sendService.Send(new() { Email = user.Email });

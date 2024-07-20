@@ -39,8 +39,8 @@ public class SykiTask
         return new SykiTask(new SeedInstitutionData { InstitutionId = institutionId });
     }
 
-    public static SykiTask LinkOldNotifications(Guid userId)
+    public static SykiTask LinkOldNotifications(Guid userId, Guid institutionId)
     {
-        return new SykiTask(new LinkOldNotifications { UserId = userId });
+        return new SykiTask(new LinkOldNotifications { UserId = userId, InstitutionId = institutionId });
     }
 }

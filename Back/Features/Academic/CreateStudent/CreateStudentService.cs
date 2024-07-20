@@ -22,7 +22,7 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService service, 
                 var student = new SykiStudent(user.Id, institutionId, data.Name, data.CourseOfferingId);
                 ctx.Add(student);
 
-                ctx.Add(SykiTask.LinkOldNotifications(user.Id));
+                ctx.Add(SykiTask.LinkOldNotifications(user.Id, institutionId));
                 await ctx.SaveChangesAsync();
 
                 await sendService.Send(new() { Email = user.Email });

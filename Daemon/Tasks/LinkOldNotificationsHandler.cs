@@ -16,7 +16,7 @@ public class LinkOldNotificationsHandler(SykiDbContext ctx) : ISykiTaskHandler<L
             .ToListAsync();
 
         var notifications = await ctx.Notifications.AsNoTracking()
-            .Where(x => (x.Target == group || x.Target == UsersGroup.All) && x.Timeless && !userNotifications.Contains(x.Id))
+            .Where(x => x.InstitutionId == task.InstitutionId && (x.Target == group || x.Target == UsersGroup.All) && x.Timeless && !userNotifications.Contains(x.Id))
             .ToListAsync();
 
         foreach (var notification in notifications)

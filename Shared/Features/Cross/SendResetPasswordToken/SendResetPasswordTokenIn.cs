@@ -1,6 +1,3 @@
 namespace Syki.Shared;
 
-public class SendResetPasswordTokenIn
-{
-    public string Email { get; set; }
-}
+public record SendResetPasswordTokenIn(string Email);

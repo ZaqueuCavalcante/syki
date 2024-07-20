@@ -6,24 +6,15 @@ public class SendResetPasswordTokenRequestsExamples : IMultipleExamplesProvider<
     {
         yield return SwaggerExample.Create(
 			"Acadêmico",
-			new SendResetPasswordTokenIn
-			{
-				Email = "academico@syki.com"
-			}
+			new SendResetPasswordTokenIn("academico@syki.com")
 		);
         yield return SwaggerExample.Create(
 			"Professor",
-			new SendResetPasswordTokenIn
-			{
-				Email = "professor@syki.com"
-			}
+			new SendResetPasswordTokenIn("professor@syki.com")
 		);
         yield return SwaggerExample.Create(
 			"Aluno",
-			new SendResetPasswordTokenIn
-			{
-				Email = "aluno@syki.com"
-			}
+			new SendResetPasswordTokenIn("aluno@syki.com")
 		);
     }
 }

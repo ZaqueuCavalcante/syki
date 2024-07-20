@@ -3,29 +3,28 @@ using Syki.Back.Features.Cross.SendResetPasswordToken;
 
 namespace Syki.Back.Features.Academic.CreateStudent;
 
-public class CreateStudentService(SykiDbContext ctx, CreateUserService service, SendResetPasswordTokenService sendService)
+public class CreateStudentService(SykiDbContext ctx, CreateUserService createService, SendResetPasswordTokenService sendService)
 {
     public async Task<OneOf<StudentOut, SykiError>> Create(Guid institutionId, CreateStudentIn data)
     {
         using var transaction = ctx.Database.BeginTransaction();
 
-        var courseOfferingOk = await ctx.CourseOfferings
+        var courseOfferingExists = await ctx.CourseOfferings
             .AnyAsync(o => o.InstitutionId == institutionId && o.Id == data.CourseOfferingId);
-        if (!courseOfferingOk) return new CourseOfferingNotFound();
+        if (!courseOfferingExists) return new CourseOfferingNotFound();
 
         var userIn = CreateUserIn.NewStudent(institutionId, data.Name, data.Email);
-        var result = await service.Create(userIn);
+        var result = await createService.Create(userIn);
 
         return await result.Match<Task<OneOf<StudentOut, SykiError>>>(
             async user =>
             {
                 var student = new SykiStudent(user.Id, institutionId, data.Name, data.CourseOfferingId);
+
                 ctx.Add(student);
-
                 ctx.Add(SykiTask.LinkOldNotifications(user.Id, institutionId));
-                await ctx.SaveChangesAsync();
 
-                await sendService.Send(new() { Email = user.Email });
+                await sendService.Send(new(user.Email));
 
                 transaction.Commit();
 

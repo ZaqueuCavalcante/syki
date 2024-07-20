@@ -16,12 +16,11 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
             async user =>
             {
                 var teacher = new SykiTeacher(user.Id, institutionId, data.Name);
+
                 ctx.Add(teacher);
-
                 ctx.Add(SykiTask.LinkOldNotifications(user.Id, institutionId));
-                await ctx.SaveChangesAsync();
 
-                await sendService.Send(new() { Email = user.Email });
+                await sendService.Send(new(user.Email));
 
                 transaction.Commit();
 

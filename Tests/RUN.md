@@ -9,6 +9,7 @@ dotnet test --no-build --filter "FullyQualifiedName~E2ETests" --logger:"console;
 pwsh Tests/bin/Debug/net8.0/playwright.ps1 codegen http://localhost:6001
 
 dotnet test --logger:"console;verbosity=detailed"
+dotnet test --filter "FullyQualifiedName~IntegrationTests"
 dotnet test --logger:"console;verbosity=detailed" --filter "FullyQualifiedName~IntegrationTests"
 
 dotnet test --collect:"XPlat Code Coverage"

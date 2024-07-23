@@ -113,6 +113,21 @@ public class Class
             Discipline = Discipline.Name,
             Code = Discipline.Code,
             Period = Period,
+            Status = Status,
+            ExamGrades = ExamGrades.ConvertAll(h => h.ToOut()),
+            Schedules = Schedules.ConvertAll(h => h.ToOut()),
+            SchedulesInline = GetScheduleAsString(),
+        };
+    }
+
+    public TeacherClassesOut ToTeacherClassesOut()
+    {
+        return new TeacherClassesOut
+        {
+            Id = Id,
+            Discipline = Discipline.Name,
+            Code = Discipline.Code,
+            Period = Period,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
             SchedulesInline = GetScheduleAsString(),
         };

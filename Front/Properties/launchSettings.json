@@ -5,7 +5,7 @@
       "launchBrowser": true,
       "hotReloadEnabled": true,
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:6001",
+      "applicationUrl": "http://localhost:5002",
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -9,7 +9,7 @@
         <SykiDialogTitle Text="Nova Disciplina" />
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="@_form">
+        <MudForm @ref="@_form" Class="pt-1">
             <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" OnKeyDown="@Submit" />
             <MudSelect
                 Dense="true"

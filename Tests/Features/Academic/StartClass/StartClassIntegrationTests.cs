@@ -38,4 +38,17 @@ public partial class IntegrationTests : IntegrationTestBase
         examGrades.Count(x => x.ExamType == ExamType.Final).Should().Be(1);
         examGrades.Should().AllSatisfy(x => x.Note.Should().Be(0));
     }
+
+    [Test]
+    public async Task Should_not_start_not_founded_class()
+    {
+        // Arrange
+        var academicClient = await _back.LoggedAsAcademic();
+
+        // Act
+        var response = await academicClient.StartClass(Guid.NewGuid());
+
+        // Assert
+        await response.AssertBadRequest(new ClassNotFound());
+    }
 }

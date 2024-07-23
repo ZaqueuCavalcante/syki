@@ -6,7 +6,7 @@ dotnet test --filter "FullyQualifiedName~UnitTests"
 
 dotnet test --no-build --filter "FullyQualifiedName~E2ETests" --logger:"console;verbosity=detailed"
 
-pwsh Tests/bin/Debug/net8.0/playwright.ps1 codegen http://localhost:6001
+pwsh Tests/bin/Debug/net8.0/playwright.ps1 codegen http://localhost:5002
 
 dotnet test --logger:"console;verbosity=detailed"
 dotnet test --filter "FullyQualifiedName~IntegrationTests"

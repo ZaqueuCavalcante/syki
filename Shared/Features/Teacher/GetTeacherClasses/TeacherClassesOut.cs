@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class TeacherClassOut
+public class TeacherClassesOut
 {
     public Guid Id { get; set; }
     public string Discipline { get; set; }
@@ -12,7 +12,7 @@ public class TeacherClassOut
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;
-        return Id == ((TeacherClassOut)obj).Id;
+        return Id == ((TeacherClassesOut)obj).Id;
     }
 
     public override int GetHashCode()

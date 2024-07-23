@@ -38,7 +38,7 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<TeacherClassOut> _classes = [];
+    private List<TeacherClassesOut> _classes = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -47,7 +47,7 @@
         _loading = false;
     }
 
-    private Func<TeacherClassOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Period);
+    private Func<TeacherClassesOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Period);
 
     private string GetNotFoundMessage()
     {

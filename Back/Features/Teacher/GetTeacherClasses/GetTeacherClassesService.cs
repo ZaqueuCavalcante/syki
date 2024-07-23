@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Teacher.GetTeacherClasses;
 
 public class GetTeacherClassesService(SykiDbContext ctx)
 {
-    public async Task<List<TeacherClassOut>> Get(Guid institutionId, Guid userId)
+    public async Task<List<TeacherClassesOut>> Get(Guid institutionId, Guid userId)
     {
         var classes = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)
@@ -10,6 +10,6 @@ public class GetTeacherClassesService(SykiDbContext ctx)
             .Where(t => t.InstitutionId == institutionId && t.TeacherId == userId)
             .ToListAsync();
 
-        return classes.ConvertAll(t => t.ToTeacherClassOut());
+        return classes.ConvertAll(t => t.ToTeacherClassesOut());
     }
 }

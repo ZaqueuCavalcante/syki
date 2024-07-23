@@ -19,7 +19,7 @@ public static class TeacherClientExtensions
         return await client.Get(id);
     }
 
-    public static async Task<List<TeacherClassOut>> GetTeacherClasses(this HttpClient http)
+    public static async Task<List<TeacherClassesOut>> GetTeacherClasses(this HttpClient http)
     {
         var client = new GetTeacherClassesClient(http);
         return await client.Get();

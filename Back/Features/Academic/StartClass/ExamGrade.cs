@@ -19,4 +19,16 @@ public class ExamGrade
         ExamType = examType;
         Note = 0.00M;
     }
+
+    public ExamGradeOut ToOut()
+    {
+        return new ExamGradeOut
+        {
+            Id = Id,
+            ClassId = ClassId,
+            StudentId = StudentId,
+            ExamType = ExamType,
+            Note = Note,
+        };
+    }
 }

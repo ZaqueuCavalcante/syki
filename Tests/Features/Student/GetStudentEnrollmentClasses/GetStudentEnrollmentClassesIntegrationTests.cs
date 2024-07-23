@@ -9,9 +9,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _back.LoggedAsAcademic();
 
         var period = await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
-        var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
-        var end = DateOnly.FromDateTime(DateTime.Now.AddDays(2));
-        await client.CreateEnrollmentPeriod(period.Id, start, end);
+        await client.CreateEnrollmentPeriod(period.Id);
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var ads = await client.CreateCourse("ADS");
@@ -106,10 +104,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var co = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
 
         await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
-
-        var start = DateOnly.FromDateTime(DateTime.Now.AddDays(2));
-        var end = DateOnly.FromDateTime(DateTime.Now.AddDays(4));
-        await client.CreateEnrollmentPeriod(period.Id, start, end);
+        await client.CreateEnrollmentPeriod(period.Id, 2, 4);
 
         var student = await client.CreateStudent(co.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
@@ -134,10 +129,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
 
         await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
-
-        var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-4));
-        var end = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
-        await client.CreateEnrollmentPeriod(period.Id, start, end);
+        await client.CreateEnrollmentPeriod(period.Id, -4, -2);
 
         var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);

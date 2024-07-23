@@ -4,8 +4,8 @@ public class CreateUserService(SykiDbContext ctx, UserManager<SykiUser> userMana
 {
     public async Task<OneOf<UserOut, SykiError>> Create(CreateUserIn data)
     {
-        var institutionOk = await ctx.Institutions.AnyAsync(c => c.Id == data.InstitutionId);
-        if (!institutionOk) return new InstitutionNotFound();
+        var institutionExists = await ctx.Institutions.AnyAsync(c => c.Id == data.InstitutionId);
+        if (!institutionExists) return new InstitutionNotFound();
 
         if (!data.Email.IsValidEmail()) return new InvalidEmail();
 

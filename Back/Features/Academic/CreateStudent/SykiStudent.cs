@@ -10,7 +10,7 @@ public class SykiStudent
     public SykiUser User { get; }
     public Guid CourseOfferingId { get; }
     public CourseOffering CourseOffering { get; set; }
-    public string Name { get; private set; }
+    public string Name { get; }
     public string EnrollmentCode { get; }
 
     public SykiStudent(

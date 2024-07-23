@@ -9,9 +9,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _back.LoggedAsAcademic();
 
         var period = await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
-        var start = DateOnly.FromDateTime(DateTime.Now.AddDays(-2));
-        var end = DateOnly.FromDateTime(DateTime.Now.AddDays(2));
-        await client.CreateEnrollmentPeriod(period.Id, start, end);
+        await client.CreateEnrollmentPeriod(period.Id);
 
         var ads = await client.CreateCourse("ADS");
         var direito = await client.CreateCourse("Direito");

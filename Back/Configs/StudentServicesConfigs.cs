@@ -5,6 +5,7 @@ using Syki.Back.Features.Student.CreateStudentEnrollment;
 using Syki.Back.Features.Student.GetCurrentEnrollmentPeriod;
 
 using Syki.Back.Features.Student.GetStudentEnrollmentClasses;
+using Syki.Back.Features.Student.GetStudentExamGrades;
 
 namespace Syki.Back.Configs;
 
@@ -18,5 +19,6 @@ public static class StudentServicesConfigs
         services.AddScoped<GetStudentDisciplinesService>();
         services.AddScoped<GetStudentEnrollmentClassesService>();
         services.AddScoped<GetStudentInsightsService>();
+        services.AddScoped<GetStudentExamGradesService>();
     }
 }

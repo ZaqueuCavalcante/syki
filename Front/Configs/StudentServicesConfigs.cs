@@ -10,5 +10,6 @@ public static class StudentServicesConfigs
         builder.Services.AddScoped<GetStudentDisciplinesClient>();
         builder.Services.AddScoped<GetStudentEnrollmentClassesClient>();
         builder.Services.AddScoped<GetStudentInsightsClient>();
+        builder.Services.AddScoped<GetStudentExamGradesClient>();
     }
 }

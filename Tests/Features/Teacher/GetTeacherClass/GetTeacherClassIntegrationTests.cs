@@ -3,36 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests : IntegrationTestBase
 {
     [Test]
-    public async Task Should_return_teacher_onE_erollment_period_class()
-    {
-        // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
-
-        var period = await academicClient.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
-        await academicClient.CreateEnrollmentPeriod(period.Id);
-
-        var ads = await academicClient.CreateCourse("ADS");
-        var math = await academicClient.CreateDiscipline("Matemática Discreta", [ads.Id]);
-
-        var chico = await academicClient.CreateTeacher("Chico");
-        var mathClass = await academicClient.CreateClass(math.Id, chico.Id, period.Id, 40, [ new(Day.Segunda, Hour.H07_00, Hour.H10_00) ]);
-        
-        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
-
-        // Act
-        var @class = await teacherClient.GetTeacherClass(mathClass.Id);
-
-        // Assert
-        @class.Discipline.Should().Be(math.Name);
-        @class.Code.Should().Be(math.Code);
-        @class.Period.Should().Be(period.Id);
-        @class.Status.Should().Be(ClassStatus.OnEnrollmentPeriod);
-        @class.Schedules.Should().HaveCount(1);
-        @class.ExamGrades.Should().HaveCount(0);
-    }
-
-    [Test]
-    public async Task Should_return_teacher_started_class()
+    public async Task Should_return_teacher_class()
     {
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
@@ -53,8 +24,6 @@ public partial class IntegrationTests : IntegrationTestBase
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([ mathClass.Id ]);
 
-        await academicClient.StartClass(mathClass.Id);
-        
         var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Act
@@ -64,14 +33,14 @@ public partial class IntegrationTests : IntegrationTestBase
         @class.Discipline.Should().Be(math.Name);
         @class.Code.Should().Be(math.Code);
         @class.Period.Should().Be(period.Id);
-        @class.Status.Should().Be(ClassStatus.Started);
-        @class.Schedules.Should().HaveCount(1);
+        @class.Status.Should().Be(ClassStatus.OnEnrollmentPeriod);
 
-        @class.ExamGrades.Should().HaveCount(3);
-        @class.ExamGrades.Should().AllSatisfy(x => x.StudentId.Should().Be(student.Id));
-        @class.ExamGrades.Count(x => x.ExamType == ExamType.N1).Should().Be(1);
-        @class.ExamGrades.Count(x => x.ExamType == ExamType.N2).Should().Be(1);
-        @class.ExamGrades.Count(x => x.ExamType == ExamType.Final).Should().Be(1);
-        @class.ExamGrades.Should().AllSatisfy(x => x.Note.Should().Be(0));
+        @class.Students.Should().HaveCount(1);
+        var examGrades = @class.Students.First().ExamGrades;
+        examGrades.Should().AllSatisfy(x => x.StudentId.Should().Be(student.Id));
+        examGrades.Count(x => x.ExamType == ExamType.N1).Should().Be(1);
+        examGrades.Count(x => x.ExamType == ExamType.N2).Should().Be(1);
+        examGrades.Count(x => x.ExamType == ExamType.Final).Should().Be(1);
+        examGrades.Should().AllSatisfy(x => x.Note.Should().Be(0));
     }
 }

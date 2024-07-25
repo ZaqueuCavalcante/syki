@@ -1,3 +1,5 @@
+using Syki.Back.Features.Academic.StartClass;
+
 namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
 public class CreateStudentEnrollmentService(SykiDbContext ctx)
@@ -9,13 +11,16 @@ public class CreateStudentEnrollmentService(SykiDbContext ctx)
             .Select(t => t.Id)
             .ToListAsync();
 
-        var classes = await ctx.ClassesStudents.Where(x => x.SykiStudentId == userId).ToListAsync();
-        ctx.RemoveRange(classes);
+        var classesStudents = await ctx.ClassesStudents.Where(x => x.SykiStudentId == userId).ToListAsync();
+        ctx.RemoveRange(classesStudents);
+        ids.ForEach(id => ctx.Add(new ClassStudent(id, userId, StudentDisciplineStatus.Matriculado)));
 
-        foreach (var id in ids)
+        var examGrades = await ctx.ExamGrades.Where(x => x.StudentId == userId).ToListAsync();
+        ctx.RemoveRange(examGrades);
+        ids.ForEach(id =>
         {
-            ctx.Add(new ClassStudent(id, userId, StudentDisciplineStatus.Matriculado));
-        }
+            Enum.GetValues<ExamType>().ToList().ForEach(type => ctx.Add(new ExamGrade(id, userId, type)));
+        });
 
         await ctx.SaveChangesAsync();
     }

@@ -79,13 +79,6 @@ public class Class
 
     public void Start()
     {
-        ExamGrades = [];
-        foreach (var student in Students)
-        {
-            ExamGrades.Add(new(Id, student.Id, ExamType.N1));
-            ExamGrades.Add(new(Id, student.Id, ExamType.N2));
-            ExamGrades.Add(new(Id, student.Id, ExamType.Final));
-        }
         Status = ClassStatus.Started;
     }
 
@@ -107,6 +100,14 @@ public class Class
 
     public TeacherClassOut ToTeacherClassOut()
     {
+        var examGrades = ExamGrades.ConvertAll(h => h.ToOut());
+        var students = Students.ConvertAll(x => x.ToTeacherClassStudentOut());
+
+        students.ForEach(s =>
+        {
+            s.ExamGrades = examGrades.Where(x => x.StudentId == s.Id).OrderBy(x => x.ExamType).ToList();
+        });
+
         return new TeacherClassOut
         {
             Id = Id,
@@ -114,9 +115,7 @@ public class Class
             Code = Discipline.Code,
             Period = Period,
             Status = Status,
-            ExamGrades = ExamGrades.ConvertAll(h => h.ToOut()),
-            Schedules = Schedules.ConvertAll(h => h.ToOut()),
-            SchedulesInline = GetScheduleAsString(),
+            Students = students,
         };
     }
 

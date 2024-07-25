@@ -20,17 +20,23 @@
                 <PropertyColumn Property="x => x.Discipline" Title="Disciplina" />
                 <PropertyColumn Property="x => x.Period" Title="Período" />
                 <PropertyColumn Property="x => x.SchedulesInline" Title="Horário" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToClass(context.Item))" />
+                    </CellTemplate>
+                </TemplateColumn>
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="TeacherClassOut" />
+                <SykiDataGridPager T="TeacherClassesOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
 </MudContainer>
 
+@inject NavigationManager Nav
 @inject IDialogService DialogService
 @inject GetTeacherClassesClient GetTeacherClassesClient
 
@@ -45,6 +51,12 @@
         _loading = true;
         _classes = await GetTeacherClassesClient.Get();
         _loading = false;
+    }
+
+    private void GoToClass(TeacherClassesOut item)
+    {
+        Console.WriteLine(item.Id);
+        Nav.NavigateTo($"/teacher/classes/{item.Id}");
     }
 
     private Func<TeacherClassesOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Period);

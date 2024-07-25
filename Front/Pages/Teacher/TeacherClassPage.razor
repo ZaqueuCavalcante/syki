@@ -1,0 +1,65 @@
+﻿@using Syki.Front.Components.Custom
+@using Syki.Front.Features.Academic.CreateClass
+
+@namespace Syki.Front.Pages.Teacher
+
+@page "/teacher/classes/{id:guid}"
+@attribute [Authorize(Roles = "Teacher")]
+
+<PageTitle>Turma</PageTitle>
+
+<MudContainer>
+    <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="@($"{_class.Discipline} ({_class.Code}) - {_class.Period}")" />
+    <MudContainer Class="mb-8">
+        <MudDataGrid T="TeacherClassStudentOut" Class="pa-4" Items="@GetStudents()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome" />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Name" Title="Nome" />
+                <PropertyColumn Property="x => x.GetNote(ExamType.N1)" Title="N1" />
+                <PropertyColumn Property="x => x.GetNote(ExamType.N2)" Title="N2" />
+                <PropertyColumn Property="x => x.GetNote(ExamType.Final)" Title="N3" />
+                <PropertyColumn Property="x => x.AverageNote.Format()" Title="Média" />
+            </Columns>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiDataGridPager T="TeacherClassStudentOut" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject IDialogService DialogService
+@inject GetTeacherClassClient Client
+
+@code
+{
+	[Parameter]
+	public Guid Id { get; set; }
+
+    private bool _loading;
+    private string _searchString;
+    private TeacherClassOut _class = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _class = await Client.Get(Id);
+        _loading = false;
+    }
+
+    private List<TeacherClassStudentOut> GetStudents()
+    {
+        return _class.Students.OrderBy(x => x.Name).ToList();
+    }
+
+    private Func<TeacherClassStudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem alunos matriculados ainda." : "Nenhum aluno encontrado.";
+    }
+}

@@ -38,4 +38,14 @@ public class SykiStudent
             EnrollmentCode = EnrollmentCode,
         };
     }
+
+    public TeacherClassStudentOut ToTeacherClassStudentOut()
+    {
+        return new TeacherClassStudentOut
+        {
+            Id = Id,
+            Name = Name,
+            ExamGrades = [],
+        };
+    }
 }

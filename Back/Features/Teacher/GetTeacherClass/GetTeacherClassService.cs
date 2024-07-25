@@ -6,7 +6,7 @@ public class GetTeacherClassService(SykiDbContext ctx)
     {
         var @class = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)
-            .Include(t => t.Schedules)
+            .Include(t => t.Students)
             .Include(t => t.ExamGrades)
             .Where(t => t.InstitutionId == institutionId && t.TeacherId == userId && t.Id == id)
             .FirstOrDefaultAsync();

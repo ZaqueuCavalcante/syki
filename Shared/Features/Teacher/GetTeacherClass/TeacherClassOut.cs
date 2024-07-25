@@ -7,9 +7,7 @@ public class TeacherClassOut
     public string Code { get; set; }
     public string Period { get; set; }
     public ClassStatus Status { get; set; }
-    public List<ExamGradeOut> ExamGrades { get; set; }
-    public List<ScheduleOut> Schedules { get; set; }
-    public string SchedulesInline { get; set; }
+    public List<TeacherClassStudentOut> Students { get; set; } = [];
 
     public override bool Equals(object? obj)
     {

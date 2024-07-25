@@ -40,7 +40,7 @@ public partial class IntegrationTests : IntegrationTestBase
         examGrades.Should().AllSatisfy(x => x.StudentId.Should().Be(student.Id));
         examGrades.Count(x => x.ExamType == ExamType.N1).Should().Be(1);
         examGrades.Count(x => x.ExamType == ExamType.N2).Should().Be(1);
-        examGrades.Count(x => x.ExamType == ExamType.Final).Should().Be(1);
+        examGrades.Count(x => x.ExamType == ExamType.N3).Should().Be(1);
         examGrades.Should().AllSatisfy(x => x.Note.Should().Be(0));
     }
 }

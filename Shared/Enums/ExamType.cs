@@ -10,6 +10,6 @@ public enum ExamType
     [Description("N2")]
     N2,
 
-    [Description("Final")]
-    Final,
+    [Description("N3")]
+    N3,
 }

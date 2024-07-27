@@ -1,6 +1,6 @@
 using Syki.Back.Features.Academic.CreateStudent;
 
-namespace Syki.Back.Features.Academic.StartClass;
+namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
 public class ExamGradeConfig : IEntityTypeConfiguration<ExamGrade>
 {

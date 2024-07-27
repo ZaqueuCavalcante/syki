@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Syki.Back.Features.Academic.CreateClass;
-using Syki.Back.Features.Academic.StartClass;
+using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Tests.Base;
 

@@ -2,7 +2,7 @@ using Syki.Back.Features.Cross.SendResetPasswordToken;
 
 namespace Syki.Tests.Integration;
 
-public partial class IntegrationTests : IntegrationTestBase
+public partial class IntegrationTests
 {
     [Test]
     public async Task Should_send_the_reset_password_token()

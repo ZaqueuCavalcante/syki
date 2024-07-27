@@ -1,4 +1,4 @@
-using Syki.Back.Features.Academic.StartClass;
+using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Tests.Extensions;
 

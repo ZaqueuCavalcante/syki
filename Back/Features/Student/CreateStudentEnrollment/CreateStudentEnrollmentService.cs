@@ -1,5 +1,3 @@
-using Syki.Back.Features.Academic.StartClass;
-
 namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
 public class CreateStudentEnrollmentService(SykiDbContext ctx)

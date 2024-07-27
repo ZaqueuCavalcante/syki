@@ -1,6 +1,6 @@
 namespace Syki.Tests.Integration;
 
-public partial class IntegrationTests : IntegrationTestBase
+public partial class IntegrationTests
 {
     [Test]
     public async Task Should_login_when_supply_right_mfa_token()

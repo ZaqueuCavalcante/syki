@@ -1,6 +1,6 @@
 namespace Syki.Tests.Integration;
 
-public partial class IntegrationTests : IntegrationTestBase
+public partial class IntegrationTests
 {
     [Test]
     public async Task Should_create_student_with_course_offering()

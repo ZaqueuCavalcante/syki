@@ -22,7 +22,7 @@ public partial class IntegrationTests
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
-        var teacherResponse = await teacherClient.GetUserNotifications();
+        var teacherResponse = await teacherClient.Cross.GetUserNotifications();
         var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
@@ -50,7 +50,7 @@ public partial class IntegrationTests
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
-        var teacherResponse = await teacherClient.GetUserNotifications();
+        var teacherResponse = await teacherClient.Cross.GetUserNotifications();
         var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
@@ -78,7 +78,7 @@ public partial class IntegrationTests
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
-        var teacherResponse = await teacherClient.GetUserNotifications();
+        var teacherResponse = await teacherClient.Cross.GetUserNotifications();
         var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
@@ -108,7 +108,7 @@ public partial class IntegrationTests
         await _back.AwaitTasksProcessing();
 
         // Act
-        var teacherResponse = await teacherClient.GetUserNotifications();
+        var teacherResponse = await teacherClient.Cross.GetUserNotifications();
         var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
@@ -138,7 +138,7 @@ public partial class IntegrationTests
         await _back.AwaitTasksProcessing();
 
         // Act
-        var teacherResponse = await teacherClient.GetUserNotifications();
+        var teacherResponse = await teacherClient.Cross.GetUserNotifications();
         var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
@@ -168,7 +168,7 @@ public partial class IntegrationTests
         await _back.AwaitTasksProcessing();
 
         // Act
-        var teacherResponse = await teacherClient.GetUserNotifications();
+        var teacherResponse = await teacherClient.Cross.GetUserNotifications();
         var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert

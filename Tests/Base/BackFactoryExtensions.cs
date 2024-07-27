@@ -51,11 +51,11 @@ public static class BackFactoryExtensions
         await userManager.AddToRoleAsync(user, userIn.Role.ToString());
     }
 
-    public static async Task<HttpClient> LoggedAsAdm(this BackFactory factory)
+    public static async Task<AdmHttpClient> LoggedAsAdm(this BackFactory factory)
     {
         var client = factory.GetClient();
         await client.Login("adm@syki.com", "Test@123");
-        return client;
+        return new(client);
     }
 
     public static async Task<StudentHttpClient> LoggedAsStudent(this BackFactory factory, string email)

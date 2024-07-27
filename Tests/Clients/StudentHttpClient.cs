@@ -6,7 +6,7 @@ using Syki.Front.Features.Student.CreateStudentEnrollment;
 using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 using Syki.Front.Features.Student.GetStudentEnrollmentClasses;
 
-namespace Syki.Tests.Base;
+namespace Syki.Tests.Clients;
 
 public class StudentHttpClient(HttpClient http)
 {

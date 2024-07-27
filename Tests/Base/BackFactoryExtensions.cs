@@ -19,12 +19,12 @@ public static class BackFactoryExtensions
         return register?.Id.ToString();
     }
 
-    public static async Task<HttpClient> LoggedAsAcademic(this BackFactory factory)
+    public static async Task<AcademicHttpClient> LoggedAsAcademic(this BackFactory factory)
     {
         var client = factory.GetClient();
         var user = await client.RegisterUser(factory);
         await client.Login(user.Email, user.Password);
-        return client;
+        return new(client);
     }
 
     public static async Task RegisterAdm(this BackFactory factory)

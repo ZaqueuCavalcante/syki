@@ -9,7 +9,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.GetMfaKey();
+        var response = await client.Cross.GetMfaKey();
 
         // Assert
         response.Key.Should().HaveLength(32);
@@ -22,9 +22,9 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response00 = await client.GetMfaKey();
-        var response01 = await client.GetMfaKey();
-        var response02 = await client.GetMfaKey();
+        var response00 = await client.Cross.GetMfaKey();
+        var response01 = await client.Cross.GetMfaKey();
+        var response02 = await client.Cross.GetMfaKey();
 
         // Assert
         response00.Key.Should().HaveLength(32);

@@ -23,7 +23,7 @@ public partial class IntegrationTests
 
         // Act
         var teacherResponse = await teacherClient.GetUserNotifications();
-        var studentResponse = await studentClient.GetUserNotifications();
+        var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
         teacherResponse.Count.Should().Be(0);
@@ -51,7 +51,7 @@ public partial class IntegrationTests
 
         // Act
         var teacherResponse = await teacherClient.GetUserNotifications();
-        var studentResponse = await studentClient.GetUserNotifications();
+        var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
         teacherResponse.Count.Should().Be(1);
@@ -79,7 +79,7 @@ public partial class IntegrationTests
 
         // Act
         var teacherResponse = await teacherClient.GetUserNotifications();
-        var studentResponse = await studentClient.GetUserNotifications();
+        var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
         teacherResponse.Count.Should().Be(1);
@@ -109,7 +109,7 @@ public partial class IntegrationTests
 
         // Act
         var teacherResponse = await teacherClient.GetUserNotifications();
-        var studentResponse = await studentClient.GetUserNotifications();
+        var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
         teacherResponse.Count.Should().Be(0);
@@ -139,7 +139,7 @@ public partial class IntegrationTests
 
         // Act
         var teacherResponse = await teacherClient.GetUserNotifications();
-        var studentResponse = await studentClient.GetUserNotifications();
+        var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
         teacherResponse.Count.Should().Be(1);
@@ -169,7 +169,7 @@ public partial class IntegrationTests
 
         // Act
         var teacherResponse = await teacherClient.GetUserNotifications();
-        var studentResponse = await studentClient.GetUserNotifications();
+        var studentResponse = await studentClient.Cross.GetUserNotifications();
 
         // Assert
         teacherResponse.Count.Should().Be(1);

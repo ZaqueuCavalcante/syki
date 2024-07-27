@@ -58,7 +58,7 @@ public static class BackFactoryExtensions
         return client;
     }
 
-    public static async Task<HttpClient> LoggedAsStudent(this BackFactory factory, string email)
+    public static async Task<StudentHttpClient> LoggedAsStudent(this BackFactory factory, string email)
     {
         var client = factory.GetClient();
 
@@ -66,7 +66,7 @@ public static class BackFactoryExtensions
         var password = await client.ResetPassword(token!);
         await client.Login(email, password);
     
-        return client;
+        return new(client);
     }
 
     public static async Task<HttpClient> LoggedAsTeacher(this BackFactory factory, string email)

@@ -19,7 +19,7 @@ public class CreateStudentEnrollmentService(SykiDbContext ctx)
         ctx.RemoveRange(examGrades);
         ids.ForEach(id =>
         {
-            Enum.GetValues<ExamType>().ToList().ForEach(type => ctx.Add(new ExamGrade(id, userId, type)));
+            Enum.GetValues<ExamType>().ToList().ForEach(type => ctx.Add(new ExamGrade(id, userId, type, 0.00M)));
         });
 
         await ctx.SaveChangesAsync();

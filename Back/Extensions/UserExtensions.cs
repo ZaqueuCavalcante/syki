@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Syki.Back.Features.Academic.StartClass;
 using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Extensions;
@@ -41,5 +42,11 @@ public static class UserExtensions
             path != "/reset-password" &&
             path != "/users" &&
             path != "/reset-password-token";
+    }
+
+    public static decimal GetAverageNote(this IEnumerable<ExamGrade> examGrades)
+    {
+        var average = examGrades.Select(x => x.Note).OrderDescending().Take(2).Average();
+        return Math.Round(average, 2);
     }
 }

@@ -1,3 +1,4 @@
+using Syki.Back.Features.Teacher.AddExamGradeNote;
 using Syki.Back.Features.Teacher.GetTeacherClass;
 using Syki.Back.Features.Teacher.GetTeacherAgenda;
 using Syki.Back.Features.Teacher.GetTeacherClasses;
@@ -13,5 +14,6 @@ public static class TeacherServicesConfigs
         services.AddScoped<GetTeacherClassService>();
         services.AddScoped<GetTeacherClassesService>();
         services.AddScoped<GetTeacherInsightsService>();
+        services.AddScoped<AddExamGradeNoteService>();
     }
 }

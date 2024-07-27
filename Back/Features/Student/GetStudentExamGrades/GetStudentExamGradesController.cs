@@ -8,7 +8,7 @@ public class GetStudentExamGradesController(GetStudentExamGradesService service)
     [HttpGet("student/exam-grades")]
     public async Task<IActionResult> Get()
     {
-        var examGrades = await service.Get(User.Id(), User.GetCourseCurriculumId());
+        var examGrades = await service.Get(User.Id());
 
         return Ok(examGrades);
     }

@@ -11,18 +11,24 @@ public class ExamGrade
     public ExamGrade(
         Guid classId,
         Guid studentId,
-        ExamType examType
+        ExamType examType,
+        decimal note
     ) {
         Id = Guid.NewGuid();
         ClassId = classId;
         StudentId = studentId;
         ExamType = examType;
-        Note = 0.00M;
+        Note = note;
+    }
+
+    public void AddNote(decimal note)
+    {
+        Note = note;
     }
 
     public ExamGradeOut ToOut()
     {
-        return new ExamGradeOut
+        return new()
         {
             Id = Id,
             ClassId = ClassId,

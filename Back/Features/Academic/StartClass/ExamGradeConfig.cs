@@ -18,6 +18,6 @@ public class ExamGradeConfig : IEntityTypeConfiguration<ExamGrade>
             .WithMany()
             .HasForeignKey(t => t.StudentId);
 
-        examGrade.Property(x => x.Note).HasColumnType("NUMERIC(4, 2)");
+        examGrade.Property(x => x.Note).HasPrecision(4, 2);
     }
 }

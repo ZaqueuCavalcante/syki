@@ -8,5 +8,6 @@ public static class TeacherServicesConfigs
         builder.Services.AddScoped<GetTeacherAgendaClient>();
         builder.Services.AddScoped<GetTeacherClassesClient>();
         builder.Services.AddScoped<GetTeacherInsightsClient>();
+        builder.Services.AddScoped<AddExamGradeNoteClient>();
     }
 }

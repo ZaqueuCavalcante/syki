@@ -1,0 +1,30 @@
+﻿@namespace Syki.Front.Features.Teacher.AddExamGradeNote
+        
+<MudStack Row="true" AlignItems="AlignItems.Center" Class="mb-3">
+    <MudText>@(GetLabel())</MudText>
+    <MudIcon Icon="@Icons.Material.Filled.ArrowRightAlt" />
+    <MudNumericField
+        T="decimal"
+        @bind-Value="@Data.Note"
+        Max="10.00M"
+        MaxLength="4"
+        Min="0"
+        Format="N2"
+        HideSpinButtons="true"
+        Variant="Variant.Outlined"
+        Margin="Margin.Dense"/>
+</MudStack>
+
+@code
+{
+    [Parameter]
+    public ExamGradeOut Data { get; set; }
+    
+    [Parameter]
+    public EventCallback<ExamGradeOut> DataChanged { get; set; }
+    
+    private string GetLabel()
+    {
+        return $"Nota {Data.ExamType}";
+    }
+}

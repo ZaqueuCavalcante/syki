@@ -32,7 +32,7 @@
 
         var result = await dialog.Result;
 
-        if (result.Canceled) return;
+        if (result!.Canceled) return;
         
         await _grid.Reload(); // TODO: nao ta recarregando
     }

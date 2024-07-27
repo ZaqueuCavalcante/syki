@@ -72,7 +72,7 @@ public class Class
         return new SykiSuccess();
     }
 
-    public string GetScheduleAsString()
+    private string GetScheduleAsString()
     {
         return string.Join(" | ", Schedules.OrderBy(h => h.Day).ThenBy(h => h.StartAt).ToList().ConvertAll(h => h.ToString()));
     }
@@ -100,15 +100,15 @@ public class Class
 
     public TeacherClassOut ToTeacherClassOut()
     {
-        var examGrades = ExamGrades.ConvertAll(h => h.ToOut());
         var students = Students.ConvertAll(x => x.ToTeacherClassStudentOut());
-
         students.ForEach(s =>
         {
-            s.ExamGrades = examGrades.Where(x => x.StudentId == s.Id).OrderBy(x => x.ExamType).ToList();
+            var studentExamGrades = ExamGrades.Where(g => g.StudentId == s.Id).ToList();
+            s.AverageNote = studentExamGrades.GetAverageNote();
+            s.ExamGrades = studentExamGrades.OrderBy(x => x.ExamType).Select(g => g.ToOut()).ToList();
         });
 
-        return new TeacherClassOut
+        return new()
         {
             Id = Id,
             Discipline = Discipline.Name,

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Syki.Back.Features.Academic.CreateClass;
+using Syki.Back.Features.Academic.StartClass;
 
 namespace Syki.Tests.Base;
 
@@ -11,7 +12,7 @@ public static class TestData
     {
         foreach (var name in new List<string>() { "Keu", "Maju", "Maria", "Naldinho Silva", })
         {
-            yield return new object[] { name };
+            yield return [name];
         }
     }
 
@@ -19,7 +20,7 @@ public static class TestData
     {
         foreach (var name in new List<string>() { null, "", "a", "42", " ", "  ", "     ", "JP", })
         {
-            yield return new object[] { name };
+            yield return [name];
         }
     }
 
@@ -29,7 +30,7 @@ public static class TestData
         var random = Guid.NewGuid().ToString();
         foreach (var name in new List<string>() { null, "", "a", "42", " ", "  ", "     ", "JP", empty, random, })
         {
-            yield return new object[] { name };
+            yield return [name];
         }
     }
 
@@ -37,7 +38,7 @@ public static class TestData
     {
         foreach (var id in new List<string>() { null, "", "   ", "lalala", "1969.1", "1970.3", "1970.0", "1971.90", "2001", "202", "2023.9", "2070.0", })
         {
-            yield return new object[] { id };
+            yield return [id];
         }
     }
 
@@ -45,7 +46,7 @@ public static class TestData
     {
         foreach (var id in new List<string>() { "1970.1", "1970.2", "2023.1", "2023.2", "2070.1", "2070.2", })
         {
-            yield return new object[] { id };
+            yield return [id];
         }
     }
 
@@ -74,7 +75,7 @@ public static class TestData
     {
         foreach (var email in InvalidEmailsList)
         {
-            yield return new object[] { email };
+            yield return [email];
         }
     }
 
@@ -92,7 +93,7 @@ public static class TestData
             "5816811681816",
         })
         {
-            yield return new object[] { role };
+            yield return [role];
         }
     }
 
@@ -109,7 +110,7 @@ public static class TestData
             Guid.NewGuid().ToHashCode().ToString()[..6]
         })
         {
-            yield return new object[] { role };
+            yield return [role];
         }
     }
 
@@ -125,7 +126,7 @@ public static class TestData
             ("AspNetRoleClaims", "asp_net_role_claims"),
         })
         {
-            yield return new object[] { name };
+            yield return [name];
         }
     }
 
@@ -138,7 +139,7 @@ public static class TestData
             (Guid.Parse("439f1f9d-5be0-4456-8364-a2a2391953bb"), 4391_9504),
         })
         {
-            yield return new object[] { name };
+            yield return [name];
         }
     }
 
@@ -156,7 +157,7 @@ public static class TestData
             ("18.297.767/0001-90", "18297767000190"),
         })
         {
-            yield return new object[] { text };
+            yield return [text];
         }
     }
 
@@ -185,7 +186,7 @@ public static class TestData
             ("6841861", "68416", "84"),
         })
         {
-            yield return new object[] { text };
+            yield return [text];
         }
     }
 
@@ -211,7 +212,7 @@ public static class TestData
             ("6841861", "68416", "68419"),
         })
         {
-            yield return new object[] { text };
+            yield return [text];
         }
     }
 
@@ -228,7 +229,7 @@ public static class TestData
             ("/reset-password-token", false),
         })
         {
-            yield return new object[] { text };
+            yield return [text];
         }
     }
 
@@ -243,7 +244,7 @@ public static class TestData
             (153.87M, "153.87"),
         })
         {
-            yield return new object[] { text };
+            yield return [text];
         }
     }
 
@@ -260,7 +261,7 @@ public static class TestData
             (CourseType.PosDoutorado, "Pós-Doutorado"),
         })
         {
-            yield return new object[] { text };
+            yield return [text];
         }
     }
 
@@ -274,7 +275,7 @@ public static class TestData
             (Shift.Vespertino, false),
         })
         {
-            yield return new object[] { text };
+            yield return [text];
         }
     }
 
@@ -309,7 +310,7 @@ public static class TestData
             },
         })
         {
-            yield return new object[] { list };
+            yield return [list];
         }
     }
 
@@ -336,7 +337,46 @@ public static class TestData
             },
         })
         {
-            yield return new object[] { list };
+            yield return [list];
         }
+    }
+
+    public static IEnumerable<object[]> ExamGrades()
+    {
+        foreach (var list in new List<(List<ExamGrade>, decimal)>() 
+        {
+            (GetExamGradesList(0.00M, 0.00M, 0.00M), 0.00M),
+
+            (GetExamGradesList(1.23M, 0.00M, 0.00M), 0.62M),
+            (GetExamGradesList(0.00M, 1.23M, 0.00M), 0.62M),
+            (GetExamGradesList(0.00M, 0.00M, 1.23M), 0.62M),
+            
+            (GetExamGradesList(1.23M, 1.23M, 0.00M), 1.23M),
+            (GetExamGradesList(1.23M, 0.00M, 1.23M), 1.23M),
+            (GetExamGradesList(0.00M, 1.23M, 1.23M), 1.23M),
+
+            (GetExamGradesList(1.00M, 2.00M, 3.00M), 2.50M),
+            (GetExamGradesList(3.00M, 2.00M, 1.00M), 2.50M),
+
+            (GetExamGradesList(1.23M, 4.56M, 7.89M), 6.22M),
+            
+            (GetExamGradesList(10.00M, 10.00M, 00.00M), 10.00M),
+            (GetExamGradesList(10.00M, 00.00M, 10.00M), 10.00M),
+            (GetExamGradesList(00.00M, 10.00M, 10.00M), 10.00M),
+
+            (GetExamGradesList(10.00M, 10.00M, 10.00M), 10.00M),
+        })
+        {
+            yield return [list];
+        }
+    }
+
+    private static List<ExamGrade> GetExamGradesList(decimal n1, decimal n2, decimal n3)
+    {
+        return [
+            new ExamGrade(Guid.Empty, Guid.Empty, ExamType.N1, n1),
+            new ExamGrade(Guid.Empty, Guid.Empty, ExamType.N2, n2),
+            new ExamGrade(Guid.Empty, Guid.Empty, ExamType.N3, n3)
+        ];
     }
 }

@@ -9,7 +9,6 @@ namespace Syki.Back.Features.Academic.StartClass;
 public class StartClassController(StartClassService service) : ControllerBase
 {
     [HttpPut("academic/classes/{id}/start")]
-    [ProducesResponseType(204)]
     public async Task<IActionResult> Start([FromRoute] Guid id)
     {
         var result = await service.Start(User.InstitutionId(), id);

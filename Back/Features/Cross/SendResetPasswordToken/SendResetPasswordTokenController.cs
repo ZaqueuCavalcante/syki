@@ -14,8 +14,8 @@ public class SendResetPasswordTokenController(SendResetPasswordTokenService serv
     [SwaggerResponseExample(400, typeof(SendResetPasswordTokenErrorsExamples))]
     public async Task<IActionResult> Reset([FromBody] SendResetPasswordTokenIn data)
     {
-        await service.Send(data);
+        var result = await service.Send(data);
 
-        return Ok();
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

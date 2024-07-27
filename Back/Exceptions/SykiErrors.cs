@@ -141,3 +141,8 @@ public class ClassNotFound : SykiError
 {
     public override string Message { get; set; } = "Turma não encontrada.";
 }
+
+public class TeacherIsNotTheClassLeader : SykiError
+{
+    public override string Message { get; set; } = "O professor não é o titular da classe.";
+}

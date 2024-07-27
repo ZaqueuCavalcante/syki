@@ -64,7 +64,7 @@
 
         var result = await dialog.Result;
 
-        if (result.Canceled) return;
+        if (result!.Canceled) return;
         
         await GetNotifications();
     }

@@ -58,6 +58,7 @@ global using Syki.Front.Features.Teacher.GetTeacherClass;
 global using Syki.Front.Features.Teacher.GetTeacherAgenda;
 global using Syki.Front.Features.Teacher.GetTeacherClasses;
 global using Syki.Front.Features.Teacher.GetTeacherInsights;
+global using Syki.Front.Features.Teacher.AddExamGradeNote;
 
 global using Syki.Front.Features.Seller.GetSellerCourseOfferings;
 

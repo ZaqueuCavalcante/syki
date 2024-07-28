@@ -267,17 +267,25 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<HttpResponseMessage> CreateAcademicPeriodHttp(string id)
+    public async Task<(AcademicPeriodOut, HttpResponseMessage)> CreateAcademicPeriodTuple(string id)
     {
         var client = new CreateAcademicPeriodClient(Cross);
         var period = new CreateAcademicPeriodIn(id);
-        return await client.Create(id, period.StartAt, period.EndAt);
+        var response = await client.Create(id, period.StartAt, period.EndAt);
+        return (await response.DeserializeTo<AcademicPeriodOut>(), response);
+    }
+
+    public async Task<(AcademicPeriodOut, HttpResponseMessage)> CreateAcademicPeriodTuple(string id, DateOnly startAt, DateOnly endAt)
+    {
+        var client = new CreateAcademicPeriodClient(Cross);
+        var response = await client.Create(id, startAt, endAt);
+        return (await response.DeserializeTo<AcademicPeriodOut>(), response);
     }
 
     public async Task<AcademicPeriodOut> CreateAcademicPeriod(string id)
     {
-        var response = await CreateAcademicPeriodHttp(id);
-        return await response.DeserializeTo<AcademicPeriodOut>();
+        var (period, _) = await CreateAcademicPeriodTuple(id);
+        return period;
     }
 
     public async Task<List<AcademicPeriodOut>> GetAcademicPeriods()

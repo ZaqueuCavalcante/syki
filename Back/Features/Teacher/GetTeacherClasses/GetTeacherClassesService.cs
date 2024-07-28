@@ -10,6 +10,6 @@ public class GetTeacherClassesService(SykiDbContext ctx)
             .Where(t => t.InstitutionId == institutionId && t.TeacherId == userId)
             .ToListAsync();
 
-        return classes.ConvertAll(t => t.ToTeacherClassesOut());
+        return classes.OrderBy(x => x.Discipline.Name).Select(t => t.ToTeacherClassesOut()).ToList();
     }
 }

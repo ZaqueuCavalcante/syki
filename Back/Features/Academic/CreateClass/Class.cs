@@ -84,7 +84,7 @@ public class Class
 
     public ClassOut ToOut()
     {
-        return new ClassOut
+        return new()
         {
             Id = Id,
             Discipline = Discipline.Name,
@@ -121,7 +121,7 @@ public class Class
 
     public TeacherClassesOut ToTeacherClassesOut()
     {
-        return new TeacherClassesOut
+        return new()
         {
             Id = Id,
             Discipline = Discipline.Name,

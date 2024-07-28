@@ -11,7 +11,7 @@ public partial class IntegrationTests
         var period = await academicClient.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
         await academicClient.CreateEnrollmentPeriod(period.Id);
 
-        var campus = await academicClient.CreateCampus("Agreste I", "Caruaru - PE");
+        var campus = await academicClient.CreateCampus();
         var ads = await academicClient.CreateCourse("ADS");
         var direito = await academicClient.CreateCourse("Direito");
 

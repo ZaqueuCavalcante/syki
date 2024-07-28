@@ -10,7 +10,7 @@ namespace Syki.Tests.Clients;
 
 public class StudentHttpClient(HttpClient http)
 {
-    public HttpClient Cross = http;
+    public readonly HttpClient Cross = http;
 
     public async Task<List<EnrollmentClassOut>> GetStudentEnrollmentClasses()
     {

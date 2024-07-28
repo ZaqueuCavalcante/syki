@@ -7,7 +7,7 @@ namespace Syki.Tests.Clients;
 
 public class TeacherHttpClient(HttpClient http)
 {
-    public HttpClient Cross = http;
+    public readonly HttpClient Cross = http;
 
     public async Task<TeacherInsightsOut> GetTeacherInsights()
     {

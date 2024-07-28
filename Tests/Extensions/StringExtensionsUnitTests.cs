@@ -6,7 +6,7 @@ public class StringExtensionsUnitTests
 {
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.CamelCaseNames))]
-    public void Shoud_change_to_snake_case((string camel, string snake) data)
+    public void Should_change_to_snake_case((string camel, string snake) data)
     {
         // Arrange / Act
         var result = data.camel.ToSnakeCase();
@@ -17,7 +17,7 @@ public class StringExtensionsUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.FormatedStrings))]
-    public void Shoud_change_to_only_numbers((string text, string numbers) data)
+    public void Should_change_to_only_numbers((string text, string numbers) data)
     {
         // Arrange / Act
         var result = data.text.OnlyNumbers();
@@ -28,7 +28,7 @@ public class StringExtensionsUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.TextsContains))]
-    public void Shoud_return_true_because_serch_is_inside_some_text((string text1, string text2, string? search) data)
+    public void Should_return_true_because_serch_is_inside_some_text((string text1, string text2, string? search) data)
     {
         // Arrange / Act
         var result = data.search.IsIn(data.text1, data.text2);
@@ -39,7 +39,7 @@ public class StringExtensionsUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.TextsNotContains))]
-    public void Shoud_return_false_because_serch_is_not_inside_some_text((string text1, string text2, string search) data)
+    public void Should_return_false_because_serch_is_not_inside_some_text((string text1, string text2, string search) data)
     {
         // Arrange / Act
         var result = data.search.IsIn(data.text1, data.text2);
@@ -50,7 +50,7 @@ public class StringExtensionsUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.DecimalsStringsForFormat))]
-    public void Shoud_format_decimal_as_string((decimal number, string text) data)
+    public void Should_format_decimal_as_string((decimal number, string text) data)
     {
         // Arrange / Act
         var result = data.number.Format();
@@ -61,7 +61,7 @@ public class StringExtensionsUnitTests
 
     [Test]
     [Repeat(100)]
-    public void Shoud_return_true_when_email_is_valid()
+    public void Should_return_true_when_email_is_valid()
     {
         // Arrange
         var email = new Faker().Internet.Email();
@@ -75,7 +75,7 @@ public class StringExtensionsUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.InvalidEmails))]
-    public void Shoud_return_false_when_email_is_invalid(string email)
+    public void Should_return_false_when_email_is_invalid(string email)
     {
         // Arrange // Act
         var result = email.IsValidEmail();

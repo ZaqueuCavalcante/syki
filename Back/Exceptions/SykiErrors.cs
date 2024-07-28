@@ -62,6 +62,16 @@ public class CampusNotFound : SykiError
     public override string Message { get; set; } = "Campus não encontrado.";
 }
 
+public class InvalidCourseType : SykiError
+{
+    public override string Message { get; set; } = "Tipo de curso inválido.";
+}
+
+public class InvalidShift : SykiError
+{
+    public override string Message { get; set; } = "Turno inválido.";
+}
+
 public class CourseCurriculumNotFound : SykiError
 {
     public override string Message { get; set; } = "Grade curricular não encontrada.";
@@ -105,6 +115,16 @@ public class InvalidResetToken : SykiError
 public class InvalidSchedule : SykiError
 {
     public override string Message { get; set; } = "Horário inválido.";
+}
+
+public class InvalidDay : SykiError
+{
+    public override string Message { get; set; } = "Dia inválido.";
+}
+
+public class InvalidHour : SykiError
+{
+    public override string Message { get; set; } = "Hora inválida.";
 }
 
 public class ConflictingSchedules : SykiError

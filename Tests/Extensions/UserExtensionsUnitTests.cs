@@ -6,7 +6,7 @@ namespace Syki.Tests.Extensions;
 public class UserExtensionsUnitTests
 {
     [Test]
-    public void Shoud_get_user_id()
+    public void Should_get_user_id()
     {
         // Arrange
         var userIdClaim = new Claim("sub", Guid.NewGuid().ToString());
@@ -21,7 +21,7 @@ public class UserExtensionsUnitTests
     }
 
     [Test]
-    public void Shoud_get_user_institution_id()
+    public void Should_get_user_institution_id()
     {
         // Arrange
         var institutionIdClaim = new Claim("institution", Guid.NewGuid().ToString());
@@ -37,7 +37,7 @@ public class UserExtensionsUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.AuditPaths))]
-    public void Shoud_return_if_path_is_auditable((PathString path, bool isAuditable) x)
+    public void Should_return_if_path_is_auditable((PathString path, bool isAuditable) x)
     {
         // Arrange / Act
         var result = x.path.IsAuditable();

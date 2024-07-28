@@ -20,17 +20,15 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_create_many_courses()
+    public async Task Should_not_create_a_new_course_with_invalid_type()
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
-        await client.CreateCourse("Direito", Licenciatura);
+        var (_, response) = await client.CreateCourseTuple("Análise e Desenvolvimento de Sistemas", (CourseType)69);
 
         // Assert
-        var courses = await client.GetCourses();
-        courses.Should().HaveCount(2);
+        await response.AssertBadRequest(new InvalidCourseType());
     }
 }

@@ -6,7 +6,7 @@ namespace Syki.Tests.Extensions;
 public class KeyboardEventArgsExtensionsUnitTests
 {
     [Test]
-    public void Shoud_return_true_when_enter_key_is_pressed()
+    public void Should_return_true_when_enter_key_is_pressed()
     {
         // Arrange
         var args = new KeyboardEventArgs() { Key = "Enter" };
@@ -19,7 +19,7 @@ public class KeyboardEventArgsExtensionsUnitTests
     }
 
     [Test]
-    public void Shoud_return_false_when_enter_key_is_not_pressed()
+    public void Should_return_false_when_enter_key_is_not_pressed()
     {
         // Arrange
         var args = new KeyboardEventArgs() { Key = "Space" };

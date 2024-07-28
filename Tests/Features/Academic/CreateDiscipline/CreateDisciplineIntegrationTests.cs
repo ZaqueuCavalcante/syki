@@ -50,18 +50,20 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_create_many_disciplines()
+    public async Task Should_not_link_other_institution_course_to_discipline()
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
+        await client.CreateCourse("ADS");
 
+        var otherClient = await _back.LoggedAsAcademic();
+        var otherCourse = await otherClient.CreateCourse("ADS");
+        
         // Act
-        await client.CreateDiscipline("Banco de Dados");
-        await client.CreateDiscipline("Estrutura de Dados");
-        await client.CreateDiscipline("Programação Orientada a Objetos");
+        var discipline = await client.CreateDiscipline("Banco de Dados", [otherCourse.Id]);
 
         // Assert
-        var disciplines = await client.GetDisciplines();
-        disciplines.Should().HaveCount(3);
+        discipline.Name.Should().Be("Banco de Dados");
+        discipline.Courses.Should().BeEquivalentTo(new List<Guid>());
     }
 }

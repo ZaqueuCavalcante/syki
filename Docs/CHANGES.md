@@ -1,7 +1,8 @@
 # CHANGES
 
+- [X] Use Result Pattern instead throw exceptions?
+
 - Domain Events + Transactional Outbox Pattern
-- Use Result Pattern instead throw exceptions?
 - Monitoring? DataDog
 - RabbitMQ?
 - N colocar o JWT no local storage?
@@ -16,4 +17,22 @@
 - Servidor exclusivo para SignalR?
 - Customizar palleta de cores?
 - Adicionar visualizacao no mobile para todas as telas
+
+
+- Testes E2E com Front no WebAppFactory?
+
+
+
+Adicionei mais funcionalidades ao meu projeto:
+
+- Matricula academica
+- Gestao de turmas
+- Lancamento de notas
+- Cheguei a 1000 testes??????
+
+
+
+
+
+
 

@@ -4,10 +4,7 @@ public class CreateDisciplineService(SykiDbContext ctx)
 {
     public async Task<DisciplineOut> Create(Guid institutionId, CreateDisciplineIn data)
     {
-        var discipline = new Discipline(
-            institutionId,
-            data.Name
-        );
+        var discipline = new Discipline(institutionId, data.Name);
 
         var courses = await ctx.Courses
             .Where(c => c.InstitutionId == institutionId && data.Courses.Contains(c.Id))

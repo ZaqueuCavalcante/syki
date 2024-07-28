@@ -20,7 +20,7 @@ public class CreateAcademicPeriodUnitTests
         // Assert
         result.ShouldBeSuccess();
 
-        var academicPeriod = result.AsT0;
+        var academicPeriod = result.GetSuccess();
         academicPeriod.Id.Should().Be(id);
         academicPeriod.InstitutionId.Should().Be(institutionId);
         academicPeriod.StartAt.Should().Be(start);

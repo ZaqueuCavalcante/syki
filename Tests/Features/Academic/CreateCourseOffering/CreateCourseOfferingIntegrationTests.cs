@@ -11,14 +11,14 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
         var course = await client.CreateCourse("ADS");
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
-        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Matutino);
+        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Matutino);
 
         // Assert
         courseOffering.Id.Should().NotBeEmpty();
-        courseOffering.CourseCurriculumId.Should().Be(courseCurriculum.Id);
+        courseOffering.CourseCurriculumId.Should().Be(cc.Id);
         courseOffering.Period.Should().Be(period.Id);
     }
 
@@ -131,6 +131,23 @@ public partial class IntegrationTests
         await response.AssertBadRequest(new AcademicPeriodNotFound());
     }
 
+    [Test]
+    public async Task Should_not_create_course_offering_with_invalid_shift()
+    {
+        // Arrange
+        var client = await _back.LoggedAsAcademic();
+        var campus = await client.CreateCampus();
+        var period = await client.CreateAcademicPeriod("2024.1");
+        var course = await client.CreateCourse();
+        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+
+        // Act
+        var response = await client.CreateCourseOfferingHttp(campus.Id, course.Id, cc.Id, period.Id, (Shift)69);
+        
+        // Assert
+        await response.AssertBadRequest(new InvalidShift());
+    }
+    
     [Test]
     public async Task Should_not_create_course_offering_with_other_institution_period()
     {

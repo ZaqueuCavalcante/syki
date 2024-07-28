@@ -279,6 +279,22 @@ public static class TestData
         }
     }
 
+    public static IEnumerable<object[]> EnumsInvalidValues()
+    {
+        foreach (var text in new List<Enum>()
+        {
+            (Day)69,
+            (Hour)69,
+            (UserRole)69,
+            (CourseType)69,
+            (ClassStatus)69,
+            (StudentDisciplineStatus)(-69),
+        })
+        {
+            yield return [text];
+        }
+    }
+
     public static IEnumerable<object[]> ConflictingSchedules()
     {
         foreach (var list in new List<List<Schedule>>()

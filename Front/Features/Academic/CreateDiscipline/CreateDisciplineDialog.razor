@@ -22,7 +22,7 @@
                 @bind-SelectedValues="@SelectedCourses"
                 AnchorOrigin="Origin.BottomCenter"
             >
-                @foreach (var course in Courses)
+                @foreach (var course in _courses)
                 {
                     <MudSelectItem T="CourseOut" Value="@course">@course.Name</MudSelectItem>
                 }
@@ -49,15 +49,15 @@
     private bool _loading;
     private string _name;
 
-    private List<CourseOut> Courses = [];
-    IEnumerable<CourseOut> SelectedCourses { get; set; } = new HashSet<CourseOut>() { };
+    private List<CourseOut> _courses = [];
+    IEnumerable<CourseOut> SelectedCourses { get; set; } = new HashSet<CourseOut>();
 
     protected override async Task OnInitializedAsync()
     {
-        Courses = await GetCoursesClient.Get();
+        _courses = await GetCoursesClient.Get();
     }
 
-    async Task Submit()
+    private async Task Submit()
     {
         if (_loading) return;
 

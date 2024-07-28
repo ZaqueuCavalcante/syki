@@ -7,7 +7,7 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
 {
     public async Task<OneOf<TeacherOut, SykiError>> Create(Guid institutionId, CreateTeacherIn data)
     {
-        using var transaction = ctx.Database.BeginTransaction();
+        await using var transaction = await ctx.Database.BeginTransactionAsync();
 
         var userIn = CreateUserIn.NewTeacher(institutionId, data.Name, data.Email);
         var result = await service.Create(userIn);
@@ -22,7 +22,7 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
 
                 await sendService.Send(new(user.Email));
 
-                transaction.Commit();
+                await transaction.CommitAsync();
 
                 return teacher.ToOut();
             },

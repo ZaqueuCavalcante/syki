@@ -17,7 +17,7 @@ public partial class IntegrationTests
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        using var ctx = _back.GetDbContext();
+        await using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.Id.Should().NotBeEmpty();
         register.TrialStart.Should().BeNull();
@@ -37,7 +37,7 @@ public partial class IntegrationTests
         // Assert
         await response.AssertBadRequest(new InvalidEmail());
 
-        using var ctx = _back.GetDbContext();
+        await using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(x => x.Email == email);
         register.Should().BeNull();
     }
@@ -57,7 +57,7 @@ public partial class IntegrationTests
         firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         await secondResponse.AssertBadRequest(new EmailAlreadyUsed());
 
-        using var ctx = _back.GetDbContext();
+        await using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.SingleAsync(x => x.Email == email);
         register.TrialStart.Should().BeNull();
         register.TrialEnd.Should().BeNull();

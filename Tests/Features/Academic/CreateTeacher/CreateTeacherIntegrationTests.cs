@@ -17,17 +17,31 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_create_many_teachers()
+    public async Task Should_not_create_teacher_with_invalid_email()
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
+        var email = TestData.InvalidEmailsList.OrderBy(_ => Guid.NewGuid()).First();
 
         // Act
-        await client.CreateTeacher("Chico");
-        await client.CreateTeacher("Ana");
+        var (_, response) = await client.CreateTeacherTuple("Chico", email);
 
         // Assert
-        var teachers = await client.GetTeachers();
-        teachers.Should().HaveCount(2);
+        await response.AssertBadRequest(new InvalidEmail());
+    }
+
+    [Test]
+    public async Task Should_not_create_teacher_with_duplicated_email()
+    {
+        // Arrange
+        var client = await _back.LoggedAsAcademic();
+        var email = TestData.Email;
+
+        var (_, firstResponse) = await client.CreateTeacherTuple("Chico", email);
+        var (_, secondResponse) = await client.CreateTeacherTuple("Chico", email);
+
+        // Assert
+        firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        await secondResponse.AssertBadRequest(new EmailAlreadyUsed());
     }
 }

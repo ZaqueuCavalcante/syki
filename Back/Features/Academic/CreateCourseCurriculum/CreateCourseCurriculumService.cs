@@ -8,12 +8,6 @@ public class CreateCourseCurriculumService(SykiDbContext ctx)
             .AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CourseId);
         if (!courseOk) return new CourseNotFound();
 
-        var courseCurriculum = new CourseCurriculum(
-            institutionId,
-            data.CourseId,
-            data.Name
-        );
-
         var disciplines = await ctx.CoursesDisciplines.AsNoTracking()
             .Where(x => x.CourseId == data.CourseId)
             .Select(x => x.DisciplineId)
@@ -22,11 +16,13 @@ public class CreateCourseCurriculumService(SykiDbContext ctx)
         if (!data.Disciplines.ConvertAll(d => d.Id).IsSubsetOf(disciplines))
             return new InvalidDisciplinesList();
 
+        var courseCurriculum = new CourseCurriculum(institutionId, data.CourseId, data.Name);
+
         data.Disciplines.ForEach(d =>
             courseCurriculum.Links.Add(new(d.Id, d.Period, d.Credits, d.Workload))
         );
 
-        ctx.CourseCurriculums.Add(courseCurriculum);
+        ctx.Add(courseCurriculum);
         await ctx.SaveChangesAsync();
 
         courseCurriculum = await ctx.CourseCurriculums.AsNoTracking()

@@ -10,15 +10,13 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
     public async Task Run()
     {
         using var scope = serviceScopeFactory.CreateScope();
-        using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
+        await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
 
         var tasks = await connection.QueryAsync<SykiTask>(sql);
-        if (!tasks.Any()) return;
-
         foreach (var task in tasks)
         {
             dynamic data = GetData(task);
-            dynamic handler = GetHanlder(scope, task);
+            dynamic handler = GetHandler(scope, task);
             string? error = null;
 
             try
@@ -37,11 +35,11 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
     private static dynamic GetData(SykiTask task)
     {
         var type = typeof(SykiTask).Assembly.GetType(task.Type)!;
-        dynamic data = JsonConvert.DeserializeObject(task.Data.ToString()!, type)!;
+        dynamic data = JsonConvert.DeserializeObject(task.Data, type)!;
         return data;
     }
 
-    private static dynamic GetHanlder(IServiceScope scope, SykiTask task)
+    private static dynamic GetHandler(IServiceScope scope, SykiTask task)
     {
         var type = task.Type.Split(".").Last();
         var handlerType = typeof(SykiTasksProcessor).Assembly.GetType($"Syki.Daemon.Tasks.{type}Handler")!;

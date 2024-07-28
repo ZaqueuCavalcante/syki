@@ -31,7 +31,7 @@ namespace Syki.Tests.Clients;
 
 public class AcademicHttpClient(HttpClient http)
 {
-    public HttpClient Cross = http;
+    public readonly HttpClient Cross = http;
 
     public async Task<NotificationOut> CreateNotification(string title, string description, UsersGroup targetUsers, bool timeless)
     {
@@ -97,6 +97,13 @@ public class AcademicHttpClient(HttpClient http)
         return await response.DeserializeTo<CourseOut>();
     }
 
+    public async Task<(CourseOut, HttpResponseMessage)> CreateCourseTuple(string name = "ADS", CourseType tipo = CourseType.Bacharelado)
+    {
+        var client = new CreateCourseClient(Cross);
+        var response = await client.Create(name, tipo);
+        return (await response.DeserializeTo<CourseOut>(), response);
+    }
+
     public async Task<List<CourseOut>> GetCourses()
     {
         var client = new GetCoursesClient(Cross);
@@ -115,13 +122,14 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<HttpResponseMessage> CreateCourseCurriculumHttp(
+    public async Task<(CourseCurriculumOut, HttpResponseMessage)> CreateCourseCurriculumTuple(
         string name,
         Guid courseId,
         List<CreateCourseCurriculumDisciplineIn> disciplines = null
     ) {
         var client = new CreateCourseCurriculumClient(Cross);
-        return await client.Create(name, courseId, disciplines ?? []);
+        var response = await client.Create(name, courseId, disciplines ?? []);
+        return (await response.DeserializeTo<CourseCurriculumOut>(), response);
     }
 
     public async Task<CourseCurriculumOut> CreateCourseCurriculum(
@@ -129,8 +137,9 @@ public class AcademicHttpClient(HttpClient http)
         Guid courseId,
         List<CreateCourseCurriculumDisciplineIn> disciplines = null
     ) {
-        var result = await CreateCourseCurriculumHttp(name, courseId, disciplines ?? []);
-        return await result.DeserializeTo<CourseCurriculumOut>();
+        var client = new CreateCourseCurriculumClient(Cross);
+        var response = await client.Create(name, courseId, disciplines ?? []);
+        return await response.DeserializeTo<CourseCurriculumOut>();
     }
 
     public async Task<List<CourseCurriculumOut>> GetCourseCurriculums()
@@ -186,6 +195,17 @@ public class AcademicHttpClient(HttpClient http)
         return teacher;
     }
 
+    public async Task<(TeacherOut, HttpResponseMessage)> CreateTeacherTuple(
+        string name = "Chico",
+        string email = ""
+    ) {
+        var client = new CreateTeacherClient(Cross);
+        var response = await client.Create(name, email);
+        var teacher= await response.DeserializeTo<TeacherOut>();
+        teacher.Email = email;
+        return (teacher, response);
+    }
+
     public async Task<List<TeacherOut>> GetTeachers()
     {
         var client = new GetTeachersClient(Cross);
@@ -220,27 +240,23 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<HttpResponseMessage> CreateStudentHttp(
-        
+    public async Task<(StudentOut, HttpResponseMessage)> CreateStudentTuple(
         Guid courseOfferingId,
         string name = "Zezin",
         string email = ""
     ) {
         var client = new CreateStudentClient(Cross);
-        email = email.HasValue() ? email : TestData.Email;
-        return await client.Create(name, email, courseOfferingId);
+        var response = await client.Create(name, email, courseOfferingId);
+        return (await response.DeserializeTo<StudentOut>(), response);
     }
 
     public async Task<StudentOut> CreateStudent(
-        
         Guid courseOfferingId,
         string name = "Zezin",
         string email = ""
     ) {
         email = email.HasValue() ? email : TestData.Email;
-
-        var result = await CreateStudentHttp(courseOfferingId, name, email);
-        var student = await result.DeserializeTo<StudentOut>();
+        var (student, _) = await CreateStudentTuple(courseOfferingId, name, email);
         student.Email = email;
         return student;
     }

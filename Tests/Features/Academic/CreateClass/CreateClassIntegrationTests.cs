@@ -71,7 +71,7 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_not_create_class_with_invalid_schedule()
+    public async Task Should_not_create_class_with_one_invalid_schedule()
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
@@ -88,6 +88,29 @@ public partial class IntegrationTests
         await response.AssertBadRequest(new InvalidSchedule());
     }
 
+    [Test]
+    public async Task Should_not_create_class_with_two_invalid_schedules()
+    {
+        // Arrange
+        var client = await _back.LoggedAsAcademic();
+
+        var discipline = await client.CreateDiscipline();
+        var teacher = await client.CreateTeacher();
+        var period = await client.CreateAcademicPeriod("2024.1");
+        var schedules = new List<ScheduleIn>()
+        {
+            new(Day.Segunda, Hour.H07_00, Hour.H08_00),
+            new(Day.Terca, Hour.H09_00, Hour.H08_00),
+            new(Day.Quarta, Hour.H12_00, Hour.H12_00),
+        };
+
+        // Act
+        var response = await client.CreateClassHttp(discipline.Id, teacher.Id, period.Id, 40, schedules);
+
+        // Assert
+        await response.AssertBadRequest(new InvalidSchedule());
+    }
+    
     [Test]
     public async Task Should_not_create_class_with_conflicting_schedules()
     {

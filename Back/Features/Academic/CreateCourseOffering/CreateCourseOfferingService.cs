@@ -20,6 +20,8 @@ public class CreateCourseOfferingService(SykiDbContext ctx)
             .AnyAsync(p => p.InstitutionId == institutionId && p.Id == data.Period);
         if (!periodOk) return new AcademicPeriodNotFound();
 
+        if (!data.Shift.IsValid()) return new InvalidShift();
+
         var courseOffering = new CourseOffering(
             institutionId,
             data.CampusId,

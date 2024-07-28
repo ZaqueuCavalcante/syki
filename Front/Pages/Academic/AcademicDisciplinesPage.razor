@@ -12,7 +12,23 @@
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" ButtonText="Nova Disciplina" OnClick="@OpenDialog" />
     <SykiPageAlert Text="Uma mesma disciplina pode compor a grade de cursos diferentes." />
-    <AcademicDisciplinesDataGrid @ref="@_grid" />
+    <MudContainer Class="mb-8">
+        <MudDataGrid Class="pa-4" Items="@_disciplines" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou código" />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Name" Title="Nome" />
+                <PropertyColumn Property="x => x.Code" Title="Código" />
+            </Columns>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiDataGridPager T="DisciplineOut" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
 </MudContainer>
 
 @inject GetDisciplinesClient Client
@@ -20,7 +36,16 @@
 
 @code
 {
-    private AcademicDisciplinesDataGrid _grid;
+    private bool _loading;
+    private string _searchString;
+    private List<DisciplineOut> _disciplines = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _disciplines = await Client.Get();
+        _loading = false;
+    }
 
     private async Task OpenDialog()
     {
@@ -34,6 +59,13 @@
 
         if (result!.Canceled) return;
         
-        await _grid.Reload(); // TODO: nao ta recarregando
+        await OnInitializedAsync();
+    }
+    
+    private Func<DisciplineOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Code);
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem disciplinas cadastradas ainda." : "Nenhuma disciplina encontrada.";
     }
 }

@@ -53,6 +53,51 @@ public class CreateScheduleUnitTests
     }
 
     [Test]
+    public void Should_not_create_schedule_with_invalid_day()
+    {
+        // Arrange
+        var day = (Day)69;
+        var start = Hour.H07_00;
+        var end = Hour.H08_00;
+
+        // Act
+        var result = Schedule.New(day, start, end);
+
+        // Assert
+        result.ShouldBeError(new InvalidDay());
+    }
+
+    [Test]
+    public void Should_not_create_schedule_with_invalid_start_hour()
+    {
+        // Arrange
+        var day = Day.Segunda;
+        var start = (Hour)666;
+        var end = Hour.H08_00;
+
+        // Act
+        var result = Schedule.New(day, start, end);
+
+        // Assert
+        result.ShouldBeError(new InvalidHour());
+    }
+
+    [Test]
+    public void Should_not_create_schedule_with_invalid_end_hour()
+    {
+        // Arrange
+        var day = Day.Segunda;
+        var start = Hour.H08_00;
+        var end = (Hour)666;
+
+        // Act
+        var result = Schedule.New(day, start, end);
+
+        // Assert
+        result.ShouldBeError(new InvalidHour());
+    }
+    
+    [Test]
     public void Schedules_em_days_diferentes_nao_devem_conflitar()
     {
         // Arrange
@@ -84,7 +129,7 @@ public class CreateScheduleUnitTests
     }
 
     [Test]
-    public void Schedules_exatamente_iguais_devem_conflitar()
+    public void Equals_schedules_should_conflict()
     {
         // Arrange
         var start = Hour.H07_00;
@@ -101,7 +146,7 @@ public class CreateScheduleUnitTests
     }
 
     [Test]
-    public void Schedules_parcialmente_iguais_devem_conflitar()
+    public void Partial_equal_schedules_should_conflict()
     {
         // Arrange
         var scheduleA = new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00);

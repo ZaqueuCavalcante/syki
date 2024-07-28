@@ -3,7 +3,7 @@ namespace Syki.Tests.Extensions;
 public class ListExtensionsUnitTests
 {
     [Test]
-    public void Shoud_return_true_when_empty_list()
+    public void Should_return_true_when_empty_list()
     {
         // Arrange
         var guids = new List<Guid>();
@@ -15,7 +15,7 @@ public class ListExtensionsUnitTests
     }
 
     [Test]
-    public void Shoud_return_true_when_one_item_list()
+    public void Should_return_true_when_one_item_list()
     {
         // Arrange
         List<Guid> guids = 
@@ -30,7 +30,7 @@ public class ListExtensionsUnitTests
     }
 
     [Test]
-    public void Shoud_return_true_when_two_item_list()
+    public void Should_return_true_when_two_item_list()
     {
         // Arrange
         List<Guid> guids = 
@@ -46,7 +46,7 @@ public class ListExtensionsUnitTests
     }
 
     [Test]
-    public void Shoud_return_true_when_all_items_list()
+    public void Should_return_true_when_all_items_list()
     {
         // Arrange
         List<Guid> guids = 
@@ -66,7 +66,7 @@ public class ListExtensionsUnitTests
 
     [Test]
     [Repeat(100)]
-    public void Shoud_return_false_when_random_guid()
+    public void Should_return_false_when_random_guid()
     {
         // Arrange
         List<Guid> guids = 
@@ -81,7 +81,7 @@ public class ListExtensionsUnitTests
     }
 
     [Test]
-    public void Shoud_return_false_when_duplicated()
+    public void Should_return_false_when_duplicated()
     {
         // Arrange
         List<Guid> guids = 
@@ -97,7 +97,7 @@ public class ListExtensionsUnitTests
     }
 
     [Test]
-    public void Shoud_return_false_when_triplicated()
+    public void Should_return_false_when_triplicated()
     {
         // Arrange
         List<Guid> guids = 
@@ -115,7 +115,7 @@ public class ListExtensionsUnitTests
 
     [Test]
     [Repeat(100)]
-    public void Shoud_return_false_when_has_one_out()
+    public void Should_return_false_when_has_one_out()
     {
         // Arrange
         List<Guid> guids = 

@@ -28,7 +28,7 @@ public class CreateClassService(SykiDbContext ctx)
             data.TeacherId,
             data.Period,
             data.Vacancies,
-            schedules.ConvertAll(x => x.AsT0)
+            schedules.ConvertAll(x => x.GetSuccess())
         );
 
         return await result.Match<Task<OneOf<ClassOut, SykiError>>>(

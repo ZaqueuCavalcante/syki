@@ -37,4 +37,9 @@ public static class EnumExtensions
     {
         return (T)Enum.Parse(typeof(T), value, true);
     }
+
+    public static bool IsValid(this Enum value)
+    {
+        return Enum.IsDefined(value.GetType(), value);
+    }
 }

@@ -78,4 +78,26 @@ public partial class IntegrationTests
         firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         await secondResponse.AssertBadRequest(new EmailAlreadyUsed());
     }
+
+    [Test]
+    public async Task Should_create_student_only_with_student_role()
+    {
+        // Arrange
+        var client = await _back.LoggedAsAcademic();
+
+        var campus = await client.CreateCampus();
+        var period = await client.CreateAcademicPeriod("2024.1");
+        var course = await client.CreateCourse();
+        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
+
+        // Act
+        var student = await client.CreateStudent(courseOffering.Id);
+
+        // Assert
+        using var userManager = _back.GetUserManager();
+        var user = await userManager.FindByEmailAsync(student.Email);
+        var isOnlyInStudentRole = await userManager.IsOnlyInRole(user!, UserRole.Student);
+        isOnlyInStudentRole.Should().BeTrue();
+    }
 }

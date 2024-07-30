@@ -1,3 +1,4 @@
+using Syki.Front.Features.Teacher.AddExamGradeNote;
 using Syki.Front.Features.Teacher.GetTeacherClass;
 using Syki.Front.Features.Teacher.GetTeacherAgenda;
 using Syki.Front.Features.Teacher.GetTeacherClasses;
@@ -8,6 +9,12 @@ namespace Syki.Tests.Clients;
 public class TeacherHttpClient(HttpClient http)
 {
     public readonly HttpClient Cross = http;
+
+    public async Task<HttpResponseMessage> AddExamGradeNote(Guid id, decimal note)
+    {
+        var client = new AddExamGradeNoteClient(Cross);
+        return await client.Add(id, new(note));
+    }
 
     public async Task<TeacherInsightsOut> GetTeacherInsights()
     {

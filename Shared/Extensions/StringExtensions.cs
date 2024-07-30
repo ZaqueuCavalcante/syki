@@ -57,6 +57,12 @@ public static class StringExtensions
         return totp.ComputeTotp();
     }
 
+    public static string ToBase64(this string value)
+    {
+        var bytes = System.Text.Encoding.UTF8.GetBytes(value);
+        return Convert.ToBase64String(bytes);
+    }
+
     public static string Format(this decimal value)
     {
         return value.ToString("0.00", CultureInfo.InvariantCulture);

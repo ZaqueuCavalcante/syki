@@ -5,7 +5,7 @@ namespace Syki.Tests.Base;
 public class IntegrationTestBase
 {
     protected BackFactory _back = null!;
-    private DaemonFactory _daemon = null!;
+    protected DaemonFactory _daemon = null!;
 
     [OneTimeSetUp]
     public async Task OneTimeSetUp()

@@ -8,6 +8,6 @@ public class GetTeacherInsightsService(SykiDbContext ctx)
             .Where(x => x.InstitutionId == institutionId && x.TeacherId == userId)
             .CountAsync();
         
-        return new() { Classes = classes };
+        return new() { Classes = classes, Students = 3, Aulas = 89, Average = 7.89M };
     }
 }

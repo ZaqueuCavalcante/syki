@@ -9,11 +9,11 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var teacher = await client.CreateTeacher("Chico");
+        var teacher = await client.CreateTeacher("Richard");
 
         // Assert
         teacher.Id.Should().NotBeEmpty();
-        teacher.Name.Should().Be("Chico");
+        teacher.Name.Should().Be("Richard");
     }
 
     [Test]
@@ -43,5 +43,21 @@ public partial class IntegrationTests
         // Assert
         firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         await secondResponse.AssertBadRequest(new EmailAlreadyUsed());
+    }
+
+    [Test]
+    public async Task Should_create_teacher_only_with_teacher_role()
+    {
+        // Arrange
+        var client = await _back.LoggedAsAcademic();
+
+        // Act
+        var teacher = await client.CreateTeacher();
+
+        // Assert
+        using var userManager = _back.GetUserManager();
+        var user = await userManager.FindByEmailAsync(teacher.Email);
+        var isOnlyInTeacherRole = await userManager.IsOnlyInRole(user!, UserRole.Teacher);
+        isOnlyInTeacherRole.Should().BeTrue();
     }
 }

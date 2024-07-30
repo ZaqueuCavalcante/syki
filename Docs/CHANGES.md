@@ -23,12 +23,7 @@
 
 
 
-Adicionei mais funcionalidades ao meu projeto:
 
-- Matricula academica
-- Gestao de turmas
-- Lancamento de notas
-- Cheguei a 1000 testes??????
 
 
 

@@ -18,7 +18,7 @@ public partial class IntegrationTests
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        using var ctx = _back.GetDbContext();
+        await using var ctx = _back.GetDbContext();
         using var userManager = _back.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);

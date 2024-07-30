@@ -22,7 +22,7 @@ public class HangfireAuthFilter(string user, string password) : IDashboardAuthor
 
 	private bool CheckAuth(string authHeader)
 	{
-		if (authHeader == null) return false;
+		if (authHeader.IsEmpty()) return false;
 
 		var authValues = AuthenticationHeaderValue.Parse(authHeader);
 		if ("Basic".Equals(authValues.Scheme, StringComparison.InvariantCultureIgnoreCase))

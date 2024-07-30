@@ -28,9 +28,15 @@ public static class UserExtensions
         var academic = await userManager.IsInRoleAsync(user!, UserRole.Academic.ToString());
         var seller = await userManager.IsInRoleAsync(user!, UserRole.Seller.ToString());
 
-        if (role is UserRole.Academic) return academic && !(adm || student || teacher || seller);
-
-        return false;
+        return role switch
+        {
+            UserRole.Academic => academic && !(adm || student || teacher || seller),
+            UserRole.Student => student && !(adm || academic || teacher || seller),
+            UserRole.Teacher => teacher && !(adm || student || academic || seller),
+            UserRole.Adm => adm && !(student || teacher || academic || seller),
+            UserRole.Seller => seller && !(adm || student || teacher || academic || seller),
+            _ => false
+        };
     }
 
     public static bool IsAuditable(this PathString path)

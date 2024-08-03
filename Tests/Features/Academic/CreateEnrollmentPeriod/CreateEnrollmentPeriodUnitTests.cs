@@ -36,7 +36,7 @@ public class CreateEnrollmentPeriodUnitTests
         var result = EnrollmentPeriod.New(id, institutionId, start, end);
 
         // Assert
-        result.ShouldBeError(new EnrollmentPeriodStartDateShouldBeLessThanEndDate());
+        result.ShouldBeError(new InvalidEnrollmentPeriodDates());
     }
 
     [Test]
@@ -52,6 +52,6 @@ public class CreateEnrollmentPeriodUnitTests
         var result = EnrollmentPeriod.New(id, institutionId, start, end);
 
         // Assert
-        result.ShouldBeError(new EnrollmentPeriodStartDateShouldBeLessThanEndDate());
+        result.ShouldBeError(new InvalidEnrollmentPeriodDates());
     }
 }

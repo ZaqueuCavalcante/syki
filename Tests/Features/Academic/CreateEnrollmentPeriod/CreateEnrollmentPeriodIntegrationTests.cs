@@ -40,7 +40,7 @@ public partial class IntegrationTests
         var response = await client.CreateEnrollmentPeriodHttp(period.Id, "15/01", "15/01");
 
         // Assert
-        await response.AssertBadRequest(new EnrollmentPeriodStartDateShouldBeLessThanEndDate());
+        await response.AssertBadRequest(new InvalidEnrollmentPeriodDates());
     }
     
     [Test]
@@ -54,6 +54,6 @@ public partial class IntegrationTests
         var response = await client.CreateEnrollmentPeriodHttp(period.Id, "15/01", "03/01");
 
         // Assert
-        await response.AssertBadRequest(new EnrollmentPeriodStartDateShouldBeLessThanEndDate());
+        await response.AssertBadRequest(new InvalidEnrollmentPeriodDates());
     }
 }

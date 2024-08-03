@@ -10,7 +10,7 @@ public static class AuthenticationConfigs
 
     public static void AddAuthenticationConfigs(this IServiceCollection services)
     {
-        var serviceProvider = services.BuildServiceProvider();
+        using var serviceProvider = services.BuildServiceProvider();
         var settings = serviceProvider.GetService<AuthSettings>()!;
 
         JwtSecurityTokenHandler.DefaultMapInboundClaims = false;

@@ -23,6 +23,7 @@ public static class JsonExtensions
         var error = await httpResponse.DeserializeTo<ErrorOut>();
         httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         error.Message.Should().Be(sykiError.Message);
+        error.Code.Should().Be(sykiError.Code);
     }
 
     public static void ShouldBeSuccess<S, E>(this OneOf<S, E> oneOf)

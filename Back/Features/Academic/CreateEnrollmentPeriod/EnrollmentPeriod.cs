@@ -26,14 +26,14 @@ public class EnrollmentPeriod
         DateOnly endAt
     ) {
         if (startAt >= endAt)
-            return new EnrollmentPeriodStartDateShouldBeLessThanEndDate();
+            return new InvalidEnrollmentPeriodDates();
 
         return new EnrollmentPeriod(id, institutionId, startAt, endAt);
     }
 
     public EnrollmentPeriodOut ToOut()
     {
-        return new EnrollmentPeriodOut
+        return new()
         {
             Id = Id,
             StartAt = StartAt,

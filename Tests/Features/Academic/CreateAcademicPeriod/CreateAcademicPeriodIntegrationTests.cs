@@ -85,6 +85,6 @@ public partial class IntegrationTests
         var (_, response) = await client.CreateAcademicPeriodTuple("2023.1", start, end);
 
         // Assert
-        await response.AssertBadRequest(new AcademicPeriodStartDateShouldBeLessThanEndDate());
+        await response.AssertBadRequest(new InvalidAcademicPeriodDates());
     }
 }

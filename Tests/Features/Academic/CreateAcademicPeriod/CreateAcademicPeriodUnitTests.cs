@@ -88,7 +88,7 @@ public class CreateAcademicPeriodUnitTests
         var result = AcademicPeriod.New(id, institutionId, start, end);
 
         // Assert
-        result.ShouldBeError(new AcademicPeriodStartDateShouldBeLessThanEndDate());
+        result.ShouldBeError(new InvalidAcademicPeriodDates());
     }
 
     [Test]
@@ -104,7 +104,7 @@ public class CreateAcademicPeriodUnitTests
         var result = AcademicPeriod.New(id, institutionId, start, end);
 
         // Assert
-        result.ShouldBeError(new AcademicPeriodStartDateShouldBeLessThanEndDate());
+        result.ShouldBeError(new InvalidAcademicPeriodDates());
     }
 
     [Test]

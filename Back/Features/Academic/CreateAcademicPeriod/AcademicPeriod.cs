@@ -59,7 +59,7 @@ public class AcademicPeriod
             return new InvalidAcademicPeriodEndDate();
 
         if (startAt >= endAt)
-            return new AcademicPeriodStartDateShouldBeLessThanEndDate();
+            return new InvalidAcademicPeriodDates();
 
         return $"{year}.{digit}";
     }

@@ -29,12 +29,13 @@
     - Escolher disciplinas
     - Pode editar durante o período de matrícula
     - Apresentar sugestão de escolhas
+    - N pode estourar as vagas
 
 ## Quadro de Horários
     - Tela fixa com as disciplinas do período
     - Dias e horários
     - Mostrar nome do professor? Primeiro nome?
-    - Link pra uma página específica com coisas apenas da disciplina
+    - Link pra uma página específica com coisas apenas da disciplina?
 
 ## Notas
     - Disciplina - Status - N1/N2/N3 - Final

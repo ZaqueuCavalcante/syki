@@ -4,7 +4,7 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <NoWarn>CA1806;IDE1006;CS8625;</NoWarn>
+    <NoWarn>CA1806;CS8618;IDE1006;CS8625;</NoWarn>
     <TargetFramework>net8.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>

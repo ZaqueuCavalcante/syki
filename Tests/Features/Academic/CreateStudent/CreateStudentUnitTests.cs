@@ -24,6 +24,7 @@ public class CreateStudentUnitTests
         student.CourseOfferingId.Should().Be(courseOfferingId);
         student.EnrollmentCode.Should().HaveLength(12);
         student.EnrollmentCode.Should().StartWith(DateTime.Now.Year.ToString());
+        student.Status.Should().Be(StudentStatus.Enrolled);
     }
 
     [Test]

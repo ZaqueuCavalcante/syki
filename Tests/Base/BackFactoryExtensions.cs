@@ -14,7 +14,7 @@ public static class BackFactoryExtensions
 
     public static async Task<string?> GetRegisterSetupToken(this BackFactory factory, string email)
     {
-        using var ctx = factory.GetDbContext();
+        await using var ctx = factory.GetDbContext();
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Email == email);
         return register?.Id.ToString();
     }
@@ -29,7 +29,7 @@ public static class BackFactoryExtensions
 
     public static async Task RegisterAdm(this BackFactory factory)
     {
-        using var ctx = factory.GetDbContext();
+        await using var ctx = factory.GetDbContext();
         using var userManager = factory.GetUserManager();
 
         var institution = new Institution { Id = Guid.Empty, Name = "Syki" };

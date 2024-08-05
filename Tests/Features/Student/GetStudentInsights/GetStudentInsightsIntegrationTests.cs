@@ -3,30 +3,60 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests
 {
     [Test]
-    public async Task Should_return_student_insights()
+    public async Task Should_return_student_insights_just_after_student_creation()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
 
-        var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var period = await client.CreateAcademicPeriod("2024.1");
-        var course = await client.CreateCourse("ADS");
-
-        var bd = await client.CreateDiscipline("Banco de Dados", [course.Id]);
-        var ed = await client.CreateDiscipline("Estrutura de Dados", [course.Id]);
-        var poo = await client.CreateDiscipline("Programação Orientada a Objetos", [course.Id]);
-        var disciplines = new List<CreateCourseCurriculumDisciplineIn> { new(bd.Id, 1, 10, 70), new(ed.Id, 2, 8, 55), new(poo.Id, 3, 12, 60) };
-        var (courseCurriculum, _) = await client.CreateCourseCurriculumTuple("Grade de ADS 1.0", course.Id, disciplines);
-
-        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
-
-        var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
+        var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var insights = await studentClient.GetStudentInsights();
 
         // Assert
-        insights.TotalDisciplines.Should().Be(3);
+        insights.Status.Should().Be(StudentStatus.Enrolled);
+        insights.FinishedDisciplines.Should().Be(0);
+        insights.TotalDisciplines.Should().Be(6);
+        insights.Average.Should().Be(0);
+        insights.CR.Should().Be(0);
+    }
+
+    [Test]
+    public async Task Should_return_student_insights_with_average_and_cr()
+    {
+        // Arrange
+        var academicClient = await _back.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
+
+        var teacher = await academicClient.CreateTeacher();
+        var discreteMathClass = await academicClient.CreateClass(data.Disciplines.DiscreteMath.Id, teacher.Id, data.AcademicPeriod.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
+        var introToWebDevClass = await academicClient.CreateClass(data.Disciplines.IntroToWebDev.Id, teacher.Id, data.AcademicPeriod.Id, 45, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
+
+        var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        var studentClient = await _back.LoggedAsStudent(student.Email);
+        await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id]);
+
+
+
+        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
+        var teacherMathClass = await teacherClient.GetTeacherClass(discreteMathClass.Id);
+        var examGradeId = teacherMathClass.Students.First().ExamGrades.First().Id;
+        await teacherClient.AddExamGradeNote(examGradeId, 5.67M);
+
+        // TODO: preciso ser aprovado na disciplina pra que ela passe a contar nos cálculos de média e CR
+        
+
+
+        // Act
+        var insights = await studentClient.GetStudentInsights();
+
+        // Assert
+        insights.Status.Should().Be(StudentStatus.Enrolled);
+        insights.FinishedDisciplines.Should().Be(0);
+        insights.TotalDisciplines.Should().Be(6);
+        insights.Average.Should().Be(0);
+        insights.CR.Should().Be(0);
     }
 }

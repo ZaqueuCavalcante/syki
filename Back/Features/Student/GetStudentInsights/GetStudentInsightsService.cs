@@ -8,6 +8,8 @@ public class GetStudentInsightsService(SykiDbContext ctx)
             .Where(g => g.CourseCurriculumId == courseCurriculumId)
             .CountAsync();
 
+        // TODO: Adicionar demais props...
+
         return new() { TotalDisciplines = totalDisciplines };
     }
 }

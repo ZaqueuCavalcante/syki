@@ -90,10 +90,10 @@ public class AcademicHttpClient(HttpClient http)
         return await response.DeserializeTo<CampusOut>();
     }
 
-    public async Task<CourseOut> CreateCourse(string name = "ADS", CourseType tipo = CourseType.Bacharelado)
+    public async Task<CourseOut> CreateCourse(string name = "ADS", CourseType type = CourseType.Bacharelado)
     {
         var client = new CreateCourseClient(Cross);
-        var response = await client.Create(name, tipo);
+        var response = await client.Create(name, type);
         return await response.DeserializeTo<CourseOut>();
     }
 
@@ -319,5 +319,37 @@ public class AcademicHttpClient(HttpClient http)
     {
         var client = new StartClassClient(Cross);
         return await client.Start(id);
+    }
+
+    public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()
+    {
+        var data = new BasicInstitutionTestDto();
+
+        var digit = DateTime.Now.Month < 6 ? 1 : 2;
+        data.AcademicPeriod = await CreateAcademicPeriod($"{DateTime.Now.Year}.{digit}");
+        
+        data.Campus = await CreateCampus();
+        data.Course = await CreateCourse();
+        
+        data.Disciplines.DiscreteMath = await CreateDiscipline("Matemática Discreta", [data.Course.Id]);
+        data.Disciplines.IntroToWebDev = await CreateDiscipline("Introdução ao Desenvolvimento Web", [data.Course.Id]);
+        data.Disciplines.HumanMachineInteractionDesign = await CreateDiscipline("Design de Interação Humano-Máquina", [data.Course.Id]);
+        data.Disciplines.IntroToComputerNetworks = await CreateDiscipline("Introdução à Redes de Computadores", [data.Course.Id]);
+        data.Disciplines.CumputationalThinkingAndAlgorithms = await CreateDiscipline("Pensamento Computacional e Algoritmos", [data.Course.Id]);
+        data.Disciplines.IntegratorProjectOne = await CreateDiscipline("Projeto Integrador I: Concepção e Prototipação", [data.Course.Id]);
+
+        data.CourseCurriculum = await CreateCourseCurriculum("Grade ADS 1.0", data.Course.Id,
+        [
+            new(data.Disciplines.DiscreteMath.Id, 1, 7, 60),
+            new(data.Disciplines.IntroToWebDev.Id, 1, 6, 55),
+            new(data.Disciplines.HumanMachineInteractionDesign.Id, 1, 8, 60),
+            new(data.Disciplines.IntroToComputerNetworks.Id, 1, 4, 50),
+            new(data.Disciplines.CumputationalThinkingAndAlgorithms.Id, 1, 6, 45),
+            new(data.Disciplines.IntegratorProjectOne.Id, 1, 7, 65),
+        ]);
+        
+        data.CourseOffering = await CreateCourseOffering(data.Campus.Id, data.Course.Id, data.CourseCurriculum.Id, data.AcademicPeriod.Id, Shift.Noturno);
+
+        return data;
     }
 }

@@ -6,15 +6,15 @@ public class ClassStudent
     public Guid SykiStudentId { get; set; }
     public StudentDisciplineStatus StudentDisciplineStatus { get; set; }
 
-    public ClassStudent() {}
+    // Only for EF
+    public ClassStudent() { }
 
     public ClassStudent(
         Guid classId,
-        Guid studentId,
-        StudentDisciplineStatus status
+        Guid studentId
     ) {
         ClassId = classId;
         SykiStudentId = studentId;
-        StudentDisciplineStatus = status;
+        StudentDisciplineStatus = StudentDisciplineStatus.Matriculado;
     }
 }

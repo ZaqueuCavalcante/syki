@@ -21,7 +21,7 @@ public class Discipline
 
     public DisciplineOut ToOut()
     {
-        return new DisciplineOut
+        return new()
         {
             Id = Id,
             Name = Name,

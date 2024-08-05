@@ -13,7 +13,7 @@ public class CreateClassStudentUnitTests
         var status = StudentDisciplineStatus.Matriculado;
 
         // Act
-        var student = new ClassStudent(classId, studentId, status);
+        var student = new ClassStudent(classId, studentId);
 
         // Assert
         student.ClassId.Should().Be(classId);

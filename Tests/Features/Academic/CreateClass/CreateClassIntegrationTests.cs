@@ -110,7 +110,7 @@ public partial class IntegrationTests
         // Assert
         await response.AssertBadRequest(new InvalidSchedule());
     }
-    
+
     [Test]
     public async Task Should_not_create_class_with_conflicting_schedules()
     {

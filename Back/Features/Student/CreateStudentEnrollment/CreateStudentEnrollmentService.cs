@@ -11,7 +11,7 @@ public class CreateStudentEnrollmentService(SykiDbContext ctx)
 
         var classesStudents = await ctx.ClassesStudents.Where(x => x.SykiStudentId == userId).ToListAsync();
         ctx.RemoveRange(classesStudents);
-        ids.ForEach(id => ctx.Add(new ClassStudent(id, userId, StudentDisciplineStatus.Matriculado)));
+        ids.ForEach(id => ctx.Add(new ClassStudent(id, userId)));
 
         var examGrades = await ctx.ExamGrades.Where(x => x.StudentId == userId).ToListAsync();
         ctx.RemoveRange(examGrades);

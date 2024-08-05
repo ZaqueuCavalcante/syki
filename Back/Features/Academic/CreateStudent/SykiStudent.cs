@@ -12,6 +12,7 @@ public class SykiStudent
     public CourseOffering CourseOffering { get; set; }
     public string Name { get; }
     public string EnrollmentCode { get; }
+    public StudentStatus Status { get; }
 
     public SykiStudent(
         Guid id,
@@ -24,11 +25,12 @@ public class SykiStudent
         CourseOfferingId = courseOfferingId;
         Name = name;
         EnrollmentCode = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
+        Status = StudentStatus.Enrolled;
     }
 
     public StudentOut ToOut()
     {
-        return new StudentOut
+        return new()
         {
             Id = Id,
             CourseOfferingId = CourseOfferingId,
@@ -41,7 +43,7 @@ public class SykiStudent
 
     public TeacherClassStudentOut ToTeacherClassStudentOut()
     {
-        return new TeacherClassStudentOut
+        return new()
         {
             Id = Id,
             Name = Name,

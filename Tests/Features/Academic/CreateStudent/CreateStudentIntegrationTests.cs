@@ -7,19 +7,14 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-
-        var campus = await client.CreateCampus();
-        var period = await client.CreateAcademicPeriod("2024.1");
-        var course = await client.CreateCourse();
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
+        var data = await client.CreateBasicInstitutionData();
 
         // Act
-        var response = await client.CreateStudent(courseOffering.Id);
+        var response = await client.CreateStudent(data.CourseOffering.Id);
 
         // Assert
         response.Id.Should().NotBeEmpty(); 
-        response.CourseOfferingId.Should().Be(courseOffering.Id); 
+        response.CourseOfferingId.Should().Be(data.CourseOffering.Id); 
         response.Name.Should().Be("Zezin"); 
     }
 
@@ -41,17 +36,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-
-        var campus = await client.CreateCampus();
-        var period = await client.CreateAcademicPeriod("2024.1");
-        var course = await client.CreateCourse();
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
+        var data = await client.CreateBasicInstitutionData();
 
         var email = TestData.InvalidEmailsList.OrderBy(_ => Guid.NewGuid()).First();
-        
+
         // Act
-        var (_, response) = await client.CreateStudentTuple(courseOffering.Id, "Zezin", email);
+        var (_, response) = await client.CreateStudentTuple(data.CourseOffering.Id, "Zezin", email);
 
         // Assert
         await response.AssertBadRequest(new InvalidEmail()); 
@@ -62,17 +52,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-
-        var campus = await client.CreateCampus();
-        var period = await client.CreateAcademicPeriod("2024.1");
-        var course = await client.CreateCourse();
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
+        var data = await client.CreateBasicInstitutionData();
 
         // Act
         var email = TestData.Email;
-        var (_, firstResponse) = await client.CreateStudentTuple(courseOffering.Id, "Zezin", email);
-        var (_, secondResponse) = await client.CreateStudentTuple(courseOffering.Id, "Zezin", email);
+        var (_, firstResponse) = await client.CreateStudentTuple(data.CourseOffering.Id, "Zezin", email);
+        var (_, secondResponse) = await client.CreateStudentTuple(data.CourseOffering.Id, "Zezin", email);
 
         // Assert
         firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -84,15 +69,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-
-        var campus = await client.CreateCampus();
-        var period = await client.CreateAcademicPeriod("2024.1");
-        var course = await client.CreateCourse();
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
+        var data = await client.CreateBasicInstitutionData();
 
         // Act
-        var student = await client.CreateStudent(courseOffering.Id);
+        var student = await client.CreateStudent(data.CourseOffering.Id);
 
         // Assert
         using var userManager = _back.GetUserManager();

@@ -7,15 +7,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
+        var data = await client.CreateBasicInstitutionData();
 
-        var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var period = await client.CreateAcademicPeriod("2024.1");
-        var course = await client.CreateCourse("ADS");
-        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var co = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
-
-        await client.CreateStudent(co.Id, "Zaqueu");
-        await client.CreateStudent(co.Id, "Maju");
+        await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        await client.CreateStudent(data.CourseOffering.Id, "Maju");
 
         // Act
         var response = await client.GetStudents();

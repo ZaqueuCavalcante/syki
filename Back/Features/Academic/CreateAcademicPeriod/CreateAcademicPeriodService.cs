@@ -9,14 +9,12 @@ public class CreateAcademicPeriodService(SykiDbContext ctx)
 
         var result = AcademicPeriod.New(data.Id, institutionId, data.StartAt, data.EndAt);
 
-        return await result.Match<Task<OneOf<AcademicPeriodOut, SykiError>>>(
-            async period =>
-            {
-                ctx.Add(period);
-                await ctx.SaveChangesAsync();
-                return period.ToOut();
-            },
-            error => Task.FromResult<OneOf<AcademicPeriodOut, SykiError>>(error)
-        );
+        if (result.IsError()) return result.GetError();
+
+        var period = result.GetSuccess();
+        ctx.Add(period);
+        await ctx.SaveChangesAsync();
+
+        return period.ToOut();
     }
 }

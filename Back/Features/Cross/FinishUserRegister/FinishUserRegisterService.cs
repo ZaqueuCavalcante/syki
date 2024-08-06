@@ -26,14 +26,13 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
         var userIn = CreateUserIn.NewAcademic(institution.Id, register.Email, data.Password);
         var result = await service.Create(userIn);
 
-        return await result.Match<Task<OneOf<UserOut, SykiError>>>(
-            async user =>
-            {
-                await ctx.SaveChangesAsync();
-                transaction.Commit();
-                return user;
-            },
-            error => Task.FromResult<OneOf<UserOut, SykiError>>(error)
-        );
+        if (result.IsError()) return result.GetError();
+
+        var user = result.GetSuccess();
+
+        await ctx.SaveChangesAsync();
+        await transaction.CommitAsync();
+
+        return user;
     }
 }

@@ -10,14 +10,12 @@ public class CreateEnrollmentPeriodService(SykiDbContext ctx)
 
         var result = EnrollmentPeriod.New(data.Id, institutionId, data.StartAt, data.EndAt);
 
-        return await result.Match<Task<OneOf<EnrollmentPeriodOut, SykiError>>>(
-            async period =>
-            {
-                ctx.Add(period);
-                await ctx.SaveChangesAsync();
-                return period.ToOut();
-            },
-            error => Task.FromResult<OneOf<EnrollmentPeriodOut, SykiError>>(error)
-        );
+        if (result.IsError()) return result.GetError();
+
+        var period = result.GetSuccess();
+        ctx.Add(period);
+        await ctx.SaveChangesAsync();
+
+        return period.ToOut();
     }
 }

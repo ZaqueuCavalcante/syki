@@ -12,21 +12,19 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
         var userIn = CreateUserIn.NewTeacher(institutionId, data.Name, data.Email);
         var result = await service.Create(userIn);
 
-        return await result.Match<Task<OneOf<TeacherOut, SykiError>>>(
-            async user =>
-            {
-                var teacher = new SykiTeacher(user.Id, institutionId, data.Name);
+        if (result.IsError()) return result.GetError();
 
-                ctx.Add(teacher);
-                ctx.Add(SykiTask.LinkOldNotifications(user.Id, institutionId));
+        var user = result.GetSuccess();
 
-                await sendService.Send(new(user.Email));
+        var teacher = new SykiTeacher(user.Id, institutionId, data.Name);
 
-                await transaction.CommitAsync();
+        ctx.Add(teacher);
+        ctx.Add(SykiTask.LinkOldNotifications(user.Id, institutionId));
 
-                return teacher.ToOut();
-            },
-            error => Task.FromResult<OneOf<TeacherOut, SykiError>>(error)
-        );
+        await sendService.Send(new(user.Email));
+
+        await transaction.CommitAsync();
+
+        return teacher.ToOut();
     }
 }

@@ -52,10 +52,9 @@ public class Class
     ) {
         var result = Validate(schedules);
 
-        return result.Match<OneOf<Class, SykiError>>(
-            _ => new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules),
-            error => error
-        );
+        if (result.IsError()) return result.GetError();
+
+        return new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
     }
 
     private static OneOf<SykiSuccess, SykiError> Validate(List<Schedule> schedules)

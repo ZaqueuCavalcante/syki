@@ -3,7 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests
 {
     [Test]
-    public async Task Should_return_all_institution_course_curriculums()
+    public async Task Should_return_only_institution_course_curriculums()
     {
         // Arrange
         var clientNovaRoma = await _back.LoggedAsAcademic();

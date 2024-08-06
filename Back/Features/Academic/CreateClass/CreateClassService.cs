@@ -31,21 +31,19 @@ public class CreateClassService(SykiDbContext ctx)
             schedules.ConvertAll(x => x.GetSuccess())
         );
 
-        return await result.Match<Task<OneOf<ClassOut, SykiError>>>(
-            async @class =>
-            {
-                ctx.Classes.Add(@class);
-                await ctx.SaveChangesAsync();
+        if (result.IsError()) return result.GetError();
 
-                @class = await ctx.Classes.AsNoTracking()
-                    .Include(t => t.Discipline)
-                    .Include(t => t.Teacher)
-                    .Include(t => t.Schedules)
-                    .FirstAsync(x => x.Id == @class.Id);
+        var @class = result.GetSuccess();
 
-                return @class.ToOut();
-            },
-            error => Task.FromResult<OneOf<ClassOut, SykiError>>(error)
-        );
+        ctx.Classes.Add(@class);
+        await ctx.SaveChangesAsync();
+
+        @class = await ctx.Classes.AsNoTracking()
+            .Include(t => t.Discipline)
+            .Include(t => t.Teacher)
+            .Include(t => t.Schedules)
+            .FirstAsync(x => x.Id == @class.Id);
+
+        return @class.ToOut();
     }
 }

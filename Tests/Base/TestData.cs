@@ -28,7 +28,7 @@ public static class TestData
     {
         var empty = Guid.Empty.ToString();
         var random = Guid.NewGuid().ToString();
-        foreach (var name in new List<string>() { null, "", "a", "42", " ", "  ", "     ", "JP", empty, random, })
+        foreach (var name in new List<string>() { null, "", "a", "42", "qwerty123", " ", "  ", "     ", "JP", empty, random, })
         {
             yield return [name];
         }
@@ -50,30 +50,29 @@ public static class TestData
         }
     }
 
-    public static List<string> InvalidEmailsList =
-    [
-        "",
-        " ",
-        "zaqueugmail",
-        "majuasp.net",
-        "#@%^%#$@#$@#.com",
-        "@example.com",
-        "Joe Smith <email@example.com>",
-        "email.example.com",
-        "email@example@example.com",
-        ".email@example.com",
-        "email.@example.com",
-        "email..email@example.com",
-        "email@example.com (Joe Smith)",
-        "email@example",
-        "email@-example.com",
-        "email@example..com",
-        "Abc..123@example.com",
-    ];
-
     public static IEnumerable<object[]> InvalidEmails()
     {
-        foreach (var email in InvalidEmailsList)
+        List<string> emails = [
+            "",
+            " ",
+            "zaqueugmail",
+            "majuasp.net",
+            "#@%^%#$@#$@#.com",
+            "@example.com",
+            "Joe Smith <email@example.com>",
+            "email.example.com",
+            "email@example@example.com",
+            ".email@example.com",
+            "email.@example.com",
+            "email..email@example.com",
+            "email@example.com (Joe Smith)",
+            "email@example",
+            "email@-example.com",
+            "email@example..com",
+            "Abc..123@example.com",
+        ];
+
+        foreach (var email in emails)
         {
             yield return [email];
         }
@@ -105,9 +104,9 @@ public static class TestData
             " ",
             "syki",
             "5464",
+            "123456",
             "lalal.com",
             "5816811681816",
-            Guid.NewGuid().ToHashCode().ToString()[..6]
         })
         {
             yield return [role];

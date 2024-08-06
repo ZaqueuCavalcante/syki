@@ -17,11 +17,11 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_not_create_teacher_with_invalid_email()
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidEmails))]
+    public async Task Should_not_create_teacher_with_invalid_email(string email)
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-        var email = TestData.InvalidEmailsList.OrderBy(_ => Guid.NewGuid()).First();
 
         // Act
         var response = await client.CreateTeacher2("Chico", email);

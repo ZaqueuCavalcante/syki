@@ -2,8 +2,10 @@ namespace Syki.Front.Features.Academic.StartClass;
 
 public class StartClassClient(HttpClient http)
 {
-    public async Task<HttpResponseMessage> Start(Guid id)
+    public async Task<OneOf<SuccessOut, ErrorOut>> Start(Guid id)
     {
-        return await http.PutAsJsonAsync($"/academic/classes/{id}/start", new { });
+        var response = await http.PutAsJsonAsync($"/academic/classes/{id}/start", new { });
+
+        return await response.Resolve<SuccessOut>();
     }
 }

@@ -196,9 +196,9 @@ public class AcademicHttpClient(HttpClient http)
 
     public async Task<OneOf<TeacherOut, ErrorOut>> CreateTeacher2(
         string name = "Chico",
-        string email = ""
+        string email = null
     ) {
-        email = email.HasValue() ? email : TestData.Email;
+        email ??= TestData.Email;
         var client = new CreateTeacherClient(Cross);
 
         var response = await client.Create(name, email);
@@ -214,7 +214,7 @@ public class AcademicHttpClient(HttpClient http)
     }
     public async Task<TeacherOut> CreateTeacher(
         string name = "Chico",
-        string email = ""
+        string email = null
     ) {
         var response = await CreateTeacher2(name, email);
         return response.GetSuccess();
@@ -267,9 +267,9 @@ public class AcademicHttpClient(HttpClient http)
     public async Task<OneOf<StudentOut, ErrorOut>> CreateStudent2(
         Guid courseOfferingId,
         string name = "Zezin",
-        string email = ""
+        string email = null
     ) {
-        email = email.HasValue() ? email : TestData.Email;
+        email ??= TestData.Email;
 
         var client = new CreateStudentClient(Cross);
         var response = await client.Create(name, email, courseOfferingId);
@@ -286,7 +286,7 @@ public class AcademicHttpClient(HttpClient http)
     public async Task<StudentOut> CreateStudent(
         Guid courseOfferingId,
         string name = "Zezin",
-        string email = ""
+        string email = null
     ) {
         var response = await CreateStudent2(courseOfferingId, name, email);
         return response.GetSuccess();
@@ -366,7 +366,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<HttpResponseMessage> StartClass(Guid id)
+    public async Task<OneOf<SuccessOut, ErrorOut>> StartClass(Guid id)
     {
         var client = new StartClassClient(Cross);
         return await client.Start(id);

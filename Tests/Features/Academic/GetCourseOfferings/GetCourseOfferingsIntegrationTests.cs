@@ -7,12 +7,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-
-        var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var period = await client.CreateAcademicPeriod("2024.1");
-        var course = await client.CreateCourse("ADS");
-        var courseCurriculum = (await client.CreateCourseCurriculum2("Grade de ADS 1.0", course.Id)).GetSuccess();
-        await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
+        await client.CreateBasicInstitutionData();
 
         // Act
         var courseOfferings = await client.GetCourseOfferings();

@@ -15,7 +15,7 @@ public partial class IntegrationTests
         var response = await client.CreatePendingUserRegister(email);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.ShouldBeSuccess();
 
         await using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
@@ -25,17 +25,17 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_not_create_a_pending_user_register_with_invalid_email()
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidEmails))]
+    public async Task Should_not_create_a_pending_user_register_with_invalid_email(string email)
     {
         // Arrange
         var client = _back.GetClient();
-        var email = TestData.InvalidEmailsList.OrderBy(x => Guid.NewGuid()).First();
 
         // Act
         var response = await client.CreatePendingUserRegister(email);
 
         // Assert
-        await response.AssertBadRequest(new InvalidEmail());
+        response.ShouldBeError(new InvalidEmail());
 
         await using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(x => x.Email == email);
@@ -54,8 +54,8 @@ public partial class IntegrationTests
         var secondResponse = await client.CreatePendingUserRegister(email);
 
         // Assert
-        firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        await secondResponse.AssertBadRequest(new EmailAlreadyUsed());
+        firstResponse.ShouldBeSuccess();
+        secondResponse.ShouldBeError(new EmailAlreadyUsed());
 
         await using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.SingleAsync(x => x.Email == email);
@@ -76,8 +76,8 @@ public partial class IntegrationTests
         var secondResponse = await client.CreatePendingUserRegister(email2);
 
         // Assert
-        firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        await secondResponse.AssertBadRequest(new EmailAlreadyUsed());
+        firstResponse.ShouldBeSuccess();
+        secondResponse.ShouldBeError(new EmailAlreadyUsed());
 
         using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.SingleAsync(x => x.Email == email);
@@ -96,7 +96,7 @@ public partial class IntegrationTests
         var response = await client.CreatePendingUserRegister(email);
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.ShouldBeSuccess();
         await AssertTaskByDataLike<SendUserRegisterEmailConfirmation>(email);
     }
 }

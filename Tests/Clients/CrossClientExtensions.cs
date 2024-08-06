@@ -15,7 +15,7 @@ namespace Syki.Tests.Clients;
 
 public static class CrossClientExtensions
 {
-    public static async Task<HttpResponseMessage> CreatePendingUserRegister(this HttpClient http, string email)
+    public static async Task<OneOf<SuccessOut, ErrorOut>> CreatePendingUserRegister(this HttpClient http, string email)
     {
         var client = new CreatePendingUserRegisterClient(http);
         return await client.Create(email);

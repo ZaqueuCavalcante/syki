@@ -27,10 +27,9 @@ public class AcademicPeriod
     ) {
         var result = Validate(id, startAt, endAt);
 
-        return result.Match<OneOf<AcademicPeriod, SykiError>>(
-            validId => new AcademicPeriod(validId, institutionId, startAt, endAt),
-            error => error
-        );
+        if (result.IsError()) return result.GetError();
+
+        return new AcademicPeriod(result.GetSuccess(), institutionId, startAt, endAt);
     }
 
     private static OneOf<string, SykiError> Validate(

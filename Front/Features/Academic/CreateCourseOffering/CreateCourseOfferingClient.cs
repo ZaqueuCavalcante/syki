@@ -2,7 +2,7 @@ namespace Syki.Front.Features.Academic.CreateCourseOffering;
 
 public class CreateCourseOfferingClient(HttpClient http)
 {
-    public async Task<HttpResponseMessage> Create(
+    public async Task<OneOf<CourseOfferingOut, ErrorOut>> Create(
         Guid campusId,
         Guid courseId,
         Guid courseCurriculumId,
@@ -18,6 +18,8 @@ public class CreateCourseOfferingClient(HttpClient http)
             Shift = shift,
         };
 
-        return await http.PostAsJsonAsync("/academic/course-offerings", data);
+        var response = await http.PostAsJsonAsync("/academic/course-offerings", data);
+
+        return await response.Resolve<CourseOfferingOut>();
     }
 }

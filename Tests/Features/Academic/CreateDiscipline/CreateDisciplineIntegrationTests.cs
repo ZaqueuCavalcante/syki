@@ -3,7 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests
 {
     [Test]
-    public async Task Should_create_a_new_discipline_without_course()
+    public async Task Should_create_discipline_without_course()
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
@@ -19,7 +19,7 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_create_a_new_discipline_with_only_one_course()
+    public async Task Should_create_discipline_with_only_one_course()
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
@@ -34,7 +34,7 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_create_a_new_discipline_with_many_courses()
+    public async Task Should_create_discipline_with_many_courses()
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();

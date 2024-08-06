@@ -23,12 +23,12 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateEnrollmentPeriodHttp("2024.1", "15/01", "15/01");
+        var response = await client.CreateEnrollmentPeriod2("2024.1", 0, 0);
 
         // Assert
-        await response.AssertBadRequest(new AcademicPeriodNotFound());
+        response.ShouldBeError(new AcademicPeriodNotFound());
     }
-    
+
     [Test]
     public async Task Should_not_create_enrollment_period_with_start_equal_end()
     {
@@ -37,12 +37,12 @@ public partial class IntegrationTests
         var period = await client.CreateAcademicPeriod("2024.1");
 
         // Act
-        var response = await client.CreateEnrollmentPeriodHttp(period.Id, "15/01", "15/01");
+        var response = await client.CreateEnrollmentPeriod2(period.Id, 0, 0);
 
         // Assert
-        await response.AssertBadRequest(new InvalidEnrollmentPeriodDates());
+        response.ShouldBeError(new InvalidEnrollmentPeriodDates());
     }
-    
+
     [Test]
     public async Task Should_not_create_enrollment_period_with_start_greater_than_end()
     {
@@ -51,9 +51,9 @@ public partial class IntegrationTests
         var period = await client.CreateAcademicPeriod("2024.1");
 
         // Act
-        var response = await client.CreateEnrollmentPeriodHttp(period.Id, "15/01", "03/01");
+        var response = await client.CreateEnrollmentPeriod2(period.Id, 2, -2);
 
         // Assert
-        await response.AssertBadRequest(new InvalidEnrollmentPeriodDates());
+        response.ShouldBeError(new InvalidEnrollmentPeriodDates());
     }
 }

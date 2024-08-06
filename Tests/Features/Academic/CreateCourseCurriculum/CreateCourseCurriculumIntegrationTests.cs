@@ -74,10 +74,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var (_, response) = await client.CreateCourseCurriculumTuple("Grade de ADS 1.0", Guid.NewGuid(), []);
+        var response = await client.CreateCourseCurriculum2("Grade de ADS 1.0", Guid.NewGuid(), []);
         
         // Assert
-        await response.AssertBadRequest(new CourseNotFound());
+        response.ShouldBeError(new CourseNotFound());
     }
 
     [Test]
@@ -90,10 +90,10 @@ public partial class IntegrationTests
         var course = await clientUfpe.CreateCourse("Análise e Desenvolvimento de Sistemas");
 
         // Act
-        var (_, response) = await clientNovaRoma.CreateCourseCurriculumTuple("Grade de ADS 1.0", course.Id, []);
+        var response = await clientNovaRoma.CreateCourseCurriculum2("Grade de ADS 1.0", course.Id, []);
         
         // Assert
-        await response.AssertBadRequest(new CourseNotFound());
+        response.ShouldBeError(new CourseNotFound());
     }
 
     [Test]
@@ -108,10 +108,10 @@ public partial class IntegrationTests
         var bd = await client.CreateDiscipline("Banco de Dados", [ads.Id]);
 
         // Act
-        var (_, response) = await client.CreateCourseCurriculumTuple("Grade de Direito 1.0", direito.Id, [ new(bd.Id, 1, 10, 70) ]);
+        var response = await client.CreateCourseCurriculum2("Grade de Direito 1.0", direito.Id, [ new(bd.Id, 1, 10, 70) ]);
 
         // Assert
-        await response.AssertBadRequest(new InvalidDisciplinesList());
+        response.ShouldBeError(new InvalidDisciplinesList());
     }
 
     [Test]
@@ -128,10 +128,10 @@ public partial class IntegrationTests
         var disciplineUfpe = await clientUfpe.CreateDiscipline("Banco de Dados", [courseUfpe.Id]);
 
         // Act
-        var (_, response) = await clientNovaRoma.CreateCourseCurriculumTuple("Grade ADS", courseNovaRoma.Id, [ new(disciplineUfpe.Id, 1, 10, 70) ]);
+        var response = await clientNovaRoma.CreateCourseCurriculum2("Grade ADS", courseNovaRoma.Id, [ new(disciplineUfpe.Id, 1, 10, 70) ]);
 
         // Assert
-        await response.AssertBadRequest(new InvalidDisciplinesList());
+        response.ShouldBeError(new InvalidDisciplinesList());
     }
 
     [Test]
@@ -154,10 +154,10 @@ public partial class IntegrationTests
         };
 
         // Act
-        var (_, response) = await client.CreateCourseCurriculumTuple("Grade de Direito 1.0", course.Id, disciplines);
+        var response = await client.CreateCourseCurriculum2("Grade de Direito 1.0", course.Id, disciplines);
 
         // Assert
-        await response.AssertBadRequest(new InvalidDisciplinesList());
+        response.ShouldBeError(new InvalidDisciplinesList());
     }
 
     [Test]
@@ -177,9 +177,9 @@ public partial class IntegrationTests
         };
 
         // Act
-        var (_, response) = await client.CreateCourseCurriculumTuple("Grade de Direito 1.0", course.Id, disciplines);
+        var response = await client.CreateCourseCurriculum2("Grade de Direito 1.0", course.Id, disciplines);
 
         // Assert
-        await response.AssertBadRequest(new InvalidDisciplinesList());     
+        response.ShouldBeError(new InvalidDisciplinesList());     
     }
 }

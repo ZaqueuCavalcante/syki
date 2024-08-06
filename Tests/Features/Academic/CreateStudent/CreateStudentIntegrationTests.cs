@@ -25,10 +25,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var (_, response) = await client.CreateStudentTuple(Guid.NewGuid());
+        var response = await client.CreateStudent2(Guid.NewGuid());
 
         // Assert
-        await response.AssertBadRequest(new CourseOfferingNotFound());
+        response.ShouldBeError(new CourseOfferingNotFound());
     }
 
     [Test]
@@ -41,10 +41,10 @@ public partial class IntegrationTests
         var email = TestData.InvalidEmailsList.OrderBy(_ => Guid.NewGuid()).First();
 
         // Act
-        var (_, response) = await client.CreateStudentTuple(data.CourseOffering.Id, "Zezin", email);
+        var response = await client.CreateStudent2(data.CourseOffering.Id, "Zezin", email);
 
         // Assert
-        await response.AssertBadRequest(new InvalidEmail()); 
+        response.ShouldBeError(new InvalidEmail()); 
     }
 
     [Test]
@@ -56,12 +56,12 @@ public partial class IntegrationTests
 
         // Act
         var email = TestData.Email;
-        var (_, firstResponse) = await client.CreateStudentTuple(data.CourseOffering.Id, "Zezin", email);
-        var (_, secondResponse) = await client.CreateStudentTuple(data.CourseOffering.Id, "Zezin", email);
+        var firstResponse = await client.CreateStudent2(data.CourseOffering.Id, "Zezin", email);
+        var secondResponse = await client.CreateStudent2(data.CourseOffering.Id, "Zezin", email);
 
         // Assert
-        firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        await secondResponse.AssertBadRequest(new EmailAlreadyUsed());
+        firstResponse.ShouldBeSuccess();
+        secondResponse.ShouldBeError(new EmailAlreadyUsed());
     }
 
     [Test]

@@ -78,16 +78,10 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get(courseId);
     }
 
-    public async Task<HttpResponseMessage> UpdateCampusHttp(Guid id, string name = "Agreste I", string city = "Caruaru - PE")
+    public async Task<OneOf<CampusOut, ErrorOut>> UpdateCampus(Guid id, string name = "Agreste I", string city = "Caruaru - PE")
     {
         var client = new UpdateCampusClient(Cross);
         return await client.Update(id, name, city);
-    }
-
-    public async Task<CampusOut> UpdateCampus(Guid id, string name = "Agreste I", string city = "Caruaru - PE")
-    {
-        var response = await UpdateCampusHttp(id, name, city);
-        return await response.DeserializeTo<CampusOut>();
     }
 
 
@@ -128,16 +122,18 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<(CourseCurriculumOut, HttpResponseMessage)> CreateCourseCurriculumTuple(
+
+
+
+
+    public async Task<OneOf<CourseCurriculumOut, ErrorOut>> CreateCourseCurriculum2(
         string name,
         Guid courseId,
         List<CreateCourseCurriculumDisciplineIn> disciplines = null
     ) {
         var client = new CreateCourseCurriculumClient(Cross);
-        var response = await client.Create(name, courseId, disciplines ?? []);
-        return (await response.DeserializeTo<CourseCurriculumOut>(), response);
+        return await client.Create(name, courseId, disciplines ?? []);
     }
-
     public async Task<CourseCurriculumOut> CreateCourseCurriculum(
         string name,
         Guid courseId,
@@ -145,8 +141,10 @@ public class AcademicHttpClient(HttpClient http)
     ) {
         var client = new CreateCourseCurriculumClient(Cross);
         var response = await client.Create(name, courseId, disciplines ?? []);
-        return await response.DeserializeTo<CourseCurriculumOut>();
+        return response.GetSuccess();
     }
+
+
 
     public async Task<List<CourseCurriculumOut>> GetCourseCurriculums()
     {
@@ -154,7 +152,11 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<HttpResponseMessage> CreateCourseOfferingHttp(
+
+
+
+
+    public async Task<OneOf<CourseOfferingOut, ErrorOut>> CreateCourseOffering2(
         Guid campusId,
         Guid courseId,
         Guid courseCurriculumId,
@@ -162,10 +164,8 @@ public class AcademicHttpClient(HttpClient http)
         Shift shift
     ) {
         var client = new CreateCourseOfferingClient(Cross);
-
         return await client.Create(campusId, courseId, courseCurriculumId, period, shift);
     }
-
     public async Task<CourseOfferingOut> CreateCourseOffering(
         Guid campusId,
         Guid courseId,
@@ -173,9 +173,13 @@ public class AcademicHttpClient(HttpClient http)
         string? period,
         Shift shift
     ) {
-        var result = await CreateCourseOfferingHttp(campusId, courseId, courseCurriculumId, period, shift);
-        return await result.DeserializeTo<CourseOfferingOut>();
+        var result = await CreateCourseOffering2(campusId, courseId, courseCurriculumId, period, shift);
+        return result.GetSuccess();
     }
+
+
+
+
 
     public async Task<List<CourseOfferingOut>> GetCourseOfferings()
     {
@@ -189,27 +193,31 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<TeacherOut> CreateTeacher(
+
+    public async Task<OneOf<TeacherOut, ErrorOut>> CreateTeacher2(
         string name = "Chico",
         string email = ""
     ) {
         email = email.HasValue() ? email : TestData.Email;
         var client = new CreateTeacherClient(Cross);
-        var response = await client.Create(name, email);
-        var teacher= await response.DeserializeTo<TeacherOut>();
-        teacher.Email = email;
-        return teacher;
-    }
 
-    public async Task<(TeacherOut, HttpResponseMessage)> CreateTeacherTuple(
+        var response = await client.Create(name, email);
+
+        if (response.IsSuccess())
+        {
+            var teacher = response.GetSuccess();
+            teacher.Email = email;
+            return teacher;
+        }
+
+        return response.GetError();
+    }
+    public async Task<TeacherOut> CreateTeacher(
         string name = "Chico",
         string email = ""
     ) {
-        var client = new CreateTeacherClient(Cross);
-        var response = await client.Create(name, email);
-        var teacher= await response.DeserializeTo<TeacherOut>();
-        teacher.Email = email;
-        return (teacher, response);
+        var response = await CreateTeacher2(name, email);
+        return response.GetSuccess();
     }
 
     public async Task<List<TeacherOut>> GetTeachers()
@@ -252,26 +260,41 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<(StudentOut, HttpResponseMessage)> CreateStudentTuple(
-        Guid courseOfferingId,
-        string name = "Zezin",
-        string email = ""
-    ) {
-        var client = new CreateStudentClient(Cross);
-        var response = await client.Create(name, email, courseOfferingId);
-        return (await response.DeserializeTo<StudentOut>(), response);
-    }
 
-    public async Task<StudentOut> CreateStudent(
+
+
+
+    public async Task<OneOf<StudentOut, ErrorOut>> CreateStudent2(
         Guid courseOfferingId,
         string name = "Zezin",
         string email = ""
     ) {
         email = email.HasValue() ? email : TestData.Email;
-        var (student, _) = await CreateStudentTuple(courseOfferingId, name, email);
-        student.Email = email;
-        return student;
+
+        var client = new CreateStudentClient(Cross);
+        var response = await client.Create(name, email, courseOfferingId);
+
+        if (response.IsSuccess())
+        {
+            var student = response.GetSuccess();
+            student.Email = email;
+            return student;
+        }
+
+        return response.GetError();
     }
+    public async Task<StudentOut> CreateStudent(
+        Guid courseOfferingId,
+        string name = "Zezin",
+        string email = ""
+    ) {
+        var response = await CreateStudent2(courseOfferingId, name, email);
+        return response.GetSuccess();
+    }
+
+
+
+
 
     public async Task<List<StudentOut>> GetStudents()
     {
@@ -313,11 +336,16 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<HttpResponseMessage> CreateEnrollmentPeriodHttp(string id, string start, string end)
+
+
+
+
+    public async Task<OneOf<EnrollmentPeriodOut, ErrorOut>> CreateEnrollmentPeriod2(string id, int start = -2, int end = 2)
     {
         var client = new CreateEnrollmentPeriodClient(Cross);
-        var period = new CreateEnrollmentPeriodIn(id, start, end);
-        return await client.Create(id, period.StartAt, period.EndAt);
+        var startDate = DateOnly.FromDateTime(DateTime.Now.AddDays(start));
+        var endDate = DateOnly.FromDateTime(DateTime.Now.AddDays(end));
+        return await client.Create(id, startDate, endDate);
     }
     public async Task<EnrollmentPeriodOut> CreateEnrollmentPeriod(string id, int start = -2, int end = 2)
     {
@@ -325,8 +353,12 @@ public class AcademicHttpClient(HttpClient http)
         var startDate = DateOnly.FromDateTime(DateTime.Now.AddDays(start));
         var endDate = DateOnly.FromDateTime(DateTime.Now.AddDays(end));
         var response = await client.Create(id, startDate, endDate);
-        return await response.DeserializeTo<EnrollmentPeriodOut>();
+        return response.GetSuccess();
     }
+
+
+
+
 
     public async Task<List<EnrollmentPeriodOut>> GetEnrollmentPeriods()
     {
@@ -339,6 +371,14 @@ public class AcademicHttpClient(HttpClient http)
         var client = new StartClassClient(Cross);
         return await client.Start(id);
     }
+
+
+
+
+
+
+
+
 
     public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()
     {

@@ -24,10 +24,10 @@ public partial class IntegrationTests
         var email = TestData.InvalidEmailsList.OrderBy(_ => Guid.NewGuid()).First();
 
         // Act
-        var (_, response) = await client.CreateTeacherTuple("Chico", email);
+        var response = await client.CreateTeacher2("Chico", email);
 
         // Assert
-        await response.AssertBadRequest(new InvalidEmail());
+        response.ShouldBeError(new InvalidEmail());
     }
 
     [Test]
@@ -37,12 +37,12 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
         var email = TestData.Email;
 
-        var (_, firstResponse) = await client.CreateTeacherTuple("Chico", email);
-        var (_, secondResponse) = await client.CreateTeacherTuple("Chico", email);
+        var firstResponse = await client.CreateTeacher2("Chico", email);
+        var secondResponse = await client.CreateTeacher2("Chico", email);
 
         // Assert
-        firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        await secondResponse.AssertBadRequest(new EmailAlreadyUsed());
+        firstResponse.ShouldBeSuccess();
+        secondResponse.ShouldBeError(new EmailAlreadyUsed());
     }
 
     [Test]

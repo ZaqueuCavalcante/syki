@@ -139,15 +139,14 @@
 
         _loading = true;
         var response = await CreateCourseCurriculumClient.Create(data.Name, data.CourseId, data.Disciplines);
-        if (response.IsSuccessStatusCode)
+        if (response.IsSuccess())
         {
             MudDialog.Close(DialogResult.Ok(true));
             Snackbar.Add("Grade cadastrada com sucesso!", Severity.Success);
         }
         else
         {
-            var error = await response.ToError();
-            Snackbar.Add(error.Message, Severity.Error);
+            Snackbar.Add(response.GetError().Message, Severity.Error);
         }
         _loading = false;
     }

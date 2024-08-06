@@ -5,7 +5,7 @@ namespace Syki.Tests.Features.Academic.CreateNotification;
 public class CreateNotificationUnitTests
 {
     [Test]
-    public void Should_create_a_notification_with_correct_data()
+    public void Should_create_notification_with_correct_data()
     {
         // Arrange
         var institutionId = Guid.NewGuid();

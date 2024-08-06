@@ -23,7 +23,7 @@ public class CreateScheduleUnitTests
     }
 
     [Test]
-    public void Nao_deve_criar_um_schedule_quando_start_e_end_forem_iguais()
+    public void Should_not_create_schedule_with_same_start_and_end()
     {
         // Arrange
         var day = Day.Terca;

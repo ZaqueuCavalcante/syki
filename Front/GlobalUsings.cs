@@ -1,3 +1,4 @@
+global using OneOf;
 global using Syki.Shared;
 global using Syki.Front.Auth;
 global using Syki.Front.Extensions;

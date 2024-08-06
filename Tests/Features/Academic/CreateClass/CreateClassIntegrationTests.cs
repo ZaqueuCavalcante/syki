@@ -10,7 +10,7 @@ public partial class IntegrationTests
 
         var discipline = await client.CreateDiscipline();
         var teacher = await client.CreateTeacher();
-        var period = await client.CreateAcademicPeriod("2024.1");
+        var period = (await client.CreateAcademicPeriod2("2024.1")).GetSuccess();
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
         // Act
@@ -33,10 +33,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateClassHttp(Guid.NewGuid(), Guid.NewGuid(), "2024.1", 40, []);
+        var response = await client.CreateClass2(Guid.NewGuid(), Guid.NewGuid(), "2024.1", 40, []);
 
         // Assert
-        await response.AssertBadRequest(new DisciplineNotFound());
+        response.ShouldBeError(new DisciplineNotFound());
     }
 
     [Test]
@@ -48,10 +48,10 @@ public partial class IntegrationTests
         var discipline = await client.CreateDiscipline();
 
         // Act
-        var response = await client.CreateClassHttp(discipline.Id, Guid.NewGuid(), "2024.1", 40, []);
+        var response = await client.CreateClass2(discipline.Id, Guid.NewGuid(), "2024.1", 40, []);
 
         // Assert
-        await response.AssertBadRequest(new TeacherNotFound());
+        response.ShouldBeError(new TeacherNotFound());
     }
 
     [Test]
@@ -64,10 +64,10 @@ public partial class IntegrationTests
         var teacher = await client.CreateTeacher();
         
         // Act
-        var response = await client.CreateClassHttp(discipline.Id, teacher.Id, "2024.1", 40, []);
+        var response = await client.CreateClass2(discipline.Id, teacher.Id, "2024.1", 40, []);
 
         // Assert
-        await response.AssertBadRequest(new AcademicPeriodNotFound());
+        response.ShouldBeError(new AcademicPeriodNotFound());
     }
 
     [Test]
@@ -82,10 +82,10 @@ public partial class IntegrationTests
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H07_00) };
 
         // Act
-        var response = await client.CreateClassHttp(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        var response = await client.CreateClass2(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
-        await response.AssertBadRequest(new InvalidSchedule());
+        response.ShouldBeError(new InvalidSchedule());
     }
 
     [Test]
@@ -105,10 +105,10 @@ public partial class IntegrationTests
         };
 
         // Act
-        var response = await client.CreateClassHttp(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        var response = await client.CreateClass2(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
-        await response.AssertBadRequest(new InvalidSchedule());
+        response.ShouldBeError(new InvalidSchedule());
     }
 
     [Test]
@@ -127,9 +127,9 @@ public partial class IntegrationTests
         };
 
         // Act
-        var response = await client.CreateClassHttp(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        var response = await client.CreateClass2(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
-        await response.AssertBadRequest(new ConflictingSchedules());
+        response.ShouldBeError(new ConflictingSchedules());
     }
 }

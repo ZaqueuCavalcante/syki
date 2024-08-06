@@ -69,15 +69,14 @@
 
         _loading = true;
         var response = await Client.Create(_id, start, end);
-        if (response.IsSuccessStatusCode)
+        if (response.IsSuccess())
         {
             MudDialog.Close(DialogResult.Ok(true));
             Snackbar.Add("Período acadêmico cadastrado com sucesso!", Severity.Success);
         }
         else
         {
-            var error = await response.ToError();
-            Snackbar.Add(error.Message, Severity.Error);
+            Snackbar.Add(response.GetError().Message, Severity.Error);
         }
         _loading = false;
     }

@@ -1,4 +1,4 @@
-namespace Syki.Back.Extensions;
+namespace Syki.Shared;
 
 public static class ResultExtensions
 {

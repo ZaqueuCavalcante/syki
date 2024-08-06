@@ -39,7 +39,7 @@
 
 ## Notas
     - Disciplina - Status - N1/N2/N3 - Final
-    - Push notification ao atualizar notas?
+    - Push notification (mobile) ao atualizar notas?
     - SignalR Hub?
 
 ## Financeiro

@@ -103,7 +103,6 @@ public partial class IntegrationTests
         var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
         var co = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
 
-        await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
         await client.CreateEnrollmentPeriod(period.Id, 2, 4);
 
         var student = await client.CreateStudent(co.Id, "Zaqueu");
@@ -128,7 +127,6 @@ public partial class IntegrationTests
         var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
         var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
 
-        await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
         await client.CreateEnrollmentPeriod(period.Id, -4, -2);
 
         var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");

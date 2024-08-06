@@ -90,19 +90,25 @@ public class AcademicHttpClient(HttpClient http)
         return await response.DeserializeTo<CampusOut>();
     }
 
+
+
+
+    public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse2(string name = "ADS", CourseType type = CourseType.Bacharelado)
+    {
+        var client = new CreateCourseClient(Cross);
+        return await client.Create(name, type);
+    }
     public async Task<CourseOut> CreateCourse(string name = "ADS", CourseType type = CourseType.Bacharelado)
     {
         var client = new CreateCourseClient(Cross);
         var response = await client.Create(name, type);
-        return await response.DeserializeTo<CourseOut>();
+        return response.GetSuccess();
     }
 
-    public async Task<(CourseOut, HttpResponseMessage)> CreateCourseTuple(string name = "ADS", CourseType tipo = CourseType.Bacharelado)
-    {
-        var client = new CreateCourseClient(Cross);
-        var response = await client.Create(name, tipo);
-        return (await response.DeserializeTo<CourseOut>(), response);
-    }
+
+
+
+
 
     public async Task<List<CourseOut>> GetCourses()
     {
@@ -212,7 +218,10 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<HttpResponseMessage> CreateClassHttp(
+
+
+
+    public async Task<OneOf<ClassOut, ErrorOut>> CreateClass2(
         Guid disciplineId,
         Guid teacherId,
         string period,
@@ -222,7 +231,6 @@ public class AcademicHttpClient(HttpClient http)
         var client = new CreateClassClient(Cross);
         return await client.Create(disciplineId, teacherId, period, vacancies, schedules);
     }
-
     public async Task<ClassOut> CreateClass(
         Guid disciplineId,
         Guid teacherId,
@@ -230,9 +238,13 @@ public class AcademicHttpClient(HttpClient http)
         int vacancies,
         List<ScheduleIn> schedules
     ) {
-        var result = await CreateClassHttp(disciplineId, teacherId, period, vacancies, schedules);
-        return await result.DeserializeTo<ClassOut>();
+        var result = await CreateClass2(disciplineId, teacherId, period, vacancies, schedules);
+        return result.GetSuccess();
     }
+
+
+
+
 
     public async Task<List<ClassOut>> GetClasses()
     {
@@ -267,26 +279,33 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<(AcademicPeriodOut, HttpResponseMessage)> CreateAcademicPeriodTuple(string id)
-    {
-        var client = new CreateAcademicPeriodClient(Cross);
-        var period = new CreateAcademicPeriodIn(id);
-        var response = await client.Create(id, period.StartAt, period.EndAt);
-        return (await response.DeserializeTo<AcademicPeriodOut>(), response);
-    }
 
-    public async Task<(AcademicPeriodOut, HttpResponseMessage)> CreateAcademicPeriodTuple(string id, DateOnly startAt, DateOnly endAt)
-    {
-        var client = new CreateAcademicPeriodClient(Cross);
-        var response = await client.Create(id, startAt, endAt);
-        return (await response.DeserializeTo<AcademicPeriodOut>(), response);
-    }
 
+
+    public async Task<OneOf<AcademicPeriodOut, ErrorOut>> CreateAcademicPeriod2(
+        string id,
+        DateOnly? startAt = null,
+        DateOnly? endAt = null
+    ) {
+        var client = new CreateAcademicPeriodClient(Cross);
+
+        if (startAt == null || endAt == null)
+        {
+            var periodIn = new CreateAcademicPeriodIn(id);
+            startAt = periodIn.StartAt;
+            endAt = periodIn.EndAt;
+        }
+
+        return await client.Create(id, startAt.Value, endAt.Value);
+    }
     public async Task<AcademicPeriodOut> CreateAcademicPeriod(string id)
     {
-        var (period, _) = await CreateAcademicPeriodTuple(id);
-        return period;
+        var response = await CreateAcademicPeriod2(id);
+        return response.GetSuccess();
     }
+
+
+
 
     public async Task<List<AcademicPeriodOut>> GetAcademicPeriods()
     {

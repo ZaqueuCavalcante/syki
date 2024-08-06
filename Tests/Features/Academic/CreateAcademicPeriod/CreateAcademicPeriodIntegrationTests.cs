@@ -8,11 +8,17 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
 
+        const string id = "2024.1";
+        var start = new DateOnly(2024, 02, 01);
+        var end = new DateOnly(2024, 06, 01);
+
         // Act
-        var period = await client.CreateAcademicPeriod("2024.1");
+        var period = (await client.CreateAcademicPeriod2(id, start, end)).GetSuccess();
 
         // Assert
-        period.Id.Should().Be(period.Id);
+        period.Id.Should().Be(id);
+        period.StartAt.Should().Be(start);
+        period.EndAt.Should().Be(end);
     }
 
     [Test]
@@ -22,11 +28,11 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        await client.CreateAcademicPeriod("2024.1");
-        var (_, response) = await client.CreateAcademicPeriodTuple("2024.1");
+        await client.CreateAcademicPeriod2("2024.1");
+        var response = await client.CreateAcademicPeriod2("2024.1");
 
         // Assert
-        await response.AssertBadRequest(new AcademicPeriodAlreadyExists());
+        response.ShouldBeError(new AcademicPeriodAlreadyExists());
     }
 
     [Test]
@@ -37,10 +43,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var (_, response) = await client.CreateAcademicPeriodTuple(id);
+        var response = await client.CreateAcademicPeriod2(id);
 
         // Assert
-        await response.AssertBadRequest(new InvalidAcademicPeriod());
+        response.ShouldBeError(new InvalidAcademicPeriod());
     }
 
     [Test]
@@ -52,10 +58,10 @@ public partial class IntegrationTests
         var end = new DateOnly(2023, 06, 01);
         
         // Act
-        var (_, response) = await client.CreateAcademicPeriodTuple("2023.1", start, end);
+        var response = await client.CreateAcademicPeriod2("2023.1", start, end);
 
         // Assert
-        await response.AssertBadRequest(new InvalidAcademicPeriodStartDate());
+        response.ShouldBeError(new InvalidAcademicPeriodStartDate());
     }
 
     [Test]
@@ -67,10 +73,10 @@ public partial class IntegrationTests
         var end = new DateOnly(2024, 06, 01);
         
         // Act
-        var (_, response) = await client.CreateAcademicPeriodTuple("2023.1", start, end);
+        var response = await client.CreateAcademicPeriod2("2023.1", start, end);
 
         // Assert
-        await response.AssertBadRequest(new InvalidAcademicPeriodEndDate());
+        response.ShouldBeError(new InvalidAcademicPeriodEndDate());
     }
 
     [Test]
@@ -82,9 +88,9 @@ public partial class IntegrationTests
         var end = new DateOnly(2023, 02, 01);
         
         // Act
-        var (_, response) = await client.CreateAcademicPeriodTuple("2023.1", start, end);
+        var response = await client.CreateAcademicPeriod2("2023.1", start, end);
 
         // Assert
-        await response.AssertBadRequest(new InvalidAcademicPeriodDates());
+        response.ShouldBeError(new InvalidAcademicPeriodDates());
     }
 }

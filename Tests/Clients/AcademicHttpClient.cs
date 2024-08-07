@@ -372,14 +372,6 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Start(id);
     }
 
-
-
-
-
-
-
-
-
     public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()
     {
         var data = new BasicInstitutionTestDto();

@@ -7,19 +7,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
-
-        var period = await academicClient.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
-        await academicClient.CreateEnrollmentPeriod(period.Id);
-
-        var campus = await academicClient.CreateCampus();
-        var ads = await academicClient.CreateCourse();
-        var math = await academicClient.CreateDiscipline("Matemática Discreta", [ads.Id]);
-        var courseCurriculumAds = await academicClient.CreateCourseCurriculum("Grade ADS 1.0", ads.Id, [ new(math.Id, 1, 7, 73) ]);
-        var courseOfferingAds = await academicClient.CreateCourseOffering(campus.Id, ads.Id, courseCurriculumAds.Id, period.Id, Shift.Noturno);
+        var data = await academicClient.CreateBasicInstitutionData();
 
         var chico = await academicClient.CreateTeacher("Chico");
-        var student = await academicClient.CreateStudent(courseOfferingAds.Id, "Zaqueu");
-        var mathClass = await academicClient.CreateClass(math.Id, chico.Id, period.Id, 40, [ new(Day.Segunda, Hour.H07_00, Hour.H10_00) ]);
+        var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        var mathClass = await academicClient.CreateClass(data.Disciplines.DiscreteMath.Id, chico.Id, data.AcademicPeriod.Id, 40, [ new(Day.Segunda, Hour.H07_00, Hour.H10_00) ]);
 
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([ mathClass.Id ]);

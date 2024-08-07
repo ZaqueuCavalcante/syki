@@ -7,14 +7,14 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
+        var data = await client.CreateBasicInstitutionData();
+        var period = data.AcademicPeriod;
 
-        var discipline = await client.CreateDiscipline();
-        var teacher = await client.CreateTeacher();
-        var period = await client.CreateAcademicPeriod("2024.1");
-        var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
-        await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        var ana = await client.CreateTeacher("Ana");
 
-        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
+        await client.CreateClass(data.Disciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
+
+        var teacherClient = await _back.LoggedAsTeacher(ana.Email);
 
         // Act
         var insights = await teacherClient.GetTeacherInsights();

@@ -8,8 +8,8 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
 
-        var period = await client.CreateAcademicPeriod("2024.1");
-        await client.CreateEnrollmentPeriod(period.Id);
+        var period = (await client.CreateAcademicPeriod2("2024.1")).GetSuccess();
+        await client.CreateEnrollmentPeriod2(period.Id);
 
         // Act
         var periods = await client.GetEnrollmentPeriods();

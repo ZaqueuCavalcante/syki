@@ -10,10 +10,10 @@ public partial class IntegrationTests
         var period = await client.CreateAcademicPeriod("2024.1");
 
         // Act
-        var enrollmentPeriod = await client.CreateEnrollmentPeriod(period.Id);
+        var response = await client.CreateEnrollmentPeriod2(period.Id);
 
         // Assert
-        enrollmentPeriod.Id.Should().NotBeEmpty();
+        response.GetSuccess().Id.Should().NotBeEmpty();
     }
 
     [Test]

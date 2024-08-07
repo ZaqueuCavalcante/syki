@@ -7,6 +7,8 @@
 
 
 
+
+
 # Students Features
 
 ## Dados/Perfil
@@ -64,9 +66,6 @@
     - Dispensa de disciplinas
     - Declaração de Matrícula
     - Transferência Externa
-
-## Desempenho
-    - Dados sobre notas?
 
 ## Calendário
     - Quando tem aula

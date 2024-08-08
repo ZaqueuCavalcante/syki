@@ -10,7 +10,7 @@ public partial class IntegrationTests
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
-        var course = await client.CreateCourse("ADS");
+        CourseOut course = await client.CreateCourse("ADS");
 
         var discipline01 = await client.CreateDiscipline("Banco de Dados", [course.Id]);
         var discipline02 = await client.CreateDiscipline("Estrutura de Dados", [course.Id]);

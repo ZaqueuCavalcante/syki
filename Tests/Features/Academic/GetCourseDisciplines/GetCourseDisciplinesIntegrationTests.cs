@@ -7,8 +7,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-        var ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas");
-        var cc = await client.CreateCourse("Ciência da Computação");
+        CourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas");
+        CourseOut cc = await client.CreateCourse("Ciência da Computação");
 
         await client.CreateDiscipline("Banco de Dados", [ads.Id, cc.Id]);
         await client.CreateDiscipline("Informática e Sociedade", [ads.Id]);

@@ -21,4 +21,9 @@ public class CourseOut
     {
         return Name;
     }
+
+    public static implicit operator CourseOut(OneOf<CourseOut, ErrorOut> value)
+    {
+        return value.GetSuccess();
+    }
 }

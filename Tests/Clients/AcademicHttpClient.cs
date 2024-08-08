@@ -87,17 +87,12 @@ public class AcademicHttpClient(HttpClient http)
 
 
 
-    public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse2(string name = "ADS", CourseType type = CourseType.Bacharelado)
+    public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(string name = "ADS", CourseType type = CourseType.Bacharelado)
     {
         var client = new CreateCourseClient(Cross);
         return await client.Create(name, type);
     }
-    public async Task<CourseOut> CreateCourse(string name = "ADS", CourseType type = CourseType.Bacharelado)
-    {
-        var client = new CreateCourseClient(Cross);
-        var response = await client.Create(name, type);
-        return response.GetSuccess();
-    }
+
 
 
 

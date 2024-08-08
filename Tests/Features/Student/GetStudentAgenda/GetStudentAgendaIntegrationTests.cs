@@ -12,8 +12,8 @@ public partial class IntegrationTests
         await client.CreateEnrollmentPeriod(period.Id);
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var ads = await client.CreateCourse("ADS");
-        var direito = await client.CreateCourse("Direito");
+        CourseOut ads = await client.CreateCourse("ADS");
+        CourseOut direito = await client.CreateCourse("Direito");
 
         var matematica = await client.CreateDiscipline("Matemática Discreta", [ads.Id]);
         var bancoDeDados = await client.CreateDiscipline("Banco de Dados", [ads.Id]);

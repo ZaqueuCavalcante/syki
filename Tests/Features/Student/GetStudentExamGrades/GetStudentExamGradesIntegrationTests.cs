@@ -12,7 +12,7 @@ public partial class IntegrationTests
         await client.CreateEnrollmentPeriod(period.Id);
 
         var campus = await client.CreateCampus();
-        var ads = await client.CreateCourse("ADS");
+        CourseOut ads = await client.CreateCourse("ADS");
 
         var geometria = await client.CreateDiscipline("Geometria Analítica", [ads.Id]);
         var bancoDeDados = await client.CreateDiscipline("Banco de Dados", [ads.Id]);
@@ -68,7 +68,7 @@ public partial class IntegrationTests
         await client.CreateEnrollmentPeriod(period.Id);
 
         var campus = await client.CreateCampus();
-        var ads = await client.CreateCourse("ADS");
+        CourseOut ads = await client.CreateCourse("ADS");
 
         var geometria = await client.CreateDiscipline("Geometria Analítica", [ads.Id]);
         var bancoDeDados = await client.CreateDiscipline("Banco de Dados", [ads.Id]);

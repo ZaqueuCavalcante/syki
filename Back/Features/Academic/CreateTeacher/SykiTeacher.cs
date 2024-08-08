@@ -18,7 +18,7 @@ public class SykiTeacher
 
     public TeacherOut ToOut()
     {
-        return new TeacherOut
+        return new()
         {
             Id = Id,
             Name = Name,

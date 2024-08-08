@@ -66,7 +66,7 @@ public class Schedule
 
     public ScheduleOut ToOut()
     {
-        return new ScheduleOut
+        return new()
         {
             Day = Day,
             StartAt = StartAt,

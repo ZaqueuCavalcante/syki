@@ -7,6 +7,15 @@
 
 
 
+# Chamada
+- Gerar aulas?
+- So pode alterar dia atual (e dias anteriores?)
+- Cada clique ja chama o endpoint? So chamar no final?
+
+
+
+
+
 
 
 # Students Features

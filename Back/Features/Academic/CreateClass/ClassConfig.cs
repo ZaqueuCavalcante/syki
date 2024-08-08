@@ -22,7 +22,11 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
 
         @class.HasMany(c => c.Schedules)
             .WithOne()
-            .HasForeignKey(h => h.ClassId);
+            .HasForeignKey(s => s.ClassId);
+
+        @class.HasMany(c => c.Lessons)
+            .WithOne()
+            .HasForeignKey(l => l.ClassId);
 
         @class.HasOne<AcademicPeriod>()
             .WithMany()

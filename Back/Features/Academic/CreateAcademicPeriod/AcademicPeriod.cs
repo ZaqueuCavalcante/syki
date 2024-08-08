@@ -65,7 +65,7 @@ public class AcademicPeriod
 
     public AcademicPeriodOut ToOut()
     {
-        return new AcademicPeriodOut
+        return new()
         {
             Id = Id,
             StartAt = StartAt,

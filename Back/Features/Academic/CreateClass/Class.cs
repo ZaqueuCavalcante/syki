@@ -5,6 +5,9 @@ using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Back.Features.Academic.CreateClass;
 
+/// <summary>
+/// Representa uma Turma.
+/// </summary>
 public class Class
 {
     public Guid Id { get; set; }
@@ -19,6 +22,7 @@ public class Class
     public List<SykiStudent> Students { get; set; }
     public List<Schedule> Schedules { get; set; }
     public List<ExamGrade> ExamGrades { get; set; }
+    public List<Lesson> Lessons { get; set; }
 
     public string FillRatio { get; set; }
 
@@ -55,6 +59,11 @@ public class Class
         if (result.IsError()) return result.GetError();
 
         return new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
+    }
+
+    public void GenerateLessons()
+    {
+        
     }
 
     private static OneOf<SykiSuccess, SykiError> Validate(List<Schedule> schedules)

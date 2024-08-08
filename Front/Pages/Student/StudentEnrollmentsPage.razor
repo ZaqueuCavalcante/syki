@@ -21,7 +21,10 @@
         </MudCardContent>
     </MudCard>
 
-    @if (_enrollmentPeriod.Id.IsEmpty() && !_loading)
+    @if (_loading && _enrollmentPeriod.Id.IsEmpty())
+    {
+    }
+    else if (!_loading && _enrollmentPeriod.Id.IsEmpty())
     {
         <SykiPageAlert Text="Período de matrícula encerrado!" />
     }
@@ -30,7 +33,7 @@
         <MudCard Class="mt-8 mb-4 mx-6 px-2">
             <MudCardContent>
                 <MudStack Row="true" AlignItems="AlignItems.Center">
-                    <MudText>Clique ao lado para redefinir suas escolhas.</MudText>
+                    <MudText>Clique ao lado para editar sua matrícula.</MudText>
                     <MudSpacer />
                     <MudButton
                         StartIcon="@Icons.Material.Outlined.Edit"
@@ -124,16 +127,6 @@
     private List<EnrollmentClassOut> _options = [];
     private List<AgendaDayOut> _days = [];
 
-    private void Open()
-    {
-        _closed = false;
-    }
-
-    private void HandleCheckedChanged()
-    {
-        _days = _options.Where(o => o.IsSelected).ToList().ToAgendas();
-    }
-
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
@@ -149,7 +142,17 @@
         _loading = false;
     }
 
-    async Task Submit()
+    private void Open()
+    {
+        _closed = false;
+    }
+
+    private void HandleCheckedChanged()
+    {
+        _days = _options.Where(o => o.IsSelected).ToList().ToAgendas();
+    }
+
+    private async Task Submit()
     {
         if (_loading) return;
 

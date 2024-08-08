@@ -29,10 +29,8 @@ public class Startup
         services.AddCorsConfigs();
     }
 
-    public static void Configure(IApplicationBuilder app, SykiDbContext ctx)
+    public static void Configure(IApplicationBuilder app)
     {
-        ctx.ResetDb();
-
         app.UseSerilogRequestLogging();
 
         app.UseCors();

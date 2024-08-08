@@ -10,7 +10,7 @@ public partial class IntegrationTests
         var clientUfpe = await _back.LoggedAsAcademic();
 
         CourseOut courseNovaRoma = await clientNovaRoma.CreateCourse("Análise e Desenvolvimento de Sistemas");
-        var courseCurriculumNovaRoma = await clientNovaRoma.CreateCourseCurriculum("NR - Grade de ADS - 1.0", courseNovaRoma.Id);
+        CourseCurriculumOut courseCurriculumNovaRoma = await clientNovaRoma.CreateCourseCurriculum("NR - Grade de ADS - 1.0", courseNovaRoma.Id);
 
         CourseOut courseUfpe = await clientUfpe.CreateCourse("Análise e Desenvolvimento de Sistemas");
         await clientUfpe.CreateCourseCurriculum("UFPE - Grade de ADS - 1.0", courseUfpe.Id);
@@ -31,10 +31,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         CourseOut direito = await client.CreateCourse("Direito");
-        var direitoCourseCurriculum = await client.CreateCourseCurriculum("Grade de Direito 1.0", direito.Id);
+        CourseCurriculumOut direitoCourseCurriculum = await client.CreateCourseCurriculum("Grade de Direito 1.0", direito.Id);
 
         CourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas");
-        var adsCourseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", ads.Id);
+        CourseCurriculumOut adsCourseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", ads.Id);
 
         // Act
         var courseCurriculums = await client.GetCourseCurriculums();

@@ -84,20 +84,11 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Update(id, name, city);
     }
 
-
-
-
     public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(string name = "ADS", CourseType type = CourseType.Bacharelado)
     {
         var client = new CreateCourseClient(Cross);
         return await client.Create(name, type);
     }
-
-
-
-
-
-
 
     public async Task<List<CourseOut>> GetCourses()
     {
@@ -117,11 +108,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-
-
-
-
-    public async Task<OneOf<CourseCurriculumOut, ErrorOut>> CreateCourseCurriculum2(
+    public async Task<OneOf<CourseCurriculumOut, ErrorOut>> CreateCourseCurriculum(
         string name,
         Guid courseId,
         List<CreateCourseCurriculumDisciplineIn> disciplines = null
@@ -129,17 +116,6 @@ public class AcademicHttpClient(HttpClient http)
         var client = new CreateCourseCurriculumClient(Cross);
         return await client.Create(name, courseId, disciplines ?? []);
     }
-    public async Task<CourseCurriculumOut> CreateCourseCurriculum(
-        string name,
-        Guid courseId,
-        List<CreateCourseCurriculumDisciplineIn> disciplines = null
-    ) {
-        var client = new CreateCourseCurriculumClient(Cross);
-        var response = await client.Create(name, courseId, disciplines ?? []);
-        return response.GetSuccess();
-    }
-
-
 
     public async Task<List<CourseCurriculumOut>> GetCourseCurriculums()
     {
@@ -147,11 +123,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-
-
-
-
-    public async Task<OneOf<CourseOfferingOut, ErrorOut>> CreateCourseOffering2(
+    public async Task<OneOf<CourseOfferingOut, ErrorOut>> CreateCourseOffering(
         Guid campusId,
         Guid courseId,
         Guid courseCurriculumId,
@@ -161,20 +133,6 @@ public class AcademicHttpClient(HttpClient http)
         var client = new CreateCourseOfferingClient(Cross);
         return await client.Create(campusId, courseId, courseCurriculumId, period, shift);
     }
-    public async Task<CourseOfferingOut> CreateCourseOffering(
-        Guid campusId,
-        Guid courseId,
-        Guid courseCurriculumId,
-        string? period,
-        Shift shift
-    ) {
-        var result = await CreateCourseOffering2(campusId, courseId, courseCurriculumId, period, shift);
-        return result.GetSuccess();
-    }
-
-
-
-
 
     public async Task<List<CourseOfferingOut>> GetCourseOfferings()
     {
@@ -188,8 +146,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-
-    public async Task<OneOf<TeacherOut, ErrorOut>> CreateTeacher2(
+    public async Task<OneOf<TeacherOut, ErrorOut>> CreateTeacher(
         string name = "Chico",
         string email = null
     ) {
@@ -206,13 +163,6 @@ public class AcademicHttpClient(HttpClient http)
         }
 
         return response.GetError();
-    }
-    public async Task<TeacherOut> CreateTeacher(
-        string name = "Chico",
-        string email = null
-    ) {
-        var response = await CreateTeacher2(name, email);
-        return response.GetSuccess();
     }
 
     public async Task<List<TeacherOut>> GetTeachers()

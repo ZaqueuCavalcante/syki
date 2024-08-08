@@ -9,7 +9,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
-        var teacher = await client.CreateTeacher();
+        TeacherOut teacher = await client.CreateTeacher();
         var period = (await client.CreateAcademicPeriod2("2024.1")).GetSuccess();
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
@@ -61,7 +61,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
-        var teacher = await client.CreateTeacher();
+        TeacherOut teacher = await client.CreateTeacher();
         
         // Act
         var response = await client.CreateClass2(discipline.Id, teacher.Id, "2024.1", 40, []);
@@ -77,7 +77,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
-        var teacher = await client.CreateTeacher();
+        TeacherOut teacher = await client.CreateTeacher();
         var period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H07_00) };
 
@@ -95,7 +95,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
-        var teacher = await client.CreateTeacher();
+        TeacherOut teacher = await client.CreateTeacher();
         var period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>()
         {
@@ -118,7 +118,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
-        var teacher = await client.CreateTeacher();
+        TeacherOut teacher = await client.CreateTeacher();
         var period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>()
         {

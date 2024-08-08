@@ -9,7 +9,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var teacher = await client.CreateTeacher("Richard");
+        TeacherOut teacher = await client.CreateTeacher("Richard");
 
         // Assert
         teacher.Id.Should().NotBeEmpty();
@@ -24,7 +24,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateTeacher2("Chico", email);
+        var response = await client.CreateTeacher("Chico", email);
 
         // Assert
         response.ShouldBeError(new InvalidEmail());
@@ -37,8 +37,8 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
         var email = TestData.Email;
 
-        var firstResponse = await client.CreateTeacher2("Chico", email);
-        var secondResponse = await client.CreateTeacher2("Chico", email);
+        var firstResponse = await client.CreateTeacher("Chico", email);
+        var secondResponse = await client.CreateTeacher("Chico", email);
 
         // Assert
         firstResponse.ShouldBeSuccess();
@@ -52,7 +52,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var teacher = await client.CreateTeacher();
+        TeacherOut teacher = await client.CreateTeacher();
 
         // Assert
         using var userManager = _back.GetUserManager();

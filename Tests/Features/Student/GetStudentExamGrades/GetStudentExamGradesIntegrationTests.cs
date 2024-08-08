@@ -18,16 +18,16 @@ public partial class IntegrationTests
         var bancoDeDados = await client.CreateDiscipline("Banco de Dados", [ads.Id]);
         var estruturaDeDados = await client.CreateDiscipline("Estrutura de Dados", [ads.Id]);
 
-        var courseCurriculumAds = await client.CreateCourseCurriculum("Grade ADS 1.0", ads.Id,
+        CourseCurriculumOut courseCurriculumAds = await client.CreateCourseCurriculum("Grade ADS 1.0", ads.Id,
         [
             new(geometria.Id, 1, 7, 73),
             new(bancoDeDados.Id, 1, 7, 73),
             new(estruturaDeDados.Id, 2, 7, 73),
         ]);
 
-        var courseOfferingAds = await client.CreateCourseOffering(campus.Id, ads.Id, courseCurriculumAds.Id, period.Id, Shift.Noturno);
+        CourseOfferingOut courseOfferingAds = await client.CreateCourseOffering(campus.Id, ads.Id, courseCurriculumAds.Id, period.Id, Shift.Noturno);
 
-        var chico = await client.CreateTeacher("Chico");
+        TeacherOut chico = await client.CreateTeacher("Chico");
 
         var classMatematica = await client.CreateClass(geometria.Id, chico.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
         var classBancoDeDados = await client.CreateClass(bancoDeDados.Id, chico.Id, period.Id, 40, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
@@ -74,16 +74,16 @@ public partial class IntegrationTests
         var bancoDeDados = await client.CreateDiscipline("Banco de Dados", [ads.Id]);
         var estruturaDeDados = await client.CreateDiscipline("Estrutura de Dados", [ads.Id]);
 
-        var courseCurriculumAds = await client.CreateCourseCurriculum("Grade ADS 1.0", ads.Id,
+        CourseCurriculumOut courseCurriculumAds = await client.CreateCourseCurriculum("Grade ADS 1.0", ads.Id,
         [
             new(geometria.Id, 1, 7, 73),
             new(bancoDeDados.Id, 1, 7, 73),
             new(estruturaDeDados.Id, 2, 7, 73),
         ]);
 
-        var courseOfferingAds = await client.CreateCourseOffering(campus.Id, ads.Id, courseCurriculumAds.Id, period.Id, Shift.Noturno);
+        CourseOfferingOut courseOfferingAds = await client.CreateCourseOffering(campus.Id, ads.Id, courseCurriculumAds.Id, period.Id, Shift.Noturno);
 
-        var chico = await client.CreateTeacher("Chico");
+        TeacherOut chico = await client.CreateTeacher("Chico");
 
         var mathClass = await client.CreateClass(geometria.Id, chico.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
 

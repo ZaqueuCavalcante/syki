@@ -11,8 +11,8 @@ public partial class IntegrationTests
         var period = data.AcademicPeriod;
         await academicClient.CreateEnrollmentPeriod(period.Id);
 
-        var chico = await academicClient.CreateTeacher("Chico");
-        var ana = await academicClient.CreateTeacher("Ana");
+        TeacherOut chico = await academicClient.CreateTeacher("Chico");
+        TeacherOut ana = await academicClient.CreateTeacher("Ana");
 
         var discreteMathClass = await academicClient.CreateClass(data.Disciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
         var introToWebDevClass = await academicClient.CreateClass(data.Disciplines.IntroToWebDev.Id, chico.Id, period.Id, 40, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);

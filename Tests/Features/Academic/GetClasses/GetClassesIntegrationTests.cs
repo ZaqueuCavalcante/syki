@@ -9,7 +9,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
-        var teacher = await client.CreateTeacher();
+        TeacherOut teacher = await client.CreateTeacher();
         var period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
@@ -30,7 +30,7 @@ public partial class IntegrationTests
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
-        var chico = await academicClient.CreateTeacher("Chico");
+        TeacherOut chico = await academicClient.CreateTeacher("Chico");
         var mathClass = await academicClient.CreateClass(
             data.Disciplines.DiscreteMath.Id,
             chico.Id,

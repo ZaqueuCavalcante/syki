@@ -9,7 +9,7 @@ public partial class IntegrationTests
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
-        var teacher = await academicClient.CreateTeacher("Chico");
+        TeacherOut teacher = await academicClient.CreateTeacher("Chico");
         var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Students, true);
@@ -33,7 +33,7 @@ public partial class IntegrationTests
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
-        var teacher = await academicClient.CreateTeacher("Chico");
+        TeacherOut teacher = await academicClient.CreateTeacher("Chico");
         var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Teachers, true);
@@ -57,7 +57,7 @@ public partial class IntegrationTests
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
-        var teacher = await academicClient.CreateTeacher("Chico");
+        TeacherOut teacher = await academicClient.CreateTeacher("Chico");
         var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.All, true);
@@ -83,7 +83,7 @@ public partial class IntegrationTests
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Students, true);
 
-        var teacher = await academicClient.CreateTeacher("Chico");
+        TeacherOut teacher = await academicClient.CreateTeacher("Chico");
         var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
@@ -109,7 +109,7 @@ public partial class IntegrationTests
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Teachers, true);
 
-        var teacher = await academicClient.CreateTeacher("Chico");
+        TeacherOut teacher = await academicClient.CreateTeacher("Chico");
         var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
@@ -135,7 +135,7 @@ public partial class IntegrationTests
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.All, true);
 
-        var teacher = await academicClient.CreateTeacher("Chico");
+        TeacherOut teacher = await academicClient.CreateTeacher("Chico");
         var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);

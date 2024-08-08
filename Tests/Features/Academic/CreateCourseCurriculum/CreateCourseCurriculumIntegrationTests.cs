@@ -10,7 +10,7 @@ public partial class IntegrationTests
         CourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas");
 
         // Act
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Assert
         courseCurriculum.Id.Should().NotBeEmpty();
@@ -33,7 +33,7 @@ public partial class IntegrationTests
         var disciplines = new List<CreateCourseCurriculumDisciplineIn> { new(bd.Id, 1, 10, 70), new(ed.Id, 2, 8, 55), new(poo.Id, 3, 12, 60) };
 
         // Act
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, disciplines);
+        CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, disciplines);
 
         // Assert
         courseCurriculum.Id.Should().NotBeEmpty();
@@ -54,7 +54,7 @@ public partial class IntegrationTests
         var disciplines = new List<CreateCourseCurriculumDisciplineIn> { new(bd.Id, 1, 10, 80) };
 
         // Act
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, disciplines);
+        CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, disciplines);
 
         // Assert
         courseCurriculum.Id.Should().NotBeEmpty();
@@ -74,7 +74,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateCourseCurriculum2("Grade de ADS 1.0", Guid.NewGuid(), []);
+        var response = await client.CreateCourseCurriculum("Grade de ADS 1.0", Guid.NewGuid(), []);
         
         // Assert
         response.ShouldBeError(new CourseNotFound());
@@ -90,7 +90,7 @@ public partial class IntegrationTests
         CourseOut course = await clientUfpe.CreateCourse("Análise e Desenvolvimento de Sistemas");
 
         // Act
-        var response = await clientNovaRoma.CreateCourseCurriculum2("Grade de ADS 1.0", course.Id, []);
+        var response = await clientNovaRoma.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, []);
         
         // Assert
         response.ShouldBeError(new CourseNotFound());
@@ -108,7 +108,7 @@ public partial class IntegrationTests
         var bd = await client.CreateDiscipline("Banco de Dados", [ads.Id]);
 
         // Act
-        var response = await client.CreateCourseCurriculum2("Grade de Direito 1.0", direito.Id, [ new(bd.Id, 1, 10, 70) ]);
+        var response = await client.CreateCourseCurriculum("Grade de Direito 1.0", direito.Id, [ new(bd.Id, 1, 10, 70) ]);
 
         // Assert
         response.ShouldBeError(new InvalidDisciplinesList());
@@ -128,7 +128,7 @@ public partial class IntegrationTests
         var disciplineUfpe = await clientUfpe.CreateDiscipline("Banco de Dados", [courseUfpe.Id]);
 
         // Act
-        var response = await clientNovaRoma.CreateCourseCurriculum2("Grade ADS", courseNovaRoma.Id, [ new(disciplineUfpe.Id, 1, 10, 70) ]);
+        var response = await clientNovaRoma.CreateCourseCurriculum("Grade ADS", courseNovaRoma.Id, [ new(disciplineUfpe.Id, 1, 10, 70) ]);
 
         // Assert
         response.ShouldBeError(new InvalidDisciplinesList());
@@ -154,7 +154,7 @@ public partial class IntegrationTests
         };
 
         // Act
-        var response = await client.CreateCourseCurriculum2("Grade de Direito 1.0", course.Id, disciplines);
+        var response = await client.CreateCourseCurriculum("Grade de Direito 1.0", course.Id, disciplines);
 
         // Assert
         response.ShouldBeError(new InvalidDisciplinesList());
@@ -177,7 +177,7 @@ public partial class IntegrationTests
         };
 
         // Act
-        var response = await client.CreateCourseCurriculum2("Grade de Direito 1.0", course.Id, disciplines);
+        var response = await client.CreateCourseCurriculum("Grade de Direito 1.0", course.Id, disciplines);
 
         // Assert
         response.ShouldBeError(new InvalidDisciplinesList());     

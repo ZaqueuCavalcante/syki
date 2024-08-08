@@ -17,8 +17,8 @@ public partial class IntegrationTests
         var discipline03 = await client.CreateDiscipline("Programação Orientada a Objetos", [course.Id]);
         var disciplines = new List<CreateCourseCurriculumDisciplineIn>() { new() { Id = discipline01.Id }, new() { Id = discipline02.Id }, new() { Id = discipline03.Id } };
 
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, disciplines);
-        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
+        CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, disciplines);
+        CourseOfferingOut courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
 
         var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);

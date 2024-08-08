@@ -14,4 +14,9 @@ public class CourseOfferingOut
     {
         return $"{CourseCurriculum} | {Campus} | {Period} | {Shift.GetDescription()}";
     }
+
+    public static implicit operator CourseOfferingOut(OneOf<CourseOfferingOut, ErrorOut> value)
+    {
+        return value.GetSuccess();
+    }
 }

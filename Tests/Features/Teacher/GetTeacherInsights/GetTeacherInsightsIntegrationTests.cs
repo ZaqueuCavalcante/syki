@@ -10,7 +10,7 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
         var period = data.AcademicPeriod;
 
-        var ana = await client.CreateTeacher("Ana");
+        TeacherOut ana = await client.CreateTeacher("Ana");
 
         await client.CreateClass(data.Disciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
 

@@ -23,7 +23,7 @@ public partial class IntegrationTests
         var introDireito = await client.CreateDiscipline("Introdução ao Direito", [direito.Id]);
         var direitoFinanceiro = await client.CreateDiscipline("Direito Financeiro", [direito.Id]);
 
-        var courseCurriculumAds = await client.CreateCourseCurriculum("Grade ADS 1.0", ads.Id,
+        CourseCurriculumOut courseCurriculumAds = await client.CreateCourseCurriculum("Grade ADS 1.0", ads.Id,
         [
             new(matematica.Id, 1, 7, 73),
             new(bancoDeDados.Id, 1, 7, 73),
@@ -31,7 +31,7 @@ public partial class IntegrationTests
             new(infoSociedade.Id, 2, 7, 73),
         ]);
 
-        var courseCurriculumDireito = await client.CreateCourseCurriculum("Grade Direito 1.0", direito.Id,
+        CourseCurriculumOut courseCurriculumDireito = await client.CreateCourseCurriculum("Grade Direito 1.0", direito.Id,
         [
             new(direitoEconomia.Id, 1, 7, 73),
             new(infoSociedade.Id, 2, 7, 73),
@@ -39,11 +39,11 @@ public partial class IntegrationTests
             new(direitoFinanceiro.Id, 1, 7, 73),
         ]);
 
-        var courseOfferingAds = await client.CreateCourseOffering(campus.Id, ads.Id, courseCurriculumAds.Id, period.Id, Shift.Noturno);
-        var courseOfferingDireito = await client.CreateCourseOffering(campus.Id, direito.Id, courseCurriculumDireito.Id, period.Id, Shift.Noturno);
+        CourseOfferingOut courseOfferingAds = await client.CreateCourseOffering(campus.Id, ads.Id, courseCurriculumAds.Id, period.Id, Shift.Noturno);
+        CourseOfferingOut courseOfferingDireito = await client.CreateCourseOffering(campus.Id, direito.Id, courseCurriculumDireito.Id, period.Id, Shift.Noturno);
 
-        var chico = await client.CreateTeacher("Chico");
-        var ana = await client.CreateTeacher("Ana");
+        TeacherOut chico = await client.CreateTeacher("Chico");
+        TeacherOut ana = await client.CreateTeacher("Ana");
 
         var classMatematica = await client.CreateClass(matematica.Id, chico.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
         var classBancoDeDados = await client.CreateClass(bancoDeDados.Id, chico.Id, period.Id, 40, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
@@ -78,8 +78,8 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
         CourseOut course = await client.CreateCourse("ADS");
-        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
+        CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        CourseOfferingOut courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
 
         var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
@@ -100,8 +100,8 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
         CourseOut course = await client.CreateCourse("ADS");
-        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var co = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
+        CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        CourseOfferingOut co = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
 
         await client.CreateEnrollmentPeriod(period.Id, 2, 4);
 
@@ -124,8 +124,8 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
         CourseOut course = await client.CreateCourse("ADS");
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
+        CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        CourseOfferingOut courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
 
         await client.CreateEnrollmentPeriod(period.Id, -4, -2);
 

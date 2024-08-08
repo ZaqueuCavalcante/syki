@@ -11,10 +11,10 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         var period = await client.CreateAcademicPeriod("2024.1");
         CourseOut course = await client.CreateCourse("ADS");
-        var courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
-        var courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Matutino);
+        CourseOfferingOut courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Matutino);
 
         // Assert
         courseOffering.Id.Should().NotBeEmpty();
@@ -29,7 +29,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateCourseOffering2(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
+        var response = await client.CreateCourseOffering(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CampusNotFound());      
@@ -46,7 +46,7 @@ public partial class IntegrationTests
         var campusUfpe = await clientUfpe.CreateCampus("Suassuna", "Recife - PE");
 
         // Act
-        var response = await clientNovaRoma.CreateCourseOffering2(campusUfpe.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
+        var response = await clientNovaRoma.CreateCourseOffering(campusUfpe.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CampusNotFound());      
@@ -60,7 +60,7 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
 
         // Act
-        var response = await client.CreateCourseOffering2(campus.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
+        var response = await client.CreateCourseOffering(campus.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CourseNotFound());
@@ -77,7 +77,7 @@ public partial class IntegrationTests
         var campusNovaRoma = await clientNovaRoma.CreateCampus("Agreste I", "Caruaru - PE");
 
         // Act
-        var response = await clientNovaRoma.CreateCourseOffering2(campusNovaRoma.Id, courseUfpe.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
+        var response = await clientNovaRoma.CreateCourseOffering(campusNovaRoma.Id, courseUfpe.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CourseNotFound());
@@ -92,7 +92,7 @@ public partial class IntegrationTests
         CourseOut course = await client.CreateCourse("Direito");
 
         // Act
-        var response = await client.CreateCourseOffering2(campus.Id, course.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
+        var response = await client.CreateCourseOffering(campus.Id, course.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CourseCurriculumNotFound());
@@ -106,10 +106,10 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         CourseOut courseAds = await client.CreateCourse("ADS");
         CourseOut courseDireito = await client.CreateCourse("Direito");
-        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", courseAds.Id);
+        CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", courseAds.Id);
 
         // Act
-        var response = await client.CreateCourseOffering2(campus.Id, courseDireito.Id, cc.Id, "2024.1", Shift.Matutino);
+        var response = await client.CreateCourseOffering(campus.Id, courseDireito.Id, cc.Id, "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CourseCurriculumNotFound());
@@ -122,10 +122,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
         CourseOut course = await client.CreateCourse("Direito");
-        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
-        var response = await client.CreateCourseOffering2(campus.Id, course.Id, cc.Id, "2024.1", Shift.Matutino);
+        var response = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, "2024.1", Shift.Matutino);
         
         // Assert
         response.ShouldBeError(new AcademicPeriodNotFound());
@@ -139,10 +139,10 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus();
         var period = await client.CreateAcademicPeriod("2024.1");
         CourseOut course = await client.CreateCourse();
-        var cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
-        var response = await client.CreateCourseOffering2(campus.Id, course.Id, cc.Id, period.Id, (Shift)69);
+        var response = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, (Shift)69);
         
         // Assert
         response.ShouldBeError(new InvalidShift());
@@ -159,10 +159,10 @@ public partial class IntegrationTests
 
         var campus = await clientNovaRoma.CreateCampus("Agreste I", "Caruaru - PE");
         CourseOut course = await clientNovaRoma.CreateCourse("Direito");
-        var cc = await clientNovaRoma.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
+        CourseCurriculumOut cc = await clientNovaRoma.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
-        var response = await clientNovaRoma.CreateCourseOffering2(campus.Id, course.Id, cc.Id, "2023.1", Shift.Matutino);
+        var response = await clientNovaRoma.CreateCourseOffering(campus.Id, course.Id, cc.Id, "2023.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new AcademicPeriodNotFound());

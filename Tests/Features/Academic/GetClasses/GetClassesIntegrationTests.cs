@@ -10,7 +10,7 @@ public partial class IntegrationTests
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        var period = await client.CreateAcademicPeriod("2024.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
         ClassOut @class = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);

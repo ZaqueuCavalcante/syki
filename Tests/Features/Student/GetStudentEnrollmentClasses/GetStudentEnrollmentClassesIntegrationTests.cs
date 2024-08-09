@@ -8,7 +8,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
 
-        var period = await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
         await client.CreateEnrollmentPeriod(period.Id);
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
@@ -74,14 +74,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
+        var data = await client.CreateBasicInstitutionData();
 
-        var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var period = await client.CreateAcademicPeriod("2024.1");
-        CourseOut course = await client.CreateCourse("ADS");
-        CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        CourseOfferingOut courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
-
-        StudentOut student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
+        StudentOut student = await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
@@ -96,16 +91,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
+        var data = await client.CreateBasicInstitutionData();
 
-        var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var period = await client.CreateAcademicPeriod("2024.1");
-        CourseOut course = await client.CreateCourse("ADS");
-        CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        CourseOfferingOut co = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, Shift.Noturno);
+        await client.CreateEnrollmentPeriod(data.AcademicPeriod.Id, 2, 4);
 
-        await client.CreateEnrollmentPeriod(period.Id, 2, 4);
-
-        StudentOut student = await client.CreateStudent(co.Id, "Zaqueu");
+        StudentOut student = await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
@@ -120,16 +110,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
+        var data = await client.CreateBasicInstitutionData();
 
-        var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var period = await client.CreateAcademicPeriod("2024.1");
-        CourseOut course = await client.CreateCourse("ADS");
-        CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
-        CourseOfferingOut courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
+        await client.CreateEnrollmentPeriod(data.AcademicPeriod.Id, -4, -2);
 
-        await client.CreateEnrollmentPeriod(period.Id, -4, -2);
-
-        StudentOut student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
+        StudentOut student = await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act

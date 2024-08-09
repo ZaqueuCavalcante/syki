@@ -8,7 +8,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
 
-        var period = await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
         await client.CreateEnrollmentPeriod(period.Id);
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");

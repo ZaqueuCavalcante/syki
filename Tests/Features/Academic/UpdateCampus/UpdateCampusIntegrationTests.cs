@@ -10,7 +10,7 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus();
 
         // Act
-        var updatedCampus = (await client.UpdateCampus(campus.Id, "Agreste II", "Bonito - PE")).GetSuccess();
+        CampusOut updatedCampus = await client.UpdateCampus(campus.Id, "Agreste II", "Bonito - PE");
 
         // Assert
         updatedCampus.Id.Should().Be(campus.Id);

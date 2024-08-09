@@ -8,7 +8,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
 
-        var period = (await client.CreateAcademicPeriod("2024.1")).GetSuccess();
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         await client.CreateEnrollmentPeriod(period.Id);
 
         // Act

@@ -8,4 +8,9 @@ public class StudentOut
     public string Name { get; set; }
     public string Email { get; set; }
     public string EnrollmentCode { get; set; }
+
+    public static implicit operator StudentOut(OneOf<StudentOut, ErrorOut> value)
+    {
+        return value.GetSuccess();
+    }
 }

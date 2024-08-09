@@ -9,7 +9,7 @@ public partial class IntegrationTests
         var clientNovaRoma = await _back.LoggedAsAcademic();
         var clientUfpe = await _back.LoggedAsAcademic();
 
-        var period = await clientNovaRoma.CreateAcademicPeriod("2023.1");
+        AcademicPeriodOut period = await clientNovaRoma.CreateAcademicPeriod("2023.1");
 
         await clientUfpe.CreateAcademicPeriod("2023.2");
 

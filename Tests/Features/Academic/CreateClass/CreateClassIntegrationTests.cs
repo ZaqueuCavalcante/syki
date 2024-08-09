@@ -10,11 +10,11 @@ public partial class IntegrationTests
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        var period = (await client.CreateAcademicPeriod2("2024.1")).GetSuccess();
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
 
         // Act
-        var @class = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        ClassOut @class = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
         @class.Id.Should().NotBeEmpty();
@@ -33,7 +33,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateClass2(Guid.NewGuid(), Guid.NewGuid(), "2024.1", 40, []);
+        var response = await client.CreateClass(Guid.NewGuid(), Guid.NewGuid(), "2024.1", 40, []);
 
         // Assert
         response.ShouldBeError(new DisciplineNotFound());
@@ -48,7 +48,7 @@ public partial class IntegrationTests
         var discipline = await client.CreateDiscipline();
 
         // Act
-        var response = await client.CreateClass2(discipline.Id, Guid.NewGuid(), "2024.1", 40, []);
+        var response = await client.CreateClass(discipline.Id, Guid.NewGuid(), "2024.1", 40, []);
 
         // Assert
         response.ShouldBeError(new TeacherNotFound());
@@ -64,7 +64,7 @@ public partial class IntegrationTests
         TeacherOut teacher = await client.CreateTeacher();
         
         // Act
-        var response = await client.CreateClass2(discipline.Id, teacher.Id, "2024.1", 40, []);
+        var response = await client.CreateClass(discipline.Id, teacher.Id, "2024.1", 40, []);
 
         // Assert
         response.ShouldBeError(new AcademicPeriodNotFound());
@@ -78,11 +78,11 @@ public partial class IntegrationTests
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        var period = await client.CreateAcademicPeriod("2024.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H07_00) };
 
         // Act
-        var response = await client.CreateClass2(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        var response = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
         response.ShouldBeError(new InvalidSchedule());
@@ -96,7 +96,7 @@ public partial class IntegrationTests
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        var period = await client.CreateAcademicPeriod("2024.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>()
         {
             new(Day.Segunda, Hour.H07_00, Hour.H08_00),
@@ -105,7 +105,7 @@ public partial class IntegrationTests
         };
 
         // Act
-        var response = await client.CreateClass2(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        var response = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
         response.ShouldBeError(new InvalidSchedule());
@@ -119,7 +119,7 @@ public partial class IntegrationTests
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        var period = await client.CreateAcademicPeriod("2024.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>()
         {
             new(Day.Segunda, Hour.H07_00, Hour.H08_00),
@@ -127,7 +127,7 @@ public partial class IntegrationTests
         };
 
         // Act
-        var response = await client.CreateClass2(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        var response = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
         response.ShouldBeError(new ConflictingSchedules());

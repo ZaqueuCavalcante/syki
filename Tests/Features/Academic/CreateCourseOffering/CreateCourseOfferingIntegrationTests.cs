@@ -9,7 +9,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        var period = await client.CreateAcademicPeriod("2024.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         CourseOut course = await client.CreateCourse("ADS");
         CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
@@ -137,7 +137,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
         var campus = await client.CreateCampus();
-        var period = await client.CreateAcademicPeriod("2024.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         CourseOut course = await client.CreateCourse();
         CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 

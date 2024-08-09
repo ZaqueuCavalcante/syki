@@ -9,7 +9,7 @@ public partial class IntegrationTests
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
-        var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
@@ -31,10 +31,10 @@ public partial class IntegrationTests
         var data = await academicClient.CreateBasicInstitutionData();
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        var discreteMathClass = await academicClient.CreateClass(data.Disciplines.DiscreteMath.Id, teacher.Id, data.AcademicPeriod.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
-        var introToWebDevClass = await academicClient.CreateClass(data.Disciplines.IntroToWebDev.Id, teacher.Id, data.AcademicPeriod.Id, 45, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
+        ClassOut discreteMathClass = await academicClient.CreateClass(data.Disciplines.DiscreteMath.Id, teacher.Id, data.AcademicPeriod.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToWebDevClass = await academicClient.CreateClass(data.Disciplines.IntroToWebDev.Id, teacher.Id, data.AcademicPeriod.Id, 45, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
 
-        var student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id]);
 

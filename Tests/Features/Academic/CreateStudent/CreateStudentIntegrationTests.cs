@@ -10,12 +10,12 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         // Act
-        var response = await client.CreateStudent(data.CourseOffering.Id);
+        StudentOut student = await client.CreateStudent(data.CourseOffering.Id);
 
         // Assert
-        response.Id.Should().NotBeEmpty(); 
-        response.CourseOfferingId.Should().Be(data.CourseOffering.Id); 
-        response.Name.Should().Be("Zezin"); 
+        student.Id.Should().NotBeEmpty(); 
+        student.CourseOfferingId.Should().Be(data.CourseOffering.Id); 
+        student.Name.Should().Be("Zezin"); 
     }
 
     [Test]
@@ -25,7 +25,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateStudent2(Guid.NewGuid());
+        var response = await client.CreateStudent(Guid.NewGuid());
 
         // Assert
         response.ShouldBeError(new CourseOfferingNotFound());
@@ -40,7 +40,7 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         // Act
-        var response = await client.CreateStudent2(data.CourseOffering.Id, "Zezin", email);
+        var response = await client.CreateStudent(data.CourseOffering.Id, "Zezin", email);
 
         // Assert
         response.ShouldBeError(new InvalidEmail()); 
@@ -55,8 +55,8 @@ public partial class IntegrationTests
 
         // Act
         var email = TestData.Email;
-        var firstResponse = await client.CreateStudent2(data.CourseOffering.Id, "Zezin", email);
-        var secondResponse = await client.CreateStudent2(data.CourseOffering.Id, "Zezin", email);
+        var firstResponse = await client.CreateStudent(data.CourseOffering.Id, "Zezin", email);
+        var secondResponse = await client.CreateStudent(data.CourseOffering.Id, "Zezin", email);
 
         // Assert
         firstResponse.ShouldBeSuccess();
@@ -71,7 +71,7 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         // Act
-        var student = await client.CreateStudent(data.CourseOffering.Id);
+        StudentOut student = await client.CreateStudent(data.CourseOffering.Id);
 
         // Assert
         using var userManager = _back.GetUserManager();

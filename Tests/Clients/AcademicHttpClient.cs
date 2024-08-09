@@ -171,10 +171,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-
-
-
-    public async Task<OneOf<ClassOut, ErrorOut>> CreateClass2(
+    public async Task<OneOf<ClassOut, ErrorOut>> CreateClass(
         Guid disciplineId,
         Guid teacherId,
         string period,
@@ -184,20 +181,6 @@ public class AcademicHttpClient(HttpClient http)
         var client = new CreateClassClient(Cross);
         return await client.Create(disciplineId, teacherId, period, vacancies, schedules);
     }
-    public async Task<ClassOut> CreateClass(
-        Guid disciplineId,
-        Guid teacherId,
-        string period,
-        int vacancies,
-        List<ScheduleIn> schedules
-    ) {
-        var result = await CreateClass2(disciplineId, teacherId, period, vacancies, schedules);
-        return result.GetSuccess();
-    }
-
-
-
-
 
     public async Task<List<ClassOut>> GetClasses()
     {
@@ -205,11 +188,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-
-
-
-
-    public async Task<OneOf<StudentOut, ErrorOut>> CreateStudent2(
+    public async Task<OneOf<StudentOut, ErrorOut>> CreateStudent(
         Guid courseOfferingId,
         string name = "Zezin",
         string email = null
@@ -228,18 +207,6 @@ public class AcademicHttpClient(HttpClient http)
 
         return response.GetError();
     }
-    public async Task<StudentOut> CreateStudent(
-        Guid courseOfferingId,
-        string name = "Zezin",
-        string email = null
-    ) {
-        var response = await CreateStudent2(courseOfferingId, name, email);
-        return response.GetSuccess();
-    }
-
-
-
-
 
     public async Task<List<StudentOut>> GetStudents()
     {
@@ -247,10 +214,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-
-
-
-    public async Task<OneOf<AcademicPeriodOut, ErrorOut>> CreateAcademicPeriod2(
+    public async Task<OneOf<AcademicPeriodOut, ErrorOut>> CreateAcademicPeriod(
         string id,
         DateOnly? startAt = null,
         DateOnly? endAt = null
@@ -266,14 +230,6 @@ public class AcademicHttpClient(HttpClient http)
 
         return await client.Create(id, startAt.Value, endAt.Value);
     }
-    public async Task<AcademicPeriodOut> CreateAcademicPeriod(string id)
-    {
-        var response = await CreateAcademicPeriod2(id);
-        return response.GetSuccess();
-    }
-
-
-
 
     public async Task<List<AcademicPeriodOut>> GetAcademicPeriods()
     {
@@ -281,29 +237,13 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-
-
-
-
-    public async Task<OneOf<EnrollmentPeriodOut, ErrorOut>> CreateEnrollmentPeriod2(string id, int start = -2, int end = 2)
+    public async Task<OneOf<EnrollmentPeriodOut, ErrorOut>> CreateEnrollmentPeriod(string id, int start = -2, int end = 2)
     {
         var client = new CreateEnrollmentPeriodClient(Cross);
         var startDate = DateOnly.FromDateTime(DateTime.Now.AddDays(start));
         var endDate = DateOnly.FromDateTime(DateTime.Now.AddDays(end));
         return await client.Create(id, startDate, endDate);
     }
-    public async Task<EnrollmentPeriodOut> CreateEnrollmentPeriod(string id, int start = -2, int end = 2)
-    {
-        var client = new CreateEnrollmentPeriodClient(Cross);
-        var startDate = DateOnly.FromDateTime(DateTime.Now.AddDays(start));
-        var endDate = DateOnly.FromDateTime(DateTime.Now.AddDays(end));
-        var response = await client.Create(id, startDate, endDate);
-        return response.GetSuccess();
-    }
-
-
-
-
 
     public async Task<List<EnrollmentPeriodOut>> GetEnrollmentPeriods()
     {

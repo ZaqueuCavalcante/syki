@@ -33,12 +33,12 @@ public partial class IntegrationTests
         TeacherOut chico = await client.CreateTeacher("Chico");
         TeacherOut ana = await client.CreateTeacher("Ana");
 
-        var classMatematica = await client.CreateClass(matematica.Id, chico.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
-        var classBancoDeDados = await client.CreateClass(bancoDeDados.Id, chico.Id, period.Id, 40, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
-        var classEstruturaDeDados = await client.CreateClass(estruturaDeDados.Id, chico.Id, period.Id, 40, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
+        ClassOut classMatematica = await client.CreateClass(matematica.Id, chico.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
+        ClassOut classBancoDeDados = await client.CreateClass(bancoDeDados.Id, chico.Id, period.Id, 40, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
+        ClassOut classEstruturaDeDados = await client.CreateClass(estruturaDeDados.Id, chico.Id, period.Id, 40, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
         await client.CreateClass(infoSociedade.Id, ana.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H08_00)]);
 
-        var zaqueu = await client.CreateStudent(courseOfferingAds.Id, "Zaqueu");
+        StudentOut zaqueu = await client.CreateStudent(courseOfferingAds.Id, "Zaqueu");
 
         var studentClient = await _back.LoggedAsStudent(zaqueu.Email);
         await studentClient.CreateStudentEnrollment([classMatematica.Id, classBancoDeDados.Id, classEstruturaDeDados.Id]);

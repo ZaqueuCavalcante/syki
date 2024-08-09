@@ -20,7 +20,7 @@ public partial class IntegrationTests
         CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, disciplines);
         CourseOfferingOut courseOffering = await client.CreateCourseOffering(campus.Id, course.Id, courseCurriculum.Id, period.Id, Shift.Noturno);
 
-        var student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
+        StudentOut student = await client.CreateStudent(courseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act

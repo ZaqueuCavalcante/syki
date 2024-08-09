@@ -23,4 +23,9 @@ public class ClassOut
     {
         return Id.ToHashCode();
     }
+
+    public static implicit operator ClassOut(OneOf<ClassOut, ErrorOut> value)
+    {
+        return value.GetSuccess();
+    }
 }

@@ -7,13 +7,13 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-        var period = await client.CreateAcademicPeriod("2024.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
 
         // Act
-        var response = await client.CreateEnrollmentPeriod2(period.Id);
+        EnrollmentPeriodOut response = await client.CreateEnrollmentPeriod(period.Id);
 
         // Assert
-        response.GetSuccess().Id.Should().NotBeEmpty();
+        response.Id.Should().NotBeEmpty();
     }
 
     [Test]
@@ -23,7 +23,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateEnrollmentPeriod2("2024.1", 0, 0);
+        var response = await client.CreateEnrollmentPeriod("2024.1", 0, 0);
 
         // Assert
         response.ShouldBeError(new AcademicPeriodNotFound());
@@ -34,10 +34,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-        var period = await client.CreateAcademicPeriod("2024.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
 
         // Act
-        var response = await client.CreateEnrollmentPeriod2(period.Id, 0, 0);
+        var response = await client.CreateEnrollmentPeriod(period.Id, 0, 0);
 
         // Assert
         response.ShouldBeError(new InvalidEnrollmentPeriodDates());
@@ -48,10 +48,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-        var period = await client.CreateAcademicPeriod("2024.1");
+        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
 
         // Act
-        var response = await client.CreateEnrollmentPeriod2(period.Id, 2, -2);
+        var response = await client.CreateEnrollmentPeriod(period.Id, 2, -2);
 
         // Assert
         response.ShouldBeError(new InvalidEnrollmentPeriodDates());

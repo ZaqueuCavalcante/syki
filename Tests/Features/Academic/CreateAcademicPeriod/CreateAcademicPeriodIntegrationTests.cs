@@ -13,7 +13,7 @@ public partial class IntegrationTests
         var end = new DateOnly(2024, 06, 01);
 
         // Act
-        var period = (await client.CreateAcademicPeriod2(id, start, end)).GetSuccess();
+        AcademicPeriodOut period = await client.CreateAcademicPeriod(id, start, end);
 
         // Assert
         period.Id.Should().Be(id);
@@ -28,8 +28,8 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        await client.CreateAcademicPeriod2("2024.1");
-        var response = await client.CreateAcademicPeriod2("2024.1");
+        await client.CreateAcademicPeriod("2024.1");
+        var response = await client.CreateAcademicPeriod("2024.1");
 
         // Assert
         response.ShouldBeError(new AcademicPeriodAlreadyExists());
@@ -43,7 +43,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateAcademicPeriod2(id);
+        var response = await client.CreateAcademicPeriod(id);
 
         // Assert
         response.ShouldBeError(new InvalidAcademicPeriod());
@@ -58,7 +58,7 @@ public partial class IntegrationTests
         var end = new DateOnly(2023, 06, 01);
         
         // Act
-        var response = await client.CreateAcademicPeriod2("2023.1", start, end);
+        var response = await client.CreateAcademicPeriod("2023.1", start, end);
 
         // Assert
         response.ShouldBeError(new InvalidAcademicPeriodStartDate());
@@ -73,7 +73,7 @@ public partial class IntegrationTests
         var end = new DateOnly(2024, 06, 01);
         
         // Act
-        var response = await client.CreateAcademicPeriod2("2023.1", start, end);
+        var response = await client.CreateAcademicPeriod("2023.1", start, end);
 
         // Assert
         response.ShouldBeError(new InvalidAcademicPeriodEndDate());
@@ -88,7 +88,7 @@ public partial class IntegrationTests
         var end = new DateOnly(2023, 02, 01);
         
         // Act
-        var response = await client.CreateAcademicPeriod2("2023.1", start, end);
+        var response = await client.CreateAcademicPeriod("2023.1", start, end);
 
         // Assert
         response.ShouldBeError(new InvalidAcademicPeriodDates());

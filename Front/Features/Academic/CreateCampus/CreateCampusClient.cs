@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.CreateCampus;
 
-public class CreateCampusClient(HttpClient http)
+public class CreateCampusClient(HttpClient http) : IAcademicClient
 {
     public async Task<HttpResponseMessage> Create(string name, string city)
     {

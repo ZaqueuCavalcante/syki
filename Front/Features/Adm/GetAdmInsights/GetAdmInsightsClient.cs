@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Adm.GetAdmInsights;
 
-public class GetAdmInsightsClient(HttpClient http)
+public class GetAdmInsightsClient(HttpClient http) : IAdmClient
 {
     public async Task<AdmInsightsOut> Get()
     {

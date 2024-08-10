@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Cross.ViewNotifications;
 
-public class ViewNotificationsClient(HttpClient http)
+public class ViewNotificationsClient(HttpClient http) : ICrossClient
 {
     public async Task View()
     {

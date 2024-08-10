@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.GetAcademicClass;
 
-public class GetAcademicClassClient(HttpClient http)
+public class GetAcademicClassClient(HttpClient http) : IAcademicClient
 {
     public async Task<OneOf<GetAcademicClassOut, ErrorOut>> Get(Guid id)
     {

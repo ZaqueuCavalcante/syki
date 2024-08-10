@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 
-public class CreateEnrollmentPeriodClient(HttpClient http)
+public class CreateEnrollmentPeriodClient(HttpClient http) : IAcademicClient
 {
     public async Task<OneOf<EnrollmentPeriodOut, ErrorOut>> Create(string id, DateOnly startAt, DateOnly endAt)
     {

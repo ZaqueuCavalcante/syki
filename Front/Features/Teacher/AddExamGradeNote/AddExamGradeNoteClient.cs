@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Teacher.AddExamGradeNote;
 
-public class AddExamGradeNoteClient(HttpClient http)
+public class AddExamGradeNoteClient(HttpClient http) : ITeacherClient
 {
     public async Task<HttpResponseMessage> Add(Guid id, AddExamGradeNoteIn data)
     {

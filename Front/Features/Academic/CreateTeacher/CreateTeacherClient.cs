@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.CreateTeacher;
 
-public class CreateTeacherClient(HttpClient http)
+public class CreateTeacherClient(HttpClient http) : IAcademicClient
 {
     public async Task<OneOf<TeacherOut, ErrorOut>> Create(string name, string email)
     {

@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Cross.SendResetPasswordToken;
 
-public class SendResetPasswordTokenClient(HttpClient http)
+public class SendResetPasswordTokenClient(HttpClient http) : ICrossClient
 {
     public async Task<HttpResponseMessage> Send(string email)
     {

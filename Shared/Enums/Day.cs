@@ -21,7 +21,4 @@ public enum Day
 
     [Description("Sábado")]
     Saturday,
-
-    [Description("Domingo")]
-    Sunday,
 }

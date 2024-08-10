@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.CreateNotification;
 
-public class CreateNotificationClient(HttpClient http)
+public class CreateNotificationClient(HttpClient http) : IAcademicClient
 {
     public async Task<HttpResponseMessage> Create(string title, string description, UsersGroup targetUsers, bool timeless)
     {

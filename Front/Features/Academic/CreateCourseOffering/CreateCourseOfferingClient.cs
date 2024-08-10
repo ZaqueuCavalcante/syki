@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.CreateCourseOffering;
 
-public class CreateCourseOfferingClient(HttpClient http)
+public class CreateCourseOfferingClient(HttpClient http) : IAcademicClient
 {
     public async Task<OneOf<CourseOfferingOut, ErrorOut>> Create(
         Guid campusId,

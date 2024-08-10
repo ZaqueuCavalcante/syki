@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.GetCourses;
 
-public class GetCoursesClient(HttpClient http)
+public class GetCoursesClient(HttpClient http) : IAcademicClient
 {
     public async Task<List<CourseOut>> Get()
     {

@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.CreateCourseCurriculum;
 
-public class CreateCourseCurriculumClient(HttpClient http)
+public class CreateCourseCurriculumClient(HttpClient http) : IAcademicClient
 {
     public async Task<OneOf<CourseCurriculumOut, ErrorOut>> Create(string name, Guid courseId, List<CreateCourseCurriculumDisciplineIn> disciplines)
     {

@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.CreateClass;
 
-public class CreateClassClient(HttpClient http)
+public class CreateClassClient(HttpClient http) : IAcademicClient
 {
     public async Task<OneOf<ClassOut, ErrorOut>> Create(Guid disciplineId, Guid teacherId, string period, int vacancies, List<ScheduleIn> schedules)
     {

@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 
 namespace Syki.Front.Features.Cross.LoginMfa;
 
-public class LoginMfaClient(HttpClient http, ILocalStorageService localStorage, SykiAuthStateProvider authStateProvider)
+public class LoginMfaClient(HttpClient http, ILocalStorageService localStorage, SykiAuthStateProvider authStateProvider) : ICrossClient
 {
     public async Task<LoginMfaOut> Login(string code)
     {

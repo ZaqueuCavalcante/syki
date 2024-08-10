@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.UpdateCampus;
 
-public class UpdateCampusClient(HttpClient http)
+public class UpdateCampusClient(HttpClient http) : IAcademicClient
 {
     public async Task<OneOf<CampusOut, ErrorOut>> Update(Guid id, string name, string city)
     {

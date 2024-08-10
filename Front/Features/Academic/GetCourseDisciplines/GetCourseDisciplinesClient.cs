@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.GetCourseDisciplines;
 
-public class GetCourseDisciplinesClient(HttpClient http)
+public class GetCourseDisciplinesClient(HttpClient http) : IAcademicClient
 {
     public async Task<List<CourseDisciplineOut>> Get(Guid courseId)
     {

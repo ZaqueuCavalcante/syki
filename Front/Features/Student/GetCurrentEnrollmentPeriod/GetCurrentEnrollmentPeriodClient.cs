@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 
-public class GetCurrentEnrollmentPeriodClient(HttpClient http)
+public class GetCurrentEnrollmentPeriodClient(HttpClient http) : IStudentClient
 {
     public async Task<EnrollmentPeriodOut> Get()
     {

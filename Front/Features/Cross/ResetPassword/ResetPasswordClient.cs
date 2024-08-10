@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Cross.ResetPassword;
 
-public class ResetPasswordClient(HttpClient http)
+public class ResetPasswordClient(HttpClient http) : ICrossClient
 {
     public async Task<HttpResponseMessage> Reset(string? token, string password)
     {

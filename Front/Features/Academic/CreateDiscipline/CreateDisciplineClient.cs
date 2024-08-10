@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.CreateDiscipline;
 
-public class CreateDisciplineClient(HttpClient http)
+public class CreateDisciplineClient(HttpClient http) : IAcademicClient
 {
     public async Task<HttpResponseMessage> Create(string name, List<Guid> courses)
     {

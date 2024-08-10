@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.StartClass;
 
-public class StartClassClient(HttpClient http)
+public class StartClassClient(HttpClient http) : IAcademicClient
 {
     public async Task<OneOf<SuccessOut, ErrorOut>> Start(Guid id)
     {

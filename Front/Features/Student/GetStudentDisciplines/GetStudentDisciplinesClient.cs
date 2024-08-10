@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Student.GetStudentDisciplines;
 
-public class GetStudentDisciplinesClient(HttpClient http)
+public class GetStudentDisciplinesClient(HttpClient http) : IStudentClient
 {
     public async Task<List<DisciplineOut>> Get()
     {

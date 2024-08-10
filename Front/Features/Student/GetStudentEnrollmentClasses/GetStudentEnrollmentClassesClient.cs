@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Student.GetStudentEnrollmentClasses;
 
-public class GetStudentEnrollmentClassesClient(HttpClient http)
+public class GetStudentEnrollmentClassesClient(HttpClient http) : IStudentClient
 {
     public async Task<List<EnrollmentClassOut>> Get()
     {

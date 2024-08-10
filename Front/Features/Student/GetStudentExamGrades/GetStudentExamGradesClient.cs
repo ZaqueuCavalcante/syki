@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Student.GetStudentExamGrades;
 
-public class GetStudentExamGradesClient(HttpClient http)
+public class GetStudentExamGradesClient(HttpClient http) : IStudentClient
 {
     public async Task<List<StudentExamGradeOut>> Get()
     {

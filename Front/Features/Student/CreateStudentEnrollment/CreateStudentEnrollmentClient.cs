@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Student.CreateStudentEnrollment;
 
-public class CreateStudentEnrollmentClient(HttpClient http)
+public class CreateStudentEnrollmentClient(HttpClient http) : IStudentClient
 {
     public async Task<HttpResponseMessage> Create(List<Guid> classes)
     {

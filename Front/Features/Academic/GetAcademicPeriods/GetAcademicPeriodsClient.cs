@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Academic.GetAcademicPeriods;
 
-public class GetAcademicPeriodsClient(HttpClient http)
+public class GetAcademicPeriodsClient(HttpClient http) : IAcademicClient
 {
     public async Task<List<AcademicPeriodOut>> Get()
     {

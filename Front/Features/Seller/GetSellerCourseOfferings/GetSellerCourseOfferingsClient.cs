@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Seller.GetSellerCourseOfferings;
 
-public class GetSellerCourseOfferingsClient(HttpClient http)
+public class GetSellerCourseOfferingsClient(HttpClient http) : ISellerClient
 {
     public async Task<List<CourseOfferingOut>> Get()
     {

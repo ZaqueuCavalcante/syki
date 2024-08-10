@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Teacher.GetTeacherInsights;
 
-public class GetTeacherInsightsClient(HttpClient http)
+public class GetTeacherInsightsClient(HttpClient http) : ITeacherClient
 {
     public async Task<TeacherInsightsOut> Get()
     {

@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Teacher.GetTeacherAgenda;
 
-public class GetTeacherAgendaClient(HttpClient http)
+public class GetTeacherAgendaClient(HttpClient http) : ITeacherClient
 {
     public async Task<List<AgendaDayOut>> Get()
     {

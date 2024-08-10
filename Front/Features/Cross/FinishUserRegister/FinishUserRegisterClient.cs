@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Cross.FinishUserRegister;
 
-public class FinishUserRegisterClient(HttpClient http)
+public class FinishUserRegisterClient(HttpClient http) : ICrossClient
 {
     public async Task<HttpResponseMessage> Finish(string? token, string password)
     {

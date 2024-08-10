@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Teacher.GetTeacherClass;
 
-public class GetTeacherClassClient(HttpClient http)
+public class GetTeacherClassClient(HttpClient http) : ITeacherClient
 {
     public async Task<TeacherClassOut> Get(Guid id)
     {

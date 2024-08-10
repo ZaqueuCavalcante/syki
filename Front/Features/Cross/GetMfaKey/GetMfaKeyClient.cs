@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Cross.GetMfaKey;
 
-public class GetMfaKeyClient(HttpClient http)
+public class GetMfaKeyClient(HttpClient http) : ICrossClient
 {
     public async Task<GetMfaKeyOut> Get()
     {

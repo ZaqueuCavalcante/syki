@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Adm.GetInstitutions;
 
-public class GetInstitutionsClient(HttpClient http)
+public class GetInstitutionsClient(HttpClient http) : IAdmClient
 {
     public async Task<List<InstitutionOut>> Get()
     {

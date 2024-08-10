@@ -1,6 +1,6 @@
 namespace Syki.Front.Features.Adm.GetUsers;
 
-public class GetUsersClient(HttpClient http)
+public class GetUsersClient(HttpClient http) : IAdmClient
 {
     public async Task<List<UserOut>> Get()
     {

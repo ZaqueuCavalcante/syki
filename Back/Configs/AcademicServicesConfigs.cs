@@ -26,6 +26,7 @@ using Syki.Back.Features.Academic.GetCourseDisciplines;
 using Syki.Back.Features.Academic.GetCourseOfferings;
 using Syki.Back.Features.Academic.StartClass;
 using Syki.Back.Features.Academic.GetCourseCurriculums;
+using Syki.Back.Features.Academic.GetAcademicClass;
 
 namespace Syki.Back.Configs;
 
@@ -61,5 +62,6 @@ public static class AcademicServicesConfigs
         services.AddScoped<GetTeachersService>();
         services.AddScoped<StartClassService>();
         services.AddScoped<UpdateCampusService>();
+        services.AddScoped<GetAcademicClassService>();
     }
 }

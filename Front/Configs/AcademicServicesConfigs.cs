@@ -32,5 +32,6 @@ public static class AcademicServicesConfigs
         builder.Services.AddScoped<GetTeachersClient>();
         builder.Services.AddScoped<StartClassClient>();
         builder.Services.AddScoped<UpdateCampusClient>();
+        builder.Services.AddScoped<GetAcademicClassClient>();
     }
 }

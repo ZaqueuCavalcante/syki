@@ -1,0 +1,80 @@
+﻿@using Syki.Front.Components.Custom
+@using Syki.Front.Features.Teacher.AddExamGradeNote
+
+@namespace Syki.Front.Pages.Academic
+
+@page "/academic/classes/{id:guid}"
+@attribute [Authorize(Roles = "Academic")]
+
+<PageTitle>Turma</PageTitle>
+
+<MudContainer>
+    <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="@($"{_class.Discipline} ({_class.Code}) - {_class.Period}")" />
+    <MudContainer Class="mb-8">
+        <MudDataGrid T="LessonOut" Class="pa-4" Items="@GetLessons()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por data ou status" />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.Number" Title="Aula" />
+                <PropertyColumn Property="x => x.Date" Title="Data" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.StickyNote2" OnClick="@(() => Action(context.Item))" />
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiDataGridPager T="LessonOut" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject GetAcademicClassClient Client
+
+@code
+{
+	[Parameter]
+	public Guid Id { get; set; }
+
+    private bool _loading;
+    private string _searchString;
+    private GetAcademicClassOut _class = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        _loading = true;
+        var response = await Client.Get(Id);
+        if (response.IsSuccess())
+        {
+            _class = response.GetSuccess();
+        }
+        _loading = false;
+    }
+    
+    private void Action(LessonOut item)
+    {
+        // Lalala
+    }
+
+    private IEnumerable<LessonOut> GetLessons()
+    {
+        return _class.Lessons.OrderBy(x => x.Number).ToList();
+    }
+
+    private Func<LessonOut, bool> _quickFilter => x => _searchString.IsIn(x.Date.ToShortDateString());
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem aulas ainda." : "Nenhuma aula encontrada.";
+    }
+}

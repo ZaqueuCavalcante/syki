@@ -1,5 +1,16 @@
 {
     "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "RUN_ALL",
+            "configurations": [
+                "BACK",
+                "DAEMON",
+            ],
+            "preLaunchTask": "build",
+            "stopAll": true
+        }
+    ],
     "configurations": [
         {
             "name": "BACK",
@@ -18,14 +29,6 @@
             "requireExactSource": false,
             "cwd": "${workspaceFolder}/Daemon",
             "program": "${workspaceFolder}/Daemon/bin/Debug/net8.0/Daemon.dll",
-        },
-        {
-            "name": "FRONT",
-            "browser": "chrome",
-            "type": "blazorwasm",
-            "request": "attach",
-            "cwd": "${workspaceFolder}",
-            "url": "http://localhost:5002"
         }
     ]
 }

@@ -107,6 +107,11 @@ public class Class
         Status = ClassStatus.Started;
     }
 
+    public void SetFillRatio(int count)
+    {
+        FillRatio = $"{count}/{Vacancies}";
+    }
+
     public ClassOut ToOut()
     {
         return new()
@@ -118,6 +123,24 @@ public class Class
             Vacancies = Vacancies,
             Status = Status,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
+            SchedulesInline = GetScheduleAsString(),
+            FillRatio = FillRatio,
+        };
+    }
+
+    public GetAcademicClassOut ToGetAcademicClassOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Discipline = Discipline.Name,
+            Code = Discipline.Code,
+            Teacher = Teacher.Name,
+            Period = Period,
+            Vacancies = Vacancies,
+            Status = Status,
+            Schedules = Schedules.ConvertAll(h => h.ToOut()),
+            Lessons = Lessons.ConvertAll(l => l.ToOut()),
             SchedulesInline = GetScheduleAsString(),
             FillRatio = FillRatio,
         };

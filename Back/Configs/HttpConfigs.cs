@@ -9,7 +9,7 @@ public static class HttpConfigs
         services.AddRouting(options => options.LowercaseUrls = true);
     }
 
-    public static void UseDomainExceptions(this IApplicationBuilder app)
+    public static void UseExceptions(this IApplicationBuilder app)
     {
         app.UseMiddleware<ExceptionsMiddleware>();
     }
@@ -20,5 +20,10 @@ public static class HttpConfigs
         {
             options.MapControllers();
         });
+    }
+
+    public static void UseLogs(this IApplicationBuilder app)
+    {
+        app.UseSerilogRequestLogging();
     }
 }

@@ -16,7 +16,7 @@ public class GetClassesService(SykiDbContext ctx)
         foreach (var @class in classes)
         {
             var count = links.Count(x => x.ClassId == @class.Id);
-            @class.FillRatio = $"{count}/{@class.Vacancies}";
+            @class.SetFillRatio(count);
         }
 
         return classes.ConvertAll(t => t.ToOut());

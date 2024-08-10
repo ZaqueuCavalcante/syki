@@ -20,4 +20,14 @@ public class Lesson
         Number = number;
         Date = date;
     }
+
+    public LessonOut ToOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Number = Number,
+            Date = Date,
+        };
+    }
 }

@@ -5,20 +5,23 @@ namespace Syki.Shared;
 public enum Day
 {
     [Description("Segunda")]
-    Segunda,
+    Monday,
 
     [Description("Terça")]
-    Terca,
+    Tuesday,
 
     [Description("Quarta")]
-    Quarta,
+    Wednesday,
 
     [Description("Quinta")]
-    Quinta,
+    Thursday,
 
     [Description("Sexta")]
-    Sexta,
+    Friday,
 
     [Description("Sábado")]
-    Sabado,
+    Saturday,
+
+    [Description("Domingo")]
+    Sunday,
 }

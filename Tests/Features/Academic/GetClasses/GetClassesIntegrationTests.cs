@@ -11,7 +11,7 @@ public partial class IntegrationTests
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
-        var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
+        var schedules = new List<ScheduleIn>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
         ClassOut @class = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
@@ -36,7 +36,7 @@ public partial class IntegrationTests
             chico.Id,
             data.AcademicPeriod.Id,
             40,
-            [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]
+            [new(Day.Monday, Hour.H07_00, Hour.H10_00)]
         );
         StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
 

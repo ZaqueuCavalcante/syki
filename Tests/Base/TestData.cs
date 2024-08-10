@@ -299,29 +299,29 @@ public static class TestData
         foreach (var list in new List<List<Schedule>>()
         {
             new() {
-                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
-                new Schedule(Day.Segunda, Hour.H07_30, Hour.H07_45),
+                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Monday, Hour.H07_30, Hour.H07_45),
             },
             new() {
-                new Schedule(Day.Segunda, Hour.H10_00, Hour.H11_00),
-                new Schedule(Day.Segunda, Hour.H09_30, Hour.H12_15),
+                new Schedule(Day.Monday, Hour.H10_00, Hour.H11_00),
+                new Schedule(Day.Monday, Hour.H09_30, Hour.H12_15),
             },
             new() {
-                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
-                new Schedule(Day.Segunda, Hour.H07_30, Hour.H08_30),
+                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Monday, Hour.H07_30, Hour.H08_30),
             },
             new() {
-                new Schedule(Day.Segunda, Hour.H07_30, Hour.H08_30),
-                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Monday, Hour.H07_30, Hour.H08_30),
+                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
             },
             new() {
-                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
-                new Schedule(Day.Terca, Hour.H08_00, Hour.H09_00),
-                new Schedule(Day.Segunda, Hour.H07_15, Hour.H07_45),
+                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Tuesday, Hour.H08_00, Hour.H09_00),
+                new Schedule(Day.Monday, Hour.H07_15, Hour.H07_45),
             },
             new() {
-                new Schedule(Day.Quarta, Hour.H12_00, Hour.H15_30),
-                new Schedule(Day.Quarta, Hour.H13_00, Hour.H14_15),
+                new Schedule(Day.Wednesday, Hour.H12_00, Hour.H15_30),
+                new Schedule(Day.Wednesday, Hour.H13_00, Hour.H14_15),
             },
         })
         {
@@ -334,21 +334,21 @@ public static class TestData
         foreach (var list in new List<List<Schedule>>()
         {
             new() {
-                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
-                new Schedule(Day.Segunda, Hour.H08_00, Hour.H09_00),
+                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Monday, Hour.H08_00, Hour.H09_00),
             },
             new() {
-                new Schedule(Day.Segunda, Hour.H08_00, Hour.H09_00),
-                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Monday, Hour.H08_00, Hour.H09_00),
+                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
             },
             new() {
-                new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00),
-                new Schedule(Day.Terca, Hour.H08_00, Hour.H09_00),
-                new Schedule(Day.Segunda, Hour.H09_45, Hour.H10_15),
+                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+                new Schedule(Day.Tuesday, Hour.H08_00, Hour.H09_00),
+                new Schedule(Day.Monday, Hour.H09_45, Hour.H10_15),
             },
             new() {
-                new Schedule(Day.Quarta, Hour.H12_00, Hour.H15_30),
-                new Schedule(Day.Quarta, Hour.H11_15, Hour.H12_00),
+                new Schedule(Day.Wednesday, Hour.H12_00, Hour.H15_30),
+                new Schedule(Day.Wednesday, Hour.H11_15, Hour.H12_00),
             },
         })
         {
@@ -393,5 +393,60 @@ public static class TestData
             new ExamGrade(Guid.Empty, Guid.Empty, ExamType.N2, n2),
             new ExamGrade(Guid.Empty, Guid.Empty, ExamType.N3, n3)
         ];
+    }
+
+    public static IEnumerable<object[]> Holidays()
+    {
+        foreach (var day in new List<DateOnly>()
+        {
+            new(2024, 01, 01), // Confraternização Universal
+            new(2024, 04, 21), // Tiradentes
+            new(2024, 05, 01), // Dia do Trabalho
+            new(2024, 09, 07), // Independência do Brasil
+            new(2024, 10, 12), // Nossa Senhora Aparecida
+            new(2024, 11, 02), // Finados
+            new(2024, 11, 15), // Proclamação da República
+            new(2024, 12, 25), // Natal
+        })
+        {
+            yield return [day];
+        }
+    }
+
+    public static IEnumerable<object[]> NotHolidays()
+    {
+        foreach (var day in new List<DateOnly>()
+        {
+            new(2024, 01, 02),
+        })
+        {
+            yield return [day];
+        }
+    }
+
+    public static IEnumerable<object[]> HoursDiffsInMinutes()
+    {
+        foreach (var value in new List<(Hour, Hour, int)>()
+        {
+            (Hour.H07_00, Hour.H07_00, 00),
+            (Hour.H07_00, Hour.H07_15, 15),
+            (Hour.H07_00, Hour.H07_45, 45),
+            (Hour.H07_00, Hour.H08_00, 01*60),
+            (Hour.H07_15, Hour.H08_30, 01*60+15),
+            (Hour.H07_15, Hour.H08_45, 01*60+30),
+            (Hour.H07_30, Hour.H08_30, 01*60),
+            (Hour.H07_00, Hour.H12_00, 05*60),
+            (Hour.H13_00, Hour.H19_00, 06*60),
+            (Hour.H07_15, Hour.H09_45, 02*60+30),
+            (Hour.H08_45, Hour.H12_00, 03*60+15),
+            (Hour.H08_15, Hour.H15_45, 07*60+30),
+            (Hour.H07_15, Hour.H07_00, 15),
+            (Hour.H19_00, Hour.H13_00, 06*60),
+            (Hour.H08_30, Hour.H07_15, 01*60+15),
+            (Hour.H08_45, Hour.H07_15, 01*60+30),
+        })
+        {
+            yield return [value];
+        }
     }
 }

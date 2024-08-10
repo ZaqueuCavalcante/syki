@@ -8,7 +8,7 @@ public class CreateScheduleUnitTests
     public void Should_create_schedule_with_correct_data()
     {
         // Arrange
-        var day = Day.Segunda;
+        var day = Day.Monday;
         var start = Hour.H07_00;
         var end = Hour.H08_00;
 
@@ -26,7 +26,7 @@ public class CreateScheduleUnitTests
     public void Should_not_create_schedule_with_same_start_and_end()
     {
         // Arrange
-        var day = Day.Terca;
+        var day = Day.Tuesday;
         var start = Hour.H07_00;
         var end = Hour.H07_00;
 
@@ -41,7 +41,7 @@ public class CreateScheduleUnitTests
     public void Nao_deve_criar_um_schedule_quando_end_for_menor_que_start()
     {
         // Arrange
-        var day = Day.Terca;
+        var day = Day.Tuesday;
         var start = Hour.H10_00;
         var end = Hour.H07_00;
 
@@ -71,7 +71,7 @@ public class CreateScheduleUnitTests
     public void Should_not_create_schedule_with_invalid_start_hour()
     {
         // Arrange
-        var day = Day.Segunda;
+        var day = Day.Monday;
         var start = (Hour)666;
         var end = Hour.H08_00;
 
@@ -86,7 +86,7 @@ public class CreateScheduleUnitTests
     public void Should_not_create_schedule_with_invalid_end_hour()
     {
         // Arrange
-        var day = Day.Segunda;
+        var day = Day.Monday;
         var start = Hour.H08_00;
         var end = (Hour)666;
 
@@ -104,8 +104,8 @@ public class CreateScheduleUnitTests
         var start = Hour.H07_00;
         var end = Hour.H08_00;
 
-        var scheduleA = new Schedule(Day.Segunda, start, end);
-        var scheduleB = new Schedule(Day.Terca, start, end);
+        var scheduleA = new Schedule(Day.Monday, start, end);
+        var scheduleB = new Schedule(Day.Tuesday, start, end);
 
         // Act
         var result = scheduleA.Conflict(scheduleB);
@@ -118,8 +118,8 @@ public class CreateScheduleUnitTests
     public void Schedules_validos_nao_devem_conflitar()
     {
         // Arrange
-        var scheduleA = new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00);
-        var scheduleB = new Schedule(Day.Segunda, Hour.H08_00, Hour.H08_30);
+        var scheduleA = new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00);
+        var scheduleB = new Schedule(Day.Monday, Hour.H08_00, Hour.H08_30);
 
         // Act
         var result = scheduleA.Conflict(scheduleB);
@@ -135,8 +135,8 @@ public class CreateScheduleUnitTests
         var start = Hour.H07_00;
         var end = Hour.H08_00;
 
-        var scheduleA = new Schedule(Day.Segunda, start, end);
-        var scheduleB = new Schedule(Day.Segunda, start, end);
+        var scheduleA = new Schedule(Day.Monday, start, end);
+        var scheduleB = new Schedule(Day.Monday, start, end);
 
         // Act
         var result = scheduleA.Conflict(scheduleB);
@@ -149,8 +149,8 @@ public class CreateScheduleUnitTests
     public void Partial_equal_schedules_should_conflict()
     {
         // Arrange
-        var scheduleA = new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00);
-        var scheduleB = new Schedule(Day.Segunda, Hour.H07_30, Hour.H08_30);
+        var scheduleA = new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00);
+        var scheduleB = new Schedule(Day.Monday, Hour.H07_30, Hour.H08_30);
 
         // Act
         var result = scheduleA.Conflict(scheduleB);
@@ -163,8 +163,8 @@ public class CreateScheduleUnitTests
     public void Schedules_cujo_segundo_esta_contido_no_primeiro_devem_conflitar()
     {
         // Arrange
-        var scheduleA = new Schedule(Day.Segunda, Hour.H07_00, Hour.H08_00);
-        var scheduleB = new Schedule(Day.Segunda, Hour.H07_30, Hour.H07_45);
+        var scheduleA = new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00);
+        var scheduleB = new Schedule(Day.Monday, Hour.H07_30, Hour.H07_45);
 
         // Act
         var result = scheduleA.Conflict(scheduleB);
@@ -177,8 +177,8 @@ public class CreateScheduleUnitTests
     public void Schedules_cujo_primeiro_esta_contido_no_segundo_devem_conflitar()
     {
         // Arrange
-        var scheduleA = new Schedule(Day.Segunda, Hour.H10_00, Hour.H11_00);
-        var scheduleB = new Schedule(Day.Segunda, Hour.H09_30, Hour.H12_15);
+        var scheduleA = new Schedule(Day.Monday, Hour.H10_00, Hour.H11_00);
+        var scheduleB = new Schedule(Day.Monday, Hour.H09_30, Hour.H12_15);
 
         // Act
         var result = scheduleA.Conflict(scheduleB);

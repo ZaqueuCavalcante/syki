@@ -86,6 +86,17 @@ public class EnumExtensionsUnitTests
         result.Should().BeFalse();
     }
 
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.HoursDiffsInMinutes))]
+    public void Should_get_hours_diff((Hour hourA, Hour hourB, int diff) data)
+    {
+        // Arrange / Act
+        var result = data.hourA.DiffInMinutes(data.hourB);
+
+        // Assert
+        result.Should().Be(data.diff);
+    }
+
     private enum TestEnum
     {
         WithoutDescription

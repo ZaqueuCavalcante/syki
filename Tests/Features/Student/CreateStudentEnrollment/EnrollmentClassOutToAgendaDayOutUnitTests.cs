@@ -8,7 +8,7 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
         // Arrange
         var classes = new List<EnrollmentClassOut>
         {
-            new() { Discipline = "Banco de Dados", Schedules = [ new(Day.Segunda, Hour.H07_00, Hour.H10_00) ] }
+            new() { Discipline = "Banco de Dados", Schedules = [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ] }
         };
 
         // Act
@@ -16,7 +16,7 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
 
         // Assert
         agendas.Should().ContainSingle();
-        agendas[0].Day.Should().Be(Day.Segunda);
+        agendas[0].Day.Should().Be(Day.Monday);
         agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
         agendas[0].Disciplines[0].Start.Should().Be(Hour.H07_00);
         agendas[0].Disciplines[0].End.Should().Be(Hour.H10_00);
@@ -30,8 +30,8 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
         {
             new() { Discipline = "Banco de Dados", Schedules =
             [
-                new(Day.Segunda, Hour.H10_15, Hour.H12_00),
-                new(Day.Segunda, Hour.H07_00, Hour.H10_00),
+                new(Day.Monday, Hour.H10_15, Hour.H12_00),
+                new(Day.Monday, Hour.H07_00, Hour.H10_00),
             ]}
         };
 
@@ -40,7 +40,7 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
 
         // Assert
         agendas.Should().ContainSingle();
-        agendas[0].Day.Should().Be(Day.Segunda);
+        agendas[0].Day.Should().Be(Day.Monday);
         agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
         agendas[0].Disciplines[0].Start.Should().Be(Hour.H07_00);
         agendas[0].Disciplines[0].End.Should().Be(Hour.H10_00);
@@ -57,9 +57,9 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
         {
             new() { Discipline = "Banco de Dados", Schedules =
             [
-                new(Day.Segunda, Hour.H10_15, Hour.H12_00),
-                new(Day.Segunda, Hour.H07_00, Hour.H10_00),
-                new(Day.Segunda, Hour.H15_00, Hour.H17_00),
+                new(Day.Monday, Hour.H10_15, Hour.H12_00),
+                new(Day.Monday, Hour.H07_00, Hour.H10_00),
+                new(Day.Monday, Hour.H15_00, Hour.H17_00),
             ]}
         };
 
@@ -68,7 +68,7 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
 
         // Assert
         agendas.Should().ContainSingle();
-        agendas[0].Day.Should().Be(Day.Segunda);
+        agendas[0].Day.Should().Be(Day.Monday);
         agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
         agendas[0].Disciplines[0].Start.Should().Be(Hour.H07_00);
         agendas[0].Disciplines[0].End.Should().Be(Hour.H10_00);
@@ -86,8 +86,8 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
         // Arrange
         var classes = new List<EnrollmentClassOut>
         {
-            new() { Discipline = "POO", Schedules = [ new(Day.Segunda, Hour.H10_00, Hour.H12_00) ] },
-            new() { Discipline = "Banco de Dados", Schedules = [ new(Day.Segunda, Hour.H07_00, Hour.H10_00) ] },
+            new() { Discipline = "POO", Schedules = [ new(Day.Monday, Hour.H10_00, Hour.H12_00) ] },
+            new() { Discipline = "Banco de Dados", Schedules = [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ] },
         };
 
         // Act
@@ -95,7 +95,7 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
 
         // Assert
         agendas.Should().ContainSingle();
-        agendas[0].Day.Should().Be(Day.Segunda);
+        agendas[0].Day.Should().Be(Day.Monday);
         agendas[0].Disciplines[0].Name.Should().Be("Banco de Dados");
         agendas[0].Disciplines[0].Start.Should().Be(Hour.H07_00);
         agendas[0].Disciplines[0].End.Should().Be(Hour.H10_00);

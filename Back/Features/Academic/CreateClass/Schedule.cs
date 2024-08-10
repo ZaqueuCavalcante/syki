@@ -36,6 +36,11 @@ public class Schedule
         return new Schedule(day, startAt, endAt);
     }
 
+    public int GetDiff()
+    {
+        return StartAt.DiffInMinutes(EndAt);
+    }
+
     public bool Conflict(Schedule other)
     {
         if (Day != other.Day)

@@ -29,9 +29,9 @@ public partial class IntegrationTests
 
         TeacherOut chico = await client.CreateTeacher("Chico");
 
-        ClassOut classMatematica = await client.CreateClass(geometria.Id, chico.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
-        ClassOut classBancoDeDados = await client.CreateClass(bancoDeDados.Id, chico.Id, period.Id, 40, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
-        ClassOut classEstruturaDeDados = await client.CreateClass(estruturaDeDados.Id, chico.Id, period.Id, 40, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
+        ClassOut classMatematica = await client.CreateClass(geometria.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut classBancoDeDados = await client.CreateClass(bancoDeDados.Id, chico.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut classEstruturaDeDados = await client.CreateClass(estruturaDeDados.Id, chico.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
 
         StudentOut zaqueu = await client.CreateStudent(courseOfferingAds.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(zaqueu.Email);
@@ -85,7 +85,7 @@ public partial class IntegrationTests
 
         TeacherOut chico = await client.CreateTeacher("Chico");
 
-        ClassOut mathClass = await client.CreateClass(geometria.Id, chico.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
+        ClassOut mathClass = await client.CreateClass(geometria.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
 
         StudentOut zaqueu = await client.CreateStudent(courseOfferingAds.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(zaqueu.Email);

@@ -45,13 +45,13 @@ public partial class IntegrationTests
         TeacherOut chico = await client.CreateTeacher("Chico");
         TeacherOut ana = await client.CreateTeacher("Ana");
 
-        ClassOut classMatematica = await client.CreateClass(matematica.Id, chico.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H10_00)]);
-        ClassOut classBancoDeDados = await client.CreateClass(bancoDeDados.Id, chico.Id, period.Id, 40, [new(Day.Terca, Hour.H07_00, Hour.H10_00)]);
-        ClassOut classEstruturaDeDados = await client.CreateClass(estruturaDeDados.Id, chico.Id, period.Id, 40, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
-        ClassOut classInfoSociedade = await client.CreateClass(infoSociedade.Id, ana.Id, period.Id, 40, [new(Day.Segunda, Hour.H07_00, Hour.H08_00)]);
-        ClassOut classDireitoEconomia = await client.CreateClass(direitoEconomia.Id, ana.Id, period.Id, 40, [new(Day.Terca, Hour.H07_00, Hour.H08_00)]);
-        ClassOut classIntroDireito = await client.CreateClass(introDireito.Id, ana.Id, period.Id, 40, [new(Day.Quarta, Hour.H07_00, Hour.H08_00)]);
-        ClassOut classDireitoFinanceiro = await client.CreateClass(direitoFinanceiro.Id, ana.Id, period.Id, 40, [new(Day.Quinta, Hour.H07_00, Hour.H08_00)]);
+        ClassOut classMatematica = await client.CreateClass(matematica.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut classBancoDeDados = await client.CreateClass(bancoDeDados.Id, chico.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut classEstruturaDeDados = await client.CreateClass(estruturaDeDados.Id, chico.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut classInfoSociedade = await client.CreateClass(infoSociedade.Id, ana.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H08_00)]);
+        ClassOut classDireitoEconomia = await client.CreateClass(direitoEconomia.Id, ana.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H08_00)]);
+        ClassOut classIntroDireito = await client.CreateClass(introDireito.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H08_00)]);
+        ClassOut classDireitoFinanceiro = await client.CreateClass(direitoFinanceiro.Id, ana.Id, period.Id, 40, [new(Day.Thursday, Hour.H07_00, Hour.H08_00)]);
 
         StudentOut zaqueu = await client.CreateStudent(courseOfferingAds.Id, "Zaqueu");
         StudentOut maju = await client.CreateStudent(courseOfferingDireito.Id, "Maju");

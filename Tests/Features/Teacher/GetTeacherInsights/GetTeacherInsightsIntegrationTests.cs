@@ -12,7 +12,7 @@ public partial class IntegrationTests
 
         TeacherOut ana = await client.CreateTeacher("Ana");
 
-        await client.CreateClass(data.Disciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Quarta, Hour.H07_00, Hour.H10_00)]);
+        await client.CreateClass(data.Disciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
 
         var teacherClient = await _back.LoggedAsTeacher(ana.Email);
 

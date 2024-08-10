@@ -8,9 +8,16 @@
 
 
 # Chamada
-- Gerar aulas?
-- So pode alterar dia atual (e dias anteriores?)
-- Cada clique ja chama o endpoint? So chamar no final?
+- Ao criar uma turma, o sistema deve gerar todas as AULAS no dias informados
+- Deve levar em conta os dias + horarios + carga horaria total da disciplina
+- Tbm deve levar em conta o inicio e fim do periodo academico
+- Levar em conta os dias de avaliacao? Eles contam como carga-horaria normal?
+- Levar em conta os feriados nacionais e regionais
+
+- So pode mexer no dia atual e nos passados
+- So salvar no final, ao clicar em Salvar
+
+
 
 
 

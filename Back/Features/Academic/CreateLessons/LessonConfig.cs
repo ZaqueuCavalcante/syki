@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.CreateClass;
+namespace Syki.Back.Features.Academic.CreateLessons;
 
 public class LessonConfig : IEntityTypeConfiguration<Lesson>
 {

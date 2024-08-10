@@ -11,7 +11,7 @@ public partial class IntegrationTests
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
-        var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
+        var schedules = new List<ScheduleIn>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
         // Act
         ClassOut @class = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
@@ -79,7 +79,7 @@ public partial class IntegrationTests
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
-        var schedules = new List<ScheduleIn>() { new(Day.Segunda, Hour.H07_00, Hour.H07_00) };
+        var schedules = new List<ScheduleIn>() { new(Day.Monday, Hour.H07_00, Hour.H07_00) };
 
         // Act
         var response = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
@@ -99,9 +99,9 @@ public partial class IntegrationTests
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>()
         {
-            new(Day.Segunda, Hour.H07_00, Hour.H08_00),
-            new(Day.Terca, Hour.H09_00, Hour.H08_00),
-            new(Day.Quarta, Hour.H12_00, Hour.H12_00),
+            new(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new(Day.Tuesday, Hour.H09_00, Hour.H08_00),
+            new(Day.Wednesday, Hour.H12_00, Hour.H12_00),
         };
 
         // Act
@@ -122,8 +122,8 @@ public partial class IntegrationTests
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>()
         {
-            new(Day.Segunda, Hour.H07_00, Hour.H08_00),
-            new(Day.Segunda, Hour.H07_30, Hour.H08_30),
+            new(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new(Day.Monday, Hour.H07_30, Hour.H08_30),
         };
 
         // Act

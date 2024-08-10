@@ -15,7 +15,7 @@ public class CreateClassUnitTests
         var teacherId = Guid.NewGuid();
         const string period = "2023.2";
         const int vacancies = 40;
-        var schedules = new List<Schedule>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
+        var schedules = new List<Schedule>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
         // Act
         var @class = new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
@@ -41,8 +41,8 @@ public class CreateClassUnitTests
         const int vacancies = 40;
         var schedules = new List<Schedule>()
         {
-            new(Day.Segunda, Hour.H07_00, Hour.H08_00),
-            new(Day.Segunda, Hour.H07_00, Hour.H08_00),
+            new(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new(Day.Monday, Hour.H07_00, Hour.H08_00),
         };
 
         // Act
@@ -101,7 +101,7 @@ public class CreateClassUnitTests
 
         var discipline = new Discipline(institutionId, "Banco de Dados");
         var teacher = new SykiTeacher(userId, institutionId, "Chico Science");
-        var schedules = new List<Schedule>() { new(Day.Segunda, Hour.H07_00, Hour.H08_00) };
+        var schedules = new List<Schedule>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
         var @class = new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules)
         {

@@ -42,4 +42,28 @@ public static class EnumExtensions
     {
         return Enum.IsDefined(value.GetType(), value);
     }
+
+    public static bool Is(this DayOfWeek dayOfWeek, Day day)
+    {
+        return day.ToString() == dayOfWeek.ToString();
+    }
+
+    public static int DiffInMinutes(this Hour hourA, Hour hourB)
+    {
+        if (hourA > hourB)
+        {
+            (hourA, hourB) = (hourB, hourA);
+        }
+
+        var hourAHour = int.Parse(hourA.ToString().Substring(1, 2));
+        var hourAMinute = int.Parse(hourA.ToString().Substring(4, 2));
+
+        var hourBHour = int.Parse(hourB.ToString().Substring(1, 2));
+        var hourBMinute = int.Parse(hourB.ToString().Substring(4, 2));
+
+        var hours = hourBHour - hourAHour;
+        var minutes = hourBMinute - hourAMinute;
+
+        return hours * 60 + minutes;
+    }
 }

@@ -1,5 +1,6 @@
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
+using Syki.Back.Features.Academic.CreateLessons;
 using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 
@@ -44,6 +45,7 @@ public class Class
         Vacancies = vacancies;
         Status = ClassStatus.OnEnrollmentPeriod;
         Schedules = schedules;
+        Lessons = [];
     }
 
     public static OneOf<Class, SykiError> New(
@@ -61,9 +63,24 @@ public class Class
         return new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
     }
 
-    public void GenerateLessons()
+    public void CreateLessons(DateOnly start, ushort workload)
     {
-        
+        var minutes = 0;
+        var current = start;
+        var schedule = Schedules.First();
+
+        var counter = 0;
+
+        while (minutes < workload*60)
+        {
+            if (current.DayOfWeek.Is(schedule.Day))
+            {
+                Lessons.Add(new(Id, counter, current));
+                minutes += schedule.GetDiff();
+                counter++;
+            }
+            current = current.AddDays(1);
+        }
     }
 
     private static OneOf<SykiSuccess, SykiError> Validate(List<Schedule> schedules)

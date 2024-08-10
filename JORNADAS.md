@@ -1,11 +1,5 @@
 # JORNADAS
 
-## MACRO
-- Nova Roma geral, quem acessa todos os dados?
-- Quais integracoes tem?
-- Quais sao os usuarios do sistema?
-
-
 
 
 
@@ -34,10 +28,15 @@
 - Finalizou o curso? -> Diploma
 
 
+
+
 ## Teacher
 - Agenda
 - Turmas
 - Alunos, faltas e notas
+- Diario de class
+
+
 
 
 ## Academic

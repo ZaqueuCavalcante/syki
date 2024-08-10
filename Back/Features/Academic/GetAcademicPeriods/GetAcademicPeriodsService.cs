@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetAcademicPeriods;
 
-public class GetAcademicPeriodsService(SykiDbContext ctx)
+public class GetAcademicPeriodsService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<List<AcademicPeriodOut>> Get(Guid institutionId)
     {

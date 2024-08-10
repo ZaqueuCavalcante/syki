@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Cross.GetUserNotifications;
 
-public class GetUserNotificationsService(SykiDbContext ctx)
+public class GetUserNotificationsService(SykiDbContext ctx) : ICrossService
 {
     public async Task<List<UserNotificationOut>> Get(Guid institutionId, Guid userId)
     {

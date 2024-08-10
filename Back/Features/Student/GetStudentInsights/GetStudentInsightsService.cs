@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.GetStudentInsights;
 
-public class GetStudentInsightsService(SykiDbContext ctx)
+public class GetStudentInsightsService(SykiDbContext ctx) : IStudentService
 {
     public async Task<StudentInsightsOut> Get(Guid courseCurriculumId)
     {

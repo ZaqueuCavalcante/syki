@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateCourseCurriculum;
 
-public class CreateCourseCurriculumService(SykiDbContext ctx)
+public class CreateCourseCurriculumService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<OneOf<CourseCurriculumOut, SykiError>> Create(Guid institutionId, CreateCourseCurriculumIn data)
     {

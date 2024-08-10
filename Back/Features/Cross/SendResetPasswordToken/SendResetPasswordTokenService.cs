@@ -2,7 +2,7 @@ using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Cross.SendResetPasswordToken;
 
-public class SendResetPasswordTokenService(SykiDbContext ctx, UserManager<SykiUser> userManager)
+public class SendResetPasswordTokenService(SykiDbContext ctx, UserManager<SykiUser> userManager) : ICrossService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Send(SendResetPasswordTokenIn data)
     {

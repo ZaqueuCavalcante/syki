@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetClasses;
 
-public class GetClassesService(SykiDbContext ctx)
+public class GetClassesService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<List<ClassOut>> Get(Guid institutionId)
     {

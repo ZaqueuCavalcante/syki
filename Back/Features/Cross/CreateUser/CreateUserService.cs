@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Cross.CreateUser;
 
-public class CreateUserService(SykiDbContext ctx, UserManager<SykiUser> userManager)
+public class CreateUserService(SykiDbContext ctx, UserManager<SykiUser> userManager) : ICrossService
 {
     public async Task<OneOf<UserOut, SykiError>> Create(CreateUserIn data)
     {

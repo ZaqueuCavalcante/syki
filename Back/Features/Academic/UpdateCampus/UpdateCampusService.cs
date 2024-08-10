@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.UpdateCampus;
 
-public class UpdateCampusService(SykiDbContext ctx)
+public class UpdateCampusService(SykiDbContext ctx) : IAcademicService
 {
 	public async Task<OneOf<CampusOut, SykiError>> Update(Guid institutionId, UpdateCampusIn data)
 	{

@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateClass;
 
-public class CreateClassService(SykiDbContext ctx)
+public class CreateClassService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<OneOf<ClassOut, SykiError>> Create(Guid institutionId, CreateClassIn data)
     {

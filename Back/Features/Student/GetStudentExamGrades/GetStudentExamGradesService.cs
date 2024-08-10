@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.GetStudentExamGrades;
 
-public class GetStudentExamGradesService(SykiDbContext ctx)
+public class GetStudentExamGradesService(SykiDbContext ctx) : IStudentService
 {
     public async Task<List<StudentExamGradeOut>> Get(Guid userId)
     {

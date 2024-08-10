@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateDiscipline;
 
-public class CreateDisciplineService(SykiDbContext ctx)
+public class CreateDisciplineService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<DisciplineOut> Create(Guid institutionId, CreateDisciplineIn data)
     {

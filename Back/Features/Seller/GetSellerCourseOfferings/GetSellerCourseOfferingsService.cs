@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Seller.GetSellerCourseOfferings;
 
-public class GetSellerCourseOfferingsService(SykiDbContext ctx)
+public class GetSellerCourseOfferingsService(SykiDbContext ctx) : ISellerService
 {
     public async Task<List<CourseOfferingOut>> Get(Guid institutionId)
     {

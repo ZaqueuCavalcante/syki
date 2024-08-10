@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateAcademicPeriod;
 
-public class CreateAcademicPeriodService(SykiDbContext ctx)
+public class CreateAcademicPeriodService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<OneOf<AcademicPeriodOut, SykiError>> Create(Guid institutionId, CreateAcademicPeriodIn data)
     {

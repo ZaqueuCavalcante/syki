@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Teacher.AddExamGradeNote;
 
-public class AddExamGradeNoteService(SykiDbContext ctx)
+public class AddExamGradeNoteService(SykiDbContext ctx) : ITeacherService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Add(Guid teacherId, Guid examGradeId, AddExamGradeNoteIn data)
     {

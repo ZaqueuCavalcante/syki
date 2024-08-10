@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetCampi;
 
-public class GetCampiService(SykiDbContext ctx)
+public class GetCampiService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<List<CampusOut>> Get(Guid institutionId)
     {

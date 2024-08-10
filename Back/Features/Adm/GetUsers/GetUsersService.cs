@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetUsers;
 
-public class GetUsersService(DatabaseSettings dbSettings)
+public class GetUsersService(DatabaseSettings dbSettings) : IAdmService
 {
     public async Task<List<UserOut>> Get()
     {

@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Cross.ViewNotifications;
 
-public class ViewNotificationsService(SykiDbContext ctx)
+public class ViewNotificationsService(SykiDbContext ctx) : ICrossService
 {
     public async Task View(Guid institutionId, Guid userId)
     {

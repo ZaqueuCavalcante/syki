@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.GetStudentEnrollmentClasses;
 
-public class GetStudentEnrollmentClassesService(SykiDbContext ctx)
+public class GetStudentEnrollmentClassesService(SykiDbContext ctx) : IStudentService
 {
     public async Task<List<EnrollmentClassOut>> Get(Guid institutionId, Guid userId, Guid courseCurriculumId)
     {

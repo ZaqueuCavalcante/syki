@@ -3,7 +3,7 @@ using Syki.Back.Features.Cross.GenerateJWT;
 
 namespace Syki.Back.Features.Cross.Login;
 
-public class LoginService(GenerateJWTService service, SignInManager<SykiUser> signInManager)
+public class LoginService(GenerateJWTService service, SignInManager<SykiUser> signInManager) : ICrossService
 {
     public async Task<LoginOut> Login(LoginIn data)
     {

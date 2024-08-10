@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateCampus;
 
-public class CreateCampusService(SykiDbContext ctx)
+public class CreateCampusService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<CampusOut> Create(Guid institutionId, CreateCampusIn data)
     {

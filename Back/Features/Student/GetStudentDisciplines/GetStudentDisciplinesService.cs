@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.GetStudentDisciplines;
 
-public class GetStudentDisciplinesService(SykiDbContext ctx)
+public class GetStudentDisciplinesService(SykiDbContext ctx) : IStudentService
 {
     public async Task<List<DisciplineOut>> Get(Guid userId, Guid courseCurriculumId)
     {

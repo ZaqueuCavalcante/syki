@@ -3,7 +3,7 @@ using Syki.Back.Features.Cross.CreateInstitution;
 
 namespace Syki.Back.Features.Cross.FinishUserRegister;
 
-public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService service)
+public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService service) : ICrossService
 {
     public async Task<OneOf<UserOut, SykiError>> Finish(FinishUserRegisterIn data)
     {

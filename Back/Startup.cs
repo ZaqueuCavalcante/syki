@@ -5,21 +5,14 @@ public class Startup
     public static void ConfigureServices(IServiceCollection services)
     {
         services.AddSettingsConfigs();
-
-        services.AddAcademicServicesConfigs();
-        services.AddCrossServicesConfigs();
-        services.AddAdmServicesConfigs();
-        services.AddTeacherServicesConfigs();
-        services.AddStudentServicesConfigs();
-        services.AddSellerServicesConfigs();
-
-        services.AddRateLimiterConfigs();
+        services.AddServicesConfigs();
 
         services.AddIdentityConfigs();
         services.AddAuthenticationConfigs();
         services.AddAuthorizationConfigs();
 
         services.AddHttpConfigs();
+        services.AddRateLimiterConfigs();
 
         services.AddAuditConfigs();
         services.AddDapperConfigs();
@@ -29,10 +22,8 @@ public class Startup
         services.AddCorsConfigs();
     }
 
-    public static void Configure(IApplicationBuilder app, SykiDbContext ctx)
+    public static void Configure(IApplicationBuilder app)
     {
-        ctx.ResetDb();
-
         app.UseLogs();
 
         app.UseCors();

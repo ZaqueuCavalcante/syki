@@ -6,7 +6,7 @@ using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Cross.GenerateJWT;
 
-public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> userManager, SykiDbContext ctx)
+public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> userManager, SykiDbContext ctx) : ICrossService
 {
     public async Task<string> Generate(string email)
     {

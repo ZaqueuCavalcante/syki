@@ -3,7 +3,7 @@ using Syki.Back.Features.Cross.GenerateJWT;
 
 namespace Syki.Back.Features.Cross.LoginMfa;
 
-public class LoginMfaService(GenerateJWTService service, SignInManager<SykiUser> signInManager)
+public class LoginMfaService(GenerateJWTService service, SignInManager<SykiUser> signInManager) : ICrossService
 {
     public async Task<LoginMfaOut> Login(LoginMfaIn data)
     {

@@ -3,7 +3,7 @@ using Syki.Back.Features.Cross.SendResetPasswordToken;
 
 namespace Syki.Back.Features.Academic.CreateStudent;
 
-public class CreateStudentService(SykiDbContext ctx, CreateUserService createService, SendResetPasswordTokenService sendService)
+public class CreateStudentService(SykiDbContext ctx, CreateUserService createService, SendResetPasswordTokenService sendService) : IAcademicService
 {
     public async Task<OneOf<StudentOut, SykiError>> Create(Guid institutionId, CreateStudentIn data)
     {

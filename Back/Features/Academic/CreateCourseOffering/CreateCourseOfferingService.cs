@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateCourseOffering;
 
-public class CreateCourseOfferingService(SykiDbContext ctx)
+public class CreateCourseOfferingService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<OneOf<CourseOfferingOut, SykiError>> Create(Guid institutionId, CreateCourseOfferingIn data)
     {

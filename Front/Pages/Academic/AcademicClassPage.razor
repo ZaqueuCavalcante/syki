@@ -9,20 +9,42 @@
 <PageTitle>Turma</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="@($"{_class.Discipline} ({_class.Code}) - {_class.Period}")" />
+    <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="@($"{_class.Discipline} ({_class.Code})")" />
+
+    <MudPaper Class="px-6 py-4 mb-4 mx-6">
+        <MudGrid Justify="Justify.FlexStart" Spacing="1">
+            <MudItem xs="6" sm="6" md="6">
+                <MudStack Spacing="1">
+                    <MudText><strong>Professor:</strong> @_class.Teacher</MudText>
+                    <MudText><strong>Status:</strong> @_class.Status.GetDescription()</MudText>
+                    <MudText><strong>Alunos:</strong> @_class.FillRatio</MudText>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="6" sm="6" md="6">
+                <MudStack Spacing="1">
+                    <MudText><strong>Período:</strong> @_class.Period</MudText>
+                    <MudText><strong>Progresso:</strong> @_class.Progress</MudText>
+                    <MudText><strong>Carga Horária:</strong> @_class.Workload</MudText>
+                </MudStack>
+            </MudItem>
+            <MudItem>
+                <MudStack Spacing="1">
+                    <MudText><strong>Horário:</strong> @_class.SchedulesInline</MudText>
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
     <MudContainer Class="mb-8">
         <MudDataGrid T="LessonOut" Class="pa-4" Items="@GetLessons()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por data ou status" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por data, horário ou status" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Number" Title="Aula" />
                 <PropertyColumn Property="x => x.Date" Title="Data" />
-                <TemplateColumn CellClass="d-flex justify-end">
-                    <CellTemplate>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.StickyNote2" OnClick="@(() => Action(context.Item))" />
-                    </CellTemplate>
-                </TemplateColumn>
+                <PropertyColumn Property="x => x.Schedule" Title="Horário" />
+                <PropertyColumn Property="x => x.Status.GetDescription()" Title="Status" />
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -34,7 +56,8 @@
     </MudContainer>
 </MudContainer>
 
-@inject GetAcademicClassClient Client
+@inject CreateLessonsClient CreateLessonsClient
+@inject GetAcademicClassClient GetAcademicClassClient
 
 @code
 {
@@ -53,17 +76,17 @@
     private async Task Load()
     {
         _loading = true;
-        var response = await Client.Get(Id);
+        var response = await GetAcademicClassClient.Get(Id);
         if (response.IsSuccess())
         {
             _class = response.GetSuccess();
+            if (_class.Lessons.Count == 0)
+            {
+                await CreateLessonsClient.Create(Id);
+                await Load();
+            }
         }
         _loading = false;
-    }
-    
-    private void Action(LessonOut item)
-    {
-        // Lalala
     }
 
     private IEnumerable<LessonOut> GetLessons()
@@ -71,7 +94,7 @@
         return _class.Lessons.OrderBy(x => x.Number).ToList();
     }
 
-    private Func<LessonOut, bool> _quickFilter => x => _searchString.IsIn(x.Date.ToShortDateString());
+    private Func<LessonOut, bool> _quickFilter => x => _searchString.IsIn(x.Date.ToShortDateString(), x.Schedule, x.Status.GetDescription());
 
     private string GetNotFoundMessage()
     {

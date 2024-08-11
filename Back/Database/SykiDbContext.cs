@@ -1,7 +1,6 @@
 using Syki.Back.Audit;
 using Audit.EntityFramework;
 using Syki.Back.Features.Cross.CreateUser;
-using Syki.Back.Features.Academic.StartClass;
 using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
@@ -105,5 +104,11 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
         {
             Database.Migrate();
         }
+    }
+
+
+    public async Task<bool> AcademicPeriodExists(Guid institutionId, string id)
+    {
+        return await AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
     }
 }

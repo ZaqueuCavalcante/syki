@@ -16,9 +16,8 @@ public class CreateCourseOfferingService(SykiDbContext ctx) : IAcademicService
             .AnyAsync(g => g.InstitutionId == institutionId && g.Id == data.CourseCurriculumId && g.CourseId == data.CourseId);
         if (!courseCurriculumOk) return new CourseCurriculumNotFound();
 
-        var periodOk = await ctx.AcademicPeriods
-            .AnyAsync(p => p.InstitutionId == institutionId && p.Id == data.Period);
-        if (!periodOk) return new AcademicPeriodNotFound();
+        var periodExists = await ctx.AcademicPeriodExists(institutionId, data.Period);
+        if (!periodExists) return new AcademicPeriodNotFound();
 
         if (!data.Shift.IsValid()) return new InvalidShift();
 

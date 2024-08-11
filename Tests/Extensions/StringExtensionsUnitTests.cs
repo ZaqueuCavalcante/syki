@@ -83,4 +83,15 @@ public class StringExtensionsUnitTests
         // Assert
         result.Should().BeFalse();
     }
+
+    [Test]
+    [TestCaseSource(typeof(TestData), nameof(TestData.MinutesForFormat))]
+    public void Should_format_minutes_as_string((int minutes, string text) data)
+    {
+        // Arrange / Act
+        var result = data.minutes.MinutesToString();
+
+        // Assert
+        result.Should().Be(data.text);
+    }
 }

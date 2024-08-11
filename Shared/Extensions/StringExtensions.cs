@@ -97,4 +97,16 @@ public static class StringExtensions
 
         return qrCode.GetGraphic(20);
     }
+
+    public static string MinutesToString(this int value)
+    {
+        var hours = value / 60;
+        var minutes = value % 60;
+
+        if (hours == 0 && minutes == 0) return "0";
+        if (hours == 0) return $"{minutes}min";
+        if (minutes == 0) return $"{hours}h";
+
+        return $"{hours}h e {minutes}min";
+    }
 }

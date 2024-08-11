@@ -1,5 +1,6 @@
 # TODOS
 
+
 - Events
 - Inbox/Outbox Patterns
 - RabbitMQ
@@ -29,6 +30,11 @@
     - Filiação (pai e mãe)
     - Contato (celular, email)
     - Endereço (CEP, cidade, estado)
+    - Acompanhamento do curso
+        - Quanto ja conclui / quanto falta
+        - Monitorias? Aluno pode receber acesso a "features de monitor"?
+        - Horas necessarias fora as disciplinas
+        - Iniciacao cientifica
 
 ## Grade Curricular
     - Dados consolidados/porcentagens:

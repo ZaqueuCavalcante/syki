@@ -7,27 +7,39 @@ public class Lesson
 {
     public Guid Id { get; set; }
     public Guid ClassId { get; set; }
-    public int Number { get; set; }
     public DateOnly Date { get; set; }
+    public Hour StartAt { get; set; }
+    public Hour EndAt { get; set; }
+    public LessonStatus Status { get; set; }
 
     public Lesson(
         Guid classId,
-        int number,
-        DateOnly date
+        DateOnly date,
+        Hour startAt,
+        Hour endAt
     ) {
         Id = Guid.NewGuid();
         ClassId = classId;
-        Number = number;
         Date = date;
+        StartAt = startAt;
+        EndAt = endAt;
+        Status = LessonStatus.Pending;
     }
 
-    public LessonOut ToOut()
+    public string GetSchedule()
+    {
+        return $"{StartAt.GetDescription()}-{EndAt.GetDescription()}";
+    }
+
+    public LessonOut ToOut(int number)
     {
         return new()
         {
             Id = Id,
-            Number = Number,
+            Number = number,
             Date = Date,
+            Status = Status,
+            Schedule = GetSchedule(),
         };
     }
 }

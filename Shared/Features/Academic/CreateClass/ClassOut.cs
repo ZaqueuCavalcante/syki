@@ -9,7 +9,6 @@ public class ClassOut
     public int Vacancies { get; set; }
     public ClassStatus Status { get; set; }
     public List<ScheduleOut> Schedules { get; set; }
-    public string SchedulesInline { get; set; }
 
     public string FillRatio { get; set; }
 

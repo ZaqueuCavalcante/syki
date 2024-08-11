@@ -1,4 +1,3 @@
-using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Back.Features.Academic.CreateClass;
@@ -28,9 +27,9 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
             .WithOne()
             .HasForeignKey(l => l.ClassId);
 
-        @class.HasOne<AcademicPeriod>()
+        @class.HasOne(c => c.Period)
             .WithMany()
-            .HasForeignKey(c => new { c.Period, c.InstitutionId });
+            .HasForeignKey(c => new { c.PeriodId, c.InstitutionId });
 
         @class.HasMany(c => c.ExamGrades)
             .WithOne()

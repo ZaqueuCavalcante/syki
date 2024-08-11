@@ -25,7 +25,7 @@ public class CreateClassUnitTests
         @class.InstitutionId.Should().Be(institutionId);
         @class.DisciplineId.Should().Be(disciplineId);
         @class.TeacherId.Should().Be(teacherId);
-        @class.Period.Should().Be(period);
+        @class.PeriodId.Should().Be(period);
         @class.Vacancies.Should().Be(vacancies);
         @class.Schedules.Should().BeEquivalentTo(schedules);
     }
@@ -116,7 +116,7 @@ public class CreateClassUnitTests
         classOut.Id.Should().Be(@class.Id);
         classOut.Discipline.Should().Be(@class.Discipline.Name);
         classOut.Teacher.Should().Be(@class.Teacher.Name);
-        classOut.Period.Should().Be(@class.Period);
+        classOut.Period.Should().Be(@class.PeriodId);
         classOut.Schedules.Should().HaveCount(1);
     }
 }

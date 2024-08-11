@@ -449,4 +449,22 @@ public static class TestData
             yield return [value];
         }
     }
+
+    public static IEnumerable<object[]> MinutesForFormat()
+    {
+        foreach (var text in new List<(int, string)>()
+        {
+            (0, "0"),
+            (15, "15min"),
+            (30, "30min"),
+            (45, "45min"),
+            (60, "1h"),
+            (90, "1h e 30min"),
+            (105, "1h e 45min"),
+            (135, "2h e 15min"),
+        })
+        {
+            yield return [text];
+        }
+    }
 }

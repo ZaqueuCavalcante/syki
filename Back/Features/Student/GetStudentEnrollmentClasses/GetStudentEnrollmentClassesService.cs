@@ -21,7 +21,7 @@ public class GetStudentEnrollmentClassesService(SykiDbContext ctx) : IStudentSer
             .Include(t => t.Discipline)
             .Include(t => t.Schedules)
             .Include(t => t.Teacher)
-            .Where(t => t.InstitutionId == institutionId && t.Period == enrollmentPeriod.Id && ids.Contains(t.DisciplineId))
+            .Where(t => t.InstitutionId == institutionId && t.PeriodId == enrollmentPeriod.Id && ids.Contains(t.DisciplineId))
             .ToListAsync();
 
         var selecteds = await ctx.ClassesStudents.Where(x => x.SykiStudentId == userId).Select(x => x.ClassId).ToListAsync();

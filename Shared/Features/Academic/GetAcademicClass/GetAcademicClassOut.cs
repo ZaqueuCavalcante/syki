@@ -13,6 +13,8 @@ public class GetAcademicClassOut
     public List<LessonOut> Lessons { get; set; } = [];
     public string SchedulesInline { get; set; }
     public string FillRatio { get; set; }
+    public string Workload { get; set; }
+    public string Progress { get; set; }
 
     public override bool Equals(object? obj)
     {

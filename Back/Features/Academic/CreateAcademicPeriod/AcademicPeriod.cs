@@ -72,4 +72,9 @@ public class AcademicPeriod
             EndAt = EndAt,
         };
     }
+
+    public static implicit operator AcademicPeriod(OneOf<AcademicPeriod, SykiError> value)
+    {
+        return value.GetSuccess();
+    }
 }

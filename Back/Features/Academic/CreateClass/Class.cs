@@ -2,6 +2,7 @@ using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateLessons;
 using Syki.Back.Features.Academic.CreateDiscipline;
+using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Back.Features.Academic.CreateClass;
@@ -17,9 +18,11 @@ public class Class
     public Discipline Discipline { get; set; }
     public Guid TeacherId { get; set; }
     public SykiTeacher Teacher { get; set; }
-    public string Period { get; set; }
+    public string PeriodId { get; set; }
+    public AcademicPeriod Period { get; set; }
     public int Vacancies { get; set; }
     public ClassStatus Status { get; set; }
+    public int Workload { get; set; }
     public List<SykiStudent> Students { get; set; }
     public List<Schedule> Schedules { get; set; }
     public List<ExamGrade> ExamGrades { get; set; }
@@ -41,7 +44,7 @@ public class Class
         InstitutionId = institutionId;
         DisciplineId = disciplineId;
         TeacherId = teacherId;
-        Period = period;
+        PeriodId = period;
         Vacancies = vacancies;
         Status = ClassStatus.OnEnrollmentPeriod;
         Schedules = schedules;
@@ -63,21 +66,20 @@ public class Class
         return new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
     }
 
-    public void CreateLessons(DateOnly start, ushort workload)
+    public void CreateLessons()
     {
-        var minutes = 0;
-        var current = start;
-        var schedule = Schedules.First();
+        var schedules = Schedules.OrderBy(x => x.Day).ThenBy(x => x.StartAt).ToList();
 
-        var counter = 0;
-
-        while (minutes < workload*60)
+        var current = Period.StartAt;
+        while (current < Period.EndAt)
         {
-            if (current.DayOfWeek.Is(schedule.Day))
+            foreach (var schedule in schedules)
             {
-                Lessons.Add(new(Id, counter, current));
-                minutes += schedule.GetDiff();
-                counter++;
+                if (current.DayOfWeek.Is(schedule.Day))
+                {
+                    Lessons.Add(new(Id, current, schedule.StartAt, schedule.EndAt));
+                    Workload += schedule.GetDiff();
+                }
             }
             current = current.AddDays(1);
         }
@@ -93,13 +95,24 @@ public class Class
                     return new ConflictingSchedules();
             }
         }
-
         return new SykiSuccess();
     }
 
     private string GetScheduleAsString()
     {
         return string.Join(" | ", Schedules.OrderBy(h => h.Day).ThenBy(h => h.StartAt).ToList().ConvertAll(h => h.ToString()));
+    }
+
+    private string GetWorkloadAsString()
+    {
+        return Workload.MinutesToString();
+    }
+
+    private string GetProgressAsString()
+    {
+        var total = Lessons.Count;
+        var finalized = Lessons.Count(x => x.Status == LessonStatus.Finalized);
+        return $"{finalized}/{total}";
     }
 
     public void Start()
@@ -119,11 +132,10 @@ public class Class
             Id = Id,
             Discipline = Discipline.Name,
             Teacher = Teacher.Name,
-            Period = Period,
+            Period = PeriodId,
             Vacancies = Vacancies,
             Status = Status,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
-            SchedulesInline = GetScheduleAsString(),
             FillRatio = FillRatio,
         };
     }
@@ -136,12 +148,14 @@ public class Class
             Discipline = Discipline.Name,
             Code = Discipline.Code,
             Teacher = Teacher.Name,
-            Period = Period,
+            Period = PeriodId,
             Vacancies = Vacancies,
             Status = Status,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
-            Lessons = Lessons.ConvertAll(l => l.ToOut()),
+            Lessons = Lessons.OrderBy(x => x.Date).ThenBy(x => x.StartAt).Select((l, i) => l.ToOut(i+1)).ToList(),
             SchedulesInline = GetScheduleAsString(),
+            Workload = GetWorkloadAsString(),
+            Progress = GetProgressAsString(),
             FillRatio = FillRatio,
         };
     }
@@ -161,7 +175,7 @@ public class Class
             Id = Id,
             Discipline = Discipline.Name,
             Code = Discipline.Code,
-            Period = Period,
+            Period = PeriodId,
             Status = Status,
             Students = students,
         };
@@ -174,7 +188,7 @@ public class Class
             Id = Id,
             Discipline = Discipline.Name,
             Code = Discipline.Code,
-            Period = Period,
+            Period = PeriodId,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
             SchedulesInline = GetScheduleAsString(),
         };

@@ -64,7 +64,11 @@ public class UserNotFound : SykiError
     public override string Code { get; set; } = nameof(UserNotFound);
     public override string Message { get; set; } = "Usuário não encontrado.";
 }
-
+public class LessonNotFound : SykiError
+{
+    public override string Code { get; set; } = nameof(LessonNotFound);
+    public override string Message { get; set; } = "Aula não encontrada.";
+}
 
 // INVALID  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 public class InvalidDisciplinesList : SykiError
@@ -141,6 +145,11 @@ public class InvalidRegistrationToken : SykiError
 {
     public override string Code { get; set; } = nameof(InvalidRegistrationToken);
     public override string Message { get; set; } = "Token de registro inválido.";
+}
+public class InvalidStudentsList : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidStudentsList);
+    public override string Message { get; set; } = "Lista de alunos inválida.";
 }
 
 

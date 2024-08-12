@@ -1,6 +1,7 @@
 ﻿@using Syki.Front.Components.Custom
 @using Syki.Front.Components.Buttons
 @using Syki.Front.Features.Teacher.AddExamGradeNote
+@using Syki.Front.Features.Teacher.CreateLessonAttendance
 
 @namespace Syki.Front.Pages.Teacher
 
@@ -33,11 +34,11 @@
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Class" Class="mr-1 mb-1" Size="Size.Medium"/>
                         <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
-                            <MudText Typo="Typo.h6">Aula 5</MudText>
+                            <MudText Typo="Typo.h6">Aula @_lesson.Number</MudText>
                             <MudText Typo="Typo.h3">·</MudText>
-                            <MudText Typo="Typo.h6">12/07/2024</MudText>
+                            <MudText Typo="Typo.h6">@_lesson.Date</MudText>
                             <MudText Typo="Typo.h3">·</MudText>
-                            <MudText Typo="Typo.h6">Segunda 08:30-12:00</MudText>
+                            <MudText Typo="Typo.h6">@_lesson.Schedule</MudText>
                         </MudStack>
                         <MudSpacer />
                         <MudButton
@@ -53,7 +54,7 @@
                     </MudStack>
                 </MudCardContent>
             </MudCard>
-            <MudDataGrid T="TeacherClassStudentOut" Class="pa-4" Items="@GetStudents()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+            <MudDataGrid T="TeacherClassStudentOut" Class="pa-4" Items="@_students" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
                 <ToolBarContent>
                     <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome" />
                 </ToolBarContent>
@@ -67,7 +68,7 @@
                                 Size="Size.Small"
                                 Color="Color.Success"
                                 Value="@context.Item.IsSelected"
-                                ValueChanged="x => { context.Item.IsSelected = x; HandleCheckedChanged(); }"
+                                ValueChanged="x => { context.Item.IsSelected = x; }"
                             />
                         </CellTemplate>
                     </TemplateColumn>
@@ -88,7 +89,7 @@
     else if (_index == 1)
     {
         <MudContainer Class="mb-8">
-            <MudDataGrid T="TeacherClassStudentOut" Class="pa-4" Items="@GetStudents()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+            <MudDataGrid T="TeacherClassStudentOut" Class="pa-4" Items="@_students" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
                 <ToolBarContent>
                     <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome" />
                 </ToolBarContent>
@@ -123,37 +124,55 @@
     }
 </MudContainer>
 
+<ClassLessonsDialog @ref="@_dialog" OnRowClick="@SetLesson" />
 <AddExamGradeNoteDrawer @ref="@_drawer" AfterSubmit="@Load" />
 
-@inject GetTeacherClassClient Client
+@inject ISnackbar Snackbar
+@inject GetTeacherClassClient GetTeacherClassClient
+@inject CreateLessonAttendanceClient CreateLessonAttendanceClient
 
 @code
 {
 	[Parameter]
 	public Guid Id { get; set; }
 
+    private ClassLessonsDialog _dialog;
     private AddExamGradeNoteDrawer _drawer;
 
     private int _index;
     private bool _loading;
     private string _searchString;
     private TeacherClassOut _class = new();
+    private LessonOut _lesson = new();
+    private List<TeacherClassStudentOut> _students = [];
 
     protected override async Task OnInitializedAsync()
     {
         await Load();
+
+        var id = _class.Lessons.Where(x => x.Date <= DateTime.Now.ToDateOnly())
+            .OrderByDescending(x => x.Date)
+            .FirstOrDefault()?.Id ?? Guid.Empty;
+
+        SetLesson(id);
     }
 
     private async Task Load()
     {
         _loading = true;
-        _class = await Client.Get(Id);
+        _class = await GetTeacherClassClient.Get(Id);
+        _students = _class.Students.OrderBy(x => x.Name).ToList();
         _loading = false;
+    }
+
+    private void SetLesson(Guid id)
+    {
+        _lesson = _class.Lessons.FirstOrDefault(x => x.Id == id) ?? new();
     }
 
     private void OnEditLessonClick()
     {
-
+        _dialog.Open(_class.Lessons);
     }
 
     private void CancelFrequency()
@@ -161,24 +180,23 @@
 
     }
 
-    private void SaveFrequency()
+    private async Task SaveFrequency()
     {
-
-    }
-
-    private void HandleCheckedChanged()
-    {
-        // _days = _options.Where(o => o.IsSelected).ToList().ToAgendas();
+        var ids = _students.Where(x => x.IsSelected).Select(x => x.Id).ToList();
+        var result = await CreateLessonAttendanceClient.Create(_lesson.Id, ids);
+        if (result.IsSuccess())
+        {
+            Snackbar.Add("Chamada salva com sucesso!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(result.GetError().Message, Severity.Error);
+        }
     }
 
     private void AddNote(TeacherClassStudentOut item)
     {
         _drawer.Open(item);
-    }
-
-    private IEnumerable<TeacherClassStudentOut> GetStudents()
-    {
-        return _class.Students.OrderBy(x => x.Name).ToList();
     }
 
     private Func<TeacherClassStudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);

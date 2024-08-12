@@ -1,5 +1,5 @@
-using Syki.Front.Features.Teacher.AddExamGradeNote;
 using Syki.Front.Features.Teacher.GetTeacherClass;
+using Syki.Front.Features.Teacher.AddExamGradeNote;
 using Syki.Front.Features.Teacher.GetTeacherAgenda;
 using Syki.Front.Features.Teacher.GetTeacherClasses;
 using Syki.Front.Features.Teacher.GetTeacherInsights;

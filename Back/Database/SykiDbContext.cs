@@ -6,6 +6,7 @@ using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateTeacher;
+using Syki.Back.Features.Academic.CreateLessons;
 using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateNotification;
@@ -24,6 +25,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
 {
     public DbSet<Campus> Campi { get; set; }
     public DbSet<Class> Classes { get; set; }
+    public DbSet<Lesson> Lessons { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<SykiTask> Tasks { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }

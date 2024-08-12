@@ -13,6 +13,7 @@
     <PackageReference Include="QRCoder" Version="1.4.3" />
     <PackageReference Include="Otp.NET" Version="1.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="BrazilHolidays.Net" Version="1.0.4" />
   </ItemGroup>
 
 </Project>

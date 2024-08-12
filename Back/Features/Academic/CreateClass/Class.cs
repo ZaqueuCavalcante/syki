@@ -48,6 +48,7 @@ public class Class
         Vacancies = vacancies;
         Status = ClassStatus.OnEnrollmentPeriod;
         Schedules = schedules;
+        Students = [];
         Lessons = [];
     }
 
@@ -178,6 +179,7 @@ public class Class
             Period = PeriodId,
             Status = Status,
             Students = students,
+            Lessons = Lessons.OrderBy(x => x.Date).ThenBy(x => x.StartAt).Select((l, i) => l.ToOut(i+1)).ToList(),
         };
     }
 

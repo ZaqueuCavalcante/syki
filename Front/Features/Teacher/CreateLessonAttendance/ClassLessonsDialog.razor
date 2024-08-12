@@ -1,0 +1,61 @@
+@namespace Syki.Front.Features.Teacher.CreateLessonAttendance
+
+<MudDialog @bind-Visible=@_visible Options="@_options">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Class" Class="mr-1 mb-n1" />
+            Aulas
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudDataGrid
+            T="LessonOut"
+            Class="mb-4"
+            Dense="true"
+            Hover="true"
+            Items="@_lessons"
+            RowClass="cursor-pointer"
+            RowClick="@HandleRowClick"
+        >
+            <Columns>
+                <PropertyColumn Property="x => x.Number" Title="Aula" />
+                <PropertyColumn Property="x => x.Date" Title="Data" />
+                <PropertyColumn Property="x => x.Schedule" Title="Horário" />
+                <PropertyColumn Property="x => x.Status.GetDescription()" Title="Status" />
+            </Columns>
+        </MudDataGrid>
+    </DialogContent>
+</MudDialog>
+
+@code
+{
+    [Parameter]
+    public EventCallback<Guid> OnRowClick { get; set; }
+
+    private bool _visible;
+    private List<LessonOut> _lessons = [];
+
+    private readonly DialogOptions _options = new DialogOptions
+    {
+        FullWidth = true,
+        CloseButton = true,
+        MaxWidth = MaxWidth.Small,
+    };
+
+    public void Open(List<LessonOut> lessons)
+    {
+        _lessons = lessons;
+        _visible = true;
+    }
+
+    public void Close()
+    {
+        _visible = false;
+    }
+
+    private async Task HandleRowClick(DataGridRowClickEventArgs<LessonOut> row)
+    {
+        await OnRowClick.InvokeAsync(row.Item.Id);
+        Close();
+    }
+}

@@ -8,6 +8,7 @@ public class GetTeacherClassService(SykiDbContext ctx) : ITeacherService
             .Include(t => t.Discipline)
             .Include(t => t.Students)
             .Include(t => t.ExamGrades)
+            .Include(t => t.Lessons)
             .Where(t => t.InstitutionId == institutionId && t.TeacherId == userId && t.Id == id)
             .FirstOrDefaultAsync();
 

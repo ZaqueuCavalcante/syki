@@ -18,7 +18,7 @@ public static class IdentityConfigs
         services.Configure<IdentityOptions>(options =>
         {
             options.User.RequireUniqueEmail = true;
-            options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_@.";
+            options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_@.+";
         });
 
         services.Configure<IdentityOptions>(options =>

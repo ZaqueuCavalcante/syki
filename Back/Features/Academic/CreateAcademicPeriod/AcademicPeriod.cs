@@ -2,10 +2,10 @@ namespace Syki.Back.Features.Academic.CreateAcademicPeriod;
 
 public class AcademicPeriod
 {
-    public string Id { get; set; }
-    public Guid InstitutionId { get; set; }
-    public DateOnly StartAt { get; set; }
-    public DateOnly EndAt { get; set; }
+    public string Id { get; }
+    public Guid InstitutionId { get; }
+    public DateOnly StartAt { get; private set; }
+    public DateOnly EndAt { get; private set; }
 
     public AcademicPeriod(
         string id,

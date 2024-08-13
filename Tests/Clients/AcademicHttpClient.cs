@@ -27,6 +27,7 @@ using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
 using Syki.Front.Features.Academic.GetAcademicClass;
+using Syki.Front.Features.Academic.CreateLessons;
 
 namespace Syki.Tests.Clients;
 
@@ -262,6 +263,12 @@ public class AcademicHttpClient(HttpClient http)
     {
         var client = new StartClassClient(Cross);
         return await client.Start(id);
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> CreateClassLessons(Guid classId
+    ) {
+        var client = new CreateLessonsClient(Cross);
+        return await client.Create(classId);
     }
 
     public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()

@@ -7,7 +7,9 @@ public class CreateLessonAttendanceService(SykiDbContext ctx) : ITeacherService
         var lesson = await ctx.Lessons.FirstOrDefaultAsync(x => x.Id == lessonId);
         if (lesson == null) return new LessonNotFound();
 
-        var @class = await ctx.Classes.Include(x => x.Students).FirstOrDefaultAsync(x => x.Id == lesson.ClassId && x.TeacherId == teacherId);
+        var @class = await ctx.Classes
+            .Include(x => x.Students)
+            .FirstOrDefaultAsync(x => x.Id == lesson.ClassId && x.TeacherId == teacherId);
         if (@class == null) return new LessonNotFound();
 
         var allStudents = @class.Students.Select(x => x.Id).ToList();

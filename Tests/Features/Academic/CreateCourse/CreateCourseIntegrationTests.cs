@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using static Syki.Shared.CourseType;
 
 namespace Syki.Tests.Integration;
@@ -30,5 +31,18 @@ public partial class IntegrationTests
 
         // Assert
         response.ShouldBeError(new InvalidCourseType());
+    }
+
+    [Test]
+    public async Task Should_not_create_course_without_type()
+    {
+        // Arrange
+        var client = await _back.LoggedAsAcademic();
+
+        // Act
+        var response = await client.Cross.PostAsJsonAsync("/academic/courses", new { Name = "ADS" });
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }

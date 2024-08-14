@@ -12,6 +12,7 @@ public class GetAverageNoteUnitTests
         var result = data.examGrades.GetAverageNote();
 
         // Assert
-        result.Should().Be(data.average, $"{data.examGrades[0].Note} & {data.examGrades[1].Note} & {data.examGrades[2].Note} = {data.average}");
+        var because = $"{data.examGrades[0].Note} & {data.examGrades[1].Note} & {data.examGrades[2].Note} = {data.average}";
+        result.Should().Be(data.average, because);
     }
 }

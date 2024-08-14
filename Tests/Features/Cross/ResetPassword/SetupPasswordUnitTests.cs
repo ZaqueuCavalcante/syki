@@ -1,6 +1,6 @@
 using Syki.Front.Components.Passwords;
 
-namespace Syki.Tests.Components;
+namespace Syki.Tests.Features.Cross.ResetPassword;
 
 public class SetupPasswordUnitTests
 {

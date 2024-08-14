@@ -7,7 +7,14 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsAcademic();
-        await client.CreateBasicInstitutionData();
+        var data = await client.CreateBasicInstitutionData();
+
+        await client.CreateTeacher("Chico");
+        await client.CreateTeacher("Ana");
+
+        await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        await client.CreateStudent(data.CourseOffering.Id, "Maju");
+        await client.CreateStudent(data.CourseOffering.Id, "Zezin");
 
         // Act
         var response = await client.GetAcademicInsights();
@@ -19,8 +26,8 @@ public partial class IntegrationTests
         response.CourseCurriculums.Should().Be(1);
         response.CourseOfferings.Should().Be(1);
         response.Classes.Should().Be(0);
-        response.Teachers.Should().Be(0);
-        response.Students.Should().Be(0);
+        response.Teachers.Should().Be(2);
+        response.Students.Should().Be(3);
         response.Notifications.Should().Be(0);
     }
 }

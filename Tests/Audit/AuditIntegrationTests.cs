@@ -1,3 +1,5 @@
+using Syki.Back.Features.Academic.CreateCampus;
+
 namespace Syki.Tests.Integration;
 
 [Parallelizable(ParallelScope.All)]
@@ -16,6 +18,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await using var ctx = _back.GetDbContext();
         var audit = await ctx.AuditLogs.FirstAsync(a => a.EntityId == campus.Id);
         audit.Action.Should().Be("Insert");
+        audit.EntityType.Should().Be(nameof(Campus));
     }
 
     [Test]
@@ -34,5 +37,6 @@ public partial class IntegrationTests : IntegrationTestBase
             .OrderByDescending(x => x.CreatedAt)
             .FirstAsync(a => a.EntityId == campus.Id);
         audit.Action.Should().Be("Update");
+        audit.EntityType.Should().Be(nameof(Campus));
     }
 }

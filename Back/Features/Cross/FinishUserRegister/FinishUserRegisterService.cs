@@ -7,7 +7,7 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
 {
     public async Task<OneOf<UserOut, SykiError>> Finish(FinishUserRegisterIn data)
     {
-        using var transaction = ctx.Database.BeginTransaction();
+        await using var transaction = await ctx.Database.BeginTransactionAsync();
 
         _ = Guid.TryParse(data.Token, out var id);
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Id == id);

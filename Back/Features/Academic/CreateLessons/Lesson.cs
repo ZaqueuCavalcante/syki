@@ -1,3 +1,5 @@
+using Syki.Back.Features.Teacher.CreateLessonAttendance;
+
 namespace Syki.Back.Features.Academic.CreateLessons;
 
 /// <summary>
@@ -11,6 +13,7 @@ public class Lesson
     public Hour StartAt { get; set; }
     public Hour EndAt { get; set; }
     public LessonStatus Status { get; set; }
+    public List<LessonAttendance> Attendances { get; set; }
 
     public Lesson(
         Guid classId,
@@ -26,9 +29,9 @@ public class Lesson
         Status = LessonStatus.Pending;
     }
 
-    public string GetSchedule()
+    private string GetSchedule()
     {
-        return $"{StartAt.GetDescription()}-{EndAt.GetDescription()}";
+        return $"{Date.DayOfWeek.ToString().ToEnum<Day>().GetDescription()} {StartAt.GetDescription()}-{EndAt.GetDescription()}";
     }
 
     public LessonOut ToOut(int number)

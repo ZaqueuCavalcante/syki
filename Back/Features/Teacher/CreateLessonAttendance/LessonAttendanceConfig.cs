@@ -1,3 +1,4 @@
+using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateLessons;
 using Syki.Back.Features.Academic.CreateStudent;
 
@@ -15,12 +16,12 @@ public class LessonAttendanceConfig : IEntityTypeConfiguration<LessonAttendance>
         lessonAttendance.HasIndex(t => new { t.LessonId, t.StudentId })
             .IsUnique();
 
-        lessonAttendance.HasOne<Lesson>()
-            .WithMany()
-            .HasForeignKey(t => t.LessonId);
-
         lessonAttendance.HasOne<SykiStudent>()
             .WithMany()
             .HasForeignKey(t => t.StudentId);
+
+        lessonAttendance.HasOne<Class>()
+            .WithMany()
+            .HasForeignKey(t => t.ClassId);
     }
 }

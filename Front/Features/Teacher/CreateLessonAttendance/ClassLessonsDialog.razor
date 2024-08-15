@@ -4,7 +4,7 @@
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Class" Class="mr-1 mb-n1" />
-            Aulas
+            Selecione uma das aulas abaixo
         </MudText>
     </TitleContent>
     <DialogContent>
@@ -35,20 +35,20 @@
     private bool _visible;
     private List<LessonOut> _lessons = [];
 
-    private readonly DialogOptions _options = new DialogOptions
+    private readonly DialogOptions _options = new()
     {
         FullWidth = true,
         CloseButton = true,
-        MaxWidth = MaxWidth.Small,
+        MaxWidth = MaxWidth.Medium,
     };
 
     public void Open(List<LessonOut> lessons)
     {
-        _lessons = lessons;
+        _lessons = lessons.Where(x => x.Date <= DateTime.Now.ToDateOnly()).ToList();
         _visible = true;
     }
 
-    public void Close()
+    private void Close()
     {
         _visible = false;
     }

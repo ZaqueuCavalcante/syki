@@ -4,7 +4,7 @@ public class CreateLessonAttendanceService(SykiDbContext ctx) : ITeacherService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Create(Guid teacherId, Guid lessonId, CreateLessonAttendanceIn data)
     {
-        var lesson = await ctx.Lessons.FirstOrDefaultAsync(x => x.Id == lessonId);
+        var lesson = await ctx.Lessons.Include(l => l.Attendances).FirstOrDefaultAsync(x => x.Id == lessonId);
         if (lesson == null) return new LessonNotFound();
 
         var @class = await ctx.Classes
@@ -16,11 +16,20 @@ public class CreateLessonAttendanceService(SykiDbContext ctx) : ITeacherService
         if (!data.PresentStudents.IsSubsetOf(allStudents))
             return new InvalidStudentsList();
 
+        var attendances = lesson.Attendances;
         foreach (var studentId in allStudents)
         {
             var present = data.PresentStudents.Contains(studentId);
-            var attendance = new LessonAttendance(@class.Id, lesson.Id, studentId, present);
-            ctx.Add(attendance);
+            var attendance = attendances.FirstOrDefault(a => a.StudentId == studentId);
+            if (attendance != null)
+            {
+                attendance.Update(present);
+            }
+            else
+            {
+                attendance = new LessonAttendance(@class.Id, lesson.Id, studentId, present);
+                ctx.Add(attendance);
+            }
         }
 
         await ctx.SaveChangesAsync();

@@ -1,5 +1,4 @@
 ﻿@using Syki.Front.Components.Custom
-@using Syki.Front.Features.Teacher.AddExamGradeNote
 
 @namespace Syki.Front.Pages.Academic
 
@@ -9,51 +8,86 @@
 <PageTitle>Turma</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="@($"{_class.Discipline} ({_class.Code})")" />
+    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mr-1 mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">@($"{_class.Discipline} - {_class.Code}")</MudText>
+                <MudSpacer />
+                <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="120px">
+                    <MudTabPanel Text="Aulas" ID='"panel_0"'></MudTabPanel>
+                    <MudTabPanel Text="Alunos" ID='"panel_1"'></MudTabPanel>
+                </MudTabs>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
 
-    <MudPaper Class="px-6 py-4 mb-4 mx-6">
-        <MudGrid Justify="Justify.FlexStart" Spacing="1">
-            <MudItem xs="6" sm="6" md="6">
-                <MudStack Spacing="1">
-                    <MudText><strong>Professor:</strong> @_class.Teacher</MudText>
-                    <MudText><strong>Status:</strong> @_class.Status.GetDescription()</MudText>
-                    <MudText><strong>Alunos:</strong> @_class.FillRatio</MudText>
-                </MudStack>
-            </MudItem>
-            <MudItem xs="6" sm="6" md="6">
-                <MudStack Spacing="1">
-                    <MudText><strong>Período:</strong> @_class.Period</MudText>
-                    <MudText><strong>Progresso:</strong> @_class.Progress</MudText>
-                    <MudText><strong>Carga Horária:</strong> @_class.Workload</MudText>
-                </MudStack>
-            </MudItem>
-            <MudItem>
-                <MudStack Spacing="1">
-                    <MudText><strong>Horário:</strong> @_class.SchedulesInline</MudText>
-                </MudStack>
-            </MudItem>
-        </MudGrid>
-    </MudPaper>
+    @if (_index == 0)
+    {
+        <MudPaper Class="px-6 py-4 mb-4 mx-6">
+            <MudGrid Justify="Justify.FlexStart" Spacing="1">
+                <MudItem xs="6" sm="6" md="6">
+                    <MudStack Spacing="1">
+                        <MudText><strong>Professor:</strong> @_class.Teacher</MudText>
+                        <MudText><strong>Status:</strong> @_class.Status.GetDescription()</MudText>
+                        <MudText><strong>Alunos:</strong> @_class.FillRatio</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="6" sm="6" md="6">
+                    <MudStack Spacing="1">
+                        <MudText><strong>Período:</strong> @_class.Period</MudText>
+                        <MudText><strong>Progresso:</strong> @_class.Progress</MudText>
+                        <MudText><strong>Carga Horária:</strong> @_class.Workload</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem>
+                    <MudStack Spacing="1">
+                        <MudText><strong>Horário:</strong> @_class.SchedulesInline</MudText>
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
 
-    <MudContainer Class="mb-8">
-        <MudDataGrid T="LessonOut" Class="pa-4" Items="@GetLessons()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
-            <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por data, horário ou status" />
-            </ToolBarContent>
-            <Columns>
-                <PropertyColumn Property="x => x.Number" Title="Aula" />
-                <PropertyColumn Property="x => x.Date" Title="Data" />
-                <PropertyColumn Property="x => x.Schedule" Title="Horário" />
-                <PropertyColumn Property="x => x.Status.GetDescription()" Title="Status" />
-            </Columns>
-            <NoRecordsContent>
-                @(GetNotFoundMessage())
-            </NoRecordsContent>
-            <PagerContent>
-                <SykiDataGridPager T="LessonOut" />
-            </PagerContent>
-        </MudDataGrid>
-    </MudContainer>
+        <MudContainer Class="mb-8">
+            <MudDataGrid T="LessonOut" Class="pa-4" Items="@GetLessons()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+                <ToolBarContent>
+                    <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por data, horário ou status" />
+                </ToolBarContent>
+                <Columns>
+                    <PropertyColumn Property="x => x.Number" Title="Aula" />
+                    <PropertyColumn Property="x => x.Date" Title="Data" />
+                    <PropertyColumn Property="x => x.Schedule" Title="Horário" />
+                    <PropertyColumn Property="x => x.Status.GetDescription()" Title="Status" />
+                </Columns>
+                <NoRecordsContent>
+                    @(GetNotFoundMessage())
+                </NoRecordsContent>
+                <PagerContent>
+                    <SykiDataGridPager T="LessonOut" />
+                </PagerContent>
+            </MudDataGrid>
+        </MudContainer>
+    }
+    else
+    {
+        <MudContainer Class="mb-8">
+            <MudDataGrid T="AcademicClassStudentOut" Class="pa-4" Items="@_students" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+                <Columns>
+                    <PropertyColumn Property="x => x.Name" Title="Nome" />
+                    <PropertyColumn Property="x => x.GetNote(ExamType.N1)" Title="N1" />
+                    <PropertyColumn Property="x => x.GetNote(ExamType.N2)" Title="N2" />
+                    <PropertyColumn Property="x => x.GetNote(ExamType.N3)" Title="N3" />
+                    <PropertyColumn Property="x => x.AverageNote.Format()" Title="Média" />
+                </Columns>
+                <NoRecordsContent>
+                    @(GetStudentsNotFoundMessage())
+                </NoRecordsContent>
+                <PagerContent>
+                    <SykiDataGridPager T="AcademicClassStudentOut" />
+                </PagerContent>
+            </MudDataGrid>
+        </MudContainer>
+    }
 </MudContainer>
 
 @inject CreateLessonsClient CreateLessonsClient
@@ -64,9 +98,11 @@
 	[Parameter]
 	public Guid Id { get; set; }
 
+    private int _index;
     private bool _loading;
     private string _searchString;
     private GetAcademicClassOut _class = new();
+    private List<AcademicClassStudentOut> _students = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -80,6 +116,7 @@
         if (response.IsSuccess())
         {
             _class = response.GetSuccess();
+            _students = _class.Students.OrderBy(x => x.Name).ToList();
             if (_class.Lessons.Count == 0)
             {
                 await CreateLessonsClient.Create(Id);
@@ -99,5 +136,10 @@
     private string GetNotFoundMessage()
     {
         return (_searchString.IsEmpty()) ? "Não existem aulas ainda." : "Nenhuma aula encontrada.";
+    }
+
+    private string GetStudentsNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem alunos ainda." : "Nenhum aluno encontrado.";
     }
 }

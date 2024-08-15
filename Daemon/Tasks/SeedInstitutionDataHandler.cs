@@ -1,6 +1,8 @@
+using Syki.Back.Features.Cross.ResetPassword;
 using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateTeacher;
+using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
@@ -9,7 +11,11 @@ using Syki.Back.Features.Academic.CreateCourseCurriculum;
 
 namespace Syki.Daemon.Tasks;
 
-public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateTeacherService service) : ISykiTaskHandler<SeedInstitutionData>
+public class SeedInstitutionDataHandler(
+    SykiDbContext ctx,
+    CreateTeacherService createTeacherService,
+    CreateStudentService createStudentService,
+    ResetPasswordService resetPasswordService) : ISykiTaskHandler<SeedInstitutionData>
 {
     public async Task Handle(SeedInstitutionData task)
     {
@@ -180,13 +186,27 @@ public class SeedInstitutionDataHandler(SykiDbContext ctx, CreateTeacherService 
         );
         ctx.Add(courseOfferingAds);
 
-        await service.Create(institution.Id, CreateTeacherIn.Demo("Davi Pessoa Ferraz"));
-        await service.Create(institution.Id, CreateTeacherIn.Demo("Luciete Bezerra Alves"));
-        await service.Create(institution.Id, CreateTeacherIn.Demo("Antonio Marques da Costa Júnior"));
-        await service.Create(institution.Id, CreateTeacherIn.Demo("Paulo Marcelo Pedrosa de Almeida"));
-        await service.Create(institution.Id, CreateTeacherIn.Demo("Josélia Pachêco de Santana"));
-        await service.Create(institution.Id, CreateTeacherIn.Demo("Manuela Abath Valença"));
+        var ids = new List<Guid>
+        {
+            [0] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Davi Pessoa Ferraz"))).GetSuccess().Id,
+            [1] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Luciete Bezerra Alves"))).GetSuccess().Id,
+            [2] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Antonio Marques da Costa Júnior"))).GetSuccess().Id,
+            [3] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Paulo Marcelo Pedrosa de Almeida"))).GetSuccess().Id,
+            [4] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Josélia Pachêco de Santana"))).GetSuccess().Id,
+            [5] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Manuela Abath Valença"))).GetSuccess().Id,
+            [6] = (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Zaqueu do Vale Cavalcante", courseOfferingAds.Id))).GetSuccess().Id,
+            [7] = (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Maria Júlia de Oliveira Melo", courseOfferingAds.Id))).GetSuccess().Id,
+            [8] = (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Marlene de Oliveira", courseOfferingAds.Id))).GetSuccess().Id,
+            [9] = (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Simone Bezerra", courseOfferingAds.Id))).GetSuccess().Id,
+            [10] = (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Marcelo Lima Filho", courseOfferingAds.Id))).GetSuccess().Id
+        };
 
+        foreach (var userId in ids)
+        {
+            var reset = await ctx.ResetPasswordTokens.FirstOrDefaultAsync(d => d.UserId == userId);
+            await resetPasswordService.Reset(new() { Token = reset.Id.ToString(), Password = "Syki@123" });
+        }
+        
         await ctx.SaveChangesAsync();
     }
 }

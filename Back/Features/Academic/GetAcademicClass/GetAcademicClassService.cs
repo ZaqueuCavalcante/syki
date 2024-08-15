@@ -9,6 +9,8 @@ public class GetAcademicClassService(SykiDbContext ctx) : IAcademicService
             .Include(t => t.Teacher)
             .Include(t => t.Schedules)
             .Include(t => t.Lessons)
+            .Include(t => t.Students)
+            .Include(t => t.ExamGrades)
             .Where(c => c.InstitutionId == institutionId && c.Id == id)
             .FirstOrDefaultAsync();
 

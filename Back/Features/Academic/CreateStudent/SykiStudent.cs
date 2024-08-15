@@ -50,4 +50,14 @@ public class SykiStudent
             ExamGrades = [],
         };
     }
+
+    public AcademicClassStudentOut ToAcademicClassStudentOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Name = Name,
+            ExamGrades = [],
+        };
+    }
 }

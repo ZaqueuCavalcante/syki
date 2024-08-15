@@ -143,6 +143,14 @@ public class Class
 
     public GetAcademicClassOut ToGetAcademicClassOut()
     {
+        var students = Students.ConvertAll(x => x.ToAcademicClassStudentOut());
+        students.ForEach(s =>
+        {
+            var studentExamGrades = ExamGrades.Where(g => g.StudentId == s.Id).ToList();
+            s.AverageNote = studentExamGrades.GetAverageNote();
+            s.ExamGrades = studentExamGrades.OrderBy(x => x.ExamType).Select(g => g.ToOut()).ToList();
+        });
+
         return new()
         {
             Id = Id,
@@ -157,6 +165,7 @@ public class Class
             SchedulesInline = GetScheduleAsString(),
             Workload = GetWorkloadAsString(),
             Progress = GetProgressAsString(),
+            Students = students,
             FillRatio = FillRatio,
         };
     }

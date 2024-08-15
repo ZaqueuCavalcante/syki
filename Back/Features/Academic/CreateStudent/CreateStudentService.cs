@@ -7,7 +7,7 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService createSer
 {
     public async Task<OneOf<StudentOut, SykiError>> Create(Guid institutionId, CreateStudentIn data)
     {
-        using var transaction = ctx.Database.BeginTransaction();
+        await using var transaction = await ctx.Database.BeginTransactionAsync();
 
         var courseOfferingExists = await ctx.CourseOfferings
             .AnyAsync(o => o.InstitutionId == institutionId && o.Id == data.CourseOfferingId);

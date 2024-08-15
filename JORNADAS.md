@@ -1,9 +1,5 @@
 # JORNADAS
 
-
-
-
-
 ## Lead / Seller
 - Antes de se matricular eh um Lead?
 - Pagina de cadastro? Campanhas?
@@ -13,34 +9,21 @@
 - Contrato?
 - Financeiro?
 
-
 ## Student
 - Email institucional
 - Primeiro acesso
-- Matricula academica
+- Matricula acadêmica
 - Agenda
 - Disciplinas
 - Notas
 - Faltas
 - Financeiro
 - Requerimentos?
-- Aprovado? -> Ferias -> Rematricula
+- Aprovado? -> Férias -> Rematrícula
 - Finalizou o curso? -> Diploma
-
-
-
 
 ## Teacher
 - Agenda
 - Turmas
 - Alunos, faltas e notas
-- Diario de class
-
-
-
-
-## Academic
-- Pegando o sistema do zero?
-- Ao criar uma turma, como determinar as aulas?
-
-
+- Diário de class

@@ -19,4 +19,9 @@ public static class DateOnlyExtensions
     {
         return DateOnly.FromDateTime(dateTime);
     }
+
+    public static string FormatBr(this DateOnly date)
+    {
+        return date.ToString("dd/MM/yyyy");
+    }
 }

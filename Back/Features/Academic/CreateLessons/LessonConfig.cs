@@ -8,5 +8,9 @@ public class LessonConfig : IEntityTypeConfiguration<Lesson>
 
         lesson.HasKey(l => l.Id);
         lesson.Property(l => l.Id).ValueGeneratedNever();
+
+        lesson.HasMany(l => l.Attendances)
+            .WithOne()
+            .HasForeignKey(a => a.LessonId);
     }
 }

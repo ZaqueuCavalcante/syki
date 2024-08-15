@@ -10,9 +10,10 @@ public partial class IntegrationTests
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        var start = new DateOnly(2024, 08, 12);
-        var end = new DateOnly(2024, 08, 30);
+
+        var (start, end) = (new DateOnly(2024, 08, 12), new DateOnly(2024, 08, 30));
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1", start, end);
+
         var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };
         ClassOut @class = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
 
@@ -37,9 +38,10 @@ public partial class IntegrationTests
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        var start = new DateOnly(2024, 08, 12);
-        var end = new DateOnly(2024, 08, 30);
+
+        var (start, end) = (new DateOnly(2024, 08, 12), new DateOnly(2024, 08, 30));
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1", start, end);
+
         var schedules = new List<ScheduleIn>()
         {
             new(Day.Tuesday, Hour.H19_00, Hour.H22_00),

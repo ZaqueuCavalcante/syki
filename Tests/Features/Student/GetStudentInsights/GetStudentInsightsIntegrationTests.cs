@@ -38,8 +38,6 @@ public partial class IntegrationTests
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id]);
 
-
-
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         var teacherMathClass = await teacherClient.GetTeacherClass(discreteMathClass.Id);
         var examGradeId = teacherMathClass.Students.First().ExamGrades.First().Id;
@@ -47,7 +45,7 @@ public partial class IntegrationTests
 
         // TODO: preciso ser aprovado na disciplina pra que ela passe a contar nos cálculos de média e CR
         
-
+        // ???????????
 
         // Act
         var insights = await studentClient.GetStudentInsights();

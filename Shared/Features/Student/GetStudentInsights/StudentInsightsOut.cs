@@ -8,5 +8,5 @@ public class StudentInsightsOut
     public int TotalDisciplines { get; set; }
 
     public decimal Average { get; set; }
-    public decimal CR { get; set; }
+    public decimal YieldCoefficient { get; set; }
 }

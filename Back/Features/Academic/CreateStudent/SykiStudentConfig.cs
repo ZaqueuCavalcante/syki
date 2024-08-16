@@ -19,5 +19,9 @@ public class SykiStudentConfig : IEntityTypeConfiguration<SykiStudent>
             .WithOne()
             .HasPrincipalKey<SykiUser>(u => new { u.InstitutionId, u.Id })
             .HasForeignKey<SykiStudent>(a => new { a.InstitutionId, a.Id });
+
+        student.Property(x => x.YieldCoefficient).HasPrecision(4, 2);
+
+        student.HasIndex(s => s.EnrollmentCode).IsUnique();
     }
 }

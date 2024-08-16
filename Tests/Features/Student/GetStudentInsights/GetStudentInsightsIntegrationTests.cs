@@ -20,7 +20,7 @@ public partial class IntegrationTests
         insights.FinishedDisciplines.Should().Be(0);
         insights.TotalDisciplines.Should().Be(6);
         insights.Average.Should().Be(0);
-        insights.CR.Should().Be(0);
+        insights.YieldCoefficient.Should().Be(0);
     }
 
     [Test]
@@ -55,6 +55,6 @@ public partial class IntegrationTests
         insights.FinishedDisciplines.Should().Be(0);
         insights.TotalDisciplines.Should().Be(6);
         insights.Average.Should().Be(0);
-        insights.CR.Should().Be(0);
+        insights.YieldCoefficient.Should().Be(0);
     }
 }

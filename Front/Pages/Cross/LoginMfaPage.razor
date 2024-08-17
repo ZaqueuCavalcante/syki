@@ -4,15 +4,15 @@
 
 <PageTitle>Login MFA</PageTitle>
 
-<MudContainer Class="mt-16 mb-8" Style="width: 460px">
+<MudContainer Class="mt-8 mb-8" MaxWidth="MaxWidth.ExtraSmall">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
     <style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
-    <MudCard Class="mt-4 px-6 pt-16" Elevation="0" Style="height: 460px">
+    <MudCard Class="px-4 pt-16" Elevation="0" Style="height: 460px">
         <MudCardContent>
             <MudStack AlignItems="AlignItems.Center">
-                <MudAlert Severity="Severity.Info" Variant="Variant.Text">
+                <MudAlert Class="px-2" Severity="Severity.Info" Variant="Variant.Text">
                     <MudStack Row="true" Justify="Justify.SpaceAround">
                         <MudText>Insira o código para realizar o login</MudText>
                     </MudStack>

@@ -1,5 +1,4 @@
-﻿@using Syki.Front.Components.Custom
-@using Syki.Front.Components.Passwords
+﻿@using Syki.Front.Components.Passwords
 
 @namespace Syki.Front.Pages.Cross
 
@@ -7,13 +6,12 @@
 
 <PageTitle>Cadastro</PageTitle>
 
-<MudContainer Class="mt-8 mb-8" Style="width: 480px">
+<MudContainer Class="mt-8 mb-8" MaxWidth="MaxWidth.ExtraSmall">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
     <MudForm>
-        <MudCard Class="px-16 pt-16 pb-8">
-            <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
+        <MudCard Class="px-10 pt-10 pb-8">
             @if (_saved)
             {
                 <MudStack AlignItems="AlignItems.Center">
@@ -25,7 +23,7 @@
                         OnClick="@GoToLogin"
                         Variant="Variant.Filled"
                         Color="Color.Primary"
-                        Class="mx-auto my-4 px-12"
+                        Class="my-4 px-12"
                     >
                         Ir pro login
                     </MudButton>
@@ -33,7 +31,7 @@
             }
             else
             {
-                <MudCardContent Class="mt-4 pb-2 px-0">
+                <MudCardContent Class="pb-2 px-0">
                     <PasswordTextField Value="@_setup.Password" ValueChanged="@HandlePasswordChange" Required="false" />
                 </MudCardContent>
                 <PasswordRequerimentsCard @bind-Validation="@_setup.Validation" />

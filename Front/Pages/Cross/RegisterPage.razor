@@ -6,25 +6,24 @@
 
 <PageTitle>Cadastro</PageTitle>
 
-<MudContainer Class="mt-8 mb-8" Style="width: 460px">
+<MudContainer Class="mt-8 mb-8" MaxWidth="MaxWidth.ExtraSmall">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
     <MudForm @ref="@_form">
-        <MudCard Class="px-16 pt-16 pb-8">
-            <MudCardMedia Image="syki_logo.png" Height="120" Class="rounded" />
+        <MudCard Class="px-10 pt-10 pb-8">
             @if (_saved)
             {
-                <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
+                <MudAlert NoIcon="true" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                     <MudText>Verifique seu email e utilize o link para definir sua senha de acesso.</MudText>
                 </MudAlert>
             }
             else
             {
-                <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
+                <MudAlert NoIcon="true" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                     <MudText Align="Align.Center">Cadastre seu email para ter acesso ao sistema.</MudText>
                 </MudAlert>
-                <MudCardContent Class="my-0 pb-0">
+                <MudCardContent Class="px-0 pt-12 pb-0">
                     <SykiTextField Label="Email" AutoFocus="true" @bind-Value="@_email" OnKeyDown="@Submit" />
                 </MudCardContent>
                 <MudCardActions>

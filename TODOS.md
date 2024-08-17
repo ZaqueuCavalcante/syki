@@ -1,5 +1,12 @@
 # TODOS
 
+## Front
+
+- xs sm md lg xl
+
+
+
+
 # Students Features
 
 ## Dados/Perfil

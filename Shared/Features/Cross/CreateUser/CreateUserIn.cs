@@ -7,10 +7,11 @@ public class CreateUserIn
     public string Email { get; set; }
     public string Password { get; set; }
     public UserRole Role { get; set; }
+    public string? PhoneNumber { get; set; }
 
     public static CreateUserIn NewAcademic(Guid institutionId, string email, string password)
     {
-        return new CreateUserIn
+        return new()
         {
             Name = email,
             Email = email,
@@ -22,7 +23,7 @@ public class CreateUserIn
 
     public static CreateUserIn NewTeacher(Guid institutionId, string name, string email)
     {
-        return new CreateUserIn
+        return new()
         {
             Name = name,
             Email = email,
@@ -32,13 +33,14 @@ public class CreateUserIn
         };
     }
 
-    public static CreateUserIn NewStudent(Guid institutionId, string name, string email)
+    public static CreateUserIn NewStudent(Guid institutionId, string name, string email, string? phoneNumber)
     {
-        return new CreateUserIn
+        return new()
         {
             Name = name,
             Email = email,
             Role = UserRole.Student,
+            PhoneNumber = phoneNumber,
             InstitutionId = institutionId,
             Password = $"Student@{Guid.NewGuid().ToString().OnlyNumbers()}",
         };

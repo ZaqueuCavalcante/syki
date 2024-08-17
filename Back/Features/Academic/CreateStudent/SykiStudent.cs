@@ -33,11 +33,12 @@ public class SykiStudent
         return new()
         {
             Id = Id,
+            Name = Name,
+            Email = User?.Email ?? "-",
+            PhoneNumber = User?.PhoneNumber,
+            EnrollmentCode = EnrollmentCode,
             CourseOfferingId = CourseOfferingId,
             CourseOffering = CourseOffering?.Course?.Name ?? "-",
-            Email = User?.Email ?? "-",
-            Name = Name,
-            EnrollmentCode = EnrollmentCode,
         };
     }
 

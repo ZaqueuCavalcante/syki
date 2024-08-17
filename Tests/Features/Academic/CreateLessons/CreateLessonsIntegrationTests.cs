@@ -25,9 +25,9 @@ public partial class IntegrationTests
         GetAcademicClassOut classDb = await client.GetAcademicClass(@class.Id);
         @classDb.Workload.Should().Be("9h");
         @classDb.Lessons.Should().HaveCount(3);
-        @classDb.Lessons[0].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 13), Schedule = "19:00-22:00" });
-        @classDb.Lessons[1].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 20), Schedule = "19:00-22:00" });
-        @classDb.Lessons[2].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 27), Schedule = "19:00-22:00" });
+        @classDb.Lessons[0].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 13), Schedule = "Terça 19:00-22:00" });
+        @classDb.Lessons[1].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 20), Schedule = "Terça 19:00-22:00" });
+        @classDb.Lessons[2].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 27), Schedule = "Terça 19:00-22:00" });
     }
 
     [Test]
@@ -57,12 +57,12 @@ public partial class IntegrationTests
         GetAcademicClassOut classDb = await client.GetAcademicClass(@class.Id);
         @classDb.Workload.Should().Be("15h e 45min");
         @classDb.Lessons.Should().HaveCount(6);
-        @classDb.Lessons[0].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 13), Schedule = "08:15-10:30" });
-        @classDb.Lessons[1].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 13), Schedule = "19:00-22:00" });
-        @classDb.Lessons[2].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 20), Schedule = "08:15-10:30" });
-        @classDb.Lessons[3].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 20), Schedule = "19:00-22:00" });
-        @classDb.Lessons[4].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 27), Schedule = "08:15-10:30" });
-        @classDb.Lessons[5].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 27), Schedule = "19:00-22:00" });
+        @classDb.Lessons[0].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 13), Schedule = "Terça 08:15-10:30" });
+        @classDb.Lessons[1].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 13), Schedule = "Terça 19:00-22:00" });
+        @classDb.Lessons[2].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 20), Schedule = "Terça 08:15-10:30" });
+        @classDb.Lessons[3].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 20), Schedule = "Terça 19:00-22:00" });
+        @classDb.Lessons[4].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 27), Schedule = "Terça 08:15-10:30" });
+        @classDb.Lessons[5].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 27), Schedule = "Terça 19:00-22:00" });
     }
 
     [Test]

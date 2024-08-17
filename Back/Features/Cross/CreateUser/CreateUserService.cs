@@ -12,7 +12,7 @@ public class CreateUserService(SykiDbContext ctx, UserManager<SykiUser> userMana
         var emailUsed = await ctx.Users.AnyAsync(u => u.Email == data.Email);
         if (emailUsed) return new EmailAlreadyUsed();
 
-        var user = new SykiUser(data.InstitutionId, data.Name, data.Email);
+        var user = new SykiUser(data.InstitutionId, data.Name, data.Email, data.PhoneNumber);
 
         // TODO: Levar em conta mais o q pode dar problema aqui
         // Caractere invalido no email

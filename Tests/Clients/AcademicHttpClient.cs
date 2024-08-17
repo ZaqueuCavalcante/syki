@@ -199,12 +199,13 @@ public class AcademicHttpClient(HttpClient http)
     public async Task<OneOf<StudentOut, ErrorOut>> CreateStudent(
         Guid courseOfferingId,
         string name = "Zezin",
-        string email = null
+        string email = null,
+        string? phoneNumber = null
     ) {
         email ??= TestData.Email;
 
         var client = new CreateStudentClient(Cross);
-        var response = await client.Create(name, email, courseOfferingId);
+        var response = await client.Create(name, email, courseOfferingId, phoneNumber);
 
         if (response.IsSuccess())
         {

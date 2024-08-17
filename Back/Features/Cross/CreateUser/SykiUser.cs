@@ -9,12 +9,14 @@ public class SykiUser : IdentityUser<Guid>
     public SykiUser(
         Guid institutionId,
         string name,
-        string email
+        string email,
+        string? phoneNumber = null
     ) {
         InstitutionId = institutionId;
         Name = name;
         UserName = email;
         Email = email;
+        PhoneNumber = phoneNumber;
         CreatedAt = DateTime.Now;
     }
 

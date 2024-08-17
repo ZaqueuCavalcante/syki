@@ -13,7 +13,7 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService createSer
             .AnyAsync(o => o.InstitutionId == institutionId && o.Id == data.CourseOfferingId);
         if (!courseOfferingExists) return new CourseOfferingNotFound();
 
-        var userIn = CreateUserIn.NewStudent(institutionId, data.Name, data.Email);
+        var userIn = CreateUserIn.NewStudent(institutionId, data.Name, data.Email, data.PhoneNumber);
         var result = await createService.Create(userIn);
 
         if (result.IsError()) return result.GetError();

@@ -11,43 +11,42 @@
 
 <PageTitle>Syki</PageTitle>
 
-<DesktopContainer>
-    <AuthorizeView Roles="@UserRole.Adm.ToString()">
-        <Authorized>
-            <AdmInsightsPage />
-        </Authorized>
-    </AuthorizeView>
-    <AuthorizeView Roles="@UserRole.Academic.ToString()">
-        <Authorized>
-            <AcademicInsightsPage />
-        </Authorized>
-    </AuthorizeView>
-    <AuthorizeView Roles="@UserRole.Student.ToString()">
-        <Authorized>
-            <StudentInsightsPage />
-        </Authorized>
-    </AuthorizeView>
-    <AuthorizeView Roles="@UserRole.Teacher.ToString()">
-        <Authorized>
-            <TeacherInsightsPage />
-        </Authorized>
-    </AuthorizeView>
-    <AuthorizeView Roles="@UserRole.Seller.ToString()">
-        <Authorized>
-            <MudStack AlignItems="AlignItems.Center" Class="mt-16">
-                <MudText Style="font-size: 80px">
-                    <strong>NADA AINDA</strong>
-                </MudText>
-            </MudStack>
-        </Authorized>
-    </AuthorizeView>
-    <AuthorizeView Roles="Adm, Academic, Teacher, Student, Seller">
-        <NotAuthorized>
-            <IndexAnonymous />
-        </NotAuthorized>
-    </AuthorizeView>
-</DesktopContainer>
+<AuthorizeView Roles="@UserRole.Adm.ToString()">
+    <Authorized>
+        <AdmInsightsPage />
+    </Authorized>
+</AuthorizeView>
 
-<MobileContainer>
-    <IndexAnonymousMobile />
-</MobileContainer>
+<AuthorizeView Roles="@UserRole.Academic.ToString()">
+    <Authorized>
+        <AcademicInsightsPage />
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="@UserRole.Student.ToString()">
+    <Authorized>
+        <StudentInsightsPage />
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="@UserRole.Teacher.ToString()">
+    <Authorized>
+        <TeacherInsightsPage />
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="@UserRole.Seller.ToString()">
+    <Authorized>
+        <MudStack AlignItems="AlignItems.Center" Class="mt-16">
+            <MudText Style="font-size: 80px">
+                <strong>NADA AINDA</strong>
+            </MudText>
+        </MudStack>
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Adm, Academic, Teacher, Student, Seller">
+    <NotAuthorized>
+        <IndexAnonymous />
+    </NotAuthorized>
+</AuthorizeView>

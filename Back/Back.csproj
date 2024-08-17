@@ -4,7 +4,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <TargetFramework>net8.0</TargetFramework>
-		<NoWarn>CS1591;CS8618;CS8602;CS8604;</NoWarn>
+    <NoWarn>CS1591;CS8618;CS8602;CS8604;</NoWarn>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <InvariantGlobalization>true</InvariantGlobalization>

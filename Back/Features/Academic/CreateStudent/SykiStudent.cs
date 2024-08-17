@@ -13,6 +13,7 @@ public class SykiStudent
     public string Name { get; }
     public string EnrollmentCode { get; }
     public StudentStatus Status { get; }
+    public decimal YieldCoefficient { get; set; }
 
     public SykiStudent(
         Guid id,

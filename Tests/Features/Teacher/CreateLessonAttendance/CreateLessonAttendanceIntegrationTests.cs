@@ -75,4 +75,31 @@ public partial class IntegrationTests
         // Assert
         response.ShouldBeError(new InvalidStudentsList());
     }
+
+    [Test]
+    public async Task Should_not_create_lesson_attendance_when_lesson_is_in_future()
+    {
+        // Arrange
+        var academicClient = await _back.LoggedAsAcademic();
+
+        var discipline = await academicClient.CreateDiscipline();
+        var start = new DateOnly(2029, 08, 12);
+        var end = new DateOnly(2029, 08, 30);
+        AcademicPeriodOut period = await academicClient.CreateAcademicPeriod("2029.1", start, end);
+        var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };
+
+        TeacherOut teacher = await academicClient.CreateTeacher();
+        ClassOut @class = await academicClient.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        await academicClient.CreateClassLessons(@class.Id);
+
+        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
+        GetAcademicClassOut classDb = await academicClient.GetAcademicClass(@class.Id);
+        var lessonId = classDb.Lessons[0].Id;
+
+        // Act
+        var response = await teacherClient.CreateLessonAttendance(lessonId, []);
+
+        // Assert
+        response.ShouldBeError(new InvalidLesson());
+    }
 }

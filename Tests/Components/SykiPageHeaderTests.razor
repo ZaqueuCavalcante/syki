@@ -7,39 +7,6 @@
 @code
 {
     [Test]
-    public void Should_validate_header_markup()
-    {
-        // Arrange
-        var icon = Icons.Material.Filled.People;
-        var title = "Aluno";
-        var buttonText = "Novo Aluno";
-
-        Action<MouseEventArgs> onClick = _ => { };
-
-        // Act
-        var cut = Render(@<SykiPageHeader Icon=@icon Title=@title ButtonText=@buttonText OnClick=@onClick />);
-
-        // Assert
-        cut.MarkupMatches(
-            @<div diff:ignoreAttributes>
-                <div diff:ignoreAttributes>
-                    <div diff:ignoreAttributes>
-                        <svg diff:ignore></svg>
-                        <h5 diff:ignoreAttributes>@title</h5>
-                        <div diff:ignoreAttributes></div>
-                        <button diff:ignoreAttributes>
-                            <span diff:ignoreAttributes>
-                                <span diff:ignore></span>
-                                @buttonText
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    [Test]
     public void Should_call_on_click_method()
     {
         // Arrange

@@ -151,7 +151,11 @@ public class InvalidStudentsList : SykiError
     public override string Code { get; set; } = nameof(InvalidStudentsList);
     public override string Message { get; set; } = "Lista de alunos inválida.";
 }
-
+public class InvalidLesson : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidLesson);
+    public override string Message { get; set; } = "Aula inválida.";
+}
 
 // OTHERS - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 public class WeakPassword : SykiError

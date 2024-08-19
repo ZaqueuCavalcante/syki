@@ -12,7 +12,7 @@
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" ButtonText="Nova Disciplina" OnClick="@OpenDialog" />
     <SykiPageAlert Text="Uma mesma disciplina pode compor a grade de cursos diferentes." />
-    <MudContainer Class="mb-8">
+    <MudContainer Class="px-4 mb-8">
         <MudDataGrid Class="pa-4" Items="@_disciplines" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou código" />
@@ -25,7 +25,7 @@
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="DisciplineOut" />
+                <SykiDataGridPager T="DisciplineOut"/>
             </PagerContent>
         </MudDataGrid>
     </MudContainer>

@@ -11,7 +11,7 @@
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Alunos" ButtonText="Novo Aluno" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Um aluno precisa necessariamente estar vinculado à uma oferta de curso." />
-    <MudContainer Class="mb-8">
+    <MudContainer Class="px-4 mb-8">
         <MudDataGrid Class="pa-4" Items="@_students" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou matrícula" />

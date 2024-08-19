@@ -10,7 +10,7 @@
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.CalendarMonth" Title="Período Acadêmico" ButtonText="Período Acadêmico" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Utilize os períodos acadêmicos para organizar as informações durante o ano letivo." />
-    <MudContainer Class="mb-8">
+    <MudContainer Class="px-4 mb-8">
         <MudDataGrid Class="pa-4" Items="@_periods" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por ano" />

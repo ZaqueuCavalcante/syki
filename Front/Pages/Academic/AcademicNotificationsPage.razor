@@ -11,7 +11,7 @@
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.Notifications" Title="Notificações" ButtonText="Nova Notificação" OnClick="@OpenDialog" />
     <SykiPageAlert Text="Aqui você pode escolher quais usuários serão notificados e acompanhar o status de visualização das mensagens." />
-    <MudContainer Class="mb-8">
+    <MudContainer Class="px-4 mb-8">
         <MudDataGrid
             T="NotificationOut"
             Class="pa-4"
@@ -22,6 +22,7 @@
             ReadOnly="true"
             Loading="@_loading"
             RowsPerPage="10"
+            FooterClass="d-flex"
         >
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por título ou descrição" />
@@ -37,7 +38,7 @@
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="NotificationOut" />
+                <SykiDataGridPager T="NotificationOut"/>
             </PagerContent>
         </MudDataGrid>
     </MudContainer>

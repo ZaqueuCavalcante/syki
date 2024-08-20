@@ -25,4 +25,15 @@ public class LessonAttendance
     {
         Present = present;
     }
+
+    public GetTeacherLessonAttendanceOut ToOut(string studentName)
+    {
+        return new()
+        {
+            LessonId = LessonId,
+            StudentId = StudentId,
+            StudentName = studentName,
+            Present = Present,
+        };
+    }
 }

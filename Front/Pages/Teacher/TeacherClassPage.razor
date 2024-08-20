@@ -54,12 +54,12 @@
                     </MudStack>
                 </MudCardContent>
             </MudCard>
-            <MudDataGrid T="TeacherClassStudentOut" Class="pa-4" Items="@_students" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+            <MudDataGrid T="GetTeacherLessonAttendanceOut" Class="pa-4" Items="@_attendances" QuickFilter="@_attendancesQuickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
                 <ToolBarContent>
                     <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome" />
                 </ToolBarContent>
                 <Columns>
-                    <PropertyColumn Property="x => x.Name" Title="Nome" />
+                    <PropertyColumn Property="x => x.StudentName" Title="Nome" />
                     <TemplateColumn Title="Presente" CellClass="pl-11 mx-0">
                         <CellTemplate>
                             <MudCheckBox
@@ -67,8 +67,8 @@
                                 Dense="true"
                                 Size="Size.Small"
                                 Color="Color.Success"
-                                Value="@context.Item.IsSelected"
-                                ValueChanged="x => { context.Item.IsSelected = x; }"
+                                Value="@context.Item.Present"
+                                ValueChanged="x => { context.Item.Present = x; }"
                             />
                         </CellTemplate>
                     </TemplateColumn>
@@ -132,6 +132,7 @@
 @inject ISnackbar Snackbar
 @inject GetTeacherClassClient GetTeacherClassClient
 @inject CreateLessonAttendanceClient CreateLessonAttendanceClient
+@inject GetTeacherLessonAttendancesClient GetTeacherLessonAttendancesClient
 
 @code
 {
@@ -147,12 +148,13 @@
     private TeacherClassOut _class = new();
     private LessonOut _lesson = new();
     private List<TeacherClassStudentOut> _students = [];
+    private List<GetTeacherLessonAttendanceOut> _attendances = [];
 
     protected override async Task OnInitializedAsync()
     {
         await Load();
         var id = _class.Lessons.Where(x => x.Date <= DateTime.Now.ToDateOnly()).MaxBy(x => x.Date)?.Id ?? Guid.Empty;
-        SetLesson(id);
+        await SetLesson(id);
     }
 
     private async Task Load()
@@ -163,9 +165,10 @@
         _loading = false;
     }
 
-    private void SetLesson(Guid id)
+    private async Task SetLesson(Guid id)
     {
         _lesson = _class.Lessons.FirstOrDefault(x => x.Id == id) ?? new();
+        _attendances = await GetTeacherLessonAttendancesClient.Get(id);
     }
 
     private void OnEditLessonClick()
@@ -180,7 +183,7 @@
 
     private async Task SaveFrequency()
     {
-        var ids = _students.Where(x => x.IsSelected).Select(x => x.Id).ToList();
+        var ids = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
         var result = await CreateLessonAttendanceClient.Create(_lesson.Id, ids);
         if (result.IsSuccess())
         {
@@ -196,6 +199,8 @@
     {
         _drawer.Open(item);
     }
+
+    private Func<GetTeacherLessonAttendanceOut, bool> _attendancesQuickFilter => x => _searchString.IsIn(x.StudentName);
 
     private Func<TeacherClassStudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
 

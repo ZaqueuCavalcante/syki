@@ -1,9 +1,11 @@
 using Dapper;
 using Npgsql;
+using Hangfire;
 using Newtonsoft.Json;
 
 namespace Syki.Daemon.Tasks;
 
+[DisableConcurrentExecution(60)]
 public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
 {
     // TODO: ter uma fila pros emails e outra pras demais tasks?
@@ -58,7 +60,7 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
             created_at ASC
         LIMIT
             300
-        FOR UPDATE SKIP LOCKED
+        FOR UPDATE
     ";
 
     private const string update = @"

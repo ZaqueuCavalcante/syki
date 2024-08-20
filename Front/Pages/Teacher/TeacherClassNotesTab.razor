@@ -1,0 +1,72 @@
+﻿@using Syki.Front.Components.Custom
+@using Syki.Front.Features.Teacher.AddExamGradeNote
+
+@namespace Syki.Front.Pages.Teacher
+
+<MudContainer Class="mb-8">
+    <MudDataGrid T="TeacherClassStudentOut" Class="pa-4" Items="@_students" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <ToolBarContent>
+            <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome" />
+        </ToolBarContent>
+        <Columns>
+            <PropertyColumn Property="x => x.Name" Title="Nome" />
+            <PropertyColumn Property="x => x.GetNote(ExamType.N1)" Title="N1" />
+            <PropertyColumn Property="x => x.GetNote(ExamType.N2)" Title="N2" />
+            <PropertyColumn Property="x => x.GetNote(ExamType.N3)" Title="N3" />
+            <PropertyColumn Property="x => x.AverageNote.Format()" Title="Média" />
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.StickyNote2" OnClick="@(() => AddNote(context.Item))" />
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        <NoRecordsContent>
+            @(GetNotFoundMessage())
+        </NoRecordsContent>
+        <PagerContent>
+            <SykiDataGridPager T="TeacherClassStudentOut" />
+        </PagerContent>
+    </MudDataGrid>
+</MudContainer>
+
+<AddExamGradeNoteDrawer @ref="@_drawer" AfterSubmit="@Load" />
+
+@inject GetTeacherClassClient GetTeacherClassClient
+
+@code
+{
+	[Parameter]
+	public Guid ClassId { get; set; }
+
+    private AddExamGradeNoteDrawer _drawer;
+
+    private bool _loading;
+    private string _searchString;
+    private TeacherClassOut _class = new();
+    private List<TeacherClassStudentOut> _students = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        _loading = true;
+        _class = await GetTeacherClassClient.Get(ClassId);
+        _students = _class.Students.OrderBy(x => x.Name).ToList();
+        _loading = false;
+    }
+  
+    private void AddNote(TeacherClassStudentOut item)
+    {
+        _drawer.Open(item);
+    }
+
+    private Func<TeacherClassStudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem alunos matriculados ainda." : "Nenhum aluno encontrado.";
+    }
+}

@@ -186,19 +186,19 @@ public class SeedInstitutionDataHandler(
         );
         ctx.Add(courseOfferingAds);
 
-        var ids = new List<Guid>
+        var ids = new List<Guid>()
         {
-            [0] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Davi Pessoa Ferraz"))).GetSuccess().Id,
-            [1] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Luciete Bezerra Alves"))).GetSuccess().Id,
-            [2] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Antonio Marques da Costa Júnior"))).GetSuccess().Id,
-            [3] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Paulo Marcelo Pedrosa de Almeida"))).GetSuccess().Id,
-            [4] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Josélia Pachêco de Santana"))).GetSuccess().Id,
-            [5] = (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Manuela Abath Valença"))).GetSuccess().Id,
-            [6] = (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Zaqueu do Vale Cavalcante", courseOfferingAds.Id))).GetSuccess().Id,
-            [7] = (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Maria Júlia de Oliveira Melo", courseOfferingAds.Id))).GetSuccess().Id,
-            [8] = (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Marlene de Oliveira", courseOfferingAds.Id))).GetSuccess().Id,
-            [9] = (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Simone Bezerra", courseOfferingAds.Id))).GetSuccess().Id,
-            [10] = (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Marcelo Lima Filho", courseOfferingAds.Id))).GetSuccess().Id
+            (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Davi Pessoa Ferraz"))).GetSuccess().Id,
+            (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Luciete Bezerra Alves"))).GetSuccess().Id,
+            (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Antonio Marques da Costa Júnior"))).GetSuccess().Id,
+            (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Paulo Marcelo Pedrosa de Almeida"))).GetSuccess().Id,
+            (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Josélia Pachêco de Santana"))).GetSuccess().Id,
+            (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Manuela Abath Valença"))).GetSuccess().Id,
+            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Zaqueu do Vale Cavalcante", courseOfferingAds.Id))).GetSuccess().Id,
+            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Maria Júlia de Oliveira Melo", courseOfferingAds.Id))).GetSuccess().Id,
+            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Marlene de Oliveira", courseOfferingAds.Id))).GetSuccess().Id,
+            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Simone Bezerra", courseOfferingAds.Id))).GetSuccess().Id,
+            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Marcelo Lima Filho", courseOfferingAds.Id))).GetSuccess().Id
         };
 
         foreach (var userId in ids)
@@ -206,7 +206,7 @@ public class SeedInstitutionDataHandler(
             var reset = await ctx.ResetPasswordTokens.FirstOrDefaultAsync(d => d.UserId == userId);
             await resetPasswordService.Reset(new() { Token = reset.Id.ToString(), Password = "Syki@123" });
         }
-        
+
         await ctx.SaveChangesAsync();
     }
 }

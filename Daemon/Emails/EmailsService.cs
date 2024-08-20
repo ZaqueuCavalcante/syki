@@ -15,6 +15,8 @@ public class EmailsService : IEmailsService
 
     public async Task SendResetPasswordEmail(string to, string token)
     {
+		if (to.EndsWith("@syki.seed.com")) return;
+
         var link = $"{_settings.FrontUrl}/reset-password?token={token}";
         var body = new BrevoEmailMessage(
             sender: "syki@zaqbit.com",
@@ -28,6 +30,8 @@ public class EmailsService : IEmailsService
 
     public async Task SendUserRegisterEmailConfirmation(string to, string token)
     {
+		if (to.EndsWith("@syki.seed.com")) return;
+
         var link = $"{_settings.FrontUrl}/register-setup?token={token}";
         var body = new BrevoEmailMessage(
             sender: "syki@zaqbit.com",

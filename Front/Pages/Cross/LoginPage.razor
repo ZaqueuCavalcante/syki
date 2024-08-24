@@ -11,21 +11,21 @@
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
     <MudForm @ref="@_form">
-        <MudCard Class="px-4 pt-10 pb-4">
+        <MudCard Class="px-4 pt-0 pb-4">
+            <MudImage Src="logo_512x512.png" Alt="Syki" Elevation="25" Class="rounded-lg ma-10"/>
             <MudCardContent>
                 <MudTextField
                     InputType="InputType.Email"
                     Margin="Margin.Dense"
                     AutoFocus="true"
                     Label="Email"
-                    Class="mt-3"
+                    Class="mt-0"
                     OnlyValidateIfDirty="true"
                     @bind-Value="@_email"
                     Variant="Variant.Outlined"
                     Required="true"
-                    RequiredError="Informe!"
-                />
-                <PasswordTextField @bind-Value="@_password" />
+                    RequiredError="Informe!"/>
+                <PasswordTextField @bind-Value="@_password"/>
             </MudCardContent>
             <MudCardActions Class="justify-center">
                 <MudStack Spacing="1">
@@ -34,8 +34,7 @@
                         OnClick="@OnClick"
                         Variant="Variant.Filled"
                         Color="Color.Primary"
-                        Class="mx-auto mb-4 px-12"
-                    >
+                        Class="mx-auto mb-4 px-12">
                         Login
                     </MudButton>
                     <MudLink Href="/reset-password-token">Esqueci minha senha</MudLink>

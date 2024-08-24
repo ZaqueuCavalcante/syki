@@ -11,7 +11,8 @@
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
     <MudForm @ref="@_form">
-        <MudCard Class="px-10 pt-10 pb-8">
+        <MudCard Class="px-10 pt-2 pb-8">
+            <MudImage Src="logo_512x512.png" Alt="Syki" Elevation="25" Class="rounded-lg ma-8"/>
             @if (_saved)
             {
                 <MudAlert NoIcon="true" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
@@ -24,7 +25,7 @@
                     <MudText Align="Align.Center">Cadastre seu email para ter acesso ao sistema.</MudText>
                 </MudAlert>
                 <MudCardContent Class="px-0 pt-12 pb-0">
-                    <SykiTextField Label="Email" AutoFocus="true" @bind-Value="@_email" OnKeyDown="@Submit" />
+                    <SykiTextField Label="Email" AutoFocus="true" @bind-Value="@_email" OnKeyDown="@Submit"/>
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton
@@ -32,8 +33,7 @@
                         Size="Size.Large"
                         Color="Color.Primary"
                         Variant="Variant.Filled"
-                        Class="mx-auto mb-4 px-12 my-0"
-                    >
+                        Class="mx-auto mb-4 px-12 my-0">
                         Cadastrar
                     </MudButton>
                 </MudCardActions>

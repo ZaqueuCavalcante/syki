@@ -4,6 +4,7 @@
 
 - xs sm md lg xl
 
+- Font Ultra #594AE2
 
 
 

@@ -11,7 +11,8 @@
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
     <MudForm>
-        <MudCard Class="px-10 pt-10 pb-8">
+        <MudCard Class="px-10 pt-2 pb-8">
+            <MudImage Src="logo_512x512.png" Alt="Syki" Elevation="25" Class="rounded-lg ma-6"/>
             @if (_saved)
             {
                 <MudStack AlignItems="AlignItems.Center">
@@ -23,18 +24,17 @@
                         OnClick="@GoToLogin"
                         Variant="Variant.Filled"
                         Color="Color.Primary"
-                        Class="my-4 px-12"
-                    >
+                        Class="my-4 px-12">
                         Ir pro login
                     </MudButton>
                 </MudStack>
             }
             else
             {
-                <MudCardContent Class="pb-2 px-0">
-                    <PasswordTextField Value="@_setup.Password" ValueChanged="@HandlePasswordChange" Required="false" />
+                <MudCardContent Class="pt-0 pb-2 px-0">
+                    <PasswordTextField Value="@_setup.Password" ValueChanged="@HandlePasswordChange" Required="false"/>
                 </MudCardContent>
-                <PasswordRequerimentsCard @bind-Validation="@_setup.Validation" />
+                <PasswordRequerimentsCard @bind-Validation="@_setup.Validation"/>
                 <MudCardActions>
                     <MudButton
                         Size="Size.Large"
@@ -42,8 +42,7 @@
                         Disabled="@(!_setup.IsValid())"
                         Variant="Variant.Filled"
                         Color="Color.Primary"
-                        Class="mx-auto mb-4 px-12"
-                    >
+                        Class="mx-auto mb-4 px-12">
                         SALVAR
                     </MudButton>
                 </MudCardActions>

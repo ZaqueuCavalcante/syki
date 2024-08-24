@@ -7,23 +7,24 @@
 
 <PageTitle>2FA Setup</PageTitle>
 
-<AuthorizeView>
-    <MudContainer Class="mt-8 px-12">
-        <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-4">
-            <MudIcon Icon="@Icons.Material.Filled.ScreenLockPortrait" Class="mr-1 mb-n1" Size="Size.Large"/>
-            2FA Setup
-        </MudText>
-        <MudAlert Class="mt-4" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-            <MudStack Row="true" Justify="Justify.SpaceAround">
-                <MudText>A autenticação de dois fatores ajuda a manter sua conta segura.</MudText>
-            </MudStack>
-        </MudAlert>
-        <MudPaper Elevation="2" Class="mt-6">
-            <MudStack Row="true" Justify="Justify.SpaceAround">
-                <MfaQrCode />
-                <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="my-10" />
-                <SetupMfaInput />
-            </MudStack>
-        </MudPaper>
+<MudContainer Class="mt-4">
+    <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-4">
+        <MudIcon Icon="@Icons.Material.Filled.ScreenLockPortrait" Class="mr-1 mb-n1" Size="Size.Large"/>
+        2FA Setup
+    </MudText>
+    <MudAlert Class="my-4" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
+        <MudStack Row="true" Justify="Justify.SpaceAround">
+            <MudText>A autenticação de dois fatores ajuda a manter sua conta segura.</MudText>
+        </MudStack>
+    </MudAlert>
+    <MudContainer Class="px-4 mb-8">
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="6" lg="6">
+                <MfaQrCode/>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="6" lg="6">
+                <SetupMfaInput/>
+            </MudItem>
+        </MudGrid>
     </MudContainer>
-</AuthorizeView>
+</MudContainer>

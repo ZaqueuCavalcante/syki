@@ -9,7 +9,7 @@
 
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" />
-    <MudContainer Class="mb-8">
+    <MudContainer Class="px-4 mb-8">
         <MudExpansionPanels MultiExpansion="true">
             @foreach(var period in _disciplines.ConvertAll(d => d.Period).Distinct().Order())
             {
@@ -22,12 +22,6 @@
                     </TitleContent>
                     <ChildContent>
                         <MudTable Items="@_disciplines.Where(x => x.Period == period).OrderBy(x => x.Name)" Breakpoint="Breakpoint.Sm" Dense="true">
-                            <ColGroup>
-                                <col style="width: 50%;" />
-                                <col style="width: 15%;" />
-                                <col style="width: 15%;" />
-                                <col style="width: 20%;" />
-                            </ColGroup>
                             <HeaderContent>
                                 <MudTh>Nome</MudTh>
                                 <MudTh>Créditos</MudTh>

@@ -1,7 +1,6 @@
 ﻿@using Syki.Front.Components.Agenda
 @using Syki.Front.Components.Custom
 @using Syki.Front.Components.Buttons
-@using Syki.Front.Features.Academic.CreateEnrollmentPeriod
 
 @namespace Syki.Front.Pages.Student
 
@@ -11,47 +10,30 @@
 <PageTitle>Matrícula</PageTitle>
 
 <MudContainer>
-    <MudCard Class="mt-8 mb-4 mx-6 px-2">
-        <MudCardContent>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.Article" Class="mr-1 mb-1" Size="Size.Large" />
-                <MudText Typo="Typo.h5" Style="font-weight: bold">Matrícula</MudText>
-                <MudSpacer />
-            </MudStack>
-        </MudCardContent>
-    </MudCard>
+    <SykiPageHeader
+        Icon="@Icons.Material.Filled.Article"
+        Title="Matrícula"
+        ButtonIcon="@Icons.Material.Outlined.Edit"
+        ButtonText="Editar"
+        OnClick="Open"
+        @bind-ButtonDisabled="@_editing"
+    />
 
+    <MudContainer Class="px-4 mb-8">
+        
     @if (_loading && _enrollmentPeriod.Id.IsEmpty())
     {
     }
     else if (!_loading && _enrollmentPeriod.Id.IsEmpty())
     {
-        <SykiPageAlert Text="Período de matrícula encerrado!" />
+        <SykiPageAlert Text="Período de matrícula encerrado!"/>
     }
-    else if (_closed)
+    else if (!_editing)
     {
-        <MudCard Class="mt-8 mb-4 mx-6 px-2">
-            <MudCardContent>
-                <MudStack Row="true" AlignItems="AlignItems.Center">
-                    <MudText>Clique ao lado para editar sua matrícula.</MudText>
-                    <MudSpacer />
-                    <MudButton
-                        StartIcon="@Icons.Material.Outlined.Edit"
-                        IconSize="Size.Large"
-                        Variant="Variant.Filled"
-                        Style="height: 40px;"
-                        Color="Color.Primary"
-                        @onclick="@Open"
-                    >
-                        Editar
-                    </MudButton>
-                </MudStack>
-            </MudCardContent>
-        </MudCard>
     }
     else
     {
-        <MudAlert Class="mt-4 mb-4 mx-6 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
+        <MudAlert Class="mt-4 mb-4 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
             <MudText>
                 Selecione as disciplinas que você irá cursar nesse semestre.
                 O período de matrícula vai até <strong>@_enrollmentPeriod.EndAt.FormatBr()</strong>.
@@ -59,10 +41,10 @@
         </MudAlert>
 
         <CascadingValue Name="Days" Value="@_days">
-            <WeeklyAgenda />
+            <WeeklyAgenda Class="px-0 mb-4"/>
         </CascadingValue>
 
-        <MudContainer Class="mb-8">
+        <MudContainer Class="px-0 mb-8">
             <MudTable
                 T="EnrollmentClassOut"
                 Items="@_options"
@@ -71,15 +53,14 @@
                 Dense="true"
                 Hover="true"
                 Loading="@_loading"
-                RowsPerPage="100"
-            >
+                RowsPerPage="100">
                 <HeaderContent>
                     <MudTh>Disciplina</MudTh>
                     <MudTh>Período</MudTh>
                     <MudTh>Créditos</MudTh>
                     <MudTh>CH</MudTh>
                     <MudTh>Professor</MudTh>
-                    <MudTh></MudTh>
+                    <MudTh>Selecionada</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Disciplina">@context.Discipline</MudTd>
@@ -87,31 +68,32 @@
                     <MudTd DataLabel="Créditos">@context.Credits</MudTd>
                     <MudTd DataLabel="CH">@context.Workload</MudTd>
                     <MudTd DataLabel="Professor">@context.Teacher</MudTd>
-                    <MudTd>
+                    <MudTd DataLabel="Selecionada">
                         <MudCheckBox
                             T="bool"
+                            Class="pl-9 pr-1"
                             Dense="true"
                             Size="Size.Small"
                             Color="Color.Success"
                             Value="@context.IsSelected"
-                            ValueChanged="x => { context.IsSelected = x; HandleCheckedChanged(); }"
-                        />
+                            ValueChanged="x => { context.IsSelected = x; HandleCheckedChanged(); }"/>
                     </MudTd>
                 </RowTemplate>
                 <NoRecordsContent>
                     Não existem turmas disponíveis no momento.
                 </NoRecordsContent>
                 <PagerContent>
-                    <MudDivider />
+                    <MudDivider/>
                     <MudStack Row="true" Class="mt-4">
-                        <DialogCancelButton OnClick="@Cancel" />
-                        <SykiProgressCircular Loading="@_loading" />
-                        <DialogSaveButton OnClick="@Submit" />
+                        <DialogCancelButton OnClick="@Cancel"/>
+                        <SykiProgressCircular Loading="@_loading"/>
+                        <DialogSaveButton OnClick="@Submit"/>
                     </MudStack>
                 </PagerContent>
             </MudTable>
         </MudContainer>
     }
+    </MudContainer>
 </MudContainer>
 
 @inject ISnackbar Snackbar
@@ -122,7 +104,7 @@
 @code
 {
     private bool _loading;
-    private bool _closed = true;
+    private bool _editing;
     EnrollmentPeriodOut _enrollmentPeriod = new();
     private List<EnrollmentClassOut> _options = [];
     private List<AgendaDayOut> _days = [];
@@ -137,14 +119,14 @@
             return;
         }
         _options = await GetStudentEnrollmentClassesClient.Get();
-        _closed = _options.Count(x => x.IsSelected) > 0;
+        _editing = _options.Count(x => x.IsSelected) > 0;
         HandleCheckedChanged();
         _loading = false;
     }
 
     private void Open()
     {
-        _closed = false;
+        _editing = true;
     }
 
     private void HandleCheckedChanged()
@@ -161,7 +143,7 @@
         var response = await CreateStudentEnrollmentClient.Create(classes);
         if (response.IsSuccessStatusCode)
         {
-            _closed = true;
+            _editing = false;
             Snackbar.Add("Matrícula salva com sucesso!", Severity.Success);
         }
         else
@@ -174,6 +156,6 @@
 
     private void Cancel()
     {
-        _closed = true;
+        _editing = false;
     }
 }

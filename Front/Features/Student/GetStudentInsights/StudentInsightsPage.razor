@@ -1,6 +1,6 @@
 ﻿@namespace Syki.Front.Features.Student.GetStudentInsights
 
-<MudContainer Class="mt-8 px-12">
+<MudContainer Class="my-8 px-12">
     <MudText Typo="Typo.h4" Style="font-weight: bold" Class="ml-4">
         Olá, @_userName
     </MudText>
@@ -30,7 +30,7 @@
         />
         <StudentInsightCard
             Icon="@Icons.Material.Filled.Class"
-            Title="Coeficiente de rendimento"
+            Title="Coef. de rendimento"
             Text="@($"{_data.YieldCoefficient.Format()}")"
             Loading="@_loading"
         />

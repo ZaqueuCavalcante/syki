@@ -1,10 +1,24 @@
 @namespace Syki.Front.Components.Agenda
 
-<MudContainer Class="mb-4">
-    <MudGrid Spacing="0" Justify="Justify.SpaceBetween">
+<MudContainer Class="@Class">
+    <MudGrid Spacing="2" Justify="Justify.SpaceBetween">
         @foreach (AgendaDayOut day in GetDays())
         {
-            <AgendaDay Data="@day" />
+            <MudItem xs="12" sm="6" md="4" lg="2">
+                <MudPaper Class="pb-3" Style="height: 100%">
+                    <MudStack AlignItems="AlignItems.Center" Spacing="1">
+                        <MudText Class="mt-1" Typo="Typo.h6">@day.Day.GetDescription()</MudText>
+                        <MudDivider/>
+                        @foreach (AgendaDisciplineOut item in day.Disciplines)
+                        {
+                            <MudPaper Class="border-solid mt-2" Style="width: 90%; border-width: 1px;">
+                                <MudText Align="Align.Center" Class="pa-2 pt-2" Typo="Typo.body2">@item.Name</MudText>
+                                <MudText Align="Align.Center" Class="px-2 pb-2" Typo="Typo.body2"><strong>@item.Start.GetDescription() - @item.End.GetDescription()</strong></MudText>
+                            </MudPaper>
+                        }
+                    </MudStack>
+                </MudPaper>
+            </MudItem>
         }
     </MudGrid>
 </MudContainer>
@@ -14,13 +28,11 @@
     [CascadingParameter(Name = "Days")]
     public List<AgendaDayOut> Days { get; set; }
 
+    [Parameter]
+    public string Class { get; set; }
+    
     private List<AgendaDayOut> GetDays()
     {
-        @foreach (Day day in Enum.GetValues<Day>())
-        {
-            if (Days.Any(d => d.Day == day)) continue;
-            Days.Add(new AgendaDayOut { Day = day });
-        }
         return Days.OrderBy(d => d.Day).ToList();
     }
 }

@@ -1,6 +1,6 @@
 @namespace Syki.Front.Components.Custom
 
-<MudCard Class="mt-8 mb-4 mx-4 px-2">
+<MudCard Class="mt-6 mb-4 mx-4 px-2">
     <MudCardContent>
         <MudGrid>
             <MudItem xs="12" sm="8" md="8" lg="8">
@@ -13,7 +13,8 @@
             {
                 <MudItem xs="12" sm="4" md="4" lg="4" Class="d-none d-sm-flex d-flex justify-end">
                     <MudButton
-                        StartIcon="@Icons.Material.Outlined.Add"
+                        Disabled="@ButtonDisabled"
+                        StartIcon="@ButtonIcon"
                         IconSize="Size.Large"
                         Variant="Variant.Filled"
                         Size="Size.Medium"
@@ -37,6 +38,14 @@
 
     [Parameter]
     public string ButtonText { get; set; }
+
+    [Parameter]
+    public string ButtonIcon { get; set; } = Icons.Material.Outlined.Add;
+
+    [Parameter]
+    public bool ButtonDisabled { get; set; }
+    [Parameter]
+    public EventCallback<bool> ButtonDisabledChanged { get; set; }
 
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }

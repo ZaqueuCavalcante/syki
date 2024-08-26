@@ -69,6 +69,11 @@ public class LessonNotFound : SykiError
     public override string Code { get; set; } = nameof(LessonNotFound);
     public override string Message { get; set; } = "Aula não encontrada.";
 }
+public class EnrollmentPeriodNotFound : SykiError
+{
+    public override string Code { get; set; } = nameof(EnrollmentPeriodNotFound);
+    public override string Message { get; set; } = "Período de matrícula não encontrado.";
+}
 
 // INVALID  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 public class InvalidDisciplinesList : SykiError
@@ -187,4 +192,9 @@ public class TeacherIsNotTheClassLeader : SykiError
 {
     public override string Code { get; set; } = nameof(TeacherIsNotTheClassLeader);
     public override string Message { get; set; } = "O professor não é o titular da classe.";
+}
+public class EnrollmentPeriodAlreadyExists : SykiError
+{
+    public override string Code { get; set; } = nameof(EnrollmentPeriodAlreadyExists);
+    public override string Message { get; set; } = "Já existe um período de matrícula com esse id.";
 }

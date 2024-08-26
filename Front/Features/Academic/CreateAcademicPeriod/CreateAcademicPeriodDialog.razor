@@ -12,27 +12,33 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
-            <MudTextField
-                OnlyValidateIfDirty="true"
-                Immediate="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-4"
-                AutoFocus="true"
-                @bind-Value="@_id"
-                Counter="6"
-                MaxLength="6"
-                Mask="@(new PatternMask("0000.0"))"
-                HelperText="Exemplo: 2024.1"
-                T="String"
-                Label="Id"
-                Required="true"
-                RequiredError="Informe!"
-            />
-            <MudStack Row="true">
-                <SykiDatePicker Label="Início" @bind-Date="@_start"/>
-                <SykiDatePicker Label="Fim" @bind-Date="@_end"/>
-            </MudStack>
+            <MudGrid>
+                <MudItem>
+                    <MudTextField
+                        OnlyValidateIfDirty="true"
+                        Immediate="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        Class="mb-4"
+                        AutoFocus="true"
+                        @bind-Value="@_id"
+                        Counter="6"
+                        MaxLength="6"
+                        Mask="@(new PatternMask("0000.0"))"
+                        HelperText="Exemplo: 2024.1"
+                        T="String"
+                        Label="Id"
+                        Required="true"
+                        RequiredError="Informe!"
+                    />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <SykiDatePicker Label="Início" @bind-Date="@_start"/>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <SykiDatePicker Label="Fim" @bind-Date="@_end"/>
+                </MudItem>
+            </MudGrid>
         </MudForm>
     </DialogContent>
     <DialogActions>

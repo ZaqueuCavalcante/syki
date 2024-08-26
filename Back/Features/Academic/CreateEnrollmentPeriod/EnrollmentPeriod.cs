@@ -31,6 +31,17 @@ public class EnrollmentPeriod
         return new EnrollmentPeriod(id, institutionId, startAt, endAt);
     }
 
+    public OneOf<SykiSuccess, SykiError> Update(DateOnly startAt, DateOnly endAt)
+    {
+        if (startAt >= endAt)
+            return new InvalidEnrollmentPeriodDates();
+
+        StartAt = startAt;
+        EndAt = endAt;
+        
+        return new SykiSuccess();
+    }
+
     public EnrollmentPeriodOut ToOut()
     {
         return new()

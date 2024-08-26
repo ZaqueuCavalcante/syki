@@ -1,0 +1,73 @@
+@namespace Syki.Front.Features.Academic.CreateEnrollmentPeriod
+
+<MudDialog Class="pb-2">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Outlined.Edit" Class="mr-1 mb-n1" />
+            Período de Matrícula
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="_form" Class="pt-1">
+            <MudStack Row="true">
+                <SykiDatePicker Label="Início" @bind-Date="@_start"/>
+                <SykiDatePicker Label="Fim" @bind-Date="@_end"/>
+            </MudStack>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Cancel" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject GetAcademicPeriodsClient GetClient
+@inject CreateEnrollmentPeriodClient CreateClient
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    private MudForm _form;
+    private bool _loading;
+
+    private string _id;
+    private DateTime? _start;
+    private DateTime? _end;
+
+    List<AcademicPeriodOut> _periods = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _periods = await GetClient.Get();
+    }
+
+    async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        var start = DateOnly.FromDateTime(_start!.Value);
+        var end = DateOnly.FromDateTime(_end!.Value);
+
+        _loading = true;
+        var response = await CreateClient.Create(_id, start, end);
+        if (response.IsSuccess())
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Período cadastrado com sucesso!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(response.GetError().Message, Severity.Error);
+        }
+        _loading = false;
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

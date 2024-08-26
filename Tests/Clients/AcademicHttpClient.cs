@@ -254,6 +254,14 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Create(id, startDate, endDate);
     }
 
+    public async Task<OneOf<EnrollmentPeriodOut, ErrorOut>> UpdateEnrollmentPeriod(string id, int start = -4, int end = 4)
+    {
+        var client = new UpdateEnrollmentPeriodClient(Cross);
+        var startDate = DateOnly.FromDateTime(DateTime.Now.AddDays(start));
+        var endDate = DateOnly.FromDateTime(DateTime.Now.AddDays(end));
+        return await client.Update(id, startDate, endDate);
+    }
+    
     public async Task<List<EnrollmentPeriodOut>> GetEnrollmentPeriods()
     {
         var client = new GetEnrollmentPeriodsClient(Cross);

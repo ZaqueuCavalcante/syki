@@ -99,7 +99,7 @@ public class InvalidAcademicPeriodEndDate : SykiError
 public class InvalidAcademicPeriodDates : SykiError
 {
     public override string Code { get; set; } = nameof(InvalidAcademicPeriodDates);
-    public override string Message { get; set; } = "A data de início deve ser menor que a de fim de período acadêmico.";
+    public override string Message { get; set; } = "A data de início deve ser menor que a de fim.";
 }
 public class InvalidCourseType : SykiError
 {
@@ -139,7 +139,7 @@ public class InvalidHour : SykiError
 public class InvalidEnrollmentPeriodDates : SykiError
 {
     public override string Code { get; set; } = nameof(InvalidEnrollmentPeriodDates);
-    public override string Message { get; set; } = "A data de início deve ser menor que a de fim de período de matrícula.";
+    public override string Message { get; set; } = "A data de início deve ser menor que a de fim.";
 }
 public class InvalidMfaToken : SykiError
 {
@@ -196,5 +196,5 @@ public class TeacherIsNotTheClassLeader : SykiError
 public class EnrollmentPeriodAlreadyExists : SykiError
 {
     public override string Code { get; set; } = nameof(EnrollmentPeriodAlreadyExists);
-    public override string Message { get; set; } = "Já existe um período de matrícula com esse id.";
+    public override string Message { get; set; } = "Já existe um período de matrícula para o período acadêmico informado.";
 }

@@ -10,7 +10,9 @@ public class UpdateEnrollmentPeriodService(SykiDbContext ctx) : IAcademicService
         var period = await ctx.EnrollmentPeriods.FirstOrDefaultAsync(x => x.InstitutionId == institutionId && x.Id == id);
         if (period == null) return new EnrollmentPeriodNotFound();
 
-        period.Update(data.StartAt, data.EndAt);
+        var result = period.Update(data.StartAt, data.EndAt);
+
+        if (result.IsError()) return result.GetError();
         
         await ctx.SaveChangesAsync();
 

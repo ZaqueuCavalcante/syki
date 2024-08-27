@@ -1,7 +1,3 @@
-@using Syki.Front.Components.Custom
-@using Syki.Front.Components.Buttons
-@using Syki.Front.Features.Academic.CreateAcademicPeriod
-
 @namespace Syki.Front.Features.Academic.CreateEnrollmentPeriod
 
 <MudDialog Class="pb-2">
@@ -12,28 +8,34 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="_form" Class="pt-1">
-            <MudSelect
-                Dense="true"
-                AutoFocus="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                Class="mb-4"
-                @bind-Value="@_id"
-                Label="Período Acadêmico"
-                Required="true"
-                RequiredError="Informe!"
-                AdornmentColor="Color.Primary"
-            >
-                @foreach (string? item in _periods.ConvertAll(p => p.Id))
-                {
-                    <MudSelectItem Value="@item">@item</MudSelectItem>
-                }
-            </MudSelect>
-            <MudStack Row="true">
-                <SykiDatePicker Label="Início" @bind-Date="@_start"/>
-                <SykiDatePicker Label="Fim" @bind-Date="@_end"/>
-            </MudStack>
+        <MudForm @ref="_form" Class="py-1">
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <MudSelect
+                        Dense="true"
+                        AutoFocus="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        Class="mb-4"
+                        @bind-Value="@_id"
+                        Label="Período Acadêmico"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary">
+                        @foreach (string? item in _periods.ConvertAll(p => p.Id))
+                        {
+                        <MudSelectItem Value="@item">@item</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudFlexBreak />
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <SykiDatePicker Label="Início" @bind-Date="@_start"/>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <SykiDatePicker Label="Fim" @bind-Date="@_end"/>
+                </MudItem>
+            </MudGrid>
         </MudForm>
     </DialogContent>
     <DialogActions>

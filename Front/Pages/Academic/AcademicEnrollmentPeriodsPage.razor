@@ -1,6 +1,4 @@
-﻿@using Syki.Front.Components.Custom
-
-@namespace Syki.Front.Pages.Academic
+﻿@namespace Syki.Front.Pages.Academic
 
 @page "/academic/enrollment-periods"
 @attribute [Authorize(Roles = "Academic")]
@@ -8,17 +6,22 @@
 <PageTitle>Matrículas</PageTitle>
 
 <MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.Article" Title="Matrículas" ButtonText="Período de Matrícula" OnClick="OpenDialog"/>
-    <SykiPageAlert Text="Utilize os períodos de matrícula para organizar as informações durante o ano letivo." />
+    <SykiPageHeader Icon="@Icons.Material.Filled.Article" Title="Matrículas" ButtonText="Período de Matrícula" OnClick="@OpenDialog"/>
+    <SykiPageAlert Text="Utilize os períodos de matrícula para organizar as informações durante o ano letivo."/>
     <MudContainer Class="px-4 mb-8">
         <MudDataGrid Class="pa-4" Items="@_periodos" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por ano" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por ano"/>
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Id" Title="Id" />
                 <PropertyColumn Property="x => x.StartAt" Title="Início" />
                 <PropertyColumn Property="x => x.EndAt" Title="Fim" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@(() => OpenEditDialog(context.Item))" />
+                    </CellTemplate>
+                </TemplateColumn>
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -63,6 +66,24 @@
         await OnInitializedAsync();
     }
 
+    private async Task OpenEditDialog(EnrollmentPeriodOut item)
+    {
+        var parameters = new DialogParameters<UpdateEnrollmentPeriodDialog>();
+        parameters.Add(x => x.Period, item);
+
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true,
+        };
+        var dialog = await DialogService.ShowAsync<UpdateEnrollmentPeriodDialog>("", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+    
     private string GetNotFoundMessage()
     {
         return (_searchString.IsEmpty()) ? "Não existem períodos de matrícula cadastrados ainda." : "Nenhum período de matrícula encontrado.";

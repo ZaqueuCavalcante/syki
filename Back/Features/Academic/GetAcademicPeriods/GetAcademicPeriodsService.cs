@@ -6,6 +6,7 @@ public class GetAcademicPeriodsService(SykiDbContext ctx) : IAcademicService
     {
         var periods = await ctx.AcademicPeriods.AsNoTracking()
             .Where(c => c.InstitutionId == institutionId)
+            .OrderBy(p => p.Id)
             .ToListAsync();
         
         return periods.ConvertAll(p => p.ToOut());

@@ -1,3 +1,5 @@
+@using Syki.Front.Features.Academic.UpdateEnrollmentPeriod
+
 @namespace Syki.Front.Features.Academic.CreateEnrollmentPeriod
 
 <MudDialog Class="pb-2">
@@ -8,11 +10,16 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="_form" Class="pt-1">
-            <MudStack Row="true">
-                <SykiDatePicker Label="Início" @bind-Date="@_start"/>
-                <SykiDatePicker Label="Fim" @bind-Date="@_end"/>
-            </MudStack>
+        <MudForm @ref="@_form" Class="py-1">
+            <MudGrid Spacing="2">
+                <MudFlexBreak />
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <SykiDatePicker Label="Início" @bind-Date="@_start"/>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <SykiDatePicker Label="Fim" @bind-Date="@_end"/>
+                </MudItem>
+            </MudGrid>
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -23,26 +30,27 @@
 </MudDialog>
 
 @inject ISnackbar Snackbar
-@inject GetAcademicPeriodsClient GetClient
-@inject CreateEnrollmentPeriodClient CreateClient
+@inject UpdateEnrollmentPeriodClient Client
 
 @code
 {
     [CascadingParameter]
     MudDialogInstance MudDialog { get; set; }
 
+    [Parameter]
+    public EnrollmentPeriodOut Period { get; set; }
+    
     private MudForm _form;
     private bool _loading;
 
-    private string _id;
     private DateTime? _start;
     private DateTime? _end;
 
-    List<AcademicPeriodOut> _periods = [];
-
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        _periods = await GetClient.Get();
+        base.OnInitialized();
+        _start = Period.StartAt.ToDateTime();
+        _end = Period.EndAt.ToDateTime();
     }
 
     async Task Submit()
@@ -56,11 +64,11 @@
         var end = DateOnly.FromDateTime(_end!.Value);
 
         _loading = true;
-        var response = await CreateClient.Create(_id, start, end);
+        var response = await Client.Update(Period.Id, start, end);
         if (response.IsSuccess())
         {
             MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add("Período cadastrado com sucesso!", Severity.Success);
+            Snackbar.Add("Período editado com sucesso!", Severity.Success);
         }
         else
         {

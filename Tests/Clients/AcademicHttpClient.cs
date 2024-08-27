@@ -26,6 +26,7 @@ using Syki.Front.Features.Academic.GetEnrollmentPeriods;
 using Syki.Front.Features.Academic.GetCourseCurriculums;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
+using Syki.Front.Features.Academic.UpdateEnrollmentPeriod;
 using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
 

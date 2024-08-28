@@ -14,7 +14,7 @@ public class CreatePendingUserRegisterService(SykiDbContext ctx) : ICrossService
         var register = new UserRegister(email);
         ctx.Add(register);
 
-        ctx.Add(SykiTask.SendUserRegisterEmailConfirmation(email));
+        // ctx.Add(SykiTask.SendUserRegisterEmailConfirmation(email));
 
         await ctx.SaveChangesAsync();
 

@@ -12,7 +12,7 @@ public static class ServicesConfigs
         services.AddServiceConfigs(typeof(ITeacherService));
     }
 
-    private static void AddServiceConfigs(this IServiceCollection services, Type? marker)
+    private static void AddServiceConfigs(this IServiceCollection services, Type marker)
     {
         var types = AppDomain.CurrentDomain.GetAssemblies()
             .Where(s => s.FullName.StartsWith("Back"))

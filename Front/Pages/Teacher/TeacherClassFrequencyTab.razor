@@ -1,33 +1,31 @@
-﻿@using Syki.Front.Components.Custom
-@using Syki.Front.Components.Buttons
-@using Syki.Front.Features.Teacher.CreateLessonAttendance
+﻿@using Syki.Front.Features.Teacher.CreateLessonAttendance
 
 @namespace Syki.Front.Pages.Teacher
 
-<MudContainer Class="mb-8">
-    <MudCard Class="mb-4 px-2">
+<MudContainer Class="mb-8 px-4">
+    <MudCard Class="mb-4 pa-2">
         <MudCardContent Class="py-1">
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.Class" Class="mr-1 mb-1" Size="Size.Medium"/>
-                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
-                    <MudText Typo="Typo.h6">Aula @_lesson.Number</MudText>
-                    <MudText Typo="Typo.h3">·</MudText>
-                    <MudText Typo="Typo.h6">@_lesson.Date.FormatBr()</MudText>
-                    <MudText Typo="Typo.h3">·</MudText>
-                    <MudText Typo="Typo.h6">@_lesson.Schedule</MudText>
-                </MudStack>
-                <MudSpacer />
-                <MudButton
-                    StartIcon="@Icons.Material.Outlined.Edit"
-                    IconSize="Size.Large"
-                    Variant="Variant.Filled"
-                    Style="height: 40px;"
-                    Color="Color.Primary"
-                    @onclick="@OnEditLessonClick"
-                >
-                    Editar
-                </MudButton>
-            </MudStack>
+            <MudGrid Class="align-center">
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.Class" Class="mr-1 mb-1" Size="Size.Medium"/>
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                            <MudText Typo="Typo.h6">Aula @_lesson.Number <b>·</b> @_lesson.Date.FormatBr() <b>·</b> @_lesson.Schedule</MudText>
+                        </MudStack>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudButton
+                        StartIcon="@Icons.Material.Outlined.Edit"
+                        IconSize="Size.Large"
+                        Variant="Variant.Filled"
+                        Style="height: 40px;"
+                        Color="Color.Primary"
+                        @onclick="@OnEditLessonClick">
+                        Editar
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
         </MudCardContent>
     </MudCard>
     <MudDataGrid T="GetTeacherLessonAttendanceOut" Class="pa-4" Items="@_attendances" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">

@@ -6,24 +6,29 @@
 <PageTitle>Turma</PageTitle>
 
 <MudContainer>
-    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+    <MudCard Class="mt-8 mb-4 mx-4 px-2">
         <MudCardContent>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mr-1 mb-1" Size="Size.Large"/>
-                <MudText Typo="Typo.h5" Style="font-weight: bold">@($"{_class.Discipline} - {_class.Period}")</MudText>
-                <MudSpacer />
-                <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="120px">
-                    <MudTabPanel Text="Frequência" ID='"panel_0"'></MudTabPanel>
-                    <MudTabPanel Text="Diário" ID='"panel_1"'></MudTabPanel>
-                    <MudTabPanel Text="Notas" ID='"panel_2"'></MudTabPanel>
-                </MudTabs>
-            </MudStack>
+            <MudGrid Class="align-center">
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mr-1 mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Style="font-weight: bold">@($"{_class.Discipline}")</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="100%">
+                        <MudTabPanel Text="Frequência" ID='"panel_0"'></MudTabPanel>
+                        <MudTabPanel Text="Diário" ID='"panel_1"'></MudTabPanel>
+                        <MudTabPanel Text="Notas" ID='"panel_2"'></MudTabPanel>
+                    </MudTabs>
+                </MudItem>
+            </MudGrid>
         </MudCardContent>
     </MudCard>
 
     @if (_index == 0)
     {
-        <TeacherClassFrequencyTab ClassId="@Id" />
+        <TeacherClassFrequencyTab ClassId="@Id"/>
     }
     else if (_index == 1)
     {
@@ -35,7 +40,7 @@
     }
     else
     {
-        <TeacherClassNotesTab ClassId="@Id" />
+        <TeacherClassNotesTab ClassId="@Id"/>
     }
 </MudContainer>
 

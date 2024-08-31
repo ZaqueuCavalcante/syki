@@ -1,9 +1,9 @@
 # TODOS
 
 - [V] Quando o academico criar turma, ja redirecionar pra pagina de detalhes
-- [] Tabs de (Aulas | Alunos) do detalhe de turma do academico deve abrir em coluna
-- [] Detalhes da turma do academico devem ficar em uma unica coluna quando abrir no celular
-- [] Analisar padrao para ar margins/paddings em todas as telas (deixar no layout?)
+- [V] Tabs de (Aulas | Alunos) do detalhe de turma do academico deve abrir em coluna
+- [V] Detalhes da turma do academico devem ficar em uma unica coluna quando abrir no celular
+- [] Analisar padrao para as margins/paddings em todas as telas (deixar no layout?)
 - [] Diminuir margins em relacao as bordas da tela
 - [] Mudar icone de setup de MFA para algo de seguranca
 - [] Substituir todos os dialogs pra usar componente e n C#

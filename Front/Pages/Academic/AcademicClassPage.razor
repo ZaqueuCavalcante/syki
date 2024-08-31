@@ -1,6 +1,4 @@
-﻿@using Syki.Front.Components.Custom
-
-@namespace Syki.Front.Pages.Academic
+﻿@namespace Syki.Front.Pages.Academic
 
 @page "/academic/classes/{id:guid}"
 @attribute [Authorize(Roles = "Academic")]
@@ -8,32 +6,37 @@
 <PageTitle>Turma</PageTitle>
 
 <MudContainer>
-    <MudCard Class="mt-8 mb-4 mx-6 px-2">
+    <MudCard Class="mt-8 mb-4 mx-4 px-2">
         <MudCardContent>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mr-1 mb-1" Size="Size.Large"/>
-                <MudText Typo="Typo.h5" Style="font-weight: bold">@($"{_class.Discipline} - {_class.Code}")</MudText>
-                <MudSpacer />
-                <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="120px">
-                    <MudTabPanel Text="Aulas" ID='"panel_0"'></MudTabPanel>
-                    <MudTabPanel Text="Alunos" ID='"panel_1"'></MudTabPanel>
-                </MudTabs>
-            </MudStack>
+            <MudGrid Class="align-center">
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mr-1 mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Style="font-weight: bold">@($"{_class.Discipline} - {_class.Code}")</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="120px">
+                        <MudTabPanel Text="Aulas" ID='"panel_0"'></MudTabPanel>
+                        <MudTabPanel Text="Alunos" ID='"panel_1"'></MudTabPanel>
+                    </MudTabs>
+                </MudItem>
+            </MudGrid>
         </MudCardContent>
     </MudCard>
 
     @if (_index == 0)
     {
-        <MudPaper Class="px-6 py-4 mb-4 mx-6">
+        <MudPaper Class="mx-4 px-7 py-4 mb-4">
             <MudGrid Justify="Justify.FlexStart" Spacing="1">
-                <MudItem xs="6" sm="6" md="6">
+                <MudItem xs="12" sm="6" md="6" lg="6">
                     <MudStack Spacing="1">
                         <MudText><strong>Professor:</strong> @_class.Teacher</MudText>
                         <MudText><strong>Status:</strong> @_class.Status.GetDescription()</MudText>
                         <MudText><strong>Alunos:</strong> @_class.FillRatio</MudText>
                     </MudStack>
                 </MudItem>
-                <MudItem xs="6" sm="6" md="6">
+                <MudItem xs="12" sm="6" md="6" lg="6">
                     <MudStack Spacing="1">
                         <MudText><strong>Período:</strong> @_class.Period</MudText>
                         <MudText><strong>Progresso:</strong> @_class.Progress</MudText>
@@ -48,7 +51,7 @@
             </MudGrid>
         </MudPaper>
 
-        <MudContainer Class="mb-8">
+        <MudContainer Class="px-4 mb-8">
             <MudDataGrid T="LessonOut" Class="pa-4" Items="@GetLessons()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
                 <ToolBarContent>
                     <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por data, horário ou status" />

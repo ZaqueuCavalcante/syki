@@ -1,9 +1,6 @@
-@using Syki.Front.Components.Custom
-@using Syki.Front.Components.Buttons
-
 @namespace Syki.Front.Features.Academic.CreateClass
 
-<MudDialog Class="pb-2">
+<MudDialog @bind-Visible=@_visible Class="pb-2" Options="@_options">
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
@@ -17,7 +14,6 @@
                     <MudAutocomplete
                         T="DisciplineOut"
                         MaxItems="50"
-                        AutoFocus="true"
                         SearchFunc="@SearchDiscipline"
                         Dense="true"
                         Margin="Margin.Dense"
@@ -53,7 +49,7 @@
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (TeacherOut? item in Teachers)
+                        @foreach (TeacherOut? item in _teachers)
                         {
                             <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                         }
@@ -70,7 +66,7 @@
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (string? item in Periods.ConvertAll(p => p.Id))
+                        @foreach (string? item in _periods.ConvertAll(p => p.Id))
                         {
                             <MudSelectItem Value="@item">@item</MudSelectItem>
                         }
@@ -109,7 +105,7 @@
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="@Cancel" />
+        <DialogCancelButton OnClick="@Close" />
         <SykiProgressCircular Loading="@_loading" />
         <DialogSaveButton OnClick="@Submit" />
     </DialogActions>
@@ -118,40 +114,55 @@
 @inject ISnackbar Snackbar
 @inject CreateClassClient CreateClassClient
 @inject GetTeachersClient GetTeachersClient
-@inject GetStudentsClient GetStudentsClient
 @inject GetDisciplinesClient GetDisciplinesClient
 @inject GetAcademicPeriodsClient GetAcademicPeriodsClient
 
 @code
 {
-    [CascadingParameter]
-    MudDialogInstance MudDialog { get; set; }
+    [Parameter]
+    public EventCallback<Guid> OnSuccess { get; set; }
 
-    MudForm _form;
+    private MudForm _form;
     private bool _loading;
+    private bool _visible;
 
-    DisciplineOut? _discipline;
-    TeacherOut? _teacher;
-    string? _period;
-    byte? _vacancies;
-    List<ScheduleInFillable> _schedules { get; set; } = [];
+    private DisciplineOut? _discipline;
+    private TeacherOut? _teacher;
+    private string? _period;
+    private byte? _vacancies;
+    private List<ScheduleInFillable> _schedules = [];
 
-    List<DisciplineOut> Disciplines = [];
-    List<TeacherOut> Teachers = [];
-    List<AcademicPeriodOut> Periods = [];
-    List<StudentOut> Students = [];
+    private List<DisciplineOut> _disciplines = [];
+    private List<TeacherOut> _teachers = [];
+    private List<AcademicPeriodOut> _periods = [];
+
+    private readonly DialogOptions _options = new()
+    {
+        FullWidth = true,
+        CloseButton = true,
+        MaxWidth = MaxWidth.Small,
+    };
 
     protected override async Task OnInitializedAsync()
     {
         NewSchedule();
-        await Task.WhenAll(new Task[] { 
-            Task.Run(async () => Teachers = await GetTeachersClient.Get()),
-            Task.Run(async () => Periods = await GetAcademicPeriodsClient.Get()),
-            Task.Run(async () => Students = await GetStudentsClient.Get()),
-            Task.Run(async () => Disciplines = await GetDisciplinesClient.Get()),
-        });
+        await Task.WhenAll([
+            Task.Run(async () => _teachers = await GetTeachersClient.Get()),
+            Task.Run(async () => _periods = await GetAcademicPeriodsClient.Get()),
+            Task.Run(async () => _disciplines = await GetDisciplinesClient.Get())
+        ]);
     }
 
+    public void Open()
+    {
+        _visible = true;
+    }
+
+    private void Close()
+    {
+        _visible = false;
+    }
+    
     bool GetNewScheduleDisabled()
     {
         return _schedules.Count == 3;
@@ -172,9 +183,9 @@
         await Task.Delay(0);
 
         if (string.IsNullOrEmpty(value))
-            return Disciplines;
+            return _disciplines;
 
-        return Disciplines.Where(x => value.IsIn(x.Name));
+        return _disciplines.Where(x => value.IsIn(x.Name));
     }
 
     async Task Submit()
@@ -194,8 +205,8 @@
         var response = await CreateClassClient.Create(disciplineId, teacherId, period, vacancies, schedules);
         if (response.IsSuccess())
         {
-            MudDialog.Close(DialogResult.Ok(true));
             Snackbar.Add("Turma cadastrada com sucesso!", Severity.Success);
+            await OnSuccess.InvokeAsync(response.GetSuccess().Id);
         }
         else
         {
@@ -203,6 +214,4 @@
         }
         _loading = false;
     }
-
-    void Cancel() => MudDialog.Cancel();
 }

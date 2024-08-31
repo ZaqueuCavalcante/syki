@@ -1,4 +1,3 @@
-@using Syki.Front.Components.Custom
 @using Syki.Front.Features.Academic.CreateClass
 
 @namespace Syki.Front.Pages.Academic
@@ -36,8 +35,9 @@
     </MudContainer>
 </MudContainer>
 
+<CreateClassDialog @ref="@_dialog" OnSuccess="@GoToClassPage" />
+
 @inject NavigationManager Nav
-@inject IDialogService DialogService
 @inject GetClassesClient GetClassesClient
 
 @code
@@ -45,6 +45,8 @@
     private bool _loading;
     private string _searchString;
     private List<ClassOut> _classes = [];
+
+    private CreateClassDialog _dialog;
 
     protected override async Task OnInitializedAsync()
     {
@@ -55,24 +57,19 @@
 
     private void Action(ClassOut item)
     {
-        Nav.NavigateTo($"/academic/classes/{item.Id}");
+        GoToClassPage(item.Id);
+    }
+
+    private void GoToClassPage(Guid id)
+    {
+        Nav.NavigateTo($"/academic/classes/{id}");
     }
 
     private Func<ClassOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Teacher, x.Period);
 
-    private async Task OpenDialog()
+    private void OpenDialog()
     {
-        var options = new DialogOptions {
-            MaxWidth = MaxWidth.Small,
-            FullWidth = true
-        };
-        var dialog = await DialogService.ShowAsync<CreateClassDialog>("", options);
-
-        var result = await dialog.Result;
-
-        if (result!.Canceled) return;
-        
-        await OnInitializedAsync();
+        _dialog.Open();
     }
 
     private string GetNotFoundMessage()

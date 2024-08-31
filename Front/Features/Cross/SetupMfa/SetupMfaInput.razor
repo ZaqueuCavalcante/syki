@@ -1,46 +1,49 @@
 ﻿@namespace Syki.Front.Features.Cross.SetupMfa
 
-<MudOverlay @bind-Visible="@_validateCodeLoading" LightBackground="true" Absolute="false">
-    <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
-</MudOverlay>
+<MudPaper Style="position: relative; height: 100%">
+    <MudOverlay @bind-Visible="@_validateCodeLoading" LightBackground="true" Absolute="true">
+        <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
+    </MudOverlay>
 
-<style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
-<MudCard Class="mt-4 px-8 py-0" Elevation="0">
-    <MudCardContent>
-        <MudStack AlignItems="AlignItems.Center">
-            <MudAlert Severity="Severity.Info" Variant="Variant.Text">
-                <MudStack Row="true" Justify="Justify.SpaceAround">
-                    <MudText>Insira o código para finalizar o setup</MudText>
-                </MudStack>
-            </MudAlert>
-            <MudForm>
-                <MudTextField
-                    Immediate="true"
-                    Placeholder="_ _ _  _ _ _"
-                    OnlyValidateIfDirty="true"
-                    Variant="Variant.Outlined"
-                    Disabled="@_codeIsCorrect"
-                    Style="width: 200px;"
-                    Class="mt-8"
-                    AutoFocus="true"
-                    Value="@_userCode"
-                    ValueChanged="@HandleCodeChanged"
-                    T="String"
-                    Mask="@(new PatternMask("000 000"))"
-                />
-            </MudForm>
-
-            @if (_showCodeFeedback && !_codeIsCorrect)
-            {
-                <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Text">
+    <style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
+    <MudCard Class="px-4 py-0" Elevation="0" Style="height: 100%">
+        <MudCardContent>
+            <MudStack AlignItems="AlignItems.Center">
+                <MudAlert Severity="Severity.Info" Variant="Variant.Text">
                     <MudStack Row="true" Justify="Justify.SpaceAround">
-                        <MudText>Código inválido</MudText>
+                        <MudText>Insira o código para finalizar o setup</MudText>
                     </MudStack>
                 </MudAlert>
-            }
-        </MudStack>
-    </MudCardContent>
-</MudCard>
+                <MudForm>
+                    <MudTextField
+                        T="String"
+                        Immediate="true"
+                        Placeholder="_ _ _  _ _ _"
+                        OnlyValidateIfDirty="true"
+                        Variant="Variant.Outlined"
+                        ReadOnly="@_validateCodeLoading"
+                        Disabled="@_codeIsCorrect"
+                        Style="width: 200px;"
+                        Class="mt-8"
+                        AutoFocus="true"
+                        Value="@_userCode"
+                        ValueChanged="@HandleCodeChanged"
+                        Mask="@(new PatternMask("000 000"))"
+                    />
+                </MudForm>
+
+                @if (_showCodeFeedback && !_codeIsCorrect)
+                {
+                    <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Text">
+                        <MudStack Row="true" Justify="Justify.SpaceAround">
+                            <MudText>Código inválido</MudText>
+                        </MudStack>
+                    </MudAlert>
+                }
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudPaper>
 
 @inject SetupMfaClient Client
 @inject IDialogService DialogService
@@ -60,6 +63,7 @@
         if (_userCode.OnlyNumbers().Length == 6)
         {
             _validateCodeLoading = true;
+            await Task.Delay(3000);
             _codeIsCorrect = await Client.Setup(_userCode);
             _showCodeFeedback = true;
             _validateCodeLoading = false;

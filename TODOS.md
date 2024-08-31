@@ -5,7 +5,7 @@
 - [V] Detalhes da turma do academico devem ficar em uma unica coluna quando abrir no celular
 - [] Analisar padrao para as margins/paddings em todas as telas (deixar no layout?)
 - [] Diminuir margins em relacao as bordas da tela
-- [] Mudar icone de setup de MFA para algo de seguranca
+- [V] Mudar icone de setup de MFA para algo de seguranca
 - [] Substituir todos os dialogs pra usar componente e n C#
 - [] Dialog de Nova Grade no celular ta cagalhado
 - [] Dialog de Nova Oferta no celular ta cagalhado
@@ -30,8 +30,6 @@
 - [] Matricula habilita botao de editar mesmo quando n tem periodo academico in range
 - [] Caso ja tenha se matriculado, exibir componente mas com opcao de editar
 - [] Caso ja tenha se matriculado e o periodo academico ja tenha passado, exibir escolha como readonly (sem Editar, Cancelar nem Salvar)
-
-
 
 
 

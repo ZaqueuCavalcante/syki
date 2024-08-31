@@ -1,26 +1,30 @@
 ﻿@namespace Syki.Front.Features.Cross.GetMfaKey
 
-<MudCard Class="mt-4 px-8 py-0" Elevation="0">
-    <MudCardContent>
-        <MudStack AlignItems="AlignItems.Center">
-            <MudAlert Severity="Severity.Info" Variant="Variant.Text">
-                <MudStack Row="true" Justify="Justify.SpaceAround">
-                    <MudText>Utilize um app de autenticação para ler o QR-Code</MudText>
-                </MudStack>
-            </MudAlert>
-            @if (_qrCodeLoading)
-            {
-                <MudCard Elevation="25" Class="ma-4 d-flex align-center justify-center" Style="width: 300px; height: 300px;">
-                    <MudProgressCircular Color="Color.Dark" Indeterminate="true" Size="Size.Large" />
-                </MudCard>
-            }
-            else
-            {
-                <MudImage Src="@(GetQrCodeImageSrc())" Width="300" Height="300" Elevation="25" Class="rounded-lg ma-4"/>
-            }
-        </MudStack>
-    </MudCardContent>
-</MudCard>
+<MudPaper>
+    <MudCard Class="px-4 py-0" Elevation="0">
+        <MudCardContent>
+            <MudStack AlignItems="AlignItems.Center">
+                <MudAlert Severity="Severity.Info" Variant="Variant.Text">
+                    <MudStack Row="true" Justify="Justify.SpaceAround">
+                        <MudText>Utilize um app de autenticação para ler o QR-Code</MudText>
+                    </MudStack>
+                </MudAlert>
+                @if (_qrCodeLoading)
+                {
+                    <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0 d-flex align-center justify-center">
+                        <MudProgressCircular Style="width: 40%; height: 40%" Color="Color.Dark" Indeterminate="true" Size="Size.Large"/>
+                    </MudContainer>
+                }
+                else
+                {
+                    <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0">
+                        <MudImage Src="@(GetQrCodeImageSrc())" Fluid="true" Elevation="25" Class="rounded-lg"/>
+                    </MudContainer>
+                }
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudPaper>
 
 @inject GetMfaKeyClient Client
 

@@ -1,5 +1,4 @@
-﻿@using Syki.Front.Components.Buttons
-@using Syki.Front.Features.Cross.GetUserNotifications
+﻿@using Syki.Front.Features.Cross.GetUserNotifications
 
 @namespace Syki.Front.Shared
 
@@ -20,7 +19,7 @@
                 <AuthorizeView Roles="Teacher, Student" Context="otherContext">
                     <NotificationsIconButton />
                 </AuthorizeView>
-                <SettingsIconButton />
+                <MfaIconButton />
                 <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ChangeTheme" />
                 <LogoutIconButton OnClick="@Logout" />
             </MudAppBar>

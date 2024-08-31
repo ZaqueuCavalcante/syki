@@ -1,12 +1,61 @@
 # TODOS
 
+- [] Adicionar eventos ao sistema + avoid polling do banco
+- [] Usar interceptors para salvar os eventos na mesma transacao do EF
+- [] Criar mapping para bindig fortemente tipado de eventos e tasks
+- [] O processamento dos eventos deve ser feito de maneira unica e sequencial
+- [] Caso um falhe, marcar como falha e seguir com os demais
+- [] Criar fila unica pra executar as tasks (depois pensar em ter uma pros emails e outros pras demais coisas...)
+
+- [] ----------------------------------------------------------------------------------------------
+
+- [] Quando o academico criar turma, ja redirecionar pra pagina de detalhes
+- [] Tabs de (Aulas | Alunos) do detalhe de turma do academico deve abrir em coluna
+- [] Detalhes da turma do academico devem ficar em uma unica coluna quando abrir no celular
+- [] Analisar padrao para ar margins/paddings em todas as telas (deixar no layout?)
+- [] Diminuir margins em relacao as bordas da tela
+- [] Mudar icone de setup de MFA para algo de seguranca
+- [] Substituir todos os dialogs pra usar componente e n C#
+- [] Dialog de Nova Grade no celular ta cagalhado
+- [] Dialog de Nova Oferta no celular ta cagalhado
+- [] Dialog de Nova Turma no celular ta cagalhado
+
+- [] ----------------------------------------------------------------------------------------------
+
+- [] Dados corretos na tela de index do professor
+- [] Adicionar skeletton na tela de detalhes de turma pra ver como fica o loading
+- [] Essa tela ta toda bugada no mobile
+- [] Adicionar opcao de selecionar todos e selecionar nenhum na aba de frequencia
+- [] Tamanho do header na pagina de Agenda (celular)
+- [] Criar pagina de notificacoes ou drawer, n exibir mais no dialog
+- [] Botao de notificacoes fica exibindo o tip mesmo depois de fechar o dialog
+- [] Botao de notificacoes fica zoado quando tem notificacao (numerozinho)
+- [] Adicionar feature simples de diario de classe (selecionar aula + caixa de texto simples multiline)
+
+- [] ----------------------------------------------------------------------------------------------
+
+- [] Calcular media do aluno + coeficiente de rendimento (on the fly)
+- [] No celular, exibir card de insight com icone -> nome -> value (coluna)
+- [] Matricula habilita botao de editar mesmo quando n tem periodo academico in range
+- [] Caso ja tenha se matriculado, exibir componente mas com opcao de editar
+- [] Caso ja tenha se matriculado e o periodo academico ja tenha passado, exibir escolha como readonly (sem Editar, Cancelar nem Salvar)
+
+
+
+
+
+
+
+
 ## Front
 
 - xs sm md lg xl
 
 - Font Ultra #594AE2
 
+## Events
 
+https://www.graymatterdeveloper.com/2019/12/02/listening-events-postgresql/index.html
 
 # Students Features
 

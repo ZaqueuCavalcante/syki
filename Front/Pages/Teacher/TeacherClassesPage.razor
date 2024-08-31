@@ -34,7 +34,6 @@
 </MudContainer>
 
 @inject NavigationManager Nav
-@inject IDialogService DialogService
 @inject GetTeacherClassesClient GetTeacherClassesClient
 
 @code
@@ -59,6 +58,6 @@
 
     private string GetNotFoundMessage()
     {
-        return (_searchString.IsEmpty()) ? "Não existem turmas cadastradas ainda." : "Nenhuma turma encontrada.";
+        return _searchString.IsEmpty() ? "Não existem turmas cadastradas ainda." : "Nenhuma turma encontrada.";
     }
 }

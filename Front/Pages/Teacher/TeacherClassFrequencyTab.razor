@@ -6,7 +6,7 @@
     <MudCard Class="mb-4 pa-2">
         <MudCardContent Class="py-1">
             <MudGrid Class="align-center">
-                <MudItem xs="12" sm="8" md="8" lg="8">
+                <MudItem xs="12" sm="6" md="6" lg="6">
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Class" Class="mr-1 mb-1" Size="Size.Medium"/>
                         <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
@@ -14,7 +14,14 @@
                         </MudStack>
                     </MudStack>
                 </MudItem>
-                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                <MudItem xs="12" sm="4" md="4" lg="4">
+                    <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_lesson.Frequency)" Style="height: 24px">
+                        <MudText Typo="Typo.body1">
+                            <b>@_lesson.Frequency.Format()%</b>
+                        </MudText>
+                    </MudProgressLinear>
+                </MudItem>
+                <MudItem xs="12" sm="2" md="2" lg="2" Class="d-flex justify-end">
                     <MudButton
                         StartIcon="@Icons.Material.Outlined.Edit"
                         IconSize="Size.Large"
@@ -28,29 +35,53 @@
             </MudGrid>
         </MudCardContent>
     </MudCard>
-    <MudDataGrid T="GetTeacherLessonAttendanceOut" Class="pa-4" Items="@_attendances" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+    <MudTable
+        T="GetTeacherLessonAttendanceOut"
+        Class="pa-4"
+        Items="@_attendances"
+        Filter="@_quickFilter"
+        Hover="true"
+        Dense="true"
+        Loading="@_loading"
+        RowsPerPage="100"
+        ContainerClass="pt-6"
+    >
         <ToolBarContent>
-            <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome" />
+            <MudGrid Class="align-center">
+                <MudItem xs="12" sm="5" md="5" lg="5">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                        <MudButton OnClick="@SelectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBox" Size="Size.Small">Todos</MudButton>
+                        <MudButton OnClick="@UnselectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" Size="Size.Small">Nenhum</MudButton>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="7" md="7" lg="7" Class="d-flex justify-end">
+                    <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome"/>
+                </MudItem>
+            </MudGrid>
         </ToolBarContent>
-        <Columns>
-            <PropertyColumn Property="x => x.StudentName" Title="Nome" />
-            <TemplateColumn Title="Presente" CellClass="pl-11 mx-0">
-                <CellTemplate>
-                    <MudCheckBox
-                        T="bool"
-                        Dense="true"
-                        Size="Size.Small"
-                        Color="Color.Success"
-                        Value="@context.Item.Present"
-                        ValueChanged="x => { context.Item.Present = x; CheckChanged(); }"
-                    />
-                </CellTemplate>
-            </TemplateColumn>
-        </Columns>
+        <HeaderContent>
+            <MudTh>Nome</MudTh>
+            <MudTh>Presente</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Nome">@context.StudentName</MudTd>
+            <MudTd DataLabel="Presente">
+                <MudCheckBox
+                    T="bool"
+                    Class="pl-7 pr-1"
+                    Dense="true"
+                    Size="Size.Small"
+                    Color="Color.Success"
+                    Value="@context.Present"
+                    ValueChanged="x => { context.Present = x; CheckChanged(); }"
+                />
+            </MudTd>
+        </RowTemplate>
         <NoRecordsContent>
             @(GetNotFoundMessage())
         </NoRecordsContent>
         <PagerContent>
+            <MudDivider />
             <MudStack Row="true" Class="mt-4">
                 @if (!_unchanged)
                 {
@@ -62,7 +93,7 @@
                 <DialogSaveButton Class="mr-2" OnClick="@SaveFrequency" @bind-Disabled="@_unchanged"/>
             </MudStack>
         </PagerContent>
-    </MudDataGrid>
+    </MudTable>
 </MudContainer>
 
 <ClassLessonsDialog @ref="@_dialog" OnRowClick="@SetLesson" />
@@ -105,13 +136,33 @@
         _unchanged = true;
     }
 
+    private void SelectAll()
+    {
+        _attendances.ForEach(x => x.Present = true);
+        CheckChanged();
+    }
+    private void UnselectAll()
+    {
+        _attendances.ForEach(x => x.Present = false);
+        CheckChanged();
+    }
+
     private void CheckChanged()
     {
         var current = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
         var sameSize = current.Count == _initialState.Count;
         _unchanged = sameSize && current.IsSubsetOf(_initialState);
+        _lesson.Frequency = GetCurrentFrequency();
     }
-    
+
+    private decimal GetCurrentFrequency()
+    {
+        var total = _attendances.Count;
+        if (total == 0) return 0.00M;
+        var presences = _attendances.Count(x => x.Present);
+        return 100M*(1M * presences / (1M * total));
+    }
+
     private void OnEditLessonClick()
     {
         _dialog.Open(_class.Lessons);
@@ -123,6 +174,7 @@
         var result = await CreateLessonAttendanceClient.Create(_lesson.Id, ids);
         if (result.IsSuccess())
         {
+            _class = await GetTeacherClassClient.Get(ClassId);
             _initialState = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
             _unchanged = true;
             Snackbar.Add("Chamada salva com sucesso!", Severity.Success);

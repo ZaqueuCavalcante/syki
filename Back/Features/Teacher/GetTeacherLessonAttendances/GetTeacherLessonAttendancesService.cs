@@ -15,11 +15,11 @@ public class GetTeacherLessonAttendancesService(SykiDbContext ctx) : ITeacherSer
         if (@class == null) return new ClassNotFound();
 
         var attendances = await ctx.Attendances.Where(x => x.LessonId == lessonId).ToListAsync();
-        return @class.Students.ConvertAll(s =>
+        return @class.Students.OrderBy(s => s.Name).Select(s =>
         {
             var value = attendances.FirstOrDefault(a => a.StudentId == s.Id);
             if (value != null) return value.ToOut(s.Name);
-            return new GetTeacherLessonAttendanceOut() { LessonId = lessonId, StudentId = s.Id, StudentName = s.Name };
-        });
+            return new() { LessonId = lessonId, StudentId = s.Id, StudentName = s.Name };
+        }).ToList();
     }
 }

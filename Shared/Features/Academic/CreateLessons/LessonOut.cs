@@ -7,7 +7,8 @@ public class LessonOut
     public DateOnly Date { get; set; }
     public string Schedule { get; set; }
     public LessonStatus Status { get; set; }
-
+    public decimal Frequency { get; set; }
+    
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;

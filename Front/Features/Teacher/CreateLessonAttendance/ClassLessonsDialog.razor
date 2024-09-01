@@ -8,22 +8,41 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudDataGrid
+        <MudTable
             T="LessonOut"
+            Items="@_lessons"
             Class="mb-4"
+            Breakpoint="Breakpoint.Sm"
             Dense="true"
             Hover="true"
-            Items="@_lessons"
             RowClass="cursor-pointer"
-            RowClick="@HandleRowClick"
+            OnRowClick="@HandleRowClick"
+            RowsPerPage="100"
         >
-            <Columns>
-                <PropertyColumn Property="x => x.Number" Title="Aula" />
-                <PropertyColumn Property="x => x.Date" Title="Data" />
-                <PropertyColumn Property="x => x.Schedule" Title="Horário" />
-                <PropertyColumn Property="x => x.Status.GetDescription()" Title="Status" />
-            </Columns>
-        </MudDataGrid>
+            <HeaderContent>
+                <MudTh>Aula</MudTh>
+                <MudTh>Data</MudTh>
+                <MudTh>Horário</MudTh>
+                <MudTh>Status</MudTh>
+                <MudTh>Frequência</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Aula">@context.Number</MudTd>
+                <MudTd DataLabel="Data">@context.Date</MudTd>
+                <MudTd DataLabel="Horário">@context.Schedule</MudTd>
+                <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
+                <MudTd DataLabel="Frequência">
+                    @if (context.Status == LessonStatus.Finalized)
+                    {
+                        <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Frequency)" Style="height: 24px">
+                            <MudText Typo="Typo.body1">
+                                <b>@context.Frequency.Format()%</b>
+                            </MudText>
+                        </MudProgressLinear>
+                    }
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
     </DialogContent>
 </MudDialog>
 
@@ -53,7 +72,7 @@
         _visible = false;
     }
 
-    private async Task HandleRowClick(DataGridRowClickEventArgs<LessonOut> row)
+    private async Task HandleRowClick(TableRowClickEventArgs<LessonOut> row)
     {
         await OnRowClick.InvokeAsync(row.Item.Id);
         Close();

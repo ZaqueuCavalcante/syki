@@ -32,6 +32,11 @@
 - [] Caso ja tenha se matriculado e o periodo academico ja tenha passado, exibir escolha como readonly (sem Editar, Cancelar nem Salvar)
 
 
+- [] Tela de profile de usuario com nome, email, reset de senha e 2FA setup
+- [] Remover 2FA da navbar
+
+
+
 
 
 

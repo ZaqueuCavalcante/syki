@@ -68,6 +68,11 @@ public static class StringExtensions
         return value.ToString("0.00", CultureInfo.InvariantCulture);
     }
 
+    public static string Format(this int value)
+    {
+        return value.ToString("N0", CultureInfo.CreateSpecificCulture("pt-BR"));
+    }
+
     public static bool IsValidEmail(this string email)
     {
         if (email.IsEmpty()) return false;

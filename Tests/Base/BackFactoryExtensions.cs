@@ -105,7 +105,7 @@ public static class BackFactoryExtensions
 
     public static async Task<string?> GetResetPasswordToken(this BackFactory factory, string email)
     {
-        using var ctx = factory.GetDbContext();
+        await using var ctx = factory.GetDbContext();
 
         var user = await ctx.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
         if (user == null)
@@ -122,7 +122,7 @@ public static class BackFactoryExtensions
 
     public static async Task AwaitTasksProcessing(this BackFactory factory)
     {
-        using var ctx = factory.GetDbContext();
+        await using var ctx = factory.GetDbContext();
         while (true)
         {
             var tasks = await ctx.Tasks.CountAsync(x => x.ProcessedAt == null);

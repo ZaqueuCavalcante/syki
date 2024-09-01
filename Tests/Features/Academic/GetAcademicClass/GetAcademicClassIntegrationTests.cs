@@ -33,7 +33,7 @@ public partial class IntegrationTests
         ClassOut mathClass = await academicClient.CreateClass(
             data.Disciplines.DiscreteMath.Id,
             chico.Id,
-            data.AcademicPeriod.Id,
+            data.AcademicPeriod2.Id,
             40,
             [new(Day.Monday, Hour.H07_00, Hour.H10_00)]
         );

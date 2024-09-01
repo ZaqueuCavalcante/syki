@@ -8,7 +8,7 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod;
+        var period = data.AcademicPeriod2;
         await academicClient.CreateEnrollmentPeriod(period.Id);
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");

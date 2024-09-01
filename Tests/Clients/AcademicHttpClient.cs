@@ -275,8 +275,8 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Start(id);
     }
 
-    public async Task<OneOf<SuccessOut, ErrorOut>> CreateClassLessons(Guid classId
-    ) {
+    public async Task<OneOf<SuccessOut, ErrorOut>> CreateClassLessons(Guid classId)
+    {
         var client = new CreateLessonsClient(Cross);
         return await client.Create(classId);
     }
@@ -285,18 +285,25 @@ public class AcademicHttpClient(HttpClient http)
     {
         var data = new BasicInstitutionTestDto();
 
-        var digit = DateTime.Now.Month < 6 ? 1 : 2;
-        data.AcademicPeriod = await CreateAcademicPeriod($"{DateTime.Now.Year}.{digit}");
-        
+        data.AcademicPeriod1 = await CreateAcademicPeriod($"{DateTime.Now.Year}.1");
+        data.AcademicPeriod2 = await CreateAcademicPeriod($"{DateTime.Now.Year}.2");
+
         data.Campus = await CreateCampus();
         data.Course = await CreateCourse();
-        
+
         data.Disciplines.DiscreteMath = await CreateDiscipline("Matemática Discreta", [data.Course.Id]);
         data.Disciplines.IntroToWebDev = await CreateDiscipline("Introdução ao Desenvolvimento Web", [data.Course.Id]);
         data.Disciplines.HumanMachineInteractionDesign = await CreateDiscipline("Design de Interação Humano-Máquina", [data.Course.Id]);
         data.Disciplines.IntroToComputerNetworks = await CreateDiscipline("Introdução à Redes de Computadores", [data.Course.Id]);
-        data.Disciplines.CumputationalThinkingAndAlgorithms = await CreateDiscipline("Pensamento Computacional e Algoritmos", [data.Course.Id]);
+        data.Disciplines.ComputationalThinkingAndAlgorithms = await CreateDiscipline("Pensamento Computacional e Algoritmos", [data.Course.Id]);
         data.Disciplines.IntegratorProjectOne = await CreateDiscipline("Projeto Integrador I: Concepção e Prototipação", [data.Course.Id]);
+
+        data.Disciplines.Arch = await CreateDiscipline("Arquitetura de Computadores e Sistemas Operacionais", [data.Course.Id]);
+        data.Disciplines.Databases = await CreateDiscipline("Banco de Dados", [data.Course.Id]);
+        data.Disciplines.DataStructures = await CreateDiscipline("Estrutura de Dados", [data.Course.Id]);
+        data.Disciplines.InfoAndSociety = await CreateDiscipline("Informática e Sociedade", [data.Course.Id]);
+        data.Disciplines.Poo = await CreateDiscipline("Programação Orientada a Objetos", [data.Course.Id]);
+        data.Disciplines.IntegratorProjectTwo = await CreateDiscipline("Projeto Integrador II: Modelagem de Banco de Dados", [data.Course.Id]);
 
         data.CourseCurriculum = await CreateCourseCurriculum("Grade ADS 1.0", data.Course.Id,
         [
@@ -304,11 +311,18 @@ public class AcademicHttpClient(HttpClient http)
             new(data.Disciplines.IntroToWebDev.Id, 1, 6, 55),
             new(data.Disciplines.HumanMachineInteractionDesign.Id, 1, 8, 60),
             new(data.Disciplines.IntroToComputerNetworks.Id, 1, 4, 50),
-            new(data.Disciplines.CumputationalThinkingAndAlgorithms.Id, 1, 6, 45),
+            new(data.Disciplines.ComputationalThinkingAndAlgorithms.Id, 1, 6, 45),
             new(data.Disciplines.IntegratorProjectOne.Id, 1, 7, 65),
+
+            new(data.Disciplines.Arch.Id, 1, 7, 60),
+            new(data.Disciplines.Databases.Id, 1, 6, 55),
+            new(data.Disciplines.DataStructures.Id, 1, 8, 60),
+            new(data.Disciplines.InfoAndSociety.Id, 1, 4, 50),
+            new(data.Disciplines.Poo.Id, 1, 6, 45),
+            new(data.Disciplines.IntegratorProjectTwo.Id, 1, 7, 65),
         ]);
         
-        data.CourseOffering = await CreateCourseOffering(data.Campus.Id, data.Course.Id, data.CourseCurriculum.Id, data.AcademicPeriod.Id, Shift.Noturno);
+        data.CourseOffering = await CreateCourseOffering(data.Campus.Id, data.Course.Id, data.CourseCurriculum.Id, data.AcademicPeriod2.Id, Shift.Noturno);
 
         return data;
     }

@@ -9,12 +9,12 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
-        await client.CreateTeacher("Chico");
+        await client.CreateTeacher("Chico Bento");
         await client.CreateTeacher("Ana");
 
         await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
         await client.CreateStudent(data.CourseOffering.Id, "Maju");
-        await client.CreateStudent(data.CourseOffering.Id, "Zezin");
+        await client.CreateStudent(data.CourseOffering.Id, "Zezinho");
 
         // Act
         var response = await client.GetAcademicInsights();
@@ -22,7 +22,7 @@ public partial class IntegrationTests
         // Assert
         response.Campus.Should().Be(1);
         response.Courses.Should().Be(1);
-        response.Disciplines.Should().Be(6);
+        response.Disciplines.Should().Be(12);
         response.CourseCurriculums.Should().Be(1);
         response.CourseOfferings.Should().Be(1);
         response.Classes.Should().Be(0);

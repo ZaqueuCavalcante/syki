@@ -5,41 +5,48 @@
 
 <MudContainer>
     <SykiPageHeader Icon="@Icons.Material.Filled.Class" Title="Frequência" />
-    <MudPaper Class="mb-8 mx-4">
-        <MudContainer MaxWidth="MaxWidth.Medium" Class="pt-4">
-            <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="10" Style="height: 24px">
-                <MudText Typo="Typo.body1" Style="color: white">
-                    <b>10%</b>
-                </MudText>
-            </MudProgressLinear>
+    <MudContainer Class="px-4 mb-8">
+        <MudContainer Class="px-0 mb-8">
+            <MudTable
+                T="GetStudentFrequenciesOut"
+                Items="@_frequencies"
+                Class="pa-4"
+                Breakpoint="Breakpoint.Sm"
+                Dense="true"
+                Hover="true"
+                RowsPerPage="100">
+                <HeaderContent>
+                    <MudTh>Escopo</MudTh>
+                    <MudTh>Período</MudTh>
+                    <MudTh>Aulas</MudTh>
+                    <MudTh>Frequência</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Escopo">@context.Name</MudTd>
+                    <MudTd DataLabel="Período">@context.Period</MudTd>
+                    <MudTd DataLabel="Aulas">@context.GetFormated()</MudTd>
+                    <MudTd DataLabel="Frequência">
+                        <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.GetPercentage())" Style="height: 24px">
+                            <MudText Typo="Typo.body1">
+                                <b>@context.GetPercentage().Format()%</b>
+                            </MudText>
+                        </MudProgressLinear>
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
         </MudContainer>
-        <div>
-            <MudChart
-                ChartType="ChartType.Bar"
-                ChartSeries="@Series"
-                LegendPosition="Position.Top"
-                XAxisLabels="@XAxisLabels"
-                Width="100%"
-                Height="350px"
-                ChartOptions="@_options"
-                
-            />
-        </div>
-    </MudPaper>
-    
+    </MudContainer>
 </MudContainer>
 
+@inject GetStudentFrequenciesClient Client
 
 @code
 {
-    private ChartOptions _options = new()
+    private List<GetStudentFrequenciesOut> _frequencies = [];
+
+    protected override async Task OnInitializedAsync()
     {
-        MaxNumYAxisTicks = 5
-    };
-    
-    public List<ChartSeries> Series = new()
-    {
-        new ChartSeries() { Name = "Brasil", Data = new double[] { 100, 20, 25, 27, 46, 60, 48, 100, 15 } },
-    };
-    public string[] XAxisLabels = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+        var response = await Client.Get();
+        if (response.IsSuccess()) _frequencies = response.GetSuccess();
+    }
 }

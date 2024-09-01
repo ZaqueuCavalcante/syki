@@ -93,7 +93,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
-        await client.CreateEnrollmentPeriod(data.AcademicPeriod.Id, 2, 4);
+        await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id, 2, 4);
 
         StudentOut student = await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
@@ -112,7 +112,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
-        await client.CreateEnrollmentPeriod(data.AcademicPeriod.Id, -4, -2);
+        await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id, -4, -2);
 
         StudentOut student = await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);

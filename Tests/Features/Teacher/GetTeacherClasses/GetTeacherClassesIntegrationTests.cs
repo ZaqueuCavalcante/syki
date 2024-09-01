@@ -8,7 +8,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod;
+        var period = data.AcademicPeriod2;
 
         TeacherOut chico = await client.CreateTeacher("Chico");
         TeacherOut ana = await client.CreateTeacher("Ana");
@@ -34,7 +34,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod;
+        var period = data.AcademicPeriod2;
 
         TeacherOut chico = await client.CreateTeacher("Chico");
         TeacherOut ana = await client.CreateTeacher("Ana");

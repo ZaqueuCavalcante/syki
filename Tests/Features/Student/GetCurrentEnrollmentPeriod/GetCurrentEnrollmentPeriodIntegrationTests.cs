@@ -8,7 +8,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod;
+        var period = data.AcademicPeriod2;
 
         await client.CreateEnrollmentPeriod(period.Id);
 
@@ -45,7 +45,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod;
+        var period = data.AcademicPeriod2;
 
         await client.CreateEnrollmentPeriod(period.Id, 2, 4);
 
@@ -65,7 +65,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod;
+        var period = data.AcademicPeriod2;
 
         await client.CreateEnrollmentPeriod(period.Id, -4, -2);
 

@@ -24,6 +24,7 @@ public class GetStudentFrequenciesOut
 
     public decimal GetPercentage()
     {
+        if (Lessons == 0) return 0.00M;
         return 100M*(1M * Presences / (1M * Lessons));
     }
 }

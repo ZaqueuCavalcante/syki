@@ -55,6 +55,32 @@
     - Dias totais, dias ja estudados, dias que faltam
 
 
+## Dispensa e reprovacao de disciplina
+- O q acontece aqui?
+
+## Feature para iniciacao cientifica / pesquisa / extensao
+- Analisar o que colocar aqui
+
+## Feature para acompanhamento de monitoria
+- Aluno quando monitor de uma disciplina/turma possui acesso as funcionalidades de monitor
+- Professor consegue ver e interagir com os dados de monitoria (atas, assuntos, frequencias)
+- Alunos dentro de uma turma conseguem acessar abas da monitoria
+
+## Feature para montar quadro de horarios
+- Ao iniciar o periodo, tenho X alunos que precisam se matricular
+- Idealmente, cada oferta de curso vai ter as disciplinas a serem abertas no periodo
+- Pode acontecer de alunos de diferentes cursos ou ofertas se matricularem na mesma turma
+- Pode acontecer de nao abrir a turma ideal, mas mudar pra alguma outra disciplina
+- Levar em conta as salas + horarios que estarao ocupadas
+- Levar em conta o numero de vagas de uma turma
+- Levar em conta carga-horaria caso a disciplina seja expremida ou alargada
+- Um aluno n pode estar em duas turmas no mesmo dia e horario
+- Um professor n pode estar em duas turmas no mesmo dia e horario
+- Deixar cadastrar de boa, mas mostrar os conflitos pendentes (travar passo seguinte)
+- Permitir de maneira inteligente a edicao e salvamento dos novos dias e horarios
+- Cards q ficam um em cima do outro em vermelho claro (arrastar e editar on fly)
+- Permitir que professores possam ver preview do horario no sistema
+
 
 ## Front
 

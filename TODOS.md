@@ -1,50 +1,64 @@
 # TODOS
 
-- [V] Quando o academico criar turma, ja redirecionar pra pagina de detalhes
-- [V] Tabs de (Aulas | Alunos) do detalhe de turma do academico deve abrir em coluna
-- [V] Detalhes da turma do academico devem ficar em uma unica coluna quando abrir no celular
-- [V] Mudar icone de setup de MFA para algo de seguranca
+- [] Adicionar mais alunos no seed (15 ADS e 10 Direito)
 - [] Analisar padrao para as margins/paddings em todas as telas (deixar no layout?)
-- [] Diminuir margins em relacao as bordas da tela
+- [] Diminuir margins em relacao as bordas da tela (mobile)
+- [] Dialogs com botoes margem direita e esquerda maiores (campi, curso, disciplina, oferta, turma, aluno)
 - [] Substituir todos os dialogs pra usar componente e n C#
 - [] Dialog de Nova Grade no celular ta cagalhado
 - [] Dialog de Nova Oferta no celular ta cagalhado
 - [] Dialog de Nova Turma no celular ta cagalhado
+- [] Adicionar frequencia por aula e global nos detalhes de turma [Tab Aulas]
+- [] Adicionar frequencia por aluno e global nos detalhes de turma [Tab Alunos]
+- [] Adicionar comportamento padrao nos botoes de salvar para ficar desativado + loading
+- [] Setup de MFA n chama a API no celular ao digitar o 6 numeros (deixar colocar letra tbm)
+- [] Remover 2FA da navbar
+- [] Tela de profile de usuario com nome, email, reset de senha e 2FA setup
+- [] Limite de faltas e nota minima (reprovacao)
+- [] Cadastrar datas
+    - Periodo de matricula
+    - Inicio e fim do periodo academico
+    - Feriados nacionais e regionais (n tem aula)
+    - Eventos especiais (palestra, visita, simposio?)
+    - Semana de provas (n tem aula)
+    - Ferias
 
 ----------------------------------------------------------------------------------------------
 
-- [] Dados corretos na tela de index do professor
+- [] Dados incorretos na tela de index do professor
 - [] Adicionar skeletton na tela de detalhes de turma pra ver como fica o loading
-- [] Essa tela ta toda bugada no mobile
-- [] Adicionar opcao de selecionar todos e selecionar nenhum na aba de frequencia
-- [] Tamanho do header na pagina de Agenda (celular)
-- [] Criar pagina de notificacoes ou drawer, n exibir mais no dialog
+- [] Tela de detalhes de turma tela ta toda bugada no mobile (botoes todos/nenhum)
+- [] Tamanho horizontal do header na pagina de Agenda (celular)
+- [] Criar pagina de notificacoes, n exibir mais no dialog
 - [] Botao de notificacoes fica exibindo o tip mesmo depois de fechar o dialog
-- [] Botao de notificacoes fica zoado quando tem notificacao (numerozinho)
-- [] Adicionar feature simples de diario de classe (selecionar aula + caixa de texto simples multiline)
+- [] Botao de notificacoes fica zoado quando tem notificacao (numerozinho) / numero no meio do icon
+- [] Adicionar feature simples de diario de classe
+    - Listagem com aula + titulo + data-hora + status + icon
+    - Detalhes num dialog
 
 ----------------------------------------------------------------------------------------------
 
+- [] Adicionar frequencia como insight
 - [] Calcular media do aluno + coeficiente de rendimento (on the fly)
 - [] No celular, exibir card de insight com icone -> nome -> value (coluna)
+- [] Matricula com pre-requisitos
 - [] Matricula habilita botao de editar mesmo quando n tem periodo academico in range
 - [] Caso ja tenha se matriculado, exibir componente mas com opcao de editar
-- [] Caso ja tenha se matriculado e o periodo academico ja tenha passado, exibir escolha como readonly (sem Editar, Cancelar nem Salvar)
-
-
-- [] Tela de profile de usuario com nome, email, reset de senha e 2FA setup
-- [] Remover 2FA da navbar
-
-
-
-
+- [] Caso ja tenha se matriculado e o periodo academico ja tenha passado, exibir escolha como readonly
+- [] Abaixo da agenda, ter listagem dividida por mes
+    - Eventos especiais
+    - Semana de provas
+    - Feriados
+    - Periodo de matricula
+    - Ferias
+    - Porcentagem de quanto tempo ja passou
+    - Dias totais, dias ja estudados, dias que faltam
 
 
 
 ## Front
 
 - xs sm md lg xl
-
 - Font Ultra #594AE2
 
 ## Events
@@ -82,19 +96,10 @@ https://www.graymatterdeveloper.com/2019/12/02/listening-events-postgresql/index
         - Optativas? Eletiva?
 
 ## Matrícula Acadêmica
-    - Escolher disciplinas
-    - Pode editar durante o período de matrícula
     - Apresentar sugestão de escolhas
     - N pode estourar as vagas
 
-## Quadro de Horários
-    - Tela fixa com as disciplinas do período
-    - Dias e horários
-    - Mostrar nome do professor? Primeiro nome?
-    - Link pra uma página específica com coisas apenas da disciplina?
-
 ## Notas
-    - Disciplina - Status - N1/N2/N3 - Final
     - Push notification (mobile) ao atualizar notas?
     - SignalR Hub?
 
@@ -103,13 +108,6 @@ https://www.graymatterdeveloper.com/2019/12/02/listening-events-postgresql/index
     - Boleto/Pix
     - Bolsas/Descontos
     - Atrasos/Juros
-
-
-
-## Faltas
-    - Disciplinas + quantas faltei
-    - Limite de faltas
-    - Justificar falta online?
 
 ## Planos de Aula
     - Todos os professores apresentam na aula 0
@@ -122,14 +120,13 @@ https://www.graymatterdeveloper.com/2019/12/02/listening-events-postgresql/index
     - Transferência Externa
 
 ## Calendário
-    - Quando tem aula
-    - Qual o horario das aulas
     - Eventos especiais
     - Semana de provas
     - Feriados
-    - Datas limite para entrega de atividades
     - Periodo de matricula
     - Ferias
     - Porcentagem de quanto tempo ja passou
     - Dias totais, dias ja estudados, dias que faltam
-    - Falta quanto ate a primeira prova, segunda e final
+
+## Atividades
+    - Listagem de pendentes + data limite para entrega

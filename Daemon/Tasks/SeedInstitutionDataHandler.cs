@@ -56,7 +56,7 @@ public class SeedInstitutionDataHandler(
             Shift.Noturno
         );
         ctx.Add(courseOfferingDireito);
-        
+
         var ids = new List<Guid>()
         {
             (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Davi Pessoa Ferraz"))).GetSuccess().Id,
@@ -65,6 +65,7 @@ public class SeedInstitutionDataHandler(
             (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Paulo Marcelo Pedrosa de Almeida"))).GetSuccess().Id,
             (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Josélia Pachêco de Santana"))).GetSuccess().Id,
             (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Manuela Abath Valença"))).GetSuccess().Id,
+            //
             (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Zaqueu do Vale Cavalcante", courseOfferingAds.Id))).GetSuccess().Id,
             (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Maria Júlia de Oliveira Melo", courseOfferingDireito.Id))).GetSuccess().Id,
             (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Marlene de Oliveira", courseOfferingAds.Id))).GetSuccess().Id,

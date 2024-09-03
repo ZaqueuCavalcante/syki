@@ -13,7 +13,7 @@
     <MudContainer Class="px-4 mb-8">
         <MudDataGrid Class="pa-4" Items="@_students" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou matrícula" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer campo" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
@@ -47,7 +47,7 @@
         _loading = false;
     }
 
-    private Func<StudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.EnrollmentCode);
+    private Func<StudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Email, x.EnrollmentCode, x.CourseOffering);
 
     private async Task OpenDialog()
     {

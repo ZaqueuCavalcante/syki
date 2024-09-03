@@ -1,6 +1,9 @@
 # TODOS
 
-- [] Adicionar mais alunos no seed (15 ADS e 10 Direito)
+- [] Bug do gutto (aluno faz matricula depois de uma chamada feita)
+
+----------------------------------------------------------------------------------------------
+
 - [] Analisar padrao para as margins/paddings em todas as telas (deixar no layout?)
 - [] Diminuir margins em relacao as bordas da tela (mobile)
 - [] Dialogs com botoes margem direita e esquerda maiores (campi, curso, disciplina, oferta, turma, aluno)

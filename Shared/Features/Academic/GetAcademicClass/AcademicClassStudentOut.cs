@@ -6,8 +6,7 @@ public class AcademicClassStudentOut
     public string Name { get; set; }
     public decimal AverageNote { get; set; }
     public List<ExamGradeOut> ExamGrades { get; set; } = [];
-
-    public bool IsSelected { get; set; }
+    public decimal Frequency { get; set; }
 
     public string GetNote(ExamType type)
     {

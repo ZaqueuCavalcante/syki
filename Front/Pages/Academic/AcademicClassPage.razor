@@ -52,43 +52,96 @@
         </MudPaper>
 
         <MudContainer Class="px-4 mb-8">
-            <MudDataGrid T="LessonOut" Class="pa-4" Items="@GetLessons()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+            <MudTable
+                Items="@GetLessons()"
+                Class="pa-4"
+                Dense="true"
+                Hover="true"
+                Filter="@_quickFilter"
+                RowsPerPage="10"
+            >
                 <ToolBarContent>
                     <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por data, horário ou status" />
                 </ToolBarContent>
-                <Columns>
-                    <PropertyColumn Property="x => x.Number" Title="Aula" />
-                    <PropertyColumn Property="x => x.Date" Title="Data" />
-                    <PropertyColumn Property="x => x.Schedule" Title="Horário" />
-                    <PropertyColumn Property="x => x.Status.GetDescription()" Title="Status" />
-                </Columns>
+                <HeaderContent>
+                    <MudTh>Aula</MudTh>
+                    <MudTh>Data</MudTh>
+                    <MudTh>Horário</MudTh>
+                    <MudTh>Status</MudTh>
+                    <MudTh>Frequência</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Aula">@context.Number</MudTd>
+                    <MudTd DataLabel="Data">@context.Date</MudTd>
+                    <MudTd DataLabel="Horário">@context.Schedule</MudTd>
+                    <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
+                    <MudTd DataLabel="Frequência">
+                        @if (context.Status == LessonStatus.Finalized)
+                        {
+                            <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Frequency)" Style="height: 24px">
+                                <MudText Typo="Typo.body1">
+                                    <b>@context.Frequency.Format()%</b>
+                                </MudText>
+                            </MudProgressLinear>
+                        }
+                    </MudTd>
+                </RowTemplate>
                 <NoRecordsContent>
                     @(GetNotFoundMessage())
                 </NoRecordsContent>
                 <PagerContent>
-                    <SykiDataGridPager T="LessonOut" />
+                    <SykiTablePager />
                 </PagerContent>
-            </MudDataGrid>
+            </MudTable>
         </MudContainer>
     }
     else
     {
         <MudContainer Class="mb-8">
-            <MudDataGrid T="AcademicClassStudentOut" Class="pa-4" Items="@_students" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
-                <Columns>
-                    <PropertyColumn Property="x => x.Name" Title="Nome" />
-                    <PropertyColumn Property="x => x.GetNote(ExamType.N1)" Title="N1" />
-                    <PropertyColumn Property="x => x.GetNote(ExamType.N2)" Title="N2" />
-                    <PropertyColumn Property="x => x.GetNote(ExamType.N3)" Title="N3" />
-                    <PropertyColumn Property="x => x.AverageNote.Format()" Title="Média" />
-                </Columns>
+            <MudTable
+                Items="@_students"
+                Class="pa-4"
+                Hover="true"
+                Loading="@_loading"
+                Dense="true"
+                RowsPerPage="10"
+                Filter="@_quickFilterStudents"
+            >
+                <ToolBarContent>
+                    <SykiDataGridSearchTextField @bind-Value="@_searchStringStudents" Placeholder="Busque por nome" />
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh>Nome</MudTh>
+                    <MudTh>N1</MudTh>
+                    <MudTh>N2</MudTh>
+                    <MudTh>N3</MudTh>
+                    <MudTh>Média</MudTh>
+                    <MudTh>Frequência</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Nome">@context.Name</MudTd>
+                    <MudTd DataLabel="N1">@context.GetNote(ExamType.N1)</MudTd>
+                    <MudTd DataLabel="N2">@context.GetNote(ExamType.N2)</MudTd>
+                    <MudTd DataLabel="N3">@context.GetNote(ExamType.N3)</MudTd>
+                    <MudTd DataLabel="Média">@context.AverageNote.Format()</MudTd>
+                    <MudTd DataLabel="Frequência">
+                        @if (ShowFrequencyColumn())
+                        {
+                            <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Frequency)" Style="height: 24px">
+                                <MudText Typo="Typo.body1">
+                                    <b>@context.Frequency.Format()%</b>
+                                </MudText>
+                            </MudProgressLinear>
+                        }
+                    </MudTd>
+                </RowTemplate>
                 <NoRecordsContent>
                     @(GetStudentsNotFoundMessage())
                 </NoRecordsContent>
                 <PagerContent>
-                    <SykiDataGridPager T="AcademicClassStudentOut" />
+                    <SykiTablePager/>
                 </PagerContent>
-            </MudDataGrid>
+            </MudTable>
         </MudContainer>
     }
 </MudContainer>
@@ -104,12 +157,18 @@
     private int _index;
     private bool _loading;
     private string _searchString;
+    private string _searchStringStudents;
     private GetAcademicClassOut _class = new();
     private List<AcademicClassStudentOut> _students = [];
 
     protected override async Task OnInitializedAsync()
     {
         await Load();
+    }
+
+    private bool ShowFrequencyColumn()
+    {
+        return _class.Lessons.Any(x => x.Status == LessonStatus.Finalized);
     }
 
     private async Task Load()
@@ -135,6 +194,7 @@
     }
 
     private Func<LessonOut, bool> _quickFilter => x => _searchString.IsIn(x.Date.ToShortDateString(), x.Schedule, x.Status.GetDescription());
+    private Func<AcademicClassStudentOut, bool> _quickFilterStudents => x => _searchStringStudents.IsIn(x.Name);
 
     private string GetNotFoundMessage()
     {

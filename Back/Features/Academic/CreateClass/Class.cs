@@ -144,10 +144,13 @@ public class Class
     public GetAcademicClassOut ToGetAcademicClassOut()
     {
         var students = Students.ConvertAll(x => x.ToAcademicClassStudentOut());
+        var lessons = Lessons.Count(x => x.Attendances.Count > 0);
         students.ForEach(s =>
         {
             var studentExamGrades = ExamGrades.Where(g => g.StudentId == s.Id).ToList();
             s.AverageNote = studentExamGrades.GetAverageNote();
+            var presences = Lessons.Count(x => x.Attendances.Exists(a => a.StudentId == s.Id && a.Present));
+            s.Frequency = lessons == 0 ? 0.00M : 100M * (1M * presences / (1M * lessons));
             s.ExamGrades = studentExamGrades.OrderBy(x => x.ExamType).Select(g => g.ToOut()).ToList();
         });
 
@@ -161,7 +164,7 @@ public class Class
             Vacancies = Vacancies,
             Status = Status,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
-            Lessons = Lessons.OrderBy(x => x.Date).ThenBy(x => x.StartAt).Select((l, i) => l.ToOut(i+1, l.GetFrequency())).ToList(),
+            Lessons = Lessons.OrderBy(x => x.Date).ThenBy(x => x.StartAt).Select((l, i) => l.ToOut(i+1)).ToList(),
             SchedulesInline = GetScheduleAsString(),
             Workload = GetWorkloadAsString(),
             Progress = GetProgressAsString(),
@@ -188,7 +191,7 @@ public class Class
             Period = PeriodId,
             Status = Status,
             Students = students,
-            Lessons = Lessons.OrderBy(x => x.Date).ThenBy(x => x.StartAt).Select((l, i) => l.ToOut(i+1, l.GetFrequency())).ToList(),
+            Lessons = Lessons.OrderBy(x => x.Date).ThenBy(x => x.StartAt).Select((l, i) => l.ToOut(i+1)).ToList(),
         };
     }
 

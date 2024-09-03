@@ -34,7 +34,7 @@ public class Lesson
         return $"{Date.DayOfWeek.ToString().ToEnum<Day>().GetDescription()} {StartAt.GetDescription()}-{EndAt.GetDescription()}";
     }
 
-    public decimal GetFrequency()
+    private decimal GetFrequency()
     {
         var total = Attendances.Count;
         if (total == 0) return 0.00M;
@@ -42,7 +42,7 @@ public class Lesson
         return 100M*(1M * presences / (1M * total));
     }
 
-    public LessonOut ToOut(int number, decimal frequency)
+    public LessonOut ToOut(int number)
     {
         return new()
         {
@@ -51,7 +51,7 @@ public class Lesson
             Date = Date,
             Status = Status,
             Schedule = GetSchedule(),
-            Frequency = frequency,
+            Frequency = GetFrequency(),
         };
     }
 }

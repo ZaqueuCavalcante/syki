@@ -24,6 +24,9 @@ public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> use
         };
         claims.AddRange(await GetDbClaims(user.Id, role));
 
+        var features = new int[] { 2 };
+        claims.Add(new Claim("features", features.Serialize()));
+
         var identityClaims = new ClaimsIdentity();
         identityClaims.AddClaims(claims);
 

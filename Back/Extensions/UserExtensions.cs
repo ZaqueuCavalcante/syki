@@ -1,10 +1,73 @@
+using Newtonsoft.Json;
 using System.Security.Claims;
 using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Extensions;
 
+public enum TrackFeature
+{
+    CanCreateSegmentation = 0,
+    CanGetCampaigns = 1,
+    CanGetFilteredDonors = 2,
+}
+
+public static class TrackApiPolicy
+{
+    public const string CreateSegmentation = nameof(CreateSegmentation);
+    public const string GetCampaigns = nameof(GetCampaigns);
+    public const string GetDonors = nameof(GetDonors);
+}
+
+// public static class TrackFrontPolicy
+// {
+//     public static readonly string CreateSegmentation = nameof(CreateSegmentation);
+//     public static readonly string GetCampaigns = nameof(GetCampaigns);
+//     public static readonly string GetFilteredDonors = nameof(GetFilteredDonors);
+// }
+
 public static class UserExtensions
 {
+    public static bool HasFeature(this ClaimsPrincipal user, TrackFeature feature)
+    {
+        if (user == null || !user.Identity.IsAuthenticated) return false;
+
+        var userFeatures = JsonConvert.DeserializeObject<int[]>(user.FindFirstValue("features"));
+        return userFeatures.Contains((int)feature);
+    }
+
+    public static bool HasAnyFeature(this ClaimsPrincipal user, params TrackFeature[] features)
+    {
+        if (user == null || !user.Identity.IsAuthenticated) return false;
+
+        var userFeatures = JsonConvert.DeserializeObject<int[]>(user.FindFirstValue("features"));
+        foreach (var feature in features)
+        {
+            if (userFeatures.Contains((int)feature)) return true;
+        }
+        return false;
+    }
+
+    public static AuthorizationPolicyBuilder UserHasFeature(this AuthorizationPolicyBuilder builder, TrackFeature feature)
+    {
+        builder.RequireAuthenticatedUser().RequireAssertion(ctx => ctx.User.HasFeature(feature));
+        return builder;
+    }
+
+    public static AuthorizationPolicyBuilder UserHasAnyFeature(this AuthorizationPolicyBuilder builder, params TrackFeature[] features)
+    {
+        builder.RequireAuthenticatedUser().RequireAssertion(ctx => ctx.User.HasAnyFeature(features));
+        return builder;
+    }
+
+
+
+
+
+
+
+
+
+
     public static Guid InstitutionId(this ClaimsPrincipal user)
     {
         return Guid.Parse(user.FindFirstValue("institution")!);

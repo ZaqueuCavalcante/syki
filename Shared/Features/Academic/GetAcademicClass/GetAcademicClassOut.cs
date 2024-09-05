@@ -16,6 +16,7 @@ public class GetAcademicClassOut
     public string FillRatio { get; set; }
     public string Workload { get; set; }
     public string Progress { get; set; }
+    public decimal Frequency { get; set; }
 
     public override bool Equals(object? obj)
     {

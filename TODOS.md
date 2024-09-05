@@ -11,9 +11,10 @@
 - [] Dialog de Nova Grade no celular ta cagalhado
 - [] Dialog de Nova Oferta no celular ta cagalhado
 - [] Dialog de Nova Turma no celular ta cagalhado
-- [] Adicionar frequencia por aula e global nos detalhes de turma [Tab Aulas]
+
 - [] Adicionar frequencia por aluno e global nos detalhes de turma [Tab Alunos]
 - [] Adicionar comportamento padrao nos botoes de salvar para ficar desativado + loading
+
 - [] Setup de MFA n chama a API no celular ao digitar o 6 numeros (deixar colocar letra tbm)
 - [] Remover 2FA da navbar
 - [] Tela de profile de usuario com nome, email, reset de senha e 2FA setup

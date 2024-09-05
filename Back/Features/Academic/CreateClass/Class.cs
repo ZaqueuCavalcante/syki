@@ -170,6 +170,7 @@ public class Class
             Progress = GetProgressAsString(),
             Students = students,
             FillRatio = FillRatio,
+            Frequency = students.Average(s => s.Frequency),
         };
     }
 

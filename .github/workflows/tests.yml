@@ -36,13 +36,3 @@ jobs:
         run: dotnet build --no-restore
       - name: Tests
         run: dotnet test --no-build
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.401
-          dotnet-quality: 'ga'
-      - name: ReportGenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.3.9
-        with:
-          reports: cobertura.xml
-          targetdir: coveragereport

@@ -39,6 +39,8 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
             .Include(t => t.Discipline)
             .Include(t => t.Teacher)
             .Include(t => t.Schedules)
+            .Include(t => t.Lessons)
+                .ThenInclude(l => l.Attendances)
             .FirstAsync(x => x.Id == @class.Id);
 
         return @class.ToOut();

@@ -9,28 +9,49 @@
     <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="Turmas" ButtonText="Nova Turma" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Em uma mesma turma podem estudar alunos de diferentes cursos." />
     <MudContainer Class="px-4 mb-8">
-        <MudDataGrid Class="pa-4" Items="@_classes" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <MudTable
+            Items="@_classes"
+            Class="pa-4"
+            Dense="true"
+            Hover="true"
+            Filter="@_quickFilter"
+            Loading="@_loading"
+            RowsPerPage="10"
+        >
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por disciplina, professor ou período" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por disciplina, professor ou período"/>
             </ToolBarContent>
-            <Columns>
-                <PropertyColumn Property="x => x.Discipline" Title="Disciplina" />
-                <PropertyColumn Property="x => x.Teacher" Title="Professor" />
-                <PropertyColumn Property="x => x.Period" Title="Período" />
-                <PropertyColumn Property="x => x.Status.GetDescription()" Title="Status" />
-                <TemplateColumn>
-                    <CellTemplate>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.StickyNote2" OnClick="@(() => Action(context.Item))" />
-                    </CellTemplate>
-                </TemplateColumn>
-            </Columns>
+            <HeaderContent>
+                <MudTh>Disciplina</MudTh>
+                <MudTh>Professor</MudTh>
+                <MudTh>Período</MudTh>
+                <MudTh>Status</MudTh>
+                <MudTh>Frequência</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Disciplina">@context.Discipline</MudTd>
+                <MudTd DataLabel="Professor">@context.Teacher</MudTd>
+                <MudTd DataLabel="Período">@context.Period</MudTd>
+                <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
+                <MudTd DataLabel="Frequência">
+                    <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Frequency)" Style="height: 24px">
+                        <MudText Typo="Typo.body1">
+                            <b>@context.Frequency.Format()%</b>
+                        </MudText>
+                    </MudProgressLinear>
+                </MudTd>
+                <MudTd>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.StickyNote2" OnClick="@(() => Action(context))"/>
+                </MudTd>
+            </RowTemplate>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="ClassOut" />
+                <SykiTablePager />
             </PagerContent>
-        </MudDataGrid>
+        </MudTable>
     </MudContainer>
 </MudContainer>
 

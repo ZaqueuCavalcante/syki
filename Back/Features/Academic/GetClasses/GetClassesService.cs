@@ -8,6 +8,8 @@ public class GetClassesService(SykiDbContext ctx) : IAcademicService
             .Include(t => t.Discipline)
             .Include(t => t.Teacher)
             .Include(t => t.Schedules)
+            .Include(t => t.Lessons)
+                .ThenInclude(l => l.Attendances)
             .Where(c => c.InstitutionId == institutionId)
             .ToListAsync();
         

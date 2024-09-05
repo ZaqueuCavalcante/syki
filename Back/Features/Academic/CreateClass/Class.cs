@@ -128,6 +128,8 @@ public class Class
 
     public ClassOut ToOut()
     {
+        var presences = Lessons.Sum(l => l.Attendances.Count(a => a.Present));
+        var attendances = Lessons.Sum(l => l.Attendances.Count);
         return new()
         {
             Id = Id,
@@ -138,6 +140,7 @@ public class Class
             Status = Status,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
             FillRatio = FillRatio,
+            Frequency = attendances == 0 ? 0.00M : 100M * (1M * presences / (1M * attendances)),
         };
     }
 
@@ -170,7 +173,7 @@ public class Class
             Progress = GetProgressAsString(),
             Students = students,
             FillRatio = FillRatio,
-            Frequency = students.Average(s => s.Frequency),
+            Frequency = students.Count > 0 ? students.Average(s => s.Frequency) : 0.00M,
         };
     }
 

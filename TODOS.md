@@ -12,7 +12,6 @@
 - [] Dialog de Nova Oferta no celular ta cagalhado
 - [] Dialog de Nova Turma no celular ta cagalhado
 
-- [] Adicionar frequencia por aluno e global nos detalhes de turma [Tab Alunos]
 - [] Adicionar comportamento padrao nos botoes de salvar para ficar desativado + loading
 
 - [] Setup de MFA n chama a API no celular ao digitar o 6 numeros (deixar colocar letra tbm)

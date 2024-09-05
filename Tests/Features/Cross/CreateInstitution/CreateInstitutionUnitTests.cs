@@ -16,6 +16,9 @@ public class CreateInstitutionUnitTests
         // Assert
         institution.Id.Should().NotBeEmpty();
         institution.Name.Should().Be(name);
+        institution.Configs.InstitutionId.Should().Be(institution.Id);
+        institution.Configs.NoteLimit.Should().Be(7.00M);
+        institution.Configs.FrequencyLimit.Should().Be(70.00M);
     }
 
     [Test]
@@ -30,6 +33,8 @@ public class CreateInstitutionUnitTests
         // Assert
         institutionOut.Id.Should().Be(institution.Id);
         institutionOut.Name.Should().Be(institution.Name);
+        institutionOut.NoteLimit.Should().Be(institution.Configs.NoteLimit);
+        institutionOut.FrequencyLimit.Should().Be(institution.Configs.FrequencyLimit);
     }
 
     [Test]

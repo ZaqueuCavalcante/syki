@@ -14,15 +14,16 @@ public class Institution
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public List<AcademicPeriod> AcademicPeriods { get; set; }
     public List<Campus> Campi { get; set; }
     public List<Course> Courses { get; set; }
-    public List<CourseOffering> CourseOfferings { get; set; }
-    public List<CourseCurriculum> CourseCurriculums { get; set; }
-    public List<Discipline> Disciplines { get; set; }
-    public List<SykiTeacher> Teachers { get; set; }
     public List<SykiStudent> Students { get; set; }
+    public InstitutionConfigs Configs { get; set; }
+    public List<SykiTeacher> Teachers { get; set; }
+    public List<Discipline> Disciplines { get; set; }
     public List<Notification> Notifications { get; set; }
+    public List<CourseOffering> CourseOfferings { get; set; }
+    public List<AcademicPeriod> AcademicPeriods { get; set; }
+    public List<CourseCurriculum> CourseCurriculums { get; set; }
 
     public Institution() { }
 
@@ -30,14 +31,17 @@ public class Institution
     {
         Id = Guid.NewGuid();
         Name = name;
+        Configs = new InstitutionConfigs(Id, 7, 70);
     }
 
     public InstitutionOut ToOut()
     {
-        return new InstitutionOut
+        return new()
         {
             Id = Id,
             Name = Name,
+            NoteLimit = Configs.NoteLimit,
+            FrequencyLimit = Configs.FrequencyLimit,
         };
     }
 }

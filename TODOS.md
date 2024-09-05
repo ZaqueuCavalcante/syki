@@ -1,6 +1,7 @@
 # TODOS
 
 - [] Bug do gutto (aluno faz matricula depois de uma chamada feita)
+- [] Se n veio ngm pra aula, deve ser possivel salvar logo de cara tudo vazio?
 
 ----------------------------------------------------------------------------------------------
 

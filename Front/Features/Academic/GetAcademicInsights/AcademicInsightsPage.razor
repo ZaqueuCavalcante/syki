@@ -2,7 +2,7 @@
 
 @namespace Syki.Front.Features.Academic.GetAcademicInsights
 
-<MudContainer Class="my-8 px-12">
+<MudContainer Class="my-4 px-4">
     <MudText Typo="Typo.h4" Style="font-weight: bold" Class="ml-4">
         <MudIcon Icon="@Icons.Material.Filled.Insights" Class="mr-1 mb-n1" Size="Size.Large"/>
         Insights
@@ -12,7 +12,7 @@
             <MudText>Aqui você encontra dados consolidados sobre a sua instituição, atualizados em tempo real!</MudText>
         </MudStack>
     </MudAlert>
-    <MudGrid Class="mt-4">
+    <MudGrid Class="mt-0">
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.GroupWork" Value="@_data.Campus" Text="Campus" />
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.Class" Value="@_data.Courses" Text="Cursos" />
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.Apps" Value="@_data.Disciplines" Text="Disciplinas" />

@@ -64,7 +64,6 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
 
-    private string _userName = "";
     private bool _isDark = true;
     private bool _open = true;
 
@@ -76,26 +75,13 @@
     protected override async Task OnInitializedAsync()
     {
         var isDark = await LocalStorage.GetItemAsync("IsDark");
-        _isDark = isDark != null ? bool.Parse(isDark) : true;
-        await SetUserName();
+        _isDark = isDark == null || bool.Parse(isDark);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        base.OnAfterRender(firstRender);
+        await base.OnAfterRenderAsync(firstRender);
 
-        await SetUserName();
-    }
-
-    private async Task SetUserName()
-    {
-        var state = await AuthState;
-
-        var claim = state.User.FindFirst("name");
-        if (claim != null)
-        {
-            _userName = claim.Value;
-        }
     }
 
     private async Task ChangeTheme()

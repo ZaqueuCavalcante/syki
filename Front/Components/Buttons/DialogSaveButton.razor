@@ -2,7 +2,7 @@
 
 <MudButton
     Class="@Class"
-    OnClick="@OnClick"
+    OnClick="@HandleClick"
     Variant="Variant.Filled"
     Disabled="@Disabled"
     Style="@($"color: white; background: {Colors.Green.Default};")"
@@ -16,10 +16,17 @@
     public string Text { get; set; } = "Salvar";
 
     [Parameter]
-    public string Class { get; set; } = "mr-4";
+    public string Class { get; set; } = "mr-5";
     
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private async Task HandleClick()
+    {
+        Disabled = true;
+        await OnClick.InvokeAsync();
+        Disabled = false;
+    }
     
     [Parameter]
     public bool Disabled { get; set; }

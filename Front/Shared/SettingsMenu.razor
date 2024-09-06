@@ -1,0 +1,17 @@
+﻿@namespace Syki.Front.Shared
+
+<MudNavMenu>
+    <MudNavLink Href="setup-mfa" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Inherit">Segurança</MudNavLink>
+    <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Logout" OnClick="@Logout" IconColor="Color.Inherit">Sair</MudNavLink>
+</MudNavMenu>
+
+@code
+{
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnLogoutClick { get; set; }
+
+    private async Task Logout()
+    {
+        await OnLogoutClick.InvokeAsync();
+    }
+}

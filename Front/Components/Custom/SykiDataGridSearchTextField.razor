@@ -1,19 +1,23 @@
 @namespace Syki.Front.Components.Custom
 
-<MudSpacer />
-<MudSpacer />
-<MudTextField
-    Class="mt-0"
-    Value="@Value"
-    Immediate="true"
-    Margin="Margin.Dense"
-    IconSize="Size.Medium"
-    Placeholder="@Placeholder"
-    Variant="Variant.Outlined"
-    ValueChanged="@ValueChanged"
-    Adornment="Adornment.Start"
-    AdornmentIcon="@Icons.Material.Filled.Search"
-/>
+<MudGrid Justify="Justify.FlexEnd" Spacing="0">
+    <MudItem xs="12" sm="6" md="6" lg="6">
+        <MudTextField
+            Class="mt-0 mx-0"
+            Value="@Value"
+            Immediate="true"
+            Margin="Margin.Dense"
+            IconSize="Size.Medium"
+            Placeholder="@Placeholder"
+            Variant="Variant.Outlined"
+            ValueChanged="@ValueChanged"
+            Adornment="Adornment.Start"
+            AdornmentIcon="@Icons.Material.Filled.Search"
+        />
+    </MudItem>
+</MudGrid>
+
+
 
 @code
 {

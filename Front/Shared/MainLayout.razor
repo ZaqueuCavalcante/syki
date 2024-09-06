@@ -12,19 +12,21 @@
 <AuthorizeView>
     <Authorized>
         <MudLayout>
-            <MudAppBar Elevation="1" Dense="true">
-                <MudIconButton OnClick="@ToggleOpen" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Style="margin-left: -20px;" />
+            <MudAppBar Elevation="1" Dense="true" ToolBarClass="pl-1 pr-5">
+                <MudIconButton OnClick="@ToggleLeftOpen" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" />
                 <HomeButton />
                 <MudSpacer />
                 <AuthorizeView Roles="Teacher, Student" Context="otherContext">
-                    <NotificationsIconButton />
                 </AuthorizeView>
-                <MfaIconButton />
+                    <NotificationsIconButton />
                 <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ChangeTheme" />
-                <LogoutIconButton OnClick="@Logout" />
+                <MudIconButton OnClick="@ToggleRightOpen" Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" />
             </MudAppBar>
-            <MudDrawer @bind-Open="@_open" ClipMode="DrawerClipMode.Always" Elevation="2" Width="160px">
+            <MudDrawer @bind-Open="@_leftOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Width="160px">
                 <NavMenu />
+            </MudDrawer>
+            <MudDrawer Anchor="Anchor.Right" @bind-Open="@_rightOpen" ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Temporary" OverlayAutoClose="true" Elevation="2" Width="160px">
+                <SettingsMenu OnLogoutClick="@Logout" />
             </MudDrawer>
             <MudMainContent>
                 @Body
@@ -65,13 +67,19 @@
     public Task<AuthenticationState> AuthState { get; set; }
 
     private bool _isDark = true;
-    private bool _open = true;
+    private bool _leftOpen = true;
+    private bool _rightOpen = false;
 
-    private void ToggleOpen()
+    private void ToggleLeftOpen()
     {
-        _open = !_open;
+        _leftOpen = !_leftOpen;
     }
 
+    private void ToggleRightOpen()
+    {
+        _rightOpen = !_rightOpen;
+    }
+    
     protected override async Task OnInitializedAsync()
     {
         var isDark = await LocalStorage.GetItemAsync("IsDark");
@@ -92,6 +100,7 @@
 
     private async Task Logout()
     {
+        _rightOpen = false;
         await LocalStorage.RemoveItemAsync("AccessToken");
         AuthStateProvider.MarkUserAsLoggedOut();
         Nav.NavigateTo("/");

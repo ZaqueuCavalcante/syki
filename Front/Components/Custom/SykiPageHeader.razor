@@ -1,11 +1,11 @@
 @namespace Syki.Front.Components.Custom
 
-<MudCard Class="mt-6 mb-4 mx-4 px-2">
+<MudCard>
     <MudCardContent>
         <MudGrid>
             <MudItem xs="12" sm="8" md="8" lg="8">
                 <MudStack Row="true" AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icon" Class="mr-1 mb-1" Size="Size.Large"/>
+                    <MudIcon Icon="@Icon" Class="mb-1" Size="Size.Large"/>
                     <MudText Typo="Typo.h5" Style="font-weight: bold">@Title</MudText>
                 </MudStack>
             </MudItem>
@@ -19,7 +19,9 @@
                         Variant="Variant.Filled"
                         Size="Size.Medium"
                         Color="Color.Primary"
-                        @onclick="@OnClick">
+                        @onclick="@OnClick"
+                        Class="mr-2"
+                    >
                         @ButtonText
                     </MudButton>
                 </MudItem>

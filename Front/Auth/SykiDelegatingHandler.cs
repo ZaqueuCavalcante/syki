@@ -20,6 +20,8 @@ public class SykiDelegatingHandler(ILocalStorageService storage, NavigationManag
 
         var response = await base.SendAsync(request, cancellationToken);
 
+        await Task.Delay(1000, cancellationToken);
+
         if (response.StatusCode == HttpStatusCode.Unauthorized)
         {
             await storage.RemoveItemAsync("AccessToken");

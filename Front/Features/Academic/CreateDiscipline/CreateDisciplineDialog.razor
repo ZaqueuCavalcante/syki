@@ -11,6 +11,7 @@
             <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" OnKeyDown="@Submit" />
             <MudSelect
                 Dense="true"
+                
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
@@ -22,7 +23,7 @@
             >
                 @foreach (var course in _courses)
                 {
-                    <MudSelectItem T="CourseOut" Value="@course">@course.Name</MudSelectItem>
+                    <MudSelectItem Class="d-flex align-start gap-0" T="CourseOut" Value="@course">@course.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudForm>

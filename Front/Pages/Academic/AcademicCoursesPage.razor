@@ -5,12 +5,12 @@
 @page "/academic/courses"
 @attribute [Authorize(Roles = "Academic")]
 
-<PageTitle>Cursos</PageTitle>
+<SykiPageTitle Title="Cursos" />
 
-<MudContainer>
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.Class" Title="Cursos" ButtonText="Novo Curso" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Note que um mesmo curso pode ser ofertado em mais de um campus." />
-    <MudContainer Class="px-4 mb-8">
+    <MudContainer Class="px-0 mb-4">
         <MudDataGrid
             Class="pa-4"
             Items="@_courses"
@@ -27,11 +27,9 @@
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.Type.GetDescription()" Title="Tipo" />
             </Columns>
-
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
-
             <PagerContent>
                 <SykiDataGridPager T="CourseOut" />
             </PagerContent>

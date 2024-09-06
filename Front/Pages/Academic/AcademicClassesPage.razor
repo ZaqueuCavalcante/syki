@@ -5,7 +5,9 @@
 @page "/academic/classes"
 @attribute [Authorize(Roles = "Academic")]
 
-<MudContainer>
+<SykiPageTitle Title="Turmas" />
+
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="Turmas" ButtonText="Nova Turma" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Em uma mesma turma podem estudar alunos de diferentes cursos." />
     <MudContainer Class="px-4 mb-8">

@@ -30,7 +30,7 @@
     private string _name;
     private string _city;
 
-    async Task Submit()
+    private async Task Submit()
     {
         if (_loading) return;
 
@@ -52,5 +52,5 @@
         _loading = false;
     }
 
-    void Cancel() => MudDialog.Cancel();
+    private void Cancel() => MudDialog.Cancel();
 }

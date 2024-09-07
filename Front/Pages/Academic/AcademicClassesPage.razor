@@ -10,7 +10,7 @@
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="Turmas" ButtonText="Nova Turma" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Em uma mesma turma podem estudar alunos de diferentes cursos." />
-    <MudContainer Class="px-4 mb-8">
+    <MudContainer Class="px-0 mb-4">
         <MudTable
             Items="@_classes"
             Class="pa-4"
@@ -89,9 +89,9 @@
 
     private Func<ClassOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Teacher, x.Period);
 
-    private void OpenDialog()
+    private async Task OpenDialog()
     {
-        _dialog.Open();
+        await _dialog.Open();
     }
 
     private string GetNotFoundMessage()

@@ -9,8 +9,8 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
-            <MudGrid>
-                <MudItem xs="9" Class="pb-2">
+            <MudGrid Spacing="3">
+                <MudItem xs="12" sm="12" md="12" lg="12">
                     <MudAutocomplete
                         T="DisciplineOut"
                         MaxItems="50"
@@ -25,20 +25,7 @@
                         AdornmentColor="Color.Primary"
                     />
                 </MudItem>
-                <MudItem xs="3" Class="pl-3">
-                    <MudNumericField
-                        MaxLength="2"
-                        HideSpinButtons="true"
-                        Margin="Margin.Dense"
-                        Variant="Variant.Outlined"
-                        T="byte?"
-                        @bind-Value="@_vacancies"
-                        Label="Vagas"
-                        Required="true"
-                        RequiredError="Informe!"
-                    />
-                </MudItem>
-                <MudItem xs="9" Class="py-0">
+                <MudItem xs="12" sm="12" md="12" lg="12">
                     <MudSelect
                         Dense="true"
                         Margin="Margin.Dense"
@@ -55,7 +42,20 @@
                         }
                     </MudSelect>
                 </MudItem>
-                <MudItem xs="3" Class="pl-3 py-0">
+                <MudItem xs="6" sm="6" md="6" lg="6">
+                    <MudNumericField
+                        MaxLength="2"
+                        HideSpinButtons="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="byte?"
+                        @bind-Value="@_vacancies"
+                        Label="Vagas"
+                        Required="true"
+                        RequiredError="Informe!"
+                    />
+                </MudItem>
+                <MudItem xs="6" sm="6" md="6" lg="6">
                     <MudSelect
                         Dense="true"
                         Margin="Margin.Dense"
@@ -73,7 +73,7 @@
                     </MudSelect>
                 </MudItem>
 
-                <MudItem xs="12" Class="pt-3 pb-0">
+                <MudItem xs="12" Class="py-3">
                     <MudDivider />
                 </MudItem>
 
@@ -115,6 +115,7 @@
 @inject CreateClassClient CreateClassClient
 @inject GetTeachersClient GetTeachersClient
 @inject GetDisciplinesClient GetDisciplinesClient
+@inject IBrowserViewportService BrowserViewportService
 @inject GetAcademicPeriodsClient GetAcademicPeriodsClient
 
 @code
@@ -153,8 +154,10 @@
         ]);
     }
 
-    public void Open()
+    public async Task Open()
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _options.FullScreen = breakpoint == Breakpoint.Xs;
         _visible = true;
     }
 

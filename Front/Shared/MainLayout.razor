@@ -17,8 +17,8 @@
                 <HomeButton />
                 <MudSpacer />
                 <AuthorizeView Roles="Teacher, Student" Context="otherContext">
-                </AuthorizeView>
                     <NotificationsIconButton />
+                </AuthorizeView>
                 <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ChangeTheme" />
                 <MudIconButton OnClick="@ToggleRightOpen" Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" />
             </MudAppBar>

@@ -5,9 +5,7 @@
 <div>
     @if (GetCount() > 0)
     {
-        <MudBadge Content="@GetCount()"  Overlap="true" Class="mx-3 my-4" Color="Color.Secondary" Max="9">
-            <MudIconButton OnClick="@ViewAndOpenDialog" Icon="@Icons.Material.Filled.NotificationsActive" Style="color: #FFF" />
-        </MudBadge>
+        <MudIconButton OnClick="@ViewAndOpenDialog" Color="Color.Warning" Icon="@Icons.Material.Filled.NotificationsActive" Style="color: #FFF" />
     }
     else
     {
@@ -36,14 +34,14 @@
 
     private int GetCount()
     {
-        return 8;//_notifications.Count(x => x.ViewedAt == null);
+        return _notifications.Count(x => x.ViewedAt == null);
     }
 
     private async Task ViewAndOpenDialog()
     {
         await OpenDialog();
-        await GetNotifications();
         await ViewNotificationsClient.View();
+        await GetNotifications();
         StateHasChanged();
     }
 

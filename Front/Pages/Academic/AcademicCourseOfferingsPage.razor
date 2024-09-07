@@ -5,12 +5,12 @@
 @page "/academic/course-offerings"
 @attribute [Authorize(Roles = "Academic")]
 
-<PageTitle>Ofertas</PageTitle>
+<SykiPageTitle Title="Ofertas" />
 
-<MudContainer>
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.PlaylistAddCheck" Title="Ofertas" ButtonText="Nova Oferta" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Uma oferta de curso pode acontecer a cada período, com variações de campus, turno e grade." />
-    <MudContainer Class="px-4 mb-8">
+    <MudContainer Class="px-0 mb-4">
         <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo" />
@@ -34,6 +34,7 @@
 
 @inject IDialogService DialogService
 @inject GetCourseOfferingsClient GetCourseOfferingsClient
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
@@ -53,9 +54,11 @@
 
     private async Task OpenDialog()
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Small,
             FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
         var dialog = await DialogService.ShowAsync<CreateCourseOfferingDialog>("", options);
 

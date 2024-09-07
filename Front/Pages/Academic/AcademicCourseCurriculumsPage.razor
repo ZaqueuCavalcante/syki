@@ -13,7 +13,7 @@
     <MudContainer Class="px-0 mb-4">
         <MudDataGrid Class="pa-4" T="CourseCurriculumOut" Items="@_grades" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo nome do curso ou da grade" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por curso ou grade" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Nome" />

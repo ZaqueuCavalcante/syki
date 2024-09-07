@@ -5,25 +5,18 @@
 <div>
     @if (GetCount() > 0)
     {
-        <div class="d-flex justify-space-around flex-wrap mt-2" style="width: 50px">
-            <MudTooltip Text="Notificações">
-                <MudButton OnClick="@ViewAndOpenDialog" Class="rounded-circle hover:mud-inherit-hover mud-ripple mud-ripple-icon">
-                    <MudBadge Content="@GetCount()" Overlap="true" Class="mx-3 my-4" Color="Color.Secondary" Max="9">
-                        <MudIcon Icon="@Icons.Material.Filled.NotificationsActive" Style="color: #FFF" />
-                    </MudBadge>
-                </MudButton>
-            </MudTooltip>
-        </div>
+        <MudBadge Content="@GetCount()"  Overlap="true" Class="mx-3 my-4" Color="Color.Secondary" Max="9">
+            <MudIconButton OnClick="@ViewAndOpenDialog" Icon="@Icons.Material.Filled.NotificationsActive" Style="color: #FFF" />
+        </MudBadge>
     }
     else
     {
-        <MudTooltip Text="Notificações">
-            <MudIconButton Icon="@Icons.Material.Filled.NotificationsNone" OnClick="@OpenDialog" Color="Color.Inherit" />
-        </MudTooltip>
+        <MudIconButton Icon="@Icons.Material.Filled.NotificationsNone" OnClick="@OpenDialog" Color="Color.Inherit" />
     }
 </div>
 
 @inject IDialogService DialogService
+@inject IBrowserViewportService BrowserViewportService
 @inject ViewNotificationsClient ViewNotificationsClient
 @inject GetUserNotificationsClient GetUserNotificationsClient
 
@@ -43,22 +36,24 @@
 
     private int GetCount()
     {
-        return _notifications.Count(x => x.ViewedAt == null);
+        return 8;//_notifications.Count(x => x.ViewedAt == null);
     }
 
     private async Task ViewAndOpenDialog()
     {
-        await ViewNotificationsClient.View();
-        await GetNotifications();
-        StateHasChanged();
         await OpenDialog();
+        await GetNotifications();
+        await ViewNotificationsClient.View();
+        StateHasChanged();
     }
 
     private async Task OpenDialog()
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Medium,
-            FullWidth = true
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
         var dialog = await DialogService.ShowAsync<ViewNotificationsDialog>("", options);
 

@@ -32,6 +32,7 @@
 
 @inject GetDisciplinesClient Client
 @inject IDialogService DialogService
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
@@ -48,9 +49,11 @@
 
     private async Task OpenDialog()
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Small,
-            FullWidth = true
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
         var dialog = await DialogService.ShowAsync<CreateDisciplineDialog>("", options);
 

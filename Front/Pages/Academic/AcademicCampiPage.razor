@@ -48,6 +48,7 @@
 
 @inject GetCampiClient Client
 @inject IDialogService DialogService
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
@@ -66,9 +67,11 @@
 
     private async Task OpenDialog()
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Small,
             FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
         var dialog = await DialogService.ShowAsync<CreateCampusDialog>("", options);
 
@@ -84,9 +87,11 @@
         var parameters = new DialogParameters<UpdateCampusDialog>();
         parameters.Add(x => x.Campus, item);
 
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Small,
             FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
         var dialog = await DialogService.ShowAsync<UpdateCampusDialog>("", parameters, options);
 

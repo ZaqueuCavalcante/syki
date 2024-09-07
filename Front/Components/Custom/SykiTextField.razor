@@ -14,7 +14,6 @@
     OnlyValidateIfDirty="true"
     Variant="Variant.Outlined"
     ValueChanged="@ValueChanged"
-    OnKeyDown="@HandleOnKeyDown"
 />
 
 @code
@@ -33,15 +32,4 @@
 
     [Parameter]
     public int MaxLength { get; set; } = 100;
-
-    [Parameter]
-    public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
-
-    private async Task HandleOnKeyDown(KeyboardEventArgs args)
-    {
-        if (args.IsEnter())
-        {
-            await OnKeyDown.InvokeAsync();
-        }
-    }
 }

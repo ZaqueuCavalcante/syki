@@ -1,76 +1,80 @@
 @namespace Syki.Front.Features.Academic.CreateCourseCurriculum
 
-<MudForm @ref="@_form">
-    <MudStack Row="true">
-        <MudItem xs="5">
-            <MudAutocomplete
-                MaxItems="50"
-                T="CourseCurriculumDisciplineFillable"
-                SearchFunc="@SearchDiscipline"
-                Dense="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                ShowProgressIndicator="true"
-                Class="mb-2"
-                Value="@Data"
-                ValueChanged="(CourseCurriculumDisciplineFillable newValue) => HandleDisciplineChanged(newValue)"
-                Label="Disciplina"
-                Required="true"
-                RequiredError="Informe!"
-                AdornmentColor="Color.Primary"
-            />
+<MudForm @ref="@_form" Class="mx-0">
+    <MudGrid Spacing="0">
+        <MudItem xs="12" sm="12" md="6" lg="6">
+            <MudStack Row="true" Spacing="0">
+                <MudItem xs="8">
+                    <MudAutocomplete
+                        MaxItems="50"
+                        T="CourseCurriculumDisciplineFillable"
+                        SearchFunc="@SearchDiscipline"
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        ShowProgressIndicator="true"
+                        Class="mb-2"
+                        Value="@Data"
+                        ValueChanged="(CourseCurriculumDisciplineFillable newValue) => HandleDisciplineChanged(newValue)"
+                        Label="Disciplina"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary"/>
+                </MudItem>
+                <MudItem xs="4">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="byte?"
+                        Value="@Data.Period"
+                        ValueChanged="x => HandlePeriodoChanged(x)"
+                        Label="Período"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary">
+                        @foreach (byte? item in Enumerable.Range(1, 10).ToList())
+                        {
+                        <MudSelectItem Value="@item">@($"{item}º")</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudStack>
         </MudItem>
-        <MudItem xs="2">
-            <MudSelect
-                Dense="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                T="byte?"
-                Value="@Data.Period"
-                ValueChanged="x => HandlePeriodoChanged(x)"
-                Label="Período"
-                Required="true"
-                RequiredError="Informe!"
-                AdornmentColor="Color.Primary"
-            >
-                @foreach (byte? item in Enumerable.Range(1, 10).ToList())
-                {
-                    <MudSelectItem Value="@item">@($"{item}º")</MudSelectItem>
-                }
-            </MudSelect>
+        <MudItem xs="12" sm="12" md="6" lg="6">
+            <MudStack Row="true" Spacing="0">
+                <MudItem xs="4">
+                    <MudNumericField
+                        MaxLength="2"
+                        HideSpinButtons="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="byte?"
+                        Value="@Data.Credits"
+                        ValueChanged="x => HandleCreditosChanged(x)"
+                        Label="Créditos"
+                        Required="true"
+                        RequiredError="Informe!"/>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudNumericField
+                        MaxLength="3"
+                        HideSpinButtons="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="ushort?"
+                        Value="@Data.Workload"
+                        ValueChanged="x => HandleCargaHorariaChanged(x)"
+                        Label="Carga Horária"
+                        Required="true"
+                        RequiredError="Informe!"/>
+                </MudItem>
+                <MudItem>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" OnClick="@HandleDeleteClick"/>
+                </MudItem>
+            </MudStack>
         </MudItem>
-        <MudItem xs="2">
-            <MudNumericField
-                MaxLength="2"
-                HideSpinButtons="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                T="byte?"
-                Value="@Data.Credits"
-                ValueChanged="x => HandleCreditosChanged(x)"
-                Label="Créditos"
-                Required="true"
-                RequiredError="Informe!"
-            />
-        </MudItem>
-        <MudItem xs="2">
-            <MudNumericField
-                MaxLength="3"
-                HideSpinButtons="true"
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                T="ushort?"
-                Value="@Data.Workload"
-                ValueChanged="x => HandleCargaHorariaChanged(x)"
-                Label="Carga Horária"
-                Required="true"
-                RequiredError="Informe!"
-            />
-        </MudItem>
-        <MudItem>
-            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" OnClick="@HandleDeleteClick" />
-        </MudItem>
-    </MudStack>
+    </MudGrid>
 </MudForm>
 
 @code

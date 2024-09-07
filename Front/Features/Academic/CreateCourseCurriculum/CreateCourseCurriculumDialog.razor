@@ -6,29 +6,33 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
-            <MudStack Row="true">
-                <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@data.Name" />
-                <MudSelect
-                    Dense="true"
-                    Margin="Margin.Dense"
-                    Variant="Variant.Outlined"
-                    Value="@_course"
-                    ValueChanged="@((CourseOut newValue) => HandleSelectCourse(newValue))"
-                    Label="Curso"
-                    Required="true"
-                    RequiredError="Informe!"
-                    AdornmentColor="Color.Primary"
-                >
-                    @foreach (CourseOut? item in Courses)
-                    {
+            <MudGrid Spacing="0">
+                <MudItem xs="12" sm="12" md="6" lg="6">
+                    <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@data.Name"/>
+                </MudItem>
+                <MudItem xs="12" sm="12" md="6" lg="6">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        Value="@_course"
+                        ValueChanged="@((CourseOut newValue) => HandleSelectCourse(newValue))"
+                        Label="Curso"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary"
+                    >
+                        @foreach (CourseOut? item in Courses)
+                        {
                         <MudSelectItem Value="@item">@item.Name</MudSelectItem>
-                    }
-                    @if (Courses.Count == 0)
-                    {
+                        }
+                        @if (Courses.Count == 0)
+                        {
                         <MudSelectItem Value="@_course" Disabled="true">Não existem cursos com disciplinas ainda.</MudSelectItem>
-                    }
-                </MudSelect>
-            </MudStack>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
 
             <MudDivider Class="my-4"/>
 
@@ -38,7 +42,8 @@
                         <CascadingValue Name="Options" Value="@Options">
                             @foreach (var discipline in Disciplines)
                             {
-                                <CourseCurriculumDiscipline Data="@discipline" OnDeleteClick="@DeleteGradeDiscipline" />
+                                <CourseCurriculumDiscipline Data="@discipline" OnDeleteClick="@DeleteGradeDiscipline"/>
+                                <MudDivider DividerType="DividerType.Middle" Class="my-2"/>
                             }
                         </CascadingValue>
                         <MudButton
@@ -47,7 +52,7 @@
                             IconSize="Size.Large"
                             Variant="Variant.Outlined"
                             FullWidth="true"
-                            Class="mt-2 border-dashed border-2 mud-border-secundary"
+                            Class="mt-2 border-dashed border-2 mud-border-secundary mx-1"
                             Color="Color.Primary"
                             @onclick="@NewGradeDiscipline"
                         >

@@ -5,12 +5,12 @@
 @page "/academic/course-curriculums"
 @attribute [Authorize(Roles = "Academic")]
 
-<PageTitle>Grades</PageTitle>
+<SykiPageTitle Title="Grades" />
 
-<MudContainer>
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.AccountTree" Title="Grades" ButtonText="Nova Grade" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Um mesmo curso pode ter várias grades diferentes ao longo do tempo, com diferentes disciplinas." />
-    <MudContainer Class="px-4 mb-8">
+    <MudContainer Class="px-0 mb-4">
         <MudDataGrid Class="pa-4" T="CourseCurriculumOut" Items="@_grades" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo nome do curso ou da grade" />
@@ -40,6 +40,7 @@
 
 @inject IDialogService DialogService
 @inject GetCourseCurriculumsClient Client
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
@@ -59,9 +60,11 @@
         var parameters = new DialogParameters<CourseCurriculumDisciplinesDialog>();
         parameters.Add(x => x.Disciplines, courseCurriculum.Disciplines);
 
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Medium,
-            FullWidth = true
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
         await DialogService.ShowAsync<CourseCurriculumDisciplinesDialog>(courseCurriculum.Name, parameters, options);
     }
@@ -70,9 +73,11 @@
 
     private async Task OpenDialog()
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Medium,
-            FullWidth = true
+            FullWidth = true,
+            FullScreen = breakpoint.IsIn(Breakpoint.Xs, Breakpoint.Sm),
         };
         var dialog = await DialogService.ShowAsync<CreateCourseCurriculumDialog>("", options);
 

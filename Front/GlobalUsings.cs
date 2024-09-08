@@ -2,7 +2,6 @@ global using OneOf;
 global using Syki.Shared;
 global using Syki.Front.Auth;
 global using Syki.Front.Markers;
-global using Syki.Front.Extensions;
 
 global using Syki.Front.Features.Academic.CreateLessons;
 global using Syki.Front.Features.Academic.CreateAcademicPeriod;
@@ -22,6 +21,7 @@ global using Syki.Front.Features.Academic.GetNotifications;
 global using Syki.Front.Features.Academic.GetStudents;
 global using Syki.Front.Features.Academic.GetTeachers;
 global using Syki.Front.Features.Academic.GetAcademicClass;
+global using Syki.Front.Features.Academic.UpdateEnrollmentPeriod;
 
 global using Syki.Front.Features.Adm.GetInstitutions;
 global using Syki.Front.Features.Adm.GetUsers;

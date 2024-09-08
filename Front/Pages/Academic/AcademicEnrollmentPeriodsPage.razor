@@ -3,12 +3,12 @@
 @page "/academic/enrollment-periods"
 @attribute [Authorize(Roles = "Academic")]
 
-<PageTitle>Matrículas</PageTitle>
+<SykiPageTitle Title="Matrículas" />
 
-<MudContainer>
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.Article" Title="Matrículas" ButtonText="Período de Matrícula" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Utilize os períodos de matrícula para organizar as informações durante o ano letivo."/>
-    <MudContainer Class="px-4 mb-8">
+    <MudContainer Class="px-0 mb-4">
         <MudDataGrid Class="pa-4" Items="@_periodos" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por ano"/>
@@ -35,6 +35,7 @@
 
 @inject IDialogService DialogService
 @inject GetEnrollmentPeriodsClient Client
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
@@ -53,10 +54,13 @@
 
     private async Task OpenDialog()
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
-            MaxWidth = MaxWidth.Small,
-            FullWidth = true
+            MaxWidth = MaxWidth.ExtraSmall,
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
+  
         var dialog = await DialogService.ShowAsync<CreateEnrollmentPeriodDialog>("", options);
 
         var result = await dialog.Result;
@@ -71,9 +75,11 @@
         var parameters = new DialogParameters<UpdateEnrollmentPeriodDialog>();
         parameters.Add(x => x.Period, item);
 
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
-            MaxWidth = MaxWidth.Small,
+            MaxWidth = MaxWidth.ExtraSmall,
             FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
         var dialog = await DialogService.ShowAsync<UpdateEnrollmentPeriodDialog>("", parameters, options);
 

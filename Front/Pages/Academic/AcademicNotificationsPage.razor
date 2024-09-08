@@ -5,12 +5,12 @@
 @page "/academic/notifications"
 @attribute [Authorize(Roles = "Academic")]
 
-<PageTitle>Notificações</PageTitle>
+<SykiPageTitle Title="Notificações" />
 
-<MudContainer>
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.Notifications" Title="Notificações" ButtonText="Nova Notificação" OnClick="@OpenDialog" />
     <SykiPageAlert Text="Aqui você pode escolher quais usuários serão notificados e acompanhar o status de visualização das mensagens." />
-    <MudContainer Class="px-4 mb-8">
+    <MudContainer Class="px-0 mb-4">
         <MudDataGrid
             T="NotificationOut"
             Class="pa-4"
@@ -45,6 +45,7 @@
 
 @inject IDialogService DialogService
 @inject GetNotificationsClient GetNotificationsClient
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
@@ -61,9 +62,11 @@
 
     private async Task OpenDialog()
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Small,
             FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
         var dialog = await DialogService.ShowAsync<CreateNotificationDialog>("", options);
 

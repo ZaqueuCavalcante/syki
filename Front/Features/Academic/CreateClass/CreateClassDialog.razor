@@ -141,10 +141,10 @@
     {
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         NewSchedule();
+        _disciplines = await GetDisciplinesClient.Get();
         await Task.WhenAll([
             Task.Run(async () => _teachers = await GetTeachersClient.Get()),
-            Task.Run(async () => _periods = await GetAcademicPeriodsClient.Get()),
-            Task.Run(async () => _disciplines = await GetDisciplinesClient.Get())
+            Task.Run(async () => _periods = await GetAcademicPeriodsClient.Get())
         ]);
     }
 

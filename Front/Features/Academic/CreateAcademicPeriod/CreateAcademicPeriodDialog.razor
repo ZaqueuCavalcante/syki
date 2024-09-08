@@ -1,3 +1,4 @@
+@using System.Globalization
 @namespace Syki.Front.Features.Academic.CreateAcademicPeriod
 
 <MudDialog Class="pb-2" Style="min-height: 450px">
@@ -8,22 +9,22 @@
         <MudForm @ref="@_form" Class="py-1">
             <MudGrid Spacing="2">
                 <MudItem xs="12">
-                    <MudTextField
-                        OnlyValidateIfDirty="true"
-                        Immediate="true"
-                        Margin="Margin.Dense"
-                        Variant="Variant.Outlined"
-                        Class="mb-4"
-                        AutoFocus="true"
+                    <MudNumericField
+                        T="decimal"
                         @bind-Value="@_id"
-                        Counter="6"
+                        Max="2050.1M"
                         MaxLength="6"
-                        Mask="@(new PatternMask("0000.0"))"
+                        Min="1970.1M"
+                        Format="####.#"
+                        Culture="CultureInfo.InvariantCulture"
+                        HideSpinButtons="true"
+                        Variant="Variant.Outlined"
+                        Margin="Margin.Dense"
                         HelperText="Exemplo: 2024.1"
-                        T="string"
-                        Label="Id"
                         Required="true"
-                        RequiredError="Informe!"/>
+                        Label="Id"
+                        RequiredError="Informe!"
+                    />
                 </MudItem>
                 <MudItem xs="12">
                     <SykiDatePicker Label="Início" @bind-Date="@_start"/>
@@ -52,11 +53,16 @@
     private MudForm _form;
     private bool _loading;
 
-    private string _id;
+    private decimal _id = DateTime.Now.Year + 0.1M;
     private DateTime? _start;
     private DateTime? _end;
 
-    async Task Submit()
+    private string GetIdHelperText()
+    {
+        return $"Exemplo: {DateTime.Now.Year + 0.1M}";
+    }
+
+    private async Task Submit()
     {
         if (_loading) return;
 
@@ -67,7 +73,7 @@
         var end = DateOnly.FromDateTime(_end!.Value);
 
         _loading = true;
-        var response = await Client.Create(_id, start, end);
+        var response = await Client.Create(_id.ToString("####.#", CultureInfo.InvariantCulture), start, end);
         if (response.IsSuccess())
         {
             MudDialog.Close(DialogResult.Ok(true));
@@ -80,5 +86,5 @@
         _loading = false;
     }
 
-    void Cancel() => MudDialog.Cancel();
+    private void Cancel() => MudDialog.Cancel();
 }

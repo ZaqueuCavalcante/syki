@@ -1,68 +1,71 @@
 @namespace Syki.Front.Features.Academic.CreateClass
 
-<MudStack Row="true" Class="mb-2">
-    <MudItem xs="5">
-        <MudSelect
-            Dense="true"
-            Margin="Margin.Dense"
-            Class="py-0 my-0"
-            Variant="Variant.Outlined"
-            T="Day?"
-            @bind-Value="@Data.Day"
-            Label="Dia"
-            Required="true"
-            RequiredError="Informe!"
-            AdornmentColor="Color.Primary"
-        >
-            @foreach (Day? day in Enum.GetValues<Day>())
-            {
+<MudForm Class="ml-2">
+    <MudGrid Spacing="2">
+        <MudItem xs="12" sm="4" md="4" lg="4">
+            <MudSelect
+                Dense="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                T="Day?"
+                @bind-Value="@Data.Day"
+                Label="Dia"
+                Required="true"
+                RequiredError="Informe!"
+                AdornmentColor="Color.Primary"
+            >
+                @foreach (Day? day in Enum.GetValues<Day>())
+                {
                 <MudSelectItem Value="@day">@day.GetDescription()</MudSelectItem>
-            }
-        </MudSelect>
-    </MudItem>
-    <MudItem xs="3">
-        <MudSelect
-            Dense="true"
-            Margin="Margin.Dense"
-            Class="py-0 my-0"
-            Variant="Variant.Outlined"
-            T="Hour?"
-            @bind-Value="@Data.Start"
-            Label="Início"
-            Required="true"
-            RequiredError="Informe!"
-            AdornmentColor="Color.Primary"
-        >
-            @foreach (Hour? hour in Enum.GetValues<Hour>())
-            {
-                <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
-            }
-        </MudSelect>
-    </MudItem>
-    <MudItem xs="3">
-        <MudSelect
-            Dense="true"
-            Margin="Margin.Dense"
-            Class="py-0 my-0"
-            Variant="Variant.Outlined"
-            T="Hour?"
-            @bind-Value="@Data.End"
-            Label="Fim"
-            Required="true"
-            RequiredError="Informe!"
-            AdornmentColor="Color.Primary"
-        >
-            @foreach (Hour? hour in Enum.GetValues<Hour>())
-            {
-                if (Data.Start == null || hour <= Data.Start) continue;
-                <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
-            }
-        </MudSelect>
-    </MudItem>
-    <MudItem xs="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" Class="py-2" OnClick="@HandleDeleteClick" />
-    </MudItem>
-</MudStack>
+                }
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="8" md="8" lg="8">
+            <MudStack Row="true" Class="mb-2" Spacing="2">
+                <MudItem xs="5">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="Hour?"
+                        @bind-Value="@Data.Start"
+                        Label="Início"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary"
+                    >
+                        @foreach (Hour? hour in Enum.GetValues<Hour>())
+                        {
+                        <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="5">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="Hour?"
+                        @bind-Value="@Data.End"
+                        Label="Fim"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary"
+                    >
+                        @foreach (Hour? hour in Enum.GetValues<Hour>())
+                        {
+                        if (Data.Start == null || hour <= Data.Start) continue;
+                        <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="2">
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" OnClick="@HandleDeleteClick" />
+                </MudItem>
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+</MudForm>
 
 @code
 {

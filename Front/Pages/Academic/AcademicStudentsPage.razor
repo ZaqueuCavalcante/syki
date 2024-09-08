@@ -5,12 +5,12 @@
 @page "/academic/students"
 @attribute [Authorize(Roles = "Academic")]
 
-<PageTitle>Alunos</PageTitle>
+<SykiPageTitle Title="Alunos" />
 
-<MudContainer>
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Alunos" ButtonText="Novo Aluno" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Um aluno precisa necessariamente estar vinculado à uma oferta de curso." />
-    <MudContainer Class="px-4 mb-8">
+    <MudContainer Class="px-0 mb-4">
         <MudDataGrid Class="pa-4" Items="@_students" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer campo" />
@@ -33,6 +33,7 @@
 
 @inject GetStudentsClient Client
 @inject IDialogService DialogService
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
@@ -51,9 +52,11 @@
 
     private async Task OpenDialog()
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
             MaxWidth = MaxWidth.Small,
-            FullWidth = true
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
         var dialog = await DialogService.ShowAsync<CreateStudentDialog>("", options);
 

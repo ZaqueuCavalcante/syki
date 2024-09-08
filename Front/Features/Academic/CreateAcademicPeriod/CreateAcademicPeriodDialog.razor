@@ -1,16 +1,13 @@
 @namespace Syki.Front.Features.Academic.CreateAcademicPeriod
 
-<MudDialog Class="pb-2">
+<MudDialog Class="pb-2" Style="min-height: 450px">
     <TitleContent>
-        <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
-            Novo Período Acadêmico
-        </MudText>
+        <SykiDialogTitle Text="Novo Período Acadêmico" />
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form" Class="py-1">
             <MudGrid Spacing="2">
-                <MudItem xs="12" sm="6" md="6" lg="6">
+                <MudItem xs="12">
                     <MudTextField
                         OnlyValidateIfDirty="true"
                         Immediate="true"
@@ -23,26 +20,24 @@
                         MaxLength="6"
                         Mask="@(new PatternMask("0000.0"))"
                         HelperText="Exemplo: 2024.1"
-                        T="String"
+                        T="string"
                         Label="Id"
                         Required="true"
-                        RequiredError="Informe!"
-                    />
+                        RequiredError="Informe!"/>
                 </MudItem>
-                <MudFlexBreak />
-                <MudItem xs="12" sm="6" md="6" lg="6">
+                <MudItem xs="12">
                     <SykiDatePicker Label="Início" @bind-Date="@_start"/>
                 </MudItem>
-                <MudItem xs="12" sm="6" md="6" lg="6">
+                <MudItem xs="12" Class="mb-4">
                     <SykiDatePicker Label="Fim" @bind-Date="@_end"/>
                 </MudItem>
             </MudGrid>
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="@Cancel" />
-        <SykiProgressCircular Loading="@_loading" />
-        <DialogSaveButton OnClick="@Submit" />
+        <DialogCancelButton OnClick="@Cancel"/>
+        <SykiProgressCircular Loading="@_loading"/>
+        <DialogSaveButton OnClick="@Submit"/>
     </DialogActions>
 </MudDialog>
 

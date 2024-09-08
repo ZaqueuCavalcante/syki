@@ -1,10 +1,10 @@
 @namespace Syki.Front.Features.Academic.CreateCourseCurriculum
 
-<MudForm @ref="@_form" Class="mx-0">
-    <MudGrid Spacing="0">
+<MudForm Class="mx-0">
+    <MudGrid Spacing="2">
         <MudItem xs="12" sm="12" md="6" lg="6">
-            <MudStack Row="true" Spacing="0">
-                <MudItem xs="8">
+            <MudStack Row="true" Spacing="2">
+                <MudItem xs="9">
                     <MudAutocomplete
                         MaxItems="50"
                         T="CourseCurriculumDisciplineFillable"
@@ -21,7 +21,7 @@
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"/>
                 </MudItem>
-                <MudItem xs="4">
+                <MudItem xs="3">
                     <MudSelect
                         Dense="true"
                         Margin="Margin.Dense"
@@ -42,7 +42,7 @@
             </MudStack>
         </MudItem>
         <MudItem xs="12" sm="12" md="6" lg="6">
-            <MudStack Row="true" Spacing="0">
+            <MudStack Row="true" Spacing="2">
                 <MudItem xs="4">
                     <MudNumericField
                         MaxLength="2"
@@ -79,8 +79,6 @@
 
 @code
 {
-    MudForm _form;
-
     [CascadingParameter(Name = "Options")]
     public List<CourseDisciplineOut> Options { get; set; }
 

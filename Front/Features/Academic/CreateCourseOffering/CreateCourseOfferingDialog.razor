@@ -9,7 +9,7 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
-            <MudGrid Justify="Justify.FlexStart" Spacing="0">
+            <MudGrid Justify="Justify.FlexStart" Spacing="2">
                 <MudItem xs="12" sm="4" md="4" lg="4">
                     <MudSelect
                         Dense="true"
@@ -73,7 +73,7 @@
                 Dense="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
-                Class="mb-4"
+                Class="py-2"
                 @bind-Value="@_course"
                 Label="Curso"
                 Required="true"

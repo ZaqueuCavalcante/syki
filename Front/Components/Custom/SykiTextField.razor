@@ -2,7 +2,7 @@
 
 <MudTextField
     T="string"
-    Class="mb-4"
+    Class="@Class"
     Label="@Label"
     Value="@Value"
     Required="true"
@@ -27,6 +27,9 @@
     [Parameter]
     public string Label { get; set; }
 
+    [Parameter]
+    public string Class { get; set; } = "pb-2";
+    
     [Parameter]
     public bool AutoFocus { get; set; }
 

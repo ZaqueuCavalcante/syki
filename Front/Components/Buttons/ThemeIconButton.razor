@@ -2,15 +2,11 @@
 
 @if (IsDark)
 {
-    <MudTooltip Text="Light">
-        <MudIconButton Icon="@Icons.Material.Filled.LightMode" Color="Color.Inherit" OnClick="@OnClick" />
-    </MudTooltip>
+    <MudIconButton Icon="@Icons.Material.Filled.LightMode" Color="Color.Inherit" OnClick="@OnClick" />
 }
 else
 {
-    <MudTooltip Text="Dark">
-        <MudIconButton Icon="@Icons.Material.Filled.DarkMode" Color="Color.Inherit" OnClick="@OnClick" />
-    </MudTooltip>
+    <MudIconButton Icon="@Icons.Material.Filled.DarkMode" Color="Color.Inherit" OnClick="@OnClick" />
 }
 
 @code

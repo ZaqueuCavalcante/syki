@@ -5,10 +5,10 @@
         <SykiDialogTitle Text="Nova Grade" />
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="@_form" Class="pt-1">
-            <MudGrid Spacing="0">
+        <MudForm @ref="@_form" Class="pt-1" Spacing="0">
+            <MudGrid Spacing="2">
                 <MudItem xs="12" sm="12" md="6" lg="6">
-                    <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@data.Name"/>
+                    <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@data.Name" Class="pb-0"/>
                 </MudItem>
                 <MudItem xs="12" sm="12" md="6" lg="6">
                     <MudSelect
@@ -20,15 +20,14 @@
                         Label="Curso"
                         Required="true"
                         RequiredError="Informe!"
-                        AdornmentColor="Color.Primary"
-                    >
+                        AdornmentColor="Color.Primary">
                         @foreach (CourseOut? item in Courses)
                         {
-                        <MudSelectItem Value="@item">@item.Name</MudSelectItem>
+                            <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                         }
                         @if (Courses.Count == 0)
                         {
-                        <MudSelectItem Value="@_course" Disabled="true">Não existem cursos com disciplinas ainda.</MudSelectItem>
+                            <MudSelectItem Value="@_course" Disabled="true">Não existem cursos com disciplinas ainda.</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>
@@ -36,31 +35,34 @@
 
             <MudDivider Class="my-4"/>
 
-            <MudContainer Class="px-0">
-                <MudGrid Justify="Justify.FlexStart">
-                    <MudItem xs="12">
-                        <CascadingValue Name="Options" Value="@Options">
-                            @foreach (var discipline in Disciplines)
+            <MudGrid Spacing="0">
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <CascadingValue Name="Options" Value="@Options">
+                        @foreach (var discipline in Disciplines)
+                        {
+                            <CourseCurriculumDiscipline Data="@discipline" OnDeleteClick="@DeleteGradeDiscipline"/>
+                            @if (_breakpoint == Breakpoint.Xs)
                             {
-                                <CourseCurriculumDiscipline Data="@discipline" OnDeleteClick="@DeleteGradeDiscipline"/>
-                                <MudDivider DividerType="DividerType.Middle" Class="my-2"/>
+                                <MudDivider Class="my-2"/>
                             }
-                        </CascadingValue>
-                        <MudButton
-                            Disabled="(GetNewDisciplineDisabled())"
-                            StartIcon="@Icons.Material.Outlined.Add"
-                            IconSize="Size.Large"
-                            Variant="Variant.Outlined"
-                            FullWidth="true"
-                            Class="mt-2 border-dashed border-2 mud-border-secundary mx-1"
-                            Color="Color.Primary"
-                            @onclick="@NewGradeDiscipline"
-                        >
-                            NOVA DISCIPLINA
-                        </MudButton>
-                    </MudItem>
-                </MudGrid>
-            </MudContainer>
+                        }
+                    </CascadingValue>
+                </MudItem>
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <MudButton
+                        Disabled="(GetNewDisciplineDisabled())"
+                        StartIcon="@Icons.Material.Outlined.Add"
+                        IconSize="Size.Large"
+                        Variant="Variant.Outlined"
+                        FullWidth="true"
+                        Class="mt-2 border-dashed border-2 mud-border-secundary"
+                        Style="max-width: fit-content"
+                        Color="Color.Primary"
+                        @onclick="@NewGradeDiscipline">
+                        NOVA DISCIPLINA
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
         </MudForm>
     </DialogContent>
     <DialogActions>
@@ -71,6 +73,7 @@
 </MudDialog>
 
 @inject ISnackbar Snackbar
+@inject IBrowserViewportService BrowserViewportService
 @inject GetCourseDisciplinesClient GetCourseDisciplinesClient
 @inject CreateCourseCurriculumClient CreateCourseCurriculumClient
 @inject GetCoursesWithDisciplinesClient GetCoursesWithDisciplinesClient
@@ -83,16 +86,18 @@
     private MudForm _form;
     private bool _loading;
 
-    CourseOut? _course;
+    private CourseOut? _course;
     List<CourseOut> Courses = [];
 
     List<CourseDisciplineOut> Options = [];
     List<CourseCurriculumDisciplineFillable> Disciplines = [];
 
+    private Breakpoint _breakpoint;
     CreateCourseCurriculumIn data = new();
 
     protected override async Task OnInitializedAsync()
     {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         Courses = await GetCoursesWithDisciplinesClient.Get();
     }
 

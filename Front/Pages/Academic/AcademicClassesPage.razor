@@ -57,18 +57,16 @@
     </MudContainer>
 </MudContainer>
 
-<CreateClassDialog @ref="@_dialog" OnSuccess="@GoToClassPage" />
-
 @inject NavigationManager Nav
+@inject IDialogService DialogService
 @inject GetClassesClient GetClassesClient
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
     private bool _loading;
     private string _searchString;
     private List<ClassOut> _classes = [];
-
-    private CreateClassDialog _dialog;
 
     protected override async Task OnInitializedAsync()
     {
@@ -79,19 +77,26 @@
 
     private void Action(ClassOut item)
     {
-        GoToClassPage(item.Id);
-    }
-
-    private void GoToClassPage(Guid id)
-    {
-        Nav.NavigateTo($"/academic/classes/{id}");
+        Nav.NavigateTo($"/academic/classes/{item.Id}");
     }
 
     private Func<ClassOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Teacher, x.Period);
 
     private async Task OpenDialog()
     {
-        await _dialog.Open();
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
+        };
+        var dialog = await DialogService.ShowAsync<CreateClassDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        await OnInitializedAsync();
     }
 
     private string GetNotFoundMessage()

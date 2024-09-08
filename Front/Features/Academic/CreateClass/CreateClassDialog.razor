@@ -1,15 +1,12 @@
 @namespace Syki.Front.Features.Academic.CreateClass
 
-<MudDialog @bind-Visible=@_visible Class="pb-2" Options="@_options">
+<MudDialog Class="pb-2">
     <TitleContent>
-        <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
-            Nova Turma
-        </MudText>
+        <SykiDialogTitle Text="Nova Turma" />
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="@_form" Class="pt-1">
-            <MudGrid Spacing="3">
+        <MudForm @ref="@_form" Class="pt-1" Spacing="0">
+            <MudGrid Spacing="2">
                 <MudItem xs="12" sm="12" md="12" lg="12">
                     <MudAutocomplete
                         T="DisciplineOut"
@@ -73,45 +70,47 @@
                     </MudSelect>
                 </MudItem>
 
-                <MudItem xs="12" Class="py-3">
-                    <MudDivider />
-                </MudItem>
+                <MudDivider Class="my-4"/>
 
-                <MudItem xs="12">
-                    <MudContainer Class="px-0">
-                        <MudGrid Justify="Justify.FlexStart">
-                            <MudItem xs="12">
-                                @foreach (var schedule in _schedules)
-                                {
-                                    <ClassSchedule Data="@schedule" OnDeleteClick="@DeleteSchedule" />
-                                }
-                                <MudButton
-                                    Disabled="(GetNewScheduleDisabled())"
-                                    StartIcon="@Icons.Material.Outlined.Add"
-                                    IconSize="Size.Large"
-                                    Variant="Variant.Outlined"
-                                    FullWidth="true"
-                                    Class="mt-2 border-dashed border-2 mud-border-secundary"
-                                    Color="Color.Primary"
-                                    @onclick="@NewSchedule"
-                                >
-                                    NOVO HORÁRIO
-                                </MudButton>
-                            </MudItem>
-                        </MudGrid>
-                    </MudContainer>
-                </MudItem>
+                <MudGrid Spacing="0">
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        @foreach (var schedule in _schedules)
+                        {
+                            <ClassSchedule Data="@schedule" OnDeleteClick="@DeleteSchedule" />
+                            @if (_breakpoint == Breakpoint.Xs)
+                            {
+                                <MudDivider Class="my-2"/>
+                            }
+                        }
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <MudButton
+                            Disabled="(GetNewScheduleDisabled())"
+                            StartIcon="@Icons.Material.Outlined.Add"
+                            IconSize="Size.Large"
+                            Variant="Variant.Outlined"
+                            FullWidth="true"
+                            Class="mt-2 border-dashed border-2 mud-border-secundary ml-2"
+                            Style="max-width: fit-content"
+                            Color="Color.Primary"
+                            @onclick="@NewSchedule"
+                        >
+                            NOVO HORÁRIO
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
             </MudGrid>
         </MudForm>
     </DialogContent>
     <DialogActions>
-        <DialogCancelButton OnClick="@Close" />
+        <DialogCancelButton OnClick="@Cancel" />
         <SykiProgressCircular Loading="@_loading" />
         <DialogSaveButton OnClick="@Submit" />
     </DialogActions>
 </MudDialog>
 
 @inject ISnackbar Snackbar
+@inject NavigationManager Nav
 @inject CreateClassClient CreateClassClient
 @inject GetTeachersClient GetTeachersClient
 @inject GetDisciplinesClient GetDisciplinesClient
@@ -120,12 +119,11 @@
 
 @code
 {
-    [Parameter]
-    public EventCallback<Guid> OnSuccess { get; set; }
-
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+    
     private MudForm _form;
     private bool _loading;
-    private bool _visible;
 
     private DisciplineOut? _discipline;
     private TeacherOut? _teacher;
@@ -136,16 +134,12 @@
     private List<DisciplineOut> _disciplines = [];
     private List<TeacherOut> _teachers = [];
     private List<AcademicPeriodOut> _periods = [];
-
-    private readonly DialogOptions _options = new()
-    {
-        FullWidth = true,
-        CloseButton = true,
-        MaxWidth = MaxWidth.Small,
-    };
+    
+    private Breakpoint _breakpoint;
 
     protected override async Task OnInitializedAsync()
     {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         NewSchedule();
         await Task.WhenAll([
             Task.Run(async () => _teachers = await GetTeachersClient.Get()),
@@ -154,29 +148,17 @@
         ]);
     }
 
-    public async Task Open()
-    {
-        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        _options.FullScreen = breakpoint == Breakpoint.Xs;
-        _visible = true;
-    }
-
-    private void Close()
-    {
-        _visible = false;
-    }
-    
-    bool GetNewScheduleDisabled()
+    private bool GetNewScheduleDisabled()
     {
         return _schedules.Count == 3;
     }
 
-    void NewSchedule()
+    private void NewSchedule()
     {
         _schedules.Add(new());
     }
 
-    void DeleteSchedule(Guid id)
+    private void DeleteSchedule(Guid id)
     {
         _schedules.Remove(_schedules.First(f => f.Id == id));
     }
@@ -191,7 +173,7 @@
         return _disciplines.Where(x => value.IsIn(x.Name));
     }
 
-    async Task Submit()
+    private async Task Submit()
     {
         if (_loading) return;
 
@@ -209,7 +191,7 @@
         if (response.IsSuccess())
         {
             Snackbar.Add("Turma cadastrada com sucesso!", Severity.Success);
-            await OnSuccess.InvokeAsync(response.GetSuccess().Id);
+            Nav.NavigateTo($"/academic/classes/{response.GetSuccess().Id}");
         }
         else
         {
@@ -217,4 +199,6 @@
         }
         _loading = false;
     }
+
+    private void Cancel() => MudDialog.Cancel();
 }

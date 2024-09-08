@@ -36,3 +36,7 @@
 .mud-list-item-icon {
     min-width: 34px !important;
 }
+
+.mud-input-control.mud-input-control-margin-dense {
+    margin: 4px 0 !important;
+}

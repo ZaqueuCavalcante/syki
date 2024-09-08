@@ -4,7 +4,7 @@ public class CourseCurriculumDisciplineFillable
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public byte? Period { get; set; }
+    public byte? Period { get; set; } = 1;
     public byte? Credits { get; set; }
     public ushort? Workload { get; set; }
 

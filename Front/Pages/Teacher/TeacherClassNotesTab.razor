@@ -2,8 +2,17 @@
 
 @namespace Syki.Front.Pages.Teacher
 
-<MudContainer Class="mb-8">
-    <MudDataGrid T="TeacherClassStudentOut" Class="pa-4" Items="@_students" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+<MudContainer Class="mb-4 px-0">
+    <MudDataGrid
+        T="TeacherClassStudentOut"
+        Class="pa-4"
+        Items="@_students"
+        QuickFilter="@_quickFilter"
+        Hover="true"
+        Dense="true"
+        Loading="@_loading"
+        RowsPerPage="100"
+    >
         <ToolBarContent>
             <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome" />
         </ToolBarContent>
@@ -23,7 +32,6 @@
             @(GetNotFoundMessage())
         </NoRecordsContent>
         <PagerContent>
-            <SykiDataGridPager T="TeacherClassStudentOut" />
         </PagerContent>
     </MudDataGrid>
 </MudContainer>

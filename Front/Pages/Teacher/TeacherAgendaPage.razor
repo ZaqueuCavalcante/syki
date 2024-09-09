@@ -5,6 +5,8 @@
 @page "/teacher/agenda"
 @attribute [Authorize(Roles = "Teacher")]
 
+<SykiPageTitle Title="Agenda" />
+
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.CalendarMonth" Title="Agenda" Class="mb-4" />
     @if (_loading)

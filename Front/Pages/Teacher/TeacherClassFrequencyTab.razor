@@ -2,39 +2,47 @@
 
 @namespace Syki.Front.Pages.Teacher
 
-<MudContainer Class="mb-8 px-4">
-    <MudCard Class="mb-4 pa-2">
+<MudContainer Class="mb-4 px-0">
+    <MudCard Class="mb-4 py-2 px-2">
         <MudCardContent Class="py-1">
-            <MudGrid Class="align-center">
-                <MudItem xs="12" sm="6" md="6" lg="6">
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
-                        <MudIcon Icon="@Icons.Material.Filled.Class" Class="mr-1 mb-1" Size="Size.Medium"/>
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
-                            <MudText Typo="Typo.h6">Aula @_lesson.Number <b>·</b> @_lesson.Date.FormatBr() <b>·</b> @_lesson.Schedule</MudText>
+            @if (_loading)
+            {
+                <MudSkeleton Animation="Animation.Wave" />
+            }
+            else
+            {
+                <MudGrid Class="align-center">
+                    <MudItem xs="12" sm="6" md="6" lg="6">
+                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                                <MudText Typo="Typo.h6">Aula @_lesson.Number <b>·</b> @_lesson.Date.FormatBr() <b>·</b> @_lesson.Schedule</MudText>
+                            </MudStack>
                         </MudStack>
-                    </MudStack>
-                </MudItem>
-                <MudItem xs="12" sm="4" md="4" lg="4">
-                    <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_lesson.Frequency)" Style="height: 24px">
-                        <MudText Typo="Typo.body1">
-                            <b>@_lesson.Frequency.Format()%</b>
-                        </MudText>
-                    </MudProgressLinear>
-                </MudItem>
-                <MudItem xs="12" sm="2" md="2" lg="2" Class="d-flex justify-end">
-                    <MudButton
-                        StartIcon="@Icons.Material.Outlined.Edit"
-                        IconSize="Size.Large"
-                        Variant="Variant.Filled"
-                        Style="height: 40px;"
-                        Color="Color.Primary"
-                        @onclick="@OnEditLessonClick">
-                        Editar
-                    </MudButton>
-                </MudItem>
-            </MudGrid>
+                    </MudItem>
+                    <MudItem xs="12" sm="4" md="4" lg="4">
+                        <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_lesson.Frequency)" Style="height: 24px">
+                            <MudText Typo="Typo.body1">
+                                <b>@_lesson.Frequency.Format()%</b>
+                            </MudText>
+                        </MudProgressLinear>
+                    </MudItem>
+                    <MudItem xs="12" sm="2" md="2" lg="2" Class="d-flex justify-end">
+                        <MudButton
+                            StartIcon="@Icons.Material.Outlined.Edit"
+                            IconSize="Size.Large"
+                            Variant="Variant.Filled"
+                            Style="height: 40px;"
+                            Color="Color.Primary"
+                            @onclick="@OnEditLessonClick">
+                            Editar
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            }
         </MudCardContent>
     </MudCard>
+
+    <style>.mud-table-toolbar { height: auto }</style>
     <MudTable
         T="GetTeacherLessonAttendanceOut"
         Class="pa-4"
@@ -47,7 +55,7 @@
         ContainerClass="pt-6"
     >
         <ToolBarContent>
-            <MudGrid Class="align-center">
+            <MudGrid Class="align-center" Spacing="3">
                 <MudItem xs="12" sm="5" md="5" lg="5">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
                         <MudButton OnClick="@SelectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBox" Size="Size.Small">Todos</MudButton>
@@ -73,24 +81,17 @@
                     Size="Size.Small"
                     Color="Color.Success"
                     Value="@context.Present"
-                    ValueChanged="x => { context.Present = x; CheckChanged(); }"
-                />
+                    ValueChanged="x => { context.Present = x; CheckChanged(); }"/>
             </MudTd>
         </RowTemplate>
         <NoRecordsContent>
             @(GetNotFoundMessage())
         </NoRecordsContent>
         <PagerContent>
-            <MudDivider />
+            <MudDivider/>
             <MudStack Row="true" Class="mt-4">
-                @if (!_unchanged)
-                {
-                    <MudAlert Class="ml-2" Dense="true" Severity="Severity.Warning" Variant="Variant.Text" Elevation="1">
-                        <MudText>Alterações pendentes</MudText>
-                    </MudAlert>
-                }
                 <MudSpacer/>
-                <DialogSaveButton Class="mr-2" OnClick="@SaveFrequency" @bind-Disabled="@_unchanged"/>
+                <DialogSaveButton Class="mr-2" OnClick="@SaveFrequency"/>
             </MudStack>
         </PagerContent>
     </MudTable>
@@ -117,7 +118,6 @@
     private List<GetTeacherLessonAttendanceOut> _attendances = [];
 
     private List<Guid> _initialState = [];
-    private bool _unchanged = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -133,7 +133,6 @@
         _lesson = _class.Lessons.FirstOrDefault(x => x.Id == id) ?? new();
         _attendances = await GetTeacherLessonAttendancesClient.Get(id);
         _initialState = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
-        _unchanged = true;
     }
 
     private void SelectAll()
@@ -149,9 +148,6 @@
 
     private void CheckChanged()
     {
-        var current = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
-        var sameSize = current.Count == _initialState.Count;
-        _unchanged = sameSize && current.IsSubsetOf(_initialState);
         _lesson.Frequency = GetCurrentFrequency();
     }
 
@@ -163,9 +159,9 @@
         return 100M*(1M * presences / (1M * total));
     }
 
-    private void OnEditLessonClick()
+    private async Task OnEditLessonClick()
     {
-        _dialog.Open(_class.Lessons);
+        await _dialog.Open(_class.Lessons);
     }
 
     private async Task SaveFrequency()
@@ -176,7 +172,6 @@
         {
             _class = await GetTeacherClassClient.Get(ClassId);
             _initialState = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
-            _unchanged = true;
             Snackbar.Add("Chamada salva com sucesso!", Severity.Success);
         }
         else

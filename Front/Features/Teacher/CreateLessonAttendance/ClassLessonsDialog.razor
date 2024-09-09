@@ -4,7 +4,7 @@
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Class" Class="mr-1 mb-n1" />
-            Selecione uma das aulas abaixo
+            Selecione uma aula
         </MudText>
     </TitleContent>
     <DialogContent>
@@ -46,6 +46,8 @@
     </DialogContent>
 </MudDialog>
 
+@inject IBrowserViewportService BrowserViewportService
+
 @code
 {
     [Parameter]
@@ -61,8 +63,10 @@
         MaxWidth = MaxWidth.Medium,
     };
 
-    public void Open(List<LessonOut> lessons)
+    public async Task Open(List<LessonOut> lessons)
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _options.FullScreen = breakpoint == Breakpoint.Xs;
         _lessons = lessons.Where(x => x.Date <= DateTime.Now.ToDateOnly()).ToList();
         _visible = true;
     }
@@ -74,7 +78,7 @@
 
     private async Task HandleRowClick(TableRowClickEventArgs<LessonOut> row)
     {
-        await OnRowClick.InvokeAsync(row.Item.Id);
         Close();
+        await OnRowClick.InvokeAsync(row.Item.Id);
     }
 }

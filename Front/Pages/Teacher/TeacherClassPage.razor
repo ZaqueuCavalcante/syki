@@ -18,7 +18,6 @@
                 <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
                     <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="100%">
                         <MudTabPanel Text="Frequência" ID='"panel_0"'></MudTabPanel>
-                        <MudTabPanel Text="Diário" ID='"panel_1"'></MudTabPanel>
                         <MudTabPanel Text="Notas" ID='"panel_2"'></MudTabPanel>
                     </MudTabs>
                 </MudItem>
@@ -29,14 +28,6 @@
     @if (_index == 0)
     {
         <TeacherClassFrequencyTab ClassId="@Id"/>
-    }
-    else if (_index == 1)
-    {
-        <MudContainer Class="mb-8">
-            <MudStack Row="true" Class="mt-4" Justify="Justify.Center">
-                <MudText Typo="Typo.h1">Diário</MudText>
-            </MudStack>
-        </MudContainer>
     }
     else
     {

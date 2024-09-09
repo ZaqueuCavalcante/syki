@@ -5,14 +5,6 @@
 
 ----------------------------------------------------------------------------------------------
 
-- [] Analisar padrao para as margins/paddings em todas as telas (deixar no layout?)
-- [] Diminuir margins em relacao as bordas da tela (mobile)
-- [] Dialogs com botoes margem direita e esquerda maiores (campi, curso, disciplina, oferta, turma, aluno)
-- [] Substituir todos os dialogs pra usar componente e n C#
-- [] Dialog de Nova Grade no celular ta cagalhado
-- [] Dialog de Nova Oferta no celular ta cagalhado
-- [] Dialog de Nova Turma no celular ta cagalhado
-
 - [] Adicionar comportamento padrao nos botoes de salvar para ficar desativado + loading
 
 - [] Setup de MFA n chama a API no celular ao digitar o 6 numeros (deixar colocar letra tbm)

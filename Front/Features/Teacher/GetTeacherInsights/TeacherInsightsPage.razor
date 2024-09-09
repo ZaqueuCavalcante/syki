@@ -1,49 +1,20 @@
-﻿@namespace Syki.Front.Features.Teacher.GetTeacherInsights
+﻿@using Syki.Front.Components.Indexes
 
-<MudContainer Class="mt-8 px-12">
-    <MudText Typo="Typo.h4" Style="font-weight: bold" Class="ml-4">
+@namespace Syki.Front.Features.Teacher.GetTeacherInsights
+
+<MudContainer Class="my-4 px-4">
+    <MudText Typo="Typo.h4" Style="font-weight: bold" Class="ml-2">
         Olá, @_userName
     </MudText>
-
-    <MudAlert Class="mt-4" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
+    <MudAlert Class="mt-4" NoIcon="true" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudStack Row="true" Justify="Justify.SpaceAround">
-            <MudText>Aqui você encontra dados consolidados sobre suas turmas, atualizados em tempo real!</MudText>
+            <MudText>Aqui você encontra dados consolidados sobre suas turmas.</MudText>
         </MudStack>
     </MudAlert>
-
-    <MudGrid Class="mt-4">
-        <MudItem xs="6" sm="6" md="6">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Classes Turmas</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="6" sm="6" md="6">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.School" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Students Alunos</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="6" sm="6" md="6">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.Class" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Aulas Aulas</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
-        <MudItem xs="6" sm="6" md="6">
-            <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">
-                <MudStack AlignItems="AlignItems.Center">
-                    <MudIcon Icon="@Icons.Material.Filled.GroupWork" Size="Size.Large" Color="Color.Primary"/>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Average.Format() Média</MudText>
-                </MudStack>
-            </MudPaper>
-        </MudItem>
+    <MudGrid Class="pt-4" Spacing="4">
+        <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircle" Value="@_data.Classes" Text="Turmas" />
+        <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.School" Value="@_data.Students" Text="Alunos" />
+        <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.Class" Value="@_data.Classes" Text="Aulas" />
     </MudGrid>
 </MudContainer>
 
@@ -54,13 +25,16 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
 
+    private bool _loading;
     private string _userName = "";
     private TeacherInsightsOut _data = new();
 
     protected override async Task OnInitializedAsync()
     {
+        _loading = true;
         await SetUserName();
         _data = await Client.Get();
+        _loading = false;
     }
 
     private async Task SetUserName()

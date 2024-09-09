@@ -30,6 +30,11 @@
             </MudDrawer>
             <MudMainContent>
                 @Body
+
+                @if(_showFab)
+                {
+                    <MudFab OnClick="@ToggleLeftOpen" Style="position:fixed; bottom:25px; right:25px;" Color="@Color.Primary" StartIcon="@Icons.Material.Filled.Menu" />
+                }
             </MudMainContent>
         </MudLayout>
     </Authorized>
@@ -60,6 +65,7 @@
 @inject NavigationManager Nav
 @inject ILocalStorageService LocalStorage
 @inject SykiAuthStateProvider AuthStateProvider
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
@@ -69,6 +75,7 @@
     private bool _isDark = true;
     private bool _leftOpen = true;
     private bool _rightOpen = false;
+    private bool _showFab = false;
 
     private void ToggleLeftOpen()
     {
@@ -84,6 +91,8 @@
     {
         var isDark = await LocalStorage.GetItemAsync("IsDark");
         _isDark = isDark == null || bool.Parse(isDark);
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _showFab = breakpoint == Breakpoint.Xs;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

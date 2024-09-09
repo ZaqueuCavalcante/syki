@@ -36,7 +36,7 @@
     </MudDataGrid>
 </MudContainer>
 
-<AddExamGradeNoteDrawer @ref="@_drawer" AfterSubmit="@Load" />
+<AddExamGradeNotesDialog @ref="@_dialog" AfterSubmit="@Load" />
 
 @inject GetTeacherClassClient GetTeacherClassClient
 
@@ -45,7 +45,7 @@
 	[Parameter]
 	public Guid ClassId { get; set; }
 
-    private AddExamGradeNoteDrawer _drawer;
+    private AddExamGradeNotesDialog _dialog;
 
     private bool _loading;
     private string _searchString;
@@ -64,10 +64,10 @@
         _students = _class.Students.OrderBy(x => x.Name).ToList();
         _loading = false;
     }
-  
-    private void AddNote(TeacherClassStudentOut item)
+
+    private async Task AddNote(TeacherClassStudentOut item)
     {
-        _drawer.Open(item);
+        await _dialog.Open(item);
     }
 
     private Func<TeacherClassStudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);

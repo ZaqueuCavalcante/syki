@@ -1,0 +1,70 @@
+﻿@using Syki.Front.Components.Buttons
+
+@namespace Syki.Front.Features.Teacher.AddExamGradeNote
+
+<MudDialog Class="pb-2" @bind-Visible="@_visible" Options="@_options">
+    <TitleContent>
+        <SykiDialogTitle Text="Adicionar notas" />
+    </TitleContent>
+    <DialogContent>
+        <MudText Typo="Typo.h6" Class="px-0 py-2">@_item.Name</MudText>
+
+        <MudForm @ref="@_form" Class="px-0 pt-2">
+            @foreach (var grade in _item.ExamGrades)
+            {
+                <ExamGradeNoteField Data="@grade" />
+            }
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Close" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject AddExamGradeNoteClient Client
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    private bool _visible;
+    private MudForm _form;
+    private bool _loading;
+    private TeacherClassStudentOut _item = new();
+    private readonly DialogOptions _options = new()
+    {
+        FullWidth = true,
+        CloseButton = true,
+        MaxWidth = MaxWidth.ExtraSmall,
+    };
+
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    public async Task Open(TeacherClassStudentOut item)
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _options.FullScreen = breakpoint == Breakpoint.Xs;
+        _item = item;
+        _visible = true;
+    }
+
+    private void Close()
+    {
+        _visible = false;
+    }
+
+    private async Task Submit()
+    {
+        _loading = true;
+        foreach (var examGrade in _item.ExamGrades)
+        {
+            await Client.Add(examGrade.Id, new(examGrade.Note));
+        }
+
+        Close();
+        await AfterSubmit.InvokeAsync();
+        _loading = false;
+    }
+}

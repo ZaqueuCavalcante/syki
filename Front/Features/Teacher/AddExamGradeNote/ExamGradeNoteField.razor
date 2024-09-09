@@ -1,19 +1,25 @@
 ﻿@namespace Syki.Front.Features.Teacher.AddExamGradeNote
         
-<MudStack Row="true" AlignItems="AlignItems.Center" Class="mb-3">
-    <MudText>@(GetLabel())</MudText>
-    <MudIcon Icon="@Icons.Material.Filled.ArrowRightAlt" />
-    <MudNumericField
-        T="decimal"
-        @bind-Value="@Data.Note"
-        Max="10.00M"
-        MaxLength="4"
-        Min="0"
-        Format="N2"
-        HideSpinButtons="true"
-        Variant="Variant.Outlined"
-        Margin="Margin.Dense"
-    />
+<MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="0" Class="mb-3">
+    <MudItem xs="4">
+        <MudText>@(GetLabel())</MudText>
+    </MudItem>
+    <MudItem xs="2">
+        <MudIcon Icon="@Icons.Material.Filled.ArrowRightAlt" />
+    </MudItem>
+    <MudItem xs="6">
+        <MudNumericField
+            T="decimal"
+            @bind-Value="@Data.Note"
+            Max="10.00M"
+            MaxLength="4"
+            Min="0"
+            Format="N2"
+            HideSpinButtons="true"
+            Variant="Variant.Outlined"
+            Margin="Margin.Dense"
+        />
+    </MudItem>
 </MudStack>
 
 @code

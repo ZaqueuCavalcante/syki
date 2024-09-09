@@ -47,6 +47,12 @@
                     <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.StickyNote2" OnClick="@(() => Action(context))"/>
                 </MudTd>
             </RowTemplate>
+            <LoadingContent>
+                @if (_breakpoint == Breakpoint.Xs)
+                {
+                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                }
+            </LoadingContent>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
@@ -68,8 +74,11 @@
     private string _searchString;
     private List<ClassOut> _classes = [];
 
+    private Breakpoint _breakpoint;
+
     protected override async Task OnInitializedAsync()
     {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _loading = true;
         _classes = await GetClassesClient.Get();
         _loading = false;

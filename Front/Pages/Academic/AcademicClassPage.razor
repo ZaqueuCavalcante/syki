@@ -6,73 +6,87 @@
 <SykiPageTitle Title="Turma" />
 
 <MudContainer Class="my-4 px-4">
-    <MudCard Class="mt-8 mb-4 mx-4 px-2">
+    <MudCard>
         <MudCardContent>
-            <MudGrid Class="align-center">
-                <MudItem xs="12" sm="9" md="9" lg="9">
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
-                        <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mr-1 mb-1" Size="Size.Large"/>
-                        <MudText Typo="Typo.h5" Style="font-weight: bold">@($"{_class.Discipline} - {_class.Code}")</MudText>
-                    </MudStack>
-                </MudItem>
-                <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end">
-                    <MudTabs Elevation="0" Rounded="true" Outlined="true" TabPanelClass="px-6" @bind-ActivePanelIndex="@_index" MinimumTabWidth="100%">
-                        <MudTabPanel Text="Aulas" ID='"panel_0"'></MudTabPanel>
-                        <MudTabPanel Text="Alunos" ID='"panel_1"'></MudTabPanel>
-                    </MudTabs>
-                </MudItem>
-            </MudGrid>
+            @if (_loading)
+            {
+                <MudSkeleton Animation="Animation.Wave" />
+            }
+            else
+            {
+                <MudGrid Class="align-center">
+                    <MudItem xs="12" sm="9" md="9" lg="9">
+                        <MudText Typo="Typo.h5" Style="font-weight: bold">@_class.Discipline</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end">
+                        <MudTabs Elevation="0" Rounded="true" Outlined="true" TabPanelClass="px-6" @bind-ActivePanelIndex="@_index" MinimumTabWidth="100%">
+                            <MudTabPanel Text="Aulas" ID='"panel_0"'></MudTabPanel>
+                            <MudTabPanel Text="Alunos" ID='"panel_1"'></MudTabPanel>
+                        </MudTabs>
+                    </MudItem>
+                </MudGrid>
+            }
         </MudCardContent>
     </MudCard>
 
     @if (_index == 0)
     {
-        <MudPaper Class="mx-4 px-7 py-4 mb-4">
-            <MudGrid Justify="Justify.FlexStart" Spacing="1">
-                <MudItem xs="12" sm="6" md="6" lg="6">
-                    <MudStack Spacing="1">
-                        <MudText><strong>Professor:</strong> @_class.Teacher</MudText>
-                        <MudText><strong>Status:</strong> @_class.Status.GetDescription()</MudText>
-                        <MudText><strong>Alunos:</strong> @_class.FillRatio</MudText>
-                        <MudText><strong>Horário:</strong> @_class.SchedulesInline</MudText>
-                    </MudStack>
-                </MudItem>
-                <MudItem xs="12" sm="6" md="6" lg="6">
-                    <MudStack Spacing="1">
-                        <MudText><strong>Período:</strong> @_class.Period</MudText>
-                        <MudText><strong>Progresso:</strong> @_class.Progress</MudText>
-                        <MudText><strong>Carga Horária:</strong> @_class.Workload</MudText>
-                        <MudStack Row="true" AlignItems="AlignItems.Center">
-                            <MudText><strong>Frequência:</strong></MudText>
-                            @if (_class.Lessons.Any(x => x.Status == LessonStatus.Finalized))
-                            {
-                                <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_class.Frequency)" Style="height: 24px">
-                                    <MudText Typo="Typo.body1">
-                                        <b>@_class.Frequency.Format()%</b>
-                                    </MudText>
-                                </MudProgressLinear>
-                            }
-                        </MudStack>
-                    </MudStack>
-                </MudItem>
-                <MudItem>
-                    <MudStack Spacing="1">
-                    </MudStack>
-                </MudItem>
-            </MudGrid>
-        </MudPaper>
+        <MudCard Class="my-4">
+            <MudCardContent>
+                @if (_loading)
+                {
+                    <MudSkeleton Animation="Animation.Wave" />
+                }
+                else
+                {
+                    <MudGrid Justify="Justify.FlexStart" Spacing="1">
+                        <MudItem xs="12" sm="6" md="6" lg="6">
+                            <MudStack Spacing="1">
+                                <MudText><strong>Professor:</strong> @_class.Teacher</MudText>
+                                <MudText><strong>Status:</strong> @_class.Status.GetDescription()</MudText>
+                                <MudText><strong>Alunos:</strong> @_class.FillRatio</MudText>
+                                <MudText><strong>Horário:</strong> @_class.SchedulesInline</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="12" sm="6" md="6" lg="6">
+                            <MudStack Spacing="1">
+                                <MudText><strong>Período:</strong> @_class.Period</MudText>
+                                <MudText><strong>Aulas Concluídas:</strong> @_class.Progress</MudText>
+                                <MudText><strong>Carga Horária:</strong> @_class.Workload</MudText>
+                                <MudStack Row="true" AlignItems="AlignItems.Center">
+                                    <MudText><strong>Frequência:</strong></MudText>
+                                    @if (_class.Lessons.Any(x => x.Status == LessonStatus.Finalized))
+                                    {
+                                        <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_class.Frequency)" Style="height: 24px">
+                                            <MudText Typo="Typo.body1">
+                                                <b>@_class.Frequency.Format()%</b>
+                                            </MudText>
+                                        </MudProgressLinear>
+                                    }
+                                </MudStack>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem>
+                            <MudStack Spacing="1">
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+                }
+            </MudCardContent>
+        </MudCard>
 
-        <MudContainer Class="px-4 mb-8">
+        <MudContainer Class="px-0 mb-4">
             <MudTable
                 Items="@GetLessons()"
                 Class="pa-4"
                 Dense="true"
                 Hover="true"
+                Loading="@_loading"
                 Filter="@_quickFilter"
                 RowsPerPage="10"
             >
                 <ToolBarContent>
-                    <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por data, horário ou status" />
+                    <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo" />
                 </ToolBarContent>
                 <HeaderContent>
                     <MudTh>Aula</MudTh>
@@ -97,6 +111,12 @@
                         }
                     </MudTd>
                 </RowTemplate>
+                <LoadingContent>
+                    @if (_breakpoint == Breakpoint.Xs)
+                    {
+                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                    }
+                </LoadingContent>
                 <NoRecordsContent>
                     @(GetNotFoundMessage())
                 </NoRecordsContent>
@@ -108,7 +128,7 @@
     }
     else
     {
-        <MudContainer Class="px-4 mb-8">
+        <MudContainer Class="px-0 my-4">
             <MudTable
                 Items="@_students"
                 Class="pa-4"
@@ -159,6 +179,7 @@
 
 @inject CreateLessonsClient CreateLessonsClient
 @inject GetAcademicClassClient GetAcademicClassClient
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
@@ -172,8 +193,11 @@
     private GetAcademicClassOut _class = new();
     private List<AcademicClassStudentOut> _students = [];
 
+    private Breakpoint _breakpoint;
+
     protected override async Task OnInitializedAsync()
     {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         await Load();
     }
 

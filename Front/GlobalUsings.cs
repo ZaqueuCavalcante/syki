@@ -2,6 +2,7 @@ global using OneOf;
 global using Syki.Shared;
 global using Syki.Front.Auth;
 global using Syki.Front.Markers;
+global using Syki.Front.Extensions;
 
 global using Syki.Front.Features.Academic.CreateLessons;
 global using Syki.Front.Features.Academic.CreateAcademicPeriod;

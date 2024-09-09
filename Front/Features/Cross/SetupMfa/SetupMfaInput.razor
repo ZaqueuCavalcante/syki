@@ -5,7 +5,6 @@
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
 
-    <style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
     <MudCard Class="px-4 py-0" Elevation="0" Style="height: 100%">
         <MudCardContent>
             <MudStack AlignItems="AlignItems.Center">
@@ -15,26 +14,35 @@
                     </MudStack>
                 </MudAlert>
                 <MudForm>
-                    <MudTextField
-                        T="String"
+                    <style>
+                        .align-center input{
+                            text-align: center;
+                        }
+                    </style>
+                    <MudNumericField
+                        T="int?"
+                        AutoFocus="true"
                         Immediate="true"
-                        Placeholder="_ _ _  _ _ _"
                         OnlyValidateIfDirty="true"
-                        Variant="Variant.Outlined"
                         ReadOnly="@_validateCodeLoading"
                         Disabled="@_codeIsCorrect"
                         Style="width: 200px;"
-                        Class="mt-8"
-                        AutoFocus="true"
                         Value="@_userCode"
                         ValueChanged="@HandleCodeChanged"
-                        Mask="@(new PatternMask("000 000"))"
+                        Variant="Variant.Outlined"
+                        HideSpinButtons="true"
+                        Typo="Typo.h6"
+                        Class="mt-8"
+                        Margin="Margin.Dense"
+                        Max="999999"
+                        MaxLength="6"
+                        Min="0"
                     />
                 </MudForm>
 
                 @if (_showCodeFeedback && !_codeIsCorrect)
                 {
-                    <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Text">
+                    <MudAlert Class="mt-2" Severity="Severity.Error" Variant="Variant.Text">
                         <MudStack Row="true" Justify="Justify.SpaceAround">
                             <MudText>Código inválido</MudText>
                         </MudStack>
@@ -47,23 +55,24 @@
 
 @inject SetupMfaClient Client
 @inject IDialogService DialogService
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
-    private string _userCode;
+    private int? _userCode;
     private bool _validateCodeLoading;
     private bool _showCodeFeedback;
     private bool _codeIsCorrect;
 
-    private async Task HandleCodeChanged(string newValue)
+    private async Task HandleCodeChanged(int? newValue)
     {
         _showCodeFeedback = false;
         _userCode = newValue;
 
-        if (_userCode.OnlyNumbers().Length == 6)
+        if (_userCode != null && _userCode.ToString().Length == 6)
         {
             _validateCodeLoading = true;
-            _codeIsCorrect = await Client.Setup(_userCode);
+            _codeIsCorrect = await Client.Setup(_userCode.ToString()!);
             _showCodeFeedback = true;
             _validateCodeLoading = false;
         }
@@ -76,10 +85,12 @@
 
     private async Task OpenDialog()
     {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var options = new DialogOptions {
             FullWidth = true,
             CloseButton = false,
             MaxWidth = MaxWidth.ExtraSmall,
+            FullScreen = breakpoint == Breakpoint.Xs,
         };
         await DialogService.ShowAsync<SetupMfaDialog>("", options);
     }

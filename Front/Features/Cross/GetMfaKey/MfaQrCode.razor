@@ -20,6 +20,9 @@
                     <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0">
                         <MudImage Src="@(GetQrCodeImageSrc())" Fluid="true" Elevation="25" Class="rounded-lg"/>
                     </MudContainer>
+                    <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0">
+                        <SykiTextField Value="@_key" CopyAdornment="true" ReadOnly="true" />
+                    </MudContainer>
                 }
             </MudStack>
         </MudCardContent>
@@ -33,6 +36,7 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
 
+    private string _key;
     private bool _qrCodeLoading;
     private Byte[] _codeBytes;
 
@@ -42,7 +46,8 @@
 
         var result = await Client.Get();
         var email = await GetUserEmail();
-        _codeBytes = result.Key.GenerateQrCodeBytes(email);
+        _key = result.Key;
+        _codeBytes = _key.GenerateQrCodeBytes(email);
 
         _qrCodeLoading = false;
     }

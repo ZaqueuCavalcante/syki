@@ -7,6 +7,7 @@
     Value="@Value"
     Required="true"
     Immediate="true"
+    ReadOnly="@ReadOnly"
     Margin="Margin.Dense"
     MaxLength="@MaxLength"
     AutoFocus="@AutoFocus"
@@ -14,7 +15,12 @@
     OnlyValidateIfDirty="true"
     Variant="Variant.Outlined"
     ValueChanged="@ValueChanged"
+    OnAdornmentClick="@OnAdornmentClick"
+	AdornmentIcon="@Icons.Material.Filled.ContentCopy"
+    Adornment="@(CopyAdornment ? Adornment.End : Adornment.None)"
 />
+
+@inject ClipboardService ClipboardService
 
 @code
 {
@@ -34,5 +40,16 @@
     public bool AutoFocus { get; set; }
 
     [Parameter]
+    public bool ReadOnly { get; set; }
+    
+    [Parameter]
     public int MaxLength { get; set; } = 100;
+
+	[Parameter]
+	public bool CopyAdornment { get; set; }
+
+	private async Task OnAdornmentClick()
+	{
+		await ClipboardService.CopyToClipboard(Value);
+	}
 }

@@ -6,17 +6,17 @@
 
 <PageTitle>Cadastro</PageTitle>
 
-<MudContainer Class="mt-8 mb-8" MaxWidth="MaxWidth.ExtraSmall">
+<MudContainer Class="mt-4 mb-8" MaxWidth="MaxWidth.ExtraSmall">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
     <MudForm>
-        <MudCard Class="px-10 pt-2 pb-8">
-            <MudImage Src="logo_512x512.png" Alt="Syki" Elevation="25" Class="rounded-lg ma-6"/>
+        <MudCard Class="px-4 pt-0 pb-4">
+            <MudImage Src="logo_512x512.png" Alt="Syki" Elevation="25" Class="rounded-lg ma-10"/>
             @if (_saved)
             {
                 <MudStack AlignItems="AlignItems.Center">
-                    <MudAlert NoIcon="true" Class="mt-6" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
+                    <MudAlert NoIcon="true" Class="mt-6 mb-6" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                         <MudText>Pronto, agora é só logar!</MudText>
                     </MudAlert>
                     <MudButton
@@ -32,9 +32,9 @@
             else
             {
                 <MudCardContent Class="pt-0 pb-2 px-0">
-                    <PasswordTextField Value="@_setup.Password" ValueChanged="@HandlePasswordChange" Required="false"/>
+                    <PasswordTextField Value="@_setup.Password" ValueChanged="@HandlePasswordChange" Class="pb-2 px-4" Required="false"/>
+                    <PasswordRequerimentsCard @bind-Validation="@_setup.Validation"/>
                 </MudCardContent>
-                <PasswordRequerimentsCard @bind-Validation="@_setup.Validation"/>
                 <MudCardActions>
                     <MudButton
                         Size="Size.Large"

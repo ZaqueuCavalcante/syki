@@ -2,33 +2,44 @@
 
 @page "/login-mfa"
 
-<PageTitle>Login MFA</PageTitle>
+<SykiPageTitle Title="Login MFA" />
 
-<MudContainer Class="mt-8 mb-8" MaxWidth="MaxWidth.ExtraSmall">
+<MudContainer Class="mt-4 mb-8" MaxWidth="MaxWidth.ExtraSmall">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
     <style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
-    <MudCard Class="px-4 pt-16" Elevation="0" Style="height: 460px">
+    <MudCard Class="px-4 pt-8" Style="height: 460px">
         <MudCardContent>
             <MudStack AlignItems="AlignItems.Center">
-                <MudAlert Class="px-2" Severity="Severity.Info" Variant="Variant.Text">
+                <MudAlert NoIcon="true" Class="px-4" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center">
                     <MudStack Row="true" Justify="Justify.SpaceAround">
-                        <MudText>Insira o código para realizar o login</MudText>
+                        <MudText>Insira o código gerado pelo app Google Authenticator para realizar o login</MudText>
                     </MudStack>
                 </MudAlert>
                 <MudForm>
-                    <MudTextField
-                        Placeholder="_ _ _  _ _ _"
+                    <style>
+                        .align-center input{
+                            text-align: center;
+                        }
+                    </style>
+                    <MudNumericField
+                        T="int?"
+                        Immediate="true"
                         OnlyValidateIfDirty="true"
-                        Variant="Variant.Outlined"
+                        ReadOnly="@_loading"
                         Style="width: 200px;"
-                        Class="mt-8 pt-8"
-                        AutoFocus="true"
                         Value="@_code"
                         ValueChanged="@HandleCodeChanged"
-                        T="String"
-                        Mask="@(new PatternMask("000 000"))"
+                        Variant="Variant.Outlined"
+                        HideSpinButtons="true"
+                        AutoFocus="true"
+                        Typo="Typo.h6"
+                        Class="mt-8"
+                        Margin="Margin.Dense"
+                        Max="999999"
+                        MaxLength="6"
+                        Min="0"
                     />
                 </MudForm>
                 @if (_showCodeFeedback)
@@ -49,19 +60,19 @@
 
 @code
 {
-    private string _code;
+    private int? _code;
     private bool _loading;
     private bool _showCodeFeedback;
 
-    private async Task HandleCodeChanged(string newValue)
+    private async Task HandleCodeChanged(int? newValue)
     {
         _showCodeFeedback = false;
         _code = newValue;
 
-        if (_code.OnlyNumbers().Length == 6)
+        if (_code.ToString().Length == 6)
         {
             _loading = true;
-            var result = await Client.Login(_code);
+            var result = await Client.Login(_code.ToString()!);
 
             if (result.AccessToken != null)
             {

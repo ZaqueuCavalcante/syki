@@ -4,9 +4,9 @@
 
 @page "/login"
 
-<PageTitle>Login</PageTitle>
+<SykiPageTitle Title="Login" />
 
-<MudContainer Class="mt-8 mb-8" MaxWidth="MaxWidth.ExtraSmall">
+<MudContainer Class="mt-4 mb-8" MaxWidth="MaxWidth.ExtraSmall">
     <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
         <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
     </MudOverlay>
@@ -19,7 +19,7 @@
                     Margin="Margin.Dense"
                     AutoFocus="true"
                     Label="Email"
-                    Class="mt-0"
+                    Class="mt-0 pb-3"
                     OnlyValidateIfDirty="true"
                     @bind-Value="@_email"
                     Variant="Variant.Outlined"

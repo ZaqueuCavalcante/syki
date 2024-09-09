@@ -1,6 +1,6 @@
 @namespace Syki.Front.Components.Custom
 
-<MudCard>
+<MudCard Class="@Class">
     <MudCardContent>
         <MudGrid>
             <MudItem xs="12" sm="8" md="8" lg="8">
@@ -32,6 +32,9 @@
 
 @code
 {
+    [Parameter]
+    public string Class { get; set; }
+    
     [Parameter]
     public string Icon { get; set; }
 

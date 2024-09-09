@@ -5,29 +5,37 @@
 @page "/teacher/agenda"
 @attribute [Authorize(Roles = "Teacher")]
 
-<MudContainer>
-    <MudCard Class="mt-8 mb-4 mx-6 px-2">
-        <MudCardContent>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudIcon Icon="@Icons.Material.Filled.CalendarMonth" Class="mr-1 mb-1" Size="Size.Large"/>
-                <MudText Typo="Typo.h5" Style="font-weight: bold">Agenda</MudText>
-                <MudSpacer />
-            </MudStack>
-        </MudCardContent>
-    </MudCard>
-    <CascadingValue Name="Days" Value="@Days">
-        <WeeklyAgenda />
-    </CascadingValue>
+<MudContainer Class="my-4 px-4">
+    <SykiPageHeader Icon="@Icons.Material.Filled.CalendarMonth" Title="Agenda" Class="mb-4" />
+    @if (_loading)
+    {
+        <MudContainer Class="px-0">
+            <MudCard>
+                <MudCardContent>
+                    <MudSkeleton Animation="Animation.Wave"/>
+                </MudCardContent>
+            </MudCard>
+        </MudContainer>
+    }
+    else
+    {
+        <CascadingValue Name="Days" Value="@Days">
+            <WeeklyAgenda Class="px-0" />
+        </CascadingValue>
+    }
 </MudContainer>
 
 @inject GetTeacherAgendaClient Client
 
 @code
 {
+    private bool _loading;
     private List<AgendaDayOut> Days = [];
-
+    
     protected override async Task OnInitializedAsync()
     {
+        _loading = true;
         Days = await Client.Get();
+        _loading = false;
     }
 }

@@ -5,18 +5,18 @@
 
 @page "/setup-mfa"
 
-<PageTitle>2FA Setup</PageTitle>
+<SykiPageTitle Title="Segurança" />
 
-<MudContainer>
-    <SykiPageHeader Icon="@Icons.Material.Filled.ScreenLockPortrait" Title="2FA Setup"/>
+<MudContainer Class="my-4 px-4">
+    <SykiPageHeader Icon="@Icons.Material.Filled.ScreenLockPortrait" Title="Configurar 2FA" />
     <SykiPageAlert Text="A autenticação de dois fatores ajuda a manter sua conta segura." />
-    <MudContainer Class="px-4 mb-8">
-        <MudGrid>
+    <MudContainer Class="px-0 mb-4">
+        <MudGrid Spacing="4">
             <MudItem xs="12" sm="12" md="6" lg="6">
-                <MfaQrCode/>
+                <MfaQrCode />
             </MudItem>
             <MudItem xs="12" sm="12" md="6" lg="6">
-                <SetupMfaInput/>
+                <SetupMfaInput />
             </MudItem>
         </MudGrid>
     </MudContainer>

@@ -3,7 +3,7 @@
 @namespace Syki.Front.Features.Cross.GetUserNotifications
 
 <div>
-    @if (GetCount() > 0)
+    @if (_alert)
     {
         <MudIconButton OnClick="@ViewAndOpenDialog" Color="Color.Warning" Icon="@Icons.Material.Filled.NotificationsActive" Style="color: #FFF" />
     }
@@ -20,11 +20,13 @@
 
 @code
 {
+    private bool _alert = false;
     private List<UserNotificationOut> _notifications = [];
 
     protected override async Task OnInitializedAsync()
     {
         await GetNotifications();
+        _alert = _notifications.Any(x => x.ViewedAt == null);
     }
 
     private async Task GetNotifications()
@@ -32,13 +34,9 @@
         _notifications = await GetUserNotificationsClient.Get();
     }
 
-    private int GetCount()
-    {
-        return _notifications.Count(x => x.ViewedAt == null);
-    }
-
     private async Task ViewAndOpenDialog()
     {
+        _alert = false;
         await OpenDialog();
         await ViewNotificationsClient.View();
         await GetNotifications();

@@ -29,7 +29,7 @@ public class Startup(IConfiguration configuration)
 
     public void Configure(IApplicationBuilder app)
     {
-        BackgroundJob.Enqueue<SykiTasksProcessor>(x => x.Run());
+        // BackgroundJob.Enqueue<SykiTasksProcessor>(x => x.Run());
 
         app.UseRouting();
         app.UseStaticFiles();

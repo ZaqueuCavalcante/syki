@@ -11,7 +11,7 @@ public class Startup(IConfiguration configuration)
     {
         services.AddServicesConfigs();
 
-        services.AddHostedService<PostgresListener>();
+        // services.AddHostedService<PostgresListener>();
 
         services.AddHangfire(x =>
         {

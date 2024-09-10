@@ -3,9 +3,11 @@
 @page "/student/frequency"
 @attribute [Authorize(Roles = "Student")]
 
-<MudContainer>
+<SykiPageTitle Title="Frequência" />
+
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.Class" Title="Frequência" />
-    <MudContainer Class="px-4 mb-8">
+    <MudContainer Class="px-0 my-4">
         <MudContainer Class="px-0 mb-8">
             <MudTable
                 T="GetStudentFrequenciesOut"
@@ -14,6 +16,7 @@
                 Breakpoint="Breakpoint.Sm"
                 Dense="true"
                 Hover="true"
+                Loading="@_loading"
                 RowsPerPage="100">
                 <HeaderContent>
                     <MudTh>Escopo</MudTh>
@@ -42,11 +45,14 @@
 
 @code
 {
+    private bool _loading;
     private List<GetStudentFrequenciesOut> _frequencies = [];
 
     protected override async Task OnInitializedAsync()
     {
+        _loading = true;
         var response = await Client.Get();
         if (response.IsSuccess()) _frequencies = response.GetSuccess();
+        _loading = false;
     }
 }

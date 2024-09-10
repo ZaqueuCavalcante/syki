@@ -5,9 +5,9 @@
 @page "/student/enrollments"
 @attribute [Authorize(Roles = "Student")]
 
-<PageTitle>Matrícula</PageTitle>
+<SykiPageTitle Title="Matrícula" />
 
-<MudContainer>
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader
         Icon="@Icons.Material.Filled.Article"
         Title="Matrícula"
@@ -17,7 +17,7 @@
         @bind-ButtonDisabled="@_editing"
     />
 
-    <MudContainer Class="px-4 mb-8">
+<MudContainer Class="px-0 my-4">
         
     @if (_loading && _enrollmentPeriod.Id.IsEmpty())
     {

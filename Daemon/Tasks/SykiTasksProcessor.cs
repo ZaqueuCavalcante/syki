@@ -13,7 +13,7 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
     {
         using var scope = serviceScopeFactory.CreateScope();
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
-
+        
         var tasks = await connection.QueryAsync<SykiTask>(sql);
         foreach (var task in tasks)
         {
@@ -59,7 +59,7 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
         ORDER BY
             created_at ASC
         LIMIT
-            300
+            250
         FOR UPDATE
     ";
 

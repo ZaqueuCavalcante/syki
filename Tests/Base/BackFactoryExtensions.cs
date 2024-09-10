@@ -127,7 +127,7 @@ public static class BackFactoryExtensions
         {
             var tasks = await ctx.Tasks.CountAsync(x => x.ProcessedAt == null);
             if (tasks == 0) break;
-            await Task.Delay(50);
+            await Task.Delay(500);
         }
     }
 }

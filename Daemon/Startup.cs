@@ -11,6 +11,8 @@ public class Startup(IConfiguration configuration)
     {
         services.AddServicesConfigs();
 
+        services.AddHostedService<PostgresListener>();
+
         services.AddHangfire(x =>
         {
             x.UseMemoryStorage();
@@ -27,7 +29,7 @@ public class Startup(IConfiguration configuration)
 
     public void Configure(IApplicationBuilder app)
     {
-        RecurringJob.AddOrUpdate<SykiTasksProcessor>("tasks-processor", x => x.Run(), configuration.Tasks().DelayCron());
+        BackgroundJob.Enqueue<SykiTasksProcessor>(x => x.Run());
 
         app.UseRouting();
         app.UseStaticFiles();
@@ -39,7 +41,7 @@ public class Startup(IConfiguration configuration)
 
         app.UseHangfireDashboard(
             pathMatch: "",
-            options: new DashboardOptions()
+            options: new DashboardOptions
             {
                 FaviconPath = "/favicon.ico",
                 Authorization = [ new HangfireAuthFilter(configuration.Hangfire().User, configuration.Hangfire().Password) ]

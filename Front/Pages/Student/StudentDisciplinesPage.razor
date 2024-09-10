@@ -8,35 +8,48 @@
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.Apps" Title="Disciplinas" />
     <MudContainer Class="px-0 my-4">
-        <MudExpansionPanels MultiExpansion="true">
-            @foreach(var period in _disciplines.ConvertAll(d => d.Period).Distinct().Order())
-            {
-                <MudExpansionPanel Expanded="@(period==1)">
-                    <TitleContent>
-                        <div class="d-flex">
-                            <MudIcon Icon="@Icons.Material.Filled.ArrowRight" class="mr-3"></MudIcon>
-                            <MudText><strong>@($"{period}º Período")</strong></MudText>
-                        </div>
-                    </TitleContent>
-                    <ChildContent>
-                        <MudTable Items="@_disciplines.Where(x => x.Period == period).OrderBy(x => x.Name)" Breakpoint="Breakpoint.Sm" Dense="true">
-                            <HeaderContent>
-                                <MudTh>Nome</MudTh>
-                                <MudTh>Créditos</MudTh>
-                                <MudTh>CH</MudTh>
-                                <MudTh>Situação</MudTh>
-                            </HeaderContent>
-                            <RowTemplate>
-                                <MudTd DataLabel="Nome">@context.Name</MudTd>
-                                <MudTd DataLabel="Créditos">@context.Credits</MudTd>
-                                <MudTd DataLabel="CH">@context.Workload</MudTd>
-                                <MudTd DataLabel="Status">@context.StudentDisciplineStatus</MudTd>
-                            </RowTemplate>
-                        </MudTable>
-                    </ChildContent>
-                </MudExpansionPanel>
-            }
-        </MudExpansionPanels>
+        @if (_loading)
+        {
+            <MudContainer Class="px-0">
+                <MudCard>
+                    <MudCardContent>
+                        <MudSkeleton Animation="Animation.Wave"/>
+                    </MudCardContent>
+                </MudCard>
+            </MudContainer>
+        }
+        else
+        {
+            <MudExpansionPanels MultiExpansion="true">
+                @foreach (var period in _disciplines.ConvertAll(d => d.Period).Distinct().Order())
+                {
+                    <MudExpansionPanel Expanded="@(period == 1)">
+                        <TitleContent>
+                            <div class="d-flex">
+                                <MudIcon Icon="@Icons.Material.Filled.ArrowRight" class="mr-3"></MudIcon>
+                                <MudText><strong>@($"{period}º Período")</strong></MudText>
+                            </div>
+                        </TitleContent>
+                        <ChildContent>
+                            <MudTable Items="@_disciplines.Where(x => x.Period == period).OrderBy(x => x.Name)" Breakpoint="Breakpoint.Sm" Dense="true">
+                                <HeaderContent>
+                                    <MudTh>Nome</MudTh>
+                                    <MudTh>Créditos</MudTh>
+                                    <MudTh>CH</MudTh>
+                                    <MudTh>Situação</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Nome">@context.Name</MudTd>
+                                    <MudTd DataLabel="Créditos">@context.Credits</MudTd>
+                                    <MudTd DataLabel="CH">@context.Workload</MudTd>
+                                    <MudTd DataLabel="Status">@context.StudentDisciplineStatus</MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </ChildContent>
+                    </MudExpansionPanel>
+                }
+            </MudExpansionPanels>
+        }
     </MudContainer>
 </MudContainer>
 
@@ -44,10 +57,13 @@
 
 @code
 {
+    private bool _loading;
     private List<DisciplineOut> _disciplines = [];
 
     protected override async Task OnInitializedAsync()
     {
+        _loading = true;
         _disciplines = await Client.Get();
+        _loading = false;
     }
 }

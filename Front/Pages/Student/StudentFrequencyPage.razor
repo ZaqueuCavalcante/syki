@@ -8,7 +8,7 @@
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.Class" Title="Frequência" />
     <MudContainer Class="px-0 my-4">
-        <MudContainer Class="px-0 mb-8">
+        <MudContainer Class="px-0 mb-4">
             <MudTable
                 T="GetStudentFrequenciesOut"
                 Items="@_frequencies"
@@ -16,8 +16,13 @@
                 Breakpoint="Breakpoint.Sm"
                 Dense="true"
                 Hover="true"
+                Filter="@_quickFilter"
                 Loading="@_loading"
-                RowsPerPage="100">
+                RowsPerPage="100"
+            >
+                <ToolBarContent>
+                    <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por disciplina"/>
+                </ToolBarContent>
                 <HeaderContent>
                     <MudTh>Escopo</MudTh>
                     <MudTh>Período</MudTh>
@@ -36,21 +41,33 @@
                         </MudProgressLinear>
                     </MudTd>
                 </RowTemplate>
+                <LoadingContent>
+                    @if (_breakpoint == Breakpoint.Xs)
+                    {
+                        <MudProgressLinear Color="Color.Info" Indeterminate="true"/>
+                    }
+                </LoadingContent>
             </MudTable>
         </MudContainer>
     </MudContainer>
 </MudContainer>
 
 @inject GetStudentFrequenciesClient Client
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
     private bool _loading;
+    private string _searchString;
+    private Breakpoint _breakpoint;
     private List<GetStudentFrequenciesOut> _frequencies = [];
+    
+    private Func<GetStudentFrequenciesOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var response = await Client.Get();
         if (response.IsSuccess()) _frequencies = response.GetSuccess();
         _loading = false;

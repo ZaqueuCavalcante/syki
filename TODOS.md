@@ -1,14 +1,9 @@
 # TODOS
 
 - [] Bug do gutto (aluno faz matricula depois de uma chamada feita)
-- [] Se n veio ngm pra aula, deve ser possivel salvar logo de cara tudo vazio?
 
 ----------------------------------------------------------------------------------------------
 
-- [] Adicionar comportamento padrao nos botoes de salvar para ficar desativado + loading
-
-- [] Setup de MFA n chama a API no celular ao digitar o 6 numeros (deixar colocar letra tbm)
-- [] Remover 2FA da navbar
 - [] Tela de profile de usuario com nome, email, reset de senha e 2FA setup
 - [] Limite de faltas e nota minima (reprovacao)
 - [] Cadastrar datas
@@ -22,12 +17,6 @@
 ----------------------------------------------------------------------------------------------
 
 - [] Dados incorretos na tela de index do professor
-- [] Adicionar skeletton na tela de detalhes de turma pra ver como fica o loading
-- [] Tela de detalhes de turma tela ta toda bugada no mobile (botoes todos/nenhum)
-- [] Tamanho horizontal do header na pagina de Agenda (celular)
-- [] Criar pagina de notificacoes, n exibir mais no dialog
-- [] Botao de notificacoes fica exibindo o tip mesmo depois de fechar o dialog
-- [] Botao de notificacoes fica zoado quando tem notificacao (numerozinho) / numero no meio do icon
 - [] Adicionar feature simples de diario de classe
     - Listagem com aula + titulo + data-hora + status + icon
     - Detalhes num dialog
@@ -36,7 +25,6 @@
 
 - [] Adicionar frequencia como insight
 - [] Calcular media do aluno + coeficiente de rendimento (on the fly)
-- [] No celular, exibir card de insight com icone -> nome -> value (coluna)
 - [] Matricula com pre-requisitos
 - [] Matricula habilita botao de editar mesmo quando n tem periodo academico in range
 - [] Caso ja tenha se matriculado, exibir componente mas com opcao de editar

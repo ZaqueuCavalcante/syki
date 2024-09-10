@@ -8,67 +8,66 @@
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.StickyNote2" Title="Notas" />
     <MudContainer Class="px-0 my-4">
-
-        @if (_loading)
-        {
-            <MudContainer Class="px-0">
-                <MudCard>
-                    <MudCardContent>
-                        <MudSkeleton Animation="Animation.Wave" />
-                    </MudCardContent>
-                </MudCard>
-            </MudContainer>
-        }
-        else
-        {
-            <MudExpansionPanels MultiExpansion="true">
-                @foreach (var period in _disciplines.ConvertAll(d => d.Period).Distinct().Order())
-                {
-                    <MudExpansionPanel Expanded="@(period==1)">
-                        <TitleContent>
-                            <div class="d-flex">
-                                <MudIcon Icon="@Icons.Material.Filled.ArrowRight" class="mr-3"></MudIcon>
-                                <MudText><strong>@($"{period}º Período")</strong></MudText>
-                            </div>
-                        </TitleContent>
-                        <ChildContent>
-                            <MudTable Items="@_disciplines.Where(x => x.Period == period).OrderBy(x => x.Discipline)"
-                                Breakpoint="Breakpoint.Sm" Dense="true">
-                                <HeaderContent>
-                                    <MudTh>Disciplina</MudTh>
-                                    <MudTh>Status</MudTh>
-                                    <MudTh>N1</MudTh>
-                                    <MudTh>N2</MudTh>
-                                    <MudTh>N3</MudTh>
-                                    <MudTh>Média</MudTh>
-                                </HeaderContent>
-                                <RowTemplate>
-                                    <MudTd DataLabel="Disciplina">@context.Discipline</MudTd>
-                                    <MudTd DataLabel="Status">@context.StudentDisciplineStatus.GetDescription()</MudTd>
-                                    <MudTd DataLabel="N1">@context.GetNote(ExamType.N1)</MudTd>
-                                    <MudTd DataLabel="N2">@context.GetNote(ExamType.N2)</MudTd>
-                                    <MudTd DataLabel="N3">@context.GetNote(ExamType.N3)</MudTd>
-                                    <MudTd DataLabel="Média">@context.AverageNote.Format()</MudTd>
-                                </RowTemplate>
-                            </MudTable>
-                        </ChildContent>
-                    </MudExpansionPanel>
-                }
-            </MudExpansionPanels>
-        }
+        <MudContainer Class="px-0 mb-4">
+            <MudTable
+                T="StudentExamGradeOut"
+                Items="@_disciplines"
+                Breakpoint="Breakpoint.Sm"
+                Dense="true"
+                Class="pa-4"
+                Hover="true"
+                Filter="@_quickFilter"
+                Loading="@_loading"
+                RowsPerPage="100"
+            >
+                <ToolBarContent>
+                    <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou status"/>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh>Disciplina</MudTh>
+                    <MudTh>Período</MudTh>
+                    <MudTh>Status</MudTh>
+                    <MudTh>N1</MudTh>
+                    <MudTh>N2</MudTh>
+                    <MudTh>N3</MudTh>
+                    <MudTh>Média</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Disciplina">@context.Discipline</MudTd>
+                    <MudTd DataLabel="Período">@context.Period</MudTd>
+                    <MudTd DataLabel="Status">@context.StudentDisciplineStatus.GetDescription()</MudTd>
+                    <MudTd DataLabel="N1">@context.GetNote(ExamType.N1)</MudTd>
+                    <MudTd DataLabel="N2">@context.GetNote(ExamType.N2)</MudTd>
+                    <MudTd DataLabel="N3">@context.GetNote(ExamType.N3)</MudTd>
+                    <MudTd DataLabel="Média">@context.AverageNote.Format()</MudTd>
+                </RowTemplate>
+                <LoadingContent>
+                    @if (_breakpoint == Breakpoint.Xs)
+                    {
+                        <MudProgressLinear Color="Color.Info" Indeterminate="true"/>
+                    }
+                </LoadingContent>
+            </MudTable>
+        </MudContainer>
     </MudContainer>
 </MudContainer>
 
 @inject GetStudentExamGradesClient Client
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
     private bool _loading;
+    private string _searchString;
+    private Breakpoint _breakpoint;
     private List<StudentExamGradeOut> _disciplines = [];
 
+    private Func<StudentExamGradeOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.StudentDisciplineStatus.ToString());
+    
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _disciplines = await Client.Get();
         _loading = false;
     }

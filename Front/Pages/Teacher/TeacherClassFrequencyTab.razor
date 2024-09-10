@@ -52,7 +52,7 @@
         Dense="true"
         Loading="@_loading"
         RowsPerPage="100"
-        ContainerClass="pt-6"
+        ContainerClass="pt-0"
     >
         <ToolBarContent>
             <MudGrid Class="align-center" Spacing="3">
@@ -87,6 +87,12 @@
         <NoRecordsContent>
             @(GetNotFoundMessage())
         </NoRecordsContent>
+        <LoadingContent>
+            @if (_breakpoint == Breakpoint.Xs)
+            {
+                <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+            }
+        </LoadingContent>
         <PagerContent>
             <MudDivider/>
             <MudStack Row="true" Class="mt-4">
@@ -101,6 +107,7 @@
 
 @inject ISnackbar Snackbar
 @inject GetTeacherClassClient GetTeacherClassClient
+@inject IBrowserViewportService BrowserViewportService
 @inject CreateLessonAttendanceClient CreateLessonAttendanceClient
 @inject GetTeacherLessonAttendancesClient GetTeacherLessonAttendancesClient
 
@@ -109,6 +116,7 @@
 	[Parameter]
 	public Guid ClassId { get; set; }
 
+    private Breakpoint _breakpoint;
     private ClassLessonsDialog _dialog;
 
     private bool _loading;
@@ -122,6 +130,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _class = await GetTeacherClassClient.Get(ClassId);
         var id = _class.Lessons.Where(x => x.Date <= DateTime.Now.ToDateOnly()).MaxBy(x => x.Date)?.Id ?? Guid.Empty;
         await SetLesson(id);

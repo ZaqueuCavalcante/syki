@@ -7,7 +7,6 @@ public static class SykiTasksConfigs
 {
     public static void AddSykiTasksConfigs(this IServiceCollection services)
     {
-        services.AddSingleton<TasksSettings>();
         services.AddSingleton<EmailSettings>();
         services.AddSingleton<DatabaseSettings>();
         services.AddSingleton<HangfireSettings>();

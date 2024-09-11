@@ -53,7 +53,7 @@ services:
     environment:
       - 'ASPNETCORE_URLS=http://+:5003'
       - 'ASPNETCORE_ENVIRONMENT=Development'
-      - 'Database__ConnectionString=UserID=postgres;Password=postgres;Host=db_host;Port=5432;Database=syki-db;Pooling=true;'
+      - 'Database__ConnectionString=UserID=postgres;Password=postgres;Host=db_host;Port=5432;Database=syki-db;Pooling=true;Keepalive=60;'
     ports:
       - '5003:5003'
     networks:

@@ -13,6 +13,7 @@ public class SykiTask
     public DateTime CreatedAt { get; set; }
     public DateTime? ProcessedAt { get; set; }
     public string? Error { get; set; }
+    public Guid? ProcessorId { get; set; }
 
     public SykiTask() { }
 

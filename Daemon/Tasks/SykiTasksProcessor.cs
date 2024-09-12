@@ -1,20 +1,33 @@
 using Dapper;
 using Npgsql;
-using Hangfire;
 using Newtonsoft.Json;
 
 namespace Syki.Daemon.Tasks;
 
-[DisableConcurrentExecution(60)]
 public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
 {
-    // TODO: ter uma fila pros emails e outra pras demais tasks?
     public async Task Run()
     {
         using var scope = serviceScopeFactory.CreateScope();
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
-        
-        var tasks = await connection.QueryAsync<SykiTask>(sql);
+
+        const string pickRowsSql = @"
+            UPDATE syki.tasks
+            SET processor_id = @ProcessorId
+            WHERE processor_id IS NULL
+        ";
+
+        var processorId = Guid.NewGuid();
+        var rows = await connection.ExecuteAsync(pickRowsSql, new { processorId });
+        if (rows == 0) return;
+
+        const string sql = @"
+            SELECT * FROM syki.tasks
+            WHERE processor_id = @ProcessorId AND processed_at IS NULL
+        ";
+
+        var tasks = await connection.QueryAsync<SykiTask>(sql, new { processorId });
+
         foreach (var task in tasks)
         {
             dynamic data = GetData(task);
@@ -29,6 +42,12 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
             {
                 error = ex.Message + ex.InnerException?.Message;
             }
+
+            const string update = @"
+                UPDATE syki.tasks
+                SET processed_at = now(), error = @Error
+                WHERE id = @Id
+            ";
 
             await connection.ExecuteAsync(update, new { task.Id, error });
         }
@@ -48,28 +67,4 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
         dynamic handler = scope.ServiceProvider.GetRequiredService(handlerType);
         return handler;
     }
-
-    private const string sql = @"
-        SELECT
-            *
-        FROM
-            syki.tasks
-        WHERE
-            processed_at IS NULL
-        ORDER BY
-            created_at ASC
-        LIMIT
-            250
-        FOR UPDATE
-    ";
-
-    private const string update = @"
-        UPDATE
-            syki.tasks
-        SET
-            processed_at = now(),
-            error = @Error
-        WHERE
-            id = @Id
-    ";
 }

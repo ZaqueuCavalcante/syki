@@ -1,11 +1,29 @@
 # TODOS
 
+- [] Fluxo de Iniciar Turma
+- [] Arrumar tela de matricula do aluno
+- [] Corrigir dados de index de Aluno e Professor
+- [] Mudar seed para ter alunos ja matriculados e outros ainda em periodo de matricula
+- [] 
+- [] 
+- [] 
+- [] Deploy na Azure com Terraform
+- [] Limite de faltas e nota minima (reprovacao)
+
+
+
+
+
+
+
+
+
+
 - [] Bug do gutto (aluno faz matricula depois de uma chamada feita)
 
 ----------------------------------------------------------------------------------------------
 
 - [] Tela de profile de usuario com nome, email, reset de senha e 2FA setup
-- [] Limite de faltas e nota minima (reprovacao)
 - [] Cadastrar datas
     - Periodo de matricula
     - Inicio e fim do periodo academico
@@ -16,10 +34,10 @@
 
 ----------------------------------------------------------------------------------------------
 
-- [] Dados incorretos na tela de index do professor
 - [] Adicionar feature simples de diario de classe
     - Listagem com aula + titulo + data-hora + status + icon
     - Detalhes num dialog
+    - Deve aparecer pro aluno
 
 ----------------------------------------------------------------------------------------------
 

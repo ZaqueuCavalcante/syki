@@ -15,6 +15,8 @@ public class GetTeachersService(SykiDbContext ctx) : IAcademicService
                 syki.users u ON u.id = t.id
             WHERE
                 u.institution_id = {institutionId}
+            ORDER BY
+                t.name
         ";
 
         var teachers = await ctx.Database.SqlQuery<TeacherOut>(sql).ToListAsync();

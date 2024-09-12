@@ -43,6 +43,7 @@ public static class UserExtensions
     {
         return
             path != "/login" &&
+            path != "/skip-user-register" &&
             path != "/login/mfa" &&
             path != "/reset-password" &&
             path != "/users" &&

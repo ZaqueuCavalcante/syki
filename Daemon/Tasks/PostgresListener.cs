@@ -16,11 +16,7 @@ public class PostgresListener(IConfiguration configuration) : BackgroundService
 
         connection.Notification += (o, e) =>
         {
-            var count = JobStorage.Current.GetMonitoringApi().ProcessingCount();
-            if (count <= 1)
-            {
-                BackgroundJob.Enqueue<SykiTasksProcessor>(x => x.Run());
-            }
+            BackgroundJob.Enqueue<SykiTasksProcessor>(x => x.Run());
         };
 
         await using (var cmd = new NpgsqlCommand("LISTEN new_task;", connection))

@@ -29,6 +29,7 @@ global using Syki.Front.Features.Adm.GetUsers;
 
 global using Syki.Front.Features.Cross.CreatePendingUserRegister;
 global using Syki.Front.Features.Cross.FinishUserRegister;
+global using Syki.Front.Features.Cross.SkipUserRegister;
 global using Syki.Front.Features.Cross.GetUserNotifications;
 global using Syki.Front.Features.Cross.Login;
 global using Syki.Front.Features.Cross.LoginMfa;

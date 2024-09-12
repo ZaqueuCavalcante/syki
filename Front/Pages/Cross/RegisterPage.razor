@@ -19,11 +19,29 @@
             }
             else
             {
+                <MudButton
+                    OnClick="@SkipRegister"
+                    EndIcon="@Icons.Material.Filled.Login"
+                    IconSize="Size.Medium"
+                    Size="Size.Large"
+                    Color="Color.Tertiary"
+                    Variant="Variant.Filled"
+                    Class="mx-auto mb-4 px-12 my-0"
+                >
+                    Logar sem cadastro
+                </MudButton>
+
+                <MudStack Row="true" Spacing="0" AlignItems="AlignItems.Center" Justify="Justify.Center">
+                    <MudDivider DividerType="DividerType.FullWidth" Class="mt-2 mb-6" Style="width: 40%" />
+                    <MudIcon Icon="@Icons.Material.Filled.TripOrigin" Size="Size.Large" Class="mb-4" />
+                    <MudDivider DividerType="DividerType.FullWidth" Class="mt-2 mb-6" Style="width: 40%" />
+                </MudStack>
+
                 <MudAlert NoIcon="true" Class="mx-4" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                     <MudText Align="Align.Center">Cadastre seu email para ter acesso ao sistema.</MudText>
                 </MudAlert>
                 <MudCardContent Class="px-0 mx-4 pt-8 pb-0">
-                    <SykiTextField Label="Email" AutoFocus="true" @bind-Value="@_email" />
+                    <SykiTextField Label="Email" @bind-Value="@_email" />
                 </MudCardContent>
                 <MudCardActions>
                     <MudButton
@@ -31,7 +49,8 @@
                         Size="Size.Large"
                         Color="Color.Primary"
                         Variant="Variant.Filled"
-                        Class="mx-auto mb-4 px-12 my-0">
+                        Class="mx-auto mb-4 px-12 my-0"
+                    >
                         Cadastrar
                     </MudButton>
                 </MudCardActions>
@@ -41,7 +60,9 @@
 </MudContainer>
 
 @inject ISnackbar Snackbar
-@inject CreatePendingUserRegisterClient Client
+@inject NavigationManager Nav
+@inject SkipUserRegisterClient SkipUserRegisterClient
+@inject CreatePendingUserRegisterClient CreatePendingUserRegisterClient
 
 @code
 {
@@ -50,13 +71,21 @@
     private MudForm _form;
     private string _email;
 
+    private async Task SkipRegister()
+    {
+        _loading = true;
+        await SkipUserRegisterClient.Skip();
+        Nav.NavigateTo("/");
+        _loading = false;
+    }
+
     private async Task Submit()
     {
         await _form.Validate();
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Client.Create(_email);
+        var response = await CreatePendingUserRegisterClient.Create(_email);
         if (response.IsSuccess())
         {
             _saved = true;

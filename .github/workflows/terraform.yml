@@ -1,95 +1,95 @@
-name: Terraform
+# name: Terraform
 
-on:
-  push:
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
 
-jobs:
-  setup-infra:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: Infra
+# jobs:
+#   setup-infra:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         working-directory: Infra
 
-    steps:
-      - uses: actions/checkout@v4
+#     steps:
+#       - uses: actions/checkout@v4
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
+#       - name: Set up Terraform
+#         uses: hashicorp/setup-terraform@v1
 
-      - name: Terraform Init
-        run: terraform init
+#       - name: Terraform Init
+#         run: terraform init
 
-      - name: Log in to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#       - name: Log in to Azure
+#         uses: azure/login@v1
+#         with:
+#           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
-        env:
-          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+#       - name: Terraform Apply
+#         run: terraform apply -auto-approve
+#         env:
+#           ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+#           ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+#           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
-  build:
-    runs-on: ubuntu-latest
-    needs: setup-infra
+#   build:
+#     runs-on: ubuntu-latest
+#     needs: setup-infra
 
-    steps:
-      - uses: actions/checkout@v3
+#     steps:
+#       - uses: actions/checkout@v3
 
-      - name: Setup
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 8.0.401
+#       - name: Setup
+#         uses: actions/setup-dotnet@v3
+#         with:
+#           dotnet-version: 8.0.401
 
-      - name: Restore
-        run: dotnet restore
+#       - name: Restore
+#         run: dotnet restore
 
-      - name: Build
-        run: dotnet build --no-restore
+#       - name: Build
+#         run: dotnet build --no-restore
 
-      - name: Tests
-        run: dotnet test --no-build
+#       - name: Tests
+#         run: dotnet test --no-build
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: syki-api
-          path: dist
+#       - name: Upload artifact for deployment job
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: syki-api
+#           path: dist
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: "Production"
+#   deploy:
+#     runs-on: ubuntu-latest
+#     needs: build
+#     environment:
+#       name: "Production"
 
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: syki-api
+#     steps:
+#       - name: Download artifact from build job
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: syki-api
 
-      - name: Log in to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#       - name: Log in to Azure
+#         uses: azure/login@v1
+#         with:
+#           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Retrieve Azure Web App Publish Profile
-        id: getpublishprofile
-        run: |
-          PUBLISH_PROFILE=$(az webapp deployment list-publishing-profiles --name "tweet-text-splitter" --resource-group "testRG" --xml)
-          echo "PUBLISH_PROFILE<<EOF" >> $GITHUB_ENV
-          echo "$PUBLISH_PROFILE" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+#       - name: Retrieve Azure Web App Publish Profile
+#         id: getpublishprofile
+#         run: |
+#           PUBLISH_PROFILE=$(az webapp deployment list-publishing-profiles --name "tweet-text-splitter" --resource-group "testRG" --xml)
+#           echo "PUBLISH_PROFILE<<EOF" >> $GITHUB_ENV
+#           echo "$PUBLISH_PROFILE" >> $GITHUB_ENV
+#           echo "EOF" >> $GITHUB_ENV
   
-      - name: "Deploy to Azure Web App"
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: "tweet-text-splitter"
-          slot-name: "Production"
-          package: .
-          publish-profile: ${{ env.PUBLISH_PROFILE }}
+#       - name: "Deploy to Azure Web App"
+#         uses: azure/webapps-deploy@v2
+#         with:
+#           app-name: "tweet-text-splitter"
+#           slot-name: "Production"
+#           package: .
+#           publish-profile: ${{ env.PUBLISH_PROFILE }}

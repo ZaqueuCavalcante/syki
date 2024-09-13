@@ -5,9 +5,19 @@ public class GetTeacherInsightsService(SykiDbContext ctx) : ITeacherService
     public async Task<TeacherInsightsOut> Get(Guid institutionId, Guid userId)
     {
         var classes = await ctx.Classes
+            .Include(c => c.Students)
+            .Include(c => c.Lessons)
             .Where(x => x.InstitutionId == institutionId && x.TeacherId == userId)
-            .CountAsync();
+            .ToListAsync();
         
-        return new() { Classes = classes, Students = 3, Aulas = 89, Average = 7.89M };
+        var students = new Dictionary<Guid, Guid>();
+        var lessons = 0;
+        classes.ForEach(c =>
+        {
+            c.Students.ForEach(s => students.TryAdd(s.Id, s.Id));
+            lessons += c.Lessons.Count;
+        });
+
+        return new() { Classes = classes.Count, Students = students.Count, Lessons = lessons };
     }
 }

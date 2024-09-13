@@ -57,10 +57,13 @@
         <ToolBarContent>
             <MudGrid Class="align-center" Spacing="3">
                 <MudItem xs="12" sm="5" md="5" lg="5">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
-                        <MudButton OnClick="@SelectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBox" Size="Size.Small">Todos</MudButton>
-                        <MudButton OnClick="@UnselectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" Size="Size.Small">Nenhum</MudButton>
-                    </MudStack>
+                    @if (_showButtons)
+                    {
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                            <MudButton OnClick="@SelectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBox" Size="Size.Small">Todos</MudButton>
+                            <MudButton OnClick="@UnselectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" Size="Size.Small">Nenhum</MudButton>
+                        </MudStack>
+                    }
                 </MudItem>
                 <MudItem xs="12" sm="7" md="7" lg="7" Class="d-flex justify-end">
                     <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome"/>
@@ -95,10 +98,13 @@
         </LoadingContent>
         <PagerContent>
             <MudDivider/>
-            <MudStack Row="true" Class="mt-4">
-                <MudSpacer/>
-                <DialogSaveButton Class="mr-2" OnClick="@SaveFrequency"/>
-            </MudStack>
+            @if (_showButtons)
+            {
+                <MudStack Row="true" Class="mt-4">
+                    <MudSpacer/>
+                    <DialogSaveButton Class="mr-2" OnClick="@SaveFrequency"/>
+                </MudStack>
+            }
         </PagerContent>
     </MudTable>
 </MudContainer>
@@ -120,6 +126,7 @@
     private ClassLessonsDialog _dialog;
 
     private bool _loading;
+    private bool _showButtons;
     private string _searchString;
     private TeacherClassOut _class = new();
     private LessonOut _lesson = new();
@@ -135,6 +142,7 @@
         var id = _class.Lessons.Where(x => x.Date <= DateTime.Now.ToDateOnly()).MaxBy(x => x.Date)?.Id ?? Guid.Empty;
         await SetLesson(id);
         _loading = false;
+        _showButtons = true;
     }
 
     private async Task SetLesson(Guid id)
@@ -181,7 +189,7 @@
         {
             _class = await GetTeacherClassClient.Get(ClassId);
             _initialState = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
-            Snackbar.Add("Chamada salva com sucesso!", Severity.Success);
+            Snackbar.Add("Frequência salva com sucesso!", Severity.Success);
         }
         else
         {

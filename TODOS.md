@@ -4,13 +4,10 @@
 - [] Arrumar tela de matricula do aluno
 - [] Corrigir dados de index de Aluno e Professor
 - [] Mudar seed para ter alunos ja matriculados e outros ainda em periodo de matricula
-- [] 
-- [] 
-- [] 
+- [] Revisar todos os testes
+- [] Documentacao do codigo e da API
 - [] Deploy na Azure com Terraform
 - [] Limite de faltas e nota minima (reprovacao)
-
-
 
 
 

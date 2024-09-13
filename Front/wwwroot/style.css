@@ -1,7 +1,7 @@
 .outer-circle {
     width: 5rem;
     height: 5rem;
-    background-color: #fff;
+    background-color: #32333D;
     margin: auto;
     position: absolute;
     top: 0;
@@ -13,7 +13,7 @@
 
 .inner-circle {
     border-radius: inherit;
-    background-image: conic-gradient(#fff, rgba(89, 74, 226, 0.3), rgb(89, 74, 226));
+    background-image: conic-gradient(#32333D, rgba(89, 74, 226, 0.3), rgb(89, 74, 226));
     position: absolute;
     z-index: -1;
     margin: auto;

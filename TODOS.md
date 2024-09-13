@@ -15,6 +15,14 @@
 
 
 
+- [] Feature flags
+    - API retorna header com as features habilitadas [541, 684, 1844]
+    - Front salva lista no LocalStorage
+    - Usar o AuthorizeView para determinar se pode ver ou nao coisa relacionadas a features
+    - Isso n deve ser usado para coisas relacionadas a autenticacao / autorizacao
+    - Em todos os requests o que veio no header eh salvo no LocalStorage (sobrescrever msm)
+    - Ao mudar os headers na API, o front deve se adaptar automaticamente
+    - Isso pode ser usado para forcar o reload depois de um deploy do front, basta retornar o hash do ultimo commit do codigo
 
 
 

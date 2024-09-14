@@ -31,14 +31,14 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
 
-        var keyResponse = await client.Cross.GetMfaKey();
+        var keyResponse = await client.Http.GetMfaKey();
         var token = keyResponse.Key.ToMfaToken();
-        await client.Cross.SetupMfa(token);
+        await client.Http.SetupMfa(token);
 
-        client.Cross.RemoveAuthToken();
+        client.Http.RemoveAuthToken();
 
         // Act
-        var response = await client.Cross.LoginMfa(token);
+        var response = await client.Http.LoginMfa(token);
 
         // Assert
         response.AccessToken.Should().BeNull();

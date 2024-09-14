@@ -8,16 +8,16 @@ public class GetStudentInsightsService(SykiDbContext ctx) : IStudentService
             .Where(g => g.CourseCurriculumId == courseCurriculumId)
             .CountAsync();
 
-        // TODO: Adicionar demais props...
+        var finishedDisciplines = await ctx.ClassesStudents
+            .Where(x => x.SykiStudentId == userId && x.StudentDisciplineStatus == StudentDisciplineStatus.Aprovado)
+            .CountAsync();
 
-        var notas = await ctx.ExamGrades.Where(g => g.StudentId == userId).ToListAsync();
-        var ids = notas.Select(g => g.ClassId).Distinct().ToList();
-        var classes = await ctx.Classes
-            .Select(x => new { x.Id, x.Workload })
-            .Where(g => ids.Contains(g.Id))
-            .ToListAsync();
+        // Filtrar so as relacionadas com o studante
+        var lessons = await ctx.Lessons.Include(x => x.Attendances).ToListAsync();
+        var lessonsCount = lessons.Count(x => x.Attendances.Count > 0);
+        var presences = lessons.Count(x => x.Attendances.Exists(a => a.StudentId == userId && a.Present));
+        var frequency = lessonsCount == 0 ? 0.00M : 100M * (1M * presences / (1M * lessonsCount));
 
-
-        return new() { TotalDisciplines = totalDisciplines };
+        return new() { Status = StudentStatus.Enrolled, TotalDisciplines = totalDisciplines, FinishedDisciplines = finishedDisciplines, Frequency = frequency };
     }
 }

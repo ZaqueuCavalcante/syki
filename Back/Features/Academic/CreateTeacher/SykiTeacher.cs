@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.CreateTeacher;
 
+/// <summary>
+/// Representa um Professor.
+/// </summary>
 public class SykiTeacher
 {
     public Guid Id { get; set; }

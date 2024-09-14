@@ -32,7 +32,7 @@ public class Class
 
     private Class() {}
 
-    public Class(
+    private Class(
         Guid institutionId,
         Guid disciplineId,
         Guid teacherId,
@@ -46,7 +46,7 @@ public class Class
         TeacherId = teacherId;
         PeriodId = period;
         Vacancies = vacancies;
-        Status = ClassStatus.OnEnrollmentPeriod;
+        Status = ClassStatus.OnPreEnrollment;
         Schedules = schedules;
         Students = [];
         Lessons = [];

@@ -22,7 +22,7 @@ public partial class IntegrationTests
         @class.Teacher.Should().Be(teacher.Name);
         @class.Period.Should().Be(period.Id);
         @class.Vacancies.Should().Be(40);
-        @class.Status.Should().Be(ClassStatus.OnEnrollmentPeriod);
+        @class.Status.Should().Be(ClassStatus.OnPreEnrollment);
         @class.Schedules.Should().ContainSingle();
     }
 

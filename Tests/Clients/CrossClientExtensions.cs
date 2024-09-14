@@ -30,7 +30,7 @@ public static class CrossClientExtensions
     public static async Task<UserOut> RegisterUser(this HttpClient client, BackFactory factory)
     {
         var email = TestData.Email;
-        var password = "Lalala@123";
+        var password = "Test@123";
 
         await client.CreatePendingUserRegister(email);
         var token = await factory.GetRegisterSetupToken(email);
@@ -90,7 +90,7 @@ public static class CrossClientExtensions
 
     public static async Task<string> ResetPassword(this HttpClient client, string token)
     {
-        var password = "My@newP4sswordMy@newP4ssword";
+        var password = "My@newP4ssword";
         await client.ResetPassword(token, password);
         return password;
     }

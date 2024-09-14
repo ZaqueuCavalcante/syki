@@ -23,6 +23,12 @@
             Loading="@_loading"
         />
         <StudentInsightCard
+            Icon="@Icons.Material.Filled.CoPresent"
+            Title="Frequência"
+            Text="@($"{_data.Frequency.Format()}%")"
+            Loading="@_loading"
+        />
+        <StudentInsightCard
             Icon="@Icons.Material.Filled.GroupWork"
             Title="Média"
             Text="@($"{_data.Average.Format()}")"

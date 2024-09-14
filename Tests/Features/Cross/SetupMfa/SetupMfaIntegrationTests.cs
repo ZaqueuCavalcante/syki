@@ -8,11 +8,11 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsAcademic();
 
-        var keyResponse = await client.Cross.GetMfaKey();
+        var keyResponse = await client.Http.GetMfaKey();
         var token = keyResponse.Key.ToMfaToken();
 
         // Act
-        var response = await client.Cross.SetupMfa(token);
+        var response = await client.Http.SetupMfa(token);
 
         // Assert
         response.Should().BeTrue();
@@ -26,7 +26,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.Cross.SetupMfa(token);
+        var response = await client.Http.SetupMfa(token);
 
         // Assert
         response.Should().BeFalse();

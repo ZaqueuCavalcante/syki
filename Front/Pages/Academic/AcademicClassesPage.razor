@@ -1,4 +1,5 @@
 @using Syki.Front.Features.Academic.CreateClass
+@using Syki.Front.Features.Academic.ReleaseClassesForEnrollment
 
 @namespace Syki.Front.Pages.Academic
 
@@ -10,6 +11,42 @@
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="Turmas" ButtonText="Nova Turma" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Em uma mesma turma podem estudar alunos de diferentes cursos." />
+    @if (_showReleaseButton || _showStartButton)
+    {
+        <MudCard Class="pl-1 mb-4">
+            <MudCardContent>
+                <MudGrid Spacing="3">
+                    @if (_showReleaseButton)
+                    {
+                        <MudItem>
+                            <MudButton
+                                IconSize="Size.Medium"
+                                StartIcon="@Icons.Material.Filled.Article"
+                                Variant="Variant.Filled"
+                                Size="Size.Medium"
+                                Color="Color.Tertiary"
+                                OnClick="@OpenReleaseDialog">
+                                Liberar matrícula
+                            </MudButton>
+                        </MudItem>
+                    }
+                    @if (_showStartButton)
+                    {
+                        <MudItem>
+                            <MudButton
+                                IconSize="Size.Medium"
+                                StartIcon="@Icons.Material.Filled.PlayLesson"
+                                Variant="Variant.Filled"
+                                Size="Size.Medium"
+                                Color="Color.Info">
+                                Iniciar
+                            </MudButton>
+                        </MudItem>
+                    }
+                </MudGrid>
+            </MudCardContent>
+        </MudCard>
+    }
     <MudContainer Class="px-0 mb-4">
         <MudTable
             Items="@_classes"
@@ -65,13 +102,15 @@
 
 @inject NavigationManager Nav
 @inject IDialogService DialogService
-@inject GetClassesClient GetClassesClient
 @inject IBrowserViewportService BrowserViewportService
+@inject GetAcademicClassesClient GetAcademicClassesClient
 
 @code
 {
     private bool _loading;
     private string _searchString;
+    private bool _showReleaseButton;
+    private bool _showStartButton;
     private List<ClassOut> _classes = [];
 
     private Breakpoint _breakpoint;
@@ -80,7 +119,8 @@
     {
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _loading = true;
-        _classes = await GetClassesClient.Get();
+        _classes = await GetAcademicClassesClient.Get();
+        _showReleaseButton = _classes.Any(c => c.Status == ClassStatus.OnPreEnrollment);
         _loading = false;
     }
 
@@ -108,6 +148,23 @@
         await OnInitializedAsync();
     }
 
+    private async Task OpenReleaseDialog()
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            FullWidth = true,
+            MaxWidth = MaxWidth.Medium,
+            FullScreen = breakpoint == Breakpoint.Xs,
+        };
+        var dialog = await DialogService.ShowAsync<ReleaseClassesForEnrollmentDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+    
     private string GetNotFoundMessage()
     {
         return (_searchString.IsEmpty()) ? "Não existem turmas cadastradas ainda." : "Nenhuma turma encontrada.";

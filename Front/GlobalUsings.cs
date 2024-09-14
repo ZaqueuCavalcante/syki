@@ -9,7 +9,7 @@ global using Syki.Front.Features.Academic.CreateAcademicPeriod;
 global using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 global using Syki.Front.Features.Academic.GetAcademicPeriods;
 global using Syki.Front.Features.Academic.GetCampi;
-global using Syki.Front.Features.Academic.GetClasses;
+global using Syki.Front.Features.Academic.GetAcademicClasses;
 global using Syki.Front.Features.Academic.GetCourseCurriculums;
 global using Syki.Front.Features.Academic.GetCourseDisciplines;
 global using Syki.Front.Features.Academic.GetCourseOfferings;

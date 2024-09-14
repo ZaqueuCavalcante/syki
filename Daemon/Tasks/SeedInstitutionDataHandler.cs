@@ -25,6 +25,8 @@ public class SeedInstitutionDataHandler(
 {
     public async Task Handle(SeedInstitutionData task)
     {
+        if (Env.IsTesting()) return;
+
         var id = task.InstitutionId;
         var institution = await ctx.Institutions.FirstAsync(f => f.Id == id);
 

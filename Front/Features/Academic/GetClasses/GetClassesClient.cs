@@ -1,9 +1,10 @@
-namespace Syki.Front.Features.Academic.GetClasses;
+namespace Syki.Front.Features.Academic.GetAcademicClasses;
 
-public class GetClassesClient(HttpClient http) : IAcademicClient
+public class GetAcademicClassesClient(HttpClient http) : IAcademicClient
 {
-    public async Task<List<ClassOut>> Get()
+    public async Task<List<ClassOut>> Get(GetAcademicClassesIn? query = null)
     {
-        return await http.GetFromJsonAsync<List<ClassOut>>("/academic/classes") ?? [];
+        var queryString = query?.Status != null ? $"?status={query.Status}" : "";
+        return await http.GetFromJsonAsync<List<ClassOut>>($"/academic/classes{queryString}") ?? [];
     }
 }

@@ -27,7 +27,7 @@ public partial class IntegrationTests
         @class.Code.Should().Be(math.Code);
         @class.Period.Should().Be(period.Id);
         @class.Discipline.Should().Be(math.Name);
-        @class.Status.Should().Be(ClassStatus.OnEnrollmentPeriod);
+        @class.Status.Should().Be(ClassStatus.OnPreEnrollment);
 
         @class.Students.Should().HaveCount(1);
         var examGrades = @class.Students.First().ExamGrades;

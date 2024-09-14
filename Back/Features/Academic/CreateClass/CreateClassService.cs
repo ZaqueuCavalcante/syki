@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.CreateClass;
 
+/// <summary>
+/// Cria uma nova Turma.
+/// </summary>
 public class CreateClassService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<OneOf<ClassOut, SykiError>> Create(Guid institutionId, CreateClassIn data)

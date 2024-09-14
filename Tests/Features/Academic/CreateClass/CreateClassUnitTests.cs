@@ -18,7 +18,7 @@ public class CreateClassUnitTests
         var schedules = new List<Schedule>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
         // Act
-        var @class = new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
+        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).GetSuccess();
 
         // Assert
         @class.Id.Should().NotBeEmpty();
@@ -26,6 +26,7 @@ public class CreateClassUnitTests
         @class.DisciplineId.Should().Be(disciplineId);
         @class.TeacherId.Should().Be(teacherId);
         @class.PeriodId.Should().Be(period);
+        @class.Status.Should().Be(ClassStatus.OnPreEnrollment);
         @class.Vacancies.Should().Be(vacancies);
         @class.Schedules.Should().BeEquivalentTo(schedules);
     }
@@ -82,7 +83,7 @@ public class CreateClassUnitTests
         const int vacancies = 40;
 
         // Act
-        var @class = new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
+        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).GetSuccess();
 
         // Assert
         @class.Schedules.Should().BeEquivalentTo(schedules);
@@ -103,11 +104,9 @@ public class CreateClassUnitTests
         var teacher = new SykiTeacher(userId, institutionId, "Chico Science");
         var schedules = new List<Schedule>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
-        var @class = new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules)
-        {
-            Discipline = discipline,
-            Teacher = teacher,
-        };
+        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).GetSuccess();
+        @class.Discipline = discipline;
+        @class.Teacher = teacher;
 
         // Act
         var classOut = @class.ToOut();

@@ -1,7 +1,8 @@
 namespace Syki.Back.Features.Academic.StartClass;
 
 /// <summary>
-/// Inicia uma turma.
+/// Inicia várias Turmas.
+/// Após isso, tanto Professores quanto Alunos passam a ter acesso às suas Turmas.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

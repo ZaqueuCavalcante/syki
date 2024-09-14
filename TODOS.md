@@ -1,5 +1,23 @@
 # TODOS
 
+- [V] Ao criar uma Turma, ela vai comecar com o status de Pre-Matricula
+
+- [V] Deve ser possivel liberar para matricula varias turmas ao mesmo tempo
+    - Todas precisam ter o status de Pre-Matricula e ser do mesmo periodo academico
+    - O periodo de matricula vinculado deve conter a data do request (date >= start && date <= end)
+
+- [ ] Uma vez liberada a matricula, o status deve ser Em matricula (ate dia final do periodo de matricula)
+    - Se o periodo de matricula acabar e a turma ainda estiver Em-Matricula, deve exibir o status de Aguardando Inicio
+    - Nesse momento, caso o periodo de matricula seja estendido, o sistema deve continuar funcional
+
+- [ ] Deve ser possivel iniciar varias turmas ao mesmo tempo
+    - Todas precisam ter o status de Aguardando Inicio e ser do mesmo periodo
+
+- [ ] O aluno so pode ver a turma quando ela tiver o status de Em Matricula
+
+
+
+
 - [] Fluxo de Iniciar Turma
 - [] Arrumar tela de matricula do aluno
 - [] Corrigir dados de index de Aluno e Professor
@@ -20,6 +38,10 @@
     - Em todos os requests o que veio no header eh salvo no LocalStorage (sobrescrever msm)
     - Ao mudar os headers na API, o front deve se adaptar automaticamente
     - Isso pode ser usado para forcar o reload depois de um deploy do front, basta retornar o hash do ultimo commit do codigo
+
+
+
+
 
 
 

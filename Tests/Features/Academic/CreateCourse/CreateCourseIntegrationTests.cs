@@ -40,7 +40,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await client.Cross.PostAsJsonAsync("/academic/courses", new { Name = "ADS" });
+        var response = await client.Http.PostAsJsonAsync("/academic/courses", new { Name = "ADS" });
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);

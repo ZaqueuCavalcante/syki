@@ -164,10 +164,8 @@ public class CreateLessonsUnitTests
         const string period = "2024.2";
         const int vacancies = 40;
 
-        var @class = new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules)
-        {
-            Period = AcademicPeriod.New(period, institutionId, start.ToDateOnly(), end.ToDateOnly())
-        };
+        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).GetSuccess();
+        @class.Period = AcademicPeriod.New(period, institutionId, start.ToDateOnly(), end.ToDateOnly());
 
         return @class;
     }

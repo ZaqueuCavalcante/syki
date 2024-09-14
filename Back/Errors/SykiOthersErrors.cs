@@ -35,3 +35,18 @@ public class EnrollmentPeriodAlreadyExists : SykiError
     public override string Code { get; set; } = nameof(EnrollmentPeriodAlreadyExists);
     public override string Message { get; set; } = "Já existe um período de matrícula para o período acadêmico informado.";
 }
+public class AllClassesMustHaveOnPreEnrollmentStatus : SykiError
+{
+    public override string Code { get; set; } = nameof(AllClassesMustHaveOnPreEnrollmentStatus);
+    public override string Message { get; set; } = "Todas as turmas precisam ter o status de Pré-matrícula.";
+}
+public class EnrollmentPeriodNotStarted : SykiError
+{
+    public override string Code { get; set; } = nameof(EnrollmentPeriodNotStarted);
+    public override string Message { get; set; } = "Período de matrícula não iniciado.";
+}
+public class EnrollmentPeriodFinalized : SykiError
+{
+    public override string Code { get; set; } = nameof(EnrollmentPeriodFinalized);
+    public override string Message { get; set; } = "Período de matrícula finalizado.";
+}

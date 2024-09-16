@@ -61,7 +61,6 @@
 
 @inject ISnackbar Snackbar
 @inject NavigationManager Nav
-@inject SkipUserRegisterClient SkipUserRegisterClient
 @inject CreatePendingUserRegisterClient CreatePendingUserRegisterClient
 
 @code
@@ -70,14 +69,6 @@
     private bool _loading;
     private MudForm _form;
     private string _email;
-
-    private async Task SkipRegister()
-    {
-        _loading = true;
-        await SkipUserRegisterClient.Skip();
-        Nav.NavigateTo("/");
-        _loading = false;
-    }
 
     private async Task Submit()
     {

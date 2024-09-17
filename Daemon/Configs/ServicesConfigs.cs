@@ -1,6 +1,5 @@
 using Syki.Back.Configs;
 using Syki.Daemon.Emails;
-using Syki.Back.Extensions;
 using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Cross.ResetPassword;
 using Syki.Back.Features.Academic.CreateClass;

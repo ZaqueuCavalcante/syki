@@ -16,8 +16,6 @@
 - [ ] O aluno so pode ver a turma quando ela tiver o status de Em Matricula
 
 
-
-
 - [] Fluxo de Iniciar Turma
 - [] Arrumar tela de matricula do aluno
 - [] Corrigir dados de index de Aluno e Professor

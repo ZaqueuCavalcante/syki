@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace Syki.Back.Extensions;
 
 public static class Env
@@ -23,5 +25,14 @@ public static class Env
     public static bool IsDevelopment()
     {
         return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Development;
+    }
+
+    public static string GetLastCommitHash()
+    {
+        return typeof(Program).Assembly
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            .InformationalVersion
+            .Split("+")
+            .Last();
     }
 }

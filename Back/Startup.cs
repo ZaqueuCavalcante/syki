@@ -31,6 +31,7 @@ public class Startup
         app.UseRouting();
         app.UseRateLimiter();
         app.UseExceptions();
+        app.UseCustomHeaders();
 
         app.UseAuthentication();
         app.UseAuthorization();

@@ -14,6 +14,11 @@ public static class HttpConfigs
         app.UseMiddleware<ExceptionsMiddleware>();
     }
 
+    public static void UseCustomHeaders(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<CustomHeadersMiddleware>();
+    }
+
     public static void UseControllers(this IApplicationBuilder app)
     {
         app.UseEndpoints(options =>

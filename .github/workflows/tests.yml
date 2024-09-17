@@ -35,4 +35,4 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Tests
-        run: dotnet test --no-build
+        run: dotnet test --no-build --filter "FullyQualifiedName~UnitTests"

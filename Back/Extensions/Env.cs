@@ -31,8 +31,6 @@ public static class Env
     {
         return typeof(Program).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            .InformationalVersion
-            .Split("+")
-            .Last();
+            .InformationalVersion;
     }
 }

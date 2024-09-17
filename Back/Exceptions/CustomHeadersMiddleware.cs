@@ -6,8 +6,7 @@ public class CustomHeadersMiddleware(RequestDelegate next)
     {
         context.Response.OnStarting(() =>
         {
-            context.Response.Headers["X-SykiHash"] = Env.GetLastCommitHash();
-            context.Response.Headers["X-Testando"] = "0123456789";
+            context.Response.Headers["X-Hash"] = Env.GetLastCommitHash();
             return Task.CompletedTask;
         });
 

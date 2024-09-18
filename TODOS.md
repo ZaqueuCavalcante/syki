@@ -1,14 +1,7 @@
 # TODOS
 
-- [V] Ao criar uma Turma, ela vai comecar com o status de Pre-Matricula
-
-- [V] Deve ser possivel liberar para matricula varias turmas ao mesmo tempo
-    - Todas precisam ter o status de Pre-Matricula e ser do mesmo periodo academico
-    - O periodo de matricula vinculado deve conter a data do request (date >= start && date <= end)
-
-- [ ] Uma vez liberada a matricula, o status deve ser Em matricula (ate dia final do periodo de matricula)
-    - Se o periodo de matricula acabar e a turma ainda estiver Em-Matricula, deve exibir o status de Aguardando Inicio
-    - Nesse momento, caso o periodo de matricula seja estendido, o sistema deve continuar funcional
+- [] Quando o periodo de matricula terminar, deve aparecer em tela a turma com o status de "Aguardando Inicio"
+    - Esse status eh apenas virtual, ele n existe no enum, apenas eh computado on the fly com base na data de fim do periodo de matricula
 
 - [ ] Deve ser possivel iniciar varias turmas ao mesmo tempo
     - Todas precisam ter o status de Aguardando Inicio e ser do mesmo periodo

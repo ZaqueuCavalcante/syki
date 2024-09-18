@@ -19,15 +19,22 @@ public enum ClassStatus
     OnEnrollment = 1,
 
     /// <summary>
+    /// Esse status é apenas virtual, ou seja, é computado em memória com base na data de fim do Período de Matrícula.
+    /// No banco de dados o status vigente ainda é o de OnEnrollment.
+    /// </summary>
+    [Description("Aguardando início")]
+    AwaitingStart = 2,
+
+    /// <summary>
     /// Uma Turma só pode ser iniciada ao final do Período de Matrícula.
     /// Após iniciada, não é possível retroceder para algum status anterior a esse.
     /// </summary>
     [Description("Iniciada")]
-    Started = 2,
+    Started = 3,
 
     /// <summary>
     /// Ao final do semestre, quando todas as notas e frequências forem salvas, é possível finalizar a Turma.
     /// </summary>
     [Description("Finalizada")]
-    Finalized = 3,
+    Finalized = 4,
 }

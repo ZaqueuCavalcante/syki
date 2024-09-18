@@ -8,13 +8,20 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
+        var period = data.AcademicPeriod2.Id;
+
+        await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, data.AcademicPeriod2.Id, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+        ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+
+        await academicClient.ReleaseClassesForEnrollment(period, [mathClass.Id]);
 
         var studentClient = await _back.LoggedAsStudent(student.Email);
-        await studentClient.CreateStudentEnrollment([ mathClass.Id ]);
+        await studentClient.CreateStudentEnrollment([mathClass.Id]);
+
+        await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
 
         // Act
         await academicClient.StartClass(mathClass.Id);
@@ -42,5 +49,45 @@ public partial class IntegrationTests
 
         // Assert
         response.ShouldBeError(new ClassNotFound());
+    }
+
+    [Test]
+    public async Task Should_not_start_on_pre_enrollment_class()
+    {
+        // Arrange
+        var academicClient = await _back.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
+        var period = data.AcademicPeriod2.Id;
+
+        TeacherOut chico = await academicClient.CreateTeacher("Chico");
+        ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+
+        // Act
+        var response = await academicClient.StartClass(mathClass.Id);
+
+        // Assert
+        response.ShouldBeError(new ClassMustHaveOnEnrollmentStatus());
+    }
+
+    [Test]
+    public async Task Should_not_start_on_enrollment_class_when_enrollment_period_is_not_finalized()
+    {
+        // Arrange
+        var academicClient = await _back.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
+        var period = data.AcademicPeriod2.Id;
+
+        await academicClient.CreateEnrollmentPeriod(period, -2, 2);
+
+        TeacherOut chico = await academicClient.CreateTeacher("Chico");
+        ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+
+        await academicClient.ReleaseClassesForEnrollment(period, [mathClass.Id]);
+
+        // Act
+        var response = await academicClient.StartClass(mathClass.Id);
+
+        // Assert
+        response.ShouldBeError(new EnrollmentPeriodMustBeFinalized());
     }
 }

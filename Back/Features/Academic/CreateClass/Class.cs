@@ -49,6 +49,7 @@ public class Class
         Status = ClassStatus.OnPreEnrollment;
         Schedules = schedules;
         Students = [];
+        ExamGrades = [];
         Lessons = [];
     }
 
@@ -119,6 +120,12 @@ public class Class
     public void Start()
     {
         Status = ClassStatus.Started;
+        ExamGrades = [];
+        foreach (var student in Students)
+        {
+            Enum.GetValues<ExamType>().ToList()
+                .ForEach(type => ExamGrades.Add(new ExamGrade(Id, student.Id, type, 0.00M)));
+        }
     }
 
     public void SetFillRatio(int count)

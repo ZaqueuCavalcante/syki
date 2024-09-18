@@ -27,16 +27,24 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
+        var period = data.AcademicPeriod2.Id;
+
+        await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, teacher.Id, data.AcademicPeriod2.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, data.AcademicPeriod2.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, teacher.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
         await academicClient.CreateClassLessons(discreteMathClass.Id);
         await academicClient.CreateClassLessons(introToWebDevClass.Id);
+
+        await academicClient.ReleaseClassesForEnrollment(period, [discreteMathClass.Id]);
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id]);
+
+        await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
+        await academicClient.StartClass(discreteMathClass.Id);
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         var teacherMathClass = await teacherClient.GetTeacherClass(discreteMathClass.Id);
@@ -60,20 +68,32 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
+        var period = data.AcademicPeriod1.Id;
+
+        await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        ClassOut discreteMath = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, teacher.Id, data.AcademicPeriod1.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToWebDev = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut humanMachineInteractionDesign = await academicClient.CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToComputerNetworks = await academicClient.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut computationalThinkingAndAlgorithms = await academicClient.CreateClass(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut integratorProjectOne = await academicClient.CreateClass(data.AdsDisciplines.IntegratorProjectOne.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut humanMachineInteractionDesign = await academicClient.CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, teacher.Id, period, 45, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToComputerNetworks = await academicClient.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToWebDev = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, period, 45, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut discreteMath = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, teacher.Id, period, 40, [new(Day.Thursday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut computationalThinkingAndAlgorithms = await academicClient.CreateClass(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Id, teacher.Id, period, 45, [new(Day.Friday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut integratorProjectOne = await academicClient.CreateClass(data.AdsDisciplines.IntegratorProjectOne.Id, teacher.Id, period, 45, [new(Day.Saturday, Hour.H07_00, Hour.H10_00)]);
         await academicClient.CreateClassLessons(discreteMath.Id);
         await academicClient.CreateClassLessons(introToWebDev.Id);
         await academicClient.CreateClassLessons(humanMachineInteractionDesign.Id);
         await academicClient.CreateClassLessons(introToComputerNetworks.Id);
         await academicClient.CreateClassLessons(computationalThinkingAndAlgorithms.Id);
         await academicClient.CreateClassLessons(integratorProjectOne.Id);
+
+        await academicClient.ReleaseClassesForEnrollment(period, [
+            discreteMath.Id,
+            introToWebDev.Id,
+            humanMachineInteractionDesign.Id,
+            introToComputerNetworks.Id,
+            computationalThinkingAndAlgorithms.Id,
+            integratorProjectOne.Id
+        ]);
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
@@ -85,6 +105,14 @@ public partial class IntegrationTests
             computationalThinkingAndAlgorithms.Id,
             integratorProjectOne.Id
         ]);
+
+        await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
+        await academicClient.StartClass(discreteMath.Id);
+        await academicClient.StartClass(introToWebDev.Id);
+        await academicClient.StartClass(humanMachineInteractionDesign.Id);
+        await academicClient.StartClass(introToComputerNetworks.Id);
+        await academicClient.StartClass(computationalThinkingAndAlgorithms.Id);
+        await academicClient.StartClass(integratorProjectOne.Id);
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         var teacherDiscreteMath = await teacherClient.GetTeacherClass(discreteMath.Id);
@@ -103,8 +131,9 @@ public partial class IntegrationTests
         lessons.AddRange(teacherIntegratorProjectOne.Lessons.PickRandom(1));
         for (var i = 0; i < lessons.Count; i++)
         {
-            List<Guid> presences = new List<int>{ 0, 2, 3, 5, 6, 8, 10  }.Contains(i) ? [student.Id] : [];
-            await teacherClient.CreateLessonAttendance(lessons[i].Id, presences);
+            List<Guid> presences = new List<int>{ 0, 2, 3, 5, 6, 8, 10 }.Contains(i) ? [student.Id] : [];
+            var x = await teacherClient.CreateLessonAttendance(lessons[i].Id, presences);
+            x.ShouldBeSuccess();
         }
 
         // Act

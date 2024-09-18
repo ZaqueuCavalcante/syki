@@ -19,33 +19,40 @@ public partial class IntegrationTests
         insights.Status.Should().Be(StudentStatus.Enrolled);
         insights.FinishedDisciplines.Should().Be(0);
         insights.TotalDisciplines.Should().Be(12);
+        insights.Frequency.Should().Be(0);
         insights.Average.Should().Be(0);
         insights.YieldCoefficient.Should().Be(0);
     }
 
     [Test]
-    public async Task Should_return_student_insights_with_average_and_cr()
+    public async Task Should_return_student_insights_after_first_lesson_attendance()
     {
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
+        var period = data.AcademicPeriod2.Id;
+
+        await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, teacher.Id, data.AcademicPeriod2.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, data.AcademicPeriod2.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, teacher.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        await academicClient.CreateClassLessons(discreteMathClass.Id);
+
+        await academicClient.ReleaseClassesForEnrollment(period, [discreteMathClass.Id]);
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id]);
 
+        await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
+        await academicClient.StartClass(discreteMathClass.Id);
+
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         var teacherMathClass = await teacherClient.GetTeacherClass(discreteMathClass.Id);
-        var examGradeId = teacherMathClass.Students.First().ExamGrades.First().Id;
-        await teacherClient.AddExamGradeNote(examGradeId, 5.67M);
+        var firstLesson = teacherMathClass.Lessons.First();
 
-        // TODO: preciso ser aprovado na disciplina pra que ela passe a contar nos cálculos de média e CR
-        
-        // ???????????
+        await teacherClient.CreateLessonAttendance(firstLesson.Id, [student.Id]);
 
         // Act
         var insights = await studentClient.GetStudentInsights();
@@ -54,6 +61,7 @@ public partial class IntegrationTests
         insights.Status.Should().Be(StudentStatus.Enrolled);
         insights.FinishedDisciplines.Should().Be(0);
         insights.TotalDisciplines.Should().Be(12);
+        insights.Frequency.Should().Be(100);
         insights.Average.Should().Be(0);
         insights.YieldCoefficient.Should().Be(0);
     }

@@ -2,24 +2,29 @@ namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
 public class CreateStudentEnrollmentService(SykiDbContext ctx) : IStudentService
 {
-    public async Task Create(Guid institutionId, Guid userId, CreateStudentEnrollmentIn data)
+    public async Task<OneOf<SykiSuccess, SykiError>> Create(Guid institutionId, Guid userId, Guid courseCurriculumId, CreateStudentEnrollmentIn data)
     {
-        var ids = await ctx.Classes
-            .Where(t => t.InstitutionId == institutionId && data.Classes.Contains(t.Id))
-            .Select(t => t.Id)
+        var today = DateOnly.FromDateTime(DateTime.Now);
+        var enrollmentPeriod = await ctx.EnrollmentPeriods.AsNoTracking()
+            .Where(p => p.InstitutionId == institutionId && p.StartAt <= today && p.EndAt >= today)
+            .FirstOrDefaultAsync();
+        if (enrollmentPeriod == null) return new EnrollmentPeriodNotFound();
+
+        var courseCurriculum = await ctx.CourseCurriculums.Where(g => g.Id == courseCurriculumId).AsNoTracking()
+            .Include(g => g.Links)
+            .FirstAsync();
+        var disciplines = courseCurriculum.Links.ConvertAll(d => d.DisciplineId);
+        var classes = await ctx.Classes.AsNoTracking()
+            .Where(t => t.InstitutionId == institutionId && t.PeriodId == enrollmentPeriod.Id && t.Status == ClassStatus.OnEnrollment && disciplines.Contains(t.DisciplineId))
             .ToListAsync();
+        var ids = classes.Where(t => data.Classes.Contains(t.Id)).Select(t => t.Id).ToList();
 
         var classesStudents = await ctx.ClassesStudents.Where(x => x.SykiStudentId == userId).ToListAsync();
         ctx.RemoveRange(classesStudents);
         ids.ForEach(id => ctx.Add(new ClassStudent(id, userId)));
 
-        var examGrades = await ctx.ExamGrades.Where(x => x.StudentId == userId).ToListAsync();
-        ctx.RemoveRange(examGrades);
-        ids.ForEach(id =>
-        {
-            Enum.GetValues<ExamType>().ToList().ForEach(type => ctx.Add(new ExamGrade(id, userId, type, 0.00M)));
-        });
-
         await ctx.SaveChangesAsync();
+
+        return new SykiSuccess();
     }
 }

@@ -16,21 +16,23 @@ public partial class IntegrationTests
 
         ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, chico.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut humanMachineInteractionDesignClass = await academicClient.CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, ana.Id, period.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
         ClassOut introToComputerNetworksClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
 
-        await academicClient.ReleaseClassesForEnrollment(period.Id, [discreteMathClass.Id, introToComputerNetworksClass.Id]);
+        await academicClient.ReleaseClassesForEnrollment(period.Id, [discreteMathClass.Id, humanMachineInteractionDesignClass.Id, introToComputerNetworksClass.Id]);
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
-        await studentClient.CreateStudentEnrollment([discreteMathClass.Id]);
+        await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToComputerNetworksClass.Id]);
 
         // Assert
         var classes = await studentClient.GetStudentEnrollmentClasses();
 
-        classes.Should().HaveCount(2);
+        classes.Should().HaveCount(3);
         classes.First(x => x.Id == discreteMathClass.Id).IsSelected.Should().BeTrue();
-        classes.First(x => x.Id == introToComputerNetworksClass.Id).IsSelected.Should().BeFalse();
+        classes.First(x => x.Id == introToComputerNetworksClass.Id).IsSelected.Should().BeTrue();
+        classes.First(x => x.Id == humanMachineInteractionDesignClass.Id).IsSelected.Should().BeFalse();
     }
 }

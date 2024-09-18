@@ -50,3 +50,13 @@ public class EnrollmentPeriodFinalized : SykiError
     public override string Code { get; set; } = nameof(EnrollmentPeriodFinalized);
     public override string Message { get; set; } = "Período de matrícula finalizado.";
 }
+public class ClassMustHaveOnEnrollmentStatus : SykiError
+{
+    public override string Code { get; set; } = nameof(ClassMustHaveOnEnrollmentStatus);
+    public override string Message { get; set; } = "A turma precisam ter o status de Matrícula para ser iniciada.";
+}
+public class EnrollmentPeriodMustBeFinalized : SykiError
+{
+    public override string Code { get; set; } = nameof(EnrollmentPeriodMustBeFinalized);
+    public override string Message { get; set; } = "O período de matrícula precisa estar finalizado.";
+}

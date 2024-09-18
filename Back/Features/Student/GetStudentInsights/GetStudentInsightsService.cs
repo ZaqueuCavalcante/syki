@@ -12,11 +12,9 @@ public class GetStudentInsightsService(SykiDbContext ctx) : IStudentService
             .Where(x => x.SykiStudentId == userId && x.StudentDisciplineStatus == StudentDisciplineStatus.Aprovado)
             .CountAsync();
 
-        // Filtrar so as relacionadas com o studante
-        var lessons = await ctx.Lessons.Include(x => x.Attendances).ToListAsync();
-        var lessonsCount = lessons.Count(x => x.Attendances.Count > 0);
-        var presences = lessons.Count(x => x.Attendances.Exists(a => a.StudentId == userId && a.Present));
-        var frequency = lessonsCount == 0 ? 0.00M : 100M * (1M * presences / (1M * lessonsCount));
+        var attendances = await ctx.Attendances.AsNoTracking().Where(x => x.StudentId == userId).ToListAsync();
+        var totalPresences = attendances.Count(x => x.Present);
+        var frequency = (attendances.Count == 0) ? 0.00M : 100M*(1M * totalPresences / (1M * attendances.Count));
 
         return new() { Status = StudentStatus.Enrolled, TotalDisciplines = totalDisciplines, FinishedDisciplines = finishedDisciplines, Frequency = frequency };
     }

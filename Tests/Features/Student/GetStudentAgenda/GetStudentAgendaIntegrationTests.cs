@@ -6,47 +6,29 @@ public partial class IntegrationTests
     public async Task Should_get_student_agenda()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
+        var period = data.AcademicPeriod2;
+        await academicClient.CreateEnrollmentPeriod(period.Id);
 
-        AcademicPeriodOut period = await client.CreateAcademicPeriod($"{DateTime.Now.Year}.1");
-        await client.CreateEnrollmentPeriod(period.Id);
+        TeacherOut chico = await academicClient.CreateTeacher("Chico");
+        TeacherOut ana = await academicClient.CreateTeacher("Ana");
 
-        var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
-        CourseOut ads = await client.CreateCourse("ADS");
-        CourseOut direito = await client.CreateCourse("Direito");
+        ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut humanMachineInteractionDesignClass = await academicClient.CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, ana.Id, period.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToComputerNetworksClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
 
-        var matematica = await client.CreateDiscipline("Matemática Discreta", [ads.Id]);
-        var bancoDeDados = await client.CreateDiscipline("Banco de Dados", [ads.Id]);
-        var estruturaDeDados = await client.CreateDiscipline("Estrutura de Dados", [ads.Id]);
-        var infoSociedade = await client.CreateDiscipline("Informática e Sociedade", [ads.Id, direito.Id]);
+        await academicClient.ReleaseClassesForEnrollment(period.Id, [discreteMathClass.Id, humanMachineInteractionDesignClass.Id, introToComputerNetworksClass.Id]);
 
-        CourseCurriculumOut courseCurriculumAds = await client.CreateCourseCurriculum("Grade ADS 1.0", ads.Id,
-        [
-            new(matematica.Id, 1, 7, 73),
-            new(bancoDeDados.Id, 1, 7, 73),
-            new(estruturaDeDados.Id, 2, 7, 73),
-            new(infoSociedade.Id, 2, 7, 73),
-        ]);
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
-        CourseOfferingOut courseOfferingAds = await client.CreateCourseOffering(campus.Id, ads.Id, courseCurriculumAds.Id, period.Id, Shift.Noturno);
-
-        TeacherOut chico = await client.CreateTeacher("Chico");
-        TeacherOut ana = await client.CreateTeacher("Ana");
-
-        ClassOut classMatematica = await client.CreateClass(matematica.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut classBancoDeDados = await client.CreateClass(bancoDeDados.Id, chico.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut classEstruturaDeDados = await client.CreateClass(estruturaDeDados.Id, chico.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
-        await client.CreateClass(infoSociedade.Id, ana.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H08_00)]);
-
-        StudentOut zaqueu = await client.CreateStudent(courseOfferingAds.Id, "Zaqueu");
-
-        var studentClient = await _back.LoggedAsStudent(zaqueu.Email);
-        await studentClient.CreateStudentEnrollment([classMatematica.Id, classBancoDeDados.Id, classEstruturaDeDados.Id]);
+        await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToComputerNetworksClass.Id]);
 
         // Act
         var agenda = await studentClient.GetStudentAgenda();
 
         // Assert
-        agenda.Should().HaveCount(3);
+        agenda.Should().HaveCount(2);
     }
 }

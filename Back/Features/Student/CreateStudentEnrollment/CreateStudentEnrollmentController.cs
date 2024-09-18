@@ -8,8 +8,8 @@ public class CreateStudentEnrollmentController(CreateStudentEnrollmentService se
     [HttpPost("student/enrollments")]
     public async Task<IActionResult> Create([FromBody] CreateStudentEnrollmentIn data)
     {
-        await service.Create(User.InstitutionId(), User.Id(), data);
+        var result = await service.Create(User.InstitutionId(), User.Id(), User.GetCourseCurriculumId(), data);
 
-        return Ok();
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

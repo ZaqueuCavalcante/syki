@@ -136,7 +136,7 @@ public class SeedInstitutionDataHandler(
 
         foreach (var item in adsers)
         {
-            await createStudentEnrollmentService.Create(id, item, new() { Classes = classesIds });
+            await createStudentEnrollmentService.Create(id, item, adsCC.Id, new() { Classes = classesIds });
         }
 
         await ctx.SaveChangesAsync();

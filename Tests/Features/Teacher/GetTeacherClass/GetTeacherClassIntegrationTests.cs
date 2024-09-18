@@ -8,15 +8,22 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod2;
+        var period = data.AcademicPeriod2.Id;
         var math = data.AdsDisciplines.DiscreteMath;
+
+        await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        ClassOut mathClass = await academicClient.CreateClass(math.Id, chico.Id, period.Id, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+        ClassOut mathClass = await academicClient.CreateClass(math.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+
+        await academicClient.ReleaseClassesForEnrollment(period, [mathClass.Id]);
 
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([ mathClass.Id ]);
+
+        await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
+        await academicClient.StartClass(mathClass.Id);
 
         var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
@@ -25,9 +32,9 @@ public partial class IntegrationTests
 
         // Assert
         @class.Code.Should().Be(math.Code);
-        @class.Period.Should().Be(period.Id);
+        @class.Period.Should().Be(period);
         @class.Discipline.Should().Be(math.Name);
-        @class.Status.Should().Be(ClassStatus.OnPreEnrollment);
+        @class.Status.Should().Be(ClassStatus.Started);
 
         @class.Students.Should().HaveCount(1);
         var examGrades = @class.Students.First().ExamGrades;

@@ -32,13 +32,13 @@ public partial class IntegrationTests
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
         ClassOut mathClass = await academicClient.CreateClass(
-            data.Disciplines.DiscreteMath.Id,
+            data.AdsDisciplines.DiscreteMath.Id,
             chico.Id,
             data.AcademicPeriod2.Id,
             40,
             [new(Day.Monday, Hour.H07_00, Hour.H10_00)]
         );
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([mathClass.Id]);
@@ -60,13 +60,13 @@ public partial class IntegrationTests
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
         ClassOut mathClass = await academicClient.CreateClass(
-            data.Disciplines.DiscreteMath.Id,
+            data.AdsDisciplines.DiscreteMath.Id,
             chico.Id,
             data.AcademicPeriod2.Id,
             40,
             [new(Day.Monday, Hour.H07_00, Hour.H10_00)]
         );
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([mathClass.Id]);

@@ -13,7 +13,7 @@ public partial class IntegrationTests
         var courseOfferings = await client.GetCourseOfferings();
 
         // Assert
-        courseOfferings.Count.Should().Be(1);
+        courseOfferings.Count.Should().Be(2);
     }
 
     [Test]

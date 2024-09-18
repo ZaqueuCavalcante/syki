@@ -1,6 +1,5 @@
 using Syki.Front.Features.Academic.GetCampi;
 using Syki.Front.Features.Academic.GetCourses;
-using Syki.Front.Features.Academic.GetAcademicClasses;
 using Syki.Front.Features.Academic.StartClass;
 using Syki.Front.Features.Academic.CreateClass;
 using Syki.Front.Features.Academic.GetTeachers;
@@ -15,6 +14,7 @@ using Syki.Front.Features.Academic.GetDisciplines;
 using Syki.Front.Features.Academic.CreateDiscipline;
 using Syki.Front.Features.Academic.GetNotifications;
 using Syki.Front.Features.Academic.GetAcademicClass;
+using Syki.Front.Features.Academic.GetAcademicClasses;
 using Syki.Front.Features.Academic.GetCourseOfferings;
 using Syki.Front.Features.Academic.GetAcademicPeriods;
 using Syki.Front.Features.Academic.CreateNotification;
@@ -296,40 +296,62 @@ public class AcademicHttpClient(HttpClient http)
         data.AcademicPeriod2 = await CreateAcademicPeriod($"{DateTime.Now.Year}.2");
 
         data.Campus = await CreateCampus();
-        data.Course = await CreateCourse();
 
-        data.Disciplines.DiscreteMath = await CreateDiscipline("Matemática Discreta", [data.Course.Id]);
-        data.Disciplines.IntroToWebDev = await CreateDiscipline("Introdução ao Desenvolvimento Web", [data.Course.Id]);
-        data.Disciplines.HumanMachineInteractionDesign = await CreateDiscipline("Design de Interação Humano-Máquina", [data.Course.Id]);
-        data.Disciplines.IntroToComputerNetworks = await CreateDiscipline("Introdução à Redes de Computadores", [data.Course.Id]);
-        data.Disciplines.ComputationalThinkingAndAlgorithms = await CreateDiscipline("Pensamento Computacional e Algoritmos", [data.Course.Id]);
-        data.Disciplines.IntegratorProjectOne = await CreateDiscipline("Projeto Integrador I: Concepção e Prototipação", [data.Course.Id]);
+        // Ads
+        data.AdsCourse = await CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo);
 
-        data.Disciplines.Arch = await CreateDiscipline("Arquitetura de Computadores e Sistemas Operacionais", [data.Course.Id]);
-        data.Disciplines.Databases = await CreateDiscipline("Banco de Dados", [data.Course.Id]);
-        data.Disciplines.DataStructures = await CreateDiscipline("Estrutura de Dados", [data.Course.Id]);
-        data.Disciplines.InfoAndSociety = await CreateDiscipline("Informática e Sociedade", [data.Course.Id]);
-        data.Disciplines.Poo = await CreateDiscipline("Programação Orientada a Objetos", [data.Course.Id]);
-        data.Disciplines.IntegratorProjectTwo = await CreateDiscipline("Projeto Integrador II: Modelagem de Banco de Dados", [data.Course.Id]);
+        data.AdsDisciplines.DiscreteMath = await CreateDiscipline("Matemática Discreta", [data.AdsCourse.Id]);
+        data.AdsDisciplines.IntroToWebDev = await CreateDiscipline("Introdução ao Desenvolvimento Web", [data.AdsCourse.Id]);
+        data.AdsDisciplines.HumanMachineInteractionDesign = await CreateDiscipline("Design de Interação Humano-Máquina", [data.AdsCourse.Id]);
+        data.AdsDisciplines.IntroToComputerNetworks = await CreateDiscipline("Introdução à Redes de Computadores", [data.AdsCourse.Id]);
+        data.AdsDisciplines.ComputationalThinkingAndAlgorithms = await CreateDiscipline("Pensamento Computacional e Algoritmos", [data.AdsCourse.Id]);
+        data.AdsDisciplines.IntegratorProjectOne = await CreateDiscipline("Projeto Integrador I: Concepção e Prototipação", [data.AdsCourse.Id]);
 
-        data.CourseCurriculum = await CreateCourseCurriculum("Grade ADS 1.0", data.Course.Id,
+        data.AdsDisciplines.Arch = await CreateDiscipline("Arquitetura de Computadores e Sistemas Operacionais", [data.AdsCourse.Id]);
+        data.AdsDisciplines.Databases = await CreateDiscipline("Banco de Dados", [data.AdsCourse.Id]);
+        data.AdsDisciplines.DataStructures = await CreateDiscipline("Estrutura de Dados", [data.AdsCourse.Id]);
+        data.AdsDisciplines.InfoAndSociety = await CreateDiscipline("Informática e Sociedade", [data.AdsCourse.Id]);
+        data.AdsDisciplines.Poo = await CreateDiscipline("Programação Orientada a Objetos", [data.AdsCourse.Id]);
+        data.AdsDisciplines.IntegratorProjectTwo = await CreateDiscipline("Projeto Integrador II: Modelagem de Banco de Dados", [data.AdsCourse.Id]);
+
+        data.AdsCourseCurriculum = await CreateCourseCurriculum("Grade ADS 1.0", data.AdsCourse.Id,
         [
-            new(data.Disciplines.DiscreteMath.Id, 1, 7, 60),
-            new(data.Disciplines.IntroToWebDev.Id, 1, 6, 55),
-            new(data.Disciplines.HumanMachineInteractionDesign.Id, 1, 8, 60),
-            new(data.Disciplines.IntroToComputerNetworks.Id, 1, 4, 50),
-            new(data.Disciplines.ComputationalThinkingAndAlgorithms.Id, 1, 6, 45),
-            new(data.Disciplines.IntegratorProjectOne.Id, 1, 7, 65),
+            new(data.AdsDisciplines.DiscreteMath.Id, 1, 7, 60),
+            new(data.AdsDisciplines.IntroToWebDev.Id, 1, 6, 55),
+            new(data.AdsDisciplines.HumanMachineInteractionDesign.Id, 1, 8, 60),
+            new(data.AdsDisciplines.IntroToComputerNetworks.Id, 1, 4, 50),
+            new(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Id, 1, 6, 45),
+            new(data.AdsDisciplines.IntegratorProjectOne.Id, 1, 7, 65),
 
-            new(data.Disciplines.Arch.Id, 1, 7, 60),
-            new(data.Disciplines.Databases.Id, 1, 6, 55),
-            new(data.Disciplines.DataStructures.Id, 1, 8, 60),
-            new(data.Disciplines.InfoAndSociety.Id, 1, 4, 50),
-            new(data.Disciplines.Poo.Id, 1, 6, 45),
-            new(data.Disciplines.IntegratorProjectTwo.Id, 1, 7, 65),
+            new(data.AdsDisciplines.Arch.Id, 1, 7, 60),
+            new(data.AdsDisciplines.Databases.Id, 1, 6, 55),
+            new(data.AdsDisciplines.DataStructures.Id, 1, 8, 60),
+            new(data.AdsDisciplines.InfoAndSociety.Id, 1, 4, 50),
+            new(data.AdsDisciplines.Poo.Id, 1, 6, 45),
+            new(data.AdsDisciplines.IntegratorProjectTwo.Id, 1, 7, 65),
         ]);
         
-        data.CourseOffering = await CreateCourseOffering(data.Campus.Id, data.Course.Id, data.CourseCurriculum.Id, data.AcademicPeriod2.Id, Shift.Noturno);
+        data.AdsCourseOffering = await CreateCourseOffering(data.Campus.Id, data.AdsCourse.Id, data.AdsCourseCurriculum.Id, data.AcademicPeriod2.Id, Shift.Noturno);
+
+        // Direito
+        data.DireitoCourse = await CreateCourse("Direito", CourseType.Bacharelado);
+
+        data.DireitoDisciplines.PhilosophicalBases = await CreateDiscipline("Bases Filosóficas", [data.DireitoCourse.Id]);
+        data.DireitoDisciplines.CommunicationAndLegalArgumentation = await CreateDiscipline("Comunicação e Argumentação Jurídica", [data.DireitoCourse.Id]);
+        data.DireitoDisciplines.ManSocietyAndLaw = await CreateDiscipline("Homem, Sociedade e Direito", [data.DireitoCourse.Id]);
+        data.DireitoDisciplines.PoliticsAndStateInFocus = await CreateDiscipline("Política e Estado em Foco", [data.DireitoCourse.Id]);
+        data.DireitoDisciplines.GeneralTheoryOfLaw = await CreateDiscipline("Teoria Geral do Direito", [data.DireitoCourse.Id]);
+
+        data.DireitoCourseCurriculum = await CreateCourseCurriculum("Grade Direito 1.0", data.DireitoCourse.Id,
+        [
+            new(data.DireitoDisciplines.PhilosophicalBases.Id, 1, 7, 60),
+            new(data.DireitoDisciplines.CommunicationAndLegalArgumentation.Id, 1, 6, 55),
+            new(data.DireitoDisciplines.ManSocietyAndLaw.Id, 1, 8, 60),
+            new(data.DireitoDisciplines.PoliticsAndStateInFocus.Id, 1, 4, 50),
+            new(data.DireitoDisciplines.GeneralTheoryOfLaw.Id, 1, 6, 45),
+        ]);
+        
+        data.DireitoCourseOffering = await CreateCourseOffering(data.Campus.Id, data.DireitoCourse.Id, data.DireitoCourseCurriculum.Id, data.AcademicPeriod2.Id, Shift.Noturno);
 
         return data;
     }

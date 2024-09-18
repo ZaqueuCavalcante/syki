@@ -3,6 +3,9 @@ using Syki.Back.Features.Academic.CreateCourseOffering;
 
 namespace Syki.Back.Features.Academic.CreateStudent;
 
+/// <summary>
+/// Representa um Aluno.
+/// </summary>
 public class SykiStudent
 {
     public Guid Id { get; }

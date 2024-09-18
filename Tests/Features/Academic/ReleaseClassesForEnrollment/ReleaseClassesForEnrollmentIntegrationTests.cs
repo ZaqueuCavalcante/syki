@@ -12,7 +12,7 @@ public partial class IntegrationTests
 
         TeacherOut chico = await client.CreateTeacher("Chico");
         ClassOut mathClass = await client.CreateClass(
-            data.Disciplines.DiscreteMath.Id,
+            data.AdsDisciplines.DiscreteMath.Id,
             chico.Id,
             data.AcademicPeriod2.Id,
             40,
@@ -78,7 +78,7 @@ public partial class IntegrationTests
 
         TeacherOut chico = await client.CreateTeacher("Chico");
         ClassOut mathClass = await client.CreateClass(
-            data.Disciplines.DiscreteMath.Id,
+            data.AdsDisciplines.DiscreteMath.Id,
             chico.Id,
             data.AcademicPeriod2.Id,
             40,

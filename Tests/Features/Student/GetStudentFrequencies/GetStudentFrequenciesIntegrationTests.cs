@@ -9,7 +9,7 @@ public partial class IntegrationTests
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
@@ -29,12 +29,12 @@ public partial class IntegrationTests
         var data = await academicClient.CreateBasicInstitutionData();
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        ClassOut discreteMathClass = await academicClient.CreateClass(data.Disciplines.DiscreteMath.Id, teacher.Id, data.AcademicPeriod2.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToWebDevClass = await academicClient.CreateClass(data.Disciplines.IntroToWebDev.Id, teacher.Id, data.AcademicPeriod2.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, teacher.Id, data.AcademicPeriod2.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, data.AcademicPeriod2.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
         await academicClient.CreateClassLessons(discreteMathClass.Id);
         await academicClient.CreateClassLessons(introToWebDevClass.Id);
 
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id]);
 
@@ -51,7 +51,7 @@ public partial class IntegrationTests
         var frequencies = response.GetSuccess();
         frequencies.Should().HaveCount(2);
         frequencies[0].Should().BeEquivalentTo(new GetStudentFrequenciesOut("Total do curso", "-", 1, 1));
-        frequencies[1].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.Disciplines.DiscreteMath.Name, "1", 1, 1));
+        frequencies[1].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.DiscreteMath.Name, "1", 1, 1));
     }
 
     [Test]
@@ -62,12 +62,12 @@ public partial class IntegrationTests
         var data = await academicClient.CreateBasicInstitutionData();
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        ClassOut discreteMath = await academicClient.CreateClass(data.Disciplines.DiscreteMath.Id, teacher.Id, data.AcademicPeriod1.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToWebDev = await academicClient.CreateClass(data.Disciplines.IntroToWebDev.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut humanMachineInteractionDesign = await academicClient.CreateClass(data.Disciplines.HumanMachineInteractionDesign.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToComputerNetworks = await academicClient.CreateClass(data.Disciplines.IntroToComputerNetworks.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut computationalThinkingAndAlgorithms = await academicClient.CreateClass(data.Disciplines.ComputationalThinkingAndAlgorithms.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut integratorProjectOne = await academicClient.CreateClass(data.Disciplines.IntegratorProjectOne.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut discreteMath = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, teacher.Id, data.AcademicPeriod1.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToWebDev = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut humanMachineInteractionDesign = await academicClient.CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToComputerNetworks = await academicClient.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut computationalThinkingAndAlgorithms = await academicClient.CreateClass(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut integratorProjectOne = await academicClient.CreateClass(data.AdsDisciplines.IntegratorProjectOne.Id, teacher.Id, data.AcademicPeriod1.Id, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
         await academicClient.CreateClassLessons(discreteMath.Id);
         await academicClient.CreateClassLessons(introToWebDev.Id);
         await academicClient.CreateClassLessons(humanMachineInteractionDesign.Id);
@@ -75,7 +75,7 @@ public partial class IntegrationTests
         await academicClient.CreateClassLessons(computationalThinkingAndAlgorithms.Id);
         await academicClient.CreateClassLessons(integratorProjectOne.Id);
 
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([
             discreteMath.Id,
@@ -114,11 +114,11 @@ public partial class IntegrationTests
         var frequencies = response.GetSuccess();
         frequencies.Should().HaveCount(7);
         frequencies[0].Should().BeEquivalentTo(new GetStudentFrequenciesOut("Total do curso", "-", 12, 7));
-        frequencies[1].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.Disciplines.HumanMachineInteractionDesign.Name, "1", 1, 1));
-        frequencies[2].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.Disciplines.IntroToComputerNetworks.Name, "1", 3, 2));
-        frequencies[3].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.Disciplines.IntroToWebDev.Name, "1", 2, 1));
-        frequencies[4].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.Disciplines.DiscreteMath.Name, "1", 3, 2));
-        frequencies[5].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.Disciplines.ComputationalThinkingAndAlgorithms.Name, "1", 2, 1));
-        frequencies[6].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.Disciplines.IntegratorProjectOne.Name, "1", 1, 0));
+        frequencies[1].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.HumanMachineInteractionDesign.Name, "1", 1, 1));
+        frequencies[2].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.IntroToComputerNetworks.Name, "1", 3, 2));
+        frequencies[3].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.IntroToWebDev.Name, "1", 2, 1));
+        frequencies[4].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.DiscreteMath.Name, "1", 3, 2));
+        frequencies[5].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Name, "1", 2, 1));
+        frequencies[6].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.IntegratorProjectOne.Name, "1", 1, 0));
     }
 }

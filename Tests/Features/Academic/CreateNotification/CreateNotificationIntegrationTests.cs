@@ -10,7 +10,7 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         await client.CreateTeacher("Chico");
-        await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         // Act
         var response = await client.CreateNotification("Hello", "Hi", UsersGroup.All, true);
@@ -37,7 +37,7 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         TeacherOut teacher = await client.CreateTeacher("Chico");
-        await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         // Act
         var response = await client.CreateNotification("Hello", "Hi", UsersGroup.Teachers, true);
@@ -65,7 +65,7 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         await client.CreateTeacher("Chico");
-        StudentOut student = await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         // Act
         var response = await client.CreateNotification("Hello", "Hi", UsersGroup.Students, true);

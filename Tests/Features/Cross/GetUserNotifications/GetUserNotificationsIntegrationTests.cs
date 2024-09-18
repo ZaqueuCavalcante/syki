@@ -10,7 +10,7 @@ public partial class IntegrationTests
         var data = await academicClient.CreateBasicInstitutionData();
 
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Students, true);
 
@@ -34,7 +34,7 @@ public partial class IntegrationTests
         var data = await academicClient.CreateBasicInstitutionData();
 
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Teachers, true);
 
@@ -58,7 +58,7 @@ public partial class IntegrationTests
         var data = await academicClient.CreateBasicInstitutionData();
 
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.All, true);
 
@@ -84,7 +84,7 @@ public partial class IntegrationTests
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Students, true);
 
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         var studentClient = await _back.LoggedAsStudent(student.Email);
@@ -110,7 +110,7 @@ public partial class IntegrationTests
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Teachers, true);
 
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         var studentClient = await _back.LoggedAsStudent(student.Email);
@@ -136,7 +136,7 @@ public partial class IntegrationTests
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.All, true);
 
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         var studentClient = await _back.LoggedAsStudent(student.Email);

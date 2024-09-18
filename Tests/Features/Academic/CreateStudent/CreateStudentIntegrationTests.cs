@@ -10,11 +10,11 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         // Act
-        StudentOut student = await client.CreateStudent(data.CourseOffering.Id);
+        StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id);
 
         // Assert
         student.Id.Should().NotBeEmpty(); 
-        student.CourseOfferingId.Should().Be(data.CourseOffering.Id); 
+        student.CourseOfferingId.Should().Be(data.AdsCourseOffering.Id); 
         student.Name.Should().Be("Zezin"); 
     }
 
@@ -40,7 +40,7 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         // Act
-        var response = await client.CreateStudent(data.CourseOffering.Id, "Zezin", email);
+        var response = await client.CreateStudent(data.AdsCourseOffering.Id, "Zezin", email);
 
         // Assert
         response.ShouldBeError(new InvalidEmail()); 
@@ -55,8 +55,8 @@ public partial class IntegrationTests
 
         // Act
         var email = TestData.Email;
-        var firstResponse = await client.CreateStudent(data.CourseOffering.Id, "Zezin", email);
-        var secondResponse = await client.CreateStudent(data.CourseOffering.Id, "Zezin", email);
+        var firstResponse = await client.CreateStudent(data.AdsCourseOffering.Id, "Zezin", email);
+        var secondResponse = await client.CreateStudent(data.AdsCourseOffering.Id, "Zezin", email);
 
         // Assert
         firstResponse.ShouldBeSuccess();
@@ -71,7 +71,7 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         // Act
-        StudentOut student = await client.CreateStudent(data.CourseOffering.Id);
+        StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id);
 
         // Assert
         using var userManager = _back.GetUserManager();

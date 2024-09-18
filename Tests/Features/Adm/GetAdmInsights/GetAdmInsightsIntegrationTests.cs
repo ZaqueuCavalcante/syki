@@ -12,8 +12,8 @@ public partial class IntegrationTests
         await academicClient.CreateTeacher("Chico");
         await academicClient.CreateTeacher("Ana");
 
-        await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
-        await academicClient.CreateStudent(data.CourseOffering.Id, "Maju");
+        await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
+        await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Maju");
 
         var admClient = await _back.LoggedAsAdm();
 

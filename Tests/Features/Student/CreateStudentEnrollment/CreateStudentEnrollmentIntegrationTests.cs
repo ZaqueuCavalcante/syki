@@ -14,22 +14,23 @@ public partial class IntegrationTests
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
         TeacherOut ana = await academicClient.CreateTeacher("Ana");
 
-        ClassOut discreteMathClass = await academicClient.CreateClass(data.Disciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToWebDevClass = await academicClient.CreateClass(data.Disciplines.IntroToWebDev.Id, chico.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToComputerNetworksClass = await academicClient.CreateClass(data.Disciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, chico.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut introToComputerNetworksClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
 
-        StudentOut student = await academicClient.CreateStudent(data.CourseOffering.Id, "Zaqueu");
+        await academicClient.ReleaseClassesForEnrollment(period.Id, [discreteMathClass.Id, introToComputerNetworksClass.Id]);
+
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
-        await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToComputerNetworksClass.Id]);
+        await studentClient.CreateStudentEnrollment([discreteMathClass.Id]);
 
         // Assert
         var classes = await studentClient.GetStudentEnrollmentClasses();
 
-        classes.Should().HaveCount(3);
+        classes.Should().HaveCount(2);
         classes.First(x => x.Id == discreteMathClass.Id).IsSelected.Should().BeTrue();
-        classes.First(x => x.Id == introToComputerNetworksClass.Id).IsSelected.Should().BeTrue();
-        classes.First(x => x.Id == introToWebDevClass.Id).IsSelected.Should().BeFalse();
+        classes.First(x => x.Id == introToComputerNetworksClass.Id).IsSelected.Should().BeFalse();
     }
 }

@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Student.GetStudentEnrollmentClasses;
 
+/// <summary>
+/// Retorna as Turmas que o Aluno pode se matricular.
+/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

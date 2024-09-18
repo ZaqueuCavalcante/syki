@@ -9,8 +9,8 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
-        await client.CreateStudent(data.CourseOffering.Id, "Zaqueu");
-        await client.CreateStudent(data.CourseOffering.Id, "Maju");
+        await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
+        await client.CreateStudent(data.AdsCourseOffering.Id, "Maju");
 
         // Act
         var response = await client.GetStudents();

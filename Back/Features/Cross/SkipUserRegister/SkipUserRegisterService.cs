@@ -1,4 +1,4 @@
-using Syki.Back.Features.Cross.Login;
+using Syki.Back.Features.Cross.GenerateJWT;
 using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
 
@@ -6,41 +6,39 @@ namespace Syki.Back.Features.Cross.SkipUserRegister;
 
 public class SkipUserRegisterService(
     SykiDbContext ctx,
-    LoginService loginService,
+    GenerateJWTService generateJWTService,
     FinishUserRegisterService finishService,
     CreatePendingUserRegisterService createService
 ) : ICrossService
 {
-    public async Task<OneOf<SkipRegisterLoginOut, SykiError>> Skip(SkipRegisterLoginIn data)
+    public async Task<OneOf<SkipUserRegisterLoginOut, SykiError>> Skip(SkipUserRegisterLoginIn data)
     {
-        if (data.InstitutionId == Guid.Empty) return await RegisterAndLogin();
+        var user = await ctx.Users.AsNoTracking().Where(x => x.Id == data.UserId).FirstOrDefaultAsync();
 
-        return await Login(data.InstitutionId);
+        if (user == null) data.UserId = await Register();
+
+        return await Login(data.UserId);
     }
 
-    public async Task<SkipRegisterLoginOut> RegisterAndLogin()
+    public async Task<Guid> Register()
     {
-        var email = $"academico.157{Guid.NewGuid().ToString().OnlyNumbers()[..8]}@syki.seed.com";
-        var password = "Test@123";
+        var email = $"academico.{Guid.NewGuid().ToString().OnlyNumbers()[..8]}@syki.skip.com";
+        var password = $"Academic@{Guid.NewGuid().ToString().OnlyNumbers()}";
 
         await createService.Create(new(email));
 
         var register = await ctx.UserRegisters.FirstAsync(d => d.Email == email);
 
         var user = await finishService.Finish(new(register.Id.ToString(), password));
-
-        var result = await loginService.Login(new(email, password));
-
-        return new() { InstitutionId = user.GetSuccess().InstitutionId, AccessToken = result.AccessToken };
+        return user.GetSuccess().Id;
     }
 
-    public async Task<SkipRegisterLoginOut> Login(Guid institutionId)
+    public async Task<SkipUserRegisterLoginOut> Login(Guid userId)
     {
-        var user = await ctx.Users.Where(x => x.InstitutionId == institutionId && x.Email.StartsWith("academico.157")).FirstOrDefaultAsync();
-        if (user == null) return await RegisterAndLogin();
+        var user = await ctx.Users.AsNoTracking().Where(x => x.Id == userId).FirstAsync();
 
-        var result = await loginService.Login(new(user.Email, "Test@123"));
+        var jwt = await generateJWTService.Generate(user.Email);
 
-        return new() { InstitutionId = institutionId, AccessToken = result.AccessToken };
+        return new() { UserId = userId, AccessToken = jwt };
     }
 }

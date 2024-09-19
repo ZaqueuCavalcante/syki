@@ -9,6 +9,7 @@ public static class CorsConfigs
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()
+                .WithExposedHeaders("X-Hash", "X-SkipUserRegister")
                 .SetIsOriginAllowed(_ => true)
             )
         );

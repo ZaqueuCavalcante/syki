@@ -4,7 +4,7 @@ namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 /// Cria um registro de usuário pendente.
 /// </summary>
 [ApiController]
-[EnableRateLimiting("VerySmall")]
+[EnableRateLimiting("SuperVerySmall")]
 [Consumes("application/json"), Produces("application/json")]
 public class CreatePendingUserRegisterController(CreatePendingUserRegisterService service) : ControllerBase
 {

@@ -28,6 +28,9 @@ public class SykiDelegatingHandler(ILocalStorageService storage, NavigationManag
                 nav.NavigateTo("/login", forceLoad: true);
         }
 
+        response.Headers.TryGetValues("X-SkipUserRegister", out var values);
+        await storage.SetItemAsync("SkipUserRegister", values?.FirstOrDefault() ?? "False");
+
         return response;
     }
 }

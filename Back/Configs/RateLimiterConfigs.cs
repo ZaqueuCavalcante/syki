@@ -12,18 +12,28 @@ public static class RateLimiterConfigs
 
             if (Env.IsTesting() || Env.IsDevelopment())
             {
+                options.AddFixedWindowLimiter("SuperVerySmall", o => { o.PermitLimit = 10_000; o.Window = TimeSpan.FromHours(1); });
                 options.AddFixedWindowLimiter("VerySmall", o => { o.PermitLimit = 10_000; o.Window = TimeSpan.FromHours(1); });
                 options.AddFixedWindowLimiter("Small", o => { o.PermitLimit = 10_000; o.Window = TimeSpan.FromHours(1); });
                 options.AddFixedWindowLimiter("Medium", o => { o.PermitLimit = 10_000; o.Window = TimeSpan.FromHours(1); });
                 return;
             }
 
-            options.AddPolicy("VerySmall", httpContext =>
+            options.AddPolicy("SuperVerySmall", httpContext =>
                 RateLimitPartition.GetFixedWindowLimiter(
                     partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
                     factory: _ => new FixedWindowRateLimiterOptions
                     {
                         PermitLimit = 2,
+                        Window = TimeSpan.FromHours(1)
+                    }));
+
+            options.AddPolicy("VerySmall", httpContext =>
+                RateLimitPartition.GetFixedWindowLimiter(
+                    partitionKey: httpContext.Connection.RemoteIpAddress?.ToString(),
+                    factory: _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 10,
                         Window = TimeSpan.FromHours(1)
                     }));
 

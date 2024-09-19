@@ -6,14 +6,14 @@ public class SkipUserRegisterClient(HttpClient http, ILocalStorageService localS
 {
     public async Task Skip()
     {
-        var id = await localStorage.GetItemAsync("InstitutionId");
-        _ = Guid.TryParse(id, out Guid institutionId);
+        var id = await localStorage.GetItemAsync("UserId");
+        _ = Guid.TryParse(id, out Guid userId);
 
-        var response = await http.PostAsJsonAsync("/skip-user-register", new SkipRegisterLoginIn { InstitutionId = institutionId  });
-        var result = (await response.Resolve<SkipRegisterLoginOut>()).GetSuccess();
+        var response = await http.PostAsJsonAsync("/skip-user-register", new SkipUserRegisterLoginIn { UserId = userId  });
+        var result = (await response.Resolve<SkipUserRegisterLoginOut>()).GetSuccess();
 
         await localStorage.SetItemAsync("AccessToken", result.AccessToken);
-        await localStorage.SetItemAsync("InstitutionId", result.InstitutionId.ToString());
+        await localStorage.SetItemAsync("UserId", result.UserId.ToString());
         authStateProvider.MarkUserAsAuthenticated();
     }
 }

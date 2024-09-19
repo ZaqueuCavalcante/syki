@@ -5,24 +5,18 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Syki.Front.Auth;
 
-public class SykiAuthStateProvider : AuthenticationStateProvider
+public class SykiAuthStateProvider(ILocalStorageService storage) : AuthenticationStateProvider
 {
-    private readonly ILocalStorageService _localStorage;
-    public SykiAuthStateProvider(ILocalStorageService localStorage)
-    {
-        _localStorage = localStorage;
-    }
-
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var jwt = await _localStorage.GetItemAsync("AccessToken");
+        var jwt = await storage.GetItemAsync("AccessToken");
 
-        if (string.IsNullOrWhiteSpace(jwt))
+        if (jwt.IsEmpty())
         {
-            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+            return new(new ClaimsPrincipal(new ClaimsIdentity()));
         }
-        
-        return new AuthenticationState(CreateClaimsPrincipalFromToken(jwt));
+
+        return new(CreateClaimsPrincipalFromToken(jwt!));
     }
 
     public void MarkUserAsAuthenticated()

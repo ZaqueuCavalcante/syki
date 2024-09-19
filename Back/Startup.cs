@@ -1,8 +1,8 @@
 namespace Syki.Back;
 
-public class Startup
+public class Startup()
 {
-    public static void ConfigureServices(IServiceCollection services)
+    public void ConfigureServices(IServiceCollection services)
     {
         services.AddSettingsConfigs();
         services.AddServicesConfigs();

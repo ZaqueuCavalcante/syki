@@ -19,23 +19,24 @@
             }
             else
             {
-                @* <MudButton
-                    OnClick="@SkipRegister"
-                    EndIcon="@Icons.Material.Filled.Login"
-                    IconSize="Size.Medium"
-                    Size="Size.Large"
-                    Color="Color.Tertiary"
-                    Variant="Variant.Filled"
-                    Class="mx-auto mb-4 px-12 my-0"
-                >
-                    Logar sem cadastro
-                </MudButton>
-
-                <MudStack Row="true" Spacing="0" AlignItems="AlignItems.Center" Justify="Justify.Center">
-                    <MudDivider DividerType="DividerType.FullWidth" Class="mt-2 mb-6" Style="width: 40%" />
-                    <MudIcon Icon="@Icons.Material.Filled.TripOrigin" Size="Size.Large" Class="mb-4" />
-                    <MudDivider DividerType="DividerType.FullWidth" Class="mt-2 mb-6" Style="width: 40%" />
-                </MudStack> *@
+                <AuthorizeView Policy="@FrontPolicy.SkipUserRegister">
+                    <MudButton
+                        OnClick="@SkipUserRegister"
+                        EndIcon="@Icons.Material.Filled.Login"
+                        IconSize="Size.Medium"
+                        Size="Size.Large"
+                        Color="Color.Tertiary"
+                        Variant="Variant.Filled"
+                        Class="mx-auto mb-4 px-12 my-0"
+                    >
+                        Testar sem cadastro
+                    </MudButton>
+                    <MudStack Row="true" Spacing="0" AlignItems="AlignItems.Center" Justify="Justify.Center">
+                        <MudDivider DividerType="DividerType.FullWidth" Class="mt-2 mb-6" Style="width: 40%" />
+                        <MudIcon Icon="@Icons.Material.Filled.TripOrigin" Size="Size.Large" Class="mb-4" />
+                        <MudDivider DividerType="DividerType.FullWidth" Class="mt-2 mb-6" Style="width: 40%" />
+                    </MudStack>
+                </AuthorizeView>
 
                 <MudAlert NoIcon="true" Class="mx-4" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                     <MudText Align="Align.Center">Cadastre seu email para ter acesso ao sistema.</MudText>
@@ -61,6 +62,8 @@
 
 @inject ISnackbar Snackbar
 @inject NavigationManager Nav
+@inject HealthClient HealthClient
+@inject SkipUserRegisterClient SkipUserRegisterClient
 @inject CreatePendingUserRegisterClient CreatePendingUserRegisterClient
 
 @code
@@ -69,6 +72,19 @@
     private bool _loading;
     private MudForm _form;
     private string _email;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await HealthClient.Get();
+    }
+
+    private async Task SkipUserRegister()
+    {
+        _loading = true;
+        await SkipUserRegisterClient.Skip();
+        Nav.NavigateTo("/");
+        _loading = false;
+    }
 
     private async Task Submit()
     {

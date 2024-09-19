@@ -39,8 +39,15 @@
     </MudGrid>
 </MudContainer>
 
+@inject HealthClient HealthClient
+
 @code
 {
     [CascadingParameter(Name = "IsDarkTheme")]
     public bool IsDarkTheme { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await HealthClient.Get();
+    }
 }

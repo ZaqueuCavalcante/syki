@@ -1,15 +1,18 @@
-// namespace Syki.Back.Features.Cross.SkipUserRegister;
+using Syki.Back.Auth;
 
-// [ApiController]
-// [EnableRateLimiting("Small")]
-// [Consumes("application/json"), Produces("application/json")]
-// public class SkipUserRegisterController(SkipUserRegisterService service) : ControllerBase
-// {
-//     [HttpPost("skip-user-register")]
-//     public async Task<IActionResult> Skip([FromBody] SkipRegisterLoginIn data)
-//     {
-//         var result = await service.Skip(data);
+namespace Syki.Back.Features.Cross.SkipUserRegister;
 
-//         return result.Match<IActionResult>(Ok, BadRequest);
-//     }
-// }
+[ApiController]
+[EnableRateLimiting("VerySmall")]
+[Consumes("application/json"), Produces("application/json")]
+public class SkipUserRegisterController(SkipUserRegisterService service) : ControllerBase
+{
+    [HttpPost("skip-user-register")]
+    [Authorize(BackPolicy.SkipUserRegister)]
+    public async Task<IActionResult> Skip([FromBody] SkipUserRegisterLoginIn data)
+    {
+        var result = await service.Skip(data);
+
+        return result.Match<IActionResult>(Ok, BadRequest);
+    }
+}

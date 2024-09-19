@@ -1,5 +1,11 @@
 # TODOS
 
+https://www.freedium.cfd/https://medium.com/@mucahidozcelik/deploying-net-core-application-on-azure-app-service-with-terraform-11b49d2cfc88
+
+https://medium.com/@williamwarley/mastering-azure-deployments-a-comprehensive-guide-to-deploying-main-services-with-terraform-and-f624e48fb6f4
+
+
+
 - [] Quando o periodo de matricula terminar, deve aparecer em tela a turma com o status de "Aguardando Inicio"
     - Esse status eh apenas virtual, ele n existe no enum, apenas eh computado on the fly com base na data de fim do periodo de matricula
 

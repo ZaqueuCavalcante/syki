@@ -24,6 +24,29 @@ public partial class IntegrationTests
     }
 
     [Test]
+    public async Task Should_return_academic_classes_with_awaiting_start_status_when_enrollment_period_ends()
+    {
+        // Arrange
+        var academicClient = await _back.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
+        var period = data.AcademicPeriod2;
+        await academicClient.CreateEnrollmentPeriod(period.Id);
+
+        TeacherOut chico = await academicClient.CreateTeacher("Chico");
+        ClassOut @class = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        await academicClient.ReleaseClassesForEnrollment(period.Id, [@class.Id]);
+
+        await academicClient.UpdateEnrollmentPeriod(period.Id, -4, -1);
+
+        // Act
+        var classes = await academicClient.GetAcademicClasses();
+
+        // Assert
+        classes.Count.Should().Be(1);
+        classes[0].Status.Should().Be(ClassStatus.AwaitingStart);
+    }
+
+    [Test]
     public async Task Should_return_academic_classes_with_fill_ratio()
     {
         // Arrange

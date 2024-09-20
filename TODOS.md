@@ -1,13 +1,5 @@
 # TODOS
 
-https://www.freedium.cfd/https://medium.com/@mucahidozcelik/deploying-net-core-application-on-azure-app-service-with-terraform-11b49d2cfc88
-https://medium.com/@williamwarley/mastering-azure-deployments-a-comprehensive-guide-to-deploying-main-services-with-terraform-and-f624e48fb6f4
-
-
-
-- [] Quando o periodo de matricula terminar, deve aparecer em tela a turma com o status de "Aguardando Inicio"
-    - Esse status eh apenas virtual, ele n existe no enum, apenas eh computado on the fly com base na data de fim do periodo de matricula
-
 - [ ] Deve ser possivel iniciar varias turmas ao mesmo tempo
     - Todas precisam ter o status de Aguardando Inicio e ser do mesmo periodo
     - Só deve ser possível iniciar uma turma caso o período de marícula já tenha acabado
@@ -32,26 +24,6 @@ https://medium.com/@williamwarley/mastering-azure-deployments-a-comprehensive-gu
 
 
 
-
-
-
-- [] Feature flags
-    - API retorna header com as features habilitadas [541, 684, 1844]
-    - Front salva lista no LocalStorage
-    - Usar o AuthorizeView para determinar se pode ver ou nao coisa relacionadas a features
-    - Isso n deve ser usado para coisas relacionadas a autenticacao / autorizacao
-    - Em todos os requests o que veio no header eh salvo no LocalStorage (sobrescrever msm)
-    - Ao mudar os headers na API, o front deve se adaptar automaticamente
-    - Isso pode ser usado para forcar o reload depois de um deploy do front, basta retornar o hash do ultimo commit do codigo
-
-
-
-
-
-
-
-
-- [] Bug do gutto (aluno faz matricula depois de uma chamada feita)
 
 ----------------------------------------------------------------------------------------------
 
@@ -190,3 +162,10 @@ https://www.graymatterdeveloper.com/2019/12/02/listening-events-postgresql/index
 
 ## Atividades
     - Listagem de pendentes + data limite para entrega
+
+
+
+## Stuck
+
+- IOptionsMonitor not works
+- Events not Tasks

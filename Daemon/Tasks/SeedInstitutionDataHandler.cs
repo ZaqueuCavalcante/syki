@@ -180,7 +180,7 @@ public class SeedInstitutionDataHandler(
         ];
     }
 
-    private List<Discipline> GetAdsDisciplines(Guid id)
+    private static List<Discipline> GetAdsDisciplines(Guid id)
     {
         return
         [
@@ -222,7 +222,7 @@ public class SeedInstitutionDataHandler(
         ];
     }
 
-    private List<Discipline> GetDireitoDisciplines(Guid id)
+    private static List<Discipline> GetDireitoDisciplines(Guid id)
     {
         return
         [
@@ -299,7 +299,7 @@ public class SeedInstitutionDataHandler(
         ];
     }
 
-    private CourseCurriculum GetAdsCourseCurriculum(Institution institution, List<Discipline> disciplines)
+    private static CourseCurriculum GetAdsCourseCurriculum(Institution institution, List<Discipline> disciplines)
     {
         var adsCC = new CourseCurriculum(institution.Id, institution.Courses[1].Id, "Grade ADS 1.0");
         adsCC.Links.Add(new(disciplines[00].Id, 1, 4, 72));
@@ -341,7 +341,7 @@ public class SeedInstitutionDataHandler(
         return adsCC;
     }
 
-    private CourseCurriculum GetDireitoCourseCurriculum(Institution institution, List<Discipline> disciplines)
+    private static CourseCurriculum GetDireitoCourseCurriculum(Institution institution, List<Discipline> disciplines)
     {
         var direitoCC = new CourseCurriculum(institution.Id, institution.Courses[4].Id, "Grade Direito 1.0");
 

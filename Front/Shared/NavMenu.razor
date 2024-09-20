@@ -1,6 +1,6 @@
 ﻿@namespace Syki.Front.Shared
 
-<MudNavMenu>
+<MudNavMenu Bordered="true">
     <AuthorizeView Roles="@UserRole.Adm.ToString()">
         <MudNavLink Href="adm/users" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Users</MudNavLink>
         <MudNavLink Href="adm/institutions" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.School" IconColor="Color.Inherit">Instituições</MudNavLink>
@@ -13,7 +13,7 @@
         <MudNavLink Href="academic/course-curriculums" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.AccountTree" IconColor="Color.Inherit">Grades</MudNavLink>
         <MudNavLink Href="academic/course-offerings" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.PlaylistAddCheck" IconColor="Color.Inherit">Ofertas</MudNavLink>
         <MudNavLink Href="academic/teachers" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person4" IconColor="Color.Inherit">Professores</MudNavLink>
-        <MudNavLink Href="academic/classes" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CenterFocusStrong" IconColor="Color.Inherit">Turmas</MudNavLink>
+        <MudNavLink Href="academic/classes" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.CenterFocusStrong" IconColor="Color.Inherit">Turmas</MudNavLink>
         <MudNavLink Href="academic/students" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Alunos</MudNavLink>
         <MudNavLink Href="academic/academic-periods" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Períodos</MudNavLink>
         <MudNavLink Href="academic/enrollment-periods" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrículas</MudNavLink>

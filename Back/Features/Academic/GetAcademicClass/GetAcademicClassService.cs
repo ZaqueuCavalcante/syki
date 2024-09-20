@@ -16,9 +16,15 @@ public class GetAcademicClassService(SykiDbContext ctx) : IAcademicService
             .FirstOrDefaultAsync();
 
         if (@class == null) return new ClassNotFound();
-        
+
         var count = await ctx.ClassesStudents.Where(x => x.ClassId == id).CountAsync();
         @class.SetFillRatio(count);
+
+        var period = await ctx.EnrollmentPeriods.AsNoTracking().Where(x => x.InstitutionId == institutionId && x.Id == @class.PeriodId).FirstOrDefaultAsync();
+        if (@class.Status == ClassStatus.OnEnrollment && period?.EndAt < DateTime.Now.ToDateOnly())
+        {
+            @class.Status = ClassStatus.AwaitingStart;
+        }
 
         return @class.ToGetAcademicClassOut();
     }

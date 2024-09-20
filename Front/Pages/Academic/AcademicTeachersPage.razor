@@ -11,7 +11,19 @@
     <SykiPageHeader Icon="@Icons.Material.Filled.Person4" Title="Professores" ButtonText="Novo Professor" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Um professor pode lecionar várias disciplinas ao longo de um período, inclusive em mais de um campus." />
     <MudContainer Class="px-0 mb-4">
-        <MudDataGrid Class="pa-4" Items="@_teachers" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+
+
+
+
+        <MudDataGrid
+            Class="pa-4"
+            Items="@_teachers"
+            QuickFilter="@_quickFilter"
+            Hover="true"
+            Loading="@_loading"
+            Dense="true"
+            RowsPerPage="10"
+        >
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou email" />
             </ToolBarContent>
@@ -26,6 +38,10 @@
                 <SykiDataGridPager T="TeacherOut" />
             </PagerContent>
         </MudDataGrid>
+
+
+
+
     </MudContainer>
 </MudContainer>
 

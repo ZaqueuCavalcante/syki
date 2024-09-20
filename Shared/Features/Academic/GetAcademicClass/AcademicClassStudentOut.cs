@@ -10,6 +10,7 @@ public class AcademicClassStudentOut
 
     public string GetNote(ExamType type)
     {
-        return ExamGrades.Where(x => x.ExamType == type).First().Note.Format();
+        var examGrade = ExamGrades.Where(x => x.ExamType == type).FirstOrDefault();
+        return examGrade != null ? examGrade.Note.Format() : "0.00";
     }
 }

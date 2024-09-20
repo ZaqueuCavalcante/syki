@@ -14,6 +14,7 @@ global using Syki.Front.Features.Academic.GetCourseCurriculums;
 global using Syki.Front.Features.Academic.GetCourseDisciplines;
 global using Syki.Front.Features.Academic.GetCourseOfferings;
 global using Syki.Front.Features.Academic.GetCourses;
+global using Syki.Front.Features.Academic.CrossLogin;
 global using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 global using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
 global using Syki.Front.Features.Academic.GetDisciplines;

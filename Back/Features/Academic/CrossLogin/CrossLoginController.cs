@@ -3,7 +3,7 @@ using Syki.Back.Auth;
 namespace Syki.Back.Features.Academic.CrossLogin;
 
 /// <summary>
-/// Realiza o login a partir do acadêmico, indo para conta de um Aluno ou Professor da instituição.
+/// Realiza o login a partir do Acadêmico, indo para conta de um Aluno ou Professor da instituição.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

@@ -11,41 +11,53 @@
     <SykiPageHeader Icon="@Icons.Material.Filled.Person4" Title="Professores" ButtonText="Novo Professor" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Um professor pode lecionar várias disciplinas ao longo de um período, inclusive em mais de um campus." />
     <MudContainer Class="px-0 mb-4">
-
-
-
-
-        <MudDataGrid
+        <MudTable
             Class="pa-4"
             Items="@_teachers"
-            QuickFilter="@_quickFilter"
+            Filter="@_quickFilter"
             Hover="true"
             Loading="@_loading"
             Dense="true"
             RowsPerPage="10"
         >
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou email" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo"/>
             </ToolBarContent>
-            <Columns>
-                <PropertyColumn Property="x => x.Name" Title="Nome" />
-                <PropertyColumn Property="x => x.Email" Title="Email" />
-            </Columns>
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Email</MudTh>
+                <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
+                    <MudTh></MudTh>
+                </AuthorizeView>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nome">@context.Name</MudTd>
+                <MudTd DataLabel="Email">@context.Email</MudTd>
+                <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
+                    <MudTd>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context))" />
+                    </MudTd>
+                </AuthorizeView>
+            </RowTemplate>
+            <LoadingContent>
+                @if (_breakpoint == Breakpoint.Xs)
+                {
+                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                }
+            </LoadingContent>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="TeacherOut" />
+                <SykiTablePager />
             </PagerContent>
-        </MudDataGrid>
-
-
-
-
+        </MudTable>
     </MudContainer>
 </MudContainer>
 
+@inject NavigationManager Nav
 @inject IDialogService DialogService
+@inject CrossLoginClient CrossLoginClient
 @inject GetTeachersClient GetTeachersClient
 @inject IBrowserViewportService BrowserViewportService
 
@@ -55,10 +67,21 @@
     private string _searchString;
     private List<TeacherOut> _teachers = [];
 
+    private Breakpoint _breakpoint;
+
     protected override async Task OnInitializedAsync()
     {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _loading = true;
         _teachers = await GetTeachersClient.Get();
+        _loading = false;
+    }
+
+    private async Task CrossLogin(TeacherOut teacher)
+    {
+        _loading = true;
+        var result = await CrossLoginClient.Login(teacher.Id);
+        if (result.AccessToken != null) Nav.NavigateTo("/", forceLoad: true);
         _loading = false;
     }
 

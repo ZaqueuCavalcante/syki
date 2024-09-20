@@ -20,6 +20,11 @@
                 <PropertyColumn Property="x => x.Email" Title="Email" />
                 <PropertyColumn Property="x => x.EnrollmentCode" Title="Matrícula" />
                 <PropertyColumn Property="x => x.CourseOffering" Title="Curso" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context.Item))" />
+                    </CellTemplate>
+                </TemplateColumn>
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -31,8 +36,10 @@
     </MudContainer>
 </MudContainer>
 
+@inject NavigationManager Nav
 @inject GetStudentsClient Client
 @inject IDialogService DialogService
+@inject CrossLoginClient CrossLoginClient
 @inject IBrowserViewportService BrowserViewportService
 
 @code
@@ -45,6 +52,14 @@
     {
         _loading = true;
         _students = await Client.Get();
+        _loading = false;
+    }
+
+    private async Task CrossLogin(StudentOut student)
+    {
+        _loading = true;
+        var result = await CrossLoginClient.Login(student.Id);
+        if (result.AccessToken != null) Nav.NavigateTo("/", forceLoad: true);
         _loading = false;
     }
 

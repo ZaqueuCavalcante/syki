@@ -16,7 +16,7 @@
                 <MudIconButton OnClick="@ToggleLeftOpen" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" />
                 <HomeButton />
                 <MudSpacer />
-                <AuthorizeView Roles="Teacher, Student" Context="otherContext">
+                <AuthorizeView Roles="Teacher, Student" Context="authContext">
                     <NotificationsIconButton />
                 </AuthorizeView>
                 <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ChangeTheme" />

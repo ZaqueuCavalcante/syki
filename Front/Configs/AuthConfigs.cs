@@ -8,10 +8,12 @@ public static class AuthConfigs
     public static void AddAuthConfigs(this WebAssemblyHostBuilder builder)
     {
         builder.Services.AddScoped<IAuthorizationHandler, SkipUserRegisterAuthReqHandler>();
+        builder.Services.AddScoped<IAuthorizationHandler, CrossLoginAuthReqHandler>();
 
         builder.Services.AddAuthorizationCore(options =>
         {
             options.AddPolicy(FrontPolicy.SkipUserRegister, p => p.Requirements.Add(new SkipUserRegisterAuthReq()));
+            options.AddPolicy(FrontPolicy.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthReq()));
         });
 
         builder.Services.AddScoped<SykiAuthStateProvider>();

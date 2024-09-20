@@ -11,28 +11,51 @@
     <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Alunos" ButtonText="Novo Aluno" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Um aluno precisa necessariamente estar vinculado à uma oferta de curso." />
     <MudContainer Class="px-0 mb-4">
-        <MudDataGrid Class="pa-4" Items="@_students" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <MudTable
+            Class="pa-4"
+            Items="@_students"
+            Filter="@_quickFilter"
+            Dense="true"
+            Hover="true"
+            Loading="@_loading"
+            RowsPerPage="10"
+        >
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer campo" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo"/>
             </ToolBarContent>
-            <Columns>
-                <PropertyColumn Property="x => x.Name" Title="Nome" />
-                <PropertyColumn Property="x => x.Email" Title="Email" />
-                <PropertyColumn Property="x => x.EnrollmentCode" Title="Matrícula" />
-                <PropertyColumn Property="x => x.CourseOffering" Title="Curso" />
-                <TemplateColumn CellClass="d-flex justify-end">
-                    <CellTemplate>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context.Item))" />
-                    </CellTemplate>
-                </TemplateColumn>
-            </Columns>
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Email</MudTh>
+                <MudTh>Matrícula</MudTh>
+                <MudTh>Curso</MudTh>
+                <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
+                    <MudTh></MudTh>
+                </AuthorizeView>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nome">@context.Name</MudTd>
+                <MudTd DataLabel="Email">@context.Email</MudTd>
+                <MudTd DataLabel="Matrícula">@context.EnrollmentCode</MudTd>
+                <MudTd DataLabel="Curso">@context.CourseOffering</MudTd>
+                <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
+                    <MudTd>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context))" />
+                    </MudTd>
+                </AuthorizeView>
+            </RowTemplate>
+            <LoadingContent>
+                @if (_breakpoint == Breakpoint.Xs)
+                {
+                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                }
+            </LoadingContent>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="StudentOut" />
+                <SykiTablePager />
             </PagerContent>
-        </MudDataGrid>
+        </MudTable>
     </MudContainer>
 </MudContainer>
 
@@ -48,8 +71,11 @@
     private string _searchString;
     private List<StudentOut> _students = [];
 
+    private Breakpoint _breakpoint;
+
     protected override async Task OnInitializedAsync()
     {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _loading = true;
         _students = await Client.Get();
         _loading = false;

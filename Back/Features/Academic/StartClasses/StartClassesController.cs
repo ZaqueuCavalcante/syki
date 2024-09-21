@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.StartClass;
+namespace Syki.Back.Features.Academic.StartClasses;
 
 /// <summary>
 /// Inicia várias Turmas.
@@ -7,12 +7,12 @@ namespace Syki.Back.Features.Academic.StartClass;
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
-public class StartClassController(StartClassService service) : ControllerBase
+public class StartClassesController(StartClassesService service) : ControllerBase
 {
-    [HttpPut("academic/classes/{id}/start")]
-    public async Task<IActionResult> Start([FromRoute] Guid id)
+    [HttpPut("academic/classes/start")]
+    public async Task<IActionResult> Start([FromBody] StartClassesIn data)
     {
-        var result = await service.Start(User.InstitutionId(), id);
+        var result = await service.Start(User.InstitutionId(), data);
 
         return result.Match<IActionResult>(_ => NoContent(), BadRequest);
     }

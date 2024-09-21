@@ -1,17 +1,8 @@
 # TODOS
 
-- [ ] Deve ser possivel iniciar varias turmas ao mesmo tempo
-    - Todas precisam ter o status de Aguardando Inicio e ser do mesmo periodo
-    - Só deve ser possível iniciar uma turma caso o período de marícula já tenha acabado
-
-- [ ] O aluno so pode ver a turma quando ela tiver o status de Em Matricula + dentro do período de matrícula
-
-
-- [] Fluxo de Iniciar Turma
 - [] Arrumar tela de matricula do aluno
 - [] Corrigir dados de index de Aluno e Professor
 - [] Mudar seed para ter alunos ja matriculados e outros ainda em periodo de matricula
-- [] Revisar todos os testes
 - [] Documentacao do codigo e da API
 - [] Deploy na Azure com Terraform
 - [] Limite de faltas e nota minima (reprovacao)

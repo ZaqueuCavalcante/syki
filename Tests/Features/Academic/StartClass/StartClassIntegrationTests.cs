@@ -16,7 +16,7 @@ public partial class IntegrationTests
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
-        await academicClient.ReleaseClassesForEnrollment(period, [mathClass.Id]);
+        await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);
 
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([mathClass.Id]);
@@ -24,10 +24,10 @@ public partial class IntegrationTests
         await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
 
         // Act
-        await academicClient.StartClass(mathClass.Id);
+        await academicClient.StartClasses([mathClass.Id]);
 
         // Assert
-        using var ctx = _back.GetDbContext();
+        await using var ctx = _back.GetDbContext();
         var examGrades = await ctx.ExamGrades.Where(x => x.ClassId == mathClass.Id).ToListAsync();
 
         examGrades.Should().HaveCount(3);
@@ -39,16 +39,16 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_not_start_not_founded_class()
+    public async Task Should_not_start_invalid_classes()
     {
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
 
         // Act
-        var response = await academicClient.StartClass(Guid.NewGuid());
+        var response = await academicClient.StartClasses([Guid.NewGuid()]);
 
         // Assert
-        response.ShouldBeError(new ClassNotFound());
+        response.ShouldBeError(new InvalidClassesList());
     }
 
     [Test]
@@ -63,7 +63,7 @@ public partial class IntegrationTests
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
         // Act
-        var response = await academicClient.StartClass(mathClass.Id);
+        var response = await academicClient.StartClasses([mathClass.Id]);
 
         // Assert
         response.ShouldBeError(new ClassMustHaveOnEnrollmentStatus());
@@ -82,10 +82,10 @@ public partial class IntegrationTests
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
-        await academicClient.ReleaseClassesForEnrollment(period, [mathClass.Id]);
+        await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);
 
         // Act
-        var response = await academicClient.StartClass(mathClass.Id);
+        var response = await academicClient.StartClasses([mathClass.Id]);
 
         // Assert
         response.ShouldBeError(new EnrollmentPeriodMustBeFinalized());

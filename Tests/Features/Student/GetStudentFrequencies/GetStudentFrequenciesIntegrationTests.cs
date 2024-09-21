@@ -37,14 +37,14 @@ public partial class IntegrationTests
         await academicClient.CreateClassLessons(discreteMathClass.Id);
         await academicClient.CreateClassLessons(introToWebDevClass.Id);
 
-        await academicClient.ReleaseClassesForEnrollment(period, [discreteMathClass.Id]);
+        await academicClient.ReleaseClassesForEnrollment([discreteMathClass.Id]);
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id]);
 
         await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
-        await academicClient.StartClass(discreteMathClass.Id);
+        await academicClient.StartClasses([discreteMathClass.Id]);
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         var teacherMathClass = await teacherClient.GetTeacherClass(discreteMathClass.Id);
@@ -86,7 +86,7 @@ public partial class IntegrationTests
         await academicClient.CreateClassLessons(computationalThinkingAndAlgorithms.Id);
         await academicClient.CreateClassLessons(integratorProjectOne.Id);
 
-        await academicClient.ReleaseClassesForEnrollment(period, [
+        await academicClient.ReleaseClassesForEnrollment([
             discreteMath.Id,
             introToWebDev.Id,
             humanMachineInteractionDesign.Id,
@@ -107,12 +107,12 @@ public partial class IntegrationTests
         ]);
 
         await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
-        await academicClient.StartClass(discreteMath.Id);
-        await academicClient.StartClass(introToWebDev.Id);
-        await academicClient.StartClass(humanMachineInteractionDesign.Id);
-        await academicClient.StartClass(introToComputerNetworks.Id);
-        await academicClient.StartClass(computationalThinkingAndAlgorithms.Id);
-        await academicClient.StartClass(integratorProjectOne.Id);
+        await academicClient.StartClasses([discreteMath.Id]);
+        await academicClient.StartClasses([introToWebDev.Id]);
+        await academicClient.StartClasses([humanMachineInteractionDesign.Id]);
+        await academicClient.StartClasses([introToComputerNetworks.Id]);
+        await academicClient.StartClasses([computationalThinkingAndAlgorithms.Id]);
+        await academicClient.StartClasses([integratorProjectOne.Id]);
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         var teacherDiscreteMath = await teacherClient.GetTeacherClass(discreteMath.Id);

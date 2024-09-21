@@ -39,14 +39,14 @@ public partial class IntegrationTests
         ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
         await academicClient.CreateClassLessons(discreteMathClass.Id);
 
-        await academicClient.ReleaseClassesForEnrollment(period, [discreteMathClass.Id]);
+        await academicClient.ReleaseClassesForEnrollment([discreteMathClass.Id]);
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id]);
 
         await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
-        await academicClient.StartClass(discreteMathClass.Id);
+        await academicClient.StartClasses([discreteMathClass.Id]);
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         var teacherMathClass = await teacherClient.GetTeacherClass(discreteMathClass.Id);

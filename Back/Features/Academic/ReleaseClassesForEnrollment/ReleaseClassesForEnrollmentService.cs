@@ -4,17 +4,19 @@ public class ReleaseClassesForEnrollmentService(SykiDbContext ctx) : IAcademicSe
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Release(Guid institutionId, ReleaseClassesForEnrollmentIn data)
     {
-        var enrollmentPeriod = await ctx.EnrollmentPeriods.AsNoTracking()
-            .Where(x => x.InstitutionId == institutionId && x.Id == data.PeriodId).FirstOrDefaultAsync();
-        if (enrollmentPeriod == null) return new EnrollmentPeriodNotFound();
-
-        var today = DateTime.Now.ToDateOnly();
-        if (today < enrollmentPeriod.StartAt) return new EnrollmentPeriodNotStarted();
-        if (today > enrollmentPeriod.EndAt) return new EnrollmentPeriodFinalized();
-
         var classes = await ctx.Classes
             .Where(c => c.InstitutionId == institutionId && data.Classes.Contains(c.Id))
             .ToListAsync();
+
+        var today = DateTime.Now.ToDateOnly();
+        var periods = await ctx.EnrollmentPeriods.AsNoTracking().Where(x => x.InstitutionId == institutionId).ToListAsync();
+        foreach (var @class in classes)
+        {
+            var period = periods.FirstOrDefault(x => x.Id == @class.PeriodId);
+            if (period == null) return new EnrollmentPeriodNotFound();
+            if (today < period.StartAt) return new EnrollmentPeriodNotStarted();
+            if (today > period.EndAt) return new EnrollmentPeriodFinalized();
+        }
 
         var statusOk = classes.All(x => x.Status == ClassStatus.OnPreEnrollment);
         if (!statusOk) return new AllClassesMustHaveOnPreEnrollmentStatus();

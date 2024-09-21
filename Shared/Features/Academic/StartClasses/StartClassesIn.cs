@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class ReleaseClassesForEnrollmentIn
+public class StartClassesIn
 {
     public List<Guid> Classes { get; set; }
 }

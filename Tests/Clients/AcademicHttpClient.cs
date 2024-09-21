@@ -1,6 +1,6 @@
 using Syki.Front.Features.Academic.GetCampi;
 using Syki.Front.Features.Academic.GetCourses;
-using Syki.Front.Features.Academic.StartClass;
+using Syki.Front.Features.Academic.StartClasses;
 using Syki.Front.Features.Academic.CreateClass;
 using Syki.Front.Features.Academic.GetTeachers;
 using Syki.Front.Features.Academic.GetStudents;
@@ -186,10 +186,10 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Create(disciplineId, teacherId, period, vacancies, schedules);
     }
 
-    public async Task<OneOf<SuccessOut, ErrorOut>> ReleaseClassesForEnrollment(string period, List<Guid> classes)
+    public async Task<OneOf<SuccessOut, ErrorOut>> ReleaseClassesForEnrollment(List<Guid> classes)
     {
         var client = new ReleaseClassesForEnrollmentClient(Http);
-        return await client.Release(period, classes);
+        return await client.Release(classes);
     }
 
     public async Task<List<ClassOut>> GetAcademicClasses(GetAcademicClassesIn query = null)
@@ -276,10 +276,10 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<OneOf<SuccessOut, ErrorOut>> StartClass(Guid id)
+    public async Task<OneOf<SuccessOut, ErrorOut>> StartClasses(List<Guid> classes)
     {
-        var client = new StartClassClient(Http);
-        return await client.Start(id);
+        var client = new StartClassesClient(Http);
+        return await client.Start(classes);
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> CreateClassLessons(Guid classId)

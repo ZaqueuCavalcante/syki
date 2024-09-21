@@ -1,8 +1,8 @@
-@namespace Syki.Front.Features.Academic.ReleaseClassesForEnrollment
+@namespace Syki.Front.Features.Academic.StartClasses
 
 <MudDialog Class="pb-2">
     <TitleContent>
-        <SykiDialogTitle Text="Liberar matrícula" Icon="@Icons.Material.Filled.Article" />
+        <SykiDialogTitle Text="Iniciar" Icon="@Icons.Material.Filled.PlayLesson" />
     </TitleContent>
     <DialogContent>
         <style>.mud-table-toolbar { height: auto }</style>
@@ -68,7 +68,7 @@
                     <MudStack Row="true" Class="mt-4">
                         <DialogCancelButton OnClick="@Cancel" />
                         <SykiProgressCircular Loading="@_loading" />
-                        <DialogSaveButton Class="mr-2" OnClick="@Submit" Text="Liberar" />
+                        <DialogSaveButton Class="mr-2" OnClick="@Submit" Text="Iniciar" />
                     </MudStack>
                 }
             </PagerContent>
@@ -77,9 +77,9 @@
 </MudDialog>
 
 @inject ISnackbar Snackbar
+@inject StartClassesClient StartClient
 @inject GetAcademicClassesClient GetClient
 @inject IBrowserViewportService BrowserViewportService
-@inject ReleaseClassesForEnrollmentClient ReleaseClient
 
 @code
 {
@@ -90,14 +90,13 @@
     private bool _showButtons;
     private string _searchString;
     private List<ClassOut> _classes = [];
-
     private Breakpoint _breakpoint;
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        _classes = await GetClient.Get(new() { Status = ClassStatus.OnPreEnrollment });
+        _classes = await GetClient.Get(new() { Status = ClassStatus.AwaitingStart });
         _loading = false;
         _showButtons = true;
     }
@@ -117,11 +116,11 @@
 
         _loading = true;
         var ids = _classes.Where(c => c.IsSelected).Select(c => c.Id).ToList();
-        var response = await ReleaseClient.Release(ids);
+        var response = await StartClient.Start(ids);
         if (response.IsSuccess())
         {
             MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add("Turmas liberadas com sucesso!", Severity.Success);
+            Snackbar.Add("Turmas iniciadas com sucesso!", Severity.Success);
         }
         else
         {
@@ -136,6 +135,6 @@
 
     private string GetNotFoundMessage()
     {
-        return (_searchString.IsEmpty()) ? "Não existem turmas para liberar." : "Nenhuma turma encontrada.";
+        return (_searchString.IsEmpty()) ? "Não existem turmas para serem iniciadas." : "Nenhuma turma encontrada.";
     }
 }

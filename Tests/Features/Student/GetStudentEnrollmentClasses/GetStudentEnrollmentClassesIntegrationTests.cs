@@ -19,7 +19,7 @@ public partial class IntegrationTests
         ClassOut databasesClass = await client.CreateClass(data.AdsDisciplines.Databases.Id, chico.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
         ClassOut manSocietyAndLawClass = await client.CreateClass(data.DireitoDisciplines.ManSocietyAndLaw.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H08_00)]);
 
-        await client.ReleaseClassesForEnrollment(period.Id, [discreteMathClass.Id]);
+        await client.ReleaseClassesForEnrollment([discreteMathClass.Id]);
 
         StudentOut zaqueu = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         StudentOut maju = await client.CreateStudent(data.DireitoCourseOffering.Id, "Maju");
@@ -113,7 +113,7 @@ public partial class IntegrationTests
         ClassOut discreteMathClass = await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
 
         await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id, -4, 4);
-        await client.ReleaseClassesForEnrollment(period.Id, [discreteMathClass.Id]);
+        await client.ReleaseClassesForEnrollment([discreteMathClass.Id]);
         await client.UpdateEnrollmentPeriod(data.AcademicPeriod2.Id, -4, -1);
 
         StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");

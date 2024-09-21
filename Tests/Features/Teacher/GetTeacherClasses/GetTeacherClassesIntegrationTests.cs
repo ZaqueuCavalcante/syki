@@ -33,7 +33,7 @@ public partial class IntegrationTests
         TeacherOut chico = await client.CreateTeacher("Chico");
         ClassOut discreteMathClass = await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
 
-        await client.ReleaseClassesForEnrollment(period.Id, [discreteMathClass.Id]);
+        await client.ReleaseClassesForEnrollment([discreteMathClass.Id]);
 
         var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 

@@ -85,3 +85,8 @@ public class InvalidLesson : SykiError
     public override string Code { get; set; } = nameof(InvalidLesson);
     public override string Message { get; set; } = "Aula inválida.";
 }
+public class InvalidClassesList : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidClassesList);
+    public override string Message { get; set; } = "Lista de turmas inválida.";
+}

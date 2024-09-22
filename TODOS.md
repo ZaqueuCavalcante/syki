@@ -1,5 +1,7 @@
 # TODOS
 
+- [] Gerar notificação pro aluno quando o professor adicionar nota
+
 - [] Arrumar tela de matricula do aluno
 - [] Corrigir dados de index de Aluno e Professor
 - [] Mudar seed para ter alunos ja matriculados e outros ainda em periodo de matricula
@@ -14,7 +16,6 @@
 
 ----------------------------------------------------------------------------------------------
 
-- [] Tela de profile de usuario com nome, email, reset de senha e 2FA setup
 - [] Cadastrar datas
     - Periodo de matricula
     - Inicio e fim do periodo academico
@@ -24,6 +25,8 @@
     - Ferias
 
 ----------------------------------------------------------------------------------------------
+
+- [] Tela de profile de usuario com nome, email, reset de senha e 2FA setup
 
 - [] Adicionar feature simples de diario de classe
     - Listagem com aula + titulo + data-hora + status + icon

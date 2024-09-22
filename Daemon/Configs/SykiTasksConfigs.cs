@@ -17,5 +17,6 @@ public static class SykiTasksConfigs
         services.AddTransient<LinkOldNotificationsHandler>();
         services.AddTransient<SendResetPasswordEmailHandler>();
         services.AddTransient<SendUserRegisterEmailConfirmationHandler>();
+        services.AddTransient<CreateNewExamGradeNoteNotificationHandler>();
     }
 }

@@ -467,4 +467,29 @@ public static class TestData
             yield return [text];
         }
     }
+
+    public static IEnumerable<object[]> ValidExamGradeNotes()
+    {
+        foreach (var note in new List<decimal>()
+        {
+            0.00M,
+            5.67M,
+            10.00M,
+        })
+        {
+            yield return [note];
+        }
+    }
+
+    public static IEnumerable<object[]> InvalidExamGradeNotes()
+    {
+        foreach (var note in new List<decimal>()
+        {
+            -0.01M,
+            10.01M,
+        })
+        {
+            yield return [note];
+        }
+    }
 }

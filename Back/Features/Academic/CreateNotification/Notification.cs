@@ -31,7 +31,7 @@ public class Notification
 
     public NotificationOut ToOut()
     {
-        return new NotificationOut
+        return new()
         {
             Id = Id,
             Title = Title,

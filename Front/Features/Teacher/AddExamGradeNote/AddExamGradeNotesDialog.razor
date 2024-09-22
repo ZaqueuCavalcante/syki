@@ -1,6 +1,4 @@
-﻿@using Syki.Front.Components.Buttons
-
-@namespace Syki.Front.Features.Teacher.AddExamGradeNote
+﻿@namespace Syki.Front.Features.Teacher.AddExamGradeNote
 
 <MudDialog Class="pb-2" @bind-Visible="@_visible" Options="@_options">
     <TitleContent>
@@ -8,7 +6,6 @@
     </TitleContent>
     <DialogContent>
         <MudText Typo="Typo.h6" Class="px-0 py-2">@_item.Name</MudText>
-
         <MudForm @ref="@_form" Class="px-0 pt-2">
             @foreach (var grade in _item.ExamGrades)
             {
@@ -32,6 +29,8 @@
     private MudForm _form;
     private bool _loading;
     private TeacherClassStudentOut _item = new();
+    private List<CompareExamGradeOut> _initialValues = [];
+
     private readonly DialogOptions _options = new()
     {
         FullWidth = true,
@@ -47,6 +46,7 @@
         var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _options.FullScreen = breakpoint == Breakpoint.Xs;
         _item = item;
+        _initialValues = item.ExamGrades.Select(x => new CompareExamGradeOut() { ExamType = x.ExamType, Note = x.Note }).ToList();
         _visible = true;
     }
 
@@ -60,6 +60,9 @@
         _loading = true;
         foreach (var examGrade in _item.ExamGrades)
         {
+            var initial = _initialValues.First(x => x.ExamType == examGrade.ExamType);
+            if (examGrade.Note == initial.Note) continue;
+
             await Client.Add(examGrade.Id, new(examGrade.Note));
         }
 

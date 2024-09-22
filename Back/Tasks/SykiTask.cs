@@ -1,3 +1,4 @@
+using Syki.Back.Features.Teacher.AddExamGradeNote;
 using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Cross.LinkOldNotifications;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
@@ -43,5 +44,10 @@ public class SykiTask
     public static SykiTask LinkOldNotifications(Guid userId, Guid institutionId)
     {
         return new SykiTask(new LinkOldNotifications { UserId = userId, InstitutionId = institutionId });
+    }
+
+    public static SykiTask CreateNewExamGradeNoteNotification(Guid userId, Guid classId)
+    {
+        return new SykiTask(new CreateNewExamGradeNoteNotification { UserId = userId, ClassId = classId });
     }
 }

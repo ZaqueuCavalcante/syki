@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
+/// <summary>
+/// Representa uma Prova.
+/// </summary>
 public class ExamGrade
 {
     public Guid Id { get; set; }
@@ -21,9 +24,13 @@ public class ExamGrade
         Note = note;
     }
 
-    public void AddNote(decimal note)
+    public OneOf<SykiSuccess, SykiError> AddNote(decimal note)
     {
+        if (note < 0 || note > 10) return new InvalidExamGradeNote();
+
         Note = note;
+
+        return new SykiSuccess();
     }
 
     public ExamGradeOut ToOut()

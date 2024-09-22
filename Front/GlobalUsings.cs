@@ -30,6 +30,8 @@ global using Syki.Front.Features.Academic.ReleaseClassesForEnrollment;
 
 global using Syki.Front.Features.Adm.GetInstitutions;
 global using Syki.Front.Features.Adm.GetUsers;
+global using Syki.Front.Features.Adm.GetFeatureFlags;
+global using Syki.Front.Features.Adm.SetupFeatureFlags;
 
 global using Syki.Front.Features.Cross.CreatePendingUserRegister;
 global using Syki.Front.Features.Cross.FinishUserRegister;

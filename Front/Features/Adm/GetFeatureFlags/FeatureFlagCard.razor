@@ -1,0 +1,33 @@
+﻿@namespace Syki.Front.Features.Adm.GetFeatureFlags
+
+<MudItem xs="12">
+    <MudPaper Class="d-flex mud-width-full py-2">
+        <MudStack Row="true" Class="px-4" Spacing="1" AlignItems="AlignItems.Center">
+            <MudCheckBox
+                T="bool"
+                Dense="true"
+                Disabled="@Loading"
+                Size="Size.Medium"
+                Color="Color.Success"
+                Value="@Value"
+                ValueChanged="@ValueChanged"
+            />
+            <MudText Typo="Typo.body1">@Text</MudText>
+        </MudStack>
+    </MudPaper>
+</MudItem>
+
+@code
+{
+    [Parameter]
+    public bool Loading { get; set; }
+    
+    [Parameter]
+    public bool Value { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+}

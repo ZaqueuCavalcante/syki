@@ -5,10 +5,9 @@
 
 <PageTitle>Instituições</PageTitle>
 
-<MudContainer>
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.School" Title="Instituições" />
-    <SykiPageAlert Text="Uma instituição pode conter vários campus e ofertar vários cursos." />
-    <MudContainer Class="mb-8">
+    <MudContainer Class="px-0 my-4">
         <MudDataGrid Class="pa-4" Items="@_institutions" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por name" />
@@ -27,7 +26,6 @@
     </MudContainer>
 </MudContainer>
 
-@inject IDialogService DialogService
 @inject GetInstitutionsClient GetInstitutionsClient
 
 @code

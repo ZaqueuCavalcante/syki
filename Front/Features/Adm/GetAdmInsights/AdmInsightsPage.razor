@@ -1,19 +1,18 @@
 ﻿@using Syki.Front.Components.Indexes
-@using Syki.Front.Features.Adm.GetAdmInsights
 
 @namespace Syki.Front.Features.Adm.GetAdmInsights
 
-<MudContainer Class="mt-8 px-12">
+<MudContainer Class="my-4 px-4">
     <MudText Typo="Typo.h4" Style="font-weight: bold" Class="ml-4">
         <MudIcon Icon="@Icons.Material.Filled.Insights" Class="mr-1 mb-n1" Size="Size.Large"/>
         Insights
     </MudText>
-    <MudAlert Class="mt-4" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
+    <MudAlert Class="mt-4" Severity="Severity.Normal" NoIcon="true" Variant="Variant.Text" Elevation="1">
         <MudStack Row="true" Justify="Justify.SpaceAround">
             <MudText>Aqui você encontra dados consolidados sobre todo o sistema, atualizados em tempo real!</MudText>
         </MudStack>
     </MudAlert>
-    <MudGrid Class="mt-4">
+    <MudGrid Class="pt-4" Spacing="4">
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.School" Value="@_data.Institutions" Text="Instituições" />
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.People" Value="@_data.Users" Text="Usuários" />
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.GroupWork" Value="@_data.Campi" Text="Campus" />

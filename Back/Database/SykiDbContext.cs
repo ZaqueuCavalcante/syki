@@ -8,17 +8,18 @@ using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateLessons;
 using Syki.Back.Features.Cross.CreateInstitution;
+using Syki.Back.Features.Cross.SetupFeatureFlags;
 using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Academic.CreateCourseOffering;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Syki.Back.Features.Teacher.CreateLessonAttendance;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Syki.Back.Features.Academic.CreateCourseCurriculum;
 using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
-using Syki.Back.Features.Teacher.CreateLessonAttendance;
 
 namespace Syki.Back.Database;
 
@@ -35,6 +36,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     public DbSet<ExamGrade> ExamGrades { get; set; }
     public DbSet<Discipline> Disciplines { get; set; }
     public DbSet<Institution> Institutions { get; set; }
+    public DbSet<FeatureFlags> FeatureFlags { get; set; }
     public DbSet<UserRegister> UserRegisters { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<LessonAttendance> Attendances { get; set; }

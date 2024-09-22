@@ -25,7 +25,7 @@ public partial class IntegrationTests
         register.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
         register.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
 
-        var institution = await ctx.Institutions.SingleAsync(x => x.Name.Contains(email));
+        var institution = await ctx.Institutions.SingleAsync(x => x.Name.Contains(email.OnlyNumbers()));
         institution.Id.Should().NotBeEmpty();
 
         var user = await userManager.FindByEmailAsync(email);
@@ -93,7 +93,7 @@ public partial class IntegrationTests
         register.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
         register.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
 
-        var institution = await ctx.Institutions.SingleAsync(x => x.Name.Contains(email));
+        var institution = await ctx.Institutions.SingleAsync(x => x.Name.Contains(email.OnlyNumbers()));
         institution.Id.Should().NotBeEmpty();
 
         var user = await userManager.FindByEmailAsync(email);

@@ -24,8 +24,8 @@ public class SykiDelegatingHandler(ILocalStorageService storage, NavigationManag
         {
             await storage.RemoveItemAsync("AccessToken");
             auth.MarkUserAsLoggedOut();
-            if (!nav.Uri.EndsWith("/login"))
-                nav.NavigateTo("/login", forceLoad: true);
+            if (!nav.Uri.Equals("/"))
+                nav.NavigateTo("/", forceLoad: true);
         }
 
         response.Headers.TryGetValues("X-SkipUserRegister", out var skipUserRegister);

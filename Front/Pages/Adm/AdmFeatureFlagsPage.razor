@@ -1,0 +1,46 @@
+﻿@using Syki.Front.Features.Adm.GetFeatureFlags
+
+@namespace Syki.Front.Pages.Adm
+
+@page "/adm/feature-flags"
+@attribute [Authorize(Roles = "Adm")]
+
+<PageTitle>Features</PageTitle>
+
+<MudContainer Class="my-4 px-4">
+    <SykiPageHeader Icon="@Icons.Material.Filled.Flag" Title="Features" />
+    <MudContainer Class="px-0 my-4">
+        <MudGrid Spacing="4">
+            <FeatureFlagCard Loading="@_loading" Text="Logar sem cadastro" Value="@_skipUserRegister" ValueChanged="async x => { _skipUserRegister = x; await Setup(); }" />
+            <FeatureFlagCard Loading="@_loading" Text="Login cruzado" Value="@_crossLogin" ValueChanged="async x => { _crossLogin = x; await Setup(); }" />
+        </MudGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject ISnackbar Snackbar
+@inject GetFeatureFlagsClient GetFeatureFlagsClient
+@inject SetupFeatureFlagsClient SetupFeatureFlagsClient
+
+@code
+{
+    private bool _loading;
+    private bool _skipUserRegister;
+    private bool _crossLogin;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        var features = await GetFeatureFlagsClient.Get();
+        _skipUserRegister = features.SkipUserRegister;
+        _crossLogin = features.CrossLogin;
+        _loading = false;
+    }
+
+    private async Task Setup()
+    {
+        _loading = true;
+        await SetupFeatureFlagsClient.Setup(_skipUserRegister, _crossLogin);
+        Snackbar.Add("Feature alterada com sucesso!", Severity.Success);
+        _loading = false;
+    }
+}

@@ -5,10 +5,9 @@
 
 <PageTitle>Usuários</PageTitle>
 
-<MudContainer>
+<MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Usuários" />
-    <SykiPageAlert Text="Um usuário necessariamente precisa estar vinculado à uma instituição." />
-    <MudContainer Class="mb-8">
+    <MudContainer Class="px-0 my-4">
         <MudDataGrid Class="pa-4" Items="@_users" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo" />
@@ -29,7 +28,6 @@
     </MudContainer>
 </MudContainer>
 
-@inject IDialogService DialogService
 @inject GetUsersClient GetUsersClient
 
 @code

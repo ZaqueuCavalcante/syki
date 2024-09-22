@@ -2,8 +2,9 @@
 
 <MudNavMenu>
     <AuthorizeView Roles="@UserRole.Adm.ToString()">
-        <MudNavLink Href="adm/users" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Users</MudNavLink>
+        <MudNavLink Href="adm/users" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Usuários</MudNavLink>
         <MudNavLink Href="adm/institutions" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.School" IconColor="Color.Inherit">Instituições</MudNavLink>
+        <MudNavLink Href="adm/feature-flags" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Flag" IconColor="Color.Inherit">Features</MudNavLink>
     </AuthorizeView>
 
     <AuthorizeView Roles="@UserRole.Academic.ToString()">

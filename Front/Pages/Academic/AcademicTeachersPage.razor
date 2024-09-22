@@ -80,8 +80,8 @@
     private async Task CrossLogin(TeacherOut teacher)
     {
         _loading = true;
-        var result = await CrossLoginClient.Login(teacher.Id);
-        if (result.AccessToken != null) Nav.NavigateTo("/", forceLoad: true);
+        await CrossLoginClient.Login(teacher.Id);
+        Nav.NavigateTo("/", forceLoad: true);
         _loading = false;
     }
 

@@ -10,6 +10,7 @@ using Syki.Front.Features.Cross.FinishUserRegister;
 using Syki.Front.Features.Cross.GetUserNotifications;
 using Syki.Front.Features.Cross.SendResetPasswordToken;
 using Syki.Front.Features.Cross.CreatePendingUserRegister;
+using Syki.Front.Features.Academic.CrossLogin;
 
 namespace Syki.Tests.Clients;
 
@@ -115,5 +116,12 @@ public static class CrossClientExtensions
     public static void AddAuthToken(this HttpClient client, string token)
     {
         client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+    }
+
+    public static async Task<OneOf<CrossLoginOut, ErrorOut>> CrossLogin(this HttpClient http, Guid targetUserId)
+    {
+        var storage = new LocalStorageServiceMock();
+        var client = new CrossLoginClient(http, storage, new SykiAuthStateProvider(storage));
+        return await client.Login(targetUserId);
     }
 }

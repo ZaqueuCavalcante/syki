@@ -15,7 +15,7 @@ public class CrossLoginController(CrossLoginService service) : ControllerBase
     [ProducesResponseType(200)]
     public async Task<IActionResult> Login([FromBody] CrossLoginIn data)
     {
-        var result = await service.Login(User.Id(), data);
+        var result = await service.Login(User.InstitutionId(), data);
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

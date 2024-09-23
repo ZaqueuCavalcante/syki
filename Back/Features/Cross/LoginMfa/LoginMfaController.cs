@@ -10,7 +10,7 @@ public class LoginMfaController(LoginMfaService service) : ControllerBase
 {
     [HttpPost("login/mfa")]
     [ProducesResponseType(200)]
-    public async Task<IActionResult> LoginMfa([FromBody] LoginMfaIn data)
+    public async Task<IActionResult> Login([FromBody] LoginMfaIn data)
     {
         var result = await service.Login(data);
 

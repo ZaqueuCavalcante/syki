@@ -15,10 +15,10 @@ public partial class IntegrationTests
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
-        await studentClient.Cross.ViewNotifications();
+        await studentClient.Http.ViewNotifications();
 
         // Assert
-        var response = await studentClient.Cross.GetUserNotifications();
+        var response = await studentClient.Http.GetUserNotifications();
         response.Count.Should().Be(1);
         response[0].ViewedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
     }

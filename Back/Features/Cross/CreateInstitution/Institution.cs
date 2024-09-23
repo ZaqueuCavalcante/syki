@@ -14,6 +14,7 @@ public class Institution
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+    public DateTime CreatedAt { get; set; }
     public List<Campus> Campi { get; set; }
     public List<Course> Courses { get; set; }
     public List<SykiStudent> Students { get; set; }
@@ -31,6 +32,7 @@ public class Institution
     {
         Id = Guid.NewGuid();
         Name = name;
+        CreatedAt = DateTime.Now;
         Configs = new InstitutionConfigs(Id, 7, 70);
     }
 
@@ -40,6 +42,7 @@ public class Institution
         {
             Id = Id,
             Name = Name,
+            CreatedAt = CreatedAt,
             NoteLimit = Configs.NoteLimit,
             FrequencyLimit = Configs.FrequencyLimit,
         };

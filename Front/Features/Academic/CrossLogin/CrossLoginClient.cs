@@ -9,10 +9,11 @@ public class CrossLoginClient(HttpClient http, ILocalStorageService localStorage
         var body = new CrossLoginIn { TargetUserId = targetUserId };
         var response = await http.PostAsJsonAsync("/academic/cross-login", body);
 
-        if (!response.IsSuccessStatusCode) return new ErrorOut();
+        var result = await response.Resolve<CrossLoginOut>();
 
-        var result = (await response.Resolve<CrossLoginOut>()).GetSuccess();
-        await localStorage.SetItemAsync("AccessToken", result.AccessToken);
+        if (result.IsError()) return result.GetError();
+
+        await localStorage.SetItemAsync("AccessToken", result.GetSuccess().AccessToken);
         authStateProvider.MarkUserAsAuthenticated();
 
         return result;

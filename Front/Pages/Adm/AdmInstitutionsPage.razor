@@ -3,7 +3,7 @@
 @page "/adm/institutions"
 @attribute [Authorize(Roles = "Adm")]
 
-<PageTitle>Instituições</PageTitle>
+<SykiPageTitle Title="Instituições" />
 
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.School" Title="Instituições" />
@@ -15,6 +15,7 @@
             <Columns>
                 <PropertyColumn Property="x => x.Id" Title="Id" />
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
+                <PropertyColumn Property="x => x.CreatedAt" Title="Criada em" />
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())

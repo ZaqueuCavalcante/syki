@@ -122,7 +122,7 @@ public partial class IntegrationTests
         await _back.AwaitTasksProcessing();
 
         // Act
-        var response = await studentClient.Cross.GetUserNotifications();
+        var response = await studentClient.Http.GetUserNotifications();
 
         // Assert
         response.Should().HaveCount(1);

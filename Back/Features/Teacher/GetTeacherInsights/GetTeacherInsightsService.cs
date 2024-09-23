@@ -18,6 +18,10 @@ public class GetTeacherInsightsService(SykiDbContext ctx) : ITeacherService
             lessons += c.Lessons.Count;
         });
 
+        // Aulas concluidas
+        // Aulas retantes
+        // Frequencia media dos alunos nas suas turmas
+
         return new() { Classes = classes.Count, Students = students.Count, Lessons = lessons };
     }
 }

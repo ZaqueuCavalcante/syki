@@ -1,3 +1,4 @@
+using System.Net;
 using Newtonsoft.Json;
 
 namespace Syki.Shared;
@@ -20,6 +21,9 @@ public static class HttpExtensions
     {
         if (httpResponse.IsSuccessStatusCode)
             return await httpResponse.DeserializeTo<T>();
+
+        if (httpResponse.StatusCode == HttpStatusCode.Forbidden)
+            return new ForbiddenErrorOut();
 
         return await httpResponse.ToError();
     }

@@ -11,53 +11,53 @@ namespace Syki.Tests.Clients;
 
 public class StudentHttpClient(HttpClient http)
 {
-    public readonly HttpClient Cross = http;
+    public readonly HttpClient Http = http;
 
     public async Task<List<EnrollmentClassOut>> GetStudentEnrollmentClasses()
     {
-        var client = new GetStudentEnrollmentClassesClient(Cross);
+        var client = new GetStudentEnrollmentClassesClient(Http);
         return await client.Get();
     }
 
     public async Task<List<DisciplineOut>> GetStudentDisciplines()
     {
-        var client = new GetStudentDisciplinesClient(Cross);
+        var client = new GetStudentDisciplinesClient(Http);
         return await client.Get();
     }
 
     public async Task<List<StudentExamGradeOut>> GetStudentExamGrades()
     {
-        var client = new GetStudentExamGradesClient(Cross);
+        var client = new GetStudentExamGradesClient(Http);
         return await client.Get();
     }
 
     public async Task<EnrollmentPeriodOut> GetCurrentEnrollmentPeriod()
     {
-        var client = new GetCurrentEnrollmentPeriodClient(Cross);
+        var client = new GetCurrentEnrollmentPeriodClient(Http);
         return await client.Get();
     }
 
     public async Task<StudentInsightsOut> GetStudentInsights()
     {
-        var client = new GetStudentInsightsClient(Cross);
+        var client = new GetStudentInsightsClient(Http);
         return await client.Get();
     }
 
     public async Task<OneOf<List<GetStudentFrequenciesOut>, ErrorOut>> GetStudentFrequencies()
     {
-        var client = new GetStudentFrequenciesClient(Cross);
+        var client = new GetStudentFrequenciesClient(Http);
         return await client.Get();
     }
 
     public async Task<HttpResponseMessage> CreateStudentEnrollment(List<Guid> classes)
     {
-        var client = new CreateStudentEnrollmentClient(Cross);
+        var client = new CreateStudentEnrollmentClient(Http);
         return await client.Create(classes);
     }
 
     public async Task<List<AgendaDayOut>> GetStudentAgenda()
     {
-        var client = new GetStudentAgendaClient(Cross);
+        var client = new GetStudentAgendaClient(Http);
         return await client.Get();
     }
 }

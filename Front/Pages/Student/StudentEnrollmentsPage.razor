@@ -11,87 +11,84 @@
     <SykiPageHeader
         Icon="@Icons.Material.Filled.Article"
         Title="Matrícula"
-        ButtonIcon="@Icons.Material.Outlined.Edit"
-        ButtonText="Editar"
-        OnClick="Open"
-        @bind-ButtonDisabled="@_editing"
     />
+    <MudContainer Class="px-0 my-4">
+        @if (_loading && _enrollmentPeriod.Id.IsEmpty())
+        {
+            <MudContainer Class="px-0">
+                <MudCard>
+                    <MudCardContent>
+                        <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                    </MudCardContent>
+                </MudCard>
+            </MudContainer>
+        }
+        else if (!_loading && _enrollmentPeriod.Id.IsEmpty())
+        {
+            <SykiPageAlert Text="A escolha das disciplinas só pode ser feita durante a vigência do Período de Matrícula."/>
+        }
+        else
+        {
+            <MudAlert NoIcon="true" Class="mt-4 mb-4 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
+                <MudText>
+                    Selecione as disciplinas que você irá cursar nesse semestre.
+                    O período de matrícula vai até <strong>@_enrollmentPeriod.EndAt.FormatBr()</strong>.
+                </MudText>
+            </MudAlert>
 
-<MudContainer Class="px-0 my-4">
-        
-    @if (_loading && _enrollmentPeriod.Id.IsEmpty())
-    {
-    }
-    else if (!_loading && _enrollmentPeriod.Id.IsEmpty())
-    {
-        <SykiPageAlert Text="Período de matrícula encerrado!"/>
-    }
-    else if (!_editing)
-    {
-    }
-    else
-    {
-        <MudAlert Class="mt-4 mb-4 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-            <MudText>
-                Selecione as disciplinas que você irá cursar nesse semestre.
-                O período de matrícula vai até <strong>@_enrollmentPeriod.EndAt.FormatBr()</strong>.
-            </MudText>
-        </MudAlert>
+            <CascadingValue Name="Days" Value="@_days">
+                <WeeklyAgenda Class="px-0 mb-4"/>
+            </CascadingValue>
 
-        <CascadingValue Name="Days" Value="@_days">
-            <WeeklyAgenda Class="px-0 mb-4"/>
-        </CascadingValue>
-
-        <MudContainer Class="px-0 mb-8">
-            <MudTable
-                T="EnrollmentClassOut"
-                Items="@_options"
-                Class="pa-4"
-                Breakpoint="Breakpoint.Sm"
-                Dense="true"
-                Hover="true"
-                Loading="@_loading"
-                RowsPerPage="100">
-                <HeaderContent>
-                    <MudTh>Disciplina</MudTh>
-                    <MudTh>Período</MudTh>
-                    <MudTh>Créditos</MudTh>
-                    <MudTh>CH</MudTh>
-                    <MudTh>Professor</MudTh>
-                    <MudTh>Selecionada</MudTh>
-                </HeaderContent>
-                <RowTemplate>
-                    <MudTd DataLabel="Disciplina">@context.Discipline</MudTd>
-                    <MudTd DataLabel="Período">@context.Period</MudTd>
-                    <MudTd DataLabel="Créditos">@context.Credits</MudTd>
-                    <MudTd DataLabel="CH">@context.Workload</MudTd>
-                    <MudTd DataLabel="Professor">@context.Teacher</MudTd>
-                    <MudTd DataLabel="Selecionada">
-                        <MudCheckBox
-                            T="bool"
-                            Class="pl-9 pr-1"
-                            Dense="true"
-                            Size="Size.Small"
-                            Color="Color.Success"
-                            Value="@context.IsSelected"
-                            ValueChanged="x => { context.IsSelected = x; HandleCheckedChanged(); }"
-                        />
-                    </MudTd>
-                </RowTemplate>
-                <NoRecordsContent>
-                    Não existem turmas disponíveis no momento.
-                </NoRecordsContent>
-                <PagerContent>
-                    <MudDivider/>
-                    <MudStack Row="true" Class="mt-4">
-                        <DialogCancelButton OnClick="@Cancel"/>
-                        <SykiProgressCircular Loading="@_loading"/>
-                        <DialogSaveButton OnClick="@Submit"/>
-                    </MudStack>
-                </PagerContent>
-            </MudTable>
-        </MudContainer>
-    }
+            <MudContainer Class="px-0 mb-8">
+                <MudTable
+                    T="EnrollmentClassOut"
+                    Items="@_options"
+                    Class="pa-4"
+                    Breakpoint="Breakpoint.Sm"
+                    Dense="true"
+                    Hover="true"
+                    Loading="@_loading"
+                    RowsPerPage="100">
+                    <HeaderContent>
+                        <MudTh>Disciplina</MudTh>
+                        <MudTh>Período</MudTh>
+                        <MudTh>Créditos</MudTh>
+                        <MudTh>CH</MudTh>
+                        <MudTh>Professor</MudTh>
+                        <MudTh>Selecionada</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Disciplina">@context.Discipline</MudTd>
+                        <MudTd DataLabel="Período">@context.Period</MudTd>
+                        <MudTd DataLabel="Créditos">@context.Credits</MudTd>
+                        <MudTd DataLabel="CH">@context.Workload</MudTd>
+                        <MudTd DataLabel="Professor">@context.Teacher</MudTd>
+                        <MudTd DataLabel="Selecionada">
+                            <MudCheckBox
+                                T="bool"
+                                Class="pl-9 pr-1"
+                                Dense="true"
+                                Size="Size.Small"
+                                Color="Color.Success"
+                                Value="@context.IsSelected"
+                                ValueChanged="x => { context.IsSelected = x; HandleCheckedChanged(); }"
+                            />
+                        </MudTd>
+                    </RowTemplate>
+                    <NoRecordsContent>
+                        Não existem turmas disponíveis no momento.
+                    </NoRecordsContent>
+                    <PagerContent>
+                        <MudDivider/>
+                        <MudStack Row="true" Class="mt-4">
+                            <SykiProgressCircular Loading="@_loading"/>
+                            <DialogSaveButton OnClick="@Submit"/>
+                        </MudStack>
+                    </PagerContent>
+                </MudTable>
+            </MudContainer>
+        }
     </MudContainer>
 </MudContainer>
 
@@ -103,7 +100,6 @@
 @code
 {
     private bool _loading;
-    private bool _editing;
     EnrollmentPeriodOut _enrollmentPeriod = new();
     private List<EnrollmentClassOut> _options = [];
     private List<AgendaDayOut> _days = [];
@@ -118,14 +114,8 @@
             return;
         }
         _options = await GetStudentEnrollmentClassesClient.Get();
-        _editing = _options.Count(x => x.IsSelected) > 0;
         HandleCheckedChanged();
         _loading = false;
-    }
-
-    private void Open()
-    {
-        _editing = true;
     }
 
     private void HandleCheckedChanged()
@@ -142,7 +132,6 @@
         var response = await CreateStudentEnrollmentClient.Create(classes);
         if (response.IsSuccessStatusCode)
         {
-            _editing = false;
             Snackbar.Add("Matrícula salva com sucesso!", Severity.Success);
         }
         else
@@ -151,10 +140,5 @@
             Snackbar.Add(error.Message, Severity.Error);
         }
         _loading = false;
-    }
-
-    private void Cancel()
-    {
-        _editing = false;
     }
 }

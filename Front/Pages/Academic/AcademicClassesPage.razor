@@ -7,39 +7,38 @@
 
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="Turmas" ButtonText="Nova Turma" OnClick="@OpenDialog"/>
-    <SykiPageAlert Text="Em uma mesma turma podem estudar alunos de diferentes cursos." />
-        <MudCard Class="pl-1 mb-4">
-            <MudCardContent>
-                <MudGrid Spacing="3">
-                    <MudItem>
-                        <MudButton
-                            IconSize="Size.Medium"
-                            StartIcon="@Icons.Material.Filled.Article"
-                            Variant="Variant.Filled"
-                            Size="Size.Medium"
-                            Color="Color.Tertiary"
-                            Disabled="@(!_showReleaseButton)"
-                            OnClick="@OpenReleaseDialog"
-                        >
-                            Liberar matrícula
-                        </MudButton>
-                    </MudItem>
-                    <MudItem>
-                        <MudButton
-                            IconSize="Size.Medium"
-                            StartIcon="@Icons.Material.Filled.PlayLesson"
-                            Variant="Variant.Filled"
-                            Size="Size.Medium"
-                            Color="Color.Info"
-                            Disabled="@(!_showStartButton)"
-                            OnClick="@OpenStartDialog"
-                        >
-                            Iniciar
-                        </MudButton>
-                    </MudItem>
-                </MudGrid>
-            </MudCardContent>
-        </MudCard>
+    <MudCard Class="pl-1 my-4">
+        <MudCardContent>
+            <MudGrid Spacing="3">
+                <MudItem>
+                    <MudButton
+                        IconSize="Size.Medium"
+                        StartIcon="@Icons.Material.Filled.Article"
+                        Variant="Variant.Filled"
+                        Size="Size.Medium"
+                        Color="Color.Tertiary"
+                        Disabled="@(!_showReleaseButton)"
+                        OnClick="@OpenReleaseDialog"
+                    >
+                        Liberar matrícula
+                    </MudButton>
+                </MudItem>
+                <MudItem>
+                    <MudButton
+                        IconSize="Size.Medium"
+                        StartIcon="@Icons.Material.Filled.PlayLesson"
+                        Variant="Variant.Filled"
+                        Size="Size.Medium"
+                        Color="Color.Info"
+                        Disabled="@(!_showStartButton)"
+                        OnClick="@OpenStartDialog"
+                    >
+                        Iniciar
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
     <MudContainer Class="px-0 mb-4">
         <MudTable
             Items="@_classes"

@@ -6,7 +6,6 @@
         <MudNavLink Href="adm/institutions" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.School" IconColor="Color.Inherit">Instituições</MudNavLink>
         <MudNavLink Href="adm/feature-flags" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Flag" IconColor="Color.Inherit">Features</MudNavLink>
     </AuthorizeView>
-
     <AuthorizeView Roles="@UserRole.Academic.ToString()">
         <MudNavLink Href="academic/campi" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.GroupWork" IconColor="Color.Inherit">Campi</MudNavLink>
         <MudNavLink Href="academic/courses" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Class" IconColor="Color.Inherit">Cursos</MudNavLink>
@@ -20,21 +19,15 @@
         <MudNavLink Href="academic/enrollment-periods" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrículas</MudNavLink>
         <MudNavLink Href="academic/notifications" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Notifications" IconColor="Color.Inherit">Notificações</MudNavLink>
     </AuthorizeView>
-
     <AuthorizeView Roles="@UserRole.Teacher.ToString()">
         <MudNavLink Href="teacher/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
         <MudNavLink Href="teacher/classes" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CenterFocusStrong" IconColor="Color.Inherit">Turmas</MudNavLink>
     </AuthorizeView>
-
     <AuthorizeView Roles="@UserRole.Student.ToString()">
         <MudNavLink Href="student/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
         <MudNavLink Href="student/enrollments" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrícula</MudNavLink>
         <MudNavLink Href="student/disciplines" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apps" IconColor="Color.Inherit">Disciplinas</MudNavLink>
         <MudNavLink Href="student/exam-grades" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.StickyNote2" IconColor="Color.Inherit">Notas</MudNavLink>
         <MudNavLink Href="student/frequency" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Class" IconColor="Color.Inherit">Frequência</MudNavLink>
-    </AuthorizeView>
-
-    <AuthorizeView Roles="@UserRole.Seller.ToString()">
-        <MudNavLink Href="seller/course-offerings" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.PlaylistAddCheck" IconColor="Color.Inherit">Ofertas</MudNavLink>
     </AuthorizeView>
 </MudNavMenu>

@@ -7,7 +7,6 @@ public static class ServicesConfigs
         services.AddServiceConfigs(typeof(IAcademicService));
         services.AddServiceConfigs(typeof(IAdmService));
         services.AddServiceConfigs(typeof(ICrossService));
-        services.AddServiceConfigs(typeof(ISellerService));
         services.AddServiceConfigs(typeof(IStudentService));
         services.AddServiceConfigs(typeof(ITeacherService));
     }

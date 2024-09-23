@@ -6,5 +6,4 @@ public enum UserRole
     Academic,
     Teacher,
     Student,
-    Seller,
 }

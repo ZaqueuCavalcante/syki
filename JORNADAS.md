@@ -1,14 +1,5 @@
 # JORNADAS
 
-## Lead / Seller
-- Antes de se matricular eh um Lead?
-- Pagina de cadastro? Campanhas?
-- Vendedor/comercial?
-- Quais dados precisa informar?
-- Documentos?
-- Contrato?
-- Financeiro?
-
 ## Student
 - Email institucional
 - Primeiro acesso

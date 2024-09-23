@@ -1,5 +1,3 @@
-using Syki.Front.Extensions;
-
 namespace Syki.Front.Configs;
 
 public static class ServicesConfigs
@@ -9,7 +7,6 @@ public static class ServicesConfigs
         builder.Services.AddServiceConfigs(typeof(IAcademicClient));
         builder.Services.AddServiceConfigs(typeof(IAdmClient));
         builder.Services.AddServiceConfigs(typeof(ICrossClient));
-        builder.Services.AddServiceConfigs(typeof(ISellerClient));
         builder.Services.AddServiceConfigs(typeof(IStudentClient));
         builder.Services.AddServiceConfigs(typeof(ITeacherClient));
 

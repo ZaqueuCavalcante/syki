@@ -34,17 +34,7 @@
     </Authorized>
 </AuthorizeView>
 
-<AuthorizeView Roles="@UserRole.Seller.ToString()">
-    <Authorized>
-        <MudStack AlignItems="AlignItems.Center" Class="mt-16">
-            <MudText Style="font-size: 80px">
-                <strong>NADA AINDA</strong>
-            </MudText>
-        </MudStack>
-    </Authorized>
-</AuthorizeView>
-
-<AuthorizeView Roles="Adm, Academic, Teacher, Student, Seller">
+<AuthorizeView Roles="Adm, Academic, Teacher, Student">
     <NotAuthorized>
         <IndexAnonymous />
     </NotAuthorized>

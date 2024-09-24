@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.GetCoursesWithCurriculums;
 
+/// <summary>
+/// Retorna todos os Cursos que possuem Grades Curriculares vinculadas.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

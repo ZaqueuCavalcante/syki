@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Teacher.AddExamGradeNote;
 
+/// <summary>
+/// Define a Nota da Avaliação informada.
+/// </summary>
 [ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

@@ -3,6 +3,10 @@ using Syki.Back.Features.Academic.CreateDiscipline;
 
 namespace Syki.Back.Features.Academic.CreateCourseCurriculum;
 
+/// <summary>
+/// Grade Curricular de um Curso.
+/// Um mesmo Curso pode possuir diversas Grades diferentes.
+/// </summary>
 public class CourseCurriculum
 {
     public Guid Id { get; set; }

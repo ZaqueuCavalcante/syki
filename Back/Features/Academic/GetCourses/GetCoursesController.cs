@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Academic.GetCourses;
 
 /// <summary>
-/// Retorna todos os cursos da instituição.
+/// Retorna todos os Cursos.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

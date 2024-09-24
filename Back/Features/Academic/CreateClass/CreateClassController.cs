@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Academic.CreateClass;
 
 /// <summary>
-/// Cria uma nova turma.
+/// Cria uma nova Turma.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

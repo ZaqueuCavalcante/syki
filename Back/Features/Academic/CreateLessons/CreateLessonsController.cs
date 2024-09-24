@@ -1,8 +1,8 @@
 namespace Syki.Back.Features.Academic.CreateLessons;
 
 /// <summary>
-/// Cria as aulas de uma turma.
-/// Se baseia nas datas de início e fim do período acadêmico.
+/// Cria as Aulas de uma Turma.
+/// Se baseia nas datas de início e fim do Período Acadêmico.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

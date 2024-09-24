@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Cross.Login;
 
 /// <summary>
-/// Realiza o login no sistema.
+/// Realiza o Login no sistema.
 /// </summary>
 [ApiController]
 [EnableRateLimiting("Small")]

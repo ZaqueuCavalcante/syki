@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.GetCourseOfferings;
 
+/// <summary>
+/// Retorna todas as Ofertas de Curso.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

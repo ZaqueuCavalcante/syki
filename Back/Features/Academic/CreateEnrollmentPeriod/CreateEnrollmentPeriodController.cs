@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 
+/// <summary>
+/// Cria um novo Período de Matrícula.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

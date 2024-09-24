@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Student.GetStudentDisciplines;
 
+/// <summary>
+/// Retorna todas as Disciplinas da Grade Curricular do Curso do Aluno.
+/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

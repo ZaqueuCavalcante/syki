@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Student.GetStudentAgenda;
 
+/// <summary>
+/// Retorna a Agenda do Aluno.
+/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

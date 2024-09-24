@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.GetEnrollmentPeriods;
 
+/// <summary>
+/// Retorna todos os Períodos de Matrícula.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

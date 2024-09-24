@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Academic.GetAcademicInsights;
 
 /// <summary>
-/// Retorna os insights do usuário do tipo acadêmico.
+/// Retorna os Insights do Acadêmico.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

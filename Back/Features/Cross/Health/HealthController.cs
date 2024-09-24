@@ -1,5 +1,8 @@
 namespace Syki.Back.Health;
 
+/// <summary>
+/// Retorna o Status da API.
+/// </summary>
 [ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]
 [Consumes("application/json"), Produces("application/json")]

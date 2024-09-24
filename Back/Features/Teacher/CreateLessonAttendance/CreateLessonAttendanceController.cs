@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Teacher.CreateLessonAttendance;
 
+/// <summary>
+/// Realiza a Chamada da Aula informada.
+/// </summary>
 [ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

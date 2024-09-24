@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Cross.SetupMfa;
 
 /// <summary>
-/// Habilita a autenticação de dois fatores.
+/// Habilita a Autenticação de Dois Fatores.
 /// </summary>
 [ApiController, AuthBearer]
 [EnableRateLimiting("Small")]

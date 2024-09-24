@@ -2,6 +2,9 @@
 
 namespace Syki.Back.Audit;
 
+/// <summary>
+/// Representa uma mudança de valor em uma coluna qualquer.
+/// </summary>
 public class AuditChange
 {
     public string Column { get; set; }

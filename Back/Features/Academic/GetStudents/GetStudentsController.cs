@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.GetStudents;
 
+/// <summary>
+/// Retorna todas os Alunos.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

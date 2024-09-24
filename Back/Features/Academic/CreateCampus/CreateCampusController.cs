@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Academic.CreateCampus;
 
 /// <summary>
-/// Cria um novo campus.
+/// Cria um novo Campus.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

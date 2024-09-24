@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.UpdateEnrollmentPeriod;
 
+/// <summary>
+/// Atualiza os dados do Perído de Matrícula informado.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

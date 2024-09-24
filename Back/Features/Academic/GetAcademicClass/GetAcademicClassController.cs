@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.GetAcademicClass;
 
+/// <summary>
+/// Retorna uma Turma, dado seu id.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

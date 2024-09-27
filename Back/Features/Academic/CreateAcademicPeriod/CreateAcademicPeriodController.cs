@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Academic.CreateAcademicPeriod;
 
 /// <summary>
-/// Cria um novo período acadêmico.
+/// Cria um novo Período Acadêmico.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

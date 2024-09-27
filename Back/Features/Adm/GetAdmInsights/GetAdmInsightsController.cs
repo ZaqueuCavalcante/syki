@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Adm.GetAdmInsights;
 
+/// <summary>
+/// Retorna os Insights do Admin.
+/// </summary>
 [ApiController, AuthAdm]
 [Consumes("application/json"), Produces("application/json")]
 public class GetAdmInsightsController(GetAdmInsightsService service) : ControllerBase

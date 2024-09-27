@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Student.GetStudentFrequencies;
 
+/// <summary>
+/// Retorna todas as Frequências do Aluno.
+/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

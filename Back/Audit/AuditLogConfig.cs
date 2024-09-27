@@ -2,6 +2,9 @@ using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Audit;
 
+/// <summary>
+/// Configuração da tabela de logs de auditoria.
+/// </summary>
 public class AuditLogConfig : IEntityTypeConfiguration<AuditLog>
 {
     public void Configure(EntityTypeBuilder<AuditLog> auditLog)

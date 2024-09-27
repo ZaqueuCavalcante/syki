@@ -14,9 +14,6 @@ public class CreateUserService(SykiDbContext ctx, UserManager<SykiUser> userMana
 
         var user = new SykiUser(data.InstitutionId, data.Name, data.Email, data.PhoneNumber);
 
-        // TODO: Levar em conta mais o q pode dar problema aqui
-        // Caractere invalido no email
-        // Lockout apos mais de 3 tentativas de login com falha
         var result = await userManager.CreateAsync(user, data.Password);
         if (!result.Succeeded) return new WeakPassword();
 

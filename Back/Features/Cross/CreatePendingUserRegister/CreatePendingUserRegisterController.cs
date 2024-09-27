@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 /// <summary>
-/// Cria um registro de usuário pendente.
+/// Cria um Registro de Usuário Pendente.
 /// </summary>
 [ApiController]
 [EnableRateLimiting("SuperVerySmall")]

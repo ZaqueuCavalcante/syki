@@ -4,6 +4,9 @@ using Audit.EntityFramework;
 
 namespace Syki.Back.Audit;
 
+/// <summary>
+/// Tabela de logs de auditoria.
+/// </summary>
 public class AuditLog
 {
     public Guid Id { get; set; }

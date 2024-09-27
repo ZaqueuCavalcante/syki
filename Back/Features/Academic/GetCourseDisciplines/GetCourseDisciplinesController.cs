@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.GetCourseDisciplines;
 
+/// <summary>
+/// Retorna todas as Disciplinas.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

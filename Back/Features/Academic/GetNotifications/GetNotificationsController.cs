@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.GetNotifications;
 
+/// <summary>
+/// Retorna todas as Notificações.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

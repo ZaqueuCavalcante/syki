@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Academic.CreateDiscipline;
 
 /// <summary>
-/// Cria uma nova disciplina.
+/// Cria uma nova Disciplina.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

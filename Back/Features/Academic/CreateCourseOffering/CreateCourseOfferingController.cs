@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.CreateCourseOffering;
 
+/// <summary>
+/// Cria uma nova Oferta de Curso.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

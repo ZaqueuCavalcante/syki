@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Cross.SendResetPasswordToken;
 
 /// <summary>
-/// Redefine a senha do usuário.
+/// Redefine a senha do Usuário.
 /// </summary>
 [ApiController]
 [EnableRateLimiting("Small")]

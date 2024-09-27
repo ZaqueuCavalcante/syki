@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.CreateTeacher;
 
+/// <summary>
+/// Cria um novo Professor.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

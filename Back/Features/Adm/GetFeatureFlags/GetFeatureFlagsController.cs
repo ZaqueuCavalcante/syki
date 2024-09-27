@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Adm.GetFeatureFlags;
 
+/// <summary>
+/// Retorna as Feature Flags.
+/// </summary>
 [ApiController, AuthAdm]
 [Consumes("application/json"), Produces("application/json")]
 public class GetFeatureFlagsController(GetFeatureFlagsService service) : ControllerBase

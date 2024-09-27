@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Cross.ViewNotifications;
 
+/// <summary>
+/// Marca todas as Notificações do Usuário como visualizadas.
+/// </summary>
 [ApiController, AuthBearer]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

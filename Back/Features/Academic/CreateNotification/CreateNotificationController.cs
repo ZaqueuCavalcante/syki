@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.CreateNotification;
 
+/// <summary>
+/// Cria uma nova Notificação.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

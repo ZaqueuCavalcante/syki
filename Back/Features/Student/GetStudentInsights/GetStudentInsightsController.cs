@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Student.GetStudentInsights;
 
+/// <summary>
+/// Retorna os Insights do Aluno.
+/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

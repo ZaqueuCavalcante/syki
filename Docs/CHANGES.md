@@ -1,7 +1,5 @@
 # CHANGES
 
-- [X] Use Result Pattern instead throw exceptions?
-
 - Domain Events + Transactional Outbox Pattern
 - Monitoring? DataDog
 - RabbitMQ?
@@ -17,17 +15,3 @@
 - Servidor exclusivo para SignalR?
 - Customizar palleta de cores?
 - Adicionar visualizacao no mobile para todas as telas
-
-
-- Testes E2E com Front no WebAppFactory?
-
-
-
-
-
-
-
-
-
-
-

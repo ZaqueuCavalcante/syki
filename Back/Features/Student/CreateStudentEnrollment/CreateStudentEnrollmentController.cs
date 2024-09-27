@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
+/// <summary>
+/// Realiza a Matrícula do Aluno nas Turmas informadas.
+/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

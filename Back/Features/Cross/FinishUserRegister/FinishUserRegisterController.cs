@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Cross.FinishUserRegister;
 
 /// <summary>
-/// Finaliza o registro de um usuário.
+/// Finaliza o Registro de um Usuário.
 /// </summary>
 [ApiController]
 [EnableRateLimiting("Small")]

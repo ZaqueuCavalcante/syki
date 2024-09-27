@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Cross.LoginMfa;
 
 /// <summary>
-/// Realiza o login utilizando o token de segundo fator de autenticação.
+/// Realiza o Login utilizando o Token MFA.
 /// </summary>
 [ApiController]
 [EnableRateLimiting("Small")]

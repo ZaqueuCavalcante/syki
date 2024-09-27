@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Academic.GetCampi;
 
 /// <summary>
-/// Retorna todos os campus da instituição.
+/// Retorna todos os Campus.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

@@ -1,8 +1,7 @@
 namespace Syki.Back.Features.Academic.ReleaseClassesForEnrollment;
 
 /// <summary>
-/// Libera várias Turmas para matrícula.
-/// Após isso os Alunos podem se matricular nessas Turmas.
+/// Libera as Turmas informadas para que os Alunos possam se matricular.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

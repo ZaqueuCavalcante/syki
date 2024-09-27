@@ -20,8 +20,8 @@ public static class AuthorizationConfigs
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(BackPolicy.SkipUserRegister, p => p.Requirements.Add(new SkipUserRegisterAuthReq()));
-            options.AddPolicy(BackPolicy.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthReq()));
+            options.AddPolicy(BackPolicy.SkipUserRegister, p => p.Requirements.Add(new SkipUserRegisterAuthRequirement()));
+            options.AddPolicy(BackPolicy.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthRequirement()));
         });
     }
 }

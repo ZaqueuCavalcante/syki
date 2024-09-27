@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Academic.UpdateCampus;
 
 /// <summary>
-/// Atualiza os dados de um campus.
+/// Atualiza os dados do Campus informado.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Academic.GetAcademicPeriods;
 
 /// <summary>
-/// Retorna todos os períodos acadêmicos.
+/// Retorna todos os Períodos Acadêmicos.
 /// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]

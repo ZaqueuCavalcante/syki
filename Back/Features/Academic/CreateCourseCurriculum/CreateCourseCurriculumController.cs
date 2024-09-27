@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.CreateCourseCurriculum;
 
+/// <summary>
+/// Cria uma nova Grade Curricular.
+/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]

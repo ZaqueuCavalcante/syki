@@ -11,11 +11,15 @@ public class BasicInstitutionTestDto
     public BasicInstitutionTestAdsDisciplinesDto AdsDisciplines { get; set; } = new();
     public CourseCurriculumOut AdsCourseCurriculum { get; set; }
     public CourseOfferingOut AdsCourseOffering { get; set; }
+    public BasicInstitutionTestAdsClassesDto AdsClasses { get; set; } = new();
 
     public CourseOut DireitoCourse { get; set; }
     public BasicInstitutionTestDireitoDisciplinesDto DireitoDisciplines { get; set; } = new();
     public CourseCurriculumOut DireitoCourseCurriculum { get; set; }
     public CourseOfferingOut DireitoCourseOffering { get; set; }
+
+    public TeacherOut Teacher { get; set; }
+    public StudentOut Student { get; set; }
 }
 
 public class BasicInstitutionTestAdsDisciplinesDto
@@ -33,6 +37,23 @@ public class BasicInstitutionTestAdsDisciplinesDto
     public DisciplineOut InfoAndSociety { get; set; }
     public DisciplineOut Poo { get; set; }
     public DisciplineOut IntegratorProjectTwo { get; set; }
+}
+
+public class BasicInstitutionTestAdsClassesDto
+{
+    public ClassOut DiscreteMath { get; set; }
+    public ClassOut IntroToWebDev { get; set; }
+    public ClassOut HumanMachineInteractionDesign { get; set; }
+    public ClassOut IntroToComputerNetworks { get; set; }
+    public ClassOut ComputationalThinkingAndAlgorithms { get; set; }
+    public ClassOut IntegratorProjectOne { get; set; }
+
+    public ClassOut Arch { get; set; }
+    public ClassOut Databases { get; set; }
+    public ClassOut DataStructures { get; set; }
+    public ClassOut InfoAndSociety { get; set; }
+    public ClassOut Poo { get; set; }
+    public ClassOut IntegratorProjectTwo { get; set; }
 }
 
 public class BasicInstitutionTestDireitoDisciplinesDto

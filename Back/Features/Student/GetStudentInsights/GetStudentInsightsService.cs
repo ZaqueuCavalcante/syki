@@ -1,6 +1,8 @@
+using Syki.Back.Features.Student.GetStudentFrequency;
+
 namespace Syki.Back.Features.Student.GetStudentInsights;
 
-public class GetStudentInsightsService(SykiDbContext ctx) : IStudentService
+public class GetStudentInsightsService(SykiDbContext ctx, GetStudentFrequencyService service) : IStudentService
 {
     public async Task<StudentInsightsOut> Get(Guid userId, Guid courseCurriculumId)
     {
@@ -12,15 +14,8 @@ public class GetStudentInsightsService(SykiDbContext ctx) : IStudentService
         var finishedDisciplines = await ctx.ClassesStudents
             .Where(x => x.SykiStudentId == userId && x.StudentDisciplineStatus == StudentDisciplineStatus.Aprovado)
             .CountAsync();
-
-        var attendances = await ctx.Attendances.AsNoTracking().Where(x => x.StudentId == userId).ToListAsync();
-        var totalPresences = attendances.Count(x => x.Present);
-        var frequency = (attendances.Count == 0) ? 0.00M : 100M*(1M * totalPresences / (1M * attendances.Count));
-
         
-
-
-
+        var frequency = await service.Get(userId);
 
         return new()
         {

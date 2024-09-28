@@ -348,4 +348,49 @@ public class AcademicHttpClient(HttpClient http)
 
         return data;
     }
+
+    public async Task AddStartedAdsClasses(BasicInstitutionTestDto data, BackFactory back)
+    {
+        var period = data.AcademicPeriod1.Id;
+
+        await CreateEnrollmentPeriod(period, -2, 2);
+
+        data.Teacher = await CreateTeacher();
+        data.AdsClasses.HumanMachineInteractionDesign = await CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, data.Teacher.Id, period, 45, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.IntroToComputerNetworks = await CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, data.Teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.IntroToWebDev = await CreateClass(data.AdsDisciplines.IntroToWebDev.Id, data.Teacher.Id, period, 45, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.DiscreteMath = await CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Teacher.Id, period, 40, [new(Day.Thursday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.ComputationalThinkingAndAlgorithms = await CreateClass(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Id, data.Teacher.Id, period, 45, [new(Day.Friday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.IntegratorProjectOne = await CreateClass(data.AdsDisciplines.IntegratorProjectOne.Id, data.Teacher.Id, period, 45, [new(Day.Saturday, Hour.H07_00, Hour.H10_00)]);
+
+        await ReleaseClassesForEnrollment([
+            data.AdsClasses.DiscreteMath.Id,
+            data.AdsClasses.IntroToWebDev.Id,
+            data.AdsClasses.HumanMachineInteractionDesign.Id,
+            data.AdsClasses.IntroToComputerNetworks.Id,
+            data.AdsClasses.ComputationalThinkingAndAlgorithms.Id,
+            data.AdsClasses.IntegratorProjectOne.Id
+        ]);
+
+        data.Student = await CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
+        var studentClient = await back.LoggedAsStudent(data.Student.Email);
+        await studentClient.CreateStudentEnrollment([
+            data.AdsClasses.DiscreteMath.Id,
+            data.AdsClasses.IntroToWebDev.Id,
+            data.AdsClasses.HumanMachineInteractionDesign.Id,
+            data.AdsClasses.IntroToComputerNetworks.Id,
+            data.AdsClasses.ComputationalThinkingAndAlgorithms.Id,
+            data.AdsClasses.IntegratorProjectOne.Id
+        ]);
+
+        await UpdateEnrollmentPeriod(period, -2, -1);
+        await StartClasses([
+            data.AdsClasses.DiscreteMath.Id,
+            data.AdsClasses.IntroToWebDev.Id,
+            data.AdsClasses.HumanMachineInteractionDesign.Id,
+            data.AdsClasses.IntroToComputerNetworks.Id,
+            data.AdsClasses.ComputationalThinkingAndAlgorithms.Id,
+            data.AdsClasses.IntegratorProjectOne.Id
+        ]);
+    }
 }

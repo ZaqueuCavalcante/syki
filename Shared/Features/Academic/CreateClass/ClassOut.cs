@@ -10,6 +10,7 @@ public class ClassOut
     public decimal Frequency { get; set; }
     public ClassStatus Status { get; set; }
     public List<ScheduleOut> Schedules { get; set; }
+    public List<LessonOut> Lessons { get; set; } = [];
 
     public string FillRatio { get; set; }
     public bool IsSelected { get; set; }

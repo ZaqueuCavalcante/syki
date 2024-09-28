@@ -7,6 +7,24 @@
 
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.Class" Title="Frequência" />
+    <MudContainer Class="px-0 pt-4">
+        <MudCard>
+            <MudCardContent Class="px-6">
+                @if (_loading)
+                {
+                    <MudProgressLinear Color="Color.Info" Indeterminate="true"/>
+                }
+                else
+                {
+                    <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.Frequency)" Style="height: 24px">
+                        <MudText Typo="Typo.body1">
+                            <b>@_student.Frequency.Format()%</b>
+                        </MudText>
+                    </MudProgressLinear>
+                }
+            </MudCardContent>
+        </MudCard>
+    </MudContainer>
     <MudContainer Class="px-0 my-4">
         <MudContainer Class="px-0 mb-4">
             <MudTable
@@ -24,13 +42,13 @@
                     <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por disciplina"/>
                 </ToolBarContent>
                 <HeaderContent>
-                    <MudTh>Escopo</MudTh>
+                    <MudTh>Disciplina</MudTh>
                     <MudTh>Período</MudTh>
                     <MudTh>Aulas</MudTh>
                     <MudTh>Frequência</MudTh>
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd DataLabel="Escopo">@context.Name</MudTd>
+                    <MudTd DataLabel="Disciplina">@context.Name</MudTd>
                     <MudTd DataLabel="Período">@context.Period</MudTd>
                     <MudTd DataLabel="Aulas">@context.GetFormated()</MudTd>
                     <MudTd DataLabel="Frequência">
@@ -52,7 +70,8 @@
     </MudContainer>
 </MudContainer>
 
-@inject GetStudentFrequenciesClient Client
+@inject GetStudentFrequencyClient FrequencyClient
+@inject GetStudentFrequenciesClient FrequenciesClient
 @inject IBrowserViewportService BrowserViewportService
 
 @code
@@ -60,6 +79,7 @@
     private bool _loading;
     private string _searchString;
     private Breakpoint _breakpoint;
+    private GetStudentFrequencyOut _student = new();
     private List<GetStudentFrequenciesOut> _frequencies = [];
     
     private Func<GetStudentFrequenciesOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
@@ -68,7 +88,8 @@
     {
         _loading = true;
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        var response = await Client.Get();
+        _student = await FrequencyClient.Get();
+        var response = await FrequenciesClient.Get();
         if (response.IsSuccess()) _frequencies = response.GetSuccess();
         _loading = false;
     }

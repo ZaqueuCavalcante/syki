@@ -8,6 +8,6 @@ public class GetStudentFrequencyService(SykiDbContext ctx) : IStudentService
         var presences = await ctx.Attendances.Where(x => x.StudentId == userId && x.Present).CountAsync();
 
         if (attendances == 0) return 0.00M;
-        return 100M*(1M * presences / (1M * attendances));
+        return Math.Round(100M*(1M * presences / (1M * attendances)), 2);
     }
 }

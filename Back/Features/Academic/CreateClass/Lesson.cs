@@ -1,6 +1,6 @@
 using Syki.Back.Features.Teacher.CreateLessonAttendance;
 
-namespace Syki.Back.Features.Academic.CreateLessons;
+namespace Syki.Back.Features.Academic.CreateClass;
 
 /// <summary>
 /// Representa uma Aula dentro de uma Turma.

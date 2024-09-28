@@ -1,6 +1,5 @@
 using Syki.Back.Features.Cross.ResetPassword;
 using Syki.Back.Features.Academic.CreateClass;
-using Syki.Back.Features.Academic.CreateLessons;
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Cross.CreateInstitution;
@@ -19,7 +18,6 @@ public class SeedInstitutionDataHandler(
     CreateStudentService createStudentService,
     ResetPasswordService resetPasswordService,
     CreateClassService createClassService,
-    CreateLessonsService createLessonsService,
     CreateEnrollmentPeriodService createEnrollmentPeriodService,
     CreateStudentEnrollmentService createStudentEnrollmentService) : ISykiTaskHandler<SeedInstitutionData>
 {
@@ -123,7 +121,6 @@ public class SeedInstitutionDataHandler(
                 Schedules = [new() { Day = (Day)i, Start = Hour.H19_00, End = Hour.H22_00 }]
             });
             classesIds.Add(response.GetSuccess().Id);
-            await createLessonsService.Create(id, response.GetSuccess().Id);
         }
 
         var today = DateTime.Now.ToDateOnly();

@@ -1,5 +1,4 @@
 using Syki.Back.Features.Academic.CreateClass;
-using Syki.Back.Features.Academic.CreateLessons;
 using Syki.Back.Features.Academic.CreateStudent;
 
 namespace Syki.Back.Features.Teacher.CreateLessonAttendance;

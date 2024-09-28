@@ -6,7 +6,6 @@ using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateTeacher;
-using Syki.Back.Features.Academic.CreateLessons;
 using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.Features.Cross.SetupFeatureFlags;
 using Syki.Back.Features.Academic.CreateDiscipline;

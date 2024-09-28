@@ -1,7 +1,7 @@
 using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 
-namespace Syki.Tests.Features.Academic.CreateLessons;
+namespace Syki.Tests.Features.Academic.CreateClass;
 
 public class CreateLessonsUnitTests
 {

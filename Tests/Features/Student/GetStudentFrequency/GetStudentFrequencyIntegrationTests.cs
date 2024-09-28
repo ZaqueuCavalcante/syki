@@ -3,7 +3,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests
 {
     [Test]
-    public async Task Should_return_student_frequencies_with_zero_values()
+    public async Task Should_return_student_frequency_empty()
     {
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
@@ -13,16 +13,14 @@ public partial class IntegrationTests
         var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
-        var response = await studentClient.GetStudentFrequencies();
+        var response = await studentClient.GetStudentFrequency();
 
         // Assert
-        var frequencies = response.GetSuccess();
-        frequencies.Should().HaveCount(1);
-        frequencies[0].Should().BeEquivalentTo(new GetStudentFrequenciesOut("Total do curso", "-", 0, 0));
+        response.Frequency.Should().Be(0);
     }
 
     [Test]
-    public async Task Should_return_student_frequencies_for_the_first_lesson_attendance()
+    public async Task Should_return_student_frequency_for_the_first_lesson_attendance()
     {
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
@@ -32,20 +30,28 @@ public partial class IntegrationTests
         await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, teacher.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
 
-        await academicClient.ReleaseClassesForEnrollment([discreteMathClass.Id]);
+        await academicClient.ReleaseClassesForEnrollment([introToWebDevClass.Id]);
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         var studentClient = await _back.LoggedAsStudent(student.Email);
-        await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id]);
+        await studentClient.CreateStudentEnrollment([introToWebDevClass.Id]);
 
         await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
-        await academicClient.StartClasses([discreteMathClass.Id]);
+        await academicClient.StartClasses([introToWebDevClass.Id]);
+
+
+
+
+
+
+
+
+
 
         var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
-        var teacherMathClass = await teacherClient.GetTeacherClass(discreteMathClass.Id);
+        var teacherMathClass = await teacherClient.GetTeacherClass(introToWebDevClass.Id);
         var firstLesson = teacherMathClass.Lessons.First();
 
         await teacherClient.CreateLessonAttendance(firstLesson.Id, [student.Id]);
@@ -61,7 +67,7 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_return_student_frequencies_for_the_first_period_lesson_attendances()
+    public async Task Should_return_s111tudent_frequencies_for_the_first_period_lesson_attendances()
     {
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();

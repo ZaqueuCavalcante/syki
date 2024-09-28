@@ -37,7 +37,6 @@ public partial class IntegrationTests
         TeacherOut teacher = await academicClient.CreateTeacher();
         ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, teacher.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        await academicClient.CreateClassLessons(discreteMathClass.Id);
 
         await academicClient.ReleaseClassesForEnrollment([discreteMathClass.Id]);
 

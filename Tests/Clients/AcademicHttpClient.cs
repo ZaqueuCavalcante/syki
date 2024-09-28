@@ -1,8 +1,5 @@
-using Syki.Tests.Mock;
-using Syki.Front.Auth;
 using Syki.Front.Features.Academic.GetCampi;
 using Syki.Front.Features.Academic.GetCourses;
-using Syki.Front.Features.Academic.CrossLogin;
 using Syki.Front.Features.Academic.CreateClass;
 using Syki.Front.Features.Academic.GetTeachers;
 using Syki.Front.Features.Academic.GetStudents;
@@ -11,7 +8,6 @@ using Syki.Front.Features.Academic.CreateCampus;
 using Syki.Front.Features.Academic.UpdateCampus;
 using Syki.Front.Features.Academic.CreateCourse;
 using Syki.Front.Features.Academic.CreateStudent;
-using Syki.Front.Features.Academic.CreateLessons;
 using Syki.Front.Features.Academic.CreateTeacher;
 using Syki.Front.Features.Academic.GetDisciplines;
 using Syki.Front.Features.Academic.CreateDiscipline;
@@ -283,12 +279,6 @@ public class AcademicHttpClient(HttpClient http)
     {
         var client = new StartClassesClient(Http);
         return await client.Start(classes);
-    }
-
-    public async Task<OneOf<SuccessOut, ErrorOut>> CreateClassLessons(Guid classId)
-    {
-        var client = new CreateLessonsClient(Http);
-        return await client.Create(classId);
     }
 
     public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()

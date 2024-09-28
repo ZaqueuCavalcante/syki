@@ -7,6 +7,8 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<OneOf<ClassOut, SykiError>> Create(Guid institutionId, CreateClassIn data)
     {
+        await using var transaction = await ctx.Database.BeginTransactionAsync();
+
         var disciplineOk = await ctx.Disciplines.AnyAsync(x => x.InstitutionId == institutionId && x.Id == data.DisciplineId);
         if (!disciplineOk) return new DisciplineNotFound();
 
@@ -37,6 +39,17 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
 
         ctx.Classes.Add(@class);
         await ctx.SaveChangesAsync();
+
+        @class = await ctx.Classes
+            .Include(c => c.Period)
+            .Include(t => t.Lessons)
+            .Include(t => t.Schedules)
+            .FirstAsync(x => x.Id == @class.Id);
+
+        @class.CreateLessons();
+        await ctx.SaveChangesAsync();
+
+        await transaction.CommitAsync();
 
         @class = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)

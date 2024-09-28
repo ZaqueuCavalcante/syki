@@ -177,7 +177,6 @@
     }
 </MudContainer>
 
-@inject CreateLessonsClient CreateLessonsClient
 @inject GetAcademicClassClient GetAcademicClassClient
 @inject IBrowserViewportService BrowserViewportService
 
@@ -214,11 +213,6 @@
         {
             _class = response.GetSuccess();
             _students = _class.Students.OrderBy(x => x.Name).ToList();
-            if (_class.Lessons.Count == 0)
-            {
-                await CreateLessonsClient.Create(Id);
-                await Load();
-            }
         }
         _loading = false;
     }

@@ -1,8 +1,9 @@
 using Syki.Back.Features.Student.GetStudentFrequency;
+using Syki.Back.Features.Student.GetStudentAverageNote;
 
 namespace Syki.Back.Features.Student.GetStudentInsights;
 
-public class GetStudentInsightsService(SykiDbContext ctx, GetStudentFrequencyService service) : IStudentService
+public class GetStudentInsightsService(SykiDbContext ctx, GetStudentFrequencyService frequencyService, GetStudentAverageNoteService averageNoteService) : IStudentService
 {
     public async Task<StudentInsightsOut> Get(Guid userId, Guid courseCurriculumId)
     {
@@ -15,7 +16,9 @@ public class GetStudentInsightsService(SykiDbContext ctx, GetStudentFrequencySer
             .Where(x => x.SykiStudentId == userId && x.StudentDisciplineStatus == StudentDisciplineStatus.Aprovado)
             .CountAsync();
         
-        var frequency = await service.Get(userId);
+        var frequency = await frequencyService.Get(userId);
+
+        var averageNote = await averageNoteService.Get(userId);
 
         return new()
         {
@@ -23,6 +26,7 @@ public class GetStudentInsightsService(SykiDbContext ctx, GetStudentFrequencySer
             TotalDisciplines = totalDisciplines,
             FinishedDisciplines = finishedDisciplines,
             Frequency = frequency,
+            Average = averageNote,
         };
     }
 }

@@ -49,4 +49,13 @@ public class TeacherHttpClient(HttpClient http)
         var client = new GetTeacherAgendaClient(Cross);
         return await client.Get();
     }
+
+    public async Task AddExamGradeNotes(Guid classId, Guid studentId, decimal n1, decimal n2, decimal n3)
+    {
+        var discreteMathClass = await GetTeacherClass(classId);
+        var discreteMathClassExamGrades = discreteMathClass.Students.First(x => x.Id == studentId).ExamGrades;
+        await AddExamGradeNote(discreteMathClassExamGrades[0].Id, n1);
+        await AddExamGradeNote(discreteMathClassExamGrades[1].Id, n2);
+        await AddExamGradeNote(discreteMathClassExamGrades[2].Id, n3);
+    }
 }

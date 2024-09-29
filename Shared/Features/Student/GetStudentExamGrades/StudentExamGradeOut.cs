@@ -2,6 +2,7 @@ namespace Syki.Shared;
 
 public class StudentExamGradeOut
 {
+    public Guid ClassId { get; set; }
     public byte Period { get; set; }
     public string Discipline { get; set; }
     public StudentDisciplineStatus StudentDisciplineStatus { get; set; }

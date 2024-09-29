@@ -3,53 +3,29 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests
 {
     [Test]
-    public async Task Should_get_student_exam_grades_after_enrollment()
+    public async Task Should_get_student_exam_grades_just_after_enrollment()
     {
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod2.Id;
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        await academicClient.CreateEnrollmentPeriod(period, -2, 2);
-
-        TeacherOut chico = await academicClient.CreateTeacher("Chico");
-        TeacherOut ana = await academicClient.CreateTeacher("Ana");
-
-        ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, chico.Id, period, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut humanMachineInteractionDesignClass = await academicClient.CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, ana.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        ClassOut introToComputerNetworksClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, ana.Id, period, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
-
-        await academicClient.ReleaseClassesForEnrollment([discreteMathClass.Id, introToWebDevClass.Id, humanMachineInteractionDesignClass.Id, introToComputerNetworksClass.Id]);
-
-        StudentOut zaqueu = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _back.LoggedAsStudent(zaqueu.Email);
-        await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id, introToComputerNetworksClass.Id]);
-
-        await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
-        await academicClient.StartClasses([discreteMathClass.Id]);
-        await academicClient.StartClasses([introToWebDevClass.Id]);
-        await academicClient.StartClasses([introToComputerNetworksClass.Id]);
+        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
 
         // Act
         var response = await studentClient.GetStudentExamGrades();
 
         // Assert
-        response.Count.Should().Be(3);
-        response[0].Period.Should().Be(1);
-        response[0].Discipline.Should().Be(data.AdsDisciplines.IntroToComputerNetworks.Name);
-        response[0].ExamGrades.Should().HaveCount(3);
-        response[0].ExamGrades.Should().AllSatisfy(x => x.Note.Should().Be(0));
+        response.Count.Should().Be(6);
 
-        response[1].Period.Should().Be(1);
-        response[1].Discipline.Should().Be(data.AdsDisciplines.IntroToWebDev.Name);
-        response[1].ExamGrades.Should().HaveCount(3);
-        response[1].ExamGrades.Should().AllSatisfy(x => x.Note.Should().Be(0));
-
-        response[2].Period.Should().Be(1);
-        response[2].Discipline.Should().Be(data.AdsDisciplines.DiscreteMath.Name);
-        response[2].ExamGrades.Should().HaveCount(3);
-        response[2].ExamGrades.Should().AllSatisfy(x => x.Note.Should().Be(0));
+        response.ForEach(x =>
+        {
+            x.Period.Should().Be(1);
+            x.AverageNote.Should().Be(0);
+            x.ExamGrades.Should().HaveCount(3);
+            x.ExamGrades.Should().AllSatisfy(x => x.Note.Should().Be(0));
+            x.StudentDisciplineStatus.Should().Be(StudentDisciplineStatus.Matriculado);
+        });
     }
 
     [Test]
@@ -58,38 +34,38 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod2.Id;
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        await academicClient.CreateEnrollmentPeriod(period, -2, 2);
-   
-        TeacherOut chico = await academicClient.CreateTeacher("Chico");
-        StudentOut zaqueu = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
 
-        await academicClient.ReleaseClassesForEnrollment([discreteMathClass.Id]);
+        await teacherClient.AddExamGradeNotes(data.AdsClasses.DiscreteMath.Id, data.Student.Id, 1.67M, 8.50M, 5.23M);
+        await teacherClient.AddExamGradeNotes(data.AdsClasses.IntroToWebDev.Id, data.Student.Id, 7.58M, 1.28M, 7.43M);
+        await teacherClient.AddExamGradeNotes(data.AdsClasses.HumanMachineInteractionDesign.Id, data.Student.Id, 0.00M, 1.75M, 0.90M);
+        await teacherClient.AddExamGradeNotes(data.AdsClasses.IntroToComputerNetworks.Id, data.Student.Id, 3.42M, 3.34M, 6.14M);
+        await teacherClient.AddExamGradeNotes(data.AdsClasses.ComputationalThinkingAndAlgorithms.Id, data.Student.Id, 2.84M, 8.61M, 0.86M);
+        await teacherClient.AddExamGradeNotes(data.AdsClasses.IntegratorProjectOne.Id, data.Student.Id, 8.77M, 1.21M, 10.0M);
 
-        var studentClient = await _back.LoggedAsStudent(zaqueu.Email);
-        await studentClient.CreateStudentEnrollment([discreteMathClass.Id]);
-
-        await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
-        await academicClient.StartClasses([discreteMathClass.Id]);
-
-        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
-        var teacherMathClass = await teacherClient.GetTeacherClass(discreteMathClass.Id);
-        var examGradeId = teacherMathClass.Students.First().ExamGrades.First().Id;
-        await teacherClient.AddExamGradeNote(examGradeId, 5.67M);
-        
         // Act
         var response = await studentClient.GetStudentExamGrades();
 
         // Assert
-        response.Count.Should().Be(1);
-        response[0].Period.Should().Be(1);
-        response[0].Discipline.Should().Be(data.AdsDisciplines.DiscreteMath.Name);
-        var examGrades = response[0].ExamGrades;
-        examGrades.Should().HaveCount(3);
-        examGrades.First(x => x.ExamType == ExamType.N1).Note.Should().Be(5.67M);
-        examGrades.First(x => x.ExamType == ExamType.N2).Note.Should().Be(0);
-        examGrades.First(x => x.ExamType == ExamType.N3).Note.Should().Be(0);
+        response.Count.Should().Be(6);
+
+        AssertCorrectNotes(response, data.AdsClasses.DiscreteMath.Id, 6.86M, 1.67M, 8.50M, 5.23M);
+        AssertCorrectNotes(response, data.AdsClasses.IntroToWebDev.Id, 7.50M, 7.58M, 1.28M, 7.43M);
+        AssertCorrectNotes(response, data.AdsClasses.HumanMachineInteractionDesign.Id, 1.32M, 0.00M, 1.75M, 0.90M);
+        AssertCorrectNotes(response, data.AdsClasses.IntroToComputerNetworks.Id, 4.78M, 3.42M, 3.34M, 6.14M);
+        AssertCorrectNotes(response, data.AdsClasses.ComputationalThinkingAndAlgorithms.Id, 5.72M, 2.84M, 8.61M, 0.86M);
+        AssertCorrectNotes(response, data.AdsClasses.IntegratorProjectOne.Id, 9.38M, 8.77M, 1.21M, 10.0M);
+    }
+
+    private static void AssertCorrectNotes(List<StudentExamGradeOut> list, Guid classId, decimal averageNote, decimal n1, decimal n2, decimal n3)
+    {
+        var discreteMath = list.First(x => x.ClassId == classId);
+        discreteMath.AverageNote.Should().Be(averageNote);
+        discreteMath.ExamGrades.First(x => x.ExamType == ExamType.N1).Note.Should().Be(n1);
+        discreteMath.ExamGrades.First(x => x.ExamType == ExamType.N2).Note.Should().Be(n2);
+        discreteMath.ExamGrades.First(x => x.ExamType == ExamType.N3).Note.Should().Be(n3);
     }
 }

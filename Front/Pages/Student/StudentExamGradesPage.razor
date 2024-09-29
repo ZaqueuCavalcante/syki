@@ -7,6 +7,26 @@
 
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.StickyNote2" Title="Notas" />
+
+    <MudContainer Class="px-0 pt-4">
+        <MudCard>
+            <MudCardContent Class="px-6">
+                @if (_loading)
+                {
+                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                }
+                else
+                {
+                    <MudProgressLinear Color="@GetAverageNoteColor()" Max="10" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.AverageNote)" Style="height: 24px">
+                        <MudText Typo="Typo.body1">
+                            <b>@_student.AverageNote.Format()</b>
+                        </MudText>
+                    </MudProgressLinear>
+                }
+            </MudCardContent>
+        </MudCard>
+    </MudContainer>
+
     <MudContainer Class="px-0 my-4">
         <MudContainer Class="px-0 mb-4">
             <MudTable
@@ -52,14 +72,16 @@
     </MudContainer>
 </MudContainer>
 
-@inject GetStudentExamGradesClient Client
 @inject IBrowserViewportService BrowserViewportService
+@inject GetStudentAverageNoteClient AverageNotesClient
+@inject GetStudentExamGradesClient StudentExamGradesClient
 
 @code
 {
     private bool _loading;
     private string _searchString;
     private Breakpoint _breakpoint;
+    private GetStudentAverageNoteOut _student = new();
     private List<StudentExamGradeOut> _disciplines = [];
 
     private Func<StudentExamGradeOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.StudentDisciplineStatus.ToString());
@@ -68,7 +90,13 @@
     {
         _loading = true;
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        _disciplines = await Client.Get();
+        _disciplines = await StudentExamGradesClient.Get();
+        _student = await AverageNotesClient.Get();
         _loading = false;
+    }
+
+    private Color GetAverageNoteColor()
+    {
+        return _student.AverageNote >= 7 ? Color.Tertiary : Color.Error;
     }
 }

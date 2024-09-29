@@ -28,10 +28,11 @@ public class GetStudentExamGradesService(SykiDbContext ctx) : IStudentService
             var disciplineExamGrades = examGrades.Where(g => g.ClassId == c.ClassId).ToList();
             return new StudentExamGradeOut
             {
+                ClassId = c.ClassId,
                 Discipline = c.Discipline,
-                Period = periods.First(p => p.DisciplineId == c.DisciplineId).Period,
                 AverageNote = disciplineExamGrades.GetAverageNote(),
                 ExamGrades = disciplineExamGrades.Select(g => g.ToOut()).ToList(),
+                Period = periods.First(p => p.DisciplineId == c.DisciplineId).Period,
                 StudentDisciplineStatus = classesStudents.First(s => s.ClassId == c.ClassId).StudentDisciplineStatus,
             };
         });

@@ -31,6 +31,7 @@ jobs:
         with:
           dotnet-version: 8.0.401
       - name: Restore
+        run: dotnet workload restore
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore

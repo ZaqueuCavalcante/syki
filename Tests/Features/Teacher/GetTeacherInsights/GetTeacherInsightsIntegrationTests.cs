@@ -6,20 +6,22 @@ public partial class IntegrationTests
     public async Task Should_return_teacher_insights()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
-        var data = await client.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod2;
+        var academicClient = await _back.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        TeacherOut ana = await client.CreateTeacher("Ana");
+        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
 
-        await client.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
-
-        var teacherClient = await _back.LoggedAsTeacher(ana.Email);
+        var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
+        await teacherClient.CreateLessonAttendance(lessons[0].Id, [data.Student.Id]);
 
         // Act
         var insights = await teacherClient.GetTeacherInsights();
 
         // Assert
-        insights.Classes.Should().Be(1);
+        insights.Classes.Should().Be(6);
+        insights.Students.Should().Be(1);
+        insights.FinalizedLessons.Should().Be(1);
+        insights.TotalLessons.Should().Be(129);
     }
 }

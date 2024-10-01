@@ -14,7 +14,7 @@
     <MudGrid Class="pt-4" Spacing="4">
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircle" Value="@_data.Classes" Text="Turmas" />
         <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.School" Value="@_data.Students" Text="Alunos" />
-        <IndexCard Loading="@_loading" Icon="@Icons.Material.Filled.Class" Value="@_data.Lessons" Text="Aulas" />
+        <TeacherInsightCard Loading="@_loading" Icon="@Icons.Material.Filled.Class" Text="@GetLessonsMessage()" />
     </MudGrid>
 </MudContainer>
 
@@ -35,6 +35,11 @@
         await SetUserName();
         _data = await Client.Get();
         _loading = false;
+    }
+
+    private string GetLessonsMessage()
+    {
+        return $"{_data.FinalizedLessons}/{_data.TotalLessons} Aulas";
     }
 
     private async Task SetUserName()

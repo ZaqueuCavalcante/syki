@@ -30,10 +30,11 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.401
-      - name: Restore
+      - name: Workload
         run: dotnet workload restore
+      - name: Restore
         run: dotnet restore
       - name: Build
         run: dotnet build --no-restore
       - name: Tests
-        run: dotnet test --no-build --filter "FullyQualifiedName~UnitTests"
+        run: dotnet test --no-build

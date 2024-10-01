@@ -1,0 +1,29 @@
+﻿@namespace Syki.Front.Features.Teacher.GetTeacherInsights
+
+<MudItem xs="12" sm="6" md="4" lg="4">
+    <MudPaper Class="d-flex align-center justify-center mud-width-full py-4">
+        <MudStack AlignItems="AlignItems.Center">
+            <MudIcon Icon="@Icon" Size="Size.Large" Color="Color.Primary"/>
+            @if (Loading)
+            {
+                <MudText Typo="Typo.h5" Style="font-weight: bold">...</MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.h5" Style="font-weight: bold">@Text</MudText>
+            }
+        </MudStack>
+    </MudPaper>
+</MudItem>
+
+@code
+{
+    [Parameter]
+    public bool Loading { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+}

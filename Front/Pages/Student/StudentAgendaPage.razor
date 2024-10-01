@@ -21,9 +21,20 @@
     }
     else
     {
-        <CascadingValue Name="Days" Value="@Days">
-            <WeeklyAgenda Class="px-0" />
-        </CascadingValue>
+        @if (Days.Count > 0)
+        {
+            <CascadingValue Name="Days" Value="@Days">
+                <WeeklyAgenda Class="px-0" />
+            </CascadingValue>
+        }
+        else
+        {
+            <MudAlert Class="mt-4" Severity="Severity.Normal" NoIcon="true" Variant="Variant.Text" Elevation="1">
+                <MudStack Row="true" Justify="Justify.SpaceAround">
+                    <MudText>Sua agenda está vazia...</MudText>
+                </MudStack>
+            </MudAlert>
+        }
     }
 </MudContainer>
 

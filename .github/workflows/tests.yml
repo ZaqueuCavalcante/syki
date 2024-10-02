@@ -34,6 +34,11 @@ jobs:
         run: dotnet workload restore
       - name: Restore
         run: dotnet restore
+      - name: Android
+        run: |
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
+          --sdk_root=$ANDROID_SDK_ROOT \
+          "platform-tools"
       - name: Build
         run: dotnet build --no-restore
       - name: Tests

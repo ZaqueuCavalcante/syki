@@ -10,7 +10,7 @@
         <ApplicationTitle>Syki</ApplicationTitle>
         <ApplicationVersion>1</ApplicationVersion>
         <ApplicationId>com.syki.app</ApplicationId>
-        <TargetFrameworks>net8.0-android</TargetFrameworks>
+        <TargetFramework>net8.0-android</TargetFramework>
         <EnableDefaultCssItems>false</EnableDefaultCssItems>
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>

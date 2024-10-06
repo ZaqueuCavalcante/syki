@@ -12,9 +12,9 @@
 <AuthorizeView>
     <Authorized>
         <MudLayout>
-            <MudAppBar Elevation="1" Dense="true" ToolBarClass="pl-1 pr-1">
+            <MudAppBar Elevation="0" Dense="true" ToolBarClass="pl-1 pr-1">
                 <MudIconButton OnClick="@ToggleLeftOpen" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" />
-                <HomeButton />
+                <MudIconButton Href="/" Icon="@Icons.Material.Filled.Home" Color="Color.Inherit" />
                 <MudSpacer />
                 <AuthorizeView Roles="Teacher, Student" Context="authContext">
                     <NotificationsIconButton />
@@ -28,8 +28,12 @@
             <MudDrawer Anchor="Anchor.Right" @bind-Open="@_rightOpen" ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Temporary" OverlayAutoClose="true" Elevation="2" Width="160px">
                 <SettingsMenu OnLogoutClick="@Logout" />
             </MudDrawer>
-            <MudMainContent>
+            <MudMainContent Class="pb-8">
                 @Body
+                @if (_breakpoint == Breakpoint.Xs)
+                {
+                    <MudFab OnClick="@ToggleLeftOpen" Size="@Size.Medium" Style="position:fixed; bottom:10px; left:50%; transform:translate(-50%,0%);" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Menu" />
+                }
             </MudMainContent>
         </MudLayout>
     </Authorized>
@@ -57,9 +61,11 @@
     </NotAuthorized>
 </AuthorizeView>
 
+
 @inject NavigationManager Nav
 @inject ILocalStorageService LocalStorage
 @inject SykiAuthStateProvider AuthStateProvider
+@inject IBrowserViewportService BrowserViewportService
 
 @code
 {
@@ -69,6 +75,7 @@
     private bool _isDark = true;
     private bool _leftOpen = true;
     private bool _rightOpen = false;
+    private Breakpoint _breakpoint;
 
     private void ToggleLeftOpen()
     {
@@ -82,6 +89,7 @@
     
     protected override async Task OnInitializedAsync()
     {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var isDark = await LocalStorage.GetItemAsync("IsDark");
         _isDark = isDark == null || bool.Parse(isDark);
     }

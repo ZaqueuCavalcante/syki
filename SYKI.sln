@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Daemon", "Daemon\Daemon.csproj", "{DE6B549B-DB7C-4C9F-8861-F942A77C64FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mobile", "Mobile\Mobile.csproj", "{BA0F3952-601B-4258-92D3-2026B7FC5214}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,12 +39,6 @@ Global
 		{DE6B549B-DB7C-4C9F-8861-F942A77C64FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE6B549B-DB7C-4C9F-8861-F942A77C64FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE6B549B-DB7C-4C9F-8861-F942A77C64FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA0F3952-601B-4258-92D3-2026B7FC5214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA0F3952-601B-4258-92D3-2026B7FC5214}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA0F3952-601B-4258-92D3-2026B7FC5214}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{BA0F3952-601B-4258-92D3-2026B7FC5214}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA0F3952-601B-4258-92D3-2026B7FC5214}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA0F3952-601B-4258-92D3-2026B7FC5214}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

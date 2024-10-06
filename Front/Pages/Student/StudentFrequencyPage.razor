@@ -16,18 +16,17 @@
                 }
                 else
                 {
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="0">
-                        <MudItem xs="3" sm="1" md="1" lg="1">
-                            <MudText Typo="Typo.body1"><b>@GetFrequency()</b></MudText>
-                        </MudItem>
-                        <MudItem xs="9" sm="11" md="11" lg="11">
-                            <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.Frequency)" Style="height: 24px">
-                                <MudText Typo="Typo.body1">
-                                    <b>@_student.Frequency.Format()%</b>
-                                </MudText>
-                            </MudProgressLinear>
-                        </MudItem>
-                    </MudStack>
+                    <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.Frequency)" Style="height: 24px">
+                        <MudText Typo="Typo.body1">
+                            <b>@GetFrequency()</b>
+                        </MudText>
+                        <MudText Typo="Typo.h4" Class="mx-2">
+                            <b> · </b>
+                        </MudText>
+                        <MudText Typo="Typo.body1">
+                            <b>@_student.Frequency.Format()%</b>
+                        </MudText>
+                    </MudProgressLinear>
                 }
             </MudCardContent>
         </MudCard>
@@ -51,12 +50,14 @@
                 <HeaderContent>
                     <MudTh>Disciplina</MudTh>
                     <MudTh>Período</MudTh>
+                    <MudTh>Status</MudTh>
                     <MudTh>Aulas</MudTh>
                     <MudTh>Frequência</MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Disciplina">@context.Name</MudTd>
                     <MudTd DataLabel="Período">@context.Period</MudTd>
+                    <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
                     <MudTd DataLabel="Aulas">@context.GetFormated()</MudTd>
                     <MudTd DataLabel="Frequência">
                         <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.GetPercentage())" Style="height: 24px">

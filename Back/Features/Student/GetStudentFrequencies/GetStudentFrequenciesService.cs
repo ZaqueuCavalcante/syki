@@ -17,15 +17,19 @@ public class GetStudentFrequenciesService(SykiDbContext ctx) : IStudentService
             .Where(x => x.CourseCurriculumId == courseCurriculumId && disciplineIds.Contains(x.DisciplineId))
             .ToListAsync();
 
+        var classesStudents = await ctx.ClassesStudents.AsNoTracking()
+            .Where(x => x.SykiStudentId == userId).ToListAsync();
+
         var result = new List<GetStudentFrequenciesOut>();
         foreach (var item in classes)
         {
             var period = disciplines.First(x => x.DisciplineId == item.DisciplineId).Period.ToString();
             var lessons = attendances.Count(x => x.ClassId == item.Id);
             var presences = attendances.Count(x => x.ClassId == item.Id && x.Present);
-            result.Add(new(item.Discipline.Name, period, lessons, presences));
+            var status = classesStudents.First(s => s.ClassId == item.Id).StudentDisciplineStatus;
+            result.Add(new(item.Discipline.Name, period, lessons, presences, status));
         }
-        
+
         return result.OrderBy(x => x.Period).ThenBy(x => x.Name).ToList();
     }
 }

@@ -9,3 +9,5 @@
         - Ao fechar, o professor nao pode mais alterar os dados
         - Os alunos devem conseguir ver se foram aprovados ou nao nas disciplinas q cursaram
             - Devem ver suas notas e frequencias
+
+

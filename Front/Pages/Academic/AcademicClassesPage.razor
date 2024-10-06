@@ -136,7 +136,7 @@
         Nav.NavigateTo($"/academic/classes/{item.Id}");
     }
 
-    private Func<ClassOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Teacher, x.Period);
+    private Func<ClassOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.Teacher, x.Period, x.Status.GetDescription());
 
     private async Task OpenDialog()
     {

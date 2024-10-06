@@ -54,7 +54,7 @@ public partial class IntegrationTests
 
         // Assert
         var frequencies = response.GetSuccess();
-        frequencies[0].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.DiscreteMath.Name, "1", 1, 1));
+        frequencies[0].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.DiscreteMath.Name, "1", 1, 1, StudentDisciplineStatus.Matriculado));
     }
 
     [Test]
@@ -131,11 +131,11 @@ public partial class IntegrationTests
         // Assert
         var frequencies = response.GetSuccess();
         frequencies.Should().HaveCount(6);
-        frequencies[0].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.HumanMachineInteractionDesign.Name, "1", 1, 1));
-        frequencies[1].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.IntroToComputerNetworks.Name, "1", 3, 2));
-        frequencies[2].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.IntroToWebDev.Name, "1", 2, 1));
-        frequencies[3].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.DiscreteMath.Name, "1", 3, 2));
-        frequencies[4].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Name, "1", 2, 1));
-        frequencies[5].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.IntegratorProjectOne.Name, "1", 1, 0));
+        frequencies[0].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.HumanMachineInteractionDesign.Name, "1", 1, 1, StudentDisciplineStatus.Matriculado));
+        frequencies[1].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.IntroToComputerNetworks.Name, "1", 3, 2, StudentDisciplineStatus.Matriculado));
+        frequencies[2].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.IntroToWebDev.Name, "1", 2, 1, StudentDisciplineStatus.Matriculado));
+        frequencies[3].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.DiscreteMath.Name, "1", 3, 2, StudentDisciplineStatus.Matriculado));
+        frequencies[4].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Name, "1", 2, 1, StudentDisciplineStatus.Matriculado));
+        frequencies[5].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.IntegratorProjectOne.Name, "1", 1, 0, StudentDisciplineStatus.Matriculado));
     }
 }

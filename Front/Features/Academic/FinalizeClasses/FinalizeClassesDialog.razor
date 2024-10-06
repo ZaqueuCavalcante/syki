@@ -1,0 +1,140 @@
+@namespace Syki.Front.Features.Academic.FinalizeClasses
+
+<MudDialog Class="pb-2">
+    <TitleContent>
+        <SykiDialogTitle Text="Finalizar" Icon="@Icons.Material.Filled.FactCheck" />
+    </TitleContent>
+    <DialogContent>
+        <style>.mud-table-toolbar { height: auto }</style>
+        <MudTable
+            T="ClassOut"
+            Class="pa-4 mb-2"
+            Items="@_classes"
+            Filter="@_quickFilter"
+            Hover="true"
+            Dense="true"
+            Loading="@_loading"
+            RowsPerPage="100"
+            ContainerClass="pt-0"
+        >
+            <ToolBarContent>
+                <MudGrid Class="align-center" Spacing="3">
+                    <MudItem xs="12" sm="5" md="5" lg="5">
+                        @if (_showButtons)
+                        {
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                                <MudButton OnClick="@SelectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBox" Size="Size.Small">Todos</MudButton>
+                                <MudButton OnClick="@UnselectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" Size="Size.Small">Nenhum</MudButton>
+                            </MudStack>
+                        }
+                    </MudItem>
+                    <MudItem xs="12" sm="7" md="7" lg="7" Class="d-flex justify-end">
+                        <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome"/>
+                    </MudItem>
+                </MudGrid>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Professor</MudTh>
+                <MudTh>Selecionada</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Disciplina">@context.Discipline</MudTd>
+                <MudTd DataLabel="Professor">@context.Teacher</MudTd>
+                <MudTd DataLabel="Selecionada">
+                    <MudCheckBox
+                        T="bool"
+                        Class="pl-7 pr-1"
+                        Dense="true"
+                        Size="Size.Small"
+                        Color="Color.Success"
+                        Value="@context.IsSelected"
+                        ValueChanged="x => { context.IsSelected = x; }"/>
+                </MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <LoadingContent>
+                @if (_breakpoint == Breakpoint.Xs)
+                {
+                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                }
+            </LoadingContent>
+            <PagerContent>
+                <MudDivider/>
+                @if (_showButtons)
+                {
+                    <MudStack Row="true" Class="mt-4">
+                        <DialogCancelButton OnClick="@Cancel" />
+                        <SykiProgressCircular Loading="@_loading" />
+                        <DialogSaveButton Class="mr-2" OnClick="@Submit" Text="Finalizar" />
+                    </MudStack>
+                }
+            </PagerContent>
+        </MudTable>
+    </DialogContent>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject FinalizeClassesClient FinalizeClient
+@inject GetAcademicClassesClient GetClient
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    private bool _loading;
+    private bool _showButtons;
+    private string _searchString;
+    private List<ClassOut> _classes = [];
+    private Breakpoint _breakpoint;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _classes = await GetClient.Get(new() { Status = ClassStatus.Started, AllLessonsFinished = true });
+        _loading = false;
+        _showButtons = true;
+    }
+
+    private void SelectAll()
+    {
+        _classes.ForEach(x => x.IsSelected = true);
+    }
+    private void UnselectAll()
+    {
+        _classes.ForEach(x => x.IsSelected = false);
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        _loading = true;
+        var ids = _classes.Where(c => c.IsSelected).Select(c => c.Id).ToList();
+        var response = await FinalizeClient.Finalize(ids);
+        if (response.IsSuccess())
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Turmas finalizadas com sucesso!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(response.GetError().Message, Severity.Error);
+        }
+        _loading = false;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+    
+    private Func<ClassOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline);
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem turmas para serem finalizadas." : "Nenhuma turma encontrada.";
+    }
+}

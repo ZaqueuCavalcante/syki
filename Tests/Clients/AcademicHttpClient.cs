@@ -281,6 +281,12 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Start(classes);
     }
 
+    public async Task<OneOf<SuccessOut, ErrorOut>> FinalizeClasses(List<Guid> classes)
+    {
+        var client = new StartClassesClient(Http);
+        return await client.Start(classes);
+    }
+
     public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()
     {
         var data = new BasicInstitutionTestDto();

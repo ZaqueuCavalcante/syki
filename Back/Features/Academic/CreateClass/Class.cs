@@ -127,6 +127,15 @@ public class Class
         }
     }
 
+    public OneOf<SykiSuccess, SykiError> Finish()
+    {
+        if (Lessons.Any(x => x.Status != LessonStatus.Finalized))
+            return new AllClassLessonsMustHaveFinalizedStatus();
+
+        Status = ClassStatus.Finalized;
+        return new SykiSuccess();
+    }
+
     public void SetFillRatio(int count)
     {
         FillRatio = $"{count}/{Vacancies}";

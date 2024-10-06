@@ -34,7 +34,7 @@ public class CreateLessonAttendanceService(SykiDbContext ctx) : ITeacherService
             }
         }
 
-        lesson.Status = LessonStatus.Finalized;
+        lesson.Finish();
 
         await ctx.SaveChangesAsync();
 

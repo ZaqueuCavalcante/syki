@@ -16,11 +16,18 @@
                 }
                 else
                 {
-                    <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.Frequency)" Style="height: 24px">
-                        <MudText Typo="Typo.body1">
-                            <b>@_student.Frequency.Format()%</b>
-                        </MudText>
-                    </MudProgressLinear>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="0">
+                        <MudItem xs="3" sm="1" md="1" lg="1">
+                            <MudText Typo="Typo.body1"><b>@GetFrequency()</b></MudText>
+                        </MudItem>
+                        <MudItem xs="9" sm="11" md="11" lg="11">
+                            <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.Frequency)" Style="height: 24px">
+                                <MudText Typo="Typo.body1">
+                                    <b>@_student.Frequency.Format()%</b>
+                                </MudText>
+                            </MudProgressLinear>
+                        </MudItem>
+                    </MudStack>
                 }
             </MudCardContent>
         </MudCard>
@@ -92,5 +99,10 @@
         var response = await FrequenciesClient.Get();
         if (response.IsSuccess()) _frequencies = response.GetSuccess();
         _loading = false;
+    }
+
+    private string GetFrequency()
+    {
+        return $"{_student.Presences} / {_student.Attendances}";
     }
 }

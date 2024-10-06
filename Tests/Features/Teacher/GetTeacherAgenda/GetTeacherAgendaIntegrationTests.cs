@@ -6,24 +6,21 @@ public partial class IntegrationTests
     public async Task Should_get_teacher_agenda()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
-        var data = await client.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod2;
+        var academicClient = await _back.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        TeacherOut chico = await client.CreateTeacher("Chico");
-        TeacherOut ana = await client.CreateTeacher("Ana");
-
-        await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
-        await client.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, chico.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        await client.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
-
-        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
 
         // Assert
         var agenda = await teacherClient.GetTeacherAgenda();
 
-        agenda.Should().HaveCount(2);
+        agenda.Should().HaveCount(6);
         agenda.Should().Contain(x => x.Day == Day.Monday);
         agenda.Should().Contain(x => x.Day == Day.Tuesday);
+        agenda.Should().Contain(x => x.Day == Day.Wednesday);
+        agenda.Should().Contain(x => x.Day == Day.Thursday);
+        agenda.Should().Contain(x => x.Day == Day.Friday);
+        agenda.Should().Contain(x => x.Day == Day.Saturday);
     }
 }

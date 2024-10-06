@@ -14,6 +14,7 @@ using Syki.Back.Features.Academic.ReleaseClassesForEnrollment;
 using Syki.Back.Features.Academic.UpdateEnrollmentPeriod;
 using Syki.Back.Features.Teacher.CreateLessonAttendance;
 using Syki.Back.Features.Teacher.AddExamGradeNote;
+using Syki.Back.Features.Academic.FinalizeClasses;
 
 namespace Syki.Daemon.Configs;
 
@@ -36,6 +37,7 @@ public static class ServicesConfigs
         services.AddScoped<UpdateEnrollmentPeriodService>();
         services.AddScoped<CreateLessonAttendanceService>();
         services.AddScoped<AddExamGradeNoteService>();
+        services.AddScoped<FinalizeClassesService>();
         
         services.AddScoped<IEmailsService, EmailsService>();
         if (Env.IsDevelopment() || Env.IsTesting())

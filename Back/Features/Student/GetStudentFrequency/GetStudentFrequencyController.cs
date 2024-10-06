@@ -13,6 +13,6 @@ public class GetStudentFrequencyController(GetStudentFrequencyService service) :
     {
         var frequency = await service.Get(User.Id());
 
-        return Ok(new GetStudentFrequencyOut() { Frequency = frequency });
+        return Ok(frequency);
     }
 }

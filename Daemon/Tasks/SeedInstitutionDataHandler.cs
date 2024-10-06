@@ -5,6 +5,7 @@ using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Teacher.AddExamGradeNote;
+using Syki.Back.Features.Academic.FinalizeClasses;
 using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateCourseOffering;
 using Syki.Back.Features.Teacher.CreateLessonAttendance;
@@ -27,6 +28,7 @@ public class SeedInstitutionDataHandler(
     UpdateEnrollmentPeriodService updateEnrollmentPeriodService,
     CreateLessonAttendanceService createLessonAttendanceService,
     AddExamGradeNoteService addExamGradeNoteService,
+    FinalizeClassesService finalizeClassesService,
     CreateStudentEnrollmentService createStudentEnrollmentService) : ISykiTaskHandler<SeedInstitutionData>
 {
     public async Task Handle(SeedInstitutionData task)
@@ -97,7 +99,7 @@ public class SeedInstitutionDataHandler(
             (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Miguel Gomes da Silva", courseOfferingAds.Id))).GetSuccess().Id
         };
 
-        // TURMAS
+        // TURMAS 2024.1
         var classesIds = new List<Guid>();
         for (int i = 0; i < 6; i++)
         {
@@ -106,15 +108,78 @@ public class SeedInstitutionDataHandler(
             {
                 DisciplineId = disciplineId,
                 TeacherId = teachers.PickRandom(),
-                Period = institution.AcademicPeriods[1].Id,
+                Period = institution.AcademicPeriods[0].Id,
                 Vacancies = new List<int>{25, 30, 35}.PickRandom(),
                 Schedules = [new() { Day = (Day)i, Start = Hour.H19_00, End = Hour.H22_00 }]
             });
             classesIds.Add(response.GetSuccess().Id);
-
         }
 
         var today = DateTime.Now.ToDateOnly();
+        await createEnrollmentPeriodService.Create(id, new()
+        {
+            Id = institution.AcademicPeriods[0].Id,
+            StartAt = today.AddDays(-1),
+            EndAt = today.AddDays(1)
+        });
+
+        await releaseClassesForEnrollmentService.Release(id, new() { Classes = classesIds });
+
+        foreach (var item in adsers)
+        {
+            await createStudentEnrollmentService.Create(id, item, adsCC.Id, new() { Classes = classesIds });
+        }
+
+        await updateEnrollmentPeriodService.Update(id, institution.AcademicPeriods[0].Id, new() { StartAt = today.AddDays(-2), EndAt = today.AddDays(-1) });
+
+        await startClassesService.Start(id, new() { Classes = classesIds });
+
+        // Chamadas + Notas
+        var classes = await ctx.Classes.AsNoTracking()
+            .Include(c => c.Lessons)
+            .Include(c => c.Students)
+            .Include(c => c.ExamGrades)
+            .Where(c => c.InstitutionId == id && classesIds.Contains(c.Id))
+            .ToListAsync();
+
+        var random = new Random();
+        foreach (var item in classes)
+        {
+            foreach (var lesson in item.Lessons.Where(l => l.Date < today))
+            {
+                await createLessonAttendanceService.Create(item.TeacherId, lesson.Id, new(item.Students.Select(s => s.Id).PickRandom(random.Next(0, 7)).ToList()));
+            }
+
+            foreach (var student in item.Students)
+            {
+                foreach (var examGrade in item.ExamGrades.Where(g => g.ClassId == item.Id && g.StudentId == student.Id))
+                {
+                    await addExamGradeNoteService.Add(item.TeacherId, examGrade.Id, new(Convert.ToDecimal(Math.Round(random.NextDouble()*10, 2))));
+                }
+            }
+        }
+
+        await finalizeClassesService.Finalize(id, new() { Classes = classesIds });
+
+        // ----------------------------------------------------------------------------------------
+
+        // TURMAS 2024.2
+        classesIds = [];
+        for (int i = 6; i < 12; i++)
+        {
+            var disciplineId = adsDisciplines[i].Id;
+            var response = await createClassService.Create(id, new()
+            {
+                DisciplineId = disciplineId,
+                TeacherId = teachers.PickRandom(),
+                Period = institution.AcademicPeriods[1].Id,
+                Vacancies = new List<int>{25, 30, 35}.PickRandom(),
+                Schedules = [new() { Day = (Day)(i-6), Start = Hour.H19_00, End = Hour.H22_00 }]
+            });
+            classesIds.Add(response.GetSuccess().Id);
+        }
+
+        today = DateTime.Now.ToDateOnly();
         await createEnrollmentPeriodService.Create(id, new()
         {
             Id = institution.AcademicPeriods[1].Id,
@@ -134,14 +199,14 @@ public class SeedInstitutionDataHandler(
         await startClassesService.Start(id, new() { Classes = classesIds });
 
         // Chamadas + Notas
-        var classes = await ctx.Classes.AsNoTracking()
+        classes = await ctx.Classes.AsNoTracking()
             .Include(c => c.Lessons)
             .Include(c => c.Students)
             .Include(c => c.ExamGrades)
             .Where(c => c.InstitutionId == id && classesIds.Contains(c.Id))
             .ToListAsync();
 
-        var random = new Random();
+        random = new Random();
         foreach (var item in classes)
         {
             foreach (var lesson in item.Lessons.Where(l => l.Date < today))
@@ -165,7 +230,7 @@ public class SeedInstitutionDataHandler(
         institution.AcademicPeriods =
         [
             new($"{year}.1", institution.Id, new DateOnly(year, 02, 01), new DateOnly(year, 06, 01)),
-            new($"{year}.2", institution.Id, new DateOnly(year, 07, 01), new DateOnly(year, 12, 01)),
+            new($"{year}.2", institution.Id, new DateOnly(year, 07, 03), new DateOnly(year, 12, 05)),
         ];
     }
 

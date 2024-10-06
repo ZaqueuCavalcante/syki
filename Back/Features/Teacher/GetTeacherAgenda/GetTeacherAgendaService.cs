@@ -7,7 +7,7 @@ public class GetTeacherAgendaService(SykiDbContext ctx) : ITeacherService
         var classes = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)
             .Include(t => t.Schedules)
-            .Where(t => t.InstitutionId == institution && t.TeacherId == userId)
+            .Where(t => t.InstitutionId == institution && t.TeacherId == userId && t.Status == ClassStatus.Started)
             .ToListAsync();
 
         var response = classes.ConvertAll(t =>

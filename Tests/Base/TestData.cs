@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Syki.Back.Features.Academic.CreateClass;
+using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Tests.Base;
@@ -491,5 +492,19 @@ public static class TestData
         {
             yield return [note];
         }
+    }
+
+    public static Class GetClass(string start, string end, List<Schedule> schedules)
+    {
+        var institutionId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
+        var teacherId = Guid.NewGuid();
+        const string period = "2024.2";
+        const int vacancies = 40;
+
+        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).GetSuccess();
+        @class.Period = AcademicPeriod.New(period, institutionId, start.ToDateOnly(), end.ToDateOnly());
+
+        return @class;
     }
 }

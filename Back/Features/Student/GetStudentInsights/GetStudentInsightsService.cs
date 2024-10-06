@@ -25,7 +25,7 @@ public class GetStudentInsightsService(SykiDbContext ctx, GetStudentFrequencySer
             Status = student.Status,
             TotalDisciplines = totalDisciplines,
             FinishedDisciplines = finishedDisciplines,
-            Frequency = frequency,
+            Frequency = frequency.Frequency,
             Average = averageNote,
         };
     }

@@ -1,6 +1,3 @@
-using Syki.Back.Features.Academic.CreateClass;
-using Syki.Back.Features.Academic.CreateAcademicPeriod;
-
 namespace Syki.Tests.Features.Academic.CreateClass;
 
 public class CreateLessonsUnitTests
@@ -9,7 +6,7 @@ public class CreateLessonsUnitTests
     public void Should_create_lessons_for_one_day_one_schedule_19_00_to_20_00()
     {
         // Arrange
-        var @class = GetClass("05/08/2024", "23/08/2024", [new(Day.Monday, Hour.H19_00, Hour.H20_00)]);
+        var @class = TestData.GetClass("05/08/2024", "23/08/2024", [new(Day.Monday, Hour.H19_00, Hour.H20_00)]);
 
         // Act
         @class.CreateLessons();
@@ -26,7 +23,7 @@ public class CreateLessonsUnitTests
     public void Should_create_lessons_for_one_day_one_schedule_09_30_to_12_45()
     {
         // Arrange
-        var @class = GetClass("05/08/2024", "23/08/2024", [new(Day.Tuesday, Hour.H09_30, Hour.H12_45)]);
+        var @class = TestData.GetClass("05/08/2024", "23/08/2024", [new(Day.Tuesday, Hour.H09_30, Hour.H12_45)]);
 
         // Act
         @class.CreateLessons();
@@ -43,7 +40,7 @@ public class CreateLessonsUnitTests
     public void Should_create_lessons_for_one_day_one_schedule_20_15_to_22_30()
     {
         // Arrange
-        var @class = GetClass("05/08/2024", "23/08/2024", [new(Day.Wednesday, Hour.H20_15, Hour.H22_30)]);
+        var @class = TestData.GetClass("05/08/2024", "23/08/2024", [new(Day.Wednesday, Hour.H20_15, Hour.H22_30)]);
 
         // Act
         @class.CreateLessons();
@@ -60,7 +57,7 @@ public class CreateLessonsUnitTests
     public void Should_create_lessons_for_one_day_two_schedules()
     {
         // Arrange
-        var @class = GetClass(
+        var @class = TestData.GetClass(
             "27/08/2024", "13/09/2024",
             [new(Day.Thursday, Hour.H15_15, Hour.H18_45),
             new(Day.Thursday, Hour.H09_00, Hour.H10_00)]);
@@ -83,7 +80,7 @@ public class CreateLessonsUnitTests
     public void Should_create_lessons_for_one_day_three_schedules()
     {
         // Arrange
-        var @class = GetClass(
+        var @class = TestData.GetClass(
             "27/08/2024", "13/09/2024",
             [new(Day.Thursday, Hour.H08_30, Hour.H12_00),
             new(Day.Thursday, Hour.H13_15, Hour.H18_30),
@@ -110,7 +107,7 @@ public class CreateLessonsUnitTests
     public void Should_create_lessons_for_two_days_one_schedule_per_day()
     {
         // Arrange
-        var @class = GetClass(
+        var @class = TestData.GetClass(
             "26/08/2024", "13/09/2024",
             [new(Day.Thursday, Hour.H09_00, Hour.H10_00),
             new(Day.Monday, Hour.H15_15, Hour.H18_45)]);
@@ -133,7 +130,7 @@ public class CreateLessonsUnitTests
     public void Should_create_lessons_for_two_days_one_schedule_on_first_day_and_two_schedules_on_second_day()
     {
         // Arrange
-        var @class = GetClass(
+        var @class = TestData.GetClass(
             "26/08/2024", "13/09/2024",
             [new(Day.Thursday, Hour.H20_00, Hour.H22_00),
             new(Day.Monday, Hour.H15_15, Hour.H18_45),
@@ -154,19 +151,5 @@ public class CreateLessonsUnitTests
         @class.Lessons[6].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 09, 09), StartAt = Hour.H15_15, EndAt = Hour.H18_45 });
         @class.Lessons[7].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 09, 12), StartAt = Hour.H09_00, EndAt = Hour.H10_00 });
         @class.Lessons[8].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 09, 12), StartAt = Hour.H20_00, EndAt = Hour.H22_00 });
-    }
-
-    private Class GetClass(string start, string end, List<Schedule> schedules)
-    {
-        var institutionId = Guid.NewGuid();
-        var disciplineId = Guid.NewGuid();
-        var teacherId = Guid.NewGuid();
-        const string period = "2024.2";
-        const int vacancies = 40;
-
-        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).GetSuccess();
-        @class.Period = AcademicPeriod.New(period, institutionId, start.ToDateOnly(), end.ToDateOnly());
-
-        return @class;
     }
 }

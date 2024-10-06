@@ -29,6 +29,11 @@ public class Lesson
         Status = LessonStatus.Pending;
     }
 
+    public void Finish()
+    {
+        Status = LessonStatus.Finalized;
+    }
+
     private string GetSchedule()
     {
         return $"{Date.DayOfWeek.ToString().ToEnum<Day>().GetDescription()} {StartAt.GetDescription()}-{EndAt.GetDescription()}";

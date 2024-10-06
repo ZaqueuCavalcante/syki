@@ -60,3 +60,13 @@ public class EnrollmentPeriodMustBeFinalized : SykiError
     public override string Code { get; set; } = nameof(EnrollmentPeriodMustBeFinalized);
     public override string Message { get; set; } = "O período de matrícula precisa estar finalizado.";
 }
+public class AllClassLessonsMustHaveFinalizedStatus : SykiError
+{
+    public override string Code { get; set; } = nameof(AllClassLessonsMustHaveFinalizedStatus);
+    public override string Message { get; set; } = "Todas as aulas da turma precisam estar concluídas.";
+}
+public class ClassMustHaveStartedStatus : SykiError
+{
+    public override string Code { get; set; } = nameof(ClassMustHaveStartedStatus);
+    public override string Message { get; set; } = "A turma precisam ter o status de Iniciada para ser finalizada.";
+}

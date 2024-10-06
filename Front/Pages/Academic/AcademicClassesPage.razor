@@ -36,6 +36,19 @@
                         Iniciar
                     </MudButton>
                 </MudItem>
+                <MudItem>
+                    <MudButton
+                        IconSize="Size.Medium"
+                        StartIcon="@Icons.Material.Filled.FactCheck"
+                        Variant="Variant.Filled"
+                        Size="Size.Medium"
+                        Color="Color.Warning"
+                        Disabled="@(!_showFinalizeButton)"
+                        OnClick="@OpenFinalizeDialog"
+                    >
+                        Finalizar
+                    </MudButton>
+                </MudItem>
             </MudGrid>
         </MudCardContent>
     </MudCard>
@@ -103,6 +116,7 @@
     private string _searchString;
     private bool _showReleaseButton;
     private bool _showStartButton;
+    private bool _showFinalizeButton;
     private List<ClassOut> _classes = [];
     private Breakpoint _breakpoint;
 
@@ -113,6 +127,7 @@
         _classes = await GetAcademicClassesClient.Get();
         _showReleaseButton = _classes.Any(c => c.Status == ClassStatus.OnPreEnrollment);
         _showStartButton = _classes.Any(c => c.Status == ClassStatus.AwaitingStart);
+        _showFinalizeButton = _classes.Any(c => c.Status == ClassStatus.Started && c.Lessons.All(l => l.Status == LessonStatus.Finalized));
         _loading = false;
     }
 
@@ -174,6 +189,23 @@
         await OnInitializedAsync();
     }
 
+    private async Task OpenFinalizeDialog()
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            FullWidth = true,
+            MaxWidth = MaxWidth.Medium,
+            FullScreen = breakpoint == Breakpoint.Xs,
+        };
+        var dialog = await DialogService.ShowAsync<FinalizeClassesDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+    
     private string GetNotFoundMessage()
     {
         return (_searchString.IsEmpty()) ? "Não existem turmas cadastradas ainda." : "Nenhuma turma encontrada.";

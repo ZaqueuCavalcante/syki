@@ -6,7 +6,7 @@
         "mutation-level": "Complete",
         "reporters": [ "html" ],
         "ignore-methods": [
-            "SwaggerExample.Create"
+            "*GetExamples*"
         ]
     }
 }

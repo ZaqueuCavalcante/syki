@@ -24,6 +24,6 @@ public class LoginE2ETests : E2ETestBase
 
         await ClickOn(Button("Login"));
 
-        await AssertVisibleLink("Insights");
+        await AssertVisibleText("Insights");
     }
 }

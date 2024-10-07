@@ -23,6 +23,11 @@ dotnet test --collect:"XPlat Code Coverage"
 
 reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\*\coverage.cobertura.xml" -targetdir:"./Tests/Reports" -reporttypes:Html
 
+
+
+
+
+
 # Mutation
 
 cd tests

@@ -35,6 +35,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     public DbSet<ExamGrade> ExamGrades { get; set; }
     public DbSet<Discipline> Disciplines { get; set; }
     public DbSet<Institution> Institutions { get; set; }
+    public DbSet<InstitutionConfigs> Configs { get; set; }
     public DbSet<FeatureFlags> FeatureFlags { get; set; }
     public DbSet<UserRegister> UserRegisters { get; set; }
     public DbSet<Notification> Notifications { get; set; }

@@ -17,11 +17,16 @@
                 }
                 else
                 {
-                    <MudProgressLinear Color="@GetAverageNoteColor()" Max="10" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.AverageNote)" Style="height: 24px">
-                        <MudText Typo="Typo.body1">
-                            <b>@_student.AverageNote.Format()</b>
-                        </MudText>
-                    </MudProgressLinear>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                        <MudProgressLinear Color="@GetAverageNoteColor(_student.AverageNote)" Max="10" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.AverageNote)" Style="height: 24px">
+                            <MudText Typo="Typo.body1">
+                                <b>@_student.AverageNote.Format()</b>
+                            </MudText>
+                        </MudProgressLinear>
+                        <MudTooltip Text="A nota mínima para ser aprovado é 7.00" Arrow="true" Placement="Placement.Bottom">
+                            <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+                        </MudTooltip>
+                    </MudStack>
                 }
             </MudCardContent>
         </MudCard>
@@ -59,7 +64,13 @@
                     <MudTd DataLabel="N1">@context.GetNote(ExamType.N1)</MudTd>
                     <MudTd DataLabel="N2">@context.GetNote(ExamType.N2)</MudTd>
                     <MudTd DataLabel="N3">@context.GetNote(ExamType.N3)</MudTd>
-                    <MudTd DataLabel="Média">@context.AverageNote.Format()</MudTd>
+                    <MudTd DataLabel="Média">
+                        <MudProgressLinear Color="@GetAverageNoteColor(context.AverageNote)" Max="10" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.AverageNote)" Style="height: 24px">
+                            <MudText Typo="Typo.body1">
+                                <b>@context.AverageNote.Format()</b>
+                            </MudText>
+                        </MudProgressLinear>
+                    </MudTd>
                 </RowTemplate>
                 <LoadingContent>
                     @if (_breakpoint == Breakpoint.Xs)
@@ -95,8 +106,8 @@
         _loading = false;
     }
 
-    private Color GetAverageNoteColor()
+    private Color GetAverageNoteColor(decimal averageNote)
     {
-        return _student.AverageNote >= 7 ? Color.Tertiary : Color.Error;
+        return averageNote >= 7 ? Color.Tertiary : Color.Error;
     }
 }

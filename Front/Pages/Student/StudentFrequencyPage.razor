@@ -16,17 +16,22 @@
                 }
                 else
                 {
-                    <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.Frequency)" Style="height: 24px">
-                        <MudText Typo="Typo.body1">
-                            <b>@GetFrequency()</b>
-                        </MudText>
-                        <MudText Typo="Typo.h4" Class="mx-2">
-                            <b> · </b>
-                        </MudText>
-                        <MudText Typo="Typo.body1">
-                            <b>@_student.Frequency.Format()%</b>
-                        </MudText>
-                    </MudProgressLinear>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                        <MudProgressLinear Color="@GetFrequencyColor(_student.Frequency)" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.Frequency)" Style="height: 24px">
+                            <MudText Typo="Typo.body1">
+                                <b>@GetFrequency()</b>
+                            </MudText>
+                            <MudText Typo="Typo.h4" Class="mx-2">
+                                <b> · </b>
+                            </MudText>
+                            <MudText Typo="Typo.body1">
+                                <b>@_student.Frequency.Format()%</b>
+                            </MudText>
+                        </MudProgressLinear>
+                        <MudTooltip Text="A frequência mínima para ser aprovado é 70.00%" Arrow="true" Placement="Placement.Bottom">
+                            <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+                        </MudTooltip>
+                    </MudStack>
                 }
             </MudCardContent>
         </MudCard>
@@ -60,7 +65,7 @@
                     <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
                     <MudTd DataLabel="Aulas">@context.GetFormated()</MudTd>
                     <MudTd DataLabel="Frequência">
-                        <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.GetPercentage())" Style="height: 24px">
+                        <MudProgressLinear Color="@GetFrequencyColor(context.GetPercentage())" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.GetPercentage())" Style="height: 24px">
                             <MudText Typo="Typo.body1">
                                 <b>@context.GetPercentage().Format()%</b>
                             </MudText>
@@ -105,5 +110,10 @@
     private string GetFrequency()
     {
         return $"{_student.Presences} / {_student.Attendances}";
+    }
+
+    private Color GetFrequencyColor(decimal frequency)
+    {
+        return frequency >= 70 ? Color.Tertiary : Color.Error;
     }
 }

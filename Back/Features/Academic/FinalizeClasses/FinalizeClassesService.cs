@@ -6,6 +6,8 @@ public class FinalizeClassesService(SykiDbContext ctx) : IAcademicService
     {
         var classes = await ctx.Classes
             .Include(x => x.Lessons)
+                .ThenInclude(x => x.Attendances)
+            .Include(x => x.Students)
             .Where(c => c.InstitutionId == institutionId && data.Classes.Contains(c.Id))
             .ToListAsync();
 
@@ -18,6 +20,26 @@ public class FinalizeClassesService(SykiDbContext ctx) : IAcademicService
         foreach (var result in results)
         {
             if (result.IsError()) return result.GetError();
+        }
+
+        var ids = classes.ConvertAll(x => x.Id);
+        var classesStudents = await ctx.ClassesStudents.Where(x => ids.Contains(x.ClassId)).ToListAsync();
+
+        var configs = await ctx.Configs.FirstAsync(x => x.InstitutionId == institutionId);
+
+        foreach (var @class in classes)
+        {
+            var lessons = @class.Lessons.Count(x => x.Attendances.Count > 0);
+            foreach (var student in @class.Students)
+            {
+                var studentExamGrades = @class.ExamGrades.Where(g => g.StudentId == student.Id).ToList();
+                var averageNote = studentExamGrades.GetAverageNote();
+                var presences = @class.Lessons.Count(x => x.Attendances.Exists(a => a.StudentId == student.Id && a.Present));
+                var frequency = lessons == 0 ? 0.00M : 100M * (1M * presences / (1M * lessons));
+                var link = classesStudents.First(x => x.ClassId == @class.Id && x.SykiStudentId == student.Id);
+                link.StudentDisciplineStatus = averageNote >= configs.NoteLimit && frequency >= configs.FrequencyLimit
+                    ? StudentDisciplineStatus.Aprovado : StudentDisciplineStatus.Reprovado;
+            }
         }
 
         await ctx.SaveChangesAsync();

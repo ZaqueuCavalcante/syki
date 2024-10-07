@@ -116,11 +116,13 @@ public class SeedInstitutionDataHandler(
         }
 
         var today = DateTime.Now.ToDateOnly();
+        var firstDay = new DateTime(today.Year, 1, 1).ToDateOnly();
+        var lastDay = new DateTime(today.Year, 12, 31).ToDateOnly();
         await createEnrollmentPeriodService.Create(id, new()
         {
             Id = institution.AcademicPeriods[0].Id,
-            StartAt = today.AddDays(-1),
-            EndAt = today.AddDays(1)
+            StartAt = firstDay,
+            EndAt = lastDay,
         });
 
         await releaseClassesForEnrollmentService.Release(id, new() { Classes = classesIds });
@@ -130,7 +132,7 @@ public class SeedInstitutionDataHandler(
             await createStudentEnrollmentService.Create(id, item, adsCC.Id, new() { Classes = classesIds });
         }
 
-        await updateEnrollmentPeriodService.Update(id, institution.AcademicPeriods[0].Id, new() { StartAt = today.AddDays(-2), EndAt = today.AddDays(-1) });
+        await updateEnrollmentPeriodService.Update(id, institution.AcademicPeriods[0].Id, new() { StartAt = new DateTime(today.Year, 3, 1).ToDateOnly(), EndAt = new DateTime(today.Year, 3, 15).ToDateOnly() });
 
         await startClassesService.Start(id, new() { Classes = classesIds });
 
@@ -147,14 +149,15 @@ public class SeedInstitutionDataHandler(
         {
             foreach (var lesson in item.Lessons.Where(l => l.Date < today))
             {
-                await createLessonAttendanceService.Create(item.TeacherId, lesson.Id, new(item.Students.Select(s => s.Id).PickRandom(random.Next(0, 7)).ToList()));
+                await createLessonAttendanceService.Create(item.TeacherId, lesson.Id, new(item.Students.Select(s => s.Id).PickRandom(random.Next(3, 7)).ToList()));
             }
 
             foreach (var student in item.Students)
             {
                 foreach (var examGrade in item.ExamGrades.Where(g => g.ClassId == item.Id && g.StudentId == student.Id))
                 {
-                    await addExamGradeNoteService.Add(item.TeacherId, examGrade.Id, new(Convert.ToDecimal(Math.Round(random.NextDouble()*10, 2))));
+                    var note = Convert.ToDecimal(Math.Round(random.NextDouble()*10, 2));
+                    await addExamGradeNoteService.Add(item.TeacherId, examGrade.Id, new(note < 4 ? note+5 : note));
                 }
             }
         }
@@ -183,8 +186,8 @@ public class SeedInstitutionDataHandler(
         await createEnrollmentPeriodService.Create(id, new()
         {
             Id = institution.AcademicPeriods[1].Id,
-            StartAt = today.AddDays(-1),
-            EndAt = today.AddDays(1)
+            StartAt = firstDay,
+            EndAt = lastDay,
         });
 
         await releaseClassesForEnrollmentService.Release(id, new() { Classes = classesIds });
@@ -194,7 +197,7 @@ public class SeedInstitutionDataHandler(
             await createStudentEnrollmentService.Create(id, item, adsCC.Id, new() { Classes = classesIds });
         }
 
-        await updateEnrollmentPeriodService.Update(id, institution.AcademicPeriods[1].Id, new() { StartAt = today.AddDays(-2), EndAt = today.AddDays(-1) });
+        await updateEnrollmentPeriodService.Update(id, institution.AcademicPeriods[1].Id, new() { StartAt = today.AddDays(-20), EndAt = today.AddDays(-10) });
 
         await startClassesService.Start(id, new() { Classes = classesIds });
 
@@ -211,13 +214,14 @@ public class SeedInstitutionDataHandler(
         {
             foreach (var lesson in item.Lessons.Where(l => l.Date < today))
             {
-                await createLessonAttendanceService.Create(item.TeacherId, lesson.Id, new(item.Students.Select(s => s.Id).PickRandom(random.Next(0, 7)).ToList()));
+                await createLessonAttendanceService.Create(item.TeacherId, lesson.Id, new(item.Students.Select(s => s.Id).PickRandom(random.Next(3, 7)).ToList()));
             }
 
             foreach (var student in item.Students)
             {
                 var examGrade = item.ExamGrades.First(g => g.ClassId == item.Id && g.StudentId == student.Id && g.ExamType == ExamType.N1);
-                await addExamGradeNoteService.Add(item.TeacherId, examGrade.Id, new(Convert.ToDecimal(Math.Round(random.NextDouble()*10, 2))));
+                var note = Convert.ToDecimal(Math.Round(random.NextDouble()*10, 2));
+                await addExamGradeNoteService.Add(item.TeacherId, examGrade.Id, new(note < 4 ? note+5 : note));
             }
         }
 

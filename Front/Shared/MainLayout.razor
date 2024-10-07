@@ -13,8 +13,8 @@
     <Authorized>
         <MudLayout>
             <MudAppBar Elevation="0" Dense="true" ToolBarClass="pl-1 pr-1">
-                <MudIconButton OnClick="@ToggleLeftOpen" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" />
-                <MudIconButton Href="/" Icon="@Icons.Material.Filled.Home" Color="Color.Inherit" />
+                <MudIconButton Class="mr-3" OnClick="@ToggleLeftOpen" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" />
+                <HomeButton />
                 <MudSpacer />
                 <AuthorizeView Roles="Teacher, Student" Context="authContext">
                     <NotificationsIconButton />

@@ -5,7 +5,11 @@ public class GetStudentAverageNoteService(SykiDbContext ctx) : IStudentService
     public async Task<decimal> Get(Guid userId)
     {
         var classesStudents = await ctx.ClassesStudents.AsNoTracking()
-            .Where(x => x.SykiStudentId == userId).ToListAsync();
+            .Where(x =>
+                x.SykiStudentId == userId &&
+                x.StudentDisciplineStatus != StudentDisciplineStatus.Pendente &&
+                x.StudentDisciplineStatus != StudentDisciplineStatus.Matriculado
+            ).ToListAsync();
 
         var classes = classesStudents.ConvertAll(x => x.ClassId);
         var examGrades = await ctx.ExamGrades.AsNoTracking()

@@ -7,7 +7,10 @@
 
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.Class" Title="Frequência" />
-    <MudContainer Class="px-0 pt-4">
+    <MudAlert Class="my-4 pl-6" NoIcon="true" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
+        <MudText>A frequência mínima para ser aprovado é <b>70.00%</b></MudText>
+    </MudAlert>
+    <MudContainer Class="px-0">
         <MudCard>
             <MudCardContent Class="px-6">
                 @if (_loading)
@@ -28,7 +31,7 @@
                                 <b>@_student.Frequency.Format()%</b>
                             </MudText>
                         </MudProgressLinear>
-                        <MudTooltip Text="A frequência mínima para ser aprovado é 70.00%" Arrow="true" Placement="Placement.Bottom">
+                        <MudTooltip Text="Total de presenças durante todo o curso" Arrow="true" Placement="Placement.Bottom">
                             <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
                         </MudTooltip>
                     </MudStack>

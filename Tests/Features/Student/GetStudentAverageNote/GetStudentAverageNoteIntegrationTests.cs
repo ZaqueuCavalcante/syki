@@ -41,6 +41,6 @@ public partial class IntegrationTests
         var response = await studentClient.GetStudentAverageNote();
 
         // Assert
-        response.AverageNote.Should().Be(5.93M);
+        response.AverageNote.Should().Be(0);
     }
 }

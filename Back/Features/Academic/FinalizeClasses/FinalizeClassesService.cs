@@ -37,8 +37,16 @@ public class FinalizeClassesService(SykiDbContext ctx) : IAcademicService
                 var presences = @class.Lessons.Count(x => x.Attendances.Exists(a => a.StudentId == student.Id && a.Present));
                 var frequency = lessons == 0 ? 0.00M : 100M * (1M * presences / (1M * lessons));
                 var link = classesStudents.First(x => x.ClassId == @class.Id && x.SykiStudentId == student.Id);
-                link.StudentDisciplineStatus = averageNote >= configs.NoteLimit && frequency >= configs.FrequencyLimit
-                    ? StudentDisciplineStatus.Aprovado : StudentDisciplineStatus.Reprovado;
+
+                link.StudentDisciplineStatus = StudentDisciplineStatus.Aprovado;
+                if (averageNote < configs.NoteLimit)
+                {
+                    link.StudentDisciplineStatus = StudentDisciplineStatus.ReprovadoPorNota;
+                }
+                else if (frequency < configs.FrequencyLimit)
+                {
+                    link.StudentDisciplineStatus = StudentDisciplineStatus.ReprovadoPorFalta;
+                }
             }
         }
 

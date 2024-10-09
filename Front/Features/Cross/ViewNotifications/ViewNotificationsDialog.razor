@@ -9,6 +9,9 @@
             Class="mb-4"
             Hover="true"
             Loading="@_loading"
+            T="@UserNotificationOut"
+            RowClass="cursor-pointer"
+            RowClick="@HandleRowClick"
             Items="@_notifications.OrderByDescending(d => d.CreatedAt)"
         >
             <Columns>
@@ -23,11 +26,13 @@
     </DialogContent>
 </MudDialog>
 
+@inject NavigationManager Nav
 @inject GetUserNotificationsClient GetUserNotificationsClient
 
 @code
 {
     private bool _loading;
+    private bool _visible;
     private List<UserNotificationOut> _notifications = [];
 
     protected override async Task OnInitializedAsync()
@@ -35,6 +40,15 @@
         _loading = true;
         _notifications = await GetUserNotificationsClient.Get();
         _loading = false;
+    }
+
+    private async Task HandleRowClick(DataGridRowClickEventArgs<UserNotificationOut> row)
+    {
+        await Task.FromResult(0);
+        if (row.Item.Title == "Nota adicionada")
+        {
+            Nav.NavigateTo("/student/exam-grades");
+        }
     }
 
     private string GetNotFoundMessage()

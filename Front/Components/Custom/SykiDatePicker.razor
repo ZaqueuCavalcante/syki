@@ -3,7 +3,7 @@
 <MudDatePicker
     Margin="Margin.Dense"
     Variant="Variant.Outlined"
-    Editable="true"
+    Editable="@Editable"
     Required="true"
     RequiredError="Informe!"
     Label="@Label"
@@ -25,4 +25,7 @@
 
     [Parameter]
     public string Label { get; set; }
+
+    [Parameter]
+    public bool Editable { get; set; }
 }

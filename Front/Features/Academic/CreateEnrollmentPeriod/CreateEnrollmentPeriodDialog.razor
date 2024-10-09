@@ -21,18 +21,19 @@
                         Label="Período Acadêmico"
                         Required="true"
                         RequiredError="Informe!"
-                        AdornmentColor="Color.Primary">
+                        AdornmentColor="Color.Primary"
+                    >
                         @foreach (string? item in _periods.ConvertAll(p => p.Id))
                         {
-                        <MudSelectItem Value="@item">@item</MudSelectItem>
+                            <MudSelectItem Value="@item">@item</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12">
-                    <SykiDatePicker Label="Início" @bind-Date="@_start"/>
+                    <SykiDatePicker Label="Início" @bind-Date="@_start" Editable="false" />
                 </MudItem>
                 <MudItem xs="12">
-                    <SykiDatePicker Label="Fim" @bind-Date="@_end"/>
+                    <SykiDatePicker Label="Fim" @bind-Date="@_end" Editable="false" />
                 </MudItem>
             </MudGrid>
         </MudForm>

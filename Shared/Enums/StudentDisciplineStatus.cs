@@ -16,6 +16,9 @@ public enum StudentDisciplineStatus
     [Description("Dispensado")]
     Dispensado,
 
-    [Description("Reprovado")]
-    Reprovado,
+    [Description("Reprovado por nota")]
+    ReprovadoPorNota,
+
+    [Description("Reprovado por falta")]
+    ReprovadoPorFalta,
 }

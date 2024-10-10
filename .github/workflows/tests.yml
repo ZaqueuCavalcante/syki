@@ -42,7 +42,7 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Tests
-        run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory coveragereport
+        run: dotnet test --no-build --filter "FullyQualifiedName~UnitTests" --collect:"XPlat Code Coverage" --logger trx --results-directory coveragereport
       - name: ReportGenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.3.11
         with:

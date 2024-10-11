@@ -33,6 +33,6 @@ jobs:
       - name: Restore
         run: dotnet restore
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build --configuration Release --no-restore
       - name: Tests
-        run: dotnet test --no-build --filter "FullyQualifiedName~UnitTests" --collect:"XPlat Code Coverage" --logger trx --results-directory coveragereport
+        run: dotnet test --configuration Release --no-build --verbosity normal

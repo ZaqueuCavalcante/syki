@@ -1,4 +1,4 @@
-name: PR - Status Checks
+name: PR Tests
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ jobs:
   build:
     permissions: write-all
     runs-on: ubuntu-latest
-    name: PR - Status Check
+    name: PR Tests
 
     services:
       postgres:
@@ -34,7 +34,7 @@ jobs:
       with:
         dotnet-version: 8.0.401
 
-    - name: Restore Dependencies
+    - name: Restore
       run: dotnet restore
 
     - name: Build

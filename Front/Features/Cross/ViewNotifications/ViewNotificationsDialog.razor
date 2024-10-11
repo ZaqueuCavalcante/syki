@@ -17,7 +17,7 @@
             <Columns>
                 <PropertyColumn Property="x => x.Title" Title="Título" />
                 <PropertyColumn Property="x => x.Description" Title="Descrição" />
-                <PropertyColumn Property="x => x.CreatedAt" Title="Criada em" />
+                <PropertyColumn Property="x => x.CreatedAt.ToLocalTime()" Title="Criada em" />
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())

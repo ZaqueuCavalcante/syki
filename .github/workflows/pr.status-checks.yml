@@ -25,7 +25,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test --filter "FullyQualifiedName~UnitTests" --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger trx --results-directory ./coverage
+      run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --logger trx --results-directory ./coverage
 
     - name: Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0

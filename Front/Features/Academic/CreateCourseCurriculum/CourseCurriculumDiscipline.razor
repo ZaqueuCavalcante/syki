@@ -103,7 +103,7 @@
         return filtered.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    private async Task HandleDisciplineChanged(CourseCurriculumDisciplineFillable newValue)
+    private void HandleDisciplineChanged(CourseCurriculumDisciplineFillable newValue)
     {
         Options.First(d => d.Id == newValue.Id).IsSelected = true;
 
@@ -116,17 +116,17 @@
         Data.Name = newValue.Name;
     }
 
-    void HandlePeriodoChanged(byte? newValue)
+    private void HandlePeriodoChanged(byte? newValue)
     {
         Data.Period = newValue;
     }
 
-    void HandleCreditosChanged(byte? newValue)
+    private void HandleCreditosChanged(byte? newValue)
     {
         Data.Credits = newValue;
     }
 
-    void HandleCargaHorariaChanged(ushort? newValue)
+    private void HandleCargaHorariaChanged(ushort? newValue)
     {
         Data.Workload = newValue;
     }

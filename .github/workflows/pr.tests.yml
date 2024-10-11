@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     name: PR Tests
 
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     services:
       postgres:
         image: postgres
@@ -80,21 +84,8 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v3.0.1
       with:
-        path: "./coverage"
+        path: .
 
-  deploy-coverage:
-    runs-on: ubuntu-latest
-    needs: tests
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v3
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v3

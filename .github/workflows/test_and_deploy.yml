@@ -1,0 +1,79 @@
+name: Allure Reports
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.401
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Test
+        run: dotnet test --filter "FullyQualifiedName~UnitTests"
+
+      - name: Upload Allure Results
+        uses: actions/upload-artifact@v4.0.0
+        with:
+          name: allure-results
+          path: .\bin\Debug\net8.0\allure-results
+          if-no-files-found: error
+          retention-days: 20
+
+      - name: Clean up gh-pages branch (optional)
+        run: |
+          git checkout -f gh-pages
+          git rm -rf .
+
+  report:
+      needs: tests
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Download Build Artifact
+          uses: actions/download-artifact@v4.1.0
+          with:
+            name: allure-results
+            path: ./allure-results
+
+        - name: Get Allure history (optional)
+          uses: actions/checkout@v4.1.1
+          if: always()
+          continue-on-error: true
+          with:
+            ref: gh-pages
+            path: gh-pages
+
+        - name: Generate report
+          uses: simple-elf/allure-report-action@v1.7
+          if: always()
+          id: allure-report
+          with:
+            allure_results: allure-results
+            gh_pages: allure-report
+            allure_history: allure-history
+            keep_reports: 20
+
+        - name: Deploy report to Github Pages
+          if: always()
+          uses: peaceiris/actions-gh-pages@v3.9.3
+          with:
+            PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            PUBLISH_BRANCH: gh-pages
+            PUBLISH_DIR: allure-report

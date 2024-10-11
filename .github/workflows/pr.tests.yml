@@ -80,7 +80,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: "./coverage"
+        path: coveragereport
 
   deploy-coverage:
     runs-on: ubuntu-latest

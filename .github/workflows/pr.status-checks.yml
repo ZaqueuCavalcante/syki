@@ -1,4 +1,4 @@
-name: Pull Request - Status Checks
+name: PR - Status Checks
 
 on:
   pull_request:

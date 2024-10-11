@@ -10,10 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     name: PR Tests
 
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     services:
       postgres:
         image: postgres
@@ -75,17 +71,31 @@ jobs:
     - name: Upload coverage report artifact
       uses: actions/upload-artifact@v4
       with:
-        name: CoverageReport  
+        name: CoverageReport
         path: coveragereport
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
 
     - name: Upload Artifact
-      uses: actions/upload-pages-artifact@v3.0.1
+      uses: actions/upload-pages-artifact@v3
       with:
-        path: .
+        path: coveragereport
 
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v3
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    needs: tests
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

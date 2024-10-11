@@ -42,7 +42,7 @@
                                     <MudTd DataLabel="Nome">@context.Name</MudTd>
                                     <MudTd DataLabel="Créditos">@context.Credits</MudTd>
                                     <MudTd DataLabel="CH">@context.Workload</MudTd>
-                                    <MudTd DataLabel="Status">@context.StudentDisciplineStatus</MudTd>
+                                    <MudTd DataLabel="Status">@context.StudentDisciplineStatus.GetDescription()</MudTd>
                                 </RowTemplate>
                             </MudTable>
                         </ChildContent>

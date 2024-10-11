@@ -25,20 +25,13 @@ jobs:
           - 5432:5432
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.401
-      - name: Workload
-        run: dotnet workload restore
       - name: Restore
         run: dotnet restore
-      - name: Android
-        run: |
-          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
-          --sdk_root=$ANDROID_SDK_ROOT \
-          "platform-tools"
       - name: Build
         run: dotnet build --no-restore
       - name: Tests

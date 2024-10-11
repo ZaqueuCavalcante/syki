@@ -4,24 +4,7 @@
     <MudGrid Spacing="2">
         <MudItem xs="12" sm="12" md="6" lg="6">
             <MudStack Row="true" Spacing="2">
-                <MudItem xs="9">
-                    <MudAutocomplete
-                        MaxItems="50"
-                        T="CourseCurriculumDisciplineFillable"
-                        SearchFunc="@SearchDiscipline"
-                        Dense="true"
-                        Margin="Margin.Dense"
-                        Variant="Variant.Outlined"
-                        ShowProgressIndicator="true"
-                        Class="mb-2"
-                        Value="@Data"
-                        ValueChanged="(CourseCurriculumDisciplineFillable newValue) => HandleDisciplineChanged(newValue)"
-                        Label="Disciplina"
-                        Required="true"
-                        RequiredError="Informe!"
-                        AdornmentColor="Color.Primary"/>
-                </MudItem>
-                <MudItem xs="3">
+                <MudItem xs="4">
                     <MudSelect
                         Dense="true"
                         Margin="Margin.Dense"
@@ -39,10 +22,6 @@
                         }
                     </MudSelect>
                 </MudItem>
-            </MudStack>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="6" lg="6">
-            <MudStack Row="true" Spacing="2">
                 <MudItem xs="4">
                     <MudNumericField
                         MaxLength="2"
@@ -56,7 +35,7 @@
                         Required="true"
                         RequiredError="Informe!"/>
                 </MudItem>
-                <MudItem xs="6">
+                <MudItem xs="4">
                     <MudNumericField
                         MaxLength="3"
                         HideSpinButtons="true"
@@ -65,9 +44,32 @@
                         T="ushort?"
                         Value="@Data.Workload"
                         ValueChanged="x => HandleCargaHorariaChanged(x)"
-                        Label="Carga Horária"
+                        Label="Carga"
                         Required="true"
                         RequiredError="Informe!"/>
+                </MudItem>
+
+            </MudStack>
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="6" lg="6">
+            <MudStack Row="true" Spacing="2">
+                <MudItem xs="11">
+                    <MudAutocomplete
+                        MaxItems="50"
+                        T="CourseCurriculumDisciplineFillable"
+                        SearchFunc="@SearchDiscipline"
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        Class="mb-2"
+                        Value="@Data"
+                        ValueChanged="(CourseCurriculumDisciplineFillable newValue) => HandleDisciplineChanged(newValue)"
+                        Label="Disciplina"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary"
+                    />
                 </MudItem>
                 <MudItem>
                     <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" OnClick="@HandleDeleteClick"/>
@@ -101,7 +103,7 @@
         return filtered.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    void HandleDisciplineChanged(CourseCurriculumDisciplineFillable newValue)
+    private async Task HandleDisciplineChanged(CourseCurriculumDisciplineFillable newValue)
     {
         Options.First(d => d.Id == newValue.Id).IsSelected = true;
 

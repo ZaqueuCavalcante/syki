@@ -45,7 +45,8 @@ public class SeedInstitutionDataHandler(
         var adsDisciplines = GetAdsDisciplines(id);
         var direitoDisciplines = GetDireitoDisciplines(id);
 
-        institution.Disciplines = adsDisciplines;
+        institution.Disciplines = [];
+        institution.Disciplines.AddRange(adsDisciplines);
         institution.Disciplines.AddRange(direitoDisciplines);
 
         institution.Courses[1].Disciplines = adsDisciplines;

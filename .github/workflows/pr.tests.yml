@@ -48,9 +48,10 @@ jobs:
       with:
         filename: coverage/**/coverage.cobertura.xml
         badge: true
-        indicators: true
-        format: markdown
         output: both
+        format: markdown
+        indicators: true
+        thresholds: '55 55'
 
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2

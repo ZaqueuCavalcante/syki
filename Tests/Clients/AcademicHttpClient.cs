@@ -10,6 +10,7 @@ using Syki.Front.Features.Academic.CreateCourse;
 using Syki.Front.Features.Academic.CreateStudent;
 using Syki.Front.Features.Academic.CreateTeacher;
 using Syki.Front.Features.Academic.GetDisciplines;
+using Syki.Front.Features.Academic.FinalizeClasses;
 using Syki.Front.Features.Academic.CreateDiscipline;
 using Syki.Front.Features.Academic.GetNotifications;
 using Syki.Front.Features.Academic.GetAcademicClass;
@@ -283,8 +284,8 @@ public class AcademicHttpClient(HttpClient http)
 
     public async Task<OneOf<SuccessOut, ErrorOut>> FinalizeClasses(List<Guid> classes)
     {
-        var client = new StartClassesClient(Http);
-        return await client.Start(classes);
+        var client = new FinalizeClassesClient(Http);
+        return await client.Finalize(classes);
     }
 
     public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()

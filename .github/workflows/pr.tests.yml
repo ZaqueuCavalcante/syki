@@ -1,4 +1,4 @@
-name: Pull Request Tests
+name: PR Tests
 
 on:
   pull_request:
@@ -99,8 +99,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.4.3
-        with:
-          branch: gh-pages
-          folder: tests/test-pages-00

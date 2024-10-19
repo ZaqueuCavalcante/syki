@@ -8,6 +8,7 @@ public class FinalizeClassesService(SykiDbContext ctx) : IAcademicService
             .Include(x => x.Lessons)
                 .ThenInclude(x => x.Attendances)
             .Include(x => x.Students)
+            .Include(t => t.ExamGrades)
             .Where(c => c.InstitutionId == institutionId && data.Classes.Contains(c.Id))
             .ToListAsync();
 

@@ -51,6 +51,6 @@ O módulo acadêmico conta com:
 
 ## Overview
 
-Se cadastre em https://syki.zaqbit.com e teste o sistema em produção.
+Se cadastre em https://app.syki.com.br e teste o sistema em produção.
 
 <img src="./Docs/images/syki_overview.gif" style="border-radius: 6px">

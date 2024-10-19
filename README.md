@@ -14,6 +14,8 @@ Inicialmente, o sistema só possui o módulo Acadêmico.
 
 A ideia é adicionar mais módulos no futuro, como os de Biblioteca, Financeiro, Almoxarifado...
 
+Também pretendo criar integrações com outros sistemas, como o Moodle e o Google Classroom.
+
 O módulo acadêmico conta com:
 
 - Registro de usuários + login

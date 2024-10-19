@@ -34,7 +34,6 @@ O módulo acadêmico conta com:
 
 - Backend em C#/.NET
 - Frontend em C#/Blazor Webassembly
-- Testes automatizados com NUnit
 - Banco PostgreSQL
 - Docker para buildar back e front
 - Deploy no Railway

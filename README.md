@@ -16,7 +16,7 @@ A ideia é adicionar mais módulos no futuro, como os de Biblioteca, Financeiro,
 
 Também pretendo criar integrações com outros sistemas, como o Moodle e o Google Classroom.
 
-O módulo acadêmico conta com:
+O módulo Acadêmico conta com:
 
 - Registro de usuários + login
 - Criação de instituição + seed de dados

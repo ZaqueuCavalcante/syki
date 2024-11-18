@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_return_teacher_class()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
         var math = data.AdsDisciplines.DiscreteMath;
@@ -19,13 +19,13 @@ public partial class IntegrationTests
 
         await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);
 
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([ mathClass.Id ]);
 
         await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
         await academicClient.StartClasses([mathClass.Id]);
 
-        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
         // Act
         var @class = await teacherClient.GetTeacherClass(mathClass.Id);

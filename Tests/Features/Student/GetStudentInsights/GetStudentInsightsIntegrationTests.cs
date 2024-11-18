@@ -6,11 +6,11 @@ public partial class IntegrationTests
     public async Task Should_return_student_insights_just_after_student_creation()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
 
         // Act
         var insights = await studentClient.GetStudentInsights();
@@ -28,12 +28,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_insights_for_sequence_VVX()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, [data.Student.Id]);

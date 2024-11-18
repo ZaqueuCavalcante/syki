@@ -6,9 +6,9 @@ public partial class IntegrationTests
     public async Task Should_return_all_institutions()
     {
         // Arrange
-        await _back.LoggedAsAcademic();
+        await _api.LoggedAsAcademic();
 
-        var client = await _back.LoggedAsAdm();
+        var client = await _api.LoggedAsAdm();
 
         // Act
         var institutions = await client.GetInstitutions();

@@ -51,7 +51,7 @@ public static class StringExtensions
         return startUnderscores + Regex.Replace(input, @"([a-z0-9])([A-Z])", "$1_$2").ToLower();
     }
 
-    public static string ToMfaToken(this string key)
+    public static string GenerateTOTP(this string key)
     {
         var totp = new Totp(Base32Encoding.ToBytes(key));
         return totp.ComputeTotp();

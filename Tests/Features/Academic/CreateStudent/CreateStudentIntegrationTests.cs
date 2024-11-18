@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_create_student_with_course_offering()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         // Act
@@ -22,7 +22,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_student_without_course_offering()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateStudent(Guid.NewGuid());
@@ -36,7 +36,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_student_with_invalid_email(string email)
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         // Act
@@ -50,7 +50,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_student_with_duplicated_email()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         // Act
@@ -67,14 +67,14 @@ public partial class IntegrationTests
     public async Task Should_create_student_only_with_student_role()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         // Act
         StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id);
 
         // Assert
-        using var userManager = _back.GetUserManager();
+        using var userManager = _api.GetUserManager();
         var user = await userManager.FindByEmailAsync(student.Email);
         var isOnlyInStudentRole = await userManager.IsOnlyInRole(user!, UserRole.Student);
         isOnlyInStudentRole.Should().BeTrue();

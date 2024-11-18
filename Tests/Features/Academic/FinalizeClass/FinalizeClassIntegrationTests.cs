@@ -6,11 +6,11 @@ public partial class IntegrationTests
     public async Task Should_finalize_class()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
 
         foreach (var lesson in lessons)
@@ -29,7 +29,7 @@ public partial class IntegrationTests
     public async Task Should_not_finalize_invalid_classes_list()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
 
         // Act
         var response = await academicClient.FinalizeClasses([Guid.NewGuid()]);
@@ -42,7 +42,7 @@ public partial class IntegrationTests
     public async Task Should_not_finalize_on_pre_enrollment_class()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -60,7 +60,7 @@ public partial class IntegrationTests
     public async Task Should_not_finalize_on_enrollment_class()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -82,9 +82,9 @@ public partial class IntegrationTests
     public async Task Should_not_finalize_classes_with_pending_lessons()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
         // Act
         var response = await academicClient.FinalizeClasses([data.AdsClasses.HumanMachineInteractionDesign.Id]);

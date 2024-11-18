@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_create_class()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -30,7 +30,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_without_discipline()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateClass(Guid.NewGuid(), Guid.NewGuid(), "2024.1", 40, []);
@@ -43,7 +43,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_without_teacher()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
 
@@ -58,7 +58,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_without_period()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -74,7 +74,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_with_one_invalid_schedule()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -92,7 +92,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_with_two_invalid_schedules()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -115,7 +115,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_with_conflicting_schedules()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -137,7 +137,7 @@ public partial class IntegrationTests
     public async Task Should_create_class_lessons_for_one_day_one_schedule()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -163,7 +163,7 @@ public partial class IntegrationTests
     public async Task Should_create_class_lessons_for_one_day_two_schedules()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();

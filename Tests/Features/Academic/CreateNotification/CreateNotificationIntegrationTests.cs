@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_create_notification_for_all_users()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         await client.CreateTeacher("Chico");
@@ -16,7 +16,7 @@ public partial class IntegrationTests
         var response = await client.CreateNotification("Hello", "Hi", UsersGroup.All, true);
 
         // Assert
-        await using var ctx = _back.GetDbContext();
+        await using var ctx = _api.GetDbContext();
 
         var notification = await ctx.Notifications.FirstAsync(x => x.Id == response.Id);
         notification.Title.Should().Be("Hello");
@@ -33,7 +33,7 @@ public partial class IntegrationTests
     public async Task Should_create_notification_only_for_teachers()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         TeacherOut teacher = await client.CreateTeacher("Chico");
@@ -43,7 +43,7 @@ public partial class IntegrationTests
         var response = await client.CreateNotification("Hello", "Hi", UsersGroup.Teachers, true);
 
         // Assert
-        await using var ctx = _back.GetDbContext();
+        await using var ctx = _api.GetDbContext();
 
         var notification = await ctx.Notifications.FirstAsync(x => x.Id == response.Id);
         notification.Title.Should().Be("Hello");
@@ -61,7 +61,7 @@ public partial class IntegrationTests
     public async Task Should_create_a_notification_only_for_students()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         await client.CreateTeacher("Chico");
@@ -71,7 +71,7 @@ public partial class IntegrationTests
         var response = await client.CreateNotification("Hello", "Hi", UsersGroup.Students, true);
 
         // Assert
-        await using var ctx = _back.GetDbContext();
+        await using var ctx = _api.GetDbContext();
 
         var notification = await ctx.Notifications.FirstAsync(x => x.Id == response.Id);
         notification.Title.Should().Be("Hello");

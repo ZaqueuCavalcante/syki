@@ -4,18 +4,18 @@ namespace Syki.Tests.Base;
 
 public class IntegrationTestBase
 {
-    protected BackFactory _back = null!;
+    protected BackFactory _api = null!;
     protected DaemonFactory _daemon = null!;
 
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
     {
-        _back = new BackFactory();
-        using var scope = _back.Services.CreateScope();
+        _api = new BackFactory();
+        using var scope = _api.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 
         await ctx.ResetDbAsync();
-        await _back.RegisterAdm();
+        await _api.RegisterAdm();
 
         _daemon = new DaemonFactory();
         _daemon.Services.CreateScope();
@@ -24,13 +24,13 @@ public class IntegrationTestBase
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
     {
-        await _back.DisposeAsync();
+        await _api.DisposeAsync();
         await _daemon.DisposeAsync();
     }
 
     protected async Task AssertTaskByDataLike<T>(string like)
     {
-        using var ctx = _back.GetDbContext();
+        using var ctx = _api.GetDbContext();
 
         var likeFormat = $"%{like}%";
         FormattableString sql = $@"

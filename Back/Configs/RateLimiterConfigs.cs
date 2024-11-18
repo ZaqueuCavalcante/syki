@@ -6,6 +6,8 @@ public static class RateLimiterConfigs
 {
     public static void AddRateLimiterConfigs(this IServiceCollection services)
     {
+        // TODO: Load configs from appsettings.json
+
         services.AddRateLimiter(options =>
         {
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;

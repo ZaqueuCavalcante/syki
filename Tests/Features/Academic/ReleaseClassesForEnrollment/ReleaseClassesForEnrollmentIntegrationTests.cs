@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_release_classes_for_enrollment()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
         await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id);
 
@@ -30,7 +30,7 @@ public partial class IntegrationTests
     public async Task Should_not_release_classes_for_enrollment_when_enrollment_period_not_found()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         TeacherOut chico = await client.CreateTeacher("Chico");
@@ -53,7 +53,7 @@ public partial class IntegrationTests
     public async Task Should_not_release_classes_for_enrollment_when_enrollment_period_not_started()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         TeacherOut chico = await client.CreateTeacher("Chico");
@@ -78,7 +78,7 @@ public partial class IntegrationTests
     public async Task Should_not_release_classes_for_enrollment_when_enrollment_period_finalized()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         TeacherOut chico = await client.CreateTeacher("Chico");
@@ -103,7 +103,7 @@ public partial class IntegrationTests
     public async Task Should_not_release_classes_for_enrollment_when_classes_status_is_not_on_pre_enrollment()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
         
         await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id, -4, 4);

@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_return_all_course_offerings()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         await client.CreateBasicInstitutionData();
 
         // Act
@@ -20,7 +20,7 @@ public partial class IntegrationTests
     public async Task Should_not_return_any_course_offering()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         // Act
         var courseOfferings = await client.GetCourseOfferings();

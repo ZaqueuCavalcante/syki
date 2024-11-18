@@ -6,13 +6,13 @@ public partial class IntegrationTests
     public async Task Should_view_user_notifications()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         await client.CreateNotification("Hello", "Hi", UsersGroup.Students, true);
 
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
 
         // Act
         await studentClient.Http.ViewNotifications();

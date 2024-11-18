@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_redirect_to_api_docs_page()
     {
         // Arrange
-        var client = _back.GetClient();
+        var client = _api.GetClient();
 
         // Act
         var response = await client.GetAsync("/");

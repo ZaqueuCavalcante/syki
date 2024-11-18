@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_get_students()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");

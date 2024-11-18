@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_get_healthy_status()
     {
         // Arrange
-        var client = _back.GetClient();
+        var client = _api.GetClient();
 
         // Act
         var response = await client.GetAsync("/health");

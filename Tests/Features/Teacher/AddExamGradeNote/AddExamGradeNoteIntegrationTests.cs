@@ -7,7 +7,7 @@ public partial class IntegrationTests
     public async Task Should_add_valid_exam_grade_note(decimal note)
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -19,13 +19,13 @@ public partial class IntegrationTests
 
         await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);
 
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([mathClass.Id]);
 
         await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
         await academicClient.StartClasses([mathClass.Id]);
 
-        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
         var @class = await teacherClient.GetTeacherClass(mathClass.Id);
         var examGradeId = @class.Students.First().ExamGrades.First().Id;
 
@@ -47,7 +47,7 @@ public partial class IntegrationTests
     public async Task Should_add_invalid_exam_grade_note(decimal note)
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -59,13 +59,13 @@ public partial class IntegrationTests
 
         await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);
 
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([mathClass.Id]);
 
         await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
         await academicClient.StartClasses([mathClass.Id]);
 
-        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
         var @class = await teacherClient.GetTeacherClass(mathClass.Id);
         var examGradeId = @class.Students.First().ExamGrades.First().Id;
 
@@ -80,10 +80,10 @@ public partial class IntegrationTests
     public async Task Should_not_add_exam_grade_note_when_not_found()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
-        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
         // Act
         var response = await teacherClient.AddExamGradeNote(Guid.NewGuid(), 5.67M);
@@ -96,7 +96,7 @@ public partial class IntegrationTests
     public async Task Should_send_notification_to_user_when_teacher_add_exam_grade_note()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -108,18 +108,18 @@ public partial class IntegrationTests
 
         await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);
 
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([mathClass.Id]);
 
         await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
         await academicClient.StartClasses([mathClass.Id]);
 
-        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
         var @class = await teacherClient.GetTeacherClass(mathClass.Id);
         var examGradeId = @class.Students.First().ExamGrades.First().Id;
 
         await teacherClient.AddExamGradeNote(examGradeId, 7.89M);
-        await _back.AwaitTasksProcessing();
+        await _api.AwaitTasksProcessing();
 
         // Act
         var response = await studentClient.Http.GetUserNotifications();

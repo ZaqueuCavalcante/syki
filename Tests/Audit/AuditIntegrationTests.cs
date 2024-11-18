@@ -9,13 +9,13 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_audit_campus_creation()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         // Act
         var campus = await client.CreateCampus();
 
         // Assert
-        await using var ctx = _back.GetDbContext();
+        await using var ctx = _api.GetDbContext();
         var audit = await ctx.AuditLogs.FirstAsync(a => a.EntityId == campus.Id);
         audit.Action.Should().Be("Insert");
         audit.EntityType.Should().Be(nameof(Campus));
@@ -25,14 +25,14 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Should_audit_campus_update()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var campus = await client.CreateCampus();
 
         // Act
         await client.UpdateCampus(campus.Id, "Agreste II", "Bonito - PE");
 
         // Assert
-        await using var ctx = _back.GetDbContext();
+        await using var ctx = _api.GetDbContext();
         var audit = await ctx.AuditLogs
             .OrderByDescending(x => x.CreatedAt)
             .FirstAsync(a => a.EntityId == campus.Id);

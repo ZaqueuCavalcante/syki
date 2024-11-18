@@ -6,11 +6,11 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_when_has_no_lesson_attendances()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
 
         // Act
         var response = await studentClient.GetStudentFrequency();
@@ -23,12 +23,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_V()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, [data.Student.Id]);
@@ -44,12 +44,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_X()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, []);
@@ -65,12 +65,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_VV()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, [data.Student.Id]);
@@ -87,12 +87,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_VX()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, [data.Student.Id]);
@@ -109,12 +109,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_XV()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, []);
@@ -131,12 +131,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_XX()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, []);
@@ -152,12 +152,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_VVV()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, [data.Student.Id]);
@@ -175,12 +175,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_VVX()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, [data.Student.Id]);
@@ -198,12 +198,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_VXV()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, [data.Student.Id]);
@@ -221,12 +221,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_VXX()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, [data.Student.Id]);
@@ -244,12 +244,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_XVV()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, []);
@@ -267,12 +267,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_XVX()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, []);
@@ -290,12 +290,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_XXV()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, []);
@@ -313,12 +313,12 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequency_for_sequence_XXX()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
 
         var lessons = data.AdsClasses.HumanMachineInteractionDesign.Lessons;
         await teacherClient.CreateLessonAttendance(lessons[0].Id, []);

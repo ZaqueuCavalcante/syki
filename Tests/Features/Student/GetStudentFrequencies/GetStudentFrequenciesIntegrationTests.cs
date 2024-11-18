@@ -6,11 +6,11 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequencies_with_zero_values()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
 
         // Act
         var response = await studentClient.GetStudentFrequencies();
@@ -24,7 +24,7 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequencies_for_the_first_lesson_attendance()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -37,13 +37,13 @@ public partial class IntegrationTests
         await academicClient.ReleaseClassesForEnrollment([discreteMathClass.Id]);
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToWebDevClass.Id]);
 
         await academicClient.UpdateEnrollmentPeriod(period, -2, -1);
         await academicClient.StartClasses([discreteMathClass.Id]);
 
-        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
+        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
         var teacherMathClass = await teacherClient.GetTeacherClass(discreteMathClass.Id);
         var firstLesson = teacherMathClass.Lessons.First();
 
@@ -61,7 +61,7 @@ public partial class IntegrationTests
     public async Task Should_return_student_frequencies_for_the_first_period_lesson_attendances()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod1.Id;
 
@@ -85,7 +85,7 @@ public partial class IntegrationTests
         ]);
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([
             discreteMath.Id,
             introToWebDev.Id,
@@ -103,7 +103,7 @@ public partial class IntegrationTests
         await academicClient.StartClasses([computationalThinkingAndAlgorithms.Id]);
         await academicClient.StartClasses([integratorProjectOne.Id]);
 
-        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
+        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
         var teacherDiscreteMath = await teacherClient.GetTeacherClass(discreteMath.Id);
         var teacherIntroToWebDev = await teacherClient.GetTeacherClass(introToWebDev.Id);
         var teacherHumanMachineInteractionDesign = await teacherClient.GetTeacherClass(humanMachineInteractionDesign.Id);

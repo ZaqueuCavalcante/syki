@@ -9,7 +9,7 @@ public partial class IntegrationTests
     public async Task Should_create_course()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         // Act
         CourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
@@ -24,7 +24,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_with_invalid_type()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", (CourseType)69);
@@ -37,7 +37,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_without_type()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         // Act
         var response = await client.Http.PostAsJsonAsync("/academic/courses", new { Name = "ADS" });

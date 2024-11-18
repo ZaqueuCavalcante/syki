@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_update_enrollment_period()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         EnrollmentPeriodOut enrollmentPeriod = await client.CreateEnrollmentPeriod(period.Id, -1, 1);
 
@@ -23,7 +23,7 @@ public partial class IntegrationTests
     public async Task Should_not_update_enrollment_period_without_academic_period()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         
         // Act
         var response = await client.UpdateEnrollmentPeriod("2024.1");
@@ -36,7 +36,7 @@ public partial class IntegrationTests
     public async Task Should_not_update_enrollment_period_when_not_found()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
 
         // Act
@@ -50,7 +50,7 @@ public partial class IntegrationTests
     public async Task Should_not_update_enrollment_period_with_start_equal_end()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         await client.CreateEnrollmentPeriod(period.Id);
 
@@ -65,7 +65,7 @@ public partial class IntegrationTests
     public async Task Should_not_update_enrollment_period_with_start_greater_than_end()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         await client.CreateEnrollmentPeriod(period.Id);
 

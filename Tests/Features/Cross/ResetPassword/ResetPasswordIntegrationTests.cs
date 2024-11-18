@@ -6,12 +6,12 @@ public partial class IntegrationTests
     public async Task Should_reset_password()
     {
         // Arrange
-        var client = _back.GetClient();
-        var user = await client.RegisterUser(_back);
+        var client = _api.GetClient();
+        var user = await client.RegisterUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
-        client.RemoveAuthToken();
-        var token = await _back.GetResetPasswordToken(user.Email);
+        client.Logout();
+        var token = await _api.GetResetPasswordToken(user.Email);
         var password = "My@new@strong@P4ssword";
 
         // Act
@@ -27,11 +27,11 @@ public partial class IntegrationTests
     public async Task Should_not_reset_password_with_wrong_token()
     {
         // Arrange
-        var client = _back.GetClient();
-        var user = await client.RegisterUser(_back);
+        var client = _api.GetClient();
+        var user = await client.RegisterUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
-        client.RemoveAuthToken();
+        client.Logout();
 
         // Act
         var response = await client.ResetPassword(Guid.NewGuid().ToString(), "My@new@strong@P4ssword");
@@ -44,12 +44,12 @@ public partial class IntegrationTests
     public async Task Should_not_login_using_the_old_password()
     {
         // Arrange
-        var client = _back.GetClient();
-        var user = await client.RegisterUser(_back);
+        var client = _api.GetClient();
+        var user = await client.RegisterUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
-        client.RemoveAuthToken();
-        var token = await _back.GetResetPasswordToken(user.Email);
+        client.Logout();
+        var token = await _api.GetResetPasswordToken(user.Email);
         var password = "My@new@strong@P4ssword";
         await client.ResetPassword(token!, password);
 
@@ -64,12 +64,12 @@ public partial class IntegrationTests
     public async Task Should_not_reset_password_twice_with_same_token()
     {
         // Arrange
-        var client = _back.GetClient();
-        var user = await client.RegisterUser(_back);
+        var client = _api.GetClient();
+        var user = await client.RegisterUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
-        client.RemoveAuthToken();
-        var token = await _back.GetResetPasswordToken(user.Email);
+        client.Logout();
+        var token = await _api.GetResetPasswordToken(user.Email);
         var password = "My@new@strong@P4ssword";
         await client.ResetPassword(token!, password);
 
@@ -85,12 +85,12 @@ public partial class IntegrationTests
     public async Task Should_not_reset_password_to_a_weak_one(string password)
     {
         // Arrange
-        var client = _back.GetClient();
-        var user = await client.RegisterUser(_back);
+        var client = _api.GetClient();
+        var user = await client.RegisterUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
-        client.RemoveAuthToken();
-        var token = await _back.GetResetPasswordToken(user.Email);
+        client.Logout();
+        var token = await _api.GetResetPasswordToken(user.Email);
 
         // Act
         var response = await client.ResetPassword(token!, password);

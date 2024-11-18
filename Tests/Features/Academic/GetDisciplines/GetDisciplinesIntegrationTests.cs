@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_return_disciplines_ordered_by_name()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         // Act
         await client.CreateDiscipline("Estrutura de Dados");

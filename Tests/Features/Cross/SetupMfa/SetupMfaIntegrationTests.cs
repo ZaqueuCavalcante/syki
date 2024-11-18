@@ -6,10 +6,10 @@ public partial class IntegrationTests
     public async Task Should_setup_mfa()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         var keyResponse = await client.Http.GetMfaKey();
-        var token = keyResponse.Key.ToMfaToken();
+        var token = keyResponse.Key.GenerateTOTP();
 
         // Act
         var response = await client.Http.SetupMfa(token);
@@ -23,7 +23,7 @@ public partial class IntegrationTests
     public async Task Should_not_setup_mfa_when_token_is_wrong(string token)
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         // Act
         var response = await client.Http.SetupMfa(token);

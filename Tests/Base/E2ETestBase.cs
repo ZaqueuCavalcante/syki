@@ -70,6 +70,6 @@ public class E2ETestBase : PageTest
         using var ctx = GetDbContext();
         var userId = await ctx.Users.Where(u => u.Email == email).Select(u => u.Id).FirstAsync();
         var mfaKey = await ctx.UserTokens.Where(t => t.UserId == userId).Select(t => t.Value).FirstAsync();
-        return mfaKey!.ToMfaToken();
+        return mfaKey!.GenerateTOTP();
     }
 }

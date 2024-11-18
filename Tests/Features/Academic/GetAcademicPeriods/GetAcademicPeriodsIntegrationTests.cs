@@ -6,8 +6,8 @@ public partial class IntegrationTests
     public async Task Should_return_institution_academic_periods()
     {
         // Arrange
-        var clientNovaRoma = await _back.LoggedAsAcademic();
-        var clientUfpe = await _back.LoggedAsAcademic();
+        var clientNovaRoma = await _api.LoggedAsAcademic();
+        var clientUfpe = await _api.LoggedAsAcademic();
 
         AcademicPeriodOut period = await clientNovaRoma.CreateAcademicPeriod("2023.1");
 

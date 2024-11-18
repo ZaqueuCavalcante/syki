@@ -8,7 +8,7 @@ public partial class IntegrationTests
     public async Task Should_get_all_courses_with_curriculums()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         // Act
         await client.CreateCourse("Pedagogia", Mestrado);

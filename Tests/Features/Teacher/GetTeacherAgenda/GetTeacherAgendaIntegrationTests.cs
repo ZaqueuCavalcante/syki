@@ -6,11 +6,11 @@ public partial class IntegrationTests
     public async Task Should_get_teacher_agenda()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _back);
+        await academicClient.AddStartedAdsClasses(data, _api);
 
-        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
 
         // Assert
         var agenda = await teacherClient.GetTeacherAgenda();

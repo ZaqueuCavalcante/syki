@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_update_a_campus()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         var campus = await client.CreateCampus();
 
         // Act
@@ -22,7 +22,7 @@ public partial class IntegrationTests
     public async Task Should_not_update_random_campus()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         await client.CreateCampus();
 
         // Act
@@ -36,10 +36,10 @@ public partial class IntegrationTests
     public async Task Should_not_update_other_institution_campus()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
         await client.CreateCampus();
 
-        var otherClient = await _back.LoggedAsAcademic();
+        var otherClient = await _api.LoggedAsAcademic();
         var otherCampus = await otherClient.CreateCampus();
         
         // Act

@@ -5,12 +5,12 @@ using Syki.Front.Features.Cross.SetupMfa;
 using Syki.Front.Features.Cross.LoginMfa;
 using Syki.Front.Features.Cross.GetMfaKey;
 using Syki.Front.Features.Cross.ResetPassword;
+using Syki.Front.Features.Academic.CrossLogin;
 using Syki.Front.Features.Cross.ViewNotifications;
 using Syki.Front.Features.Cross.FinishUserRegister;
 using Syki.Front.Features.Cross.GetUserNotifications;
 using Syki.Front.Features.Cross.SendResetPasswordToken;
 using Syki.Front.Features.Cross.CreatePendingUserRegister;
-using Syki.Front.Features.Academic.CrossLogin;
 
 namespace Syki.Tests.Clients;
 
@@ -47,7 +47,7 @@ public static class CrossClientExtensions
         var client = new LoginClient(http, storage, new SykiAuthStateProvider(storage));
         var response = await client.Login(email, password);
 
-        http.RemoveAuthToken();
+        http.Logout();
         http.AddAuthToken(response.AccessToken);
 
         return response;
@@ -71,7 +71,7 @@ public static class CrossClientExtensions
         var client = new LoginMfaClient(http, storage, new SykiAuthStateProvider(storage));
         var response = await client.Login(token);
 
-        http.RemoveAuthToken();
+        http.Logout();
         http.AddAuthToken(response.AccessToken);
 
         return response;
@@ -108,7 +108,7 @@ public static class CrossClientExtensions
         await client.View();
     }
 
-    public static void RemoveAuthToken(this HttpClient client)
+    public static void Logout(this HttpClient client)
     {
         client.DefaultRequestHeaders.Remove("Authorization");
     }

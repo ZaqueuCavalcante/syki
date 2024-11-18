@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_return_all_enrollment_periods()
     {
         // Arrange
-        var client = await _back.LoggedAsAcademic();
+        var client = await _api.LoggedAsAcademic();
 
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         await client.CreateEnrollmentPeriod(period.Id);

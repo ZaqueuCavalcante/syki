@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_return_only_student_notifications()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
@@ -14,8 +14,8 @@ public partial class IntegrationTests
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Students, true);
 
-        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
 
         // Act
         var teacherResponse = await teacherClient.Cross.GetUserNotifications();
@@ -30,7 +30,7 @@ public partial class IntegrationTests
     public async Task Should_return_only_teacher_notifications()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
@@ -38,8 +38,8 @@ public partial class IntegrationTests
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Teachers, true);
 
-        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
 
         // Act
         var teacherResponse = await teacherClient.Cross.GetUserNotifications();
@@ -54,7 +54,7 @@ public partial class IntegrationTests
     public async Task Should_return_all_users_notifications()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
@@ -62,8 +62,8 @@ public partial class IntegrationTests
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.All, true);
 
-        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
 
         // Act
         var teacherResponse = await teacherClient.Cross.GetUserNotifications();
@@ -78,7 +78,7 @@ public partial class IntegrationTests
     public async Task Should_return_only_student_notifications_when_notification_is_timeless()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Students, true);
@@ -86,10 +86,10 @@ public partial class IntegrationTests
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
-        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
 
-        await _back.AwaitTasksProcessing();
+        await _api.AwaitTasksProcessing();
 
         // Act
         var teacherResponse = await teacherClient.Cross.GetUserNotifications();
@@ -104,7 +104,7 @@ public partial class IntegrationTests
     public async Task Should_return_only_teacher_notifications_when_notification_is_timeless()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.Teachers, true);
@@ -112,10 +112,10 @@ public partial class IntegrationTests
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
-        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
 
-        await _back.AwaitTasksProcessing();
+        await _api.AwaitTasksProcessing();
 
         // Act
         var teacherResponse = await teacherClient.Cross.GetUserNotifications();
@@ -130,7 +130,7 @@ public partial class IntegrationTests
     public async Task Should_return_all_notifications_when_notification_is_timeless()
     {
         // Arrange
-        var academicClient = await _back.LoggedAsAcademic();
+        var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
 
         await academicClient.CreateNotification("Hello", "Hi", UsersGroup.All, true);
@@ -138,10 +138,10 @@ public partial class IntegrationTests
         TeacherOut teacher = await academicClient.CreateTeacher("Chico");
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
-        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
-        var studentClient = await _back.LoggedAsStudent(student.Email);
+        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(student.Email);
 
-        await _back.AwaitTasksProcessing();
+        await _api.AwaitTasksProcessing();
 
         // Act
         var teacherResponse = await teacherClient.Cross.GetUserNotifications();

@@ -53,7 +53,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(settings.ConnectionString);
-        optionsBuilder.UseSnakeCaseNamingConvention();
+        // optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
     }
 
@@ -65,9 +65,13 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
 
         builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
+        builder.ToSnakeCaseNames();
+
         foreach (var entity in builder.Model.GetEntityTypes())
         {
-            entity.SetTableName(entity.GetTableName()!.ToSnakeCase().Replace("asp_net_", ""));
+            if (entity.GetTableName().IsEmpty()) continue;
+
+            entity.SetTableName(entity.GetTableName().ToSnakeCase().Replace("asp_net_", ""));
 
             foreach (var fk in entity.GetForeignKeys())
             {

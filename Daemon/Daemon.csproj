@@ -3,14 +3,14 @@
   <PropertyGroup>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <NoWarn>CS1591;CS8618;CS8602;CS8604;</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
 
   <ItemGroup>
-		<PackageReference Include="Hangfire" Version="1.8.12" />
+		<PackageReference Include="Hangfire" Version="1.8.15" />
     <PackageReference Include="Hangfire.MemoryStorage" Version="1.8.1.1" />
   </ItemGroup>
 

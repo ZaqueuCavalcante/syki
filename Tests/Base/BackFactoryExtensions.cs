@@ -32,7 +32,7 @@ public static class BackFactoryExtensions
         await using var ctx = factory.GetDbContext();
         using var userManager = factory.GetUserManager();
 
-        var institution = new Institution { Id = Guid.Empty, Name = "Syki" };
+        var institution = new Institution { Id = Guid.Empty, Name = "Syki", CreatedAt = DateTime.Now };
         ctx.Add(institution);
         await ctx.SaveChangesAsync();
 

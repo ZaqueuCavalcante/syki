@@ -32,14 +32,7 @@ public class IntegrationTestBase
     {
         using var ctx = _api.GetDbContext();
 
-        var likeFormat = $"%{like}%";
-        FormattableString sql = $@"
-            SELECT *
-            FROM syki.tasks
-            WHERE data LIKE {likeFormat}
-        ";
-
-        var tasks = await ctx.Database.SqlQuery<SykiTask>(sql).ToListAsync();
+        var tasks = await ctx.Tasks.Where(x => x.Data.Contains(like)).ToListAsync();
 
         tasks.Should().ContainSingle();
         typeof(SykiTask).Assembly.GetType(tasks[0].Type).Should().Be<T>();

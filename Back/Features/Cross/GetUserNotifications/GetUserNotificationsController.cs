@@ -1,13 +1,13 @@
 namespace Syki.Back.Features.Cross.GetUserNotifications;
 
-/// <summary>
-/// Retorna todas as Notificações vinculadas com o Usuário.
-/// </summary>
 [ApiController, AuthBearer]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetUserNotificationsController(GetUserNotificationsService service) : ControllerBase
 {
+    /// <summary>
+    /// Notificações
+    /// </summary>
     [HttpGet("notifications/user")]
     public async Task<IActionResult> Get()
     {

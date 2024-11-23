@@ -24,10 +24,8 @@ public class Startup()
         services.AddOpenApi();
     }
 
-    public static void Configure(IApplicationBuilder app, SykiDbContext ctx)
+    public static void Configure(IApplicationBuilder app)
     {
-        ctx.ResetDb();
-
         app.UseLogs();
 
         app.UseCors();

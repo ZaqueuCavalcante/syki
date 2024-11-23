@@ -28,8 +28,8 @@ public class LoadFeatureFlagsFromDb(IServiceScopeFactory serviceScopeFactory, Fe
 
         if (features == null) return;
 
-        settings.SkipUserRegister = features.Settings.SkipUserRegister;
-        settings.CrossLogin = features.Settings.CrossLogin;
+        settings.SkipUserRegister = features.SkipUserRegister;
+        settings.CrossLogin = features.CrossLogin;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

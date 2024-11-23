@@ -8,7 +8,5 @@ public class FeatureFlagsConfig : IEntityTypeConfiguration<FeatureFlags>
 
         features.HasKey(f => f.Id);
         features.Property(f => f.Id).ValueGeneratedNever();
-
-        features.OwnsOne(f => f.Settings, x => x.ToJson());
     }
 }

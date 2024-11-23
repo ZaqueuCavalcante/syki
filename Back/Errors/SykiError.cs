@@ -9,6 +9,6 @@ public abstract class SykiError
 
     public SwaggerExample<ErrorOut> ToSwaggerExampleErrorOut()
     {
-        return SwaggerExample.Create(Message, new ErrorOut { Message = Message });
+        return SwaggerExample.Create(Message, new ErrorOut { Code = Code, Message = Message });
     }
 }

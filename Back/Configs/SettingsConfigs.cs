@@ -7,7 +7,6 @@ public static class SettingsConfigs
         services.AddSingleton<AuthSettings>();
         services.AddSingleton<DatabaseSettings>();
         services.AddSingleton<FeaturesSettings>();
-        // TODO: FIX THIS
-        // services.AddHostedService<LoadFeatureFlagsFromDb>();
+        services.AddHostedService<LoadFeatureFlagsFromDb>();
     }
 }

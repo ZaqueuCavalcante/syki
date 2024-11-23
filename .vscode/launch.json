@@ -19,7 +19,7 @@
             "preLaunchTask": "build",
             "requireExactSource": false,
             "cwd": "${workspaceFolder}/Back",
-            "program": "${workspaceFolder}/Back/bin/Debug/net8.0/Back.dll",
+            "program": "${workspaceFolder}/Back/bin/Debug/net9.0/Back.dll",
         },
         {
             "name": "DAEMON",
@@ -28,7 +28,7 @@
             "preLaunchTask": "build",
             "requireExactSource": false,
             "cwd": "${workspaceFolder}/Daemon",
-            "program": "${workspaceFolder}/Daemon/bin/Debug/net8.0/Daemon.dll",
+            "program": "${workspaceFolder}/Daemon/bin/Debug/net9.0/Daemon.dll",
         }
     ]
 }

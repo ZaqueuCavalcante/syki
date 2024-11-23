@@ -1,3 +1,5 @@
+using Scalar.AspNetCore;
+
 namespace Syki.Back.Configs;
 
 public static class HttpConfigs
@@ -24,6 +26,23 @@ public static class HttpConfigs
         app.UseEndpoints(options =>
         {
             options.MapControllers();
+
+            options.MapOpenApi();
+            options.MapScalarApiReference(options =>
+            {
+                options.WithModels(false);
+                options.WithDownloadButton(false);
+                options.WithTitle("Syki API Docs");
+                options.WithEndpointPrefix("/api-docs/{documentName}");
+                options.WithOpenApiRoutePattern("/swagger/v1/swagger.json");
+                options
+                    .WithPreferredScheme("Bearer")
+                    .WithHttpBearerAuthentication(bearer =>
+                    {
+                        bearer.Token = "your-bearer-token";
+                    })
+                    .WithHttpBasicAuthentication(basic => {});
+            });
         });
     }
 

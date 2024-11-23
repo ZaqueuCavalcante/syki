@@ -1,16 +1,17 @@
 namespace Syki.Back.Features.Cross.FinishUserRegister;
 
-/// <summary>
-/// Finaliza o Registro de um Usuário.
-/// </summary>
 [ApiController]
 [EnableRateLimiting("Small")]
 [Consumes("application/json"), Produces("application/json")]
 public class FinishUserRegisterController(FinishUserRegisterService service) : ControllerBase
 {
+    /// <summary>
+    /// Finalizar registro
+    /// </summary>
     [HttpPut("users")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(UserOut), 200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]
+    [SwaggerResponseExample(200, typeof(FinishUserRegisterResponseExamples))]
     [SwaggerResponseExample(400, typeof(FinishUserRegisterErrorsExamples))]
     public async Task<IActionResult> Finish([FromBody] FinishUserRegisterIn data)
     {

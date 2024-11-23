@@ -23,6 +23,19 @@ public static class DocsConfigs
                 },
             });
 
+            options.EnableAnnotations();
+
+            options.TagActionsBy(api =>
+            {
+                var group = api.RelativePath.Split("/")[0];
+                if (group == "academic") return ["Academic"];
+                if (group == "student") return ["Student"];
+                if (group == "teacher") return ["Teacher"];
+                if (group == "adm") return ["Adm"];
+                return ["Cross"];
+            });
+            options.DocInclusionPredicate((name, api) => true);
+
             options.ExampleFilters();
 
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -51,9 +64,11 @@ public static class DocsConfigs
 
             options.DescribeAllParametersInCamelCase();
 
-            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, "Back.xml");
             options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+
+            var xmlPath2 = Path.Combine(AppContext.BaseDirectory, "Shared.xml");
+            options.IncludeXmlComments(xmlPath2, includeControllerXmlComments: true);
         });
 
         services.AddSwaggerExamplesFromAssemblyOf(typeof(Program));

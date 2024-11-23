@@ -8,7 +8,11 @@ public class GetFeatureFlagsService(SykiDbContext ctx, FeaturesSettings settings
             .Where(i => i.Id == Guid.Empty)
             .FirstOrDefaultAsync();
         
-        featureFlags ??= new() { Settings = settings };
+        featureFlags ??= new()
+        {
+            CrossLogin = settings.CrossLogin,
+            SkipUserRegister = settings.SkipUserRegister
+        };
 
         return featureFlags.ToOut();
     }

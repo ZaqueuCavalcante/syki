@@ -4,7 +4,7 @@ COPY . .
 RUN dotnet restore "./Daemon/Daemon.csproj"
 RUN dotnet publish "./Daemon/Daemon.csproj" -c release -o /app --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
 COPY --from=build /app ./
 

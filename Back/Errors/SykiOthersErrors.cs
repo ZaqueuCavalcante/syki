@@ -81,3 +81,8 @@ public class LoginRequiresTwoFactor : SykiError
     public override string Code { get; set; } = nameof(LoginRequiresTwoFactor);
     public override string Message { get; set; } = "Utilize o segundo fator de autenticação para realizar login.";
 }
+public class LoginWrongMfaToken : SykiError
+{
+    public override string Code { get; set; } = nameof(LoginWrongMfaToken);
+    public override string Message { get; set; } = "Token incorreto.";
+}

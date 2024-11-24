@@ -1,21 +1,19 @@
-using Newtonsoft.Json;
 using Microsoft.JSInterop;
 
 namespace Syki.Front.Features.Cross.LoginMfa;
 
 public class LoginMfaClient(HttpClient http, ILocalStorageService localStorage, SykiAuthStateProvider authStateProvider) : ICrossClient
 {
-    public async Task<LoginMfaOut> Login(string code)
+    public async Task<OneOf<LoginMfaOut, ErrorOut>> LoginMfa(string code)
     {
         var body = new LoginMfaIn { Token = code };
         var response = await http.PostAsJsonAsync("/login/mfa", body);
 
-        var responseAsString = await response.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<LoginMfaOut>(responseAsString)!;
+        var result = await response.Resolve<LoginMfaOut>();
 
-        if (response.IsSuccessStatusCode && result.AccessToken != null)
+        if (result.IsSuccess())
         {
-            await localStorage.SetItemAsync("AccessToken", result.AccessToken);
+            await localStorage.SetItemAsync("AccessToken", result.GetSuccess().AccessToken);
             authStateProvider.MarkUserAsAuthenticated();
         }
 

@@ -65,14 +65,14 @@ public static class CrossClientExtensions
         return await client.Setup(token);
     }
 
-    public static async Task<LoginMfaOut> LoginMfa(this HttpClient http, string token)
+    public static async Task<OneOf<LoginMfaOut, ErrorOut>> LoginMfa(this HttpClient http, string token)
     {
         var storage=  new LocalStorageServiceMock();
         var client = new LoginMfaClient(http, storage, new SykiAuthStateProvider(storage));
-        var response = await client.Login(token);
+        var response = await client.LoginMfa(token);
 
         http.Logout();
-        http.AddAuthToken(response.AccessToken);
+        http.AddAuthToken(response.IsSuccess() ? response.GetSuccess().AccessToken : "");
 
         return response;
     }

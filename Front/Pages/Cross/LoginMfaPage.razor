@@ -72,9 +72,9 @@
         if (_code.ToString().Length == 6)
         {
             _loading = true;
-            var result = await Client.Login(_code.ToString()!);
+            var result = await Client.LoginMfa(_code.ToString()!);
 
-            if (result.AccessToken != null)
+            if (result.IsSuccess())
             {
                 Nav.NavigateTo("/");
             }

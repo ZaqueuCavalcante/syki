@@ -1,19 +1,25 @@
 namespace Syki.Back.Features.Cross.LoginMfa;
 
-/// <summary>
-/// Realiza o Login utilizando o Token MFA.
-/// </summary>
 [ApiController]
 [EnableRateLimiting("Small")]
 [Consumes("application/json"), Produces("application/json")]
 public class LoginMfaController(LoginMfaService service) : ControllerBase
 {
+    /// <summary>
+    /// Login MFA 🔓
+    /// </summary>
+    /// <remarks>
+    /// Realiza login utilizando o token MFA.
+    /// </remarks>
     [HttpPost("login/mfa")]
-    [ProducesResponseType(200)]
-    public async Task<IActionResult> Login([FromBody] LoginMfaIn data)
+    [ProducesResponseType(typeof(LoginMfaOut), 200)]
+    [ProducesResponseType(typeof(ErrorOut), 400)]
+    [SwaggerResponseExample(200, typeof(LoginMfaResponseExamples))]
+    [SwaggerResponseExample(400, typeof(LoginMfaErrorsExamples))]
+    public async Task<IActionResult> LoginMfa([FromBody] LoginMfaIn data)
     {
-        var result = await service.Login(data);
+        var result = await service.LoginMfa(data);
 
-        return Ok(result);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

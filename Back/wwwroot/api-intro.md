@@ -1,11 +1,13 @@
-A autenticação é feita via JWT.
+## ▶️ Introdução
 
-Os endpoints do grupo Cross podem ser utilizados por todos os usuários, independente de perfil.
+Essa é a documentação oficial do Syki, que serve a aplicação web ()
 
-Os demais são agrupados de acordo com o perfil do usuário:
-- Adm
-- Academic
-- Student
-- Teacher
+No futuro ela também vai servir o app do Syki, que vou desenvolver usando Flutter.
 
 Repositório: [Syki ↗️](https://github.com/ZaqueuCavalcante/syki)
+
+## 🔑 Autenticação
+
+A autenticação é feita via JWT.
+
+Os enpoints marcados com o ícone 🔓 estão abertos.

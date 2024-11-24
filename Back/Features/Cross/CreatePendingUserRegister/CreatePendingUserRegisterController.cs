@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 public class CreatePendingUserRegisterController(CreatePendingUserRegisterService service) : ControllerBase
 {
     /// <summary>
-    /// Registrar
+    /// Registrar 🔓
     /// </summary>
     /// <remarks>
     /// Cria um registro do usuário no sistema, usando o email informado.

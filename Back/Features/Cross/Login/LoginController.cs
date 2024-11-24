@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Cross.Login;
 public class LoginController(LoginService service) : ControllerBase
 {
     /// <summary>
-    /// Login
+    /// Login 🔓
     /// </summary>
     /// <remarks>
     /// Realiza login no sistema.
@@ -14,7 +14,7 @@ public class LoginController(LoginService service) : ControllerBase
     [HttpPost("login")]
     [ProducesResponseType(typeof(LoginOut), 200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]
-    [SwaggerResponseExample(200, typeof(LoginOut))]
+    [SwaggerResponseExample(200, typeof(LoginResponseExamples))]
     [SwaggerResponseExample(400, typeof(LoginErrorsExamples))]
     public async Task<IActionResult> Login([FromBody] LoginIn data)
     {

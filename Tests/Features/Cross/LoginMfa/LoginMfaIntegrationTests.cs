@@ -21,7 +21,7 @@ public partial class IntegrationTests
         var response = await client.LoginMfa(totp);
 
         // Assert
-        response.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+        response.GetSuccess().AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
     }
 
     [Test]
@@ -38,8 +38,7 @@ public partial class IntegrationTests
         var response = await client.Http.LoginMfa(totp);
 
         // Assert
-        response.AccessToken.Should().BeNull();
-        response.Wrong2FactorCode.Should().BeTrue();
+        response.ShouldBeError(new LoginWrongMfaToken());
     }
 
     [Test]
@@ -61,7 +60,6 @@ public partial class IntegrationTests
         var response = await client.LoginMfa(randomToken);
 
         // Assert
-        response.AccessToken.Should().BeNull();
-        response.Wrong2FactorCode.Should().BeTrue();
+        response.ShouldBeError(new LoginWrongMfaToken());
     }
 }

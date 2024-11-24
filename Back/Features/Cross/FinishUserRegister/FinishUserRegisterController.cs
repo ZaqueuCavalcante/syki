@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Cross.FinishUserRegister;
 public class FinishUserRegisterController(FinishUserRegisterService service) : ControllerBase
 {
     /// <summary>
-    /// Finalizar registro
+    /// Finalizar registro 🔓
     /// </summary>
     /// <remarks>
     /// Finaliza o registro do usuário no sistema.

@@ -1,3 +1,4 @@
+using Syki.Back.Filters;
 using System.Reflection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
@@ -29,13 +30,15 @@ public static class DocsConfigs
             options.TagActionsBy(api =>
             {
                 var group = api.RelativePath.Split("/")[0];
-                if (group == "academic") return ["Academic"];
-                if (group == "student") return ["Student"];
-                if (group == "teacher") return ["Teacher"];
-                if (group == "adm") return ["Adm"];
-                return ["Cross"];
+                if (group == "academic") return ["🏫 Academic"];
+                if (group == "student") return ["👩🏻‍🎓 Student"];
+                if (group == "teacher") return ["👨🏻‍🏫 Teacher"];
+                if (group == "adm") return ["🛡️ Adm"];
+                return ["🧱 Cross"];
             });
             options.DocInclusionPredicate((name, api) => true);
+
+            options.OperationFilter<AuthOperationsFilter>();
 
             options.ExampleFilters();
 
@@ -47,20 +50,6 @@ public static class DocsConfigs
                 Type = SecuritySchemeType.Http,
                 BearerFormat = "JWT",
                 Scheme = "bearer",
-            });
-            options.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer",
-                        }
-                    },
-                    new string[] {}
-                }
             });
 
             options.DescribeAllParametersInCamelCase();

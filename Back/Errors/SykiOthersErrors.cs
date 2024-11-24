@@ -70,3 +70,14 @@ public class ClassMustHaveStartedStatus : SykiError
     public override string Code { get; set; } = nameof(ClassMustHaveStartedStatus);
     public override string Message { get; set; } = "A turma precisam ter o status de Iniciada para ser finalizada.";
 }
+
+public class LoginWrongEmailOrPassword : SykiError
+{
+    public override string Code { get; set; } = nameof(LoginWrongEmailOrPassword);
+    public override string Message { get; set; } = "Email ou senha incorretos.";
+}
+public class LoginRequiresTwoFactor : SykiError
+{
+    public override string Code { get; set; } = nameof(LoginRequiresTwoFactor);
+    public override string Message { get; set; } = "Utilize o segundo fator de autenticação para realizar login.";
+}

@@ -13,7 +13,7 @@ public partial class IntegrationTests
         var result = await client.Login(user.Email, user.Password);
 
         // Assert
-        result.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+        result.GetSuccess().AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
     }
 
     [Test]
@@ -29,7 +29,7 @@ public partial class IntegrationTests
         var result = await client.Login(email, password);
 
         // Assert
-        result.WrongEmailOrPassword.Should().BeTrue();
+        result.ShouldBeError(new LoginWrongEmailOrPassword());
     }
 
     [Test]
@@ -43,7 +43,7 @@ public partial class IntegrationTests
         var result = await client.Login(user.Email + "1", user.Password);
 
         // Assert
-        result.WrongEmailOrPassword.Should().BeTrue();
+        result.ShouldBeError(new LoginWrongEmailOrPassword());
     }
 
     [Test]
@@ -57,7 +57,7 @@ public partial class IntegrationTests
         var result = await client.Login(user.Email, user.Password + "1");
 
         // Assert
-        result.WrongEmailOrPassword.Should().BeTrue();
+        result.ShouldBeError(new LoginWrongEmailOrPassword());
     }
 
     [Test]
@@ -78,6 +78,6 @@ public partial class IntegrationTests
         var result = await client.Login(user.Email, user.Password);
 
         // Assert
-        result.RequiresTwoFactor.Should().BeTrue();
+        result.ShouldBeError(new LoginRequiresTwoFactor());
     }
 }

@@ -20,9 +20,9 @@ public partial class IntegrationTests
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var login = await client.Login(user.Email, password);
-        login.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+        login.GetSuccess().AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
     }
-    
+
     [Test]
     public async Task Should_not_reset_password_with_wrong_token()
     {
@@ -57,7 +57,7 @@ public partial class IntegrationTests
         var response = await client.Login(user.Email, user.Password);
 
         // Assert
-        response.WrongEmailOrPassword.Should().BeTrue();
+        response.ShouldBeError(new LoginWrongEmailOrPassword());
     }
 
     [Test]

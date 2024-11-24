@@ -5,7 +5,7 @@ namespace Syki.Back.Features.Cross.Login;
 
 public class LoginService(GenerateJWTService service, SignInManager<SykiUser> signInManager) : ICrossService
 {
-    public async Task<LoginOut> Login(LoginIn data)
+    public async Task<OneOf<LoginOut, SykiError>> Login(LoginIn data)
     {
         var result = await signInManager.PasswordSignInAsync(
             userName: data.Email,
@@ -15,10 +15,10 @@ public class LoginService(GenerateJWTService service, SignInManager<SykiUser> si
         );
 
         if (!result.Succeeded && !result.RequiresTwoFactor)
-            return new LoginOut { WrongEmailOrPassword = true };
+            return new LoginWrongEmailOrPassword();
 
         if (result.RequiresTwoFactor)
-            return new LoginOut { RequiresTwoFactor = true };
+            return new LoginRequiresTwoFactor();
 
         var jwt = await service.Generate(data.Email);
 

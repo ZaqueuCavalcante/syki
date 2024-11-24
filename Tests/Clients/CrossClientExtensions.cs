@@ -41,14 +41,14 @@ public static class CrossClientExtensions
         return new UserOut { Email = email, Password = password };
     }
 
-    public static async Task<LoginOut> Login(this HttpClient http, string email, string password)
+    public static async Task<OneOf<LoginOut, ErrorOut>> Login(this HttpClient http, string email, string password)
     {
         var storage = new LocalStorageServiceMock();
         var client = new LoginClient(http, storage, new SykiAuthStateProvider(storage));
         var response = await client.Login(email, password);
 
         http.Logout();
-        http.AddAuthToken(response.AccessToken);
+        http.AddAuthToken(response.IsSuccess() ? response.GetSuccess().AccessToken : "");
 
         return response;
     }

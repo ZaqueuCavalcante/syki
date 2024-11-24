@@ -1,21 +1,19 @@
-using Newtonsoft.Json;
 using Microsoft.JSInterop;
 
 namespace Syki.Front.Features.Cross.Login;
 
 public class LoginClient(HttpClient http, ILocalStorageService localStorage, SykiAuthStateProvider authStateProvider) : ICrossClient
 {
-    public async Task<LoginOut> Login(string email, string password)
+    public async Task<OneOf<LoginOut, ErrorOut>> Login(string email, string password)
     {
         var body = new LoginIn(email, password);
         var response = await http.PostAsJsonAsync("/login", body);
 
-        var responseAsString = await response.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<LoginOut>(responseAsString)!;
+        var result = await response.Resolve<LoginOut>();
 
-        if (result.AccessToken != null)
+        if (result.IsSuccess())
         {
-            await localStorage.SetItemAsync("AccessToken", result.AccessToken);
+            await localStorage.SetItemAsync("AccessToken", result.GetSuccess().AccessToken);
             authStateProvider.MarkUserAsAuthenticated();
         }
 

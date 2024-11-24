@@ -62,17 +62,20 @@
 
         _loading = true;
         var result = await Client.Login(_email, _password);
-        if (result.AccessToken != null)
+        if (result.IsSuccess())
         {
             Nav.NavigateTo("/");
         }
-        if (result.RequiresTwoFactor)
+        else
         {
-            Nav.NavigateTo("/login-mfa");
-        }
-        if (result.WrongEmailOrPassword)
-        {
-            Snackbar.Add("Email ou senha inválidos!", Severity.Error);
+            if (result.GetError().Code == "LoginRequiresTwoFactor")
+            {
+                Nav.NavigateTo("/login-mfa");
+            }
+            if (result.GetError().Code == "LoginWrongEmailOrPassword")
+            {
+                Snackbar.Add("Email ou senha inválidos!", Severity.Error);
+            }
         }
         _loading = false;
     }

@@ -9,5 +9,10 @@ public class HomeController : ControllerBase
     /// Redireciona para a Documentação da API.
     /// </summary>
     [HttpGet("")]
-    public IActionResult Get() => Redirect("/docs");
+    public IActionResult Get()
+    {
+        var x = 4;
+        x++;
+        return Redirect("/docs");
+    }
 }

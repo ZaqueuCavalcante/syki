@@ -6,7 +6,7 @@ namespace Syki.Back.Health;
 public class HealthController : ControllerBase
 {
     /// <summary>
-    /// Retorna o Status da API.
+    /// Retorna o health status da API.
     /// </summary>
     [HttpGet("health")]
     public IActionResult Get()

@@ -13,6 +13,6 @@ public class HomeController : ControllerBase
     {
         var x = 4;
         x++;
-        return Redirect("/docs");
+        return Redirect("/docs/v1");
     }
 }

@@ -6,10 +6,10 @@ namespace Syki.Back.Features.Academic.GetCourseDisciplines;
 public class GetCourseDisciplinesController(GetCourseDisciplinesService service) : ControllerBase
 {
     /// <summary>
-    /// Disciplinas
+    /// Disciplinas do curso
     /// </summary>
     /// <remarks>
-    /// Retorna todas as disciplinas.
+    /// Retorna todas as disciplinas do curso informado.
     /// </remarks>
     [HttpGet("academic/courses/{id}/disciplines")]
     public async Task<IActionResult> Get([FromRoute] Guid id)

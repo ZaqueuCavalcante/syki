@@ -12,6 +12,7 @@ public partial class IntegrationTests
         var response = await client.GetAsync("/");
 
         // Assert
-        response.RequestMessage!.RequestUri!.ToString().Should().Contain("/docs");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.RequestMessage!.RequestUri!.ToString().Should().Contain("/docs/v1");
     }
 }

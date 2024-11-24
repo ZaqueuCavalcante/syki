@@ -18,7 +18,7 @@ Principais características:
 2️⃣ Fácil navegação e busca por termos
 3️⃣ Realização de requests (estilo Insomnia/Postman)
 4️⃣ Suporte a múltiplos exemplos de requests/responses
-5️⃣ Múltiplas client libraries (C#, Ruby, Node, Python...)
+5️⃣ Múltiplas client libraries (C#, Node, Python...)
 6️⃣ Múltiplos métodos de autenticação (JWT, ApiKey, OAuth2...)
 
 Abaixo no GIF mostro a API do meu projeto com 66 endpoints totalmente documentados.
@@ -28,9 +28,6 @@ Vou deixar o código + documentação nos comentários ⤵️
 #api #docs #scalar #openapi #dotnet
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
+Código: https://github.com/ZaqueuCavalcante/syki
+Documentação: https://syki-api.zaqbit.com
+Scalar: https://docs.scalar.com

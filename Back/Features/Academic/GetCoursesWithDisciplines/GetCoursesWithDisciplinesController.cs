@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Academic.GetCoursesWithDisciplines;
 
-/// <summary>
-/// Retorna todos os Cursos que possuem Disciplinas vinculadas.
-/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetCoursesWithDisciplinesController(GetCoursesWithDisciplinesService service) : ControllerBase
 {
+    /// <summary>
+    /// Cursos com disciplinas
+    /// </summary>
+    /// <remarks>
+    /// Retorna todos os cursos que possuem disciplinas vinculadas.
+    /// </remarks>
     [HttpGet("academic/courses/with-disciplines")]
     public async Task<IActionResult> Get()
     {

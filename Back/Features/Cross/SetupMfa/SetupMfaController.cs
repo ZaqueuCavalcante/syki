@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Cross.SetupMfa;
 
-/// <summary>
-/// Habilita a Autenticação de Dois Fatores.
-/// </summary>
 [ApiController, AuthBearer]
 [EnableRateLimiting("Small")]
 [Consumes("application/json"), Produces("application/json")]
 public class SetupMfaController(SetupMfaService service) : ControllerBase
 {
+    /// <summary>
+    /// Habilitar MFA
+    /// </summary>
+    /// <remarks>
+    /// Habilita a autenticação de dois fatores.
+    /// </remarks>
     [HttpPost("mfa/setup")]
     [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]

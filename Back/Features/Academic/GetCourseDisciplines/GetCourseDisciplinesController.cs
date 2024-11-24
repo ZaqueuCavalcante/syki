@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Academic.GetCourseDisciplines;
 
-/// <summary>
-/// Retorna todas as Disciplinas.
-/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetCourseDisciplinesController(GetCourseDisciplinesService service) : ControllerBase
 {
+    /// <summary>
+    /// Disciplinas
+    /// </summary>
+    /// <remarks>
+    /// Retorna todas as disciplinas.
+    /// </remarks>
     [HttpGet("academic/courses/{id}/disciplines")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {

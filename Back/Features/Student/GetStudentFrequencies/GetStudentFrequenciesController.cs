@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Student.GetStudentFrequencies;
 
-/// <summary>
-/// Retorna todas as Frequências do Aluno.
-/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetStudentFrequenciesController(GetStudentFrequenciesService service) : ControllerBase
 {
+    /// <summary>
+    /// Frequências
+    /// </summary>
+    /// <remarks>
+    /// Retorna todas as frequências do aluno.
+    /// </remarks>
     [HttpGet("student/frequencies")]
     public async Task<IActionResult> Get()
     {

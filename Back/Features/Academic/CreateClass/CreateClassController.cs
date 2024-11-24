@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Academic.CreateClass;
 
-/// <summary>
-/// Cria uma nova Turma.
-/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class CreateClassController(CreateClassService service) : ControllerBase
 {
+    /// <summary>
+    /// Criar turma
+    /// </summary>
+    /// <remarks>
+    /// Cria uma nova turma.
+    /// </remarks>
     [HttpPost("academic/classes")]
     [ProducesResponseType(typeof(ClassOut), 200)]
     public async Task<IActionResult> Create([FromBody] CreateClassIn data)

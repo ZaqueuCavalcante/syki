@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Academic.UpdateCampus;
 
-/// <summary>
-/// Atualiza os dados do Campus informado.
-/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class UpdateCampusController(UpdateCampusService service) : ControllerBase
 {
+    /// <summary>
+    /// Editar campus
+    /// </summary>
+    /// <remarks>
+    /// Edita os dados do campus informado.
+    /// </remarks>
     [HttpPut("academic/campi")]
     [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]

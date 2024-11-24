@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Student.GetStudentAverageNote;
 
-/// <summary>
-/// Retorna a Nota Média do Aluno.
-/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetStudentAverageNoteController(GetStudentAverageNoteService service) : ControllerBase
 {
+    /// <summary>
+    /// Nota média
+    /// </summary>
+    /// <remarks>
+    /// Retorna a nota média do aluno.
+    /// </remarks>
     [HttpGet("student/average-note")]
     public async Task<IActionResult> Get()
     {

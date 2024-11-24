@@ -8,6 +8,9 @@ public class GetStudentInsightsController(GetStudentInsightsService service) : C
     /// <summary>
     /// Insights
     /// </summary>
+    /// <remarks>
+    /// Retorna os insights do Aluno.
+    /// </remarks>
     [HttpGet("student/insights")]
     public async Task<IActionResult> Get()
     {

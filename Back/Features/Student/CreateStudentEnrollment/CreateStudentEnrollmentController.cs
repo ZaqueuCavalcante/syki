@@ -8,6 +8,9 @@ public class CreateStudentEnrollmentController(CreateStudentEnrollmentService se
     /// <summary>
     /// Realizar matrícula
     /// </summary>
+    /// <remarks>
+    /// Realiza a matrícula do aluno nas turmas informadas.
+    /// </remarks>
     [HttpPost("student/enrollments")]
     [ProducesResponseType<EnrollmentClassOut>(200)]
     [ProducesResponseType<SykiError>(400)]

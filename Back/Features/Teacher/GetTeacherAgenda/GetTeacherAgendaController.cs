@@ -5,6 +5,12 @@ namespace Syki.Back.Features.Teacher.GetTeacherAgenda;
 [Consumes("application/json"), Produces("application/json")]
 public class GetTeacherAgendaController(GetTeacherAgendaService service) : ControllerBase
 {
+    /// <summary>
+    /// Agenda
+    /// </summary>
+    /// <remarks>
+    /// Retorna a agenda do professor.
+    /// </remarks>
     [HttpGet("teacher/agenda")]
     public async Task<IActionResult> Get()
     {

@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Academic.GetStudents;
 
-/// <summary>
-/// Retorna todas os Alunos.
-/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetStudentsController(GetStudentsService service) : ControllerBase
 {
+    /// <summary>
+    /// Alunos
+    /// </summary>
+    /// <remarks>
+    /// Retorna todos os alunos.
+    /// </remarks>
     [HttpGet("academic/students")]
     public async Task<IActionResult> Get()
     {

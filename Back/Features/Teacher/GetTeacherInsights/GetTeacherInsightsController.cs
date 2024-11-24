@@ -5,6 +5,12 @@ namespace Syki.Back.Features.Teacher.GetTeacherInsights;
 [Consumes("application/json"), Produces("application/json")]
 public class GetTeacherInsightsController(GetTeacherInsightsService service) : ControllerBase
 {
+    /// <summary>
+    /// Insights
+    /// </summary>
+    /// <remarks>
+    /// Retorna os insights do Professor.
+    /// </remarks>
     [HttpGet("teacher/insights")]
     public async Task<IActionResult> Get()
     {

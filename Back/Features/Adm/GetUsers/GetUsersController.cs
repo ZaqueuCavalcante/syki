@@ -1,12 +1,15 @@
 namespace Syki.Back.Features.Adm.GetUsers;
 
-/// <summary>
-/// Retorna todos os Usuários.
-/// </summary>
 [ApiController, AuthAdm]
 [Consumes("application/json"), Produces("application/json")]
 public class GetUsersController(GetUsersService service) : ControllerBase
 {
+    /// <summary>
+    /// Usuários
+    /// </summary>
+    /// <remarks>
+    /// Retorna todos os usuários.
+    /// </remarks>
     [HttpGet("adm/users")]
     public async Task<IActionResult> Get()
     {

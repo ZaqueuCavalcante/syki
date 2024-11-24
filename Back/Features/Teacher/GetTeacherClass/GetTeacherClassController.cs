@@ -5,6 +5,12 @@ namespace Syki.Back.Features.Teacher.GetTeacherClass;
 [Consumes("application/json"), Produces("application/json")]
 public class GetTeacherClassController(GetTeacherClassService service) : ControllerBase
 {
+    /// <summary>
+    /// Turma
+    /// </summary>
+    /// <remarks>
+    /// Retorna os dados da turma informada.
+    /// </remarks>
     [HttpGet("teacher/classes/{id}")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {

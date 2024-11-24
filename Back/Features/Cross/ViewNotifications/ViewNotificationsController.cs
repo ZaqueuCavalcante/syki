@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Cross.ViewNotifications;
 
-/// <summary>
-/// Marca todas as Notificações do Usuário como visualizadas.
-/// </summary>
 [ApiController, AuthBearer]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class ViewNotificationsController(ViewNotificationsService service) : ControllerBase
 {
+    /// <summary>
+    /// Visualizar notificações
+    /// </summary>
+    /// <remarks>
+    /// Marca todas as notificações do usuário como visualizadas.
+    /// </remarks>
     [HttpPut("notifications/user")]
     public async Task<IActionResult> View()
     {

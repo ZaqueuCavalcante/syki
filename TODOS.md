@@ -26,3 +26,11 @@ Abaixo no GIF mostro a API do meu projeto com 66 endpoints totalmente documentad
 Vou deixar o código + documentação nos comentários ⤵️
 
 #api #docs #scalar #openapi #dotnet
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>

@@ -2,14 +2,18 @@ using Syki.Back.Auth;
 
 namespace Syki.Back.Features.Academic.CrossLogin;
 
-/// <summary>
-/// Realiza o login a partir do Acadêmico, indo para conta de um Aluno ou Professor da instituição.
-/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class CrossLoginController(CrossLoginService service) : ControllerBase
 {
+    /// <summary>
+    /// Login interno
+    /// </summary>
+    /// <remarks>
+    /// Realiza o login a partir do Acadêmico, indo para conta de um Aluno ou Professor da instituição. <br/>
+    /// Essa operação pode ser ativada/desativada globalmente pelo usuário Adm através da feature flag CrossLogin.
+    /// </remarks>
     [Authorize(BackPolicy.CrossLogin)]
     [HttpPost("academic/cross-login")]
     [ProducesResponseType(200)]

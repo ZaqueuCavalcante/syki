@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 
-/// <summary>
-/// Cria um novo Período de Matrícula.
-/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class CreateEnrollmentPeriodController(CreateEnrollmentPeriodService service) : ControllerBase
 {
+    /// <summary>
+    /// Criar período de matrícula
+    /// </summary>
+    /// <remarks>
+    /// Cria um novo período de matrícula.
+    /// </remarks>
     [HttpPost("academic/enrollment-periods")]
     public async Task<IActionResult> Create([FromBody] CreateEnrollmentPeriodIn data)
     {

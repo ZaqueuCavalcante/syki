@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Student.GetStudentDisciplines;
 
-/// <summary>
-/// Retorna todas as Disciplinas da Grade Curricular do Curso do Aluno.
-/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetStudentDisciplinesController(GetStudentDisciplinesService service) : ControllerBase
 {
+    /// <summary>
+    /// Disciplinas da grade
+    /// </summary>
+    /// <remarks>
+    /// Retorna todas as disciplinas da grade curricular do curso do aluno.
+    /// </remarks>
     [HttpGet("student/disciplines")]
     public async Task<IActionResult> Get()
     {

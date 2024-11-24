@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Student.GetStudentAgenda;
 
-/// <summary>
-/// Retorna a Agenda do Aluno.
-/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetStudentAgendaController(GetStudentAgendaService service) : ControllerBase
 {
+    /// <summary>
+    /// Agenda
+    /// </summary>
+    /// <remarks>
+    /// Retorna a agenda do aluno.
+    /// </remarks>
     [HttpGet("student/agenda")]
     public async Task<IActionResult> Get()
     {

@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Student.GetStudentExamGrades;
 
-/// <summary>
-/// Retorna todas as Avaliações vinculadas com o Aluno.
-/// </summary>
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetStudentExamGradesController(GetStudentExamGradesService service) : ControllerBase
 {
+    /// <summary>
+    /// Avaliações
+    /// </summary>
+    /// <remarks>
+    /// Retorna todas as avaliações vinculadas com o aluno.
+    /// </remarks>
     [HttpGet("student/exam-grades")]
     public async Task<IActionResult> Get()
     {

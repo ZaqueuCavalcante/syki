@@ -5,6 +5,12 @@ namespace Syki.Back.Features.Teacher.GetTeacherLessonAttendances;
 [Consumes("application/json"), Produces("application/json")]
 public class GetTeacherLessonAttendancesController(GetTeacherLessonAttendancesService service) : ControllerBase
 {
+    /// <summary>
+    /// Frequência da aula
+    /// </summary>
+    /// <remarks>
+    /// Retornas a frequência da aula informada.
+    /// </remarks>
     [HttpGet("teacher/lessons/{id}/attendances")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {

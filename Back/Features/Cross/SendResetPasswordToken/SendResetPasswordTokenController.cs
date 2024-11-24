@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Cross.SendResetPasswordToken;
 
-/// <summary>
-/// Redefine a senha do Usuário.
-/// </summary>
 [ApiController]
 [EnableRateLimiting("Small")]
 [Consumes("application/json"), Produces("application/json")]
 public class SendResetPasswordTokenController(SendResetPasswordTokenService service) : ControllerBase
 {
+    /// <summary>
+    /// Esqueci minha senha 🔓
+    /// </summary>
+    /// <remarks>
+    /// Envia para o email informado um link de redefinição de senha.
+    /// </remarks>
     [HttpPost("reset-password-token")]
     [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]

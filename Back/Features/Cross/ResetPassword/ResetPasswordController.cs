@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Cross.ResetPassword;
 
-/// <summary>
-/// Redefine a senha do Usuário.
-/// </summary>
 [ApiController]
 [EnableRateLimiting("Small")]
 [Consumes("application/json"), Produces("application/json")]
 public class ResetPasswordController(ResetPasswordService service) : ControllerBase
 {
+    /// <summary>
+    /// Redefinir senha 🔓
+    /// </summary>
+    /// <remarks>
+    /// Redefine a senha do usuário.
+    /// </remarks>
     [HttpPost("reset-password")]
     [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]

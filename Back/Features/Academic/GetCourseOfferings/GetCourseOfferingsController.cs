@@ -1,13 +1,16 @@
 namespace Syki.Back.Features.Academic.GetCourseOfferings;
 
-/// <summary>
-/// Retorna todas as Ofertas de Curso.
-/// </summary>
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
 public class GetCourseOfferingsController(GetCourseOfferingsService service) : ControllerBase
 {
+    /// <summary>
+    /// Ofertas de curso
+    /// </summary>
+    /// <remarks>
+    /// Retorna todas as ofertas de curso.
+    /// </remarks>
     [HttpGet("academic/course-offerings")]
     public async Task<IActionResult> Get()
     {

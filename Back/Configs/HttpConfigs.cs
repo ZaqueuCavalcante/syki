@@ -31,7 +31,6 @@ public static class HttpConfigs
             options.MapScalarApiReference(options =>
             {
                 options.WithModels(false);
-                options.WithSearchHotKey("f");
                 options.WithDownloadButton(false);
                 options.WithTitle("Syki API Docs");
                 options.WithEndpointPrefix("/docs/{documentName}");

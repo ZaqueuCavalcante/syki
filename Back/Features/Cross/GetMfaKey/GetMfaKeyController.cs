@@ -9,10 +9,11 @@ public class GetMfaKeyController(GetMfaKeyService service) : ControllerBase
     /// Chave MFA
     /// </summary>
     /// <remarks>
-    /// Ela é mostrada em tela via QR-Code.
+    /// Retorna a chave MFA do usuário. <br/>
+    /// Ela é mostrada em tela via QR-Code, possibilitando a configuração do MFA.
     /// </remarks>
     [HttpGet("mfa/key")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(GetMfaKeyOut), 200)]
     [SwaggerResponseExample(200, typeof(GetMfaKeyResponseExamples))]
     public async Task<IActionResult> Get()
     {

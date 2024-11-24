@@ -86,13 +86,6 @@ public static class DocsConfigs
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Syki 1.0");
             options.DefaultModelsExpandDepth(-1);
         });
-
-        app.UseReDoc(c =>
-        {
-            c.RoutePrefix = "docs";
-            c.DocumentTitle = "Syki API Docs";
-            c.SpecUrl = "/swagger/v1/swagger.json";
-        });
     }
 
     public static string ReadResource(string name)

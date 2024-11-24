@@ -33,7 +33,7 @@ public static class HttpConfigs
                 options.WithModels(false);
                 options.WithDownloadButton(false);
                 options.WithTitle("Syki API Docs");
-                options.WithEndpointPrefix("/api-docs/{documentName}");
+                options.WithEndpointPrefix("/docs/{documentName}");
                 options.WithOpenApiRoutePattern("/swagger/v1/swagger.json");
                 options
                     .WithPreferredScheme("Bearer")

@@ -21,6 +21,8 @@ Principais características:
 5️⃣ Múltiplas client libraries (C#, Ruby, Node, Python...)
 6️⃣ Múltiplos métodos de autenticação (JWT, ApiKey, OAuth2...)
 
+Abaixo no GIF mostro a API do meu projeto com 66 endpoints totalmente documentados.
+
 Vou deixar o código + documentação nos comentários ⤵️
 
 #api #docs #scalar #openapi #dotnet

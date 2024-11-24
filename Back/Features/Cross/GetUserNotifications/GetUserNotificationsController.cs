@@ -8,7 +8,12 @@ public class GetUserNotificationsController(GetUserNotificationsService service)
     /// <summary>
     /// Notificações
     /// </summary>
+    /// <remarks>
+    /// Retorna as notificações do usuário.
+    /// </remarks>
     [HttpGet("notifications/user")]
+    [ProducesResponseType(typeof(List<UserNotificationOut>), 200)]
+    [SwaggerResponseExample(200, typeof(GetUserNotificationsResponseExamples))]
     public async Task<IActionResult> Get()
     {
         var notifications = await service.Get(User.InstitutionId(), User.Id());

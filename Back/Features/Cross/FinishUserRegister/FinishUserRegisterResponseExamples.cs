@@ -13,7 +13,7 @@ public class FinishUserRegisterResponseExamples : IMultipleExamplesProvider<User
 				Email = "zaqueu.cavalcante@gmail.com",
 				Password = "M1@Str0ngP4ssword#",
 				InstitutionId = Guid.NewGuid(),
-				Institution = "UFPE",
+				Institution = "Universidade Federal Caruaruense",
 				Role = UserRole.Student.ToString()
 			}
 		);

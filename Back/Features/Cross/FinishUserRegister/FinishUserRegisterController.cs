@@ -8,6 +8,9 @@ public class FinishUserRegisterController(FinishUserRegisterService service) : C
     /// <summary>
     /// Finalizar registro
     /// </summary>
+    /// <remarks>
+    /// Finaliza o registro do usuário no sistema.
+    /// </remarks>
     [HttpPut("users")]
     [ProducesResponseType(typeof(UserOut), 200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]

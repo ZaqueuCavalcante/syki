@@ -1,7 +1,6 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Syki.Back.Features.Cross.SkipUserRegister;
 
 namespace Syki.Back.Filters;
 

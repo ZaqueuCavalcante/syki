@@ -39,6 +39,7 @@ public static class DocsConfigs
             options.DocInclusionPredicate((name, api) => true);
 
             options.OperationFilter<AuthOperationsFilter>();
+            options.DocumentFilter<HttpMethodSorterDocumentFilter>();
 
             options.ExampleFilters();
 

@@ -13,6 +13,7 @@ public static class DocsConfigs
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
+                Title = "Syki API Docs",
                 Description = ReadResource("api-intro.md"),
                 Extensions = new Dictionary<string, IOpenApiExtension>
                 {
@@ -45,7 +46,7 @@ public static class DocsConfigs
                 Name = "Authorization",
                 Type = SecuritySchemeType.Http,
                 BearerFormat = "JWT",
-                Scheme = "Bearer"
+                Scheme = "bearer",
             });
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
@@ -55,7 +56,7 @@ public static class DocsConfigs
                         Reference = new OpenApiReference
                         {
                             Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
+                            Id = "Bearer",
                         }
                     },
                     new string[] {}
@@ -81,7 +82,7 @@ public static class DocsConfigs
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
-            options.DocumentTitle = "Syki API";
+            options.DocumentTitle = "Syki API Docs";
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Syki 1.0");
             options.DefaultModelsExpandDepth(-1);
         });
@@ -89,7 +90,7 @@ public static class DocsConfigs
         app.UseReDoc(c =>
         {
             c.RoutePrefix = "docs";
-            c.DocumentTitle = "Syki API";
+            c.DocumentTitle = "Syki API Docs";
             c.SpecUrl = "/swagger/v1/swagger.json";
         });
     }

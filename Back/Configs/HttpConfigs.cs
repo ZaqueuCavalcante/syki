@@ -39,7 +39,7 @@ public static class HttpConfigs
                     .WithPreferredScheme("Bearer")
                     .WithHttpBearerAuthentication(bearer =>
                     {
-                        bearer.Token = "your-bearer-token";
+                        bearer.Token = "your.bearer.token";
                     })
                     .WithHttpBasicAuthentication(basic => {});
             });

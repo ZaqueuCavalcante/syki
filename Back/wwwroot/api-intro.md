@@ -1,5 +1,3 @@
-# Syki API Docs
-
 A autenticação é feita via JWT.
 
 Os endpoints do grupo Cross não validam o perfil do usuário.

@@ -1,16 +1,31 @@
-# app
+# Syki App
 
-A new Flutter project.
+## Start
 
-## Getting Started
+- Features, not layout
+- Grayscale + Spacing + Contrast + Size
+- Font = Sans Serif (or neutral sans serif)
+- Colors = blue or purple
+- Border-radius = medium/large
 
-This project is a starting point for a Flutter application.
+## Pre-defined Values (System)
 
-A few resources to get you started if this is your first Flutter project:
+- Font size
+- Font weight
+- Line height
+- Color
+- Margin
+- Padding
+- Width
+- Height
+- Box shadows
+- Border radius
+- Border width
+- Opacity
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Hierarchy is Everything
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+
+

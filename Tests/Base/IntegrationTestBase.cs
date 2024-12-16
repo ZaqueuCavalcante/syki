@@ -24,8 +24,8 @@ public class IntegrationTestBase
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
     {
-        await _api.DisposeAsync();
-        await _daemon.DisposeAsync();
+        if (_api != null) await _api.DisposeAsync();
+        if (_daemon != null) await _daemon.DisposeAsync();
     }
 
     protected async Task AssertTaskByDataLike<T>(string like)

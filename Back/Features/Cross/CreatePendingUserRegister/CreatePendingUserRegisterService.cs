@@ -11,10 +11,7 @@ public class CreatePendingUserRegisterService(SykiDbContext ctx) : ICrossService
 
         if (!email.IsValidEmail()) return new InvalidEmail();
 
-        var register = new UserRegister(email);
-        ctx.Add(register);
-
-        ctx.Add(SykiTask.SendUserRegisterEmailConfirmation(email));
+        ctx.Add(new UserRegister(email));
 
         await ctx.SaveChangesAsync();
 

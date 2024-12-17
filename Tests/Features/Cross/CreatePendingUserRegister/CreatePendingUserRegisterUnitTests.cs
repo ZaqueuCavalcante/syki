@@ -11,12 +11,25 @@ public class CreatePendingUserRegisterUnitTests
         var email = TestData.Email;
 
         // Act
-        var institution = new UserRegister(email);
+        var register = new UserRegister(email);
 
         // Assert
-        institution.Id.Should().NotBeEmpty();
-        institution.Email.Should().Be(email);
-        institution.TrialStart.Should().BeNull();
-        institution.TrialEnd.Should().BeNull();
+        register.Id.Should().NotBeEmpty();
+        register.Email.Should().Be(email);
+        register.Status.Should().Be(UserRegisterStatus.Pending);
+    }
+
+    [Test]
+    public void Should_create_user_register_with_domain_event()
+    {
+        // Arrange
+        var email = TestData.Email;
+
+        // Act
+        var register = new UserRegister(email);
+
+        // Assert
+        var domainEvent = register.ShouldPublishDomainEvent<UserRegisterCreatedDomainEvent>();
+        domainEvent.Id.Should().Be(register.Id);
     }
 }

@@ -9,12 +9,11 @@ public class DomainEvent
     public DateTime CreatedAt { get; set; }
     public DateTime? ProcessedAt { get; set; }
     public string? Error { get; set; }
+    public Guid? ProcessorId { get; set; }
 
     public DomainEvent() { }
 
-    public DomainEvent(
-        Guid entityId,
-        object data)
+    public DomainEvent(Guid entityId, object data)
     {
         Id = Guid.NewGuid();
         EntityId = entityId;

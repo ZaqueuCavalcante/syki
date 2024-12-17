@@ -55,6 +55,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
         optionsBuilder.UseNpgsql(settings.ConnectionString);
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
+        optionsBuilder.AddInterceptors(new SaveDomainEventsInterceptor());
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -113,7 +114,6 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
             Database.Migrate();
         }
     }
-
 
     public async Task<bool> AcademicPeriodExists(Guid institutionId, string id)
     {

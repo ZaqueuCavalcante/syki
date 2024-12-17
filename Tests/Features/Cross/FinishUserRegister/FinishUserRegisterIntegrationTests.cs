@@ -22,8 +22,7 @@ public partial class IntegrationTests
         using var userManager = _api.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
-        register.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
-        register.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
+        register.Status.Should().Be(UserRegisterStatus.Finished);
 
         var institution = await ctx.Institutions.SingleAsync(x => x.Name.Contains(email.OnlyNumbers()));
         institution.Id.Should().NotBeEmpty();
@@ -57,8 +56,7 @@ public partial class IntegrationTests
         using var userManager = _api.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
-        register.TrialStart.Should().BeNull();
-        register.TrialEnd.Should().BeNull();
+        register.Status.Should().Be(UserRegisterStatus.Pending);
 
         var institution = await ctx.Institutions.FirstOrDefaultAsync(x => x.Name.Contains(email));
         institution.Should().BeNull();
@@ -90,8 +88,7 @@ public partial class IntegrationTests
         using var userManager = _api.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
-        register.TrialStart.Should().Be(DateOnly.FromDateTime(DateTime.Now));
-        register.TrialEnd.Should().Be(DateOnly.FromDateTime(DateTime.Now.AddDays(7)));
+        register.Status.Should().Be(UserRegisterStatus.Finished);
 
         var institution = await ctx.Institutions.SingleAsync(x => x.Name.Contains(email.OnlyNumbers()));
         institution.Id.Should().NotBeEmpty();
@@ -126,8 +123,7 @@ public partial class IntegrationTests
         using var userManager = _api.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
-        register.TrialStart.Should().BeNull();
-        register.TrialEnd.Should().BeNull();
+        register.Status.Should().Be(UserRegisterStatus.Pending);
 
         var institution = await ctx.Institutions.FirstOrDefaultAsync(x => x.Name.Contains(email));
         institution.Should().BeNull();

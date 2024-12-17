@@ -20,8 +20,7 @@ public partial class IntegrationTests
         await using var ctx = _api.GetDbContext();
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.Id.Should().NotBeEmpty();
-        register.TrialStart.Should().BeNull();
-        register.TrialEnd.Should().BeNull();
+        register.Status.Should().Be(UserRegisterStatus.Pending);
     }
 
     [Test]
@@ -58,9 +57,8 @@ public partial class IntegrationTests
         secondResponse.ShouldBeError(new EmailAlreadyUsed());
 
         await using var ctx = _api.GetDbContext();
-        var register = await ctx.UserRegisters.SingleAsync(x => x.Email == email);
-        register.TrialStart.Should().BeNull();
-        register.TrialEnd.Should().BeNull();
+        var registers = await ctx.UserRegisters.Where(x => x.Email == email).ToListAsync();
+        registers.Should().ContainSingle();
     }
 
     [Test]
@@ -80,9 +78,8 @@ public partial class IntegrationTests
         secondResponse.ShouldBeError(new EmailAlreadyUsed());
 
         using var ctx = _api.GetDbContext();
-        var register = await ctx.UserRegisters.SingleAsync(x => x.Email == email);
-        register.TrialStart.Should().BeNull();
-        register.TrialEnd.Should().BeNull();
+        var registers = await ctx.UserRegisters.Where(x => x.Email == email).ToListAsync();
+        registers.Should().ContainSingle();
     }
 
     [Test]

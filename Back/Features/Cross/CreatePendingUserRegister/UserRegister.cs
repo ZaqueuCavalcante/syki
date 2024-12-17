@@ -1,25 +1,24 @@
 namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 
-public class UserRegister
+public class UserRegister : Entity
 {
     public Guid Id { get; set; }
     public string Email { get; set; }
-    public DateOnly? TrialStart { get; set; }
-    public DateOnly? TrialEnd { get; set; }
+    public UserRegisterStatus Status { get; set; }
 
     public UserRegister(string email)
     {
         Id = Guid.NewGuid();
         Email = email.ToLower();
+        AddDomainEvent(new UserRegisterCreatedDomainEvent(Id));
     }
 
     public OneOf<SykiSuccess, SykiError> Finish()
     {
-        if (TrialStart != null)
+        if (Status == UserRegisterStatus.Finished)
             return new UserAlreadyRegistered();
 
-        TrialStart = DateOnly.FromDateTime(DateTime.Now);
-        TrialEnd = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
+        Status = UserRegisterStatus.Finished;
 
         return new SykiSuccess();
     }

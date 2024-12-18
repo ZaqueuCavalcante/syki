@@ -11,9 +11,7 @@ public class SendResetPasswordTokenService(SykiDbContext ctx, UserManager<SykiUs
 
         var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-        var reset = new ResetPasswordToken(user.Id, token);
-        ctx.Add(reset);
-        ctx.Add(SykiTask.SendResetPasswordEmail(user.Id));
+        ctx.Add(new ResetPasswordToken(user.Id, token));
 
         await ctx.SaveChangesAsync();
 

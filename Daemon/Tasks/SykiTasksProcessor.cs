@@ -62,7 +62,7 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
 
     private static dynamic GetHandler(IServiceScope scope, SykiTask task)
     {
-        var handlerType = typeof(SykiTasksProcessor).Assembly.GetType($"{task.Type}Handler")!;
+        var handlerType = typeof(ISykiTask).Assembly.GetType($"{task.Type}Handler")!;
         dynamic handler = scope.ServiceProvider.GetRequiredService(handlerType);
         return handler;
     }

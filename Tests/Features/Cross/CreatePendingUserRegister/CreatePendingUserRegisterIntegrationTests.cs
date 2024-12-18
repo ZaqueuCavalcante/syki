@@ -1,3 +1,4 @@
+using Syki.Back.Emails;
 using Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 namespace Syki.Tests.Integration;
@@ -19,8 +20,12 @@ public partial class IntegrationTests
 
         await using var ctx = _api.GetDbContext();
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
+
         register.Id.Should().NotBeEmpty();
+        register.Email.Should().Be(email);
         register.Status.Should().Be(UserRegisterStatus.Pending);
+
+        await AssertDomainEvent<PendingUserRegisterCreatedDomainEvent>(register.Id.ToString());
     }
 
     [Test]
@@ -94,6 +99,11 @@ public partial class IntegrationTests
 
         // Assert
         response.ShouldBeSuccess();
-        // await AssertTaskByDataLike<SendUserRegisterEmailConfirmationTask>(email);
+
+        await _daemon.AwaitEventsProcessing();
+        await _daemon.AwaitTasksProcessing();
+
+        var service = _daemon.GetService<IEmailsService>() as FakeEmailsService;
+        service!.Emails.Should().ContainSingle(x => x.Contains(email));
     }
 }

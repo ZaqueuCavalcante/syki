@@ -25,11 +25,6 @@ public class SykiTask
         CreatedAt = DateTime.Now;
     }
 
-    public static SykiTask SendResetPasswordEmail(Guid userId)
-    {
-        return new SykiTask(new SendResetPasswordEmail { UserId = userId });
-    }
-
     public static SykiTask SeedInstitutionData(Guid institutionId)
     {
         return new SykiTask(new SeedInstitutionData { InstitutionId = institutionId });

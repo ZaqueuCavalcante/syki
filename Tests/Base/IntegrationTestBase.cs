@@ -22,10 +22,20 @@ public class IntegrationTestBase
     }
 
     [OneTimeTearDown]
-    public async Task OneTimeTearDown()
+    public void OneTimeTearDown()
     {
-        if (_api != null) await _api.DisposeAsync();
-        if (_daemon != null) await _daemon.DisposeAsync();
+        _api.Dispose();
+        _daemon.Dispose();
+    }
+
+    protected async Task AssertDomainEvent<T>(string like)
+    {
+        using var ctx = _api.GetDbContext();
+
+        var events = await ctx.DomainEvents.AsNoTracking().Where(x => x.Data.Contains(like)).ToListAsync();
+
+        events.Should().ContainSingle();
+        typeof(SykiTask).Assembly.GetType(events[0].Type).Should().Be<T>();
     }
 
     protected async Task AssertTaskByDataLike<T>(string like)

@@ -7,6 +7,7 @@ public static class SykiTasksConfigs
 {
     public static void AddSykiTasksConfigs(this IServiceCollection services)
     {
+        services.AddSingleton<EmailSettings>();
         services.AddSingleton<DatabaseSettings>();
         services.AddSingleton<HangfireSettings>();
 
@@ -14,7 +15,6 @@ public static class SykiTasksConfigs
 
         services.AddTransient<SeedInstitutionDataHandler>();
         services.AddTransient<LinkOldNotificationsHandler>();
-        services.AddTransient<SendResetPasswordEmailHandler>();
         services.AddTransient<CreateNewExamGradeNoteNotificationHandler>();
     }
 }

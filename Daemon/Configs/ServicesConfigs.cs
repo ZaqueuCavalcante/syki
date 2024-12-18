@@ -1,3 +1,4 @@
+using Syki.Back.Emails;
 using Syki.Back.Configs;
 using Syki.Daemon.Events;
 using Syki.Back.Features.Cross.CreateUser;
@@ -13,6 +14,7 @@ using Syki.Back.Features.Teacher.CreateLessonAttendance;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Back.Features.Academic.UpdateEnrollmentPeriod;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Syki.Back.Features.Academic.ReleaseClassesForEnrollment;
 
 namespace Syki.Daemon.Configs;
@@ -37,6 +39,12 @@ public static class ServicesConfigs
         services.AddScoped<CreateLessonAttendanceService>();
         services.AddScoped<AddExamGradeNoteService>();
         services.AddScoped<FinalizeClassesService>();
+
+        services.AddScoped<IEmailsService, EmailsService>();
+        if (Env.IsDevelopment() || Env.IsTesting())
+        {
+            services.Replace(ServiceDescriptor.Singleton<IEmailsService, FakeEmailsService>());
+        }
 
         services.AddIdentityConfigs();
         services.AddSykiTasksConfigs();

@@ -2,10 +2,7 @@ using Syki.Back.Emails;
 
 namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 
-public class SendUserRegisterEmailConfirmationTask : ISykiTask
-{
-    public Guid Id { get; set; }
-}
+public record SendUserRegisterEmailConfirmationTask(Guid Id) : ISykiTask;
 
 public class SendUserRegisterEmailConfirmationTaskHandler(SykiDbContext ctx, IEmailsService emailsService) : ISykiTaskHandler<SendUserRegisterEmailConfirmationTask>
 {

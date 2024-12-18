@@ -1,6 +1,3 @@
-using Syki.Back.Emails;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-
 namespace Syki.Back.Configs;
 
 public static class ServicesConfigs
@@ -12,12 +9,6 @@ public static class ServicesConfigs
         services.AddServiceConfigs(typeof(ICrossService));
         services.AddServiceConfigs(typeof(IStudentService));
         services.AddServiceConfigs(typeof(ITeacherService));
-
-        services.AddScoped<IEmailsService, EmailsService>();
-        if (Env.IsDevelopment() || Env.IsTesting())
-        {
-            services.Replace(ServiceDescriptor.Scoped<IEmailsService, FakeEmailsService>());
-        }
     }
 
     private static void AddServiceConfigs(this IServiceCollection services, Type marker)

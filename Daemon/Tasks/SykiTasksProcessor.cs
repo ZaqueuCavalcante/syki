@@ -11,6 +11,8 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
         using var scope = serviceScopeFactory.CreateScope();
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
 
+        // TODO: CALL BOTH QUERIES IN SAME REQUEST
+
         const string pickRowsSql = @"
             UPDATE syki.tasks
             SET processor_id = @ProcessorId

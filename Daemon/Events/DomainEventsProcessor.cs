@@ -12,6 +12,8 @@ public class DomainEventsProcessor(IConfiguration configuration, IServiceScopeFa
         using var scope = serviceScopeFactory.CreateScope();
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
 
+        // TODO: CALL BOTH QUERIES IN SAME REQUEST
+
         const string pickRowsSql = @"
             UPDATE syki.domain_events
             SET processor_id = @ProcessorId

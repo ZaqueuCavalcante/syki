@@ -26,7 +26,7 @@ public class DomainEventsProcessorDbListener(IConfiguration configuration) : Bac
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            await connection.WaitAsync(stoppingToken);
+            await connection.WaitAsync(stoppingToken).ConfigureAwait(ConfigureAwaitOptions.SuppressThrowing);
         }
     }
 

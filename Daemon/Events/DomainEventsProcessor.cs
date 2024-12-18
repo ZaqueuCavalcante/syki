@@ -1,10 +1,11 @@
 using Dapper;
 using Npgsql;
 using Newtonsoft.Json;
+using Syki.Back.Events;
 
-namespace Syki.Daemon.Tasks;
+namespace Syki.Daemon.Events;
 
-public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
+public class DomainEventsProcessor(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
 {
     public async Task Run()
     {
@@ -12,7 +13,7 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
 
         const string pickRowsSql = @"
-            UPDATE syki.tasks
+            UPDATE syki.domain_events
             SET processor_id = @ProcessorId
             WHERE processor_id IS NULL
         ";
@@ -22,16 +23,16 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
         if (rows == 0) return;
 
         const string sql = @"
-            SELECT * FROM syki.tasks
+            SELECT * FROM syki.domain_events
             WHERE processor_id = @ProcessorId AND processed_at IS NULL
         ";
 
-        var tasks = await connection.QueryAsync<SykiTask>(sql, new { processorId });
+        var events = await connection.QueryAsync<DomainEvent>(sql, new { processorId });
 
-        foreach (var task in tasks)
+        foreach (var evt in events)
         {
-            dynamic data = GetData(task);
-            dynamic handler = GetHandler(scope, task);
+            dynamic data = GetData(evt);
+            dynamic handler = GetHandler(scope, evt);
             string? error = null;
 
             try
@@ -44,25 +45,25 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
             }
 
             const string update = @"
-                UPDATE syki.tasks
+                UPDATE syki.domain_events
                 SET processed_at = now(), error = @Error
                 WHERE id = @Id
             ";
 
-            await connection.ExecuteAsync(update, new { task.Id, error });
+            await connection.ExecuteAsync(update, new { evt.Id, error });
         }
     }
 
-    private static dynamic GetData(SykiTask task)
+    private static dynamic GetData(DomainEvent evt)
     {
-        var type = typeof(SykiTask).Assembly.GetType(task.Type)!;
-        dynamic data = JsonConvert.DeserializeObject(task.Data, type)!;
+        var type = typeof(DomainEvent).Assembly.GetType(evt.Type)!;
+        dynamic data = JsonConvert.DeserializeObject(evt.Data, type)!;
         return data;
     }
 
-    private static dynamic GetHandler(IServiceScope scope, SykiTask task)
+    private static dynamic GetHandler(IServiceScope scope, DomainEvent evt)
     {
-        var handlerType = typeof(SykiTasksProcessor).Assembly.GetType($"{task.Type}Handler")!;
+        var handlerType = typeof(IDomainEvent).Assembly.GetType($"{evt.Type}Handler")!;
         dynamic handler = scope.ServiceProvider.GetRequiredService(handlerType);
         return handler;
     }

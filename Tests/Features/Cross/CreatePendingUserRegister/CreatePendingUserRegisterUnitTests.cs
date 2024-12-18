@@ -29,7 +29,7 @@ public class CreatePendingUserRegisterUnitTests
         var register = new UserRegister(email);
 
         // Assert
-        var domainEvent = register.ShouldPublishDomainEvent<UserRegisterCreatedDomainEvent>();
+        var domainEvent = register.ShouldPublishDomainEvent<PendingUserRegisterCreatedDomainEvent>();
         domainEvent.Id.Should().Be(register.Id);
     }
 }

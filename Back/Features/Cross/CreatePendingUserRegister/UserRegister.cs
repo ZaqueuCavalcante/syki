@@ -10,7 +10,7 @@ public class UserRegister : Entity
     {
         Id = Guid.NewGuid();
         Email = email.ToLower();
-        AddDomainEvent(new UserRegisterCreatedDomainEvent(Id));
+        AddDomainEvent(new PendingUserRegisterCreatedDomainEvent(Id));
     }
 
     public OneOf<SykiSuccess, SykiError> Finish()

@@ -1,5 +1,6 @@
 using Hangfire;
 using Syki.Daemon.Tasks;
+using Syki.Daemon.Events;
 using Syki.Daemon.Configs;
 using Hangfire.MemoryStorage;
 
@@ -10,8 +11,10 @@ public class Startup(IConfiguration configuration)
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddServicesConfigs();
+        services.AddHandlersConfigs();
 
-        services.AddHostedService<PostgresListener>();
+        services.AddHostedService<SykiTasksProcessorDbListener>();
+        services.AddHostedService<DomainEventsProcessorDbListener>();
 
         services.AddHangfire(x =>
         {
@@ -30,6 +33,7 @@ public class Startup(IConfiguration configuration)
     public void Configure(IApplicationBuilder app)
     {
         BackgroundJob.Enqueue<SykiTasksProcessor>(x => x.Run());
+        BackgroundJob.Enqueue<DomainEventsProcessor>(x => x.Run());
 
         app.UseRouting();
         app.UseStaticFiles();

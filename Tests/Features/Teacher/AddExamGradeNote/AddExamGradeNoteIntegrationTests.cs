@@ -119,7 +119,7 @@ public partial class IntegrationTests
         var examGradeId = @class.Students.First().ExamGrades.First().Id;
 
         await teacherClient.AddExamGradeNote(examGradeId, 7.89M);
-        await _api.AwaitTasksProcessing();
+        // await _api.AwaitTasksProcessing();
 
         // Act
         var response = await studentClient.Http.GetUserNotifications();

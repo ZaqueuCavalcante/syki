@@ -2,7 +2,6 @@ using Syki.Back.Features.Teacher.AddExamGradeNote;
 using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Cross.LinkOldNotifications;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
-using Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 namespace Syki.Back.Tasks;
 
@@ -24,11 +23,6 @@ public class SykiTask
         Type = data.GetType().ToString();
         Data = data.Serialize();
         CreatedAt = DateTime.Now;
-    }
-
-    public static SykiTask SendUserRegisterEmailConfirmation(string email)
-    {
-        return new SykiTask(new SendUserRegisterEmailConfirmation { Email = email });
     }
 
     public static SykiTask SendResetPasswordEmail(Guid userId)

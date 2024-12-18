@@ -1,4 +1,4 @@
-namespace Syki.Daemon.Settings;
+namespace Syki.Back.Settings;
 
 public class EmailSettings
 {

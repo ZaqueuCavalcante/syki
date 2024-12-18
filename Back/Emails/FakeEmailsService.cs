@@ -1,6 +1,4 @@
-using Syki.Daemon.Settings;
-
-namespace Syki.Daemon.Emails;
+namespace Syki.Back.Emails;
 
 public class FakeEmailsService(EmailSettings settings) : IEmailsService
 {

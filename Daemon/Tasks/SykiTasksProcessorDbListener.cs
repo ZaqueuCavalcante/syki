@@ -4,7 +4,7 @@ using Hangfire;
 
 namespace Syki.Daemon.Tasks;
 
-public class PostgresListener(IConfiguration configuration) : BackgroundService
+public class SykiTasksProcessorDbListener(IConfiguration configuration) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {

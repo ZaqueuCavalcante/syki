@@ -119,4 +119,10 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     {
         return await AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
     }
+
+    public async Task SaveTaskAsync<T>(T data) where T : ISykiTask
+    {
+        Add(new SykiTask(data));
+        await SaveChangesAsync();
+    }
 }

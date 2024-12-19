@@ -2,8 +2,6 @@ using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.StartClasses;
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
-using Syki.Back.Features.Cross.CreateInstitution;
-using Syki.Back.Features.Cross.FinishUserRegister;
 using Syki.Back.Features.Teacher.AddExamGradeNote;
 using Syki.Back.Features.Academic.FinalizeClasses;
 using Syki.Back.Features.Academic.CreateDiscipline;
@@ -15,23 +13,25 @@ using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Back.Features.Academic.UpdateEnrollmentPeriod;
 using Syki.Back.Features.Academic.ReleaseClassesForEnrollment;
 
-namespace Syki.Daemon.Tasks;
+namespace Syki.Back.Features.Cross.CreateInstitution;
 
-public class SeedInstitutionDataHandler(
+public record SeedInstitutionDataTask(Guid InstitutionId) : ISykiTask;
+
+public class SeedInstitutionDataTaskHandler(
     SykiDbContext ctx,
-    CreateTeacherService createTeacherService,
-    CreateStudentService createStudentService,
     CreateClassService createClassService,
-    ReleaseClassesForEnrollmentService releaseClassesForEnrollmentService,
     StartClassesService startClassesService,
+    CreateStudentService createStudentService,
+    CreateTeacherService createTeacherService,
+    FinalizeClassesService finalizeClassesService,
+    AddExamGradeNoteService addExamGradeNoteService,
     CreateEnrollmentPeriodService createEnrollmentPeriodService,
     UpdateEnrollmentPeriodService updateEnrollmentPeriodService,
     CreateLessonAttendanceService createLessonAttendanceService,
-    AddExamGradeNoteService addExamGradeNoteService,
-    FinalizeClassesService finalizeClassesService,
-    CreateStudentEnrollmentService createStudentEnrollmentService) : ISykiTaskHandler<SeedInstitutionData>
+    CreateStudentEnrollmentService createStudentEnrollmentService,
+    ReleaseClassesForEnrollmentService releaseClassesForEnrollmentService) : ISykiTaskHandler<SeedInstitutionDataTask>
 {
-    public async Task Handle(SeedInstitutionData task)
+    public async Task Handle(SeedInstitutionDataTask task)
     {
         if (Env.IsTesting()) return;
 

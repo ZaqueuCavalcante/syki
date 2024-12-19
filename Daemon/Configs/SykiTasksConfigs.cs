@@ -13,7 +13,6 @@ public static class SykiTasksConfigs
 
         services.AddTransient<SykiTasksProcessor>();
 
-        services.AddTransient<SeedInstitutionDataHandler>();
         services.AddTransient<LinkOldNotificationsHandler>();
         services.AddTransient<CreateNewExamGradeNoteNotificationHandler>();
     }

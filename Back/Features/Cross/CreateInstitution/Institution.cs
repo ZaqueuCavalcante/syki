@@ -10,7 +10,7 @@ using Syki.Back.Features.Academic.CreateCourseCurriculum;
 
 namespace Syki.Back.Features.Cross.CreateInstitution;
 
-public class Institution
+public class Institution : Entity
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -34,6 +34,8 @@ public class Institution
         Name = name;
         CreatedAt = DateTime.Now;
         Configs = new InstitutionConfigs(Id, 7, 70);
+
+        AddDomainEvent(new InstitutionCreatedDomainEvent(Id));
     }
 
     public InstitutionOut ToOut()

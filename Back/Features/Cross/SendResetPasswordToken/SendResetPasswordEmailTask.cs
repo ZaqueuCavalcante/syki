@@ -4,7 +4,7 @@ namespace Syki.Back.Features.Cross.SendResetPasswordToken;
 
 public record SendResetPasswordEmailTask(Guid UserId) : ISykiTask;
 
-public class SendResetPasswordEmailHandler(SykiDbContext ctx, IEmailsService emailsService) : ISykiTaskHandler<SendResetPasswordEmailTask>
+public class SendResetPasswordEmailTaskHandler(SykiDbContext ctx, IEmailsService emailsService) : ISykiTaskHandler<SendResetPasswordEmailTask>
 {
     public async Task Handle(SendResetPasswordEmailTask task)
     {

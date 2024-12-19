@@ -88,7 +88,7 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_enqueue_a_send_user_register_email_confirmation_task_on_pending_user_registration()
+    public async Task Should_send_a_email_confirmation_after_create_pending_user_register()
     {
         // Arrange
         var client = _api.GetClient();
@@ -104,6 +104,6 @@ public partial class IntegrationTests
         await _daemon.AwaitTasksProcessing();
 
         var service = _daemon.GetService<IEmailsService>() as FakeEmailsService;
-        service!.Emails.Should().ContainSingle(x => x.Contains(email));
+        service!.UserRegisterEmailConfirmationEmails.Should().ContainSingle(x => x.Contains(email));
     }
 }

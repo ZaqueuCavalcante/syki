@@ -21,11 +21,16 @@
 
 ## Observabilidade
 
+- OpenTelemetry + Jaeger
 - Contar quantos requests foram feitos durante a execucao dos testes de integracao
 - Endpoints + quantas chamadas tiveram + qual o retorno (sucesso vs erro)
 
 
 
+## Identity
+
+- Token de reset de senha expirado (setar pro teste)
+- Locked out
 
 
 
@@ -43,3 +48,4 @@
 ## 4 - Succeeding in your job
 
 ## 5 - Skillful self-advocacy and managing your career
+

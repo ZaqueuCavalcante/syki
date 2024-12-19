@@ -22,7 +22,7 @@ public static class CrossClientExtensions
         return await client.Create(email);
     }
 
-    public static async Task<HttpResponseMessage> FinishUserRegister(this HttpClient http, string token, string password)
+    public static async Task<OneOf<UserOut, ErrorOut>> FinishUserRegister(this HttpClient http, string token, string password)
     {
         var client = new FinishUserRegisterClient(http);
         return await client.Finish(token, password);
@@ -36,9 +36,9 @@ public static class CrossClientExtensions
         await client.CreatePendingUserRegister(email);
         var token = await factory.GetRegisterSetupToken(email);
 
-        await client.FinishUserRegister(token!, password);
+        var response = await client.FinishUserRegister(token!, password);
 
-        return new UserOut { Email = email, Password = password };
+        return new UserOut { Id = response.GetSuccess().Id, Email = email, Password = password };
     }
 
     public static async Task<OneOf<LoginOut, ErrorOut>> Login(this HttpClient http, string email, string password)

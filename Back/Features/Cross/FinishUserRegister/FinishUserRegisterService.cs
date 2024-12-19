@@ -17,10 +17,8 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
         if (finish.IsError()) return finish.GetError();
 
         var institution = new Institution(register.Email.OnlyNumbers());
+
         ctx.Add(institution);
-
-        ctx.Add(SykiTask.SeedInstitutionData(institution.Id));
-
         await ctx.SaveChangesAsync();
 
         var userIn = CreateUserIn.NewAcademic(institution.Id, register.Email, data.Password);

@@ -9,6 +9,7 @@ public class SendResetPasswordTokenService(SykiDbContext ctx, UserManager<SykiUs
         var user = await userManager.FindByEmailAsync(data.Email);
         if (user == null) return new UserNotFound();
 
+        // TODO: Locked out?
         var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
         ctx.Add(new ResetPasswordToken(user.Id, token));

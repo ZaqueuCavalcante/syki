@@ -1,3 +1,4 @@
+using Syki.Back.Emails;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 
 namespace Syki.Tests.Integration;
@@ -5,7 +6,7 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests
 {
     [Test]
-    public async Task Should_send_the_reset_password_token()
+    public async Task Should_send_reset_password_token()
     {
         // Arrange
         var client = _api.GetClient();
@@ -17,10 +18,12 @@ public partial class IntegrationTests
         // Assert
         var token = await _api.GetResetPasswordToken(user.Email);
         token!.Length.Should().Be(36);
+
+        await AssertDomainEvent<ResetPasswordTokenCreatedDomainEvent>(user.Id.ToString());
     }
 
     [Test]
-    public async Task Should_enqueue_reset_password_token_task()
+    public async Task Should_send_a_reset_password_email()
     {
         // Arrange
         var client = _api.GetClient();
@@ -30,9 +33,11 @@ public partial class IntegrationTests
         await client.SendResetPasswordToken(user.Email);
 
         // Assert
-        using var ctx = _api.GetDbContext();
-        var userDb = await ctx.Users.FirstAsync(x => x.Email == user.Email);
-        // await AssertTaskByDataLike<SendResetPasswordEmail>(userDb.Id.ToString());
+        await _daemon.AwaitEventsProcessing();
+        await _daemon.AwaitTasksProcessing();
+
+        var service = _daemon.GetService<IEmailsService>() as FakeEmailsService;
+        service!.ResetPasswordEmails.Should().ContainSingle(x => x.Contains(user.Email));
     }
 
     [Test]

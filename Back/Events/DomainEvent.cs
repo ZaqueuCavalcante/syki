@@ -21,4 +21,17 @@ public class DomainEvent
         Data = data.Serialize();
         CreatedAt = DateTime.Now;
     }
+
+    public EventOut ToOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Type = Type,
+            Data = Data,
+            CreatedAt = CreatedAt,
+            ProcessedAt = ProcessedAt,
+            Error = Error,
+        };
+    }
 }

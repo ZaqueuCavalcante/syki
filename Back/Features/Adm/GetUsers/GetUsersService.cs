@@ -14,6 +14,7 @@ public class GetUsersService(DatabaseSettings dbSettings) : IAdmService
                 u.id,
                 u.name AS name,
                 u.email,
+                u.institution_id,
                 i.name AS institution,
                 STRING_AGG(r.name, ',') AS role
             FROM

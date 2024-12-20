@@ -19,4 +19,17 @@ public class SykiTask
         Data = data.Serialize();
         CreatedAt = DateTime.Now;
     }
+
+    public TaskOut ToOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Type = Type,
+            Data = Data,
+            CreatedAt = CreatedAt,
+            ProcessedAt = ProcessedAt,
+            Error = Error,
+        };
+    }
 }

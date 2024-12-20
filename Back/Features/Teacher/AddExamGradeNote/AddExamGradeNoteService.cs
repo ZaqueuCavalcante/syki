@@ -13,8 +13,6 @@ public class AddExamGradeNoteService(SykiDbContext ctx) : ITeacherService
         var result = examGrade.AddNote(data.Note);
         if (result.IsError()) return result.GetError();
 
-        ctx.Add(SykiTask.CreateNewExamGradeNoteNotification(examGrade.StudentId, examGrade.ClassId));
-
         await ctx.SaveChangesAsync();
 
         return new SykiSuccess();

@@ -1,3 +1,5 @@
+using Syki.Back.Features.Academic.CreateStudent;
+
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
@@ -15,7 +17,9 @@ public partial class IntegrationTests
         // Assert
         student.Id.Should().NotBeEmpty(); 
         student.CourseOfferingId.Should().Be(data.AdsCourseOffering.Id); 
-        student.Name.Should().Be("Zezin"); 
+        student.Name.Should().Be("Zezin");
+
+        await AssertDomainEvent<StudentCreatedDomainEvent>(student.Id.ToString());
     }
 
     [Test]

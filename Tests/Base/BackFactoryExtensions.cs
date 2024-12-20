@@ -62,6 +62,7 @@ public static class BackFactoryExtensions
     {
         var client = factory.GetClient();
 
+        await client.SendResetPasswordToken(email);
         var token = await factory.GetResetPasswordToken(email);
         var password = await client.ResetPassword(token!);
         await client.Login(email, password);
@@ -73,6 +74,7 @@ public static class BackFactoryExtensions
     {
         var client = factory.GetClient();
 
+        await client.SendResetPasswordToken(email);
         var token = await factory.GetResetPasswordToken(email);
         var password = await client.ResetPassword(token!);
         await client.Login(email, password);

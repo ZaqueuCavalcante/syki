@@ -9,7 +9,7 @@ public class SendResetPasswordTokenController(SendResetPasswordTokenService serv
     /// Esqueci minha senha 🔓
     /// </summary>
     /// <remarks>
-    /// Envia para o email informado um link de redefinição de senha.
+    /// Envia um link de redefinição de senha para o email informado.
     /// </remarks>
     [HttpPost("reset-password-token")]
     [ProducesResponseType(200)]

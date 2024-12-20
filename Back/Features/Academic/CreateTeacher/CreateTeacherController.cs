@@ -10,6 +10,7 @@ public class CreateTeacherController(CreateTeacherService service) : ControllerB
     /// </summary>
     /// <remarks>
     /// Cria um novo professor.
+    /// Um link para redefinição de senha será enviado pro email informado.
     /// </remarks>
     [HttpPost("academic/teachers")]
     public async Task<IActionResult> Create([FromBody] CreateTeacherIn data)

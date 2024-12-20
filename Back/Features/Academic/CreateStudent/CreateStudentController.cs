@@ -10,6 +10,7 @@ public class CreateStudentController(CreateStudentService service) : ControllerB
     /// </summary>
     /// <remarks>
     /// Cria um novo aluno.
+    /// Um link para redefinição de senha será enviado pro email informado.
     /// </remarks>
     [HttpPost("academic/students")]
     public async Task<IActionResult> Create([FromBody] CreateStudentIn data)

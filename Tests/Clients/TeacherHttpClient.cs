@@ -1,6 +1,3 @@
-using Syki.Front.Auth;
-using Syki.Tests.Mock;
-using Syki.Front.Features.Academic.CrossLogin;
 using Syki.Front.Features.Teacher.GetTeacherClass;
 using Syki.Front.Features.Teacher.AddExamGradeNote;
 using Syki.Front.Features.Teacher.GetTeacherAgenda;

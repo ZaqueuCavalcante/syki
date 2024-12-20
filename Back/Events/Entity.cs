@@ -2,21 +2,20 @@ namespace Syki.Back.Events;
 
 public abstract class Entity
 {
-    private List<IDomainEvent> _domainEvents;
+    private List<IDomainEvent> _domainEvents = [];
 
     public void AddDomainEvent(IDomainEvent domainEvent)
     {
-        _domainEvents ??= [];
         _domainEvents.Add(domainEvent);
     }
 
     public void ClearDomainEvents()
     {
-        _domainEvents?.Clear();
+        _domainEvents.Clear();
     }
 
-    public List<IDomainEvent> GetDomainEvents()
+    public IReadOnlyList<IDomainEvent> GetDomainEvents()
     {
-        return _domainEvents ?? [];
+        return [.. _domainEvents];
     }
 }

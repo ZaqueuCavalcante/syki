@@ -6,6 +6,8 @@ public class UserRegister : Entity
     public string Email { get; set; }
     public UserRegisterStatus Status { get; set; }
 
+    private UserRegister() {}
+
     public UserRegister(string email)
     {
         Id = Guid.NewGuid();

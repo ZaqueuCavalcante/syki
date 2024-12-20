@@ -1,9 +1,8 @@
 using Syki.Back.Features.Cross.CreateUser;
-using Syki.Back.Features.Cross.SendResetPasswordToken;
 
 namespace Syki.Back.Features.Academic.CreateStudent;
 
-public class CreateStudentService(SykiDbContext ctx, CreateUserService createService, SendResetPasswordTokenService sendService) : IAcademicService
+public class CreateStudentService(SykiDbContext ctx, CreateUserService createService) : IAcademicService
 {
     public async Task<OneOf<StudentOut, SykiError>> Create(Guid institutionId, CreateStudentIn data)
     {
@@ -20,11 +19,9 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService createSer
 
         var user = result.GetSuccess();
         var student = new SykiStudent(user.Id, institutionId, data.Name, data.CourseOfferingId);
-
         ctx.Add(student);
-        ctx.Add(SykiTask.LinkOldNotifications(user.Id, institutionId));
 
-        await sendService.Send(new(user.Email));
+        await ctx.SaveChangesAsync();
 
         await transaction.CommitAsync();
 

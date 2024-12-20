@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Syki.Back.Events;
 
 namespace Syki.Tests.Base;
 
@@ -28,7 +29,7 @@ public class IntegrationTestBase
         _daemon.Dispose();
     }
 
-    protected async Task AssertDomainEvent<T>(string like)
+    protected async Task AssertDomainEvent<T>(string like) where T : IDomainEvent
     {
         using var ctx = _api.GetDbContext();
 
@@ -38,7 +39,7 @@ public class IntegrationTestBase
         typeof(SykiTask).Assembly.GetType(events[0].Type).Should().Be<T>();
     }
 
-    protected async Task AssertTaskByDataLike<T>(string like)
+    protected async Task AssertTask<T>(string like) where T : ISykiTask
     {
         using var ctx = _api.GetDbContext();
 

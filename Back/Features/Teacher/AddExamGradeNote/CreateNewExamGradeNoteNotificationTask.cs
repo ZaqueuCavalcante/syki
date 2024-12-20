@@ -1,11 +1,12 @@
-using Syki.Back.Features.Teacher.AddExamGradeNote;
 using Syki.Back.Features.Academic.CreateNotification;
 
-namespace Syki.Daemon.Tasks;
+namespace Syki.Back.Features.Teacher.AddExamGradeNote;
 
-public class CreateNewExamGradeNoteNotificationHandler(SykiDbContext ctx) : ISykiTaskHandler<CreateNewExamGradeNoteNotification>
+public record CreateNewExamGradeNoteNotificationTask(Guid UserId, Guid ClassId) : ISykiTask;
+
+public class CreateNewExamGradeNoteNotificationTaskHandler(SykiDbContext ctx) : ISykiTaskHandler<CreateNewExamGradeNoteNotificationTask>
 {
-    public async Task Handle(CreateNewExamGradeNoteNotification task)
+    public async Task Handle(CreateNewExamGradeNoteNotificationTask task)
     {
         var @class = await ctx.Classes.AsNoTracking()
             .Include(x => x.Discipline)

@@ -1,6 +1,3 @@
-using Syki.Back.Features.Teacher.AddExamGradeNote;
-using Syki.Back.Features.Cross.LinkOldNotifications;
-
 namespace Syki.Back.Tasks;
 
 public class SykiTask
@@ -21,15 +18,5 @@ public class SykiTask
         Type = data.GetType().ToString();
         Data = data.Serialize();
         CreatedAt = DateTime.Now;
-    }
-
-    public static SykiTask LinkOldNotifications(Guid userId, Guid institutionId)
-    {
-        return new SykiTask(new LinkOldNotifications { UserId = userId, InstitutionId = institutionId });
-    }
-
-    public static SykiTask CreateNewExamGradeNoteNotification(Guid userId, Guid classId)
-    {
-        return new SykiTask(new CreateNewExamGradeNoteNotification { UserId = userId, ClassId = classId });
     }
 }

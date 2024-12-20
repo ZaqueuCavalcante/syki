@@ -12,8 +12,5 @@ public static class SykiTasksConfigs
         services.AddSingleton<HangfireSettings>();
 
         services.AddTransient<SykiTasksProcessor>();
-
-        services.AddTransient<LinkOldNotificationsHandler>();
-        services.AddTransient<CreateNewExamGradeNoteNotificationHandler>();
     }
 }

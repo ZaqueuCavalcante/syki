@@ -118,13 +118,14 @@ public partial class IntegrationTests
         var @class = await teacherClient.GetTeacherClass(mathClass.Id);
         var examGradeId = @class.Students.First().ExamGrades.First().Id;
 
-        await teacherClient.AddExamGradeNote(examGradeId, 7.89M);
-        // await _api.AwaitTasksProcessing();
-
         // Act
-        var response = await studentClient.Http.GetUserNotifications();
+        await teacherClient.AddExamGradeNote(examGradeId, 7.89M);
+        
+        await _daemon.AwaitEventsProcessing();
+        await _daemon.AwaitTasksProcessing();
 
         // Assert
+        var response = await studentClient.Http.GetUserNotifications();
         response.Should().HaveCount(1);
         response[0].Title.Should().Be("Nota adicionada");
         response[0].Description.Should().Be($"Confira sua nota na disciplina: {@class.Discipline}");

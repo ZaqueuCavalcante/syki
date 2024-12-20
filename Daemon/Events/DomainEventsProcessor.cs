@@ -12,24 +12,17 @@ public class DomainEventsProcessor(IConfiguration configuration, IServiceScopeFa
         using var scope = serviceScopeFactory.CreateScope();
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
 
-        // TODO: CALL BOTH QUERIES IN SAME REQUEST
-
-        const string pickRowsSql = @"
+        const string sql = @"
             UPDATE syki.domain_events
             SET processor_id = @ProcessorId
-            WHERE processor_id IS NULL
-        ";
+            WHERE processor_id IS NULL;
 
-        var processorId = Guid.NewGuid();
-        var rows = await connection.ExecuteAsync(pickRowsSql, new { processorId });
-        if (rows == 0) return;
-
-        const string sql = @"
             SELECT * FROM syki.domain_events
             WHERE processor_id = @ProcessorId AND processed_at IS NULL
+            ORDER BY created_at;
         ";
 
-        var events = await connection.QueryAsync<DomainEvent>(sql, new { processorId });
+        var events = await connection.QueryAsync<DomainEvent>(sql, new { ProcessorId = Guid.NewGuid() });
 
         foreach (var evt in events)
         {

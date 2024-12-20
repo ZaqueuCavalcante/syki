@@ -10,25 +10,18 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
     {
         using var scope = serviceScopeFactory.CreateScope();
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
-
-        // TODO: CALL BOTH QUERIES IN SAME REQUEST
-
-        const string pickRowsSql = @"
+        
+        const string sql = @"
             UPDATE syki.tasks
             SET processor_id = @ProcessorId
-            WHERE processor_id IS NULL
-        ";
+            WHERE processor_id IS NULL;
 
-        var processorId = Guid.NewGuid();
-        var rows = await connection.ExecuteAsync(pickRowsSql, new { processorId });
-        if (rows == 0) return;
-
-        const string sql = @"
             SELECT * FROM syki.tasks
             WHERE processor_id = @ProcessorId AND processed_at IS NULL
+            ORDER BY created_at;
         ";
 
-        var tasks = await connection.QueryAsync<SykiTask>(sql, new { processorId });
+        var tasks = await connection.QueryAsync<SykiTask>(sql, new { ProcessorId = Guid.NewGuid() });
 
         foreach (var task in tasks)
         {

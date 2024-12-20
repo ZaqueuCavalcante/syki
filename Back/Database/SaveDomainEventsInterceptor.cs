@@ -15,11 +15,10 @@ public class SaveDomainEventsInterceptor : SaveChangesInterceptor
 
                 entity.ClearDomainEvents();
 
-                return domainEvents.Select(x => new DomainEvent(x));
+                var entityId = entry.Property<Guid>("Id").CurrentValue;
+                return domainEvents.Select(x => new DomainEvent(entityId, x));
             })
             .ToList();
-
-        Console.WriteLine(domainEvents.Count);
 
         foreach (var evt in domainEvents)
         {

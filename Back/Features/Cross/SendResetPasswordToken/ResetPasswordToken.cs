@@ -8,8 +8,6 @@ public class ResetPasswordToken : Entity
     public DateTime CreatedAt { get; set; }
     public DateTime? UsedAt { get; set; }
 
-    // TODO: Add expiration date?
-
     public ResetPasswordToken(
         Guid userId,
         string token

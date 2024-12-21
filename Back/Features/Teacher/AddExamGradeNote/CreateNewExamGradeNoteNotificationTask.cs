@@ -2,6 +2,7 @@ using Syki.Back.Features.Academic.CreateNotification;
 
 namespace Syki.Back.Features.Teacher.AddExamGradeNote;
 
+[SykiTaskDescription("Criar notificação de nota adicionada")]
 public record CreateNewExamGradeNoteNotificationTask(Guid UserId, Guid ClassId) : ISykiTask;
 
 public class CreateNewExamGradeNoteNotificationTaskHandler(SykiDbContext ctx) : ISykiTaskHandler<CreateNewExamGradeNoteNotificationTask>

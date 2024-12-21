@@ -15,6 +15,7 @@ using Syki.Back.Features.Academic.ReleaseClassesForEnrollment;
 
 namespace Syki.Back.Features.Cross.CreateInstitution;
 
+[SykiTaskDescription("Realizar seed de dados da instituição")]
 public record SeedInstitutionDataTask(Guid InstitutionId) : ISykiTask;
 
 public class SeedInstitutionDataTaskHandler(
@@ -34,6 +35,8 @@ public class SeedInstitutionDataTaskHandler(
     public async Task Handle(SeedInstitutionDataTask task)
     {
         if (Env.IsTesting()) return;
+
+        if (task.InstitutionId != Guid.Empty) throw new Exception("Teste");
 
         var id = task.InstitutionId;
         var institution = await ctx.Institutions.FirstAsync(f => f.Id == id);

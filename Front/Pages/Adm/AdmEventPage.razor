@@ -1,4 +1,5 @@
-﻿@using Syki.Front.Features.Adm.GetDomainEvent
+﻿@using Syki.Front.Features.Adm.GetTasks
+@using Syki.Front.Features.Adm.GetDomainEvent
 
 @namespace Syki.Front.Pages.Adm
 
@@ -12,10 +13,7 @@
         <MudCardContent>
             <MudGrid>
                 <MudItem xs="12" sm="8" md="8" lg="8">
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
-                        <MudIcon Icon="@Icons.Material.Filled.StickyNote2" Class="mb-1" Size="Size.Large"/>
-                        <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Type</MudText>
-                    </MudStack>
+                    <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@_data.Type</MudText>
                 </MudItem>
                 <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
                     <MudChip
@@ -48,21 +46,52 @@
     </MudContainer>
 
     <MudContainer Class="px-0 my-4">
+        <style>
+            .mud-table-toolbar {
+                height: auto;
+            }
+        </style>
         <MudTable
             Class="mb-4"
             Dense="true"
             Hover="true"
             RowsPerPage="10"
+            Loading="@_loading"
             Items="@_data.Tasks"
             T="DomainEventTaskOut"
             Breakpoint="Breakpoint.Sm"
         >
+            <ToolBarContent>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
+                    <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
+                    <MudText Typo="Typo.h6" Style="font-weight: bold">Tarefas</MudText>
+                </MudStack>
+            </ToolBarContent>
+
             <HeaderContent>
                 <MudTh>Tipo</MudTh>
+                <MudTh>Status</MudTh>
+                <MudTh>Criação</MudTh>
+                <MudTh>Processamento</MudTh>
+                <MudTh>Duração (ms)</MudTh>
+                <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Tipo">@context.Type</MudTd>
+                <MudTd DataLabel="Status">
+                    <SykiTaskStatusChip Status="@context.Status" />
+                </MudTd>
+                <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
+                <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
+                <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
+
+                <MudTd>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" />
+                </MudTd>
             </RowTemplate>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
         </MudTable>
     </MudContainer>
 </MudContainer>
@@ -87,5 +116,10 @@
         _loading = true;
         _data = await GetDomainEventClient.Get(Id);
         _loading = false;
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return "Não existem tarefas ainda.";
     }
 }

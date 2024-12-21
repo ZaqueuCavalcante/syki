@@ -2,6 +2,7 @@ using Syki.Back.Emails;
 
 namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 
+[SykiTaskDescription("Enviar email de confirmação de cadastro")]
 public record SendUserRegisterEmailConfirmationTask(Guid UserRegisterId) : ISykiTask;
 
 public class SendUserRegisterEmailConfirmationTaskHandler(SykiDbContext ctx, IEmailsService emailsService) : ISykiTaskHandler<SendUserRegisterEmailConfirmationTask>

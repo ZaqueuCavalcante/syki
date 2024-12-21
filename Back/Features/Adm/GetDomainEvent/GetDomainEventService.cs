@@ -23,6 +23,7 @@ public class GetDomainEventService(DatabaseSettings settings) : IAdmService
             WHERE event_id = @Id
         ";
         evt.Tasks = (await connection.QueryAsync<DomainEventTaskOut>(tasksSql, new{ id })).ToList();
+        evt.Tasks.ForEach(x => x.Type = x.Type.ToSykiTaskDescription());
 
         return evt;
     }

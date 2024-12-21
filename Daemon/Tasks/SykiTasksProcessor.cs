@@ -1,6 +1,7 @@
 using Dapper;
 using Npgsql;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Syki.Daemon.Tasks;
 
@@ -10,10 +11,13 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
     {
         using var scope = serviceScopeFactory.CreateScope();
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
-        
+
+        // TODO: Se tiver 1.000.000 de tarefas pendentes e isso aqui rodar, deveria trazer todos de uma vez pra memoria?
+        // Analisar como ficar buscando aos poucos, lotes de 100...
+
         const string sql = @"
             UPDATE syki.tasks
-            SET processor_id = @ProcessorId
+            SET processor_id = @ProcessorId, status = 'Processing'
             WHERE processor_id IS NULL;
 
             SELECT * FROM syki.tasks
@@ -23,8 +27,12 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
 
         var tasks = await connection.QueryAsync<SykiTask>(sql, new { ProcessorId = Guid.NewGuid() });
 
+        var sw = Stopwatch.StartNew();
+
         foreach (var task in tasks)
         {
+            sw.Restart();
+
             dynamic data = GetData(task);
             dynamic handler = GetHandler(scope, task);
             string? error = null;
@@ -40,11 +48,20 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
 
             const string update = @"
                 UPDATE syki.tasks
-                SET processed_at = now(), error = @Error
+                SET processed_at = now(), status = @Status, error = @Error, duration = @Duration
                 WHERE id = @Id
             ";
 
-            await connection.ExecuteAsync(update, new { task.Id, error });
+            var parameters = new
+            {
+                task.Id,
+                error,
+                Duration = sw.Elapsed.TotalMilliseconds,
+                Status = error.HasValue() ? SykiTaskStatus.Error.ToString() : SykiTaskStatus.Success.ToString(),
+            };
+            sw.Stop();
+
+            await connection.ExecuteAsync(update, parameters);
         }
     }
 

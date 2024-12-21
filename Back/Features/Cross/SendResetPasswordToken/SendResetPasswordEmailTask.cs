@@ -2,6 +2,7 @@ using Syki.Back.Emails;
 
 namespace Syki.Back.Features.Cross.SendResetPasswordToken;
 
+[SykiTaskDescription("Enviar email de redefinição de senha")]
 public record SendResetPasswordEmailTask(Guid UserId) : ISykiTask;
 
 public class SendResetPasswordEmailTaskHandler(SykiDbContext ctx, IEmailsService emailsService) : ISykiTaskHandler<SendResetPasswordEmailTask>

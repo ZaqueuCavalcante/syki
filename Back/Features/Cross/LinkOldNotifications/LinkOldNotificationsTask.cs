@@ -2,6 +2,7 @@ using Syki.Back.Features.Academic.CreateNotification;
 
 namespace Syki.Back.Features.Cross.LinkOldNotifications;
 
+[SykiTaskDescription("Vincular notificações ao novo usuário")]
 public record LinkOldNotificationsTask(Guid UserId, Guid InstitutionId) : ISykiTask;
 
 public class LinkOldNotificationsTaskHandler(SykiDbContext ctx) : ISykiTaskHandler<LinkOldNotificationsTask>

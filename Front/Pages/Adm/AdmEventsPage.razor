@@ -193,6 +193,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
+        _tableLoading = true;
         _data = await GetEventsClient.Get();
         await Filter();
         _loading = false;
@@ -216,6 +217,6 @@
 
     private string GetNotFoundMessage()
     {
-        return "Não existem eventos ainda.";
+        return _tableLoading ? "" : "Não existem eventos ainda.";
     }
 }

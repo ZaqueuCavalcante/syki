@@ -2,6 +2,7 @@ using Dapper;
 using Npgsql;
 using Newtonsoft.Json;
 using Syki.Back.Events;
+using System.Diagnostics;
 
 namespace Syki.Daemon.Events;
 
@@ -12,9 +13,12 @@ public class DomainEventsProcessor(IConfiguration configuration, IServiceScopeFa
         using var scope = serviceScopeFactory.CreateScope();
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
 
+        // TODO: Se tiver 1.000.000 de eventos pendentes e isso aqui rodar, deveria trazer todos de uma vez pra memoria?
+        // Analisar como ficar buscando aos poucos, lotes de 100...
+
         const string sql = @"
             UPDATE syki.domain_events
-            SET processor_id = @ProcessorId
+            SET processor_id = @ProcessorId, status = 'Processing'
             WHERE processor_id IS NULL;
 
             SELECT * FROM syki.domain_events
@@ -24,8 +28,12 @@ public class DomainEventsProcessor(IConfiguration configuration, IServiceScopeFa
 
         var events = await connection.QueryAsync<DomainEvent>(sql, new { ProcessorId = Guid.NewGuid() });
 
+        var sw = Stopwatch.StartNew();
+
         foreach (var evt in events)
         {
+            sw.Restart();
+
             dynamic data = GetData(evt);
             dynamic handler = GetHandler(scope, evt);
             string? error = null;
@@ -41,11 +49,19 @@ public class DomainEventsProcessor(IConfiguration configuration, IServiceScopeFa
 
             const string update = @"
                 UPDATE syki.domain_events
-                SET processed_at = now(), error = @Error
+                SET processed_at = now(), status = @Status, error = @Error, duration = @Duration
                 WHERE id = @Id
             ";
 
-            await connection.ExecuteAsync(update, new { evt.Id, error });
+            var parameters = new
+            {
+                evt.Id,
+                error,
+                Duration = sw.Elapsed.TotalMilliseconds,
+                Status = error.HasValue() ? DomainEventStatus.Error.ToString() : DomainEventStatus.Success.ToString(),
+            };
+            sw.Stop();
+            await connection.ExecuteAsync(update, parameters);
         }
     }
 

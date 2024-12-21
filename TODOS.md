@@ -1,5 +1,41 @@
 # TODOS
 
+- Header
+    - Taxa de processamento atual
+        - Pegar todos os eventos do dia
+        - Dividir pela hora atual do dia? 0.5 eventos / hora?
+
+- Tabela
+    - Tipo, Criacao, Processamento, Status, Duracao
+    - Todos com ordenacao ASC / DESC
+
+- Filtros
+    - Tipo (multi-select)
+    - Criacao (range de data)
+    - Processamento (range de data)
+    - Select de Status (exclusivo)
+        - Pendente -> processed_at IS NULL AND processor_id IS NULL
+        - Processando -> processed_at IS NULL AND processor_id IS NOT NULL
+        - Sucesso -> processed_at IS NOT NULL AND error IS NULL
+        - Erro -> processed_at IS NOT NULL AND error IS NOT NULL
+    - Duracao -> = X ou > X ou < X
+
+- Drawer com detalhes:
+    - Body/data
+    - Erro completo
+    - Tasks associadas + status delas
+    - Reprocessamento?
+
+- Selecionar todos os filtrados e reprocessa-los?
+    - Preview com o count ou resumo de tudo que vai ser feito
+    - Ao confirmar, voltar para a tela com os mesmos filtros aplicados para ir vendo o progresso...
+
+
+
+
+- Diferentes niveis de prioridade para o processamento dos eventos?
+
+
 
 
 
@@ -33,10 +69,6 @@ Esses eventos podem servir no futuro para o disparo de WebHooks, deixando a inte
 
 - Filtrar por instituição / por evento / por tarefa / por erros
 - Consigo reprocessar um evento / tarefa
-
-
-
-
 
 
 Exemplos de eventos:
@@ -75,7 +107,8 @@ Exemplos de eventos:
 
 - Implementar retentativas automaticas e manuais
 
-
+- Rotinas para limpar essas tabelas todo dia meia noite?
+    - Jogar para tabelas __processed
 
 
 

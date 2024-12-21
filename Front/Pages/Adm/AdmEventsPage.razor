@@ -1,5 +1,4 @@
-﻿@using ApexCharts
-@using Syki.Front.Features.Adm.GetEvents
+﻿@using Syki.Front.Features.Adm.GetEvents
 
 @namespace Syki.Front.Pages.Adm
 
@@ -24,39 +23,71 @@
                 <MudPaper Class="px-4 pt-4">
                     @if (!_loading)
                     {
-                        <ApexChart TItem="LastEventOut" Title="Últimos eventos">
-                            <ApexPointSeries
+                        <ApexCharts.ApexChart TItem="LastEventOut" Title="Últimos eventos">
+                            <ApexCharts.ApexPointSeries
                                 Name="Eventos"
                                 TItem="LastEventOut"
                                 Items="@_data.LastEvents"
-                                SeriesType="SeriesType.Line"
+                                SeriesType="ApexCharts.SeriesType.Line"
                                 XValue="@(e => e.Date.ToString("HH:mm:ss"))"
                                 YValue="@(e => e.Total)"
                             />
-                        </ApexChart>
+                        </ApexCharts.ApexChart>
                     }
                 </MudPaper>
             </MudItem>
-
             <MudItem xs="12" sm="6" md="6" lg="6">
                 <MudPaper Class="px-4 pt-4" Style="height: 100%">
                     @if (!_loading)
                     {
-                        <ApexChart TItem="EventTypeCountOut" Title="Quantidade por tipo">
-                            <ApexPointSeries
+                        <ApexCharts.ApexChart TItem="EventTypeCountOut" Title="Quantidade por tipo">
+                            <ApexCharts.ApexPointSeries
                                 Name="Tipos"
                                 TItem="EventTypeCountOut"
                                 Items="@_data.EventTypes"
-                                SeriesType="SeriesType.Pie"
+                                SeriesType="ApexCharts.SeriesType.Pie"
                                 XValue="@(e => e.Type)"
                                 YValue="@(e => e.Total)"
                             />
-                        </ApexChart>
+                        </ApexCharts.ApexChart>
                     }
                 </MudPaper>
             </MudItem>
         </MudGrid>
     </MudContainer>
+
+
+
+    <MudCard Class="pl-1 my-4">
+        <MudCardContent>
+            <MudGrid Spacing="3">
+                <MudItem>
+                    <MudButton
+                        IconSize="Size.Medium"
+                        StartIcon="@Icons.Material.Filled.Article"
+                        Variant="Variant.Filled"
+                        Size="Size.Medium"
+                        Color="Color.Tertiary"
+                    >
+                        Liberar matrícula
+                    </MudButton>
+                </MudItem>
+                <MudItem>
+                    <MudButton
+                        IconSize="Size.Medium"
+                        StartIcon="@Icons.Material.Filled.PlayLesson"
+                        Variant="Variant.Filled"
+                        Size="Size.Medium"
+                        Color="Color.Info"
+                    >
+                        Iniciar
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+
 </MudContainer>
 
 @inject GetEventsClient GetEventsClient

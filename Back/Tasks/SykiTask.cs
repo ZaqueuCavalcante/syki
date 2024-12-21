@@ -13,12 +13,13 @@ public class SykiTask
 
     public SykiTask() { }
 
-    public SykiTask(object data)
+    public SykiTask(Guid eventId, object data)
     {
         Id = Guid.NewGuid();
         Type = data.GetType().ToString();
         Data = data.Serialize();
         CreatedAt = DateTime.Now;
+        EventId = eventId;
     }
 
     public TaskOut ToOut()

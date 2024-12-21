@@ -6,8 +6,8 @@ public record TeacherCreatedDomainEvent(Guid UserId, Guid InstitutionId) : IDoma
 
 public class TeacherCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<TeacherCreatedDomainEvent>
 {
-    public async Task Handle(TeacherCreatedDomainEvent evt)
+    public async Task Handle(Guid eventId, TeacherCreatedDomainEvent evt)
     {
-        await ctx.SaveTaskAsync(new LinkOldNotificationsTask(evt.UserId, evt.InstitutionId));
+        await ctx.SaveTaskAsync(eventId, new LinkOldNotificationsTask(evt.UserId, evt.InstitutionId));
     }
 }

@@ -40,7 +40,7 @@ public class DomainEventsProcessor(IConfiguration configuration, IServiceScopeFa
 
             try
             {
-                await handler.Handle(data);
+                await handler.Handle(evt.Id, data);
             }
             catch (Exception ex)
             {

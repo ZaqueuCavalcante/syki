@@ -4,8 +4,8 @@ public record InstitutionCreatedDomainEvent(Guid Id) : IDomainEvent;
 
 public class InstitutionCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<InstitutionCreatedDomainEvent>
 {
-    public async Task Handle(InstitutionCreatedDomainEvent evt)
+    public async Task Handle(Guid eventId, InstitutionCreatedDomainEvent evt)
     {
-        await ctx.SaveTaskAsync(new SeedInstitutionDataTask(evt.Id));
+        await ctx.SaveTaskAsync(eventId, new SeedInstitutionDataTask(evt.Id));
     }
 }

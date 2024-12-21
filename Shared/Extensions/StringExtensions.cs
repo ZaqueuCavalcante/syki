@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using System.Globalization;
 using Newtonsoft.Json.Converters;
 using System.Text.RegularExpressions;
+using System.Reflection;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Syki.Shared;
 
@@ -136,4 +138,38 @@ public static class StringExtensions
 
 		return date.Value.ToMinuteString();
 	}
+
+    public static string AddQueryString(this string path, object obj)
+    {
+        return QueryHelpers.AddQueryString(path, ConvertObjectToDictionary(obj));
+    }
+
+    private static Dictionary<string, string?> ConvertObjectToDictionary(object obj)
+    {
+        if (obj == null) return [];
+
+        Dictionary<string, string?> dictionary = [];
+        PropertyInfo[] properties = obj.GetType().GetProperties();
+
+        foreach (PropertyInfo property in properties)
+        {
+            string propertyName = property.Name;
+            object propertyValue = property.GetValue(obj)!;
+
+            if (propertyValue != null)
+            {
+                var valueAsString = propertyValue.ToString();
+
+                if (property.PropertyType == typeof(DateTime))
+                    valueAsString = ((DateTime)propertyValue).ToString("yyyy-MM-ddTHH:mm:sszzz");
+                
+                if (property.PropertyType == typeof(DateOnly))
+                    valueAsString = ((DateOnly)propertyValue).ToString("yyyy-MM-dd");
+
+                dictionary.Add(propertyName, valueAsString);
+            }
+        }
+
+        return dictionary;
+    }
 }

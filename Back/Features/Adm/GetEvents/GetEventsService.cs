@@ -35,19 +35,11 @@ public class GetEventsService(DatabaseSettings settings) : IAdmService
             ORDER BY total DESC
         ";
 
-        const string eventsSql = @"
-            SELECT type, status, created_at, processed_at, duration
-            FROM syki.domain_events
-            ORDER BY created_at DESC
-        ";
-
         result.Summary = await connection.QueryFirstAsync<EventsSummaryOut>(summarySql);
         result.LastEvents = (await connection.QueryAsync<LastEventOut>(lastEventsSql)).ToList();
         result.EventTypes = (await connection.QueryAsync<EventTypeCountOut>(typesSql)).ToList();
-        result.Events = (await connection.QueryAsync<EventTableOut>(eventsSql)).ToList();
 
-        result.EventTypes.ForEach(x => x.Type = x.Type.ToPortugueseEventName());
-        result.Events.ForEach(x => x.Type = x.Type.ToPortugueseEventName());
+        result.EventTypes.ForEach(x => x.Description = x.Type.ToPortugueseEventName());
 
         return result;
     }

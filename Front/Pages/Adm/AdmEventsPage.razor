@@ -61,7 +61,7 @@
                                 TItem="EventTypeCountOut"
                                 Items="@_data.EventTypes"
                                 SeriesType="ApexCharts.SeriesType.Pie"
-                                XValue="@(e => e.Type)"
+                                XValue="@(e => e.Description)"
                                 YValue="@(e => e.Total)"
                             />
                         </ApexCharts.ApexChart>
@@ -83,6 +83,7 @@
                         Variant="Variant.Outlined"
                         @bind-Value="@_status"
                         Label="Status"
+                        Clearable="true"
                         AdornmentColor="Color.Primary
                     ">
                         @foreach (DomainEventStatus? item in Enum.GetValues<DomainEventStatus>())
@@ -96,13 +97,14 @@
                         }
                     </MudSelect>
                 </MudItem>
-                <MudItem xs="12" sm="3" md="3" lg="3">
+                <MudItem xs="12" sm="12" md="12" lg="12" Class="d-flex justify-end">
                     <MudButton
-                        IconSize="Size.Medium"
-                        StartIcon="@Icons.Material.Filled.Filter"
-                        Variant="Variant.Filled"
+                        OnClick="@Filter"
                         Size="Size.Medium"
-                        Color="Color.Info"
+                        Color="Color.Primary"
+                        IconSize="Size.Medium"
+                        Variant="Variant.Filled"
+                        StartIcon="@Icons.Material.Outlined.FilterList"
                     >
                         Filtrar
                     </MudButton>
@@ -113,13 +115,14 @@
 
     <MudContainer Class="px-0 my-4">
         <MudTable
-            T="EventTableOut"
-            Items="@_data.Events"
             Class="mb-4"
-            Breakpoint="Breakpoint.Sm"
             Dense="true"
             Hover="true"
+            Items="@_events"
             RowsPerPage="10"
+            T="DomainEventTableOut"
+            Loading="@_tableLoading"
+            Breakpoint="Breakpoint.Sm"
         >
             <HeaderContent>
                 <MudTh>Tipo</MudTh>
@@ -148,11 +151,14 @@
 </MudContainer>
 
 @inject GetEventsClient GetEventsClient
+@inject GetDomainEventsClient GetDomainEventsClient
 
 @code
 {
     private bool _loading;
+    private bool _tableLoading;
     private GetEventsOut _data = new();
+    private List<DomainEventTableOut> _events = [];
 
     private DomainEventStatus? _status;
 
@@ -160,7 +166,19 @@
     {
         _loading = true;
         _data = await GetEventsClient.Get();
+        await Filter();
         _loading = false;
+    }
+
+    private async Task Filter()
+    {
+        _tableLoading = true;
+        var filters = new DomainEventTableFilterIn()
+        {
+            Status = _status
+        };
+        _events = await GetDomainEventsClient.Get(filters);
+        _tableLoading = false;
     }
 
     private string GetNotFoundMessage()

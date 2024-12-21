@@ -76,26 +76,35 @@
     <MudCard Class="pl-1 my-4">
         <MudCardContent>
             <MudGrid Spacing="3">
-                <MudItem>
-                    <MudButton
-                        IconSize="Size.Medium"
-                        StartIcon="@Icons.Material.Filled.Article"
-                        Variant="Variant.Filled"
-                        Size="Size.Medium"
-                        Color="Color.Tertiary"
-                    >
-                        Liberar matrícula
-                    </MudButton>
+                <MudItem xs="12" sm="3" md="3" lg="3">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        @bind-Value="@_status"
+                        Label="Status"
+                        AdornmentColor="Color.Primary
+                    ">
+                        @foreach (DomainEventStatus? item in Enum.GetValues<DomainEventStatus>())
+                        {
+                            <MudSelectItem Value="@item">
+                                <MudStack Row="true" AlignItems="AlignItems.Center">
+                                    <MudIcon Class="mb-1" Icon="@item.Value.GetIcon()" Color="@item.Value.GetColor()" Size="Size.Small"/>
+                                    <MudText>@item.GetDescription()</MudText>
+                                </MudStack>
+                            </MudSelectItem>
+                        }
+                    </MudSelect>
                 </MudItem>
-                <MudItem>
+                <MudItem xs="12" sm="3" md="3" lg="3">
                     <MudButton
                         IconSize="Size.Medium"
-                        StartIcon="@Icons.Material.Filled.PlayLesson"
+                        StartIcon="@Icons.Material.Filled.Filter"
                         Variant="Variant.Filled"
                         Size="Size.Medium"
                         Color="Color.Info"
                     >
-                        Iniciar
+                        Filtrar
                     </MudButton>
                 </MudItem>
             </MudGrid>
@@ -144,6 +153,8 @@
 {
     private bool _loading;
     private GetEventsOut _data = new();
+
+    private DomainEventStatus? _status;
 
     protected override async Task OnInitializedAsync()
     {

@@ -4,8 +4,8 @@
     T="string"
     Class="px-3 ma-0"
     Size="Size.Small"
-    Icon="@GetIcon()"
-    Color="@GetColor()"
+    Icon="@Status.GetIcon()"
+    Color="@Status.GetColor()"
     IconColor="Color.Default"
 >
     @Status.GetDescription()
@@ -15,28 +15,4 @@
 {
     [Parameter]
     public DomainEventStatus Status { get; set; }
-
-    private string GetIcon()
-    {
-        return Status switch
-        {
-            DomainEventStatus.Pending => Icons.Material.Rounded.WarningAmber,
-            DomainEventStatus.Processing => Icons.Material.Filled.Autorenew,
-            DomainEventStatus.Success => Icons.Material.Filled.CheckCircleOutline,
-            DomainEventStatus.Error => Icons.Material.Filled.ErrorOutline,
-            _ => ""
-        };
-    }
-
-    private Color GetColor()
-    {
-        return Status switch
-        {
-            DomainEventStatus.Pending => Color.Warning,
-            DomainEventStatus.Processing => Color.Info,
-            DomainEventStatus.Success => Color.Success,
-            DomainEventStatus.Error => Color.Error,
-            _ => Color.Default
-        };
-    }
 }

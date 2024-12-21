@@ -39,7 +39,7 @@ public class GetEventsService(DatabaseSettings settings) : IAdmService
         result.LastEvents = (await connection.QueryAsync<LastEventOut>(lastEventsSql)).ToList();
         result.EventTypes = (await connection.QueryAsync<EventTypeCountOut>(typesSql)).ToList();
 
-        result.EventTypes.ForEach(x => x.Description = x.Type.ToPortugueseEventName());
+        result.EventTypes.ForEach(x => x.Description = x.Type.ToDomainEventDescription());
 
         return result;
     }

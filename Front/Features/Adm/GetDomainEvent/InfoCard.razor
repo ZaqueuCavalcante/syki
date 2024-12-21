@@ -1,0 +1,32 @@
+﻿@namespace Syki.Front.Features.Adm.GetDomainEvent
+
+<MudCard Outlined="true" Elevation="0" Style="height: 100%">
+	<MudCardHeader Style="padding: 8px 8px 8px 20px">
+		<CardHeaderAvatar>
+			<MudIcon Icon="@Icon" Style="@($"color: {@Color}")" Size="Size.Medium" />
+		</CardHeaderAvatar>
+		<CardHeaderContent>
+			<MudText Style="font-size: 12px; color: #7C8183">
+				@Title
+			</MudText>
+			<MudText Style="font-size: 18px; font-weight: 700">
+				@Content
+			</MudText>
+		</CardHeaderContent>
+	</MudCardHeader>
+</MudCard>
+
+@code
+{
+	[Parameter]
+	public string Icon { get; set; }
+
+	[Parameter]
+	public string Color { get; set; }
+
+	[Parameter]
+	public string Title { get; set; }
+
+	[Parameter]
+	public string Content { get; set; }
+}

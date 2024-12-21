@@ -14,10 +14,6 @@
     - Criacao (range de data)
     - Processamento (range de data)
     - Select de Status (exclusivo)
-        - Pendente -> processed_at IS NULL AND processor_id IS NULL
-        - Processando -> processed_at IS NULL AND processor_id IS NOT NULL
-        - Sucesso -> processed_at IS NOT NULL AND error IS NULL
-        - Erro -> processed_at IS NOT NULL AND error IS NOT NULL
     - Duracao -> = X ou > X ou < X
 
 - Drawer com detalhes:

@@ -35,7 +35,7 @@ public class GetDomainEventsService(DatabaseSettings settings) : IAdmService
 
         var events = (await connection.QueryAsync<DomainEventTableOut>(sql, parameters)).ToList();
 
-        events.ForEach(x => x.Type = x.Type.ToPortugueseEventName());
+        events.ForEach(x => x.Type = x.Type.ToDomainEventDescription());
 
         return events;
     }

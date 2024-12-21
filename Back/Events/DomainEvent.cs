@@ -12,6 +12,7 @@ public class DomainEvent
     public Guid? ProcessorId { get; set; }
     public string? Error { get; set; }
     public int Duration { get; set; }
+    public Guid? ParentId { get; set; }
 
     public DomainEvent() { }
 

@@ -105,6 +105,7 @@
                 <MudTh>Criação</MudTh>
                 <MudTh>Processamento</MudTh>
                 <MudTh>Duração (ms)</MudTh>
+                <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Tipo">@context.Type</MudTd>
@@ -114,6 +115,10 @@
                 <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
+
+                <MudTd>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Id))" />
+                </MudTd>
             </RowTemplate>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -126,10 +131,10 @@
 
     <MudContainer Class="px-0 my-4">
         <MudGrid Spacing="2">
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Rounded.WarningAmber" Color="MudBlazor.Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Autorenew" Color="MudBlazor.Color.Info" Text="Processando" Value="@_data.Summary.Processing" />
             <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="MudBlazor.Color.Success" Text="Sucessos" Value="@_data.Summary.Success" />
             <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="MudBlazor.Color.Error" Text="Erros" Value="@_data.Summary.Error" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Rounded.WarningAmber" Color="MudBlazor.Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Autorenew" Color="MudBlazor.Color.Info" Text="Processando" Value="@_data.Summary.Processing" />
         </MudGrid>
         <MudGrid Spacing="2" Class="mt-2">
             <MudItem xs="12" sm="6" md="6" lg="6">
@@ -171,6 +176,7 @@
 
 </MudContainer>
 
+@inject NavigationManager Nav
 @inject GetEventsClient GetEventsClient
 @inject GetDomainEventsClient GetDomainEventsClient
 
@@ -201,6 +207,11 @@
         };
         _events = await GetDomainEventsClient.Get(filters);
         _tableLoading = false;
+    }
+
+    private void GoToDetails(Guid id)
+    {
+        Nav.NavigateTo($"adm/events/{id}");
     }
 
     private string GetNotFoundMessage()

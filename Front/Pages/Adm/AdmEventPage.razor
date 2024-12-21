@@ -1,0 +1,91 @@
+﻿@using Syki.Front.Features.Adm.GetDomainEvent
+
+@namespace Syki.Front.Pages.Adm
+
+@page "/adm/events/{id:guid}"
+@attribute [Authorize(Roles = "Adm")]
+
+<SykiPageTitle Title="Eventos" />
+
+<MudContainer Class="my-4 px-4">
+    <MudCard>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.StickyNote2" Class="mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Style="font-weight: bold">@_data.Type</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudChip
+                        T="string"
+                        Class="px-5 ma-0"
+                        Size="Size.Large"
+                        Icon="@_data.Status.GetIcon()"
+                        Color="@_data.Status.GetColor()"
+                        IconColor="Color.Default"
+                    >
+                        @_data.Status.GetDescription()
+                    </MudChip>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="px-0 my-4">
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.BlueGray.Lighten4" Title="Criação" Content="@_data.CreatedAt.ToMinuteString()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.AccessTimeFilled" Color="@GetProcessedAtIconColor()" Title="Processamento" Content="@_data.ProcessedAt.ToMinuteString()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.Timer" Color="@Colors.Indigo.Darken1" Title="Duração (ms)" Content="@_data.Duration.ToThousandSeparated()" />
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+
+    <MudContainer Class="px-0 my-4">
+        <MudTable
+            Class="mb-4"
+            Dense="true"
+            Hover="true"
+            RowsPerPage="10"
+            Items="@_data.Tasks"
+            T="DomainEventTaskOut"
+            Breakpoint="Breakpoint.Sm"
+        >
+            <HeaderContent>
+                <MudTh>Tipo</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Tipo">@context.Type</MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+@inject GetDomainEventClient GetDomainEventClient
+
+@code
+{
+	[Parameter]
+	public Guid Id { get; set; }
+
+    private bool _loading;
+    private DomainEventOut _data = new();
+
+    private string GetProcessedAtIconColor()
+    {
+        return _data.ProcessedAt == null ? Colors.BlueGray.Lighten4 : Colors.Green.Darken1;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _data = await GetDomainEventClient.Get(Id);
+        _loading = false;
+    }
+}

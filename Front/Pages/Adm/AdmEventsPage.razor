@@ -24,15 +24,113 @@
         </MudCardContent>
     </MudCard>
 
+    <style>
+        .mud-table-toolbar {
+            height: auto;
+        }
+    </style>
     <MudContainer Class="px-0 my-4">
+        <MudTable
+            Class="mb-4"
+            Dense="true"
+            Hover="true"
+            Items="@_events"
+            RowsPerPage="10"
+            T="DomainEventTableOut"
+            Loading="@_tableLoading"
+            Breakpoint="Breakpoint.Sm"
+        >
+            <ToolBarContent>
+                <MudCard Class="my-4 mr-2" Style="width: 100%" Elevation="0" Outlined="true">
+                    <MudCardContent>
+                        <MudGrid Spacing="3">
+                            <MudItem xs="12" sm="6" md="6" lg="6">
+                                <MudSelect
+                                    Dense="true"
+                                    Margin="Margin.Dense"
+                                    Variant="Variant.Outlined"
+                                    @bind-Value="@_type"
+                                    Label="Tipo"
+                                    Clearable="true"
+                                    AdornmentColor="Color.Primary
+                                ">
+                                    @foreach (EventTypeCountOut item in _data.EventTypes)
+                                    {
+                                        <MudSelectItem Value="@item.Type">@item.Description</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
 
+                            <MudItem xs="12" sm="3" md="3" lg="3">
+                                <MudSelect
+                                    Dense="true"
+                                    Margin="Margin.Dense"
+                                    Variant="Variant.Outlined"
+                                    @bind-Value="@_status"
+                                    Label="Status"
+                                    Clearable="true"
+                                    AdornmentColor="Color.Primary
+                                ">
+                                    @foreach (DomainEventStatus? item in Enum.GetValues<DomainEventStatus>())
+                                    {
+                                        <MudSelectItem Value="@item">
+                                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                                <MudIcon Class="mb-1" Icon="@item.Value.GetIcon()" Color="@item.Value.GetColor()" Size="Size.Small"/>
+                                                <MudText>@item.GetDescription()</MudText>
+                                            </MudStack>
+                                        </MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                            <MudItem xs="12" sm="12" md="12" lg="12" Class="d-flex justify-end">
+                                <MudButton
+                                    OnClick="@Filter"
+                                    Size="Size.Medium"
+                                    Color="Color.Primary"
+                                    IconSize="Size.Medium"
+                                    Variant="Variant.Filled"
+                                    StartIcon="@Icons.Material.Outlined.FilterList"
+                                >
+                                    Filtrar
+                                </MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    </MudCardContent>
+                </MudCard>
+            </ToolBarContent>
+
+            <HeaderContent>
+                <MudTh>Tipo</MudTh>
+                <MudTh>Status</MudTh>
+                <MudTh>Criação</MudTh>
+                <MudTh>Processamento</MudTh>
+                <MudTh>Duração (ms)</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Tipo">@context.Type</MudTd>
+                <MudTd DataLabel="Status">
+                    <DomainEventStatusChip Status="@context.Status" />
+                </MudTd>
+                <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
+                <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
+                <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudContainer>
+
+    <MudContainer Class="px-0 my-4">
         <MudGrid Spacing="2">
             <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Rounded.WarningAmber" Color="MudBlazor.Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
             <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Autorenew" Color="MudBlazor.Color.Info" Text="Processando" Value="@_data.Summary.Processing" />
             <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="MudBlazor.Color.Success" Text="Sucessos" Value="@_data.Summary.Success" />
             <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="MudBlazor.Color.Error" Text="Erros" Value="@_data.Summary.Error" />
         </MudGrid>
-
         <MudGrid Spacing="2" Class="mt-2">
             <MudItem xs="12" sm="6" md="6" lg="6">
                 <MudPaper Class="px-4 pt-4">
@@ -71,83 +169,6 @@
         </MudGrid>
     </MudContainer>
 
-
-
-    <MudCard Class="pl-1 my-4">
-        <MudCardContent>
-            <MudGrid Spacing="3">
-                <MudItem xs="12" sm="3" md="3" lg="3">
-                    <MudSelect
-                        Dense="true"
-                        Margin="Margin.Dense"
-                        Variant="Variant.Outlined"
-                        @bind-Value="@_status"
-                        Label="Status"
-                        Clearable="true"
-                        AdornmentColor="Color.Primary
-                    ">
-                        @foreach (DomainEventStatus? item in Enum.GetValues<DomainEventStatus>())
-                        {
-                            <MudSelectItem Value="@item">
-                                <MudStack Row="true" AlignItems="AlignItems.Center">
-                                    <MudIcon Class="mb-1" Icon="@item.Value.GetIcon()" Color="@item.Value.GetColor()" Size="Size.Small"/>
-                                    <MudText>@item.GetDescription()</MudText>
-                                </MudStack>
-                            </MudSelectItem>
-                        }
-                    </MudSelect>
-                </MudItem>
-                <MudItem xs="12" sm="12" md="12" lg="12" Class="d-flex justify-end">
-                    <MudButton
-                        OnClick="@Filter"
-                        Size="Size.Medium"
-                        Color="Color.Primary"
-                        IconSize="Size.Medium"
-                        Variant="Variant.Filled"
-                        StartIcon="@Icons.Material.Outlined.FilterList"
-                    >
-                        Filtrar
-                    </MudButton>
-                </MudItem>
-            </MudGrid>
-        </MudCardContent>
-    </MudCard>
-
-    <MudContainer Class="px-0 my-4">
-        <MudTable
-            Class="mb-4"
-            Dense="true"
-            Hover="true"
-            Items="@_events"
-            RowsPerPage="10"
-            T="DomainEventTableOut"
-            Loading="@_tableLoading"
-            Breakpoint="Breakpoint.Sm"
-        >
-            <HeaderContent>
-                <MudTh>Tipo</MudTh>
-                <MudTh>Status</MudTh>
-                <MudTh>Criação</MudTh>
-                <MudTh>Processamento</MudTh>
-                <MudTh>Duração (ms)</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Tipo">@context.Type</MudTd>
-                <MudTd DataLabel="Status">
-                    <DomainEventStatusChip Status="@context.Status" />
-                </MudTd>
-                <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
-                <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
-                <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
-            </RowTemplate>
-            <NoRecordsContent>
-                @(GetNotFoundMessage())
-            </NoRecordsContent>
-            <PagerContent>
-                <SykiTablePager />
-            </PagerContent>
-        </MudTable>
-    </MudContainer>
 </MudContainer>
 
 @inject GetEventsClient GetEventsClient
@@ -160,6 +181,7 @@
     private GetEventsOut _data = new();
     private List<DomainEventTableOut> _events = [];
 
+    private string? _type;
     private DomainEventStatus? _status;
 
     protected override async Task OnInitializedAsync()
@@ -175,7 +197,7 @@
         _tableLoading = true;
         var filters = new DomainEventTableFilterIn()
         {
-            Status = _status
+            Type = _type, Status = _status
         };
         _events = await GetDomainEventsClient.Get(filters);
         _tableLoading = false;

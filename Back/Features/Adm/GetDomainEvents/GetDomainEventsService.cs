@@ -11,6 +11,7 @@ public class GetDomainEventsService(DatabaseSettings settings) : IAdmService
 
         const string sql = @"
             SELECT
+                id,
                 type,
                 status,
                 created_at,

@@ -14,9 +14,10 @@ public class GetEventsService(DatabaseSettings settings) : IAdmService
         const string summarySql = @"
             SELECT
                 count(1) AS total,
-                count(1) FILTER (WHERE processed_at IS NOT NULL) AS processed,
-                count(1) FILTER (WHERE processed_at IS NULL) AS pending,
-                count(1) FILTER (WHERE error IS NOT NULL) AS error
+                count(1) FILTER (WHERE status = 'Pending') AS pending,
+                count(1) FILTER (WHERE status = 'Processing') AS processing,
+                count(1) FILTER (WHERE status = 'Success') AS success,
+                count(1) FILTER (WHERE status = 'Error') AS error
             FROM syki.domain_events
         ";
 
@@ -34,11 +35,19 @@ public class GetEventsService(DatabaseSettings settings) : IAdmService
             ORDER BY total DESC
         ";
 
+        const string eventsSql = @"
+            SELECT type, status, created_at, processed_at, duration
+            FROM syki.domain_events
+            ORDER BY created_at DESC
+        ";
+
         result.Summary = await connection.QueryFirstAsync<EventsSummaryOut>(summarySql);
         result.LastEvents = (await connection.QueryAsync<LastEventOut>(lastEventsSql)).ToList();
         result.EventTypes = (await connection.QueryAsync<EventTypeCountOut>(typesSql)).ToList();
+        result.Events = (await connection.QueryAsync<EventTableOut>(eventsSql)).ToList();
 
         result.EventTypes.ForEach(x => x.Type = x.Type.ToPortugueseEventName());
+        result.Events.ForEach(x => x.Type = x.Type.ToPortugueseEventName());
 
         return result;
     }

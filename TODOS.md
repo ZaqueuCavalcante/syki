@@ -6,7 +6,7 @@
         - Dividir pela hora atual do dia? 0.5 eventos / hora?
 
 - Tabela
-    - Tipo, Criacao, Processamento, Status, Duracao
+    - Tipo, Status, Criacao, Processamento, Duracao
     - Todos com ordenacao ASC / DESC
 
 - Filtros

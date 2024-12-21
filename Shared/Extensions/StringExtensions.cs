@@ -120,4 +120,20 @@ public static class StringExtensions
 	{
 		return value.ToString("N0", CultureInfo.CreateSpecificCulture("pt-BR"));
 	}
+
+	public static string ToMinuteString(this DateTime date)
+	{
+		if (date == DateTime.MinValue)
+			return "-";
+
+		return date.ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss");
+	}
+
+	public static string ToMinuteString(this DateTime? date)
+	{
+		if (date == null)
+			return "-";
+
+		return date.Value.ToMinuteString();
+	}
 }

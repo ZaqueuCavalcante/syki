@@ -8,13 +8,28 @@
 <SykiPageTitle Title="Eventos" />
 
 <MudContainer Class="my-4 px-4">
-    <SykiPageHeader Icon="@Icons.Material.Filled.StickyNote2" Title="Eventos" />
+    <MudCard>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.StickyNote2" Class="mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Style="font-weight: bold">Eventos</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudText Typo="Typo.h4" Style="font-weight: bold">@_data.Summary.Total.ToThousandSeparated()</MudText>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
     <MudContainer Class="px-0 my-4">
 
         <MudGrid Spacing="2">
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Adjust" Color="MudBlazor.Color.Info" Text="Total" Value="@_data.Summary.Total" />
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="MudBlazor.Color.Success" Text="Processados" Value="@_data.Summary.Processed" />
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.WarningAmber" Color="MudBlazor.Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Rounded.WarningAmber" Color="MudBlazor.Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Autorenew" Color="MudBlazor.Color.Info" Text="Processando" Value="@_data.Summary.Processing" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="MudBlazor.Color.Success" Text="Sucessos" Value="@_data.Summary.Success" />
             <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="MudBlazor.Color.Error" Text="Erros" Value="@_data.Summary.Error" />
         </MudGrid>
 
@@ -87,7 +102,40 @@
         </MudCardContent>
     </MudCard>
 
-
+    <MudContainer Class="px-0 my-4">
+        <MudTable
+            T="EventTableOut"
+            Items="@_data.Events"
+            Class="mb-4"
+            Breakpoint="Breakpoint.Sm"
+            Dense="true"
+            Hover="true"
+            RowsPerPage="10"
+        >
+            <HeaderContent>
+                <MudTh>Tipo</MudTh>
+                <MudTh>Status</MudTh>
+                <MudTh>Criação</MudTh>
+                <MudTh>Processamento</MudTh>
+                <MudTh>Duração (ms)</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Tipo">@context.Type</MudTd>
+                <MudTd DataLabel="Status">
+                    <DomainEventStatusChip Status="@context.Status" />
+                </MudTd>
+                <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
+                <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
+                <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudContainer>
 </MudContainer>
 
 @inject GetEventsClient GetEventsClient
@@ -102,5 +150,10 @@
         _loading = true;
         _data = await GetEventsClient.Get();
         _loading = false;
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return "Não existem eventos ainda.";
     }
 }

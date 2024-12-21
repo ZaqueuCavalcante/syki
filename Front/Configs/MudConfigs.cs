@@ -1,4 +1,5 @@
 using MudBlazor;
+using ApexCharts;
 using MudBlazor.Services;
 
 namespace Syki.Front.Configs;
@@ -7,6 +8,8 @@ public static class MudConfigs
 {
     public static void AddMudConfigs(this WebAssemblyHostBuilder builder)
     {
+        builder.Services.AddApexCharts();
+
         builder.Services.AddMudServices(config =>
         {
             config.SnackbarConfiguration.NewestOnTop = true;

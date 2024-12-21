@@ -64,10 +64,10 @@
     </NotAuthorized>
 </AuthorizeView>
 
-
 @inject NavigationManager Nav
 @inject ILocalStorageService LocalStorage
 @inject SykiAuthStateProvider AuthStateProvider
+@inject ApexCharts.IApexChartService ApexChartService
 @inject IBrowserViewportService BrowserViewportService
 
 @code
@@ -100,12 +100,22 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
-
     }
 
     private async Task ChangeTheme()
     {
         _isDark = !_isDark;
+
+        var options = new ApexCharts.ApexChartBaseOptions
+        {
+            Theme = new ApexCharts.Theme
+            {
+                Mode = _isDark ? ApexCharts.Mode.Dark : ApexCharts.Mode.Light
+            }
+        };
+
+        await ApexChartService.SetGlobalOptionsAsync(options, true);
+
         await LocalStorage.SetItemAsync("IsDark", _isDark.ToString()); 
     }
 

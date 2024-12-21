@@ -1,5 +1,19 @@
 # Sistemas Similares
 
+Moodle
+Backbone Educacional
+Genius Education System Software
+SYDLE ONE
+Gradelink SIS
+PowerVista RollCall
+Pikmykid
+Teachmint
+Jumbula
+EduSec
+EduKool ERP
+Wisenet
+
+
 ## FEDENA
 
 https://fedena.com/feature-tour

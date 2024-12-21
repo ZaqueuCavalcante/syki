@@ -40,3 +40,7 @@
 .mud-input-control.mud-input-control-margin-dense {
     margin: 4px 0 !important;
 }
+
+svg.apexcharts-svg {
+    background: transparent !important;
+}

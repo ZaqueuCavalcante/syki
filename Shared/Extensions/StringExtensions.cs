@@ -115,4 +115,9 @@ public static class StringExtensions
 
         return $"{hours}h e {minutes}min";
     }
+
+	public static string ToThousandSeparated(this int value)
+	{
+		return value.ToString("N0", CultureInfo.CreateSpecificCulture("pt-BR"));
+	}
 }

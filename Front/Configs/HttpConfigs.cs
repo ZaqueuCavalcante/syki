@@ -12,7 +12,7 @@ public static class HttpConfigs
             .AddHttpClient("HttpClient", x => x.BaseAddress = new Uri(apiUrl))
             .AddHttpMessageHandler<SykiDelegatingHandler>();
 
-        builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+        builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>()
             .CreateClient("HttpClient"));
     }
 }

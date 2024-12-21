@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="MudBlazor" Version="7.15.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Blazor-ApexCharts" Version="4.0.1" />
     <PackageReference Include="Blazor.LocalStorage" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />

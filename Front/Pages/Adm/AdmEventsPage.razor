@@ -1,0 +1,75 @@
+﻿@using ApexCharts
+@using Syki.Front.Features.Adm.GetEvents
+
+@namespace Syki.Front.Pages.Adm
+
+@page "/adm/events"
+@attribute [Authorize(Roles = "Adm")]
+
+<SykiPageTitle Title="Eventos" />
+
+<MudContainer Class="my-4 px-4">
+    <SykiPageHeader Icon="@Icons.Material.Filled.StickyNote2" Title="Eventos" />
+    <MudContainer Class="px-0 my-4">
+
+        <MudGrid Spacing="2">
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Adjust" Color="MudBlazor.Color.Info" Text="Total" Value="@_data.Summary.Total" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="MudBlazor.Color.Success" Text="Processados" Value="@_data.Summary.Processed" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.WarningAmber" Color="MudBlazor.Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="MudBlazor.Color.Error" Text="Erros" Value="@_data.Summary.Error" />
+        </MudGrid>
+
+        <MudGrid Spacing="2" Class="mt-2">
+            <MudItem xs="12" sm="6" md="6" lg="6">
+                <MudPaper Class="px-4 pt-4">
+                    @if (!_loading)
+                    {
+                        <ApexChart TItem="LastEventOut" Title="Últimos eventos">
+                            <ApexPointSeries
+                                Name="Eventos"
+                                TItem="LastEventOut"
+                                Items="@_data.LastEvents"
+                                SeriesType="SeriesType.Line"
+                                XValue="@(e => e.Date.ToString("HH:mm:ss"))"
+                                YValue="@(e => e.Total)"
+                            />
+                        </ApexChart>
+                    }
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="6" lg="6">
+                <MudPaper Class="px-4 pt-4" Style="height: 100%">
+                    @if (!_loading)
+                    {
+                        <ApexChart TItem="EventTypeCountOut" Title="Quantidade por tipo">
+                            <ApexPointSeries
+                                Name="Tipos"
+                                TItem="EventTypeCountOut"
+                                Items="@_data.EventTypes"
+                                SeriesType="SeriesType.Pie"
+                                XValue="@(e => e.Type)"
+                                YValue="@(e => e.Total)"
+                            />
+                        </ApexChart>
+                    }
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject GetEventsClient GetEventsClient
+
+@code
+{
+    private bool _loading;
+    private GetEventsOut _data = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _data = await GetEventsClient.Get();
+        _loading = false;
+    }
+}

@@ -1,13 +1,45 @@
+using Dapper;
+using Npgsql;
+
 namespace Syki.Back.Features.Adm.GetEvents;
 
-public class GetEventsService(SykiDbContext ctx) : IAdmService
+public class GetEventsService(DatabaseSettings settings) : IAdmService
 {
-    public async Task<List<EventOut>> Get()
+    public async Task<GetEventsOut> Get()
     {
-        var events = await ctx.DomainEvents
-            .OrderByDescending(x => x.CreatedAt)
-            .ToListAsync();
+        using var connection = new NpgsqlConnection(settings.ConnectionString);
 
-        return events.ConvertAll(e => e.ToOut());
+        var result = new GetEventsOut();
+
+        const string summarySql = @"
+            SELECT
+                count(1) AS total,
+                count(1) FILTER (WHERE processed_at IS NOT NULL) AS processed,
+                count(1) FILTER (WHERE processed_at IS NULL) AS pending,
+                count(1) FILTER (WHERE error IS NOT NULL) AS error
+            FROM syki.domain_events
+        ";
+
+        const string lastEventsSql = @"
+            SELECT created_at::timestamp(0) AS date, count(1) AS total
+            FROM syki.domain_events
+            GROUP BY created_at::timestamp(0)
+            ORDER BY date
+        ";
+
+        const string typesSql = @"
+            SELECT type, count(1) AS total
+            FROM syki.domain_events
+            GROUP BY TYPE
+            ORDER BY total DESC
+        ";
+
+        result.Summary = await connection.QueryFirstAsync<EventsSummaryOut>(summarySql);
+        result.LastEvents = (await connection.QueryAsync<LastEventOut>(lastEventsSql)).ToList();
+        result.EventTypes = (await connection.QueryAsync<EventTypeCountOut>(typesSql)).ToList();
+
+        result.EventTypes.ForEach(x => x.Type = x.Type.ToPortugueseEventName());
+
+        return result;
     }
 }

@@ -10,6 +10,7 @@ public class DomainEvent
     public DateTime? ProcessedAt { get; set; }
     public string? Error { get; set; }
     public Guid? ProcessorId { get; set; }
+    public int Duration { get; set; }
 
     public DomainEvent() { }
 

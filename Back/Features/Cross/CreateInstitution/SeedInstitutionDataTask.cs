@@ -36,8 +36,6 @@ public class SeedInstitutionDataTaskHandler(
     {
         if (Env.IsTesting()) return;
 
-        if (task.InstitutionId != Guid.Empty) throw new Exception("Teste");
-
         var id = task.InstitutionId;
         var institution = await ctx.Institutions.FirstAsync(f => f.Id == id);
 

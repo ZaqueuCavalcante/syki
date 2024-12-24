@@ -8,8 +8,18 @@ public static class MudConfigs
 {
     public static void AddMudConfigs(this WebAssemblyHostBuilder builder)
     {
-        builder.Services.AddApexCharts();
+        builder.Services.AddApexCharts(options =>
+        {
+            options.GlobalOptions = new ApexChartBaseOptions
+            {
+                Theme = new Theme
+                {
+                    Mode = Mode.Dark
+                }
+            };
+        });
 
+        // TODO: Change MudBlazor Theme, use custom colors (Colors.Blue.lalala)
         builder.Services.AddMudServices(config =>
         {
             config.SnackbarConfiguration.NewestOnTop = true;

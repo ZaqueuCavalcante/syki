@@ -61,7 +61,7 @@ Testes de integração:
 
 - Como cada evento gera apenas uma tarefa em background, também foram processadas 1.055 tarefas
 
-    | Evento                                 | Quantidade |
+    | Tarefa                                 | Quantidade |
     |----------------------------------------|------------|
     | SendUserRegisterEmailConfirmationTask  | 294        |
     | SendResetPasswordEmailTask             | 274        |

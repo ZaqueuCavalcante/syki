@@ -22,7 +22,7 @@
                 <AuthorizeView Roles="Teacher, Student" Context="authContext">
                     <NotificationsIconButton />
                 </AuthorizeView>
-                <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ChangeTheme" />
+                <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ToggleTheme" />
                 <MudIconButton OnClick="@ToggleRightOpen" Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" />
             </MudAppBar>
             <MudDrawer @bind-Open="@_leftOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Width="160px">
@@ -47,7 +47,7 @@
                 <MudStack Row="true" Class="d-flex justify-space-around flex-grow-1">
                     <HomeButton />
                     <MudSpacer />
-                    <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ChangeTheme" />
+                    <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ToggleTheme" />
                     <LoginButton />
                 </MudStack>
             </MudAppBar>
@@ -102,7 +102,7 @@
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    private async Task ChangeTheme()
+    private async Task ToggleTheme()
     {
         _isDark = !_isDark;
 

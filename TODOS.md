@@ -1,10 +1,8 @@
 # TODOS
 
 - Filtros
-    - Tipo (multi-select)
     - Criacao (range de data)
     - Processamento (range de data)
-    - Select de Status (exclusivo)
     - Duracao -> = X ou > X ou < X
 
 - Drawer com detalhes:

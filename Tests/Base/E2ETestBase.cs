@@ -55,7 +55,7 @@ public class E2ETestBase : PageTest
     protected SykiDbContext GetDbContext()
     {
         var settings = new DatabaseSettings { ConnectionString = _database };
-        return new SykiDbContext(new DbContextOptions<SykiDbContext>(), settings);
+        return new SykiDbContext(new DbContextOptions<SykiDbContext>(), settings, null);
     }
 
     protected async Task<string> GetRegisterToken(string email)

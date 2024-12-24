@@ -3,6 +3,7 @@ namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 public class UserRegister : Entity
 {
     public Guid Id { get; set; }
+    public Guid InstitutionId { get; set; }
     public string Email { get; set; }
     public UserRegisterStatus Status { get; set; }
 
@@ -12,6 +13,7 @@ public class UserRegister : Entity
     {
         Id = Guid.NewGuid();
         Email = email.ToLower();
+        InstitutionId = Guid.NewGuid();
         AddDomainEvent(new PendingUserRegisterCreatedDomainEvent(Id));
     }
 

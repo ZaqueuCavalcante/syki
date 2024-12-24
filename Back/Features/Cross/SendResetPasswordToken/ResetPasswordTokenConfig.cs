@@ -1,4 +1,5 @@
 using Syki.Back.Features.Cross.CreateUser;
+using Syki.Back.Features.Cross.CreateInstitution;
 
 namespace Syki.Back.Features.Cross.SendResetPasswordToken;
 
@@ -15,6 +16,11 @@ public class ResetPasswordTokenConfig : IEntityTypeConfiguration<ResetPasswordTo
             .WithMany()
             .HasPrincipalKey(u => u.Id)
             .HasForeignKey(rp => rp.UserId);
+
+        resetPassword.HasOne<Institution>()
+            .WithMany()
+            .HasPrincipalKey(u => u.Id)
+            .HasForeignKey(rp => rp.InstitutionId);
 
         resetPassword.HasIndex(rp => rp.Token).IsUnique();
     }

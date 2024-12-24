@@ -15,9 +15,14 @@ public static class UserExtensions
         return Guid.Parse(user.FindFirstValue("sub")!);
     }
 
-    public static Guid GetCourseCurriculumId(this ClaimsPrincipal user)
+    public static Guid CourseCurriculumId(this ClaimsPrincipal user)
     {
         return Guid.Parse(user.FindFirstValue("CourseCurriculumId")!);
+    }
+
+    public static bool IsAuthenticated(this ClaimsPrincipal user)
+    {
+        return user.Identity.IsAuthenticated && user.FindFirstValue("institution") != null;
     }
 
     public static async Task<bool> IsOnlyInRole(this UserManager<SykiUser> userManager, SykiUser user, UserRole role)
@@ -35,16 +40,5 @@ public static class UserExtensions
             UserRole.Adm => adm && !(student || teacher || academic),
             _ => false
         };
-    }
-
-    public static bool IsAuditable(this PathString path)
-    {
-        return
-            path != "/login" &&
-            path != "/skip-user-register" &&
-            path != "/login/mfa" &&
-            path != "/reset-password" &&
-            path != "/users" &&
-            path != "/reset-password-token";
     }
 }

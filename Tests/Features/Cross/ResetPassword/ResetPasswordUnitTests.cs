@@ -9,8 +9,9 @@ public class ResetPasswordUnitTests
     {
         // Arrange
         var userId = Guid.NewGuid();
+        var institutionId = Guid.NewGuid();
         var token = Guid.NewGuid().ToString();
-        var reset = new ResetPasswordToken(userId, token);
+        var reset = new ResetPasswordToken(userId, institutionId, token);
 
         // Act
         reset.Use();

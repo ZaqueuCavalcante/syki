@@ -41,6 +41,20 @@ public partial class IntegrationTests
     }
 
     [Test]
+    public async Task Should_not_send_a_reset_password_email_when_user_not_exists()
+    {
+        // Arrange
+        var client = _api.GetClient();
+        var email = TestData.Email;
+
+        // Act
+        var response = await client.SendResetPasswordToken(email);
+
+        // Assert
+        await response.AssertBadRequest(new UserNotFound());
+    }
+
+    [Test]
     public async Task Should_not_get_the_reset_password_token_when_user_not_exists()
     {
         // Arrange / Act

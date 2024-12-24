@@ -13,15 +13,17 @@ public class DomainEvent
     public string? Error { get; set; }
     public int Duration { get; set; }
     public Guid? ParentId { get; set; }
+    public Guid? InstitutionId { get; set; }
 
     public DomainEvent() { }
 
-    public DomainEvent(Guid entityId, object data)
+    public DomainEvent(Guid entityId, object data, Guid? institutionId)
     {
         Id = Guid.NewGuid();
         EntityId = entityId;
         Type = data.GetType().ToString();
         Data = data.Serialize();
         CreatedAt = DateTime.Now;
+        InstitutionId = institutionId;
     }
 }

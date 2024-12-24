@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
 
 namespace Syki.Tests.Extensions;
 
@@ -33,16 +32,5 @@ public class UserExtensionsUnitTests
 
         // Assert
         result.Should().Be(institutionIdClaim.Value);
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.AuditPaths))]
-    public void Should_return_if_path_is_auditable((PathString path, bool isAuditable) x)
-    {
-        // Arrange / Act
-        var result = x.path.IsAuditable();
-
-        // Assert
-        result.Should().Be(x.isAuditable);
     }
 }

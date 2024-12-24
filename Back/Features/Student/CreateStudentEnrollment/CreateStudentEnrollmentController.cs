@@ -17,7 +17,7 @@ public class CreateStudentEnrollmentController(CreateStudentEnrollmentService se
     public async Task<IActionResult> Create([FromBody] CreateStudentEnrollmentIn data)
     {
         var x = data.Classes;
-        var result = await service.Create(User.InstitutionId(), User.Id(), User.GetCourseCurriculumId(), data);
+        var result = await service.Create(User.InstitutionId(), User.Id(), User.CourseCurriculumId(), data);
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

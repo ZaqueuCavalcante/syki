@@ -16,7 +16,7 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
         var finish = register.Finish();
         if (finish.IsError()) return finish.GetError();
 
-        var institution = new Institution(register.Email.OnlyNumbers());
+        var institution = new Institution(register.InstitutionId, register.Email.OnlyNumbers());
 
         ctx.Add(institution);
         await ctx.SaveChangesAsync();

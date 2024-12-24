@@ -28,9 +28,9 @@ public class Institution : Entity
 
     public Institution() { }
 
-    public Institution(string name)
+    public Institution(Guid id, string name)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Name = name;
         CreatedAt = DateTime.Now;
         Configs = new InstitutionConfigs(Id, 7, 70);

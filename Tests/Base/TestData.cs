@@ -216,23 +216,6 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> AuditPaths()
-    {
-        foreach (var text in new List<(PathString, bool)>()
-        {
-            ("/academic/campi", true),
-            ("/academic/courses", true),
-            ("/login", false),
-            ("/users", false),
-            ("/login/mfa", false),
-            ("/reset-password", false),
-            ("/reset-password-token", false),
-        })
-        {
-            yield return [text];
-        }
-    }
-
     public static IEnumerable<object[]> DecimalsStringsForFormat()
     {
         foreach (var text in new List<(decimal, string)>()

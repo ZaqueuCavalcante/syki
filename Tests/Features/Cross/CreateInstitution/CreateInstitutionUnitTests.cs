@@ -8,13 +8,14 @@ public class CreateInstitutionUnitTests
     public void Should_create_institution_with_correct_data()
     {
         // Arrange
+        var id = Guid.NewGuid();
         const string name = "UFPE";
 
         // Act
-        var institution = new Institution(name);
+        var institution = new Institution(id, name);
 
         // Assert
-        institution.Id.Should().NotBeEmpty();
+        institution.Id.Should().Be(id);
         institution.Name.Should().Be(name);
         institution.Configs.InstitutionId.Should().Be(institution.Id);
         institution.Configs.NoteLimit.Should().Be(7.00M);
@@ -25,7 +26,8 @@ public class CreateInstitutionUnitTests
     public void Should_convert_institution_to_out()
     {
         // Arrange
-        var institution = new Institution("UFPE");
+        var id = Guid.NewGuid();
+        var institution = new Institution(id, "UFPE");
 
         // Act
         var institutionOut = institution.ToOut();
@@ -41,7 +43,8 @@ public class CreateInstitutionUnitTests
     public void Should_return_institution_name_on_to_string()
     {
         // Arrange
-        var institution = new Institution("UFPE");
+        var id = Guid.NewGuid();
+        var institution = new Institution(id, "UFPE");
         var institutionOut = institution.ToOut();
 
         // Act

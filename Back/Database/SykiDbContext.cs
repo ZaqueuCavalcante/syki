@@ -22,7 +22,7 @@ using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Back.Database;
 
-public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSettings settings) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
+public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSettings settings, IHttpContextAccessor httpContextAccessor) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
 {
     public DbSet<Campus> Campi { get; set; }
     public DbSet<Class> Classes { get; set; }
@@ -56,7 +56,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
         optionsBuilder.UseNpgsql(settings.ConnectionString);
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
-        optionsBuilder.AddInterceptors(new SaveDomainEventsInterceptor());
+        optionsBuilder.AddInterceptors(new SaveDomainEventsInterceptor(httpContextAccessor));
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

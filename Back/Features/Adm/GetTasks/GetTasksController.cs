@@ -11,10 +11,10 @@ public class GetTasksController(GetTasksService service) : ControllerBase
     /// Retorna todas as tarefas.
     /// </remarks>
     [HttpGet("adm/tasks")]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] SykiTaskTableFilterIn filters)
     {
-        var events = await service.Get();
+        var tasks = await service.Get(filters);
 
-        return Ok(events);
+        return Ok(tasks);
     }
 }

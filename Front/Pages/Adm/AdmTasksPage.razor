@@ -1,0 +1,216 @@
+﻿@using Syki.Front.Features.Adm.GetEvents
+@using Syki.Front.Features.Adm.GetSykiTasks
+@using Syki.Front.Features.Adm.GetTasksSummary
+
+@namespace Syki.Front.Pages.Adm
+
+@page "/adm/tasks"
+@attribute [Authorize(Roles = "Adm")]
+
+<SykiPageTitle Title="Tarefas" />
+
+<MudContainer Class="my-4 px-4">
+    <MudCard>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Style="font-weight: bold">Tarefas</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudText Typo="Typo.h4" Style="font-weight: bold">@_data.Summary.Total.ToThousandSeparated()</MudText>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="px-0 my-4">
+        <MudGrid Spacing="2">
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="MudBlazor.Color.Success" Text="Sucessos" Value="@_data.Summary.Success" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="MudBlazor.Color.Error" Text="Erros" Value="@_data.Summary.Error" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Rounded.WarningAmber" Color="MudBlazor.Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Autorenew" Color="MudBlazor.Color.Info" Text="Processando" Value="@_data.Summary.Processing" />
+        </MudGrid>
+    </MudContainer>
+
+    <style>
+        .mud-table-toolbar {
+            height: auto;
+        }
+    </style>
+    <MudContainer Class="px-0 my-4">
+        <MudTable
+            Class="mb-4"
+            Dense="true"
+            Hover="true"
+            Items="@_tasks"
+            RowsPerPage="10"
+            T="SykiTaskTableOut"
+            Loading="@_tableLoading"
+            Breakpoint="Breakpoint.Sm"
+        >
+            <ToolBarContent>
+                <MudCard Class="my-4 mr-2" Style="width: 100%" Elevation="0" Outlined="true">
+                    <MudCardContent>
+                        <MudGrid Spacing="3">
+                            <MudItem xs="12" sm="6" md="6" lg="6">
+                                <MudAutocomplete
+                                    T="TinyInstitutionOut"
+                                    MaxItems="50"
+                                    SearchFunc="@SearchInstitution"
+                                    Dense="true"
+                                    Margin="Margin.Dense"
+                                    Variant="Variant.Outlined"
+                                    @bind-Value="@_institution"
+                                    Label="Instituição"
+                                    Clearable="true"
+                                    OnClearButtonClick="@(() => _institution = null)"
+                                    AdornmentColor="Color.Primary"
+                                />
+                            </MudItem>
+
+                            <MudItem xs="12" sm="6" md="6" lg="6">
+                                <MudSelect
+                                    Dense="true"
+                                    Margin="Margin.Dense"
+                                    Variant="Variant.Outlined"
+                                    @bind-Value="@_type"
+                                    Label="Tipo"
+                                    Clearable="true"
+                                    AdornmentColor="Color.Primary
+                                ">
+                                    @foreach (TaskTypeCountOut item in _data.TaskTypes)
+                                    {
+                                        <MudSelectItem Value="@item.Type">@item.Description</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+
+                            <MudItem xs="12" sm="3" md="3" lg="3">
+                                <MudSelect
+                                    Dense="true"
+                                    Margin="Margin.Dense"
+                                    Variant="Variant.Outlined"
+                                    @bind-Value="@_status"
+                                    Label="Status"
+                                    Clearable="true"
+                                    AdornmentColor="Color.Primary
+                                ">
+                                    @foreach (SykiTaskStatus? item in Enum.GetValues<SykiTaskStatus>())
+                                    {
+                                        <MudSelectItem Value="@item">
+                                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                                <MudIcon Class="mb-1" Icon="@item.Value.GetIcon()" Color="@item.Value.GetColor()" Size="Size.Small"/>
+                                                <MudText>@item.GetDescription()</MudText>
+                                            </MudStack>
+                                        </MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                            <MudItem xs="12" sm="12" md="12" lg="12" Class="d-flex justify-end">
+                                <MudButton
+                                    OnClick="@Filter"
+                                    Size="Size.Medium"
+                                    Color="Color.Primary"
+                                    IconSize="Size.Medium"
+                                    Variant="Variant.Filled"
+                                    StartIcon="@Icons.Material.Outlined.FilterList"
+                                >
+                                    Filtrar
+                                </MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    </MudCardContent>
+                </MudCard>
+            </ToolBarContent>
+
+            <HeaderContent>
+                <MudTh>Tipo</MudTh>
+                <MudTh>Status</MudTh>
+                <MudTh>Criação</MudTh>
+                <MudTh>Processamento</MudTh>
+                <MudTh>Duração (ms)</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Tipo">@context.Type</MudTd>
+                <MudTd DataLabel="Status">
+                    <SykiTaskStatusChip Status="@context.Status" />
+                </MudTd>
+                <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
+                <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
+                <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
+
+                <MudTd>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Id))" />
+                </MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+@inject NavigationManager Nav
+@inject GetSykiTasksClient GetSykiTasksClient
+@inject GetTasksSummaryClient GetTasksSummaryClient
+
+@code
+{
+    private bool _loading;
+    private bool _tableLoading;
+    private GetTasksSummaryOut _data = new();
+    private List<SykiTaskTableOut> _tasks = [];
+
+    private TinyInstitutionOut? _institution;
+    private string? _type;
+    private SykiTaskStatus? _status;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _tableLoading = true;
+        _data = await GetTasksSummaryClient.Get();
+        await Filter();
+        _loading = false;
+    }
+
+    private async Task Filter()
+    {
+        _tableLoading = true;
+        var filters = new SykiTaskTableFilterIn()
+        {
+            Type = _type,
+            Status = _status,
+            InstitutionId = _institution?.Id,
+        };
+        _tasks = await GetSykiTasksClient.Get(filters);
+        _tableLoading = false;
+    }
+
+    private async Task<IEnumerable<TinyInstitutionOut>> SearchInstitution(string value, CancellationToken cancellationToken)
+    {
+        await Task.Delay(0);
+
+        if (string.IsNullOrEmpty(value))
+            return _data.Institutions;
+
+        return _data.Institutions.Where(x => value.IsIn(x.Name));
+    }
+
+    private void GoToDetails(Guid id)
+    {
+        Nav.NavigateTo($"adm/tasks/{id}");
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return _tableLoading ? "" : "Não existem tarefas ainda.";
+    }
+}

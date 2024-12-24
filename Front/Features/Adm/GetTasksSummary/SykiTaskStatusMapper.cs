@@ -1,8 +1,8 @@
 ﻿using MudBlazor;
 
-namespace Syki.Front.Features.Adm.GetTasks;
+namespace Syki.Front.Features.Adm.GetEvents;
 
-public static class SykiStatusMapper
+public static class SykiTaskStatusMapper
 {
     public static string GetIcon(this SykiTaskStatus status)
     {

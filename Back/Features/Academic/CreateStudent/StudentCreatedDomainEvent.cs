@@ -7,10 +7,11 @@ public record StudentCreatedDomainEvent(Guid UserId, Guid InstitutionId) : IDoma
 
 public class StudentCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<StudentCreatedDomainEvent>
 {
-    public async Task Handle(Guid eventId, StudentCreatedDomainEvent evt)
+    public async Task Handle(Guid eventId, Guid institutionId, StudentCreatedDomainEvent evt)
     {
         await ctx.SaveTasksAsync<ISykiTask>(
             eventId,
+            institutionId,
             new LinkOldNotificationsTask(evt.UserId, evt.InstitutionId),
             new SendStudentWelcomeEmailTask(evt.UserId, evt.InstitutionId)
         );

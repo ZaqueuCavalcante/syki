@@ -13,16 +13,18 @@ public class SykiTask
     public Guid? EventId { get; set; }
     public int Duration { get; set; }
     public Guid? ParentId { get; set; }
+    public Guid InstitutionId { get; set; }
 
     public SykiTask() { }
 
-    public SykiTask(Guid eventId, object data)
+    public SykiTask(Guid eventId, Guid institutionId, object data)
     {
         Id = Guid.NewGuid();
         Type = data.GetType().ToString();
         Data = data.Serialize();
         CreatedAt = DateTime.Now;
         EventId = eventId;
+        InstitutionId = institutionId;
     }
 
     public TaskOut ToOut()

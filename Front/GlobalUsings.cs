@@ -34,6 +34,8 @@ global using Syki.Front.Features.Adm.SetupFeatureFlags;
 global using Syki.Front.Features.Adm.GetEvents;
 global using Syki.Front.Features.Adm.GetDomainEvent;
 global using Syki.Front.Features.Adm.GetDomainEvents;
+global using Syki.Front.Features.Adm.GetSykiTasks;
+global using Syki.Front.Features.Adm.GetTasksSummary;
 
 global using Syki.Front.Features.Cross.CreatePendingUserRegister;
 global using Syki.Front.Features.Cross.FinishUserRegister;

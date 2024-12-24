@@ -5,8 +5,8 @@ public record ExamGradeNoteAddedDomainEvent(Guid StudentId, Guid ClassId) : IDom
 
 public class ExamGradeNoteAddedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<ExamGradeNoteAddedDomainEvent>
 {
-    public async Task Handle(Guid eventId, ExamGradeNoteAddedDomainEvent evt)
+    public async Task Handle(Guid eventId, Guid institutionId, ExamGradeNoteAddedDomainEvent evt)
     {
-        await ctx.SaveTasksAsync(eventId, new CreateNewExamGradeNoteNotificationTask(evt.StudentId, evt.ClassId));
+        await ctx.SaveTasksAsync(eventId, institutionId, new CreateNewExamGradeNoteNotificationTask(evt.StudentId, evt.ClassId));
     }
 }

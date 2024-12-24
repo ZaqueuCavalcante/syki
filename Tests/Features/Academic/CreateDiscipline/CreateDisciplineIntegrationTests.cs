@@ -23,7 +23,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas");
+        CourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
 
         // Act
         var discipline = await client.CreateDiscipline("Banco de Dados", [course.Id]);
@@ -38,8 +38,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas");
-        CourseOut cc = await client.CreateCourse("Ciência da Computação");
+        CourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
+        CourseOut cc = await client.CreateCourse("Ciência da Computação", CourseType.Bacharelado, []);
 
         // Act
         var discipline = await client.CreateDiscipline("Banco de Dados", [ads.Id, cc.Id]);
@@ -54,10 +54,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        await client.CreateCourse("ADS");
+        await client.CreateCourse("ADS", CourseType.Tecnologo, []);
 
         var otherClient = await _api.LoggedAsAcademic();
-        CourseOut otherCourse = await otherClient.CreateCourse("ADS");
+        CourseOut otherCourse = await otherClient.CreateCourse("ADS", CourseType.Tecnologo, []);
         
         // Act
         var discipline = await client.CreateDiscipline("Banco de Dados", [otherCourse.Id]);

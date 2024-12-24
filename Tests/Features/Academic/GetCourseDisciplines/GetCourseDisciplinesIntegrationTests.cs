@@ -7,13 +7,16 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas");
-        CourseOut cc = await client.CreateCourse("Ciência da Computação");
-
-        await client.CreateDiscipline("Banco de Dados", [ads.Id, cc.Id]);
-        await client.CreateDiscipline("Informática e Sociedade", [ads.Id]);
-        await client.CreateDiscipline("Programação Orientada a Objetos", [cc.Id]);
-        await client.CreateDiscipline("Projeto Integrador II: Modelagem de Banco de Dados", [cc.Id]);
+        CourseOut ads = await client.CreateCourse(
+            "Análise e Desenvolvimento de Sistemas",
+            CourseType.Tecnologo,
+            ["Banco de Dados", "Informática e Sociedade"]
+        );
+        CourseOut cc = await client.CreateCourse(
+            "Ciência da Computação",
+            CourseType.Bacharelado,
+            ["Programação Orientada a Objetos", "Projeto Integrador II: Modelagem de Banco de Dados"]
+        );
 
         // Act
         var disciplines = await client.GetCourseDisciplines(ads.Id);

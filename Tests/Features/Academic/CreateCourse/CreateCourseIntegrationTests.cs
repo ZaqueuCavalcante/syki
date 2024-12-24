@@ -12,7 +12,7 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        CourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
+        CourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado, []);
 
         // Assert
         course.Id.Should().NotBeEmpty();
@@ -27,7 +27,7 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", (CourseType)69);
+        var response = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", (CourseType)69, []);
 
         // Assert
         response.ShouldBeError(new InvalidCourseType());

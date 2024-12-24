@@ -5,6 +5,7 @@ public class CourseOut
     public Guid Id { get; set; }
     public string Name { get; set; }
     public CourseType Type { get; set; }
+    public List<DisciplineOut> Disciplines { get; set; }
 
     public override bool Equals(object? obj)
     {

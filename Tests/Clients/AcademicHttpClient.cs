@@ -88,10 +88,10 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Update(id, name, city);
     }
 
-    public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(string name = "ADS", CourseType type = CourseType.Bacharelado)
+    public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(string name, CourseType type, List<string> disciplines)
     {
         var client = new CreateCourseClient(Http);
-        return await client.Create(name, type);
+        return await client.Create(name, type, disciplines);
     }
 
     public async Task<List<CourseOut>> GetCourses()
@@ -298,21 +298,38 @@ public class AcademicHttpClient(HttpClient http)
         data.Campus = await CreateCampus();
 
         // Ads
-        data.AdsCourse = await CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo);
+        var adsDisciplines = new List<string>()
+        {
+            "Matemática Discreta",
+            "Introdução ao Desenvolvimento Web",
+            "Design de Interação Humano-Máquina",
+            "Introdução à Redes de Computadores",
+            "Pensamento Computacional e Algoritmos",
+            "Projeto Integrador I: Concepção e Prototipação",
 
-        data.AdsDisciplines.DiscreteMath = await CreateDiscipline("Matemática Discreta", [data.AdsCourse.Id]);
-        data.AdsDisciplines.IntroToWebDev = await CreateDiscipline("Introdução ao Desenvolvimento Web", [data.AdsCourse.Id]);
-        data.AdsDisciplines.HumanMachineInteractionDesign = await CreateDiscipline("Design de Interação Humano-Máquina", [data.AdsCourse.Id]);
-        data.AdsDisciplines.IntroToComputerNetworks = await CreateDiscipline("Introdução à Redes de Computadores", [data.AdsCourse.Id]);
-        data.AdsDisciplines.ComputationalThinkingAndAlgorithms = await CreateDiscipline("Pensamento Computacional e Algoritmos", [data.AdsCourse.Id]);
-        data.AdsDisciplines.IntegratorProjectOne = await CreateDiscipline("Projeto Integrador I: Concepção e Prototipação", [data.AdsCourse.Id]);
+            "Arquitetura de Computadores e Sistemas Operacionais",
+            "Banco de Dados",
+            "Estrutura de Dados",
+            "Informática e Sociedade",
+            "Programação Orientada a Objetos",
+            "Projeto Integrador II: Modelagem de Banco de Dados",
+        };
 
-        data.AdsDisciplines.Arch = await CreateDiscipline("Arquitetura de Computadores e Sistemas Operacionais", [data.AdsCourse.Id]);
-        data.AdsDisciplines.Databases = await CreateDiscipline("Banco de Dados", [data.AdsCourse.Id]);
-        data.AdsDisciplines.DataStructures = await CreateDiscipline("Estrutura de Dados", [data.AdsCourse.Id]);
-        data.AdsDisciplines.InfoAndSociety = await CreateDiscipline("Informática e Sociedade", [data.AdsCourse.Id]);
-        data.AdsDisciplines.Poo = await CreateDiscipline("Programação Orientada a Objetos", [data.AdsCourse.Id]);
-        data.AdsDisciplines.IntegratorProjectTwo = await CreateDiscipline("Projeto Integrador II: Modelagem de Banco de Dados", [data.AdsCourse.Id]);
+        data.AdsCourse = await CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, adsDisciplines);
+
+        data.AdsDisciplines.DiscreteMath = data.AdsCourse.Disciplines[0];
+        data.AdsDisciplines.IntroToWebDev = data.AdsCourse.Disciplines[1];
+        data.AdsDisciplines.HumanMachineInteractionDesign = data.AdsCourse.Disciplines[2];
+        data.AdsDisciplines.IntroToComputerNetworks = data.AdsCourse.Disciplines[3];
+        data.AdsDisciplines.ComputationalThinkingAndAlgorithms = data.AdsCourse.Disciplines[4];
+        data.AdsDisciplines.IntegratorProjectOne = data.AdsCourse.Disciplines[5];
+
+        data.AdsDisciplines.Arch = data.AdsCourse.Disciplines[6];
+        data.AdsDisciplines.Databases = data.AdsCourse.Disciplines[7];
+        data.AdsDisciplines.DataStructures = data.AdsCourse.Disciplines[8];
+        data.AdsDisciplines.InfoAndSociety = data.AdsCourse.Disciplines[9];
+        data.AdsDisciplines.Poo = data.AdsCourse.Disciplines[10];
+        data.AdsDisciplines.IntegratorProjectTwo = data.AdsCourse.Disciplines[11];
 
         data.AdsCourseCurriculum = await CreateCourseCurriculum("Grade ADS 1.0", data.AdsCourse.Id,
         [
@@ -334,13 +351,22 @@ public class AcademicHttpClient(HttpClient http)
         data.AdsCourseOffering = await CreateCourseOffering(data.Campus.Id, data.AdsCourse.Id, data.AdsCourseCurriculum.Id, data.AcademicPeriod2.Id, Shift.Noturno);
 
         // Direito
-        data.DireitoCourse = await CreateCourse("Direito", CourseType.Bacharelado);
+        var direitoDisciplines = new List<string>()
+        {
+            "Bases Filosóficas",
+            "Comunicação e Argumentação Jurídica",
+            "Homem, Sociedade e Direito",
+            "Política e Estado em Foco",
+            "Teoria Geral do Direito",
+        };
 
-        data.DireitoDisciplines.PhilosophicalBases = await CreateDiscipline("Bases Filosóficas", [data.DireitoCourse.Id]);
-        data.DireitoDisciplines.CommunicationAndLegalArgumentation = await CreateDiscipline("Comunicação e Argumentação Jurídica", [data.DireitoCourse.Id]);
-        data.DireitoDisciplines.ManSocietyAndLaw = await CreateDiscipline("Homem, Sociedade e Direito", [data.DireitoCourse.Id]);
-        data.DireitoDisciplines.PoliticsAndStateInFocus = await CreateDiscipline("Política e Estado em Foco", [data.DireitoCourse.Id]);
-        data.DireitoDisciplines.GeneralTheoryOfLaw = await CreateDiscipline("Teoria Geral do Direito", [data.DireitoCourse.Id]);
+        data.DireitoCourse = await CreateCourse("Direito", CourseType.Bacharelado, direitoDisciplines);
+
+        data.DireitoDisciplines.PhilosophicalBases = data.DireitoCourse.Disciplines[0];
+        data.DireitoDisciplines.CommunicationAndLegalArgumentation = data.DireitoCourse.Disciplines[1];
+        data.DireitoDisciplines.ManSocietyAndLaw = data.DireitoCourse.Disciplines[2];
+        data.DireitoDisciplines.PoliticsAndStateInFocus = data.DireitoCourse.Disciplines[3];
+        data.DireitoDisciplines.GeneralTheoryOfLaw = data.DireitoCourse.Disciplines[4];
 
         data.DireitoCourseCurriculum = await CreateCourseCurriculum("Grade Direito 1.0", data.DireitoCourse.Id,
         [

@@ -22,6 +22,8 @@ public class Course
         InstitutionId = institutionId;
         Name = name;
         Type = type;
+        Links = [];
+        Disciplines = [];
     }
 
     public CourseOut ToOut()
@@ -31,6 +33,7 @@ public class Course
             Id = Id,
             Name = Name,
             Type = Type,
+            Disciplines = Disciplines.ConvertAll(x => x.ToOut()),
         };
     }
 }

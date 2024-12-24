@@ -11,14 +11,11 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        await client.CreateCourse("Pedagogia", Mestrado);
-        await client.CreateCourse("Ciência da Computação", Especializacao);
-        await client.CreateCourse("Administração", Doutorado);
-        CourseOut direito = await client.CreateCourse("Direito", Tecnologo);
-        CourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado);
-
-        await client.CreateDiscipline("Banco de Dados", [ads.Id]);
-        await client.CreateDiscipline("Penal", [direito.Id]);
+        await client.CreateCourse("Pedagogia", Mestrado, []);
+        await client.CreateCourse("Ciência da Computação", Especializacao, []);
+        await client.CreateCourse("Administração", Doutorado, []);
+        await client.CreateCourse("Direito", Tecnologo, ["Direito Penal"]);
+        await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Tecnologo, ["Banco de Dados"]);
 
         // Assert
         var courses = await client.GetCoursesWithDisciplines();

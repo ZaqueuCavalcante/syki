@@ -8,16 +8,7 @@ public static class MudConfigs
 {
     public static void AddMudConfigs(this WebAssemblyHostBuilder builder)
     {
-        builder.Services.AddApexCharts(options =>
-        {
-            options.GlobalOptions = new ApexChartBaseOptions
-            {
-                Theme = new Theme
-                {
-                    Mode = Mode.Dark
-                }
-            };
-        });
+        builder.Services.AddApexCharts();
 
         // TODO: Change MudBlazor Theme, use custom colors (Colors.Blue.lalala)
         builder.Services.AddMudServices(config =>

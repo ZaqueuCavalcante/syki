@@ -35,9 +35,17 @@ public class GetEventsService(DatabaseSettings settings) : IAdmService
             ORDER BY total DESC
         ";
 
+        const string institutionsSql = @"
+            SELECT id, name
+            FROM syki.institutions
+            WHERE id <> '00000000-0000-0000-0000-000000000000'
+            ORDER BY name
+        ";
+
         result.Summary = await connection.QueryFirstAsync<EventsSummaryOut>(summarySql);
         result.LastEvents = (await connection.QueryAsync<LastEventOut>(lastEventsSql)).ToList();
         result.EventTypes = (await connection.QueryAsync<EventTypeCountOut>(typesSql)).ToList();
+        result.Institutions = (await connection.QueryAsync<TinyInstitutionOut>(institutionsSql)).ToList();
 
         result.EventTypes.ForEach(x => x.Description = x.Type.ToDomainEventDescription());
 

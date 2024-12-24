@@ -100,12 +100,20 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
+        await UpdateChartsTheme();
     }
 
     private async Task ToggleTheme()
     {
         _isDark = !_isDark;
 
+        await UpdateChartsTheme();
+
+        await LocalStorage.SetItemAsync("IsDark", _isDark.ToString()); 
+    }
+
+    private async Task UpdateChartsTheme()
+    {
         var options = new ApexCharts.ApexChartBaseOptions
         {
             Theme = new ApexCharts.Theme
@@ -115,8 +123,6 @@
         };
 
         await ApexChartService.SetGlobalOptionsAsync(options, true);
-
-        await LocalStorage.SetItemAsync("IsDark", _isDark.ToString()); 
     }
 
     private async Task Logout()

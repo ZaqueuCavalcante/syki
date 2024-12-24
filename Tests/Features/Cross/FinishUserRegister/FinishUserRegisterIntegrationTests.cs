@@ -24,7 +24,7 @@ public partial class IntegrationTests
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.Status.Should().Be(UserRegisterStatus.Finished);
 
-        var institution = await ctx.Institutions.SingleAsync(x => x.Name.Contains(email.OnlyNumbers()));
+        var institution = await ctx.Institutions.SingleAsync(x => x.Id == response.GetSuccess().InstitutionId);
         institution.Id.Should().NotBeEmpty();
 
         var user = await userManager.FindByEmailAsync(email);
@@ -90,7 +90,7 @@ public partial class IntegrationTests
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.Status.Should().Be(UserRegisterStatus.Finished);
 
-        var institution = await ctx.Institutions.SingleAsync(x => x.Name.Contains(email.OnlyNumbers()));
+        var institution = await ctx.Institutions.SingleAsync(x => x.Id == firstResponse.GetSuccess().InstitutionId);
         institution.Id.Should().NotBeEmpty();
 
         var user = await userManager.FindByEmailAsync(email);

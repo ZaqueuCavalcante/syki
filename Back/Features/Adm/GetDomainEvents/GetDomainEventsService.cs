@@ -23,6 +23,8 @@ public class GetDomainEventsService(DatabaseSettings settings) : IAdmService
                 (@Type IS NULL OR type = @Type)
                     AND
                 (@Status IS NULL OR status = @Status)
+                    AND
+                (@InstitutionId IS NULL OR institution_id = @InstitutionId)
             ORDER BY
                 created_at DESC
         ";
@@ -30,7 +32,8 @@ public class GetDomainEventsService(DatabaseSettings settings) : IAdmService
         var parameters = new
         {
             filters.Type,
-            Status = filters.Status?.ToString()
+            filters.InstitutionId,
+            Status = filters.Status?.ToString(),
         };
 
         var events = (await connection.QueryAsync<DomainEventTableOut>(sql, parameters)).ToList();

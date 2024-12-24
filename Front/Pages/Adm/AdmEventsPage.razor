@@ -45,6 +45,22 @@
                     <MudCardContent>
                         <MudGrid Spacing="3">
                             <MudItem xs="12" sm="6" md="6" lg="6">
+                                <MudAutocomplete
+                                    T="TinyInstitutionOut"
+                                    MaxItems="50"
+                                    SearchFunc="@SearchInstitution"
+                                    Dense="true"
+                                    Margin="Margin.Dense"
+                                    Variant="Variant.Outlined"
+                                    @bind-Value="@_institution"
+                                    Label="Instituição"
+                                    Clearable="true"
+                                    OnClearButtonClick="@(() => _institution = null)"
+                                    AdornmentColor="Color.Primary"
+                                />
+                            </MudItem>
+
+                            <MudItem xs="12" sm="6" md="6" lg="6">
                                 <MudSelect
                                     Dense="true"
                                     Margin="Margin.Dense"
@@ -187,6 +203,7 @@
     private GetEventsOut _data = new();
     private List<DomainEventTableOut> _events = [];
 
+    private TinyInstitutionOut? _institution;
     private string? _type;
     private DomainEventStatus? _status;
 
@@ -204,10 +221,22 @@
         _tableLoading = true;
         var filters = new DomainEventTableFilterIn()
         {
-            Type = _type, Status = _status
+            Type = _type,
+            Status = _status,
+            InstitutionId = _institution?.Id,
         };
         _events = await GetDomainEventsClient.Get(filters);
         _tableLoading = false;
+    }
+
+    private async Task<IEnumerable<TinyInstitutionOut>> SearchInstitution(string value, CancellationToken cancellationToken)
+    {
+        await Task.Delay(0);
+
+        if (string.IsNullOrEmpty(value))
+            return _data.Institutions;
+
+        return _data.Institutions.Where(x => value.IsIn(x.Name));
     }
 
     private void GoToDetails(Guid id)

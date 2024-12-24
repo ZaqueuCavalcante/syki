@@ -1,10 +1,5 @@
 # TODOS
 
-- Filtros
-    - Criacao (range de data)
-    - Processamento (range de data)
-    - Duracao -> = X ou > X ou < X
-
 - Drawer com detalhes:
     - Body/data
     - Erro completo
@@ -16,8 +11,5 @@
     - Ao confirmar, voltar para a tela com os mesmos filtros aplicados para ir vendo o progresso...
 
 - Diferentes niveis de prioridade para o processamento dos eventos?
-
-
-
 
 

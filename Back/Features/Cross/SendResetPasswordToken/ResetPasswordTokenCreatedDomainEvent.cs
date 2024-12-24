@@ -7,6 +7,6 @@ public class ResetPasswordTokenCreatedDomainEventHandler(SykiDbContext ctx) : ID
 {
     public async Task Handle(Guid eventId, ResetPasswordTokenCreatedDomainEvent evt)
     {
-        await ctx.SaveTaskAsync(eventId, new SendResetPasswordEmailTask(evt.UserId));
+        await ctx.SaveTasksAsync(eventId, new SendResetPasswordEmailTask(evt.UserId));
     }
 }

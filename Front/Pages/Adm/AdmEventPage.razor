@@ -1,4 +1,6 @@
-﻿@using Syki.Front.Features.Adm.GetTasks
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Syki.Front.Features.Adm.GetTasks
 @using Syki.Front.Features.Adm.GetDomainEvent
 
 @namespace Syki.Front.Pages.Adm
@@ -13,7 +15,10 @@
         <MudCardContent>
             <MudGrid>
                 <MudItem xs="12" sm="8" md="8" lg="8">
-                    <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@_data.Type</MudText>
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.StickyNote2" Class="mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@_data.Type</MudText>
+                    </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
                     <MudChip
@@ -42,6 +47,12 @@
             <MudItem xs="12" sm="4" md="4" lg="4">
                 <InfoCard Icon="@Icons.Material.Filled.Timer" Color="@Colors.Indigo.Darken1" Title="Duração (ms)" Content="@_data.Duration.ToThousandSeparated()" />
             </MudItem>
+            @if (_data.Error.HasValue())
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.Error" Color="@Colors.Red.Darken1" Title="Erro" Content="@_data.Error" />
+                </MudItem>
+            }
         </MudGrid>
     </MudContainer>
 
@@ -109,6 +120,11 @@
     private string GetProcessedAtIconColor()
     {
         return _data.ProcessedAt == null ? Colors.BlueGray.Lighten4 : Colors.Green.Darken1;
+    }
+
+    private string GetIdentedData()
+    {
+        return _data.Data.HasValue() ? JValue.Parse(_data.Data).ToString(Formatting.Indented) : "";
     }
 
     protected override async Task OnInitializedAsync()

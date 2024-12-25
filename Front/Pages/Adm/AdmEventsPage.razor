@@ -108,7 +108,7 @@
                                 />
                             </MudItem>
 
-                            <MudItem xs="12" sm="3" md="3" lg="3" Class="pt-0">
+                            <MudItem xs="12" sm="3" md="3" lg="3" Class="pt-1">
                                 <MudSelect
                                     Dense="true"
                                     Margin="Margin.Dense"
@@ -129,19 +129,20 @@
                                     }
                                 </MudSelect>
                             </MudItem>
-
-                            <MudItem xs="12" sm="9" md="9" lg="9" Class="d-flex justify-end align-center pt-0">
-                                <MudButton
-                                    OnClick="@Filter"
-                                    Size="Size.Medium"
-                                    Color="Color.Primary"
-                                    IconSize="Size.Medium"
-                                    Variant="Variant.Filled"
-                                    Style="height: fit-content"
-                                    StartIcon="@Icons.Material.Outlined.FilterList"
-                                >
-                                    Filtrar
-                                </MudButton>
+                            <MudItem xs="12" sm="9" md="9" lg="9" Class="d-flex justify-end align-center pt-1">
+                               <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                    <MudChip T="string" Variant="Variant.Text" Color="Color.Primary" Class="mt-1 pt-1">@_events.Count.ToThousandSeparated()</MudChip>
+                                    <MudButton
+                                        OnClick="@Filter"
+                                        Size="Size.Medium"
+                                        Color="Color.Primary"
+                                        IconSize="Size.Medium"
+                                        Variant="Variant.Filled"
+                                        StartIcon="@Icons.Material.Outlined.FilterList"
+                                    >
+                                        Filtrar
+                                    </MudButton>
+                                </MudStack>
                             </MudItem>
                         </MudGrid>
                     </MudCardContent>
@@ -278,6 +279,6 @@
 
     private string GetNotFoundMessage()
     {
-        return _tableLoading ? "" : "Não existem eventos ainda.";
+        return _tableLoading ? "" : "Nenhum evento econtrado.";
     }
 }

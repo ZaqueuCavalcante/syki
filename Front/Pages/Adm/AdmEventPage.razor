@@ -97,7 +97,7 @@
                 <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
 
                 <MudTd>
-                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" />
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToTaskDetails(context.Id))" />
                 </MudTd>
             </RowTemplate>
             <NoRecordsContent>
@@ -107,6 +107,7 @@
     </MudContainer>
 </MudContainer>
 
+@inject NavigationManager Nav
 @inject GetDomainEventClient GetDomainEventClient
 
 @code
@@ -134,8 +135,13 @@
         _loading = false;
     }
 
+    private void GoToTaskDetails(Guid id)
+    {
+        Nav.NavigateTo($"adm/tasks/{id}");
+    }
+
     private string GetNotFoundMessage()
     {
-        return "Não existem tarefas ainda.";
+        return "Este evento não possui tarefas.";
     }
 }

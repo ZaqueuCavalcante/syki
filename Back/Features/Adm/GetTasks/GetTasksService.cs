@@ -38,7 +38,7 @@ public class GetTasksService(DatabaseSettings settings) : IAdmService
 
         var tasks = (await connection.QueryAsync<SykiTaskTableOut>(sql, parameters)).ToList();
 
-        tasks.ForEach(x => x.Type = x.Type.ToSykiTaskDescription());
+        tasks.ForEach(x => x.Description = x.Type.ToSykiTaskDescription());
 
         return tasks;
     }

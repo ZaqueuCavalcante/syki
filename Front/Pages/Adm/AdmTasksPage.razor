@@ -28,10 +28,10 @@
 
     <MudContainer Class="px-0 my-4">
         <MudGrid Spacing="2">
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="MudBlazor.Color.Success" Text="Sucessos" Value="@_data.Summary.Success" />
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="MudBlazor.Color.Error" Text="Erros" Value="@_data.Summary.Error" />
             <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Rounded.WarningAmber" Color="MudBlazor.Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
             <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Autorenew" Color="MudBlazor.Color.Info" Text="Processando" Value="@_data.Summary.Processing" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="MudBlazor.Color.Error" Text="Erros" Value="@_data.Summary.Error" />
+            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="MudBlazor.Color.Success" Text="Sucessos" Value="@_data.Summary.Success" />
         </MudGrid>
     </MudContainer>
 
@@ -55,39 +55,6 @@
                 <MudCard Class="my-4 mr-2" Style="width: 100%" Elevation="0" Outlined="true">
                     <MudCardContent>
                         <MudGrid Spacing="3">
-                            <MudItem xs="12" sm="6" md="6" lg="6">
-                                <MudAutocomplete
-                                    T="TinyInstitutionOut"
-                                    MaxItems="50"
-                                    SearchFunc="@SearchInstitution"
-                                    Dense="true"
-                                    Margin="Margin.Dense"
-                                    Variant="Variant.Outlined"
-                                    @bind-Value="@_institution"
-                                    Label="Instituição"
-                                    Clearable="true"
-                                    OnClearButtonClick="@(() => _institution = null)"
-                                    AdornmentColor="Color.Primary"
-                                />
-                            </MudItem>
-
-                            <MudItem xs="12" sm="6" md="6" lg="6">
-                                <MudSelect
-                                    Dense="true"
-                                    Margin="Margin.Dense"
-                                    Variant="Variant.Outlined"
-                                    @bind-Value="@_type"
-                                    Label="Tipo"
-                                    Clearable="true"
-                                    AdornmentColor="Color.Primary
-                                ">
-                                    @foreach (TaskTypeCountOut item in _data.TaskTypes)
-                                    {
-                                        <MudSelectItem Value="@item.Type">@item.Description</MudSelectItem>
-                                    }
-                                </MudSelect>
-                            </MudItem>
-
                             <MudItem xs="12" sm="3" md="3" lg="3">
                                 <MudSelect
                                     Dense="true"
@@ -109,17 +76,51 @@
                                     }
                                 </MudSelect>
                             </MudItem>
-                            <MudItem xs="12" sm="12" md="12" lg="12" Class="d-flex justify-end">
-                                <MudButton
-                                    OnClick="@Filter"
-                                    Size="Size.Medium"
-                                    Color="Color.Primary"
-                                    IconSize="Size.Medium"
-                                    Variant="Variant.Filled"
-                                    StartIcon="@Icons.Material.Outlined.FilterList"
-                                >
-                                    Filtrar
-                                </MudButton>
+                            <MudItem xs="12" sm="4" md="4" lg="4">
+                                <MudSelect
+                                    Dense="true"
+                                    Margin="Margin.Dense"
+                                    Variant="Variant.Outlined"
+                                    @bind-Value="@_type"
+                                    Label="Tipo"
+                                    Clearable="true"
+                                    AdornmentColor="Color.Primary
+                                ">
+                                    @foreach (TaskTypeCountOut item in _data.TaskTypes)
+                                    {
+                                        <MudSelectItem Value="@item.Type">@item.Description</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                            <MudItem xs="12" sm="5" md="5" lg="5">
+                                <MudAutocomplete
+                                    T="TinyInstitutionOut"
+                                    MaxItems="50"
+                                    SearchFunc="@SearchInstitution"
+                                    Dense="true"
+                                    Margin="Margin.Dense"
+                                    Variant="Variant.Outlined"
+                                    @bind-Value="@_institution"
+                                    Label="Instituição"
+                                    Clearable="true"
+                                    OnClearButtonClick="@(() => _institution = null)"
+                                    AdornmentColor="Color.Primary"
+                                />
+                            </MudItem>
+                            <MudItem xs="12" sm="12" md="12" lg="12" Class="d-flex justify-end align-center pt-1">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                    <MudChip T="string" Variant="Variant.Text" Color="Color.Primary" Class="mt-1 pt-1">@_tasks.Count.ToThousandSeparated()</MudChip>
+                                    <MudButton
+                                        OnClick="@Filter"
+                                        Size="Size.Medium"
+                                        Color="Color.Primary"
+                                        IconSize="Size.Medium"
+                                        Variant="Variant.Filled"
+                                        StartIcon="@Icons.Material.Outlined.FilterList"
+                                    >
+                                        Filtrar
+                                    </MudButton>
+                                </MudStack>
                             </MudItem>
                         </MudGrid>
                     </MudCardContent>
@@ -128,21 +129,21 @@
 
             <HeaderContent>
                 <MudTh>Tipo</MudTh>
-                <MudTh>Status</MudTh>
                 <MudTh>Criação</MudTh>
                 <MudTh>Processamento</MudTh>
                 <MudTh>Duração (ms)</MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Tipo">@context.Type</MudTd>
-                <MudTd DataLabel="Status">
-                    <SykiTaskStatusChip Status="@context.Status" />
+                <MudTd DataLabel="Tipo">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                        <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
+                        <MudText Typo="Typo.body2">@context.Description</MudText>
+                    </MudStack>
                 </MudTd>
                 <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
-
                 <MudTd>
                     <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Id))" />
                 </MudTd>

@@ -17,7 +17,7 @@
                 <MudItem xs="12" sm="8" md="8" lg="8">
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Large"/>
-                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@_data.Type</MudText>
+                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@_data.Description</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
@@ -39,7 +39,7 @@
     <MudContainer Class="px-0 my-4">
         <MudGrid Spacing="2">
             <MudItem xs="12" sm="4" md="4" lg="4">
-                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.BlueGray.Lighten4" Title="Criação" Content="@_data.OccurredAt.ToMinuteString()" />
+                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.BlueGray.Lighten4" Title="Criação" Content="@_data.CreatedAt.ToMinuteString()" />
             </MudItem>
             <MudItem xs="12" sm="4" md="4" lg="4">
                 <InfoCard Icon="@Icons.Material.Filled.AccessTimeFilled" Color="@GetProcessedAtIconColor()" Title="Processamento" Content="@_data.ProcessedAt.ToMinuteString()" />
@@ -56,12 +56,12 @@
         </MudGrid>
     </MudContainer>
 
+    <style>
+        .mud-table-toolbar {
+            height: auto;
+        }
+    </style>
     <MudContainer Class="px-0 my-4">
-        <style>
-            .mud-table-toolbar {
-                height: auto;
-            }
-        </style>
         <MudTable
             Class="mb-4"
             Dense="true"
@@ -69,36 +69,48 @@
             RowsPerPage="10"
             Loading="@_loading"
             Items="@_data.Tasks"
-            T="DomainEventTaskOut"
+            T="SykiTaskOut"
             Breakpoint="Breakpoint.Sm"
         >
             <ToolBarContent>
-                <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
-                    <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
-                    <MudText Typo="Typo.h6" Style="font-weight: bold">Tarefas</MudText>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Class="my-4 ml-1 mr-2" Style="width: 100%">
+                    <MudItem xs="12" sm="8" md="8" lg="8">
+                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
+                            <MudText Typo="Typo.h6" Style="font-weight: bold">Reprocessamentos</MudText>
+                        </MudStack>
+                    </MudItem>
+                    <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                        <MudButton
+                            OnClick="@Reprocess"
+                            Size="Size.Medium"
+                            Color="Color.Primary"
+                            IconSize="Size.Medium"
+                            Variant="Variant.Filled"
+                            StartIcon="@Icons.Material.Outlined.Autorenew"
+                        >
+                            Reprocessar
+                        </MudButton>
+                    </MudItem>
                 </MudStack>
             </ToolBarContent>
 
             <HeaderContent>
                 <MudTh>Tipo</MudTh>
-                <MudTh>Status</MudTh>
                 <MudTh>Criação</MudTh>
                 <MudTh>Processamento</MudTh>
                 <MudTh>Duração (ms)</MudTh>
-                <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Tipo">@context.Type</MudTd>
-                <MudTd DataLabel="Status">
-                    <SykiTaskStatusChip Status="@context.Status" />
+                <MudTd DataLabel="Tipo">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                        <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
+                        <MudText Typo="Typo.body2">@context.Description</MudText>
+                    </MudStack>
                 </MudTd>
                 <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
-
-                <MudTd>
-                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" />
-                </MudTd>
             </RowTemplate>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -107,7 +119,7 @@
     </MudContainer>
 </MudContainer>
 
-@inject GetDomainEventClient GetDomainEventClient
+@inject GetSykiTaskClient GetSykiTaskClient
 
 @code
 {
@@ -115,7 +127,7 @@
 	public Guid Id { get; set; }
 
     private bool _loading;
-    private DomainEventOut _data = new();
+    private SykiTaskOut _data = new();
 
     private string GetProcessedAtIconColor()
     {
@@ -130,12 +142,17 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _data = await GetDomainEventClient.Get(Id);
+        _data = await GetSykiTaskClient.Get(Id);
         _loading = false;
     }
 
     private string GetNotFoundMessage()
     {
-        return "Não existem tarefas ainda.";
+        return "Esta tarefa não possui reprocessamentos.";
+    }
+
+    private void Reprocess()
+    {
+        Console.WriteLine("Reprocess");
     }
 }

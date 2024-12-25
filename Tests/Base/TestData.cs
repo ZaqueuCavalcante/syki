@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http;
 using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;

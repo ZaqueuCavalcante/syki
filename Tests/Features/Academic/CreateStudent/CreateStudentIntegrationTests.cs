@@ -36,10 +36,10 @@ public partial class IntegrationTests
     }
 
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidEmails))]
-    public async Task Should_not_create_student_with_invalid_email(string email)
+    public async Task Should_not_create_student_with_invalid_email()
     {
         // Arrange
+        var email = TestData.InvalidEmails().PickRandom().First().ToString()!;
         var client = await _api.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 

@@ -7,7 +7,7 @@ public class DomainEvent
     public string Type { get; set; }
     public string Data { get; set; }
     public DomainEventStatus Status { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime OccurredAt { get; set; }
     public DateTime? ProcessedAt { get; set; }
     public Guid? ProcessorId { get; set; }
     public string? Error { get; set; }
@@ -23,7 +23,7 @@ public class DomainEvent
         EntityId = entityId;
         Type = data.GetType().ToString();
         Data = data.Serialize();
-        CreatedAt = DateTime.Now;
+        OccurredAt = DateTime.Now;
         InstitutionId = institutionId;
     }
 }

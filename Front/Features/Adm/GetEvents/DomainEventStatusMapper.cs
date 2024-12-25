@@ -1,6 +1,6 @@
 ﻿using MudBlazor;
 
-namespace Syki.Front.Features.Adm.GetEvents;
+namespace Syki.Front.Features.Adm.GetDomainEventsSummary;
 
 public static class DomainEventStatusMapper
 {

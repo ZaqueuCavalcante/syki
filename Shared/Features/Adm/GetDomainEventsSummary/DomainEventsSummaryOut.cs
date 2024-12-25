@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class EventsSummaryOut
+public class DomainEventsSummaryOut
 {
     public int Total { get; set; }
     public int Pending { get; set; }

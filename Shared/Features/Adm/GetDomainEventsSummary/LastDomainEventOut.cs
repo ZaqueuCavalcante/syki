@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class LastEventOut
+public class LastDomainEventOut
 {
     public DateTime Date { get; set; }
     public int Total { get; set; }

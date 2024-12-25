@@ -121,7 +121,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
         return await AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
     }
 
-    public async Task SaveTasksAsync<ISykiTask>(Guid eventId, Guid institutionId, params ISykiTask[] tasks)
+    public async Task SaveTasksAsync(Guid eventId, Guid institutionId, params ISykiTask[] tasks)
     {
         foreach (var task in tasks)
         {

@@ -39,7 +39,7 @@
     <MudContainer Class="px-0 my-4">
         <MudGrid Spacing="2">
             <MudItem xs="12" sm="4" md="4" lg="4">
-                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.BlueGray.Lighten4" Title="Criação" Content="@_data.CreatedAt.ToMinuteString()" />
+                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.BlueGray.Lighten4" Title="Criação" Content="@_data.OccurredAt.ToMinuteString()" />
             </MudItem>
             <MudItem xs="12" sm="4" md="4" lg="4">
                 <InfoCard Icon="@Icons.Material.Filled.AccessTimeFilled" Color="@GetProcessedAtIconColor()" Title="Processamento" Content="@_data.ProcessedAt.ToMinuteString()" />

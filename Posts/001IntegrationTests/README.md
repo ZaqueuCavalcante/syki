@@ -10,7 +10,6 @@ E no caso do sistema ter apenas testes de integração? Sim né, e talvez ainda 
 Testes de integração:
 - Quebram quando fluxos não triviais do código passam a não funcionar depois de uma alteração
 
-
 - São 593 testes:
     - 289 de unidade, que rodam em 0.8s
     - 304 de integração, que rodam em 11.2s
@@ -38,6 +37,7 @@ Testes de integração:
 
 - O banco possui 34 tabelas
 - Foram executados mais de 44.000 comandos SQL (TOP 3 a seguir)
+- CONTAR COM OS LOGS DO DAEMON TBM
 
     | Comando | Quantidade |
     |---------|------------|

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class EventTypeCountOut
+public class DomainEventTypeCountOut
 {
     public string Type { get; set; }
     public string Description { get; set; }

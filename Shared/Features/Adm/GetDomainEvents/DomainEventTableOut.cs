@@ -4,8 +4,9 @@ public class DomainEventTableOut
 {
     public Guid Id { get; set; }
     public string Type { get; set; }
+    public string Description { get; set; }
     public DomainEventStatus Status { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime OccurredAt { get; set; }
     public DateTime? ProcessedAt { get; set; }
-    public int Duration { get; set; }
+    public SykiTaskStatus[] Tasks { get; set; } = [];
 }

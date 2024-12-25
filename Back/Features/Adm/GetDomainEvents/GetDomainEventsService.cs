@@ -11,22 +11,26 @@ public class GetDomainEventsService(DatabaseSettings settings) : IAdmService
 
         const string sql = @"
             SELECT
-                id,
-                type,
-                status,
-                created_at,
-                processed_at,
-                duration
+                e.id,
+                e.type,
+                e.status,
+                e.occurred_at,
+                e.processed_at,
+                ARRAY_AGG(t.status ORDER BY t.created_at) AS tasks
             FROM
-                syki.domain_events
+                syki.domain_events e
+            LEFT JOIN
+                syki.tasks t ON t.event_id = e.id
             WHERE
-                (@Type IS NULL OR type = @Type)
+                (@Type IS NULL OR e.type = @Type)
                     AND
-                (@Status IS NULL OR status = @Status)
+                (@Status IS NULL OR e.status = @Status)
                     AND
-                (@InstitutionId IS NULL OR institution_id = @InstitutionId)
+                (@InstitutionId IS NULL OR e.institution_id = @InstitutionId)
+            GROUP BY
+                e.id
             ORDER BY
-                created_at DESC
+                e.occurred_at DESC
         ";
 
         var parameters = new
@@ -38,7 +42,12 @@ public class GetDomainEventsService(DatabaseSettings settings) : IAdmService
 
         var events = (await connection.QueryAsync<DomainEventTableOut>(sql, parameters)).ToList();
 
-        events.ForEach(x => x.Type = x.Type.ToDomainEventDescription());
+        if (filters.Tasks != null)
+        {
+            events = events.Where(x => x.Tasks.Contains(filters.Tasks.Value)).ToList();
+        }
+
+        events.ForEach(x => x.Description = x.Type.ToDomainEventDescription());
 
         return events;
     }

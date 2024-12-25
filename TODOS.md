@@ -13,3 +13,7 @@
 - Diferentes niveis de prioridade para o processamento dos eventos?
 
 
+
+
+- n permitir o reprocessamento de quem possui parent_id
+

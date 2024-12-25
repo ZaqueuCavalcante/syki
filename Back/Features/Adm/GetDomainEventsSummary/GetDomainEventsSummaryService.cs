@@ -1,15 +1,15 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Adm.GetEvents;
+namespace Syki.Back.Features.Adm.GetDomainEventsSummary;
 
-public class GetEventsService(DatabaseSettings settings) : IAdmService
+public class GetDomainEventsSummaryService(DatabaseSettings settings) : IAdmService
 {
-    public async Task<GetEventsOut> Get()
+    public async Task<GetDomainEventsSummaryOut> Get()
     {
         using var connection = new NpgsqlConnection(settings.ConnectionString);
 
-        var result = new GetEventsOut();
+        var result = new GetDomainEventsSummaryOut();
 
         const string summarySql = @"
             SELECT
@@ -22,9 +22,9 @@ public class GetEventsService(DatabaseSettings settings) : IAdmService
         ";
 
         const string lastEventsSql = @"
-            SELECT created_at::timestamp(0) AS date, count(1) AS total
+            SELECT occurred_at::timestamp(0) AS date, count(1) AS total
             FROM syki.domain_events
-            GROUP BY created_at::timestamp(0)
+            GROUP BY occurred_at::timestamp(0)
             ORDER BY date
         ";
 
@@ -42,9 +42,9 @@ public class GetEventsService(DatabaseSettings settings) : IAdmService
             ORDER BY name
         ";
 
-        result.Summary = await connection.QueryFirstAsync<EventsSummaryOut>(summarySql);
-        result.LastEvents = (await connection.QueryAsync<LastEventOut>(lastEventsSql)).ToList();
-        result.EventTypes = (await connection.QueryAsync<EventTypeCountOut>(typesSql)).ToList();
+        result.Summary = await connection.QueryFirstAsync<DomainEventsSummaryOut>(summarySql);
+        result.LastEvents = (await connection.QueryAsync<LastDomainEventOut>(lastEventsSql)).ToList();
+        result.EventTypes = (await connection.QueryAsync<DomainEventTypeCountOut>(typesSql)).ToList();
         result.Institutions = (await connection.QueryAsync<TinyInstitutionOut>(institutionsSql)).ToList();
 
         result.EventTypes.ForEach(x => x.Description = x.Type.ToDomainEventDescription());

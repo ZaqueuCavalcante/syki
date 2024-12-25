@@ -23,7 +23,7 @@ public class DomainEventsProcessor(IConfiguration configuration, IServiceScopeFa
 
             SELECT * FROM syki.domain_events
             WHERE processor_id = @ProcessorId AND processed_at IS NULL
-            ORDER BY created_at;
+            ORDER BY occurred_at;
         ";
 
         var events = await connection.QueryAsync<DomainEvent>(sql, new { ProcessorId = Guid.NewGuid() });

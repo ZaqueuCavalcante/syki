@@ -86,3 +86,8 @@ public class LoginWrongMfaToken : SykiError
     public override string Code { get; set; } = nameof(LoginWrongMfaToken);
     public override string Message { get; set; } = "Token incorreto.";
 }
+public class OnlyRootTasksCanBeReprocessed : SykiError
+{
+    public override string Code { get; set; } = nameof(OnlyRootTasksCanBeReprocessed);
+    public override string Message { get; set; } = "Apenas a tarefa original pode ser reprocessada.";
+}

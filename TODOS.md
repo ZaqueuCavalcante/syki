@@ -11,9 +11,3 @@
     - Ao confirmar, voltar para a tela com os mesmos filtros aplicados para ir vendo o progresso...
 
 - Diferentes niveis de prioridade para o processamento dos eventos?
-
-
-
-
-- n permitir o reprocessamento de quem possui parent_id
-

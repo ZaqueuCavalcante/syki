@@ -53,73 +53,86 @@
                     <InfoCard Icon="@Icons.Material.Filled.Error" Color="@Colors.Red.Darken1" Title="Erro" Content="@_data.Error" />
                 </MudItem>
             }
+            @if (_data.ParentId != null)
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Tarefa original">
+                        <MudLink Href="@($"/adm/tasks/{@_data.ParentId}")" Target="_blank" Color="Color.Primary">Esta tarefa foi originada de um reprocessamento.</MudLink>
+                    </InfoCard>
+                </MudItem>
+            }
         </MudGrid>
     </MudContainer>
 
-    <style>
-        .mud-table-toolbar {
-            height: auto;
-        }
-    </style>
-    <MudContainer Class="px-0 my-4">
-        <MudTable
-            Class="mb-4"
-            Dense="true"
-            Hover="true"
-            RowsPerPage="10"
-            Loading="@_loading"
-            Items="@_data.Tasks"
-            T="SykiTaskOut"
-            Breakpoint="Breakpoint.Sm"
-        >
-            <ToolBarContent>
-                <MudStack Row="true" AlignItems="AlignItems.Center" Class="my-4 ml-1 mr-2" Style="width: 100%">
-                    <MudItem xs="12" sm="8" md="8" lg="8">
-                        <MudStack Row="true" AlignItems="AlignItems.Center">
-                            <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
-                            <MudText Typo="Typo.h6" Style="font-weight: bold">Reprocessamentos</MudText>
-                        </MudStack>
-                    </MudItem>
-                    <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
-                        <MudButton
-                            OnClick="@Reprocess"
-                            Size="Size.Medium"
-                            Color="Color.Primary"
-                            IconSize="Size.Medium"
-                            Variant="Variant.Filled"
-                            StartIcon="@Icons.Material.Outlined.Autorenew"
-                        >
-                            Reprocessar
-                        </MudButton>
-                    </MudItem>
-                </MudStack>
-            </ToolBarContent>
-
-            <HeaderContent>
-                <MudTh>Tipo</MudTh>
-                <MudTh>Criação</MudTh>
-                <MudTh>Processamento</MudTh>
-                <MudTh>Duração (ms)</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Tipo">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
-                        <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@context.Description</MudText>
+    @if (_data.ParentId == null)
+    {
+        <style>
+            .mud-table-toolbar {
+                height: auto;
+            }
+        </style>
+        <MudContainer Class="px-0 my-4">
+            <MudTable
+                Class="mb-4"
+                Dense="true"
+                Hover="true"
+                RowsPerPage="10"
+                Loading="@_loading"
+                Items="@_data.Tasks"
+                T="SykiTaskOut"
+                Breakpoint="Breakpoint.Sm"
+            >
+                <ToolBarContent>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Class="my-4 ml-1 mr-2" Style="width: 100%">
+                        <MudItem xs="12" sm="8" md="8" lg="8">
+                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
+                                <MudText Typo="Typo.h6" Style="font-weight: bold">Reprocessamentos</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                            <MudButton
+                                OnClick="@Reprocess"
+                                Size="Size.Medium"
+                                Color="Color.Primary"
+                                IconSize="Size.Medium"
+                                Variant="Variant.Filled"
+                                Disabled="@_disableButton"
+                                StartIcon="@Icons.Material.Outlined.Autorenew"
+                            >
+                                Reprocessar
+                            </MudButton>
+                        </MudItem>
                     </MudStack>
-                </MudTd>
-                <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
-                <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
-                <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
-            </RowTemplate>
-            <NoRecordsContent>
-                @(GetNotFoundMessage())
-            </NoRecordsContent>
-        </MudTable>
-    </MudContainer>
+                </ToolBarContent>
+
+                <HeaderContent>
+                    <MudTh>Tipo</MudTh>
+                    <MudTh>Criação</MudTh>
+                    <MudTh>Processamento</MudTh>
+                    <MudTh>Duração (ms)</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Tipo">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                            <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
+                            <MudText Typo="Typo.body2">@context.Description</MudText>
+                        </MudStack>
+                    </MudTd>
+                    <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
+                    <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
+                    <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
+                </RowTemplate>
+                <NoRecordsContent>
+                    @(GetNotFoundMessage())
+                </NoRecordsContent>
+            </MudTable>
+        </MudContainer>
+    }
 </MudContainer>
 
 @inject GetSykiTaskClient GetSykiTaskClient
+@inject ReprocessTaskClient ReprocessTaskClient
 
 @code
 {
@@ -127,6 +140,7 @@
 	public Guid Id { get; set; }
 
     private bool _loading;
+    private bool _disableButton;
     private SykiTaskOut _data = new();
 
     private string GetProcessedAtIconColor()
@@ -151,8 +165,13 @@
         return "Esta tarefa não possui reprocessamentos.";
     }
 
-    private void Reprocess()
+    private async Task Reprocess()
     {
-        Console.WriteLine("Reprocess");
+        _disableButton = true;
+        await ReprocessTaskClient.Reprocess(Id);
+        _loading = true;
+        _data = await GetSykiTaskClient.Get(Id);
+        _loading = false;
+        _disableButton = false;
     }
 }

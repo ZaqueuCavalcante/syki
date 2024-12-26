@@ -17,7 +17,7 @@ public class SykiTask
 
     public SykiTask() { }
 
-    public SykiTask(Guid eventId, Guid institutionId, object data)
+    public SykiTask(Guid? eventId, Guid institutionId, object data)
     {
         Id = Guid.NewGuid();
         Type = data.GetType().ToString();

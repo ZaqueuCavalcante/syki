@@ -9,15 +9,25 @@
 			<MudText Style="font-size: 12px; color: #7C8183">
 				@Title
 			</MudText>
-			<MudText Style="font-size: 18px; font-weight: 700">
-				@Content
-			</MudText>
+			@if (Content.HasValue())
+			{
+				<MudText Style="font-size: 18px; font-weight: 700">
+					@Content
+				</MudText>
+			}
+			else
+			{
+				@ChildContent
+			}
 		</CardHeaderContent>
 	</MudCardHeader>
 </MudCard>
 
 @code
 {
+	[Parameter]
+	public RenderFragment ChildContent { get; set; }
+
 	[Parameter]
 	public string Icon { get; set; }
 

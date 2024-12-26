@@ -65,3 +65,8 @@ public class ExamGradeNotFound : SykiError
     public override string Code { get; set; } = nameof(ExamGradeNotFound);
     public override string Message { get; set; } = "Prova não encontrada.";
 }
+public class SykiTaskNotFound : SykiError
+{
+    public override string Code { get; set; } = nameof(SykiTaskNotFound);
+    public override string Message { get; set; } = "Tarefa não encontrada.";
+}

@@ -22,6 +22,7 @@
     <PackageReference Include="Npgsql.OpenTelemetry" Version="9.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
     <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.OpenTelemetry" Version="4.1.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <PackageReference Include="Audit.EntityFramework.Core" Version="27.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />

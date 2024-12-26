@@ -1,5 +1,6 @@
 using Npgsql;
 using OpenTelemetry.Trace;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
 namespace Syki.Back.Configs;
@@ -10,7 +11,15 @@ public static class OpenTelemetryConfigs
     {
         services
             .AddOpenTelemetry()
-            .ConfigureResource(resource => resource.AddService("syki-api"))
+            .ConfigureResource(resource => resource.AddService("SykiAPI"))
+            .WithMetrics(metrics =>
+            {
+                metrics
+                    .AddAspNetCoreInstrumentation()
+                    .AddNpgsqlInstrumentation();
+                
+                metrics.AddOtlpExporter();
+            })
             .WithTracing(tracing =>
             {
                 tracing

@@ -22,6 +22,8 @@ public class Startup()
         services.AddCorsConfigs();
 
         services.AddOpenApi();
+
+        services.AddOpenTelemetryConfigs();
     }
 
     public static void Configure(IApplicationBuilder app)

@@ -20,7 +20,8 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
             SET processor_id = @ProcessorId, status = 'Processing'
             WHERE processor_id IS NULL;
 
-            SELECT * FROM syki.tasks
+            SELECT id, type, data
+            FROM syki.tasks
             WHERE processor_id = @ProcessorId AND processed_at IS NULL
             ORDER BY created_at;
         ";

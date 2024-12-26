@@ -26,7 +26,7 @@ public class Startup(IConfiguration configuration)
         services.AddHangfireServer(x =>
         {
             x.ServerName = "Daemon";
-            x.SchedulePollingInterval = TimeSpan.FromSeconds(1);
+            x.SchedulePollingInterval = TimeSpan.FromSeconds(60);
         });
     }
 

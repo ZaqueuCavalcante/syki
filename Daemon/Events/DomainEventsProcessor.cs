@@ -21,7 +21,8 @@ public class DomainEventsProcessor(IConfiguration configuration, IServiceScopeFa
             SET processor_id = @ProcessorId, status = 'Processing'
             WHERE processor_id IS NULL;
 
-            SELECT * FROM syki.domain_events
+            SELECT id, institution_id, type, data
+            FROM syki.domain_events
             WHERE processor_id = @ProcessorId AND processed_at IS NULL
             ORDER BY occurred_at;
         ";

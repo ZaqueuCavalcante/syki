@@ -9,6 +9,8 @@ public static class OpenTelemetryConfigs
 {
     public static void AddOpenTelemetryConfigs(this IServiceCollection services)
     {
+        if (Env.IsTesting()) return;
+
         services
             .AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddService("SykiAPI"))

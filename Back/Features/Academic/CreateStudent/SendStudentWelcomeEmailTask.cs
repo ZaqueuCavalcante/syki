@@ -9,6 +9,6 @@ public class SendStudentWelcomeEmailTaskHandler(SykiDbContext ctx) : ISykiTaskHa
     {
         var student = await ctx.Students
             .Where(x => x.Id == task.InstitutionId)
-            .FirstAsync();
+            .FirstOrDefaultAsync();
     }
 }

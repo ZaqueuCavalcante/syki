@@ -30,7 +30,7 @@ public class DomainEventsProcessorDbListener(IConfiguration configuration) : Bac
         }
     }
 
-    private async Task CreateTrigger(NpgsqlConnection connection)
+    private static async Task CreateTrigger(NpgsqlConnection connection)
     {
         const string sql = @"
             CREATE OR REPLACE FUNCTION notify_new_domain_event_trigger()

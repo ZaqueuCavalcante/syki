@@ -4,7 +4,7 @@
 
 ## O que é este projeto?
 
-É um sistema para gerenciamento educacional, que pode ser usado por gestores, professores e alunos.
+É um sistema open-source para gerenciamento educacional, que pode ser usado por gestores, professores e alunos.
 
 Por ser multi-tenant, suporta a operação de diversas instituições de ensino ao mesmo tempo.
 
@@ -16,19 +16,14 @@ A ideia é adicionar mais módulos no futuro, como os de Biblioteca, Financeiro,
 
 Também pretendo criar integrações com outros sistemas, como o Moodle e o Google Classroom.
 
-O módulo Acadêmico conta com:
+O módulo Acadêmico possui diversas funcionalidades para agilizar sua gestão:
 
-- Registro de usuários + login
-- Criação de instituição + seed de dados
-- Configuração de MFA + login com 2FA
-- Página insights com dados consolidados
-- Criação e edição de campus
-- Criação de cursos, disciplinas e grades curriculares
-- Possibilidade de ofertar um curso em um campus
-- Cadastro de professores e alunos
-- Abertura de turmas
-- Matrícula acadêmica
-- Envio de notificações para professores e alunos
+- ✅ Organize os campus, cursos e disciplinas como os fundamentos da sua estrutura acadêmica
+- ✅ Crie novas grades curriculares a cada semestre ou reutilize grades em novas ofertas de curso
+- ✅ Dê autonomia para seus professores realizarem chamadas e avaliações de maneira simples e efetiva
+- ✅ Acompanhe o andamento de cada turma em detalhes, tanto das aulas quanto dos alunos
+- ✅ Seus alunos terão acesso direto a agenda, notas, frequência e matrícula
+- ✅ Envie notificações para todos os usuários dentro do próprio sistema
 
 ## Qual a tech stack?
 

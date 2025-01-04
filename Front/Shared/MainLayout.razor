@@ -41,7 +41,7 @@
         </MudLayout>
     </Authorized>
     <NotAuthorized>
-        @if (Nav.Uri.EndsWith("/") || Nav.Uri.ToLower().Contains("register") || Nav.Uri.ToLower().Contains("login") || Nav.Uri.ToLower().Contains("reset-password"))
+        @if (IsAnonymous())
         {
             <MudAppBar Elevation="1" Dense="true">
                 <MudStack Row="true" Class="d-flex justify-space-around flex-grow-1">
@@ -49,6 +49,15 @@
                     <MudSpacer />
                     <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ToggleTheme" />
                     <LoginButton />
+                    <MudButton
+                        Href="/register"
+                        Target="_self"
+                        IconSize="Size.Large"
+                        Variant="Variant.Text"
+                        Style="color: white; margin-left: -11px;"
+                    >
+                        Cadastro
+                    </MudButton>
                 </MudStack>
             </MudAppBar>
             <CascadingValue Name="IsDarkTheme" Value="@_isDark">
@@ -79,6 +88,12 @@
     private bool _leftOpen = true;
     private bool _rightOpen = false;
     private Breakpoint _breakpoint;
+
+    private bool IsAnonymous()
+    {
+        var uri = Nav.Uri.ToLower();
+        return uri.EndsWith("/") || uri.Contains("experiment") || uri.Contains("register") || uri.Contains("login") || uri.Contains("reset-password");
+    }
 
     private void ToggleLeftOpen()
     {

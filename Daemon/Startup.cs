@@ -13,6 +13,8 @@ public class Startup(IConfiguration configuration)
         services.AddServicesConfigs();
         services.AddHandlersConfigs();
 
+        services.AddDapperConfigs();
+
         services.AddHostedService<SykiTasksProcessorDbListener>();
         services.AddHostedService<DomainEventsProcessorDbListener>();
 
@@ -34,6 +36,8 @@ public class Startup(IConfiguration configuration)
     {
         BackgroundJob.Enqueue<SykiTasksProcessor>(x => x.Run());
         BackgroundJob.Enqueue<DomainEventsProcessor>(x => x.Run());
+
+        RecurringJob.AddOrUpdate<SykiTasksProcessedCleaner>(nameof(SykiTasksProcessedCleaner), x => x.Run(), Cron.Daily(23));
 
         app.UseRouting();
         app.UseStaticFiles();

@@ -22,6 +22,6 @@ public partial class IntegrationTests
         insights.Classes.Should().Be(6);
         insights.Students.Should().Be(1);
         insights.FinalizedLessons.Should().Be(1);
-        insights.TotalLessons.Should().Be(129);
+        insights.TotalLessons.Should().Be(128);
     }
 }

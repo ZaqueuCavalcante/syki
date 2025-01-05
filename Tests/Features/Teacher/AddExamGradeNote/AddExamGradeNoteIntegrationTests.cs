@@ -1,3 +1,5 @@
+using Syki.Back.Features.Teacher.AddExamGradeNote;
+
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
@@ -40,11 +42,13 @@ public partial class IntegrationTests
         examGrades.First(x => x.ExamType == ExamType.N1).Note.Should().Be(note);
         examGrades.First(x => x.ExamType == ExamType.N2).Note.Should().Be(0);
         examGrades.First(x => x.ExamType == ExamType.N3).Note.Should().Be(0);
+
+        await AssertDomainEvent<ExamGradeNoteAddedDomainEvent>(@class.Id.ToString());
     }
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.InvalidExamGradeNotes))]
-    public async Task Should_add_invalid_exam_grade_note(decimal note)
+    public async Task Should_not_add_invalid_exam_grade_note(decimal note)
     {
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();

@@ -11,8 +11,6 @@ public class HomeController : ControllerBase
     [HttpGet("")]
     public IActionResult Get()
     {
-        var x = 4;
-        x++;
         return Redirect("/docs/v1");
     }
 }

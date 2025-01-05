@@ -1,3 +1,5 @@
+using Syki.Back.Features.Cross.CreateInstitution;
+
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
@@ -34,6 +36,8 @@ public partial class IntegrationTests
 
         var isOnlyInAcademicRole = await userManager.IsOnlyInRole(user!, UserRole.Academic);
         isOnlyInAcademicRole.Should().BeTrue();
+
+        await AssertDomainEvent<InstitutionCreatedDomainEvent>(institution.Id.ToString());
     }
 
     [Test]

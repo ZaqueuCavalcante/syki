@@ -24,7 +24,7 @@ public class CreatePendingUserRegisterController(CreatePendingUserRegisterServic
     }
 }
 
-public class RequestsExamples : IMultipleExamplesProvider<CreatePendingUserRegisterIn>
+internal class RequestsExamples : IMultipleExamplesProvider<CreatePendingUserRegisterIn>
 {
     public IEnumerable<SwaggerExample<CreatePendingUserRegisterIn>> GetExamples()
     {
@@ -43,7 +43,7 @@ public class RequestsExamples : IMultipleExamplesProvider<CreatePendingUserRegis
     }
 }
 
-public class ErrorsExamples : IMultipleExamplesProvider<ErrorOut>
+internal class ErrorsExamples : IMultipleExamplesProvider<ErrorOut>
 {
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {

@@ -24,7 +24,7 @@ public class FinishUserRegisterController(FinishUserRegisterService service) : C
     }
 }
 
-public class RequestsExamples : IExamplesProvider<FinishUserRegisterIn>
+internal class RequestsExamples : IExamplesProvider<FinishUserRegisterIn>
 {
 	public FinishUserRegisterIn GetExamples()
 	{
@@ -35,7 +35,7 @@ public class RequestsExamples : IExamplesProvider<FinishUserRegisterIn>
 	}
 }
 
-public class ResponseExamples : IMultipleExamplesProvider<UserOut>
+internal class ResponseExamples : IMultipleExamplesProvider<UserOut>
 {
     public IEnumerable<SwaggerExample<UserOut>> GetExamples()
     {
@@ -55,7 +55,7 @@ public class ResponseExamples : IMultipleExamplesProvider<UserOut>
     }
 }
 
-public class ErrorsExamples : IMultipleExamplesProvider<ErrorOut>
+internal class ErrorsExamples : IMultipleExamplesProvider<ErrorOut>
 {
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {

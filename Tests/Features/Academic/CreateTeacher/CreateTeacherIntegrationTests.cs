@@ -1,3 +1,5 @@
+using Syki.Back.Features.Academic.CreateTeacher;
+
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
@@ -14,6 +16,8 @@ public partial class IntegrationTests
         // Assert
         teacher.Id.Should().NotBeEmpty();
         teacher.Name.Should().Be("Richard");
+
+        await AssertDomainEvent<TeacherCreatedDomainEvent>(teacher.Id.ToString());
     }
 
     [Test]

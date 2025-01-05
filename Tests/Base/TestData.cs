@@ -372,9 +372,9 @@ public static class TestData
     private static List<ExamGrade> GetExamGradesList(decimal n1, decimal n2, decimal n3)
     {
         return [
-            new ExamGrade(Guid.Empty, Guid.Empty, ExamType.N1, n1),
-            new ExamGrade(Guid.Empty, Guid.Empty, ExamType.N2, n2),
-            new ExamGrade(Guid.Empty, Guid.Empty, ExamType.N3, n3)
+            new ExamGrade(Guid.Empty, Guid.Empty, Guid.Empty, ExamType.N1, n1),
+            new ExamGrade(Guid.Empty, Guid.Empty, Guid.Empty, ExamType.N2, n2),
+            new ExamGrade(Guid.Empty, Guid.Empty, Guid.Empty, ExamType.N3, n3)
         ];
     }
 

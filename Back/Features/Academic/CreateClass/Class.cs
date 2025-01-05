@@ -123,7 +123,7 @@ public class Class
         foreach (var student in Students)
         {
             Enum.GetValues<ExamType>().ToList()
-                .ForEach(type => ExamGrades.Add(new ExamGrade(Id, student.Id, type, 0.00M)));
+                .ForEach(type => ExamGrades.Add(new ExamGrade(InstitutionId, Id, student.Id, type, 0.00M)));
         }
     }
 

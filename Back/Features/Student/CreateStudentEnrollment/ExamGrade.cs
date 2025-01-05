@@ -8,6 +8,7 @@ namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 public class ExamGrade : Entity
 {
     public Guid Id { get; set; }
+    public Guid InstitutionId { get; set; }
     public Guid ClassId { get; set; }
     public Guid StudentId { get; set; }
     public ExamType ExamType { get; set; }
@@ -16,12 +17,14 @@ public class ExamGrade : Entity
     private ExamGrade() {}
 
     public ExamGrade(
+        Guid institutionId,
         Guid classId,
         Guid studentId,
         ExamType examType,
         decimal note
     ) {
         Id = Guid.NewGuid();
+        InstitutionId = institutionId;
         ClassId = classId;
         StudentId = studentId;
         ExamType = examType;

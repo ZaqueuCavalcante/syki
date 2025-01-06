@@ -1,71 +1,28 @@
-# Testes de Integração
+# Integração > Unidade
 
-Eu sempre prefiro ter mais testes de integração que de unidade.
+Prefiro ter mais testes de integração que de unidade.
+
 O motivo é simples: acredito que quanto mais parecido com o cenário de produção for o teste, mais valor ele entrega.
 
-Você mandaria pra produção um sistema que possui apenas testes de unidade? Talvez sim né, mas antes disso iria testar manualmente se tudo funciona em um ambiente de Staging.
-
-E no caso do sistema ter apenas testes de integração? Sim né, e talvez ainda precise realizar testes em Staging, só que esses testes manuais...
-
 Testes de integração:
-- Quebram quando fluxos não triviais do código passam a não funcionar depois de uma alteração
+- Alertam quando fluxos não triviais do código passam a não funcionar depois de uma alteração
+- Servem como uma documentação viva das funcionalidades do sistema
+- Possibilitam a reprodução de bugs difíceis e garantem que eles não voltem após serem corrigidos
+- São fundamentais para a manutenção de um ritmo sustentável de desenvolvimento
 
-- São 593 testes:
-    - 289 de unidade, que rodam em 0.8s
-    - 304 de integração, que rodam em 11.2s
-- O setup dos testes de integração é feito apenas uma vez, ou seja, a API + Daemon + Postgres são os mesmos para todos os testes
+Vou utilizar o Syki como projeto de exemplo:
+- Ele possui 538 testes, sendo 282 de unidade e 256 de integração
+- Sua arquitetura é baseada em 3 componentes principais: API, Daemon (processa eventos e tarefas em background) e PostgreSQL
+- O setup dos testes de integração é feito apenas uma vez, ou seja, a API + Daemon + PostgreSQL são os mesmos para todos os testes
 - Não fico limpando o banco antes de cada teste, isso permite rodá-los em paralelo e deixa o cenário mais próximo do que ocorre em produção
 
+Resultado dos testes:
+- A API possui 70 endpoints, todos foram chamados pelo menos uma vez, totalizando 3.310 requests
+- O Daemon realizou o processamento de 1.055 eventos de domínio e de 1.055 tarefas em background
+- O banco possui 34 tabelas e foram executados mais de 44.000 comandos SQL (INSERT, SELECT, UPDATE...)
 
-- A API possui 70 endpoints, todos foram chamados pelo menos uma vez
-- Ao total foram feitos 3.310 requests (TOP 10 a seguir)
-
-    | Endpoint                          | Requests |
-    |-----------------------------------|----------|
-    | POST /login                       | 387      |
-    | POST /users                       | 313      |
-    | PUT  /users                       | 291      |
-    | POST /academic/courses            | 255      |
-    | POST /academic/academic-periods   | 252      |
-    | POST /academic/course-curriculums | 228      |
-    | POST /academic/course-offerings   | 218      |
-    | POST /academic/classes            | 202      |
-    | POST /reset-password-token        | 138      |
-    | POST /reset-password              | 137      |
-
-
-
-- O banco possui 34 tabelas
-- Foram executados mais de 44.000 comandos SQL (TOP 3 a seguir)
-- CONTAR COM OS LOGS DO DAEMON TBM
-
-    | Comando | Quantidade |
-    |---------|------------|
-    | INSERT  | 22.638     |
-    | SELECT  | 18.017     |
-    | UPDATE  | 1.664      |
-
-
-
-- Foram emitidos e processados 1.055 eventos de domínio
-
-    | Evento                                | Quantidade |
-    |---------------------------------------|------------|
-    | PendingUserRegisterCreatedDomainEvent | 294        |
-    | ResetPasswordTokenCreatedDomainEvent  | 274        |
-    | InstitutionCreatedDomainEvent         | 271        |
-    | TeacherCreatedDomainEvent             | 100        |
-    | StudentCreatedDomainEvent             | 77         |
-    | ExamGradeNoteAddedDomainEvent         | 40         |
-
-
-- Como cada evento gera apenas uma tarefa em background, também foram processadas 1.055 tarefas
-
-    | Tarefa                                 | Quantidade |
-    |----------------------------------------|------------|
-    | SendUserRegisterEmailConfirmationTask  | 294        |
-    | SendResetPasswordEmailTask             | 274        |
-    | SeedInstitutionDataTask                | 271        |
-    | LinkOldNotificationsTask               | 177        |
-    | CreateNewExamGradeNoteNotificationTask | 40         |
-
+Abaixo mostro um dos testes, onde:
+- Chamo a API para criar um registro de usuário pendente (+ evento PendingUserRegisterCreatedDomainEvent)
+- Aguardo o Daemon processar o evento de domínio gerado (que enfilera a tarefa SendUserRegisterEmailConfirmationTask)
+- Aguardo o Daemon processar a tarefa de enviar o email de confirmação de registro
+- Valido que o email foi "enviado" pela minha implementação fake usada nos testes

@@ -1,4 +1,5 @@
 using Npgsql;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -30,6 +31,10 @@ public static class OpenTelemetryConfigs
                     .AddNpgsql();
 
                 tracing.AddOtlpExporter();
+            })
+            .WithLogging(logging =>
+            {
+                logging.AddOtlpExporter();
             });
     }
 }

@@ -7,7 +7,8 @@ public class GetAcademicInsightsService(DatabaseSettings settings) : IAcademicSe
 {
     public async Task<AcademicInsightsOut> Get(Guid institutionId)
     {
-        using var connection = new NpgsqlConnection(settings.ConnectionString);
+        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
+        await using var connection = await dataSource.OpenConnectionAsync();
 
         const string sql = @"
             SELECT

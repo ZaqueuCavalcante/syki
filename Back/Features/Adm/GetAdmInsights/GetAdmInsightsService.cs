@@ -7,7 +7,8 @@ public class GetAdmInsightsService(DatabaseSettings settings) : IAdmService
 {
     public async Task<AdmInsightsOut> Get()
     {
-        using var connection = new NpgsqlConnection(settings.ConnectionString);
+        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
+        await using var connection = await dataSource.OpenConnectionAsync();
 
         const string sql = @"
             SELECT

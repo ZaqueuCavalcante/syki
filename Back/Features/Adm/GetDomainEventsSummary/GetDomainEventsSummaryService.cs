@@ -7,7 +7,8 @@ public class GetDomainEventsSummaryService(DatabaseSettings settings) : IAdmServ
 {
     public async Task<GetDomainEventsSummaryOut> Get()
     {
-        using var connection = new NpgsqlConnection(settings.ConnectionString);
+        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
+        await using var connection = await dataSource.OpenConnectionAsync();
 
         var result = new GetDomainEventsSummaryOut();
 

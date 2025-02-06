@@ -19,7 +19,7 @@ Quero monitorar tudo que acontece nele:
 - Endpoints com baixa performance (código / banco)
 - Hot paths
 - Anomalias no uso do sistema
-- Usos de CPU/Memoria
+- Usos de recursos (CPU/Memoria)
 - Requests/segundo
 - Fluxo completo, desde o front -> back -> banco -> daemon (eventos + tasks) -> moodle
 
@@ -43,9 +43,16 @@ Mais importante que mandar algo para produção é MANTER algo em produção!
 
 
 
+O que está acontecendo no sistema? A observabilidade permite que você acompanhe e registre informações sobre o desempenho e o comportamento do sistema em tempo real.
+
+Por que algo deu errado? Quando ocorrem problemas ou falhas no sistema, a observabilidade fornece insights detalhados para que você possa identificar a causa raiz e solucionar o problema mais rapidamente.
+
+Como o sistema está funcionando? Ela oferece métricas e indicadores de desempenho que ajudam a avaliar o estado do sistema e a tomar decisões informadas sobre otimizações e escalabilidade.
 
 
+https://opentelemetry.io/docs/concepts/observability-primer/#what-is-observability
 
+https://www.elastic.co/pt/what-is/observability
 
 
 

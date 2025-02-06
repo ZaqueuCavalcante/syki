@@ -15,7 +15,7 @@ public class AuthOperationsFilter : IOperationFilter
         var controllerDescriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
         var controller = controllerDescriptor != null ? controllerDescriptor.ControllerName : null;
 
-        if (authAttributes.Any() && controller !="SkipUserRegister")
+        if (authAttributes.Any() && controller != "SkipUserRegister")
         {
             var securityRequirement = new OpenApiSecurityRequirement()
             {

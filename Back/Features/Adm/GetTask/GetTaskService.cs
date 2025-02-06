@@ -7,7 +7,8 @@ public class GetTaskService(DatabaseSettings settings) : IAdmService
 {
     public async Task<SykiTaskOut> Get(Guid id)
     {
-        using var connection = new NpgsqlConnection(settings.ConnectionString);
+        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
+        await using var connection = await dataSource.OpenConnectionAsync();
 
         const string sql = @"
             SELECT *

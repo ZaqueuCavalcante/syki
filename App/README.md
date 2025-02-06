@@ -24,8 +24,3 @@
 - Opacity
 
 ## Hierarchy is Everything
-
-
-
-
-

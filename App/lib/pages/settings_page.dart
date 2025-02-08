@@ -1,3 +1,4 @@
+import 'package:app/components/settings_tile.dart';
 import 'package:app/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,15 +16,15 @@ class SettingsPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ListTile(
-            title: const Text("Dark mode"),
-            trailing: Switch(
+          SettingsTile(
+            title: "Dark Mode",
+            action: Switch(
                 value:
                     Provider.of<ThemeProvider>(context, listen: false).isDark,
                 onChanged: (value) =>
                     Provider.of<ThemeProvider>(context, listen: false)
                         .toggleTheme()),
-          )
+          ),
         ],
       ),
     );

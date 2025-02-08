@@ -10,39 +10,44 @@ class SykiDrawer extends StatelessWidget {
     return Drawer(
       backgroundColor: Theme.of(context).colorScheme.surface,
       child: SafeArea(
-          child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 50),
-            child: Icon(
-              Icons.person,
-              size: 72,
-              color: Theme.of(context).colorScheme.primary,
+          child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 50),
+              child: Icon(
+                Icons.person,
+                size: 72,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
-          ),
-          Divider(
-            indent: 25,
-            endIndent: 25,
-            color: Theme.of(context).colorScheme.secondary,
-          ),
-          SykiDrawerTile(
-            title: "Home",
-            icon: Icons.home,
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          SykiDrawerTile(
-            title: "Settings",
-            icon: Icons.settings,
-            onTap: () {
-              Navigator.pop(context);
-
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()));
-            },
-          )
-        ],
+            Divider(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+            const SizedBox(height: 10),
+            SykiDrawerTile(
+              title: "Home",
+              icon: Icons.home,
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            SykiDrawerTile(
+              title: "Settings",
+              icon: Icons.settings,
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsPage(),
+                  ),
+                );
+              },
+            )
+          ],
+        ),
       )),
     );
   }

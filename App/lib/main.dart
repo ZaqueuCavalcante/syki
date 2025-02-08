@@ -1,7 +1,7 @@
-import 'package:app/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:app/pages/bootstrap_page.dart';
+import 'package:app/themes/theme_provider.dart';
 
-import 'pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const HomePage(),
+      home: const BootstrapPage(),
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).themeData,
     );

@@ -13,8 +13,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      drawer: SykiDrawer(),
-      appBar: AppBar(),
+      drawer: const SykiDrawer(),
+      appBar: AppBar(title: const Text("Syki")),
     );
   }
 }

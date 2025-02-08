@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:app/auth/auth_service.dart';
+import 'package:app/configs/services_configs.dart';
 import 'package:app/components/syki_text_field.dart';
 import 'package:app/components/syki_primary_button.dart';
 
@@ -14,6 +16,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  final AuthService client = getIt();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +64,13 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 30),
                 SykiPrimaryButton(
                   text: "Login",
-                  onTap: () {},
+                  onTap: () async {
+                    var result = await client.login(
+                        emailController.text, passwordController.text);
+                    var message = result ? "BOA" : "ERRO";
+                    var snackBar = SnackBar(content: Text(message));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  },
                 ),
                 const SizedBox(height: 40),
                 Row(

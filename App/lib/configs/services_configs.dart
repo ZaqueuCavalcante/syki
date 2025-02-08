@@ -1,11 +1,16 @@
+import 'package:app/auth/auth_service.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:app/configs/env.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:app/features/cross/create_pending_user_register/create_pending_user_register_client.dart';
 
 final getIt = GetIt.instance;
 
 void addServicesConfigs() {
+  getIt.registerSingleton(const FlutterSecureStorage());
+  getIt.registerSingleton(AuthService());
+
   getIt.registerLazySingleton(() => CreatePendingUserRegisterClient());
 }
 
@@ -30,8 +35,8 @@ class JWTInterceptor extends InterceptorsWrapper {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    // GET FROM SECURE STORAGE
-    options.headers['Authorization'] = 'Bearer my_token';
+    var token = await getIt<AuthService>().getToken();
+    options.headers['Authorization'] = 'Bearer $token';
     return super.onRequest(options, handler);
   }
 }

@@ -1,6 +1,6 @@
-import 'package:app/components/syki_drawer_tile.dart';
-import 'package:app/pages/settings_page.dart';
 import 'package:flutter/material.dart';
+import 'package:app/pages/settings_page.dart';
+import 'package:app/components/syki_drawer_tile.dart';
 
 class SykiDrawer extends StatelessWidget {
   const SykiDrawer({super.key});

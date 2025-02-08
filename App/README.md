@@ -24,3 +24,9 @@
 - Opacity
 
 ## Hierarchy is Everything
+
+
+
+## Enable API on localhost
+
+adb reverse tcp:5001 tcp:5001

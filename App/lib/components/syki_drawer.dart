@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app/pages/settings_page.dart';
+import 'package:go_router/go_router.dart';
 import 'package:app/components/syki_drawer_tile.dart';
 
 class SykiDrawer extends StatelessWidget {
@@ -29,22 +29,12 @@ class SykiDrawer extends StatelessWidget {
             SykiDrawerTile(
               title: "Home",
               icon: Icons.home,
-              onTap: () {
-                Navigator.pop(context);
-              },
+              onTap: () => context.go('/'),
             ),
             SykiDrawerTile(
               title: "Settings",
               icon: Icons.settings,
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SettingsPage(),
-                  ),
-                );
-              },
+              onTap: () => context.go('/settings'),
             )
           ],
         ),

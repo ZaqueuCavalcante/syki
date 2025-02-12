@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app/configs/http_configs.dart';
 import 'package:app/configs/services_configs.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 

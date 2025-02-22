@@ -7,6 +7,7 @@ public static class SettingsConfigs
         services.AddSingleton<AuthSettings>();
         services.AddSingleton<DatabaseSettings>();
         services.AddSingleton<FeaturesSettings>();
+        services.AddSingleton<RateLimiterSettings>();
 
         services.AddHostedService<LoadFeatureFlagsFromDb>();
     }

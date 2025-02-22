@@ -1,9 +1,9 @@
 import 'package:app/configs/env.dart';
-import 'package:app/configs/routing_configs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:app/configs/http_configs.dart';
 import 'package:app/themes/theme_provider.dart';
+import 'package:app/configs/routing_configs.dart';
 import 'package:app/configs/services_configs.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

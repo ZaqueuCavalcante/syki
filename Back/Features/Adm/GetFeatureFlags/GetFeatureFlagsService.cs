@@ -11,7 +11,6 @@ public class GetFeatureFlagsService(SykiDbContext ctx, FeaturesSettings settings
         featureFlags ??= new()
         {
             CrossLogin = settings.CrossLogin,
-            SkipUserRegister = settings.SkipUserRegister
         };
 
         return featureFlags.ToOut();

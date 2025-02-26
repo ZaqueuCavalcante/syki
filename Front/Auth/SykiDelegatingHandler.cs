@@ -28,9 +28,6 @@ public class SykiDelegatingHandler(ILocalStorageService storage, NavigationManag
                 nav.NavigateTo("/", forceLoad: true);
         }
 
-        response.Headers.TryGetValues("X-SkipUserRegister", out var skipUserRegister);
-        await storage.SetItemAsync("SkipUserRegister", skipUserRegister?.FirstOrDefault() ?? "False");
-
         response.Headers.TryGetValues("X-CrossLogin", out var crossLogin);
         await storage.SetItemAsync("CrossLogin", crossLogin?.FirstOrDefault() ?? "False");
 

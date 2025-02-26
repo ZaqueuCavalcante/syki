@@ -15,13 +15,11 @@ public class SetupFeatureFlagsService(SykiDbContext ctx, FeaturesSettings settin
         }
         else
         {
-            features.SkipUserRegister = data.SkipUserRegister;
             features.CrossLogin = data.CrossLogin;
         }
 
         await ctx.SaveChangesAsync();
 
-        settings.SkipUserRegister = features.SkipUserRegister;
         settings.CrossLogin = features.CrossLogin;
     }
 }

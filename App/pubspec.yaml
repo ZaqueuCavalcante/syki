@@ -1,7 +1,7 @@
 name: app
 version: 1.0.0+1
 publish_to: 'none'
-description: "Syki App"
+description: "Syki"
 
 environment:
   sdk: ^3.5.4
@@ -16,7 +16,6 @@ dependencies:
   go_router: ^14.8.0
   flutter_dotenv: ^5.2.1
   cupertino_icons: ^1.0.8
-  flutter_native_splash: ^2.4.4
   flutter_secure_storage: ^9.2.4
 
 dev_dependencies:

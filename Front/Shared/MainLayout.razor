@@ -92,7 +92,7 @@
     private bool IsAnonymous()
     {
         var uri = Nav.Uri.ToLower();
-        return uri.EndsWith("/") || uri.Contains("experiment") || uri.Contains("register") || uri.Contains("login") || uri.Contains("reset-password");
+        return uri.EndsWith("/") || uri.Contains("register") || uri.Contains("login") || uri.Contains("reset-password");
     }
 
     private void ToggleLeftOpen()

@@ -2,7 +2,6 @@ namespace Syki.Back.Settings;
 
 public class FeaturesSettings
 {
-    public bool SkipUserRegister { get; set; }
     public bool CrossLogin { get; set; }
 
     public FeaturesSettings() {}
@@ -28,7 +27,6 @@ public class LoadFeatureFlagsFromDb(IServiceScopeFactory serviceScopeFactory, Fe
 
         if (features == null) return;
 
-        settings.SkipUserRegister = features.SkipUserRegister;
         settings.CrossLogin = features.CrossLogin;
     }
 

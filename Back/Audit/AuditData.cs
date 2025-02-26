@@ -4,7 +4,7 @@ using Audit.EntityFramework;
 namespace Syki.Back.Audit;
 
 /// <summary>
-/// Guarda as informações da autoria de mudança em uma entidade.
+/// Guarda as informações da autoria de mudança de uma entidade.
 /// </summary>
 public class AuditData
 {

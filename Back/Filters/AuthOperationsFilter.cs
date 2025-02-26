@@ -1,6 +1,5 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace Syki.Back.Filters;
 
@@ -12,10 +11,7 @@ public class AuthOperationsFilter : IOperationFilter
             .Union(context.MethodInfo.GetCustomAttributes(true))
             .OfType<AuthorizeAttribute>();
 
-        var controllerDescriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
-        var controller = controllerDescriptor != null ? controllerDescriptor.ControllerName : null;
-
-        if (authAttributes.Any() && controller != "SkipUserRegister")
+        if (authAttributes.Any())
         {
             var securityRequirement = new OpenApiSecurityRequirement()
             {

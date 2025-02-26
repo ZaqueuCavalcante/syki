@@ -15,12 +15,10 @@ public static class AuthorizationConfigs
             };
         });
 
-        services.AddSingleton<IAuthorizationHandler, SkipUserRegisterAuthReqHandler>();
         services.AddSingleton<IAuthorizationHandler, CrossLoginAuthReqHandler>();
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(BackPolicy.SkipUserRegister, p => p.Requirements.Add(new SkipUserRegisterAuthRequirement()));
             options.AddPolicy(BackPolicy.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthRequirement()));
         });
     }

@@ -4,7 +4,6 @@ public class FeatureFlags
 {
     public Guid Id { get; set; }
     public bool CrossLogin { get; set; }
-    public bool SkipUserRegister { get; set; }
 
     public FeatureFlags() {}
 
@@ -12,7 +11,6 @@ public class FeatureFlags
     {
         Id = Guid.Empty;
         CrossLogin = data.CrossLogin;
-        SkipUserRegister = data.SkipUserRegister;
     }
 
     public GetFeatureFlagsOut ToOut()
@@ -20,7 +18,6 @@ public class FeatureFlags
         return new()
         {
             CrossLogin = CrossLogin,
-            SkipUserRegister = SkipUserRegister,
         };
     }
 }

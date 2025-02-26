@@ -2,7 +2,6 @@ namespace Syki.Shared;
 
 public class GetFeatureFlagsOut
 {
-    public bool SkipUserRegister { get; set; }
     public bool CrossLogin { get; set; }
 }
 

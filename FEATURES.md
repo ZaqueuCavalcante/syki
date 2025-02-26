@@ -1,12 +1,15 @@
 # Features
 
+- Audit
+- Events
+- Commands
+
 ## Academic
 
 - [] 
 - [] 
 - [] 
 - []
-
 
 ## Adm
 
@@ -18,9 +21,9 @@
 ## Cross
 
 - ✅ CreateInstitution
-- ✅ CreatePendingUserRegister
-- ✅ CreateUser
-- ✅ FinishUserRegister
+- CreatePendingUserRegister
+- CreateUser
+- FinishUserRegister
 - GenerateJWT
 - GenerateMfaKey
 - GetUserNotifications
@@ -32,7 +35,6 @@
 - ResetPassword
 - SendResetPasswordToken
 - SetupMfa
-- SkipUserRegister
 - ViewNotifications
 
 ## Student
@@ -48,7 +50,3 @@
 - [] 
 - [] 
 - [] 
-
-
-
-

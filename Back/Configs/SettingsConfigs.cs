@@ -9,6 +9,7 @@ public static class SettingsConfigs
         services.AddSingleton<FeaturesSettings>();
         services.AddSingleton<RateLimiterSettings>();
 
+        services.Configure<HostOptions>(x => x.ServicesStartConcurrently = true);
         services.AddHostedService<LoadFeatureFlagsFromDb>();
     }
 }

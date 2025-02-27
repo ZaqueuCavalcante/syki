@@ -16,7 +16,7 @@ public class LoadFeatureFlagsFromDb(IServiceScopeFactory serviceScopeFactory, Fe
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        if (Env.IsTesting()) return;
+        await Task.Delay(5_000, cancellationToken);
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();

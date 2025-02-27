@@ -43,7 +43,18 @@
 
 ## Adm
 
-- [] 
+- GetAdmInsights
+- GetDomainEvent
+- GetDomainEvents
+- GetDomainEventSummary
+- GetFeatureFlags
+- GetInstitutions
+- GetSykiTasksSummary
+- GetTask
+- GetTasks
+- GetUsers
+- ReprocessTask
+- SetupFeatureFlags
 
 ## Cross
 
@@ -66,8 +77,23 @@
 
 ## Student
 
-- [] 
+- CreateStudentEnrollment
+- GetCurrentEnrollmentPeriod
+- GetStudentAgenda
+- GetStudentAverageNote
+- GetStudentDisciplines
+- GetStudentEnrollmentClasses
+- GetStudentExamGrades
+- GetStudentFrequencies
+- GetStudentFrequency
+- GetStudentInsights
 
 ## Teacher
 
-- [] 
+- AddExamGradeNote
+- CreateLessonAttendance
+- GetTeacherAgenda
+- GetTeacherClass
+- GetTeacherClasses
+- GetTeacherInsights
+- GetTeacherLessonAttendances

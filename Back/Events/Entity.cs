@@ -2,7 +2,7 @@ namespace Syki.Back.Events;
 
 public abstract class Entity
 {
-    private List<IDomainEvent> _domainEvents = [];
+    private readonly List<IDomainEvent> _domainEvents = [];
 
     public void AddDomainEvent(IDomainEvent domainEvent)
     {

@@ -4,6 +4,6 @@ public class GetAcademicInsightsClient(HttpClient http) : IAcademicClient
 {
     public async Task<AcademicInsightsOut> Get()
     {
-        return await http.GetFromJsonAsync<AcademicInsightsOut>("/academic/insights") ?? new();
+        return await http.GetFromJsonAsync<AcademicInsightsOut>("/academic/insights", HttpConfigs.JsonOptions) ?? new();
     }
 }

@@ -1,3 +1,6 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 namespace Syki.Front.Configs;
 
 public static class HttpConfigs
@@ -15,4 +18,10 @@ public static class HttpConfigs
         builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>()
             .CreateClient("HttpClient"));
     }
+
+    public static JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        Converters = { new JsonStringEnumConverter() }
+    };
 }

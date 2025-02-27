@@ -21,7 +21,7 @@ public class CreateDisciplineController(CreateDisciplineService service) : Contr
     }
 }
 
-public class CreateDisciplineRequestsExamples : IMultipleExamplesProvider<CreateDisciplineIn>
+internal class RequestExamples : IMultipleExamplesProvider<CreateDisciplineIn>
 {
     public IEnumerable<SwaggerExample<CreateDisciplineIn>> GetExamples()
     {

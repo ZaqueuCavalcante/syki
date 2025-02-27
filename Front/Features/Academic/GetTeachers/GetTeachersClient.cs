@@ -4,6 +4,6 @@ public class GetTeachersClient(HttpClient http) : IAcademicClient
 {
     public async Task<List<TeacherOut>> Get()
     {
-        return await http.GetFromJsonAsync<List<TeacherOut>>("/academic/teachers") ?? [];
+        return await http.GetFromJsonAsync<List<TeacherOut>>("/academic/teachers", HttpConfigs.JsonOptions) ?? [];
     }
 }

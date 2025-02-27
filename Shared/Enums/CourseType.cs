@@ -2,6 +2,9 @@ using System.ComponentModel;
 
 namespace Syki.Shared;
 
+/// <summary>
+/// Tipo do curso
+/// </summary>
 public enum CourseType
 {
     [Description("Bacharelado")]

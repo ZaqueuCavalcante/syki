@@ -38,6 +38,7 @@ public static class DocsConfigs
             });
             options.DocInclusionPredicate((name, api) => true);
 
+            options.SchemaFilter<EnumSchemaFilter>();
             options.OperationFilter<AuthOperationsFilter>();
             options.DocumentFilter<HttpMethodSorterDocumentFilter>();
 

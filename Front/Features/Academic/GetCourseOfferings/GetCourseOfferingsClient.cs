@@ -4,6 +4,6 @@ public class GetCourseOfferingsClient(HttpClient http) : IAcademicClient
 {
     public async Task<List<CourseOfferingOut>> Get()
     {
-        return await http.GetFromJsonAsync<List<CourseOfferingOut>>("/academic/course-offerings") ?? [];
+        return await http.GetFromJsonAsync<List<CourseOfferingOut>>("/academic/course-offerings", HttpConfigs.JsonOptions) ?? [];
     }
 }

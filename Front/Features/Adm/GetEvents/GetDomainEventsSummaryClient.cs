@@ -4,6 +4,6 @@ public class GetDomainEventsSummaryClient(HttpClient http) : IAdmClient
 {
     public async Task<GetDomainEventsSummaryOut> Get()
     {
-        return await http.GetFromJsonAsync<GetDomainEventsSummaryOut>("/adm/domain-events/summary") ?? new();
+        return await http.GetFromJsonAsync<GetDomainEventsSummaryOut>("/adm/domain-events/summary", HttpConfigs.JsonOptions) ?? new();
     }
 }

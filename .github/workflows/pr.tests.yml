@@ -32,7 +32,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 9.0.100
+        dotnet-version: 9.0.200
 
     - name: Restore
       run: dotnet restore

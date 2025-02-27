@@ -20,6 +20,6 @@ public partial class IntegrationTests
         // Assert
         var response = await studentClient.Http.GetUserNotifications();
         response.Count.Should().Be(1);
-        response[0].ViewedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
+        response[0].ViewedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
     }
 }

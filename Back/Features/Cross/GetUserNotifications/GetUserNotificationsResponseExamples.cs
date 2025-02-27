@@ -12,7 +12,7 @@ public class GetUserNotificationsResponseExamples : IMultipleExamplesProvider<Li
 				{
 					NotificationId = Guid.NewGuid(),
 					Title = "Boas-vindas!",
-					Description = "Agradecemos a confiança na nossa instituição, que seja uma jornada com muito aprendizado pra você!",
+					Description = "Agradecemos a confiança na nossa instituição, que seja uma jornada cheia de aprendizado!",
 					CreatedAt = DateTime.Now.AddDays(-50),
 					ViewedAt = DateTime.Now.AddDays(-48),
 				},
@@ -20,7 +20,7 @@ public class GetUserNotificationsResponseExamples : IMultipleExamplesProvider<Li
 				{
 					NotificationId = Guid.NewGuid(),
 					Title = "Semana de prova chegando!",
-					Description = "Preparado pras provas? Elas começam semana que vem, revise os assuntos e boas provas!",
+					Description = "Preparado(a) pras avaliações? Elas começam semana que vem, revise os assuntos e boas provas!",
 					CreatedAt = DateTime.Now,
 					ViewedAt = null,
 				}

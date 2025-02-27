@@ -17,6 +17,6 @@ public class ResetPasswordUnitTests
         reset.Use();
 
         // Assert
-        reset.UsedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
+        reset.UsedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
     }
 }

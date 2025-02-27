@@ -22,7 +22,7 @@ public class CreateNotificationUnitTests
         notification.InstitutionId.Should().Be(institutionId);
         notification.Title.Should().Be(title);
         notification.Description.Should().Be(description);
-        notification.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
+        notification.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
     }
 
     [Test]

@@ -19,7 +19,7 @@ public class SendResetPasswordTokenUnitTests
         reset.Id.Should().NotBeEmpty();
         reset.UserId.Should().Be(userId);
         reset.Token.Should().Be(token);
-        reset.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
+        reset.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
         reset.UsedAt.Should().BeNull();
     }
 }

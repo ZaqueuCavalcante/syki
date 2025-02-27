@@ -10,7 +10,7 @@ public static class MudConfigs
     {
         builder.Services.AddApexCharts();
 
-        // TODO: Change MudBlazor Theme, use custom colors (Colors.Blue.lalala)
+        // TODO: Change MudBlazor Theme, use custom colors
         builder.Services.AddMudServices(config =>
         {
             config.SnackbarConfiguration.NewestOnTop = true;

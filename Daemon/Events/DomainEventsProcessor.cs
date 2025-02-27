@@ -13,9 +13,6 @@ public class DomainEventsProcessor(IConfiguration configuration, IServiceScopeFa
         using var scope = serviceScopeFactory.CreateScope();
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
 
-        // TODO: Se tiver 1.000.000 de eventos pendentes e isso aqui rodar, deveria trazer todos de uma vez pra memoria?
-        // Analisar como ficar buscando aos poucos, lotes de 100...
-
         const string sql = @"
             UPDATE syki.domain_events
             SET processor_id = @ProcessorId, status = 'Processing'

@@ -22,20 +22,20 @@
 
 - ✅ CreateInstitution
 - ✅ CreatePendingUserRegister
-- CreateUser
-- FinishUserRegister
-- GenerateJWT
-- GenerateMfaKey
-- GetUserNotifications
-- Health
-- Home
+- ✅ CreateUser
+- ✅ FinishUserRegister
+- ✅ GenerateJWT
+- ✅ GetMfaKey
+- ✅ GetUserNotifications
+- ✅ Health
+- ✅ Home
 - LinkOldNotifications
 - Login
 - LoginMfa
 - ResetPassword
 - SendResetPasswordToken
 - SetupMfa
-- ViewNotifications
+- ✅ ViewNotifications
 
 ## Student
 

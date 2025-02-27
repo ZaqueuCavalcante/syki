@@ -29,7 +29,7 @@ public class CreateUserIn
             Email = email,
             Role = UserRole.Teacher,
             InstitutionId = institutionId,
-            Password = $"Teacher@{Guid.NewGuid().ToString().OnlyNumbers()}",
+            Password = $"Teacher@{Guid.NewGuid()}",
         };
     }
 
@@ -42,7 +42,7 @@ public class CreateUserIn
             Role = UserRole.Student,
             PhoneNumber = phoneNumber,
             InstitutionId = institutionId,
-            Password = $"Student@{Guid.NewGuid().ToString().OnlyNumbers()}",
+            Password = $"Student@{Guid.NewGuid()}",
         };
     }
 }

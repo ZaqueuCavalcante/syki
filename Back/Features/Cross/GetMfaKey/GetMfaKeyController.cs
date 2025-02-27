@@ -14,11 +14,25 @@ public class GetMfaKeyController(GetMfaKeyService service) : ControllerBase
     /// </remarks>
     [HttpGet("mfa/key")]
     [ProducesResponseType(typeof(GetMfaKeyOut), 200)]
-    [SwaggerResponseExample(200, typeof(GetMfaKeyResponseExamples))]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {
         var key = await service.Get(User.Id());
 
         return Ok(key);
+    }
+}
+
+internal class ResponseExamples : IMultipleExamplesProvider<GetMfaKeyOut>
+{
+    public IEnumerable<SwaggerExample<GetMfaKeyOut>> GetExamples()
+    {
+        yield return SwaggerExample.Create(
+			"Key",
+			new GetMfaKeyOut
+			{
+				Key = "COZF2TE2BEWGHEB77A5THFYHPBC2KHPM"
+			}
+		);
     }
 }

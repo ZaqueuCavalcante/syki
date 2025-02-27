@@ -29,12 +29,12 @@
 - ✅ GetUserNotifications
 - ✅ Health
 - ✅ Home
-- LinkOldNotifications
-- Login
-- LoginMfa
-- ResetPassword
-- SendResetPasswordToken
-- SetupMfa
+- ✅ LinkOldNotifications
+- ✅ Login
+- ✅ LoginMfa
+- ✅ ResetPassword
+- ✅ SendResetPasswordToken
+- ✅ SetupMfa
 - ✅ ViewNotifications
 
 ## Student

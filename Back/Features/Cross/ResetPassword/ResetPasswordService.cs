@@ -13,7 +13,6 @@ public class ResetPasswordService(SykiDbContext ctx, UserManager<SykiUser> userM
         var user = await userManager.FindByIdAsync(reset!.UserId.ToString());
 
         var result = await userManager.ResetPasswordAsync(user!, reset.Token, body.Password);
-
         if (!result.Succeeded)
         {
             if (result.Errors.Any(e => e.Code == "InvalidToken")) return new InvalidResetToken();

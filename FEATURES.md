@@ -21,7 +21,7 @@
 ## Cross
 
 - ✅ CreateInstitution
-- CreatePendingUserRegister
+- ✅ CreatePendingUserRegister
 - CreateUser
 - FinishUserRegister
 - GenerateJWT

@@ -101,7 +101,7 @@ public class SeedInstitutionDataTaskHandler(
             (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Miguel Gomes da Silva", courseOfferingAds.Id))).GetSuccess().Id
         };
 
-        // TURMAS 2024.1
+        // TURMAS 2025.1
         var classesIds = new List<Guid>();
         for (int i = 0; i < 6; i++)
         {
@@ -168,7 +168,7 @@ public class SeedInstitutionDataTaskHandler(
 
         // ----------------------------------------------------------------------------------------
 
-        // TURMAS 2024.2
+        // TURMAS 2025.2
         classesIds = [];
         for (int i = 6; i < 12; i++)
         {
@@ -230,7 +230,7 @@ public class SeedInstitutionDataTaskHandler(
         await ctx.SaveChangesAsync();
     }
 
-    private void AddAcademicPeriods(Institution institution)
+    private static void AddAcademicPeriods(Institution institution)
     {
         var year = DateTime.Now.Year;
         institution.AcademicPeriods =
@@ -240,7 +240,7 @@ public class SeedInstitutionDataTaskHandler(
         ];
     }
 
-    private void AddCampi(Institution institution)
+    private static void AddCampi(Institution institution)
     {
 
         institution.Campi =
@@ -252,7 +252,7 @@ public class SeedInstitutionDataTaskHandler(
         ];
     }
     
-    private void AddCourses(Institution institution)
+    private static void AddCourses(Institution institution)
     {
         institution.Courses =
         [

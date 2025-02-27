@@ -23,6 +23,7 @@ public partial class IntegrationTests
 
         register.Id.Should().NotBeEmpty();
         register.Email.Should().Be(email);
+        register.InstitutionId.Should().NotBeEmpty();
         register.Status.Should().Be(UserRegisterStatus.Pending);
 
         await AssertDomainEvent<PendingUserRegisterCreatedDomainEvent>(register.Id.ToString());
@@ -32,8 +33,8 @@ public partial class IntegrationTests
     public async Task Should_not_create_a_pending_user_register_with_invalid_email()
     {
         // Arrange
-        var email = TestData.InvalidEmails().PickRandom().First().ToString()!;
         var client = _api.GetClient();
+        var email = TestData.InvalidEmails().PickRandom().First().ToString()!;
 
         // Act
         var response = await client.CreatePendingUserRegister(email);
@@ -88,7 +89,7 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_send_a_email_confirmation_after_create_pending_user_register()
+    public async Task Should_send_a_email_confirmation_after_create_a_pending_user_register()
     {
         // Arrange
         var client = _api.GetClient();

@@ -2,12 +2,12 @@ namespace Syki.Back.Features.Academic.CreateCampus;
 
 public class Campus
 {
-    public Guid Id { get; }
-    public Guid InstitutionId { get; }
-    public string Name { get; private set; }
-    public string City { get; private set; }
+    public Guid Id { get; set; }
+    public Guid InstitutionId { get; set; }
+    public string Name { get; set; }
+    public string City { get; set; }
 
-    public Campus() { }
+    private Campus() { }
 
     public Campus(Guid institutionId, string name, string city)
     {

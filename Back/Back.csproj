@@ -4,10 +4,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <TargetFramework>net9.0</TargetFramework>
-    <NoWarn>CS1591;CS8618;CS8602;CS8604;</NoWarn>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <NoWarn>CS1591;CS8618;CS8602;CS8604;EXTEXP0018;</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <UserSecretsId>73852cbc-85df-4a66-b30c-e60af7d726c0</UserSecretsId>
   </PropertyGroup>
@@ -39,6 +39,7 @@
     <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.10.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" Version="9.2.0-preview.1.25105.6" />
     <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.10.0-beta.1" />
   </ItemGroup>
 

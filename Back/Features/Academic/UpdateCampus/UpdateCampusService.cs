@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.UpdateCampus;
 
-public class UpdateCampusService(SykiDbContext ctx) : IAcademicService
+public class UpdateCampusService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
 	public async Task<OneOf<CampusOut, SykiError>> Update(Guid institutionId, UpdateCampusIn data)
 	{
@@ -11,6 +11,8 @@ public class UpdateCampusService(SykiDbContext ctx) : IAcademicService
 
 		campus.Update(data.Name, data.City);
 		await ctx.SaveChangesAsync();
+
+		await cache.RemoveAsync($"campi:{institutionId}");
 
 		return campus.ToOut();
 	}

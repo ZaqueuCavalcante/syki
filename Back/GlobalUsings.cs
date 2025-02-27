@@ -16,4 +16,5 @@ global using Microsoft.AspNetCore.Identity;
 global using Swashbuckle.AspNetCore.Filters;
 global using Microsoft.AspNetCore.RateLimiting;
 global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.Extensions.Caching.Hybrid;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;

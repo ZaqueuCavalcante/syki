@@ -12,6 +12,7 @@ public class Startup()
         services.AddAuthorizationConfigs();
 
         services.AddHttpConfigs();
+        services.AddCacheConfigs();
         services.AddRateLimiterConfigs();
 
         services.AddAuditConfigs();

@@ -22,6 +22,7 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
 
         await transaction.CommitAsync();
 
+        await cache.RemoveAsync("users");
         await cache.RemoveAsync($"teachers:{institutionId}");
 
         return teacher.ToOut();

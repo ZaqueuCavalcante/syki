@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetUsers;
 
-public class GetUsersService(DatabaseSettings dbSettings) : IAdmService
+public class GetUsersService(DatabaseSettings dbSettings, HybridCache cache) : IAdmService
 {
     public async Task<List<UserOut>> Get()
     {
@@ -29,8 +29,14 @@ public class GetUsersService(DatabaseSettings dbSettings) : IAdmService
                 u.id, i.name
         ";
 
-        var data = await connection.QueryAsync<UserOut>(sql);
-        
-        return data.ToList();
+        return await cache.GetOrCreateAsync(
+            key: "users",
+            state: (connection, sql),
+            factory: async (state, _) =>
+            {
+                var data = await state.connection.QueryAsync<UserOut>(state.sql);
+                return data.ToList();
+            }
+        );
     }
 }

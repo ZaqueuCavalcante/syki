@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetTeachers;
 
-public class GetTeachersService(SykiDbContext ctx) : IAcademicService
+public class GetTeachersService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
     public async Task<List<TeacherOut>> Get(Guid institutionId)
     {
@@ -19,7 +19,14 @@ public class GetTeachersService(SykiDbContext ctx) : IAcademicService
                 t.name
         ";
 
-        var teachers = await ctx.Database.SqlQuery<TeacherOut>(sql).ToListAsync();
+        var teachers = await cache.GetOrCreateAsync(
+            key: $"teachers:{institutionId}",
+            state: (ctx, sql),
+            factory: async (state, _) =>
+            {
+                return await state.ctx.Database.SqlQuery<TeacherOut>(state.sql).ToListAsync();
+            }
+        );
 
         return teachers;
     }

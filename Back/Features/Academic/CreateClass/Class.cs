@@ -7,7 +7,7 @@ using Syki.Back.Features.Student.CreateStudentEnrollment;
 namespace Syki.Back.Features.Academic.CreateClass;
 
 /// <summary>
-/// Representa uma Turma.
+/// Turma
 /// </summary>
 public class Class
 {

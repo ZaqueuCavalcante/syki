@@ -2,6 +2,9 @@ using System.ComponentModel;
 
 namespace Syki.Shared;
 
+/// <summary>
+/// Status da Turma
+/// </summary>
 public enum ClassStatus
 {
     /// <summary>

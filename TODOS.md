@@ -14,12 +14,26 @@
 
 
 
-
-
-
-
-
-
+- GetAcademicPeriods
+    - 
+- GetCampi
+    - 
+- GetCourseCurriculums
+    - 
+- GetCourseOfferings
+    - 
+- GetCourses
+    - 
+- GetEnrollmentPeriods
+    - 
+- GetStudents
+    - 
+- GetTeachers
+    - 
+- GetInstitutions
+    - 
+- GetUsers
+    - 
 
 
 

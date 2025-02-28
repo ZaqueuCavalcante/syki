@@ -3,7 +3,7 @@ using System.ComponentModel;
 namespace Syki.Shared;
 
 /// <summary>
-/// Tipo do curso
+/// Tipo do Curso
 /// </summary>
 public enum CourseType
 {

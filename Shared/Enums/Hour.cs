@@ -2,6 +2,9 @@ using System.ComponentModel;
 
 namespace Syki.Shared;
 
+/// <summary>
+/// Horário
+/// </summary>
 public enum Hour
 {
     [Description("07:00")] H07_00 = 07_00,

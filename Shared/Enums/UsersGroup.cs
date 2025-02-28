@@ -2,6 +2,9 @@ using System.ComponentModel;
 
 namespace Syki.Shared;
 
+/// <summary>
+/// Grupo de Usuários
+/// </summary>
 public enum UsersGroup
 {
     [Description("Todos")]

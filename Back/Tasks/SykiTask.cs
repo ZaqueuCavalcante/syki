@@ -1,11 +1,12 @@
 namespace Syki.Back.Tasks;
 
+// REMOVER PRA COMANDO!!!!!!!
 public class SykiTask
 {
     public Guid Id { get; set; }
     public string Type { get; set; }
     public string Data { get; set; }
-    public SykiTaskStatus Status { get; set; }
+    public CommandStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? ProcessedAt { get; set; }
     public Guid? ProcessorId { get; set; }

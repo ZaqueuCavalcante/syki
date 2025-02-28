@@ -118,7 +118,7 @@
                                     Clearable="true"
                                     AdornmentColor="Color.Primary
                                 ">
-                                    @foreach (SykiTaskStatus? item in Enum.GetValues<SykiTaskStatus>())
+                                    @foreach (CommandStatus? item in Enum.GetValues<CommandStatus>())
                                     {
                                         <MudSelectItem Value="@item">
                                             <MudStack Row="true" AlignItems="AlignItems.Center">
@@ -166,7 +166,7 @@
                 <MudTd DataLabel="Ocorrido">@context.OccurredAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Tarefas">
-                    @foreach (SykiTaskStatus task in context.Tasks)
+                    @foreach (CommandStatus task in context.Tasks)
                     {
                         <MudIcon Icon="@task.GetIcon()" Color="@task.GetColor()" Size="Size.Small" />
                     }
@@ -240,7 +240,7 @@
     private DomainEventStatus? _status;
     private string? _type;
     private TinyInstitutionOut? _institution;
-    private SykiTaskStatus? _tasks;
+    private CommandStatus? _tasks;
 
     protected override async Task OnInitializedAsync()
     {

@@ -8,5 +8,5 @@ public class DomainEventTableOut
     public DomainEventStatus Status { get; set; }
     public DateTime OccurredAt { get; set; }
     public DateTime? ProcessedAt { get; set; }
-    public SykiTaskStatus[] Tasks { get; set; } = [];
+    public CommandStatus[] Tasks { get; set; } = [];
 }

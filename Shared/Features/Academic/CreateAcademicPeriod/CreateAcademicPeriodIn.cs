@@ -3,7 +3,15 @@ namespace Syki.Shared;
 public class CreateAcademicPeriodIn
 {
     public string? Id { get; set; }
+
+    /// <summary>
+    /// Data de início
+    /// </summary>
     public DateOnly StartAt { get; set; }
+
+    /// <summary>
+    /// Data de término
+    /// </summary>
     public DateOnly EndAt { get; set; }
 
     public CreateAcademicPeriodIn() {}

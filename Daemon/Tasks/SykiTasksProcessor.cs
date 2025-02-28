@@ -55,7 +55,7 @@ public class SykiTasksProcessor(IConfiguration configuration, IServiceScopeFacto
                 task.Id,
                 error,
                 Duration = sw.Elapsed.TotalMilliseconds,
-                Status = error.HasValue() ? SykiTaskStatus.Error.ToString() : SykiTaskStatus.Success.ToString(),
+                Status = error.HasValue() ? CommandStatus.Error.ToString() : CommandStatus.Success.ToString(),
             };
             sw.Stop();
 

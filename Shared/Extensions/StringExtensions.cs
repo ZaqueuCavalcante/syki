@@ -1,10 +1,10 @@
 using OtpNet;
 using QRCoder;
 using Newtonsoft.Json;
+using System.Reflection;
 using System.Globalization;
 using Newtonsoft.Json.Converters;
 using System.Text.RegularExpressions;
-using System.Reflection;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Syki.Shared;

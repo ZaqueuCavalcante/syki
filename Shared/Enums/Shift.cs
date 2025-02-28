@@ -2,6 +2,9 @@ using System.ComponentModel;
 
 namespace Syki.Shared;
 
+/// <summary>
+/// Turno
+/// </summary>
 public enum Shift
 {
     [Description("Matutino")]

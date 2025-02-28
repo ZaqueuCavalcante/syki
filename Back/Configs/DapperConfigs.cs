@@ -9,7 +9,7 @@ public static class DapperConfigs
     {
         DefaultTypeMap.MatchNamesWithUnderscores = true;
 
-        SqlMapper.AddTypeHandler(new StringEnumArrayHandler<SykiTaskStatus>());
+        SqlMapper.AddTypeHandler(new StringEnumArrayHandler<CommandStatus>());
     }
 }
 

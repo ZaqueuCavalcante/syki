@@ -2,7 +2,10 @@ using System.ComponentModel;
 
 namespace Syki.Shared;
 
-public enum SykiTaskStatus
+/// <summary>
+/// Status de um Comando
+/// </summary>
+public enum CommandStatus
 {
     [Description("Pendente")]
     Pending,

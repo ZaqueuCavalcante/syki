@@ -2,28 +2,28 @@
 
 namespace Syki.Front.Features.Adm.GetTasksSummary;
 
-public static class SykiTaskStatusMapper
+public static class CommandStatusMapper
 {
-    public static string GetIcon(this SykiTaskStatus status)
+    public static string GetIcon(this CommandStatus status)
     {
         return status switch
         {
-            SykiTaskStatus.Pending => Icons.Material.Rounded.WarningAmber,
-            SykiTaskStatus.Processing => Icons.Material.Filled.Autorenew,
-            SykiTaskStatus.Success => Icons.Material.Filled.CheckCircleOutline,
-            SykiTaskStatus.Error => Icons.Material.Filled.ErrorOutline,
+            CommandStatus.Pending => Icons.Material.Rounded.WarningAmber,
+            CommandStatus.Processing => Icons.Material.Filled.Autorenew,
+            CommandStatus.Success => Icons.Material.Filled.CheckCircleOutline,
+            CommandStatus.Error => Icons.Material.Filled.ErrorOutline,
             _ => ""
         };
     }
 
-    public static Color GetColor(this SykiTaskStatus status)
+    public static Color GetColor(this CommandStatus status)
     {
         return status switch
         {
-            SykiTaskStatus.Pending => Color.Warning,
-            SykiTaskStatus.Processing => Color.Info,
-            SykiTaskStatus.Success => Color.Success,
-            SykiTaskStatus.Error => Color.Error,
+            CommandStatus.Pending => Color.Warning,
+            CommandStatus.Processing => Color.Info,
+            CommandStatus.Success => Color.Success,
+            CommandStatus.Error => Color.Error,
             _ => Color.Default
         };
     }

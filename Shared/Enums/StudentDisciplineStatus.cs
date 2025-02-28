@@ -2,6 +2,9 @@ using System.ComponentModel;
 
 namespace Syki.Shared;
 
+/// <summary>
+/// Status do Aluno em uma Disciplina
+/// </summary>
 public enum StudentDisciplineStatus
 {
     [Description("Pendente")]

@@ -3,7 +3,7 @@ using Hangfire.Dashboard;
 using Hangfire.Annotations;
 using System.Net.Http.Headers;
 
-namespace Syki.Daemon;
+namespace Syki.Daemon.Filters;
 
 public class HangfireAuthFilter(string user, string password) : IDashboardAuthorizationFilter
 {

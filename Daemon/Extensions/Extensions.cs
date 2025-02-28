@@ -1,6 +1,6 @@
 using Syki.Daemon.Settings;
 
-namespace Syki.Daemon;
+namespace Syki.Daemon.Extensions;
 
 public static class Extensions
 {

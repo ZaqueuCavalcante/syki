@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateAcademicPeriod;
 
-public class CreateAcademicPeriodService(SykiDbContext ctx) : IAcademicService
+public class CreateAcademicPeriodService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
     public async Task<OneOf<AcademicPeriodOut, SykiError>> Create(Guid institutionId, CreateAcademicPeriodIn data)
     {
@@ -14,6 +14,8 @@ public class CreateAcademicPeriodService(SykiDbContext ctx) : IAcademicService
 
         ctx.Add(period);
         await ctx.SaveChangesAsync();
+
+        await cache.RemoveAsync($"academicPeriods:{institutionId}");
 
         return period.ToOut();
     }

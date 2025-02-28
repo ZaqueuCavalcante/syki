@@ -1,14 +1,22 @@
 namespace Syki.Back.Features.Academic.GetAcademicPeriods;
 
-public class GetAcademicPeriodsService(SykiDbContext ctx) : IAcademicService
+public class GetAcademicPeriodsService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
     public async Task<List<AcademicPeriodOut>> Get(Guid institutionId)
     {
-        var periods = await ctx.AcademicPeriods.AsNoTracking()
-            .Where(c => c.InstitutionId == institutionId)
-            .OrderBy(p => p.Id)
-            .ToListAsync();
-        
-        return periods.ConvertAll(p => p.ToOut());
+        var academicPeriods = await cache.GetOrCreateAsync(
+            key: $"academicPeriods:{institutionId}",
+            state: (ctx, institutionId),
+            factory: async (state, _) =>
+            {
+                var data = await state.ctx.AcademicPeriods.AsNoTracking()
+                    .Where(p => p.InstitutionId == state.institutionId)
+                    .OrderBy(p => p.Id)
+                    .ToListAsync();
+                return data.ConvertAll(p => p.ToOut());
+            }
+        );
+
+        return academicPeriods;
     }
 }

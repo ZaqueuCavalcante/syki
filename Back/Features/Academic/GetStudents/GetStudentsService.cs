@@ -1,8 +1,8 @@
 namespace Syki.Back.Features.Academic.GetStudents;
 
-public class GetStudentsService(SykiDbContext ctx) : IAcademicService
+public class GetStudentsService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
-    public async Task<List<StudentOut>> Get(Guid institutionId, HybridCache cache)
+    public async Task<List<StudentOut>> Get(Guid institutionId)
     {
         return await cache.GetOrCreateAsync(
             key: $"students:{institutionId}",

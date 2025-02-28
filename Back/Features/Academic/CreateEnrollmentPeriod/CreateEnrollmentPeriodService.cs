@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 
-public class CreateEnrollmentPeriodService(SykiDbContext ctx) : IAcademicService
+public class CreateEnrollmentPeriodService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
     public async Task<OneOf<EnrollmentPeriodOut, SykiError>> Create(Guid institutionId, CreateEnrollmentPeriodIn data)
     {
@@ -17,6 +17,8 @@ public class CreateEnrollmentPeriodService(SykiDbContext ctx) : IAcademicService
         var period = result.GetSuccess();
         ctx.Add(period);
         await ctx.SaveChangesAsync();
+
+        await cache.RemoveAsync($"enrollmentPeriods:{institutionId}");
 
         return period.ToOut();
     }

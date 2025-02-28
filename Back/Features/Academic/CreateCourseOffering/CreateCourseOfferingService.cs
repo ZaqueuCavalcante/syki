@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateCourseOffering;
 
-public class CreateCourseOfferingService(SykiDbContext ctx) : IAcademicService
+public class CreateCourseOfferingService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
     public async Task<OneOf<CourseOfferingOut, SykiError>> Create(Guid institutionId, CreateCourseOfferingIn data)
     {
@@ -32,6 +32,8 @@ public class CreateCourseOfferingService(SykiDbContext ctx) : IAcademicService
 
         ctx.CourseOfferings.Add(courseOffering);
         await ctx.SaveChangesAsync();
+
+        await cache.RemoveAsync($"courseOfferings:{institutionId}");
 
         courseOffering = await ctx.CourseOfferings.AsNoTracking()
             .Include(x => x.Campus)

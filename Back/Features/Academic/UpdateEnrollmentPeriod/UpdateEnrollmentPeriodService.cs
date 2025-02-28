@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.UpdateEnrollmentPeriod;
 
-public class UpdateEnrollmentPeriodService(SykiDbContext ctx) : IAcademicService
+public class UpdateEnrollmentPeriodService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
     public async Task<OneOf<EnrollmentPeriodOut, SykiError>> Update(Guid institutionId, string id, UpdateEnrollmentPeriodIn data)
     {
@@ -15,6 +15,8 @@ public class UpdateEnrollmentPeriodService(SykiDbContext ctx) : IAcademicService
         if (result.IsError()) return result.GetError();
         
         await ctx.SaveChangesAsync();
+
+        await cache.RemoveAsync($"enrollmentPeriods:{institutionId}");
 
         return period.ToOut();
     }

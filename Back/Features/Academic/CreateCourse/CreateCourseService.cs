@@ -2,7 +2,7 @@ using Syki.Back.Features.Academic.CreateDiscipline;
 
 namespace Syki.Back.Features.Academic.CreateCourse;
 
-public class CreateCourseService(SykiDbContext ctx) : IAcademicService
+public class CreateCourseService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
     public async Task<OneOf<CourseOut, SykiError>> Create(Guid institutionId, CreateCourseIn data)
     {
@@ -14,6 +14,8 @@ public class CreateCourseService(SykiDbContext ctx) : IAcademicService
 
         ctx.Add(course);
         await ctx.SaveChangesAsync();
+
+        await cache.RemoveAsync($"courses:{institutionId}");
 
         return course.ToOut();
     }

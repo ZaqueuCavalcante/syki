@@ -2,7 +2,7 @@ using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Academic.CreateStudent;
 
-public class CreateStudentService(SykiDbContext ctx, CreateUserService createService) : IAcademicService
+public class CreateStudentService(SykiDbContext ctx, CreateUserService createService, HybridCache cache) : IAcademicService
 {
     public async Task<OneOf<StudentOut, SykiError>> Create(Guid institutionId, CreateStudentIn data)
     {
@@ -24,6 +24,8 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService createSer
         await ctx.SaveChangesAsync();
 
         await transaction.CommitAsync();
+
+        await cache.RemoveAsync($"students:{institutionId}");
 
         return student.ToOut();
     }

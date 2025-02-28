@@ -19,7 +19,7 @@ public class GetTeachersService(SykiDbContext ctx, HybridCache cache) : IAcademi
                 t.name
         ";
 
-        var teachers = await cache.GetOrCreateAsync(
+        return await cache.GetOrCreateAsync(
             key: $"teachers:{institutionId}",
             state: (ctx, sql),
             factory: async (state, _) =>
@@ -27,7 +27,5 @@ public class GetTeachersService(SykiDbContext ctx, HybridCache cache) : IAcademi
                 return await state.ctx.Database.SqlQuery<TeacherOut>(state.sql).ToListAsync();
             }
         );
-
-        return teachers;
     }
 }

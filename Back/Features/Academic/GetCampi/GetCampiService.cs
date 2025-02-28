@@ -4,7 +4,7 @@ public class GetCampiService(SykiDbContext ctx, HybridCache cache) : IAcademicSe
 {
     public async Task<List<CampusOut>> Get(Guid institutionId)
     {
-        var campi = await cache.GetOrCreateAsync(
+        return await cache.GetOrCreateAsync(
             key: $"campi:{institutionId}",
             state: (ctx, institutionId),
             factory: async (state, _) =>
@@ -15,7 +15,5 @@ public class GetCampiService(SykiDbContext ctx, HybridCache cache) : IAcademicSe
                 return data.ConvertAll(c => c.ToOut());
             }
         );
-
-        return campi;
     }
 }

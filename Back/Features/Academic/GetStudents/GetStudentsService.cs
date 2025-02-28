@@ -4,7 +4,7 @@ public class GetStudentsService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<List<StudentOut>> Get(Guid institutionId, HybridCache cache)
     {
-        var students = await cache.GetOrCreateAsync(
+        return await cache.GetOrCreateAsync(
             key: $"students:{institutionId}",
             state: (ctx, institutionId),
             factory: async (state, _) =>
@@ -19,7 +19,5 @@ public class GetStudentsService(SykiDbContext ctx) : IAcademicService
                 return data.ConvertAll(c => c.ToOut());
             }
         );
-
-        return students;
     }
 }

@@ -14,6 +14,7 @@ public class Startup(IConfiguration configuration)
         services.AddHandlersConfigs();
 
         services.AddDapperConfigs();
+        services.AddCacheConfigs();
 
         services.AddHostedService<CommandsProcessorDbListener>();
         services.AddHostedService<DomainEventsProcessorDbListener>();

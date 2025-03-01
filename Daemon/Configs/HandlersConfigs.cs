@@ -5,7 +5,7 @@ public static class HandlersConfigs
     public static void AddHandlersConfigs(this IServiceCollection services)
     {
         services.AddHandlersConfigs("DomainEventHandler");
-        services.AddHandlersConfigs("TaskHandler");
+        services.AddHandlersConfigs("CommandHandler");
     }
 
     private static void AddHandlersConfigs(this IServiceCollection services, string handlerName)

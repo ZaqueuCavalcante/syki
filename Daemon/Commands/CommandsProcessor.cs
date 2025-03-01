@@ -1,29 +1,23 @@
-using Dapper;
-using Npgsql;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using Syki.Back.Database;
 
 namespace Syki.Daemon.Commands;
 
-public class CommandsProcessor(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory)
+public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
 {
     public async Task Run()
     {
         using var scope = serviceScopeFactory.CreateScope();
-        await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
+        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 
-        const string sql = @"
-            UPDATE syki.commands
-            SET processor_id = @ProcessorId, status = 'Processing'
-            WHERE processor_id IS NULL;
+        await Process(scope, ctx, Guid.NewGuid());
+    }
 
-            SELECT id, type, data
-            FROM syki.commands
-            WHERE processor_id = @ProcessorId AND processed_at IS NULL
-            ORDER BY created_at;
-        ";
-
-        var commands = await connection.QueryAsync<Command>(sql, new { ProcessorId = Guid.NewGuid() });
+    private static async Task Process(IServiceScope scope, SykiDbContext ctx, Guid processorId)
+    {
+        var commands = await ctx.Commands.FromSqlRaw(Sql, processorId).AsNoTracking().ToListAsync();
+        if (commands.Count == 0) return;
 
         var sw = Stopwatch.StartNew();
 
@@ -31,9 +25,11 @@ public class CommandsProcessor(IConfiguration configuration, IServiceScopeFactor
         {
             sw.Restart();
 
+            ctx.Attach(command);
+            await ctx.Database.BeginTransactionAsync();
+
             dynamic data = GetData(command);
             dynamic handler = GetHandler(scope, command);
-            string? error = null;
 
             try
             {
@@ -41,26 +37,21 @@ public class CommandsProcessor(IConfiguration configuration, IServiceScopeFactor
             }
             catch (Exception ex)
             {
-                error = ex.Message + ex.InnerException?.Message;
+                ctx.ChangeTracker.Clear();
+                ctx.Attach(command);
+                command.Error = ex.Message + ex.InnerException?.Message;
             }
 
-            const string update = @"
-                UPDATE syki.commands
-                SET processed_at = now(), status = @Status, error = @Error, duration = @Duration
-                WHERE id = @Id
-            ";
-
-            var parameters = new
-            {
-                command.Id,
-                error,
-                Duration = sw.Elapsed.TotalMilliseconds,
-                Status = error.HasValue() ? CommandStatus.Error.ToString() : CommandStatus.Success.ToString(),
-            };
             sw.Stop();
 
-            await connection.ExecuteAsync(update, parameters);
+            command.Processed(sw.Elapsed.TotalMilliseconds);
+
+            await ctx.SaveChangesAsync();
+            ctx.ChangeTracker.Clear();
+            await ctx.Database.CommitTransactionAsync();
         }
+
+        await Process(scope, ctx, processorId);
     }
 
     private static dynamic GetData(Command command)
@@ -76,4 +67,21 @@ public class CommandsProcessor(IConfiguration configuration, IServiceScopeFactor
         dynamic handler = scope.ServiceProvider.GetRequiredService(handlerType);
         return handler;
     }
+
+    private static readonly string Sql = @"
+        UPDATE syki.commands
+        SET processor_id = {0}, status = 'Processing'
+        WHERE id IN (
+            SELECT id
+            FROM syki.commands
+            WHERE processor_id IS NULL AND status = 'Pending'
+            ORDER BY created_at
+            LIMIT 100
+            FOR UPDATE SKIP LOCKED
+        );
+        SELECT *
+        FROM syki.commands
+        WHERE processor_id = {0} AND processed_at IS NULL
+        ORDER BY created_at;
+    ";
 }

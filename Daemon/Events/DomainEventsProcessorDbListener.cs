@@ -9,14 +9,18 @@ public class DomainEventsProcessorDbListener(IConfiguration configuration) : Bac
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
-        
         await connection.OpenAsync(stoppingToken);
 
         await CreateTrigger(connection);
 
         connection.Notification += (o, e) =>
         {
-            BackgroundJob.Enqueue<DomainEventsProcessor>(x => x.Run());
+            var processingJobs = JobStorage.Current.GetMonitoringApi().ProcessingJobs(0, int.MaxValue).Count(x => x.Value.Job.Type == typeof(DomainEventsProcessor));
+            var enqueuedJobs = JobStorage.Current.GetMonitoringApi().EnqueuedJobs("default", 0, int.MaxValue).Count(x => x.Value.Job.Type == typeof(DomainEventsProcessor));
+            if (processingJobs < 3 && enqueuedJobs < 5)
+            {
+                BackgroundJob.Enqueue<DomainEventsProcessor>(x => x.Run());
+            }
         };
 
         await using (var cmd = new NpgsqlCommand("LISTEN new_domain_event;", connection))
@@ -33,7 +37,7 @@ public class DomainEventsProcessorDbListener(IConfiguration configuration) : Bac
     private static async Task CreateTrigger(NpgsqlConnection connection)
     {
         const string sql = @"
-            CREATE OR REPLACE FUNCTION notify_new_domain_event_trigger()
+            CREATE OR REPLACE FUNCTION notify_new_domain_event_function()
             RETURNS trigger
             LANGUAGE 'plpgsql'
             AS $BODY$ 
@@ -45,7 +49,7 @@ public class DomainEventsProcessorDbListener(IConfiguration configuration) : Bac
 
             CREATE OR REPLACE TRIGGER notify_new_domain_event_trigger
             AFTER INSERT ON syki.domain_events
-            FOR EACH ROW EXECUTE PROCEDURE notify_new_domain_event_trigger();
+            EXECUTE PROCEDURE notify_new_domain_event_function();
         ";
 
         await connection.ExecuteAsync(sql);

@@ -5,13 +5,10 @@ namespace Syki.Shared;
 /// <summary>
 /// Status de um Comando
 /// </summary>
-public enum CommandStatus
+public enum CommandBatchStatus
 {
     [Description("Pendente")]
     Pending,
-
-    [Description("Aguardando")]
-    Awaiting,
 
     [Description("Processando")]
     Processing,

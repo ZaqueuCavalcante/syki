@@ -15,7 +15,7 @@ public class ReprocessCommandService(SykiDbContext ctx) : IAdmService
         var type = typeof(DomainEvent).Assembly.GetType(command.Type)!;
         dynamic data = JsonConvert.DeserializeObject(command.Data, type)!;
    
-        var newCommand = new Command(null, command.InstitutionId, data)
+        var newCommand = new Command(command.InstitutionId, data, null, null)
         {
             Type = command.Type,
             ParentId = command.Id

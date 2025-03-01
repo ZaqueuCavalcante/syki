@@ -17,7 +17,7 @@ public class DomainEvent
 
     public DomainEvent() { }
 
-    public DomainEvent(Guid entityId, object data, Guid institutionId)
+    public DomainEvent(Guid institutionId, Guid entityId, object data)
     {
         Id = Guid.NewGuid();
         EntityId = entityId;
@@ -25,5 +25,12 @@ public class DomainEvent
         Data = data.Serialize();
         OccurredAt = DateTime.Now;
         InstitutionId = institutionId;
+    }
+
+    public void Processed(double duration)
+    {
+        ProcessedAt = DateTime.Now;
+        Duration = Convert.ToInt32(duration);
+        Status = Error.HasValue() ? DomainEventStatus.Error : DomainEventStatus.Success;
     }
 }

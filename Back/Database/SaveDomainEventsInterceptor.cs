@@ -21,8 +21,8 @@ public class SaveDomainEventsInterceptor(IHttpContextAccessor HttpContextAccesso
 
                 var entityId = entry.Property<Guid>("Id").CurrentValue;
                 institutionId ??= (entry.Entity is Institution) ? entityId : entry.Property<Guid>("InstitutionId").CurrentValue;
-                
-                return domainEvents.Select(x => new DomainEvent(entityId, x, institutionId.Value));
+
+                return domainEvents.Select(x => new DomainEvent(institutionId.Value, entityId, x));
             })
             .ToList();
 

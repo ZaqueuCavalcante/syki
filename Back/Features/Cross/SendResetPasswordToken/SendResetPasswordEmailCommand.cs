@@ -11,7 +11,7 @@ public class SendResetPasswordEmailCommandHandler(SykiDbContext ctx, IEmailsServ
     {
         var user = await ctx.Users.AsNoTracking().FirstAsync(u => u.Id == command.UserId);
 
-        var reset = await ctx.ResetPasswordTokens
+        var reset = await ctx.ResetPasswordTokens.AsNoTracking()
             .OrderByDescending(r => r.CreatedAt)
             .FirstAsync(r => r.UserId == user.Id);
 

@@ -5,8 +5,8 @@ public record PendingUserRegisterCreatedDomainEvent(Guid UserRegisterId) : IDoma
 
 public class PendingUserRegisterCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<PendingUserRegisterCreatedDomainEvent>
 {
-    public async Task Handle(Guid eventId, Guid institutionId, PendingUserRegisterCreatedDomainEvent evt)
+    public async Task Handle(Guid institutionId, Guid eventId, PendingUserRegisterCreatedDomainEvent evt)
     {
-        await ctx.SaveCommandsAsync(eventId, institutionId, new SendUserRegisterEmailConfirmationCommand(evt.UserRegisterId));
+        await ctx.SaveCommandsAsync(institutionId, eventId, new SendUserRegisterEmailConfirmationCommand(evt.UserRegisterId));
     }
 }

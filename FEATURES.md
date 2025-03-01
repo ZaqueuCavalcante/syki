@@ -7,8 +7,8 @@
 
 ## Academic
 
-- ✅ CreateAcademicPeriod
-- ✅ CreateCampus
+- CreateAcademicPeriod
+- CreateCampus
 - CreateClass
 - CreateCourse
 - CreateCourseCurriculum

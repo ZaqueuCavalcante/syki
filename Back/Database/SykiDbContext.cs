@@ -89,45 +89,4 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     {
         configurationBuilder.Properties<Enum>().HaveConversion<string>();
     }
-
-    public async Task ResetDbAsync()
-    {
-        if (Env.IsTesting())
-        {
-            await Database.EnsureDeletedAsync();
-            await Database.EnsureCreatedAsync();
-        }
-    }
-
-    public void ResetDb()
-    {
-        if (Env.IsDevelopment())
-        {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
-        }
-    }
-
-    public void MigrateDb()
-    {
-        if (!Env.IsTesting())
-        {
-            Database.Migrate();
-        }
-    }
-
-    public async Task<bool> AcademicPeriodExists(Guid institutionId, string id)
-    {
-        return await AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
-    }
-
-    public async Task SaveTasksAsync(Guid eventId, Guid institutionId, params ISykiTask[] tasks)
-    {
-        foreach (var task in tasks)
-        {
-            Add(new SykiTask(eventId, institutionId, task));
-        }
-
-        await SaveChangesAsync();
-    }
 }

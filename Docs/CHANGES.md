@@ -14,4 +14,3 @@
 - Use records on all Dtos?
 - Servidor exclusivo para SignalR?
 - Customizar palleta de cores?
-- Adicionar visualizacao no mobile para todas as telas

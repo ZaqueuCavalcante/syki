@@ -33,11 +33,11 @@ public static class DbContextExtensions
         return await ctx.AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
     }
 
-    public static async Task SaveTasksAsync(this SykiDbContext ctx, Guid eventId, Guid institutionId, params ISykiTask[] tasks)
+    public static async Task SaveCommandsAsync(this SykiDbContext ctx, Guid eventId, Guid institutionId, params ICommand[] commands)
     {
-        foreach (var task in tasks)
+        foreach (var command in commands)
         {
-            ctx.Add(new SykiTask(eventId, institutionId, task));
+            ctx.Add(new Command(eventId, institutionId, command));
         }
 
         await ctx.SaveChangesAsync();

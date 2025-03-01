@@ -1,49 +1,20 @@
 # TODOS
 
+- Feature para enviar email pros alunos toda vez que for postada uma nova atividade
+- Plano de aulas (conteudos)
 - Melhorar design da AppBar (rounded)
 - Melhorar design da paginação das tabelas
+
+
+
 
 
 
 - HttpClientFactory
 - DbConnectionFactory
 - Pool de conexoes com o banco de dados
-
 - RabbitMQ use case (project)
 - Redis use case (project)
-
-
-
-- GetAcademicPeriods
-    - 
-- GetCampi
-    - 
-- GetCourseCurriculums
-    - 
-- GetCourseOfferings
-    - 
-- GetCourses
-    - 
-- GetEnrollmentPeriods
-    - 
-- GetStudents
-    - 
-- GetTeachers
-    - 
-- GetInstitutions
-    - 
-- GetUsers
-    - 
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -67,10 +38,3 @@ DigitoUnico(9875) -> 9+8+7+5 -> 29
 DigitoUnico(29) -> 2+9 -> 11
 DigitoUnico(11) -> 1+1 -> 2
 DigitoUnico(2) -> 2
-
-
-
-
-
-
-

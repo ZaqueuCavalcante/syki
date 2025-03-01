@@ -90,7 +90,7 @@ public partial class IntegrationTests
         var studentClient = await _api.LoggedAsStudent(student.Email);
 
         await _daemon.AwaitEventsProcessing();
-        await _daemon.AwaitTasksProcessing();
+        await _daemon.AwaitCommandsProcessing();
 
         // Act
         var teacherResponse = await teacherClient.Cross.GetUserNotifications();
@@ -117,7 +117,7 @@ public partial class IntegrationTests
         var studentClient = await _api.LoggedAsStudent(student.Email);
 
         await _daemon.AwaitEventsProcessing();
-        await _daemon.AwaitTasksProcessing();
+        await _daemon.AwaitCommandsProcessing();
 
         // Act
         var teacherResponse = await teacherClient.Cross.GetUserNotifications();
@@ -144,7 +144,7 @@ public partial class IntegrationTests
         var studentClient = await _api.LoggedAsStudent(student.Email);
 
         await _daemon.AwaitEventsProcessing();
-        await _daemon.AwaitTasksProcessing();
+        await _daemon.AwaitCommandsProcessing();
 
         // Act
         var teacherResponse = await teacherClient.Cross.GetUserNotifications();

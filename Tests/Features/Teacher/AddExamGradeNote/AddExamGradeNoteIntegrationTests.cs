@@ -126,7 +126,7 @@ public partial class IntegrationTests
         await teacherClient.AddExamGradeNote(examGradeId, 7.89M);
         
         await _daemon.AwaitEventsProcessing();
-        await _daemon.AwaitTasksProcessing();
+        await _daemon.AwaitCommandsProcessing();
 
         // Assert
         var response = await studentClient.Http.GetUserNotifications();

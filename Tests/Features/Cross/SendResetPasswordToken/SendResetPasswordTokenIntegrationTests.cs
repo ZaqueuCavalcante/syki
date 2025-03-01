@@ -34,7 +34,7 @@ public partial class IntegrationTests
 
         // Assert
         await _daemon.AwaitEventsProcessing();
-        await _daemon.AwaitTasksProcessing();
+        await _daemon.AwaitCommandsProcessing();
 
         var service = _daemon.GetService<IEmailsService>() as FakeEmailsService;
         service!.ResetPasswordEmails.Should().ContainSingle(x => x.Contains(user.Email));

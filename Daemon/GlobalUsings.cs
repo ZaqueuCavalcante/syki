@@ -1,5 +1,5 @@
 global using Syki.Shared;
-global using Syki.Back.Tasks;
+global using Syki.Back.Commands;
 global using Syki.Back.Settings;
 global using Syki.Daemon.Filters;
 global using Syki.Back.Extensions;

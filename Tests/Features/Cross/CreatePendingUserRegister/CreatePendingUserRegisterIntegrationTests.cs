@@ -102,7 +102,7 @@ public partial class IntegrationTests
         response.ShouldBeSuccess();
 
         await _daemon.AwaitEventsProcessing();
-        await _daemon.AwaitTasksProcessing();
+        await _daemon.AwaitCommandsProcessing();
 
         var service = _daemon.GetService<IEmailsService>() as FakeEmailsService;
         service!.UserRegisterEmailConfirmationEmails.Should().ContainSingle(x => x.Contains(email));

@@ -35,10 +35,10 @@ global using Syki.Front.Features.Adm.SetupFeatureFlags;
 global using Syki.Front.Features.Adm.GetDomainEventsSummary;
 global using Syki.Front.Features.Adm.GetDomainEvent;
 global using Syki.Front.Features.Adm.GetDomainEvents;
-global using Syki.Front.Features.Adm.GetSykiTask;
-global using Syki.Front.Features.Adm.GetSykiTasks;
-global using Syki.Front.Features.Adm.ReprocessTask;
-global using Syki.Front.Features.Adm.GetTasksSummary;
+global using Syki.Front.Features.Adm.GetCommand;
+global using Syki.Front.Features.Adm.GetCommands;
+global using Syki.Front.Features.Adm.ReprocessCommand;
+global using Syki.Front.Features.Adm.GetCommandsSummary;
 
 global using Syki.Front.Features.Cross.CreatePendingUserRegister;
 global using Syki.Front.Features.Cross.FinishUserRegister;

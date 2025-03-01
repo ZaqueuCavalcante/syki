@@ -1,5 +1,5 @@
 using Hangfire;
-using Syki.Daemon.Tasks;
+using Syki.Daemon.Commands;
 using Syki.Daemon.Events;
 using Syki.Daemon.Configs;
 using Hangfire.MemoryStorage;
@@ -15,7 +15,7 @@ public class Startup(IConfiguration configuration)
 
         services.AddDapperConfigs();
 
-        services.AddHostedService<SykiTasksProcessorDbListener>();
+        services.AddHostedService<CommandsProcessorDbListener>();
         services.AddHostedService<DomainEventsProcessorDbListener>();
 
         services.AddHangfire(x =>
@@ -34,10 +34,10 @@ public class Startup(IConfiguration configuration)
 
     public void Configure(IApplicationBuilder app)
     {
-        BackgroundJob.Enqueue<SykiTasksProcessor>(x => x.Run());
+        BackgroundJob.Enqueue<CommandsProcessor>(x => x.Run());
         BackgroundJob.Enqueue<DomainEventsProcessor>(x => x.Run());
 
-        RecurringJob.AddOrUpdate<SykiTasksProcessedCleaner>(nameof(SykiTasksProcessedCleaner), x => x.Run(), Cron.Daily(23));
+        RecurringJob.AddOrUpdate<CommandsProcessedCleaner>(nameof(CommandsProcessedCleaner), x => x.Run(), Cron.Daily(23));
 
         app.UseRouting();
         app.UseStaticFiles();

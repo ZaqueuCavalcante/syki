@@ -12,5 +12,5 @@ public class DomainEventOut
     public int Duration { get; set; }
     public Guid? ParentId { get; set; }
 
-    public List<DomainEventTaskOut> Tasks { get; set; } = [];
+    public List<DomainEventCommandOut> Commands { get; set; } = [];
 }

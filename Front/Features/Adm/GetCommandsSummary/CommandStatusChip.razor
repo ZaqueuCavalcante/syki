@@ -1,0 +1,18 @@
+﻿@namespace Syki.Front.Features.Adm.GetCommandsSummary
+
+<MudChip
+    T="string"
+    Class="px-3 ma-0"
+    Size="Size.Small"
+    Icon="@Status.GetIcon()"
+    Color="@Status.GetColor()"
+    IconColor="Color.Default"
+>
+    @Status.GetDescription()
+</MudChip>
+
+@code
+{
+    [Parameter]
+    public CommandStatus Status { get; set; }
+}

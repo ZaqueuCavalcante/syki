@@ -47,7 +47,7 @@ public static class ServicesConfigs
         }
 
         services.AddIdentityConfigs();
-        services.AddSykiTasksConfigs();
+        services.AddCommandsConfigs();
         services.AddTransient<DomainEventsProcessor>();
     }
 }

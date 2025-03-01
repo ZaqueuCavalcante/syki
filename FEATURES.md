@@ -49,11 +49,11 @@
 - GetDomainEventSummary
 - GetFeatureFlags
 - GetInstitutions
-- GetSykiTasksSummary
-- GetTask
-- GetTasks
+- GetCommandsSummary
+- GetCommand
+- GetCommands
 - GetUsers
-- ReprocessTask
+- ReprocessCommand
 - SetupFeatureFlags
 
 ## Cross

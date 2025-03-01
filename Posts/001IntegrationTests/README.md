@@ -23,6 +23,6 @@ Resultado dos testes:
 
 Abaixo mostro um dos testes, onde:
 - Chamo a API para criar um registro de usuário pendente (+ evento PendingUserRegisterCreatedDomainEvent)
-- Aguardo o Daemon processar o evento de domínio gerado (que enfilera a tarefa SendUserRegisterEmailConfirmationTask)
+- Aguardo o Daemon processar o evento de domínio gerado (que enfilera a tarefa SendUserRegisterEmailConfirmationCommand)
 - Aguardo o Daemon processar a tarefa de enviar o email de confirmação de registro
 - Valido que o email foi "enviado" pela minha implementação fake usada nos testes

@@ -113,8 +113,8 @@
                                     Dense="true"
                                     Margin="Margin.Dense"
                                     Variant="Variant.Outlined"
-                                    @bind-Value="@_tasks"
-                                    Label="Tasks"
+                                    @bind-Value="@_commands"
+                                    Label="Comandos"
                                     Clearable="true"
                                     AdornmentColor="Color.Primary
                                 ">
@@ -153,7 +153,7 @@
                 <MudTh>Tipo</MudTh>
                 <MudTh>Ocorrido</MudTh>
                 <MudTh>Processado</MudTh>
-                <MudTh>Tarefas</MudTh>
+                <MudTh>Comandos</MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
@@ -165,10 +165,10 @@
                 </MudTd>
                 <MudTd DataLabel="Ocorrido">@context.OccurredAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
-                <MudTd DataLabel="Tarefas">
-                    @foreach (CommandStatus task in context.Tasks)
+                <MudTd DataLabel="Comandos">
+                    @foreach (CommandStatus command in context.Commands)
                     {
-                        <MudIcon Icon="@task.GetIcon()" Color="@task.GetColor()" Size="Size.Small" />
+                        <MudIcon Icon="@command.GetIcon()" Color="@command.GetColor()" Size="Size.Small" />
                     }
                 </MudTd>
                 <MudTd>
@@ -240,7 +240,7 @@
     private DomainEventStatus? _status;
     private string? _type;
     private TinyInstitutionOut? _institution;
-    private CommandStatus? _tasks;
+    private CommandStatus? _commands;
 
     protected override async Task OnInitializedAsync()
     {
@@ -257,7 +257,7 @@
         var filters = new DomainEventTableFilterIn()
         {
             Type = _type,
-            Tasks = _tasks,
+            Commands = _commands,
             Status = _status,
             InstitutionId = _institution?.Id,
         };

@@ -1,7 +1,7 @@
 global using OneOf;
 global using System.Net;
 global using Syki.Shared;
-global using Syki.Back.Tasks;
+global using Syki.Back.Commands;
 global using Syki.Tests.Base;
 global using NUnit.Framework;
 global using Syki.Back.Errors;

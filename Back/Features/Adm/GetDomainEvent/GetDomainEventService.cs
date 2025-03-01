@@ -18,13 +18,13 @@ public class GetDomainEventService(DatabaseSettings settings) : IAdmService
         var evt = await connection.QueryFirstOrDefaultAsync<DomainEventOut>(sql, new{ id }) ?? new();
         evt.Type = evt.Type.ToDomainEventDescription();
 
-        const string tasksSql = @"
+        const string commandsSql = @"
             SELECT *
-            FROM syki.tasks
+            FROM syki.commands
             WHERE event_id = @Id
         ";
-        evt.Tasks = (await connection.QueryAsync<DomainEventTaskOut>(tasksSql, new{ id })).ToList();
-        evt.Tasks.ForEach(x => x.Type = x.Type.ToSykiTaskDescription());
+        evt.Commands = (await connection.QueryAsync<DomainEventCommandOut>(commandsSql, new{ id })).ToList();
+        evt.Commands.ForEach(x => x.Type = x.Type.ToCommandDescription());
 
         return evt;
     }

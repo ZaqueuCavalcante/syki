@@ -25,7 +25,7 @@ public static class DaemonFactoryExtensions
         }
     }
 
-    public static async Task AwaitTasksProcessing(this DaemonFactory factory)
+    public static async Task AwaitCommandsProcessing(this DaemonFactory factory)
     {
         await using var ctx = factory.GetDbContext();
         var count = 0;
@@ -33,8 +33,8 @@ public static class DaemonFactoryExtensions
         {
             if (count == 2) break;
 
-            var tasks = await ctx.Tasks.CountAsync(x => x.ProcessedAt == null);
-            if (tasks == 0) break;
+            var commands = await ctx.Commands.CountAsync(x => x.ProcessedAt == null);
+            if (commands == 0) break;
             await Task.Delay(500);
             count ++;
         }

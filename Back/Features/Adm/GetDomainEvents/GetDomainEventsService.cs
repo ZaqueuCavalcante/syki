@@ -17,11 +17,11 @@ public class GetDomainEventsService(DatabaseSettings settings) : IAdmService
                 e.status,
                 e.occurred_at,
                 e.processed_at,
-                ARRAY_AGG(t.status ORDER BY t.created_at) AS tasks
+                ARRAY_AGG(t.status ORDER BY t.created_at) AS commands
             FROM
                 syki.domain_events e
             LEFT JOIN
-                syki.tasks t ON t.event_id = e.id
+                syki.commands t ON t.event_id = e.id
             WHERE
                 (@Type IS NULL OR e.type = @Type)
                     AND
@@ -43,9 +43,9 @@ public class GetDomainEventsService(DatabaseSettings settings) : IAdmService
 
         var events = (await connection.QueryAsync<DomainEventTableOut>(sql, parameters)).ToList();
 
-        if (filters.Tasks != null)
+        if (filters.Commands != null)
         {
-            events = events.Where(x => x.Tasks.Contains(filters.Tasks.Value)).ToList();
+            events = events.Where(x => x.Commands.Contains(filters.Commands.Value)).ToList();
         }
 
         events.ForEach(x => x.Description = x.Type.ToDomainEventDescription());

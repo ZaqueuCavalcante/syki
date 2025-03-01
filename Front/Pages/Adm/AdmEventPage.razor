@@ -1,7 +1,7 @@
 ﻿@using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using Syki.Front.Features.Adm.GetDomainEvent
-@using Syki.Front.Features.Adm.GetTasksSummary
+@using Syki.Front.Features.Adm.GetCommandsSummary
 
 @namespace Syki.Front.Pages.Adm
 
@@ -68,14 +68,14 @@
             Hover="true"
             RowsPerPage="10"
             Loading="@_loading"
-            Items="@_data.Tasks"
-            T="DomainEventTaskOut"
+            Items="@_data.Commands"
+            T="DomainEventCommandOut"
             Breakpoint="Breakpoint.Sm"
         >
             <ToolBarContent>
                 <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
                     <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
-                    <MudText Typo="Typo.h6" Style="font-weight: bold">Tarefas</MudText>
+                    <MudText Typo="Typo.h6" Style="font-weight: bold">Comandos</MudText>
                 </MudStack>
             </ToolBarContent>
 
@@ -90,7 +90,7 @@
             <RowTemplate>
                 <MudTd DataLabel="Tipo">@context.Type</MudTd>
                 <MudTd DataLabel="Status">
-                    <SykiTaskStatusChip Status="@context.Status" />
+                    <CommandStatusChip Status="@context.Status" />
                 </MudTd>
                 <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
@@ -137,11 +137,11 @@
 
     private void GoToTaskDetails(Guid id)
     {
-        Nav.NavigateTo($"adm/tasks/{id}");
+        Nav.NavigateTo($"adm/commands/{id}");
     }
 
     private string GetNotFoundMessage()
     {
-        return "Este evento não possui tarefas.";
+        return "Este evento não possui comandos.";
     }
 }

@@ -36,16 +36,16 @@ public class IntegrationTestBase
         var events = await ctx.DomainEvents.AsNoTracking().Where(x => x.Data.Contains(like)).ToListAsync();
 
         events.Should().ContainSingle();
-        typeof(SykiTask).Assembly.GetType(events[0].Type).Should().Be<T>();
+        typeof(Command).Assembly.GetType(events[0].Type).Should().Be<T>();
     }
 
-    protected async Task AssertTask<T>(string like) where T : ISykiTask
+    protected async Task AssertCommand<T>(string like) where T : ICommand
     {
         using var ctx = _api.GetDbContext();
 
-        var tasks = await ctx.Tasks.Where(x => x.Data.Contains(like)).ToListAsync();
+        var commands = await ctx.Commands.Where(x => x.Data.Contains(like)).ToListAsync();
 
-        tasks.Should().ContainSingle();
-        typeof(SykiTask).Assembly.GetType(tasks[0].Type).Should().Be<T>();
+        commands.Should().ContainSingle();
+        typeof(Command).Assembly.GetType(commands[0].Type).Should().Be<T>();
     }
 }

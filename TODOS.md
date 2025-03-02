@@ -1,6 +1,12 @@
 # TODOS
 
 - Feature para enviar email pros alunos toda vez que for postada uma nova atividade
+
+
+
+
+
+
 - Plano de aulas (conteudos)
 - Melhorar design da AppBar (rounded)
 - Melhorar design da paginação das tabelas

@@ -10,7 +10,7 @@ public class CreateLessonAttendanceService(SykiDbContext ctx) : ITeacherService
         var @class = await ctx.Classes
             .Include(x => x.Students)
             .FirstOrDefaultAsync(x => x.Id == lesson.ClassId && x.TeacherId == teacherId);
-        if (@class == null) return new LessonNotFound();
+        if (@class == null) return new ClassNotFound();
 
         var allStudents = @class.Students.Select(x => x.Id).ToList();
         if (!data.PresentStudents.IsSubsetOf(allStudents))

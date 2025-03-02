@@ -26,21 +26,21 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateCourseIn>
     public IEnumerable<SwaggerExample<CreateCourseIn>> GetExamples()
     {
         yield return SwaggerExample.Create(
-			"ADS",
-			new CreateCourseIn
-			{
-				Name = "Análise e Desenvolvimento de Sistemas",
-                Type = CourseType.Tecnologo,
-                Disciplines = ["Programação Orientada a Objetos", "Banco de Dados"],
-			}
-		);
-        yield return SwaggerExample.Create(
 			"Direito",
 			new CreateCourseIn
 			{
 				Name = "Direito",
                 Type = CourseType.Bacharelado,
                 Disciplines = ["Direito Civil", "Direito Penal"],
+			}
+		);
+        yield return SwaggerExample.Create(
+			"ADS",
+			new CreateCourseIn
+			{
+				Name = "Análise e Desenvolvimento de Sistemas",
+                Type = CourseType.Tecnologo,
+                Disciplines = ["Programação Orientada a Objetos", "Banco de Dados"],
 			}
 		);
     }

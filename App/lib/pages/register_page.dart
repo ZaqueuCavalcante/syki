@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:app/configs/services_configs.dart';
 import 'package:app/components/syki_text_field.dart';
 import 'package:app/components/syki_primary_button.dart';
-import 'package:app/features/cross/create_pending_user_register/create_pending_user_register_client.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function() goToLoginPage;
@@ -16,7 +14,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
 
-  final CreatePendingUserRegisterClient client = getIt();
+  // final CreatePendingUserRegisterClient client = getIt();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    "Vamos criar uma conta acadêmica para a sua instituição de ensino",
+                    "Informe o código que foi enviado para o seu email acadêmico",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontSize: 16,
@@ -48,17 +46,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 15),
                 SykiTextField(
                   controller: emailController,
-                  hintText: "Email",
+                  hintText: "Código",
                 ),
                 const SizedBox(height: 15),
                 SykiPrimaryButton(
-                  text: "Registrar",
-                  onTap: () async {
-                    var result = await client.create(emailController.text);
-                    var message = result ? "BOA" : "ERRO";
-                    var snackBar = SnackBar(content: Text(message));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  },
+                  text: "Avançar",
+                  onTap: () {},
                 ),
                 const SizedBox(height: 40),
                 Row(

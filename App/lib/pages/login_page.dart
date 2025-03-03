@@ -69,7 +69,10 @@ class _LoginPageState extends State<LoginPage> {
                         emailController.text, passwordController.text);
                     var message = result ? "BOA" : "ERRO";
                     var snackBar = SnackBar(content: Text(message));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
                   },
                 ),
                 const SizedBox(height: 40),
@@ -77,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Não possui conta?",
+                      "Primeiro acesso?",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                       ),

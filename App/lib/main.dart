@@ -1,8 +1,7 @@
 import 'package:app/configs/env.dart';
+import 'package:app/pages/bootstrap_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:app/configs/http_configs.dart';
-import 'package:app/themes/theme_provider.dart';
 import 'package:app/themes/syki_app_theme.dart';
 import 'package:app/configs/services_configs.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,14 +12,9 @@ Future<void> main() async {
   addServicesConfigs();
   addHttpConfigs();
 
-  runApp(
-    ChangeNotifierProvider(
-      // AuthProvider
-      //https://medium.com/@areesh-ali/building-a-secure-flutter-app-with-jwt-and-apis-e22ade2b2d5f
-      create: (context) => ThemeProvider(),
-      child: const SykiApp(),
-    ),
-  );
+  // AuthProvider
+  //https://medium.com/@areesh-ali/building-a-secure-flutter-app-with-jwt-and-apis-e22ade2b2d5f,
+  runApp(const SykiApp());
 }
 
 class SykiApp extends StatelessWidget {
@@ -30,6 +24,7 @@ class SykiApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      home: const BootstrapPage(),
       themeMode: ThemeMode.system,
       theme: SykiAppTheme.lightTheme,
       darkTheme: SykiAppTheme.darkTheme,

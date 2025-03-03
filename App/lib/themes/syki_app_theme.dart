@@ -1,12 +1,12 @@
-import 'package:app/themes/syki_app_bar_theme.dart';
-import 'package:app/themes/syki_bottom_sheet_theme.dart';
-import 'package:app/themes/syki_checkbox_theme.dart';
-import 'package:app/themes/syki_chip_theme.dart';
-import 'package:app/themes/syki_elevated_button_theme.dart';
-import 'package:app/themes/syki_input_decoration_theme.dart';
-import 'package:app/themes/syki_outlined_button_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:app/themes/syki_text_theme.dart';
+import 'package:app/themes/syki_chip_theme.dart';
+import 'package:app/themes/syki_app_bar_theme.dart';
+import 'package:app/themes/syki_checkbox_theme.dart';
+import 'package:app/themes/syki_bottom_sheet_theme.dart';
+import 'package:app/themes/syki_elevated_button_theme.dart';
+import 'package:app/themes/syki_outlined_button_theme.dart';
+import 'package:app/themes/syki_input_decoration_theme.dart';
 
 class SykiAppTheme {
   static ThemeData lightTheme = ThemeData(

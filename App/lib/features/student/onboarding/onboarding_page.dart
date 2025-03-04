@@ -1,12 +1,12 @@
-import 'package:app/features/student/onboarding/onboarding_controller.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:app/constants/syki_sizes.dart';
 import 'package:app/utils/syki_functions.dart';
 import 'package:app/constants/syki_images.dart';
 import 'package:app/constants/syki_colors.dart';
-import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:app/features/student/onboarding/onboarding_step.dart';
+import 'package:app/features/student/onboarding/onboarding_controller.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
@@ -41,16 +41,6 @@ class OnboardingPage extends StatelessWidget {
                     'Veja todas as datas importantes e pendências de entrega.',
               )
             ],
-          ),
-
-          /// Skip Button
-          Positioned(
-            top: SykiFunctions.appBarHeight(),
-            right: SykiSizes.defaultSpace,
-            child: TextButton(
-              onPressed: () => controller.skip(),
-              child: const Text('Pular'),
-            ),
           ),
 
           /// Dot Navigation SmoothPageIndicator

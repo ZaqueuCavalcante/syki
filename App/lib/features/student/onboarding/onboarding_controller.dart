@@ -1,6 +1,6 @@
 import 'package:app/pages/login_page.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 class OnboardingController extends GetxController {
   static OnboardingController get instance => Get.find();
@@ -17,9 +17,9 @@ class OnboardingController extends GetxController {
 
   void nextStep() {
     if (currentStepIndex.value == 2) {
-      // Get.to(LoginPage(
-      //   goToRegisterPage: () {},
-      // ));
+      Get.to(LoginPage(
+        goToRegisterPage: () {},
+      ));
     } else {
       int step = currentStepIndex.value + 1;
       pageController.jumpToPage(step);

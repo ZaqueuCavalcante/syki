@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:app/auth/auth_service.dart';
-import 'package:app/components/syki_text_field.dart';
-import 'package:app/components/syki_primary_button.dart';
+import 'package:app/constants/syki_sizes.dart';
+import 'package:app/utils/syki_functions.dart';
+import 'package:app/constants/syki_colors.dart';
+import 'package:app/constants/syki_images.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function() goToRegisterPage;
@@ -22,81 +24,113 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 30),
-                Icon(
-                  Icons.lock_open_rounded,
-                  size: 72,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(height: 50),
-                SykiTextField(
-                  controller: emailController,
-                  hintText: "Email",
-                ),
-                const SizedBox(height: 10),
-                SykiTextField(
-                  controller: passwordController,
-                  hintText: "Senha",
-                  obscureText: true,
-                ),
-                const SizedBox(height: 15),
-                Padding(
-                  padding: const EdgeInsets.only(right: 5),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "Esqueci minha senha",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+          padding: EdgeInsets.only(
+            top: SykiSizes.appBarHeight,
+            left: SykiSizes.defaultSpace,
+            bottom: SykiSizes.defaultSpace,
+            right: SykiSizes.defaultSpace,
+          ),
+          child: Column(
+            children: [
+              /// Logo + Title + SubTitle
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image(
+                    height: 130,
+                    image: AssetImage(SykiImages.sykiLogo),
                   ),
-                ),
-                const SizedBox(height: 30),
-                SykiPrimaryButton(
-                  text: "Login",
-                  onTap: () async {
-                    var result = await client.login(
-                        emailController.text, passwordController.text);
-                    var message = result ? "BOA" : "ERRO";
-                    var snackBar = SnackBar(content: Text(message));
+                  Text(
+                    'Bem-vindo(a)!',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  const SizedBox(height: SykiSizes.sm),
+                  Text(
+                    'Simplifique sua vida acadêmica. Tudo sobre seu curso em um só lugar!',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  )
+                ],
+              ),
 
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    }
-                  },
-                ),
-                const SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              const SizedBox(height: SykiSizes.spaceBtwSections),
+
+              /// Form
+              Form(
+                child: Column(
                   children: [
-                    Text(
-                      "Primeiro acesso?",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.email_rounded),
+                          labelText: 'Email'),
+                    ),
+                    const SizedBox(height: SykiSizes.spaceBtwInputFields),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.lock_outline_rounded),
+                        labelText: 'Senha',
+                        suffixIcon: Icon(Icons.visibility_off_outlined),
                       ),
                     ),
-                    const SizedBox(width: 5),
-                    GestureDetector(
-                      onTap: widget.goToRegisterPage,
-                      child: Text("Registre-se agora!",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold)),
-                    )
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Esqueci minha senha",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+
+              const SizedBox(height: SykiSizes.spaceBtwItems),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Login'),
+                ),
+              ),
+
+              const SizedBox(height: SykiSizes.defaultSpace),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                      child: Divider(
+                    color: SykiFunctions.isDarkMode(context)
+                        ? SykiColors.darkGrey
+                        : SykiColors.grey,
+                    thickness: 0.5,
+                  ))
+                ],
+              ),
+              const SizedBox(height: SykiSizes.defaultSpace),
+
+              Text(
+                'Ainda não definiu sua senha?',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: SykiSizes.spaceBtwItems / 2),
+
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () {},
+                  child: Text('Primeiro acesso'),
+                ),
+              ),
+            ],
           ),
         ),
       ),

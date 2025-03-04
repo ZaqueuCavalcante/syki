@@ -28,7 +28,7 @@ class SykiAppTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: Colors.blue,
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: Colors.grey[850],
     textTheme: SykiTextTheme.darkTextTheme,
     chipTheme: SykiChipTheme.darkChipTheme,
     appBarTheme: SykiAppBarTheme.darkAppBarTheme,

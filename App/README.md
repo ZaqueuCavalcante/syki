@@ -1,7 +1,6 @@
 # Syki App
 
 - APENAS FEATURES DO ALUNO
-- DEPOIS PENSAR EM FAZER PRO PROFESSOR
 - ANEXAR ARQUIVOS DO GOOGLE DOCS
 
 - MENSAGEIRO OFF-LINE (FACE-TO-FACE)
@@ -36,3 +35,10 @@
 ## Enable API on localhost
 
 adb reverse tcp:5001 tcp:5001
+
+
+
+## Ilustrations
+
+Illustration by <a href="https://icons8.com/illustrations/author/ARh4OKrFtdfC">Pixeltrue Ouch!</a>
+

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:app/configs/env.dart';
 import 'package:app/auth/auth_service.dart';
-import 'package:app/configs/services_configs.dart';
 
 final dio = Dio();
 
@@ -22,7 +22,7 @@ class JWTInterceptor extends InterceptorsWrapper {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    var token = await getIt<AuthService>().getToken();
+    var token = await Get.find<AuthService>().getToken();
     options.headers['Authorization'] = 'Bearer $token';
     return super.onRequest(options, handler);
   }

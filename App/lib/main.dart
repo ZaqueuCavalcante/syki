@@ -1,10 +1,11 @@
+import 'package:get/get.dart';
 import 'package:app/configs/env.dart';
-import 'package:app/pages/bootstrap_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app/configs/http_configs.dart';
 import 'package:app/themes/syki_app_theme.dart';
 import 'package:app/configs/services_configs.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:app/features/student/onboarding/onboarding_page.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: Env.fileName);
@@ -22,9 +23,9 @@ class SykiApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const BootstrapPage(),
+      home: const OnboardingPage(),
       themeMode: ThemeMode.system,
       theme: SykiAppTheme.lightTheme,
       darkTheme: SykiAppTheme.darkTheme,

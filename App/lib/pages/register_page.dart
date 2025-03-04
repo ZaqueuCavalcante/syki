@@ -14,8 +14,6 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
 
-  // final CreatePendingUserRegisterClient client = getIt();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

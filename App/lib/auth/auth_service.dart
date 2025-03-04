@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:app/utils/syki_logger.dart';
 import 'package:app/configs/http_configs.dart';
-import 'package:app/configs/services_configs.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService {
-  final FlutterSecureStorage storage = getIt<FlutterSecureStorage>();
+  final FlutterSecureStorage storage = Get.find();
 
   Future<bool> login(String email, String password) async {
     try {
@@ -21,7 +22,7 @@ class AuthService {
         }
       }
     } catch (e) {
-      print('Login error: $e');
+      SykiLogger.error('Login error: $e');
     }
     return false;
   }

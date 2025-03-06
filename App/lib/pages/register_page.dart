@@ -1,81 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:app/components/syki_text_field.dart';
-import 'package:app/components/syki_primary_button.dart';
+import 'package:flutter/services.dart';
+import 'package:app/constants/syki_sizes.dart';
+import 'package:app/constants/syki_images.dart';
 
 class RegisterPage extends StatefulWidget {
-  final void Function() goToLoginPage;
-
-  const RegisterPage({super.key, required this.goToLoginPage});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController codeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: SafeArea(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.app_registration_outlined,
-                  size: 72,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(height: 50),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    "Informe o código que foi enviado para o seu email acadêmico",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontSize: 16,
-                    ),
+          padding: EdgeInsets.only(
+            left: SykiSizes.defaultSpace,
+            bottom: SykiSizes.defaultSpace,
+            right: SykiSizes.defaultSpace,
+          ),
+          child: Column(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image(
+                    height: 130,
+                    image: AssetImage(SykiImages.sykiLogo),
                   ),
-                ),
-                const SizedBox(height: 15),
-                SykiTextField(
-                  controller: emailController,
-                  hintText: "Código",
-                ),
-                const SizedBox(height: 15),
-                SykiPrimaryButton(
-                  text: "Avançar",
-                  onTap: () {},
-                ),
-                const SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  const SizedBox(height: SykiSizes.sm),
+                  Text(
+                    'Informe o código de 6 dígitos que foi enviado para o seu email acadêmico:',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  )
+                ],
+              ),
+              const SizedBox(height: SykiSizes.spaceBtwSections),
+              Form(
+                child: Column(
                   children: [
-                    Text(
-                      "Já possui conta?",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                    TextFormField(
+                      maxLength: 6,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.token_rounded),
+                          labelText: 'Código'),
                     ),
-                    const SizedBox(width: 5),
-                    GestureDetector(
-                      onTap: widget.goToLoginPage,
-                      child: Text(
-                        "Faça o login aqui!",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+              const SizedBox(height: SykiSizes.spaceBtwItems),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Avançar'),
+                ),
+              ),
+            ],
           ),
         ),
       ),

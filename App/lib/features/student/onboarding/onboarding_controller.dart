@@ -1,6 +1,6 @@
-import 'package:app/pages/login_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:app/pages/login_page.dart';
 
 class OnboardingController extends GetxController {
   static OnboardingController get instance => Get.find();
@@ -24,10 +24,5 @@ class OnboardingController extends GetxController {
       int step = currentStepIndex.value + 1;
       pageController.jumpToPage(step);
     }
-  }
-
-  void skip() {
-    currentStepIndex.value = 2;
-    pageController.jumpToPage(2);
   }
 }

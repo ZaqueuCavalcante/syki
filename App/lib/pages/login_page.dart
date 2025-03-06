@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:app/auth/auth_service.dart';
+import 'package:app/pages/register_page.dart';
 import 'package:app/constants/syki_sizes.dart';
 import 'package:app/utils/syki_functions.dart';
 import 'package:app/constants/syki_colors.dart';
@@ -126,7 +127,9 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(const RegisterPage());
+                  },
                   child: Text('Primeiro acesso'),
                 ),
               ),

@@ -26,8 +26,6 @@ class _BootstrapPageState extends State<BootstrapPage> {
       );
     }
 
-    return RegisterPage(
-      goToLoginPage: toogleLoginRegisterPages,
-    );
+    return RegisterPage();
   }
 }

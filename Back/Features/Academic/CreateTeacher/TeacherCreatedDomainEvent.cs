@@ -9,6 +9,7 @@ public class TeacherCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventH
 {
     public async Task Handle(Guid institutionId, Guid eventId, TeacherCreatedDomainEvent evt)
     {
-        await ctx.SaveCommandsAsync(institutionId, eventId, new LinkOldNotificationsCommand(evt.InstitutionId, evt.UserId));
+        ctx.AddCommands(institutionId, eventId, new LinkOldNotificationsCommand(evt.InstitutionId, evt.UserId));
+        await Task.CompletedTask;
     }
 }

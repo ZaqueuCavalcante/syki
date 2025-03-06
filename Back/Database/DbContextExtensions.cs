@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore.Storage;
+
 namespace Syki.Back.Database;
 
 public static class DbContextExtensions
@@ -20,6 +22,15 @@ public static class DbContextExtensions
         }
     }
 
+    public static async Task<IDbContextTransaction> BeginTransactionAsync(this SykiDbContext ctx)
+    {
+        if (ctx.Database.CurrentTransaction == null)
+        {
+            return await ctx.Database.BeginTransactionAsync();
+        }
+        return ctx.Database.CurrentTransaction;
+    }
+
     public static void MigrateDb(this SykiDbContext ctx)
     {
         if (!Env.IsTesting())
@@ -40,13 +51,11 @@ public static class DbContextExtensions
         );
     }
 
-    public static async Task SaveCommandsAsync(this SykiDbContext ctx, Guid institutionId, Guid eventId, params ICommand[] commands)
+    public static void AddCommands(this SykiDbContext ctx, Guid institutionId, Guid eventId, params ICommand[] commands)
     {
         foreach (var command in commands)
         {
             ctx.Add(new Command(institutionId, command, eventId, null));
         }
-
-        await ctx.SaveChangesAsync();
     }
 }

@@ -1,6 +1,6 @@
 ﻿@namespace Syki.Front.Shared
 
-<MudNavMenu>
+<MudNavMenu Rounded="true" Color="Color.Primary" Class="pa-2">
     <AuthorizeView Roles="@UserRole.Adm.ToString()">
         <MudNavLink Href="adm/users" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Usuários</MudNavLink>
         <MudNavLink Href="adm/institutions" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.School" IconColor="Color.Inherit">Instituições</MudNavLink>

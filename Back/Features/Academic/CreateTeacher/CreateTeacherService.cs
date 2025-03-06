@@ -6,7 +6,7 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
 {
     public async Task<OneOf<TeacherOut, SykiError>> Create(Guid institutionId, CreateTeacherIn data)
     {
-        await using var transaction = await ctx.Database.BeginTransactionAsync();
+        await using var transaction = await ctx.BeginTransactionAsync();
 
         var userIn = CreateUserIn.NewTeacher(institutionId, data.Name, data.Email);
         var result = await service.Create(userIn);

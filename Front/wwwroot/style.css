@@ -44,3 +44,7 @@
 svg.apexcharts-svg {
     background: transparent !important;
 }
+
+.mud-navmenu.mud-navmenu-rounded .mud-nav-link {
+    border-radius: 6px !important;
+}

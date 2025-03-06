@@ -4,7 +4,7 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<OneOf<ClassOut, SykiError>> Create(Guid institutionId, CreateClassIn data)
     {
-        await using var transaction = await ctx.Database.BeginTransactionAsync();
+        await using var transaction = await ctx.BeginTransactionAsync();
 
         var disciplineOk = await ctx.Disciplines.AnyAsync(x => x.InstitutionId == institutionId && x.Id == data.DisciplineId);
         if (!disciplineOk) return new DisciplineNotFound();

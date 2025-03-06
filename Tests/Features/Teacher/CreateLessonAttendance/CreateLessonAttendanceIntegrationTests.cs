@@ -70,7 +70,7 @@ public partial class IntegrationTests
         var response = await teacherClient.CreateLessonAttendance(lessonId, []);
 
         // Assert
-        response.ShouldBeError(new LessonNotFound());
+        response.ShouldBeError(new ClassNotFound());
     }
 
     [Test]

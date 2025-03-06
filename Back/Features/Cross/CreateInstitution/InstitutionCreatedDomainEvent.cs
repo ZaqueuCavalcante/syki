@@ -7,6 +7,7 @@ public class InstitutionCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEv
 {
     public async Task Handle(Guid institutionId, Guid eventId, InstitutionCreatedDomainEvent evt)
     {
-        await ctx.SaveCommandsAsync(institutionId, eventId, new SeedInstitutionDataCommand(evt.Id));
+        ctx.AddCommands(institutionId, eventId, new SeedInstitutionDataCommand(evt.Id));
+        await Task.CompletedTask;
     }
 }

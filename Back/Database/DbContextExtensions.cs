@@ -6,7 +6,7 @@ public static class DbContextExtensions
 {
     public static void ResetDb(this SykiDbContext ctx)
     {
-        if (Env.IsDevelopment())
+        if (!Env.IsTesting())
         {
             ctx.Database.EnsureDeleted();
             ctx.Database.EnsureCreated();

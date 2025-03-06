@@ -5,9 +5,7 @@
 
 
 - Plano de aulas (conteudos)
-- Melhorar design da AppBar (rounded)
 - Melhorar design da paginação das tabelas
-
 
 
 - HttpClientFactory

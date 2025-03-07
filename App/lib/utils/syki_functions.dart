@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -40,5 +42,11 @@ class SykiFunctions {
 
   static double bottomNavigationBarHeight() {
     return kBottomNavigationBarHeight;
+  }
+
+  static String getJWTPayload(String? jwt) {
+    if (jwt == null) return "";
+    String normalizedSource = base64Url.normalize(jwt.split(".")[1]);
+    return utf8.decode(base64Url.decode(normalizedSource));
   }
 }

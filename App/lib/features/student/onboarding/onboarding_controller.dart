@@ -17,7 +17,7 @@ class OnboardingController extends GetxController {
 
   void nextStep() {
     if (currentStepIndex.value == 2) {
-      Get.to(LoginPage(
+      Get.to(() => LoginPage(
         goToRegisterPage: () {},
       ));
     } else {

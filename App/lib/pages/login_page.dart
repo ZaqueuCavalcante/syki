@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:app/pages/home_page.dart';
 import 'package:app/auth/auth_service.dart';
 import 'package:app/pages/register_page.dart';
 import 'package:app/constants/syki_sizes.dart';
@@ -20,7 +21,9 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  final AuthService client = Get.find();
+  final AuthService authService = Get.find();
+
+  bool _showPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -62,17 +65,38 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      onTapOutside: (PointerDownEvent event) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      },
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.email_rounded),
                           labelText: 'Email'),
                     ),
                     const SizedBox(height: SykiSizes.spaceBtwInputFields),
                     TextFormField(
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.lock_outline_rounded),
-                        labelText: 'Senha',
-                        suffixIcon: Icon(Icons.visibility_off_outlined),
-                      ),
+                      controller: passwordController,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      autofillHints: const [AutofillHints.password],
+                      obscureText: !_showPassword,
+                      onTapOutside: (PointerDownEvent event) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      },
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.lock_outline_rounded),
+                          labelText: 'Senha',
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _showPassword = !_showPassword;
+                                });
+                              },
+                              icon: _showPassword
+                                  ? Icon(Icons.visibility_off)
+                                  : Icon(Icons.visibility))),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 5),
@@ -98,7 +122,15 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    var result = await authService.login(
+                      emailController.text,
+                      passwordController.text,
+                    );
+                    if (result) {
+                      Get.to(() => HomePage());
+                    }
+                  },
                   child: Text('Login'),
                 ),
               ),
@@ -128,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: () {
-                    Get.to(const RegisterPage());
+                    Get.to(() => const RegisterPage());
                   },
                   child: Text('Primeiro acesso'),
                 ),

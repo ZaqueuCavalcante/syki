@@ -27,10 +27,8 @@ public class Startup()
         services.AddOpenTelemetryConfigs();
     }
 
-    public static void Configure(IApplicationBuilder app, SykiDbContext context)
+    public static void Configure(IApplicationBuilder app)
     {
-        context.ResetDb();
-
         app.UseLogs();
 
         app.UseCors();

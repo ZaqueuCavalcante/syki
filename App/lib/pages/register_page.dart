@@ -48,6 +48,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       maxLength: 6,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       keyboardType: TextInputType.number,
+                      onTapOutside: (PointerDownEvent event) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      },
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: const InputDecoration(
                           prefixIcon: Icon(Icons.token_rounded),

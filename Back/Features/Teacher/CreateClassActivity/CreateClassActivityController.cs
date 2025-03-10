@@ -9,7 +9,7 @@ public class CreateClassActivityController(CreateClassActivityService service) :
     /// Criar atividade
     /// </summary>
     /// <remarks>
-    /// Cria um atividade vinculada à turma especificada
+    /// Cria uma atividade vinculada à turma especificada
     /// </remarks>
     [HttpPost("teacher/classes/{id}/activities")]
     [ProducesResponseType(200)]

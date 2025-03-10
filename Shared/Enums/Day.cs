@@ -3,7 +3,7 @@ using System.ComponentModel;
 namespace Syki.Shared;
 
 /// <summary>
-/// Dia de semana
+/// Dia da semana
 /// </summary>
 public enum Day
 {

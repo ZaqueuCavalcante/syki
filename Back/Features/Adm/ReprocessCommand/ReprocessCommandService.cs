@@ -10,15 +10,14 @@ public class ReprocessCommandService(SykiDbContext ctx) : IAdmService
 
         if (command is null) return new CommandNotFound();
 
-        if (command.ParentId != null) return new OnlyRootCommandsCanBeReprocessed();
+        if (command.OriginalId != null) return new OnlyRootCommandsCanBeReprocessed();
 
         var type = typeof(DomainEvent).Assembly.GetType(command.Type)!;
         dynamic data = JsonConvert.DeserializeObject(command.Data, type)!;
    
-        var newCommand = new Command(command.InstitutionId, data, null, null)
+        var newCommand = new Command(command.InstitutionId, data, originalId: command.Id)
         {
             Type = command.Type,
-            ParentId = command.Id
         };
 
         ctx.Commands.Add(newCommand);

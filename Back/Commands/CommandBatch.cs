@@ -13,7 +13,7 @@ public class CommandBatch
 
     public static CommandBatch New()
     {
-        return new CommandBatch
+        return new()
         {
             Id = Guid.NewGuid(),
             CreatedAt = DateTime.Now,

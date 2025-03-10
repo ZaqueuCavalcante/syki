@@ -1,4 +1,3 @@
-using Syki.Back.Filters;
 using System.Reflection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;

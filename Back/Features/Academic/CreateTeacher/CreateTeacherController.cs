@@ -13,6 +13,7 @@ public class CreateTeacherController(CreateTeacherService service) : ControllerB
     /// Um link para redefinição de senha será enviado pro email informado.
     /// </remarks>
     [HttpPost("academic/teachers")]
+    [DbContextTransactionFilter]
     public async Task<IActionResult> Create([FromBody] CreateTeacherIn data)
     {
         var result = await service.Create(User.InstitutionId(), data);

@@ -1,3 +1,5 @@
+using Syki.Back.Features.Cross.SeedInstitutionData;
+
 namespace Syki.Back.Features.Cross.CreateInstitution;
 
 [DomainEventDescription("Instituição criada")]
@@ -7,7 +9,7 @@ public class InstitutionCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEv
 {
     public async Task Handle(Guid institutionId, Guid eventId, InstitutionCreatedDomainEvent evt)
     {
-        ctx.AddCommands(institutionId, eventId, new SeedInstitutionDataCommand(evt.Id));
+        ctx.AddCommand(institutionId, new SeedInstitutionBasicDataCommand(evt.Id), eventId: eventId);
         await Task.CompletedTask;
     }
 }

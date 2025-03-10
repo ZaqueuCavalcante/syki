@@ -7,8 +7,6 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
 {
     public async Task<OneOf<UserOut, SykiError>> Finish(FinishUserRegisterIn data)
     {
-        await using var transaction = await ctx.BeginTransactionAsync();
-
         _ = Guid.TryParse(data.Token, out var id);
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(d => d.Id == id);
         if (register == null) return new InvalidRegistrationToken();
@@ -29,7 +27,6 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
         var user = result.GetSuccess();
 
         await ctx.SaveChangesAsync();
-        await transaction.CommitAsync();
 
         await cache.RemoveAsync("users");
         await cache.RemoveAsync("institutions");

@@ -12,6 +12,7 @@ public class SendResetPasswordTokenController(SendResetPasswordTokenService serv
     /// Envia um link de redefinição de senha para o email informado.
     /// </remarks>
     [HttpPost("reset-password-token")]
+    [DbContextTransactionFilter]
     [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]

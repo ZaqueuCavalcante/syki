@@ -7,7 +7,7 @@ public class PendingUserRegisterCreatedDomainEventHandler(SykiDbContext ctx) : I
 {
     public async Task Handle(Guid institutionId, Guid eventId, PendingUserRegisterCreatedDomainEvent evt)
     {
-        ctx.AddCommands(institutionId, eventId, new SendUserRegisterEmailConfirmationCommand(evt.UserRegisterId));
+        ctx.AddCommand(institutionId, new SendUserRegisterEmailConfirmationCommand(evt.UserRegisterId), eventId: eventId);
         await Task.CompletedTask;
     }
 }

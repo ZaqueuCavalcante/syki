@@ -5,7 +5,7 @@ public record SendStudentWelcomeEmailCommand(Guid InstitutionId, Guid UserId) : 
 
 public class SendStudentWelcomeEmailCommandHandler(SykiDbContext ctx) : ICommandHandler<SendStudentWelcomeEmailCommand>
 {
-    public async Task Handle(SendStudentWelcomeEmailCommand command)
+    public async Task Handle(Guid commandId, SendStudentWelcomeEmailCommand command)
     {
         var student = await ctx.Students
             .Where(x => x.Id == command.InstitutionId)

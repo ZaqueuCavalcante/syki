@@ -6,8 +6,6 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService createSer
 {
     public async Task<OneOf<StudentOut, SykiError>> Create(Guid institutionId, CreateStudentIn data)
     {
-        await using var transaction = await ctx.BeginTransactionAsync();
-
         var courseOfferingExists = await ctx.CourseOfferings
             .AnyAsync(o => o.InstitutionId == institutionId && o.Id == data.CourseOfferingId);
         if (!courseOfferingExists) return new CourseOfferingNotFound();
@@ -22,8 +20,6 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService createSer
         ctx.Add(student);
 
         await ctx.SaveChangesAsync();
-
-        await transaction.CommitAsync();
 
         await cache.RemoveAsync("users");
         await cache.RemoveAsync($"students:{institutionId}");

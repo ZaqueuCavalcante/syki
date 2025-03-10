@@ -12,6 +12,7 @@ public class FinishUserRegisterController(FinishUserRegisterService service) : C
     /// Finaliza o registro do usuário no sistema.
     /// </remarks>
     [HttpPut("users")]
+    [DbContextTransactionFilter]
     [ProducesResponseType(typeof(UserOut), 200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]

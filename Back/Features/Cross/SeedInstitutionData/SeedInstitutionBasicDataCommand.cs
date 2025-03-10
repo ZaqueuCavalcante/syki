@@ -1,38 +1,17 @@
-using Syki.Back.Features.Academic.CreateClass;
-using Syki.Back.Features.Academic.StartClasses;
-using Syki.Back.Features.Academic.CreateTeacher;
-using Syki.Back.Features.Academic.CreateStudent;
-using Syki.Back.Features.Teacher.AddExamGradeNote;
-using Syki.Back.Features.Academic.FinalizeClasses;
+
+using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateCourseOffering;
-using Syki.Back.Features.Teacher.CreateLessonAttendance;
 using Syki.Back.Features.Academic.CreateCourseCurriculum;
-using Syki.Back.Features.Student.CreateStudentEnrollment;
-using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
-using Syki.Back.Features.Academic.UpdateEnrollmentPeriod;
-using Syki.Back.Features.Academic.ReleaseClassesForEnrollment;
 
-namespace Syki.Back.Features.Cross.CreateInstitution;
+namespace Syki.Back.Features.Cross.SeedInstitutionData;
 
-[CommandDescription("Realizar seed de dados da instituição")]
-public record SeedInstitutionDataCommand(Guid InstitutionId) : ICommand;
+[CommandDescription("Realizar seed de dados básicos da instituição")]
+public record SeedInstitutionBasicDataCommand(Guid InstitutionId) : ICommand;
 
-public class SeedInstitutionDataCommandHandler(
-    SykiDbContext ctx,
-    CreateClassService createClassService,
-    StartClassesService startClassesService,
-    CreateStudentService createStudentService,
-    CreateTeacherService createTeacherService,
-    FinalizeClassesService finalizeClassesService,
-    AddExamGradeNoteService addExamGradeNoteService,
-    CreateEnrollmentPeriodService createEnrollmentPeriodService,
-    UpdateEnrollmentPeriodService updateEnrollmentPeriodService,
-    CreateLessonAttendanceService createLessonAttendanceService,
-    CreateStudentEnrollmentService createStudentEnrollmentService,
-    ReleaseClassesForEnrollmentService releaseClassesForEnrollmentService) : ICommandHandler<SeedInstitutionDataCommand>
+public class SeedInstitutionBasicDataCommandHandler(SykiDbContext ctx) : ICommandHandler<SeedInstitutionBasicDataCommand>
 {
-    public async Task Handle(SeedInstitutionDataCommand command)
+    public async Task Handle(Guid commandId, SeedInstitutionBasicDataCommand command)
     {
         if (Env.IsTesting()) return;
 
@@ -77,157 +56,7 @@ public class SeedInstitutionDataCommandHandler(
         );
         ctx.Add(courseOfferingDireito);
 
-        var teachers = new List<Guid>()
-        {
-            (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Davi Pessoa Ferraz"))).GetSuccess().Id,
-            (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Luciete Bezerra Alves"))).GetSuccess().Id,
-            (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Paulo Marcelo Pedrosa de Almeida"))).GetSuccess().Id,
-            (await createTeacherService.Create(institution.Id, CreateTeacherIn.Seed("Manuela Abath Valença"))).GetSuccess().Id,
-        };
-        var direiters = new List<Guid>()
-        {
-            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Maria Júlia de Oliveira Melo", courseOfferingDireito.Id))).GetSuccess().Id,
-            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Everton Ian de Galhardo Filho", courseOfferingDireito.Id))).GetSuccess().Id,
-            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Alisson Aranda de Aguiar", courseOfferingDireito.Id))).GetSuccess().Id,
-            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Alma Celeste Maldonado Mendonça", courseOfferingDireito.Id))).GetSuccess().Id,
-        };
-        var adsers = new List<Guid>()
-        {
-            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Zaqueu do Vale Cavalcante", courseOfferingAds.Id))).GetSuccess().Id,
-            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Marlene de Oliveira", courseOfferingAds.Id))).GetSuccess().Id,
-            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Simone Bezerra", courseOfferingDireito.Id))).GetSuccess().Id,
-            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Marcelo Lima Filho", courseOfferingAds.Id))).GetSuccess().Id,
-            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Josilda Aragão Paz", courseOfferingAds.Id))).GetSuccess().Id,
-            (await createStudentService.Create(institution.Id, CreateStudentIn.Seed("Miguel Gomes da Silva", courseOfferingAds.Id))).GetSuccess().Id
-        };
-
-        // TURMAS 2025.1
-        var classesIds = new List<Guid>();
-        for (int i = 0; i < 6; i++)
-        {
-            var disciplineId = adsDisciplines[i].Id;
-            var response = await createClassService.Create(id, new()
-            {
-                DisciplineId = disciplineId,
-                TeacherId = teachers.PickRandom(),
-                Period = institution.AcademicPeriods[0].Id,
-                Vacancies = new List<int>{25, 30, 35}.PickRandom(),
-                Schedules = [new() { Day = (Day)i, Start = Hour.H19_00, End = Hour.H22_00 }]
-            });
-            classesIds.Add(response.GetSuccess().Id);
-        }
-
-        var today = DateTime.Now.ToDateOnly();
-        var firstDay = new DateTime(today.Year, 1, 1).ToDateOnly();
-        var lastDay = new DateTime(today.Year, 12, 31).ToDateOnly();
-        await createEnrollmentPeriodService.Create(id, new()
-        {
-            Id = institution.AcademicPeriods[0].Id,
-            StartAt = firstDay,
-            EndAt = lastDay,
-        });
-
-        await releaseClassesForEnrollmentService.Release(id, new() { Classes = classesIds });
-
-        foreach (var item in adsers)
-        {
-            await createStudentEnrollmentService.Create(id, item, adsCC.Id, new() { Classes = classesIds });
-        }
-
-        await updateEnrollmentPeriodService.Update(id, institution.AcademicPeriods[0].Id, new() { StartAt = new DateTime(today.Year, 3, 1).ToDateOnly(), EndAt = new DateTime(today.Year, 3, 15).ToDateOnly() });
-
-        await startClassesService.Start(id, new() { Classes = classesIds });
-
-        // Chamadas + Notas
-        var classes = await ctx.Classes.AsNoTracking()
-            .Include(c => c.Lessons)
-            .Include(c => c.Students)
-            .Include(c => c.ExamGrades)
-            .Where(c => c.InstitutionId == id && classesIds.Contains(c.Id))
-            .ToListAsync();
-
-        var random = new Random();
-        foreach (var item in classes)
-        {
-            foreach (var lesson in item.Lessons.Where(l => l.Date < today))
-            {
-                await createLessonAttendanceService.Create(item.TeacherId, lesson.Id, new(item.Students.Select(s => s.Id).PickRandom(random.Next(3, 7)).ToList()));
-            }
-
-            foreach (var student in item.Students)
-            {
-                foreach (var examGrade in item.ExamGrades.Where(g => g.ClassId == item.Id && g.StudentId == student.Id))
-                {
-                    var note = Convert.ToDecimal(Math.Round(random.NextDouble()*10, 2));
-                    await addExamGradeNoteService.Add(item.TeacherId, examGrade.Id, new(note < 4 ? note+5 : note));
-                }
-            }
-        }
-
-        await finalizeClassesService.Finalize(id, new() { Classes = classesIds });
-
-        // ----------------------------------------------------------------------------------------
-
-        // TURMAS 2025.2
-        classesIds = [];
-        for (int i = 6; i < 12; i++)
-        {
-            var disciplineId = adsDisciplines[i].Id;
-            var response = await createClassService.Create(id, new()
-            {
-                DisciplineId = disciplineId,
-                TeacherId = teachers.PickRandom(),
-                Period = institution.AcademicPeriods[1].Id,
-                Vacancies = new List<int>{25, 30, 35}.PickRandom(),
-                Schedules = [new() { Day = (Day)(i-6), Start = Hour.H19_00, End = Hour.H22_00 }]
-            });
-            classesIds.Add(response.GetSuccess().Id);
-        }
-
-        today = DateTime.Now.ToDateOnly();
-        await createEnrollmentPeriodService.Create(id, new()
-        {
-            Id = institution.AcademicPeriods[1].Id,
-            StartAt = firstDay,
-            EndAt = lastDay,
-        });
-
-        await releaseClassesForEnrollmentService.Release(id, new() { Classes = classesIds });
-
-        foreach (var item in adsers)
-        {
-            await createStudentEnrollmentService.Create(id, item, adsCC.Id, new() { Classes = classesIds });
-        }
-
-        await updateEnrollmentPeriodService.Update(id, institution.AcademicPeriods[1].Id, new() { StartAt = today.AddDays(-20), EndAt = today.AddDays(-10) });
-
-        await startClassesService.Start(id, new() { Classes = classesIds });
-
-        // Chamadas + Notas
-        classes = await ctx.Classes.AsNoTracking()
-            .Include(c => c.Lessons)
-            .Include(c => c.Students)
-            .Include(c => c.ExamGrades)
-            .Where(c => c.InstitutionId == id && classesIds.Contains(c.Id))
-            .ToListAsync();
-
-        random = new Random();
-        foreach (var item in classes)
-        {
-            foreach (var lesson in item.Lessons.Where(l => l.Date < today))
-            {
-                await createLessonAttendanceService.Create(item.TeacherId, lesson.Id, new(item.Students.Select(s => s.Id).PickRandom(random.Next(3, 7)).ToList()));
-            }
-
-            foreach (var student in item.Students)
-            {
-                var examGrade = item.ExamGrades.First(g => g.ClassId == item.Id && g.StudentId == student.Id && g.ExamType == ExamType.N1);
-                var note = Convert.ToDecimal(Math.Round(random.NextDouble()*10, 2));
-                await addExamGradeNoteService.Add(item.TeacherId, examGrade.Id, new(note < 4 ? note+5 : note));
-            }
-        }
-
-        await ctx.SaveChangesAsync();
+        ctx.AddCommand(id, new SeedInstitutionUsersCommand(id, courseOfferingDireito.Id, courseOfferingAds.Id), parentId: commandId);
     }
 
     private static void AddAcademicPeriods(Institution institution)

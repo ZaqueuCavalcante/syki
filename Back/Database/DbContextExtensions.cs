@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore.Storage;
-
 namespace Syki.Back.Database;
 
 public static class DbContextExtensions
@@ -22,15 +20,6 @@ public static class DbContextExtensions
         }
     }
 
-    public static async Task<IDbContextTransaction> BeginTransactionAsync(this SykiDbContext ctx)
-    {
-        if (ctx.Database.CurrentTransaction == null)
-        {
-            return await ctx.Database.BeginTransactionAsync();
-        }
-        return ctx.Database.CurrentTransaction;
-    }
-
     public static void MigrateDb(this SykiDbContext ctx)
     {
         if (!Env.IsTesting())
@@ -44,18 +33,24 @@ public static class DbContextExtensions
         return await ctx.AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
     }
 
-    public static void AddCommand(this DbContext ctx, Guid institutionId, ICommand command, Guid? eventId = null, Guid? batchId = null)
+    public static void AddCommand(
+        this DbContext ctx,
+        Guid institutionId,
+        ICommand command,
+        Guid? eventId = null,
+        Guid? parentId = null,
+        Guid? originalId = null,
+        Guid? batchId = null)
     {
         ctx.Add(
-            new Command(institutionId, command, eventId, batchId)
+            new Command(
+                institutionId,
+                command,
+                eventId: eventId,
+                parentId: parentId,
+                originalId: originalId,
+                batchId: batchId
+            )
         );
-    }
-
-    public static void AddCommands(this SykiDbContext ctx, Guid institutionId, Guid eventId, params ICommand[] commands)
-    {
-        foreach (var command in commands)
-        {
-            ctx.Add(new Command(institutionId, command, eventId, null));
-        }
     }
 }

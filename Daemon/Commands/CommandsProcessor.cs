@@ -33,7 +33,7 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
 
             try
             {
-                await handler.Handle(data);
+                await handler.Handle(command.Id, data);
             }
             catch (Exception ex)
             {

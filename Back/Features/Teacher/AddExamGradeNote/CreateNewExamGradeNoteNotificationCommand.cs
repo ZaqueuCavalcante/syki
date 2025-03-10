@@ -7,7 +7,7 @@ public record CreateNewExamGradeNoteNotificationCommand(Guid ClassId, Guid UserI
 
 public class CreateNewExamGradeNoteNotificationCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateNewExamGradeNoteNotificationCommand>
 {
-    public async Task Handle(CreateNewExamGradeNoteNotificationCommand command)
+    public async Task Handle(Guid commandId, CreateNewExamGradeNoteNotificationCommand command)
     {
         var @class = await ctx.Classes.AsNoTracking()
             .Include(x => x.Discipline)

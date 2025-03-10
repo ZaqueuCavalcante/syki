@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Teacher.CreateLessonAttendance;
 
+/// <summary>
+/// Representa se um Aluno estava presente ou não em uma Aula
+/// </summary>
 public class LessonAttendance
 {
     public Guid Id { get; }

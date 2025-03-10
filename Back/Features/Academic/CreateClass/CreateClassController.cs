@@ -12,6 +12,7 @@ public class CreateClassController(CreateClassService service) : ControllerBase
     /// Cria uma nova turma.
     /// </remarks>
     [HttpPost("academic/classes")]
+    [DbContextTransactionFilter]
     [ProducesResponseType(typeof(ClassOut), 200)]
     public async Task<IActionResult> Create([FromBody] CreateClassIn data)
     {

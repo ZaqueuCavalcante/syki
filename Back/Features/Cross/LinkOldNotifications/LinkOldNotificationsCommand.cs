@@ -7,7 +7,7 @@ public record LinkOldNotificationsCommand(Guid InstitutionId, Guid UserId) : ICo
 
 public class LinkOldNotificationsCommandHandler(SykiDbContext ctx) : ICommandHandler<LinkOldNotificationsCommand>
 {
-    public async Task Handle(LinkOldNotificationsCommand command)
+    public async Task Handle(Guid commandId, LinkOldNotificationsCommand command)
     {
         var isStudent = await ctx.Students.AnyAsync(s => s.Id == command.UserId);
         var group = isStudent ? UsersGroup.Students : UsersGroup.Teachers;

@@ -3,6 +3,7 @@ global using Serilog;
 global using Syki.Shared;
 global using Syki.Back.Events;
 global using Syki.Back.Errors;
+global using Syki.Back.Filters;
 global using Syki.Back.Configs;
 global using Syki.Back.Markers;
 global using Syki.Back.Commands;

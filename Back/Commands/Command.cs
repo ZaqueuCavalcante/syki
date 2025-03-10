@@ -12,20 +12,48 @@ public class Command
     public DateTime? ProcessedAt { get; set; }
     public Guid? ProcessorId { get; set; }
     public string? Error { get; set; }
+
+    /// <summary>
+    /// Id do evento que gerou o comando
+    /// </summary>
     public Guid? EventId { get; set; }
+
+    /// <summary>
+    /// Id do comando que gerou o comando
+    /// Utilizado quando um comando gera outro em seu handler
+    /// </summary>
     public Guid? ParentId { get; set; }
+
+    /// <summary>
+    /// Id do comando com erro que gerou o comando atual
+    /// Utilizado quando o comando original está com erro e é reprocessado
+    /// O comando atual é uma cópia do original (imutabilidade)
+    /// </summary>
+    public Guid? OriginalId { get; set; }
+
+    /// <summary>
+    /// Id do lote que contém o comando
+    /// </summary>
     public Guid? BatchId { get; set; }
 
     public Command() { }
 
-    public Command(Guid institutionId, object data, Guid? eventId, Guid? batchId)
-    {
+    public Command(
+        Guid institutionId,
+        object data,
+        Guid? eventId = null,
+        Guid? parentId = null,
+        Guid? originalId = null,
+        Guid? batchId = null
+    ) {
         Id = Guid.NewGuid();
         InstitutionId = institutionId;
         Type = data.GetType().ToString();
         Data = data.Serialize();
         CreatedAt = DateTime.Now;
         EventId = eventId;
+        ParentId = parentId;
+        OriginalId = originalId;
         BatchId = batchId;
     }
 

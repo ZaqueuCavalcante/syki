@@ -17,6 +17,12 @@
 
 ## Eventos de Domínio + Comandos
 
+- Diagramas no Draw.io
+    - Eventos
+    - Comandos
+    - Lotes
+    - Listeners + Processors
+
 - Eventos de Domínio
     - Interceptor
     - Sempre estão associados à uma Instituição e à uma Entidade
@@ -50,3 +56,9 @@
 
 - Hangfire em memória dando erro?
     - Subir instância do Redis?
+
+
+
+
+
+

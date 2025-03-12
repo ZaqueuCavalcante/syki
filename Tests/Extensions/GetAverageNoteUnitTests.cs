@@ -6,13 +6,13 @@ public class GetAverageNoteUnitTests
 {
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.ExamGrades))]
-    public void Should_get_average_note((List<ExamGrade> examGrades, decimal average) data)
+    public void Should_get_average_note(List<ExamGrade> examGrades, decimal average)
     {
         // Arrange / Act
-        var result = data.examGrades.GetAverageNote();
+        var result = examGrades.GetAverageNote();
 
         // Assert
-        var because = $"{data.examGrades[0].Note} & {data.examGrades[1].Note} & {data.examGrades[2].Note} = {data.average}";
-        result.Should().Be(data.average, because);
+        var because = $"{examGrades[0].Note} & {examGrades[1].Note} & {examGrades[2].Note} = {average}";
+        result.Should().Be(average, because);
     }
 }

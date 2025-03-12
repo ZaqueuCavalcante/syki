@@ -9,6 +9,7 @@ public static class CommandStatusMapper
         return status switch
         {
             CommandStatus.Pending => Icons.Material.Rounded.WarningAmber,
+            CommandStatus.Awaiting => Icons.Material.Filled.HourglassTop,
             CommandStatus.Processing => Icons.Material.Filled.Autorenew,
             CommandStatus.Success => Icons.Material.Filled.CheckCircleOutline,
             CommandStatus.Error => Icons.Material.Filled.ErrorOutline,
@@ -21,6 +22,7 @@ public static class CommandStatusMapper
         return status switch
         {
             CommandStatus.Pending => Color.Warning,
+            CommandStatus.Awaiting => Color.Default,
             CommandStatus.Processing => Color.Info,
             CommandStatus.Success => Color.Success,
             CommandStatus.Error => Color.Error,

@@ -41,7 +41,21 @@ public class EmailsService : IEmailsService
         await _client.PostAsJsonAsync("", body);
     }
 
-	private string GetContent(string title, string description, string button, string link)
+	public async Task SendNewClassActivityEmail(string to, string message)
+    {
+		if (to.Contains("@syki")) return;
+
+        var body = new BrevoEmailMessage(
+            sender: "syki@zaqbit.com",
+            to: to,
+            subject: "Syki - Nova atividade",
+            content: message
+        );
+
+        await _client.PostAsJsonAsync("", body);
+    }
+
+	private static string GetContent(string title, string description, string button, string link)
 	{
 		return """
 			<!doctype html>

@@ -3,6 +3,7 @@ global using Syki.Shared;
 global using Syki.Front.Auth;
 global using Syki.Front.Markers;
 global using Syki.Front.Configs;
+global using Syki.Front.Constants;
 global using Syki.Front.Extensions;
 
 global using Syki.Front.Features.Academic.CreateAcademicPeriod;

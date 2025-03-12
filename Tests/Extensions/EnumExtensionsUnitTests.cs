@@ -24,24 +24,24 @@ public class EnumExtensionsUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.CourseTypeEnumToDescription))]
-    public void Should_get_enum_description((CourseType tipo, string description) data)
+    public void Should_get_enum_description(CourseType type, string description)
     {
         // Arrange / Act
-        var result = data.tipo.GetDescription();
+        var result = type.GetDescription();
 
         // Assert
-        result.Should().Be(data.description);
+        result.Should().Be(description);
     }
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.CourseTypeEnumForIsIn))]
-    public void Should_get_if_value_is_in_list((Enum value, bool isIn) data)
+    public void Should_get_if_value_is_in_list(Enum value, bool isIn)
     {
         // Arrange / Act
-        var result = data.value.IsIn(CourseType.Bacharelado, CourseType.Tecnologo);
+        var result = value.IsIn(CourseType.Bacharelado, CourseType.Tecnologo);
 
         // Assert
-        result.Should().Be(data.isIn);
+        result.Should().Be(isIn);
     }
 
     [Test]
@@ -88,13 +88,13 @@ public class EnumExtensionsUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.HoursDiffsInMinutes))]
-    public void Should_get_hours_diff((Hour hourA, Hour hourB, int diff) data)
+    public void Should_get_hours_diff(Hour hourA, Hour hourB, int diff)
     {
         // Arrange / Act
-        var result = data.hourA.DiffInMinutes(data.hourB);
+        var result = hourA.DiffInMinutes(hourB);
 
         // Assert
-        result.Should().Be(data.diff);
+        result.Should().Be(diff);
     }
 
     private enum TestEnum

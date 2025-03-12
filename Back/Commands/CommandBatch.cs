@@ -11,13 +11,14 @@ public class CommandBatch
 
     private CommandBatch() { }
 
-    public static CommandBatch New()
+    public static CommandBatch New(Guid institutionId)
     {
         return new()
         {
             Id = Guid.NewGuid(),
             CreatedAt = DateTime.Now,
-            Status = CommandBatchStatus.Processing
+            InstitutionId = institutionId,
+            Status = CommandBatchStatus.Processing,
         };
     }
 

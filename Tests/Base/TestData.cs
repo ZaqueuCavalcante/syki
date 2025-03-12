@@ -71,7 +71,6 @@ public static class TestData
             "email@example..com",
             "Abc..123@example.com",
         ];
-
         foreach (var email in emails)
         {
             yield return [email];
@@ -115,7 +114,7 @@ public static class TestData
 
     public static IEnumerable<object[]> CamelCaseNames()
     {
-        foreach (var name in new List<(string, string)>()
+        foreach (var (camel, snake) in new List<(string, string)>()
         {
             ("", ""),
             (" ", ""),
@@ -125,26 +124,26 @@ public static class TestData
             ("AspNetRoleClaims", "asp_net_role_claims"),
         })
         {
-            yield return [name];
+            yield return new object[] { camel, snake };
         }
     }
 
     public static IEnumerable<object[]> GuidsToHashCodes()
     {
-        foreach (var name in new List<(Guid, int)>()
+        foreach (var (guid, hashCode) in new List<(Guid, int)>()
         {
             (Guid.Parse("e2e833ce-9eee-4755-96be-66c52d7dc260"), 2833_9475),
             (Guid.Parse("bab5f379-ac8b-446d-9325-13d18cd42227"), 5379_8446),
             (Guid.Parse("439f1f9d-5be0-4456-8364-a2a2391953bb"), 4391_9504),
         })
         {
-            yield return [name];
+            yield return new object[] { guid, hashCode };
         }
     }
 
     public static IEnumerable<object[]> FormatedStrings()
     {
-        foreach (var text in new List<(string, string)>()
+        foreach (var (text, numbers) in new List<(string, string)>()
         {
             ("", ""),
             (" ", ""),
@@ -156,13 +155,13 @@ public static class TestData
             ("18.297.767/0001-90", "18297767000190"),
         })
         {
-            yield return [text];
+            yield return new object[]  { text, numbers };
         }
     }
 
     public static IEnumerable<object[]> TextsContains()
     {
-        foreach (var text in new List<(string, string, string?)>()
+        foreach (var (text1, text2, search) in new List<(string, string, string?)>()
         {
             ("Banco de Dados", "72", null),
             ("Banco de Dados", "72", ""),
@@ -185,13 +184,13 @@ public static class TestData
             ("6841861", "68416", "84"),
         })
         {
-            yield return [text];
+            yield return new object[] { text1, text2, search! };
         }
     }
 
     public static IEnumerable<object[]> TextsNotContains()
     {
-        foreach (var text in new List<(string, string, string)>()
+        foreach (var (text1, text2, search) in new List<(string, string, string)>()
         {
             ("Banco de Dados", "72", "objeto"),
             ("Banco de Dados", "72", "sociedade"),
@@ -211,13 +210,13 @@ public static class TestData
             ("6841861", "68416", "68419"),
         })
         {
-            yield return [text];
+            yield return new object[] { text1, text2, search! };
         }
     }
 
     public static IEnumerable<object[]> DecimalsStringsForFormat()
     {
-        foreach (var text in new List<(decimal, string)>()
+        foreach (var (number, text) in new List<(decimal, string)>()
         {
             (0.00M, "0.00"),
             (0.23M, "0.23"),
@@ -226,13 +225,13 @@ public static class TestData
             (153.87M, "153.87"),
         })
         {
-            yield return [text];
+            yield return new object[] { number, text };
         }
     }
 
     public static IEnumerable<object[]> CourseTypeEnumToDescription()
     {
-        foreach (var text in new List<(CourseType, string)>()
+        foreach (var (type, description) in new List<(CourseType, string)>()
         {
             (CourseType.Bacharelado, "Bacharelado"),
             (CourseType.Licenciatura, "Licenciatura"),
@@ -243,13 +242,13 @@ public static class TestData
             (CourseType.PosDoutorado, "Pós-Doutorado"),
         })
         {
-            yield return [text];
+            yield return new object[] { type, description };
         }
     }
 
     public static IEnumerable<object[]> CourseTypeEnumForIsIn()
     {
-        foreach (var text in new List<(Enum, bool)>()
+        foreach (var (value, isIn) in new List<(Enum, bool)>()
         {
             (CourseType.Bacharelado, true),
             (StudentDisciplineStatus.Matriculado, false),
@@ -257,7 +256,7 @@ public static class TestData
             (Shift.Vespertino, false),
         })
         {
-            yield return [text];
+            yield return new object[] { value, isIn };
         }
     }
 
@@ -341,7 +340,7 @@ public static class TestData
 
     public static IEnumerable<object[]> ExamGrades()
     {
-        foreach (var list in new List<(List<ExamGrade>, decimal)>() 
+        foreach (var (examGrades, average) in new List<(List<ExamGrade>, decimal)>() 
         {
             (GetExamGradesList(0.00M, 0.00M, 0.00M), 0.00M),
 
@@ -365,7 +364,7 @@ public static class TestData
             (GetExamGradesList(10.00M, 10.00M, 10.00M), 10.00M),
         })
         {
-            yield return [list];
+            yield return new object[] { examGrades, average };
         }
     }
 
@@ -409,7 +408,7 @@ public static class TestData
 
     public static IEnumerable<object[]> HoursDiffsInMinutes()
     {
-        foreach (var value in new List<(Hour, Hour, int)>()
+        foreach (var (hourA, hourB, diff) in new List<(Hour, Hour, int)>()
         {
             (Hour.H07_00, Hour.H07_00, 00),
             (Hour.H07_00, Hour.H07_15, 15),
@@ -429,13 +428,13 @@ public static class TestData
             (Hour.H08_45, Hour.H07_15, 01*60+30),
         })
         {
-            yield return [value];
+            yield return new object[] { hourA, hourB, diff };
         }
     }
 
     public static IEnumerable<object[]> MinutesForFormat()
     {
-        foreach (var text in new List<(int, string)>()
+        foreach (var (minutes, text) in new List<(int, string)>()
         {
             (0, "0"),
             (15, "15min"),
@@ -447,7 +446,7 @@ public static class TestData
             (135, "2h e 15min"),
         })
         {
-            yield return [text];
+            yield return new object[] { minutes, text };
         }
     }
 

@@ -53,18 +53,18 @@
                     <InfoCard Icon="@Icons.Material.Filled.Error" Color="@Colors.Red.Darken1" Title="Erro" Content="@_data.Error" />
                 </MudItem>
             }
-            @if (_data.ParentId != null)
+            @if (_data.OriginalId != null)
             {
                 <MudItem xs="12" sm="12" md="12" lg="12">
                     <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Comando original">
-                        <MudLink Href="@($"/adm/commands/{@_data.ParentId}")" Target="_blank" Color="Color.Primary">Este comando foi originado de um reprocessamento.</MudLink>
+                        <MudLink Href="@($"/adm/commands/{@_data.OriginalId}")" Target="_blank" Color="Color.Primary">Este comando foi originado de um reprocessamento.</MudLink>
                     </InfoCard>
                 </MudItem>
             }
         </MudGrid>
     </MudContainer>
 
-    @if (_data.ParentId == null)
+    @if (_data.OriginalId == null)
     {
         <style>
             .mud-table-toolbar {

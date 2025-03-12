@@ -6,9 +6,12 @@
 - Plano de aulas (conteudos)
 - Melhorar design da paginação das tabelas
 
+- DbConnectionFactory
+    - NpgsqlDataSource
+    - DROP new NpgsqlConnection
+
 
 - HttpClientFactory
-- DbConnectionFactory
 - Pool de conexoes com o banco de dados
 - RabbitMQ use case (project)
 - Redis use case (project)

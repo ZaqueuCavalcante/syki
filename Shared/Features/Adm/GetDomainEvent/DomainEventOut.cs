@@ -10,7 +10,6 @@ public class DomainEventOut
     public DateTime? ProcessedAt { get; set; }
     public string? Error { get; set; }
     public int Duration { get; set; }
-    public Guid? ParentId { get; set; }
 
     public List<DomainEventCommandOut> Commands { get; set; } = [];
 }

@@ -3,6 +3,7 @@ namespace Syki.Back.Events;
 public class DomainEvent
 {
     public Guid Id { get; set; }
+    public Guid InstitutionId { get; set; }
     public Guid EntityId { get; set; }
     public string Type { get; set; }
     public string Data { get; set; }
@@ -12,8 +13,6 @@ public class DomainEvent
     public Guid? ProcessorId { get; set; }
     public string? Error { get; set; }
     public int Duration { get; set; }
-    public Guid? ParentId { get; set; }
-    public Guid InstitutionId { get; set; }
 
     public DomainEvent() { }
 

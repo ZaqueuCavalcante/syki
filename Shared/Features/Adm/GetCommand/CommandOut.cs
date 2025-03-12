@@ -11,7 +11,10 @@ public class CommandOut
     public DateTime? ProcessedAt { get; set; }
     public string? Error { get; set; }
     public int Duration { get; set; }
+    public Guid? EventId { get; set; }
     public Guid? ParentId { get; set; }
+    public Guid? OriginalId { get; set; }
+    public Guid? BatchId { get; set; }
 
     public List<CommandOut> Commands { get; set; } = [];
 }

@@ -23,19 +23,16 @@ public class SeedInstitutionClassesCommandHandler(
 
         var teachers = await ctx.Teachers.Where(x => x.InstitutionId == id).Select(x => x.Id).ToListAsync();
 
-        var classesIds = new List<Guid>();
         for (int i = 0; i < 6; i++)
         {
-            var disciplineId = adsDisciplines[i].DisciplineId;
-            var response = await createClassService.Create(id, new()
+            await createClassService.Create(id, new()
             {
-                DisciplineId = disciplineId,
+                DisciplineId = adsDisciplines[i].DisciplineId,
                 TeacherId = teachers.PickRandom(),
                 Period = academicPeriod,
                 Vacancies = new List<int>{25, 30, 35}.PickRandom(),
                 Schedules = [new() { Day = (Day)i, Start = Hour.H19_00, End = Hour.H22_00 }]
             });
-            classesIds.Add(response.GetSuccess().Id);
         }
 
         ctx.AddCommand(id, new SeedInstitutionEnrollmentsCommand(id, adsCourseCurriculumId), parentId: commandId);

@@ -25,7 +25,7 @@ public class SeedInstitutionExamGradeNotesCommandHandler(
                 foreach (var examGrade in @class.ExamGrades.Where(g => g.ClassId == @class.Id && g.StudentId == student.Id && g.ExamType == ExamType.N1))
                 {
                     var note = Convert.ToDecimal(Math.Round(random.NextDouble()*10, 2));
-                    await addExamGradeNoteService.Add(@class.TeacherId, examGrade.Id, new(note < 4 ? note+5 : note));
+                    await addExamGradeNoteService.AddWithThrowOnError(@class.TeacherId, examGrade.Id, new(note < 4 ? note+5 : note));
                 }
             }
         }

@@ -76,10 +76,10 @@
                 Class="mb-4"
                 Dense="true"
                 Hover="true"
+                T="CommandOut"
                 RowsPerPage="10"
                 Loading="@_loading"
-                Items="@_data.Commands"
-                T="CommandOut"
+                Items="@_data.Retries"
                 Breakpoint="Breakpoint.Sm"
             >
                 <ToolBarContent>
@@ -111,6 +111,7 @@
                     <MudTh>Criação</MudTh>
                     <MudTh>Processamento</MudTh>
                     <MudTh>Duração (ms)</MudTh>
+                    <MudTh></MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Tipo">
@@ -122,15 +123,72 @@
                     <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
                     <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
                     <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
+                    <MudTd>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Id))" />
+                    </MudTd>
                 </RowTemplate>
                 <NoRecordsContent>
-                    @(GetNotFoundMessage())
+                    @(GetRetriesNotFoundMessage())
+                </NoRecordsContent>
+            </MudTable>
+        </MudContainer>
+    }
+
+    @if (_data.Subcommands.Count > 0)
+    {
+        <style>
+            .mud-table-toolbar {
+                height: auto;
+            }
+        </style>
+        <MudContainer Class="px-0 my-4">
+            <MudTable
+                Class="mb-4"
+                Dense="true"
+                Hover="true"
+                T="CommandOut"
+                RowsPerPage="10"
+                Loading="@_loading"
+                Items="@_data.Subcommands"
+                Breakpoint="Breakpoint.Sm"
+            >
+                <ToolBarContent>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
+                        <MudIcon Icon="@Icons.Material.Filled.SubdirectoryArrowRight" Class="mb-1" Size="Size.Medium"/>
+                        <MudText Typo="Typo.h6" Style="font-weight: bold">Subcomandos</MudText>
+                    </MudStack>
+                </ToolBarContent>
+
+                <HeaderContent>
+                    <MudTh>Tipo</MudTh>
+                    <MudTh>Criação</MudTh>
+                    <MudTh>Processamento</MudTh>
+                    <MudTh>Duração (ms)</MudTh>
+                    <MudTh></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Tipo">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                            <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
+                            <MudText Typo="Typo.body2">@context.Description</MudText>
+                        </MudStack>
+                    </MudTd>
+                    <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
+                    <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
+                    <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
+                    <MudTd>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Id))" />
+                    </MudTd>
+                </RowTemplate>
+                <NoRecordsContent>
+                    @(GetSubcommandsNotFoundMessage())
                 </NoRecordsContent>
             </MudTable>
         </MudContainer>
     }
 </MudContainer>
 
+@inject NavigationManager Nav
 @inject GetCommandClient GetCommandClient
 @inject ReprocessCommandClient ReprocessCommandClient
 
@@ -160,9 +218,19 @@
         _loading = false;
     }
 
-    private string GetNotFoundMessage()
+    private string GetRetriesNotFoundMessage()
     {
         return "Este comando não possui reprocessamentos.";
+    }
+
+    private string GetSubcommandsNotFoundMessage()
+    {
+        return "Este comando não possui subcomandos.";
+    }
+
+    private void GoToDetails(Guid id)
+    {
+        Nav.NavigateTo($"adm/commands/{id}", forceLoad: true);
     }
 
     private async Task Reprocess()

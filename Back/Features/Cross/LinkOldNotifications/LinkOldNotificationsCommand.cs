@@ -17,15 +17,14 @@ public class LinkOldNotificationsCommandHandler(SykiDbContext ctx) : ICommandHan
             .Select(x => x.NotificationId)
             .ToListAsync();
 
-        var notifications = await ctx.Notifications.AsNoTracking()
+        var notifications = await ctx.Notifications
             .Where(x => x.InstitutionId == command.InstitutionId && x.Timeless && (x.Target == group || x.Target == UsersGroup.All) && !userNotifications.Contains(x.Id))
+            .Select(x => new { x.Id })
             .ToListAsync();
 
         foreach (var notification in notifications)
         {
             ctx.Add(new UserNotification(command.UserId, notification.Id));
         }
-
-        await ctx.SaveChangesAsync();
     }
 }

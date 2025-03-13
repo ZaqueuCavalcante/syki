@@ -54,4 +54,9 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
 
         return @class.ToOut();
     }
+
+    public async Task CreateWithThrowOnError(Guid institutionId, CreateClassIn data)
+    {
+        (await Create(institutionId, data)).ThrowOnError();
+    }
 }

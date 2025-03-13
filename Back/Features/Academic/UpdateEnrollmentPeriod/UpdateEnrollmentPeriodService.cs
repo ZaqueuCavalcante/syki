@@ -20,4 +20,9 @@ public class UpdateEnrollmentPeriodService(SykiDbContext ctx, HybridCache cache)
 
         return period.ToOut();
     }
+
+    public async Task UpdateWithThrowOnError(Guid institutionId, string id, UpdateEnrollmentPeriodIn data)
+    {
+        (await Update(institutionId, id, data)).ThrowOnError();
+    }
 }

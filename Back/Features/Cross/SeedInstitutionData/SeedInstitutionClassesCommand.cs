@@ -19,13 +19,14 @@ public class SeedInstitutionClassesCommandHandler(
             .Select(x => x.Id).FirstAsync();
         var adsDisciplines = await ctx.CourseCurriculumDisciplines
             .Where(x => x.CourseCurriculumId == adsCourseCurriculumId && x.Period == 1)
+            .Select(x => new { x.DisciplineId })
             .ToListAsync();
 
         var teachers = await ctx.Teachers.Where(x => x.InstitutionId == id).Select(x => x.Id).ToListAsync();
 
         for (int i = 0; i < 6; i++)
         {
-            await createClassService.Create(id, new()
+            await createClassService.CreateWithThrowOnError(id, new()
             {
                 DisciplineId = adsDisciplines[i].DisciplineId,
                 TeacherId = teachers.PickRandom(),

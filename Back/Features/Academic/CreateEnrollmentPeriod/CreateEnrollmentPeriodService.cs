@@ -22,4 +22,9 @@ public class CreateEnrollmentPeriodService(SykiDbContext ctx, HybridCache cache)
 
         return period.ToOut();
     }
+
+    public async Task CreateWithThrowOnError(Guid institutionId, CreateEnrollmentPeriodIn data)
+    {
+        (await Create(institutionId, data)).ThrowOnError();
+    }
 }

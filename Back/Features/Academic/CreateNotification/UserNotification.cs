@@ -15,7 +15,7 @@ public class UserNotification
 
     public UserNotificationOut ToOut()
     {
-        return new UserNotificationOut
+        return new()
         {
             NotificationId = NotificationId,
             Title = Notification.Title,

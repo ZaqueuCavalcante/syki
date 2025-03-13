@@ -27,4 +27,9 @@ public class ReleaseClassesForEnrollmentService(SykiDbContext ctx) : IAcademicSe
 
         return new SykiSuccess();
     }
+
+    public async Task ReleaseWithThrowOnError(Guid institutionId, ReleaseClassesForEnrollmentIn data)
+    {
+        (await Release(institutionId, data)).ThrowOnError();
+    }
 }

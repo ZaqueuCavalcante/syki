@@ -22,7 +22,5 @@ public class CreateNewExamGradeNoteNotificationCommandHandler(SykiDbContext ctx)
         );
 
         ctx.AddRange(notification, new UserNotification(command.UserId, notification.Id));
-
-        await ctx.SaveChangesAsync();
     }
 }

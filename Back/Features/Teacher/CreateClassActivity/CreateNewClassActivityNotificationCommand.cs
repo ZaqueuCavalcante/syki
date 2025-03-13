@@ -15,7 +15,7 @@ public class CreateNewClassActivityNotificationCommandHandler(SykiDbContext ctx)
 
         var students = await ctx.ClassesStudents
             .Where(x => x.ClassId == command.ClassId)
-            .Select(x => x.SykiStudentId)
+            .Select(x => new { Id = x.SykiStudentId })
             .ToListAsync();
 
         var notification = new Notification(
@@ -31,8 +31,8 @@ public class CreateNewClassActivityNotificationCommandHandler(SykiDbContext ctx)
         ctx.Add(batch);
         foreach (var student in students)
         {
-            ctx.Add(new UserNotification(student, notification.Id));
-            ctx.AddCommand(@class.InstitutionId, new SendNewClassActivityEmailCommand(student, notification.Id), parentId: commandId, batchId: batch.Id);
+            ctx.Add(new UserNotification(student.Id, notification.Id));
+            ctx.AddCommand(@class.InstitutionId, new SendNewClassActivityEmailCommand(student.Id, notification.Id), parentId: commandId, batchId: batch.Id);
         }
     }
 }

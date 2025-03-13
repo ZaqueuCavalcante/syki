@@ -17,4 +17,9 @@ public class AddExamGradeNoteService(SykiDbContext ctx) : ITeacherService
 
         return new SykiSuccess();
     }
+
+    public async Task AddWithThrowOnError(Guid teacherId, Guid examGradeId, AddExamGradeNoteIn data)
+    {
+        (await Add(teacherId, examGradeId, data)).ThrowOnError();
+    }
 }

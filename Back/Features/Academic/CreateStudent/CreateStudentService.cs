@@ -26,4 +26,9 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService createSer
 
         return student.ToOut();
     }
+
+    public async Task CreateWithThrowOnError(Guid institutionId, CreateStudentIn data)
+    {
+        (await Create(institutionId, data)).ThrowOnError();
+    }
 }

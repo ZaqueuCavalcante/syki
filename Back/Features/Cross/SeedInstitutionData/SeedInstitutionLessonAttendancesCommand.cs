@@ -21,12 +21,12 @@ public class SeedInstitutionLessonAttendancesCommandHandler(
 
         var random = new Random();
         var today = DateTime.Now.ToDateOnly();
-        foreach (var item in classes)
+        foreach (var @class in classes)
         {
-            foreach (var lesson in item.Lessons.Where(l => l.Date < today))
+            foreach (var lesson in @class.Lessons.Where(l => l.Date < today))
             {
-                var presentStudents = item.Students.Select(s => s.Id).PickRandom(random.Next(3, 7)).ToList();
-                await createLessonAttendanceService.Create(item.TeacherId, lesson.Id, new(presentStudents));
+                var presentStudents = @class.Students.Select(s => s.Id).PickRandom(random.Next(3, 7)).ToList();
+                await createLessonAttendanceService.CreateWithThrowOnError(@class.TeacherId, lesson.Id, new(presentStudents));
             }
         }
 

@@ -17,11 +17,6 @@ public static class Env
         return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Testing;
     }
 
-    public static string Get()
-    {
-        return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!;
-    }
-
     public static bool IsDevelopment()
     {
         return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Development;

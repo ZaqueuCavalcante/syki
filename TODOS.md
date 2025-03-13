@@ -2,6 +2,10 @@
 
 - Feature para enviar email pros alunos toda vez que for postada uma nova atividade
 
+- Aplicar filtros na query-string
+    - Quando voltar pra pagina ela mantem os filtros
+    - Ao compartilhar um link, nao perdemos o filtro
+
 
 - Plano de aulas (conteudos)
 - Melhorar design da paginação das tabelas

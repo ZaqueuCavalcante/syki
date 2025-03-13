@@ -18,13 +18,21 @@ public class GetCommandService(DatabaseSettings settings) : IAdmService
         var command = await connection.QueryFirstOrDefaultAsync<CommandOut>(sql, new{ id }) ?? new();
         command.Description = command.Type.ToCommandDescription();
 
-        const string commandsSql = @"
+        const string retriesSql = @"
+            SELECT *
+            FROM syki.commands
+            WHERE original_id = @Id
+        ";
+        command.Retries = (await connection.QueryAsync<CommandOut>(retriesSql, new{ id })).ToList();
+        command.Retries.ForEach(x => x.Description = x.Type.ToCommandDescription());
+
+        const string subcommandsSql = @"
             SELECT *
             FROM syki.commands
             WHERE parent_id = @Id
         ";
-        command.Commands = (await connection.QueryAsync<CommandOut>(commandsSql, new{ id })).ToList();
-        command.Commands.ForEach(x => x.Description = x.Type.ToCommandDescription());
+        command.Subcommands = (await connection.QueryAsync<CommandOut>(subcommandsSql, new{ id })).ToList();
+        command.Subcommands.ForEach(x => x.Description = x.Type.ToCommandDescription());
 
         return command;
     }

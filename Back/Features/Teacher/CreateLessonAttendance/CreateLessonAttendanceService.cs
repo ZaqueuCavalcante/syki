@@ -38,4 +38,9 @@ public class CreateLessonAttendanceService(SykiDbContext ctx) : ITeacherService
 
         return new SykiSuccess();
     }
+
+    public async Task CreateWithThrowOnError(Guid teacherId, Guid lessonId, CreateLessonAttendanceIn data)
+    {
+        (await Create(teacherId, lessonId, data)).ThrowOnError();
+    }
 }

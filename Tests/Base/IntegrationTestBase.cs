@@ -1,5 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
 using Syki.Back.Events;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
 

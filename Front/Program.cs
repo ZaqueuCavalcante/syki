@@ -7,3 +7,5 @@ builder.AddServicesConfigs();
 builder.AddLocalStorageConfigs();
 
 await builder.Build().RunAsync();
+
+public partial class Program { }

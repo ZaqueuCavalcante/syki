@@ -1,16 +1,16 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Adm.GetCommandsSummary;
+namespace Syki.Back.Features.Adm.GetBatchesSummary;
 
-public class GetCommandsSummaryService(DatabaseSettings settings) : IAdmService
+public class GetBatchesSummaryService(DatabaseSettings settings) : IAdmService
 {
-    public async Task<GetCommandsSummaryOut> Get()
+    public async Task<GetBatchesSummaryOut> Get()
     {
         await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
 
-        var result = new GetCommandsSummaryOut();
+        var result = new GetBatchesSummaryOut();
 
         const string summarySql = @"
             SELECT
@@ -19,13 +19,13 @@ public class GetCommandsSummaryService(DatabaseSettings settings) : IAdmService
                 count(1) FILTER (WHERE status = 'Processing') AS processing,
                 count(1) FILTER (WHERE status = 'Success') AS success,
                 count(1) FILTER (WHERE status = 'Error') AS error
-            FROM syki.commands
+            FROM syki.command_batches
         ";
 
         const string typesSql = @"
             SELECT type, count(1) AS total
-            FROM syki.commands
-            GROUP BY TYPE
+            FROM syki.command_batches
+            GROUP BY type
             ORDER BY total DESC
         ";
 
@@ -36,11 +36,9 @@ public class GetCommandsSummaryService(DatabaseSettings settings) : IAdmService
             ORDER BY name
         ";
 
-        result.Summary = await connection.QueryFirstAsync<CommandsSummaryOut>(summarySql);
-        result.Types = (await connection.QueryAsync<CommandTypeCountOut>(typesSql)).ToList();
+        result.Summary = await connection.QueryFirstAsync<BatchesSummaryOut>(summarySql);
+        result.Types = (await connection.QueryAsync<BatchTypeCountOut>(typesSql)).ToList();
         result.Institutions = (await connection.QueryAsync<TinyInstitutionOut>(institutionsSql)).ToList();
-
-        result.Types.ForEach(x => x.Description = x.Type.ToCommandDescription());
 
         return result;
     }

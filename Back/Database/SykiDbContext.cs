@@ -55,6 +55,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     {
         optionsBuilder.UseNpgsql(settings.ConnectionString);
         optionsBuilder.UseSnakeCaseNamingConvention();
+        optionsBuilder.AddInterceptors(new SetBatchSizeInterceptor());
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
         optionsBuilder.AddInterceptors(new SaveDomainEventsInterceptor(httpContextAccessor));
     }

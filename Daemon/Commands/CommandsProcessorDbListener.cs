@@ -83,6 +83,12 @@ public class CommandsProcessorDbListener(IConfiguration configuration) : Backgro
                     RETURN NEW;
                 END IF;
 
+                IF batch_status = 'Pending' THEN
+                    UPDATE syki.command_batches
+                    SET status = 'Processing'
+                    WHERE id = NEW.batch_id;
+                END IF;
+
                 IF NEW.status = 'Error' THEN
                     UPDATE syki.command_batches
                     SET status = 'Error'
@@ -99,7 +105,7 @@ public class CommandsProcessorDbListener(IConfiguration configuration) : Backgro
                 END IF;
 
                 UPDATE syki.command_batches
-                SET status = 'Success'
+                SET status = 'Success', processed_at = now()
                 WHERE id = NEW.batch_id;
 
                 IF batch_next_command_id IS NOT NULL THEN

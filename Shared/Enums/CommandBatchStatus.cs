@@ -3,7 +3,7 @@ using System.ComponentModel;
 namespace Syki.Shared;
 
 /// <summary>
-/// Status de um Comando
+/// Status de um Lote de comandos
 /// </summary>
 public enum CommandBatchStatus
 {

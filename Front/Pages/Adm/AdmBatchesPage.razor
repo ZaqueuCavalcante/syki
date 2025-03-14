@@ -4,10 +4,10 @@
 
 @namespace Syki.Front.Pages.Adm
 
-@page "/adm/commands"
+@page "/adm/batches"
 @attribute [Authorize(Roles = "Adm")]
 
-<SykiPageTitle Title="Comandos" />
+<SykiPageTitle Title="Lotes" />
 
 <MudContainer Class="my-4 px-4">
     <MudCard>
@@ -15,8 +15,8 @@
             <MudGrid>
                 <MudItem xs="12" sm="8" md="8" lg="8">
                     <MudStack Row="true" AlignItems="AlignItems.Center">
-                        <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Large"/>
-                        <MudText Typo="Typo.h5" Style="font-weight: bold">Comandos</MudText>
+                        <MudIcon Icon="@Icons.Material.Filled.BorderOuter" Class="mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Style="font-weight: bold">Lotes</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
@@ -45,9 +45,9 @@
             Class="mb-4"
             Dense="true"
             Hover="true"
-            Items="@_commands"
+            Items="@_batches"
             RowsPerPage="10"
-            T="CommandTableOut"
+            T="CommandBatchTableOut"
             Loading="@_tableLoading"
             Breakpoint="Breakpoint.Sm"
         >
@@ -65,7 +65,7 @@
                                     Clearable="true"
                                     AdornmentColor="Color.Primary
                                 ">
-                                    @foreach (CommandStatus? item in Enum.GetValues<CommandStatus>())
+                                    @foreach (CommandBatchStatus? item in Enum.GetValues<CommandBatchStatus>())
                                     {
                                         <MudSelectItem Value="@item">
                                             <MudStack Row="true" AlignItems="AlignItems.Center">
@@ -86,9 +86,9 @@
                                     Clearable="true"
                                     AdornmentColor="Color.Primary
                                 ">
-                                    @foreach (CommandTypeCountOut item in _data.Types)
+                                    @foreach (CommandBatchType? item in _data.Types.Select(x => x.Type))
                                     {
-                                        <MudSelectItem Value="@item.Type">@item.Description</MudSelectItem>
+                                        <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
                                     }
                                 </MudSelect>
                             </MudItem>
@@ -109,7 +109,7 @@
                             </MudItem>
                             <MudItem xs="12" sm="12" md="12" lg="12" Class="d-flex justify-end align-center pt-1">
                                 <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
-                                    <MudChip T="string" Variant="Variant.Text" Color="Color.Primary" Class="mt-1 pt-1">@_commands.Count.ToThousandSeparated()</MudChip>
+                                    <MudChip T="string" Variant="Variant.Text" Color="Color.Primary" Class="mt-1 pt-1">@_batches.Count.ToThousandSeparated()</MudChip>
                                     <MudButton
                                         OnClick="@Filter"
                                         Size="Size.Medium"
@@ -131,19 +131,19 @@
                 <MudTh>Tipo</MudTh>
                 <MudTh>Criação</MudTh>
                 <MudTh>Processamento</MudTh>
-                <MudTh>Duração (ms)</MudTh>
+                <MudTh>Comandos</MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Tipo">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
                         <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@context.Description</MudText>
+                        <MudText Typo="Typo.body2">@context.Type.GetDescription()</MudText>
                     </MudStack>
                 </MudTd>
                 <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
                 <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
-                <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
+                <MudTd DataLabel="Comandos">@context.Size.ToThousandSeparated()</MudTd>
                 <MudTd>
                     <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Id))" />
                 </MudTd>
@@ -159,25 +159,25 @@
 </MudContainer>
 
 @inject NavigationManager Nav
-@inject GetCommandsClient GetCommandsClient
-@inject GetCommandsSummaryClient GetCommandsSummaryClient
+@inject GetBatchesClient GetBatchesClient
+@inject GetBatchesSummaryClient GetBatchesSummaryClient
 
 @code
 {
     private bool _loading;
     private bool _tableLoading;
-    private GetCommandsSummaryOut _data = new();
-    private List<CommandTableOut> _commands = [];
+    private GetBatchesSummaryOut _data = new();
+    private List<CommandBatchTableOut> _batches = [];
 
     private TinyInstitutionOut? _institution;
-    private string? _type;
-    private CommandStatus? _status;
+    private CommandBatchType? _type;
+    private CommandBatchStatus? _status;
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
         _tableLoading = true;
-        _data = await GetCommandsSummaryClient.Get();
+        _data = await GetBatchesSummaryClient.Get();
         await Filter();
         _loading = false;
     }
@@ -185,13 +185,13 @@
     private async Task Filter()
     {
         _tableLoading = true;
-        var filters = new CommandTableFilterIn()
+        var filters = new CommandBatchTableFilterIn()
         {
             Type = _type,
             Status = _status,
             InstitutionId = _institution?.Id,
         };
-        _commands = await GetCommandsClient.Get(filters);
+        _batches = await GetBatchesClient.Get(filters);
         _tableLoading = false;
     }
 
@@ -207,11 +207,11 @@
 
     private void GoToDetails(Guid id)
     {
-        Nav.NavigateTo($"adm/commands/{id}");
+        Nav.NavigateTo($"adm/batches/{id}");
     }
 
     private string GetNotFoundMessage()
     {
-        return _tableLoading ? "" : "Não existem comandos ainda.";
+        return _tableLoading ? "" : "Não existem lotes ainda.";
     }
 }

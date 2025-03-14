@@ -5,12 +5,12 @@ namespace Syki.Back.Features.Adm.GetCommandsSummary;
 public class GetCommandsSummaryController(GetCommandsSummaryService service) : ControllerBase
 {
     /// <summary>
-    /// Comandos
+    /// Sumário de Comandos
     /// </summary>
     /// <remarks>
     /// Retorna dados consolidados sobre os comandos.
     /// </remarks>
-    [HttpGet("adm/commands-summary")]
+    [HttpGet("adm/commands/summary")]
     public async Task<IActionResult> Get()
     {
         var commands = await service.Get();

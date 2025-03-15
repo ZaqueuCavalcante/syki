@@ -158,7 +158,7 @@ public class Class
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
             FillRatio = FillRatio,
             Frequency = attendances == 0 ? 0.00M : 100M * (1M * presences / (1M * attendances)),
-            Lessons = Lessons.OrderBy(x => x.Date).ThenBy(x => x.StartAt).Select((l, i) => l.ToOut(i+1)).ToList(),
+            Lessons = Lessons.OrderBy(x => x.Number).Select(x => x.ToOut()).ToList(),
         };
     }
 
@@ -185,7 +185,7 @@ public class Class
             Vacancies = Vacancies,
             Status = Status,
             Schedules = Schedules.ConvertAll(h => h.ToOut()),
-            Lessons = Lessons.OrderBy(x => x.Date).ThenBy(x => x.StartAt).Select((l, i) => l.ToOut(i+1)).ToList(),
+            Lessons = Lessons.OrderBy(x => x.Number).Select(x => x.ToOut()).ToList(),
             SchedulesInline = GetScheduleAsString(),
             Workload = GetWorkloadAsString(),
             Progress = GetProgressAsString(),
@@ -213,7 +213,7 @@ public class Class
             Period = PeriodId,
             Status = Status,
             Students = students,
-            Lessons = Lessons.OrderBy(x => x.Date).ThenBy(x => x.StartAt).Select((l, i) => l.ToOut(i+1)).ToList(),
+            Lessons = Lessons.OrderBy(x => x.Number).Select(x => x.ToOut()).ToList(),
         };
     }
 

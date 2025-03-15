@@ -50,12 +50,12 @@ public class Lesson
         return 100M*(1M * presences / (1M * total));
     }
 
-    public LessonOut ToOut(int number)
+    public LessonOut ToOut()
     {
         return new()
         {
             Id = Id,
-            Number = number,
+            Number = Number,
             Date = Date,
             Status = Status,
             Schedule = GetSchedule(),

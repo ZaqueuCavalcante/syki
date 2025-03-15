@@ -9,6 +9,7 @@ public class TeacherClassOut
     public ClassStatus Status { get; set; }
     public List<LessonOut> Lessons { get; set; } = [];
     public List<TeacherClassStudentOut> Students { get; set; } = [];
+    public List<TeacherClassActivityOut> Activities { get; set; } = [];
 
     public override bool Equals(object? obj)
     {

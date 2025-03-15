@@ -3,11 +3,6 @@ namespace Syki.Shared;
 public class CreateClassActivityIn
 {
     /// <summary>
-    /// Id da Aula
-    /// </summary>
-    public Guid LessonId { get; set; }
-
-    /// <summary>
     /// Título
     /// </summary>
     public string Title { get; set; }
@@ -20,5 +15,10 @@ public class CreateClassActivityIn
     /// <summary>
     /// Data limite para entrega
     /// </summary>
-    public DateTime? DueDate { get; set; }
+    public DateOnly DueDate { get; set; }
+
+    /// <summary>
+    /// Hora limite para entrega
+    /// </summary>
+    public Hour DueHour { get; set; }
 }

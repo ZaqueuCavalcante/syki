@@ -3,7 +3,7 @@ using Syki.Back.Features.Teacher.AddExamGradeNote;
 namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
 /// <summary>
-/// Representa uma Prova
+/// Representa uma Nota de um Aluno dentro de uma Turma
 /// </summary>
 public class ExamGrade : Entity
 {

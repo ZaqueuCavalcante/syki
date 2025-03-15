@@ -88,4 +88,9 @@ public enum Hour
     [Description("22:45")] H22_45 = 22_45,
 
     [Description("23:00")] H23_00 = 23_00,
+    [Description("23:15")] H23_15 = 23_15,
+    [Description("23:30")] H23_30 = 23_30,
+    [Description("23:45")] H23_45 = 23_45,
+
+    [Description("24:00")] H24_00 = 24_00,
 }

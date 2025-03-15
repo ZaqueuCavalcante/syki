@@ -8,7 +8,7 @@ public class LessonOut
     public string Schedule { get; set; }
     public LessonStatus Status { get; set; }
     public decimal Frequency { get; set; }
-    
+
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;
@@ -18,5 +18,10 @@ public class LessonOut
     public override int GetHashCode()
     {
         return Id.ToHashCode();
+    }
+
+    public override string ToString()
+    {
+        return $"Aula {Number.ToTwo()}";
     }
 }

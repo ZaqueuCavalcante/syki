@@ -1,12 +1,14 @@
-﻿@using Syki.Front.Features.Teacher.AddExamGradeNote
+﻿@using Syki.Front.Features.Teacher.CreateClassActivity
 
 @namespace Syki.Front.Pages.Teacher
 
 <MudContainer Class="mb-4 px-0">
+    <SykiPageHeader Icon="@Icons.Material.Filled.EditNote" Title="Atividades" ButtonText="Nova Atividade" OnClick="@NewActivity" />
+
     <MudDataGrid
-        T="TeacherClassStudentOut"
-        Class="pa-4"
-        Items="@_students"
+        T="TeacherClassActivityOut"
+        Class="pa-4 mt-4"
+        Items="@_activities"
         QuickFilter="@_quickFilter"
         Hover="true"
         Dense="true"
@@ -17,10 +19,9 @@
             <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por título" />
         </ToolBarContent>
         <Columns>
-            <PropertyColumn Property="x => x.Name" Title="Título" />
-            <PropertyColumn Property="x => x.Name" Title="Aula" />
-            <PropertyColumn Property="x => x.Name" Title="Status" />
-            <PropertyColumn Property="x => x.Name" Title="Entregas" />
+            <PropertyColumn Property="x => x.Title" Title="Título" />
+            <PropertyColumn Property="x => x.Weight" Title="Status" />
+            <PropertyColumn Property="x => x.Weight" Title="Entregas" />
         </Columns>
         <NoRecordsContent>
             @(GetNotFoundMessage())
@@ -30,7 +31,7 @@
     </MudDataGrid>
 </MudContainer>
 
-<AddExamGradeNotesDialog @ref="@_dialog" AfterSubmit="@Load" />
+<CreateClassActivityDialog @ref="@_dialog" ClassId="@ClassId" AfterSubmit="@Load" />
 
 @inject GetTeacherClassClient GetTeacherClassClient
 
@@ -39,12 +40,12 @@
 	[Parameter]
 	public Guid ClassId { get; set; }
 
-    private AddExamGradeNotesDialog _dialog;
+    private CreateClassActivityDialog _dialog;
 
     private bool _loading;
     private string _searchString;
     private TeacherClassOut _class = new();
-    private List<TeacherClassStudentOut> _students = [];
+    private List<TeacherClassActivityOut> _activities = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -55,19 +56,19 @@
     {
         _loading = true;
         _class = await GetTeacherClassClient.Get(ClassId);
-        _students = _class.Students.OrderBy(x => x.Name).ToList();
+        _activities = _class.Activities.OrderByDescending(x => x.CreatedAt).ToList();
         _loading = false;
     }
 
-    private async Task AddNote(TeacherClassStudentOut item)
+    private async Task NewActivity()
     {
-        await _dialog.Open(item);
+        await _dialog.Open();
     }
 
-    private Func<TeacherClassStudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
+    private Func<TeacherClassActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);
 
     private string GetNotFoundMessage()
     {
-        return (_searchString.IsEmpty()) ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";
+        return _searchString.IsEmpty() ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";
     }
 }

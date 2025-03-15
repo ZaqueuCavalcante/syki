@@ -1,6 +1,7 @@
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateDiscipline;
+using Syki.Back.Features.Teacher.CreateClassActivity;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 
@@ -26,6 +27,7 @@ public class Class
     public List<Schedule> Schedules { get; set; }
     public List<ExamGrade> ExamGrades { get; set; }
     public List<Lesson> Lessons { get; set; }
+    public List<ClassActivity> Activities { get; set; }
 
     public string FillRatio { get; set; }
 
@@ -50,6 +52,7 @@ public class Class
         Students = [];
         ExamGrades = [];
         Lessons = [];
+        Activities = [];
     }
 
     public static OneOf<Class, SykiError> New(
@@ -213,6 +216,7 @@ public class Class
             Period = PeriodId,
             Status = Status,
             Students = students,
+            Activities = Activities.ConvertAll(x => x.ToOut()),
             Lessons = Lessons.OrderBy(x => x.Number).Select(x => x.ToOut()).ToList(),
         };
     }

@@ -31,10 +31,10 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateClassActivityIn
 			"Atividade",
 			new CreateClassActivityIn
 			{
-                LessonId = Guid.NewGuid(),
                 Title = "Modelagem de Banco de Dados",
                 Description = "Modele um banco de dados para um sistema de gerenciamento de biblioteca.",
-                DueDate = DateTime.Now.AddDays(7),
+                DueDate = DateTime.Now.AddDays(7).ToDateOnly(),
+                DueHour = Hour.H19_00,
 			}
 		);
     }

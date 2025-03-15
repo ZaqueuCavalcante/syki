@@ -123,6 +123,11 @@ public static class StringExtensions
 		return value.ToString("N0", CultureInfo.CreateSpecificCulture("pt-BR"));
 	}
 
+    public static string ToTwo(this int value)
+    {
+        return value < 10 ? $"0{value}" : value.ToString();
+    }
+
 	public static string ToMinuteString(this DateTime date)
 	{
 		if (date == DateTime.MinValue)

@@ -27,6 +27,10 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
             .WithOne()
             .HasForeignKey(l => l.ClassId);
 
+        @class.HasMany(c => c.Activities)
+            .WithOne()
+            .HasForeignKey(a => a.ClassId);
+
         @class.HasOne(c => c.Period)
             .WithMany()
             .HasForeignKey(c => new { c.PeriodId, c.InstitutionId });

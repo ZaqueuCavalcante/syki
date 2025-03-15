@@ -1,0 +1,92 @@
+﻿@namespace Syki.Front.Features.Teacher.CreateClassActivity
+
+<MudDialog Class="pb-2" @bind-Visible="@_visible" Options="@_options">
+    <TitleContent>
+        <SykiDialogTitle Text="Nova Atividade" />
+    </TitleContent>
+    <DialogContent>
+        <SykiTextField Label="Título" AutoFocus="true" @bind-Value="@_title" />
+        <SykiTextField Label="Descrição" @bind-Value="@_description" />
+        <SykiDatePicker Label="Data de entrega" @bind-Date="@_dueDate" Editable="false" />
+        <MudSelect
+            Dense="true"
+            Margin="Margin.Dense"
+            Variant="Variant.Outlined"
+            T="Hour"
+            @bind-Value="@_dueHour"
+            Label="Hora de entrega"
+            Required="true"
+            RequiredError="Informe!"
+            AdornmentColor="Color.Primary"
+        >
+            @foreach (Hour hour in Enum.GetValues<Hour>().Where(x => (int)x % 100 == 0))
+            {
+                <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
+            }
+        </MudSelect>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Close" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject CreateClassActivityClient Client
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    private bool _visible;
+    private bool _loading;
+
+    private string _title;
+    private string _description;
+    private DateTime? _dueDate = DateTime.Now.AddDays(7);
+    private Hour _dueHour = Hour.H12_00;
+
+    private readonly DialogOptions _options = new()
+    {
+        FullWidth = true,
+        CloseButton = true,
+        MaxWidth = MaxWidth.ExtraSmall,
+    };
+
+    [Parameter]
+    public Guid ClassId { get; set; }
+    
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    public async Task Open()
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _options.FullScreen = breakpoint == Breakpoint.Xs;
+        _visible = true;
+    }
+
+    private void Close()
+    {
+        _visible = false;
+    }
+
+    private async Task Submit()
+    {
+        _loading = true;
+
+        var response = await Client.Create(ClassId, _title, _description, _dueDate!.Value.ToDateOnly(), _dueHour);
+        if (response.IsSuccess())
+        {
+            Snackbar.Add("Atividade criada com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            Close();
+        }
+        else
+        {
+            Snackbar.Add(response.GetError().Message, Severity.Error);
+        }
+        
+        _loading = false;
+    }
+}

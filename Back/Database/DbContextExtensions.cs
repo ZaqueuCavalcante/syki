@@ -33,16 +33,16 @@ public static class DbContextExtensions
         return await ctx.AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
     }
 
-    public static void AddCommand(
+    public static Command AddCommand(
         this DbContext ctx,
         Guid institutionId,
         ICommand command,
         Guid? eventId = null,
         Guid? parentId = null,
         Guid? originalId = null,
-        Guid? batchId = null)
-    {
-        ctx.Add(
+        Guid? batchId = null
+    ) {
+        return ctx.Add(
             new Command(
                 institutionId,
                 command,
@@ -51,6 +51,6 @@ public static class DbContextExtensions
                 originalId: originalId,
                 batchId: batchId
             )
-        );
+        ).Entity;
     }
 }

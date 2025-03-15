@@ -39,6 +39,7 @@ global using Syki.Front.Features.Adm.GetDomainEvents;
 global using Syki.Front.Features.Adm.GetCommand;
 global using Syki.Front.Features.Adm.GetCommands;
 global using Syki.Front.Features.Adm.GetBatches;
+global using Syki.Front.Features.Adm.GetBatch;
 global using Syki.Front.Features.Adm.GetBatchesSummary;
 global using Syki.Front.Features.Adm.ReprocessCommand;
 global using Syki.Front.Features.Adm.GetCommandsSummary;

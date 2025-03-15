@@ -28,6 +28,6 @@ public class CommandBatch
     public void ContinueWith(Command command)
     {
         NextCommandId = command.Id;
-        command.SetAwaiting(Id);
+        command.SetAwaiting();
     }
 }

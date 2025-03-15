@@ -64,7 +64,7 @@
         </MudGrid>
     </MudContainer>
 
-    @if (_data.OriginalId == null)
+    @if (_data.OriginalId == null && _data.Status == CommandStatus.Error)
     {
         <style>
             .mud-table-toolbar {

@@ -57,9 +57,8 @@ public class Command
         BatchId = batchId;
     }
 
-    public void SetAwaiting(Guid batchId)
+    public void SetAwaiting()
     {
-        BatchId = batchId;
         Status = CommandStatus.Awaiting;
     }
 

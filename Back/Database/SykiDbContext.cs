@@ -19,6 +19,7 @@ using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Syki.Back.Features.Academic.CreateCourseCurriculum;
 using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
+using Syki.Back.Features.Teacher.CreateClassActivity;
 
 namespace Syki.Back.Database;
 
@@ -42,6 +43,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<LessonAttendance> Attendances { get; set; }
     public DbSet<ClassStudent> ClassesStudents { get; set; }
+    public DbSet<ClassActivity> ClassActivities { get; set; }
     public DbSet<AcademicPeriod> AcademicPeriods { get; set; }
     public DbSet<CourseOffering> CourseOfferings { get; set; }
     public DbSet<CourseCurriculum> CourseCurriculums { get; set; }

@@ -38,7 +38,7 @@ public class ClassActivity : Entity
         DueDate = dueDate;
         DueHour = dueHour;
 
-        AddDomainEvent(new ClassActivityCreatedDomainEvent(ClassId));
+        AddDomainEvent(new ClassActivityCreatedDomainEvent(Id));
     }
 
     public TeacherClassActivityOut ToOut()

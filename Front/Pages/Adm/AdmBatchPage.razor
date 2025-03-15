@@ -1,0 +1,148 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Syki.Front.Features.Adm.GetDomainEvent
+@using Syki.Front.Features.Adm.GetCommandsSummary
+
+@namespace Syki.Front.Pages.Adm
+
+@page "/adm/batches/{id:guid}"
+@attribute [Authorize(Roles = "Adm")]
+
+<SykiPageTitle Title="Lotes" />
+
+<MudContainer Class="my-4 px-4">
+    <MudCard>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.BorderOuter" Class="mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@_data.Type.GetDescription()</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudChip
+                        T="string"
+                        Class="px-5 ma-0"
+                        Size="Size.Large"
+                        Icon="@_data.Status.GetIcon()"
+                        Color="@_data.Status.GetColor()"
+                        IconColor="Color.Default"
+                    >
+                        @_data.Status.GetDescription()
+                    </MudChip>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="px-0 my-4">
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.BlueGray.Lighten4" Title="Criação" Content="@_data.CreatedAt.ToMinuteString()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.AccessTimeFilled" Color="@GetProcessedAtIconColor()" Title="Processamento" Content="@_data.ProcessedAt.ToMinuteString()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.Timer" Color="@Colors.Indigo.Darken1" Title="Comandos" Content="@_data.Size.ToThousandSeparated()" />
+            </MudItem>
+            @if (_data.NextCommandId != null)
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Próximo comando">
+                        <MudLink Href="@($"/adm/commands/{@_data.NextCommandId}")" Target="_blank" Color="Color.Primary">Este lote disparou o processamento de um comando</MudLink>
+                    </InfoCard>
+                </MudItem>
+            }
+        </MudGrid>
+    </MudContainer>
+
+    @if (_data.Commands.Count > 0)
+    {
+        <style>
+            .mud-table-toolbar {
+                height: auto;
+            }
+        </style>
+        <MudContainer Class="px-0 my-4">
+            <MudTable
+                Class="mb-4"
+                Dense="true"
+                Hover="true"
+                T="CommandOut"
+                RowsPerPage="10"
+                Loading="@_loading"
+                Items="@_data.Commands"
+                Breakpoint="Breakpoint.Sm"
+            >
+                <ToolBarContent>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
+                        <MudIcon Icon="@Icons.Material.Filled.SubdirectoryArrowRight" Class="mb-1" Size="Size.Medium"/>
+                        <MudText Typo="Typo.h6" Style="font-weight: bold">Comandos</MudText>
+                    </MudStack>
+                </ToolBarContent>
+
+                <HeaderContent>
+                    <MudTh>Tipo</MudTh>
+                    <MudTh>Criação</MudTh>
+                    <MudTh>Processamento</MudTh>
+                    <MudTh>Duração (ms)</MudTh>
+                    <MudTh></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Tipo">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                            <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
+                            <MudText Typo="Typo.body2">@context.Description</MudText>
+                        </MudStack>
+                    </MudTd>
+                    <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
+                    <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
+                    <MudTd DataLabel="Duração (ms)">@context.Duration.ToThousandSeparated()</MudTd>
+                    <MudTd>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Id))" />
+                    </MudTd>
+                </RowTemplate>
+                <NoRecordsContent>
+                    @(GetSubcommandsNotFoundMessage())
+                </NoRecordsContent>
+            </MudTable>
+        </MudContainer>
+    }
+</MudContainer>
+
+@inject NavigationManager Nav
+@inject GetBatchClient GetBatchClient
+@inject ReprocessCommandClient ReprocessCommandClient
+
+@code
+{
+	[Parameter]
+	public Guid Id { get; set; }
+
+    private bool _loading;
+    private BatchOut _data = new();
+
+    private string GetProcessedAtIconColor()
+    {
+        return _data.ProcessedAt == null ? Colors.BlueGray.Lighten4 : Colors.Green.Darken1;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _data = await GetBatchClient.Get(Id);
+        _loading = false;
+    }
+
+    private string GetSubcommandsNotFoundMessage()
+    {
+        return "Este lote não possui comandos.";
+    }
+
+    private void GoToDetails(Guid id)
+    {
+        Nav.NavigateTo($"adm/commands/{id}", forceLoad: true);
+    }
+}

@@ -1,0 +1,73 @@
+﻿@using Syki.Front.Features.Teacher.AddExamGradeNote
+
+@namespace Syki.Front.Pages.Teacher
+
+<MudContainer Class="mb-4 px-0">
+    <MudDataGrid
+        T="TeacherClassStudentOut"
+        Class="pa-4"
+        Items="@_students"
+        QuickFilter="@_quickFilter"
+        Hover="true"
+        Dense="true"
+        Loading="@_loading"
+        RowsPerPage="100"
+    >
+        <ToolBarContent>
+            <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por título" />
+        </ToolBarContent>
+        <Columns>
+            <PropertyColumn Property="x => x.Name" Title="Título" />
+            <PropertyColumn Property="x => x.Name" Title="Aula" />
+            <PropertyColumn Property="x => x.Name" Title="Status" />
+            <PropertyColumn Property="x => x.Name" Title="Entregas" />
+        </Columns>
+        <NoRecordsContent>
+            @(GetNotFoundMessage())
+        </NoRecordsContent>
+        <PagerContent>
+        </PagerContent>
+    </MudDataGrid>
+</MudContainer>
+
+<AddExamGradeNotesDialog @ref="@_dialog" AfterSubmit="@Load" />
+
+@inject GetTeacherClassClient GetTeacherClassClient
+
+@code
+{
+	[Parameter]
+	public Guid ClassId { get; set; }
+
+    private AddExamGradeNotesDialog _dialog;
+
+    private bool _loading;
+    private string _searchString;
+    private TeacherClassOut _class = new();
+    private List<TeacherClassStudentOut> _students = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        _loading = true;
+        _class = await GetTeacherClassClient.Get(ClassId);
+        _students = _class.Students.OrderBy(x => x.Name).ToList();
+        _loading = false;
+    }
+
+    private async Task AddNote(TeacherClassStudentOut item)
+    {
+        await _dialog.Open(item);
+    }
+
+    private Func<TeacherClassStudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";
+    }
+}

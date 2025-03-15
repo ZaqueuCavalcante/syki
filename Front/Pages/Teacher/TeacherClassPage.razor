@@ -20,8 +20,9 @@
                 </MudItem>
                 <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end">
                     <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="100%">
-                        <MudTabPanel Text="Frequência" ID='"panel_0"'></MudTabPanel>
-                        <MudTabPanel Text="Notas" ID='"panel_1"'></MudTabPanel>
+                        <MudTabPanel Text="Atividades" ID='"panel_0"'></MudTabPanel>
+                        <MudTabPanel Text="Frequência" ID='"panel_1"'></MudTabPanel>
+                        <MudTabPanel Text="Notas" ID='"panel_2"'></MudTabPanel>
                     </MudTabs>
                 </MudItem>
             </MudGrid>
@@ -31,9 +32,13 @@
 
     @if (_index == 0)
     {
+        <TeacherClassActivitiesTab ClassId="@Id" />
+    }
+    @if (_index == 1)
+    {
         <TeacherClassFrequencyTab ClassId="@Id" />
     }
-    else
+    @if (_index == 2)
     {
         <TeacherClassNotesTab ClassId="@Id" />
     }

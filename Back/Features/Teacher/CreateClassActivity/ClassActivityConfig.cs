@@ -14,5 +14,11 @@ public class ClassActivityConfig : IEntityTypeConfiguration<ClassActivity>
         classActivity.HasOne<Class>()
             .WithMany()
             .HasForeignKey(t => t.ClassId);
+
+        classActivity.HasOne<Lesson>()
+            .WithMany()
+            .HasForeignKey(t => t.LessonId);
+
+        classActivity.Property(x => x.Value).HasPrecision(4, 2);
     }
 }

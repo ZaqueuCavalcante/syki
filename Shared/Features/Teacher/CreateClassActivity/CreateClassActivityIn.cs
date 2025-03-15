@@ -3,6 +3,11 @@ namespace Syki.Shared;
 public class CreateClassActivityIn
 {
     /// <summary>
+    /// Id da Aula
+    /// </summary>
+    public Guid LessonId { get; set; }
+
+    /// <summary>
     /// Título
     /// </summary>
     public string Title { get; set; }

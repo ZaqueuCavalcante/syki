@@ -9,6 +9,7 @@ public class Lesson
 {
     public Guid Id { get; set; }
     public Guid ClassId { get; set; }
+    public int Number { get; set; }
     public DateOnly Date { get; set; }
     public Hour StartAt { get; set; }
     public Hour EndAt { get; set; }
@@ -17,12 +18,14 @@ public class Lesson
 
     public Lesson(
         Guid classId,
+        int number,
         DateOnly date,
         Hour startAt,
         Hour endAt
     ) {
         Id = Guid.NewGuid();
         ClassId = classId;
+        Number = number;
         Date = date;
         StartAt = startAt;
         EndAt = endAt;

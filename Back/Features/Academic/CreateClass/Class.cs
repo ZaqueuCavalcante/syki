@@ -71,6 +71,7 @@ public class Class
     {
         var schedules = Schedules.OrderBy(x => x.Day).ThenBy(x => x.StartAt).ToList();
 
+        var number = 1;
         var current = Period.StartAt;
         while (current < Period.EndAt)
         {
@@ -78,8 +79,9 @@ public class Class
             {
                 if (current.DayOfWeek.Is(schedule.Day))
                 {
-                    Lessons.Add(new(Id, current, schedule.StartAt, schedule.EndAt));
+                    Lessons.Add(new(Id, number, current, schedule.StartAt, schedule.EndAt));
                     Workload += schedule.GetDiff();
+                    number++;
                 }
             }
             current = current.AddDays(1);

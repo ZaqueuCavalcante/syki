@@ -5,7 +5,9 @@
 <div>
     @if (_alert)
     {
-        <MudIconButton OnClick="@ViewAndOpenDialog" Color="Color.Error" Icon="@Icons.Material.Filled.NotificationsActive" Style="color: #FFF" />
+        <MudBadge Content="@(GetCount())" Color="Color.Error" Overlap="true" BadgeClass="syki-badge-icon">
+            <MudIconButton OnClick="@ViewAndOpenDialog" Icon="@Icons.Material.Filled.NotificationsActive" Style="color: #FFF" />
+        </MudBadge>
     }
     else
     {
@@ -27,6 +29,11 @@
     {
         await GetNotifications();
         _alert = _notifications.Any(x => x.ViewedAt == null);
+    }
+
+    private string GetCount()
+    {
+        return _notifications.Count < 10 ? _notifications.Count.ToString() : "9+";
     }
 
     private async Task GetNotifications()

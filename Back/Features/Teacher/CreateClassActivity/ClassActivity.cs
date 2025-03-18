@@ -9,10 +9,8 @@ public class ClassActivity : Entity
     public Guid ClassId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
-
-    // Tipo (Prova, Trabalho, Apresentação)
-
-    // Status (Rascunnho, Publicada, Finalizada)
+    public ClassActivityType Type { get; set; }
+    public ClassActivityStatus Status { get; set; }
 
     /// <summary>
     /// Peso no intervalo: 0 ≤ Weight ≤ 100

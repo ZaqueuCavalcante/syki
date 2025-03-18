@@ -48,3 +48,11 @@ svg.apexcharts-svg {
 .mud-navmenu.mud-navmenu-rounded .mud-nav-link {
     border-radius: 6px !important;
 }
+
+.syki-badge-icon {
+    inset: auto auto calc(100% - 24px) calc(100% - 24px) !important;
+    font-size: 14px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    padding: 5px 5px !important;
+}

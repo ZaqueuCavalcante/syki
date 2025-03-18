@@ -5,25 +5,37 @@
         <SykiDialogTitle Text="Nova Atividade" />
     </TitleContent>
     <DialogContent>
-        <SykiTextField Label="Título" AutoFocus="true" @bind-Value="@_title" />
-        <SykiTextField Label="Descrição" @bind-Value="@_description" />
-        <SykiDatePicker Label="Data de entrega" @bind-Date="@_dueDate" Editable="false" />
-        <MudSelect
-            Dense="true"
-            Margin="Margin.Dense"
-            Variant="Variant.Outlined"
-            T="Hour"
-            @bind-Value="@_dueHour"
-            Label="Hora de entrega"
-            Required="true"
-            RequiredError="Informe!"
-            AdornmentColor="Color.Primary"
-        >
-            @foreach (Hour hour in Enum.GetValues<Hour>().Where(x => (int)x % 100 == 0))
-            {
-                <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
-            }
-        </MudSelect>
+        <MudForm @ref="@_form" Class="pt-1" Spacing="0">
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <SykiTextField Label="Título" AutoFocus="true" @bind-Value="@_title" />
+                </MudItem>
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <SykiTextField Label="Descrição" @bind-Value="@_description" AutoGrow="true" Lines="8" MaxLines="20" MaxLength="10000" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <SykiDatePicker Label="Data de entrega" @bind-Date="@_dueDate" Editable="false" />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="Hour"
+                        @bind-Value="@_dueHour"
+                        Label="Hora de entrega"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary"
+                    >
+                        @foreach (Hour hour in Enum.GetValues<Hour>().Where(x => (int)x % 100 == 0))
+                        {
+                            <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
     </DialogContent>
     <DialogActions>
         <DialogCancelButton OnClick="@Close" />
@@ -38,6 +50,7 @@
 
 @code
 {
+    private MudForm _form;
     private bool _visible;
     private bool _loading;
 
@@ -50,7 +63,7 @@
     {
         FullWidth = true,
         CloseButton = true,
-        MaxWidth = MaxWidth.ExtraSmall,
+        MaxWidth = MaxWidth.Medium,
     };
 
     [Parameter]
@@ -73,6 +86,13 @@
 
     private async Task Submit()
     {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+
+
         _loading = true;
 
         var response = await Client.Create(ClassId, _title, _description, _dueDate!.Value.ToDateOnly(), _dueHour);

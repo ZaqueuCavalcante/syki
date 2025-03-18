@@ -2,11 +2,14 @@
 
 <MudTextField
     T="string"
+    Lines="@Lines"
     Class="@Class"
     Label="@Label"
     Value="@Value"
     Required="true"
     Immediate="true"
+    AutoGrow="@AutoGrow"
+    MaxLines="@MaxLines"
     ReadOnly="@ReadOnly"
     Margin="Margin.Dense"
     MaxLength="@MaxLength"
@@ -29,6 +32,15 @@
 
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public int Lines { get; set; }
+
+    [Parameter]
+    public int MaxLines { get; set; }
+
+    [Parameter]
+    public bool AutoGrow { get; set; }
 
     [Parameter]
     public string Label { get; set; }

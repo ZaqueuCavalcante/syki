@@ -9,6 +9,7 @@ public class CreateClassActivityService(SykiDbContext ctx) : ITeacherService
 
         var classActivity = new ClassActivity(
             classId,
+            data.Note,
             data.Title,
             data.Description,
             data.Type,

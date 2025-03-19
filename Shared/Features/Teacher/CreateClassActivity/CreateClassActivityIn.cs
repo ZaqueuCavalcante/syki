@@ -3,6 +3,11 @@ namespace Syki.Shared;
 public class CreateClassActivityIn
 {
     /// <summary>
+    /// Nota
+    /// </summary>
+    public StudentClassNoteType Note { get; set; }
+
+    /// <summary>
     /// Título
     /// </summary>
     public string Title { get; set; }

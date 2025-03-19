@@ -1,6 +1,6 @@
 ﻿@namespace Syki.Front.Features.Teacher.CreateClassActivity
 
-<MudDialog Class="pb-2" @bind-Visible="@_visible" Options="@_options">
+<MudDialog Class="pb-2" @bind-Visible="@_visible" Options="@_options" OnBackdropClick="@Close">
     <TitleContent>
         <SykiDialogTitle Text="Nova Atividade" />
     </TitleContent>
@@ -14,7 +14,7 @@
                     <SykiTextField Label="Descrição" @bind-Value="@_description" AutoGrow="true" Lines="8" MaxLines="20" MaxLength="10000" />
                 </MudItem>
 
-                <MudItem xs="12" sm="6" md="6" lg="6">
+                <MudItem xs="12" sm="4" md="4" lg="4">
                     <MudSelect
                         Dense="true"
                         Margin="Margin.Dense"
@@ -33,19 +33,38 @@
                     </MudSelect>
                 </MudItem>
 
-                <MudItem xs="12" sm="6" md="6" lg="6">
+                <MudItem xs="12" sm="4" md="4" lg="4">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="StudentClassNoteType"
+                        @bind-Value="@_note"
+                        Label="Nota"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary"
+                    >
+                        @foreach (StudentClassNoteType type in Enum.GetValues<StudentClassNoteType>())
+                        {
+                            <MudSelectItem Value="@type">@type.GetDescription()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="4" md="4" lg="4">
                     <MudNumericField
                         T="int"
                         @bind-Value="@_weight"
-                        Max="100"
-                        MaxLength="3"
+                        Max="@_maxWeight"
+                        MaxLength="@(GetWeightMaxWidth())"
                         Min="0"
                         HideSpinButtons="true"
                         Variant="Variant.Outlined"
                         Margin="Margin.Dense"
-                        HelperText="Máx: 60"
+                        HelperText="@($"Máx: {_maxWeight}")"
                         Required="true"
-                        Label="Peso"
+                        Label="Peso (%)"
                         RequiredError="Informe!"
                     />
                 </MudItem>
@@ -91,10 +110,12 @@
     private bool _visible;
     private bool _loading;
 
+    private StudentClassNoteType _note = StudentClassNoteType.N1;
     private string _title;
     private string _description;
-    private ClassActivityType _type = ClassActivityType.Work;
+    private ClassActivityType _type = ClassActivityType.Exam;
     private int _weight;
+    private int _maxWeight;
     private DateTime? _dueDate = DateTime.Now.AddDays(7);
     private Hour _dueHour = Hour.H12_00;
 
@@ -111,8 +132,9 @@
     [Parameter]
     public EventCallback AfterSubmit { get; set; }
 
-    public async Task Open()
+    public async Task Open(int maxWeight)
     {
+        _maxWeight = maxWeight;
         var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _options.FullScreen = breakpoint == Breakpoint.Xs;
         _visible = true;
@@ -120,6 +142,14 @@
 
     private void Close()
     {
+        _note = StudentClassNoteType.N1;
+        _title = string.Empty;
+        _description = string.Empty;
+        _type = ClassActivityType.Work;
+        _weight = 0;
+        _dueDate = DateTime.Now.AddDays(7);
+        _dueHour = Hour.H12_00;
+
         _visible = false;
     }
 
@@ -132,7 +162,7 @@
 
         _loading = true;
 
-        var response = await Client.Create(ClassId, _title, _description, _type, _weight, _dueDate!.Value.ToDateOnly(), _dueHour);
+        var response = await Client.Create(ClassId, _note, _title, _description, _type, _weight, _dueDate!.Value.ToDateOnly(), _dueHour);
         if (response.IsSuccess())
         {
             Snackbar.Add("Atividade criada com sucesso!", Severity.Success);
@@ -145,5 +175,14 @@
         }
         
         _loading = false;
+    }
+
+    private int GetWeightMaxWidth()
+    {
+        if (_maxWeight == 100) return 3;
+        if (_maxWeight > 9) return 2;
+        if (_maxWeight > 0 && _maxWeight <= 9) return 1;
+
+        return 0;
     }
 }

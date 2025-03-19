@@ -20,8 +20,10 @@
         </ToolBarContent>
         <Columns>
             <PropertyColumn Property="x => x.Title" Title="Título" />
-            <PropertyColumn Property="x => x.Weight" Title="Status" />
-            <PropertyColumn Property="x => x.Weight" Title="Entregas" />
+            <PropertyColumn Property="x => x.Type.GetDescription()" Title="Tipo" />
+            <PropertyColumn Property="x => x.Note.GetDescription()" Title="Nota" />
+            <PropertyColumn Property="x => x.Weight" Title="Peso (%)" />
+            <PropertyColumn Property="x => x.GetDueDate()" Title="Data de entrega" />
         </Columns>
         <NoRecordsContent>
             @(GetNotFoundMessage())
@@ -62,7 +64,7 @@
 
     private async Task NewActivity()
     {
-        await _dialog.Open();
+        await _dialog.Open(100);
     }
 
     private Func<TeacherClassActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);

@@ -15,6 +15,7 @@ public partial class IntegrationTests
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
+        var note = StudentClassNoteType.N1;
         var title = "Modelagem de Banco de Dados";
         var description = "Modele um banco de dados para uma barbearia.";
         var type = ClassActivityType.Work;
@@ -22,7 +23,7 @@ public partial class IntegrationTests
         var dueDate = DateTime.Now.AddDays(15).ToDateOnly();
 
         // Act
-        var response = await teacherClient.CreateClassActivity(mathClass.Id, title, description, type, weight, dueDate, Hour.H10_00);
+        var response = await teacherClient.CreateClassActivity(mathClass.Id, note, title, description, type, weight, dueDate, Hour.H10_00);
 
         // Assert
         response.ShouldBeSuccess();
@@ -38,7 +39,7 @@ public partial class IntegrationTests
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
         // Act
-        var response = await teacherClient.CreateClassActivity(Guid.NewGuid(), "", "", ClassActivityType.Exam, 50, DateTime.Now.ToDateOnly(), Hour.H08_00);
+        var response = await teacherClient.CreateClassActivity(Guid.NewGuid(), StudentClassNoteType.N2, "", "", ClassActivityType.Exam, 50, DateTime.Now.ToDateOnly(), Hour.H08_00);
 
         // Assert
         response.ShouldBeError(new ClassNotFound());

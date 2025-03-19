@@ -38,7 +38,7 @@ public class Startup(IConfiguration configuration)
         BackgroundJob.Enqueue<CommandsProcessor>(x => x.Run());
         BackgroundJob.Enqueue<DomainEventsProcessor>(x => x.Run());
 
-        RecurringJob.AddOrUpdate<CommandsProcessedCleaner>(nameof(CommandsProcessedCleaner), x => x.Run(), Cron.Daily(23));
+        // RecurringJob.AddOrUpdate<CommandsProcessedCleaner>(nameof(CommandsProcessedCleaner), x => x.Run(), Cron.Daily(23));
 
         app.UseRouting();
         app.UseStaticFiles();

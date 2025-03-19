@@ -4,6 +4,7 @@ public class CreateClassActivityClient(HttpClient http) : ITeacherClient
 {
     public async Task<OneOf<SuccessOut, ErrorOut>> Create(
         Guid classId,
+        StudentClassNoteType note,
         string title,
         string description,
         ClassActivityType type,
@@ -11,7 +12,7 @@ public class CreateClassActivityClient(HttpClient http) : ITeacherClient
         DateOnly dueDate,
         Hour dueHour)
     {
-        var data = new CreateClassActivityIn { Title = title, Description = description, Type = type, Weight = weight, DueDate = dueDate, DueHour = dueHour };
+        var data = new CreateClassActivityIn { Note = note, Title = title, Description = description, Type = type, Weight = weight, DueDate = dueDate, DueHour = dueHour };
 
         var response = await http.PostAsJsonAsync($"/teacher/classes/{classId}/activities", data);
 

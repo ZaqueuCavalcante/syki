@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Teacher.CreateClassActivity;
 
 /// <summary>
-/// Nota de uma Atividade feita por um Aluno dentro de uma Turma
+/// Nota de uma Atividade feita por um Aluno
 /// </summary>
 public class StudentClassActivityNote : Entity
 {

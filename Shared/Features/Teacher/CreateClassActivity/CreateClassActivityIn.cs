@@ -13,6 +13,16 @@ public class CreateClassActivityIn
     public string Description { get; set; }
 
     /// <summary>
+    /// Tipo
+    /// </summary>
+    public ClassActivityType Type { get; set; }
+
+    /// <summary>
+    /// Peso no intervalo: 0 ≤ Weight ≤ 100
+    /// </summary>
+    public int Weight { get; set; }
+
+    /// <summary>
     /// Data limite para entrega
     /// </summary>
     public DateOnly DueDate { get; set; }

@@ -18,20 +18,24 @@ public class ClassActivity : Entity
     public int Weight { get; set; }
 
     public DateTime CreatedAt { get; set; }
-    public DateOnly? DueDate { get; set; }
-    public Hour? DueHour { get; set; }
+    public DateOnly DueDate { get; set; }
+    public Hour DueHour { get; set; }
 
     public ClassActivity(
         Guid classId,
         string title,
         string description,
-        DateOnly? dueDate,
-        Hour? dueHour
+        ClassActivityType type,
+        int weight,
+        DateOnly dueDate,
+        Hour dueHour
     ) {
         Id = Guid.NewGuid();
         ClassId = classId;
         Title = title;
         Description = description;
+        Type = type;
+        Weight = weight;
         CreatedAt = DateTime.Now;
         DueDate = dueDate;
         DueHour = dueHour;

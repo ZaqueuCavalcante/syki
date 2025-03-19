@@ -13,6 +13,43 @@
                 <MudItem xs="12" sm="12" md="12" lg="12">
                     <SykiTextField Label="Descrição" @bind-Value="@_description" AutoGrow="true" Lines="8" MaxLines="20" MaxLength="10000" />
                 </MudItem>
+
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="ClassActivityType"
+                        @bind-Value="@_type"
+                        Label="Tipo"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary"
+                    >
+                        @foreach (ClassActivityType type in Enum.GetValues<ClassActivityType>())
+                        {
+                            <MudSelectItem Value="@type">@type.GetDescription()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <MudNumericField
+                        T="int"
+                        @bind-Value="@_weight"
+                        Max="100"
+                        MaxLength="3"
+                        Min="0"
+                        HideSpinButtons="true"
+                        Variant="Variant.Outlined"
+                        Margin="Margin.Dense"
+                        HelperText="Máx: 60"
+                        Required="true"
+                        Label="Peso"
+                        RequiredError="Informe!"
+                    />
+                </MudItem>
+
                 <MudItem xs="12" sm="6" md="6" lg="6">
                     <SykiDatePicker Label="Data de entrega" @bind-Date="@_dueDate" Editable="false" />
                 </MudItem>
@@ -56,6 +93,8 @@
 
     private string _title;
     private string _description;
+    private ClassActivityType _type = ClassActivityType.Work;
+    private int _weight;
     private DateTime? _dueDate = DateTime.Now.AddDays(7);
     private Hour _dueHour = Hour.H12_00;
 
@@ -91,11 +130,9 @@
         await _form.Validate();
         if (!_form.IsValid) return;
 
-
-
         _loading = true;
 
-        var response = await Client.Create(ClassId, _title, _description, _dueDate!.Value.ToDateOnly(), _dueHour);
+        var response = await Client.Create(ClassId, _title, _description, _type, _weight, _dueDate!.Value.ToDateOnly(), _dueHour);
         if (response.IsSuccess())
         {
             Snackbar.Add("Atividade criada com sucesso!", Severity.Success);

@@ -11,6 +11,8 @@ public class CreateClassActivityService(SykiDbContext ctx) : ITeacherService
             classId,
             data.Title,
             data.Description,
+            data.Type,
+            data.Weight,
             data.DueDate,
             data.DueHour
         );

@@ -24,10 +24,17 @@ public class TeacherHttpClient(HttpClient http)
         return await client.Create(id, presentStudents);
     }
 
-    public async Task<OneOf<SuccessOut, ErrorOut>> CreateClassActivity(Guid classId, string title, string description, DateOnly dueDate, Hour dueHour)
+    public async Task<OneOf<SuccessOut, ErrorOut>> CreateClassActivity(
+        Guid classId,
+        string title,
+        string description,
+        ClassActivityType type,
+        int weight,
+        DateOnly dueDate,
+        Hour dueHour)
     {
         var client = new CreateClassActivityClient(Cross);
-        return await client.Create(classId, title, description, dueDate, dueHour);
+        return await client.Create(classId, title, description, type, weight, dueDate, dueHour);
     }
 
     public async Task<TeacherInsightsOut> GetTeacherInsights()

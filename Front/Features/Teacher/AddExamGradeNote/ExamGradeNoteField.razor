@@ -25,13 +25,13 @@
 @code
 {
     [Parameter]
-    public ExamGradeOut Data { get; set; }
+    public ClassStudentNoteOut Data { get; set; }
     
     [Parameter]
-    public EventCallback<ExamGradeOut> DataChanged { get; set; }
+    public EventCallback<ClassStudentNoteOut> DataChanged { get; set; }
     
     private string GetLabel()
     {
-        return $"Nota {Data.ExamType}";
+        return $"Nota {Data.ClassStudentNoteType}";
     }
 }

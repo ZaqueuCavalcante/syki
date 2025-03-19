@@ -22,16 +22,16 @@ public class StartClassUnitTests
 
         var examGradesA = @class.ExamGrades.Where(x => x.StudentId == studentA.Id);
         examGradesA.Should().HaveCount(3);
-        examGradesA.Count(x => x.ExamType == ExamType.N1).Should().Be(1);
-        examGradesA.Count(x => x.ExamType == ExamType.N2).Should().Be(1);
-        examGradesA.Count(x => x.ExamType == ExamType.N3).Should().Be(1);
+        examGradesA.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N1).Should().Be(1);
+        examGradesA.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N2).Should().Be(1);
+        examGradesA.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N3).Should().Be(1);
         examGradesA.Should().AllSatisfy(x => x.Note.Should().Be(0));
 
         var examGradesB = @class.ExamGrades.Where(x => x.StudentId == studentB.Id);
         examGradesB.Should().HaveCount(3);
-        examGradesB.Count(x => x.ExamType == ExamType.N1).Should().Be(1);
-        examGradesB.Count(x => x.ExamType == ExamType.N2).Should().Be(1);
-        examGradesB.Count(x => x.ExamType == ExamType.N3).Should().Be(1);
+        examGradesB.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N1).Should().Be(1);
+        examGradesB.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N2).Should().Be(1);
+        examGradesB.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N3).Should().Be(1);
         examGradesB.Should().AllSatisfy(x => x.Note.Should().Be(0));
     }
 }

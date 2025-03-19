@@ -63,9 +63,9 @@
                     <MudTd DataLabel="Disciplina">@context.Discipline</MudTd>
                     <MudTd DataLabel="Período">@context.Period</MudTd>
                     <MudTd DataLabel="Status">@context.StudentDisciplineStatus.GetDescription()</MudTd>
-                    <MudTd DataLabel="N1">@context.GetNote(ExamType.N1)</MudTd>
-                    <MudTd DataLabel="N2">@context.GetNote(ExamType.N2)</MudTd>
-                    <MudTd DataLabel="N3">@context.GetNote(ExamType.N3)</MudTd>
+                    <MudTd DataLabel="N1">@context.GetNote(ClassStudentNoteType.N1)</MudTd>
+                    <MudTd DataLabel="N2">@context.GetNote(ClassStudentNoteType.N2)</MudTd>
+                    <MudTd DataLabel="N3">@context.GetNote(ClassStudentNoteType.N3)</MudTd>
                     <MudTd DataLabel="Média">
                         <MudProgressLinear Color="@GetAverageNoteColor(context.AverageNote)" Max="10" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.AverageNote)" Style="height: 24px">
                             <MudText Typo="Typo.body1">

@@ -151,9 +151,9 @@
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Nome">@context.Name</MudTd>
-                    <MudTd DataLabel="N1">@context.GetNote(ExamType.N1)</MudTd>
-                    <MudTd DataLabel="N2">@context.GetNote(ExamType.N2)</MudTd>
-                    <MudTd DataLabel="N3">@context.GetNote(ExamType.N3)</MudTd>
+                    <MudTd DataLabel="N1">@context.GetNote(ClassStudentNoteType.N1)</MudTd>
+                    <MudTd DataLabel="N2">@context.GetNote(ClassStudentNoteType.N2)</MudTd>
+                    <MudTd DataLabel="N3">@context.GetNote(ClassStudentNoteType.N3)</MudTd>
                     <MudTd DataLabel="Média">@context.AverageNote.Format()</MudTd>
                     <MudTd DataLabel="Frequência">
                         @if (ShowFrequencyColumn())

@@ -39,9 +39,9 @@ public partial class IntegrationTests
         
         var classAfter = await teacherClient.GetTeacherClass(mathClass.Id);
         var examGrades = classAfter.Students.First().ExamGrades;
-        examGrades.First(x => x.ExamType == ExamType.N1).Note.Should().Be(note);
-        examGrades.First(x => x.ExamType == ExamType.N2).Note.Should().Be(0);
-        examGrades.First(x => x.ExamType == ExamType.N3).Note.Should().Be(0);
+        examGrades.First(x => x.ClassStudentNoteType == ClassStudentNoteType.N1).Note.Should().Be(note);
+        examGrades.First(x => x.ClassStudentNoteType == ClassStudentNoteType.N2).Note.Should().Be(0);
+        examGrades.First(x => x.ClassStudentNoteType == ClassStudentNoteType.N3).Note.Should().Be(0);
 
         await AssertDomainEvent<ExamGradeNoteAddedDomainEvent>(@class.Id.ToString());
     }

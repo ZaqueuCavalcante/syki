@@ -6,7 +6,7 @@ public class GetAverageNoteUnitTests
 {
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.ExamGrades))]
-    public void Should_get_average_note(List<ExamGrade> examGrades, decimal average)
+    public void Should_get_average_note(List<ClassStudentNote> examGrades, decimal average)
     {
         // Arrange / Act
         var result = examGrades.GetAverageNote();

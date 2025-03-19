@@ -46,7 +46,7 @@
         var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _options.FullScreen = breakpoint == Breakpoint.Xs;
         _item = item;
-        _initialValues = item.ExamGrades.Select(x => new CompareExamGradeOut() { ExamType = x.ExamType, Note = x.Note }).ToList();
+        _initialValues = item.ExamGrades.Select(x => new CompareExamGradeOut() { ClassStudentNoteType = x.ClassStudentNoteType, Note = x.Note }).ToList();
         _visible = true;
     }
 
@@ -60,7 +60,7 @@
         _loading = true;
         foreach (var examGrade in _item.ExamGrades)
         {
-            var initial = _initialValues.First(x => x.ExamType == examGrade.ExamType);
+            var initial = _initialValues.First(x => x.ClassStudentNoteType == examGrade.ClassStudentNoteType);
             if (examGrade.Note == initial.Note) continue;
 
             await Client.Add(examGrade.Id, new(examGrade.Note));

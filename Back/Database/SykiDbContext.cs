@@ -33,7 +33,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<SykiTeacher> Teachers { get; set; }
     public DbSet<SykiStudent> Students { get; set; }
-    public DbSet<ExamGrade> ExamGrades { get; set; }
+    public DbSet<ClassStudentNote> ExamGrades { get; set; }
     public DbSet<Discipline> Disciplines { get; set; }
     public DbSet<DomainEvent> DomainEvents { get; set; }
     public DbSet<Institution> Institutions { get; set; }

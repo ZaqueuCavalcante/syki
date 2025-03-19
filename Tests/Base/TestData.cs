@@ -340,7 +340,7 @@ public static class TestData
 
     public static IEnumerable<object[]> ExamGrades()
     {
-        foreach (var (examGrades, average) in new List<(List<ExamGrade>, decimal)>() 
+        foreach (var (examGrades, average) in new List<(List<ClassStudentNote>, decimal)>() 
         {
             (GetExamGradesList(0.00M, 0.00M, 0.00M), 0.00M),
 
@@ -368,12 +368,12 @@ public static class TestData
         }
     }
 
-    private static List<ExamGrade> GetExamGradesList(decimal n1, decimal n2, decimal n3)
+    private static List<ClassStudentNote> GetExamGradesList(decimal n1, decimal n2, decimal n3)
     {
         return [
-            new ExamGrade(Guid.Empty, Guid.Empty, Guid.Empty, ExamType.N1, n1),
-            new ExamGrade(Guid.Empty, Guid.Empty, Guid.Empty, ExamType.N2, n2),
-            new ExamGrade(Guid.Empty, Guid.Empty, Guid.Empty, ExamType.N3, n3)
+            new ClassStudentNote(Guid.Empty, Guid.Empty, Guid.Empty, ClassStudentNoteType.N1, n1),
+            new ClassStudentNote(Guid.Empty, Guid.Empty, Guid.Empty, ClassStudentNoteType.N2, n2),
+            new ClassStudentNote(Guid.Empty, Guid.Empty, Guid.Empty, ClassStudentNoteType.N3, n3)
         ];
     }
 

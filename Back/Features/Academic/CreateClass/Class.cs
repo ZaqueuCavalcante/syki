@@ -25,7 +25,7 @@ public class Class
     public int Workload { get; set; }
     public List<SykiStudent> Students { get; set; }
     public List<Schedule> Schedules { get; set; }
-    public List<ExamGrade> ExamGrades { get; set; }
+    public List<ClassStudentNote> ExamGrades { get; set; }
     public List<Lesson> Lessons { get; set; }
     public List<ClassActivity> Activities { get; set; }
 
@@ -127,8 +127,8 @@ public class Class
         ExamGrades = [];
         foreach (var student in Students)
         {
-            Enum.GetValues<ExamType>().ToList()
-                .ForEach(type => ExamGrades.Add(new ExamGrade(InstitutionId, Id, student.Id, type, 0.00M)));
+            Enum.GetValues<ClassStudentNoteType>().ToList()
+                .ForEach(type => ExamGrades.Add(new ClassStudentNote(InstitutionId, Id, student.Id, type, 0.00M)));
         }
     }
 
@@ -175,7 +175,7 @@ public class Class
             s.AverageNote = studentExamGrades.GetAverageNote();
             var presences = Lessons.Count(x => x.Attendances.Exists(a => a.StudentId == s.Id && a.Present));
             s.Frequency = lessons == 0 ? 0.00M : 100M * (1M * presences / (1M * lessons));
-            s.ExamGrades = studentExamGrades.OrderBy(x => x.ExamType).Select(g => g.ToOut()).ToList();
+            s.ExamGrades = studentExamGrades.OrderBy(x => x.ClassStudentNoteType).Select(g => g.ToOut()).ToList();
         });
 
         return new()
@@ -205,7 +205,7 @@ public class Class
         {
             var studentExamGrades = ExamGrades.Where(g => g.StudentId == s.Id).ToList();
             s.AverageNote = studentExamGrades.GetAverageNote();
-            s.ExamGrades = studentExamGrades.OrderBy(x => x.ExamType).Select(g => g.ToOut()).ToList();
+            s.ExamGrades = studentExamGrades.OrderBy(x => x.ClassStudentNoteType).Select(g => g.ToOut()).ToList();
         });
 
         return new()

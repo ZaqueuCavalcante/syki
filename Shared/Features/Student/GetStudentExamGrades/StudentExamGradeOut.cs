@@ -7,11 +7,11 @@ public class StudentExamGradeOut
     public string Discipline { get; set; }
     public StudentDisciplineStatus StudentDisciplineStatus { get; set; }
     public decimal AverageNote { get; set; }
-    public List<ExamGradeOut> ExamGrades { get; set; }
+    public List<ClassStudentNoteOut> ExamGrades { get; set; }
 
-    public string GetNote(ExamType type)
+    public string GetNote(ClassStudentNoteType type)
     {
-        var examGrade = ExamGrades.FirstOrDefault(x => x.ExamType == type);
+        var examGrade = ExamGrades.FirstOrDefault(x => x.ClassStudentNoteType == type);
         return examGrade != null ? examGrade.Note.Format() : "0.00";
     }
 }

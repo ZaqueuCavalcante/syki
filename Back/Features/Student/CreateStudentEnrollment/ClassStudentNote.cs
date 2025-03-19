@@ -5,29 +5,29 @@ namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 /// <summary>
 /// Representa uma Nota de um Aluno dentro de uma Turma
 /// </summary>
-public class ExamGrade : Entity
+public class ClassStudentNote : Entity
 {
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
     public Guid ClassId { get; set; }
     public Guid StudentId { get; set; }
-    public ExamType ExamType { get; set; }
+    public ClassStudentNoteType ClassStudentNoteType { get; set; }
     public decimal Note { get; set; }
 
-    private ExamGrade() {}
+    private ClassStudentNote() {}
 
-    public ExamGrade(
+    public ClassStudentNote(
         Guid institutionId,
         Guid classId,
         Guid studentId,
-        ExamType examType,
+        ClassStudentNoteType examType,
         decimal note
     ) {
         Id = Guid.NewGuid();
         InstitutionId = institutionId;
         ClassId = classId;
         StudentId = studentId;
-        ExamType = examType;
+        ClassStudentNoteType = examType;
         Note = note;
     }
 
@@ -42,14 +42,14 @@ public class ExamGrade : Entity
         return new SykiSuccess();
     }
 
-    public ExamGradeOut ToOut()
+    public ClassStudentNoteOut ToOut()
     {
         return new()
         {
             Id = Id,
             ClassId = ClassId,
             StudentId = StudentId,
-            ExamType = ExamType,
+            ClassStudentNoteType = ClassStudentNoteType,
             Note = Note,
         };
     }

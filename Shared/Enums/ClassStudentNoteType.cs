@@ -3,9 +3,9 @@ using System.ComponentModel;
 namespace Syki.Shared;
 
 /// <summary>
-/// Tipo de Prova
+/// Tipo de Nota de um Aluno dentro de uma Turma
 /// </summary>
-public enum ExamType
+public enum ClassStudentNoteType
 {
     [Description("N1")]
     N1,

@@ -1,13 +1,15 @@
 namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
+/// <summary>
+/// Vínculo entre Aluno e Turma
+/// </summary>
 public class ClassStudent
 {
     public Guid ClassId { get; set; }
     public Guid SykiStudentId { get; set; }
     public StudentDisciplineStatus StudentDisciplineStatus { get; set; }
 
-    // Only for EF
-    public ClassStudent() { }
+    private ClassStudent() { }
 
     public ClassStudent(
         Guid classId,

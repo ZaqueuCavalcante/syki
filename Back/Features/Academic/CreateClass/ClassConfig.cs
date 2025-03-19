@@ -35,7 +35,7 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
             .WithMany()
             .HasForeignKey(c => new { c.PeriodId, c.InstitutionId });
 
-        @class.HasMany(c => c.ExamGrades)
+        @class.HasMany(c => c.Notes)
             .WithOne()
             .HasForeignKey(eg => eg.ClassId);
 

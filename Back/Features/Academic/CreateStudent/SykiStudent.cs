@@ -56,7 +56,7 @@ public class SykiStudent : Entity
         {
             Id = Id,
             Name = Name,
-            ExamGrades = [],
+            Notes = [],
         };
     }
 
@@ -66,7 +66,7 @@ public class SykiStudent : Entity
         {
             Id = Id,
             Name = Name,
-            ExamGrades = [],
+            Notes = [],
         };
     }
 }

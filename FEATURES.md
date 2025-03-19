@@ -83,14 +83,14 @@
 - GetStudentAverageNote
 - GetStudentDisciplines
 - GetStudentEnrollmentClasses
-- GetStudentExamGrades
+- GetStudentNotes
 - GetStudentFrequencies
 - GetStudentFrequency
 - GetStudentInsights
 
 ## Teacher
 
-- AddExamGradeNote
+- AddClassActivityNote
 - CreateLessonAttendance
 - GetTeacherAgenda
 - GetTeacherClass

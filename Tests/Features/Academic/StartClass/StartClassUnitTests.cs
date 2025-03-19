@@ -20,18 +20,18 @@ public class StartClassUnitTests
         // Assert
         @class.Status.Should().Be(ClassStatus.Started);
 
-        var examGradesA = @class.ExamGrades.Where(x => x.StudentId == studentA.Id);
-        examGradesA.Should().HaveCount(3);
-        examGradesA.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N1).Should().Be(1);
-        examGradesA.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N2).Should().Be(1);
-        examGradesA.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N3).Should().Be(1);
-        examGradesA.Should().AllSatisfy(x => x.Note.Should().Be(0));
+        var notesA = @class.Notes.Where(x => x.StudentId == studentA.Id);
+        notesA.Should().HaveCount(3);
+        notesA.Count(x => x.Type == StudentClassNoteType.N1).Should().Be(1);
+        notesA.Count(x => x.Type == StudentClassNoteType.N2).Should().Be(1);
+        notesA.Count(x => x.Type == StudentClassNoteType.N3).Should().Be(1);
+        notesA.Should().AllSatisfy(x => x.Note.Should().Be(0));
 
-        var examGradesB = @class.ExamGrades.Where(x => x.StudentId == studentB.Id);
-        examGradesB.Should().HaveCount(3);
-        examGradesB.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N1).Should().Be(1);
-        examGradesB.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N2).Should().Be(1);
-        examGradesB.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N3).Should().Be(1);
-        examGradesB.Should().AllSatisfy(x => x.Note.Should().Be(0));
+        var notesB = @class.Notes.Where(x => x.StudentId == studentB.Id);
+        notesB.Should().HaveCount(3);
+        notesB.Count(x => x.Type == StudentClassNoteType.N1).Should().Be(1);
+        notesB.Count(x => x.Type == StudentClassNoteType.N2).Should().Be(1);
+        notesB.Count(x => x.Type == StudentClassNoteType.N3).Should().Be(1);
+        notesB.Should().AllSatisfy(x => x.Note.Should().Be(0));
     }
 }

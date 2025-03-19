@@ -10,6 +10,7 @@ using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.Features.Cross.SetupFeatureFlags;
 using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateNotification;
+using Syki.Back.Features.Teacher.CreateClassActivity;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Academic.CreateCourseOffering;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
@@ -19,7 +20,6 @@ using Syki.Back.Features.Cross.CreatePendingUserRegister;
 using Syki.Back.Features.Academic.CreateCourseCurriculum;
 using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
-using Syki.Back.Features.Teacher.CreateClassActivity;
 
 namespace Syki.Back.Database;
 
@@ -33,7 +33,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<SykiTeacher> Teachers { get; set; }
     public DbSet<SykiStudent> Students { get; set; }
-    public DbSet<ClassStudentNote> ExamGrades { get; set; }
+    public DbSet<StudentClassNote> Notes { get; set; }
     public DbSet<Discipline> Disciplines { get; set; }
     public DbSet<DomainEvent> DomainEvents { get; set; }
     public DbSet<Institution> Institutions { get; set; }

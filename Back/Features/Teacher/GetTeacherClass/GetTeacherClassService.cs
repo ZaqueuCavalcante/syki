@@ -7,7 +7,7 @@ public class GetTeacherClassService(SykiDbContext ctx) : ITeacherService
         var @class = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)
             .Include(t => t.Students)
-            .Include(t => t.ExamGrades)
+            .Include(t => t.Notes)
             .Include(t => t.Activities)
             .Include(t => t.Lessons)
                 .ThenInclude(l => l.Attendances)

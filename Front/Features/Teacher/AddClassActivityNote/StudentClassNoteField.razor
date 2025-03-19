@@ -1,4 +1,4 @@
-﻿@namespace Syki.Front.Features.Teacher.AddExamGradeNote
+﻿@namespace Syki.Front.Features.Teacher.AddClassActivityNote
         
 <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="0" Class="mb-3">
     <MudItem xs="4">
@@ -25,13 +25,13 @@
 @code
 {
     [Parameter]
-    public ClassStudentNoteOut Data { get; set; }
+    public StudentClassNoteOut Data { get; set; }
     
     [Parameter]
-    public EventCallback<ClassStudentNoteOut> DataChanged { get; set; }
+    public EventCallback<StudentClassNoteOut> DataChanged { get; set; }
     
     private string GetLabel()
     {
-        return $"Nota {Data.ClassStudentNoteType}";
+        return $"Nota {Data.Type}";
     }
 }

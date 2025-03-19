@@ -25,7 +25,7 @@ public class Class
     public int Workload { get; set; }
     public List<SykiStudent> Students { get; set; }
     public List<Schedule> Schedules { get; set; }
-    public List<ClassStudentNote> ExamGrades { get; set; }
+    public List<StudentClassNote> Notes { get; set; }
     public List<Lesson> Lessons { get; set; }
     public List<ClassActivity> Activities { get; set; }
 
@@ -50,7 +50,7 @@ public class Class
         Status = ClassStatus.OnPreEnrollment;
         Schedules = schedules;
         Students = [];
-        ExamGrades = [];
+        Notes = [];
         Lessons = [];
         Activities = [];
     }
@@ -124,11 +124,11 @@ public class Class
     public void Start()
     {
         Status = ClassStatus.Started;
-        ExamGrades = [];
+        Notes = [];
         foreach (var student in Students)
         {
-            Enum.GetValues<ClassStudentNoteType>().ToList()
-                .ForEach(type => ExamGrades.Add(new ClassStudentNote(InstitutionId, Id, student.Id, type, 0.00M)));
+            Enum.GetValues<StudentClassNoteType>().ToList()
+                .ForEach(type => Notes.Add(new StudentClassNote(InstitutionId, Id, student.Id, type, 0.00M)));
         }
     }
 
@@ -171,11 +171,11 @@ public class Class
         var lessons = Lessons.Count(x => x.Attendances.Count > 0);
         students.ForEach(s =>
         {
-            var studentExamGrades = ExamGrades.Where(g => g.StudentId == s.Id).ToList();
-            s.AverageNote = studentExamGrades.GetAverageNote();
+            var studentNotes = Notes.Where(g => g.StudentId == s.Id).ToList();
+            s.AverageNote = studentNotes.GetAverageNote();
             var presences = Lessons.Count(x => x.Attendances.Exists(a => a.StudentId == s.Id && a.Present));
             s.Frequency = lessons == 0 ? 0.00M : 100M * (1M * presences / (1M * lessons));
-            s.ExamGrades = studentExamGrades.OrderBy(x => x.ClassStudentNoteType).Select(g => g.ToOut()).ToList();
+            s.Notes = studentNotes.OrderBy(x => x.Type).Select(g => g.ToOut()).ToList();
         });
 
         return new()
@@ -203,9 +203,9 @@ public class Class
         var students = Students.OrderBy(x => x.Name).Select(x => x.ToTeacherClassStudentOut()).ToList();
         students.ForEach(s =>
         {
-            var studentExamGrades = ExamGrades.Where(g => g.StudentId == s.Id).ToList();
-            s.AverageNote = studentExamGrades.GetAverageNote();
-            s.ExamGrades = studentExamGrades.OrderBy(x => x.ClassStudentNoteType).Select(g => g.ToOut()).ToList();
+            var studentNotes = Notes.Where(g => g.StudentId == s.Id).ToList();
+            s.AverageNote = studentNotes.GetAverageNote();
+            s.Notes = studentNotes.OrderBy(x => x.Type).Select(g => g.ToOut()).ToList();
         });
 
         return new()

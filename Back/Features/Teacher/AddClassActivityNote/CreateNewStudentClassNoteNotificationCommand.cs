@@ -1,13 +1,13 @@
 using Syki.Back.Features.Academic.CreateNotification;
 
-namespace Syki.Back.Features.Teacher.AddExamGradeNote;
+namespace Syki.Back.Features.Teacher.AddClassActivityNote;
 
 [CommandDescription("Criar notificação de nota adicionada")]
-public record CreateNewExamGradeNoteNotificationCommand(Guid ClassId, Guid UserId) : ICommand;
+public record CreateNewStudentClassNoteNotificationCommand(Guid ClassId, Guid UserId) : ICommand;
 
-public class CreateNewExamGradeNoteNotificationCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateNewExamGradeNoteNotificationCommand>
+public class CreateNewStudentClassNoteNotificationCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateNewStudentClassNoteNotificationCommand>
 {
-    public async Task Handle(Guid commandId, CreateNewExamGradeNoteNotificationCommand command)
+    public async Task Handle(Guid commandId, CreateNewStudentClassNoteNotificationCommand command)
     {
         var @class = await ctx.Classes.AsNoTracking()
             .Include(x => x.Discipline)

@@ -1,9 +1,9 @@
-namespace Syki.Back.Features.Teacher.AddExamGradeNote;
+namespace Syki.Back.Features.Teacher.AddClassActivityNote;
 
 [ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
-public class AddExamGradeNoteController(AddExamGradeNoteService service) : ControllerBase
+public class AddClassActivityNoteController(AddClassActivityNoteService service) : ControllerBase
 {
     /// <summary>
     /// Definir nota
@@ -11,8 +11,8 @@ public class AddExamGradeNoteController(AddExamGradeNoteService service) : Contr
     /// <remarks>
     /// Define a nota da avaliação informada.
     /// </remarks>
-    [HttpPut("teacher/exam-grades/{id}")]
-    public async Task<IActionResult> Add([FromRoute] Guid id, [FromBody] AddExamGradeNoteIn data)
+    [HttpPut("teacher/notes/{id}")]
+    public async Task<IActionResult> Add([FromRoute] Guid id, [FromBody] AddClassActivityNoteIn data)
     {
         var result = await service.Add(User.Id(), id, data);
 

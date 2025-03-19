@@ -12,13 +12,13 @@ public class GetStudentAverageNoteService(SykiDbContext ctx) : IStudentService
             ).ToListAsync();
 
         var classes = classesStudents.ConvertAll(x => x.ClassId);
-        var examGrades = await ctx.ExamGrades.AsNoTracking()
+        var notes = await ctx.Notes.AsNoTracking()
             .Where(x => x.StudentId == userId).ToListAsync();
 
-        var notes = classes.ConvertAll(c => examGrades.Where(g => g.ClassId == c).GetAverageNote());
+        var values = classes.ConvertAll(c => notes.Where(g => g.ClassId == c).GetAverageNote());
 
-        if (notes.Count == 0) return 0;
+        if (values.Count == 0) return 0;
 
-        return Math.Round(notes.Average(), 2);
+        return Math.Round(values.Average(), 2);
     }
 }

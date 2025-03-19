@@ -1,9 +1,9 @@
 using Syki.Front.Features.Teacher.GetTeacherClass;
-using Syki.Front.Features.Teacher.AddExamGradeNote;
 using Syki.Front.Features.Teacher.GetTeacherAgenda;
 using Syki.Front.Features.Teacher.GetTeacherClasses;
 using Syki.Front.Features.Teacher.GetTeacherInsights;
 using Syki.Front.Features.Teacher.CreateClassActivity;
+using Syki.Front.Features.Teacher.AddClassActivityNote;
 using Syki.Front.Features.Teacher.CreateLessonAttendance;
 
 namespace Syki.Tests.Clients;
@@ -12,9 +12,9 @@ public class TeacherHttpClient(HttpClient http)
 {
     public readonly HttpClient Cross = http;
 
-    public async Task<HttpResponseMessage> AddExamGradeNote(Guid id, decimal note)
+    public async Task<HttpResponseMessage> AddClassActivityNote(Guid id, decimal note)
     {
-        var client = new AddExamGradeNoteClient(Cross);
+        var client = new AddClassActivityNoteClient(Cross);
         return await client.Add(id, new(note));
     }
 
@@ -61,12 +61,12 @@ public class TeacherHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task AddExamGradeNotes(Guid classId, Guid studentId, decimal n1, decimal n2, decimal n3)
+    public async Task AddClassActivityNotes(Guid classId, Guid studentId, decimal n1, decimal n2, decimal n3)
     {
         var discreteMathClass = await GetTeacherClass(classId);
-        var discreteMathClassExamGrades = discreteMathClass.Students.First(x => x.Id == studentId).ExamGrades;
-        await AddExamGradeNote(discreteMathClassExamGrades[0].Id, n1);
-        await AddExamGradeNote(discreteMathClassExamGrades[1].Id, n2);
-        await AddExamGradeNote(discreteMathClassExamGrades[2].Id, n3);
+        var discreteMathClassNotes = discreteMathClass.Students.First(x => x.Id == studentId).Notes;
+        await AddClassActivityNote(discreteMathClassNotes[0].Id, n1);
+        await AddClassActivityNote(discreteMathClassNotes[1].Id, n2);
+        await AddClassActivityNote(discreteMathClassNotes[2].Id, n3);
     }
 }

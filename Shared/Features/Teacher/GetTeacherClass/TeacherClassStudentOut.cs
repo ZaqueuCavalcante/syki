@@ -5,12 +5,12 @@ public class TeacherClassStudentOut
     public Guid Id { get; set; }
     public string Name { get; set; }
     public decimal AverageNote { get; set; }
-    public List<ClassStudentNoteOut> ExamGrades { get; set; } = [];
+    public List<StudentClassNoteOut> Notes { get; set; } = [];
 
     public bool IsSelected { get; set; }
 
-    public string GetNote(ClassStudentNoteType type)
+    public string GetNote(StudentClassNoteType type)
     {
-        return ExamGrades.Where(x => x.ClassStudentNoteType == type).First().Note.Format();
+        return Notes.Where(x => x.Type == type).First().Note.Format();
     }
 }

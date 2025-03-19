@@ -30,6 +30,6 @@ public class SeedInstitutionLessonAttendancesCommandHandler(
             }
         }
 
-        ctx.AddCommand(id, new SeedInstitutionExamGradeNotesCommand(id), parentId: commandId);
+        ctx.AddCommand(id, new SeedInstitutionClassActivitiesNotesCommand(id), parentId: commandId);
     }
 }

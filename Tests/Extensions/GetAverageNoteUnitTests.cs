@@ -5,14 +5,14 @@ namespace Syki.Tests.Extensions;
 public class GetAverageNoteUnitTests
 {
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.ExamGrades))]
-    public void Should_get_average_note(List<ClassStudentNote> examGrades, decimal average)
+    [TestCaseSource(typeof(TestData), nameof(TestData.Notes))]
+    public void Should_get_average_note(List<StudentClassNote> notes, decimal average)
     {
         // Arrange / Act
-        var result = examGrades.GetAverageNote();
+        var result = notes.GetAverageNote();
 
         // Assert
-        var because = $"{examGrades[0].Note} & {examGrades[1].Note} & {examGrades[2].Note} = {average}";
+        var because = $"{notes[0].Note} & {notes[1].Note} & {notes[2].Note} = {average}";
         result.Should().Be(average, because);
     }
 }

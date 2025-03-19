@@ -37,11 +37,11 @@ public partial class IntegrationTests
         @class.Status.Should().Be(ClassStatus.Started);
 
         @class.Students.Should().HaveCount(1);
-        var examGrades = @class.Students.First().ExamGrades;
-        examGrades.Should().AllSatisfy(x => x.StudentId.Should().Be(student.Id));
-        examGrades.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N1).Should().Be(1);
-        examGrades.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N2).Should().Be(1);
-        examGrades.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N3).Should().Be(1);
-        examGrades.Should().AllSatisfy(x => x.Note.Should().Be(0));
+        var notes = @class.Students.First().Notes;
+        notes.Should().AllSatisfy(x => x.StudentId.Should().Be(student.Id));
+        notes.Count(x => x.Type == StudentClassNoteType.N1).Should().Be(1);
+        notes.Count(x => x.Type == StudentClassNoteType.N2).Should().Be(1);
+        notes.Count(x => x.Type == StudentClassNoteType.N3).Should().Be(1);
+        notes.Should().AllSatisfy(x => x.Note.Should().Be(0));
     }
 }

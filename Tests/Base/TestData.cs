@@ -338,42 +338,42 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> ExamGrades()
+    public static IEnumerable<object[]> Notes()
     {
-        foreach (var (examGrades, average) in new List<(List<ClassStudentNote>, decimal)>() 
+        foreach (var (notes, average) in new List<(List<StudentClassNote>, decimal)>() 
         {
-            (GetExamGradesList(0.00M, 0.00M, 0.00M), 0.00M),
+            (GetStudentClassNotesList(0.00M, 0.00M, 0.00M), 0.00M),
 
-            (GetExamGradesList(1.23M, 0.00M, 0.00M), 0.62M),
-            (GetExamGradesList(0.00M, 1.23M, 0.00M), 0.62M),
-            (GetExamGradesList(0.00M, 0.00M, 1.23M), 0.62M),
+            (GetStudentClassNotesList(1.23M, 0.00M, 0.00M), 0.62M),
+            (GetStudentClassNotesList(0.00M, 1.23M, 0.00M), 0.62M),
+            (GetStudentClassNotesList(0.00M, 0.00M, 1.23M), 0.62M),
             
-            (GetExamGradesList(1.23M, 1.23M, 0.00M), 1.23M),
-            (GetExamGradesList(1.23M, 0.00M, 1.23M), 1.23M),
-            (GetExamGradesList(0.00M, 1.23M, 1.23M), 1.23M),
+            (GetStudentClassNotesList(1.23M, 1.23M, 0.00M), 1.23M),
+            (GetStudentClassNotesList(1.23M, 0.00M, 1.23M), 1.23M),
+            (GetStudentClassNotesList(0.00M, 1.23M, 1.23M), 1.23M),
 
-            (GetExamGradesList(1.00M, 2.00M, 3.00M), 2.50M),
-            (GetExamGradesList(3.00M, 2.00M, 1.00M), 2.50M),
+            (GetStudentClassNotesList(1.00M, 2.00M, 3.00M), 2.50M),
+            (GetStudentClassNotesList(3.00M, 2.00M, 1.00M), 2.50M),
 
-            (GetExamGradesList(1.23M, 4.56M, 7.89M), 6.22M),
+            (GetStudentClassNotesList(1.23M, 4.56M, 7.89M), 6.22M),
             
-            (GetExamGradesList(10.00M, 10.00M, 00.00M), 10.00M),
-            (GetExamGradesList(10.00M, 00.00M, 10.00M), 10.00M),
-            (GetExamGradesList(00.00M, 10.00M, 10.00M), 10.00M),
+            (GetStudentClassNotesList(10.00M, 10.00M, 00.00M), 10.00M),
+            (GetStudentClassNotesList(10.00M, 00.00M, 10.00M), 10.00M),
+            (GetStudentClassNotesList(00.00M, 10.00M, 10.00M), 10.00M),
 
-            (GetExamGradesList(10.00M, 10.00M, 10.00M), 10.00M),
+            (GetStudentClassNotesList(10.00M, 10.00M, 10.00M), 10.00M),
         })
         {
-            yield return new object[] { examGrades, average };
+            yield return new object[] { notes, average };
         }
     }
 
-    private static List<ClassStudentNote> GetExamGradesList(decimal n1, decimal n2, decimal n3)
+    private static List<StudentClassNote> GetStudentClassNotesList(decimal n1, decimal n2, decimal n3)
     {
         return [
-            new ClassStudentNote(Guid.Empty, Guid.Empty, Guid.Empty, ClassStudentNoteType.N1, n1),
-            new ClassStudentNote(Guid.Empty, Guid.Empty, Guid.Empty, ClassStudentNoteType.N2, n2),
-            new ClassStudentNote(Guid.Empty, Guid.Empty, Guid.Empty, ClassStudentNoteType.N3, n3)
+            new StudentClassNote(Guid.Empty, Guid.Empty, Guid.Empty, StudentClassNoteType.N1, n1),
+            new StudentClassNote(Guid.Empty, Guid.Empty, Guid.Empty, StudentClassNoteType.N2, n2),
+            new StudentClassNote(Guid.Empty, Guid.Empty, Guid.Empty, StudentClassNoteType.N3, n3)
         ];
     }
 
@@ -450,7 +450,7 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> ValidExamGradeNotes()
+    public static IEnumerable<object[]> ValidNotes()
     {
         foreach (var note in new List<decimal>()
         {
@@ -463,7 +463,7 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> InvalidExamGradeNotes()
+    public static IEnumerable<object[]> InvalidNotes()
     {
         foreach (var note in new List<decimal>()
         {

@@ -1,4 +1,4 @@
-﻿@namespace Syki.Front.Features.Teacher.AddExamGradeNote
+﻿@namespace Syki.Front.Features.Teacher.AddClassActivityNote
 
 <MudDialog Class="pb-2" @bind-Visible="@_visible" Options="@_options">
     <TitleContent>
@@ -7,9 +7,9 @@
     <DialogContent>
         <MudText Typo="Typo.h6" Class="px-0 py-2">@_item.Name</MudText>
         <MudForm @ref="@_form" Class="px-0 pt-2">
-            @foreach (var grade in _item.ExamGrades)
+            @foreach (var grade in _item.Notes)
             {
-                <ExamGradeNoteField Data="@grade" />
+                <StudentClassNoteField Data="@grade" />
             }
         </MudForm>
     </DialogContent>
@@ -20,7 +20,7 @@
     </DialogActions>
 </MudDialog>
 
-@inject AddExamGradeNoteClient Client
+@inject AddClassActivityNoteClient Client
 @inject IBrowserViewportService BrowserViewportService
 
 @code
@@ -29,7 +29,7 @@
     private MudForm _form;
     private bool _loading;
     private TeacherClassStudentOut _item = new();
-    private List<CompareExamGradeOut> _initialValues = [];
+    private List<CompareStudentClassNoteOut> _initialValues = [];
 
     private readonly DialogOptions _options = new()
     {
@@ -46,7 +46,7 @@
         var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _options.FullScreen = breakpoint == Breakpoint.Xs;
         _item = item;
-        _initialValues = item.ExamGrades.Select(x => new CompareExamGradeOut() { ClassStudentNoteType = x.ClassStudentNoteType, Note = x.Note }).ToList();
+        _initialValues = item.Notes.Select(x => new CompareStudentClassNoteOut() { Type = x.Type, Note = x.Note }).ToList();
         _visible = true;
     }
 
@@ -58,12 +58,12 @@
     private async Task Submit()
     {
         _loading = true;
-        foreach (var examGrade in _item.ExamGrades)
+        foreach (var note in _item.Notes)
         {
-            var initial = _initialValues.First(x => x.ClassStudentNoteType == examGrade.ClassStudentNoteType);
-            if (examGrade.Note == initial.Note) continue;
+            var initial = _initialValues.First(x => x.Type == note.Type);
+            if (note.Note == initial.Note) continue;
 
-            await Client.Add(examGrade.Id, new(examGrade.Note));
+            await Client.Add(note.Id, new(note.Note));
         }
 
         Close();

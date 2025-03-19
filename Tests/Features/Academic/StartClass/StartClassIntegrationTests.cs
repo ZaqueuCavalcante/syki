@@ -28,14 +28,14 @@ public partial class IntegrationTests
 
         // Assert
         await using var ctx = _api.GetDbContext();
-        var examGrades = await ctx.ExamGrades.Where(x => x.ClassId == mathClass.Id).ToListAsync();
+        var notes = await ctx.Notes.Where(x => x.ClassId == mathClass.Id).ToListAsync();
 
-        examGrades.Should().HaveCount(3);
-        examGrades.Should().AllSatisfy(x => x.StudentId.Should().Be(student.Id));
-        examGrades.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N1).Should().Be(1);
-        examGrades.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N2).Should().Be(1);
-        examGrades.Count(x => x.ClassStudentNoteType == ClassStudentNoteType.N3).Should().Be(1);
-        examGrades.Should().AllSatisfy(x => x.Note.Should().Be(0));
+        notes.Should().HaveCount(3);
+        notes.Should().AllSatisfy(x => x.StudentId.Should().Be(student.Id));
+        notes.Count(x => x.Type == StudentClassNoteType.N1).Should().Be(1);
+        notes.Count(x => x.Type == StudentClassNoteType.N2).Should().Be(1);
+        notes.Count(x => x.Type == StudentClassNoteType.N3).Should().Be(1);
+        notes.Should().AllSatisfy(x => x.Note.Should().Be(0));
     }
 
     [Test]

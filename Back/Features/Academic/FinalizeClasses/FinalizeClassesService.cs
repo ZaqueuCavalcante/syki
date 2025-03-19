@@ -8,7 +8,7 @@ public class FinalizeClassesService(SykiDbContext ctx) : IAcademicService
             .Include(x => x.Lessons)
                 .ThenInclude(x => x.Attendances)
             .Include(x => x.Students)
-            .Include(t => t.ExamGrades)
+            .Include(t => t.Notes)
             .Where(c => c.InstitutionId == institutionId && data.Classes.Contains(c.Id))
             .ToListAsync();
 
@@ -33,8 +33,8 @@ public class FinalizeClassesService(SykiDbContext ctx) : IAcademicService
             var lessons = @class.Lessons.Count(x => x.Attendances.Count > 0);
             foreach (var student in @class.Students)
             {
-                var studentExamGrades = @class.ExamGrades.Where(g => g.StudentId == student.Id).ToList();
-                var averageNote = studentExamGrades.GetAverageNote();
+                var studentNotes = @class.Notes.Where(g => g.StudentId == student.Id).ToList();
+                var averageNote = studentNotes.GetAverageNote();
                 var presences = @class.Lessons.Count(x => x.Attendances.Exists(a => a.StudentId == student.Id && a.Present));
                 var frequency = lessons == 0 ? 0.00M : 100M * (1M * presences / (1M * lessons));
                 var link = classesStudents.First(x => x.ClassId == @class.Id && x.SykiStudentId == student.Id);

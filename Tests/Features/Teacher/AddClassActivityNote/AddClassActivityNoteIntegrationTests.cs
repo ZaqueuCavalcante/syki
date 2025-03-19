@@ -1,12 +1,12 @@
-using Syki.Back.Features.Teacher.AddExamGradeNote;
+using Syki.Back.Features.Teacher.AddClassActivityNote;
 
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.ValidExamGradeNotes))]
-    public async Task Should_add_valid_exam_grade_note(decimal note)
+    [TestCaseSource(typeof(TestData), nameof(TestData.ValidNotes))]
+    public async Task Should_add_valid_class_activity_note(decimal note)
     {
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
@@ -29,26 +29,26 @@ public partial class IntegrationTests
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
         var @class = await teacherClient.GetTeacherClass(mathClass.Id);
-        var examGradeId = @class.Students.First().ExamGrades.First().Id;
+        var noteId = @class.Students.First().Notes.First().Id;
 
         // Act
-        var response = await teacherClient.AddExamGradeNote(examGradeId, note);
+        var response = await teacherClient.AddClassActivityNote(noteId, note);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         
         var classAfter = await teacherClient.GetTeacherClass(mathClass.Id);
-        var examGrades = classAfter.Students.First().ExamGrades;
-        examGrades.First(x => x.ClassStudentNoteType == ClassStudentNoteType.N1).Note.Should().Be(note);
-        examGrades.First(x => x.ClassStudentNoteType == ClassStudentNoteType.N2).Note.Should().Be(0);
-        examGrades.First(x => x.ClassStudentNoteType == ClassStudentNoteType.N3).Note.Should().Be(0);
+        var notes = classAfter.Students.First().Notes;
+        notes.First(x => x.Type == StudentClassNoteType.N1).Note.Should().Be(note);
+        notes.First(x => x.Type == StudentClassNoteType.N2).Note.Should().Be(0);
+        notes.First(x => x.Type == StudentClassNoteType.N3).Note.Should().Be(0);
 
-        await AssertDomainEvent<ExamGradeNoteAddedDomainEvent>(@class.Id.ToString());
+        await AssertDomainEvent<StudentClassNoteAddedDomainEvent>(@class.Id.ToString());
     }
 
     [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidExamGradeNotes))]
-    public async Task Should_not_add_invalid_exam_grade_note(decimal note)
+    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidNotes))]
+    public async Task Should_not_add_invalid_class_activity_note(decimal note)
     {
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
@@ -71,17 +71,17 @@ public partial class IntegrationTests
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
         var @class = await teacherClient.GetTeacherClass(mathClass.Id);
-        var examGradeId = @class.Students.First().ExamGrades.First().Id;
+        var noteId = @class.Students.First().Notes.First().Id;
 
         // Act
-        var response = await teacherClient.AddExamGradeNote(examGradeId, note);
+        var response = await teacherClient.AddClassActivityNote(noteId, note);
 
         // Assert
-        await response.AssertBadRequest(new InvalidExamGradeNote());
+        await response.AssertBadRequest(new InvalidStudentClassNote());
     }
 
     [Test]
-    public async Task Should_not_add_exam_grade_note_when_not_found()
+    public async Task Should_not_add_class_activity_note_when_not_found()
     {
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
@@ -90,14 +90,14 @@ public partial class IntegrationTests
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
         // Act
-        var response = await teacherClient.AddExamGradeNote(Guid.NewGuid(), 5.67M);
+        var response = await teacherClient.AddClassActivityNote(Guid.NewGuid(), 5.67M);
 
         // Assert
-        await response.AssertBadRequest(new ExamGradeNotFound());
+        await response.AssertBadRequest(new ClassActivityNoteNotFound());
     }
 
     [Test]
-    public async Task Should_send_notification_to_user_when_teacher_add_exam_grade_note()
+    public async Task Should_send_notification_to_user_when_teacher_add_class_activity_note()
     {
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
@@ -120,10 +120,10 @@ public partial class IntegrationTests
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
         var @class = await teacherClient.GetTeacherClass(mathClass.Id);
-        var examGradeId = @class.Students.First().ExamGrades.First().Id;
+        var noteId = @class.Students.First().Notes.First().Id;
 
         // Act
-        await teacherClient.AddExamGradeNote(examGradeId, 7.89M);
+        await teacherClient.AddClassActivityNote(noteId, 7.89M);
         
         await _daemon.AwaitEventsProcessing();
         await _daemon.AwaitCommandsProcessing();

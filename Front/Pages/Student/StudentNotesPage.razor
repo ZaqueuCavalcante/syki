@@ -1,6 +1,6 @@
 @namespace Syki.Front.Pages.Student
 
-@page "/student/exam-grades"
+@page "/student/notes"
 @attribute [Authorize(Roles = "Student")]
 
 <SykiPageTitle Title="Notas" />
@@ -37,7 +37,7 @@
     <MudContainer Class="px-0 my-4">
         <MudContainer Class="px-0 mb-4">
             <MudTable
-                T="StudentExamGradeOut"
+                T="StudentNoteOut"
                 Items="@_disciplines"
                 Breakpoint="Breakpoint.Sm"
                 Dense="true"
@@ -63,9 +63,9 @@
                     <MudTd DataLabel="Disciplina">@context.Discipline</MudTd>
                     <MudTd DataLabel="Período">@context.Period</MudTd>
                     <MudTd DataLabel="Status">@context.StudentDisciplineStatus.GetDescription()</MudTd>
-                    <MudTd DataLabel="N1">@context.GetNote(ClassStudentNoteType.N1)</MudTd>
-                    <MudTd DataLabel="N2">@context.GetNote(ClassStudentNoteType.N2)</MudTd>
-                    <MudTd DataLabel="N3">@context.GetNote(ClassStudentNoteType.N3)</MudTd>
+                    <MudTd DataLabel="N1">@context.GetNote(StudentClassNoteType.N1)</MudTd>
+                    <MudTd DataLabel="N2">@context.GetNote(StudentClassNoteType.N2)</MudTd>
+                    <MudTd DataLabel="N3">@context.GetNote(StudentClassNoteType.N3)</MudTd>
                     <MudTd DataLabel="Média">
                         <MudProgressLinear Color="@GetAverageNoteColor(context.AverageNote)" Max="10" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.AverageNote)" Style="height: 24px">
                             <MudText Typo="Typo.body1">
@@ -85,9 +85,9 @@
     </MudContainer>
 </MudContainer>
 
+@inject GetStudentNotesClient StudentNotesClient
 @inject IBrowserViewportService BrowserViewportService
 @inject GetStudentAverageNoteClient AverageNotesClient
-@inject GetStudentExamGradesClient StudentExamGradesClient
 
 @code
 {
@@ -95,15 +95,15 @@
     private string _searchString;
     private Breakpoint _breakpoint;
     private GetStudentAverageNoteOut _student = new();
-    private List<StudentExamGradeOut> _disciplines = [];
+    private List<StudentNoteOut> _disciplines = [];
 
-    private Func<StudentExamGradeOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.StudentDisciplineStatus.ToString());
+    private Func<StudentNoteOut, bool> _quickFilter => x => _searchString.IsIn(x.Discipline, x.StudentDisciplineStatus.ToString());
     
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        _disciplines = await StudentExamGradesClient.Get();
+        _disciplines = await StudentNotesClient.Get();
         _student = await AverageNotesClient.Get();
         _loading = false;
     }

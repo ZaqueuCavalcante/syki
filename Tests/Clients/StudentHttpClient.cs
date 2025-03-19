@@ -1,7 +1,7 @@
 using Syki.Front.Features.Student.GetStudentAgenda;
 using Syki.Front.Features.Student.GetStudentInsights;
 using Syki.Front.Features.Student.GetStudentFrequency;
-using Syki.Front.Features.Student.GetStudentExamGrades;
+using Syki.Front.Features.Student.GetStudentNotes;
 using Syki.Front.Features.Student.GetStudentAverageNote;
 using Syki.Front.Features.Student.GetStudentDisciplines;
 using Syki.Front.Features.Student.GetStudentFrequencies;
@@ -27,9 +27,9 @@ public class StudentHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<List<StudentExamGradeOut>> GetStudentExamGrades()
+    public async Task<List<StudentNoteOut>> GetStudentNotes()
     {
-        var client = new GetStudentExamGradesClient(Http);
+        var client = new GetStudentNotesClient(Http);
         return await client.Get();
     }
 

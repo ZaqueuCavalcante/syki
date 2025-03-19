@@ -5,12 +5,12 @@ public class AcademicClassStudentOut
     public Guid Id { get; set; }
     public string Name { get; set; }
     public decimal AverageNote { get; set; }
-    public List<ClassStudentNoteOut> ExamGrades { get; set; } = [];
+    public List<StudentClassNoteOut> Notes { get; set; } = [];
     public decimal Frequency { get; set; }
 
-    public string GetNote(ClassStudentNoteType type)
+    public string GetNote(StudentClassNoteType type)
     {
-        var examGrade = ExamGrades.FirstOrDefault(x => x.ClassStudentNoteType == type);
-        return examGrade != null ? examGrade.Note.Format() : "0.00";
+        var note = Notes.FirstOrDefault(x => x.Type == type);
+        return note != null ? note.Note.Format() : "0.00";
     }
 }

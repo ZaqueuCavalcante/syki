@@ -60,10 +60,10 @@ public class EnrollmentPeriodNotFound : SykiError
     public override string Code { get; set; } = nameof(EnrollmentPeriodNotFound);
     public override string Message { get; set; } = "Período de matrícula não encontrado.";
 }
-public class ExamGradeNotFound : SykiError
+public class ClassActivityNoteNotFound : SykiError
 {
-    public override string Code { get; set; } = nameof(ExamGradeNotFound);
-    public override string Message { get; set; } = "Prova não encontrada.";
+    public override string Code { get; set; } = nameof(ClassActivityNoteNotFound);
+    public override string Message { get; set; } = "Avaliação não encontrada.";
 }
 public class CommandNotFound : SykiError
 {

@@ -1,4 +1,4 @@
-﻿@using Syki.Front.Features.Teacher.AddExamGradeNote
+﻿@using Syki.Front.Features.Teacher.AddClassActivityNote
 
 @namespace Syki.Front.Pages.Teacher
 
@@ -18,9 +18,9 @@
         </ToolBarContent>
         <Columns>
             <PropertyColumn Property="x => x.Name" Title="Nome" />
-            <PropertyColumn Property="x => x.GetNote(ClassStudentNoteType.N1)" Title="N1" />
-            <PropertyColumn Property="x => x.GetNote(ClassStudentNoteType.N2)" Title="N2" />
-            <PropertyColumn Property="x => x.GetNote(ClassStudentNoteType.N3)" Title="N3" />
+            <PropertyColumn Property="x => x.GetNote(StudentClassNoteType.N1)" Title="N1" />
+            <PropertyColumn Property="x => x.GetNote(StudentClassNoteType.N2)" Title="N2" />
+            <PropertyColumn Property="x => x.GetNote(StudentClassNoteType.N3)" Title="N3" />
             <PropertyColumn Property="x => x.AverageNote.Format()" Title="Média" />
             <TemplateColumn CellClass="d-flex justify-end">
                 <CellTemplate>
@@ -36,7 +36,7 @@
     </MudDataGrid>
 </MudContainer>
 
-<AddExamGradeNotesDialog @ref="@_dialog" AfterSubmit="@Load" />
+<AddClassActivityNotesDialog @ref="@_dialog" AfterSubmit="@Load" />
 
 @inject GetTeacherClassClient GetTeacherClassClient
 
@@ -45,7 +45,7 @@
 	[Parameter]
 	public Guid ClassId { get; set; }
 
-    private AddExamGradeNotesDialog _dialog;
+    private AddClassActivityNotesDialog _dialog;
 
     private bool _loading;
     private string _searchString;

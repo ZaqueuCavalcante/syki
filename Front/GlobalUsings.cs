@@ -58,7 +58,7 @@ global using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 global using Syki.Front.Features.Student.GetStudentAgenda;
 global using Syki.Front.Features.Student.GetStudentDisciplines;
 global using Syki.Front.Features.Student.GetStudentEnrollmentClasses;
-global using Syki.Front.Features.Student.GetStudentExamGrades;
+global using Syki.Front.Features.Student.GetStudentNotes;
 global using Syki.Front.Features.Student.GetStudentFrequencies;
 global using Syki.Front.Features.Student.GetStudentFrequency;
 global using Syki.Front.Features.Student.GetStudentAverageNote;

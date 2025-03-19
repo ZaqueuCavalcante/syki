@@ -3,11 +3,11 @@ using Syki.Back.Features.Cross.CreateInstitution;
 
 namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
-public class ClassStudentNoteConfig : IEntityTypeConfiguration<ClassStudentNote>
+public class StudentClassNoteConfig : IEntityTypeConfiguration<StudentClassNote>
 {
-    public void Configure(EntityTypeBuilder<ClassStudentNote> note)
+    public void Configure(EntityTypeBuilder<StudentClassNote> note)
     {
-        note.ToTable("class_student_notes");
+        note.ToTable("student_class_notes");
 
         note.HasKey(t => t.Id);
         note.Property(t => t.Id).ValueGeneratedNever();
@@ -17,7 +17,7 @@ public class ClassStudentNoteConfig : IEntityTypeConfiguration<ClassStudentNote>
             .HasPrincipalKey(u => u.Id)
             .HasForeignKey(rp => rp.InstitutionId);
 
-        note.HasIndex(t => new { t.ClassId, t.StudentId, t.ClassStudentNoteType })
+        note.HasIndex(t => new { t.ClassId, t.StudentId, t.Type })
             .IsUnique();
 
         note.HasOne<SykiStudent>()

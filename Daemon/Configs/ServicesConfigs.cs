@@ -7,7 +7,7 @@ using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.StartClasses;
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
-using Syki.Back.Features.Teacher.AddExamGradeNote;
+using Syki.Back.Features.Teacher.AddClassActivityNote;
 using Syki.Back.Features.Academic.FinalizeClasses;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Teacher.CreateLessonAttendance;
@@ -37,7 +37,7 @@ public static class ServicesConfigs
         services.AddScoped<StartClassesService>();
         services.AddScoped<UpdateEnrollmentPeriodService>();
         services.AddScoped<CreateLessonAttendanceService>();
-        services.AddScoped<AddExamGradeNoteService>();
+        services.AddScoped<AddClassActivityNoteService>();
         services.AddScoped<FinalizeClassesService>();
 
         services.AddScoped<IEmailsService, EmailsService>();

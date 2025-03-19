@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Student.GetStudentExamGrades;
+namespace Syki.Back.Features.Student.GetStudentNotes;
 
-public class GetStudentExamGradesService(SykiDbContext ctx) : IStudentService
+public class GetStudentNotesService(SykiDbContext ctx) : IStudentService
 {
-    public async Task<List<StudentExamGradeOut>> Get(Guid userId)
+    public async Task<List<StudentNoteOut>> Get(Guid userId)
     {
         var classesStudents = await ctx.ClassesStudents.AsNoTracking()
             .Where(x => x.SykiStudentId == userId).ToListAsync();
@@ -20,18 +20,18 @@ public class GetStudentExamGradesService(SykiDbContext ctx) : IStudentService
             .Where(x => disciplinesIds.Contains(x.DisciplineId))
             .ToListAsync();
 
-        var examGrades = await ctx.ExamGrades.AsNoTracking()
+        var notes = await ctx.Notes.AsNoTracking()
             .Where(x => x.StudentId == userId).ToListAsync();
 
         var result = classes.ConvertAll(c =>
         {
-            var disciplineExamGrades = examGrades.Where(g => g.ClassId == c.ClassId).ToList();
-            return new StudentExamGradeOut
+            var disciplineNotes = notes.Where(g => g.ClassId == c.ClassId).ToList();
+            return new StudentNoteOut
             {
                 ClassId = c.ClassId,
                 Discipline = c.Discipline,
-                AverageNote = disciplineExamGrades.GetAverageNote(),
-                ExamGrades = disciplineExamGrades.Select(g => g.ToOut()).ToList(),
+                AverageNote = disciplineNotes.GetAverageNote(),
+                Notes = disciplineNotes.Select(g => g.ToOut()).ToList(),
                 Period = periods.First(p => p.DisciplineId == c.DisciplineId).Period,
                 StudentDisciplineStatus = classesStudents.First(s => s.ClassId == c.ClassId).StudentDisciplineStatus,
             };

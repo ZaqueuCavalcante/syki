@@ -5,7 +5,7 @@ namespace Syki.Shared;
 /// <summary>
 /// Tipo de Nota de um Aluno dentro de uma Turma
 /// </summary>
-public enum ClassStudentNoteType
+public enum StudentClassNoteType
 {
     [Description("N1")]
     N1,

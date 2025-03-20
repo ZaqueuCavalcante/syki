@@ -1,0 +1,79 @@
+@namespace Syki.Front.Pages.Student
+
+@page "/student/activities"
+@attribute [Authorize(Roles = "Student")]
+
+<SykiPageTitle Title="Atividades" />
+
+<MudContainer Class="my-4 px-4">
+    <SykiPageHeader Icon="@Icons.Material.Filled.EditNote" Title="Atividades" />
+
+    <MudContainer Class="px-0 my-4">
+        <MudContainer Class="px-0 mb-4">
+            <MudTable
+                T="StudentActivityOut"
+                Items="@_activities"
+                Breakpoint="Breakpoint.Sm"
+                Dense="true"
+                Class="pa-4"
+                Hover="true"
+                Filter="@_quickFilter"
+                Loading="@_loading"
+                RowsPerPage="100"
+            >
+                <ToolBarContent>
+                    <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo"/>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh>Título</MudTh>
+                    <MudTh>Tipo</MudTh>
+                    <MudTh>Nota</MudTh>
+                    <MudTh>Peso (%)</MudTh>
+                    <MudTh>Limite de entrega</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Título">@context.Title</MudTd>
+                    <MudTd DataLabel="Tipo">@context.Type.GetDescription()</MudTd>
+                    <MudTd DataLabel="Nota">@context.Note.GetDescription()</MudTd>
+                    <MudTd DataLabel="Peso (%)">@context.Weight</MudTd>
+                    <MudTd DataLabel="Limite de entrega">@context.GetDueDate()</MudTd>
+                </RowTemplate>
+                <LoadingContent>
+                    @if (_breakpoint == Breakpoint.Xs)
+                    {
+                        <MudProgressLinear Color="Color.Info" Indeterminate="true"/>
+                    }
+                </LoadingContent>
+                <NoRecordsContent>
+                    @(GetNotFoundMessage())
+                </NoRecordsContent>
+            </MudTable>
+        </MudContainer>
+    </MudContainer>
+</MudContainer>
+
+@inject IBrowserViewportService BrowserViewportService
+@inject GetStudentActivitiesClient GetStudentActivitiesClient
+
+@code
+{
+    private bool _loading;
+    private string _searchString;
+    private Breakpoint _breakpoint;
+    private List<StudentActivityOut> _activities = [];
+
+    private Func<StudentActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _activities = await GetStudentActivitiesClient.Get();
+        _loading = false;
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return _searchString.IsEmpty() ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";
+    }
+}

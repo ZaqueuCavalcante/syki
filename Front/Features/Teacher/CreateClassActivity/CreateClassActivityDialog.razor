@@ -165,9 +165,9 @@
         var response = await Client.Create(ClassId, _note, _title, _description, _type, _weight, _dueDate!.Value.ToDateOnly(), _dueHour);
         if (response.IsSuccess())
         {
-            Snackbar.Add("Atividade criada com sucesso!", Severity.Success);
             await AfterSubmit.InvokeAsync();
             Close();
+            Snackbar.Add("Atividade criada com sucesso!", Severity.Success);
         }
         else
         {

@@ -63,4 +63,21 @@ public class ClassActivity : Entity
             DueHour = DueHour,
         };
     }
+
+    public StudentActivityOut ToStudentActivityOut()
+    {
+        return new()
+        {
+            Id = Id,
+            ClassId = ClassId,
+            Note = Note,
+            Title = Title,
+            Description = Description,
+            Type = Type,
+            Weight = Weight,
+            CreatedAt = CreatedAt,
+            DueDate = DueDate,
+            DueHour = DueHour,
+        };
+    }
 }

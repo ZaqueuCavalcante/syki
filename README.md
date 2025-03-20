@@ -50,16 +50,3 @@ O módulo Acadêmico possui diversas funcionalidades para agilizar sua gestão:
 Se cadastre em https://app.syki.com.br e teste o sistema em produção.
 
 <img src="./Docs/images/syki_overview.gif" style="border-radius: 6px">
-
---------------------------------------------------------------------------------------------------
-
-# Atividades
-
-- Individual ou Grupo
-- Entrega via links ou arquivos
-- Comentários Aluno-Professor (Grupo-Professor)
-- Definição de Grupos (manual ou aleatória)
-- Notas individuais ou em grupo (cálculo dinâmico de notas)
-- Notificações (nova atividade, novo comentário, citação, data limite de entrega)
-
-

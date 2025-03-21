@@ -57,7 +57,7 @@
             {
                 <MudItem xs="12" sm="12" md="12" lg="12">
                     <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Comando original">
-                        <MudLink Href="@($"/adm/commands/{@_data.OriginalId}")" Target="_blank" Color="Color.Primary">Este comando foi originado de um reprocessamento.</MudLink>
+                        <MudLink OnClick="@(() => GoToDetails(_data.OriginalId.Value))" Color="Color.Primary">Este comando foi originado de um reprocessamento.</MudLink>
                     </InfoCard>
                 </MudItem>
             }
@@ -211,7 +211,7 @@
         return _data.Data.HasValue() ? JValue.Parse(_data.Data).ToString(Formatting.Indented) : "";
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         _loading = true;
         _data = await GetCommandClient.Get(Id);
@@ -230,7 +230,7 @@
 
     private void GoToDetails(Guid id)
     {
-        Nav.NavigateTo($"adm/commands/{id}", forceLoad: true);
+        Nav.NavigateTo($"adm/commands/{id}");
     }
 
     private async Task Reprocess()

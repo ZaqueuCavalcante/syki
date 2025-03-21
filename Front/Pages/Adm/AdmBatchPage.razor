@@ -51,7 +51,7 @@
             {
                 <MudItem xs="12" sm="12" md="12" lg="12">
                     <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Próximo comando">
-                        <MudLink Href="@($"/adm/commands/{@_data.NextCommandId}")" Target="_blank" Color="Color.Primary">Este lote disparou o processamento de um comando</MudLink>
+                        <MudLink OnClick="@(() => GoToDetails(_data.NextCommandId.Value))" Color="Color.Primary">Este lote disparou o processamento de um comando</MudLink>
                     </InfoCard>
                 </MudItem>
             }
@@ -143,6 +143,6 @@
 
     private void GoToDetails(Guid id)
     {
-        Nav.NavigateTo($"adm/commands/{id}", forceLoad: true);
+        Nav.NavigateTo($"adm/commands/{id}");
     }
 }

@@ -262,7 +262,7 @@ public static class TestData
 
     public static IEnumerable<object[]> EnumsInvalidValues()
     {
-        foreach (var text in new List<Enum>()
+        foreach (var value in new List<Enum>()
         {
             (Day)69,
             (Hour)69,
@@ -272,7 +272,7 @@ public static class TestData
             (StudentDisciplineStatus)(-69),
         })
         {
-            yield return [text];
+            yield return [value];
         }
     }
 
@@ -473,6 +473,89 @@ public static class TestData
         {
             yield return [note];
         }
+    }
+
+    public static IEnumerable<object[]> ClassActivityValidWeights()
+    {
+        foreach (var weight in new List<int>()
+        {
+            0, 1, 10, 60, 99, 100,
+        })
+        {
+            yield return [weight];
+        };
+    }
+
+    public static IEnumerable<object[]> ClassActivityInvalidWeights()
+    {
+        foreach (var weight in new List<int>()
+        {
+            -10, -1, 101, 110,
+        })
+        {
+            yield return [weight];
+        };
+    }
+
+    public static IEnumerable<object[]> ClassActivityValidWeightsLists()
+    {
+        foreach (var weight in new List<List<int>>()
+        {
+            new() { 0 },
+            new() { 1 },
+            new() { 60 },
+            new() { 99 },
+            new() { 100 },
+            new() { 0, 0 },
+            new() { 0, 50 },
+            new() { 0, 100 },
+            new() { 100, 0 },
+            new() { 10, 20 },
+            new() { 70, 30 },
+            new() { 0, 0, 0 },
+            new() { 50, 50, 0 },
+            new() { 50, 10, 40 },
+            new() { 10, 80, 10 },
+            new() { 33, 33, 34 },
+            new() { 0, 0, 0, 0 },
+            new() { 0, 0, 50, 40 },
+            new() { 25, 25, 25, 25 },
+        })
+        {
+            yield return [weight];
+        };
+    }
+
+    public static IEnumerable<object[]> ClassActivityInvalidWeightsLists()
+    {
+        foreach (var weight in new List<List<int>>()
+        {
+            new() { 100, 1 },
+            new() { 50, 51 },
+            new() { 100, 100 },
+            new() { 99, 2 },
+            new() { 0, 80, 21 },
+            new() { 50, 50, 1 },
+            new() { 90, 5, 6 },
+            new() { 90, 5, 5, 1 },
+            new() { 0, 50, 45, 6 },
+        })
+        {
+            yield return [weight];
+        };
+    }
+
+    public static Class GetClass()
+    {
+        var institutionId = Guid.NewGuid();
+        var disciplineId = Guid.NewGuid();
+        var teacherId = Guid.NewGuid();
+        const string period = "2024.2";
+        const int vacancies = 40;
+
+        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, []).GetSuccess();
+
+        return @class;
     }
 
     public static Class GetClass(string start, string end, List<Schedule> schedules)

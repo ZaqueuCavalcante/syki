@@ -64,7 +64,7 @@
 
     private async Task NewActivity()
     {
-        await _dialog.Open(100);
+        await _dialog.Open();
     }
 
     private Func<TeacherClassActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);

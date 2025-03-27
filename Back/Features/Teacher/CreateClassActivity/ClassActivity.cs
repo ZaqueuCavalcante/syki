@@ -23,7 +23,9 @@ public class ClassActivity : Entity
     public DateOnly DueDate { get; set; }
     public Hour DueHour { get; set; }
 
-    public ClassActivity(
+    private ClassActivity() {}
+
+    private ClassActivity(
         Guid classId,
         StudentClassNoteType note,
         string title,
@@ -45,6 +47,21 @@ public class ClassActivity : Entity
         DueHour = dueHour;
 
         AddDomainEvent(new ClassActivityCreatedDomainEvent(Id));
+    }
+
+    public static OneOf<ClassActivity, SykiError> New(
+        Guid classId,
+        StudentClassNoteType note,
+        string title,
+        string description,
+        ClassActivityType type,
+        int weight,
+        DateOnly dueDate,
+        Hour dueHour
+    ) {
+        if (weight < 0 || weight > 100) return new InvalidClassActivityWeight();
+
+        return new ClassActivity(classId, note, title, description, type, weight, dueDate, dueHour);
     }
 
     public TeacherClassActivityOut ToOut()

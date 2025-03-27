@@ -16,6 +16,16 @@
 - RabbitMQ use case (project)
 - Redis use case (project)
 
+- Use Breadcrumbs
+
+- Aluno pode gerar um historico de disciplinas + notas (PDF)
+- Aluno pode gerar comprovante de matricula
+- Alertas pro aluno, estilo nubank-app
+- Disciplinas com pre-requisitos (bloqueio de matricula)
+- Disciplinas extra-curriculares
+- Emissao de carteira de estudante (ou integracao com providers)
+- Plano de aula / conteudo de cada aula
+- Descricao de conteudo de uma disciplina / bibliografia (unica dentro da disciplina da grade)
 
 
 

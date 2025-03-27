@@ -146,6 +146,29 @@ public class Class
         FillRatio = $"{count}/{Vacancies}";
     }
 
+    public OneOf<SykiSuccess, SykiError> AddActivity(ClassActivity activity)
+    {
+        var sum = Activities.Where(x => x.Note == activity.Note).Sum(x => x.Weight);
+
+        if (sum + activity.Weight > 100) return new InvalidClassActivityWeight();
+
+        Activities.Add(activity);
+
+        return new SykiSuccess();
+    }
+
+    public List<ClassNoteRemainingWeightsOut> GetNotesRemainingWeights()
+    {
+        var weights = new List<ClassNoteRemainingWeightsOut>();
+        foreach (var note in Enum.GetValues<StudentClassNoteType>())
+        {
+            var sum = Activities.Where(x => x.Note == note).Sum(x => x.Weight);
+            weights.Add(new() { Note = note, Weight = 100 - sum });
+        }
+
+        return weights;
+    }
+
     public ClassOut ToOut()
     {
         var presences = Lessons.Sum(l => l.Attendances.Count(a => a.Present));

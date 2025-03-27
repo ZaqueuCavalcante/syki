@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AuthService authService = Get.find();
-  String? _payload;
+  // String? _payload;
 
   @override
   void initState() {
@@ -21,9 +21,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   init() async {
-    var value = await authService.getToken();
+    // var value = await authService.getToken();
     setState(() {
-      _payload = value;
+      // _payload = value;
     });
   }
 

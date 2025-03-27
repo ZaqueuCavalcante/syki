@@ -45,5 +45,6 @@ internal class ErrorsExamples : IMultipleExamplesProvider<ErrorOut>
     public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
     {
         yield return new ClassNotFound().ToSwaggerExampleErrorOut();
+        yield return new InvalidClassActivityWeight().ToSwaggerExampleErrorOut();
     }
 }

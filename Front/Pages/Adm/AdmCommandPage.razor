@@ -17,7 +17,7 @@
                 <MudItem xs="12" sm="8" md="8" lg="8">
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Large"/>
-                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@_data.Description</MudText>
+                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@($"Comando - {_data.Description}")</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
@@ -47,17 +47,52 @@
             <MudItem xs="12" sm="4" md="4" lg="4">
                 <InfoCard Icon="@Icons.Material.Filled.Timer" Color="@Colors.Indigo.Darken1" Title="Duração (ms)" Content="@_data.Duration.ToThousandSeparated()" />
             </MudItem>
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <InfoCard Icon="@Icons.Material.Filled.DataObject" Color="@Colors.Blue.Darken1" Title="Dados" Content="@GetIdentedData()" />
+            </MudItem>
             @if (_data.Error.HasValue())
             {
                 <MudItem xs="12" sm="12" md="12" lg="12">
                     <InfoCard Icon="@Icons.Material.Filled.Error" Color="@Colors.Red.Darken1" Title="Erro" Content="@_data.Error" />
                 </MudItem>
             }
+            @if (_data.EventId != null)
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Origem">
+                        <MudLink OnClick="@(() => GoToEvent(_data.EventId.Value))" Color="Color.Primary">Este comando foi originado de um evento.</MudLink>
+                    </InfoCard>
+                </MudItem>
+            }
+            @if (_data.ParentId != null)
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Origem">
+                        <MudLink OnClick="@(() => GoToDetails(_data.ParentId.Value))" Color="Color.Primary">Este comando foi originado de outro comando.</MudLink>
+                    </InfoCard>
+                </MudItem>
+            }
             @if (_data.OriginalId != null)
             {
                 <MudItem xs="12" sm="12" md="12" lg="12">
-                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Comando original">
+                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Origem">
                         <MudLink OnClick="@(() => GoToDetails(_data.OriginalId.Value))" Color="Color.Primary">Este comando foi originado de um reprocessamento.</MudLink>
+                    </InfoCard>
+                </MudItem>
+            }
+            @if (_data.SourceBatchId != null)
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Origem">
+                        <MudLink OnClick="@(() => GoToBatch(_data.SourceBatchId.Value))" Color="Color.Primary">Este comando foi originado de um lote.</MudLink>
+                    </InfoCard>
+                </MudItem>
+            }
+            @if (_data.BatchId != null)
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.BorderOuter" Color="@Colors.Green.Darken1" Title="Lote">
+                        <MudLink OnClick="@(() => GoToBatch(_data.BatchId.Value))" Color="Color.Primary">Este comando pertence à um lote.</MudLink>
                     </InfoCard>
                 </MudItem>
             }
@@ -231,6 +266,16 @@
     private void GoToDetails(Guid id)
     {
         Nav.NavigateTo($"adm/commands/{id}");
+    }
+
+    private void GoToEvent(Guid id)
+    {
+        Nav.NavigateTo($"adm/events/{id}");
+    }
+
+    private void GoToBatch(Guid id)
+    {
+        Nav.NavigateTo($"adm/batches/{id}");
     }
 
     private async Task Reprocess()

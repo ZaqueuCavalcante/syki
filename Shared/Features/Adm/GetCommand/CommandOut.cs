@@ -15,6 +15,7 @@ public class CommandOut
     public Guid? ParentId { get; set; }
     public Guid? OriginalId { get; set; }
     public Guid? BatchId { get; set; }
+    public Guid? SourceBatchId { get; set; }
 
     public List<CommandOut> Retries { get; set; } = [];
     public List<CommandOut> Subcommands { get; set; } = [];

@@ -17,7 +17,7 @@
                 <MudItem xs="12" sm="8" md="8" lg="8">
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.StickyNote2" Class="mb-1" Size="Size.Large"/>
-                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@_data.Type</MudText>
+                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@($"Evento - {_data.Type}")</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
@@ -46,6 +46,9 @@
             </MudItem>
             <MudItem xs="12" sm="4" md="4" lg="4">
                 <InfoCard Icon="@Icons.Material.Filled.Timer" Color="@Colors.Indigo.Darken1" Title="Duração (ms)" Content="@_data.Duration.ToThousandSeparated()" />
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <InfoCard Icon="@Icons.Material.Filled.DataObject" Color="@Colors.Blue.Darken1" Title="Dados" Content="@GetIdentedData()" />
             </MudItem>
             @if (_data.Error.HasValue())
             {

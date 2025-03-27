@@ -1,8 +1,6 @@
 # Features
 
 - Audit
-- Events
-- Commands
 - Use MediatR?
 
 ## Academic

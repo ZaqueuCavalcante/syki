@@ -17,7 +17,7 @@
                 <MudItem xs="12" sm="8" md="8" lg="8">
                     <MudStack Row="true" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.BorderOuter" Class="mb-1" Size="Size.Large"/>
-                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@_data.Type.GetDescription()</MudText>
+                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@($"Lote - {_data.Type.GetDescription()}")</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
@@ -50,8 +50,8 @@
             @if (_data.NextCommandId != null)
             {
                 <MudItem xs="12" sm="12" md="12" lg="12">
-                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Próximo comando">
-                        <MudLink OnClick="@(() => GoToDetails(_data.NextCommandId.Value))" Color="Color.Primary">Este lote disparou o processamento de um comando</MudLink>
+                    <InfoCard Icon="@Icons.Material.Filled.NextPlan" Color="@Colors.Orange.Darken1" Title="Próximo comando">
+                        <MudLink OnClick="@(() => GoToDetails(_data.NextCommandId.Value))" Color="Color.Primary">Este lote disparou o processamento de um comando.</MudLink>
                     </InfoCard>
                 </MudItem>
             }

@@ -1,6 +1,6 @@
-﻿@using Syki.Front.Features.Adm.GetCommands
+﻿@using Syki.Front.Components.Summaries
+@using Syki.Front.Features.Adm.GetCommands
 @using Syki.Front.Features.Adm.GetCommandsSummary
-@using Syki.Front.Features.Adm.GetDomainEventsSummary
 
 @namespace Syki.Front.Pages.Adm
 
@@ -28,10 +28,10 @@
 
     <MudContainer Class="px-0 my-4">
         <MudGrid Spacing="2">
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Rounded.WarningAmber" Color="MudBlazor.Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Autorenew" Color="MudBlazor.Color.Info" Text="Processando" Value="@_data.Summary.Processing" />
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="MudBlazor.Color.Error" Text="Erros" Value="@_data.Summary.Error" />
-            <EventsSummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="MudBlazor.Color.Success" Text="Sucessos" Value="@_data.Summary.Success" />
+            <SummaryCard Loading="@_loading" Icon="@Icons.Material.Rounded.WarningAmber" Color="MudBlazor.Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
+            <SummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Autorenew" Color="MudBlazor.Color.Info" Text="Processando" Value="@_data.Summary.Processing" />
+            <SummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="MudBlazor.Color.Error" Text="Erros" Value="@_data.Summary.Error" />
+            <SummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="MudBlazor.Color.Success" Text="Sucessos" Value="@_data.Summary.Success" />
         </MudGrid>
     </MudContainer>
 

@@ -39,7 +39,8 @@
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         T="StudentClassNoteType"
-                        @bind-Value="@_note"
+                        Value="@_note"
+                        ValueChanged="x => HandleNoteChanged(x)"
                         Label="Nota"
                         Required="true"
                         RequiredError="Informe!"
@@ -103,12 +104,15 @@
 @inject ISnackbar Snackbar
 @inject CreateClassActivityClient Client
 @inject IBrowserViewportService BrowserViewportService
+@inject GetClassNotesRemainingWeightsClient GetClassNotesRemainingWeightsClient
 
 @code
 {
     private MudForm _form;
     private bool _visible;
     private bool _loading;
+
+    private List<ClassNoteRemainingWeightsOut> _remainingWeights = [];
 
     private StudentClassNoteType _note = StudentClassNoteType.N1;
     private string _title;
@@ -132,9 +136,10 @@
     [Parameter]
     public EventCallback AfterSubmit { get; set; }
 
-    public async Task Open(int maxWeight)
+    public async Task Open()
     {
-        _maxWeight = maxWeight;
+        _remainingWeights = await GetClassNotesRemainingWeightsClient.Get(ClassId);
+        _maxWeight = _remainingWeights.Where(x => x.Note == _note).Select(x => x.Weight).First();
         var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _options.FullScreen = breakpoint == Breakpoint.Xs;
         _visible = true;
@@ -175,6 +180,12 @@
         }
         
         _loading = false;
+    }
+
+    private void HandleNoteChanged(StudentClassNoteType newValue)
+    {
+        _note = newValue;
+        _maxWeight = _remainingWeights.Where(x => x.Note == _note).Select(x => x.Weight).First();
     }
 
     private int GetWeightMaxWidth()

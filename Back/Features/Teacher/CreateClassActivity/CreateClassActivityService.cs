@@ -4,10 +4,11 @@ public class CreateClassActivityService(SykiDbContext ctx) : ITeacherService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Create(Guid teacherId, Guid classId, CreateClassActivityIn data)
     {
-        var classOk = await ctx.Classes.AnyAsync(x => x.Id == classId && x.TeacherId == teacherId);
-        if (!classOk) return new ClassNotFound();
+        var @class = await ctx.Classes.Include(x => x.Activities)
+            .FirstOrDefaultAsync(x => x.Id == classId && x.TeacherId == teacherId);
+        if (@class == null) return new ClassNotFound();
 
-        var classActivity = new ClassActivity(
+        var activity = ClassActivity.New(
             classId,
             data.Note,
             data.Title,
@@ -17,8 +18,11 @@ public class CreateClassActivityService(SykiDbContext ctx) : ITeacherService
             data.DueDate,
             data.DueHour
         );
+        if (activity.IsError()) return activity.GetError();
 
-        ctx.Add(classActivity);
+        var result = @class.AddActivity(activity.GetSuccess());
+        if (result.IsError()) return result.GetError();
+
         await ctx.SaveChangesAsync();
 
         return new SykiSuccess();

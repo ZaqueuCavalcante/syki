@@ -17,9 +17,4 @@ public class AddClassActivityNoteService(SykiDbContext ctx) : ITeacherService
 
         return new SykiSuccess();
     }
-
-    public async Task AddWithThrowOnError(Guid teacherId, Guid noteId, AddClassActivityNoteIn data)
-    {
-        (await Add(teacherId, noteId, data)).ThrowOnError();
-    }
 }

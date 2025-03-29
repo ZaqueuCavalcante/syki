@@ -29,7 +29,5 @@ public class SeedInstitutionLessonAttendancesCommandHandler(
                 await createLessonAttendanceService.CreateWithThrowOnError(@class.TeacherId, lesson.Id, new(presentStudents));
             }
         }
-
-        ctx.AddCommand(id, new SeedInstitutionClassActivitiesNotesCommand(id), parentId: commandId);
     }
 }

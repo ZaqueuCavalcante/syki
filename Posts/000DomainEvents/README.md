@@ -22,12 +22,11 @@ Somente ao final de tudo isso, posso logar como professor e publicar uma nova at
 Acompanhe abaixo como resolvi todos esses problemas e comente como você os resolveria também!
 
 ## Sumário
-
-0️⃣ - Arquitetura do sistema
-1️⃣ - Conceitos fundamentais
-2️⃣ - Criação de nova atividade
-3️⃣ - Seed de dados
-4️⃣ - Visão do Adm
+- 0️⃣ - Arquitetura do sistema
+- 1️⃣ - Conceitos fundamentais
+- 2️⃣ - Criação de nova atividade
+- 3️⃣ - Seed de dados
+- 4️⃣ - Visão do Adm
 
 ## 0️⃣ - Arquitetura do sistema
 
@@ -41,9 +40,8 @@ Os sistema é basicamente composto por 4 componentes:
 
 Acompanhe no diagrama abaixo todos os conceitos que fazem parte da solução final:
 
-SEM OS NUMEROS
 <p align="center">
-  <img src="./async_processing.gif" style="display: block; margin: 0 auto" />
+  <img src="./clean_async_processing.gif" style="display: block; margin: 0 auto" />
 </p>
 
 - **Entidade**: uma classe do sistema capaz de emitir um evento de domínio.
@@ -79,26 +77,26 @@ SEM OS NUMEROS
 Vamos alterar um pouco o diagrama anterior e usá-lo para entender como todo o fluxo de criação de nova atividade foi implementado.
 
 <p align="center">
-  <img src="./async_processing.gif" style="display: block; margin: 0 auto" />
+  <img src="./steps_async_processing.gif" style="display: block; margin: 0 auto" />
 </p>
 
-(0) - Professor preenche os dados da nova atividade no Client, que chama a API para inserir a atividade no banco de dados
-(1) - API cria a nova atividade + evento de nova atividade criada e envia os dados para serem salvos no banco
-(2) - Banco retorna sucesso na inserção
-(3) - API retorna sucesso pro Client
-
-(4) - Após a inserção do novo evento, um trigger notifica o Event Listener que existe um novo evento para ser processado
-(5) - O Events Processor busca o evento pendente no banco
-(6) - O Event Handler cria um novo comando, que vai notificar os alunos da turma sobre a nova atividade
-(7) - O comando é salvo no banco de dados para ser processado em seguida
-
-(8) - Após a inserção do novo comando, um trigger notifica o Command Listener que existe um novo comando para ser processado
-(9) - O Commands Processor busca o comando pendente no banco
-(10) - O Command Handler cria as notificações internas pros alunos da turma + lote com os comandos para envio de emails + comando final que notifica o professor quando o lote é processado com sucesso
-(11) - Tudo que foi criado no passo anterior é então salvo no banco de dados
-
-(A) - À medida que cada comando do lote é processado, o Batch Trigger realiza a gestão do fluxo de vida do lote, alterando seu status com base no sucesso ou falha de cada um de seus comandos
-(B) - Quando todos os comandos do lote são executados com sucesso, o comando que notifica o professor é liberado para execução
+- **(0)** - Professor preenche os dados da nova atividade no Client, que chama a API para inserir a atividade no banco de dados
+- **(1)** - API cria a nova atividade + evento de nova atividade criada e envia os dados para serem salvos no banco
+- **(2)** - Banco retorna sucesso na inserção
+- **(3)** - API retorna sucesso pro Client
+- -
+- **(4)** - Após a inserção do novo evento, um trigger notifica o Event Listener que existe um novo evento para ser processado
+- **(5)** - O Events Processor busca o evento pendente no banco
+- **(6)** - O Event Handler cria um novo comando, que vai notificar os alunos da turma sobre a nova atividade
+- **(7)** - O comando é salvo no banco de dados para ser processado em seguida
+- -
+- **(8)** - Após a inserção do novo comando, um trigger notifica o Command Listener que existe um novo comando para ser processado
+- **(9)** - O Commands Processor busca o comando pendente no banco
+- **(10)** - O Command Handler cria as notificações internas pros alunos da turma + lote com os comandos para envio de emails + comando final que notifica o professor quando o lote é processado com sucesso
+- **(11)** - Tudo que foi criado no passo anterior é então salvo no banco de dados
+- -
+- **(A)** - À medida que cada comando do lote é processado, o Batch Trigger realiza a gestão do fluxo de vida do lote, alterando seu status com base no sucesso ou falha de cada um de seus comandos
+- **(B)** - Quando todos os comandos do lote são executados com sucesso, o comando que notifica o professor é liberado para execução
 
 ## 3️⃣ - Seed de dados
 
@@ -111,23 +109,43 @@ O seed de dados foi dividido em uma sequência de passos menores, onde cada um e
 - Comando: Realizar seed de matrículas da instituição
 - Comando: Realizar seed de chamadas da instituição
 
+## 4️⃣ - Visão do Adm
+
+Criei algumas telas para que o Adm do sistema possa acompanhar o processamento de todos os eventos, comandos e lotes.
+
+- Listagem de eventos
+    - Quantidade de eventos (total, pendentes, processando, erros e sucessos)
+    - Dashboard com os últimos eventos + gráfico de pizza da quantidade de cada tipo de evento
+    - Filtros por status, tipo, instituição e status dos comandos enfileirados pelo evento
+
+- Detalhes de um evento
+    - Quando ocorreu, quando foi processado, quantos milisegundos durou o processamento
+    - Os dados do comando no formato json
+    - A entidade que originou o evento de domínio
+    - Listagem com os comandos enfileirados pelo evento
+
+- Listagem de comandos
+    - Quantidade de comandos (total, pendentes, processando, erros e sucessos)
+
+- Detalhes de um comando
+
+
+- Listagem de lotes
+
+
+- Detalhes de um lote
+
+
+Perceba que é possível navegar tanto no sentido cronológico quanto no sentido contrário.
 
 
 
+## Aplicações futuras
 
+Todo esse aparato de eventos e comandos pode ser utilizado em outros casos de uso, como por exemplo:
 
-
-- Reprocessamento de comandos com erro
-
-- Análise em tela dos eventos e comandos pendentes/processados/sucessos/erros
-    - Cada evento pode enfileirar um ou mais comandos
-    - Um comando pode enfileirar um ou mais comandos
-    - Um comando com erro pode ser reprocessado, gerando um novo comando com os mesmos dados
-
-
-- Publicar eventos/msgs pra uma fila (RabbitMQ)
-- Outbox Pattern (TEM Q FALAR DISSO)
-
+- Publicar eventos para uma fila (RabbitMQ), usando o Outbox Pattern
+- Realizar chamadas de webhooks
 
 ## Pontos de melhoria
 

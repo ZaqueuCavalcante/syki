@@ -8,133 +8,135 @@ Essa notificação é feita de duas formas:
     - Fora do sistema, enviando um email para cada aluno da turma através de um serviço externo (Brevo, Mailchimp, SendGrid...)
 Ao final, quando todos os emails forem enviados, o sistema deve notificar internamente o professor, informando que a atividade foi publicada com sucesso.
 
-Ficaria muito complicado fazer tudo no mesmo request né? Sem contar que a api de envio de email pode retornar algum erro, de modo que alunos podem não receber o email. Nesse caso seria interessante ter algum mecanismo de retry automático também. Como você implementaria isso?
+Ficaria muito complicado fazer tudo na mesma requisição né? Sem contar que a api de envio de email pode retornar algum erro quando for chamada. Nesse caso seria interessante ter algum mecanismo de retry automático, que tentasse reenviar o email mais uma vez, por exemplo.
 
 Agora vamos pensar em outro caso de uso, dessa vez mais relacionado com o fluxo de desenvolvimento: frequentemente preciso subir o sistema localmente para testar as funcionalidades como um usuário final. Por exemplo, para poder publicar uma atividade como no caso acima, são necessários alguns passos antes:
 
 - Cadastrar uma nova instituição de ensino + usuário acadêmico
 - Logado como usuário acadêmico, preciso realizar o cadastro de campus, cursos, disciplinas, grades curriculares, alunos, professores, período acadêmico, turmas e aulas.
 - Os alunos precisam logar no sistema e realizar sua matrícula nas turmas que foram abertas.
+- Novamente como usuário acadêmico, precisa encerrar o período de matrícula e iniciar as turmas.
 
-Somente ao final de tudo isso, posso logar como professor e publicar uma nova atividade. Para facilitar minha vida e trazer agilidade pro desenvolvimento, criei um único método para realizar esse seed de dados básicos, mas como no caso anterior, é muito código para ser executado de uma vez só. Seria mais interessante ter como dividir o seed em uma sequência de passos menores, onde cada um executasse ao final do outro. Como você implementaria isso?
+Somente ao final de tudo isso, posso logar como professor e publicar uma nova atividade. Para facilitar minha vida e trazer agilidade pro desenvolvimento, criei um único método para realizar esse seed de dados inicial, mas como no caso anterior, é muito código para ser executado de uma vez só. Seria mais interessante ter como dividir o seed em uma sequência de passos menores, onde cada um executasse ao final do outro de maneira atômica (worflow).
+
+Acompanhe abaixo como resolvi todos esses problemas e comente como você os resolveria também!
+
+## Sumário
+
+0️⃣ - Arquitetura do sistema
+1️⃣ - Conceitos fundamentais
+2️⃣ - Criação de nova atividade
+3️⃣ - Seed de dados
+4️⃣ - Visão do Adm
+
+## 0️⃣ - Arquitetura do sistema
+
+Os sistema é basicamente composto por 4 componentes:
+- Client: frontend feito em Blazor Wasm
+- Back: api feita em ASP.NET
+- Daemon: worker para execução de tarefas em background, feito em .NET
+- Banco: um PostgreSQL da vida.
+
+## 1️⃣ - Conceitos fundamentais
+
+Acompanhe no diagrama abaixo todos os conceitos que fazem parte da solução final:
+
+SEM OS NUMEROS
+<p align="center">
+  <img src="./async_processing.gif" style="display: block; margin: 0 auto" />
+</p>
+
+- **Entidade**: uma classe do sistema capaz de emitir um evento de domínio.
+    - Exemplo: ClassActivity (atividade dentro de uma turma)
+- **Evento de Domínio**: representa que algo aconteceu no sistema.
+    - Exemplo: ClassActivityCreatedDomainEvent (emitido quando uma nova atividade é criada pelo professor)
+- **Comando**: representa um processamento assíncrono qualquer dentro do sistema.
+    - Exemplo: SendNewClassActivityEmailCommand (comando que envia um email de nova atividade para determinado aluno da turma)
+- **Lote**: um agrupamento lógico de comandos.
+    - Exemplo: SendNewClassActivityEmailCommandsBatch (lote que agrupa todos os comandos SendNewClassActivityEmailCommand de uma atividade)
+- **Workflow**: encadeamento lógico de comandos e/ou lotes.
+    - Examplo: quando todos os comandos do lote SendNewClassActivityEmailCommandsBatch são executados com sucesso, um novo comando é enfileirado em sequência para notifica o professor que todos os alunos da turma receberam o email.
+
+- **Event Listener**: componente do Daemon que é notificado toda vez que um novo evento de domínio é inserido no banco de dados.
+    - Essa notificação é feita através de um trigger na tabela de eventos, que ao ser disparado chama uma função que utiliza a feature de LISTEN/NOTIFY do Postgres para informar o Daemon que um novo evento precisa ser processado.
+- **Events Processor**: componente do Daemon que busca os eventos pendentes de processamento do banco de dados e os processa sequencialmente.
+    - Sendo mais específico, cada Processor busca os 1000 eventos pendentes mais antigos do banco, processa todos em memória e salva todos utilizando uma única transação.
+- **Event Handler**: método que contém a lógica executada no processamento de um evento.
+    - Normalmente é responsável por criar comandos ou lotes de comandos.
+
+- **Command Listener**: componente do Daemon que é notificado toda vez que um novo comando é inserido no banco de dados.
+    - Segue a mesma ideia do Event Listener.
+- **Commands Processor**: componente do Daemon que busca os comandos pendentes de processamento do banco de dados e os processa sequencialmente.
+    - Cada comando é executado de maneira atômica, ou seja, dentro de uma transação exclusiva com o Postgres.
+- **Command Handler**: método que contém a lógica executada no processamento de um comando.
+    - Aqui podemos realizar praticamente qualquer ação, como envio de emails e seed de dados.
+
+- **Batch Trigger**: existe um trigger específico para a gestão dos lotes de comandos, mas que não foi representado no diagrama.
+    - Ele é responsável por atualizar o status do lote a cada comando processado, bem como liberar o processamento de comandos posteriores à sua conclusão com sucesso.
+
+## 2️⃣ - Criação de nova atividade
+
+Vamos alterar um pouco o diagrama anterior e usá-lo para entender como todo o fluxo de criação de nova atividade foi implementado.
+
+<p align="center">
+  <img src="./async_processing.gif" style="display: block; margin: 0 auto" />
+</p>
+
+(0) - Professor preenche os dados da nova atividade no Client, que chama a API para inserir a atividade no banco de dados
+(1) - API cria a nova atividade + evento de nova atividade criada e envia os dados para serem salvos no banco
+(2) - Banco retorna sucesso na inserção
+(3) - API retorna sucesso pro Client
+
+(4) - Após a inserção do novo evento, um trigger notifica o Event Listener que existe um novo evento para ser processado
+(5) - O Events Processor busca o evento pendente no banco
+(6) - O Event Handler cria um novo comando, que vai notificar os alunos da turma sobre a nova atividade
+(7) - O comando é salvo no banco de dados para ser processado em seguida
+
+(8) - Após a inserção do novo comando, um trigger notifica o Command Listener que existe um novo comando para ser processado
+(9) - O Commands Processor busca o comando pendente no banco
+(10) - O Command Handler cria as notificações internas pros alunos da turma + lote com os comandos para envio de emails + comando final que notifica o professor quando o lote é processado com sucesso
+(11) - Tudo que foi criado no passo anterior é então salvo no banco de dados
+
+(A) - À medida que cada comando do lote é processado, o Batch Trigger realiza a gestão do fluxo de vida do lote, alterando seu status com base no sucesso ou falha de cada um de seus comandos
+(B) - Quando todos os comandos do lote são executados com sucesso, o comando que notifica o professor é liberado para execução
+
+## 3️⃣ - Seed de dados
+
+O seed de dados foi dividido em uma sequência de passos menores, onde cada um executa ao final do outro de maneira atômica (worflow). Dessa forma, quando uma nova instituição é criada, emitimos um evento de domínio que enfilera o primeiro comando no seu handler. A partir daí, cada comando enfilera o próximo a ser executado, formando toda cadeia de processamento.
+
+- Evento: Instituição Criada
+- Comando: Realizar seed de dados básicos da instituição
+- Comando: Realizar seed de usuários da instituição
+- Comando: Realizar seed de turmas da instituição
+- Comando: Realizar seed de matrículas da instituição
+- Comando: Realizar seed de chamadas da instituição
 
 
 
 
 
 
-
-
-
-
- 
-
-
-
-Então é bem simples: o professor logado no sistema informa dados sobre a atividade e clica em publicar. Nesse momento o front chama a api com os dados, onde temos um serviço que vai criar a atividade, 
-
-
-Como você implementaria isso? Quais pontos levaria em conta na sua solução?
-
-
-
-
-Sua arquitetura atual é bem simples: frontend (Blazor), api (.NET), daemon (.NET) e banco (PostgreSQL).
-
-Ele possui algumas funcionalidades que necessitam de processamento assíncrono, como:
-- Envio de emails
-- Gestão de notificações
-- Seed de dados (workflow)
-- Chamadas de webhooks
-- Integração com outros sistemas
-
-Neste artigo veremos como utilizar eventos de domínio, comandos e lotes para implementar essas funcionalidades de maneira performática e resiliente.
-
-
-
-
-
-## Exemplos
-
-1️⃣ Quando um professor publica uma nova atividade, todos os alunos da turma devem ser notificados via email. O envio dos emails deve ser feito de maneira assíncrona, assim a API pode responder rapidamente que os alunos estão sendo notificados e caso algum envio dê errado, podemos realizar retentativas isoladamente. Se todos os envios forem feitos com sucesso, o sistema notifica internamente o professor, sinalizando que todos os alunos receberam o email de nova atividade.
-
-2️⃣ Durante o desenvolvimento, é muito comum realizar o seed de dados no banco para conseguir testar o sistema via navegador, exatamente como o usuário final fará. No caso, eu repetidamente preciso fazer o seed de campus, cursos, disciplinas, grades curriculares, alunos, professores, turmas, aulas, chamadas, atividades e notas. Como você pode imaginar, fica cada vez mais complexo realizar o seed se tudo isso for feito num único processo, por isso dividi o seed em comandos que executam sequencialmente.
-
-## Como funciona
-
-Componentes fundamentais:
-
-- Entidade: uma classe do sistema capaz de emitir um Evento de Domínio. Exemplo: ClassActivity (Atividade dentro de uma turma)
-- Evento de Domínio: representa que algo aconteceu no sistema. Exemplo: ClassActivityCreatedDomainEvent (Atividade criada)
-- Comando: representa um processamento assíncrono qualquer dentro do sistema. Exemplo: CreateNewClassActivityNotificationCommand (Criar notificação de nova atividade)
-- Lote: um agrupamento lógico de comandos. Exemplo: SendNewClassActivityEmailCommands (Enviar emails de nova atividade)
-
-- Triggers: utilizados para chamar funções no banco de dados quando algo acontece
-- Postgres LISTEN/NOTIFY: quando um novo evento é salvo no banco de dados, o Daemon é notificado e vai no banco buscar os eventos pendentes
-- Tudo é feito usando locks e transações, evitando que os eventos sejam processados em duplicidade
-
-- Seguindo a mesma lógica os comandos são processados
-
-- Existe um trigger especial para a gestão dos lotes
-
-
-
-## Gerenciamento
-
-- É possível filtrar os eventos e as tarefas por diversos atributos, como tipo, status e instituição
-- Dá pra reprocessar tarefas com erro, enfileirando uma nova tarefa com os mesmos dados da anterior
-- Criei duas rotinas que migram os eventos e tarefas já processadas para outras tabelas, deixando as consultas mais performáticas
-
-
-
-
-
-
-
-
-
-## Eventos de Domínio + Comandos
-
-- Diagramas no Draw.io
-    - Eventos
-    - Comandos
-    - Lotes
-    - Listeners + Processors
-
-- Eventos de Domínio
-    - Interceptor
-    - Sempre estão associados à uma Instituição e à uma Entidade
-
-- Comandos
-    - São sempre processados atomicamente
-    - Podem ser processados com sucesso ou falha
-    - Podem enfileirar outros comandos
-    - Podem estar dentro de um lote
-
-- Batch de Comandos
-    - Vários comandos que continuam a ser processados atomicamente, mas estão vinculados à um mesmo lote
-    - O lote só é processado com sucesso caso todos os seus comandos sejam processados com sucesso
-    - Quando o lote é finalizado com sucesso, podemos executar um outro comando em seguida
 
 - Reprocessamento de comandos com erro
-    - Quando um comando dá erro, podemos reprocessá-lo de maneira automática ou manual
-    - Podemos definir políticas de retry para o reprocessamento do comando com erro
-    - A análisa deve ser feita caso a caso, evitando inconsistência nos dados
-
-- Limpeza dos dados
-    - Podemos ter tabelas específicas para armazenar os eventos e comandos já processados
-    - Essas tabelas são otimizadas para leitura, já que seus dados são imutáveis
-    - Rotinas para limpezado dos dados que rodam toda madrugada
 
 - Análise em tela dos eventos e comandos pendentes/processados/sucessos/erros
     - Cada evento pode enfileirar um ou mais comandos
     - Um comando pode enfileirar um ou mais comandos
     - Um comando com erro pode ser reprocessado, gerando um novo comando com os mesmos dados
-    - Mostrar em tela os lotes de comandos
-
-- Hangfire em memória dando erro?
-    - Subir instância do Redis?
 
 
+- Publicar eventos/msgs pra uma fila (RabbitMQ)
+- Outbox Pattern (TEM Q FALAR DISSO)
 
 
+## Pontos de melhoria
+
+- Digamos que o envio do email deu errado (a api de envio estava fora do ar no momento do request):
+    - O sistema poderia aguardar alguns segundos e tentar reprocessar o comando, certo?
+    - Daria pra utilizar alguma lib para criar regras customizadas de retry para cada comando.
+    - Como você faria isso?
+
+- Com o passar do tempo, as tabelas de eventos e comandos devem ficar enormes, causando lentidão no processamento:
+    - Podemos utilizar a feature de Table Partitioning do Postgres para mitigar isso.
+    - Também podemos criar novas tabelas para armazenar apenas os eventos e comando já processados com sucesso, juntamente com uma rotina que move os dados entre as tabelas semanalmente, por exemplo.
+    - Como você faria isso?

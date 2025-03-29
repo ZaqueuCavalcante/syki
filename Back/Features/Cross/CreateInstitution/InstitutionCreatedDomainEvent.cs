@@ -2,7 +2,7 @@ using Syki.Back.Features.Cross.SeedInstitutionData;
 
 namespace Syki.Back.Features.Cross.CreateInstitution;
 
-[DomainEventDescription("Instituição criada")]
+[DomainEvent(nameof(Institution), "Instituição criada")]
 public record InstitutionCreatedDomainEvent(Guid InstitutionId) : IDomainEvent;
 
 public class InstitutionCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<InstitutionCreatedDomainEvent>

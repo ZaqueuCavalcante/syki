@@ -11,5 +11,8 @@ public class DomainEventOut
     public string? Error { get; set; }
     public int Duration { get; set; }
 
+    public Guid EntityId { get; set; }
+    public string EntityName { get; set; }
+
     public List<DomainEventCommandOut> Commands { get; set; } = [];
 }

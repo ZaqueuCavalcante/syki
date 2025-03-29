@@ -30,7 +30,7 @@ public class CreateNewClassActivityNotificationCommandHandler(SykiDbContext ctx)
         );
         ctx.Add(notification);
 
-        var batch = CommandBatch.New(@class.InstitutionId, CommandBatchType.SendNewClassActivityEmailCommands);
+        var batch = CommandBatch.New(@class.InstitutionId, CommandBatchType.SendNewClassActivityEmailCommandsBatch);
         ctx.Add(batch);
         foreach (var student in students)
         {

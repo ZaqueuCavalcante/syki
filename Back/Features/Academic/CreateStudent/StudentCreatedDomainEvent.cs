@@ -2,7 +2,7 @@ using Syki.Back.Features.Cross.LinkOldNotifications;
 
 namespace Syki.Back.Features.Academic.CreateStudent;
 
-[DomainEventDescription("Aluno criado")]
+[DomainEvent(nameof(SykiStudent), "Aluno criado")]
 public record StudentCreatedDomainEvent(Guid UserId, Guid InstitutionId) : IDomainEvent;
 
 public class StudentCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<StudentCreatedDomainEvent>

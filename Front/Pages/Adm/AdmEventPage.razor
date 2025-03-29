@@ -50,6 +50,11 @@
             <MudItem xs="12" sm="12" md="12" lg="12">
                 <InfoCard Icon="@Icons.Material.Filled.DataObject" Color="@Colors.Blue.Darken1" Title="Dados" Content="@GetIdentedData()" />
             </MudItem>
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Origem">
+                    <MudText>Este evento foi emitido por uma entidade do tipo <b>@_data.EntityName</b> com id <b>@_data.EntityId</b></MudText>
+                </InfoCard>
+            </MudItem>
             @if (_data.Error.HasValue())
             {
                 <MudItem xs="12" sm="12" md="12" lg="12">

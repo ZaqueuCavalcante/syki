@@ -17,7 +17,7 @@ public class DomainEventsUnitTests
         // Act / Assert
         foreach (var type in types)
         {
-            var attributes = (DomainEventDescriptionAttribute[])type.GetCustomAttributes(typeof(DomainEventDescriptionAttribute), true);
+            var attributes = (DomainEventAttribute[])type.GetCustomAttributes(typeof(DomainEventAttribute), true);
             attributes.Should().ContainSingle();
             attributes[0].Description.Should().NotBeNullOrEmpty();
         }

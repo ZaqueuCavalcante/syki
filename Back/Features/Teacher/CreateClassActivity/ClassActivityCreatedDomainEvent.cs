@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Teacher.CreateClassActivity;
 
-[DomainEventDescription("Atividade criada")]
+[DomainEvent(nameof(ClassActivity), "Atividade criada")]
 public record ClassActivityCreatedDomainEvent(Guid ClassActivityId) : IDomainEvent;
 
 public class ClassActivityCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<ClassActivityCreatedDomainEvent>

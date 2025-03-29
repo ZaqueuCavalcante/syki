@@ -7,6 +7,6 @@ namespace Syki.Shared;
 /// </summary>
 public enum CommandBatchType
 {
-    [Description("Enviar emails de nova atividade")]
-    SendNewClassActivityEmailCommands,
+    [Description("Envio de emails de nova atividade")]
+    SendNewClassActivityEmailCommandsBatch,
 }

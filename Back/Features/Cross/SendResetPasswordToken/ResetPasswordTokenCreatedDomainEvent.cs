@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Cross.SendResetPasswordToken;
 
-[DomainEventDescription("Token de redefinição de senha gerado")]
+[DomainEvent(nameof(ResetPasswordToken), "Token de redefinição de senha gerado")]
 public record ResetPasswordTokenCreatedDomainEvent(Guid UserId) : IDomainEvent;
 
 public class ResetPasswordTokenCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<ResetPasswordTokenCreatedDomainEvent>

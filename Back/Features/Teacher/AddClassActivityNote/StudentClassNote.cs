@@ -1,6 +1,4 @@
-using Syki.Back.Features.Teacher.AddClassActivityNote;
-
-namespace Syki.Back.Features.Student.CreateStudentEnrollment;
+namespace Syki.Back.Features.Teacher.AddClassActivityNote;
 
 /// <summary>
 /// Representa uma Nota de um Aluno dentro de uma Turma

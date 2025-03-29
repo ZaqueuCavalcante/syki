@@ -1,4 +1,4 @@
-using Syki.Back.Features.Student.CreateStudentEnrollment;
+using Syki.Back.Features.Teacher.AddClassActivityNote;
 
 namespace Syki.Tests.Extensions;
 

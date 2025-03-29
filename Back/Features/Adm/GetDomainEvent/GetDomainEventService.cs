@@ -16,6 +16,8 @@ public class GetDomainEventService(DatabaseSettings settings) : IAdmService
             WHERE id = @Id
         ";
         var evt = await connection.QueryFirstOrDefaultAsync<DomainEventOut>(sql, new{ id }) ?? new();
+
+        evt.EntityName = evt.Type.ToDomainEventEntityName();
         evt.Type = evt.Type.ToDomainEventDescription();
 
         const string commandsSql = @"

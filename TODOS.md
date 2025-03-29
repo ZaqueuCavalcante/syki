@@ -17,6 +17,7 @@
 - Redis use case (project)
 
 - Use Breadcrumbs
+- Use db migrations
 
 - Aluno pode gerar um historico de disciplinas + notas (PDF)
 - Aluno pode gerar comprovante de matricula

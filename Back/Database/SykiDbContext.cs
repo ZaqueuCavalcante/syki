@@ -12,6 +12,7 @@ using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Teacher.CreateClassActivity;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
+using Syki.Back.Features.Teacher.AddClassActivityNote;
 using Syki.Back.Features.Academic.CreateCourseOffering;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

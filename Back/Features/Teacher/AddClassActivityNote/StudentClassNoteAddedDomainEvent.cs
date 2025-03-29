@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Teacher.AddClassActivityNote;
 
-[DomainEventDescription("Nota adicionada")]
+[DomainEvent(nameof(StudentClassNote), "Nota adicionada")]
 public record StudentClassNoteAddedDomainEvent(Guid StudentId, Guid ClassId) : IDomainEvent;
 
 public class StudentClassNoteAddedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<StudentClassNoteAddedDomainEvent>

@@ -1,7 +1,7 @@
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Cross.CreateInstitution;
 
-namespace Syki.Back.Features.Student.CreateStudentEnrollment;
+namespace Syki.Back.Features.Teacher.AddClassActivityNote;
 
 public class StudentClassNoteConfig : IEntityTypeConfiguration<StudentClassNote>
 {

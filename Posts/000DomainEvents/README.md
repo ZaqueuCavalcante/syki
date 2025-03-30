@@ -2,7 +2,9 @@
 
 Estou desenvolvendo um projeto open source, voltado para o gerenciamento acadêmico de instituições de ensino.
 
-Nele, quando um professor de uma turma publica uma nova atividade (trabalho, pesquisa, apresentação...), todos os alunos da turma precisam ser notificados.
+Ele possui algum casos de uso onde é preciso realizar o processamento de tarefas de maneira assíncrona, ou seja, fora do escopo do request pra API.
+
+Por exemplo, quando um professor de uma turma publica uma nova atividade (trabalho, pesquisa, apresentação...), todos os alunos da turma precisam ser notificados.
 
 Essa notificação é feita de duas formas:
     - Dentro do próprio sistema, via notificações internas vinculadas à cada aluno

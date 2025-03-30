@@ -38,8 +38,7 @@ Acompanhe abaixo como resolvi esses problemas e comente como você os resolveria
 - 2️⃣ - Criação de nova atividade
 - 3️⃣ - Seed de dados
 - 4️⃣ - Visão do Adm
-
-
+- 5️⃣ - Pontos de melhoria
 
 ## 0️⃣ - Arquitetura do sistema
 
@@ -142,6 +141,8 @@ O seed de dados foi dividido em uma sequência de passos menores, onde cada um e
 
 Criei algumas telas para que o Adm do sistema possa acompanhar o processamento de todos os eventos, comandos e lotes.
 
+Perceba que é possível navegar tanto no sentido cronológico de processamento dos componentes quanto no sentido contrário, chegando na origem de cada um.
+
 - **Listagem de eventos**
     - Quantidade total, pendentes, processando, erros e sucessos
     - Dashboard com os últimos eventos + gráfico de pizza da quantidade de cada tipo de evento
@@ -184,9 +185,7 @@ Criei algumas telas para que o Adm do sistema possa acompanhar o processamento d
         - Um evento de domínio
         - Um comando
 
-Perceba que é possível navegar tanto no sentido cronológico de processamento dos componentes quanto no sentido contrário, chegando na origem de cada um.
-
-## Pontos de melhoria
+## 5️⃣ - Pontos de melhoria
 
 - Digamos que o envio do email deu errado (a api de envio estava fora do ar no momento do request):
     - O sistema poderia aguardar alguns segundos e tentar reprocessar o comando, certo?

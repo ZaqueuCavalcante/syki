@@ -1,4 +1,4 @@
-# Processamento Assíncrono - Eventos, Comandos, Lotes e Workflows
+# ⚙️ Processamento Assíncrono - Eventos, Comandos, Lotes e Workflows 🔁
 
 Estou desenvolvendo um projeto open source, voltado para o gerenciamento acadêmico de instituições de ensino.
 
@@ -7,8 +7,8 @@ Ele possui algum casos de uso onde é preciso realizar o processamento de tarefa
 Por exemplo, quando um professor de uma turma publica uma nova atividade (trabalho, pesquisa, apresentação...), todos os alunos da turma precisam ser notificados.
 
 Essa notificação é feita de duas formas:
-    - Dentro do próprio sistema, via notificações internas vinculadas à cada aluno
-    - Fora do sistema, enviando um email para cada aluno da turma através de um serviço externo (Brevo, Mailchimp, SendGrid...)
+- Dentro do próprio sistema, via notificações internas vinculadas à cada aluno
+- Fora do sistema, enviando um email para cada aluno da turma através de um serviço externo (Brevo, Mailchimp, SendGrid...)
 
 Ao final, quando todos os emails forem enviados, o sistema deve notificar internamente o professor, informando que a atividade foi publicada com sucesso.
 
@@ -131,7 +131,7 @@ Perceba que todo esse aparato de eventos, comandos e lotes pode ser utilizado em
 O seed de dados foi dividido em uma sequência de passos menores, onde cada um executa ao final do outro de maneira atômica (worflow). Dessa forma, quando uma nova instituição é criada, emitimos um evento de domínio que enfilera o primeiro comando no seu handler. A partir daí, cada comando enfilera o próximo a ser executado, formando toda cadeia de processamento.
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/event_commands.gif?raw=true" height="500" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/event_commands.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 - **InstitutionCreatedDomainEvent**: Instituição Criada

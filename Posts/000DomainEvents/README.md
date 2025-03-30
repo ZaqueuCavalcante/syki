@@ -158,10 +158,18 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
     - A entidade que originou o evento de domínio
     - Listagem com os comandos enfileirados pelo evento (+ acesso aos detalhes de cada comando)
 
+<p align="center">
+  <img src="./event_details_page.gif" style="display: block; margin: 0 auto" />
+</p>
+
 - **Listagem de comandos**
     - Quantidade total, pendentes, processando, erros e sucessos
     - Filtros por status, tipo e instituição
     - Acesso aos detalhes de cada comando
+
+<p align="center">
+  <img src="./commands_page.gif" style="display: block; margin: 0 auto" />
+</p>
 
 - **Detalhes de um comando**
     - Quando foi criado, quando foi processado e quantos milisegundos durou o processamento
@@ -176,6 +184,10 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
     - Listagem com os reprocessamentos do comando, caso ele tenha algum
     - Listagem com os subcomandos do comando, caso ele tenha algum
     - Listagem com os lotes criados pelo comando, caso exista algum
+
+<p align="center">
+  <img src="./command_details_page.gif" style="display: block; margin: 0 auto" />
+</p>
 
 - **Listagem de lotes**
     - Quantidade total, pendentes, processando, erros e sucessos

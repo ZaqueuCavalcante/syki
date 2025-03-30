@@ -221,6 +221,59 @@
             </MudTable>
         </MudContainer>
     }
+
+    @if (_data.Batches.Count > 0)
+    {
+        <style>
+            .mud-table-toolbar {
+                height: auto;
+            }
+        </style>
+        <MudContainer Class="px-0 my-4">
+            <MudTable
+                Class="mb-4"
+                Dense="true"
+                Hover="true"
+                T="BatchOut"
+                RowsPerPage="10"
+                Loading="@_loading"
+                Items="@_data.Batches"
+                Breakpoint="Breakpoint.Sm"
+            >
+                <ToolBarContent>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
+                        <MudIcon Icon="@Icons.Material.Filled.SubdirectoryArrowRight" Class="mb-1" Size="Size.Medium"/>
+                        <MudText Typo="Typo.h6" Style="font-weight: bold">Lotes</MudText>
+                    </MudStack>
+                </ToolBarContent>
+
+                <HeaderContent>
+                    <MudTh>Tipo</MudTh>
+                    <MudTh>Criação</MudTh>
+                    <MudTh>Processamento</MudTh>
+                    <MudTh>Comandos</MudTh>
+                    <MudTh></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Tipo">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                            <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
+                            <MudText Typo="Typo.body2">@context.Type.GetDescription()</MudText>
+                        </MudStack>
+                    </MudTd>
+                    <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
+                    <MudTd DataLabel="Processamento">@context.ProcessedAt.ToMinuteString()</MudTd>
+                    <MudTd DataLabel="Comandos">@context.Size.ToThousandSeparated()</MudTd>
+                    <MudTd>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToBatch(context.Id))" />
+                    </MudTd>
+                </RowTemplate>
+                <NoRecordsContent>
+                    @(GetBatchesNotFoundMessage())
+                </NoRecordsContent>
+            </MudTable>
+        </MudContainer>
+    }
 </MudContainer>
 
 @inject NavigationManager Nav
@@ -261,6 +314,11 @@
     private string GetSubcommandsNotFoundMessage()
     {
         return "Este comando não possui subcomandos.";
+    }
+
+    private string GetBatchesNotFoundMessage()
+    {
+        return "Este comando não possui lotes.";
     }
 
     private void GoToDetails(Guid id)

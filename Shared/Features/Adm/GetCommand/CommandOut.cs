@@ -19,4 +19,5 @@ public class CommandOut
 
     public List<CommandOut> Retries { get; set; } = [];
     public List<CommandOut> Subcommands { get; set; } = [];
+    public List<BatchOut> Batches { get; set; } = [];
 }

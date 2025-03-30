@@ -8,12 +8,31 @@ public class CommandBatch
     public CommandBatchStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? ProcessedAt { get; set; }
+
+    /// <summary>
+    /// Id do evento que gerou o lote
+    /// </summary>
+    public Guid? EventId { get; set; }
+
+    /// <summary>
+    /// Id do comando que gerou o lote
+    /// </summary>
+    public Guid? SourceCommandId { get; set; }
+
+    /// <summary>
+    /// Id do comando que será executado quando o lote for processado com sucesso
+    /// </summary>
     public Guid? NextCommandId { get; set; }
+
     public int Size { get; set; }
 
     private CommandBatch() { }
 
-    public static CommandBatch New(Guid institutionId, CommandBatchType type)
+    public static CommandBatch New(
+        Guid institutionId,
+        CommandBatchType type,
+        Guid? eventId = null,
+        Guid? sourceCommandId = null)
     {
         return new()
         {
@@ -22,6 +41,8 @@ public class CommandBatch
             CreatedAt = DateTime.Now,
             InstitutionId = institutionId,
             Status = CommandBatchStatus.Pending,
+            EventId = eventId,
+            SourceCommandId = sourceCommandId,
         };
     }
 

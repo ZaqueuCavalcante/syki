@@ -47,6 +47,22 @@
             <MudItem xs="12" sm="4" md="4" lg="4">
                 <InfoCard Icon="@Icons.Material.Filled.Timer" Color="@Colors.Indigo.Darken1" Title="Comandos" Content="@_data.Size.ToThousandSeparated()" />
             </MudItem>
+            @if (_data.EventId != null)
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Origem">
+                        <MudLink OnClick="@(() => GoToEvent(_data.EventId.Value))" Color="Color.Primary">Este lote foi originado de um evento.</MudLink>
+                    </InfoCard>
+                </MudItem>
+            }
+            @if (_data.SourceCommandId != null)
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Origem">
+                        <MudLink OnClick="@(() => GoToCommand(_data.SourceCommandId.Value))" Color="Color.Primary">Este lote foi originado de um comando.</MudLink>
+                    </InfoCard>
+                </MudItem>
+            }
             @if (_data.NextCommandId != null)
             {
                 <MudItem xs="12" sm="12" md="12" lg="12">
@@ -142,6 +158,16 @@
     }
 
     private void GoToDetails(Guid id)
+    {
+        Nav.NavigateTo($"adm/commands/{id}");
+    }
+
+    private void GoToEvent(Guid id)
+    {
+        Nav.NavigateTo($"adm/events/{id}");
+    }
+
+    private void GoToCommand(Guid id)
     {
         Nav.NavigateTo($"adm/commands/{id}");
     }

@@ -18,6 +18,13 @@ public class GetCommandService(DatabaseSettings settings) : IAdmService
         var command = await connection.QueryFirstOrDefaultAsync<CommandOut>(sql, new { id }) ?? new();
         command.Description = command.Type.ToCommandDescription();
 
+        const string sourceBatchSql = @"
+            SELECT id
+            FROM syki.command_batches
+            WHERE next_command_id = @Id
+        ";
+        command.SourceBatchId = await connection.QueryFirstOrDefaultAsync<Guid?>(sourceBatchSql, new { id });
+
         const string retriesSql = @"
             SELECT *
             FROM syki.commands
@@ -34,12 +41,12 @@ public class GetCommandService(DatabaseSettings settings) : IAdmService
         command.Subcommands = (await connection.QueryAsync<CommandOut>(subcommandsSql, new { id })).ToList();
         command.Subcommands.ForEach(x => x.Description = x.Type.ToCommandDescription());
 
-        const string sourceBatchSql = @"
-            SELECT id
+        const string bacthesSql = @"
+            SELECT *
             FROM syki.command_batches
-            WHERE next_command_id = @Id
+            WHERE source_command_id = @Id
         ";
-        command.SourceBatchId = await connection.QueryFirstOrDefaultAsync<Guid?>(sourceBatchSql, new { id });
+        command.Batches = (await connection.QueryAsync<BatchOut>(bacthesSql, new { id })).ToList();
 
         return command;
     }

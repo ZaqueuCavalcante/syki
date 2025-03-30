@@ -143,63 +143,63 @@ Criei algumas telas para que o Adm do sistema possa acompanhar o processamento d
 
 Perceba que é possível navegar tanto no sentido cronológico de processamento dos componentes quanto no sentido contrário, chegando na origem de cada um.
 
-- **Listagem de eventos**
-    - Quantidade total, pendentes, processando, erros e sucessos
-    - Dashboard com os últimos eventos + gráfico de pizza da quantidade de cada tipo de evento
-    - Filtros por status, tipo, instituição e status dos comandos enfileirados pelo evento
+### Listagem de eventos
+- Quantidade total, pendentes, processando, erros e sucessos
+- Dashboard com os últimos eventos + gráfico de pizza da quantidade de cada tipo de evento
+- Filtros por status, tipo, instituição e status dos comandos enfileirados pelo evento
 
 <p align="center">
   <img src="./events_page.gif" style="display: block; margin: 0 auto" />
 </p>
 
-- **Detalhes de um evento**
-    - Quando ocorreu, quando foi processado e quantos milisegundos durou o processamento
-    - Os dados do evento no formato json
-    - A entidade que originou o evento de domínio
-    - Listagem com os comandos enfileirados pelo evento (+ acesso aos detalhes de cada comando)
+### Detalhes de um evento
+- Quando ocorreu, quando foi processado e quantos milisegundos durou o processamento
+- Os dados do evento no formato json
+- A entidade que originou o evento de domínio
+- Listagem com os comandos enfileirados pelo evento (+ acesso aos detalhes de cada comando)
 
 <p align="center">
   <img src="./event_details_page.gif" style="display: block; margin: 0 auto" />
 </p>
 
-- **Listagem de comandos**
-    - Quantidade total, pendentes, processando, erros e sucessos
-    - Filtros por status, tipo e instituição
-    - Acesso aos detalhes de cada comando
+### Listagem de comandos
+- Quantidade total, pendentes, processando, erros e sucessos
+- Filtros por status, tipo e instituição
+- Acesso aos detalhes de cada comando
 
 <p align="center">
   <img src="./commands_page.gif" style="display: block; margin: 0 auto" />
 </p>
 
-- **Detalhes de um comando**
-    - Quando foi criado, quando foi processado e quantos milisegundos durou o processamento
-    - Os dados do comando no formato json
-    - Uma mensagem de erro, caso tenha dado algum no seu processamento
-    - A origem do comando, podendo ser:
-        - Um evento de domínio
-        - Outro comando
-        - Reprocessamento de um comando do mesmo tipo, que foi processado com erro
-        - Finalização com sucesso de todos os comandos de um lote
-    - O lote do comando, caso ele esteja contido em um
-    - Listagem com os reprocessamentos do comando, caso ele tenha algum
-    - Listagem com os subcomandos do comando, caso ele tenha algum
-    - Listagem com os lotes criados pelo comando, caso exista algum
+### Detalhes de um comando
+- Quando foi criado, quando foi processado e quantos milisegundos durou o processamento
+- Os dados do comando no formato json
+- Uma mensagem de erro, caso tenha dado algum no seu processamento
+- A origem do comando, podendo ser:
+    - Um evento de domínio
+    - Outro comando
+    - Reprocessamento de um comando do mesmo tipo, que foi processado com erro
+    - Finalização com sucesso de todos os comandos de um lote
+- O lote do comando, caso ele esteja contido em um
+- Listagem com os reprocessamentos do comando, caso ele tenha algum
+- Listagem com os subcomandos do comando, caso ele tenha algum
+- Listagem com os lotes criados pelo comando, caso exista algum
 
 <p align="center">
   <img src="./command_details_page.gif" style="display: block; margin: 0 auto" />
 </p>
 
-- **Listagem de lotes**
-    - Quantidade total, pendentes, processando, erros e sucessos
-    - Filtros por status, tipo e instituição
-    - Acesso aos detalhes de cada lote
+### Listagem de lotes
+- Quantidade total, pendentes, processando, erros e sucessos
+- Filtros por status, tipo e instituição
+- Acesso aos detalhes de cada lote
 
-- **Detalhes de um lote**
-    - Quando foi criado, quando foi processado e quantos comandos o lote contém
-    - Próximo comando a ser executado, caso o lote possua um
-    - A origem do lote, podendo ser:
-        - Um evento de domínio
-        - Um comando
+### Detalhes de um lote
+- Quando foi criado, quando foi processado e quantos comandos o lote contém
+- Próximo comando a ser executado, caso o lote possua um
+- A origem do lote, podendo ser:
+    - Um evento de domínio
+    - Um comando
 
 ## 5️⃣ - Pontos de melhoria
 

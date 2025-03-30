@@ -194,12 +194,20 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Filtros por status, tipo e instituição
 - Acesso aos detalhes de cada lote
 
+<p align="center">
+  <img src="./batches_page.gif" style="display: block; margin: 0 auto" />
+</p>
+
 ### Detalhes de um lote
 - Quando foi criado, quando foi processado e quantos comandos o lote contém
 - Próximo comando a ser executado, caso o lote possua um
 - A origem do lote, podendo ser:
     - Um evento de domínio
     - Um comando
+
+<p align="center">
+  <img src="./batch_details_page.gif" style="display: block; margin: 0 auto" />
+</p>
 
 ## 5️⃣ - Pontos de melhoria
 

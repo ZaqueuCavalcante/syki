@@ -3,9 +3,11 @@
 Estou desenvolvendo um projeto open source, voltado para o gerenciamento acadêmico de instituições de ensino.
 
 Nele, quando um professor de uma turma publica uma nova atividade (trabalho, pesquisa, apresentação...), todos os alunos da turma precisam ser notificados.
+
 Essa notificação é feita de duas formas:
     - Dentro do próprio sistema, via notificações internas vinculadas à cada aluno
     - Fora do sistema, enviando um email para cada aluno da turma através de um serviço externo (Brevo, Mailchimp, SendGrid...)
+
 Ao final, quando todos os emails forem enviados, o sistema deve notificar internamente o professor, informando que a atividade foi publicada com sucesso.
 
 Ficaria muito complicado fazer tudo isso na mesma requisição né? Sem contar que a api de envio de email pode retornar algum erro quando for chamada. Logo, seria interessante ter algum mecanismo de retry automático, que tentasse reenviar o email mais uma vez, por exemplo.
@@ -53,7 +55,7 @@ Os sistema é basicamente composto por 4 componentes:
 Acompanhe no diagrama abaixo todos os conceitos que fazem parte da solução final:
 
 <p align="center">
-  <img src="./clean_async_processing.gif" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/clean_async_processing.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 - **Entidade**: uma classe do sistema capaz de emitir um evento de domínio.
@@ -89,7 +91,7 @@ Acompanhe no diagrama abaixo todos os conceitos que fazem parte da solução fin
 Vamos alterar um pouco o diagrama anterior e usá-lo para entender como todo o fluxo de criação de nova atividade foi implementado. Agrupei os passos relacionados em cores específicas para facilitar o entendimento.
 
 <p align="center">
-  <img src="./steps_async_processing.gif" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/steps_async_processing.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 - **(0)** - Professor preenche os dados da nova atividade no Client, que envia essas informações para a API no endpoint POST /activities
@@ -127,7 +129,7 @@ Perceba que todo esse aparato de eventos, comandos e lotes pode ser utilizado em
 O seed de dados foi dividido em uma sequência de passos menores, onde cada um executa ao final do outro de maneira atômica (worflow). Dessa forma, quando uma nova instituição é criada, emitimos um evento de domínio que enfilera o primeiro comando no seu handler. A partir daí, cada comando enfilera o próximo a ser executado, formando toda cadeia de processamento.
 
 <p align="center">
-  <img src="./event_commands.gif" height="500" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/event_commands.gif?raw=true" height="500" style="display: block; margin: 0 auto" />
 </p>
 
 - **InstitutionCreatedDomainEvent**: Instituição Criada
@@ -149,7 +151,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Filtros por status, tipo, instituição e status dos comandos enfileirados pelo evento
 
 <p align="center">
-  <img src="./events_page.gif" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/events_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ### Detalhes de um evento
@@ -159,7 +161,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Listagem com os comandos enfileirados pelo evento (+ acesso aos detalhes de cada comando)
 
 <p align="center">
-  <img src="./event_details_page.gif" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/event_details_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ### Listagem de comandos
@@ -168,7 +170,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Acesso aos detalhes de cada comando
 
 <p align="center">
-  <img src="./commands_page.gif" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/commands_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ### Detalhes de um comando
@@ -186,7 +188,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Listagem com os lotes criados pelo comando, caso exista algum
 
 <p align="center">
-  <img src="./command_details_page.gif" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/command_details_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ### Listagem de lotes
@@ -195,7 +197,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Acesso aos detalhes de cada lote
 
 <p align="center">
-  <img src="./batches_page.gif" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/batches_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ### Detalhes de um lote
@@ -206,7 +208,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
     - Um comando
 
 <p align="center">
-  <img src="./batch_details_page.gif" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/batch_details_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ## 5️⃣ - Pontos de melhoria

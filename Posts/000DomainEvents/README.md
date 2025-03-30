@@ -148,6 +148,10 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
     - Dashboard com os últimos eventos + gráfico de pizza da quantidade de cada tipo de evento
     - Filtros por status, tipo, instituição e status dos comandos enfileirados pelo evento
 
+<p align="center">
+  <img src="./events_page.gif" style="display: block; margin: 0 auto" />
+</p>
+
 - **Detalhes de um evento**
     - Quando ocorreu, quando foi processado e quantos milisegundos durou o processamento
     - Os dados do evento no formato json

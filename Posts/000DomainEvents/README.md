@@ -36,6 +36,8 @@ Visando facilitar minha vida e trazer agilidade pro desenvolvimento, criei um ú
 
 Acompanhe abaixo como resolvi esses problemas e comente como você os resolveria também!
 
+> Você pode ver o código aqui (https://github.com/ZaqueuCavalcante/syki) e a aplicação rodando aqui (https://app.syki.com.br). Venho postando no LinkedIn todas as atualizações de desenvolvimento do projeto (https://www.linkedin.com/in/zaqueu-cavalcante).
+
 ## Sumário
 - 0️⃣ - Arquitetura do sistema
 - 1️⃣ - Conceitos fundamentais

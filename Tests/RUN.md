@@ -1,12 +1,7 @@
 # RUN
 
-dotnet test --filter TestCategory=Auth
 dotnet test --filter TestCategory=Integration
 dotnet test --filter "FullyQualifiedName~UnitTests"
-
-dotnet test --no-build --filter "FullyQualifiedName~E2ETests" --logger:"console;verbosity=detailed"
-
-pwsh Tests/bin/Debug/net8.0/playwright.ps1 codegen http://localhost:5002
 
 dotnet test --logger:"console;verbosity=detailed"
 dotnet test --filter "FullyQualifiedName~IntegrationTests"
@@ -22,11 +17,6 @@ reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\*\coverage.cobe
 dotnet test --collect:"XPlat Code Coverage"
 
 reportgenerator -reports:"C:\Users\Zaqueu\syki\Tests\TestResults\*\coverage.cobertura.xml" -targetdir:"./Tests/Reports" -reporttypes:Html
-
-
-
-
-
 
 # Mutation
 

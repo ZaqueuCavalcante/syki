@@ -7,8 +7,8 @@ using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.StartClasses;
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
-using Syki.Back.Features.Teacher.AddClassActivityNote;
 using Syki.Back.Features.Academic.FinalizeClasses;
+using Syki.Back.Features.Teacher.AddClassActivityNote;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Teacher.CreateLessonAttendance;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
@@ -21,33 +21,33 @@ namespace Syki.Daemon.Configs;
 
 public static class ServicesConfigs
 {
-    public static void AddServicesConfigs(this IServiceCollection services)
+    public static void AddServicesConfigs(this WebApplicationBuilder builder)
     {
-        services.AddEfCoreConfigs();
+        builder.AddEfCoreConfigs();
 
-        services.AddScoped<CreateUserService>();
-        services.AddScoped<CreateTeacherService>();
-        services.AddScoped<CreateStudentService>();
-        services.AddScoped<ResetPasswordService>();
-        services.AddScoped<CreateClassService>();
-        services.AddScoped<CreateEnrollmentPeriodService>();
-        services.AddScoped<CreateStudentEnrollmentService>();
-        services.AddScoped<SendResetPasswordTokenService>();
-        services.AddScoped<ReleaseClassesForEnrollmentService>();
-        services.AddScoped<StartClassesService>();
-        services.AddScoped<UpdateEnrollmentPeriodService>();
-        services.AddScoped<CreateLessonAttendanceService>();
-        services.AddScoped<AddClassActivityNoteService>();
-        services.AddScoped<FinalizeClassesService>();
+        builder.Services.AddScoped<CreateUserService>();
+        builder.Services.AddScoped<CreateTeacherService>();
+        builder.Services.AddScoped<CreateStudentService>();
+        builder.Services.AddScoped<ResetPasswordService>();
+        builder.Services.AddScoped<CreateClassService>();
+        builder.Services.AddScoped<CreateEnrollmentPeriodService>();
+        builder.Services.AddScoped<CreateStudentEnrollmentService>();
+        builder.Services.AddScoped<SendResetPasswordTokenService>();
+        builder.Services.AddScoped<ReleaseClassesForEnrollmentService>();
+        builder.Services.AddScoped<StartClassesService>();
+        builder.Services.AddScoped<UpdateEnrollmentPeriodService>();
+        builder.Services.AddScoped<CreateLessonAttendanceService>();
+        builder.Services.AddScoped<AddClassActivityNoteService>();
+        builder.Services.AddScoped<FinalizeClassesService>();
 
-        services.AddScoped<IEmailsService, EmailsService>();
+        builder.Services.AddScoped<IEmailsService, EmailsService>();
         if (Env.IsDevelopment() || Env.IsTesting())
         {
-            services.Replace(ServiceDescriptor.Singleton<IEmailsService, FakeEmailsService>());
+            builder.Services.Replace(ServiceDescriptor.Singleton<IEmailsService, FakeEmailsService>());
         }
 
-        services.AddIdentityConfigs();
-        services.AddCommandsConfigs();
-        services.AddTransient<DomainEventsProcessor>();
+        builder.AddIdentityConfigs();
+        builder.AddCommandsConfigs();
+        builder.Services.AddTransient<DomainEventsProcessor>();
     }
 }

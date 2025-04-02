@@ -11,6 +11,8 @@ public class IntegrationTestBase
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
     {
+        Env.SetAsTesting();
+
         _api = new BackFactory();
         using var scope = _api.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();

@@ -8,10 +8,9 @@ public static class AuthenticationConfigs
 {
     public const string BearerScheme = "Bearer";
 
-    public static void AddAuthenticationConfigs(this IServiceCollection services)
+    public static void AddAuthenticationConfigs(this WebApplicationBuilder builder)
     {
-        using var serviceProvider = services.BuildServiceProvider();
-        var settings = serviceProvider.GetService<AuthSettings>()!;
+        var settings = new AuthSettings(builder.Configuration);
 
         JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -37,7 +36,7 @@ public static class AuthenticationConfigs
             RoleClaimType = "role",
         };
 
-        services.AddAuthentication(BearerScheme)
+        builder.Services.AddAuthentication(BearerScheme)
             .AddJwtBearer(BearerScheme, options =>
             {
                 options.TokenValidationParameters = tokenValidationParameters;

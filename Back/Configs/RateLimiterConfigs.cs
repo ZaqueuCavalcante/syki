@@ -4,12 +4,11 @@ namespace Syki.Back.Configs;
 
 public static class RateLimiterConfigs
 {
-    public static void AddRateLimiterConfigs(this IServiceCollection services)
+    public static void AddRateLimiterConfigs(this WebApplicationBuilder builder)
     {
-        using var serviceProvider = services.BuildServiceProvider();
-        var settings = serviceProvider.GetService<RateLimiterSettings>()!;
+        var settings = new RateLimiterSettings(builder.Configuration);
 
-        services.AddRateLimiter(options =>
+        builder.Services.AddRateLimiter(options =>
         {
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 

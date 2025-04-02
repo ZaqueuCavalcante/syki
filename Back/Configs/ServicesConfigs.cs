@@ -2,13 +2,13 @@ namespace Syki.Back.Configs;
 
 public static class ServicesConfigs
 {
-    public static void AddServicesConfigs(this IServiceCollection services)
+    public static void AddServicesConfigs(this WebApplicationBuilder builder)
     {
-        services.AddServiceConfigs(typeof(IAcademicService));
-        services.AddServiceConfigs(typeof(IAdmService));
-        services.AddServiceConfigs(typeof(ICrossService));
-        services.AddServiceConfigs(typeof(IStudentService));
-        services.AddServiceConfigs(typeof(ITeacherService));
+        builder.Services.AddServiceConfigs(typeof(IAcademicService));
+        builder.Services.AddServiceConfigs(typeof(IAdmService));
+        builder.Services.AddServiceConfigs(typeof(ICrossService));
+        builder.Services.AddServiceConfigs(typeof(IStudentService));
+        builder.Services.AddServiceConfigs(typeof(ITeacherService));
     }
 
     private static void AddServiceConfigs(this IServiceCollection services, Type marker)

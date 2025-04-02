@@ -2,9 +2,9 @@ namespace Syki.Back.Configs;
 
 public static class CacheConfigs
 {
-    public static void AddCacheConfigs(this IServiceCollection services)
+    public static void AddCacheConfigs(this WebApplicationBuilder builder)
     {
-        services.AddHybridCache(options =>
+        builder.Services.AddHybridCache(options =>
         {
             options.MaximumKeyLength = 512;
             options.MaximumPayloadBytes = 10 * 1024 * 1024;

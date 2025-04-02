@@ -8,11 +8,11 @@ namespace Syki.Back.Configs;
 
 public static class OpenTelemetryConfigs
 {
-    public static void AddOpenTelemetryConfigs(this IServiceCollection services)
+    public static void AddOpenTelemetryConfigs(this WebApplicationBuilder builder)
     {
         if (Env.IsTesting()) return;
 
-        services
+        builder.Services
             .AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddService("SykiAPI"))
             .WithMetrics(metrics =>

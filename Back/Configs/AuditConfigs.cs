@@ -16,7 +16,7 @@ namespace Syki.Back.Configs;
 
 public static class AuditConfigs
 {
-    public static void AddAuditConfigs(this IServiceCollection _)
+    public static void AddAuditConfigs(this WebApplicationBuilder _)
     {
         Configuration.Setup().UseEntityFramework(_ => _
             .AuditTypeExplicitMapper(_ => _

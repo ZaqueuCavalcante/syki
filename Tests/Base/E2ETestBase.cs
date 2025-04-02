@@ -1,5 +1,6 @@
 using Syki.Back.Settings;
 using Microsoft.Playwright;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
 
@@ -7,6 +8,37 @@ public class E2ETestBase : PageTest
 {
     private readonly string _url = "http://localhost:5002";
     private readonly string _database = "UserID=postgres;Password=postgres;Host=localhost;Port=5432;Database=syki-db;Pooling=true;";
+
+    protected BackFactory _api = null!;
+    protected FrontFactory _front = null!;
+    protected DaemonFactory _daemon = null!;
+
+    [OneTimeSetUp]
+    public async Task OneTimeSetUp()
+    {
+        Env.SetAsTesting();
+
+        _api = new BackFactory();
+        using var scope = _api.Services.CreateScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+
+        await ctx.ResetDbAsync();
+        await _api.RegisterAdm();
+
+        _daemon = new DaemonFactory();
+        _daemon.Services.CreateScope();
+
+        _front = new FrontFactory();
+        _front.Services.CreateScope();
+    }
+
+    [OneTimeTearDown]
+    public void OneTimeTearDown()
+    {
+        _api.Dispose();
+        _front.Dispose();
+        _daemon.Dispose();
+    }
 
     protected async Task Goto(string path)
     {

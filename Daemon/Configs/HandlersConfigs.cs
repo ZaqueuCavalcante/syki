@@ -2,10 +2,10 @@ namespace Syki.Daemon.Configs;
 
 public static class HandlersConfigs
 {
-    public static void AddHandlersConfigs(this IServiceCollection services)
+    public static void AddHandlersConfigs(this WebApplicationBuilder builder)
     {
-        services.AddHandlersConfigs("DomainEventHandler");
-        services.AddHandlersConfigs("CommandHandler");
+        builder.Services.AddHandlersConfigs("DomainEventHandler");
+        builder.Services.AddHandlersConfigs("CommandHandler");
     }
 
     private static void AddHandlersConfigs(this IServiceCollection services, string handlerName)

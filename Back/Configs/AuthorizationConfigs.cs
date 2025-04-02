@@ -4,9 +4,9 @@ namespace Syki.Back.Configs;
 
 public static class AuthorizationConfigs
 {
-    public static void AddAuthorizationConfigs(this IServiceCollection services)
+    public static void AddAuthorizationConfigs(this WebApplicationBuilder builder)
     {
-        services.ConfigureApplicationCookie(options =>
+        builder.Services.ConfigureApplicationCookie(options =>
         {
             options.Events.OnRedirectToLogin = context =>
             {
@@ -15,11 +15,9 @@ public static class AuthorizationConfigs
             };
         });
 
-        services.AddSingleton<IAuthorizationHandler, CrossLoginAuthReqHandler>();
+        builder.Services.AddSingleton<IAuthorizationHandler, CrossLoginAuthReqHandler>();
 
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy(BackPolicy.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthRequirement()));
-        });
+        builder.Services.AddAuthorizationBuilder()
+            .AddPolicy(BackPolicy.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthRequirement()));
     }
 }

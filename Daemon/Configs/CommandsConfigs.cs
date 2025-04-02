@@ -5,12 +5,12 @@ namespace Syki.Daemon.Configs;
 
 public static class CommandsConfigs
 {
-    public static void AddCommandsConfigs(this IServiceCollection services)
+    public static void AddCommandsConfigs(this WebApplicationBuilder builder)
     {
-        services.AddSingleton<EmailSettings>();
-        services.AddSingleton<DatabaseSettings>();
-        services.AddSingleton<HangfireSettings>();
+        builder.Services.AddSingleton<EmailSettings>();
+        builder.Services.AddSingleton<DatabaseSettings>();
+        builder.Services.AddSingleton<HangfireSettings>();
 
-        services.AddTransient<CommandsProcessor>();
+        builder.Services.AddTransient<CommandsProcessor>();
     }
 }

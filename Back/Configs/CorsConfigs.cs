@@ -2,9 +2,9 @@ namespace Syki.Back.Configs;
 
 public static class CorsConfigs
 {
-    public static void AddCorsConfigs(this IServiceCollection services)
+    public static void AddCorsConfigs(this WebApplicationBuilder builder)
     {
-        services.AddCors(options => options
+        builder.Services.AddCors(options => options
             .AddDefaultPolicy(builder => builder
                 .AllowAnyMethod()
                 .AllowAnyHeader()

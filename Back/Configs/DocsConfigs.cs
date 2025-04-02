@@ -7,9 +7,9 @@ namespace Syki.Back.Configs;
 
 public static class DocsConfigs
 {
-    public static void AddDocsConfigs(this IServiceCollection services)
+    public static void AddDocsConfigs(this WebApplicationBuilder builder)
     {
-        services.AddSwaggerGen(options =>
+        builder.Services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
@@ -62,7 +62,8 @@ public static class DocsConfigs
             options.IncludeXmlComments(xmlPath2, includeControllerXmlComments: true);
         });
 
-        services.AddSwaggerExamplesFromAssemblyOf(typeof(Program));
+        builder.Services.AddSwaggerExamplesFromAssemblyOf(typeof(Program));
+        builder.Services.AddOpenApi();
     }
 
     public static void UseDocs(this IApplicationBuilder app)
@@ -78,7 +79,7 @@ public static class DocsConfigs
         });
     }
 
-    public static string ReadResource(string name)
+    private static string ReadResource(string name)
     {
         var assembly = Assembly.GetExecutingAssembly();
         var resourcePath = assembly.GetManifestResourceNames().Single(str => str.EndsWith(name));

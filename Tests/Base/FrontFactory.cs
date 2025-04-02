@@ -1,90 +1,69 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Connections;
 
 namespace Syki.Tests.Base;
 
-public class FrontFactory(Action<IWebHostBuilder>? configureWebHost = null) : WebApplicationFactory<Program>
+public sealed class FrontFactory : WebApplicationFactory<Command>
 {
-    private IHost? host;
-
-    public override IServiceProvider Services
-        => host?.Services
-        ?? throw new InvalidOperationException("Call StartAsync() first to start host.");
-
-    public string ServerAddress => host is not null
-        ? ClientOptions.BaseAddress.ToString()
-        : throw new InvalidOperationException("Call StartAsync() first to start host.");
-
-    public async Task StartAsync()
-    {
-        // Triggers CreateHost() getting called.
-        _ = base.Services;
-
-        Debug.Assert(host is not null);
-
-        // Spins the host app up.
-        await host.StartAsync();
-
-        // Extract the selected dynamic port out of the Kestrel server
-        // and assign it onto the client options for convenience so it
-        // "just works" as otherwise it'll be the default http://localhost
-        // URL, which won't route to the Kestrel-hosted HTTP server.
-        var server = host.Services.GetRequiredService<IServer>();
-        var addresses = server.Features.Get<IServerAddressesFeature>();
-        ClientOptions.BaseAddress = addresses!.Addresses
-            .Select(x => x.Replace("127.0.0.1", "localhost", StringComparison.Ordinal))
-            .Select(x => new Uri(x))
-            .Last();
-    }
+    public int Port { get; set; } = 5002;
 
     protected override IHost CreateHost(IHostBuilder builder)
     {
         builder.ConfigureWebHost(webHostBuilder =>
         {
-            configureWebHost?.Invoke(webHostBuilder);
-            webHostBuilder.UseKestrel();
-            webHostBuilder.UseUrls("https://127.0.0.1:0");
+            webHostBuilder.UseKestrel(opt => opt.ListenLocalhost(Port));
+            webHostBuilder.ConfigureServices(s => s.AddSingleton<IServer, KestrelTestServer>());
         });
 
-        host = builder.Build();
+        var host = base.CreateHost(builder);
 
-        // Hack: return dummy host so that the app is not started twice.
-        return new DummyHost();
+        return host;
     }
 
     public override async ValueTask DisposeAsync()
     {
         await base.DisposeAsync();
-        host?.Dispose();
         GC.SuppressFinalize(this);
     }
+}
 
-    // The DummyHost is returned to avoid the app being started twice.
-    private sealed class DummyHost : IHost
+public class KestrelTestServer : TestServer, IServer
+{
+    private readonly KestrelServer _server;
+
+    public KestrelTestServer(IServiceProvider serviceProvider) : base(serviceProvider)
     {
-        public IServiceProvider Services { get; }
+        var transportFactory = serviceProvider.GetRequiredService<IEnumerable<IConnectionListenerFactory>>().First();
 
-        public DummyHost()
-        {
-            Services = new ServiceCollection()
-                .AddSingleton<IServer>((s) => new TestServer(s))
-                .BuildServiceProvider();
-        }
+        var kestrelOptions = serviceProvider.GetRequiredService<IOptions<KestrelServerOptions>>();
+        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+        _server = new KestrelServer(kestrelOptions, transportFactory, loggerFactory);
+    }
 
-        public void Dispose()
-        {
-        }
+    async Task IServer.StartAsync<TContext>(IHttpApplication<TContext> application, CancellationToken cancellationToken)
+    {
+        await InvokeExplicitInterfaceMethod(nameof(IServer.StartAsync), typeof(TContext), [application, cancellationToken]);
+        await _server.StartAsync(application, cancellationToken);
+    }
 
-        public Task StartAsync(CancellationToken cancellationToken = default)
-            => Task.CompletedTask;
+    async Task IServer.StopAsync(CancellationToken cancellationToken)
+    {
+        await InvokeExplicitInterfaceMethod(nameof(IServer.StopAsync), null, [cancellationToken]);
+        await _server.StopAsync(cancellationToken);
+    }
 
-        public Task StopAsync(CancellationToken cancellationToken = default)
-            => Task.CompletedTask;
+    private Task InvokeExplicitInterfaceMethod(string methodName, Type? genericParameter, object[] args)
+    {
+        var baseMethod = typeof(TestServer).GetInterfaceMap(typeof(IServer)).TargetMethods.First(m => m.Name.EndsWith(methodName));
+        var method = genericParameter == null ? baseMethod : baseMethod.MakeGenericMethod(genericParameter);
+        return method.Invoke(this, args) as Task ?? throw new InvalidOperationException("Task not returned");
     }
 }

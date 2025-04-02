@@ -1,17 +1,17 @@
-using System.Text.Json.Serialization;
 using Scalar.AspNetCore;
+using System.Text.Json.Serialization;
 
 namespace Syki.Back.Configs;
 
 public static class HttpConfigs
 {
-    public static void AddHttpConfigs(this IServiceCollection services)
+    public static void AddHttpConfigs(this WebApplicationBuilder builder)
     {
-        services.AddControllers().AddJsonOptions(options => 
+        builder.Services.AddControllers().AddJsonOptions(options => 
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
-        services.AddHttpContextAccessor();
-        services.AddRouting(options => options.LowercaseUrls = true);
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddRouting(options => options.LowercaseUrls = true);
     }
 
     public static void UseExceptions(this IApplicationBuilder app)

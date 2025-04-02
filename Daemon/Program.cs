@@ -1,18 +1,51 @@
-﻿using Audit.Core;
+﻿using Hangfire;
+using Syki.Daemon.Events;
+using Syki.Daemon.Configs;
+using Syki.Daemon.Startup;
+using Syki.Daemon.Commands;
+using Hangfire.MemoryStorage;
 
-namespace Syki.Daemon;
+var builder = WebApplication.CreateBuilder(args);
 
-public static class Program
+builder.AddServicesConfigs();
+builder.AddHandlersConfigs();
+
+builder.AddDapperConfigs();
+builder.AddCacheConfigs();
+
+builder.Services.AddHostedService<EnqueueProcessors>();
+builder.Services.AddHostedService<CommandsProcessorDbListener>();
+builder.Services.AddHostedService<DomainEventsProcessorDbListener>();
+
+builder.Services.AddHangfire(x =>
 {
-    public static void Main(string[] args)
-    {
-        Configuration.AuditDisabled = true;
-        CreateHostBuilder(args).Build().Run();
-    }
+    x.UseMemoryStorage();
+    x.UseRecommendedSerializerSettings();
+    x.UseSimpleAssemblyNameTypeSerializer();
+});
 
-    private static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-                webBuilder.UseStartup<Startup>()
-            );
-}
+builder.Services.AddHangfireServer(x =>
+{
+    x.ServerName = "Daemon";
+    x.SchedulePollingInterval = TimeSpan.FromSeconds(60);
+});
+
+var app = builder.Build();
+
+app.UseRouting();
+app.UseStaticFiles();
+
+app.MapGet("/health", () => Results.Ok(new { Status = "Healthy" }));
+
+app.UseHangfireDashboard(
+    pathMatch: "",
+    options: new DashboardOptions
+    {
+        FaviconPath = "/favicon.ico",
+        Authorization = [ new HangfireAuthFilter(builder.Configuration.Hangfire().User, builder.Configuration.Hangfire().Password) ]
+    }
+);
+
+app.Run();
+
+public partial class Program { }

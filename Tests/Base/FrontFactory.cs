@@ -1,69 +1,83 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Connections;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 
 namespace Syki.Tests.Base;
 
-public sealed class FrontFactory : WebApplicationFactory<Command>
+extern alias Server;
+
+public sealed class FrontFactory : WebApplicationFactory<Server::Program>
 {
-    public int Port { get; set; } = 5002;
+    private bool _disposed;
+    private IHost? _kestrelServerHost;
+
+    public string ServerAddress
+    {
+        get
+        {
+            EnsureServer();
+            return ClientOptions.BaseAddress.ToString();
+        }
+    }
+
+    public override IServiceProvider Services
+    {
+        get
+        {
+            EnsureServer();
+            return _kestrelServerHost!.Services;
+        }
+    }
+
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
+        base.ConfigureWebHost(builder);
+
+        builder.UseUrls("http://127.0.0.1:0");
+    }
 
     protected override IHost CreateHost(IHostBuilder builder)
     {
-        builder.ConfigureWebHost(webHostBuilder =>
+        var testServerHost = builder.Build();
+
+        builder.ConfigureWebHost(p => p.UseKestrel().UseUrls("http://*:5002"));
+
+        _kestrelServerHost = builder.Build();
+        _kestrelServerHost.Start();
+
+        var server = _kestrelServerHost.Services.GetRequiredService<IServer>();
+        var addresses = server.Features.Get<IServerAddressesFeature>();
+
+        ClientOptions.BaseAddress = addresses!.Addresses
+            .Select(p => new Uri(p))
+            .Last();
+
+        testServerHost.Start();
+
+        return testServerHost;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+
+        if (!_disposed)
         {
-            webHostBuilder.UseKestrel(opt => opt.ListenLocalhost(Port));
-            webHostBuilder.ConfigureServices(s => s.AddSingleton<IServer, KestrelTestServer>());
-        });
-
-        var host = base.CreateHost(builder);
-
-        return host;
+            if (disposing)
+            {
+                _kestrelServerHost?.Dispose();
+            }
+            _disposed = true;
+        }
     }
 
-    public override async ValueTask DisposeAsync()
+    private void EnsureServer()
     {
-        await base.DisposeAsync();
-        GC.SuppressFinalize(this);
-    }
-}
-
-public class KestrelTestServer : TestServer, IServer
-{
-    private readonly KestrelServer _server;
-
-    public KestrelTestServer(IServiceProvider serviceProvider) : base(serviceProvider)
-    {
-        var transportFactory = serviceProvider.GetRequiredService<IEnumerable<IConnectionListenerFactory>>().First();
-
-        var kestrelOptions = serviceProvider.GetRequiredService<IOptions<KestrelServerOptions>>();
-        var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
-        _server = new KestrelServer(kestrelOptions, transportFactory, loggerFactory);
-    }
-
-    async Task IServer.StartAsync<TContext>(IHttpApplication<TContext> application, CancellationToken cancellationToken)
-    {
-        await InvokeExplicitInterfaceMethod(nameof(IServer.StartAsync), typeof(TContext), [application, cancellationToken]);
-        await _server.StartAsync(application, cancellationToken);
-    }
-
-    async Task IServer.StopAsync(CancellationToken cancellationToken)
-    {
-        await InvokeExplicitInterfaceMethod(nameof(IServer.StopAsync), null, [cancellationToken]);
-        await _server.StopAsync(cancellationToken);
-    }
-
-    private Task InvokeExplicitInterfaceMethod(string methodName, Type? genericParameter, object[] args)
-    {
-        var baseMethod = typeof(TestServer).GetInterfaceMap(typeof(IServer)).TargetMethods.First(m => m.Name.EndsWith(methodName));
-        var method = genericParameter == null ? baseMethod : baseMethod.MakeGenericMethod(genericParameter);
-        return method.Invoke(this, args) as Task ?? throw new InvalidOperationException("Task not returned");
+        using var _ = CreateDefaultClient();
     }
 }

@@ -26,12 +26,14 @@ public class SetupMfaE2ETests : E2ETestBase
 
         await ClickOn(Button("Login"));
 
-        await AssertVisibleLink("Insights");
-        await Page.GetByRole(AriaRole.Banner).GetByRole(AriaRole.Link).Nth(1).ClickAsync();
+        await AssertVisibleHeading("Insights");
+
+        await Page.GetByRole(AriaRole.Toolbar).GetByRole(AriaRole.Button).Nth(2).ClickAsync();
+        await Page.GetByRole(AriaRole.Link, new() { Name = "Segurança" }).ClickAsync();
         await Expect(Page.GetByRole(AriaRole.Img)).ToBeVisibleAsync();
 
         var code = await GetMfaCode(email);
-        await Page.Locator("input[type=\"text\"]").PressSequentiallyAsync(code, new() { Delay = 100 });
+        await Page.GetByTestId("mfa-code-input").PressSequentiallyAsync(code, new() { Delay = 100 });
 
         await AssertVisibleText("2FA configurado com sucesso!");
         await ClickOn(Button("Continuar"));

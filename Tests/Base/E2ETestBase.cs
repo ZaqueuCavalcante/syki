@@ -7,7 +7,7 @@ namespace Syki.Tests.Base;
 public class E2ETestBase : PageTest
 {
     private readonly string _url = "http://localhost:5002";
-    private readonly string _database = "UserID=postgres;Password=postgres;Host=localhost;Port=5432;Database=syki-db;Pooling=true;";
+    private readonly string _database = "Host=localhost;Username=postgres;Password=postgres;Port=5432;Database=syki-tests-db;";
 
     protected BackFactory _api = null!;
     protected FrontFactory _front = null!;
@@ -27,6 +27,8 @@ public class E2ETestBase : PageTest
 
         _daemon = new DaemonFactory();
         _daemon.Services.CreateScope();
+
+        Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
 
         _front = new FrontFactory();
         _front.Services.CreateScope();
@@ -78,6 +80,12 @@ public class E2ETestBase : PageTest
         await Expect(button).ToBeVisibleAsync();
     }
 
+    protected async Task AssertVisibleHeading(string text)
+    {
+        var link = Page.GetByRole(AriaRole.Heading, new() { Name = text });
+        await Expect(link).ToBeVisibleAsync();
+    }
+
     protected async Task AssertVisibleLink(string text)
     {
         var link = Page.GetByRole(AriaRole.Link, new() { Name = text });
@@ -101,7 +109,12 @@ public class E2ETestBase : PageTest
     {
         using var ctx = GetDbContext();
         var userId = await ctx.Users.Where(u => u.Email == email).Select(u => u.Id).FirstAsync();
-        var mfaKey = await ctx.UserTokens.Where(t => t.UserId == userId).Select(t => t.Value).FirstAsync();
+        var mfaKey = "";
+        while (mfaKey.IsEmpty())
+        {
+            mfaKey = await ctx.UserTokens.Where(t => t.UserId == userId).Select(t => t.Value).FirstOrDefaultAsync();
+            await Task.Delay(250);
+        }
         return mfaKey!.GenerateTOTP();
     }
 }

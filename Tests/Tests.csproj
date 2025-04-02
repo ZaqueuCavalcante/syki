@@ -33,6 +33,7 @@
     <ProjectReference Include="..\Shared\Shared.csproj" />
     <ProjectReference Include="..\Back\Back.csproj" Aliases="global,Back" />
     <ProjectReference Include="..\Daemon\Daemon.csproj" Aliases="global,Daemon" />
+    <ProjectReference Include="..\Server\Server.csproj" Aliases="global,Server" />
   </ItemGroup>
 
 </Project>

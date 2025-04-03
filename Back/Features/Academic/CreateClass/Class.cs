@@ -127,8 +127,8 @@ public class Class
         Notes = [];
         foreach (var student in Students)
         {
-            Enum.GetValues<StudentClassNoteType>().ToList()
-                .ForEach(type => Notes.Add(new StudentClassNote(InstitutionId, Id, student.Id, type, 0.00M)));
+            Enum.GetValues<ClassNoteType>().ToList()
+                .ForEach(type => Notes.Add(new StudentClassNote(Id, student.Id, type, 0.00M)));
         }
     }
 
@@ -160,7 +160,7 @@ public class Class
     public List<ClassNoteRemainingWeightsOut> GetNotesRemainingWeights()
     {
         var weights = new List<ClassNoteRemainingWeightsOut>();
-        foreach (var note in Enum.GetValues<StudentClassNoteType>())
+        foreach (var note in Enum.GetValues<ClassNoteType>())
         {
             var sum = Activities.Where(x => x.Note == note).Sum(x => x.Weight);
             weights.Add(new() { Note = note, Weight = 100 - sum });

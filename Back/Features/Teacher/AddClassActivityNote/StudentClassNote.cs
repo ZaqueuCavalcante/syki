@@ -1,28 +1,25 @@
 namespace Syki.Back.Features.Teacher.AddClassActivityNote;
 
 /// <summary>
-/// Representa uma Nota de um Aluno dentro de uma Turma
+/// Representa uma nota de um aluno em uma atividade
 /// </summary>
 public class StudentClassNote : Entity
 {
     public Guid Id { get; set; }
-    public Guid InstitutionId { get; set; }
     public Guid ClassId { get; set; }
     public Guid StudentId { get; set; }
-    public StudentClassNoteType Type { get; set; }
+    public ClassNoteType Type { get; set; }
     public decimal Note { get; set; }
 
     private StudentClassNote() {}
 
     public StudentClassNote(
-        Guid institutionId,
         Guid classId,
         Guid studentId,
-        StudentClassNoteType examType,
+        ClassNoteType examType,
         decimal note
     ) {
         Id = Guid.NewGuid();
-        InstitutionId = institutionId;
         ClassId = classId;
         StudentId = studentId;
         Type = examType;

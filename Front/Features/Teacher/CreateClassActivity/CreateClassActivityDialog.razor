@@ -38,7 +38,7 @@
                         Dense="true"
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
-                        T="StudentClassNoteType"
+                        T="ClassNoteType"
                         Value="@_note"
                         ValueChanged="x => HandleNoteChanged(x)"
                         Label="Nota"
@@ -46,7 +46,7 @@
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (StudentClassNoteType type in Enum.GetValues<StudentClassNoteType>())
+                        @foreach (ClassNoteType type in Enum.GetValues<ClassNoteType>())
                         {
                             <MudSelectItem Value="@type">@type.GetDescription()</MudSelectItem>
                         }
@@ -114,7 +114,7 @@
 
     private List<ClassNoteRemainingWeightsOut> _remainingWeights = [];
 
-    private StudentClassNoteType _note = StudentClassNoteType.N1;
+    private ClassNoteType _note = ClassNoteType.N1;
     private string _title;
     private string _description;
     private ClassActivityType _type = ClassActivityType.Exam;
@@ -147,7 +147,7 @@
 
     private void Close()
     {
-        _note = StudentClassNoteType.N1;
+        _note = ClassNoteType.N1;
         _title = string.Empty;
         _description = string.Empty;
         _type = ClassActivityType.Work;
@@ -182,7 +182,7 @@
         _loading = false;
     }
 
-    private void HandleNoteChanged(StudentClassNoteType newValue)
+    private void HandleNoteChanged(ClassNoteType newValue)
     {
         _note = newValue;
         _maxWeight = _remainingWeights.Where(x => x.Note == _note).Select(x => x.Weight).First();

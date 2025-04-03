@@ -11,7 +11,7 @@ public class CreateClassActivityUnitTests
         // Arrange // Act
         var activity = ClassActivity.New(
             Guid.NewGuid(),
-            StudentClassNoteType.N1,
+            ClassNoteType.N1,
             "Banco de Dados",
             "Modele um banco de dados.",
             ClassActivityType.Work,
@@ -31,7 +31,7 @@ public class CreateClassActivityUnitTests
         // Arrange // Act
         var activity = ClassActivity.New(
             Guid.NewGuid(),
-            StudentClassNoteType.N1,
+            ClassNoteType.N1,
             "Banco de Dados",
             "Modele um banco de dados.",
             ClassActivityType.Work,
@@ -54,7 +54,7 @@ public class CreateClassActivityUnitTests
         {
             var activity = ClassActivity.New(
                 @class.Id,
-                StudentClassNoteType.N1,
+                ClassNoteType.N1,
                 "Banco de Dados",
                 "Modele um banco de dados.",
                 ClassActivityType.Work,
@@ -84,7 +84,7 @@ public class CreateClassActivityUnitTests
         {
             var activity = ClassActivity.New(
                 @class.Id,
-                StudentClassNoteType.N1,
+                ClassNoteType.N1,
                 "Banco de Dados",
                 "Modele um banco de dados.",
                 ClassActivityType.Work,

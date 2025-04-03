@@ -9,7 +9,7 @@ public class TeacherClassStudentOut
 
     public bool IsSelected { get; set; }
 
-    public string GetNote(StudentClassNoteType type)
+    public string GetNote(ClassNoteType type)
     {
         return Notes.Where(x => x.Type == type).First().Note.Format();
     }

@@ -64,8 +64,8 @@ public partial class IntegrationTests
     {
         var discreteMath = list.First(x => x.ClassId == classId);
         discreteMath.AverageNote.Should().Be(averageNote);
-        discreteMath.Notes.First(x => x.Type == StudentClassNoteType.N1).Note.Should().Be(n1);
-        discreteMath.Notes.First(x => x.Type == StudentClassNoteType.N2).Note.Should().Be(n2);
-        discreteMath.Notes.First(x => x.Type == StudentClassNoteType.N3).Note.Should().Be(n3);
+        discreteMath.Notes.First(x => x.Type == ClassNoteType.N1).Note.Should().Be(n1);
+        discreteMath.Notes.First(x => x.Type == ClassNoteType.N2).Note.Should().Be(n2);
+        discreteMath.Notes.First(x => x.Type == ClassNoteType.N3).Note.Should().Be(n3);
     }
 }

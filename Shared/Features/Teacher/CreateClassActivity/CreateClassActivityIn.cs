@@ -5,7 +5,7 @@ public class CreateClassActivityIn
     /// <summary>
     /// Nota
     /// </summary>
-    public StudentClassNoteType Note { get; set; }
+    public ClassNoteType Note { get; set; }
 
     /// <summary>
     /// Título

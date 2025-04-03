@@ -15,7 +15,7 @@ public partial class IntegrationTests
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
-        var note = StudentClassNoteType.N1;
+        var note = ClassNoteType.N1;
         var title = "Modelagem de Banco de Dados";
         var description = "Modele um banco de dados para uma barbearia.";
         var type = ClassActivityType.Work;
@@ -39,7 +39,7 @@ public partial class IntegrationTests
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
         // Act
-        var response = await teacherClient.CreateClassActivity(Guid.NewGuid(), StudentClassNoteType.N2, "", "", ClassActivityType.Exam, 50, DateTime.Now.ToDateOnly(), Hour.H08_00);
+        var response = await teacherClient.CreateClassActivity(Guid.NewGuid(), ClassNoteType.N2, "", "", ClassActivityType.Exam, 50, DateTime.Now.ToDateOnly(), Hour.H08_00);
 
         // Assert
         response.ShouldBeError(new ClassNotFound());
@@ -60,7 +60,7 @@ public partial class IntegrationTests
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
-        var note = StudentClassNoteType.N1;
+        var note = ClassNoteType.N1;
         var title = "Modelagem de Banco de Dados";
         var description = "Modele um banco de dados para uma barbearia.";
         var type = ClassActivityType.Work;
@@ -87,7 +87,7 @@ public partial class IntegrationTests
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
-        var note = StudentClassNoteType.N1;
+        var note = ClassNoteType.N1;
         var title = "Modelagem de Banco de Dados";
         var description = "Modele um banco de dados para uma barbearia.";
         var type = ClassActivityType.Work;

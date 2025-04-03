@@ -8,7 +8,7 @@ public class AcademicClassStudentOut
     public List<StudentClassNoteOut> Notes { get; set; } = [];
     public decimal Frequency { get; set; }
 
-    public string GetNote(StudentClassNoteType type)
+    public string GetNote(ClassNoteType type)
     {
         var note = Notes.FirstOrDefault(x => x.Type == type);
         return note != null ? note.Note.Format() : "0.00";

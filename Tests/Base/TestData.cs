@@ -371,9 +371,9 @@ public static class TestData
     private static List<StudentClassNote> GetStudentClassNotesList(decimal n1, decimal n2, decimal n3)
     {
         return [
-            new StudentClassNote(Guid.Empty, Guid.Empty, Guid.Empty, StudentClassNoteType.N1, n1),
-            new StudentClassNote(Guid.Empty, Guid.Empty, Guid.Empty, StudentClassNoteType.N2, n2),
-            new StudentClassNote(Guid.Empty, Guid.Empty, Guid.Empty, StudentClassNoteType.N3, n3)
+            new StudentClassNote(Guid.Empty, Guid.Empty, ClassNoteType.N1, n1),
+            new StudentClassNote(Guid.Empty, Guid.Empty, ClassNoteType.N2, n2),
+            new StudentClassNote(Guid.Empty, Guid.Empty, ClassNoteType.N3, n3)
         ];
     }
 

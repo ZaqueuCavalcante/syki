@@ -7,7 +7,7 @@ public class ClassActivity : Entity
 {
     public Guid Id { get; }
     public Guid ClassId { get; set; }
-    public StudentClassNoteType Note { get; set; }
+    public ClassNoteType Note { get; set; }
 
     public string Title { get; set; }
     public string Description { get; set; }
@@ -27,7 +27,7 @@ public class ClassActivity : Entity
 
     private ClassActivity(
         Guid classId,
-        StudentClassNoteType note,
+        ClassNoteType note,
         string title,
         string description,
         ClassActivityType type,
@@ -51,7 +51,7 @@ public class ClassActivity : Entity
 
     public static OneOf<ClassActivity, SykiError> New(
         Guid classId,
-        StudentClassNoteType note,
+        ClassNoteType note,
         string title,
         string description,
         ClassActivityType type,

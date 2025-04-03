@@ -26,7 +26,7 @@ public class TeacherHttpClient(HttpClient http)
 
     public async Task<OneOf<SuccessOut, ErrorOut>> CreateClassActivity(
         Guid classId,
-        StudentClassNoteType note,
+        ClassNoteType note,
         string title,
         string description,
         ClassActivityType type,

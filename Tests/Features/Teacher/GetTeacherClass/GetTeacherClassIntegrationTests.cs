@@ -39,9 +39,9 @@ public partial class IntegrationTests
         @class.Students.Should().HaveCount(1);
         var notes = @class.Students.First().Notes;
         notes.Should().AllSatisfy(x => x.StudentId.Should().Be(student.Id));
-        notes.Count(x => x.Type == StudentClassNoteType.N1).Should().Be(1);
-        notes.Count(x => x.Type == StudentClassNoteType.N2).Should().Be(1);
-        notes.Count(x => x.Type == StudentClassNoteType.N3).Should().Be(1);
+        notes.Count(x => x.Type == ClassNoteType.N1).Should().Be(1);
+        notes.Count(x => x.Type == ClassNoteType.N2).Should().Be(1);
+        notes.Count(x => x.Type == ClassNoteType.N3).Should().Be(1);
         notes.Should().AllSatisfy(x => x.Note.Should().Be(0));
     }
 }

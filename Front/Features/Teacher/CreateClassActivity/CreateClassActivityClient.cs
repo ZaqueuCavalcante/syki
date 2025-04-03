@@ -4,7 +4,7 @@ public class CreateClassActivityClient(HttpClient http) : ITeacherClient
 {
     public async Task<OneOf<SuccessOut, ErrorOut>> Create(
         Guid classId,
-        StudentClassNoteType note,
+        ClassNoteType note,
         string title,
         string description,
         ClassActivityType type,

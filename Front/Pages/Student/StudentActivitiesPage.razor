@@ -31,6 +31,7 @@
                     <MudTh>Nota</MudTh>
                     <MudTh>Peso (%)</MudTh>
                     <MudTh>Limite de entrega</MudTh>
+                    <MudTh></MudTh>
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Disciplina">@context.ClassName</MudTd>
@@ -39,6 +40,9 @@
                     <MudTd DataLabel="Nota">@context.Note.GetDescription()</MudTd>
                     <MudTd DataLabel="Peso (%)">@context.Weight</MudTd>
                     <MudTd DataLabel="Limite de entrega">@context.GetDueDate()</MudTd>
+                    <MudTd>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenDrawer(context))" />
+                    </MudTd>
                 </RowTemplate>
                 <LoadingContent>
                     @if (_breakpoint == Breakpoint.Xs)
@@ -54,8 +58,33 @@
     </MudContainer>
 </MudContainer>
 
+<MudDrawer Anchor="Anchor.Right" @bind-Open="@_rightOpen" Variant="DrawerVariant.Temporary" OverlayAutoClose="true" Elevation="1" Width="460px">
+	<MudDrawerHeader Class="justify-space-between px-4 py-1">
+		<MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart" Spacing="3">
+			<MudIcon Icon="@Icons.Material.Filled.BookmarkAdded"></MudIcon>
+			<MudText Typo="Typo.h5"><b>Entregas</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@CloseDrawer" />
+	</MudDrawerHeader>
+    <MudDivider DividerType="DividerType.Middle" />
+    <MudDrawerContainer>
+        <MudPaper Class="pa-4" Style="overflow-x: hidden" Elevation="0">
+            <MudForm Spacing="0">
+                <MudGrid Spacing="2">
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <SykiTextField Label="Link" AutoFocus="true" @bind-Value="@_link" />
+                    </MudItem>
+                </MudGrid>
+            </MudForm>
+            <DialogSaveButton OnClick="@Submit" />
+        </MudPaper>
+    </MudDrawerContainer>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
 @inject IBrowserViewportService BrowserViewportService
 @inject GetStudentActivitiesClient GetStudentActivitiesClient
+@inject CreateClassActivityWorkClient CreateClassActivityWorkClient
 
 @code
 {
@@ -63,7 +92,6 @@
     private string _searchString;
     private Breakpoint _breakpoint;
     private List<StudentActivityOut> _activities = [];
-
     private Func<StudentActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);
     
     protected override async Task OnInitializedAsync()
@@ -77,5 +105,32 @@
     private string GetNotFoundMessage()
     {
         return _searchString.IsEmpty() ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";
+    }
+
+    private string _link;
+    private bool _rightOpen;
+    private StudentActivityOut _selectedActivity = new();
+    private void OpenDrawer(StudentActivityOut activity)
+    {
+        _rightOpen = true;
+        _selectedActivity = activity;
+    }
+    private void CloseDrawer()
+    {
+        _rightOpen = false;
+    }
+    private async Task Submit()
+    {
+        var result = await CreateClassActivityWorkClient.Create(_selectedActivity.Id, _link);
+        if (result.IsSuccess())
+        {
+            Snackbar.Add("Entrega feita com sucesso!", Severity.Success);
+            _link = string.Empty;
+            CloseDrawer();
+        }
+        else
+        {
+            Snackbar.Add(result.GetError().Message, Severity.Error);
+        }
     }
 }

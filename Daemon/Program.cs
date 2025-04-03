@@ -6,6 +6,7 @@ using Syki.Daemon.Commands;
 using Hangfire.MemoryStorage;
 
 var builder = WebApplication.CreateBuilder(args);
+Audit.Core.Configuration.AuditDisabled = builder.Configuration.Audit().Disabled;
 
 builder.AddServicesConfigs();
 builder.AddHandlersConfigs();

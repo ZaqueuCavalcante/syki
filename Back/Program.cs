@@ -23,6 +23,8 @@ builder.AddOpenTelemetryConfigs();
 
 var app = builder.Build();
 
+// app.Services.CreateScope().ServiceProvider.GetRequiredService<SykiDbContext>().ResetDb(); 
+
 app.UseLogs();
 app.UseCors();
 

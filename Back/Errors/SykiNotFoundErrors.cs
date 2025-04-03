@@ -70,3 +70,8 @@ public class CommandNotFound : SykiError
     public override string Code { get; set; } = nameof(CommandNotFound);
     public override string Message { get; set; } = "Comando não encontrado.";
 }
+public class ClassActivityNotFound : SykiError
+{
+    public override string Code { get; set; } = nameof(ClassActivityNotFound);
+    public override string Message { get; set; } = "Atividade não encontrada.";
+}

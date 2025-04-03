@@ -25,6 +25,7 @@
                     <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo"/>
                 </ToolBarContent>
                 <HeaderContent>
+                    <MudTh>Disciplina</MudTh>
                     <MudTh>Título</MudTh>
                     <MudTh>Tipo</MudTh>
                     <MudTh>Nota</MudTh>
@@ -32,6 +33,7 @@
                     <MudTh>Limite de entrega</MudTh>
                 </HeaderContent>
                 <RowTemplate>
+                    <MudTd DataLabel="Disciplina">@context.ClassName</MudTd>
                     <MudTd DataLabel="Título">@context.Title</MudTd>
                     <MudTd DataLabel="Tipo">@context.Type.GetDescription()</MudTd>
                     <MudTd DataLabel="Nota">@context.Note.GetDescription()</MudTd>

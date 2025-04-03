@@ -50,8 +50,15 @@ Azure for Students, $100 credits
         - Resource Group
             - Resource
 
-- Virtual Networks
-    - Security
-    - IP Addresses (subnets)
+- Virtual Networks (VNETs)
+    - Security (NSG)
+        - Filtro de pacotes
+    - IP Addresses
+    - Subnets
+
+
+
+
+
 
 

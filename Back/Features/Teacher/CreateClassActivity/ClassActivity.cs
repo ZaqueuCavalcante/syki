@@ -81,12 +81,13 @@ public class ClassActivity : Entity
         };
     }
 
-    public StudentActivityOut ToStudentActivityOut()
+    public StudentActivityOut ToStudentActivityOut(string className)
     {
         return new()
         {
             Id = Id,
             ClassId = ClassId,
+            ClassName = className,
             Note = Note,
             Title = Title,
             Description = Description,

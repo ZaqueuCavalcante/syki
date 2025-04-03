@@ -4,11 +4,12 @@ public class GetStudentActivitiesService(SykiDbContext ctx) : IStudentService
 {
     public async Task<List<StudentActivityOut>> Get(Guid userId)
     {
-        var classesStudents = await ctx.ClassesStudents.AsNoTracking()
-            .Where(x => x.SykiStudentId == userId).ToListAsync();
+        var classesIds = await ctx.ClassesStudents
+            .Where(x => x.SykiStudentId == userId)
+            .Select(x => x.ClassId).ToListAsync();
 
-        var classesIds = classesStudents.ConvertAll(x => x.ClassId);
         var classes = await ctx.Classes.AsNoTracking()
+            .Include(x => x.Discipline)
             .Include(x => x.Activities)
             .Where(x => classesIds.Contains(x.Id))
             .ToListAsync();
@@ -19,7 +20,7 @@ public class GetStudentActivitiesService(SykiDbContext ctx) : IStudentService
         {
             foreach (var activity in @class.Activities)
             {
-                result.Add(activity.ToStudentActivityOut());
+                result.Add(activity.ToStudentActivityOut(@class.Discipline.Name));
             }
         }
 

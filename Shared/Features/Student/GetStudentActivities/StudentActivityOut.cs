@@ -4,6 +4,7 @@ public class StudentActivityOut
 {
     public Guid Id { get; set; }
     public Guid ClassId { get; set; }
+    public string ClassName { get; set; }
     public StudentClassNoteType Note { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }

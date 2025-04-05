@@ -2,7 +2,7 @@ namespace Syki.Front.Features.Teacher.CreateClassActivity;
 
 public class CreateClassActivityClient(HttpClient http) : ITeacherClient
 {
-    public async Task<OneOf<SuccessOut, ErrorOut>> Create(
+    public async Task<OneOf<CreateClassActivityOut, ErrorOut>> Create(
         Guid classId,
         ClassNoteType note,
         string title,
@@ -16,6 +16,6 @@ public class CreateClassActivityClient(HttpClient http) : ITeacherClient
 
         var response = await http.PostAsJsonAsync($"/teacher/classes/{classId}/activities", data);
 
-        return await response.Resolve<SuccessOut>();
+        return await response.Resolve<CreateClassActivityOut>();
     }
 }

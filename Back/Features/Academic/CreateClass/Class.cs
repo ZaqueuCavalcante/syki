@@ -124,12 +124,6 @@ public class Class
     public void Start()
     {
         Status = ClassStatus.Started;
-        Notes = [];
-        foreach (var student in Students)
-        {
-            Enum.GetValues<ClassNoteType>().ToList()
-                .ForEach(type => Notes.Add(new StudentClassNote(Id, student.Id, type, 0.00M)));
-        }
     }
 
     public OneOf<SykiSuccess, SykiError> Finish()
@@ -223,14 +217,6 @@ public class Class
 
     public TeacherClassOut ToTeacherClassOut()
     {
-        var students = Students.OrderBy(x => x.Name).Select(x => x.ToTeacherClassStudentOut()).ToList();
-        students.ForEach(s =>
-        {
-            var studentNotes = Notes.Where(g => g.StudentId == s.Id).ToList();
-            s.AverageNote = studentNotes.GetAverageNote();
-            s.Notes = studentNotes.OrderBy(x => x.Type).Select(g => g.ToOut()).ToList();
-        });
-
         return new()
         {
             Id = Id,
@@ -238,7 +224,6 @@ public class Class
             Code = Discipline.Code,
             Period = PeriodId,
             Status = Status,
-            Students = students,
         };
     }
 

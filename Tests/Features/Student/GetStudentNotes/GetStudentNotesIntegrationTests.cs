@@ -23,7 +23,7 @@ public partial class IntegrationTests
             x.Period.Should().Be(1);
             x.AverageNote.Should().Be(0);
             x.Notes.Should().HaveCount(3);
-            x.Notes.Should().AllSatisfy(x => x.Note.Should().Be(0));
+            x.Notes.Should().AllSatisfy(y => y.Note.Should().Be(0));
             x.StudentDisciplineStatus.Should().Be(StudentDisciplineStatus.Matriculado);
         });
     }

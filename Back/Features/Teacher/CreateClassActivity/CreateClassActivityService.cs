@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Teacher.CreateClassActivity;
 
 public class CreateClassActivityService(SykiDbContext ctx) : ITeacherService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Create(Guid teacherId, Guid classId, CreateClassActivityIn data)
+    public async Task<OneOf<CreateClassActivityOut, SykiError>> Create(Guid teacherId, Guid classId, CreateClassActivityIn data)
     {
         var @class = await ctx.Classes.Include(x => x.Activities)
             .FirstOrDefaultAsync(x => x.Id == classId && x.TeacherId == teacherId);
@@ -25,6 +25,6 @@ public class CreateClassActivityService(SykiDbContext ctx) : ITeacherService
 
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return activity.GetSuccess().ToCreateOut();
     }
 }

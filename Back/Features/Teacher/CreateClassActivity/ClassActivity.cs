@@ -103,4 +103,12 @@ public class ClassActivity : Entity
             DueHour = DueHour,
         };
     }
+
+    public CreateClassActivityOut ToCreateOut()
+    {
+        return new()
+        {
+            Id = Id,
+        };
+    }
 }

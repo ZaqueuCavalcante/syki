@@ -12,7 +12,7 @@ public class GetStudentAverageNoteService(SykiDbContext ctx) : IStudentService
             ).ToListAsync();
 
         var classes = classesStudents.ConvertAll(x => x.ClassId);
-        var notes = await ctx.Notes.AsNoTracking()
+        var notes = await ctx.ClassNotes.AsNoTracking()
             .Where(x => x.StudentId == userId).ToListAsync();
 
         var values = classes.ConvertAll(c => notes.Where(g => g.ClassId == c).GetAverageNote());

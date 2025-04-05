@@ -20,7 +20,7 @@ public class GetStudentNotesService(SykiDbContext ctx) : IStudentService
             .Where(x => disciplinesIds.Contains(x.DisciplineId))
             .ToListAsync();
 
-        var notes = await ctx.Notes.AsNoTracking()
+        var notes = await ctx.ClassNotes.AsNoTracking()
             .Where(x => x.StudentId == userId).ToListAsync();
 
         var result = classes.ConvertAll(c =>

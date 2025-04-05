@@ -7,12 +7,12 @@
 
 - ✅ Analisar pq a tela de turma do professor eh tão lenta
 
-
-
-
 - Dentro de uma turma, deve ser possível criar uma atividade
     - O Dialog só deve ser fechado ao clicar no X ou no Cancelar
     - A soma total dos pesos das atividades já existentes deve ser levada em conta no peso máximo da nova atividade
+
+
+
 
 - Na listagem de atividades
     - Ordenar por CreatedAt DESC

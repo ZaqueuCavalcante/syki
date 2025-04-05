@@ -37,7 +37,6 @@ public static class ServicesConfigs
         builder.Services.AddScoped<StartClassesService>();
         builder.Services.AddScoped<UpdateEnrollmentPeriodService>();
         builder.Services.AddScoped<CreateLessonAttendanceService>();
-        builder.Services.AddScoped<AddClassActivityNoteService>();
         builder.Services.AddScoped<FinalizeClassesService>();
 
         builder.Services.AddScoped<IEmailsService, EmailsService>();

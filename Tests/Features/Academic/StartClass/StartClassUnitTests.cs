@@ -19,19 +19,5 @@ public class StartClassUnitTests
 
         // Assert
         @class.Status.Should().Be(ClassStatus.Started);
-
-        var notesA = @class.Notes.Where(x => x.StudentId == studentA.Id);
-        notesA.Should().HaveCount(3);
-        notesA.Count(x => x.Type == ClassNoteType.N1).Should().Be(1);
-        notesA.Count(x => x.Type == ClassNoteType.N2).Should().Be(1);
-        notesA.Count(x => x.Type == ClassNoteType.N3).Should().Be(1);
-        notesA.Should().AllSatisfy(x => x.Note.Should().Be(0));
-
-        var notesB = @class.Notes.Where(x => x.StudentId == studentB.Id);
-        notesB.Should().HaveCount(3);
-        notesB.Count(x => x.Type == ClassNoteType.N1).Should().Be(1);
-        notesB.Count(x => x.Type == ClassNoteType.N2).Should().Be(1);
-        notesB.Count(x => x.Type == ClassNoteType.N3).Should().Be(1);
-        notesB.Should().AllSatisfy(x => x.Note.Should().Be(0));
     }
 }

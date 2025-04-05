@@ -112,8 +112,8 @@
 <ClassLessonsDialog @ref="@_dialog" OnRowClick="@SetLesson" />
 
 @inject ISnackbar Snackbar
-@inject GetTeacherClassClient GetTeacherClassClient
 @inject IBrowserViewportService BrowserViewportService
+@inject GetTeacherClassLessonsClient GetTeacherClassLessonsClient
 @inject CreateLessonAttendanceClient CreateLessonAttendanceClient
 @inject GetTeacherLessonAttendancesClient GetTeacherLessonAttendancesClient
 
@@ -128,8 +128,8 @@
     private bool _loading;
     private bool _showButtons;
     private string _searchString;
-    private TeacherClassOut _class = new();
     private LessonOut _lesson = new();
+    private List<LessonOut> _lessons = [];
     private List<GetTeacherLessonAttendanceOut> _attendances = [];
 
     private List<Guid> _initialState = [];
@@ -138,8 +138,8 @@
     {
         _loading = true;
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        _class = await GetTeacherClassClient.Get(ClassId);
-        var id = _class.Lessons.Where(x => x.Date <= DateTime.Now.ToDateOnly()).MaxBy(x => x.Date)?.Id ?? Guid.Empty;
+        _lessons = (await GetTeacherClassLessonsClient.Get(ClassId)).GetSuccess();
+        var id = _lessons.Where(x => x.Date <= DateTime.Now.ToDateOnly()).MaxBy(x => x.Date)?.Id ?? Guid.Empty;
         await SetLesson(id);
         _loading = false;
         _showButtons = true;
@@ -147,7 +147,7 @@
 
     private async Task SetLesson(Guid id)
     {
-        _lesson = _class.Lessons.FirstOrDefault(x => x.Id == id) ?? new();
+        _lesson = _lessons.FirstOrDefault(x => x.Id == id) ?? new();
         _attendances = await GetTeacherLessonAttendancesClient.Get(id);
         _initialState = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
     }
@@ -178,7 +178,7 @@
 
     private async Task OnEditLessonClick()
     {
-        await _dialog.Open(_class.Lessons);
+        await _dialog.Open(_lessons);
     }
 
     private async Task SaveFrequency()
@@ -187,7 +187,7 @@
         var result = await CreateLessonAttendanceClient.Create(_lesson.Id, ids);
         if (result.IsSuccess())
         {
-            _class = await GetTeacherClassClient.Get(ClassId);
+            _lessons = (await GetTeacherClassLessonsClient.Get(ClassId)).GetSuccess();
             _initialState = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
             Snackbar.Add("Frequência salva com sucesso!", Severity.Success);
         }

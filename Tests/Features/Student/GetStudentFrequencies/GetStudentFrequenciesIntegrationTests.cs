@@ -44,8 +44,8 @@ public partial class IntegrationTests
         await academicClient.StartClasses([discreteMathClass.Id]);
 
         var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
-        var teacherMathClass = await teacherClient.GetTeacherClass(discreteMathClass.Id);
-        var firstLesson = teacherMathClass.Lessons.First();
+        var mathClassLessons = (await teacherClient.GetTeacherClassLessons(discreteMathClass.Id)).GetSuccess();
+        var firstLesson = mathClassLessons.First();
 
         await teacherClient.CreateLessonAttendance(firstLesson.Id, [student.Id]);
 
@@ -104,20 +104,20 @@ public partial class IntegrationTests
         await academicClient.StartClasses([integratorProjectOne.Id]);
 
         var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
-        var teacherDiscreteMath = await teacherClient.GetTeacherClass(discreteMath.Id);
-        var teacherIntroToWebDev = await teacherClient.GetTeacherClass(introToWebDev.Id);
-        var teacherHumanMachineInteractionDesign = await teacherClient.GetTeacherClass(humanMachineInteractionDesign.Id);
-        var teacherIntroToComputerNetworks = await teacherClient.GetTeacherClass(introToComputerNetworks.Id);
-        var teacherComputationalThinkingAndAlgorithms = await teacherClient.GetTeacherClass(computationalThinkingAndAlgorithms.Id);
-        var teacherIntegratorProjectOne = await teacherClient.GetTeacherClass(integratorProjectOne.Id);
+        var teacherDiscreteMathLessons = (await teacherClient.GetTeacherClassLessons(discreteMath.Id)).GetSuccess();
+        var teacherIntroToWebDevLessons = (await teacherClient.GetTeacherClassLessons(introToWebDev.Id)).GetSuccess();
+        var teacherHumanMachineInteractionDesignLessons = (await teacherClient.GetTeacherClassLessons(humanMachineInteractionDesign.Id)).GetSuccess();
+        var teacherIntroToComputerNetworksLessons = (await teacherClient.GetTeacherClassLessons(introToComputerNetworks.Id)).GetSuccess();
+        var teacherComputationalThinkingAndAlgorithmsLessons = (await teacherClient.GetTeacherClassLessons(computationalThinkingAndAlgorithms.Id)).GetSuccess();
+        var teacherIntegratorProjectOneLessons = (await teacherClient.GetTeacherClassLessons(integratorProjectOne.Id)).GetSuccess();
 
         var lessons = new List<LessonOut>();
-        lessons.AddRange(teacherHumanMachineInteractionDesign.Lessons.PickRandom(1));
-        lessons.AddRange(teacherIntroToComputerNetworks.Lessons.PickRandom(3));
-        lessons.AddRange(teacherIntroToWebDev.Lessons.PickRandom(2));
-        lessons.AddRange(teacherDiscreteMath.Lessons.PickRandom(3));
-        lessons.AddRange(teacherComputationalThinkingAndAlgorithms.Lessons.PickRandom(2));
-        lessons.AddRange(teacherIntegratorProjectOne.Lessons.PickRandom(1));
+        lessons.AddRange(teacherHumanMachineInteractionDesignLessons.PickRandom(1));
+        lessons.AddRange(teacherIntroToComputerNetworksLessons.PickRandom(3));
+        lessons.AddRange(teacherIntroToWebDevLessons.PickRandom(2));
+        lessons.AddRange(teacherDiscreteMathLessons.PickRandom(3));
+        lessons.AddRange(teacherComputationalThinkingAndAlgorithmsLessons.PickRandom(2));
+        lessons.AddRange(teacherIntegratorProjectOneLessons.PickRandom(1));
         for (var i = 0; i < lessons.Count; i++)
         {
             List<Guid> presences = new List<int>{ 0, 2, 3, 5, 6, 8, 10 }.Contains(i) ? [student.Id] : [];

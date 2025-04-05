@@ -239,7 +239,6 @@ public class Class
             Period = PeriodId,
             Status = Status,
             Students = students,
-            Lessons = Lessons?.OrderBy(x => x.Number).Select(x => x.ToOut()).ToList() ?? [],
         };
     }
 

@@ -5,6 +5,7 @@ using Syki.Front.Features.Teacher.GetTeacherInsights;
 using Syki.Front.Features.Teacher.CreateClassActivity;
 using Syki.Front.Features.Teacher.AddClassActivityNote;
 using Syki.Front.Features.Teacher.CreateLessonAttendance;
+using Syki.Front.Features.Teacher.GetTeacherClassLessons;
 
 namespace Syki.Tests.Clients;
 
@@ -48,6 +49,12 @@ public class TeacherHttpClient(HttpClient http)
     {
         var client = new GetTeacherClassClient(Cross);
         return await client.Get(id);
+    }
+
+    public async Task<OneOf<List<LessonOut>, ErrorOut>> GetTeacherClassLessons(Guid classId)
+    {
+        var client = new GetTeacherClassLessonsClient(Cross);
+        return await client.Get(classId);
     }
 
     public async Task<List<TeacherClassesOut>> GetTeacherClasses()

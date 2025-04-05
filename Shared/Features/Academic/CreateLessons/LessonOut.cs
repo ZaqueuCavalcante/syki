@@ -24,4 +24,9 @@ public class LessonOut
     {
         return $"Aula {Number.ToTwo()}";
     }
+
+    public static implicit operator LessonOut(OneOf<LessonOut, ErrorOut> value)
+    {
+        return value.GetSuccess();
+    }
 }

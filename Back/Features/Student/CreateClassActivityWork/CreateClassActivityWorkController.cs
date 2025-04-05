@@ -12,7 +12,7 @@ public class CreateClassActivityWorkController(CreateClassActivityWorkService se
     /// Cria uma entrega para a atividade especificada
     /// </remarks>
     [HttpPost("student/activities/{id}/works")]
-    [ProducesResponseType<CreateClassActivityWorkOut>(200)]
+    [ProducesResponseType<ClassActivityWorkOut>(200)]
     [ProducesResponseType<SykiError>(400)]
     public async Task<IActionResult> Create([FromRoute] Guid id, [FromBody] CreateClassActivityWorkIn data)
     {

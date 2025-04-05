@@ -24,6 +24,11 @@
             <PropertyColumn Property="x => x.Note.GetDescription()" Title="Nota" />
             <PropertyColumn Property="x => x.Weight" Title="Peso (%)" />
             <PropertyColumn Property="x => x.GetDueDate()" Title="Data de entrega" />
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Item.Id))" />
+                </CellTemplate>
+            </TemplateColumn>
         </Columns>
         <NoRecordsContent>
             @(GetNotFoundMessage())
@@ -35,6 +40,7 @@
 
 <CreateClassActivityDialog @ref="@_dialog" ClassId="@ClassId" AfterSubmit="@Load" />
 
+@inject NavigationManager Nav
 @inject GetTeacherClassClient GetTeacherClassClient
 
 @code
@@ -52,6 +58,11 @@
     protected override async Task OnInitializedAsync()
     {
         await Load();
+    }
+
+    private void GoToDetails(Guid activityId)
+    {
+        Nav.NavigateTo($"/teacher/classes/{ClassId}/activities/{activityId}");
     }
 
     private async Task Load()

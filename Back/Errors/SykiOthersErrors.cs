@@ -25,11 +25,6 @@ public class AcademicPeriodAlreadyExists : SykiError
     public override string Code { get; set; } = nameof(AcademicPeriodAlreadyExists);
     public override string Message { get; set; } = "Já existe um período acadêmico com esse id.";
 }
-public class TeacherIsNotTheClassLeader : SykiError
-{
-    public override string Code { get; set; } = nameof(TeacherIsNotTheClassLeader);
-    public override string Message { get; set; } = "O professor não é o titular da classe.";
-}
 public class EnrollmentPeriodAlreadyExists : SykiError
 {
     public override string Code { get; set; } = nameof(EnrollmentPeriodAlreadyExists);

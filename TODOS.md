@@ -1,5 +1,76 @@
 # TODOS
 
+- Analisar pq a tela de turma do professor eh tão lenta...
+
+## Atividades V0
+
+- O professor deve ter acesso rápido à todas as suas turmas atuais, através da SideBar esquerda
+    - Ela deverá ser montada dinâmicamente para cada professor
+    - Buscar uma única vez as turmas do professor e manter na session storage (ver como foi feito na track)
+
+- Dentro de uma turma, deve ser possível criar uma atividade
+    - O Dialog só deve ser fechado ao clicar no X ou no Cancelar
+    - A soma total dos pesos das atividades já existentes deve ser levada em conta no peso máximo da nova atividade
+
+- Na listagem de atividades
+    - Ordenar por CreatedAt DESC
+    - Filtros por Tipo e Nota
+    - Adicionar coluna Criação
+    - Adicionar botão para abrir Dialog de edição
+    - Adicionar coluna de Entregas
+        - Progress com 5/26
+        - Usar Tooltip informando a %?
+        - Abaixo de 70% fica vermelha, igual ou acima fica amarela, 100% fica verde
+
+- Na tela de detalhes da atividade
+    - Adicionar um Card com todos os dados da atividade
+    - Usar mesmo estilo do Dialog de criação
+    - Deve ser possível ocultar/mostrar o Card
+
+- Listagem com todas as entregas
+    - Filtro: Todos Pendentes Corrigidos (usar Toggle Group)
+    - Colunas: Aluno, Data da entrega, Status (pendente de correção (alerta amarelo), corrigido (check verde)), Nota
+    - Clicar no detalhe, deve abrir Drawer lateral com todos os links enviados pelo aluno
+    - Professor pode atribuir nota à entrega e alterar a nota quando quiser (mesmo endpoint, criar caso null...)
+
+
+
+- Aluno deve poder ver todas as suas turmas na SideBar esquerda
+
+- Ao entrar em uma turma, listar todas as atividades ordenadas por CreatedAt DESC
+
+- Filtro: Todos Pendentes Entregues
+
+- Drawer na direita para adicionar vários links e enviar
+
+- Analisar criação de timeline
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - Aplicar filtros na query-string
     - Quando voltar pra pagina ela mantem os filtros
     - Ao compartilhar um link, nao perdemos o filtro

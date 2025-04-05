@@ -95,3 +95,8 @@ public class InvalidClassActivityWeight : SykiError
     public override string Code { get; set; } = nameof(InvalidClassActivityWeight);
     public override string Message { get; set; } = "Peso da atividade inválido.";
 }
+public class InvalidStudentClassActivityNote : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidStudentClassActivityNote);
+    public override string Message { get; set; } = "Nota de atividade inválida.";
+}

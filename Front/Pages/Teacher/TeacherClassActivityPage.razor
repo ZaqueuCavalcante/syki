@@ -1,0 +1,128 @@
+﻿@namespace Syki.Front.Pages.Teacher
+
+@page "/teacher/classes/{classId:guid}/activities/{activityId:guid}"
+@attribute [Authorize(Roles = "Teacher")]
+
+<SykiPageTitle Title="Atividade" />
+
+<MudContainer Class="my-4 px-4">
+    <SykiPageHeader Icon="@Icons.Material.Filled.EditNote" Title="Atividade" />
+    <SykiPageAlert Text="@_activity.Title" />
+
+    <MudContainer Class="px-0 mb-4">
+        <MudDataGrid Class="pa-4" Items="@_activity.Works" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+            <ToolBarContent>
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo nome do aluno" />
+            </ToolBarContent>
+            <Columns>
+                <PropertyColumn Property="x => x.StudentName" Title="Aluno" />
+                <PropertyColumn Property="x => x.Link" Title="Link" />
+                <TemplateColumn CellClass="d-flex justify-end">
+                    <CellTemplate>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenDrawer(context.Item))" />
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiDataGridPager T="ClassActivityWorkOut" />
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+</MudContainer>
+
+<MudDrawer Anchor="Anchor.Right" @bind-Open="@_rightOpen" Variant="DrawerVariant.Temporary" OverlayAutoClose="true" Elevation="1" Width="460px">
+	<MudDrawerHeader Class="justify-space-between px-4 py-1">
+		<MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart" Spacing="3">
+			<MudIcon Icon="@Icons.Material.Filled.BookmarkAdded"></MudIcon>
+			<MudText Typo="Typo.h5"><b>Entregas</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@CloseDrawer" />
+	</MudDrawerHeader>
+    <MudDivider DividerType="DividerType.Middle" />
+    <MudDrawerContainer>
+        <MudPaper Class="pa-4" Style="overflow-x: hidden" Elevation="0">
+            <MudForm Spacing="0">
+                <MudGrid Spacing="2">
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <MudNumericField
+                            T="decimal"
+                            @bind-Value="@_note"
+                            Max="10.00M"
+                            MaxLength="4"
+                            Min="0"
+                            Format="N2"
+                            HideSpinButtons="true"
+                            Variant="Variant.Outlined"
+                            Margin="Margin.Dense"
+                        />
+                    </MudItem>
+                </MudGrid>
+            </MudForm>
+            <DialogSaveButton OnClick="@Submit" />
+        </MudPaper>
+    </MudDrawerContainer>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject GetTeacherClassActivityClient GetTeacherClassActivityClient
+@inject AddStudentClassActivityNoteClient AddStudentClassActivityNoteClient
+
+@code
+{
+	[Parameter]
+	public Guid ClassId { get; set; }
+
+	[Parameter]
+	public Guid ActivityId { get; set; }
+
+    private int _index;
+    private bool _loading;
+    private string _searchString;
+    private TeacherClassActivityOut _activity = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _activity = await GetTeacherClassActivityClient.Get(ClassId, ActivityId);
+        _loading = false;
+    }
+
+    private decimal _note;
+    private bool _rightOpen;
+    private ClassActivityWorkOut _selected = new();
+    private void OpenDrawer(ClassActivityWorkOut work)
+    {
+        _note = 0;
+        _selected = work;
+        _rightOpen = true;
+    }
+    private void CloseDrawer()
+    {
+        _note = 0;
+        _selected = new();
+        _rightOpen = false;
+    }
+    private async Task Submit()
+    {
+        var result = await AddStudentClassActivityNoteClient.Add(ActivityId, _selected.StudentId, _note);
+        if (result.IsSuccess())
+        {
+            Snackbar.Add("Nota adicionada com sucesso!", Severity.Success);
+            CloseDrawer();
+        }
+        else
+        {
+            Snackbar.Add(result.GetError().Message, Severity.Error);
+        }
+    }
+
+    private Func<ClassActivityWorkOut, bool> _quickFilter => x => _searchString.IsIn(x.StudentName);
+
+    private string GetNotFoundMessage()
+    {
+        return _searchString.IsEmpty() ? "Não existem turmas cadastradas ainda." : "Nenhuma turma encontrada.";
+    }
+}

@@ -14,18 +14,18 @@
             }
             else
             {
-            <MudGrid Class="align-center">
-                <MudItem xs="12" sm="9" md="9" lg="9">
-                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_class.Discipline</MudText>
-                </MudItem>
-                <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end">
-                    <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="100%">
-                        <MudTabPanel Text="Atividades" ID='"panel_0"'></MudTabPanel>
-                        <MudTabPanel Text="Frequência" ID='"panel_1"'></MudTabPanel>
-                        <MudTabPanel Text="Notas" ID='"panel_2"'></MudTabPanel>
-                    </MudTabs>
-                </MudItem>
-            </MudGrid>
+                <MudGrid Class="align-center">
+                    <MudItem xs="12" sm="9" md="9" lg="9">
+                        <MudText Typo="Typo.h5" Style="font-weight: bold">@_class.Discipline</MudText>
+                    </MudItem>
+                    <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end">
+                        <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="100%">
+                            <MudTabPanel Text="Atividades" ID='"panel_0"'></MudTabPanel>
+                            <MudTabPanel Text="Frequência" ID='"panel_1"'></MudTabPanel>
+                            <MudTabPanel Text="Notas" ID='"panel_2"'></MudTabPanel>
+                        </MudTabs>
+                    </MudItem>
+                </MudGrid>
             }
         </MudCardContent>
     </MudCard>

@@ -1,3 +1,5 @@
+using Syki.Back.Features.Student.CreateClassActivityWork;
+
 namespace Syki.Back.Features.Teacher.CreateClassActivity;
 
 /// <summary>
@@ -22,6 +24,8 @@ public class ClassActivity : Entity
     public DateTime CreatedAt { get; set; }
     public DateOnly DueDate { get; set; }
     public Hour DueHour { get; set; }
+
+    public List<ClassActivityWork> Works { get; set; }
 
     private ClassActivity() {}
 
@@ -78,6 +82,7 @@ public class ClassActivity : Entity
             CreatedAt = CreatedAt,
             DueDate = DueDate,
             DueHour = DueHour,
+            Works = Works != null ? Works.Select(w => w.ToOut()).ToList() : [],
         };
     }
 

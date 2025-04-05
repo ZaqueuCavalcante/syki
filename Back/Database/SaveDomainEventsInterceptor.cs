@@ -16,6 +16,7 @@ public class SaveDomainEventsInterceptor(IHttpContextAccessor HttpContextAccesso
             {
                 var entity = entry.Entity;
                 var domainEvents = entity.GetDomainEvents();
+                if (domainEvents.Count == 0) return [];
 
                 entity.ClearDomainEvents();
 

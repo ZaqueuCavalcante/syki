@@ -8,7 +8,7 @@ public class AddClassActivityNoteService(SykiDbContext ctx) : ITeacherService
         if (note == null) return new ClassActivityNoteNotFound();
 
         var classOk = await ctx.Classes.AnyAsync(x => x.Id == note.ClassId && x.TeacherId == teacherId);
-        if (!classOk) return new TeacherIsNotTheClassLeader();
+        if (!classOk) return new ClassNotFound();
 
         var result = note.AddNote(data.Note);
         if (result.IsError()) return result.GetError();

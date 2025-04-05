@@ -68,6 +68,8 @@ global using Syki.Front.Features.Student.GetStudentAverageNote;
 global using Syki.Front.Features.Teacher.GetTeacherClass;
 global using Syki.Front.Features.Teacher.GetTeacherAgenda;
 global using Syki.Front.Features.Teacher.GetTeacherClasses;
+global using Syki.Front.Features.Teacher.GetTeacherClassActivity;
+global using Syki.Front.Features.Teacher.AddStudentClassActivityNote;
 global using Syki.Front.Features.Teacher.GetTeacherLessonAttendances;
 global using Syki.Front.Features.Teacher.GetClassNotesRemainingWeights;
 

@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Student.CreateClassActivityWork;
 
 public class CreateClassActivityWorkService(SykiDbContext ctx) : IStudentService
 {
-    public async Task<OneOf<CreateClassActivityWorkOut, SykiError>> Create(Guid classActivityId, Guid userId, CreateClassActivityWorkIn data)
+    public async Task<OneOf<ClassActivityWorkOut, SykiError>> Create(Guid classActivityId, Guid userId, CreateClassActivityWorkIn data)
     {
         var classActivity = await ctx.ClassActivities.AsNoTracking()
             .Where(x => x.Id == classActivityId)

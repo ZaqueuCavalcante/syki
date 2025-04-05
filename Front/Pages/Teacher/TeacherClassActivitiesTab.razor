@@ -41,7 +41,7 @@
 <CreateClassActivityDialog @ref="@_dialog" ClassId="@ClassId" AfterSubmit="@Load" />
 
 @inject NavigationManager Nav
-@inject GetTeacherClassClient GetTeacherClassClient
+@inject GetTeacherClassActivitiesClient GetTeacherClassActivitiesClient
 
 @code
 {
@@ -52,7 +52,6 @@
 
     private bool _loading;
     private string _searchString;
-    private TeacherClassOut _class = new();
     private List<TeacherClassActivityOut> _activities = [];
 
     protected override async Task OnInitializedAsync()
@@ -60,17 +59,20 @@
         await Load();
     }
 
-    private void GoToDetails(Guid activityId)
-    {
-        Nav.NavigateTo($"/teacher/classes/{ClassId}/activities/{activityId}");
-    }
-
     private async Task Load()
     {
         _loading = true;
-        _class = await GetTeacherClassClient.Get(ClassId);
-        _activities = _class.Activities.OrderByDescending(x => x.CreatedAt).ToList();
+        var response = await GetTeacherClassActivitiesClient.Get(ClassId);
+        if (response.IsSuccess())
+        {
+            _activities = response.GetSuccess();
+        }
         _loading = false;
+    }
+
+    private void GoToDetails(Guid activityId)
+    {
+        Nav.NavigateTo($"/teacher/classes/{ClassId}/activities/{activityId}");
     }
 
     private async Task NewActivity()
@@ -79,7 +81,6 @@
     }
 
     private Func<TeacherClassActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);
-
     private string GetNotFoundMessage()
     {
         return _searchString.IsEmpty() ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";

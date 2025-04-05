@@ -239,8 +239,7 @@ public class Class
             Period = PeriodId,
             Status = Status,
             Students = students,
-            Activities = Activities.ConvertAll(x => x.ToOut()),
-            Lessons = Lessons.OrderBy(x => x.Number).Select(x => x.ToOut()).ToList(),
+            Lessons = Lessons?.OrderBy(x => x.Number).Select(x => x.ToOut()).ToList() ?? [],
         };
     }
 

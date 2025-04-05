@@ -58,6 +58,7 @@
     protected override async Task OnParametersSetAsync()
     {
         _loading = true;
+        _index = 0;
         _class = await GetTeacherClassClient.Get(Id);
         _loading = false;
     }

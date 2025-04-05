@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Teacher.GetTeacherClassLessons;
 
 public class GetTeacherClassLessonsService(SykiDbContext ctx) : ITeacherService
 {
-    public async Task<OneOf<List<LessonOut>, SykiError>> Get(Guid teacherId, Guid classId)
+    public async Task<OneOf<List<ClassLessonOut>, SykiError>> Get(Guid teacherId, Guid classId)
     {
         var classOk = await ctx.Classes.AnyAsync(x => x.Id == classId && x.TeacherId == teacherId);
         if (!classOk) return new ClassNotFound();
@@ -10,7 +10,7 @@ public class GetTeacherClassLessonsService(SykiDbContext ctx) : ITeacherService
         var lessons = await ctx.Lessons.AsNoTracking()
             .Include(x => x.Attendances)
             .Where(t => t.ClassId == classId)
-            .OrderByDescending(x => x.Number)
+            .OrderBy(x => x.Number)
             .ToListAsync();
 
         return lessons.ConvertAll(x => x.ToOut());

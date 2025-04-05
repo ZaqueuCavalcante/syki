@@ -28,7 +28,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
 {
     public DbSet<Campus> Campi { get; set; }
     public DbSet<Class> Classes { get; set; }
-    public DbSet<Lesson> Lessons { get; set; }
+    public DbSet<ClassLesson> Lessons { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<Command> Commands { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
@@ -42,7 +42,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
     public DbSet<FeatureFlags> FeatureFlags { get; set; }
     public DbSet<UserRegister> UserRegisters { get; set; }
     public DbSet<Notification> Notifications { get; set; }
-    public DbSet<LessonAttendance> Attendances { get; set; }
+    public DbSet<ClassLessonAttendance> Attendances { get; set; }
     public DbSet<ClassStudent> ClassesStudents { get; set; }
     public DbSet<ClassActivity> ClassActivities { get; set; }
     public DbSet<AcademicPeriod> AcademicPeriods { get; set; }

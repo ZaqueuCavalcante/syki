@@ -9,7 +9,7 @@
     </TitleContent>
     <DialogContent>
         <MudTable
-            T="LessonOut"
+            T="ClassLessonOut"
             Items="@_lessons"
             Class="mb-4"
             Breakpoint="Breakpoint.Sm"
@@ -32,7 +32,7 @@
                 <MudTd DataLabel="Horário">@context.Schedule</MudTd>
                 <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
                 <MudTd DataLabel="Frequência">
-                    @if (context.Status == LessonStatus.Finalized)
+                    @if (context.Status == ClassLessonStatus.Finalized)
                     {
                         <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Frequency)" Style="height: 24px">
                             <MudText Typo="Typo.body1">
@@ -54,7 +54,7 @@
     public EventCallback<Guid> OnRowClick { get; set; }
 
     private bool _visible;
-    private List<LessonOut> _lessons = [];
+    private List<ClassLessonOut> _lessons = [];
 
     private readonly DialogOptions _options = new()
     {
@@ -63,7 +63,7 @@
         MaxWidth = MaxWidth.Medium,
     };
 
-    public async Task Open(List<LessonOut> lessons)
+    public async Task Open(List<ClassLessonOut> lessons)
     {
         var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _options.FullScreen = breakpoint == Breakpoint.Xs;
@@ -76,7 +76,7 @@
         _visible = false;
     }
 
-    private async Task HandleRowClick(TableRowClickEventArgs<LessonOut> row)
+    private async Task HandleRowClick(TableRowClickEventArgs<ClassLessonOut> row)
     {
         Close();
         await OnRowClick.InvokeAsync(row.Item.Id);

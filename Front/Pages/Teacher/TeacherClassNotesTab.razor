@@ -22,11 +22,6 @@
             <PropertyColumn Property="x => x.GetNote(ClassNoteType.N2)" Title="N2" />
             <PropertyColumn Property="x => x.GetNote(ClassNoteType.N3)" Title="N3" />
             <PropertyColumn Property="x => x.AverageNote.Format()" Title="Média" />
-            <TemplateColumn CellClass="d-flex justify-end">
-                <CellTemplate>
-                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.StickyNote2" OnClick="@(() => AddNote(context.Item))" />
-                </CellTemplate>
-            </TemplateColumn>
         </Columns>
         <NoRecordsContent>
             @(GetNotFoundMessage())
@@ -36,16 +31,12 @@
     </MudDataGrid>
 </MudContainer>
 
-<AddClassActivityNotesDialog @ref="@_dialog" AfterSubmit="@Load" />
-
 @inject GetTeacherClassClient GetTeacherClassClient
 
 @code
 {
 	[Parameter]
 	public Guid ClassId { get; set; }
-
-    private AddClassActivityNotesDialog _dialog;
 
     private bool _loading;
     private string _searchString;
@@ -63,11 +54,6 @@
         _class = await GetTeacherClassClient.Get(ClassId);
         _students = _class.Students.OrderBy(x => x.Name).ToList();
         _loading = false;
-    }
-
-    private async Task AddNote(TeacherClassStudentOut item)
-    {
-        await _dialog.Open(item);
     }
 
     private Func<TeacherClassStudentOut, bool> _quickFilter => x => _searchString.IsIn(x.Name);

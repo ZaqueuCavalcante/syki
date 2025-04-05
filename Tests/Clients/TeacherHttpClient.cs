@@ -51,7 +51,7 @@ public class TeacherHttpClient(HttpClient http)
         return await client.Get(id);
     }
 
-    public async Task<OneOf<List<LessonOut>, ErrorOut>> GetTeacherClassLessons(Guid classId)
+    public async Task<OneOf<List<ClassLessonOut>, ErrorOut>> GetTeacherClassLessons(Guid classId)
     {
         var client = new GetTeacherClassLessonsClient(Cross);
         return await client.Get(classId);

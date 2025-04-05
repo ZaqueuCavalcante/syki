@@ -27,7 +27,7 @@ public class CreateLessonAttendanceService(SykiDbContext ctx) : ITeacherService
             }
             else
             {
-                attendance = new LessonAttendance(@class.Id, lesson.Id, studentId, present);
+                attendance = new ClassLessonAttendance(@class.Id, lesson.Id, studentId, present);
                 ctx.Add(attendance);
             }
         }

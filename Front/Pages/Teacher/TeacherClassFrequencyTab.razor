@@ -15,14 +15,14 @@
                     <MudItem xs="12" sm="6" md="6" lg="6">
                         <MudStack Row="true" AlignItems="AlignItems.Center">
                             <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
-                                <MudText Typo="Typo.h6">Aula @_lesson.Number <b>·</b> @_lesson.Date.FormatBr() <b>·</b> @_lesson.Schedule</MudText>
+                                <MudText Typo="Typo.h6">Aula @_classLesson.Number <b>·</b> @_classLesson.Date.FormatBr() <b>·</b> @_classLesson.Schedule</MudText>
                             </MudStack>
                         </MudStack>
                     </MudItem>
                     <MudItem xs="12" sm="4" md="4" lg="4">
-                        <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_lesson.Frequency)" Style="height: 24px">
+                        <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_classLesson.Frequency)" Style="height: 24px">
                             <MudText Typo="Typo.body1">
-                                <b>@_lesson.Frequency.Format()%</b>
+                                <b>@_classLesson.Frequency.Format()%</b>
                             </MudText>
                         </MudProgressLinear>
                     </MudItem>
@@ -128,8 +128,8 @@
     private bool _loading;
     private bool _showButtons;
     private string _searchString;
-    private LessonOut _lesson = new();
-    private List<LessonOut> _lessons = [];
+    private ClassLessonOut _classLesson = new();
+    private List<ClassLessonOut> _lessons = [];
     private List<GetTeacherLessonAttendanceOut> _attendances = [];
 
     private List<Guid> _initialState = [];
@@ -147,7 +147,7 @@
 
     private async Task SetLesson(Guid id)
     {
-        _lesson = _lessons.FirstOrDefault(x => x.Id == id) ?? new();
+        _classLesson = _lessons.FirstOrDefault(x => x.Id == id) ?? new();
         _attendances = await GetTeacherLessonAttendancesClient.Get(id);
         _initialState = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
     }
@@ -165,7 +165,7 @@
 
     private void CheckChanged()
     {
-        _lesson.Frequency = GetCurrentFrequency();
+        _classLesson.Frequency = GetCurrentFrequency();
     }
 
     private decimal GetCurrentFrequency()
@@ -184,7 +184,7 @@
     private async Task SaveFrequency()
     {
         var ids = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
-        var result = await CreateLessonAttendanceClient.Create(_lesson.Id, ids);
+        var result = await CreateLessonAttendanceClient.Create(_classLesson.Id, ids);
         if (result.IsSuccess())
         {
             _lessons = (await GetTeacherClassLessonsClient.Get(ClassId)).GetSuccess();

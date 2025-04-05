@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Teacher.CreateLessonAttendance;
 /// <summary>
 /// Representa se um Aluno estava presente ou não em uma Aula
 /// </summary>
-public class LessonAttendance
+public class ClassLessonAttendance
 {
     public Guid Id { get; }
     public Guid ClassId { get; set; }
@@ -11,7 +11,7 @@ public class LessonAttendance
     public Guid StudentId { get; set; }
     public bool Present { get; set; }
 
-    public LessonAttendance(
+    public ClassLessonAttendance(
         Guid classId,
         Guid lessonId,
         Guid studentId,

@@ -1,18 +1,18 @@
 namespace Syki.Shared;
 
-public class LessonOut
+public class ClassLessonOut
 {
     public Guid Id { get; set; }
     public int Number { get; set; }
     public DateOnly Date { get; set; }
     public string Schedule { get; set; }
-    public LessonStatus Status { get; set; }
+    public ClassLessonStatus Status { get; set; }
     public decimal Frequency { get; set; }
 
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;
-        return Id == ((LessonOut)obj).Id;
+        return Id == ((ClassLessonOut)obj).Id;
     }
 
     public override int GetHashCode()
@@ -25,7 +25,7 @@ public class LessonOut
         return $"Aula {Number.ToTwo()}";
     }
 
-    public static implicit operator LessonOut(OneOf<LessonOut, ErrorOut> value)
+    public static implicit operator ClassLessonOut(OneOf<ClassLessonOut, ErrorOut> value)
     {
         return value.GetSuccess();
     }

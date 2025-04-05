@@ -17,7 +17,7 @@ public class GetTeacherInsightsService(SykiDbContext ctx) : ITeacherService
         {
             c.Students.ForEach(s => students.TryAdd(s.Id, s.Id));
             totalLessons += c.Lessons.Count;
-            finalizedLessons += c.Lessons.Count(x => x.Status == LessonStatus.Finalized);
+            finalizedLessons += c.Lessons.Count(x => x.Status == ClassLessonStatus.Finalized);
         });
 
         return new() { Classes = classes.Count, Students = students.Count, TotalLessons = totalLessons, FinalizedLessons = finalizedLessons };

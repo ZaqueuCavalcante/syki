@@ -3,11 +3,11 @@ using Syki.Back.Features.Academic.CreateStudent;
 
 namespace Syki.Back.Features.Teacher.CreateLessonAttendance;
 
-public class LessonAttendanceConfig : IEntityTypeConfiguration<LessonAttendance>
+public class ClassLessonAttendanceConfig : IEntityTypeConfiguration<ClassLessonAttendance>
 {
-    public void Configure(EntityTypeBuilder<LessonAttendance> lessonAttendance)
+    public void Configure(EntityTypeBuilder<ClassLessonAttendance> lessonAttendance)
     {
-        lessonAttendance.ToTable("lesson_attendances");
+        lessonAttendance.ToTable("class_lesson_attendances");
 
         lessonAttendance.HasKey(t => t.Id);
         lessonAttendance.Property(t => t.Id).ValueGeneratedNever();

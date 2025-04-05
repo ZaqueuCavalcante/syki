@@ -127,7 +127,7 @@
         _classes = await GetAcademicClassesClient.Get();
         _showReleaseButton = _classes.Any(c => c.Status == ClassStatus.OnPreEnrollment);
         _showStartButton = _classes.Any(c => c.Status == ClassStatus.AwaitingStart);
-        _showFinalizeButton = _classes.Any(c => c.Status == ClassStatus.Started && c.Lessons.All(l => l.Status == LessonStatus.Finalized));
+        _showFinalizeButton = _classes.Any(c => c.Status == ClassStatus.Started && c.Lessons.All(l => l.Status == ClassLessonStatus.Finalized));
         _loading = false;
     }
 

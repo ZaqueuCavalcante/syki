@@ -26,7 +26,7 @@ public class Class
     public List<SykiStudent> Students { get; set; }
     public List<Schedule> Schedules { get; set; }
     public List<StudentClassNote> Notes { get; set; }
-    public List<Lesson> Lessons { get; set; }
+    public List<ClassLesson> Lessons { get; set; }
     public List<ClassActivity> Activities { get; set; }
 
     public string FillRatio { get; set; }
@@ -117,7 +117,7 @@ public class Class
     private string GetProgressAsString()
     {
         var total = Lessons.Count;
-        var finalized = Lessons.Count(x => x.Status == LessonStatus.Finalized);
+        var finalized = Lessons.Count(x => x.Status == ClassLessonStatus.Finalized);
         return $"{finalized}/{total}";
     }
 
@@ -134,7 +134,7 @@ public class Class
 
     public OneOf<SykiSuccess, SykiError> Finish()
     {
-        if (Lessons.Any(x => x.Status != LessonStatus.Finalized))
+        if (Lessons.Any(x => x.Status != ClassLessonStatus.Finalized))
             return new AllClassLessonsMustHaveFinalizedStatus();
 
         Status = ClassStatus.Finalized;

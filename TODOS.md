@@ -1,11 +1,11 @@
 # TODOS
 
-- Analisar pq a tela de turma do professor eh tão lenta...
 
 ## Atividades V0
 
 - ✅ O professor deve ter acesso rápido à todas as suas turmas atuais, através da SideBar esquerda
 
+- ✅ Analisar pq a tela de turma do professor eh tão lenta
 
 
 

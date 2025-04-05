@@ -111,7 +111,7 @@ public partial class IntegrationTests
         var teacherComputationalThinkingAndAlgorithmsLessons = (await teacherClient.GetTeacherClassLessons(computationalThinkingAndAlgorithms.Id)).GetSuccess();
         var teacherIntegratorProjectOneLessons = (await teacherClient.GetTeacherClassLessons(integratorProjectOne.Id)).GetSuccess();
 
-        var lessons = new List<LessonOut>();
+        var lessons = new List<ClassLessonOut>();
         lessons.AddRange(teacherHumanMachineInteractionDesignLessons.PickRandom(1));
         lessons.AddRange(teacherIntroToComputerNetworksLessons.PickRandom(3));
         lessons.AddRange(teacherIntroToWebDevLessons.PickRandom(2));

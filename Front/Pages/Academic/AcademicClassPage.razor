@@ -55,7 +55,7 @@
                                 <MudText><strong>Carga Horária:</strong> @_class.Workload</MudText>
                                 <MudStack Row="true" AlignItems="AlignItems.Center">
                                     <MudText><strong>Frequência:</strong></MudText>
-                                    @if (_class.Lessons.Any(x => x.Status == LessonStatus.Finalized))
+                                    @if (_class.Lessons.Any(x => x.Status == ClassLessonStatus.Finalized))
                                     {
                                         <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_class.Frequency)" Style="height: 24px">
                                             <MudText Typo="Typo.body1">
@@ -101,7 +101,7 @@
                     <MudTd DataLabel="Horário">@context.Schedule</MudTd>
                     <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
                     <MudTd DataLabel="Frequência">
-                        @if (context.Status == LessonStatus.Finalized)
+                        @if (context.Status == ClassLessonStatus.Finalized)
                         {
                             <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Frequency)" Style="height: 24px">
                                 <MudText Typo="Typo.body1">
@@ -202,7 +202,7 @@
 
     private bool ShowFrequencyColumn()
     {
-        return _class.Lessons.Any(x => x.Status == LessonStatus.Finalized);
+        return _class.Lessons.Any(x => x.Status == ClassLessonStatus.Finalized);
     }
 
     private async Task Load()
@@ -217,12 +217,12 @@
         _loading = false;
     }
 
-    private IEnumerable<LessonOut> GetLessons()
+    private IEnumerable<ClassLessonOut> GetLessons()
     {
         return _class.Lessons.OrderBy(x => x.Number).ToList();
     }
 
-    private Func<LessonOut, bool> _quickFilter => x => _searchString.IsIn(x.Date.ToShortDateString(), x.Schedule, x.Status.GetDescription());
+    private Func<ClassLessonOut, bool> _quickFilter => x => _searchString.IsIn(x.Date.ToShortDateString(), x.Schedule, x.Status.GetDescription());
     private Func<AcademicClassStudentOut, bool> _quickFilterStudents => x => _searchStringStudents.IsIn(x.Name);
 
     private string GetNotFoundMessage()

@@ -5,7 +5,7 @@ namespace Syki.Back.Features.Academic.CreateClass;
 /// <summary>
 /// Aula
 /// </summary>
-public class Lesson
+public class ClassLesson
 {
     public Guid Id { get; set; }
     public Guid ClassId { get; set; }
@@ -13,10 +13,12 @@ public class Lesson
     public DateOnly Date { get; set; }
     public Hour StartAt { get; set; }
     public Hour EndAt { get; set; }
-    public LessonStatus Status { get; set; }
-    public List<LessonAttendance> Attendances { get; set; }
+    public ClassLessonStatus Status { get; set; }
+    public List<ClassLessonAttendance> Attendances { get; set; }
 
-    public Lesson(
+    private ClassLesson() {}
+
+    public ClassLesson(
         Guid classId,
         int number,
         DateOnly date,
@@ -29,12 +31,12 @@ public class Lesson
         Date = date;
         StartAt = startAt;
         EndAt = endAt;
-        Status = LessonStatus.Pending;
+        Status = ClassLessonStatus.Pending;
     }
 
     public void Finish()
     {
-        Status = LessonStatus.Finalized;
+        Status = ClassLessonStatus.Finalized;
     }
 
     private string GetSchedule()
@@ -50,7 +52,7 @@ public class Lesson
         return 100M*(1M * presences / (1M * total));
     }
 
-    public LessonOut ToOut()
+    public ClassLessonOut ToOut()
     {
         return new()
         {

@@ -55,7 +55,7 @@
     private bool _loading;
     private TeacherClassOut _class = new();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         _loading = true;
         _class = await GetTeacherClassClient.Get(Id);

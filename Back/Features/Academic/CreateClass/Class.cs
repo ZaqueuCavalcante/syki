@@ -256,4 +256,13 @@ public class Class
             SchedulesInline = GetScheduleAsString(),
         };
     }
+
+    public TeacherCurrentClassOut ToTeacherCurrentClassOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Discipline = Discipline.Name,
+        };
+    }
 }

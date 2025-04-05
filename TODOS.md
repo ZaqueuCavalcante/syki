@@ -4,9 +4,11 @@
 
 ## Atividades V0
 
-- O professor deve ter acesso rápido à todas as suas turmas atuais, através da SideBar esquerda
-    - Ela deverá ser montada dinâmicamente para cada professor
-    - Buscar uma única vez as turmas do professor e manter na session storage (ver como foi feito na track)
+- ✅ O professor deve ter acesso rápido à todas as suas turmas atuais, através da SideBar esquerda
+
+
+
+
 
 - Dentro de uma turma, deve ser possível criar uma atividade
     - O Dialog só deve ser fechado ao clicar no X ou no Cancelar

@@ -30,12 +30,10 @@
 </MudPaper>
 
 @inject GetMfaKeyClient Client
+@inject AuthManager AuthManager
 
 @code
 {
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthState { get; set; }
-
     private string _key;
     private bool _qrCodeLoading;
     private Byte[] _codeBytes;
@@ -45,24 +43,11 @@
         _qrCodeLoading = true;
 
         var result = await Client.Get();
-        var email = await GetUserEmail();
+        var email = (await AuthManager.GetUser()).Email;
         _key = result.Key;
         _codeBytes = _key.GenerateQrCodeBytes(email);
 
         _qrCodeLoading = false;
-    }
-
-    private async Task<string> GetUserEmail()
-    {
-        var state = await AuthState;
-
-        var claim = state.User.FindFirst("email");
-        if (claim != null)
-        {
-            return claim.Value;
-        }
-
-        return "";
     }
 
     private string GetQrCodeImageSrc()

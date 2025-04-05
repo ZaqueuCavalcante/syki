@@ -37,13 +37,11 @@
     </MudGrid>
 </MudContainer>
 
+@inject AuthManager AuthManager
 @inject GetStudentInsightsClient Client
 
 @code
 {
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthState { get; set; }
-
     private bool _loading;
     private string _userName = "";
     private StudentInsightsOut _data = new();
@@ -51,19 +49,8 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        await SetUserName();
+        _userName = (await AuthManager.GetUser()).Name;
         _data = await Client.Get();
         _loading = false;
-    }
-
-    private async Task SetUserName()
-    {
-        var state = await AuthState;
-
-        var claim = state.User.FindFirst("name");
-        if (claim != null)
-        {
-            _userName = claim.Value;
-        }
     }
 }

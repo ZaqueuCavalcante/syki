@@ -14,6 +14,7 @@ public static class AuthConfigs
             options.AddPolicy(FrontPolicy.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthReq()));
         });
 
+        builder.Services.AddScoped<AuthManager>();
         builder.Services.AddScoped<SykiAuthStateProvider>();
         builder.Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<SykiAuthStateProvider>());
     }

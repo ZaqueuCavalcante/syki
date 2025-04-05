@@ -6,7 +6,7 @@
 
 <MudPopoverProvider />
 <MudSnackbarProvider />
-<MudThemeProvider IsDarkMode="@_isDark" />
+<MudThemeProvider IsDarkMode="@_isDark" Theme="@SykiTheme" />
 <MudDialogProvider CloseOnEscapeKey="true" CloseButton="true" />
 
 <AuthorizeView>
@@ -25,7 +25,7 @@
                 <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ToggleTheme" />
                 <MudIconButton OnClick="@ToggleRightOpen" Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" />
             </MudAppBar>
-            <MudDrawer @bind-Open="@_leftOpen" ClipMode="DrawerClipMode.Always" Elevation="2" Width="160px">
+            <MudDrawer @bind-Open="@_leftOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
                 <NavMenu />
             </MudDrawer>
             <MudDrawer Anchor="Anchor.Right" @bind-Open="@_rightOpen" ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Temporary" OverlayAutoClose="true" Elevation="2" Width="160px">
@@ -74,6 +74,7 @@
 </AuthorizeView>
 
 @inject NavigationManager Nav
+@inject AuthManager AuthManager
 @inject ILocalStorageService LocalStorage
 @inject SykiAuthStateProvider AuthStateProvider
 @inject ApexCharts.IApexChartService ApexChartService
@@ -83,6 +84,14 @@
 {
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; }
+
+    private MudTheme SykiTheme = new MudTheme()
+    {
+        LayoutProperties = new LayoutProperties()
+        {
+            DrawerWidthLeft = "180px"
+        }
+    };
 
     private bool _isDark = true;
     private bool _leftOpen = true;
@@ -110,6 +119,19 @@
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         var isDark = await LocalStorage.GetItemAsync("IsDark");
         _isDark = isDark == null || bool.Parse(isDark);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var user = await AuthManager.GetUser();
+        if (user.Role.IsIn(UserRole.Teacher, UserRole.Student))
+        {
+            SykiTheme.LayoutProperties.DrawerWidthLeft = "260px";
+        }
+        else
+        {
+            SykiTheme.LayoutProperties.DrawerWidthLeft = "180px";
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

@@ -25,6 +25,10 @@
     <AuthorizeView Roles="@UserRole.Teacher.ToString()">
         <MudNavLink Href="teacher/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
         <MudNavLink Href="teacher/classes" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CenterFocusStrong" IconColor="Color.Inherit">Turmas</MudNavLink>
+        @foreach(var item in _teacherClasses)
+        {
+            <MudNavLink Href="@($"teacher/classes/{item.Id}")" Match="NavLinkMatch.All">@item.Discipline</MudNavLink>
+        }
     </AuthorizeView>
     <AuthorizeView Roles="@UserRole.Student.ToString()">
         <MudNavLink Href="student/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
@@ -35,3 +39,20 @@
         <MudNavLink Href="student/enrollments" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrícula</MudNavLink>
     </AuthorizeView>
 </MudNavMenu>
+
+@inject AuthManager AuthManager
+@inject GetTeacherCurrentClassesClient GetTeacherCurrentClassesClient
+
+@code
+{
+    private List<TeacherCurrentClassOut> _teacherClasses = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthManager.GetUser();
+        if (user.Role == UserRole.Teacher)
+        {
+            _teacherClasses = await GetTeacherCurrentClassesClient.Get();
+        }
+    }
+}

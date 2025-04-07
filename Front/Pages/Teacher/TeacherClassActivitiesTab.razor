@@ -14,26 +14,18 @@
         Hover="true"
         Dense="true"
         Loading="@_loading"
+        SortMode="@SortMode.None"
         RowsPerPage="100"
     >
         <ToolBarContent>
             <MudGrid Class="align-center" Spacing="3">
                 <MudItem xs="12" sm="3" md="3" lg="3">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
-                        <MudSelect
-                            Dense="true"
-                            Margin="Margin.Dense"
-                            Variant="Variant.Outlined"
-                            AdornmentColor="Color.Primary"
-                            @bind-Value="@_noteFilter"
-                            Label="Nota"
-                            Clearable="true"
-                        >
-                            @foreach (ClassNoteType? type in Enum.GetValues<ClassNoteType>())
-                            {
-                                <MudSelectItem Value="@type">@type.GetDescription()</MudSelectItem>
-                            }
-                        </MudSelect>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
+                        <MudToggleGroup T="ClassNoteType" SelectionMode="SelectionMode.MultiSelection" @bind-Values="@_notesFilter" Style="width: 100%;" Color="Color.Tertiary" CheckMark>
+                            <MudToggleItem Value="@(ClassNoteType.N1)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                            <MudToggleItem Value="@(ClassNoteType.N2)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                            <MudToggleItem Value="@(ClassNoteType.N3)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                        </MudToggleGroup>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="9" md="9" lg="9" Class="d-flex justify-end">
@@ -73,7 +65,7 @@
 
     private CreateClassActivityDialog _dialog;
 
-    private ClassNoteType? _noteFilter = null;
+    private IEnumerable<ClassNoteType> _notesFilter = [ClassNoteType.N1, ClassNoteType.N2, ClassNoteType.N3];
 
     private bool _loading;
     private string _searchString;
@@ -97,7 +89,7 @@
 
     private List<TeacherClassActivityOut> GetActivities()
     {
-        return _activities.Where(x => _noteFilter == null || x.Note == _noteFilter).ToList();
+        return _activities.Where(x => _notesFilter.Contains(x.Note)).ToList();
     }
 
     private void GoToDetails(Guid activityId)
@@ -113,6 +105,6 @@
     private Func<TeacherClassActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);
     private string GetNotFoundMessage()
     {
-        return _searchString.IsEmpty() ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";
+        return _searchString.IsEmpty() && _notesFilter.Count() == 3  ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";
     }
 }

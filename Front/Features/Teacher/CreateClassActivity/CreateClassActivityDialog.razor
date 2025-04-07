@@ -1,6 +1,6 @@
 ﻿@namespace Syki.Front.Features.Teacher.CreateClassActivity
 
-<MudDialog Class="pb-2" @bind-Visible="@_visible" Options="@_options" OnBackdropClick="@Close">
+<MudDialog Class="pb-2" @bind-Visible="@_visible" Options="@_options">
     <TitleContent>
         <SykiDialogTitle Text="Nova Atividade" />
     </TitleContent>
@@ -127,6 +127,7 @@
     {
         FullWidth = true,
         CloseButton = true,
+        BackdropClick = false,
         MaxWidth = MaxWidth.Medium,
     };
 
@@ -138,6 +139,7 @@
 
     public async Task Open()
     {
+        Reset();
         _remainingWeights = await GetClassNotesRemainingWeightsClient.Get(ClassId);
         _maxWeight = _remainingWeights.Where(x => x.Note == _note).Select(x => x.Weight).First();
         var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
@@ -145,7 +147,7 @@
         _visible = true;
     }
 
-    private void Close()
+    private void Reset()
     {
         _note = ClassNoteType.N1;
         _title = string.Empty;
@@ -155,6 +157,12 @@
         _dueDate = DateTime.Now.AddDays(7);
         _dueHour = Hour.H12_00;
 
+        _visible = false;
+    }
+
+    private void Close()
+    {
+        Reset();
         _visible = false;
     }
 

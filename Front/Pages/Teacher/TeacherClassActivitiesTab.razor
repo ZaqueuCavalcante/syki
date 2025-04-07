@@ -5,10 +5,11 @@
 <MudContainer Class="mb-4 px-0">
     <SykiPageHeader Icon="@Icons.Material.Filled.EditNote" Title="Atividades" ButtonText="Nova Atividade" OnClick="@NewActivity" />
 
+    <style>.mud-table-toolbar { height: auto }</style>
     <MudDataGrid
         T="TeacherClassActivityOut"
         Class="pa-4 mt-4"
-        Items="@_activities"
+        Items="@GetActivities()"
         QuickFilter="@_quickFilter"
         Hover="true"
         Dense="true"
@@ -16,7 +17,29 @@
         RowsPerPage="100"
     >
         <ToolBarContent>
-            <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por título" />
+            <MudGrid Class="align-center" Spacing="3">
+                <MudItem xs="12" sm="3" md="3" lg="3">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                        <MudSelect
+                            Dense="true"
+                            Margin="Margin.Dense"
+                            Variant="Variant.Outlined"
+                            AdornmentColor="Color.Primary"
+                            @bind-Value="@_noteFilter"
+                            Label="Nota"
+                            Clearable="true"
+                        >
+                            @foreach (ClassNoteType? type in Enum.GetValues<ClassNoteType>())
+                            {
+                                <MudSelectItem Value="@type">@type.GetDescription()</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="9" md="9" lg="9" Class="d-flex justify-end">
+                    <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por título" />
+                </MudItem>
+            </MudGrid>
         </ToolBarContent>
         <Columns>
             <PropertyColumn Property="x => x.Title" Title="Título" />
@@ -50,6 +73,8 @@
 
     private CreateClassActivityDialog _dialog;
 
+    private ClassNoteType? _noteFilter = null;
+
     private bool _loading;
     private string _searchString;
     private List<TeacherClassActivityOut> _activities = [];
@@ -68,6 +93,11 @@
             _activities = response.GetSuccess();
         }
         _loading = false;
+    }
+
+    private List<TeacherClassActivityOut> GetActivities()
+    {
+        return _activities.Where(x => _noteFilter == null || x.Note == _noteFilter).ToList();
     }
 
     private void GoToDetails(Guid activityId)

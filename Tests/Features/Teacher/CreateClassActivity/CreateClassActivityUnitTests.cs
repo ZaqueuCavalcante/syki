@@ -17,7 +17,8 @@ public class CreateClassActivityUnitTests
             ClassActivityType.Work,
             weight,
             DateTime.Now.AddDays(7).ToDateOnly(),
-            Hour.H19_00
+            Hour.H19_00,
+            []
         );
 
         // Assert
@@ -37,7 +38,8 @@ public class CreateClassActivityUnitTests
             ClassActivityType.Work,
             weight,
             DateTime.Now.AddDays(7).ToDateOnly(),
-            Hour.H19_00
+            Hour.H19_00,
+            []
         );
 
         // Assert
@@ -60,7 +62,8 @@ public class CreateClassActivityUnitTests
                 ClassActivityType.Work,
                 weight,
                 DateTime.Now.AddDays(7).ToDateOnly(),
-                Hour.H19_00
+                Hour.H19_00,
+                []
             ).GetSuccess();
             
             // Act
@@ -90,7 +93,8 @@ public class CreateClassActivityUnitTests
                 ClassActivityType.Work,
                 weight,
                 DateTime.Now.AddDays(7).ToDateOnly(),
-                Hour.H19_00
+                Hour.H19_00,
+                []
             ).GetSuccess();
 
             // Act

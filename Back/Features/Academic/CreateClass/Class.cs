@@ -23,11 +23,11 @@ public class Class
     public int Vacancies { get; set; }
     public ClassStatus Status { get; set; }
     public int Workload { get; set; }
-    public List<SykiStudent> Students { get; set; }
     public List<Schedule> Schedules { get; set; }
-    public List<StudentClassNote> Notes { get; set; }
     public List<ClassLesson> Lessons { get; set; }
+    public List<SykiStudent> Students { get; set; }
     public List<ClassActivity> Activities { get; set; }
+    public List<StudentClassNote> Notes { get; set; }
 
     public string FillRatio { get; set; }
 
@@ -49,10 +49,10 @@ public class Class
         Vacancies = vacancies;
         Status = ClassStatus.OnPreEnrollment;
         Schedules = schedules;
-        Students = [];
-        Notes = [];
         Lessons = [];
+        Students = [];
         Activities = [];
+        Notes = [];
     }
 
     public static OneOf<Class, SykiError> New(
@@ -68,6 +68,19 @@ public class Class
         if (result.IsError()) return result.GetError();
 
         return new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
+    }
+
+    private static OneOf<SykiSuccess, SykiError> Validate(List<Schedule> schedules)
+    {
+        for (int i = 0; i < schedules.Count-1; i++)
+        {
+            for (int j = i+1; j < schedules.Count; j++)
+            {
+                if (schedules[i].Conflict(schedules[j]))
+                    return new ConflictingSchedules();
+            }
+        }
+        return new SykiSuccess();
     }
 
     public void CreateLessons()
@@ -91,53 +104,9 @@ public class Class
         }
     }
 
-    private static OneOf<SykiSuccess, SykiError> Validate(List<Schedule> schedules)
-    {
-        for (int i = 0; i < schedules.Count-1; i++)
-        {
-            for (int j = i+1; j < schedules.Count; j++)
-            {
-                if (schedules[i].Conflict(schedules[j]))
-                    return new ConflictingSchedules();
-            }
-        }
-        return new SykiSuccess();
-    }
-
-    private string GetScheduleAsString()
-    {
-        return string.Join(" | ", Schedules.OrderBy(h => h.Day).ThenBy(h => h.StartAt).ToList().ConvertAll(h => h.ToString()));
-    }
-
-    private string GetWorkloadAsString()
-    {
-        return Workload.MinutesToString();
-    }
-
-    private string GetProgressAsString()
-    {
-        var total = Lessons.Count;
-        var finalized = Lessons.Count(x => x.Status == ClassLessonStatus.Finalized);
-        return $"{finalized}/{total}";
-    }
-
     public void Start()
     {
         Status = ClassStatus.Started;
-    }
-
-    public OneOf<SykiSuccess, SykiError> Finish()
-    {
-        if (Lessons.Any(x => x.Status != ClassLessonStatus.Finalized))
-            return new AllClassLessonsMustHaveFinalizedStatus();
-
-        Status = ClassStatus.Finalized;
-        return new SykiSuccess();
-    }
-
-    public void SetFillRatio(int count)
-    {
-        FillRatio = $"{count}/{Vacancies}";
     }
 
     public OneOf<SykiSuccess, SykiError> AddActivity(ClassActivity activity)
@@ -161,6 +130,37 @@ public class Class
         }
 
         return weights;
+    }
+
+    public OneOf<SykiSuccess, SykiError> Finish()
+    {
+        if (Lessons.Any(x => x.Status != ClassLessonStatus.Finalized))
+            return new AllClassLessonsMustHaveFinalizedStatus();
+
+        Status = ClassStatus.Finalized;
+        return new SykiSuccess();
+    }
+
+    private string GetScheduleAsString()
+    {
+        return string.Join(" | ", Schedules.OrderBy(h => h.Day).ThenBy(h => h.StartAt).ToList().ConvertAll(h => h.ToString()));
+    }
+
+    private string GetWorkloadAsString()
+    {
+        return Workload.MinutesToString();
+    }
+
+    private string GetProgressAsString()
+    {
+        var total = Lessons.Count;
+        var finalized = Lessons.Count(x => x.Status == ClassLessonStatus.Finalized);
+        return $"{finalized}/{total}";
+    }
+
+    public void SetFillRatio(int count)
+    {
+        FillRatio = $"{count}/{Vacancies}";
     }
 
     public ClassOut ToOut()

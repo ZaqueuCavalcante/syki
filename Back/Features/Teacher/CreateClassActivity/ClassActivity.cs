@@ -37,7 +37,8 @@ public class ClassActivity : Entity
         ClassActivityType type,
         int weight,
         DateOnly dueDate,
-        Hour dueHour
+        Hour dueHour,
+        List<Guid> students
     ) {
         Id = Guid.NewGuid();
         ClassId = classId;
@@ -50,6 +51,8 @@ public class ClassActivity : Entity
         DueDate = dueDate;
         DueHour = dueHour;
 
+        Works = students.ConvertAll(x => new ClassActivityWork(Id, x));
+
         AddDomainEvent(new ClassActivityCreatedDomainEvent(Id));
     }
 
@@ -61,11 +64,12 @@ public class ClassActivity : Entity
         ClassActivityType type,
         int weight,
         DateOnly dueDate,
-        Hour dueHour
+        Hour dueHour,
+        List<Guid> students
     ) {
         if (weight < 0 || weight > 100) return new InvalidClassActivityWeight();
 
-        return new ClassActivity(classId, note, title, description, type, weight, dueDate, dueHour);
+        return new ClassActivity(classId, note, title, description, type, weight, dueDate, dueHour, students);
     }
 
     public TeacherClassActivityOut ToOut()

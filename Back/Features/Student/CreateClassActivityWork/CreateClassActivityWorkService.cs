@@ -14,8 +14,11 @@ public class CreateClassActivityWorkService(SykiDbContext ctx) : IStudentService
             .Select(x => x.ClassId).ToListAsync();
         if (!classesIds.Contains(classActivity.ClassId)) return new ClassActivityNotFound();
 
-        var classActivityWork = new ClassActivityWork(classActivityId, userId, data.Link);
-        ctx.Add(classActivityWork);
+        var classActivityWork = await ctx.ClassActivityWorks
+            .Where(x => x.ClassActivityId == classActivityId && x.SykiStudentId == userId)
+            .FirstAsync();
+        
+        classActivityWork.AddLink(data.Link);
 
         await ctx.SaveChangesAsync();
 

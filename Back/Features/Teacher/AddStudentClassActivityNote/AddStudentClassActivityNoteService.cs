@@ -10,10 +10,14 @@ public class AddStudentClassActivityNoteService(SykiDbContext ctx) : ITeacherSer
         var classOk = await ctx.Classes.AnyAsync(x => x.Id == activity.ClassId && x.TeacherId == teacherId);
         if (!classOk) return new ClassNotFound();
 
-        var result = StudentClassActivityNote.New(data.StudentId, classActivityId, data.Value);
+        var work = await ctx.ClassActivityWorks
+            .Where(x => x.ClassActivityId == classActivityId && x.SykiStudentId == data.StudentId)
+            .FirstOrDefaultAsync();
+        if (work == null) return new ClassActivityNotFound();
+
+        var result = work.AddNote(data.Value);
         if (result.IsError()) return result.GetError();
 
-        ctx.Add(result.GetSuccess());
         await ctx.SaveChangesAsync();
 
         return new SykiSuccess();

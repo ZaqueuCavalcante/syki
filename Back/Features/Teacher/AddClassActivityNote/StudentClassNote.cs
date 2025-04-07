@@ -1,7 +1,7 @@
 namespace Syki.Back.Features.Teacher.AddClassActivityNote;
 
 /// <summary>
-/// Representa uma nota de um aluno em uma atividade
+/// Representa uma nota de um aluno em uma turma.
 /// </summary>
 public class StudentClassNote : Entity
 {
@@ -24,17 +24,6 @@ public class StudentClassNote : Entity
         StudentId = studentId;
         Type = examType;
         Note = note;
-    }
-
-    public OneOf<SykiSuccess, SykiError> AddNote(decimal note)
-    {
-        if (note < 0 || note > 10) return new InvalidStudentClassNote();
-
-        Note = note;
-
-        AddDomainEvent(new StudentClassNoteAddedDomainEvent(StudentId, ClassId));
-
-        return new SykiSuccess();
     }
 
     public StudentClassNoteOut ToOut()

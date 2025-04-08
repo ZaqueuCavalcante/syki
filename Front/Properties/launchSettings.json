@@ -3,10 +3,7 @@
     "dev": {
       "commandName": "Project",
       "launchBrowser": true,
-      "hotReloadEnabled": false,
-      "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5002",
-      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

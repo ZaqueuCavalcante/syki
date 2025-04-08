@@ -18,6 +18,7 @@ public class TeacherClassActivityOut
 
     public string GetDueDate()
     {
+        Console.WriteLine(DueHour.Serialize());
         return $"{DueDate} {DueHour.GetDescription()}";
     }
 

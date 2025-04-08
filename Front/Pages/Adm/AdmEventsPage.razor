@@ -24,66 +24,64 @@
         </MudCardContent>
     </MudCard>
 
-
-
     <MudExpansionPanels Class="mt-4">
-            <MudExpansionPanel Expanded="@_expanded">
-                <TitleContent>
-                    <div class="d-flex">
-                        <MudIcon Icon="@Icons.Material.Filled.Dashboard" class="mr-3"></MudIcon>
-                        <MudText><strong>Dashboard</strong></MudText>
-                    </div>
-                </TitleContent>
-                <ChildContent>
-                    <MudContainer Class="px-0 mb-2">
-                        <MudGrid Spacing="2">
-                            <SummaryCard Loading="@_loading" Icon="@Icons.Material.Rounded.WarningAmber" Color="Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
-                            <SummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Autorenew" Color="Color.Info" Text="Processando" Value="@_data.Summary.Processing" />
-                            <SummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="Color.Error" Text="Erros" Value="@_data.Summary.Error" />
-                            <SummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="Color.Success" Text="Sucessos" Value="@_data.Summary.Success" />
-                        </MudGrid>
-                    </MudContainer>
-                    <MudContainer Class="px-0">
-                        <MudGrid Spacing="2">
-                            <MudItem xs="12" sm="6" md="6" lg="6">
-                                <MudPaper Class="px-4 pt-4">
-                                    @if (!_loading)
-                                    {
-                                        <ApexCharts.ApexChart TItem="LastDomainEventOut" Title="Últimos eventos">
-                                            <ApexCharts.ApexPointSeries
-                                                Name="Eventos"
-                                                TItem="LastDomainEventOut"
-                                                Items="@_data.LastEvents"
-                                                SeriesType="ApexCharts.SeriesType.Line"
-                                                XValue="@(e => e.Date.ToString("HH:mm:ss"))"
-                                                YValue="@(e => e.Total)"
-                                            />
-                                        </ApexCharts.ApexChart>
-                                    }
-                                </MudPaper>
-                            </MudItem>
-                            <MudItem xs="12" sm="6" md="6" lg="6">
-                                <MudPaper Class="px-4 pt-4" Style="height: 100%">
-                                    @if (!_loading)
-                                    {
-                                        <ApexCharts.ApexChart TItem="DomainEventTypeCountOut" Title="Quantidade por tipo">
-                                            <ApexCharts.ApexPointSeries
-                                                Name="Tipos"
-                                                TItem="DomainEventTypeCountOut"
-                                                Items="@_data.EventTypes"
-                                                SeriesType="ApexCharts.SeriesType.Pie"
-                                                XValue="@(e => e.Description)"
-                                                YValue="@(e => e.Total)"
-                                                PointColor="GetPointColor"
-                                            />
-                                        </ApexCharts.ApexChart>
-                                    }
-                                </MudPaper>
-                            </MudItem>
-                        </MudGrid>
-                    </MudContainer>
-                </ChildContent>
-            </MudExpansionPanel>
+        <MudExpansionPanel Expanded="@_expanded">
+            <TitleContent>
+                <div class="d-flex">
+                    <MudIcon Icon="@Icons.Material.Filled.Dashboard" class="mr-3"></MudIcon>
+                    <MudText><strong>Dashboard</strong></MudText>
+                </div>
+            </TitleContent>
+            <ChildContent>
+                <MudContainer Class="px-0 mb-2">
+                    <MudGrid Spacing="2">
+                        <SummaryCard Loading="@_loading" Icon="@Icons.Material.Rounded.WarningAmber" Color="Color.Warning" Text="Pendentes" Value="@_data.Summary.Pending" />
+                        <SummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.Autorenew" Color="Color.Info" Text="Processando" Value="@_data.Summary.Processing" />
+                        <SummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.ErrorOutline" Color="Color.Error" Text="Erros" Value="@_data.Summary.Error" />
+                        <SummaryCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="Color.Success" Text="Sucessos" Value="@_data.Summary.Success" />
+                    </MudGrid>
+                </MudContainer>
+                <MudContainer Class="px-0">
+                    <MudGrid Spacing="2">
+                        <MudItem xs="12" sm="6" md="6" lg="6">
+                            <MudPaper Class="px-4 pt-4">
+                                @if (!_loading)
+                                {
+                                    <ApexCharts.ApexChart TItem="LastDomainEventOut" Title="Últimos eventos">
+                                        <ApexCharts.ApexPointSeries
+                                            Name="Eventos"
+                                            TItem="LastDomainEventOut"
+                                            Items="@_data.LastEvents"
+                                            SeriesType="ApexCharts.SeriesType.Line"
+                                            XValue="@(e => e.Date.ToString("HH:mm:ss"))"
+                                            YValue="@(e => e.Total)"
+                                        />
+                                    </ApexCharts.ApexChart>
+                                }
+                            </MudPaper>
+                        </MudItem>
+                        <MudItem xs="12" sm="6" md="6" lg="6">
+                            <MudPaper Class="px-4 pt-4" Style="height: 100%">
+                                @if (!_loading)
+                                {
+                                    <ApexCharts.ApexChart TItem="DomainEventTypeCountOut" Title="Quantidade por tipo">
+                                        <ApexCharts.ApexPointSeries
+                                            Name="Tipos"
+                                            TItem="DomainEventTypeCountOut"
+                                            Items="@_data.EventTypes"
+                                            SeriesType="ApexCharts.SeriesType.Pie"
+                                            XValue="@(e => e.Description)"
+                                            YValue="@(e => e.Total)"
+                                            PointColor="GetPointColor"
+                                        />
+                                    </ApexCharts.ApexChart>
+                                }
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+                </MudContainer>
+            </ChildContent>
+        </MudExpansionPanel>
     </MudExpansionPanels>
 
     <style>

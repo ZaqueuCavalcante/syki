@@ -1,0 +1,26 @@
+@namespace Syki.Front.Components.Custom
+
+<MudStack Spacing="0">
+    <MudText Typo="Typo.body2" Style="color: #7C8183">
+        @Label
+    </MudText>
+    <MudStack Row="true" Spacing="0">
+        <MudText Typo="Typo.body1">
+            <strong>@GetText()</strong>
+        </MudText>
+    </MudStack>
+</MudStack>
+
+@code
+{
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+    private string GetText()
+    {
+        return Text.HasValue() ? Text : "-";
+    }
+}

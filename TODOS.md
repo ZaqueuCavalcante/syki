@@ -1,6 +1,5 @@
 # TODOS
 
-
 ## Atividades V0
 
 - ✅ O professor deve ter acesso rápido à todas as suas turmas atuais, através da SideBar esquerda
@@ -15,19 +14,12 @@
     - ✅ Ordenar por CreatedAt DESC
     - ✅ Filtros por Nota
     - ✅ Adicionar coluna Criação
-    - Adicionar botão para abrir Dialog de edição
-    - Adicionar coluna de Entregas
-        - Progress com 5/26
-        - Usar Tooltip informando a %?
-        - Abaixo de 70% fica vermelha, igual ou acima fica amarela, 100% fica verde
+    - ✅ Adicionar coluna de Entregas
+    - ⚠️ Adicionar botão para abrir Dialog de edição
 
-
-
-
-- Na tela de detalhes da atividade
-    - Adicionar um Card com todos os dados da atividade
-    - Usar mesmo estilo do Dialog de criação
-    - Deve ser possível ocultar/mostrar o Card
+- ✅ Na tela de detalhes da atividade
+    - ✅ Adicionar um Card com todos os dados da atividade
+    - ✅ Deve ser possível ocultar/mostrar o Card
 
 - Listagem com todas as entregas
     - Filtro: Todos Pendentes Corrigidos (usar Toggle Group)

@@ -6,8 +6,62 @@
 <SykiPageTitle Title="Atividade" />
 
 <MudContainer Class="my-4 px-4">
-    <SykiPageHeader Icon="@Icons.Material.Filled.EditNote" Title="Atividade" />
-    <SykiPageAlert Text="@_activity.Title" />
+    <MudCard>
+        <MudCardContent>
+            <MudGrid Class="align-center">
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.EditNote" Class="mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">Atividade</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudProgressLinear Color="@GetDeliveryRateColor(_activity.GetDeliveryRate())" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_activity.GetDeliveryRate())" Style="height: 28px">
+                        <MudText Typo="Typo.body1">
+                            <b>@GetDeliveryRateFraction(_activity)</b>
+                        </MudText>
+                    </MudProgressLinear>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+    
+    <MudExpansionPanels Class="my-4">
+        <MudExpansionPanel Expanded="@_expanded">
+            <TitleContent>
+                <MudGrid Spacing="3">
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <MudText Typo="Typo.h6">@_activity.Title</MudText>
+                    </MudItem>
+
+                    <MudItem xs="3" sm="2" md="2" lg="2">
+                        <SykiLabelText Label="Nota" Text="@_activity.Note.ToString()" />
+                    </MudItem>
+                    <MudItem xs="5" sm="2" md="2" lg="2">
+                        <SykiLabelText Label="Tipo" Text="@_activity.Type.GetDescription()" />
+                    </MudItem>
+                    <MudItem xs="4" sm="2" md="2" lg="2">
+                        <SykiLabelText Label="Peso (%)" Text="@_activity.Weight.ToString()" />
+                    </MudItem>
+
+                    <MudItem xs="6" sm="3" md="3" lg="3">
+                        <SykiLabelText Label="Criada em" Text="@_activity.CreatedAt.ToLocalTime().Format()" />
+                    </MudItem>
+                    <MudItem xs="6" sm="3" md="3" lg="3">
+                        <SykiLabelText Label="Data de entrega" Text="@_activity.GetDueDate()" />
+                    </MudItem>
+                </MudGrid>
+            </TitleContent>
+            <ChildContent>
+                <MudContainer Class="px-0">
+                    <MudDivider DividerType="DividerType.Middle" Class="mx-0 mb-4" />
+                    <MudText Style="white-space: pre-line;">
+                        @_activity.Description
+                    </MudText>
+                </MudContainer>
+            </ChildContent>
+        </MudExpansionPanel>
+    </MudExpansionPanels>
 
     <MudContainer Class="px-0 mb-4">
         <MudDataGrid Class="pa-4" Items="@_activity.Works" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
@@ -80,6 +134,7 @@
 
     private bool _loading;
     private string _searchString;
+    private bool _expanded = true;
     private TeacherClassActivityOut _activity = new();
 
     protected override async Task OnInitializedAsync()
@@ -118,6 +173,18 @@
         }
     }
 
+    private string GetDeliveryRateFraction(TeacherClassActivityOut activity)
+    {
+        return $"{activity.DeliveredWorks} / {activity.TotalWorks} entregas";
+    }
+
+    private Color GetDeliveryRateColor(decimal deliveryRate)
+    {
+        if (deliveryRate == 100M) return Color.Success;
+
+        return deliveryRate >= 70 ? Color.Warning : Color.Error;
+    }
+    
     private Func<ClassActivityWorkOut, bool> _quickFilter => x => _searchString.IsIn(x.StudentName);
 
     private string GetNotFoundMessage()

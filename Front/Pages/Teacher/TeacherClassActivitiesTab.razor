@@ -38,20 +38,18 @@
             <PropertyColumn Property="x => x.Type.GetDescription()" Title="Tipo" />
             <PropertyColumn Property="x => x.Note.GetDescription()" Title="Nota" />
             <PropertyColumn Property="x => x.Weight" Title="Peso (%)" />
-            <PropertyColumn Property="x => x.CreatedAt.ToLocalTime()" Title="Criada em" />
+            <PropertyColumn Property="x => x.CreatedAt.ToLocalTime().Format()" Title="Criada em" />
             <PropertyColumn Property="x => x.GetDueDate()" Title="Data de entrega" />
             <TemplateColumn Title="Entregas">
                 <CellTemplate>
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
-                        <MudProgressLinear Color="@GetDeliveryRateColor(context.Item.GetDeliveryRate())" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Item.GetDeliveryRate())" Style="height: 24px">
-                            <MudText Typo="Typo.body1">
-                                <b>@GetDeliveryRateFraction(context.Item)</b>
-                            </MudText>
-                        </MudProgressLinear>
-                    </MudStack>
+                    <MudProgressLinear Color="@GetDeliveryRateColor(context.Item.GetDeliveryRate())" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Item.GetDeliveryRate())" Style="height: 24px">
+                        <MudText Typo="Typo.body1">
+                            <b>@GetDeliveryRateFraction(context.Item)</b>
+                        </MudText>
+                    </MudProgressLinear>
                 </CellTemplate>
             </TemplateColumn>
-            <TemplateColumn CellClass="d-flex justify-end">
+            <TemplateColumn>
                 <CellTemplate>
                     <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Item.Id))" />
                 </CellTemplate>
@@ -77,11 +75,10 @@
 
     private CreateClassActivityDialog _dialog;
 
-    private IEnumerable<ClassNoteType> _notesFilter = [ClassNoteType.N1, ClassNoteType.N2, ClassNoteType.N3];
-
     private bool _loading;
     private string _searchString;
     private List<TeacherClassActivityOut> _activities = [];
+    private IEnumerable<ClassNoteType> _notesFilter = [ClassNoteType.N1, ClassNoteType.N2, ClassNoteType.N3];
 
     protected override async Task OnParametersSetAsync()
     {
@@ -91,6 +88,8 @@
     private async Task Load()
     {
         _loading = true;
+        _searchString = string.Empty;
+        _notesFilter = [ClassNoteType.N1, ClassNoteType.N2, ClassNoteType.N3];
         var response = await GetTeacherClassActivitiesClient.Get(ClassId);
         if (response.IsSuccess())
         {

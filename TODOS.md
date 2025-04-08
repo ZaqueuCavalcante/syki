@@ -13,8 +13,8 @@
 
 - Na listagem de atividades
     - ✅ Ordenar por CreatedAt DESC
-    - Filtros por Tipo e Nota
-    - Adicionar coluna Criação
+    - ✅ Filtros por Nota
+    - ✅ Adicionar coluna Criação
     - Adicionar botão para abrir Dialog de edição
     - Adicionar coluna de Entregas
         - Progress com 5/26

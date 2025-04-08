@@ -72,6 +72,26 @@ public class ClassActivity : Entity
         return new ClassActivity(classId, note, title, description, type, weight, dueDate, dueHour, students);
     }
 
+    public TeacherClassActivityOut ToListOut()
+    {
+        return new()
+        {
+            Id = Id,
+            ClassId = ClassId,
+            Note = Note,
+            Title = Title,
+            Description = Description,
+            Type = Type,
+            Weight = Weight,
+            CreatedAt = CreatedAt,
+            DueDate = DueDate,
+            DueHour = DueHour,
+            DeliveredWorks = Works != null ? Works.Count(w => w.Status == ClassActivityWorkStatus.Delivered) : 0,
+            TotalWorks = Works != null ? Works.Count : 0,
+            Works = [],
+        };
+    }
+
     public TeacherClassActivityOut ToOut()
     {
         return new()
@@ -86,6 +106,8 @@ public class ClassActivity : Entity
             CreatedAt = CreatedAt,
             DueDate = DueDate,
             DueHour = DueHour,
+            DeliveredWorks = Works != null ? Works.Count(w => w.Status == ClassActivityWorkStatus.Delivered) : 0,
+            TotalWorks = Works != null ? Works.Count : 0,
             Works = Works != null ? Works.Select(w => w.ToOut()).ToList() : [],
         };
     }

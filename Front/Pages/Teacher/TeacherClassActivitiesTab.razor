@@ -21,7 +21,7 @@
             <MudGrid Class="align-center" Spacing="3">
                 <MudItem xs="12" sm="3" md="3" lg="3">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
-                        <MudToggleGroup T="ClassNoteType" SelectionMode="SelectionMode.MultiSelection" @bind-Values="@_notesFilter" Style="width: 100%;" Color="Color.Tertiary" CheckMark>
+                        <MudToggleGroup T="ClassNoteType" SelectionMode="SelectionMode.MultiSelection" Values="@_notesFilter" ValuesChanged="@HandleNotesFilterChange" Style="width: 100%;" Color="Color.Tertiary" CheckMark>
                             <MudToggleItem Value="@(ClassNoteType.N1)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
                             <MudToggleItem Value="@(ClassNoteType.N2)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
                             <MudToggleItem Value="@(ClassNoteType.N3)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
@@ -38,7 +38,19 @@
             <PropertyColumn Property="x => x.Type.GetDescription()" Title="Tipo" />
             <PropertyColumn Property="x => x.Note.GetDescription()" Title="Nota" />
             <PropertyColumn Property="x => x.Weight" Title="Peso (%)" />
+            <PropertyColumn Property="x => x.CreatedAt.ToLocalTime()" Title="Criada em" />
             <PropertyColumn Property="x => x.GetDueDate()" Title="Data de entrega" />
+            <TemplateColumn Title="Entregas">
+                <CellTemplate>
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                        <MudProgressLinear Color="@GetDeliveryRateColor(context.Item.GetDeliveryRate())" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Item.GetDeliveryRate())" Style="height: 24px">
+                            <MudText Typo="Typo.body1">
+                                <b>@GetDeliveryRateFraction(context.Item)</b>
+                            </MudText>
+                        </MudProgressLinear>
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
             <TemplateColumn CellClass="d-flex justify-end">
                 <CellTemplate>
                     <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Item.Id))" />
@@ -71,7 +83,7 @@
     private string _searchString;
     private List<TeacherClassActivityOut> _activities = [];
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         await Load();
     }
@@ -87,6 +99,17 @@
         _loading = false;
     }
 
+    private void HandleNotesFilterChange(IEnumerable<ClassNoteType> newValues)
+    {
+        if (newValues.Count() == 0)
+        {
+            _notesFilter = _notesFilter.ToList();
+            return;
+        }
+
+        _notesFilter = newValues;
+    }
+
     private List<TeacherClassActivityOut> GetActivities()
     {
         return _activities.Where(x => _notesFilter.Contains(x.Note)).ToList();
@@ -100,6 +123,18 @@
     private async Task NewActivity()
     {
         await _dialog.Open();
+    }
+
+    private string GetDeliveryRateFraction(TeacherClassActivityOut activity)
+    {
+        return $"{activity.DeliveredWorks} / {activity.TotalWorks}";
+    }
+
+    private Color GetDeliveryRateColor(decimal deliveryRate)
+    {
+        if (deliveryRate == 100M) return Color.Success;
+
+        return deliveryRate >= 70 ? Color.Warning : Color.Error;
     }
 
     private Func<TeacherClassActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);

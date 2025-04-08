@@ -52,6 +52,7 @@ public class ClassActivityWork : Entity
             StudentId = SykiStudentId,
             StudentName = SykiStudent != null ? SykiStudent.Name : "",
             Status = Status,
+            Note = Note,
             Link = Link,
         };
     }

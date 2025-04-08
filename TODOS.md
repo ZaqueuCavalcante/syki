@@ -22,8 +22,8 @@
     - ✅ Deve ser possível ocultar/mostrar o Card
 
 - Listagem com todas as entregas
+    - ✅ Colunas: Aluno, Status, Nota
     - Filtro: Todos Pendentes Corrigidos (usar Toggle Group)
-    - Colunas: Aluno, Data da entrega, Status (pendente de correção (alerta amarelo), corrigido (check verde)), Nota
     - Clicar no detalhe, deve abrir Drawer lateral com todos os links enviados pelo aluno
     - Professor pode atribuir nota à entrega e alterar a nota quando quiser (mesmo endpoint, criar caso null...)
 

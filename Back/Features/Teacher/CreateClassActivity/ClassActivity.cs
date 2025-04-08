@@ -108,7 +108,7 @@ public class ClassActivity : Entity
             DueHour = DueHour,
             DeliveredWorks = Works != null ? Works.Count(w => w.Status == ClassActivityWorkStatus.Delivered) : 0,
             TotalWorks = Works != null ? Works.Count : 0,
-            Works = Works != null ? Works.Select(w => w.ToOut()).ToList() : [],
+            Works = Works != null ? Works.Select(w => w.ToOut()).OrderBy(x => x.StudentName).ToList() : [],
         };
     }
 

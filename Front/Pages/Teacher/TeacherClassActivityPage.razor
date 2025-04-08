@@ -64,14 +64,16 @@
     </MudExpansionPanels>
 
     <MudContainer Class="px-0 mb-4">
-        <MudDataGrid Class="pa-4" Items="@_activity.Works" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_activity.Works" QuickFilter="@_quickFilter" Hover="true" SortMode="@SortMode.None" Loading="@_loading" Dense="true" RowsPerPage="100">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo nome do aluno" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo nome" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.StudentName" Title="Aluno" />
-                <PropertyColumn Property="x => x.Link" Title="Link" />
-                <TemplateColumn CellClass="d-flex justify-end">
+                <PropertyColumn Property="x => x.Status.GetDescription()" Title="Status" />
+                <PropertyColumn Property="x => x.Note.Format()" Title="Nota" />
+                <PropertyColumn Property="x => x.GetLink()" Title="Link" />
+                <TemplateColumn>
                     <CellTemplate>
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenDrawer(context.Item))" />
                     </CellTemplate>
@@ -80,9 +82,6 @@
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
-            <PagerContent>
-                <SykiDataGridPager T="ClassActivityWorkOut" />
-            </PagerContent>
         </MudDataGrid>
     </MudContainer>
 </MudContainer>
@@ -91,7 +90,7 @@
 	<MudDrawerHeader Class="justify-space-between px-4 py-1">
 		<MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart" Spacing="3">
 			<MudIcon Icon="@Icons.Material.Filled.BookmarkAdded"></MudIcon>
-			<MudText Typo="Typo.h5"><b>Entregas</b></MudText>
+			<MudText Typo="Typo.h5"><b>Entrega</b></MudText>
 		</MudStack>
 		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@CloseDrawer" />
 	</MudDrawerHeader>
@@ -184,7 +183,7 @@
 
         return deliveryRate >= 70 ? Color.Warning : Color.Error;
     }
-    
+
     private Func<ClassActivityWorkOut, bool> _quickFilter => x => _searchString.IsIn(x.StudentName);
 
     private string GetNotFoundMessage()

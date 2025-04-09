@@ -5,9 +5,16 @@
         @Label
     </MudText>
     <MudStack Row="true" Spacing="0">
-        <MudText Typo="Typo.body1">
-            <strong>@GetText()</strong>
-        </MudText>
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            <MudText Typo="Typo.body1">
+                <strong>@GetText()</strong>
+            </MudText>
+        }
     </MudStack>
 </MudStack>
 
@@ -19,6 +26,9 @@
     [Parameter]
     public string Text { get; set; }
 
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    
     private string GetText()
     {
         return Text.HasValue() ? Text : "-";

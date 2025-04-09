@@ -2,30 +2,8 @@
 
 ## Atividades V0
 
-- ✅ O professor deve ter acesso rápido à todas as suas turmas atuais, através da SideBar esquerda
+- ⚠️ Professor pode editar uma atividade
 
-- ✅ Analisar pq a tela de turma do professor eh tão lenta
-
-- ✅ Dentro de uma turma, deve ser possível criar uma atividade
-    - ✅ O Dialog só deve ser fechado ao clicar no X ou no Cancelar
-    - ✅ A soma total dos pesos das atividades já existentes deve ser levada em conta no peso máximo da nova atividade
-
-- Na listagem de atividades
-    - ✅ Ordenar por CreatedAt DESC
-    - ✅ Filtros por Nota
-    - ✅ Adicionar coluna Criação
-    - ✅ Adicionar coluna de Entregas
-    - ⚠️ Adicionar botão para abrir Dialog de edição
-
-- ✅ Na tela de detalhes da atividade
-    - ✅ Adicionar um Card com todos os dados da atividade
-    - ✅ Deve ser possível ocultar/mostrar o Card
-
-- Listagem com todas as entregas
-    - ✅ Colunas: Aluno, Status, Nota
-    - Filtro: Todos Pendentes Corrigidos (usar Toggle Group)
-    - Clicar no detalhe, deve abrir Drawer lateral com todos os links enviados pelo aluno
-    - Professor pode atribuir nota à entrega e alterar a nota quando quiser (mesmo endpoint, criar caso null...)
 
 
 
@@ -36,26 +14,6 @@
 - Filtro: Todos Pendentes Entregues
 
 - Drawer na direita para adicionar vários links e enviar
-
-- Analisar criação de timeline
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

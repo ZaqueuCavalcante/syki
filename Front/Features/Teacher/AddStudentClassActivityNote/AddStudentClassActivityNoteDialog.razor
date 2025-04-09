@@ -1,0 +1,84 @@
+@namespace Syki.Front.Features.Teacher.AddStudentClassActivityNote
+
+<MudDialog Class="pb-2">
+    <TitleContent>
+        <SykiDialogTitle Icon="@Icons.Material.Filled.BookmarkAdded" Text="Adicionar nota" />
+    </TitleContent>
+    <DialogContent>
+
+        <MudGrid Spacing="3">
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <SykiLabelText Label="Aluno" Text="@Work.StudentName" />
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <SykiLabelText Label="Link">
+                    <MudLink Href="@Work.Link" Color="Color.Primary">@(Work.Link.HasValue() ? Work.Link : "-")</MudLink>
+                </SykiLabelText>
+            </MudItem>
+        </MudGrid>
+
+        <MudForm @ref="@_form" Class="pt-1">
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <MudNumericField
+                        T="decimal"
+                        @bind-Value="@Work.Note"
+                        Max="10.00M"
+                        MaxLength="4"
+                        Min="0"
+                        Format="N2"
+                        AutoFocus="true"
+                        HideSpinButtons="true"
+                        Variant="Variant.Outlined"
+                        Margin="Margin.Dense"/>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Cancel" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject AddStudentClassActivityNoteClient AddStudentClassActivityNoteClient
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Guid ActivityId { get; set; }
+    
+    [Parameter]
+    public ClassActivityWorkOut Work { get; set; }
+    
+    private MudForm _form;
+    private bool _loading;
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+        var result = await AddStudentClassActivityNoteClient.Add(ActivityId, Work.StudentId, Work.Note);
+        if (result.IsSuccess())
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Nota adicionada com sucesso!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(result.GetError().Message, Severity.Error);
+        }
+        _loading = false;
+    }
+    
+    private void Cancel() => MudDialog.Cancel();
+}

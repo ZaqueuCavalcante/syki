@@ -100,7 +100,7 @@
 
     private void HandleNotesFilterChange(IEnumerable<ClassNoteType> newValues)
     {
-        if (newValues.Count() == 0)
+        if (!newValues.Any())
         {
             _notesFilter = _notesFilter.ToList();
             return;

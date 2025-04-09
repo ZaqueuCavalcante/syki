@@ -64,9 +64,23 @@
     </MudExpansionPanels>
 
     <MudContainer Class="px-0 mb-4">
-        <MudDataGrid Class="pa-4" Items="@_activity.Works" QuickFilter="@_quickFilter" Hover="true" SortMode="@SortMode.None" Loading="@_loading" Dense="true" RowsPerPage="100">
+        <style>.mud-table-toolbar { height: auto }</style>
+        <MudDataGrid Class="pa-4" Items="@GetWorks()" QuickFilter="@_quickFilter" Hover="true" SortMode="@SortMode.None" Loading="@_loading" Dense="true" RowsPerPage="100">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque pelo nome" />
+                <MudGrid Class="align-center" Spacing="3">
+                    <MudItem xs="12" sm="5" md="5" lg="5">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
+                            <MudToggleGroup T="ClassActivityWorkStatus" SelectionMode="SelectionMode.MultiSelection" Values="@_statusFilter" ValuesChanged="@HandleStatusFilterChange" Style="width: 100%;" Color="Color.Tertiary" CheckMark="@(_breakpoint != Breakpoint.Xs)">
+                                <MudToggleItem Value="@(ClassActivityWorkStatus.Pending)" Text="@ClassActivityWorkStatus.Pending.GetDescription()" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                                <MudToggleItem Value="@(ClassActivityWorkStatus.Delivered)" Text="@ClassActivityWorkStatus.Delivered.GetDescription()" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                                <MudToggleItem Value="@(ClassActivityWorkStatus.Finalized)" Text="@ClassActivityWorkStatus.Finalized.GetDescription()" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                            </MudToggleGroup>
+                        </MudStack>
+                    </MudItem>
+                    <MudItem xs="12" sm="7" md="7" lg="7" Class="d-flex justify-end">
+                        <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome" />
+                    </MudItem>
+                </MudGrid>
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.StudentName" Title="Aluno" />
@@ -75,7 +89,7 @@
                 <PropertyColumn Property="x => x.GetLink()" Title="Link" />
                 <TemplateColumn>
                     <CellTemplate>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenDrawer(context.Item))" />
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.BookmarkAdded" OnClick="@(() => OpenDialog(context.Item))" />
                     </CellTemplate>
                 </TemplateColumn>
             </Columns>
@@ -86,42 +100,9 @@
     </MudContainer>
 </MudContainer>
 
-<MudDrawer Anchor="Anchor.Right" @bind-Open="@_rightOpen" Variant="DrawerVariant.Temporary" OverlayAutoClose="true" Elevation="1" Width="460px">
-	<MudDrawerHeader Class="justify-space-between px-4 py-1">
-		<MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart" Spacing="3">
-			<MudIcon Icon="@Icons.Material.Filled.BookmarkAdded"></MudIcon>
-			<MudText Typo="Typo.h5"><b>Entrega</b></MudText>
-		</MudStack>
-		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@CloseDrawer" />
-	</MudDrawerHeader>
-    <MudDivider DividerType="DividerType.Middle" />
-    <MudDrawerContainer>
-        <MudPaper Class="pa-4" Style="overflow-x: hidden" Elevation="0">
-            <MudForm Spacing="0">
-                <MudGrid Spacing="2">
-                    <MudItem xs="12" sm="12" md="12" lg="12">
-                        <MudNumericField
-                            T="decimal"
-                            @bind-Value="@_note"
-                            Max="10.00M"
-                            MaxLength="4"
-                            Min="0"
-                            Format="N2"
-                            HideSpinButtons="true"
-                            Variant="Variant.Outlined"
-                            Margin="Margin.Dense"
-                        />
-                    </MudItem>
-                </MudGrid>
-            </MudForm>
-            <DialogSaveButton OnClick="@Submit" />
-        </MudPaper>
-    </MudDrawerContainer>
-</MudDrawer>
-
-@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject IBrowserViewportService BrowserViewportService
 @inject GetTeacherClassActivityClient GetTeacherClassActivityClient
-@inject AddStudentClassActivityNoteClient AddStudentClassActivityNoteClient
 
 @code
 {
@@ -135,49 +116,68 @@
     private string _searchString;
     private bool _expanded = true;
     private TeacherClassActivityOut _activity = new();
+    
+    private Breakpoint _breakpoint;
+    
+    private IEnumerable<ClassActivityWorkStatus> _statusFilter = [ClassActivityWorkStatus.Pending, ClassActivityWorkStatus.Delivered, ClassActivityWorkStatus.Finalized];
 
     protected override async Task OnInitializedAsync()
     {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        await Load();
+    }
+
+    private async Task Load()
+    {
         _loading = true;
         _activity = await GetTeacherClassActivityClient.Get(ClassId, ActivityId);
+        _statusFilter = [ClassActivityWorkStatus.Pending, ClassActivityWorkStatus.Delivered, ClassActivityWorkStatus.Finalized];
         _loading = false;
     }
+    
+    private void HandleStatusFilterChange(IEnumerable<ClassActivityWorkStatus> newValues)
+    {
+        if (!newValues.Any())
+        {
+            _statusFilter = _statusFilter.ToList();
+            return;
+        }
 
-    private decimal _note;
-    private bool _rightOpen;
-    private ClassActivityWorkOut _selected = new();
-    private void OpenDrawer(ClassActivityWorkOut work)
-    {
-        _note = 0;
-        _selected = work;
-        _rightOpen = true;
-    }
-    private void CloseDrawer()
-    {
-        _note = 0;
-        _selected = new();
-        _rightOpen = false;
-    }
-    private async Task Submit()
-    {
-        var result = await AddStudentClassActivityNoteClient.Add(ActivityId, _selected.StudentId, _note);
-        if (result.IsSuccess())
-        {
-            Snackbar.Add("Nota adicionada com sucesso!", Severity.Success);
-            CloseDrawer();
-        }
-        else
-        {
-            Snackbar.Add(result.GetError().Message, Severity.Error);
-        }
+        _statusFilter = newValues;
     }
 
-    private string GetDeliveryRateFraction(TeacherClassActivityOut activity)
+    private List<ClassActivityWorkOut> GetWorks()
+    {
+        return _activity.Works.Where(x => _statusFilter.Contains(x.Status)).ToList();
+    }
+
+    private async Task OpenDialog(ClassActivityWorkOut work)
+    {
+        var parameters = new DialogParameters<AddStudentClassActivityNoteDialog>();
+        parameters.Add(x => x.Work, work);
+        parameters.Add(x => x.ActivityId, ActivityId);
+
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            FullWidth = true,
+            MaxWidth = MaxWidth.Small,
+            FullScreen = _breakpoint == Breakpoint.Xs,
+        };
+        var dialog = await DialogService.ShowAsync<AddStudentClassActivityNoteDialog>("", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        await Load();
+    }
+    
+    private static string GetDeliveryRateFraction(TeacherClassActivityOut activity)
     {
         return $"{activity.DeliveredWorks} / {activity.TotalWorks} entregas";
     }
 
-    private Color GetDeliveryRateColor(decimal deliveryRate)
+    private static Color GetDeliveryRateColor(decimal deliveryRate)
     {
         if (deliveryRate == 100M) return Color.Success;
 
@@ -188,6 +188,6 @@
 
     private string GetNotFoundMessage()
     {
-        return _searchString.IsEmpty() ? "Não existem turmas cadastradas ainda." : "Nenhuma turma encontrada.";
+        return _searchString.IsEmpty() && _statusFilter.Count() == 3 ? "Não existem turmas cadastradas ainda." : "Nenhuma turma encontrada.";
     }
 }

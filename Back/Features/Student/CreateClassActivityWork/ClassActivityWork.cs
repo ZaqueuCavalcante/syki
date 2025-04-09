@@ -38,6 +38,7 @@ public class ClassActivityWork : Entity
         if (note < 0 || note > 10) return new InvalidStudentClassNote();
 
         Note = note;
+        Status = ClassActivityWorkStatus.Finalized;
 
         AddDomainEvent(new StudentClassNoteAddedDomainEvent(SykiStudentId, ClassActivityId));
 

@@ -86,7 +86,7 @@ public class ClassActivity : Entity
             CreatedAt = CreatedAt,
             DueDate = DueDate,
             DueHour = DueHour,
-            DeliveredWorks = Works != null ? Works.Count(w => w.Status == ClassActivityWorkStatus.Delivered) : 0,
+            DeliveredWorks = Works != null ? Works.Count(w => w.Status.IsIn(ClassActivityWorkStatus.Delivered, ClassActivityWorkStatus.Finalized)) : 0,
             TotalWorks = Works != null ? Works.Count : 0,
             Works = [],
         };
@@ -106,7 +106,7 @@ public class ClassActivity : Entity
             CreatedAt = CreatedAt,
             DueDate = DueDate,
             DueHour = DueHour,
-            DeliveredWorks = Works != null ? Works.Count(w => w.Status == ClassActivityWorkStatus.Delivered) : 0,
+            DeliveredWorks = Works != null ? Works.Count(w => w.Status.IsIn(ClassActivityWorkStatus.Delivered, ClassActivityWorkStatus.Finalized)) : 0,
             TotalWorks = Works != null ? Works.Count : 0,
             Works = Works != null ? Works.Select(w => w.ToOut()).OrderBy(x => x.StudentName).ToList() : [],
         };

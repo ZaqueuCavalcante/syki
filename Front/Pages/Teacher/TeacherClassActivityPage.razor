@@ -29,33 +29,28 @@
     <MudExpansionPanels Class="my-4">
         <MudExpansionPanel Expanded="@_expanded">
             <TitleContent>
-                <MudGrid Spacing="3">
-                    <MudItem xs="12" sm="12" md="12" lg="12">
-                        <MudText Typo="Typo.h6">@_activity.Title</MudText>
-                    </MudItem>
-
-                    <MudItem xs="3" sm="2" md="2" lg="2">
-                        <SykiLabelText Label="Nota" Text="@_activity.Note.ToString()" />
-                    </MudItem>
-                    <MudItem xs="5" sm="2" md="2" lg="2">
-                        <SykiLabelText Label="Tipo" Text="@_activity.Type.GetDescription()" />
-                    </MudItem>
-                    <MudItem xs="4" sm="2" md="2" lg="2">
-                        <SykiLabelText Label="Peso (%)" Text="@_activity.Weight.ToString()" />
-                    </MudItem>
-
-                    <MudItem xs="6" sm="3" md="3" lg="3">
-                        <SykiLabelText Label="Criada em" Text="@_activity.CreatedAt.ToLocalTime().Format()" />
-                    </MudItem>
-                    <MudItem xs="6" sm="3" md="3" lg="3">
-                        <SykiLabelText Label="Data de entrega" Text="@_activity.GetDueDate()" />
-                    </MudItem>
-                </MudGrid>
+                <MudText Typo="Typo.h6">@_activity.Title</MudText>
             </TitleContent>
             <ChildContent>
                 <MudContainer Class="px-0">
-                    <MudDivider DividerType="DividerType.Middle" Class="mx-0 mb-4" />
-                    <MudText Style="white-space: pre-line;">
+                    <MudGrid Spacing="3">
+                        <MudItem xs="3" sm="2" md="2" lg="2">
+                            <SykiLabelText Label="Nota" Text="@_activity.Note.ToString()"/>
+                        </MudItem>
+                        <MudItem xs="5" sm="2" md="2" lg="2">
+                            <SykiLabelText Label="Tipo" Text="@_activity.Type.GetDescription()"/>
+                        </MudItem>
+                        <MudItem xs="4" sm="2" md="2" lg="2">
+                            <SykiLabelText Label="Peso (%)" Text="@_activity.Weight.ToString()"/>
+                        </MudItem>
+                        <MudItem xs="6" sm="3" md="3" lg="3">
+                            <SykiLabelText Label="Criada em" Text="@_activity.CreatedAt.ToLocalTime().Format()"/>
+                        </MudItem>
+                        <MudItem xs="6" sm="3" md="3" lg="3">
+                            <SykiLabelText Label="Data de entrega" Text="@_activity.GetDueDate()"/>
+                        </MudItem>
+                    </MudGrid>
+                    <MudText Class="mt-4" Style="white-space: pre-line;">
                         @_activity.Description
                     </MudText>
                 </MudContainer>

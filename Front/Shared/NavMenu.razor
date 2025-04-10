@@ -24,11 +24,12 @@
     </AuthorizeView>
     <AuthorizeView Roles="@UserRole.Teacher.ToString()">
         <MudNavLink Href="teacher/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
-        <MudNavLink Href="teacher/classes" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CenterFocusStrong" IconColor="Color.Inherit">Turmas</MudNavLink>
-        @foreach(var item in _teacherClasses)
-        {
-            <MudNavLink Href="@($"teacher/classes/{item.Id}")" Match="NavLinkMatch.All">@item.Discipline</MudNavLink>
-        }
+        <MudNavGroup Title="Turmas" Expanded="true" Icon="@Icons.Material.Filled.CenterFocusStrong">
+            @foreach(var item in _teacherClasses)
+            {
+                <MudNavLink Href="@($"teacher/classes/{item.Id}")" Match="NavLinkMatch.All">@item.Discipline</MudNavLink>
+            }
+        </MudNavGroup>
     </AuthorizeView>
     <AuthorizeView Roles="@UserRole.Student.ToString()">
         <MudNavLink Href="student/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
@@ -37,15 +38,23 @@
         <MudNavLink Href="student/notes" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.StickyNote2" IconColor="Color.Inherit">Notas</MudNavLink>
         <MudNavLink Href="student/frequency" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Class" IconColor="Color.Inherit">Frequência</MudNavLink>
         <MudNavLink Href="student/enrollments" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrícula</MudNavLink>
+        <MudNavGroup Title="Turmas" Expanded="true" Icon="@Icons.Material.Filled.CenterFocusStrong">
+            @foreach(var item in _studentClasses)
+            {
+                <MudNavLink Href="@($"student/classes/{item.Id}")" Match="NavLinkMatch.All">@item.Discipline</MudNavLink>
+            }
+        </MudNavGroup>
     </AuthorizeView>
 </MudNavMenu>
 
 @inject AuthManager AuthManager
 @inject GetTeacherCurrentClassesClient GetTeacherCurrentClassesClient
+@inject GetStudentCurrentClassesClient GetStudentCurrentClassesClient
 
 @code
 {
     private List<TeacherCurrentClassOut> _teacherClasses = [];
+    private List<StudentCurrentClassOut> _studentClasses = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -53,6 +62,10 @@
         if (user.Role == UserRole.Teacher)
         {
             _teacherClasses = await GetTeacherCurrentClassesClient.Get();
+        }
+        if (user.Role == UserRole.Student)
+        {
+            _studentClasses = await GetStudentCurrentClassesClient.Get();
         }
     }
 }

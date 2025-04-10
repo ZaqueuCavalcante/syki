@@ -1,0 +1,28 @@
+﻿@namespace Syki.Front.Pages.Student
+
+@page "/student/classes/{id:guid}"
+@attribute [Authorize(Roles = "Student")]
+
+<SykiPageTitle Title="Turma" />
+
+<MudContainer Class="my-4 px-4">
+    <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="@_class.Discipline" Class="mb-4" />
+</MudContainer>
+
+@inject GetStudentClassClient GetStudentClassClient
+
+@code
+{
+	[Parameter]
+	public Guid Id { get; set; }
+
+    private bool _loading;
+    private StudentClassOut _class = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        _class = await GetStudentClassClient.Get(Id);
+        _loading = false;
+    }
+}

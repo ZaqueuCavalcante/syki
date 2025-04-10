@@ -227,6 +227,18 @@ public class Class
         };
     }
 
+    public StudentClassOut ToStudentClassOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Discipline = Discipline.Name,
+            Code = Discipline.Code,
+            Period = PeriodId,
+            Status = Status,
+        };
+    }
+    
     public TeacherClassesOut ToTeacherClassesOut()
     {
         return new()
@@ -241,6 +253,15 @@ public class Class
     }
 
     public TeacherCurrentClassOut ToTeacherCurrentClassOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Discipline = Discipline.Name,
+        };
+    }
+    
+    public StudentCurrentClassOut ToStudentCurrentClassOut()
     {
         return new()
         {

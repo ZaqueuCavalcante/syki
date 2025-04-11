@@ -5,22 +5,16 @@
 - ⚠️ Professor pode editar uma atividade
 
 
-
-
-
-- Ao entrar em uma turma, listar todas as atividades ordenadas por CreatedAt DESC
-
-- Filtro: Todos Pendentes Entregues
-
-- Drawer na direita para adicionar vários links e enviar
+- Aluno vendo turma:
+    - Filtro: Todos | Pendentes | Entregues
+    - Drawer na direita para adicionar link e enviar
 
 
 
 
 
 
-
-
+- Calendário Acadêmico
 
 - Aplicar filtros na query-string
     - Quando voltar pra pagina ela mantem os filtros

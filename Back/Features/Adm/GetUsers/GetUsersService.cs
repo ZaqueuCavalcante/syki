@@ -1,5 +1,6 @@
 using Dapper;
 using Npgsql;
+using Syki.Back.Hubs;
 
 namespace Syki.Back.Features.Adm.GetUsers;
 
@@ -29,7 +30,7 @@ public class GetUsersService(DatabaseSettings dbSettings, HybridCache cache) : I
                 u.id, i.name
         ";
 
-        return await cache.GetOrCreateAsync(
+        var users = await cache.GetOrCreateAsync(
             key: "users",
             state: (connection, sql),
             factory: async (state, _) =>
@@ -38,5 +39,15 @@ public class GetUsersService(DatabaseSettings dbSettings, HybridCache cache) : I
                 return data.ToList();
             }
         );
+
+        foreach (var user in users)
+        {
+            if (SykiHubUsersStore.ConnectedIds.Contains(user.Id))
+            {
+                user.Online = true;
+            }
+        }
+
+        return users;
     }
 }

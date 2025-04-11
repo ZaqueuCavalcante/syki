@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Globalization;
 using Newtonsoft.Json.Converters;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Syki.Shared;
@@ -31,6 +32,11 @@ public static class StringExtensions
     }
 
     public static bool HasValue(this string? text)
+    {
+        return !string.IsNullOrEmpty(text);
+    }
+
+    public static bool HasValue(this StringValues text)
     {
         return !string.IsNullOrEmpty(text);
     }

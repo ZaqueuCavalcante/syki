@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Syki.Back.Configs;
 
@@ -40,6 +41,20 @@ public static class AuthenticationConfigs
             .AddJwtBearer(BearerScheme, options =>
             {
                 options.TokenValidationParameters = tokenValidationParameters;
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var path = context.HttpContext.Request.Path;
+                        var jwt = context.Request.Query["access_token"];
+                        if (jwt.HasValue() && path.StartsWithSegments("/syki-hub"))
+                        {
+                            context.Token = jwt;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
     }
 }

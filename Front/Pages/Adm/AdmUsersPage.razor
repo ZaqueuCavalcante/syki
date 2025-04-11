@@ -17,6 +17,17 @@
                 <PropertyColumn Property="x => x.Email" Title="Email" />
                 <PropertyColumn Property="x => x.Institution" Title="Instituição" />
                 <PropertyColumn Property="x => x.Role" Title="Role" />
+                <TemplateColumn>
+                    <CellTemplate>
+                        <MudTooltip Text="@GetOnlineText(context.Item.Online)" Arrow="true" Placement="Placement.Top">
+                            <MudIcon
+                                Size="@Size.Small"
+                                Icon="@GetOnlineIcon(context.Item.Online)"
+                                Color="GetOnlineIconColor(context.Item.Online)"
+                            />
+                        </MudTooltip>
+                    </CellTemplate>
+                </TemplateColumn>
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -45,6 +56,21 @@
 
     private Func<UserOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Email, x.Institution, x.Role);
 
+    private static string GetOnlineText(bool online)
+    {
+        return online ? "Online" : "Off";
+    }
+    
+    private static string GetOnlineIcon(bool online)
+    {
+        return online ? Icons.Material.Filled.CheckCircle : @Icons.Material.Filled.RemoveCircleOutline;
+    }
+
+    private static Color GetOnlineIconColor(bool online)
+    {
+        return online ? Color.Success : Color.Default;
+    }
+    
     private string GetNotFoundMessage()
     {
         return (_searchString.IsEmpty()) ? "Não existem usuários cadastrados ainda." : "Nenhum usuário encontrado.";

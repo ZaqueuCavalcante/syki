@@ -9,4 +9,5 @@ public class UserOut
     public Guid InstitutionId { get; set; }
     public string Institution { get; set; }
     public string Role { get; set; }
+    public bool Online { get; set; }
 }

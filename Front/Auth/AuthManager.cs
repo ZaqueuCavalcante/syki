@@ -15,6 +15,7 @@ public class AuthManager(AuthenticationStateProvider provider)
 
         return new AuthUser
         {
+            IsAuthenticated = true,
             Name = authState.User.FindFirst("name").Value,
             Email = authState.User.FindFirst("email").Value,
             Role = Enum.Parse<UserRole>(authState.User.FindFirst("role").Value),

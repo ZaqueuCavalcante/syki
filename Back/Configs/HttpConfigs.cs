@@ -1,3 +1,4 @@
+using Syki.Back.Hubs;
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 
@@ -12,6 +13,8 @@ public static class HttpConfigs
 
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
+        
+        builder.Services.AddSignalR();
     }
 
     public static void UseExceptions(this IApplicationBuilder app)
@@ -29,6 +32,8 @@ public static class HttpConfigs
         app.UseEndpoints(options =>
         {
             options.MapControllers();
+
+            options.MapHub<SykiHub>("/syki-hub");
 
             options.MapOpenApi();
             options.MapScalarApiReference(options =>

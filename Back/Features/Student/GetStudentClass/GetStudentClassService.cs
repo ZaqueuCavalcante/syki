@@ -9,6 +9,7 @@ public class GetStudentClassService(SykiDbContext ctx) : IStudentService
 
         var @class = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)
+            .Include(x => x.Activities)
             .Where(t => t.Id == classId)
             .FirstOrDefaultAsync();
 

@@ -7,4 +7,5 @@ public class StudentClassOut
     public string Code { get; set; }
     public string Period { get; set; }
     public ClassStatus Status { get; set; }
+    public List<StudentActivityOut> Activities { get; set; } = [];
 }

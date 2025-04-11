@@ -7,7 +7,6 @@
 
 
 
-- Aluno deve poder ver todas as suas turmas na SideBar esquerda
 
 - Ao entrar em uma turma, listar todas as atividades ordenadas por CreatedAt DESC
 

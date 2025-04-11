@@ -7,6 +7,54 @@
 
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="@_class.Discipline" Class="mb-4" />
+
+    <style>.mud-table-toolbar { height: auto }</style>
+    <MudDataGrid
+        T="StudentActivityOut"
+        Class="pa-4 mt-4"
+        Items="@GetActivities()"
+        QuickFilter="@_quickFilter"
+        Hover="true"
+        Dense="true"
+        Loading="@_loading"
+        SortMode="@SortMode.None"
+        RowsPerPage="100"
+    >
+        <ToolBarContent>
+            <MudGrid Class="align-center" Spacing="3">
+                <MudItem xs="12" sm="3" md="3" lg="3">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
+                        <MudToggleGroup T="ClassNoteType" SelectionMode="SelectionMode.MultiSelection" Values="@_notesFilter" ValuesChanged="@HandleNotesFilterChange" Style="width: 100%;" Color="Color.Tertiary" CheckMark>
+                            <MudToggleItem Value="@(ClassNoteType.N1)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                            <MudToggleItem Value="@(ClassNoteType.N2)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                            <MudToggleItem Value="@(ClassNoteType.N3)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
+                        </MudToggleGroup>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="9" md="9" lg="9" Class="d-flex justify-end">
+                    <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por título" />
+                </MudItem>
+            </MudGrid>
+        </ToolBarContent>
+        <Columns>
+            <PropertyColumn Property="x => x.Title" Title="Título" />
+            <PropertyColumn Property="x => x.Type.GetDescription()" Title="Tipo" />
+            <PropertyColumn Property="x => x.Note.GetDescription()" Title="Nota" />
+            <PropertyColumn Property="x => x.Weight" Title="Peso (%)" />
+            <PropertyColumn Property="x => x.CreatedAt.ToLocalTime().Format()" Title="Criada em" />
+            <PropertyColumn Property="x => x.GetDueDate()" Title="Data de entrega" />
+            <TemplateColumn>
+                <CellTemplate>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenActivityDetailsDrawer(context.Item))" />
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        <NoRecordsContent>
+            @(GetNotFoundMessage())
+        </NoRecordsContent>
+        <PagerContent>
+        </PagerContent>
+    </MudDataGrid>
 </MudContainer>
 
 @inject GetStudentClassClient GetStudentClassClient
@@ -19,10 +67,40 @@
     private bool _loading;
     private StudentClassOut _class = new();
 
+    private string _searchString;
+    private IEnumerable<ClassNoteType> _notesFilter = [ClassNoteType.N1, ClassNoteType.N2, ClassNoteType.N3];
+    
     protected override async Task OnParametersSetAsync()
     {
         _loading = true;
         _class = await GetStudentClassClient.Get(Id);
         _loading = false;
+    }
+
+    private List<StudentActivityOut> GetActivities()
+    {
+        return _class.Activities.Where(x => _notesFilter.Contains(x.Note)).ToList();
+    }
+
+    private void OpenActivityDetailsDrawer(StudentActivityOut activity)
+    {
+        
+    }
+
+    private void HandleNotesFilterChange(IEnumerable<ClassNoteType> newValues)
+    {
+        if (!newValues.Any())
+        {
+            _notesFilter = _notesFilter.ToList();
+            return;
+        }
+
+        _notesFilter = newValues;
+    }
+    
+    private Func<StudentActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);
+    private string GetNotFoundMessage()
+    {
+        return _searchString.IsEmpty() && _notesFilter.Count() == 3  ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";
     }
 }

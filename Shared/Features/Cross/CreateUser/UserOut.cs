@@ -10,4 +10,5 @@ public class UserOut
     public string Institution { get; set; }
     public string Role { get; set; }
     public bool Online { get; set; }
+    public int Connections { get; set; }
 }

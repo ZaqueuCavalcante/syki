@@ -7,8 +7,9 @@ public class AuthManager(AuthenticationStateProvider provider)
     public async Task<AuthUser> GetUser()
     {
         var authState = await provider.GetAuthenticationStateAsync();
+        var user = authState.User;
 
-        if (authState.User.Identity is not { IsAuthenticated: true })
+        if (user.Identity is not { IsAuthenticated: true })
         {
             return new AuthUser();
         }
@@ -16,9 +17,10 @@ public class AuthManager(AuthenticationStateProvider provider)
         return new AuthUser
         {
             IsAuthenticated = true,
-            Name = authState.User.FindFirst("name").Value,
-            Email = authState.User.FindFirst("email").Value,
-            Role = Enum.Parse<UserRole>(authState.User.FindFirst("role").Value),
+            Id = Guid.Parse(user.FindFirst("sub").Value),
+            Name = user.FindFirst("name").Value,
+            Email = user.FindFirst("email").Value,
+            Role = Enum.Parse<UserRole>(user.FindFirst("role").Value),
         };
     }
 }

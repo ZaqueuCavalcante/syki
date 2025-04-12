@@ -1,4 +1,8 @@
-﻿@namespace Syki.Front.Shared
+﻿@using Microsoft.AspNetCore.SignalR.Client
+
+@namespace Syki.Front.Shared
+
+@implements IAsyncDisposable
 
 <MudNavMenu Rounded="true" Color="Color.Primary" Class="pa-2">
     <AuthorizeView Roles="@UserRole.Adm.ToString()">
@@ -48,6 +52,8 @@
 </MudNavMenu>
 
 @inject AuthManager AuthManager
+@inject IConfiguration Configuration
+@inject ILocalStorageService LocalStorage
 @inject GetTeacherCurrentClassesClient GetTeacherCurrentClassesClient
 @inject GetStudentCurrentClassesClient GetStudentCurrentClassesClient
 
@@ -66,6 +72,41 @@
         if (user.Role == UserRole.Student)
         {
             _studentClasses = await GetStudentCurrentClassesClient.Get();
+        }
+    }
+
+    private HubConnection? _hubConnection;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        
+        await ConnectWebsocket(firstRender);
+    }
+
+    private async Task ConnectWebsocket(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        var user = await AuthManager.GetUser();
+        if (!user.IsAuthenticated) return;
+
+        var apiUrl = Configuration.GetSection("ApiUrl").Value!;
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl($"{apiUrl}/syki-hub", options =>
+            {
+                options.AccessTokenProvider = async () => await LocalStorage.GetItemAsync("AccessToken");
+            })
+            .WithAutomaticReconnect()
+            .Build();
+        await _hubConnection.StartAsync();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_hubConnection is not null)
+        {
+            await _hubConnection.StopAsync();
+            await _hubConnection.DisposeAsync();
         }
     }
 }

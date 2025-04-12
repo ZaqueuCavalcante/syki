@@ -42,9 +42,10 @@ public class GetUsersService(DatabaseSettings dbSettings, HybridCache cache) : I
 
         foreach (var user in users)
         {
-            if (SykiHubUsersStore.ConnectedIds.Contains(user.Id))
+            if (SykiHubUsersStore.Users.TryGetValue(user.Id, out var connections))
             {
                 user.Online = true;
+                user.Connections = connections.Count;
             }
         }
 

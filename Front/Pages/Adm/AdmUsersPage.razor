@@ -19,7 +19,7 @@
                 <PropertyColumn Property="x => x.Role" Title="Role" />
                 <TemplateColumn>
                     <CellTemplate>
-                        <MudTooltip Text="@GetOnlineText(context.Item.Online)" Arrow="true" Placement="Placement.Top">
+                        <MudTooltip Text="@GetOnlineText(context.Item)" Arrow="true" Placement="Placement.Top">
                             <MudIcon
                                 Size="@Size.Small"
                                 Icon="@GetOnlineIcon(context.Item.Online)"
@@ -56,11 +56,11 @@
 
     private Func<UserOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Email, x.Institution, x.Role);
 
-    private static string GetOnlineText(bool online)
+    private static string GetOnlineText(UserOut user)
     {
-        return online ? "Online" : "Off";
+        return user.Online ? $"Online {user.Connections.Format()}" : "Off";
     }
-    
+
     private static string GetOnlineIcon(bool online)
     {
         return online ? Icons.Material.Filled.CheckCircle : @Icons.Material.Filled.RemoveCircleOutline;

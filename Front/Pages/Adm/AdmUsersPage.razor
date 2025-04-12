@@ -6,25 +6,62 @@
 <SykiPageTitle Title="Usuários" />
 
 <MudContainer Class="my-4 px-4">
-    <SykiPageHeader Icon="@Icons.Material.Filled.People" Title="Usuários" />
+    <MudCard>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.People" Class="mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">Usuários</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudTooltip Text="@GetOnlineChipText()" Arrow="true" Placement="Placement.Left">
+                        <MudChip
+                            T="string"
+                            Class="px-5 ma-0"
+                            Size="Size.Large"
+                            Color="@Color.Success"
+                            IconColor="Color.Default"
+                            Icon="@Icons.Material.Filled.CheckCircle">
+                            @_users.Count(x => x.Online).Format() Online
+                        </MudChip>
+                    </MudTooltip>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+    
     <MudContainer Class="px-0 my-4">
-        <MudDataGrid Class="pa-4" Items="@_users" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <style>.mud-table-toolbar { height: auto }</style>
+        <MudDataGrid Class="px-4 pt-4 pb-2" Items="@GetUsers()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo" />
+                <MudGrid Class="align-center" Spacing="3">
+                    <MudItem xs="12" sm="3" md="3" lg="3">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
+                            <MudToggleGroup T="string" SelectionMode="SelectionMode.SingleSelection" @bind-Value="@_statusFilter" Style="width: 100%;" Color="Color.Tertiary" CheckMark>
+                                <MudToggleItem Value="@("Todos")" UnselectedIcon="" SelectedIcon="" />
+                                <MudToggleItem Value="@("Online")" UnselectedIcon="@Icons.Material.Filled.CheckCircle" SelectedIcon="@Icons.Material.Filled.CheckCircle" />
+                            </MudToggleGroup>
+                        </MudStack>
+                    </MudItem>
+                    <MudItem xs="12" sm="9" md="9" lg="9" Class="d-flex justify-end">
+                        <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo" />
+                    </MudItem>
+                </MudGrid>
             </ToolBarContent>
             <Columns>
-                <PropertyColumn Property="x => x.Name" Title="Nome" />
-                <PropertyColumn Property="x => x.Email" Title="Email" />
-                <PropertyColumn Property="x => x.Institution" Title="Instituição" />
-                <PropertyColumn Property="x => x.Role" Title="Role" />
+                <PropertyColumn Property="x => x.Name" Title="Nome"/>
+                <PropertyColumn Property="x => x.Email" Title="Email"/>
+                <PropertyColumn Property="x => x.Institution" Title="Instituição"/>
+                <PropertyColumn Property="x => x.Role" Title="Role"/>
                 <TemplateColumn>
                     <CellTemplate>
                         <MudTooltip Text="@GetOnlineText(context.Item)" Arrow="true" Placement="Placement.Top">
                             <MudIcon
                                 Size="@Size.Small"
                                 Icon="@GetOnlineIcon(context.Item.Online)"
-                                Color="GetOnlineIconColor(context.Item.Online)"
-                            />
+                                Color="GetOnlineIconColor(context.Item.Online)"/>
                         </MudTooltip>
                     </CellTemplate>
                 </TemplateColumn>
@@ -33,7 +70,16 @@
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="UserOut" />
+                <MudGrid Class="align-center" Spacing="3">
+                    <MudItem xs="12" sm="3" md="3" lg="3">
+                        <MudButton OnClick="@LoadUsers" Variant="Variant.Filled" Size="Size.Small" Class="ml-4" StartIcon="@Icons.Material.Filled.Refresh">
+                            Atualizar
+                        </MudButton>
+                    </MudItem>
+                    <MudItem xs="12" sm="9" md="9" lg="9">
+                        <SykiDataGridPager T="UserOut"/>
+                    </MudItem>
+                </MudGrid>
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -47,18 +93,39 @@
     private string _searchString;
     private List<UserOut> _users = [];
 
+    private string _statusFilter = "Todos";
+
     protected override async Task OnInitializedAsync()
+    {
+        await LoadUsers();
+    }
+
+    private async Task LoadUsers()
     {
         _loading = true;
         _users = await GetUsersClient.Get();
         _loading = false;
     }
+    
+    private List<UserOut> GetUsers()
+    {
+        if (_statusFilter.Equals("Online"))
+            return _users.Where(x => x.Online).ToList();
 
-    private Func<UserOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Email, x.Institution, x.Role);
+        return _users;
+    }
+
+    private string GetOnlineChipText()
+    {
+        var total = _users.Sum(x => x.Connections);
+        var message = total == 1 ? "conexão" : "conexões";
+        return $"{total.Format()} {message}";
+    }
 
     private static string GetOnlineText(UserOut user)
     {
-        return user.Online ? $"Online {user.Connections.Format()}" : "Off";
+        var message = user.Connections == 1 ? "conexão" : "conexões";
+        return user.Online ? $"{user.Connections.Format()} {message}" : "Offline";
     }
 
     private static string GetOnlineIcon(bool online)
@@ -71,6 +138,7 @@
         return online ? Color.Success : Color.Default;
     }
     
+    private Func<UserOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Email, x.Institution, x.Role);
     private string GetNotFoundMessage()
     {
         return (_searchString.IsEmpty()) ? "Não existem usuários cadastrados ainda." : "Nenhum usuário encontrado.";

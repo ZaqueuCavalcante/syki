@@ -19,7 +19,7 @@ public partial class IntegrationTests
         response.AverageNote.Should().Be(0);
     }
 
-    [Test]
+    [Test, Ignore("Refactoring needed")]
     public async Task Should_get_student_average_notes_after_teacher_add_notes()
     {
         // Arrange

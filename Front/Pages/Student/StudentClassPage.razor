@@ -1,4 +1,7 @@
-﻿@namespace Syki.Front.Pages.Student
+﻿@using Highsoft.Web.Mvc.Charts
+@using Highsoft.Web.Mvc.Charts.Rendering
+
+@namespace Syki.Front.Pages.Student
 
 @page "/student/classes/{id:guid}"
 @attribute [Authorize(Roles = "Student")]
@@ -58,24 +61,12 @@
 </MudContainer>
 
 <MudContainer Class="my-4 px-4">
-    <MudGrid Spacing="2">
-        <MudItem xs="12" sm="12" md="12" lg="12">
-            <MudPaper Class="px-4 pt-4">
-                @foreach (var activity in _activities)
-                {
-                    <MudGrid Spacing="2" Class="mb-4">
-                        <MudItem xs="12" sm="12" md="12" lg="12">
-                            <MudStack Spacing="2">
-                                <MudText Typo="Typo.h6">@activity.Title</MudText>
-                            </MudStack>
-                        </MudItem>
-                    </MudGrid>
-                }
-            </MudPaper>
-        </MudItem>
-    </MudGrid>
+    <MudPaper Class="px-4 pt-4">
+        <div id="StudentClassPageActivitiesChart"></div>
+    </MudPaper>
 </MudContainer>
 
+@inject IJSRuntime JsInterop
 @inject GetStudentClassClient GetStudentClassClient
 @inject GetStudentClassActivitiesClient GetStudentClassActivitiesClient
 
@@ -91,10 +82,51 @@
 
     private string _searchString;
     private IEnumerable<ClassNoteType> _notesFilter = [ClassNoteType.N1, ClassNoteType.N2, ClassNoteType.N3];
-    
-    protected override void OnInitialized()
+
+    private async Task SetupChart()
     {
-       
+        List<double?> johnValues = [5, 3, 4, 7];
+        List<double?> janeValues = [2, -2, -3, 2];
+        List<double?> joeValues = [3, 4, 4, -2];
+
+        List<AreaSeriesData> johnData = [];
+        List<AreaSeriesData> janeData = [];
+        List<AreaSeriesData> joeData = [];
+
+        johnValues.ForEach(p => johnData.Add(new AreaSeriesData { Y = p }));
+        janeValues.ForEach(p => janeData.Add(new AreaSeriesData { Y = p }));
+        joeValues.ForEach(p => joeData.Add(new AreaSeriesData { Y = p }));
+
+        var chartOptions = new Highcharts
+        {
+            Title = new Title
+            {
+                Text = "Notas em cada atividade"
+            },
+            XAxis =
+            [
+                new XAxis
+                {
+                    Categories = _activities.Select((x, i) => $"{i+1} - {x.Title}").ToList(),
+                    Labels = new XAxisLabels { Formatter = "return StudentClassPageActivitiesFormatter.call(this, arguments);" }
+                }
+            ],
+            Credits = new Credits
+            {
+                Enabled = false
+            },
+            Series = new List<Series>
+            {
+                new AreaSeries { Name = "John", Data = johnData },
+                new AreaSeries { Name = "Jane", Data = janeData },
+                new AreaSeries { Name = "Joe", Data = joeData }
+            }
+        };
+
+        chartOptions.ID = "StudentClassPageActivitiesChart";
+        var renderer = new HighchartsRenderer(chartOptions);
+
+        await JsInterop.InvokeVoidAsync("StudentClassPageActivitiesRender", renderer.GetJsonOptionsForBlazor());
     }
 
     protected override async Task OnParametersSetAsync()
@@ -102,6 +134,7 @@
         _loading = true;
         _class = await GetStudentClassClient.Get(Id);
         _activities = await GetStudentClassActivitiesClient.Get(Id);
+        await SetupChart();
         _loading = false;
     }
 

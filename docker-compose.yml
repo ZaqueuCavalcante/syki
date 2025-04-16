@@ -26,6 +26,8 @@ services:
       - 'ASPNETCORE_URLS=http://+:5001'
       - 'ASPNETCORE_ENVIRONMENT=Development'
       - 'Database__ConnectionString=UserID=postgres;Password=postgres;Host=db_host;Port=5432;Database=syki-db;Pooling=true;'
+      - 'OTEL_EXPORTER_OTLP_PROTOCOL=grpc'
+      - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://datadog:4317'
     ports:
       - '5001:5001'
     networks:
@@ -58,6 +60,24 @@ services:
       - '5003:5003'
     networks:
       - sykinet
+
+  datadog:
+    container_name: datadog
+    image: 'gcr.io/datadoghq/agent:latest'
+    pid: host
+    ports:
+      - '8126:8126'
+      - '4317:4317'
+      - '4318:4318'
+    networks:
+      - sykinet
+    environment:
+      - 'DD_API_KEY=lalala'
+      - 'DD_HOSTNAME=datadog'
+      - 'DD_SITE=us5.datadoghq.com'
+      - 'DD_APM_NON_LOCAL_TRAFFIC=true'
+      - 'DD_OTLP_CONFIG_RECEIVER_PROTOCOLS_GRPC_ENDPOINT=0.0.0.0:4317'
+      - 'DD_OTLP_CONFIG_RECEIVER_PROTOCOLS_HTTP_ENDPOINT=0.0.0.0:4318'
 
 networks:
   sykinet:

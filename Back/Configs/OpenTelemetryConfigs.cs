@@ -18,17 +18,18 @@ public static class OpenTelemetryConfigs
             .WithMetrics(metrics =>
             {
                 metrics
-                    .AddAspNetCoreInstrumentation()
-                    .AddNpgsqlInstrumentation();
+                    .AddNpgsqlInstrumentation()
+                    .AddRuntimeInstrumentation()
+                    .AddAspNetCoreInstrumentation();
                 
                 metrics.AddOtlpExporter();
             })
             .WithTracing(tracing =>
             {
                 tracing
+                    .AddNpgsql()
                     .AddAspNetCoreInstrumentation()
-                    .AddEntityFrameworkCoreInstrumentation()
-                    .AddNpgsql();
+                    .AddEntityFrameworkCoreInstrumentation();
 
                 tracing.AddOtlpExporter();
             })

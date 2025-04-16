@@ -31,6 +31,7 @@ public class ClassActivityWork : Entity
     public void AddLink(string link)
     {
         Link = link;
+        Status = ClassActivityWorkStatus.Delivered;
     }
 
     public OneOf<SykiSuccess, SykiError> AddNote(decimal note)

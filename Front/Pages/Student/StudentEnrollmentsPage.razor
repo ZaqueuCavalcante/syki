@@ -8,10 +8,7 @@
 <SykiPageTitle Title="Matrícula" />
 
 <MudContainer Class="my-4 px-4">
-    <SykiPageHeader
-        Icon="@Icons.Material.Filled.Article"
-        Title="Matrícula"
-    />
+    <SykiPageHeader Icon="@Icons.Material.Filled.Article" Title="Matrícula" />
     <MudContainer Class="px-0 my-4">
         @if (_loading && _enrollmentPeriod.Id.IsEmpty())
         {
@@ -37,7 +34,7 @@
             </MudAlert>
 
             <CascadingValue Name="Days" Value="@_days">
-                <WeeklyAgenda Class="px-0 mb-4"/>
+                <WeeklyAgenda Class="px-0 mb-4" />
             </CascadingValue>
 
             <MudContainer Class="px-0 mb-8">

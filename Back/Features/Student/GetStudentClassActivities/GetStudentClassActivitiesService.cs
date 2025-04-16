@@ -25,6 +25,7 @@ public class GetStudentClassActivitiesService(SykiDbContext ctx) : IStudentServi
                 Id = activity.Id,
                 Note = activity.Note,
                 Title = activity.Title,
+                Description = activity.Description,
                 Type = activity.Type,
                 Weight = activity.Weight,
                 WorkStatus = work.Status,

@@ -8,12 +8,16 @@ https://apexcharts.github.io/Blazor-ApexCharts/bar-charts
 - ⚠️ Professor pode editar uma atividade
 
 
+- Uma prova nao possui entrega (link/documento), o professor deve simplesmente atribuir a nota
+
+
 - Aluno vendo turma:
     - Filtro: Todos | Pendentes | Entregues
     - Drawer na direita para adicionar link e enviar
 
 
-
+Vendo o tamanho que fica com 100 caracteres permitidos
+Vendo o tamanho que fica com 100 caracteres permitidos sera que ta bom ou precisa de mais ou menos?
 
 
 

@@ -10,7 +10,8 @@ public class GetTeacherClassActivitiesService(SykiDbContext ctx) : ITeacherServi
         var activities = await ctx.ClassActivities.AsNoTracking()
             .Where(t => t.ClassId == classId)
             .Include(t => t.Works)
-            .OrderByDescending(x => x.CreatedAt)
+            .OrderBy(x => x.Note)
+            .ThenBy(x => x.CreatedAt)
             .ToListAsync();
 
         return activities.ConvertAll(x => x.ToListOut());

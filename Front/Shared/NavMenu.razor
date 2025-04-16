@@ -38,14 +38,16 @@
     <AuthorizeView Roles="@UserRole.Student.ToString()">
         <MudNavLink Href="student/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
         <MudNavLink Href="student/disciplines" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apps" IconColor="Color.Inherit">Disciplinas</MudNavLink>
-        <MudNavLink Href="student/activities" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.EditNote" IconColor="Color.Inherit">Atividades</MudNavLink>
         <MudNavLink Href="student/notes" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.StickyNote2" IconColor="Color.Inherit">Notas</MudNavLink>
         <MudNavLink Href="student/frequency" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Class" IconColor="Color.Inherit">Frequência</MudNavLink>
-        <MudNavLink Href="student/enrollments" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrícula</MudNavLink>
+        @if (_currentEnrollmentPeriod.Id.HasValue())
+        {
+            <MudNavLink Href="student/enrollments" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrícula</MudNavLink>
+        }
         <MudNavGroup Title="Turmas" Expanded="true" Icon="@Icons.Material.Filled.CenterFocusStrong">
             @foreach(var item in _studentClasses)
             {
-                <MudNavLink Href="@($"student/classes/{item.Id}")" Match="NavLinkMatch.All">@item.Discipline</MudNavLink>
+                <MudNavLink Href="@($"student/classes/{item.Id}")" Match="NavLinkMatch.Prefix">@item.Discipline</MudNavLink>
             }
         </MudNavGroup>
     </AuthorizeView>
@@ -56,9 +58,11 @@
 @inject ILocalStorageService LocalStorage
 @inject GetTeacherCurrentClassesClient GetTeacherCurrentClassesClient
 @inject GetStudentCurrentClassesClient GetStudentCurrentClassesClient
+@inject GetCurrentEnrollmentPeriodClient GetCurrentEnrollmentPeriodClient
 
 @code
 {
+    private EnrollmentPeriodOut _currentEnrollmentPeriod = new();
     private List<TeacherCurrentClassOut> _teacherClasses = [];
     private List<StudentCurrentClassOut> _studentClasses = [];
 
@@ -68,10 +72,13 @@
         if (user.Role == UserRole.Teacher)
         {
             _teacherClasses = await GetTeacherCurrentClassesClient.Get();
+            await LocalStorage.SetItemAsync("Classes", _teacherClasses.ConvertAll(x => new CascadingClassDto { Id = x.Id, Name = x.Discipline }).Serialize());
         }
         if (user.Role == UserRole.Student)
         {
             _studentClasses = await GetStudentCurrentClassesClient.Get();
+            _currentEnrollmentPeriod = await GetCurrentEnrollmentPeriodClient.Get();
+            await LocalStorage.SetItemAsync("Classes", _studentClasses.ConvertAll(x => new CascadingClassDto { Id = x.Id, Name = x.Discipline }).Serialize());
         }
     }
 

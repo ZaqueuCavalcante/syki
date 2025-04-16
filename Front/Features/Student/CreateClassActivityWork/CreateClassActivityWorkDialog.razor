@@ -1,36 +1,19 @@
-@namespace Syki.Front.Features.Teacher.AddStudentClassActivityNote
+@namespace Syki.Front.Features.Student.CreateClassActivityWork
 
 <MudDialog Class="pb-2">
     <TitleContent>
-        <SykiDialogTitle Icon="@Icons.Material.Filled.BookmarkAdded" Text="Adicionar nota" />
+        <SykiDialogTitle Icon="@Icons.Material.Filled.BookmarkAdded" Text="Entregar" />
     </TitleContent>
     <DialogContent>
-
         <MudGrid Spacing="3">
             <MudItem xs="12" sm="12" md="12" lg="12">
-                <SykiLabelText Label="Aluno" Text="@Work.StudentName" />
-            </MudItem>
-            <MudItem xs="12" sm="12" md="12" lg="12">
-                <SykiLabelText Label="Link">
-                    <MudLink Href="@Work.Link" Target="_blank" Color="Color.Primary">@(Work.Link.HasValue() ? Work.Link : "-")</MudLink>
-                </SykiLabelText>
+                <MudText>Adicione o link para o documento que contém a entrega da atividade.</MudText>
             </MudItem>
         </MudGrid>
-
         <MudForm @ref="@_form" Class="pt-4">
             <MudGrid Spacing="2">
                 <MudItem xs="12" sm="12" md="12" lg="12">
-                    <MudNumericField
-                        T="decimal"
-                        @bind-Value="@Work.Note"
-                        Max="10.00M"
-                        MaxLength="4"
-                        Min="0"
-                        Format="N2"
-                        AutoFocus="true"
-                        HideSpinButtons="true"
-                        Variant="Variant.Outlined"
-                        Margin="Margin.Dense"/>
+                    <SykiTextField Label="Link" @bind-Value="@_link" AutoFocus="true" />
                 </MudItem>
             </MudGrid>
         </MudForm>
@@ -43,7 +26,7 @@
 </MudDialog>
 
 @inject ISnackbar Snackbar
-@inject AddStudentClassActivityNoteClient AddStudentClassActivityNoteClient
+@inject CreateClassActivityWorkClient CreateClassActivityWorkClient
 
 @code
 {
@@ -53,11 +36,9 @@
     [Parameter]
     public Guid ActivityId { get; set; }
     
-    [Parameter]
-    public ClassActivityWorkOut Work { get; set; }
-    
     private MudForm _form;
     private bool _loading;
+    private string _link;
 
     private async Task Submit()
     {
@@ -67,11 +48,11 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var result = await AddStudentClassActivityNoteClient.Add(ActivityId, Work.StudentId, Work.Note);
+        var result = await CreateClassActivityWorkClient.Create(ActivityId, _link);
         if (result.IsSuccess())
         {
             MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add("Nota adicionada com sucesso!", Severity.Success);
+            Snackbar.Add("Entrega realizada com sucesso!", Severity.Success);
         }
         else
         {

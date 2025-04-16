@@ -49,7 +49,7 @@
             <PropertyColumn Property="x => x.GetDueDate()" Title="Data de entrega" />
             <TemplateColumn>
                 <CellTemplate>
-                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenActivityDetailsDrawer(context.Item))" />
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Item))" />
                 </CellTemplate>
             </TemplateColumn>
         </Columns>
@@ -68,6 +68,7 @@
 </MudContainer>
 
 @inject IJSRuntime JsInterop
+@inject NavigationManager Nav
 @inject GetStudentClassClient GetStudentClassClient
 @inject GetStudentClassActivitiesClient GetStudentClassActivitiesClient
 
@@ -171,9 +172,9 @@
         return _class.Activities.Where(x => _notesFilter.Contains(x.Note)).ToList();
     }
 
-    private void OpenActivityDetailsDrawer(StudentActivityOut activity)
+    private void GoToDetails(StudentActivityOut activity)
     {
-        
+        Nav.NavigateTo($"student/classes/{activity.ClassId}/activities/{activity.Id}");
     }
 
     private void HandleNotesFilterChange(IEnumerable<ClassNoteType> newValues)

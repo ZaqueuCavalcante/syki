@@ -1,0 +1,96 @@
+﻿@namespace Syki.Front.Pages.Student
+
+@page "/student/classes/{classId:guid}/activities/{activityId:guid}"
+@attribute [Authorize(Roles = "Student")]
+
+<SykiPageTitle Title="Atividade" />
+
+<MudContainer Class="mb-4 px-4">
+    <MudBreadcrumbs Items="@_breadcrumbs"></MudBreadcrumbs>
+    <SykiPageHeader Title="@_activity.Title" Typo="Typo.h6" ButtonText="Entregar" OnClick="@OpenDialog"/>
+    <MudPaper Class="my-4 pa-5">
+        <MudContainer Class="px-0">
+            <MudGrid Spacing="3">
+                <MudItem xs="3" sm="2" md="2" lg="2">
+                    <SykiLabelText Label="Nota" Text="@_activity.Note.ToString()"/>
+                </MudItem>
+                <MudItem xs="5" sm="2" md="2" lg="2">
+                    <SykiLabelText Label="Tipo" Text="@_activity.Type.GetDescription()"/>
+                </MudItem>
+                <MudItem xs="4" sm="2" md="2" lg="2">
+                    <SykiLabelText Label="Peso (%)" Text="@_activity.Weight.ToString()"/>
+                </MudItem>
+                <MudItem xs="6" sm="3" md="3" lg="3">
+                    <SykiLabelText Label="Criada em" Text="@_activity.CreatedAt.ToLocalTime().Format()"/>
+                </MudItem>
+                <MudItem xs="6" sm="3" md="3" lg="3">
+                    <SykiLabelText Label="Data de entrega" Text="@_activity.GetDueDate()"/>
+                </MudItem>
+            </MudGrid>
+            <MudText Class="mt-4" Style="white-space: pre-line;">
+                @_activity.Description
+            </MudText>
+        </MudContainer>
+    </MudPaper>
+</MudContainer>
+
+@inject IDialogService DialogService
+@inject ILocalStorageService LocalStorage
+@inject IBrowserViewportService BrowserViewportService
+@inject GetStudentClassActivityClient GetStudentClassActivityClient
+
+@code
+{
+	[Parameter]
+	public Guid ClassId { get; set; }
+
+	[Parameter]
+	public Guid ActivityId { get; set; }
+
+    private List<CascadingClassDto> _classes = [];
+    private List<BreadcrumbItem> _breadcrumbs = [];
+
+    private StudentClassActivityOut _activity = new();
+    
+    private Breakpoint _breakpoint;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _classes = JsonConvert.DeserializeObject<List<CascadingClassDto>>(await LocalStorage.GetItemAsync("Classes") ?? "[]") ?? [];
+
+        var @class = _classes.FirstOrDefault(x => x.Id == ClassId);
+        if (@class != null)
+        {
+            _breadcrumbs.Add(new("Turmas", href: "/", icon: Icons.Material.Filled.CenterFocusStrong));
+            _breadcrumbs.Add(new(@class.Name, href: $"/student/classes/{@class.Id}"));
+            _breadcrumbs.Add(new("Atividade", href: $"/student/classes/{@class.Id}/activities/{ActivityId}"));
+        }
+
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        _activity = await GetStudentClassActivityClient.Get(ClassId, ActivityId);
+    }
+
+    private async Task OpenDialog()
+    {
+        var parameters = new DialogParameters<CreateClassActivityWorkDialog>();
+        parameters.Add(x => x.ActivityId, ActivityId);
+
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            FullWidth = true,
+            MaxWidth = MaxWidth.Small,
+            FullScreen = _breakpoint == Breakpoint.Xs,
+        };
+        var dialog = await DialogService.ShowAsync<CreateClassActivityWorkDialog>("", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        await Load();
+    }
+}

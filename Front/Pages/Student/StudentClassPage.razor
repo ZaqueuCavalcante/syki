@@ -1,4 +1,5 @@
-﻿@using Highsoft.Web.Mvc.Charts
+﻿@using System.Collections
+@using Highsoft.Web.Mvc.Charts
 @using Highsoft.Web.Mvc.Charts.Rendering
 
 @namespace Syki.Front.Pages.Student
@@ -85,45 +86,72 @@
 
     private async Task SetupChart()
     {
-        List<double?> johnValues = [5, 3, 4, 7];
-        List<double?> janeValues = [2, -2, -3, 2];
-        List<double?> joeValues = [3, 4, 4, -2];
-
-        List<AreaSeriesData> johnData = [];
-        List<AreaSeriesData> janeData = [];
-        List<AreaSeriesData> joeData = [];
-
-        johnValues.ForEach(p => johnData.Add(new AreaSeriesData { Y = p }));
-        janeValues.ForEach(p => janeData.Add(new AreaSeriesData { Y = p }));
-        joeValues.ForEach(p => joeData.Add(new AreaSeriesData { Y = p }));
-
         var chartOptions = new Highcharts
         {
+            ID = "StudentClassPageActivitiesChart",
             Title = new Title
             {
                 Text = "Notas em cada atividade"
+            },
+            Credits = new Credits
+            {
+                Enabled = false
             },
             XAxis =
             [
                 new XAxis
                 {
+                    Title = new XAxisTitle { Text = "Atividade", Style = new Hashtable { { "font-size", "20px" } } },
                     Categories = _activities.Select((x, i) => $"{i+1} - {x.Title}").ToList(),
                     Labels = new XAxisLabels { Formatter = "return StudentClassPageActivitiesFormatter.call(this, arguments);" }
                 }
             ],
-            Credits = new Credits
+            YAxis =
+            [
+                new YAxis
+                {
+                    Min = 0,
+                    Max = 10,
+                    Title = new YAxisTitle
+                    {
+                        Text = "Nota",
+                        Align = YAxisTitleAlign.Middle,
+                        Style = new Hashtable { { "font-size", "20px" } },
+                    }
+                }
+            ],
+            Tooltip = new Tooltip
             {
-                Enabled = false
+                Padding = 15,
+                Style = new Hashtable { { "font-size", "20px" } },
             },
-            Series = new List<Series>
+            PlotOptions = new PlotOptions
             {
-                new AreaSeries { Name = "John", Data = johnData },
-                new AreaSeries { Name = "Jane", Data = janeData },
-                new AreaSeries { Name = "Joe", Data = joeData }
-            }
+                Bar = new PlotOptionsBar
+                {
+                    DataLabels = new PlotOptionsBarDataLabels
+                    {
+                        Enabled = true
+                    }
+                }
+            },
+            Legend = new Legend
+            {
+                Layout = LegendLayout.Vertical,
+                Align = LegendAlign.Right,
+                VerticalAlign = LegendVerticalAlign.Top,
+                X = -40,
+                Y = 100,
+                Floating = true,
+                BorderWidth = 1,
+            },
+            Series =
+            [
+                new BarSeries { Name = "Nota",  Data = _activities.Select(x => new BarSeriesData { Y = decimal.ToDouble(x.Value) }).ToList() },
+                new BarSeries { Name = "Nota ponderada",  Data = _activities.Select(x => new BarSeriesData { Y = decimal.ToDouble(x.PonderedValue) }).ToList() },
+            ]
         };
 
-        chartOptions.ID = "StudentClassPageActivitiesChart";
         var renderer = new HighchartsRenderer(chartOptions);
 
         await JsInterop.InvokeVoidAsync("StudentClassPageActivitiesRender", renderer.GetJsonOptionsForBlazor());
@@ -158,8 +186,8 @@
 
         _notesFilter = newValues;
     }
-    
-    private Func<StudentActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title, x.Description);
+
+    private Func<StudentActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title);
     private string GetNotFoundMessage()
     {
         return _searchString.IsEmpty() && _notesFilter.Count() == 3  ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";

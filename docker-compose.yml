@@ -59,24 +59,9 @@ services:
     networks:
       - sykinet
 
-  moodle:
-    container_name: moodle
-    build:
-      context: .
-      dockerfile: Dockerfile.moodle
-    depends_on:
-      - db
-    ports:
-      - 8080:80
-    volumes:
-      - moodledata:/var/www/moodledata
-    networks:
-      - sykinet
-
 networks:
   sykinet:
     driver: bridge
 
 volumes:
   pgdata:
-  moodledata:

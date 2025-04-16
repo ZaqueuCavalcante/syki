@@ -57,7 +57,27 @@
     </MudDataGrid>
 </MudContainer>
 
+<MudContainer Class="my-4 px-4">
+    <MudGrid Spacing="2">
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <MudPaper Class="px-4 pt-4">
+                @foreach (var activity in _activities)
+                {
+                    <MudGrid Spacing="2" Class="mb-4">
+                        <MudItem xs="12" sm="12" md="12" lg="12">
+                            <MudStack Spacing="2">
+                                <MudText Typo="Typo.h6">@activity.Title</MudText>
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+                }
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
 @inject GetStudentClassClient GetStudentClassClient
+@inject GetStudentClassActivitiesClient GetStudentClassActivitiesClient
 
 @code
 {
@@ -67,13 +87,21 @@
     private bool _loading;
     private StudentClassOut _class = new();
 
+    private List<StudentClassActivityOut> _activities = [];
+
     private string _searchString;
     private IEnumerable<ClassNoteType> _notesFilter = [ClassNoteType.N1, ClassNoteType.N2, ClassNoteType.N3];
     
+    protected override void OnInitialized()
+    {
+       
+    }
+
     protected override async Task OnParametersSetAsync()
     {
         _loading = true;
         _class = await GetStudentClassClient.Get(Id);
+        _activities = await GetStudentClassActivitiesClient.Get(Id);
         _loading = false;
     }
 

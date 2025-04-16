@@ -2,6 +2,9 @@
 
 ## Atividades V0
 
+https://apexcharts.github.io/Blazor-ApexCharts/bar-charts
+
+
 - ⚠️ Professor pode editar uma atividade
 
 

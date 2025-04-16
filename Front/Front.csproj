@@ -12,7 +12,6 @@
     <PackageReference Include="MudBlazor" Version="7.15.0" />
     <PackageReference Include="Blazor-ApexCharts" Version="4.0.1" />
     <PackageReference Include="Blazor.LocalStorage" Version="8.0.0" />
-    <PackageReference Include="Highsoft.Highcharts" Version="11.4.6.5" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.3" />

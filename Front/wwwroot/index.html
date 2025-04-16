@@ -9,8 +9,6 @@
     <link href="style.css" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
 </head>
 
 <body>
@@ -50,22 +48,6 @@
             }
         });
     </script>
-
-
-    <script type="text/javascript">
-        window.StudentClassPageActivitiesFormatter = function() {
-            return this.value.split(' ')[0];
-        }
-        function StudentClassPageActivitiesRender(chartOptions)
-        {
-            json = JSON.parse(chartOptions);
-            json["xAxis"][0]["labels"]["formatter"] = new Function(json["xAxis"][0]["labels"]["formatter"]);
-            Highcharts.chart("StudentClassPageActivitiesChart", json);
-        }
-    </script>
-
-
-
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
     <script src="/_framework/aspnetcore-browser-refresh.js"></script>
 </body>

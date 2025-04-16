@@ -236,7 +236,8 @@ public class Class
             Code = Discipline.Code,
             Period = PeriodId,
             Status = Status,
-            Activities = Activities.OrderBy(x => x.CreatedAt).Select(x => x.ToStudentActivityOut(Discipline.Name)).ToList(),
+            Activities = Activities.OrderBy(x => x.Note).ThenBy(x => x.CreatedAt)
+                .Select(x => x.ToStudentActivityOut(Discipline.Name)).ToList(),
         };
     }
     

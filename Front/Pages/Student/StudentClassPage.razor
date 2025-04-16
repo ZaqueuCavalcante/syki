@@ -1,8 +1,4 @@
-﻿@using System.Collections
-@using Highsoft.Web.Mvc.Charts
-@using Highsoft.Web.Mvc.Charts.Rendering
-
-@namespace Syki.Front.Pages.Student
+﻿@namespace Syki.Front.Pages.Student
 
 @page "/student/classes/{id:guid}"
 @attribute [Authorize(Roles = "Student")]
@@ -63,11 +59,25 @@
 
 <MudContainer Class="my-4 px-4">
     <MudPaper Class="px-4 pt-4">
-        <div id="StudentClassPageActivitiesChart"></div>
+        <ApexCharts.ApexChart @ref="@_chart" TItem="StudentClassActivityOut" Title="Pontuação em cada atividade" Options="@_options">
+            <ApexCharts.ApexPointSeries
+                Name="Pontuação"
+                TItem="StudentClassActivityOut"
+                Items="@_activities"
+                SeriesType="ApexCharts.SeriesType.Bar"
+                XValue="@(a => a.Title)"
+                YValue="@(e => e.Value)"/>
+            <ApexCharts.ApexPointSeries
+                Name="Pontuação ponderada"
+                TItem="StudentClassActivityOut"
+                Items="@_activities"
+                SeriesType="ApexCharts.SeriesType.Bar"
+                XValue="@(a => a.Title)"
+                YValue="@(e => e.PonderedValue)"/>
+        </ApexCharts.ApexChart>
     </MudPaper>
 </MudContainer>
 
-@inject IJSRuntime JsInterop
 @inject NavigationManager Nav
 @inject GetStudentClassClient GetStudentClassClient
 @inject GetStudentClassActivitiesClient GetStudentClassActivitiesClient
@@ -85,85 +95,23 @@
     private string _searchString;
     private IEnumerable<ClassNoteType> _notesFilter = [ClassNoteType.N1, ClassNoteType.N2, ClassNoteType.N3];
 
-    private async Task SetupChart()
+    private ApexCharts.ApexChart<StudentClassActivityOut> _chart;
+    private ApexCharts.ApexChartOptions<StudentClassActivityOut> _options = new()
     {
-        var chartOptions = new Highcharts
+        PlotOptions = new ApexCharts.PlotOptions
         {
-            ID = "StudentClassPageActivitiesChart",
-            Title = new Title
-            {
-                Text = "Notas em cada atividade"
-            },
-            Credits = new Credits
-            {
-                Enabled = false
-            },
-            XAxis =
-            [
-                new XAxis
-                {
-                    Title = new XAxisTitle { Text = "Atividade", Style = new Hashtable { { "font-size", "20px" } } },
-                    Categories = _activities.Select((x, i) => $"{i+1} - {x.Title}").ToList(),
-                    Labels = new XAxisLabels { Formatter = "return StudentClassPageActivitiesFormatter.call(this, arguments);" }
-                }
-            ],
-            YAxis =
-            [
-                new YAxis
-                {
-                    Min = 0,
-                    Max = 10,
-                    Title = new YAxisTitle
-                    {
-                        Text = "Nota",
-                        Align = YAxisTitleAlign.Middle,
-                        Style = new Hashtable { { "font-size", "20px" } },
-                    }
-                }
-            ],
-            Tooltip = new Tooltip
-            {
-                Padding = 15,
-                Style = new Hashtable { { "font-size", "20px" } },
-            },
-            PlotOptions = new PlotOptions
-            {
-                Bar = new PlotOptionsBar
-                {
-                    DataLabels = new PlotOptionsBarDataLabels
-                    {
-                        Enabled = true
-                    }
-                }
-            },
-            Legend = new Legend
-            {
-                Layout = LegendLayout.Vertical,
-                Align = LegendAlign.Right,
-                VerticalAlign = LegendVerticalAlign.Top,
-                X = -40,
-                Y = 100,
-                Floating = true,
-                BorderWidth = 1,
-            },
-            Series =
-            [
-                new BarSeries { Name = "Nota",  Data = _activities.Select(x => new BarSeriesData { Y = decimal.ToDouble(x.Value) }).ToList() },
-                new BarSeries { Name = "Nota ponderada",  Data = _activities.Select(x => new BarSeriesData { Y = decimal.ToDouble(x.PonderedValue) }).ToList() },
-            ]
-        };
-
-        var renderer = new HighchartsRenderer(chartOptions);
-
-        await JsInterop.InvokeVoidAsync("StudentClassPageActivitiesRender", renderer.GetJsonOptionsForBlazor());
-    }
+            Bar = new ApexCharts.PlotOptionsBar { Horizontal = true }
+        },
+        Yaxis = [ new ApexCharts.YAxis { Max = 10 } ]
+    };
 
     protected override async Task OnParametersSetAsync()
     {
         _loading = true;
         _class = await GetStudentClassClient.Get(Id);
         _activities = await GetStudentClassActivitiesClient.Get(Id);
-        await SetupChart();
+        StateHasChanged();
+        await _chart.RenderAsync();
         _loading = false;
     }
 

@@ -10,6 +10,9 @@ public enum ClassActivityType
     [Description("Prova")]
     Exam,
 
+    [Description("Projeto")]
+    Project,
+    
     [Description("Trabalho")]
     Work,
 

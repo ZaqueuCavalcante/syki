@@ -7,5 +7,8 @@ public class StudentClassOut
     public string Code { get; set; }
     public string Period { get; set; }
     public ClassStatus Status { get; set; }
-    public List<StudentActivityOut> Activities { get; set; } = [];
+    public decimal N1 { get; set; }
+    public decimal N2 { get; set; }
+    public decimal N3 { get; set; }
+    public decimal Average { get; set; }
 }

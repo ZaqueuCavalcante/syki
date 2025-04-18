@@ -227,7 +227,7 @@ public class Class
         };
     }
 
-    public StudentClassOut ToStudentClassOut()
+    public StudentClassOut ToStudentClassOut(decimal n1, decimal n2, decimal n3, decimal average)
     {
         return new()
         {
@@ -236,8 +236,10 @@ public class Class
             Code = Discipline.Code,
             Period = PeriodId,
             Status = Status,
-            Activities = Activities.OrderBy(x => x.Note).ThenBy(x => x.CreatedAt)
-                .Select(x => x.ToStudentActivityOut(Discipline.Name)).ToList(),
+            N1 = n1,
+            N2 = n2,
+            N3 = n3,
+            Average = average,
         };
     }
     

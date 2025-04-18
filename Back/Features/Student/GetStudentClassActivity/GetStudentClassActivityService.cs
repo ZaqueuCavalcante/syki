@@ -16,13 +16,15 @@ public class GetStudentClassActivityService(SykiDbContext ctx) : ITeacherService
             .Where(x => x.ClassActivityId == activityId && x.SykiStudentId == studentId)
             .FirstAsync();
 
-        return new StudentClassActivityOut()
+        return new StudentClassActivityOut
         {
             Id = activity.Id,
+            ClassId = activity.ClassId,
             Note = activity.Note,
             Title = activity.Title,
             Description = activity.Description,
             Type = activity.Type,
+            Status = activity.Status,
             Weight = activity.Weight,
             WorkStatus = work.Status,
             CreatedAt = activity.CreatedAt,

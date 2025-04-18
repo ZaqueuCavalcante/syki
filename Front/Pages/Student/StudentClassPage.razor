@@ -6,11 +6,30 @@
 <SykiPageTitle Title="Turma" />
 
 <MudContainer Class="my-4 px-4">
-    <SykiPageHeader Icon="@Icons.Material.Filled.CenterFocusStrong" Title="@_class.Discipline" Class="mb-4" />
-
+    <MudGrid>
+        <MudItem xs="12" sm="8" md="8" lg="8">
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Style="font-weight: bold">@_class.Discipline</MudText>
+            </MudStack>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+            <MudChip
+                T="string"
+                Class="px-5 ma-0"
+                Size="Size.Large"
+                Icon="@_class.GetIcon()"
+                Color="@_class.GetColor()"
+                IconColor="Color.Default"
+            >
+                <b>Média: @_class.Average.Format()</b>
+            </MudChip>
+        </MudItem>
+    </MudGrid>
+    
     <style>.mud-table-toolbar { height: auto }</style>
     <MudDataGrid
-        T="StudentActivityOut"
+        T="StudentClassActivityOut"
         Class="pa-4 mt-4"
         Items="@GetActivities()"
         QuickFilter="@_quickFilter"
@@ -32,17 +51,43 @@
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="9" md="9" lg="9" Class="d-flex justify-end">
-                    <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por título" />
+                    <MudStack Row>
+                        @if (_notesFilter.Contains(ClassNoteType.N1))
+                        {
+                            <MudChip T="string" Class="px-3 ma-0" Size="Size.Medium">
+                                <b>N1: @_class.N1.Format()</b>
+                            </MudChip>
+                        }
+                        @if (_notesFilter.Contains(ClassNoteType.N2))
+                        {
+                            <MudChip T="string" Class="px-3 ma-0" Size="Size.Medium">
+                                <b>N2: @_class.N2.Format()</b>
+                            </MudChip>
+                        }
+                        @if (_notesFilter.Contains(ClassNoteType.N3))
+                        {
+                            <MudChip T="string" Class="px-3 ma-0" Size="Size.Medium">
+                                <b>N3: @_class.N3.Format()</b>
+                            </MudChip>
+                        }
+                    </MudStack>
                 </MudItem>
             </MudGrid>
         </ToolBarContent>
         <Columns>
             <PropertyColumn Property="x => x.Title" Title="Título" />
             <PropertyColumn Property="x => x.Type.GetDescription()" Title="Tipo" />
-            <PropertyColumn Property="x => x.Note.GetDescription()" Title="Nota" />
-            <PropertyColumn Property="x => x.Weight" Title="Peso (%)" />
-            <PropertyColumn Property="x => x.CreatedAt.ToLocalTime().Format()" Title="Criada em" />
+            <PropertyColumn Property="x => x.Value.Format()" Title="Pontuação" />
+            <PropertyColumn Property="x => x.GetWeight()" Title="Peso" />
+            <PropertyColumn Property="x => x.GetNote()" Title="Nota" />
             <PropertyColumn Property="x => x.GetDueDate()" Title="Data de entrega" />
+            <TemplateColumn Title="Status">
+                <CellTemplate>
+                    <MudChip T="string" Label="true" Class="px-4 ma-0" Size="Size.Small" Color="@context.Item.GetColor()">
+                        <b>@context.Item.WorkStatus.GetDescription()</b>
+                    </MudChip>
+                </CellTemplate>
+            </TemplateColumn>
             <TemplateColumn>
                 <CellTemplate>
                     <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Item))" />
@@ -59,21 +104,23 @@
 
 <MudContainer Class="my-4 px-4">
     <MudPaper Class="px-4 pt-4">
-        <ApexCharts.ApexChart @ref="@_chart" TItem="StudentClassActivityOut" Title="Pontuação em cada atividade" Options="@_options">
+        <ApexCharts.ApexChart @ref="@_chart" TItem="StudentClassActivityOut" Options="@_options" Height="@_height">
             <ApexCharts.ApexPointSeries
                 Name="Pontuação"
                 TItem="StudentClassActivityOut"
-                Items="@_activities"
+                Items="@GetActivities()"
                 SeriesType="ApexCharts.SeriesType.Bar"
                 XValue="@(a => a.Title)"
-                YValue="@(e => e.Value)"/>
+                YValue="@(e => e.Value)"
+                ShowDataLabels/>
             <ApexCharts.ApexPointSeries
                 Name="Pontuação ponderada"
                 TItem="StudentClassActivityOut"
-                Items="@_activities"
+                Items="@GetActivities()"
                 SeriesType="ApexCharts.SeriesType.Bar"
-                XValue="@(a => a.Title)"
-                YValue="@(e => e.PonderedValue)"/>
+                XValue="@(a => a.PonderedValueMessage())"
+                YValue="@(e => e.PonderedValue)"
+                ShowDataLabels/>
         </ApexCharts.ApexChart>
     </MudPaper>
 </MudContainer>
@@ -87,6 +134,7 @@
 	[Parameter]
 	public Guid Id { get; set; }
 
+    private int _height;
     private bool _loading;
     private StudentClassOut _class = new();
 
@@ -98,6 +146,10 @@
     private ApexCharts.ApexChart<StudentClassActivityOut> _chart;
     private ApexCharts.ApexChartOptions<StudentClassActivityOut> _options = new()
     {
+        Chart = new ApexCharts.Chart
+        {
+            Toolbar = new ApexCharts.Toolbar { Show = false },
+        },
         PlotOptions = new ApexCharts.PlotOptions
         {
             Bar = new ApexCharts.PlotOptionsBar { Horizontal = true }
@@ -110,22 +162,28 @@
         _loading = true;
         _class = await GetStudentClassClient.Get(Id);
         _activities = await GetStudentClassActivitiesClient.Get(Id);
-        StateHasChanged();
-        await _chart.RenderAsync();
+        await RenderChart();
         _loading = false;
     }
 
-    private List<StudentActivityOut> GetActivities()
+    private async Task RenderChart()
     {
-        return _class.Activities.Where(x => _notesFilter.Contains(x.Note)).ToList();
+        _height = 100 + GetActivities().Count() * 60;
+        StateHasChanged();
+        await _chart.RenderAsync();
     }
 
-    private void GoToDetails(StudentActivityOut activity)
+    private IEnumerable<StudentClassActivityOut> GetActivities()
+    {
+        return _activities.Where(x => _notesFilter.Contains(x.Note)).ToList();
+    }
+
+    private void GoToDetails(StudentClassActivityOut activity)
     {
         Nav.NavigateTo($"student/classes/{activity.ClassId}/activities/{activity.Id}");
     }
 
-    private void HandleNotesFilterChange(IEnumerable<ClassNoteType> newValues)
+    private async Task HandleNotesFilterChange(IEnumerable<ClassNoteType> newValues)
     {
         if (!newValues.Any())
         {
@@ -134,9 +192,10 @@
         }
 
         _notesFilter = newValues;
+        await RenderChart();
     }
 
-    private Func<StudentActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title);
+    private Func<StudentClassActivityOut, bool> _quickFilter => x => _searchString.IsIn(x.Title);
     private string GetNotFoundMessage()
     {
         return _searchString.IsEmpty() && _notesFilter.Count() == 3  ? "Não existem atividades ainda." : "Nenhuma atividade encontrada.";

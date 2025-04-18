@@ -23,12 +23,17 @@ public class GetStudentClassActivitiesService(SykiDbContext ctx) : IStudentServi
             result.Add(new()
             {
                 Id = activity.Id,
+                ClassId = activity.ClassId,
                 Note = activity.Note,
                 Title = activity.Title,
                 Description = activity.Description,
                 Type = activity.Type,
+                Status = activity.Status,
                 Weight = activity.Weight,
                 WorkStatus = work.Status,
+                CreatedAt = activity.CreatedAt,
+                DueDate = activity.DueDate,
+                DueHour = activity.DueHour,
                 Value = work.Note,
                 PonderedValue = work.Note * activity.Weight / 100M,
             });

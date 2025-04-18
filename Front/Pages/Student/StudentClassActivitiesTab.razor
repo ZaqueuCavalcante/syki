@@ -13,7 +13,7 @@
         RowsPerPage="100"
     >
         <ToolBarContent>
-            <MudGrid Class="align-center" Spacing="3">
+            <MudGrid Class="align-center mb-1" Spacing="3">
                 <MudItem xs="12" sm="3" md="3" lg="3">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
                         <MudToggleGroup T="ClassNoteType" SelectionMode="SelectionMode.MultiSelection" Values="@_notesFilter" ValuesChanged="@HandleNotesFilterChange" Style="width: 100%;" Color="Color.Tertiary" CheckMark>
@@ -27,19 +27,19 @@
                     <MudStack Row>
                         @if (_notesFilter.Contains(ClassNoteType.N1))
                         {
-                            <MudChip T="string" Class="px-3 ma-0" Size="Size.Medium">
+                            <MudChip T="string" Class="px-3 ma-0" Size="Size.Medium" Label="true">
                                 <b>N1: @_class.N1.Format()</b>
                             </MudChip>
                         }
                         @if (_notesFilter.Contains(ClassNoteType.N2))
                         {
-                            <MudChip T="string" Class="px-3 ma-0" Size="Size.Medium">
+                            <MudChip T="string" Class="px-3 ma-0" Size="Size.Medium" Label="true">
                                 <b>N2: @_class.N2.Format()</b>
                             </MudChip>
                         }
                         @if (_notesFilter.Contains(ClassNoteType.N3))
                         {
-                            <MudChip T="string" Class="px-3 ma-0" Size="Size.Medium">
+                            <MudChip T="string" Class="px-3 ma-0" Size="Size.Medium" Label="true">
                                 <b>N3: @_class.N3.Format()</b>
                             </MudChip>
                         }

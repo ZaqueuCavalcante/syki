@@ -14,20 +14,51 @@
             </MudStack>
         </MudItem>
         <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
-            <MudChip
-                T="string"
-                Class="px-5 ma-0"
-                Size="Size.Large"
-                Icon="@_class.GetIcon()"
-                Color="@_class.GetColor()"
-                IconColor="Color.Default"
-            >
-                <b>Média: @_class.Average.Format()</b>
-            </MudChip>
+            <MudChipSet T="string" @bind-SelectedValue="@_tab" SelectionMode="@SelectionMode.SingleSelection">
+                <MudGrid Class="align-center" Spacing="3">
+                    <MudItem xs="12" sm="5" md="5" lg="5">
+                        <MudChip
+                            T="string"
+                            Variant="Variant.Text"
+                            Value="@("notes")"
+                            Class="px-5 ma-0"
+                            Size="Size.Large"
+                            Icon="@_class.GetIcon()"
+                            Color="Color.Default"
+                            SelectedColor="@_class.GetColor()"
+                            IconColor="Color.Default"
+                        >
+                            <b>Média: @_class.Average.Format()</b>
+                        </MudChip>
+                    </MudItem>
+                    <MudItem xs="12" sm="7" md="7" lg="7">
+                        <MudChip
+                            T="string"
+                            Variant="Variant.Text"
+                            Value="@("frequencies")"
+                            Class="px-5 ma-0"
+                            Size="Size.Large"
+                            Icon="@_class.GetIcon()"
+                            Color="Color.Default"
+                            SelectedColor="@_class.GetColor()"
+                            IconColor="Color.Default"
+                        >
+                            <b>Frequência: @_class.Average.Format()%</b>
+                        </MudChip>
+                    </MudItem>
+                </MudGrid>
+            </MudChipSet>
         </MudItem>
     </MudGrid>
 
-    <StudentClassActivitiesTab ClassId="@Id" />
+    @if (_tab == "notes")
+    {
+        <StudentClassActivitiesTab ClassId="@Id" />
+    }
+    else
+    {
+        <MudText>FREQUENCIES</MudText>
+    }
 </MudContainer>
 
 @inject GetStudentClassClient GetStudentClassClient
@@ -38,6 +69,7 @@
 	public Guid Id { get; set; }
 
     private bool _loading;
+    private string _tab = "notes";
     private StudentClassOut _class = new();
 
     protected override async Task OnParametersSetAsync()

@@ -23,9 +23,9 @@
                             Value="@("notes")"
                             Class="px-5 ma-0"
                             Size="Size.Large"
-                            Icon="@_class.GetIcon()"
+                            Icon="@_class.GetAverageIcon()"
                             Color="Color.Default"
-                            SelectedColor="@_class.GetColor()"
+                            SelectedColor="@_class.GetAverageColor()"
                             IconColor="Color.Default"
                         >
                             <b>Média: @_class.Average.Format()</b>
@@ -38,26 +38,25 @@
                             Value="@("frequencies")"
                             Class="px-5 ma-0"
                             Size="Size.Large"
-                            Icon="@_class.GetIcon()"
+                            Icon="@_class.GetFrequencyIcon()"
                             Color="Color.Default"
-                            SelectedColor="@_class.GetColor()"
+                            SelectedColor="@_class.GetFrequencyColor()"
                             IconColor="Color.Default"
                         >
-                            <b>Frequência: @_class.Average.Format()%</b>
+                            <b>Frequência: @_class.Frequency.Format()%</b>
                         </MudChip>
                     </MudItem>
                 </MudGrid>
             </MudChipSet>
         </MudItem>
     </MudGrid>
-
     @if (_tab == "notes")
     {
         <StudentClassActivitiesTab ClassId="@Id" />
     }
     else
     {
-        <MudText>FREQUENCIES</MudText>
+        <StudentClassFrequenciesTab ClassId="@Id" />
     }
 </MudContainer>
 

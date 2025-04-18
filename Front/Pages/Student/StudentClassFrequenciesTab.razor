@@ -1,0 +1,45 @@
+﻿@namespace Syki.Front.Pages.Student
+
+<MudContainer Class="my-4 px-0">
+    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+        <MudProgressLinear Color="@_frequency.GetFrequencyColor()" Rounded="true" Size="Size.Large" Value="@_frequency.GetFrequencyAsDouble()" Style="height: 24px">
+            <MudText Typo="Typo.body1">
+                <b>@_frequency.GetFrequencyAsFraction()</b>
+            </MudText>
+            <MudText Typo="Typo.h4" Class="mx-2">
+                <b> · </b>
+            </MudText>
+            <MudText Typo="Typo.body1">
+                <b>@_frequency.Frequency.Format()%</b>
+            </MudText>
+        </MudProgressLinear>
+        <MudTooltip Text="A frequência mínima para ser aprovado é de 70%" Arrow="true" Placement="Placement.Bottom">
+            <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+        </MudTooltip>
+    </MudStack>
+</MudContainer>
+
+<MudContainer Class="my-4 px-0">
+    <MudPaper Class="px-4 pt-4">
+
+    </MudPaper>
+</MudContainer>
+
+@inject NavigationManager Nav
+@inject GetStudentClassFrequencyClient GetStudentClassFrequencyClient
+
+@code
+{
+	[Parameter]
+	public Guid ClassId { get; set; }
+
+    private bool _loading;
+    private GetStudentClassFrequencyOut _frequency = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        _frequency = await GetStudentClassFrequencyClient.Get(ClassId);
+        _loading = false;
+    }
+}

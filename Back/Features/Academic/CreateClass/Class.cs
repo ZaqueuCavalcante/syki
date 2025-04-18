@@ -227,7 +227,7 @@ public class Class
         };
     }
 
-    public StudentClassOut ToStudentClassOut(decimal n1, decimal n2, decimal n3, decimal average)
+    public StudentClassOut ToStudentClassOut(decimal n1, decimal n2, decimal n3, decimal average, decimal frequency)
     {
         return new()
         {
@@ -240,6 +240,7 @@ public class Class
             N2 = n2,
             N3 = n3,
             Average = average,
+            Frequency = frequency,
         };
     }
     

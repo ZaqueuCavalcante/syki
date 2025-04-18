@@ -11,4 +11,5 @@ public class StudentClassOut
     public decimal N2 { get; set; }
     public decimal N3 { get; set; }
     public decimal Average { get; set; }
+    public decimal Frequency { get; set; }
 }

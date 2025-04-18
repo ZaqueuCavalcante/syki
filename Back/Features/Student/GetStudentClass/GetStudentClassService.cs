@@ -24,7 +24,11 @@ public class GetStudentClassService(SykiDbContext ctx) : IStudentService
         var n3 = GetAverage(activities.Where(x => x.Note == ClassNoteType.N3).ToList(), works);
         var average = GetAverageNote(n1, n2, n3);
 
-        return @class.ToStudentClassOut(n1, n2, n3, average);
+        var attendances = await ctx.Attendances.Where(x => x.ClassId == classId && x.StudentId == userId).CountAsync();
+        var presences = await ctx.Attendances.Where(x => x.ClassId == classId && x.StudentId == userId && x.Present).CountAsync();
+        var frequency = attendances == 0 ? 0 : Math.Round(100M*(1M * presences / (1M * attendances)), 2);
+
+        return @class.ToStudentClassOut(n1, n2, n3, average, frequency);
     }
 
     private static decimal GetAverage(List<ClassActivityDto> activities, List<ClassActivityWorkDto> works)

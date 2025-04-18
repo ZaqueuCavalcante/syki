@@ -8,15 +8,7 @@ public class GetStudentClassFrequencyOut
     public int TotalLessons { get; set; }
     public decimal Frequency { get; set; }
 
-    public double GetFrequencyAsDouble()
-    {
-        return decimal.ToDouble(Frequency);
-    }
-
-    public string GetFrequencyAsFraction()
-    {
-        return $"{Presences} / {Attendances}";
-    }
+    public List<GetStudentClassLessonFrequencyOut> Lessons { get; set; } = [];
 
     public string GetLessonsAsFraction()
     {

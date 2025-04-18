@@ -7,19 +7,39 @@ public class GetStudentClassFrequencyService(SykiDbContext ctx) : IStudentServic
         var classOk = await ctx.ClassesStudents.AnyAsync(x => x.ClassId == classId && x.SykiStudentId == studentId);
         if (!classOk) return new ClassNotFound();
 
-        var totalLessons = await ctx.Lessons.Where(x => x.ClassId == classId).CountAsync();
+        var lessons = await ctx.Lessons.AsNoTracking()
+            .Where(x => x.ClassId == classId)
+            .OrderBy(x => x.Number)
+            .ToListAsync();
+
+        var attendances = await ctx.Attendances.AsNoTracking().Where(x => x.ClassId == classId && x.StudentId == studentId).ToListAsync();
+        var presences = attendances.Count(x => x.Present);
+        var absences = attendances.Count - presences;
+
+        var lessonsOut = new List<GetStudentClassLessonFrequencyOut>();
+        foreach (var lesson in lessons)
+        {
+            var attendance = attendances.FirstOrDefault(x => x.LessonId == lesson.Id);
+            lessonsOut.Add(new()
+            {
+                Lesson = lesson.Number,
+                Frequency = attendance == null ? 0.50M : attendance.Present ? 1 : 0,
+                LessonDate = $"{lesson.Date} {lesson.StartAt.GetDescription()}-{lesson.EndAt.GetDescription()}"
+            });
+        }
         
-        var attendances = await ctx.Attendances.Where(x => x.ClassId == classId && x.StudentId == studentId).CountAsync();
-        var presences = await ctx.Attendances.Where(x => x.ClassId == classId && x.StudentId == studentId && x.Present).CountAsync();
-        var absences = attendances - presences;
+        if (attendances.Count == 0) return new GetStudentClassFrequencyOut { TotalLessons = lessons.Count, Lessons = lessonsOut };
 
-        if (attendances == 0) return new GetStudentClassFrequencyOut { TotalLessons = totalLessons };
-
-        var frequency = Math.Round(100M*(1M * presences / (1M * attendances)), 2);
+        var frequency = Math.Round(100M*(1M * presences / (1M * attendances.Count)), 2);
 
         return new GetStudentClassFrequencyOut
         {
-            Frequency = frequency, Presences = presences, Attendances = attendances, Absences = absences, TotalLessons = totalLessons
+            Frequency = frequency,
+            Presences = presences,
+            Attendances = attendances.Count,
+            Absences = absences,
+            TotalLessons = lessons.Count,
+            Lessons = lessonsOut,
         };
     }
 }

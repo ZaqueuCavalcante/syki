@@ -5,10 +5,21 @@
 <MudContainer Class="my-4 px-0">
     <MudGrid Spacing="2">
         <MudItem xs="12" sm="6" md="4" lg="4">
-            <SummaryTextCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="Color.Success" Text="Presenças" Value="@_frequency.Presences.ToThousandSeparated()"/>
+            <SummaryTextCard
+                Loading="@_loading"
+                Icon="@Icons.Material.Filled.CheckCircleOutline"
+                Color="Color.Success"
+                Text="@(_frequency.Presences == 1 ? "Presença" : "Presenças")"
+                Value="@_frequency.Presences.ToThousandSeparated()"
+            />
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="4">
-            <SummaryTextCard Loading="@_loading" Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Text="Faltas" Value="@_frequency.Absences.ToThousandSeparated()"/>
+            <SummaryTextCard
+                Loading="@_loading"
+                Icon="@Icons.Material.Filled.Cancel"
+                Color="Color.Error"
+                Text="@(_frequency.Absences == 1 ? "Falta" : "Faltas")"
+                Value="@_frequency.Absences.ToThousandSeparated()"/>
         </MudItem>
         <MudItem xs="12" sm="6" md="4" lg="4">
             <SummaryTextCard Loading="@_loading" Icon="@Icons.Material.Filled.BookmarkAdded" Color="Color.Info" Text="Aulas realizadas" Value="@_frequency.GetLessonsAsFraction()"/>
@@ -18,7 +29,29 @@
 
 <MudContainer Class="my-4 px-0">
     <MudPaper Class="px-4 pt-4">
-
+        <ApexCharts.ApexChart @ref="@_chart" TItem="GetStudentClassLessonFrequencyOut" Options="@_options" Height="250">
+            <ApexPointTooltip>
+                <MudPaper Class="pa-4">
+                    <MudStack Row="true" Class="mb-2" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                        <MudText><b>@context.DataPoint.X.ToString().Split(" - ").First()</b></MudText>
+                        <MudIcon
+                            Icon="@GetTooltipIcon(context.DataPoint.Items.FirstOrDefault()?.Frequency)"
+                            Color="@GetTooltipIconColor(context.DataPoint.Items.FirstOrDefault()?.Frequency)"
+                            Class="mb-1" Size="Size.Medium" />
+                    </MudStack>
+                    <MudText>@context.DataPoint.X.ToString().Split(" - ").Last()</MudText>
+                </MudPaper>
+            </ApexPointTooltip>
+            <ChildContent>
+                <ApexCharts.ApexPointSeries
+                    Name="Presente"
+                    TItem="GetStudentClassLessonFrequencyOut"
+                    Items="@_frequency.Lessons"
+                    SeriesType="ApexCharts.SeriesType.Heatmap"
+                    XValue="@(a => a.GetLesson())"
+                    YValue="@(e => e.Frequency)"/>
+            </ChildContent>
+        </ApexCharts.ApexChart>
     </MudPaper>
 </MudContainer>
 
@@ -37,6 +70,67 @@
     {
         _loading = true;
         _frequency = await GetStudentClassFrequencyClient.Get(ClassId);
+        await RenderChart();
         _loading = false;
+    }
+
+    private ApexCharts.ApexChart<GetStudentClassLessonFrequencyOut> _chart;
+    private ApexCharts.ApexChartOptions<GetStudentClassLessonFrequencyOut> _options = new()
+    {
+        Colors = ["#87C0ED", "#21E7A4", "#F44336"],
+        Tooltip = new ApexCharts.Tooltip { Enabled = true },
+        Chart = new ApexCharts.Chart { Toolbar = new ApexCharts.Toolbar { Show = false } },
+        Xaxis = new ApexCharts.XAxis
+        {
+            Tooltip = new ApexCharts.XAxisTooltip { Enabled = false },
+            Labels = new ApexCharts.XAxisLabels
+            {
+                Formatter = @"function (value) {
+                    if (value === undefined) {return '';}
+                    return value.split(' - ')[0];
+                }"
+            }
+        },
+        Yaxis = [ new ApexCharts.YAxis { Labels = new ApexCharts.YAxisLabels { Show = false }, Tooltip = new ApexCharts.YAxisTooltip { Enabled = false } } ],
+        PlotOptions = new ApexCharts.PlotOptions
+        {
+            Heatmap = new ApexCharts.PlotOptionsHeatmap
+            {
+                EnableShades = true,
+                ColorScale = new ApexCharts.PlotOptionsHeatmapColorScale
+                {
+                    Ranges =
+                    [
+                        new() { Color = "#F44336", From = 0, To = 0 },
+                        new() { Color = "#87C0ED", From = 0.50, To = 0.50 },
+                        new() { Color = "#21E7A4", From = 1, To = 1 },
+                    ]
+                }
+            }
+        }
+    };
+
+    private async Task RenderChart()
+    {
+        StateHasChanged();
+        await _chart.RenderAsync();
+    }
+
+    private string GetTooltipIcon(decimal? frequency)
+    {
+        if (frequency is null or 0.50M) return Icons.Material.Filled.BookmarkAdded;
+
+        if (frequency == 0) return Icons.Material.Filled.Cancel;
+
+        return Icons.Material.Filled.CheckCircleOutline;
+    }
+
+    private Color GetTooltipIconColor(decimal? frequency)
+    {
+        if (frequency is null or 0.50M) return Color.Info;
+
+        if (frequency == 0) return Color.Error;
+
+        return Color.Success;
     }
 }

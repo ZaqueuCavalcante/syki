@@ -1,0 +1,38 @@
+﻿@namespace Syki.Front.Components.Summaries
+
+<MudPaper Class="px-4 py-2">
+    <MudStack Row="true" AlignItems="AlignItems.Center">
+        <MudIcon Icon="@Icon" Size="Size.Large" Color="@Color" />
+        <MudStack Spacing="0">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="0">
+                @if (Loading)
+                {
+                    <MudText Typo="Typo.h6"><b>...</b></MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6"><b>@Value</b></MudText>
+                }
+            </MudStack>
+            <MudText Typo="Typo.body1">@Text</MudText>
+        </MudStack>
+    </MudStack>
+</MudPaper>
+
+@code
+{
+    [Parameter]
+    public bool Loading { get; set; }
+
+    [Parameter]
+    public Color Color { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; }
+
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+}

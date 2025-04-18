@@ -1,22 +1,19 @@
-﻿@namespace Syki.Front.Pages.Student
+﻿@using Syki.Front.Components.Summaries
+
+@namespace Syki.Front.Pages.Student
 
 <MudContainer Class="my-4 px-0">
-    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
-        <MudProgressLinear Color="@_frequency.GetFrequencyColor()" Rounded="true" Size="Size.Large" Value="@_frequency.GetFrequencyAsDouble()" Style="height: 24px">
-            <MudText Typo="Typo.body1">
-                <b>@_frequency.GetFrequencyAsFraction()</b>
-            </MudText>
-            <MudText Typo="Typo.h4" Class="mx-2">
-                <b> · </b>
-            </MudText>
-            <MudText Typo="Typo.body1">
-                <b>@_frequency.Frequency.Format()%</b>
-            </MudText>
-        </MudProgressLinear>
-        <MudTooltip Text="A frequência mínima para ser aprovado é de 70%" Arrow="true" Placement="Placement.Bottom">
-            <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
-        </MudTooltip>
-    </MudStack>
+    <MudGrid Spacing="2">
+        <MudItem xs="12" sm="6" md="4" lg="4">
+            <SummaryTextCard Loading="@_loading" Icon="@Icons.Material.Filled.CheckCircleOutline" Color="Color.Success" Text="Presenças" Value="@_frequency.Presences.ToThousandSeparated()"/>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="4">
+            <SummaryTextCard Loading="@_loading" Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Text="Faltas" Value="@_frequency.Absences.ToThousandSeparated()"/>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4" lg="4">
+            <SummaryTextCard Loading="@_loading" Icon="@Icons.Material.Filled.BookmarkAdded" Color="Color.Info" Text="Aulas realizadas" Value="@_frequency.GetLessonsAsFraction()"/>
+        </MudItem>
+    </MudGrid>
 </MudContainer>
 
 <MudContainer Class="my-4 px-0">

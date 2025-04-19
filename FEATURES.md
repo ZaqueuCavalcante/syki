@@ -1,7 +1,6 @@
 # Features
 
 - Audit
-- Use MediatR?
 
 ## Academic
 

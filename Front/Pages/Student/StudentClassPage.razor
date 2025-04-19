@@ -67,14 +67,11 @@
 	[Parameter]
 	public Guid Id { get; set; }
 
-    private bool _loading;
     private string _tab = "notes";
     private StudentClassOut _class = new();
 
     protected override async Task OnParametersSetAsync()
     {
-        _loading = true;
         _class = await GetStudentClassClient.Get(Id);
-        _loading = false;
     }
 }

@@ -1,5 +1,15 @@
 # TODOS
 
+- ✅ + de 1.000 commits
+- ✅ + de 130 stars no GitHub
+- ✅ + de 1.000 testes automatizados
+- ✅ + de 100 funcionalidades implementadas
+
+
+
+
+
+
 ## Atividades V0
 
 https://apexcharts.github.io/Blazor-ApexCharts/bar-charts
@@ -11,13 +21,7 @@ https://apexcharts.github.io/Blazor-ApexCharts/bar-charts
 - Uma prova nao possui entrega (link/documento), o professor deve simplesmente atribuir a nota
 
 
-- Aluno vendo turma:
-    - Filtro: Todos | Pendentes | Entregues
-    - Drawer na direita para adicionar link e enviar
 
-
-Vendo o tamanho que fica com 100 caracteres permitidos
-Vendo o tamanho que fica com 100 caracteres permitidos sera que ta bom ou precisa de mais ou menos?
 
 
 
@@ -52,10 +56,6 @@ Vendo o tamanho que fica com 100 caracteres permitidos sera que ta bom ou precis
 - Descricao de conteudo de uma disciplina / bibliografia (unica dentro da disciplina da grade)
 
 
-
-# Notas
-
-Cada aluno possui 3 notas em cada turma: N1, N2 e N3
 
 
 

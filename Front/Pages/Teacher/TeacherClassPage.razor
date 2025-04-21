@@ -6,29 +6,28 @@
 <SykiPageTitle Title="Turma" />
 
 <MudContainer Class="my-4 px-4">
-    <MudCard Class="px-2 my-4">
-        <MudCardContent>
-            @if (_loading)
-            {
-                <MudSkeleton Animation="Animation.Wave" />
-            }
-            else
-            {
-                <MudGrid Class="align-center">
-                    <MudItem xs="12" sm="9" md="9" lg="9">
-                        <MudText Typo="Typo.h5" Style="font-weight: bold">@_class.Discipline</MudText>
-                    </MudItem>
-                    <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end">
-                        <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="100%">
-                            <MudTabPanel Text="Atividades" ID='"panel_0"'></MudTabPanel>
-                            <MudTabPanel Text="Frequência" ID='"panel_1"'></MudTabPanel>
-                            <MudTabPanel Text="Notas" ID='"panel_2"'></MudTabPanel>
-                        </MudTabs>
-                    </MudItem>
-                </MudGrid>
-            }
-        </MudCardContent>
-    </MudCard>
+    @if (_loading)
+    {
+        <MudSkeleton Animation="Animation.Wave" />
+    }
+    else
+    {
+        <MudGrid Class="align-center mb-4">
+            <MudItem xs="12" sm="9" md="9" lg="9">
+                <MudStack Row="true" AlignItems="AlignItems.Center">
+                    <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mb-1" Size="Size.Large" />
+                    <MudText Typo="Typo.h5" Style="font-weight: bold">@_class.Discipline</MudText>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end">
+                <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="100%">
+                    <MudTabPanel Text="Atividades" ID='"panel_0"'></MudTabPanel>
+                    <MudTabPanel Text="Frequência" ID='"panel_1"'></MudTabPanel>
+                    <MudTabPanel Text="Notas" ID='"panel_2"'></MudTabPanel>
+                </MudTabs>
+            </MudItem>
+        </MudGrid>
+    }
 
     @if (_index == 0)
     {

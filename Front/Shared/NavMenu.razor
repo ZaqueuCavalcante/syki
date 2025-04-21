@@ -6,43 +6,43 @@
 
 <MudNavMenu Rounded="true" Color="Color.Primary" Class="pa-2">
     <AuthorizeView Roles="@UserRole.Adm.ToString()">
-        <MudNavLink Href="adm/users" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Usuários</MudNavLink>
-        <MudNavLink Href="adm/institutions" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.School" IconColor="Color.Inherit">Instituições</MudNavLink>
-        <MudNavLink Href="adm/feature-flags" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Flag" IconColor="Color.Inherit">Features</MudNavLink>
+        <MudNavLink Href="adm/users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Usuários</MudNavLink>
+        <MudNavLink Href="adm/institutions" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.School" IconColor="Color.Inherit">Instituições</MudNavLink>
+        <MudNavLink Href="adm/feature-flags" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Flag" IconColor="Color.Inherit">Features</MudNavLink>
         <MudNavLink Href="adm/events" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.StickyNote2" IconColor="Color.Inherit">Eventos</MudNavLink>
         <MudNavLink Href="adm/commands" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Task" IconColor="Color.Inherit">Comandos</MudNavLink>
         <MudNavLink Href="adm/batches" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.BorderOuter" IconColor="Color.Inherit">Lotes</MudNavLink>
     </AuthorizeView>
     <AuthorizeView Roles="@UserRole.Academic.ToString()">
-        <MudNavLink Href="academic/campi" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.GroupWork" IconColor="Color.Inherit">Campi</MudNavLink>
-        <MudNavLink Href="academic/courses" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Class" IconColor="Color.Inherit">Cursos</MudNavLink>
-        <MudNavLink Href="academic/disciplines" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apps" IconColor="Color.Inherit">Disciplinas</MudNavLink>
-        <MudNavLink Href="academic/course-curriculums" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.AccountTree" IconColor="Color.Inherit">Grades</MudNavLink>
-        <MudNavLink Href="academic/course-offerings" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.PlaylistAddCheck" IconColor="Color.Inherit">Ofertas</MudNavLink>
-        <MudNavLink Href="academic/teachers" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Person4" IconColor="Color.Inherit">Professores</MudNavLink>
+        <MudNavLink Href="academic/campi" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.GroupWork" IconColor="Color.Inherit">Campi</MudNavLink>
+        <MudNavLink Href="academic/courses" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Class" IconColor="Color.Inherit">Cursos</MudNavLink>
+        <MudNavLink Href="academic/disciplines" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Apps" IconColor="Color.Inherit">Disciplinas</MudNavLink>
+        <MudNavLink Href="academic/course-curriculums" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccountTree" IconColor="Color.Inherit">Grades</MudNavLink>
+        <MudNavLink Href="academic/course-offerings" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.PlaylistAddCheck" IconColor="Color.Inherit">Ofertas</MudNavLink>
+        <MudNavLink Href="academic/teachers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person4" IconColor="Color.Inherit">Professores</MudNavLink>
         <MudNavLink Href="academic/classes" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.CenterFocusStrong" IconColor="Color.Inherit">Turmas</MudNavLink>
-        <MudNavLink Href="academic/students" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Alunos</MudNavLink>
-        <MudNavLink Href="academic/academic-periods" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Períodos</MudNavLink>
-        <MudNavLink Href="academic/enrollment-periods" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrículas</MudNavLink>
-        <MudNavLink Href="academic/notifications" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Notifications" IconColor="Color.Inherit">Notificações</MudNavLink>
+        <MudNavLink Href="academic/students" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Alunos</MudNavLink>
+        <MudNavLink Href="academic/academic-periods" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Períodos</MudNavLink>
+        <MudNavLink Href="academic/enrollment-periods" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrículas</MudNavLink>
+        <MudNavLink Href="academic/notifications" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Notifications" IconColor="Color.Inherit">Notificações</MudNavLink>
     </AuthorizeView>
     <AuthorizeView Roles="@UserRole.Teacher.ToString()">
-        <MudNavLink Href="teacher/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
+        <MudNavLink Href="teacher/agenda" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
         <MudNavGroup Title="Turmas" Expanded="true" Icon="@Icons.Material.Filled.CenterFocusStrong">
             @foreach(var item in _teacherClasses)
             {
-                <MudNavLink Href="@($"teacher/classes/{item.Id}")" Match="NavLinkMatch.All">@item.Discipline</MudNavLink>
+                <MudNavLink Href="@($"teacher/classes/{item.Id}")" Match="NavLinkMatch.Prefix">@item.Discipline</MudNavLink>
             }
         </MudNavGroup>
     </AuthorizeView>
     <AuthorizeView Roles="@UserRole.Student.ToString()">
-        <MudNavLink Href="student/agenda" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
-        <MudNavLink Href="student/disciplines" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Apps" IconColor="Color.Inherit">Disciplinas</MudNavLink>
-        <MudNavLink Href="student/notes" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.StickyNote2" IconColor="Color.Inherit">Notas</MudNavLink>
-        <MudNavLink Href="student/frequency" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Class" IconColor="Color.Inherit">Frequência</MudNavLink>
+        <MudNavLink Href="student/agenda" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
+        <MudNavLink Href="student/disciplines" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Apps" IconColor="Color.Inherit">Disciplinas</MudNavLink>
+        <MudNavLink Href="student/notes" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.StickyNote2" IconColor="Color.Inherit">Notas</MudNavLink>
+        <MudNavLink Href="student/frequency" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Class" IconColor="Color.Inherit">Frequência</MudNavLink>
         @if (_currentEnrollmentPeriod.Id.HasValue())
         {
-            <MudNavLink Href="student/enrollments" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrícula</MudNavLink>
+            <MudNavLink Href="student/enrollments" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrícula</MudNavLink>
         }
         <MudNavGroup Title="Turmas" Expanded="true" Icon="@Icons.Material.Filled.CenterFocusStrong">
             @foreach(var item in _studentClasses)
@@ -72,13 +72,13 @@
         if (user.Role == UserRole.Teacher)
         {
             _teacherClasses = await GetTeacherCurrentClassesClient.Get();
-            await LocalStorage.SetItemAsync("Classes", _teacherClasses.ConvertAll(x => new CascadingClassDto { Id = x.Id, Name = x.Discipline }).Serialize());
+            await LocalStorage.SetItemAsync("Classes", _teacherClasses.ConvertAll(x => new CascadingClassDto(x.Id, x.Discipline)).Serialize());
         }
         if (user.Role == UserRole.Student)
         {
             _studentClasses = await GetStudentCurrentClassesClient.Get();
             _currentEnrollmentPeriod = await GetCurrentEnrollmentPeriodClient.Get();
-            await LocalStorage.SetItemAsync("Classes", _studentClasses.ConvertAll(x => new CascadingClassDto { Id = x.Id, Name = x.Discipline }).Serialize());
+            await LocalStorage.SetItemAsync("Classes", _studentClasses.ConvertAll(x => new CascadingClassDto(x.Id, x.Discipline)).Serialize());
         }
     }
 

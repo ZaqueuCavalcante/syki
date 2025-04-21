@@ -1,6 +1,54 @@
 # Azure and Terraform
 
-Subi toda a infra do Syki no Azure usando o Terraform!
+## Manual
+
+- Criar Subscription na Azure
+    - "Azure for Students"
+
+- Criar Resource Group na Azure
+    - "syki-rg"
+
+- Criar App Service
+    - Select a subscription to manage deployed resources and costs.
+    - Use resource groups like folders to organize and manage all your resources.
+    - Name: "syki-api"
+    - Publish: Code or Container
+    - Region: Brazil South
+    - Pricing plans
+    -------------------
+    - Pra criar um banco, preciso de VNet and related networking resources
+    - https://learn.microsoft.com/pt-br/azure/app-service/tutorial-dotnetcore-sqldb-app?tabs=copilot&pivots=azure-portal
+    -------------------
+    - Application Insights
+    - Tags
+    -------------------
+    - 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Subi toda a infra do Syki no Azure usando o Terraform + GitHub Actions!
 
 
 - O que é IaC? Vantagens?

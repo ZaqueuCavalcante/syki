@@ -3,7 +3,11 @@
 @namespace Syki.Front.Pages.Teacher
 
 <MudContainer Class="mb-4 px-0">
-    <SykiPageHeader Icon="@Icons.Material.Filled.EditNote" Title="Atividades" ButtonText="Nova Atividade" OnClick="@NewActivity" />
+    <MudCard>
+        <MudCardContent Class="px-6">
+            <SykiPageHeader Icon="@Icons.Material.Filled.EditNote" Title="Atividades" ButtonText="Nova Atividade" OnClick="@NewActivity" />
+        </MudCardContent>
+    </MudCard>
 
     <style>.mud-table-toolbar { height: auto }</style>
     <MudDataGrid

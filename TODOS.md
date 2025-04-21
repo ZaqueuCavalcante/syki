@@ -1,11 +1,64 @@
 # TODOS
 
-- ✅ + de 1.000 commits
-- ✅ + de 130 stars no GitHub
-- ✅ + de 1.000 testes automatizados
-- ✅ + de 100 funcionalidades implementadas
+## Deploy de tudo na Azure
+- Manual
+- Terraform
+- Post
+
+## Refactor todas as funcionalidades
+- Cada funcionalidade é um grupo fechado de endpoints
+    - Precisa ter fluxos completos (casos de uso)
+    - Para cada uma, ter uma sessão no README.md
+    - Sumário
+    - Autenticação / Autorização
+    - MFA
+    - Auditoria
+    - Eventos, comandos e lotes
+    - Processamento em background
+    - Testes
+    - CI/CD
+    - Logs, metrics and traces (OpenTelemetry)
+    - Configuração
+    - Rate Limiting
+    - Real Time (SignalR)
+    - Documentação (Scalar)
+    - Cache (Distributed Cache)
+
+- Refatorar testes
+    - Criar extensions para deixar os testes mais simples
+    - Realmente validar o estado do banco de dados, via endpoint GET ou EF Context
+    - Remover FluentAssertions
+
+- Listar todas
+    - Cross
+    - Academic
+    - Teacher
+    - Student
+
+- Documentar
+    - Domínio
+    - Controller
+    - Ins/Outs
+
+- Post
+    - ✅ + de 1.000 commits
+    - ✅ + de 130 stars no GitHub
+    - ✅ + de 1.000 testes automatizados
+    - ✅ + de 50 funcionalidades implementadas
+    - ✅ + de 100 endpoints
+
+## Observabilidade
+- OpenTelemetry
+- Seq, Jaeger, Grafana, Sentry
+- DataDog
 
 
+
+
+## Tunar o Postgres
+- Índices corretos
+- Quais os Tradeoffs
+- Quais as melhores configurações
 
 
 
@@ -15,15 +68,35 @@
 https://apexcharts.github.io/Blazor-ApexCharts/bar-charts
 
 
+- App do Syki pro Aluno
+    - Agenda
+    - Turmas
+    - Atividades
+    - Frequências
+
 - ⚠️ Professor pode editar uma atividade
 
+- Adicionar Polly para o retry automático de comandos
+- Particionar tabelas para otimizar o processamento de eventos, comandos e lotes
 
 - Uma prova nao possui entrega (link/documento), o professor deve simplesmente atribuir a nota
+- Poder vincular PDF em uma atividade (subir no blob storage)
 
+- Verificar quais os gargalos da api para otimizar
+    - Medir via DataDog
+    - Avaliar antes e depois das mudanças
 
+- Todas as configurações devem ser feitas via variáveis de ambiente
+    - Não ter ifs no código pra checar ambiente
 
+- Migrations
+    - Qual o melhor jeito de fazer
+    - Sempre atualizar ao subir a aplicação
+    - Como ficam os testes
 
-
+- Otimizar imagens Docker
+    - Tempo de build
+    - Tamanho final
 
 - Calendário Acadêmico
 
@@ -42,9 +115,6 @@ https://apexcharts.github.io/Blazor-ApexCharts/bar-charts
 - Pool de conexoes com o banco de dados
 - RabbitMQ use case (project)
 - Redis use case (project)
-
-- Use Breadcrumbs
-- Use db migrations
 
 - Aluno pode gerar um historico de disciplinas + notas (PDF)
 - Aluno pode gerar comprovante de matricula

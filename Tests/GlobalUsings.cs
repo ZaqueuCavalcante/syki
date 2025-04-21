@@ -9,5 +9,4 @@ global using FluentAssertions;
 global using Syki.Tests.Clients;
 global using Syki.Back.Database;
 global using Syki.Back.Extensions;
-global using Microsoft.Playwright.NUnit;
 global using Microsoft.EntityFrameworkCore;

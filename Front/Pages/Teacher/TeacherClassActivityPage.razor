@@ -5,26 +5,23 @@
 
 <SykiPageTitle Title="Atividade" />
 
-<MudContainer Class="my-4 px-4">
-    <MudCard>
-        <MudCardContent>
-            <MudGrid Class="align-center">
-                <MudItem xs="12" sm="8" md="8" lg="8">
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
-                        <MudIcon Icon="@Icons.Material.Filled.EditNote" Class="mb-1" Size="Size.Large"/>
-                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">Atividade</MudText>
-                    </MudStack>
-                </MudItem>
-                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
-                    <MudProgressLinear Color="@GetDeliveryRateColor(_activity.GetDeliveryRate())" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_activity.GetDeliveryRate())" Style="height: 28px">
-                        <MudText Typo="Typo.body1">
-                            <b>@GetDeliveryRateFraction(_activity)</b>
-                        </MudText>
-                    </MudProgressLinear>
-                </MudItem>
-            </MudGrid>
-        </MudCardContent>
-    </MudCard>
+<MudContainer Class="mb-4 px-4">
+    <MudBreadcrumbs Items="@_breadcrumbs" Class="px-0" />
+    <MudGrid Class="align-center">
+        <MudItem xs="12" sm="8" md="8" lg="8">
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudIcon Icon="@Icons.Material.Filled.EditNote" Class="mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">Atividade</MudText>
+            </MudStack>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+            <MudProgressLinear Color="@GetDeliveryRateColor(_activity.GetDeliveryRate())" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_activity.GetDeliveryRate())" Style="height: 28px">
+                <MudText Typo="Typo.body1">
+                    <b>@GetDeliveryRateFraction(_activity)</b>
+                </MudText>
+            </MudProgressLinear>
+        </MudItem>
+    </MudGrid>
     
     <MudExpansionPanels Class="my-4">
         <MudExpansionPanel Expanded="@_expanded">
@@ -96,6 +93,7 @@
 </MudContainer>
 
 @inject IDialogService DialogService
+@inject ILocalStorageService LocalStorage
 @inject IBrowserViewportService BrowserViewportService
 @inject GetTeacherClassActivityClient GetTeacherClassActivityClient
 
@@ -110,14 +108,26 @@
     private bool _loading;
     private string _searchString;
     private bool _expanded = true;
+    private List<CascadingClassDto> _classes = [];
+    private List<BreadcrumbItem> _breadcrumbs = [];
     private TeacherClassActivityOut _activity = new();
-    
+
     private Breakpoint _breakpoint;
     private IEnumerable<ClassActivityWorkStatus> _statusFilter = [ClassActivityWorkStatus.Pending, ClassActivityWorkStatus.Delivered, ClassActivityWorkStatus.Finalized];
 
     protected override async Task OnInitializedAsync()
     {
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+
+        _classes = JsonConvert.DeserializeObject<List<CascadingClassDto>>(await LocalStorage.GetItemAsync("Classes") ?? "[]") ?? [];
+        var @class = _classes.FirstOrDefault(x => x.Id == ClassId);
+        if (@class != null)
+        {
+            _breadcrumbs.Add(new("Turmas", href: "/", icon: Icons.Material.Filled.CenterFocusStrong));
+            _breadcrumbs.Add(new(@class.Name, href: $"/teacher/classes/{@class.Id}"));
+            _breadcrumbs.Add(new("Atividade", href: $"/teacher/classes/{@class.Id}/activities/{ActivityId}"));
+        }
+
         await Load();
     }
 

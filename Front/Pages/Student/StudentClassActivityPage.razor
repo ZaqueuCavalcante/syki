@@ -6,8 +6,8 @@
 <SykiPageTitle Title="Atividade" />
 
 <MudContainer Class="mb-4 px-4">
-    <MudBreadcrumbs Items="@_breadcrumbs"></MudBreadcrumbs>
-    <SykiPageHeader Title="@_activity.Title" Typo="Typo.h6" ButtonText="Entregar" OnClick="@OpenDialog"/>
+    <MudBreadcrumbs Items="@_breadcrumbs" Class="px-0" />
+    <SykiPageHeader Icon="@Icons.Material.Filled.EditNote" Title="@_activity.Title" Typo="Typo.h6" ButtonText="Entregar" OnClick="@OpenDialog"/>
     <MudPaper Class="my-4 pa-5">
         <MudContainer Class="px-0">
             <MudGrid Spacing="3">
@@ -57,7 +57,6 @@
     protected override async Task OnInitializedAsync()
     {
         _classes = JsonConvert.DeserializeObject<List<CascadingClassDto>>(await LocalStorage.GetItemAsync("Classes") ?? "[]") ?? [];
-
         var @class = _classes.FirstOrDefault(x => x.Id == ClassId);
         if (@class != null)
         {

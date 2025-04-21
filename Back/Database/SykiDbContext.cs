@@ -6,6 +6,7 @@ using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateTeacher;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.Features.Cross.SetupFeatureFlags;
 using Syki.Back.Features.Academic.CreateDiscipline;
@@ -64,6 +65,8 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfigurati
     {
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.UseNpgsql(configuration.Database().ConnectionString);
+
+        optionsBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 
         optionsBuilder.AddInterceptors(new SetBatchSizeInterceptor());
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());

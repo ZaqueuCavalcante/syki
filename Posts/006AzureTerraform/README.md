@@ -15,8 +15,21 @@
     - Publish: Code or Container
     - Region: Brazil South
     - Pricing plans
+        - Name = ASP-sykirg-870e
+        - Operating System = Linux
+        - Region = Brazil South
+        - SKU = Basic
+        - Size = Small
+        - ACU = 100 total ACU
+        - Memory = 1.75 GB memory
     -------------------
-    - Pra criar um banco, preciso de VNet and related networking resources
+    - Pra criar um banco, preciso de VNet e SubNet
+        - Virtual network -> vnet-eftihcpw (10.0.0.0/16)
+        - Outbound subnet -> subnet-uxrumtfu (10.0.1.0/24)
+    - ServerName = syki-db-server
+    - DatabaseName = syki-db-database
+    - User = ayvnlwkjgc
+    - Password = F443TUsaaPYaR$qT
     - https://learn.microsoft.com/pt-br/azure/app-service/tutorial-dotnetcore-sqldb-app?tabs=copilot&pivots=azure-portal
     -------------------
     - Application Insights
@@ -41,7 +54,7 @@
 
 
 
-
+https://dev.to/willvelida/deploying-to-azure-with-terraform-and-github-actions-5191
 
 
 

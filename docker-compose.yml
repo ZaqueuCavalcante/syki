@@ -33,11 +33,6 @@ services:
       - '5001:5001'
     networks:
       - sykinet
-    healthcheck:
-      test: ["CMD-SHELL", "curl --fail http://localhost:5001/health || exit 1"]
-      interval: 1s
-      timeout: 2s
-      retries: 3
 
   front:
     container_name: front
@@ -58,6 +53,11 @@ services:
       dockerfile: Dockerfile.daemon
     depends_on:
       - back
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 3
     environment:
       - 'ASPNETCORE_URLS=http://+:5003'
       - 'ASPNETCORE_ENVIRONMENT=Development'
@@ -67,23 +67,23 @@ services:
     networks:
       - sykinet
 
-  datadog:
-    container_name: datadog
-    image: 'gcr.io/datadoghq/agent:latest'
-    pid: host
-    ports:
-      - '8126:8126'
-      - '4317:4317'
-      - '4318:4318'
-    networks:
-      - sykinet
-    environment:
-      - 'DD_API_KEY=lalala'
-      - 'DD_HOSTNAME=datadog'
-      - 'DD_SITE=us5.datadoghq.com'
-      - 'DD_APM_NON_LOCAL_TRAFFIC=true'
-      - 'DD_OTLP_CONFIG_RECEIVER_PROTOCOLS_GRPC_ENDPOINT=0.0.0.0:4317'
-      - 'DD_OTLP_CONFIG_RECEIVER_PROTOCOLS_HTTP_ENDPOINT=0.0.0.0:4318'
+  # datadog:
+  #   container_name: datadog
+  #   image: 'gcr.io/datadoghq/agent:latest'
+  #   pid: host
+  #   ports:
+  #     - '8126:8126'
+  #     - '4317:4317'
+  #     - '4318:4318'
+  #   networks:
+  #     - sykinet
+  #   environment:
+  #     - 'DD_API_KEY=lalala'
+  #     - 'DD_HOSTNAME=datadog'
+  #     - 'DD_SITE=us5.datadoghq.com'
+  #     - 'DD_APM_NON_LOCAL_TRAFFIC=true'
+  #     - 'DD_OTLP_CONFIG_RECEIVER_PROTOCOLS_GRPC_ENDPOINT=0.0.0.0:4317'
+  #     - 'DD_OTLP_CONFIG_RECEIVER_PROTOCOLS_HTTP_ENDPOINT=0.0.0.0:4318'
 
 networks:
   sykinet:

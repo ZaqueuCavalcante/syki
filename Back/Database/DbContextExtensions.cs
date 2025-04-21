@@ -2,30 +2,20 @@ namespace Syki.Back.Database;
 
 public static class DbContextExtensions
 {
-    public static void ResetDb(this SykiDbContext ctx)
+    public static void ResetDevDb(this SykiDbContext ctx)
     {
-        if (!Env.IsTesting())
-        {
-            ctx.Database.EnsureDeleted();
-            ctx.Database.EnsureCreated();
-        }
+        if (!Env.IsDevelopment()) return;
+
+        ctx.Database.EnsureDeleted();
+        ctx.Database.Migrate();
     }
 
-    public static async Task ResetDbAsync(this SykiDbContext ctx)
+    public static async Task ResetTestDbAsync(this SykiDbContext ctx)
     {
-        if (Env.IsTesting())
-        {
-            await ctx.Database.EnsureDeletedAsync();
-            await ctx.Database.EnsureCreatedAsync();
-        }
-    }
+        if (!Env.IsTesting()) return;
 
-    public static void MigrateDb(this SykiDbContext ctx)
-    {
-        if (!Env.IsTesting())
-        {
-            ctx.Database.Migrate();
-        }
+        await ctx.Database.EnsureDeletedAsync();
+        await ctx.Database.MigrateAsync();
     }
 
     public static async Task<bool> AcademicPeriodExists(this SykiDbContext ctx, Guid institutionId, string id)

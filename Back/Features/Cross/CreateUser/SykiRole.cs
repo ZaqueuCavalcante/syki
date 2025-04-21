@@ -4,11 +4,11 @@ public class SykiRole : IdentityRole<Guid>
 {
     private SykiRole() {}
 
-    public SykiRole(UserRole role)
+    public SykiRole(Guid id, UserRole role)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Name = role.ToString();
         NormalizedName = role.ToString().ToUpper();
-        ConcurrencyStamp = Guid.NewGuid().ToString();
+        ConcurrencyStamp = id.ToString();
     }
 }

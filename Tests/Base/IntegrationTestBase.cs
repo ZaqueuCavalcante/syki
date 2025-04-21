@@ -17,7 +17,7 @@ public class IntegrationTestBase
         using var scope = _api.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 
-        await ctx.ResetDbAsync();
+        await ctx.ResetTestDbAsync();
         await _api.RegisterAdm();
 
         _daemon = new DaemonFactory();

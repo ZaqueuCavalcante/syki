@@ -1,4 +1,4 @@
-name: Tests
+name: Railway
 
 on:
   push:
@@ -26,13 +26,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.200
+
       - name: Restore
         run: dotnet restore
+
       - name: Build
         run: dotnet build --configuration Release --no-restore
+
       - name: Tests
-        run: dotnet test --configuration Release --no-build --verbosity normal
+        run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
+
+      - name: Create Migrations Bundle
+        run: |
+          dotnet tool install --global dotnet-ef
+          dotnet ef migrations bundle --project Back/Back.csproj --output ef-db-bundle
+
+      - name: Run Migrations
+        run: ./ef-db-bundle --connection "${{ secrets.MIGRATIONS_DB_CONNECTION_STRING }}"

@@ -25,7 +25,7 @@ using Syki.Back.Features.Student.CreateClassActivityWork;
 
 namespace Syki.Back.Database;
 
-public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSettings settings) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
+public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfiguration configuration) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
 {
     public DbSet<Institution> Institutions { get; set; }
     public DbSet<InstitutionConfigs> Configs { get; set; }
@@ -62,8 +62,9 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(settings.ConnectionString);
         optionsBuilder.UseSnakeCaseNamingConvention();
+        optionsBuilder.UseNpgsql(configuration.Database().ConnectionString);
+
         optionsBuilder.AddInterceptors(new SetBatchSizeInterceptor());
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
         optionsBuilder.AddInterceptors(new SaveDomainEventsInterceptor());

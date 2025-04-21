@@ -12,3 +12,8 @@ public class DatabaseSettings
         configuration.GetSection("Database").Bind(this);
     }
 }
+
+public static class DatabaseSettingsExtensions
+{
+    public static DatabaseSettings Database(this IConfiguration configuration) => new(configuration);
+}

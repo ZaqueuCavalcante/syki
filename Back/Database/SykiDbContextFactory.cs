@@ -6,9 +6,14 @@ public class SykiDbContextFactory : IDesignTimeDbContextFactory<SykiDbContext>
 {
     public SykiDbContext CreateDbContext(string[] args)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<SykiDbContext>();
-        var settings = new DatabaseSettings() { ConnectionString = args.First() };
+        return new SykiDbContext(new(), GetAppConfiguration());
+    }
 
-        return new SykiDbContext(optionsBuilder.Options, settings);
+    static IConfiguration GetAppConfiguration()
+    {
+        var builder = new ConfigurationBuilder()
+            .AddEnvironmentVariables();
+
+        return builder.Build();
     }
 }

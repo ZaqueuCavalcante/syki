@@ -22,6 +22,11 @@ public static class Env
         return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Development;
     }
 
+    public static string GetEnvironment()
+    {
+        return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "NOT_FOUND";
+    }
+
     public static string GetLastCommitHash()
     {
         return typeof(Program).Assembly

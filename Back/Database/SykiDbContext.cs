@@ -25,7 +25,7 @@ using Syki.Back.Features.Student.CreateClassActivityWork;
 
 namespace Syki.Back.Database;
 
-public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSettings settings, IHttpContextAccessor httpContextAccessor) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
+public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSettings settings) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
 {
     public DbSet<Institution> Institutions { get; set; }
     public DbSet<InstitutionConfigs> Configs { get; set; }
@@ -66,7 +66,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, DatabaseSett
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.AddInterceptors(new SetBatchSizeInterceptor());
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
-        optionsBuilder.AddInterceptors(new SaveDomainEventsInterceptor(httpContextAccessor));
+        optionsBuilder.AddInterceptors(new SaveDomainEventsInterceptor());
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

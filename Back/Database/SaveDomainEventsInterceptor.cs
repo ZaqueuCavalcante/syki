@@ -1,13 +1,15 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Syki.Back.Features.Cross.CreateInstitution;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Syki.Back.Database;
 
-public class SaveDomainEventsInterceptor(IHttpContextAccessor HttpContextAccessor) : SaveChangesInterceptor
+public class SaveDomainEventsInterceptor : SaveChangesInterceptor
 {
-	public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default(CancellationToken))
+	public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
 	{
-        var ctx = HttpContextAccessor.HttpContext;
+        var httpContextAccessor = eventData.Context.GetService<IHttpContextAccessor>();
+        var ctx = httpContextAccessor?.HttpContext;
         Guid? institutionId = (ctx != null && ctx.User.IsAuthenticated()) ? ctx.User.InstitutionId() : null;
 
         var domainEvents = eventData.Context.ChangeTracker

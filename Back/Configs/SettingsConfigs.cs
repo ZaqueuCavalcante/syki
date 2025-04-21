@@ -10,6 +10,6 @@ public static class SettingsConfigs
         builder.Services.AddSingleton<RateLimiterSettings>();
 
         builder.Services.Configure<HostOptions>(x => x.ServicesStartConcurrently = true);
-        builder.Services.AddHostedService<LoadFeatureFlagsFromDb>();
+        // builder.Services.AddHostedService<LoadFeatureFlagsFromDb>();
     }
 }

@@ -14,6 +14,12 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     command: ["postgres","-c","max_connections=1500","-c","max_prepared_transactions=64","-c","log_statement=all"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d syki-db -h localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
 
   back:
     container_name: back
@@ -21,7 +27,8 @@ services:
       context: .
       dockerfile: Dockerfile.back
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - 'ASPNETCORE_URLS=http://+:5001'
       - 'ASPNETCORE_ENVIRONMENT=Development'
@@ -51,13 +58,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.daemon
+    restart: unless-stopped
     depends_on:
-      - back
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 3s
-        max_attempts: 3
+      db:
+        condition: service_healthy
     environment:
       - 'ASPNETCORE_URLS=http://+:5003'
       - 'ASPNETCORE_ENVIRONMENT=Development'

@@ -47,4 +47,4 @@ jobs:
           dotnet ef migrations bundle --project Back/Back.csproj --output efbundle
 
       - name: Run Migrations
-        run: ./efbundle
+        run: ./efbundle --connection "${{ secrets.MIGRATIONS_DB_CONNECTION_STRING }}"

@@ -25,6 +25,7 @@ services:
     environment:
       - 'ASPNETCORE_URLS=http://+:5001'
       - 'ASPNETCORE_ENVIRONMENT=Development'
+      - 'Database__Reset=true'
       - 'Database__ConnectionString=UserID=postgres;Password=postgres;Host=db_host;Port=5432;Database=syki-db;Pooling=true;'
       - 'OTEL_EXPORTER_OTLP_PROTOCOL=grpc'
       - 'OTEL_EXPORTER_OTLP_ENDPOINT=http://datadog:4317'
@@ -32,6 +33,11 @@ services:
       - '5001:5001'
     networks:
       - sykinet
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:5001/health || exit 1"]
+      interval: 1s
+      timeout: 2s
+      retries: 3
 
   front:
     container_name: front

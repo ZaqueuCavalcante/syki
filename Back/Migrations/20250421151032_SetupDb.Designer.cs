@@ -13,7 +13,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20250421131731_SetupDb")]
+    [Migration("20250421151032_SetupDb")]
     partial class SetupDb
     {
         /// <inheritdoc />
@@ -169,7 +169,7 @@ namespace Back.Migrations
                         .HasColumnName("action");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
                     b.Property<JsonDocument>("Data")
@@ -214,7 +214,7 @@ namespace Back.Migrations
                         .HasColumnName("batch_id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Data")
@@ -247,7 +247,7 @@ namespace Back.Migrations
                         .HasColumnName("parent_id");
 
                     b.Property<DateTime?>("ProcessedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("processed_at");
 
                     b.Property<Guid?>("ProcessorId")
@@ -277,7 +277,7 @@ namespace Back.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
                     b.Property<Guid?>("EventId")
@@ -293,7 +293,7 @@ namespace Back.Migrations
                         .HasColumnName("next_command_id");
 
                     b.Property<DateTime?>("ProcessedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("processed_at");
 
                     b.Property<int>("Size")
@@ -348,11 +348,11 @@ namespace Back.Migrations
                         .HasColumnName("institution_id");
 
                     b.Property<DateTime>("OccurredAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("occurred_at");
 
                     b.Property<DateTime?>("ProcessedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("processed_at");
 
                     b.Property<Guid?>("ProcessorId")
@@ -781,7 +781,7 @@ namespace Back.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Description")
@@ -827,7 +827,7 @@ namespace Back.Migrations
                         .HasColumnName("notification_id");
 
                     b.Property<DateTime?>("ViewedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("viewed_at");
 
                     b.HasKey("UserId", "NotificationId")
@@ -917,7 +917,7 @@ namespace Back.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Name")
@@ -1061,7 +1061,7 @@ namespace Back.Migrations
                         .HasColumnName("concurrency_stamp");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Email")
@@ -1148,7 +1148,7 @@ namespace Back.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
                     b.Property<Guid>("InstitutionId")
@@ -1161,7 +1161,7 @@ namespace Back.Migrations
                         .HasColumnName("token");
 
                     b.Property<DateTime?>("UsedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("used_at");
 
                     b.Property<Guid>("UserId")
@@ -1311,7 +1311,7 @@ namespace Back.Migrations
                         .HasColumnName("class_id");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Description")

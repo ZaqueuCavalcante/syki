@@ -27,8 +27,8 @@ namespace Back.Migrations
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     type = table.Column<string>(type: "text", nullable: false),
                     status = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    processed_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    processed_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     event_id = table.Column<Guid>(type: "uuid", nullable: true),
                     source_command_id = table.Column<Guid>(type: "uuid", nullable: true),
                     next_command_id = table.Column<Guid>(type: "uuid", nullable: true),
@@ -49,9 +49,9 @@ namespace Back.Migrations
                     type = table.Column<string>(type: "text", nullable: false),
                     data = table.Column<string>(type: "text", nullable: false),
                     status = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     duration = table.Column<int>(type: "integer", nullable: false),
-                    processed_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    processed_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     processor_id = table.Column<Guid>(type: "uuid", nullable: true),
                     error = table.Column<string>(type: "text", nullable: true),
                     event_id = table.Column<Guid>(type: "uuid", nullable: true),
@@ -75,8 +75,8 @@ namespace Back.Migrations
                     type = table.Column<string>(type: "text", nullable: false),
                     data = table.Column<string>(type: "text", nullable: false),
                     status = table.Column<string>(type: "text", nullable: false),
-                    occurred_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    processed_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    occurred_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    processed_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     processor_id = table.Column<Guid>(type: "uuid", nullable: true),
                     error = table.Column<string>(type: "text", nullable: true),
                     duration = table.Column<int>(type: "integer", nullable: false)
@@ -106,7 +106,7 @@ namespace Back.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -263,7 +263,7 @@ namespace Back.Migrations
                     description = table.Column<string>(type: "text", nullable: false),
                     timeless = table.Column<bool>(type: "boolean", nullable: false),
                     target = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -285,7 +285,7 @@ namespace Back.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -424,7 +424,7 @@ namespace Back.Migrations
                     entity_id = table.Column<Guid>(type: "uuid", nullable: false),
                     entity_type = table.Column<string>(type: "text", nullable: false),
                     action = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     data = table.Column<JsonDocument>(type: "jsonb", nullable: false)
@@ -450,8 +450,8 @@ namespace Back.Migrations
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     token = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    used_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    used_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -601,7 +601,7 @@ namespace Back.Migrations
                 {
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     notification_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    viewed_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    viewed_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -796,7 +796,7 @@ namespace Back.Migrations
                     type = table.Column<string>(type: "text", nullable: false),
                     status = table.Column<string>(type: "text", nullable: false),
                     weight = table.Column<int>(type: "integer", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     due_date = table.Column<DateOnly>(type: "date", nullable: false),
                     due_hour = table.Column<string>(type: "text", nullable: false)
                 },

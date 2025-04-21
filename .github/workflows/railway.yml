@@ -44,7 +44,7 @@ jobs:
       - name: Create Migrations Bundle
         run: |
           dotnet tool install --global dotnet-ef
-          dotnet ef migrations bundle --project Back/Back.csproj --output ef-db-bundle
+          dotnet ef migrations bundle --project Back/Back.csproj --output efbundle
 
       - name: Run Migrations
-        run: ./ef-db-bundle --connection "${{ secrets.MIGRATIONS_DB_CONNECTION_STRING }}"
+        run: ./efbundle

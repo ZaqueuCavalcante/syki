@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  tests:
+  build-test-migrate:
     runs-on: ubuntu-latest
 
     services:

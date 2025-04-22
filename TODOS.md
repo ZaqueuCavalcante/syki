@@ -1,5 +1,61 @@
 # TODOS
 
+
+
+## Sumário
+
+- Testes
+    - Unit
+    - Integration
+    - Mutation
+- CI/CD
+    - GitHub Actions
+    - Deploy Automático
+- Infra
+    - Railway
+    - Terraform
+    - Azure
+- Segurança
+    - Autenticação
+    - Autorização
+    - MFA
+- Processamento Assíncrono
+    - Eventos
+    - Comandos
+    - Lotes
+    - Workflows
+    - Falhas e Retentativas
+- Observabilidade
+    - Logs
+    - Metrics
+    - Traces
+    - OpenTelemetry
+    - DataDog
+- Auditoria
+    - Quem fez o quê quando e onde
+- Configuração
+    - Feature Flags
+    - Secrets
+- Rate Limiting
+    - Mover pro NGNIX
+- Real Time
+    - Notificações
+    - Usuários Ativos
+- Documentação
+    - Código
+    - API (Scalar)
+- Cache
+    - Distributed Cache
+    - Redis
+
+
+
+
+
+
+
+
+
 ## Deploy de tudo na Azure
 - Manual
 - Terraform
@@ -8,21 +64,6 @@
 ## Refactor todas as funcionalidades
 - Cada funcionalidade é um grupo fechado de endpoints
     - Precisa ter fluxos completos (casos de uso)
-    - Para cada uma, ter uma sessão no README.md
-    - Sumário
-    - Autenticação / Autorização
-    - MFA
-    - Auditoria
-    - Eventos, comandos e lotes
-    - Processamento em background
-    - Testes
-    - CI/CD
-    - Logs, metrics and traces (OpenTelemetry)
-    - Configuração
-    - Rate Limiting
-    - Real Time (SignalR)
-    - Documentação (Scalar)
-    - Cache (Distributed Cache)
 
 - Refatorar testes
     - Criar extensions para deixar os testes mais simples

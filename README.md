@@ -1,6 +1,6 @@
 # SYKI - Sistema de Gerenciamento Acadêmico
 
-[![Tests](https://github.com/ZaqueuCavalcante/syki/actions/workflows/tests.yml/badge.svg)](https://github.com/ZaqueuCavalcante/syki/actions/workflows/tests.yml)
+[![Tests](https://github.com/ZaqueuCavalcante/syki/actions/workflows/railway.yml/badge.svg)](https://github.com/ZaqueuCavalcante/syki/actions/workflows/railway.yml)
 
 ## O que é este projeto?
 

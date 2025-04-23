@@ -8,14 +8,14 @@ namespace Syki.Back.Features.Academic.CreateStudent;
 /// </summary>
 public class SykiStudent : Entity
 {
-    public Guid Id { get; }
-    public Guid InstitutionId { get; }
-    public SykiUser User { get; }
-    public Guid CourseOfferingId { get; }
+    public Guid Id { get; set; }
+    public Guid InstitutionId { get; set; }
+    public SykiUser User { get; set; }
+    public Guid CourseOfferingId { get; set; }
     public CourseOffering CourseOffering { get; set; }
-    public string Name { get; }
-    public string EnrollmentCode { get; }
-    public StudentStatus Status { get; }
+    public string Name { get; set; }
+    public string EnrollmentCode { get; set; }
+    public StudentStatus Status { get; set; }
     public decimal YieldCoefficient { get; set; }
 
     private SykiStudent() {}

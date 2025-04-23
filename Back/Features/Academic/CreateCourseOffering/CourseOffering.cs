@@ -5,7 +5,8 @@ using Syki.Back.Features.Academic.CreateCourseCurriculum;
 namespace Syki.Back.Features.Academic.CreateCourseOffering;
 
 /// <summary>
-/// Oferta de Curso.
+/// Oferta de Curso
+/// <br/> <br/>
 /// Ao início de cada Período Acadêmico, uma Instituição pode ofertar determinado Curso.
 /// </summary>
 public class CourseOffering

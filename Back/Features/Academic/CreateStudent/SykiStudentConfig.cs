@@ -8,17 +8,17 @@ public class SykiStudentConfig : IEntityTypeConfiguration<SykiStudent>
     {
         student.ToTable("students");
 
-        student.HasKey(a => a.Id);
-        student.Property(a => a.Id).ValueGeneratedNever();
+        student.HasKey(s => s.Id);
+        student.Property(s => s.Id).ValueGeneratedNever();
 
-        student.Property(a => a.CourseOfferingId);
-        student.Property(a => a.Name);
-        student.Property(a => a.EnrollmentCode);
-
-        student.HasOne(a => a.User)
+        student.HasOne(s => s.User)
             .WithOne()
             .HasPrincipalKey<SykiUser>(u => new { u.InstitutionId, u.Id })
-            .HasForeignKey<SykiStudent>(a => new { a.InstitutionId, a.Id });
+            .HasForeignKey<SykiStudent>(s => new { s.InstitutionId, s.Id });
+
+        student.HasOne(s => s.CourseOffering)
+            .WithMany()
+            .HasForeignKey(s => s.CourseOfferingId);
 
         student.Property(x => x.YieldCoefficient).HasPrecision(4, 2);
 

@@ -2,6 +2,7 @@
 
 dotnet test --filter TestCategory=Integration
 dotnet test --filter "FullyQualifiedName~UnitTests"
+dotnet test --filter "FullyQualifiedName!~UnitTests"
 
 dotnet test --logger:"console;verbosity=detailed"
 dotnet test --filter "FullyQualifiedName~IntegrationTests"

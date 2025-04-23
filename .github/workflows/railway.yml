@@ -38,8 +38,11 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: Tests
-        run: dotnet test --configuration Release --no-restore --no-build --verbosity normal
+      - name: Unit Tests
+        run: dotnet test --filter "FullyQualifiedName~UnitTests" --configuration Release --no-restore --no-build --verbosity normal
+
+      - name: Integration Tests
+        run: dotnet test --filter "FullyQualifiedName!~UnitTests" --configuration Release --no-restore --no-build --verbosity normal
 
       - name: Create Migrations Bundle
         run: |

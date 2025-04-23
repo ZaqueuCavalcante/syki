@@ -5,11 +5,13 @@ namespace Syki.Back.Features.Teacher.CreateLessonAttendance;
 /// </summary>
 public class ClassLessonAttendance
 {
-    public Guid Id { get; }
+    public Guid Id { get; set; }
     public Guid ClassId { get; set; }
     public Guid LessonId { get; set; }
     public Guid StudentId { get; set; }
     public bool Present { get; set; }
+
+    private ClassLessonAttendance() {}
 
     public ClassLessonAttendance(
         Guid classId,

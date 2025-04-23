@@ -12,6 +12,10 @@ public class OfertaConfig : IEntityTypeConfiguration<CourseOffering>
         courseOffering.HasKey(o => o.Id);
         courseOffering.Property(o => o.Id).ValueGeneratedNever();
 
+        courseOffering.HasOne(o => o.Campus)
+            .WithMany()
+            .HasForeignKey(o => o.CampusId);
+
         courseOffering.HasOne(o => o.Course)
             .WithMany()
             .HasForeignKey(o => o.CourseId);
@@ -23,9 +27,5 @@ public class OfertaConfig : IEntityTypeConfiguration<CourseOffering>
         courseOffering.HasOne<AcademicPeriod>()
             .WithMany()
             .HasForeignKey(o => new { o.Period, o.InstitutionId });
-
-        courseOffering.HasMany<SykiStudent>()
-            .WithOne(a => a.CourseOffering)
-            .HasForeignKey(a => a.CourseOfferingId);
     }
 }

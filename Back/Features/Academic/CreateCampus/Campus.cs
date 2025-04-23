@@ -1,5 +1,8 @@
 namespace Syki.Back.Features.Academic.CreateCampus;
 
+/// <summary>
+/// Campus
+/// </summary>
 public class Campus
 {
     public Guid Id { get; set; }
@@ -25,7 +28,7 @@ public class Campus
 
     public CampusOut ToOut()
     {
-        return new CampusOut
+        return new()
         {
             Id = Id,
             Name = Name,

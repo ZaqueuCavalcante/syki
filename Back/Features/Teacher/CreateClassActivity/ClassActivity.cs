@@ -7,7 +7,7 @@ namespace Syki.Back.Features.Teacher.CreateClassActivity;
 /// </summary>
 public class ClassActivity : Entity
 {
-    public Guid Id { get; }
+    public Guid Id { get; set; }
     public Guid ClassId { get; set; }
     public ClassNoteType Note { get; set; }
 

@@ -64,7 +64,10 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfigurati
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSnakeCaseNamingConvention();
-        optionsBuilder.UseNpgsql(configuration.Database().ConnectionString);
+        optionsBuilder.UseNpgsql(
+            configuration.Database().ConnectionString,
+            x => x.MigrationsHistoryTable("migrations", "syki")
+        );
 
         optionsBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 

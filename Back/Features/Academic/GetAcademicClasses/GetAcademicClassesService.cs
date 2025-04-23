@@ -23,7 +23,7 @@ public class GetAcademicClassesService(SykiDbContext ctx) : IAcademicService
             @class.SetFillRatio(count);
 
             var period = periods.FirstOrDefault(x => x.Id == @class.PeriodId);
-            if (@class.Status == ClassStatus.OnEnrollment && period?.EndAt < DateTime.Now.ToDateOnly())
+            if (@class.Status == ClassStatus.OnEnrollment && period?.EndAt < DateTime.UtcNow.ToDateOnly())
             {
                 @class.Status = ClassStatus.AwaitingStart;
             }

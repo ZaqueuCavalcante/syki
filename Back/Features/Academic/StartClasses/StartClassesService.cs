@@ -14,7 +14,7 @@ public class StartClassesService(SykiDbContext ctx) : IAcademicService
         var statusOk = classes.All(x => x.Status == ClassStatus.OnEnrollment);
         if (!statusOk) return new ClassMustHaveOnEnrollmentStatus();
         
-        var today = DateTime.Now.ToDateOnly();
+        var today = DateTime.UtcNow.ToDateOnly();
         var periods = await ctx.EnrollmentPeriods.AsNoTracking().Where(x => x.InstitutionId == institutionId).ToListAsync();
         foreach (var @class in classes)
         {

@@ -9,7 +9,7 @@ public class UpdateCampusService(SykiDbContext ctx, HybridCache cache) : IAcadem
 
 		if (campus == null) return new CampusNotFound();
 
-		campus.Update(data.Name, data.City);
+		campus.Update(data.Name, data.State, data.City);
 		await ctx.SaveChangesAsync();
 
 		await cache.RemoveAsync($"campi:{institutionId}");

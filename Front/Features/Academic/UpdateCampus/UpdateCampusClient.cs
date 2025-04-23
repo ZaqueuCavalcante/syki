@@ -2,9 +2,9 @@ namespace Syki.Front.Features.Academic.UpdateCampus;
 
 public class UpdateCampusClient(HttpClient http) : IAcademicClient
 {
-    public async Task<OneOf<CampusOut, ErrorOut>> Update(Guid id, string name, string city)
+    public async Task<OneOf<CampusOut, ErrorOut>> Update(Guid id, string name, BrazilState state, string city)
     {
-        var data = new UpdateCampusIn { Id = id, Name = name, City = city };
+        var data = new UpdateCampusIn { Id = id, Name = name, State = state, City = city };
 
         var response = await http.PutAsJsonAsync("/academic/campi", data);
 

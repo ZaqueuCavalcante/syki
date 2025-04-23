@@ -16,7 +16,7 @@
             >
                 @foreach (Day? day in Enum.GetValues<Day>())
                 {
-                <MudSelectItem Value="@day">@day.GetDescription()</MudSelectItem>
+                    <MudSelectItem Value="@day">@day.GetDescription()</MudSelectItem>
                 }
             </MudSelect>
         </MudItem>

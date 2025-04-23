@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Back.Migrations
 {
     /// <inheritdoc />
-    public partial class SetupDb : Migration
+    public partial class Bootstrap : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -173,6 +173,7 @@ namespace Back.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
+                    state = table.Column<string>(type: "text", nullable: false),
                     city = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -755,6 +756,7 @@ namespace Back.Migrations
                     course_offering_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     enrollment_code = table.Column<string>(type: "text", nullable: false),
+                    status = table.Column<string>(type: "text", nullable: false),
                     yield_coefficient = table.Column<decimal>(type: "numeric(4,2)", precision: 4, scale: 2, nullable: false)
                 },
                 constraints: table =>

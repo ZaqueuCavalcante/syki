@@ -35,15 +35,15 @@ internal class ResponseExamples : IMultipleExamplesProvider<List<UserNotificatio
 					NotificationId = Guid.NewGuid(),
 					Title = "Boas-vindas!",
 					Description = "Agradecemos a confiança na nossa instituição, que seja uma jornada cheia de aprendizado!",
-					CreatedAt = DateTime.Now.AddDays(-50),
-					ViewedAt = DateTime.Now.AddDays(-48),
+					CreatedAt = DateTime.UtcNow.AddDays(-50),
+					ViewedAt = DateTime.UtcNow.AddDays(-48),
 				},
 				new()
 				{
 					NotificationId = Guid.NewGuid(),
 					Title = "Semana de prova chegando!",
 					Description = "Preparado(a) pras avaliações? Elas começam semana que vem, revise os assuntos e boas provas!",
-					CreatedAt = DateTime.Now,
+					CreatedAt = DateTime.UtcNow,
 					ViewedAt = null,
 				}
 			}

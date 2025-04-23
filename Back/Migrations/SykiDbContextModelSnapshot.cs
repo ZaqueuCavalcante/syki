@@ -419,6 +419,11 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("state");
+
                     b.HasKey("Id")
                         .HasName("pk_campi");
 

@@ -8,7 +8,7 @@ public class ReleaseClassesForEnrollmentService(SykiDbContext ctx) : IAcademicSe
             .Where(c => c.InstitutionId == institutionId && data.Classes.Contains(c.Id))
             .ToListAsync();
 
-        var today = DateTime.Now.ToDateOnly();
+        var today = DateTime.UtcNow.ToDateOnly();
         var periods = await ctx.EnrollmentPeriods.AsNoTracking().Where(x => x.InstitutionId == institutionId).ToListAsync();
         foreach (var @class in classes)
         {

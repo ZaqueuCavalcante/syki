@@ -61,7 +61,7 @@ public class SeedInstitutionBasicDataCommandHandler(SykiDbContext ctx) : IComman
 
     private static void AddAcademicPeriods(Institution institution)
     {
-        var year = DateTime.Now.Year;
+        var year = DateTime.UtcNow.Year;
         institution.AcademicPeriods =
         [
             new($"{year}.1", institution.Id, new DateOnly(year, 02, 01), new DateOnly(year, 06, 01)),
@@ -74,13 +74,13 @@ public class SeedInstitutionBasicDataCommandHandler(SykiDbContext ctx) : IComman
 
         institution.Campi =
         [
-            new(institution.Id, "Garoa", "Garanhuns - PE"),
-            new(institution.Id, "Sertão", "Petrolina - PE"),
-            new(institution.Id, "Agreste", "Caruaru - PE"),
-            new(institution.Id, "Suassuna", "Recife - PE"),
+            new(institution.Id, "Garoa", BrazilState.PE, "Garanhuns"),
+            new(institution.Id, "Sertão", BrazilState.PE, "Petrolina"),
+            new(institution.Id, "Agreste", BrazilState.PE, "Caruaru"),
+            new(institution.Id, "Suassuna", BrazilState.PE, "Recife"),
         ];
     }
-    
+
     private static void AddCourses(Institution institution)
     {
         institution.Courses =

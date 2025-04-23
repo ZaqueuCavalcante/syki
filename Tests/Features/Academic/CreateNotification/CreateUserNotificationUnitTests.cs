@@ -32,7 +32,7 @@ public class CreateUserNotificationUnitTests
         var userNotification = new UserNotification(userId, notification.Id)
         {
             Notification = notification,
-            ViewedAt = DateTime.Now.AddDays(1)
+            ViewedAt = DateTime.UtcNow.AddDays(1)
         };
 
         // Act

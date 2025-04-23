@@ -12,7 +12,7 @@ public class SeedInstitutionClassesCommandHandler(
     public async Task Handle(Guid commandId, SeedInstitutionClassesCommand command)
     {
         var id = command.InstitutionId;
-        var academicPeriod = $"{DateTime.Now.Year}.1";
+        var academicPeriod = $"{DateTime.UtcNow.Year}.1";
 
         var adsCourseCurriculumId = await ctx.CourseCurriculums
             .Where(x => x.InstitutionId == id && x.Name.Equals("Grade ADS 1.0"))

@@ -26,7 +26,7 @@ public class Notification
         Description = description;
         Target = target;
         Timeless = timeless;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
     }
 
     public NotificationOut ToOut()

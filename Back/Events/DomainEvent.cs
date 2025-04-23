@@ -22,13 +22,13 @@ public class DomainEvent
         EntityId = entityId;
         Type = data.GetType().ToString();
         Data = data.Serialize();
-        OccurredAt = DateTime.Now;
+        OccurredAt = DateTime.UtcNow;
         InstitutionId = institutionId;
     }
 
     public void Processed(double duration)
     {
-        ProcessedAt = DateTime.Now;
+        ProcessedAt = DateTime.UtcNow;
         Duration = Convert.ToInt32(duration);
         Status = Error.HasValue() ? DomainEventStatus.Error : DomainEventStatus.Success;
     }

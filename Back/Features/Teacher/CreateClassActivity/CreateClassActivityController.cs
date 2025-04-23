@@ -33,7 +33,7 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateClassActivityIn
 			{
                 Title = "Modelagem de Banco de Dados",
                 Description = "Modele um banco de dados para um sistema de gerenciamento de biblioteca.",
-                DueDate = DateTime.Now.AddDays(7).ToDateOnly(),
+                DueDate = DateTime.UtcNow.AddDays(7).ToDateOnly(),
                 DueHour = Hour.H19_00,
 			}
 		);

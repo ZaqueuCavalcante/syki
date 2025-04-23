@@ -29,7 +29,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var campus = await client.CreateCampus();
 
         // Act
-        await client.UpdateCampus(campus.Id, "Agreste II", "Bonito - PE");
+        await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito");
 
         // Assert
         await using var ctx = _api.GetDbContext();

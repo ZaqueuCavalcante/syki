@@ -50,7 +50,7 @@ public class Command
         InstitutionId = institutionId;
         Type = data.GetType().ToString();
         Data = data.Serialize();
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
         EventId = eventId;
         ParentId = parentId;
         OriginalId = originalId;
@@ -64,7 +64,7 @@ public class Command
 
     public void Processed(double duration)
     {
-        ProcessedAt = DateTime.Now;
+        ProcessedAt = DateTime.UtcNow;
         Duration = Convert.ToInt32(duration);
         Status = Error.HasValue() ? CommandStatus.Error : CommandStatus.Success;
     }

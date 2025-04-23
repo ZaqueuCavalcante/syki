@@ -38,7 +38,7 @@ public class CommandBatch
         {
             Type = type,
             Id = Guid.NewGuid(),
-            CreatedAt = DateTime.Now,
+            CreatedAt = DateTime.UtcNow,
             InstitutionId = institutionId,
             Status = CommandBatchStatus.Pending,
             EventId = eventId,

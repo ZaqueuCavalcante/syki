@@ -23,7 +23,7 @@ public class CreateStudentUnitTests
         student.Name.Should().Be(name);
         student.CourseOfferingId.Should().Be(courseOfferingId);
         student.EnrollmentCode.Should().HaveLength(12);
-        student.EnrollmentCode.Should().StartWith(DateTime.Now.Year.ToString());
+        student.EnrollmentCode.Should().StartWith(DateTime.UtcNow.Year.ToString());
         student.Status.Should().Be(StudentStatus.Enrolled);
     }
 

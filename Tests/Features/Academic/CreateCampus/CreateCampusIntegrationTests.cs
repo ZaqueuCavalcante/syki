@@ -9,11 +9,12 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        var campus = await client.CreateCampus("Agreste I", "Caruaru - PE");
+        var campus = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
 
         // Assert
         campus.Id.Should().NotBeEmpty();
         campus.Name.Should().Be("Agreste I");
-        campus.City.Should().Be("Caruaru - PE");
+        campus.State.Should().Be(BrazilState.PE);
+        campus.City.Should().Be("Caruaru");
     }
 }

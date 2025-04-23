@@ -8,19 +8,21 @@ public class Campus
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
     public string Name { get; set; }
+    public BrazilState State { get; set; }
     public string City { get; set; }
 
     private Campus() { }
 
-    public Campus(Guid institutionId, string name, string city)
+    public Campus(Guid institutionId, string name, BrazilState state, string city)
     {
         Id = Guid.NewGuid();
         InstitutionId = institutionId;
         Name = name;
+        State = state;
         City = city;
     }
 
-    public void Update(string name, string city)
+    public void Update(string name, BrazilState state, string city)
     {
         Name = name;
         City = city;
@@ -32,6 +34,7 @@ public class Campus
         {
             Id = Id,
             Name = Name,
+            State = State,
             City = City,
         };
     }

@@ -30,7 +30,7 @@ public class TeacherHttpClient(HttpClient http)
         DateOnly dueDate = default,
         Hour dueHour = Hour.H12_00)
     {
-        dueDate = dueDate == default ? DateTime.Now.AddDays(15).ToDateOnly() : dueDate;
+        dueDate = dueDate == default ? DateTime.UtcNow.AddDays(15).ToDateOnly() : dueDate;
         var client = new CreateClassActivityClient(Cross);
         return await client.Create(classId, note, title, description, type, weight, dueDate, dueHour);
     }

@@ -47,7 +47,7 @@ public class ClassActivity : Entity
         Description = description;
         Type = type;
         Weight = weight;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
         DueDate = dueDate;
         DueHour = dueHour;
 

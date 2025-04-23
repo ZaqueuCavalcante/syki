@@ -58,7 +58,7 @@ public class AuditUnitTests
         audit.EntityId.Should().Be(Guid.Parse("0346158a-f03f-4d95-b627-a154876c3f5b"));
         audit.EntityType.Should().Be("Class");
         audit.Action.Should().Be("Insert");
-        audit.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
+        audit.CreatedAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(5));
         audit.UserId.Should().Be(userId);
         audit.InstitutionId.Should().Be(institutionId);
     }

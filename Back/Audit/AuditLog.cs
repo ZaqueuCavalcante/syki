@@ -27,7 +27,7 @@ public class AuditLog
         EntityId = Guid.Parse(entry.PrimaryKey.First().Value.ToString()!);
         EntityType = entry.EntityType.Name;
         Action = entry.Action;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
         UserId = Guid.Parse(evt.CustomFields["UserId"].ToString()!);
         InstitutionId = Guid.Parse(evt.CustomFields["InstitutionId"].ToString()!);
         Data = AuditData.NewAsJson(entry);

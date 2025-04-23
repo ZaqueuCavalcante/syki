@@ -15,13 +15,13 @@ public class ResetPasswordToken : Entity
         UserId = userId;
         InstitutionId = institutionId;
         Token = token;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
 
         AddDomainEvent(new ResetPasswordTokenCreatedDomainEvent(userId));
     }
 
     public void Use()
     {
-        UsedAt = DateTime.Now;
+        UsedAt = DateTime.UtcNow;
     }
 }

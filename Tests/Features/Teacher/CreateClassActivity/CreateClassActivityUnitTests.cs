@@ -16,7 +16,7 @@ public class CreateClassActivityUnitTests
             "Modele um banco de dados.",
             ClassActivityType.Work,
             weight,
-            DateTime.Now.AddDays(7).ToDateOnly(),
+            DateTime.UtcNow.AddDays(7).ToDateOnly(),
             Hour.H19_00,
             []
         );
@@ -37,7 +37,7 @@ public class CreateClassActivityUnitTests
             "Modele um banco de dados.",
             ClassActivityType.Work,
             weight,
-            DateTime.Now.AddDays(7).ToDateOnly(),
+            DateTime.UtcNow.AddDays(7).ToDateOnly(),
             Hour.H19_00,
             []
         );
@@ -61,7 +61,7 @@ public class CreateClassActivityUnitTests
                 "Modele um banco de dados.",
                 ClassActivityType.Work,
                 weight,
-                DateTime.Now.AddDays(7).ToDateOnly(),
+                DateTime.UtcNow.AddDays(7).ToDateOnly(),
                 Hour.H19_00,
                 []
             ).GetSuccess();
@@ -92,7 +92,7 @@ public class CreateClassActivityUnitTests
                 "Modele um banco de dados.",
                 ClassActivityType.Work,
                 weight,
-                DateTime.Now.AddDays(7).ToDateOnly(),
+                DateTime.UtcNow.AddDays(7).ToDateOnly(),
                 Hour.H19_00,
                 []
             ).GetSuccess();

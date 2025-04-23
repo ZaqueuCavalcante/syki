@@ -7,6 +7,24 @@
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
             <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@Campus.Name" />
+
+            <MudSelect
+                Dense="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                T="BrazilState"
+                @bind-Value="@Campus.State"
+                Label="Estado"
+                Required="true"
+                RequiredError="Informe!"
+                AdornmentColor="Color.Primary"
+            >
+                @foreach (BrazilState type in Enum.GetValues<BrazilState>())
+                {
+                    <MudSelectItem Value="@type">@type.GetDescription()</MudSelectItem>
+                }
+            </MudSelect>
+
             <SykiTextField Label="Cidade" @bind-Value="@Campus.City" />
         </MudForm>
     </DialogContent>
@@ -39,7 +57,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Client.Update(Campus.Id, Campus.Name, Campus.City);
+        var response = await Client.Update(Campus.Id, Campus.Name, Campus.State, Campus.City);
         if (response.IsSuccess())
         {
             MudDialog.Close(DialogResult.Ok(true));

@@ -21,8 +21,8 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        await client.CreateCampus("Agreste I", "Caruaru - PE");
-        await client.CreateCampus("Suassuna I", "Recife - PE");
+        await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
+        await client.CreateCampus("Suassuna I", BrazilState.PE, "Recife");
 
         // Act
         var campi = await client.GetCampi();
@@ -38,8 +38,8 @@ public partial class IntegrationTests
         var novaRoma = await _api.LoggedAsAcademic();
         var ufpe = await _api.LoggedAsAcademic();
 
-        await novaRoma.CreateCampus("Agreste I", "Caruaru - PE");
-        await ufpe.CreateCampus("Suassuna I", "Recife - PE");
+        await novaRoma.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
+        await ufpe.CreateCampus("Suassuna I", BrazilState.PE, "Recife");
 
         // Act
         var campi = await novaRoma.GetCampi();

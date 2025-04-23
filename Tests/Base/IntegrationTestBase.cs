@@ -17,6 +17,8 @@ public class IntegrationTestBase
         using var scope = _api.Services.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 
+        if (ctx.HasMissingMigration()) throw new AssertionException("Missing Migration!");
+
         await ctx.ResetTestDbAsync();
         await _api.RegisterAdm();
 

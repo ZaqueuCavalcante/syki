@@ -19,7 +19,7 @@ public class CreateCourseOfferingUnitTests
 
         var courseOffering = new CourseOffering(institutionId, campusId, courseId, courseCurriculum.Id, period, shift)
         {
-            Campus = new(institutionId, "Agreste I", "Caruaru - PE"),
+            Campus = new(institutionId, "Agreste I", BrazilState.PE, "Caruaru"),
             Course = new(institutionId, "ADS", CourseType.Bacharelado),
             CourseCurriculum = courseCurriculum,
         };

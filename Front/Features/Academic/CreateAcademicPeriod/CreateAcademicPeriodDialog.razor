@@ -53,13 +53,13 @@
     private MudForm _form;
     private bool _loading;
 
-    private decimal _id = DateTime.Now.Year + 0.1M;
+    private decimal _id = DateTime.UtcNow.Year + 0.1M;
     private DateTime? _start;
     private DateTime? _end;
 
     private string GetIdHelperText()
     {
-        return $"Exemplo: {DateTime.Now.Year + 0.1M}";
+        return $"Exemplo: {DateTime.UtcNow.Year + 0.1M}";
     }
 
     private async Task Submit()

@@ -13,8 +13,8 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20250423025006_AddStudentStatus")]
-    partial class AddStudentStatus
+    [Migration("20250423130206_Bootstrap")]
+    partial class Bootstrap
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -421,6 +421,11 @@ namespace Back.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("state");
 
                     b.HasKey("Id")
                         .HasName("pk_campi");

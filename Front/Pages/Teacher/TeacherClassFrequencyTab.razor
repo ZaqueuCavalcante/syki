@@ -139,7 +139,7 @@
         _loading = true;
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _lessons = (await GetTeacherClassLessonsClient.Get(ClassId)).GetSuccess();
-        var id = _lessons.Where(x => x.Date <= DateTime.Now.ToDateOnly()).MaxBy(x => x.Date)?.Id ?? Guid.Empty;
+        var id = _lessons.Where(x => x.Date <= DateTime.UtcNow.ToDateOnly()).MaxBy(x => x.Date)?.Id ?? Guid.Empty;
         await SetLesson(id);
         _loading = false;
         _showButtons = true;

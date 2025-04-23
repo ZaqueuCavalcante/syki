@@ -4,7 +4,7 @@ public class CreateStudentEnrollmentService(SykiDbContext ctx) : IStudentService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Create(Guid institutionId, Guid userId, Guid courseCurriculumId, CreateStudentEnrollmentIn data)
     {
-        var today = DateOnly.FromDateTime(DateTime.Now);
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
         var enrollmentPeriod = await ctx.EnrollmentPeriods.AsNoTracking()
             .Where(p => p.InstitutionId == institutionId && p.StartAt <= today && p.EndAt >= today)
             .FirstOrDefaultAsync();

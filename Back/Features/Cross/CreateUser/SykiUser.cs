@@ -17,7 +17,7 @@ public class SykiUser : IdentityUser<Guid>
         UserName = email;
         Email = email;
         PhoneNumber = phoneNumber;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
     }
 
     public UserOut ToOut()

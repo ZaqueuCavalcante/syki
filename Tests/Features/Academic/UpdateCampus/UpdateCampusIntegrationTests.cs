@@ -10,12 +10,13 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus();
 
         // Act
-        CampusOut updatedCampus = await client.UpdateCampus(campus.Id, "Agreste II", "Bonito - PE");
+        CampusOut updatedCampus = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito");
 
         // Assert
         updatedCampus.Id.Should().Be(campus.Id);
         updatedCampus.Name.Should().Be("Agreste II");
-        updatedCampus.City.Should().Be("Bonito - PE");
+        updatedCampus.State.Should().Be(BrazilState.PE);
+        updatedCampus.City.Should().Be("Bonito");
     }
 
     [Test]
@@ -26,7 +27,7 @@ public partial class IntegrationTests
         await client.CreateCampus();
 
         // Act
-        var response = await client.UpdateCampus(Guid.NewGuid(), "Agreste II", "Bonito - PE");
+        var response = await client.UpdateCampus(Guid.NewGuid(), "Agreste II", BrazilState.PE, "Bonito");
 
         // Assert
         response.ShouldBeError(new CampusNotFound()); 
@@ -43,7 +44,7 @@ public partial class IntegrationTests
         var otherCampus = await otherClient.CreateCampus();
         
         // Act
-        var response = await client.UpdateCampus(otherCampus.Id, "Agreste II", "Bonito - PE");
+        var response = await client.UpdateCampus(otherCampus.Id, "Agreste II", BrazilState.PE, "Bonito");
 
         // Assert
         response.ShouldBeError(new CampusNotFound()); 

@@ -20,7 +20,7 @@ public class SeedInstitutionLessonAttendancesCommandHandler(
             .ToListAsync();
 
         var random = new Random();
-        var today = DateTime.Now.ToDateOnly();
+        var today = DateTime.UtcNow.ToDateOnly();
         foreach (var @class in classes)
         {
             foreach (var lesson in @class.Lessons.Where(l => l.Date < today))

@@ -9,7 +9,7 @@ public class ViewNotificationsService(SykiDbContext ctx) : ICrossService
             .Where(c => c.Notification.InstitutionId == institutionId && c.UserId == userId)
             .ToListAsync();
 
-        notifications.ForEach(x => x.ViewedAt = DateTime.Now);
+        notifications.ForEach(x => x.ViewedAt = DateTime.UtcNow);
 
         await ctx.SaveChangesAsync();
     }

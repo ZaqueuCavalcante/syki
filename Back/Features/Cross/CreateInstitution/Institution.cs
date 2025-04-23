@@ -32,7 +32,7 @@ public class Institution : Entity
     {
         Id = id;
         Name = name;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
         Configs = new InstitutionConfigs(Id, 7, 70);
 
         AddDomainEvent(new InstitutionCreatedDomainEvent(Id));

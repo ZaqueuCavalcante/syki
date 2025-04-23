@@ -50,10 +50,10 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<CampusOut> CreateCampus(string name = "Agreste I", string city = "Caruaru - PE")
+    public async Task<CampusOut> CreateCampus(string name = "Agreste I", BrazilState state = BrazilState.PE, string city = "Caruaru")
     {
         var client = new CreateCampusClient(Http);
-        var response = await client.Create(name, city);
+        var response = await client.Create(name, state, city);
         return await response.DeserializeTo<CampusOut>();
     }
 
@@ -82,10 +82,10 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get(courseId);
     }
 
-    public async Task<OneOf<CampusOut, ErrorOut>> UpdateCampus(Guid id, string name = "Agreste I", string city = "Caruaru - PE")
+    public async Task<OneOf<CampusOut, ErrorOut>> UpdateCampus(Guid id, string name = "Agreste I", BrazilState state = BrazilState.PE, string city = "Caruaru")
     {
         var client = new UpdateCampusClient(Http);
-        return await client.Update(id, name, city);
+        return await client.Update(id, name, state, city);
     }
 
     public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(string name, CourseType type, List<string> disciplines)
@@ -257,16 +257,16 @@ public class AcademicHttpClient(HttpClient http)
     public async Task<OneOf<EnrollmentPeriodOut, ErrorOut>> CreateEnrollmentPeriod(string id, int start = -2, int end = 2)
     {
         var client = new CreateEnrollmentPeriodClient(Http);
-        var startDate = DateOnly.FromDateTime(DateTime.Now.AddDays(start));
-        var endDate = DateOnly.FromDateTime(DateTime.Now.AddDays(end));
+        var startDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(start));
+        var endDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(end));
         return await client.Create(id, startDate, endDate);
     }
 
     public async Task<OneOf<EnrollmentPeriodOut, ErrorOut>> UpdateEnrollmentPeriod(string id, int start = -4, int end = 4)
     {
         var client = new UpdateEnrollmentPeriodClient(Http);
-        var startDate = DateOnly.FromDateTime(DateTime.Now.AddDays(start));
-        var endDate = DateOnly.FromDateTime(DateTime.Now.AddDays(end));
+        var startDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(start));
+        var endDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(end));
         return await client.Update(id, startDate, endDate);
     }
     
@@ -292,8 +292,8 @@ public class AcademicHttpClient(HttpClient http)
     {
         var data = new BasicInstitutionTestDto();
 
-        data.AcademicPeriod1 = await CreateAcademicPeriod($"{DateTime.Now.Year}.1");
-        data.AcademicPeriod2 = await CreateAcademicPeriod($"{DateTime.Now.Year}.2");
+        data.AcademicPeriod1 = await CreateAcademicPeriod($"{DateTime.UtcNow.Year}.1");
+        data.AcademicPeriod2 = await CreateAcademicPeriod($"{DateTime.UtcNow.Year}.2");
 
         data.Campus = await CreateCampus();
 

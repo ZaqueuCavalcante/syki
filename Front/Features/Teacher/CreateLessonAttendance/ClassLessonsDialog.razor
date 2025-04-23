@@ -67,7 +67,7 @@
     {
         var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _options.FullScreen = breakpoint == Breakpoint.Xs;
-        _lessons = lessons.Where(x => x.Date <= DateTime.Now.ToDateOnly()).ToList();
+        _lessons = lessons.Where(x => x.Date <= DateTime.UtcNow.ToDateOnly()).ToList();
         _visible = true;
     }
 

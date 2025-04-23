@@ -20,7 +20,7 @@ public class SeedInstitutionEnrollmentsCommandHandler(
     public async Task Handle(Guid commandId, SeedInstitutionEnrollmentsCommand command)
     {
         var id = command.InstitutionId;
-        var today = DateTime.Now.ToDateOnly();
+        var today = DateTime.UtcNow.ToDateOnly();
         var academicPeriod = $"{today.Year}.1";
         var firstDay = new DateTime(today.Year, 1, 1).ToDateOnly();
         var lastDay = new DateTime(today.Year, 12, 31).ToDateOnly();

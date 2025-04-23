@@ -120,7 +120,7 @@
     private ClassActivityType _type = ClassActivityType.Exam;
     private int _weight;
     private int _maxWeight;
-    private DateTime? _dueDate = DateTime.Now.AddDays(7);
+    private DateTime? _dueDate = DateTime.UtcNow.AddDays(7);
     private Hour _dueHour = Hour.H12_00;
 
     private readonly DialogOptions _options = new()
@@ -154,7 +154,7 @@
         _description = string.Empty;
         _type = ClassActivityType.Work;
         _weight = 0;
-        _dueDate = DateTime.Now.AddDays(7);
+        _dueDate = DateTime.UtcNow.AddDays(7);
         _dueHour = Hour.H12_00;
 
         _visible = false;

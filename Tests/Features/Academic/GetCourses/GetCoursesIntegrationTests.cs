@@ -10,20 +10,21 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
+        CourseOut direito = await client.CreateCourse("Direito", Tecnologo, []);
+        CourseOut pedagogia = await client.CreateCourse("Pedagogia", Mestrado, []);
+        CourseOut cc = await client.CreateCourse("Ciência da Computação", Especializacao, []);
+        CourseOut adm = await client.CreateCourse("Administração", Doutorado, []);
+        CourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado, []);
+
         // Act
-        await client.CreateCourse("Direito", Tecnologo, []);
-        await client.CreateCourse("Pedagogia", Mestrado, []);
-        await client.CreateCourse("Ciência da Computação", Especializacao, []);
-        await client.CreateCourse("Administração", Doutorado, []);
-        await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado, []);
+        var courses = await client.GetCourses();
 
         // Assert
-        var courses = await client.GetCourses();
         courses.Should().HaveCount(5);
-        courses[0].Name.Should().Be("Administração");
-        courses[1].Name.Should().Be("Análise e Desenvolvimento de Sistemas");
-        courses[2].Name.Should().Be("Ciência da Computação");
-        courses[3].Name.Should().Be("Direito");
-        courses[4].Name.Should().Be("Pedagogia");
+        courses[0].Should().BeEquivalentTo(adm);
+        courses[1].Should().BeEquivalentTo(ads);
+        courses[2].Should().BeEquivalentTo(cc);
+        courses[3].Should().BeEquivalentTo(direito);
+        courses[4].Should().BeEquivalentTo(pedagogia);
     }
 }

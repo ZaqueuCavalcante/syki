@@ -6,8 +6,7 @@ public class CreateCampusService(SykiDbContext ctx, HybridCache cache) : IAcadem
     {
         var campus = new Campus(institutionId, data.Name, data.State, data.City);
 
-        ctx.Add(campus);
-        await ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync(campus);
 
         await cache.RemoveAsync($"campi:{institutionId}");
 

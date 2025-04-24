@@ -7,7 +7,7 @@
 - CreateAcademicPeriod
 - ✅ CreateCampus
 - CreateClass
-- CreateCourse
+- ✅ CreateCourse
 - CreateCourseCurriculum
 - CreateCourseOffering
 - CreateDiscipline
@@ -25,7 +25,7 @@
 - GetCourseCurriculums
 - GetCourseDisciplines
 - GetCourseOfferings
-- GetCourses
+- ✅ GetCourses
 - GetCoursesWithCurriculums
 - GetCoursesWithDisciplines
 - GetDisciplines

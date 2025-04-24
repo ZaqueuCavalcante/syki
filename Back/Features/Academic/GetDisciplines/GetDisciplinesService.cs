@@ -11,7 +11,7 @@ public class GetDisciplinesService(SykiDbContext ctx) : IAcademicService
 
         if (courseId != null && ids.Count == 0) return [];
 
-        var disciplines = await ctx.Disciplines
+        var disciplines = await ctx.Disciplines.AsNoTracking()
             .Where(d => d.InstitutionId == institutionId && (ids.Count == 0 || ids.Contains(d.Id)))
             .OrderBy(d => d.Name)
             .ToListAsync();

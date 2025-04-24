@@ -9,11 +9,11 @@ public class GetCampiService(SykiDbContext ctx, HybridCache cache) : IAcademicSe
             state: (ctx, institutionId),
             factory: async (state, cancellationToken) =>
             {
-                var data = await state.ctx.Campi.AsNoTracking()
+                var campi = await state.ctx.Campi.AsNoTracking()
                     .Where(c => c.InstitutionId == state.institutionId)
                     .OrderBy(c => c.Name)
                     .ToListAsync(cancellationToken);
-                return data.ConvertAll(c => c.ToOut());
+                return campi.ConvertAll(c => c.ToOut());
             }
         );
     }

@@ -8,6 +8,8 @@ public class Discipline
     public string Code { get; set; }
     public List<CourseDiscipline> Links { get; set; }
 
+    private Discipline() { }
+
     public Discipline(
         Guid institutionId,
         string name
@@ -26,7 +28,7 @@ public class Discipline
             Id = Id,
             Name = Name,
             Code = Code,
-            Courses = Links.ConvertAll(v => v.CourseId),
+            Courses = Links?.ConvertAll(v => v.CourseId) ?? [],
         };
     }
 }

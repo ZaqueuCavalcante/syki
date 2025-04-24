@@ -3,6 +3,9 @@ using Syki.Back.Features.Academic.CreateCourseCurriculum;
 
 namespace Syki.Back.Features.Academic.CreateCourse;
 
+/// <summary>
+/// Curso
+/// </summary>
 public class Course
 {
     public Guid Id { get; set; }
@@ -12,6 +15,8 @@ public class Course
     public List<Discipline> Disciplines { get; set; }
     public List<CourseDiscipline> Links { get; set; }
     public List<CourseCurriculum> CourseCurriculums { get; set; }
+
+    private Course() {}
 
     public Course(
         Guid institutionId,
@@ -33,7 +38,7 @@ public class Course
             Id = Id,
             Name = Name,
             Type = Type,
-            Disciplines = Disciplines.ConvertAll(x => x.ToOut()),
+            Disciplines = Disciplines?.ConvertAll(x => x.ToOut()) ?? [],
         };
     }
 }

@@ -28,9 +28,9 @@ public class CreateCourseCurriculumService(SykiDbContext ctx, HybridCache cache)
         await cache.RemoveAsync($"courseCurriculums:{institutionId}");
 
         courseCurriculum = await ctx.CourseCurriculums.AsNoTracking()
-            .Include(g => g.Course)
+            .Include(x => x.Course)
             .Include(x => x.Disciplines)
-            .Include(g => g.Links)
+            .Include(x => x.Links)
             .FirstAsync(x => x.Id == courseCurriculum.Id);
 
         return courseCurriculum.ToOut();

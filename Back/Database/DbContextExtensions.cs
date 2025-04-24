@@ -67,4 +67,10 @@ public static class DbContextExtensions
             )
         ).Entity;
     }
+
+    public static async Task<int> SaveChangesAsync<TEntity>(this SykiDbContext ctx, TEntity entity)
+    {
+        ctx.Add(entity);
+        return await ctx.SaveChangesAsync();
+    }
 }

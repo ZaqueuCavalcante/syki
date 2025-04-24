@@ -7,6 +7,9 @@ public class CreateCourseIn
     /// </summary>
     public string Name { get; set; }
 
+    /// <summary>
+    /// Tipo do curso
+    /// </summary>
     public required CourseType Type { get; set; }
 
     /// <summary>

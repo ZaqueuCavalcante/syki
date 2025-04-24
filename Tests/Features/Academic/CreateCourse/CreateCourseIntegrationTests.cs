@@ -18,6 +18,7 @@ public partial class IntegrationTests
         course.Id.Should().NotBeEmpty();
         course.Name.Should().Be("Análise e Desenvolvimento de Sistemas");
         course.Type.Should().Be(Bacharelado);
+        course.Disciplines.Should().BeEmpty();
     }
 
     [Test]

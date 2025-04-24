@@ -119,10 +119,12 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 - Editar um campus já existente.
 - Listar todos os campus da instituição.
 
+#### Cadastro de Cursos
+
+- Criar um novo curso.
+- Listar todos os cursos da instituição.
 
 
-
-#### ❌ Cadastro de Cursos
 #### ❌ Cadastro de Disciplinas
 #### ❌ Cadastro de Grades Curriculares
 #### ❌ Ofertar Curso

@@ -25,6 +25,7 @@ public class Campus
     public void Update(string name, BrazilState state, string city)
     {
         Name = name;
+        State = state;
         City = city;
     }
 

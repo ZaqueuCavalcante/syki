@@ -99,64 +99,69 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 
 ### 1.1 - Cross
 
-#### Cadastro de Usuário
-#### Esqueci Minha Senha
-#### Login Padrão
-#### Setup MFA
-#### Login MFA
-#### Marcar Notificações como Lidas
+#### ❌ Cadastro de Usuário
+#### ❌ Esqueci Minha Senha
+#### ❌ Login Padrão
+#### ❌ Setup MFA
+#### ❌ Login MFA
+#### ❌ Marcar Notificações como Lidas
 
 
 
 ### 1.2 - Acadêmico
 
-#### Insights
+#### ❌ Insights
 
 
-#### Cadastro de Campus
+#### Campus
 
-É possível criar um novo campus ou editar um já existente.
+- Criar um novo campus.
+- Editar um campus já existente.
+- Listar todos os campus da instituição.
 
-#### Cadastro de Cursos
-#### Cadastro de Disciplinas
-#### Cadastro de Grades Curriculares
-#### Ofertar Curso
-#### Cadastro de Professores
-#### Abertura de Turmas
-#### Cadastro de Alunos
-#### Abertura de Períodos Acadêmicos
-#### Abertura de Períodos de Matrícula
-#### Envio de Notificações
+
+
+
+#### ❌ Cadastro de Cursos
+#### ❌ Cadastro de Disciplinas
+#### ❌ Cadastro de Grades Curriculares
+#### ❌ Ofertar Curso
+#### ❌ Cadastro de Professores
+#### ❌ Abertura de Turmas
+#### ❌ Cadastro de Alunos
+#### ❌ Abertura de Períodos Acadêmicos
+#### ❌ Abertura de Períodos de Matrícula
+#### ❌ Envio de Notificações
 
 
 
 ### 1.3 - Professor
 
-#### Insights
-#### Agenda Acadêmica
-#### Atividades
-#### Frequências
+#### ❌ Insights
+#### ❌ Agenda Acadêmica
+#### ❌ Atividades
+#### ❌ Frequências
 
 
 
 ### 1.4 - Aluno
 
-#### Insights
-#### Agenda Acadêmica
-#### Atividades
-#### Frequências
+#### ❌ Insights
+#### ❌ Agenda Acadêmica
+#### ❌ Atividades
+#### ❌ Frequências
 
 
 
 ### 1.5 - Adm
 
-#### Insights
-#### Usuários
-#### Instituições
-#### Feature Flags
-#### Eventos
-#### Comandos
-#### Lotes
+#### ❌ Insights
+#### ❌ Usuários
+#### ❌ Instituições
+#### ❌ Feature Flags
+#### ❌ Eventos
+#### ❌ Comandos
+#### ❌ Lotes
 
 
 
@@ -178,8 +183,6 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 - DataDog
 
 <img src="./Docs/images/docker-compose.png" width="600" height="300" style="border-radius: 6px">
-
-
 
 ## Como rodar?
 

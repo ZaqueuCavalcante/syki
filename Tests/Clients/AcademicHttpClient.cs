@@ -37,8 +37,12 @@ public class AcademicHttpClient(HttpClient http)
 {
     public readonly HttpClient Http = http;
 
-    public async Task<NotificationOut> CreateNotification(string title, string description, UsersGroup targetUsers, bool timeless)
-    {
+    public async Task<NotificationOut> CreateNotification(
+        string title,
+        string description,
+        UsersGroup targetUsers,
+        bool timeless
+    ) {
         var client = new CreateNotificationClient(Http);
         var response = await client.Create(title, description, targetUsers, timeless);
         return await response.DeserializeTo<NotificationOut>();
@@ -50,8 +54,11 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<CampusOut> CreateCampus(string name = "Agreste I", BrazilState state = BrazilState.PE, string city = "Caruaru")
-    {
+    public async Task<CampusOut> CreateCampus(
+        string name = "Agreste I",
+        BrazilState state = BrazilState.PE,
+        string city = "Caruaru"
+    ) {
         var client = new CreateCampusClient(Http);
         var response = await client.Create(name, state, city);
         return await response.DeserializeTo<CampusOut>();
@@ -63,8 +70,10 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<DisciplineOut> CreateDiscipline(string name = "Banco de Dados", List<Guid> courses = null)
-    {
+    public async Task<DisciplineOut> CreateDiscipline(
+        string name = "Banco de Dados",
+        List<Guid> courses = null
+    ) {
         var client = new CreateDisciplineClient(Http);
         var response = await client.Create(name, courses ?? []);
         return await response.DeserializeTo<DisciplineOut>();
@@ -82,14 +91,21 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get(courseId);
     }
 
-    public async Task<OneOf<CampusOut, ErrorOut>> UpdateCampus(Guid id, string name = "Agreste I", BrazilState state = BrazilState.PE, string city = "Caruaru")
-    {
+    public async Task<OneOf<CampusOut, ErrorOut>> UpdateCampus(
+        Guid id,
+        string name = "Agreste I",
+        BrazilState state = BrazilState.PE,
+        string city = "Caruaru"
+    ) {
         var client = new UpdateCampusClient(Http);
         return await client.Update(id, name, state, city);
     }
 
-    public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(string name, CourseType type, List<string> disciplines)
-    {
+    public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(
+        string name, 
+        CourseType type, 
+        List<string> disciplines
+    ) {
         var client = new CreateCourseClient(Http);
         return await client.Create(name, type, disciplines);
     }

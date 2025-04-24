@@ -33,16 +33,18 @@ public class RequestExamples : IMultipleExamplesProvider<UpdateCampusIn>
 			{
 				Id = Guid.NewGuid(),
 				Name = "Agreste I",
-				City = "Caruaru - PE",
+                State = BrazilState.AP,
+				City = "Caruaru",
 			}
 		);
         yield return SwaggerExample.Create(
-			"Suassuna I",
+			"Interior",
 			new UpdateCampusIn
 			{
 				Id = Guid.NewGuid(),
-				Name = "Suassuna I",
-				City = "Recife - PE",
+				Name = "Interior",
+                State = BrazilState.TO,
+				City = "Palmas",
 			}
 		);
     }

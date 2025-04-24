@@ -8,8 +8,5 @@ public class CampusConfig : IEntityTypeConfiguration<Campus>
 
         campus.HasKey(c => c.Id);
         campus.Property(c => c.Id).ValueGeneratedNever();
-
-        campus.Property(c => c.Name);
-        campus.Property(c => c.City);
     }
 }

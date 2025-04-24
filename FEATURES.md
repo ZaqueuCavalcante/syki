@@ -5,7 +5,7 @@
 ## Academic
 
 - CreateAcademicPeriod
-- CreateCampus
+- ✅ CreateCampus
 - CreateClass
 - CreateCourse
 - CreateCourseCurriculum
@@ -21,7 +21,7 @@
 - GetAcademicClasses
 - GetAcademicInsights
 - GetAcademicPeriods
-- GetCampi
+- ✅ GetCampi
 - GetCourseCurriculums
 - GetCourseDisciplines
 - GetCourseOfferings
@@ -35,7 +35,7 @@
 - GetTeachers
 - ReleaseClassesForEnrollment
 - StartClasses
-- UpdateCampus
+- ✅ UpdateCampus
 - UpdateEnrollmentPeriod
 
 ## Adm

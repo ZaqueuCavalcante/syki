@@ -12,7 +12,6 @@
 - Refatorar testes
     - Criar extensions para deixar os testes mais simples
     - Realmente validar o estado do banco de dados, via endpoint GET ou EF Context
-    - Remover FluentAssertions
 
 - Listar todas
     - Cross
@@ -26,11 +25,11 @@
     - Ins/Outs
 
 - Post
-    - ✅ + de 1.000 commits
-    - ✅ + de 130 stars no GitHub
-    - ✅ + de 1.000 testes automatizados
-    - ✅ + de 50 funcionalidades implementadas
-    - ✅ + de 100 endpoints
+    - 👨🏻‍💻 +1.000 commits
+    - ⭐ +140 estrelas no GitHub
+    - 🧪 +1.000 testes automatizados
+    - 🚀 +50 funcionalidades implementadas
+    - 📍 +100 endpoints
 
 ## Observabilidade
 - OpenTelemetry

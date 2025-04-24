@@ -30,7 +30,8 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateCampusIn>
 			new CreateCampusIn
 			{
 				Name = "Agreste I",
-				City = "Caruaru - PE",
+                State = BrazilState.PE,
+				City = "Caruaru",
 			}
 		);
         yield return SwaggerExample.Create(
@@ -38,7 +39,8 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateCampusIn>
 			new CreateCampusIn
 			{
 				Name = "Suassuna I",
-				City = "Recife - PE",
+                State = BrazilState.PE,
+				City = "Recife",
 			}
 		);
     }

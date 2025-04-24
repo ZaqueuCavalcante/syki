@@ -16,36 +16,38 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_get_many_campus()
+    public async Task Should_get_campi_ordered_by_name()
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
-        await client.CreateCampus("Suassuna I", BrazilState.PE, "Recife");
+        var campusSuassuna = await client.CreateCampus("Suassuna I", BrazilState.PE, "Recife");
+        var campusAgreste = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
 
         // Act
         var campi = await client.GetCampi();
 
         // Assert
         campi.Should().HaveCount(2);
+
+        campi[0].Should().BeEquivalentTo(campusAgreste);
+        campi[1].Should().BeEquivalentTo(campusSuassuna);
     }
 
     [Test]
     public async Task Should_get_only_institution_campus()
     {
         // Arrange
-        var novaRoma = await _api.LoggedAsAcademic();
-        var ufpe = await _api.LoggedAsAcademic();
+        var clientA = await _api.LoggedAsAcademic();
+        var clientB = await _api.LoggedAsAcademic();
 
-        await novaRoma.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
-        await ufpe.CreateCampus("Suassuna I", BrazilState.PE, "Recife");
+        var campusA = await clientA.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
+        await clientB.CreateCampus("Suassuna I", BrazilState.PE, "Recife");
 
         // Act
-        var campi = await novaRoma.GetCampi();
+        var campi = await clientA.GetCampi();
 
         // Assert
-        campi.Should().HaveCount(1);
-        campi[0].Name.Should().Be("Agreste I");
+        campi.Should().BeEquivalentTo([campusA]);
     }
 }

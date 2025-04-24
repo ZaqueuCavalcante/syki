@@ -29,6 +29,7 @@
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
+                <PropertyColumn Property="x => x.State.GetDescription()" Title="Estado" />
                 <PropertyColumn Property="x => x.City" Title="Cidade" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>

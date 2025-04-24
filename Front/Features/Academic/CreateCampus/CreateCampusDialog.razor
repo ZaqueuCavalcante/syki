@@ -1,6 +1,6 @@
 @namespace Syki.Front.Features.Academic.CreateCampus
 
-<MudDialog Class="pb-2">
+<MudDialog Class="pb-2" DefaultFocus="DefaultFocus.None">
     <TitleContent>
         <SykiDialogTitle Text="Novo Campus" />
     </TitleContent>
@@ -12,14 +12,15 @@
                 Dense="true"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
-                T="BrazilState"
+                T="BrazilState?"
                 @bind-Value="@_state"
                 Label="Estado"
+                Class="pb-2"
                 Required="true"
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
-                @foreach (BrazilState type in Enum.GetValues<BrazilState>())
+                @foreach (BrazilState? type in Enum.GetValues<BrazilState>())
                 {
                     <MudSelectItem Value="@type">@type.GetDescription()</MudSelectItem>
                 }
@@ -46,7 +47,7 @@
     private MudForm _form;
     private bool _loading;
     private string _name;
-    private BrazilState _state;
+    private BrazilState? _state;
     private string _city;
 
     private async Task Submit()
@@ -57,7 +58,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Client.Create(_name, _state, _city);
+        var response = await Client.Create(_name, _state!.Value, _city);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

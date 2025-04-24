@@ -1,6 +1,6 @@
 @namespace Syki.Front.Features.Academic.UpdateCampus
 
-<MudDialog Class="pb-2">
+<MudDialog Class="pb-2" DefaultFocus="DefaultFocus.None">
     <TitleContent>
         <SykiDialogTitle Icon="@Icons.Material.Outlined.Edit" Text="Editar Campus" />
     </TitleContent>
@@ -15,6 +15,7 @@
                 T="BrazilState"
                 @bind-Value="@Campus.State"
                 Label="Estado"
+                Class="pb-2"
                 Required="true"
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"

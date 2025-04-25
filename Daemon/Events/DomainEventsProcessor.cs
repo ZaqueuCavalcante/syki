@@ -71,12 +71,9 @@ public class DomainEventsProcessor(IServiceScopeFactory serviceScopeFactory)
             FROM syki.domain_events
             WHERE processor_id IS NULL
             ORDER BY occurred_at
-            LIMIT 1000
             FOR UPDATE SKIP LOCKED
-        );
-        SELECT *
-        FROM syki.domain_events
-        WHERE processor_id = {0} AND processed_at IS NULL
-        ORDER BY occurred_at;
+            LIMIT 1000
+        )
+        RETURNING *;
     ";
 }

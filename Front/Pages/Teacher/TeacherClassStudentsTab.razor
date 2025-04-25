@@ -20,6 +20,7 @@
             <PropertyColumn Property="x => x.GetNote(ClassNoteType.N2)" Title="N2" />
             <PropertyColumn Property="x => x.GetNote(ClassNoteType.N3)" Title="N3" />
             <PropertyColumn Property="x => x.AverageNote.Format()" Title="Média" />
+            <PropertyColumn Property="x => x.Frequency.Format()" Title="Frequência" />
         </Columns>
         <NoRecordsContent>
             @(GetNotFoundMessage())

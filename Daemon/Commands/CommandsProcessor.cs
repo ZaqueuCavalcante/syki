@@ -76,12 +76,9 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
             FROM syki.commands
             WHERE processor_id IS NULL AND status = 'Pending'
             ORDER BY created_at
-            LIMIT 100
             FOR UPDATE SKIP LOCKED
-        );
-        SELECT *
-        FROM syki.commands
-        WHERE processor_id = {0} AND processed_at IS NULL
-        ORDER BY created_at;
+            LIMIT 100
+        )
+        RETURNING *;
     ";
 }

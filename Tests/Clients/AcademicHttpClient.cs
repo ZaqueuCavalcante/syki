@@ -421,7 +421,7 @@ public class AcademicHttpClient(HttpClient http)
             data.AdsClasses.IntegratorProjectOne.Id
         ]);
 
-        data.Student = await CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
+        data.Student = await CreateStudent(data.AdsCourseOffering.Id);
         var studentClient = await back.LoggedAsStudent(data.Student.Email);
         await studentClient.CreateStudentEnrollment([
             data.AdsClasses.DiscreteMath.Id,

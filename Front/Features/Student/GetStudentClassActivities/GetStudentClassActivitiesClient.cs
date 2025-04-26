@@ -2,8 +2,10 @@ namespace Syki.Front.Features.Student.GetStudentClassActivities;
 
 public class GetStudentClassActivitiesClient(HttpClient http) : IStudentClient
 {
-    public async Task<List<StudentClassActivityOut>> Get(Guid id)
+    public async Task<OneOf<List<StudentClassActivityOut>, ErrorOut>> Get(Guid id)
     {
-        return await http.GetFromJsonAsync<List<StudentClassActivityOut>>($"/student/classes/{id}/activities", HttpConfigs.JsonOptions) ?? [];
+        var response = await http.GetAsync($"/student/classes/{id}/activities");
+
+        return await response.Resolve<List<StudentClassActivityOut>>();
     }
 }

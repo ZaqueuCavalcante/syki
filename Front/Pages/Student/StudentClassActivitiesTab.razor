@@ -132,7 +132,11 @@
     {
         _loading = true;
         _class = await GetStudentClassClient.Get(ClassId);
-        _activities = await GetStudentClassActivitiesClient.Get(ClassId);
+        var response = await GetStudentClassActivitiesClient.Get(ClassId);
+        if (response.IsSuccess())
+        {
+            _activities = response.GetSuccess();
+        }
         await RenderChart();
         _loading = false;
     }

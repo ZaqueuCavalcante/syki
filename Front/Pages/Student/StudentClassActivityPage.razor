@@ -7,7 +7,7 @@
 
 <MudContainer Class="mb-4 px-4">
     <MudBreadcrumbs Items="@_breadcrumbs" Class="px-0" />
-    <SykiPageHeader Icon="@Icons.Material.Filled.EditNote" Title="@_activity.Title" Typo="Typo.h6" ButtonText="Entregar" OnClick="@OpenDialog"/>
+    <SykiPageHeader Icon="@Icons.Material.Filled.EditNote" Title="@_activity.Title" Typo="Typo.h6" ButtonText="Entregar" OnClick="@OpenDialog" ButtonDisabled="@GetButtonDisabled()" />
     <MudPaper Class="my-4 pa-5">
         <MudContainer Class="px-0">
             <MudGrid Spacing="3">
@@ -66,6 +66,11 @@
         }
 
         await Load();
+    }
+
+    private bool GetButtonDisabled()
+    {
+        return _activity.Type == ClassActivityType.Exam;
     }
 
     private async Task Load()

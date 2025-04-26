@@ -8,6 +8,7 @@ using Syki.Front.Features.Student.GetStudentFrequencies;
 using Syki.Front.Features.Student.CreateStudentEnrollment;
 using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 using Syki.Front.Features.Student.GetStudentEnrollmentClasses;
+using Syki.Front.Features.Student.GetStudentClassActivities;
 
 namespace Syki.Tests.Clients;
 
@@ -73,5 +74,11 @@ public class StudentHttpClient(HttpClient http)
     {
         var client = new GetStudentAverageNoteClient(Http);
         return await client.Get();
+    }
+
+    public async Task<OneOf<List<StudentClassActivityOut>, ErrorOut>> GetStudentClassActivities(Guid classId)
+    {
+        var client = new GetStudentClassActivitiesClient(Http);
+        return await client.Get(classId);
     }
 }

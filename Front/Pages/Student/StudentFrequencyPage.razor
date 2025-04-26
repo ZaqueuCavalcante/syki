@@ -1,4 +1,6 @@
-﻿@namespace Syki.Front.Pages.Student
+﻿@using Syki.Front.Components.Summaries
+
+@namespace Syki.Front.Pages.Student
 
 @page "/student/frequency"
 @attribute [Authorize(Roles = "Student")]
@@ -7,9 +9,32 @@
 
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.Class" Title="Frequência" />
-    <MudAlert Class="my-4 pl-6" NoIcon="true" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
-        <MudText>A frequência mínima para ser aprovado é <b>70.00%</b></MudText>
-    </MudAlert>
+
+    <MudContainer Class="my-4 px-0">
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="6" md="4" lg="4">
+                <SummaryTextCard
+                    Loading="@_loading"
+                    Icon="@Icons.Material.Filled.CheckCircleOutline"
+                    Color="Color.Success"
+                    Text="@(_student.Presences == 1 ? "Presença" : "Presenças")"
+                    Value="@_student.Presences.ToThousandSeparated()"
+                />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="4">
+                <SummaryTextCard
+                    Loading="@_loading"
+                    Icon="@Icons.Material.Filled.Cancel"
+                    Color="Color.Error"
+                    Text="@(_student.Absences == 1 ? "Falta" : "Faltas")"
+                    Value="@_student.Absences.ToThousandSeparated()"/>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4" lg="4">
+                <SummaryTextCard Loading="@_loading" Icon="@Icons.Material.Filled.BookmarkAdded" Color="Color.Info" Text="Aulas realizadas" Value="@_student.GetLessonsAsFraction()"/>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+
     <MudContainer Class="px-0">
         <MudCard>
             <MudCardContent Class="px-6">
@@ -21,12 +46,6 @@
                 {
                     <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
                         <MudProgressLinear Color="@GetFrequencyColor(_student.Frequency)" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.Frequency)" Style="height: 24px">
-                            <MudText Typo="Typo.body1">
-                                <b>@GetFrequency()</b>
-                            </MudText>
-                            <MudText Typo="Typo.h4" Class="mx-2">
-                                <b> · </b>
-                            </MudText>
                             <MudText Typo="Typo.body1">
                                 <b>@_student.Frequency.Format()%</b>
                             </MudText>

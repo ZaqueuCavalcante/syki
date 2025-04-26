@@ -12,7 +12,7 @@
     }
     else
     {
-        <MudGrid Class="align-center mb-4">
+        <MudGrid Class="align-center mb-6">
             <MudItem xs="12" sm="9" md="9" lg="9">
                 <MudStack Row="true" AlignItems="AlignItems.Center">
                     <MudIcon Icon="@Icons.Material.Filled.CenterFocusStrong" Class="mb-1" Size="Size.Large" />
@@ -21,9 +21,9 @@
             </MudItem>
             <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end">
                 <MudTabs Elevation="0" Rounded="true" Outlined="true" @bind-ActivePanelIndex="@_index" MinimumTabWidth="100%">
-                    <MudTabPanel Text="Atividades" ID='"panel_0"'></MudTabPanel>
-                    <MudTabPanel Text="Frequência" ID='"panel_1"'></MudTabPanel>
-                    <MudTabPanel Text="Alunos" ID='"panel_2"'></MudTabPanel>
+                    <MudTabPanel Style="min-width: 80px" Icon="@Icons.Material.Filled.EditNote" ToolTip="Atividades" ID='"panel_0"'></MudTabPanel>
+                    <MudTabPanel Style="min-width: 80px" Icon="@Icons.Material.Filled.Class" ToolTip="Frequência" ID='"panel_1"'></MudTabPanel>
+                    <MudTabPanel Style="min-width: 80px" Icon="@Icons.Material.Filled.People" ToolTip="Alunos" ID='"panel_2"'></MudTabPanel>
                 </MudTabs>
             </MudItem>
         </MudGrid>

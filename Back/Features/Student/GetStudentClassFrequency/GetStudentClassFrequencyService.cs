@@ -27,7 +27,7 @@ public class GetStudentClassFrequencyService(SykiDbContext ctx) : IStudentServic
                 LessonDate = $"{lesson.Date} {lesson.StartAt.GetDescription()}-{lesson.EndAt.GetDescription()}"
             });
         }
-        
+
         if (attendances.Count == 0) return new GetStudentClassFrequencyOut { TotalLessons = lessons.Count, Lessons = lessonsOut };
 
         var frequency = Math.Round(100M*(1M * presences / (1M * attendances.Count)), 2);

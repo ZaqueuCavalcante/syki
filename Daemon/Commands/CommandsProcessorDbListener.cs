@@ -17,12 +17,7 @@ public class CommandsProcessorDbListener(IConfiguration configuration) : Backgro
 
         connection.Notification += (o, e) =>
         {
-            var processingJobs = JobStorage.Current.GetMonitoringApi().ProcessingJobs(0, int.MaxValue).Count(x => x.Value.Job.Type == typeof(CommandsProcessor));
-            var enqueuedJobs = JobStorage.Current.GetMonitoringApi().EnqueuedJobs("default", 0, int.MaxValue).Count(x => x.Value.Job.Type == typeof(CommandsProcessor));
-            if (processingJobs < 15 && enqueuedJobs < 5)
-            {
-                BackgroundJob.Enqueue<CommandsProcessor>(x => x.Run());
-            }
+            BackgroundJob.Enqueue<CommandsProcessor>(x => x.Run());
         };
 
         await using (var cmd = new NpgsqlCommand("LISTEN new_command;", connection))

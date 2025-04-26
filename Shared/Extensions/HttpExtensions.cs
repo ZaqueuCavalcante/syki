@@ -20,10 +20,7 @@ public static class HttpExtensions
     public static async Task<OneOf<T, ErrorOut>> Resolve<T>(this HttpResponseMessage httpResponse)
     {
         if (httpResponse.IsSuccessStatusCode)
-        {
-            var xxx = await httpResponse.DeserializeTo<T>();
-            return xxx;
-        }
+            return await httpResponse.DeserializeTo<T>();
 
         if (httpResponse.StatusCode == HttpStatusCode.Forbidden)
             return new ForbiddenErrorOut();

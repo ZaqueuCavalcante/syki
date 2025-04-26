@@ -10,6 +10,8 @@ public class TeacherClassStudentOut
 
     public string GetNote(ClassNoteType type)
     {
-        return Notes.Where(x => x.Type == type).First().Note.Format();
+        var item = Notes.Where(x => x.Type == type).FirstOrDefault();
+
+        return item != null ? item.Note.Format() : "-";
     }
 }

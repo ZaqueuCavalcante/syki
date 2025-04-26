@@ -51,6 +51,7 @@ global using Syki.Front.Features.Cross.LoginMfa;
 global using Syki.Front.Features.Cross.ResetPassword;
 global using Syki.Front.Features.Cross.SendResetPasswordToken;
 
+global using Syki.Front.Features.Teacher.GetTeacherClassStudents;
 global using Syki.Front.Features.Student.CreateStudentEnrollment;
 global using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 global using Syki.Front.Features.Student.GetStudentAgenda;

@@ -20,7 +20,15 @@
             <PropertyColumn Property="x => x.GetNote(ClassNoteType.N2)" Title="N2" />
             <PropertyColumn Property="x => x.GetNote(ClassNoteType.N3)" Title="N3" />
             <PropertyColumn Property="x => x.AverageNote.Format()" Title="Média" />
-            <PropertyColumn Property="x => x.Frequency.Format()" Title="Frequência" />
+            <TemplateColumn Title="Frequência">
+                <CellTemplate>
+                        <MudProgressLinear Color="@GetFrequencyColor(context.Item.Frequency)" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Item.Frequency)" Style="height: 24px">
+                            <MudText Typo="Typo.body1">
+                                <b>@context.Item.Frequency.Format()%</b>
+                            </MudText>
+                        </MudProgressLinear>
+                </CellTemplate>
+            </TemplateColumn>
         </Columns>
         <NoRecordsContent>
             @(GetNotFoundMessage())
@@ -31,6 +39,7 @@
 </MudContainer>
 
 @inject GetTeacherClassClient GetTeacherClassClient
+@inject GetTeacherClassStudentsClient GetTeacherClassStudentsClient
 
 @code
 {
@@ -50,12 +59,18 @@
     private async Task Load()
     {
         _loading = true;
-        var response = await GetTeacherClassClient.Get(ClassId);
-        if (response.IsSuccess())
+        var classResponse = await GetTeacherClassClient.Get(ClassId);
+        if (classResponse.IsSuccess())
         {
-            _class = response.GetSuccess();
+            _class = classResponse.GetSuccess();
         }
-        _students = _class.Students.OrderBy(x => x.Name).ToList();
+
+        var studentsResponse = await GetTeacherClassStudentsClient.Get(ClassId);
+        if (studentsResponse.IsSuccess())
+        {
+            _students = studentsResponse.GetSuccess().ToList();
+        }
+
         _loading = false;
     }
 
@@ -64,5 +79,10 @@
     private string GetNotFoundMessage()
     {
         return (_searchString.IsEmpty()) ? "Não existem alunos matriculados ainda." : "Nenhum aluno encontrado.";
+    }
+
+    private Color GetFrequencyColor(decimal frequency)
+    {
+        return frequency >= 70 ? Color.Tertiary : Color.Error;
     }
 }

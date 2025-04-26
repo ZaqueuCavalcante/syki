@@ -9,6 +9,7 @@ using Syki.Front.Features.Student.CreateStudentEnrollment;
 using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 using Syki.Front.Features.Student.GetStudentEnrollmentClasses;
 using Syki.Front.Features.Student.GetStudentClassActivities;
+using Syki.Front.Features.Student.CreateClassActivityWork;
 
 namespace Syki.Tests.Clients;
 
@@ -80,5 +81,11 @@ public class StudentHttpClient(HttpClient http)
     {
         var client = new GetStudentClassActivitiesClient(Http);
         return await client.Get(classId);
+    }
+
+    public async Task<OneOf<ClassActivityWorkOut, ErrorOut>> CreateClassActivityWork(Guid activityId, string link)
+    {
+        var client = new CreateClassActivityWorkClient(Http);
+        return await client.Create(activityId, link);
     }
 }

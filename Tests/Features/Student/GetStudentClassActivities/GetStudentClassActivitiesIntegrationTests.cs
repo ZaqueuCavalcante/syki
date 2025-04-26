@@ -18,9 +18,9 @@ public partial class IntegrationTests
 
         // Act
         var studentClient = await _api.LoggedAsStudent(data.Student.Email);
+        var activities = (await studentClient.GetStudentClassActivities(data.AdsClasses.DiscreteMath.Id)).GetSuccess();
 
         // Assert
-        var activities = (await studentClient.GetStudentClassActivities(data.AdsClasses.DiscreteMath.Id)).GetSuccess();
         activities.Should().HaveCount(3);
     }
 
@@ -37,9 +37,9 @@ public partial class IntegrationTests
 
         // Act
         var studentClient = await _api.LoggedAsStudent(data.Student.Email);
+        var response = await studentClient.GetStudentClassActivities(Guid.NewGuid());
 
         // Assert
-        var response = await studentClient.GetStudentClassActivities(Guid.NewGuid());
         response.ShouldBeError(new ClassNotFound());
     }
 }

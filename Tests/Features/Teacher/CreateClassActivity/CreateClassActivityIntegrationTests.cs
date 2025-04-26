@@ -27,7 +27,7 @@ public partial class IntegrationTests
             Hour.H08_30);
 
         // Assert
-        var activity = await teacherClient.GetTeacherClassActivity(mathClass.Id, response.GetSuccess().Id);
+        var activity = (await teacherClient.GetTeacherClassActivity(mathClass.Id, response.GetSuccess().Id)).GetSuccess();
         activity.Note.Should().Be(ClassNoteType.N2);
         activity.Title.Should().Be("Test activity");
         activity.Description.Should().Be("Test description");

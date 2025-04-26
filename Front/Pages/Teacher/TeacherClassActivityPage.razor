@@ -134,7 +134,11 @@
     private async Task Load()
     {
         _loading = true;
-        _activity = await GetTeacherClassActivityClient.Get(ClassId, ActivityId);
+        var response = await GetTeacherClassActivityClient.Get(ClassId, ActivityId);
+        if (response.IsSuccess())
+        {
+            _activity = response.GetSuccess();
+        }
         _statusFilter = [ClassActivityWorkStatus.Pending, ClassActivityWorkStatus.Delivered, ClassActivityWorkStatus.Finalized];
         _loading = false;
     }

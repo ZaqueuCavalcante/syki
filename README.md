@@ -2,91 +2,42 @@
 
 [![Tests](https://github.com/ZaqueuCavalcante/syki/actions/workflows/railway.yml/badge.svg)](https://github.com/ZaqueuCavalcante/syki/actions/workflows/railway.yml)
 
-Syki um sistema open-source para gerenciamento educacional, que pode ser usado por gestores, professores e alunos.
+**Syki** é um sistema open-source para gerenciamento educacional, que pode ser usado por gestores, professores e alunos.
 
 Se cadastre em https://app.syki.com.br e teste o sistema em produção!
 
 <img src="./Docs/images/syki_overview.gif" style="border-radius: 6px">
 
+# Table of contents
+1. [Introduction](#introduction)
+2. [Some paragraph](#paragraph1)
+    1. [Sub paragraph](#subparagraph1)
+3. [Another paragraph](#paragraph2)
+
+
+
+
+
+
 ## Sumário
 
-- Funcionalidades
-- Tecnologias
-
-
-- Testes
-    - Unit
-    - Integration
-    - Mutation
-    - Report Coverage
-- CI/CD
-    - GitHub Actions
-    - Deploy Automático
-- Infra
-    - Railway
-    - Terraform
-    - Azure
-    - Docker
-- Segurança
-    - Autenticação
-    - Autorização
-    - MFA
-- Usabilidade
-    - Light / Dark Modes
-    - Responsividade no mobile
-    - App Android / IOS
-- Processamento Assíncrono
-    - Eventos
-    - Comandos
-    - Lotes
-    - Workflows
-    - Falhas e Retentativas
-- Observabilidade
-    - Logs
-    - Metrics
-    - Traces
-    - OpenTelemetry
-    - DataDog
-- Auditoria
-    - Quem fez o quê quando e onde
-- Configuração
-    - Feature Flags
-    - Secrets
-- Rate Limiting
-    - Mover pro NGNIX
-- Real Time
-    - Notificações
-    - Usuários Ativos
-- Documentação
-    - Código
-    - API (Scalar)
-- Cache
-    - Distributed Cache
-    - Redis
-- Arquitetura
-    - Vertical Slices
-    - Result Pattern
-- Banco de Dados
-    - Estrutura
-    - Tabelas
-    - Relacionamentos
-    - Indexes
-    - Diagrama
-- Desenvolvimento
-    - Rodando em localhost
-    - Rodando os testes
-- Contribuições
-    - Código de Conduta
-    - Abrir issues
-    - PRs
-    - Cobertura de Código
-    - Doações
-
-
-
-
-
-
+- 1 Funcionalidades
+- 2 Tecnologias
+- 3 Testes
+- 4 CI/CD
+- 5 Infra
+- 6 Usabilidade
+- 7 Processamento Assíncrono
+- 8 Auditoria
+- 9 Observabilidade
+- 10 Rate Limiting
+- 11 Documentação
+- 12 Real Time
+- 13 Cache
+- 14 Arquitetura
+- 15 Banco de Dados
+- 16 Desenvolvimento
+- 17 Contribuições
 
 ## 1 - Funcionalidades
 
@@ -325,7 +276,9 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 
 
 
-## Tecnologias
+## 2 - Tecnologias
+
+A stack predominante é a da Microsoft, utilizo C# tanto no backend quanto no frontend.
 
 - Backend em C#/.NET
 - Frontend em C#/Blazor Webassembly
@@ -338,11 +291,128 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 - Seq
 - DataDog
 
-<img src="./Docs/images/docker-compose.png" width="600" height="300" style="border-radius: 6px">
+## 3 - Testes
 
-## Como rodar?
+O projeto possui mais de 500 testes automatizados, divididos entre Unidade e Integração.
 
+Os testes de unidade validam regras de negócio apenas utilizando as entidades em memória, sem dependências com o banco de dados.
+
+Já os testes de integração são mais robustos, pois validam que os fluxos de negócio envolvendo Back + Daemon + Postgres estão funcionando corretamente.
+
+## 4 - CI/CD
+
+O Syki conta com um pipeline de CI/CD, que roda no GitHub Actions toda vez que um novo commit é feito na branch master.
+
+Esse pipeline é responsável por buildar toda a solução, rodar os testes automatizados e executar eventuais migrações contra o banco de dados.
+
+Quando o pipeline executa com sucesso, uma integração com a plataforma Railway é disparada para que o deploy de todos os serviços seja realizado. O Railway utiliza os Dockerfiles de cada componente para gerar as imagens e subir os contâiners a partir delas. Todas as configurações necessárias para que as aplicações rodem são armazenadas como variáveis de ambiente direto no Railway.
+
+## 5 - Infra
+
+Pretendo migrar toda a infra pra Azure no mês de Maio.
+
+Vou utilizar o Terraform para provisionar os recursos na nuvem de maneira organizada e replicável para os ambientes de Staging e Produção.
+
+## 6 - Usabilidade
+
+O frontend do projeto conta com modos claro e escuro.
+
+Todas as telas são responsivas, funcionando bem tanto no desktop quanto no mobile.
+
+Pretendo criar um app usando Flutter (Android/IOS) para que o aluno possa acessar o Syki.
+
+## 7 - Processamento Assíncrono
+
+O Syki possui diversos fluxos de negócio naturalmente assíncronos, como o envio de notificações pros usuários via email.
+
+Ele possui um sistema robusto de eventos, comandos e lotes para a realização dessas tarefas.
+
+Ainda é possível acompanhar em tempo real todas as execuções do sistema, possibilitando a rápida detecção de problemas e o reprocessamento de comandos com erro.
+
+No futuro ele vai contar também com reprocessamento automático de falhas.
+
+## 8 - Auditoria
+
+Muitas das ações dos usuários no sistema possuem auditoria, ou seja, são salvas no banco de dados para que seja possível saber quem, fez o quê, quando e onde dentro da aplicação.
+
+## 9 - Observabilidade
+
+O padrão OpenTelemetry é utilizado nas aplicações para a coleta de logs, métricas e traces.
+
+No futuro todos esses dados serão enviados para o DataDog.
+
+## 10 - Rate Limiting
+
+O backend utiliza o middleware de rate limiting nativo do próprio ASP.NET para bloquear o uso abusivo da API.
+
+No futuro esse controle deve ser realizado por algum outro componente na Azure.
+
+## 11 - Documentação
+
+Grande parte do código possui documentação via XML, que é utilizada tanto pela IDE quanto pelo Swagger para gerar o documento de especificação OpenAPI.
+
+Utilizo o Scalar para ler esse documento e gerar a documentação completa da API.
+
+## 12 - Real Time
+
+A biblioteca SignalR foi utilizada para trazer funcionalidades em tempo real para o sistema.
+
+Hoje é possível ser notificado em tempo real quando uma nova atividade é postada, por exemplo.
+
+O Adm também consegue saber quais usuários estão ativos no momento, além ter acesso a quantas conexões com o servidor cada um está estabelecendo.
+
+## 13 - Cache
+
+Utilizo a biblioteca Hybrid Cache para cachear alguns dados básicos da instituição, como seus cursos e grades curriculares.
+
+No futuro pode ser necessária a adoção de cache distribuído, usando o Redis por exemplo.
+
+## 14 - Arquitetura
+
+Todo o desenvolvimento é orientado por simplicidade.
+
+Utilizo *Vertical Slices* e *Result Pattern* em praticamente todas as funcionalidades do sistema.
+
+## 15 - Banco de Dados
+
+Toda a estrutura do banco está mepeada no EF Core.
+
+Podemos ver toda sua evolução no GIF abaixo, indo de 12 tabelas no início do projeto até as 40 atuais.
+
+## 16 - Desenvolvimento
+
+Para rodar o sistema na sua máquina, siga os passos abaixo:
 - Clone o projeto pra sua máquina
 - Para subir banco + back + daemon + front, rode o comando: `docker-compose up`
 - Para rebuildar caso tenha alguma alteração no código: `docker-compose build --no-cache`
 - O back vai subir na porta 5001, o front na 5002 e o daemon na 5003
+
+Para rodar os testes automatizados:
+
+- All: `dotnet test --logger:"console;verbosity=detailed"`
+- Unit: `dotnet test --filter "FullyQualifiedName~UnitTests"`
+- Integration: `dotnet test --filter "FullyQualifiedName!~UnitTests"`
+
+## 17 - Contribuições
+
+- Código de Conduta
+- Abrir issues
+- PRs
+- Cobertura de Código
+- Doações
+
+
+
+
+## This is the introduction <a name="introduction"></a>
+Some introduction text, formatted in heading 2 style
+
+## Some paragraph <a name="paragraph1"></a>
+The first paragraph text
+
+### Sub paragraph <a name="subparagraph1"></a>
+This is a sub paragraph, formatted in heading 3 style
+
+## Another paragraph <a name="paragraph2"></a>
+The second paragraph text
+

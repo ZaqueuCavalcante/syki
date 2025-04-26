@@ -1,198 +1,45 @@
 # TODOS
 
-## Deploy de tudo na Azure
-- Manual
-- Terraform
-- Post
+Atividades, notas e frequências
 
-## Refactor todas as funcionalidades
-- Cada funcionalidade é um grupo fechado de endpoints
-    - Precisa ter fluxos completos (casos de uso)
+## Aluno
+    - Arrumar tela de notas
+    - Arrumar tela de frequências
+    - Testes automatizados
 
-- Refatorar testes
-    - Criar extensions para deixar os testes mais simples
-    - Realmente validar o estado do banco de dados, via endpoint GET ou EF Context
+## Professor
+    - Trazer gráficos para análise da turma no geral
 
-- Listar todas
-    - Cross
-    - Academic
-    - Teacher
-    - Student
-
-- Documentar
-    - Domínio
-    - Controller
-    - Ins/Outs
-
-- Post
-    - 👨🏻‍💻 +1.000 commits
-    - ⭐ +140 estrelas no GitHub
-    - 🧪 +1.000 testes automatizados
-    - 🚀 +50 funcionalidades implementadas
-    - 📍 +100 endpoints
-
-## Observabilidade
-- OpenTelemetry
-- Seq, Jaeger, Grafana, Sentry
-- DataDog
-
-
-
-
-## Tunar o Postgres
-- Índices corretos
-- Quais os Tradeoffs
-- Quais as melhores configurações
-
-
-
-
-## Atividades V0
-
-https://apexcharts.github.io/Blazor-ApexCharts/bar-charts
-
-
-- App do Syki pro Aluno
-    - Agenda
-    - Turmas
-    - Atividades
-    - Frequências
-
-- ⚠️ Professor pode editar uma atividade
-
-- Adicionar Polly para o retry automático de comandos
-- Particionar tabelas para otimizar o processamento de eventos, comandos e lotes
-
-- Uma prova nao possui entrega (link/documento), o professor deve simplesmente atribuir a nota
-- Poder vincular PDF em uma atividade (subir no blob storage)
-
-- Verificar quais os gargalos da api para otimizar
-    - Medir via DataDog
-    - Avaliar antes e depois das mudanças
-
-- Todas as configurações devem ser feitas via variáveis de ambiente
-    - Não ter ifs no código pra checar ambiente
-
-- Migrations
-    - Qual o melhor jeito de fazer
-    - Sempre atualizar ao subir a aplicação
-    - Como ficam os testes
-
-- Otimizar imagens Docker
-    - Tempo de build
-    - Tamanho final
-
-- Calendário Acadêmico
-
-- Aplicar filtros na query-string
-    - Quando voltar pra pagina ela mantem os filtros
-    - Ao compartilhar um link, nao perdemos o filtro
-
-- Plano de aulas (conteudos)
-- Melhorar design da paginação das tabelas
-
-- DbConnectionFactory
-    - NpgsqlDataSource
-    - DROP new NpgsqlConnection
-
-- HttpClientFactory
-- Pool de conexoes com o banco de dados
-- RabbitMQ use case (project)
-- Redis use case (project)
-
-- Aluno pode gerar um historico de disciplinas + notas (PDF)
-- Aluno pode gerar comprovante de matricula
-- Alertas pro aluno, estilo nubank-app
-- Disciplinas com pre-requisitos (bloqueio de matricula)
-- Disciplinas extra-curriculares
-- Emissao de carteira de estudante (ou integracao com providers)
-- Plano de aula / conteudo de cada aula
-- Descricao de conteudo de uma disciplina / bibliografia (unica dentro da disciplina da grade)
-
-
-
-
-
-
+## Acadêmico
+    - Instituição
+    - Campus
+    - Curso
+    - Turma
+    - Aluno
 
 # Atividades
 
-- O professor pode ver todas as atividades da turma
-    - Filtros
-        - Nota (N1 | N2 | N3)
-        - Tipo (Trabalho | Apresentação | Prova)
-    - Coluna de status (Pendente | Publicada | Finalizada)
-    - Coluna com porcentagem de entregas
-    - Coluna com porcentagem de notas atribuídas
+- Professor pode criar atividade
+- Uma prova nao possui entrega (link/documento), o professor deve simplesmente atribuir a nota
 
-- Ao clicar em "Nova Atividade", abrir dialog
+- O peso da atividade dentro da nota deve ser de 0 a 100
+    - 1 só atividade -> peso qualquer
+    - 2 atividades -> soma dos pesos sempre <= 100
+    - 3 atividades -> soma dos pesos sempre <= 100
 
-- Endpoint: dado um ClassId, retornar lista com pesos restantes por nota
-    - Ex: [(N1, 50), (N2, 80), (N3, 100)]
+- Verificar retorno correto do endpoint que retorna o peso restante das notas
+    - Sem atividades -> tudo 100
+    - Com uma atividade -> peso menor que 100
+    - Com atividades em cada nota -> pesos variam
 
-- O professor da turma pode criar atividades
-    - Uma atividade pode ser do tipo trabalho, apresentação ou prova
-    - Cada nota possui título e descrição
-    - Cada nota possui data e hora limites para entrega
-    - Cada atividade deve ser vinculada à uma nota, possuindo um peso relativo à ela
-        - Ex: um trabalho de pesquisa que possui peso 20% na nota N1
-        - Buscar lista com pesos restantes por nota na API
-    - A soma dos pesos das atividades dentro de uma nota deve sempre ser 100%
-        - Ex: a nota N1 é formada por um trabalho (20%) + apresentação (30%) + prova (50%)
-    - É possível alterar o peso de uma atividade, desde que a soma dos pesos na nota continue 100%
-        - Ex: usando o exemplo anterior, mudamos o peso da prova para 40% e adicionamos um novo trabalho de peso 10%
+- Retorno correto dos detalhes da atividade
 
-- A atividade é criada como pendente e a listagem é recarregada
+- Retorno correto da lista de entregas da atividade
 
-- Na listagem o professor pode clicar em uma atividade e ver seus detalhes (abrir nova página)
-    - Exibir todas as informações da atividade
-    - Botão para editar (mesmo form do dialog da criação)
-    - Listagem com todas as entregas feitas pelos alunos
+- Professor pode atribuir nota (0 1 10) à cada entrega
 
+---------------------------------------------------------------------------------------------------
 
-- Alunos podem ver as atividades de cada turma
+- Aluno pode ver as atividades de cada turma
 
-
-
-
-- O professor da turma pode atribuir valores às atividades dos alunos
-    - Toda entrega que o aluno fizer deve ser imutável (timeline cima->baixo)
-    - Quando a atividade do aluno for entregue após o limite, alertar o professor com um chip
-    - Cada atividade do aluno possui um valor de 0 a 10
-
-
-## Entregas
-
-- Links ou arquivos pdf
-- Permitir a entrega mesmo depois da data limite
-    - Mostrar na timeline e num chip pro professor
-
-## Notificações
-
-- Nova atividade publicada
-- Novo comentário
-- Citação
-- Data limite de entrega (amanhã / hoje)
-
-## Comentários
-
-- Comentários Aluno-Professor / Grupo-Professor
-    - Na timeline de entrega de uma atividade, professor e aluno podem fazer comentários
-
-## Grupos
-
-- Após criada a atividade, é possível alterar para que ela seja em grupo
-    - O professor pode criar um grupo por vez
-    - Cada grupo deve possuir nome e quantidade de alunos
-    - Deve ser possível adicionar/remover alunos do grupo
-        - Ele pode sortear alunos no grupo (apenas os sem grupo)
-    - Ele pode alterar os grupos enquanto a atividade estiver publicada
-
-- Em uma atividade em grupo, todos os alunos devem ver a mesma atividade/grupo
-    - Apenas um integrante do grupo deve submeter entregas
-    - Todos os integrantes podem ver as entregas e fazer comentários
-
-- Nota do grupo e nota dos alunos
-    - Deve ser possível atribuir uma nota ao grupo
-    - Todos os alunos do grupo recebem essa nota
-    - O professor pode alterar a nota de um aluno para uma diferente da do grupo
+- Aluno pode submeter link de entrega pra uma atividade

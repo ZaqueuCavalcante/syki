@@ -5,6 +5,10 @@
 - Meter (metrics)
 
 
+- OpenTelemetry
+- Seq, Jaeger, Grafana, Sentry
+- DataDog
+
 
 Posts:
 - LinkedIn short

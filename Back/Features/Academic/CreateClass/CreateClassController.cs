@@ -14,6 +14,8 @@ public class CreateClassController(CreateClassService service) : ControllerBase
     [HttpPost("academic/classes")]
     [DbContextTransactionFilter]
     [ProducesResponseType(typeof(ClassOut), 200)]
+    [ProducesResponseType(typeof(ErrorOut), 400)]
+    [SwaggerResponseExample(400, typeof(ErrorExamples))]
     public async Task<IActionResult> Create([FromBody] CreateClassIn data)
     {
         var result = await service.Create(User.InstitutionId(), data);

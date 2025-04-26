@@ -7,5 +7,3 @@ Atividades, notas e frequências
 - Arrumar tela de frequências
 
 # Atividades
-
-- Professor pode atribuir nota (0 1 10) à cada entrega

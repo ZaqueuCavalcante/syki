@@ -8,38 +8,27 @@ Se cadastre em https://app.syki.com.br e teste o sistema em produção!
 
 <img src="./Docs/images/syki_overview.gif" style="border-radius: 6px">
 
-# Table of contents
-1. [Introduction](#introduction)
-2. [Some paragraph](#paragraph1)
-    1. [Sub paragraph](#subparagraph1)
-3. [Another paragraph](#paragraph2)
-
-
-
-
-
-
 ## Sumário
 
-- 1 Funcionalidades
-- 2 Tecnologias
-- 3 Testes
-- 4 CI/CD
-- 5 Infra
-- 6 Usabilidade
-- 7 Processamento Assíncrono
-- 8 Auditoria
-- 9 Observabilidade
-- 10 Rate Limiting
-- 11 Documentação
-- 12 Real Time
-- 13 Cache
-- 14 Arquitetura
-- 15 Banco de Dados
-- 16 Desenvolvimento
-- 17 Contribuições
+1. [Funcionalidades](#features)
+2. [Tecnologias](#)
+3. [Testes](#)
+4. [CI/CD](#)
+5. [Infra](#)
+6. [Usabilidade](#)
+7. [Processamento Assíncrono](#)
+8. [Auditoria](#)
+9. [Observabilidade](#)
+10. [Rate Limiting](#)
+11. [Documentação](#)
+12. [Real Time](#)
+13. [Cache](#)
+14. [Arquitetura](#)
+15. [Banco de Dados](#)
+16. [Desenvolvimento](#)
+17. [Contribuições](#contributions)
 
-## 1 - Funcionalidades
+## 1 - Funcionalidades <a name="features"></a>
 
 O Syki possui diversas funcionalidades, que podem ser categorizadas com base em cada perfil de usuário do sistema:
 
@@ -393,26 +382,10 @@ Para rodar os testes automatizados:
 - Unit: `dotnet test --filter "FullyQualifiedName~UnitTests"`
 - Integration: `dotnet test --filter "FullyQualifiedName!~UnitTests"`
 
-## 17 - Contribuições
+## 17 - Contribuições <a name="contributions"></a>
 
 - Código de Conduta
 - Abrir issues
 - PRs
 - Cobertura de Código
 - Doações
-
-
-
-
-## This is the introduction <a name="introduction"></a>
-Some introduction text, formatted in heading 2 style
-
-## Some paragraph <a name="paragraph1"></a>
-The first paragraph text
-
-### Sub paragraph <a name="subparagraph1"></a>
-This is a sub paragraph, formatted in heading 3 style
-
-## Another paragraph <a name="paragraph2"></a>
-The second paragraph text
-

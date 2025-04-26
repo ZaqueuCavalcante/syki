@@ -11,21 +11,21 @@ Se cadastre em https://app.syki.com.br e teste o sistema em produção!
 ## Sumário
 
 1. [Funcionalidades](#features)
-2. [Tecnologias](#)
-3. [Testes](#)
-4. [CI/CD](#)
-5. [Infra](#)
-6. [Usabilidade](#)
-7. [Processamento Assíncrono](#)
-8. [Auditoria](#)
-9. [Observabilidade](#)
-10. [Rate Limiting](#)
-11. [Documentação](#)
-12. [Real Time](#)
-13. [Cache](#)
-14. [Arquitetura](#)
-15. [Banco de Dados](#)
-16. [Desenvolvimento](#)
+2. [Tecnologias](#tech)
+3. [Testes](#tests)
+4. [CI/CD](#ci-cd)
+5. [Infra](#infra)
+6. [Usabilidade](#usability)
+7. [Processamento Assíncrono](#async-processing)
+8. [Auditoria](#audit)
+9. [Observabilidade](#observability)
+10. [Rate Limiting](#rate-limiting)
+11. [Documentação](#docs)
+12. [Real Time](#real-time)
+13. [Cache](#cache)
+14. [Arquitetura](#arch)
+15. [Banco de Dados](#db)
+16. [Desenvolvimento](#dev)
 17. [Contribuições](#contributions)
 
 ## 1 - Funcionalidades <a name="features"></a>
@@ -265,7 +265,7 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 
 
 
-## 2 - Tecnologias
+## 2 - Tecnologias <a name="tech"></a>
 
 A stack predominante é a da Microsoft, utilizo C# tanto no backend quanto no frontend.
 
@@ -280,7 +280,7 @@ A stack predominante é a da Microsoft, utilizo C# tanto no backend quanto no fr
 - Seq
 - DataDog
 
-## 3 - Testes
+## 3 - Testes <a name="tests"></a>
 
 O projeto possui mais de 500 testes automatizados, divididos entre Unidade e Integração.
 
@@ -288,7 +288,7 @@ Os testes de unidade validam regras de negócio apenas utilizando as entidades e
 
 Já os testes de integração são mais robustos, pois validam que os fluxos de negócio envolvendo Back + Daemon + Postgres estão funcionando corretamente.
 
-## 4 - CI/CD
+## 4 - CI/CD <a name="ci-cd"></a>
 
 O Syki conta com um pipeline de CI/CD, que roda no GitHub Actions toda vez que um novo commit é feito na branch master.
 
@@ -296,13 +296,13 @@ Esse pipeline é responsável por buildar toda a solução, rodar os testes auto
 
 Quando o pipeline executa com sucesso, uma integração com a plataforma Railway é disparada para que o deploy de todos os serviços seja realizado. O Railway utiliza os Dockerfiles de cada componente para gerar as imagens e subir os contâiners a partir delas. Todas as configurações necessárias para que as aplicações rodem são armazenadas como variáveis de ambiente direto no Railway.
 
-## 5 - Infra
+## 5 - Infra <a name="infra"></a>
 
 Pretendo migrar toda a infra pra Azure no mês de Maio.
 
 Vou utilizar o Terraform para provisionar os recursos na nuvem de maneira organizada e replicável para os ambientes de Staging e Produção.
 
-## 6 - Usabilidade
+## 6 - Usabilidade <a name="usability"></a>
 
 O frontend do projeto conta com modos claro e escuro.
 
@@ -310,7 +310,7 @@ Todas as telas são responsivas, funcionando bem tanto no desktop quanto no mobi
 
 Pretendo criar um app usando Flutter (Android/IOS) para que o aluno possa acessar o Syki.
 
-## 7 - Processamento Assíncrono
+## 7 - Processamento Assíncrono <a name="async-processing"></a>
 
 O Syki possui diversos fluxos de negócio naturalmente assíncronos, como o envio de notificações pros usuários via email.
 
@@ -320,29 +320,29 @@ Ainda é possível acompanhar em tempo real todas as execuções do sistema, pos
 
 No futuro ele vai contar também com reprocessamento automático de falhas.
 
-## 8 - Auditoria
+## 8 - Auditoria <a name="audit"></a>
 
 Muitas das ações dos usuários no sistema possuem auditoria, ou seja, são salvas no banco de dados para que seja possível saber quem, fez o quê, quando e onde dentro da aplicação.
 
-## 9 - Observabilidade
+## 9 - Observabilidade <a name="observability"></a>
 
 O padrão OpenTelemetry é utilizado nas aplicações para a coleta de logs, métricas e traces.
 
 No futuro todos esses dados serão enviados para o DataDog.
 
-## 10 - Rate Limiting
+## 10 - Rate Limiting <a name="rate-limiting"></a>
 
 O backend utiliza o middleware de rate limiting nativo do próprio ASP.NET para bloquear o uso abusivo da API.
 
 No futuro esse controle deve ser realizado por algum outro componente na Azure.
 
-## 11 - Documentação
+## 11 - Documentação <a name="docs"></a>
 
 Grande parte do código possui documentação via XML, que é utilizada tanto pela IDE quanto pelo Swagger para gerar o documento de especificação OpenAPI.
 
 Utilizo o Scalar para ler esse documento e gerar a documentação completa da API.
 
-## 12 - Real Time
+## 12 - Real Time <a name="real-time"></a>
 
 A biblioteca SignalR foi utilizada para trazer funcionalidades em tempo real para o sistema.
 
@@ -350,25 +350,25 @@ Hoje é possível ser notificado em tempo real quando uma nova atividade é post
 
 O Adm também consegue saber quais usuários estão ativos no momento, além ter acesso a quantas conexões com o servidor cada um está estabelecendo.
 
-## 13 - Cache
+## 13 - Cache <a name="cache"></a>
 
 Utilizo a biblioteca Hybrid Cache para cachear alguns dados básicos da instituição, como seus cursos e grades curriculares.
 
 No futuro pode ser necessária a adoção de cache distribuído, usando o Redis por exemplo.
 
-## 14 - Arquitetura
+## 14 - Arquitetura <a name="arch"></a>
 
 Todo o desenvolvimento é orientado por simplicidade.
 
 Utilizo *Vertical Slices* e *Result Pattern* em praticamente todas as funcionalidades do sistema.
 
-## 15 - Banco de Dados
+## 15 - Banco de Dados <a name="db"></a>
 
 Toda a estrutura do banco está mepeada no EF Core.
 
 Podemos ver toda sua evolução no GIF abaixo, indo de 12 tabelas no início do projeto até as 40 atuais.
 
-## 16 - Desenvolvimento
+## 16 - Desenvolvimento <a name="dev"></a>
 
 Para rodar o sistema na sua máquina, siga os passos abaixo:
 - Clone o projeto pra sua máquina

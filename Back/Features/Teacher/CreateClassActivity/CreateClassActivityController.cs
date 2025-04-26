@@ -19,7 +19,7 @@ public class CreateClassActivityController(CreateClassActivityService service) :
     {
         var result = await service.Create(User.Id(), id, data);
 
-        return result.Match<IActionResult>(_ => Ok(), BadRequest);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 

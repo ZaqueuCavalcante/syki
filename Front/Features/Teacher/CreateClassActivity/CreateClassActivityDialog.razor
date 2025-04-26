@@ -140,7 +140,11 @@
     public async Task Open()
     {
         Reset();
-        _remainingWeights = await GetClassNotesRemainingWeightsClient.Get(ClassId);
+        var response = await GetClassNotesRemainingWeightsClient.Get(ClassId);
+        if (response.IsSuccess())
+        {
+            _remainingWeights = response.GetSuccess();
+        }
         _maxWeight = _remainingWeights.Where(x => x.Note == _note).Select(x => x.Weight).First();
         var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _options.FullScreen = breakpoint == Breakpoint.Xs;

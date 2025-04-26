@@ -19,20 +19,7 @@ Atividades, notas e frequências
 
 # Atividades
 
-- Professor pode criar atividade
 - Uma prova nao possui entrega (link/documento), o professor deve simplesmente atribuir a nota
-
-- O peso da atividade dentro da nota deve ser de 0 a 100
-    - 1 só atividade -> peso qualquer
-    - 2 atividades -> soma dos pesos sempre <= 100
-    - 3 atividades -> soma dos pesos sempre <= 100
-
-- Verificar retorno correto do endpoint que retorna o peso restante das notas
-    - Sem atividades -> tudo 100
-    - Com uma atividade -> peso menor que 100
-    - Com atividades em cada nota -> pesos variam
-
-- Retorno correto dos detalhes da atividade
 
 - Retorno correto da lista de entregas da atividade
 

@@ -50,7 +50,11 @@
     private async Task Load()
     {
         _loading = true;
-        _class = await GetTeacherClassClient.Get(ClassId);
+        var response = await GetTeacherClassClient.Get(ClassId);
+        if (response.IsSuccess())
+        {
+            _class = response.GetSuccess();
+        }
         _students = _class.Students.OrderBy(x => x.Name).ToList();
         _loading = false;
     }

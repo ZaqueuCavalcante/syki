@@ -254,17 +254,6 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 - Dados gerais e origem do lote.
 - Próximo comando a ser executado caso o lote termine com sucesso.
 
-
-
-
-
-
-
-
-
-
-
-
 ## 2 - Tecnologias <a name="tech"></a>
 
 A stack predominante é a da Microsoft, utilizo C# tanto no backend quanto no frontend.

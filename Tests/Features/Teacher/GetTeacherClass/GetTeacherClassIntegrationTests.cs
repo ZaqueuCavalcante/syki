@@ -28,12 +28,33 @@ public partial class IntegrationTests
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
         // Act
-        var @class = await teacherClient.GetTeacherClass(mathClass.Id);
+        TeacherClassOut @class = await teacherClient.GetTeacherClass(mathClass.Id);
 
         // Assert
         @class.Code.Should().Be(math.Code);
         @class.Period.Should().Be(period);
         @class.Discipline.Should().Be(math.Name);
         @class.Status.Should().Be(ClassStatus.Started);
+    }
+
+    [Test]
+    public async Task Should_not_return_teacher_class_when_not_found()
+    {
+        // Arrange
+        var academicClient = await _api.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
+        var period = data.AcademicPeriod2.Id;
+        var math = data.AdsDisciplines.DiscreteMath;
+
+        TeacherOut chico = await academicClient.CreateTeacher();
+        ClassOut mathClass = await academicClient.CreateClass(math.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+
+        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+
+        // Act
+        var response = await teacherClient.GetTeacherClass(Guid.NewGuid());
+
+        // Assert
+        response.ShouldBeError(new ClassNotFound());
     }
 }

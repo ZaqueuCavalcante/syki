@@ -2,8 +2,10 @@ namespace Syki.Front.Features.Teacher.GetTeacherClass;
 
 public class GetTeacherClassClient(HttpClient http) : ITeacherClient
 {
-    public async Task<TeacherClassOut> Get(Guid id)
+    public async Task<OneOf<TeacherClassOut, ErrorOut>> Get(Guid id)
     {
-        return await http.GetFromJsonAsync<TeacherClassOut>($"/teacher/classes/{id}", HttpConfigs.JsonOptions) ?? new();
+        var response = await http.GetAsync($"/teacher/classes/{id}");
+
+        return await response.Resolve<TeacherClassOut>();
     }
 }

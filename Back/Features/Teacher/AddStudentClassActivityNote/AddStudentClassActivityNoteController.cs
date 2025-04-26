@@ -16,6 +16,6 @@ public class AddStudentClassActivityNoteController(AddStudentClassActivityNoteSe
     {
         var result = await service.Add(User.Id(), id, data);
 
-        return result.Match<IActionResult>(_ => NoContent(), BadRequest);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

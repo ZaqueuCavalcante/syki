@@ -58,7 +58,11 @@
     {
         _loading = true;
         _index = 0;
-        _class = await GetTeacherClassClient.Get(Id);
+        var response = await GetTeacherClassClient.Get(Id);
+        if (response.IsSuccess())
+        {
+            _class = response.GetSuccess();
+        }
         _loading = false;
     }
 }

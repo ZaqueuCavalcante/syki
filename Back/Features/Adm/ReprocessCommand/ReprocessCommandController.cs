@@ -15,6 +15,6 @@ public class ReprocessCommandController(ReprocessCommandService service) : Contr
     {
         var result = await service.Reprocess(id);
 
-        return result.Match<IActionResult>(_ => NoContent(), BadRequest);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

@@ -19,4 +19,9 @@ public class TeacherClassOut
     {
         return Id.ToHashCode();
     }
+
+    public static implicit operator TeacherClassOut(OneOf<TeacherClassOut, ErrorOut> value)
+    {
+        return value.GetSuccess();
+    }
 }

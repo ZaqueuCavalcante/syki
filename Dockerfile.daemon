@@ -1,13 +1,22 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
+
+COPY ["SYKI.sln", "."]
+COPY ["Shared/Shared.csproj", "Shared/"]
+COPY ["Daemon/Daemon.csproj", "Daemon/"]
+
+RUN dotnet restore "Daemon/Daemon.csproj"
+
 COPY . .
-RUN dotnet restore "./Daemon/Daemon.csproj"
-RUN dotnet publish "./Daemon/Daemon.csproj" -c release -o /app --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:9.0
+WORKDIR "/src/Daemon"
+RUN dotnet publish "Daemon.csproj" -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
-COPY --from=build /app ./
 
-EXPOSE 5003
+COPY --from=build /app/publish .
 
-ENTRYPOINT [ "dotnet", "Daemon.dll" ]
+# EXPOSE 5003
+
+ENTRYPOINT ["dotnet", "Daemon.dll"]

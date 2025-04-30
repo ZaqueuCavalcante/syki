@@ -19,8 +19,8 @@ public partial class IntegrationTests
         response.AverageNote.Should().Be(0);
     }
 
-    [Test, Ignore("Refactoring needed")]
-    public async Task Should_get_student_average_notes_after_teacher_add_notes()
+    [Test]
+    public async Task Should_get_student_average_notes_after_teacher_add_1_note()
     {
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
@@ -29,14 +29,56 @@ public partial class IntegrationTests
 
         var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
         var studentClient = await _api.LoggedAsStudent(data.Student.Email);
-        
-        CreateClassActivityOut activity = await teacherClient.CreateClassActivity(data.AdsClasses.DiscreteMath.Id, note: ClassNoteType.N1, weight: 50);
-        await teacherClient.AddStudentClassActivityNote(activity.Id, data.Student.Id, 8);
+
+        await teacherClient.AddClassActivityNote(data.AdsClasses.DiscreteMath.Id, data.Student.Id, ClassNoteType.N1, 50, 8);
         
         // Act
         var response = await studentClient.GetStudentAverageNote();
 
         // Assert
-        response.AverageNote.Should().Be(2);
+        response.AverageNote.Should().Be(0.33M);
+    }
+
+    [Test]
+    public async Task Should_get_student_average_notes_after_teacher_add_2_notes()
+    {
+        // Arrange
+        var academicClient = await _api.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
+        await academicClient.AddStartedAdsClasses(data, _api);
+
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
+
+        await teacherClient.AddClassActivityNote(data.AdsClasses.DiscreteMath.Id, data.Student.Id, ClassNoteType.N1, 50, 10);
+        await teacherClient.AddClassActivityNote(data.AdsClasses.IntroToWebDev.Id, data.Student.Id, ClassNoteType.N1, 30, 6);
+        
+        // Act
+        var response = await studentClient.GetStudentAverageNote();
+
+        // Assert
+        response.AverageNote.Should().Be(0.57M);
+    }
+
+    [Test]
+    public async Task Should_get_student_average_notes_after_teacher_add_3_notes()
+    {
+        // Arrange
+        var academicClient = await _api.LoggedAsAcademic();
+        var data = await academicClient.CreateBasicInstitutionData();
+        await academicClient.AddStartedAdsClasses(data, _api);
+
+        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
+
+        await teacherClient.AddClassActivityNote(data.AdsClasses.DiscreteMath.Id, data.Student.Id, ClassNoteType.N1, 10, 10);
+        await teacherClient.AddClassActivityNote(data.AdsClasses.IntroToWebDev.Id, data.Student.Id, ClassNoteType.N1, 80, 8);
+        await teacherClient.AddClassActivityNote(data.AdsClasses.IntroToWebDev.Id, data.Student.Id, ClassNoteType.N2, 100, 9);
+
+        // Act
+        var response = await studentClient.GetStudentAverageNote();
+
+        // Assert
+        response.AverageNote.Should().Be(1.37M);
     }
 }

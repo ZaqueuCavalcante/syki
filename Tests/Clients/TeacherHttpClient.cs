@@ -93,8 +93,9 @@ public class TeacherHttpClient(HttpClient http)
         return await client.Add(classActivityId, studentId, value);
     }
 
-    public async Task AddClassActivityNotes(Guid classId, Guid studentId, decimal n1, decimal n2, decimal n3)
+    public async Task AddClassActivityNote(Guid classId, Guid studentId, ClassNoteType type, int weight, decimal note)
     {
-        var discreteMathClass = await GetTeacherClass(classId);
+        CreateClassActivityOut activity = await CreateClassActivity(classId, note: type, weight: weight);
+        await AddStudentClassActivityNote(activity.Id, studentId, note);
     }
 }

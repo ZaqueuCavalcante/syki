@@ -219,44 +219,58 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
   <img src="./Docs/Readme/1.2.13_Notifications.gif" style="display: block; margin: 0 auto" />
 </p>
 
-
-
-
-
-
-
-
-
-
-
 ### 1.3 - Professor
 
-#### Insights
+#### 1.3.1 - Insights
 
 - Acessar diversos dados consolidados sobre suas turmas, atualizados em tempo real.
 
-#### Agenda Acadêmica
+<p align="center">
+  <img src="./Docs/Readme/1.3.1_Insights.png" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.3.2 - Agenda Acadêmica
 
 - Acompanhar qual o horário semanal das suas aulas.
 
-#### Turmas
+<p align="center">
+  <img src="./Docs/Readme/1.3.2_Agenda.png" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.3.3 - Turmas
 
 - Acessar facilmente todas as turmas do período atual.
 
-#### Atividades
+<p align="center">
+  <img src="./Docs/Readme/1.3.3_Classes.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.3.4 - Atividades
 
 - Criar novas atividades para a turma.
 - Listar todas as atividades da turma.
 - Avaliar com pontuação cada entrega de atividade feita pelos alunos.
 
-#### Frequências
+<p align="center">
+  <img src="./Docs/Readme/1.3.4_Activities.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.3.5 - Frequências
 
 - Realizar chamadas em cada aula.
 - Listar todas as aulas e suas frequências.
 
-#### Alunos
+<p align="center">
+  <img src="./Docs/Readme/1.3.5_Frequencies.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.3.6 - Alunos
 
 - Acompanhar notas e frequências dos alunos da turma.
+
+<p align="center">
+  <img src="./Docs/Readme/1.3.6_Students.gif" style="display: block; margin: 0 auto" />
+</p>
 
 ### 1.4 - Aluno
 

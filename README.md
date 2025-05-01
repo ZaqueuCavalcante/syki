@@ -32,7 +32,7 @@ Se cadastre em https://app.syki.com.br e teste o sistema em produção!
 
 ## 1 - Funcionalidades <a name="features"></a>
 
-O Syki possui diversas funcionalidades, que podem ser categorizadas com base em cada perfil de usuário do sistema:
+O **Syki** possui diversas funcionalidades, que podem ser categorizadas com base em cada perfil de usuário do sistema:
 
 - Acadêmico: usuário em cargo de gestão dentro da instituição de ensino
 - Professor: usuário que leciona nas turmas da instituição
@@ -94,47 +94,75 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 - Marcar notificações já visualizadas como lidas.
 
 <p align="center">
-  <img src="./Docs/Readme/1.1.6_GetNotifications.gif" style="display: block; margin: 0 auto" />
+  <img src="./Docs/Readme/1.1.6_Notifications.gif" style="display: block; margin: 0 auto" />
 </p>
 
 ### 1.2 - Acadêmico
 
-#### Insights
+#### 1.2.1 - Insights
 
 - Acessar diversos dados consolidados sobre a instituição, atualizados em tempo real.
 
-#### Campus
+<p align="center">
+  <img src="./Docs/Readme/1.2.1_Insights.png" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.2 - Campus
 
 - Criar um novo campus.
 - Editar um campus já existente.
 - Listar todos os campus da instituição.
 
-#### Cadastro de Cursos
+<p align="center">
+  <img src="./Docs/Readme/1.2.2_Campus.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.3 - Cadastro de Cursos
 
 - Criar um novo curso.
 - Listar todos os cursos da instituição.
 
-#### Cadastro de Disciplinas
+<p align="center">
+  <img src="./Docs/Readme/1.2.3_Courses.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.4 - Cadastro de Disciplinas
 
 - Criar uma nova disciplina.
 - Listar todas as disciplinas da instituição.
 
-#### Cadastro de Grades Curriculares
+<p align="center">
+  <img src="./Docs/Readme/1.2.4_Disciplines.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.5 - Cadastro de Grades Curriculares
 
 - Criar uma nova grade curricular, vinculando curso e disciplinas.
 - Listar todas as grades curriculares da instituição.
 
-#### Ofertar Curso
+<p align="center">
+  <img src="./Docs/Readme/1.2.5_CourseCurriculum.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.6 - Ofertar Curso
 
 - Ofertar um curso, vinculando campus, período acadêmico, turno, curso e grade curricular.
 - Listar todas as ofertas de curso da instituição.
 
-#### Cadastro de Professores
+<p align="center">
+  <img src="./Docs/Readme/1.2.6_CourseOffering.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.7 - Cadastro de Professores
 
 - Criar um novo professor.
 - Listar todos os professores da instituição.
 
-#### Abertura de Turmas
+<p align="center">
+  <img src="./Docs/Readme/1.2.7_Teachers.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.8 - Abertura de Turmas
 
 - Abrir um nova turma, vinculando disciplina, professor, período acadêmico e horários.
 - Liberar uma turma para matrícula, dentro do período de matrícula vigente.
@@ -142,30 +170,64 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 - Finalizar uma turma ao término do período acadêmico.
 - Listar todas as turmas da instituição.
 
-#### Acompanhamento de Turma
+<p align="center">
+  <img src="./Docs/Readme/1.2.8_Classes.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.9 - Acompanhamento de Turma
 
 - Analisar as notas dos alunos nas atividades, bem como suas frequências em cada aula.
 
-#### Cadastro de Alunos
+<p align="center">
+  <img src="./Docs/Readme/1.2.9_Class.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.10 - Cadastro de Alunos
 
 - Criar um novo aluno, vinculando com determinada oferta de curso.
 - Listar todos os alunos da instituição.
 
-#### Abertura de Períodos Acadêmicos
+<p align="center">
+  <img src="./Docs/Readme/1.2.10_Students.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.11 - Abertura de Períodos Acadêmicos
 
 - Abrir um novo período acadêmico.
 - Listar todos os períodos acadêmicos da instituição.
 
-#### Abertura de Períodos de Matrícula
+<p align="center">
+  <img src="./Docs/Readme/1.2.11_AcademicPeriods.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.12 - Abertura de Períodos de Matrícula
 
 - Abrir um novo período de matrícula.
 - Editar as datas de início e fim de um período de matrícula.
 - Listar todos os períodos de matrícula da instituição.
 
-#### Envio de Notificações
+<p align="center">
+  <img src="./Docs/Readme/1.2.12_EnrollmentPeriods.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.2.13 - Envio de Notificações
 
 - Enviar notificações para alunos e professores.
 - Listar todas as notificações da instituição.
+
+<p align="center">
+  <img src="./Docs/Readme/1.2.13_Notifications.gif" style="display: block; margin: 0 auto" />
+</p>
+
+
+
+
+
+
+
+
+
+
 
 ### 1.3 - Professor
 

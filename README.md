@@ -274,39 +274,71 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 
 ### 1.4 - Aluno
 
-#### Insights
+#### 1.4.1 - Insights
 
 - Acessar diversos dados consolidados sobre seu curso, atualizados em tempo real.
 
-#### Agenda Acadêmica
+<p align="center">
+  <img src="./Docs/Readme/1.4.1_Insights.png" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.4.2 - Agenda Acadêmica
 
 - Acompanhar qual o horário semanal das suas aulas.
 
-#### Disciplinas
+<p align="center">
+  <img src="./Docs/Readme/1.4.2_Agenda.png" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.4.3 - Disciplinas
 
 - Visualizar facilmente todas as disciplinas do seu curso, agrupadas por período acadêmico.
 
-#### Notas
+<p align="center">
+  <img src="./Docs/Readme/1.4.3_Disciplines.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.4.4 - Notas
 
 - Acompanhar sua nota média no curso, bem como sua nota em cada disciplina.
 
-#### Frequência
+<p align="center">
+  <img src="./Docs/Readme/1.4.4_Notes.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.4.5 - Frequência
 
 - Ver sua frequência total no curso, bem como em cada turma.
 
-#### Turmas
+<p align="center">
+  <img src="./Docs/Readme/1.4.5_Frequency.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.4.6 - Turmas
 
 - Acessar facilmente todas as turmas do período atual.
 
-#### Atividades
+<p align="center">
+  <img src="./Docs/Readme/1.4.6_Classes.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.4.7 - Atividades
 
 - Listar todas as atividades da turma, bem como seu desempenho em cada uma.
 - Entrar nos detalhes da atividade e realizar sua entrega via link em anexo.
 
-#### Frequências
+<p align="center">
+  <img src="./Docs/Readme/1.4.7_Activities.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.4.8 - Frequências
 
 - Acompanhar quantidade de presenças, faltas, aulas realizadas e pendentes.
 - Visualizar gráfico com sua frequência em todas as aulas realizadas até o momento.
+
+<p align="center">
+  <img src="./Docs/Readme/1.4.8_Frequencies.gif" style="display: block; margin: 0 auto" />
+</p>
 
 ### 1.5 - Adm
 

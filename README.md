@@ -420,7 +420,7 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 - Listagem e filtros de todos os lotes gerados por todas as instituições.
 
 <p align="center">
-  <img src="./Docs/Readme/1.5.9_Batches.gif" style="display: block; margin: 0 auto" />
+  <img src="./Docs/Readme/1.5.9_Batches.png" style="display: block; margin: 0 auto" />
 </p>
 
 #### 1.5.10 - Detalhes de um Lote

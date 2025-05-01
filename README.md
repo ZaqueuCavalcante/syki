@@ -6,7 +6,9 @@
 
 Se cadastre em https://app.syki.com.br e teste o sistema em produção!
 
-<img src="./Docs/images/syki_overview.gif" style="border-radius: 6px">
+<img src="./Docs/Readme/TODO.gif" style="border-radius: 6px">
+
+
 
 ## Sumário
 
@@ -41,31 +43,59 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 
 ### 1.1 - Cross
 
-#### Cadastro de Usuário
+<p align="center">
+  <img src="./Docs/Readme/1.1_Cross.png" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.1.1 - Cadastro de Usuário
 
 - Cadastrar-se no sistema informando seu email.
 - Definir senha utilizando o link de confirmação de email.
 
-#### Esqueci Minha Senha
+<p align="center">
+  <img src="./Docs/Readme/1.1.1_UserRegister.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.1.2 - Esqueci Minha Senha
 
 - Redefinir sua senha utilizando o link de redefinição de senha.
 
-#### Login Padrão
+<p align="center">
+  <img src="./Docs/Readme/1.1.2_ResetPassword.gif" style="display: block; margin: 0 auto" />
+</p>
 
-- Logar no sistema informando email+senha.
+#### 1.1.3 - Login Padrão
 
-#### Setup MFA
+- Logar no sistema informando email e senha.
+
+<p align="center">
+  <img src="./Docs/Readme/1.1.3_Login.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.1.4 - Setup MFA
 
 - Utilizar um app de autenticação (ex: Google Authenticator) para configurar o segundo fator de autenticação.
 
-#### Login MFA
+<p align="center">
+  <img src="./Docs/Readme/1.1.4_MfaSetup.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.1.5 - Login MFA
 
 - Logar no sistema apenas ao informar corretamente o TOTP gerado no app (Time-Based One-Time Password).
 
-#### Receber Notificações
+<p align="center">
+  <img src="./Docs/Readme/1.1.5_LoginMfa.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.1.6 - Receber Notificações
 
 - Listar notificações relacionadas com sua instituição, curso ou atividades das turmas.
 - Marcar notificações já visualizadas como lidas.
+
+<p align="center">
+  <img src="./Docs/Readme/1.1.6_GetNotifications.gif" style="display: block; margin: 0 auto" />
+</p>
 
 ### 1.2 - Acadêmico
 

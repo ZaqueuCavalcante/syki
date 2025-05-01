@@ -433,9 +433,17 @@ Vou utilizar o Terraform para provisionar os recursos na nuvem de maneira organi
 
 O frontend do projeto conta com modos claro e escuro.
 
+<p align="center">
+  <img src="./Docs/Readme/1.6_DarkLightModes.gif" style="display: block; margin: 0 auto" />
+</p>
+
 Todas as telas são responsivas, funcionando bem tanto no desktop quanto no mobile.
 
 Pretendo criar um app usando Flutter (Android/IOS) para que o aluno possa acessar o Syki.
+
+<p align="center">
+  <img src="./Docs/Readme/1.6_Mobile.gif" style="display: block; margin: 0 auto" />
+</p>
 
 ## 7 - Processamento Assíncrono <a name="async-processing"></a>
 

@@ -453,6 +453,10 @@ Os testes de unidade validam regras de negócio apenas utilizando as entidades e
 
 Já os testes de integração são mais robustos, pois validam que os fluxos de negócio envolvendo Back + Daemon + Postgres estão funcionando corretamente.
 
+<p align="center">
+  <img src="./Docs/Readme/3_Tests.gif" style="display: block; margin: 0 auto" />
+</p>
+
 ## 4 - CI/CD <a name="ci-cd"></a>
 
 O Syki conta com um pipeline de CI/CD, que roda no GitHub Actions toda vez que um novo commit é feito na branch master.
@@ -472,7 +476,7 @@ Vou utilizar o Terraform para provisionar os recursos na nuvem de maneira organi
 O frontend do projeto conta com modos claro e escuro.
 
 <p align="center">
-  <img src="./Docs/Readme/1.6_DarkLightModes.gif" style="display: block; margin: 0 auto" />
+  <img src="./Docs/Readme/6_DarkLightModes.gif" style="display: block; margin: 0 auto" />
 </p>
 
 Todas as telas são responsivas, funcionando bem tanto no desktop quanto no mobile.
@@ -480,7 +484,7 @@ Todas as telas são responsivas, funcionando bem tanto no desktop quanto no mobi
 Pretendo criar um app usando Flutter (Android/IOS) para que o aluno possa acessar o Syki.
 
 <p align="center">
-  <img src="./Docs/Readme/1.6_Mobile.gif" style="display: block; margin: 0 auto" />
+  <img src="./Docs/Readme/6_Mobile.gif" style="display: block; margin: 0 auto" />
 </p>
 
 ## 7 - Processamento Assíncrono <a name="async-processing"></a>

@@ -342,55 +342,95 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 
 ### 1.5 - Adm
 
-#### Insights
+#### 1.5.1 - Insights
 
 - Ver dados consolidados sobre todo o sistema, atualizados em tempo real.
 
-#### Usuários
+<p align="center">
+  <img src="./Docs/Readme/1.5.1_Insights.png" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.5.2 - Usuários
 
 - Acompanhar todos os usuários do sistema.
 - Filtrar quais estão online no momento atual.
 
-#### Instituições
+<p align="center">
+  <img src="./Docs/Readme/1.5.2_Users.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.5.3 - Instituições
 
 - Listar todas as instituições de ensino cadastradas no sistema.
 
-#### Feature Flags
+<p align="center">
+  <img src="./Docs/Readme/1.5.3_Institutions.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.5.4 - Feature Flags
 
 - Ativar/desativar features flags.
 
-#### Eventos
+<p align="center">
+  <img src="./Docs/Readme/1.5.4_FeatureFlags.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.5.5 - Eventos
 
 - Dashboard com eventos pendentes, processando, erros e sucessos.
 - Últimos eventos ocorridos e distribuição por quantidade.
 - Listagem e filtros de todos os eventos gerados por todas as instituições.
 
-#### Detalhes de um Evento
+<p align="center">
+  <img src="./Docs/Readme/1.5.5_Events.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.5.6 - Detalhes de um Evento
 
 - Dados gerais e origem do evento.
 - Lista dos comandos gerados pelo evento em questão.
 
-#### Comandos
+<p align="center">
+  <img src="./Docs/Readme/1.5.6_EventDetails.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.5.7 - Comandos
 
 - Dashboard com comandos pendentes, processando, erros e sucessos.
 - Listagem e filtros de todos os comandos gerados por todas as instituições.
 
-#### Detalhes de um Comando
+<p align="center">
+  <img src="./Docs/Readme/1.5.7_Commands.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.5.8 - Detalhes de um Comando
 
 - Dados gerais e origem do comando.
 - Lista do subcomandos gerados pelo comando em questão.
 - Reprocessamento de comando com erro.
 - Vinculo do comando caso ele pertença à um lote.
 
-#### Lotes
+<p align="center">
+  <img src="./Docs/Readme/1.5.8_CommandDetails.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.5.9 - Lotes
 
 - Dashboard com lotes pendentes, processando, erros e sucessos.
 - Listagem e filtros de todos os lotes gerados por todas as instituições.
 
-#### Detalhes de um Lote
+<p align="center">
+  <img src="./Docs/Readme/1.5.9_Batches.gif" style="display: block; margin: 0 auto" />
+</p>
+
+#### 1.5.10 - Detalhes de um Lote
 
 - Dados gerais e origem do lote.
 - Próximo comando a ser executado caso o lote termine com sucesso.
+
+<p align="center">
+  <img src="./Docs/Readme/1.5.10_BatchDetails.gif" style="display: block; margin: 0 auto" />
+</p>
 
 ## 2 - Tecnologias <a name="tech"></a>
 
@@ -402,10 +442,8 @@ A stack predominante é a da Microsoft, utilizo C# tanto no backend quanto no fr
 - Banco PostgreSQL
 - Docker para buildar back e front
 - Deploy no Railway
-- Azure
 - GitHub Actions
-- Seq
-- DataDog
+- Seq para logs
 
 ## 3 - Testes <a name="tests"></a>
 

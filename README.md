@@ -162,7 +162,7 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
   <img src="./Docs/Readme/1.2.7_Teachers.gif" style="display: block; margin: 0 auto" />
 </p>
 
-#### 1.2.8 - Abertura de Turmas
+#### 1.2.8 - Gerenciamento de Turmas
 
 - Abrir um nova turma, vinculando disciplina, professor, período acadêmico e horários.
 - Liberar uma turma para matrícula, dentro do período de matrícula vigente.

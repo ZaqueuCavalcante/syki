@@ -1,6 +1,8 @@
+using Syki.Back.Features.Teacher.GetTeacherClassStudents;
+
 namespace Syki.Back.Features.Academic.GetAcademicClass;
 
-public class GetAcademicClassService(SykiDbContext ctx) : IAcademicService
+public class GetAcademicClassService(SykiDbContext ctx, GetTeacherClassStudentsService service) : IAcademicService
 {
     public async Task<OneOf<GetAcademicClassOut, SykiError>> Get(Guid institutionId, Guid id)
     {
@@ -10,8 +12,6 @@ public class GetAcademicClassService(SykiDbContext ctx) : IAcademicService
             .Include(t => t.Schedules)
             .Include(t => t.Lessons)
                 .ThenInclude(l => l.Attendances)
-            .Include(t => t.Students)
-            .Include(t => t.Notes)
             .Where(c => c.InstitutionId == institutionId && c.Id == id)
             .FirstOrDefaultAsync();
 
@@ -26,6 +26,20 @@ public class GetAcademicClassService(SykiDbContext ctx) : IAcademicService
             @class.Status = ClassStatus.AwaitingStart;
         }
 
-        return @class.ToGetAcademicClassOut();
+        var result = @class.ToGetAcademicClassOut();
+
+        var classStudents = (await service.Get(@class.TeacherId, @class.Id)).GetSuccess();
+
+        result.Students = classStudents.ConvertAll(x => new AcademicClassStudentOut
+        {
+            Id = x.Id,
+            Name = x.Name,
+            Frequency = x.Frequency,
+            Notes = x.Notes
+        });
+
+        result.Frequency = result.Students.Count > 0 ? result.Students.Average(s => s.Frequency) : 0.00M;
+
+        return result;
     }
 }

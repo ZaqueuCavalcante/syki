@@ -184,17 +184,6 @@ public class Class
 
     public GetAcademicClassOut ToGetAcademicClassOut()
     {
-        var students = Students.ConvertAll(x => x.ToAcademicClassStudentOut());
-        var lessons = Lessons.Count(x => x.Attendances.Count > 0);
-        students.ForEach(s =>
-        {
-            var studentNotes = Notes.Where(g => g.StudentId == s.Id).ToList();
-            s.AverageNote = studentNotes.GetAverageNote();
-            var presences = Lessons.Count(x => x.Attendances.Exists(a => a.StudentId == s.Id && a.Present));
-            s.Frequency = lessons == 0 ? 0.00M : 100M * (1M * presences / (1M * lessons));
-            s.Notes = studentNotes.OrderBy(x => x.Type).Select(g => g.ToOut()).ToList();
-        });
-
         return new()
         {
             Id = Id,
@@ -209,9 +198,7 @@ public class Class
             SchedulesInline = GetScheduleAsString(),
             Workload = GetWorkloadAsString(),
             Progress = GetProgressAsString(),
-            Students = students,
             FillRatio = FillRatio,
-            Frequency = students.Count > 0 ? students.Average(s => s.Frequency) : 0.00M,
         };
     }
 

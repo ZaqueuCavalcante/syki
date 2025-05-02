@@ -38,7 +38,7 @@ public class CreateScheduleUnitTests
     }
 
     [Test]
-    public void Nao_deve_criar_um_schedule_quando_end_for_menor_que_start()
+    public void Should_not_create_schedule_when_end_is_less_than_start()
     {
         // Arrange
         var day = Day.Tuesday;
@@ -96,9 +96,9 @@ public class CreateScheduleUnitTests
         // Assert
         result.ShouldBeError(new InvalidHour());
     }
-    
+
     [Test]
-    public void Schedules_em_days_diferentes_nao_devem_conflitar()
+    public void Different_days_schedules_should_not_conflict()
     {
         // Arrange
         var start = Hour.H07_00;
@@ -115,7 +115,7 @@ public class CreateScheduleUnitTests
     }
 
     [Test]
-    public void Schedules_validos_nao_devem_conflitar()
+    public void Valid_schedules_should_not_have_conflicts()
     {
         // Arrange
         var scheduleA = new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00);
@@ -160,7 +160,7 @@ public class CreateScheduleUnitTests
     }
 
     [Test]
-    public void Schedules_cujo_segundo_esta_contido_no_primeiro_devem_conflitar()
+    public void Schedules_where_first_contains_second_should_have_conflict()
     {
         // Arrange
         var scheduleA = new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00);
@@ -174,7 +174,7 @@ public class CreateScheduleUnitTests
     }
 
     [Test]
-    public void Schedules_cujo_primeiro_esta_contido_no_segundo_devem_conflitar()
+    public void Schedules_where_second_contains_first_should_have_conflict()
     {
         // Arrange
         var scheduleA = new Schedule(Day.Monday, Hour.H10_00, Hour.H11_00);

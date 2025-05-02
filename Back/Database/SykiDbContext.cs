@@ -13,7 +13,6 @@ using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Teacher.CreateClassActivity;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
-using Syki.Back.Features.Teacher.AddClassActivityNote;
 using Syki.Back.Features.Academic.CreateCourseOffering;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -54,7 +53,6 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfigurati
     public DbSet<ClassLessonAttendance> Attendances { get; set; }
     public DbSet<ClassActivity> ClassActivities { get; set; }
     public DbSet<ClassActivityWork> ClassActivityWorks { get; set; }
-    public DbSet<StudentClassNote> ClassNotes { get; set; }
 
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<FeatureFlags> FeatureFlags { get; set; }

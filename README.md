@@ -32,12 +32,12 @@ Se cadastre em https://app.syki.com.br e teste o sistema em produção!
 
 O **Syki** possui diversas funcionalidades, que podem ser categorizadas com base em cada perfil de usuário do sistema:
 
-- Acadêmico: usuário em cargo de gestão dentro da instituição de ensino
-- Professor: usuário que leciona nas turmas da instituição
-- Aluno: usuário matriculado em algum curso da instituição
-- Adm: usuário administrador do sistema globalmente
+- **Acadêmico**: usuário em cargo de gestão dentro da instituição de ensino
+- **Professor**: usuário que leciona nas turmas da instituição
+- **Aluno**: usuário matriculado em algum curso da instituição
+- **Adm**: usuário administrador do sistema globalmente
 
-Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer usuário, como as de "Login" e "Esqueci Minha Senha".
+Existem também as funcionalidades "**Cross**", que podem ser acessadas por qualquer usuário, como as de "Login" e "Esqueci Minha Senha".
 
 ### 1.1 - Cross
 
@@ -443,6 +443,10 @@ A stack predominante é a da Microsoft, utilizo C# tanto no backend quanto no fr
 - GitHub Actions
 - Seq para logs
 
+<p align="center">
+  <img src="./Docs/Readme/2_TechStack.png" style="display: block; margin: 0 auto" />
+</p>
+
 ## 3 - Testes <a name="tests"></a>
 
 O projeto possui mais de 500 testes automatizados, divididos entre Unidade e Integração.
@@ -587,8 +591,10 @@ Para rodar os testes automatizados:
 
 ## 17 - Contribuições <a name="contributions"></a>
 
-- Código de Conduta
-- Abrir issues
-- PRs
-- Cobertura de Código
-- Doações
+Qualquer contribuição é bem-vinda!
+
+Fique à vontade para usar o sistema, abrir issues, enviar pull requests e tirar dúvidas.
+
+---------------------------------------------------------------------------------------------------
+
+> Computadores fazem arte | Artistas fazem dinheiro

@@ -33,6 +33,7 @@ public class FinalizeClassesService(SykiDbContext ctx) : IAcademicService
             var lessons = @class.Lessons.Count(x => x.Attendances.Count > 0);
             foreach (var student in @class.Students)
             {
+                // TODO: Calculate notes using the class activities
                 var studentNotes = @class.Notes.Where(g => g.StudentId == student.Id).ToList();
                 var averageNote = studentNotes.GetAverageNote();
                 var presences = @class.Lessons.Count(x => x.Attendances.Exists(a => a.StudentId == student.Id && a.Present));

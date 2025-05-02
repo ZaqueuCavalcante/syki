@@ -1,5 +1,3 @@
-using System.Net.Http.Json;
-using Syki.Front.Features.Teacher.AddStudentClassActivityNote;
 using Syki.Front.Features.Teacher.GetTeacherClass;
 using Syki.Front.Features.Teacher.GetTeacherAgenda;
 using Syki.Front.Features.Teacher.GetTeacherClasses;
@@ -7,8 +5,10 @@ using Syki.Front.Features.Teacher.GetTeacherInsights;
 using Syki.Front.Features.Teacher.CreateClassActivity;
 using Syki.Front.Features.Teacher.CreateLessonAttendance;
 using Syki.Front.Features.Teacher.GetTeacherClassLessons;
-using Syki.Front.Features.Teacher.GetTeacherClassActivities;
 using Syki.Front.Features.Teacher.GetTeacherClassActivity;
+using Syki.Front.Features.Teacher.GetTeacherClassStudents;
+using Syki.Front.Features.Teacher.GetTeacherClassActivities;
+using Syki.Front.Features.Teacher.AddStudentClassActivityNote;
 using Syki.Front.Features.Teacher.GetClassNotesRemainingWeights;
 
 namespace Syki.Tests.Clients;
@@ -48,6 +48,12 @@ public class TeacherHttpClient(HttpClient http)
     {
         var client = new GetTeacherClassClient(Cross);
         return await client.Get(id);
+    }
+
+    public async Task<OneOf<List<TeacherClassStudentOut>, ErrorOut>> GetTeacherClassStudents(Guid classId)
+    {
+        var client = new GetTeacherClassStudentsClient(Cross);
+        return await client.Get(classId);
     }
 
     public async Task<OneOf<List<ClassNoteRemainingWeightsOut>, ErrorOut>> GetClassNotesRemainingWeights(Guid classId)

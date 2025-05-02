@@ -6,9 +6,7 @@
 
 Se cadastre em https://app.syki.com.br e teste o sistema em produção!
 
-<img src="./Docs/Readme/TODO.gif" style="border-radius: 6px">
-
-
+<img src="./Docs/Readme/0_Overview.gif" style="border-radius: 6px">
 
 ## Sumário
 
@@ -434,13 +432,13 @@ Existem também as funcionalidades "Cross", que podem ser acessadas por qualquer
 
 ## 2 - Tecnologias <a name="tech"></a>
 
-A stack predominante é a da Microsoft, utilizo C# tanto no backend quanto no frontend.
+A stack predominante é a da Microsoft, utilizo C# tanto no backend quanto no frontend:
 
-- Backend em C#/.NET
-- Frontend em C#/Blazor Webassembly
-- Daemon em C#/.NET
+- API em ASP.NET
+- Front em Blazor Webassembly
+- Daemon em ASP.NET
 - Banco PostgreSQL
-- Docker para buildar back e front
+- Build com Docker
 - Deploy no Railway
 - GitHub Actions
 - Seq para logs
@@ -463,13 +461,25 @@ O Syki conta com um pipeline de CI/CD, que roda no GitHub Actions toda vez que u
 
 Esse pipeline é responsável por buildar toda a solução, rodar os testes automatizados e executar eventuais migrações contra o banco de dados.
 
+<p align="center">
+  <img src="./Docs/Readme/4_Pipeline.png" style="display: block; margin: 0 auto" />
+</p>
+
 Quando o pipeline executa com sucesso, uma integração com a plataforma Railway é disparada para que o deploy de todos os serviços seja realizado. O Railway utiliza os Dockerfiles de cada componente para gerar as imagens e subir os contâiners a partir delas. Todas as configurações necessárias para que as aplicações rodem são armazenadas como variáveis de ambiente direto no Railway.
+
+<p align="center">
+  <img src="./Docs/Readme/4_Railway.png" style="display: block; margin: 0 auto" />
+</p>
 
 ## 5 - Infra <a name="infra"></a>
 
-Pretendo migrar toda a infra pra Azure no mês de Maio.
+Atualmente todos os serviços estão rodando no [Railway](https://railway.com?referralCode=zk):
 
-Vou utilizar o Terraform para provisionar os recursos na nuvem de maneira organizada e replicável para os ambientes de Staging e Produção.
+<p align="center">
+  <img src="./Docs/Readme/5_Infra.png" style="display: block; margin: 0 auto" />
+</p>
+
+Pretendo migrar toda a infra pra Azure logo logo. Vou utilizar o Terraform para provisionar os recursos na nuvem de maneira organizada e replicável para os ambientes de Staging e Produção.
 
 ## 6 - Usabilidade <a name="usability"></a>
 
@@ -497,6 +507,10 @@ Ainda é possível acompanhar em tempo real todas as execuções do sistema, pos
 
 No futuro ele vai contar também com reprocessamento automático de falhas.
 
+<p align="center">
+  <img src="./Docs/Readme/7_AsyncProcessing.gif" style="display: block; margin: 0 auto" />
+</p>
+
 ## 8 - Auditoria <a name="audit"></a>
 
 Muitas das ações dos usuários no sistema possuem auditoria, ou seja, são salvas no banco de dados para que seja possível saber quem, fez o quê, quando e onde dentro da aplicação.
@@ -511,13 +525,15 @@ No futuro todos esses dados serão enviados para o DataDog.
 
 O backend utiliza o middleware de rate limiting nativo do próprio ASP.NET para bloquear o uso abusivo da API.
 
-No futuro esse controle deve ser realizado por algum outro componente na Azure.
-
 ## 11 - Documentação <a name="docs"></a>
 
 Grande parte do código possui documentação via XML, que é utilizada tanto pela IDE quanto pelo Swagger para gerar o documento de especificação OpenAPI.
 
 Utilizo o Scalar para ler esse documento e gerar a documentação completa da API.
+
+<p align="center">
+  <img src="./Docs/Readme/11_Scalar.gif" style="display: block; margin: 0 auto" />
+</p>
 
 ## 12 - Real Time <a name="real-time"></a>
 
@@ -541,9 +557,19 @@ Utilizo *Vertical Slices* e *Result Pattern* em praticamente todas as funcionali
 
 ## 15 - Banco de Dados <a name="db"></a>
 
-Toda a estrutura do banco está mepeada no EF Core.
+Toda a estrutura do banco está mepeada no Entity Framework Core.
 
-Podemos ver toda sua evolução no GIF abaixo, indo de 12 tabelas no início do projeto até as 40 atuais.
+Acompanhe a seguir toda a evolução das tabelas:
+
+<p align="center">
+  <img src="./Docs/Readme/15_DatabaseEvolution.gif" style="display: block; margin: 0 auto" />
+</p>
+
+E agora o estado atual do banco (omiti alguns relacionamentos para não poluir o diagrama):
+
+<p align="center">
+  <img src="./Docs/Readme/15_DatabaseTables.gif" style="display: block; margin: 0 auto" />
+</p>
 
 ## 16 - Desenvolvimento <a name="dev"></a>
 

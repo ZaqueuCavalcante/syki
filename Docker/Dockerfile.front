@@ -1,0 +1,33 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+COPY ["SYKI.sln", "."]
+COPY ["Shared/Shared.csproj", "Shared/"]
+COPY ["Front/Front.csproj", "Front/"]
+
+RUN dotnet restore "Front/Front.csproj"
+
+RUN dotnet workload install wasm-tools
+
+RUN apt-get update && apt-get install -y python3 && rm -rf /var/lib/apt/lists/*
+
+COPY . .
+
+WORKDIR "/src/Front"
+RUN dotnet publish "Front.csproj" -c Release -o /app/publish
+
+FROM nginx:alpine AS final
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+
+COPY --from=build /app/publish/wwwroot .
+
+COPY Front/nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=5s \
+  CMD wget -qO- http://localhost/ || exit 1
+
+VOLUME ["/var/cache/nginx", "/var/log/nginx"]

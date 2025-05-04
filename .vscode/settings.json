@@ -1,5 +1,6 @@
 {
     "conventionalCommits.scopes": [
-        "cleaning and adjusting"
+        "cleaning and adjusting",
+        "in-progress"
     ]
 }

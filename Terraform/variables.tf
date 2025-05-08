@@ -1,77 +1,39 @@
-variable "do_token" {
-  description = "DigitalOcean API token"
-  type        = string
-  sensitive   = true
+variable "resource_group_name" {
+  description = "Resource group name for SYKI project"
+  default     = "syki-rg"
 }
 
-variable "project_name" {
-  description = "Project name"
-  type        = string
+variable "location" {
+  description = "Azure region to deploy resources"
+  default     = "brazilsouth"
+}
+
+variable "cluster_name" {
+  description = "Name of the AKS cluster"
+  default     = "syki-aks"
+}
+
+variable "dns_prefix" {
+  description = "DNS prefix for the AKS cluster"
   default     = "syki"
-}
-
-variable "environment" {
-  description = "Environment"
-  type        = string
-  default     = "development"
-}
-
-variable "region" {
-  description = "DigitalOcean region"
-  type        = string
-  default     = "nyc1"
 }
 
 variable "kubernetes_version" {
   description = "Kubernetes version"
-  type        = string
-  default     = "1.28"
+  default     = "1.32.4"
 }
 
-variable "node_pool_size" {
-  description = "Node pool instance size"
-  type        = string
-  default     = "s-1vcpu-2gb"
+variable "acr_name" {
+  description = "Name for the Azure Container Registry"
+  default     = "sykiacr"
 }
 
 variable "node_count" {
-  description = "Number of nodes in the cluster"
-  type        = number
+  description = "Number of nodes in the default AKS node pool"
   default     = 1
 }
 
-variable "db_size" {
-  description = "Database instance size"
-  type        = string
-  default     = "db-s-1vcpu-1gb"
-}
-
-variable "postgres_user" {
-  description = "Database username"
-  type        = string
-}
-
-variable "postgres_password" {
-  description = "Password for PostgreSQL in container"
-  type        = string
-  sensitive   = true
-}
-
-variable "grafana_password" {
-  description = "Grafana admin password"
-  type        = string
-  sensitive   = true
-  default     = "admin"
-}
-
-variable "enable_cdn" {
-  description = "Enable CDN for frontend"
-  type        = bool
-  default     = false
-}
-
-variable "storage_size" {
-  description = "Storage volume size in GB"
-  type        = number
-  default     = 1
+variable "node_vm_size" {
+  description = "VM size for the AKS nodes"
+  default     = "Standard_DS2_v2"
 }

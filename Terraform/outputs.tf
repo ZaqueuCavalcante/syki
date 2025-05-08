@@ -1,35 +1,44 @@
+output "resource_group_name" {
+  value = azurerm_resource_group.syki.name
+}
+
 output "kubernetes_cluster_name" {
-  value = digitalocean_kubernetes_cluster.primary.name
+  value = azurerm_kubernetes_cluster.syki.name
 }
 
-output "kubernetes_endpoint" {
-  value     = digitalocean_kubernetes_cluster.primary.endpoint
+output "postgresql_password" {
+  value     = random_password.pg_password.result
   sensitive = true
 }
 
-output "kubeconfig" {
-  value     = digitalocean_kubernetes_cluster.primary.kube_config[0].raw_config
+output "grafana_admin_password" {
+  value     = random_password.grafana_password.result
   sensitive = true
 }
 
-output "postgres_service" {
-  value = kubernetes_service.postgres.metadata[0].name
+output "front_service_ip" {
+  value = kubernetes_service.front.status[0].load_balancer[0].ingress[0].ip
 }
 
-output "postgres_connection_string" {
-  value     = "postgresql://${var.project_name}_user:${var.postgres_password}@postgres.${kubernetes_namespace.app.metadata[0].name}.svc.cluster.local:5432/${var.project_name}_db"
-  sensitive = true
+output "grafana_access_instructions" {
+  value = "Para acessar o Grafana, execute: kubectl get svc -n monitoring prometheus-grafana -o jsonpath='{.status.loadBalancer.ingress[0].ip}'"
+  description = "Instruções para obter o endereço IP do Grafana"
+  depends_on = [helm_release.prometheus]
 }
 
-output "k8s_node_ip" {
-  value = "Execute: kubectl get nodes -o wide para obter o IP do nó para acesso via NodePort"
+output "kubernetes_command" {
+  value = "az aks get-credentials --resource-group ${azurerm_resource_group.syki.name} --name ${azurerm_kubernetes_cluster.syki.name}"
 }
 
-output "grafana_nodeport" {
-  value = "Exponha o Grafana com: kubectl port-forward svc/prometheus-grafana 3000:80 -n monitoring"
+output "container_registry_login_server" {
+  value = azurerm_container_registry.acr.login_server
 }
 
-output "db_connection_string" {
-  value     = "postgresql://${digitalocean_database_user.app_user.name}:${digitalocean_database_user.app_user.password}@${digitalocean_database_cluster.postgres.host}:${digitalocean_database_cluster.postgres.port}/${var.project_name}_db?sslmode=require"
+output "container_registry_admin_username" {
+  value = azurerm_container_registry.acr.admin_username
+}
+
+output "container_registry_admin_password" {
+  value     = azurerm_container_registry.acr.admin_password
   sensitive = true
 }

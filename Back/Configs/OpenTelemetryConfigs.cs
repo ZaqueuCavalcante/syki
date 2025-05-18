@@ -1,6 +1,7 @@
 using Npgsql;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
+using Sentry.OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
@@ -12,6 +13,8 @@ public static class OpenTelemetryConfigs
     {
         if (Env.IsTesting()) return;
 
+        var settins = new SentrySettings(builder.Configuration);
+
         builder.Services
             .AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddService("SykiAPI"))
@@ -21,12 +24,13 @@ public static class OpenTelemetryConfigs
                     .AddNpgsqlInstrumentation()
                     .AddRuntimeInstrumentation()
                     .AddAspNetCoreInstrumentation();
-                
+
                 metrics.AddOtlpExporter();
             })
             .WithTracing(tracing =>
             {
                 tracing
+                    .AddSentry()
                     .AddNpgsql()
                     .AddAspNetCoreInstrumentation()
                     .AddEntityFrameworkCoreInstrumentation();
@@ -37,5 +41,13 @@ public static class OpenTelemetryConfigs
             {
                 logging.AddOtlpExporter();
             });
+
+        builder.WebHost.UseSentry(options =>
+        {
+            options.Dsn = settins.Dsn;
+            options.UseOpenTelemetry();
+            options.SendDefaultPii = true;
+            options.TracesSampleRate = settins.TracesSampleRate;
+        });
     }
 }

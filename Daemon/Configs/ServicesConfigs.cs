@@ -8,7 +8,6 @@ using Syki.Back.Features.Academic.StartClasses;
 using Syki.Back.Features.Academic.CreateTeacher;
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.FinalizeClasses;
-using Syki.Back.Features.Teacher.AddClassActivityNote;
 using Syki.Back.Features.Cross.SendResetPasswordToken;
 using Syki.Back.Features.Teacher.CreateLessonAttendance;
 using Syki.Back.Features.Student.CreateStudentEnrollment;

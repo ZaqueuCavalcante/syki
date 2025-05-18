@@ -27,6 +27,7 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
 
             ctx.Attach(command);
             await ctx.Database.BeginTransactionAsync();
+            ctx.Database.AutoSavepointsEnabled = false;
 
             dynamic data = GetData(command);
             dynamic handler = GetHandler(scope, command);
@@ -74,7 +75,7 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
         WHERE id IN (
             SELECT id
             FROM syki.commands
-            WHERE processor_id IS NULL AND status = 'Pending'
+            WHERE processor_id IS NULL
             ORDER BY created_at
             FOR UPDATE SKIP LOCKED
             LIMIT 100

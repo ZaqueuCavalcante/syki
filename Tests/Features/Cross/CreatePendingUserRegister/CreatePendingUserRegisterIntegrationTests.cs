@@ -72,19 +72,20 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        const string email = "zaqueu.648618168711@syki.com";
-        const string email2 = "ZaqueU.648618168711@syki.com";
+        var email = TestData.Email;
+        var emailLow = $"a{email}";
+        var emailUpper = $"A{email}";
 
         // Act
-        var firstResponse = await client.CreatePendingUserRegister(email);
-        var secondResponse = await client.CreatePendingUserRegister(email2);
+        var firstResponse = await client.CreatePendingUserRegister(emailLow);
+        var secondResponse = await client.CreatePendingUserRegister(emailUpper);
 
         // Assert
         firstResponse.ShouldBeSuccess();
         secondResponse.ShouldBeError(new EmailAlreadyUsed());
 
         using var ctx = _api.GetDbContext();
-        var registers = await ctx.UserRegisters.Where(x => x.Email == email).ToListAsync();
+        var registers = await ctx.UserRegisters.Where(x => x.Email == emailLow).ToListAsync();
         registers.Should().ContainSingle();
     }
 

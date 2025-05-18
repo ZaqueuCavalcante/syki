@@ -11,6 +11,7 @@ public class DbContextTransactionFilter : TypeFilterAttribute
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            sykiDbContext.Database.AutoSavepointsEnabled = false;
             await using var transaction = await sykiDbContext.Database.BeginTransactionAsync();
 
             try

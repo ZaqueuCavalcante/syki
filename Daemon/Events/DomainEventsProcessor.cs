@@ -21,6 +21,7 @@ public class DomainEventsProcessor(IServiceScopeFactory serviceScopeFactory)
         if (events.Count == 0) return;
 
         await ctx.Database.BeginTransactionAsync();
+        ctx.Database.AutoSavepointsEnabled = false;
         var sw = Stopwatch.StartNew();
 
         foreach (var evt in events)

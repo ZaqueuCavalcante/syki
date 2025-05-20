@@ -1,4 +1,13 @@
 #cloud-config
+write_files:
+  - path: /etc/resolv.conf
+    content: |
+      nameserver 8.8.8.8
+      nameserver 8.8.4.4
+    permissions: '0644'
+    owner: root:root
+    defer: false
+
 package_update: true
 package_upgrade: true
 
@@ -7,8 +16,13 @@ packages:
   - ca-certificates
   - curl
   - software-properties-common
+  - git
 
 runcmd:
+  # Garantir resolução DNS correta
+  - echo "nameserver 8.8.8.8" > /etc/resolv.conf
+  - echo "nameserver 8.8.4.4" >> /etc/resolv.conf
+
   # Install Docker
   - curl -fsSL https://get.docker.com -o get-docker.sh
   - sh get-docker.sh
@@ -20,6 +34,8 @@ runcmd:
 
   # Create volumes
   - docker volume create pgdata
+  - docker volume create grafana-data
+  - docker volume create prometheus-data
 
   # Run PostgreSQL
   - |
@@ -39,15 +55,23 @@ runcmd:
       --health-timeout=10s \
       --health-retries=5 \
       --health-start-period=10s \
+      --restart unless-stopped \
       postgres:17.4-alpine3.21 \
       postgres -c max_connections=1500 -c max_prepared_transactions=64 -c log_statement=all
 
   # Clone repository and build images
   - git clone https://github.com/GuttoF/syki-devops.git /opt/syki
   - cd /opt/syki
-  - docker build -t syki-back -f Docker/Dockerfile.back .
-  - docker build -t syki-front -f Docker/Dockerfile.front .
-  - docker build -t syki-daemon -f Docker/Dockerfile.daemon .
+  - docker build -t syki-back:latest -f Docker/Dockerfile.back .
+  - docker build -t syki-front:latest -f Docker/Dockerfile.front .
+  - docker build -t syki-daemon:latest -f Docker/Dockerfile.daemon .
+
+  # Wait for DB to be ready
+  - |
+    until docker exec db pg_isready -U postgres -h localhost; do
+      echo "Waiting for database connection..."
+      sleep 5
+    done
 
   # Run backend
   - |
@@ -62,7 +86,8 @@ runcmd:
       --health-cmd="curl -f http://localhost:8080/health || exit 1" \
       --health-interval=30s \
       --health-timeout=5s \
-      syki-back
+      --restart unless-stopped \
+      syki-back:latest
 
   # Run frontend
   - |
@@ -72,7 +97,8 @@ runcmd:
       -p 5002:80 \
       --cpus=0.3 \
       --memory=256m \
-      syki-front
+      --restart unless-stopped \
+      syki-front:latest
 
   # Run daemon
   - |
@@ -84,11 +110,23 @@ runcmd:
       -p 5003:8080 \
       --cpus=0.5 \
       --memory=512m \
-      syki-daemon
+      --restart unless-stopped \
+      syki-daemon:latest
 
-  # Setup monitoring
-  - docker volume create grafana-data
-  - docker volume create prometheus-data
+  # Prometheus
+  - mkdir -p /opt/prometheus
+  - |
+    cat > /opt/prometheus/prometheus.yml << EOF
+    global:
+      scrape_interval: 15s
+    scrape_configs:
+      - job_name: 'back'
+        static_configs:
+          - targets: ['back:8080']
+      - job_name: 'daemon'
+        static_configs:
+          - targets: ['daemon:8080']
+    EOF
 
   # Run Prometheus
   - |
@@ -96,8 +134,10 @@ runcmd:
       --name prometheus \
       --network sykinet \
       -v prometheus-data:/prometheus \
+      -v /opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml \
       -p 9090:9090 \
-      prom/prometheus:latest
+      --restart unless-stopped \
+      prom/prometheus:v2.45.0
 
   # Run Grafana
   - |
@@ -107,4 +147,9 @@ runcmd:
       -p 3000:3000 \
       -e "GF_SECURITY_ADMIN_PASSWORD=${grafana_admin_password}" \
       -v grafana-data:/var/lib/grafana \
-      grafana/grafana:latest
+      --restart unless-stopped \
+      grafana/grafana:10.0.3
+
+  - sleep 10
+  - docker ps -a
+  - echo "Deployment completed successfully at $(date)"

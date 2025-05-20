@@ -89,89 +89,9 @@ services:
           cpus: '0.5'
           memory: 512M
 
-  prometheus:
-    image: prom/prometheus:v2.50.1
-    container_name: prometheus
-    restart: unless-stopped
-    volumes:
-      - ./prometheus:/etc/prometheus
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
-    ports:
-      - '9090:9090'
-    networks:
-      - sykinet
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-
-  loki:
-    image: grafana/loki:2.9.5
-    container_name: loki
-    restart: unless-stopped
-    ports:
-      - '3100:3100'
-    volumes:
-      - ./loki:/etc/loki
-      - loki_data:/loki
-    command: -config.file=/etc/loki/loki-config.yml
-    networks:
-      - sykinet
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-
-  promtail:
-    image: grafana/promtail:2.9.5
-    container_name: promtail
-    restart: unless-stopped
-    volumes:
-      - ./promtail:/etc/promtail
-      - /var/log:/var/log
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-    command: -config.file=/etc/promtail/promtail-config.yml
-    networks:
-      - sykinet
-    deploy:
-      resources:
-        limits:
-          cpus: '0.3'
-          memory: 256M
-
-  grafana:
-    image: grafana/grafana:10.3.3
-    container_name: grafana
-    restart: unless-stopped
-    ports:
-      - '3000:3000'
-    volumes:
-      - grafana_data:/var/lib/grafana
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_USERS_ALLOW_SIGN_UP=false
-    networks:
-      - sykinet
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-
 networks:
   sykinet:
     driver: bridge
 
 volumes:
   pgdata:
-  prometheus_data:
-  loki_data:
-  grafana_data:

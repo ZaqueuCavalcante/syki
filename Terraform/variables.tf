@@ -1,39 +1,28 @@
-variable "resource_group_name" {
-  description = "Resource group name for SYKI project"
-  default     = "syki-rg"
+variable "do_token" {
+  description = "DigitalOcean API Token"
+  type        = string
+  sensitive   = true
 }
 
-variable "location" {
-  description = "Azure region to deploy resources"
-  default     = "brazilsouth"
+variable "region" {
+  description = "DigitalOcean region"
+  type        = string
+  default     = "nyc1"
 }
 
-variable "cluster_name" {
-  description = "Name of the AKS cluster"
-  default     = "syki-aks"
+variable "postgres_password" {
+  description = "PostgreSQL password"
+  type        = string
+  default     = "postgres"
 }
 
-variable "dns_prefix" {
-  description = "DNS prefix for the AKS cluster"
-  default     = "syki"
+variable "grafana_admin_password" {
+  description = "Grafana admin password"
+  type        = string
+  default     = "admin"
 }
 
-variable "kubernetes_version" {
-  description = "Kubernetes version"
-  default     = "1.32.4"
-}
-
-variable "acr_name" {
-  description = "Name for the Azure Container Registry"
-  default     = "sykiacr"
-}
-
-variable "node_count" {
-  description = "Number of nodes in the default AKS node pool"
-  default     = 1
-}
-
-variable "node_vm_size" {
-  description = "VM size for the AKS nodes"
-  default     = "Standard_DS2_v2"
+variable "ssh_key_name" {
+  description = "Name of SSH key in DigitalOcean"
+  type        = string
 }

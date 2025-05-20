@@ -1,0 +1,110 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - software-properties-common
+
+runcmd:
+  # Install Docker
+  - curl -fsSL https://get.docker.com -o get-docker.sh
+  - sh get-docker.sh
+  - systemctl enable docker
+  - systemctl start docker
+
+  # Create Docker network
+  - docker network create sykinet
+
+  # Create volumes
+  - docker volume create pgdata
+
+  # Run PostgreSQL
+  - |
+    docker run -d \
+      --name db \
+      --hostname db_host \
+      --network sykinet \
+      -e POSTGRES_DB=syki-db \
+      -e POSTGRES_USER=postgres \
+      -e POSTGRES_PASSWORD=${postgres_password} \
+      -p 5432:5432 \
+      --cpus=1 \
+      --memory=1g \
+      -v pgdata:/var/lib/postgresql/data \
+      --health-cmd="pg_isready -U postgres -d syki-db -h localhost" \
+      --health-interval=5s \
+      --health-timeout=10s \
+      --health-retries=5 \
+      --health-start-period=10s \
+      postgres:17.4-alpine3.21 \
+      postgres -c max_connections=1500 -c max_prepared_transactions=64 -c log_statement=all
+
+  # Clone repository and build images
+  - git clone https://github.com/seu-repo/syki-devops.git /opt/syki
+  - cd /opt/syki
+  - docker build -t syki-back -f Docker/Dockerfile.back .
+  - docker build -t syki-front -f Docker/Dockerfile.front .
+  - docker build -t syki-daemon -f Docker/Dockerfile.daemon .
+
+  # Run backend
+  - |
+    docker run -d \
+      --name back \
+      --network sykinet \
+      -e ASPNETCORE_ENVIRONMENT=Development \
+      -e "Database__ConnectionString=UserID=postgres;Password=${postgres_password};Host=db_host;Port=5432;Database=syki-db;Pooling=true;" \
+      -p 5001:8080 \
+      --cpus=0.5 \
+      --memory=512m \
+      --health-cmd="curl -f http://localhost:8080/health || exit 1" \
+      --health-interval=30s \
+      --health-timeout=5s \
+      syki-back
+
+  # Run frontend
+  - |
+    docker run -d \
+      --name front \
+      --network sykinet \
+      -p 5002:80 \
+      --cpus=0.3 \
+      --memory=256m \
+      syki-front
+
+  # Run daemon
+  - |
+    docker run -d \
+      --name daemon \
+      --network sykinet \
+      -e ASPNETCORE_ENVIRONMENT=Development \
+      -e "Database__ConnectionString=UserID=postgres;Password=${postgres_password};Host=db_host;Port=5432;Database=syki-db;Pooling=true;Keepalive=60;" \
+      -p 5003:8080 \
+      --cpus=0.5 \
+      --memory=512m \
+      syki-daemon
+
+  # Setup monitoring
+  - docker volume create grafana-data
+  - docker volume create prometheus-data
+
+  # Run Prometheus
+  - |
+    docker run -d \
+      --name prometheus \
+      --network sykinet \
+      -v prometheus-data:/prometheus \
+      -p 9090:9090 \
+      prom/prometheus:latest
+
+  # Run Grafana
+  - |
+    docker run -d \
+      --name grafana \
+      --network sykinet \
+      -p 3000:3000 \
+      -e "GF_SECURITY_ADMIN_PASSWORD=${grafana_admin_password}" \
+      -v grafana-data:/var/lib/grafana \
+      grafana/grafana:latest

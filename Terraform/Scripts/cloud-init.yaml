@@ -43,7 +43,7 @@ runcmd:
       postgres -c max_connections=1500 -c max_prepared_transactions=64 -c log_statement=all
 
   # Clone repository and build images
-  - git clone https://github.com/seu-repo/syki-devops.git /opt/syki
+  - git clone https://github.com/GuttoF/syki-devops.git /opt/syki
   - cd /opt/syki
   - docker build -t syki-back -f Docker/Dockerfile.back .
   - docker build -t syki-front -f Docker/Dockerfile.front .

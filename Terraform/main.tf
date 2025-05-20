@@ -5,7 +5,7 @@ resource "digitalocean_droplet" "app" {
   size     = "s-1vcpu-1gb"
   ssh_keys = [data.digitalocean_ssh_key.main.id]
 
-  user_data = templatefile("${path.module}/scripts/cloud-init.yaml", {
+  user_data = templatefile("${path.module}/Scripts/cloud-init.yaml", {
     postgres_password      = var.postgres_password
     grafana_admin_password = var.grafana_admin_password
   })

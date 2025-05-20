@@ -19,13 +19,13 @@ packages:
   - git
 
 runcmd:
-  # Garantir resolução DNS correta
+
   - echo "nameserver 8.8.8.8" > /etc/resolv.conf
   - echo "nameserver 8.8.4.4" >> /etc/resolv.conf
 
   # Install Docker
-  - curl -fsSL https://get.docker.com -o get-docker.sh
-  - sh get-docker.sh
+  - curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
+  - bash /tmp/get-docker.sh
   - systemctl enable docker
   - systemctl start docker
 

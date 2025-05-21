@@ -1,12 +1,4 @@
 #cloud-config
-write_files:
-  - path: /etc/resolv.conf
-    content: |
-      nameserver 8.8.8.8
-      nameserver 8.8.4.4
-    permissions: '0644'
-    owner: root:root
-    defer: false
 package_update: true
 package_upgrade: true
 packages:
@@ -18,27 +10,22 @@ packages:
 runcmd:
   - exec > >(tee -a /var/log/cloud-init-custom.log) 2>&1
   - echo "===== Início da execução do script de configuração: $(date) ====="
-  
   - echo "Memória disponível: $(free -m | grep Mem | awk '{print $2}')MB"
   - echo "Espaço em disco: $(df -h / | grep / | awk '{print $4}')"
-  
   - echo "Instalando Docker..."
   - curl -fsSL https://get.docker.com -o /tmp/get-docker.sh || { echo "ERRO: Falha ao baixar script Docker"; exit 1; }
   - bash /tmp/get-docker.sh || { echo "ERRO: Falha ao instalar Docker"; exit 1; }
   - systemctl enable docker || echo "AVISO: Falha ao habilitar serviço Docker"
   - systemctl start docker || { echo "ERRO: Falha ao iniciar Docker"; exit 1; }
   - docker --version || { echo "ERRO: Docker não instalado corretamente"; exit 1; }
-  
   - echo "Criando rede Docker 'sykinet'..."
   - docker network create sykinet || echo "AVISO: Rede já pode existir ou houve erro"
   - docker network ls | grep sykinet || { echo "ERRO: Rede sykinet não criada"; exit 1; }
-  
   - echo "Criando volumes Docker..."
   - docker volume create pgdata || echo "AVISO: Volume pgdata já pode existir"
   - docker volume create grafana-data || echo "AVISO: Volume grafana-data já pode existir"
   - docker volume create prometheus-data || echo "AVISO: Volume prometheus-data já pode existir"
   - docker volume ls || { echo "ERRO: Falha ao listar volumes"; exit 1; }
-  
   - |
     echo "Iniciando PostgreSQL..."
     docker run -d \
@@ -64,7 +51,6 @@ runcmd:
     echo "Container do PostgreSQL iniciado. Verificando status..."
     sleep 10
     docker ps | grep db || { echo "ERRO: Container do PostgreSQL não está rodando"; exit 1; }
-  
   - echo "Clonando repositório..."
   - git clone https://github.com/GuttoF/syki-devops.git /opt/syki || { echo "ERRO: Falha ao clonar repositório"; exit 1; }
   - cd /opt/syki || { echo "ERRO: Diretório do projeto não encontrado"; exit 1; }
@@ -72,7 +58,6 @@ runcmd:
   - ls -la
   - echo "Verificando Dockerfiles:"
   - ls -la Docker/
-  
   - echo "Construindo imagem backend..."
   - docker build -t syki-back:latest -f Docker/Dockerfile.back . || { echo "ERRO: Falha na construção do backend"; exit 1; }
   - echo "Construindo imagem frontend..."
@@ -81,7 +66,6 @@ runcmd:
   - docker build -t syki-daemon:latest -f Docker/Dockerfile.daemon . || { echo "ERRO: Falha na construção do daemon"; exit 1; }
   - echo "Verificando imagens construídas:"
   - docker images | grep syki
-  
   - |
     echo "Aguardando banco de dados ficar disponível..."
     timeout=180
@@ -99,7 +83,6 @@ runcmd:
     fi
     
     echo "Banco de dados está disponível!"
-  
   - |
     echo "Iniciando backend..."
     docker run -d \
@@ -119,7 +102,6 @@ runcmd:
     echo "Backend iniciado. Verificando status..."
     sleep 10
     docker ps | grep back || { echo "ERRO: Container do backend não está rodando"; exit 1; }
-  
   - |
     echo "Iniciando frontend..."
     docker run -d \
@@ -134,7 +116,6 @@ runcmd:
     echo "Frontend iniciado. Verificando status..."
     sleep 10
     docker ps | grep front || { echo "ERRO: Container do frontend não está rodando"; exit 1; }
-  
   - |
     echo "Iniciando daemon..."
     docker run -d \
@@ -151,7 +132,6 @@ runcmd:
     echo "Daemon iniciado. Verificando status..."
     sleep 10
     docker ps | grep daemon || { echo "ERRO: Container do daemon não está rodando"; exit 1; }
-  
   - |
     echo "Configurando Prometheus..."
     mkdir -p /opt/prometheus
@@ -166,7 +146,6 @@ runcmd:
         static_configs:
           - targets: ['daemon:8080']
     EOF
-  
   - |
     echo "Iniciando Prometheus..."
     docker run -d \
@@ -181,7 +160,6 @@ runcmd:
     echo "Prometheus iniciado. Verificando status..."
     sleep 10
     docker ps | grep prometheus || { echo "ERRO: Container do Prometheus não está rodando"; exit 1; }
-  
   - |
     echo "Iniciando Grafana..."
     docker run -d \
@@ -196,7 +174,6 @@ runcmd:
     echo "Grafana iniciado. Verificando status..."
     sleep 10
     docker ps | grep grafana || { echo "ERRO: Container do Grafana não está rodando"; exit 1; }
-  
   - echo "Verificando status de todos os contêineres:"
   - docker ps -a
   - echo "===== Deployment concluído com sucesso em $(date) ====="

@@ -1,0 +1,20 @@
+- name: Deploy SYKI Application
+  hosts: all
+  become: true
+  
+  roles:
+    - common
+    - docker
+    - database
+    - application
+    - monitoring
+
+  post_tasks:
+    - name: Mostrar URLs dos serviços
+      debug:
+        msg: 
+          - "Frontend: http://{{ ansible_host }}:5002"
+          - "Backend: http://{{ ansible_host }}:5001"
+          - "Daemon: http://{{ ansible_host }}:5003"
+          - "Grafana: http://{{ ansible_host }}:3000"
+          - "Database: {{ ansible_host }}:5432"

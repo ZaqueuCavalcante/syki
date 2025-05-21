@@ -26,3 +26,8 @@ variable "ssh_key_name" {
   description = "Name of SSH key in DigitalOcean"
   type        = string
 }
+
+variable "ssh_private_key_path" {
+  description = "Caminho para a chave privada SSH"
+  type        = string
+}

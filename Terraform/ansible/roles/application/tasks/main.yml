@@ -1,0 +1,79 @@
+- name: Clonar repositório
+  git:
+    repo: https://github.com/GuttoF/syki-devops.git
+    dest: /opt/syki
+    clone: yes
+    update: yes
+
+- name: Construir imagem backend
+  community.docker.docker_image:
+    name: syki-back
+    tag: latest
+    build:
+      path: /opt/syki
+      dockerfile: Docker/Dockerfile.back
+    source: build
+
+- name: Construir imagem frontend
+  community.docker.docker_image:
+    name: syki-front
+    tag: latest
+    build:
+      path: /opt/syki
+      dockerfile: Docker/Dockerfile.front
+    source: build
+
+- name: Construir imagem daemon
+  community.docker.docker_image:
+    name: syki-daemon
+    tag: latest
+    build:
+      path: /opt/syki
+      dockerfile: Docker/Dockerfile.daemon
+    source: build
+
+- name: Iniciar container backend
+  community.docker.docker_container:
+    name: back
+    image: syki-back:latest
+    networks:
+      - name: "{{ docker_network_name }}"
+    env:
+      ASPNETCORE_ENVIRONMENT: Development
+      Database__ConnectionString: "UserID=postgres;Password={{ postgres_password }};Host=db_host;Port=5432;Database=syki-db;Pooling=true;"
+    ports:
+      - "5001:8080"
+    cpus: 0.5
+    memory: 512m
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health", "||", "exit", "1"]
+      interval: 30s
+      timeout: 5s
+    restart_policy: unless-stopped
+
+- name: Iniciar container frontend
+  community.docker.docker_container:
+    name: front
+    image: syki-front:latest
+    networks:
+      - name: "{{ docker_network_name }}"
+    ports:
+      - "5002:80"
+    cpus: 0.3
+    memory: 256m
+    restart_policy: unless-stopped
+
+- name: Iniciar container daemon
+  community.docker.docker_container:
+    name: daemon
+    image: syki-daemon:latest
+    networks:
+      - name: "{{ docker_network_name }}"
+    env:
+      ASPNETCORE_ENVIRONMENT: Development
+      Database__ConnectionString: "UserID=postgres;Password={{ postgres_password }};Host=db_host;Port=5432;Database=syki-db;Pooling=true;Keepalive=60;"
+    ports:
+      - "5003:8080"
+    cpus: 0.5
+    memory: 512m
+    restart_policy: unless-stopped

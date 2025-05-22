@@ -1,0 +1,34 @@
+- name: Iniciar container PostgreSQL
+  community.docker.docker_container:
+    name: db
+    hostname: db_host
+    image: postgres:17.4-alpine3.21
+    networks:
+      - name: "{{ docker_network_name }}"
+    env:
+      POSTGRES_DB: syki-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "{{ postgres_password }}"
+    ports:
+      - "5432:5432"
+    cpus: 1
+    memory: 1g
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "syki-db", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart_policy: unless-stopped
+    command: postgres -c max_connections=1500 -c max_prepared_transactions=64 -c log_statement=all
+    
+- name: Aguardar PostgreSQL ficar disponível
+  community.docker.docker_container_exec:
+    container: db
+    command: pg_isready -U postgres -h localhost
+  register: result
+  until: result.rc == 0
+  retries: 30
+  delay: 5

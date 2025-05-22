@@ -1,0 +1,38 @@
+- name: Criar diretório para configurações do Prometheus
+  file:
+    path: /opt/prometheus
+    state: directory
+    mode: '0755'
+
+- name: Configurar Prometheus
+  template:
+    src: prometheus.yml.j2
+    dest: /opt/prometheus/prometheus.yml
+    mode: '0644'
+
+- name: Iniciar container Prometheus
+  community.docker.docker_container:
+    name: prometheus
+    image: prom/prometheus:v2.45.0
+    networks:
+      - name: "{{ docker_network_name }}"
+    volumes:
+      - prometheus-data:/prometheus
+      - /opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    restart_policy: unless-stopped
+
+- name: Iniciar container Grafana
+  community.docker.docker_container:
+    name: grafana
+    image: grafana/grafana:10.0.3
+    networks:
+      - name: "{{ docker_network_name }}"
+    ports:
+      - "3000:3000"
+    env:
+      GF_SECURITY_ADMIN_PASSWORD: "{{ grafana_admin_password }}"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart_policy: unless-stopped

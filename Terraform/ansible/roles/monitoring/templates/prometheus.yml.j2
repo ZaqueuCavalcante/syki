@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: 'back'
+    static_configs:
+      - targets: ['back:8080']
+  - job_name: 'daemon'
+    static_configs:
+      - targets: ['daemon:8080']

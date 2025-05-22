@@ -31,7 +31,7 @@ services:
     container_name: back
     build:
       context: .
-      dockerfile: Docker/Dockerfile.back
+      dockerfile: Dockerfile.back-dev
     restart: unless-stopped
     depends_on:
       db:
@@ -53,7 +53,7 @@ services:
     container_name: front
     build:
       context: .
-      dockerfile: Docker/Dockerfile.front
+      dockerfile: Dockerfile.front-dev
     restart: unless-stopped
     depends_on:
       - back
@@ -71,7 +71,7 @@ services:
     container_name: daemon
     build:
       context: .
-      dockerfile: Docker/Dockerfile.daemon
+      dockerfile: Dockerfile.daemon-dev
     restart: unless-stopped
     depends_on:
       db:

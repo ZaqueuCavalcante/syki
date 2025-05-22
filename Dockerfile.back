@@ -1,0 +1,13 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet restore "./Back/Back.csproj"
+RUN dotnet publish "./Back/Back.csproj" -c release -o /app --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0
+WORKDIR /app
+COPY --from=build /app ./
+
+EXPOSE 5001
+
+ENTRYPOINT [ "dotnet", "Back.dll" ]

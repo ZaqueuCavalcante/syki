@@ -1,11 +1,12 @@
 using Dapper;
 using Npgsql;
-using Hangfire;
 
 namespace Syki.Daemon.Events;
 
-public class DomainEventsProcessorDbListener(IConfiguration configuration) : BackgroundService
+public class DomainEventsProcessorDbListener(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory) : BackgroundService
 {
+    private readonly SemaphoreSlim _throttler = new(5);
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         await using var connection = new NpgsqlConnection(configuration.Database().ConnectionString);
@@ -13,9 +14,26 @@ public class DomainEventsProcessorDbListener(IConfiguration configuration) : Bac
 
         await CreateTrigger(connection);
 
-        connection.Notification += (o, e) =>
+        connection.Notification += async (o, e) =>
         {
-            BackgroundJob.Enqueue<DomainEventsProcessor>(x => x.Run());
+            await _throttler.WaitAsync(stoppingToken);
+
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    var processor = new DomainEventsProcessor(serviceScopeFactory);
+                    await processor.Run();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error processing domain event: {ex.Message}");
+                }
+                finally
+                {
+                    _throttler.Release();
+                }
+            }, CancellationToken.None);
         };
 
         await using (var cmd = new NpgsqlCommand("LISTEN new_domain_event;", connection))

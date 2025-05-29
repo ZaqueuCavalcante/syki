@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Diagnostics;
 using Syki.Back.Database;
+using System.Collections.Concurrent;
 
 namespace Syki.Daemon.Commands;
 
@@ -55,16 +56,18 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
         await Process(scope, ctx, processorId);
     }
 
+    private static readonly ConcurrentDictionary<string, Type> _types = new();
     private static dynamic GetData(Command command)
     {
-        var type = typeof(Command).Assembly.GetType(command.Type)!;
+        var type = _types.GetOrAdd(command.Type, typeof(Command).Assembly.GetType(command.Type)!);
         dynamic data = JsonConvert.DeserializeObject(command.Data, type)!;
         return data;
     }
 
+    private static readonly ConcurrentDictionary<string, Type> _handlers = new();
     private static dynamic GetHandler(IServiceScope scope, Command command)
     {
-        var handlerType = typeof(ICommand).Assembly.GetType($"{command.Type}Handler")!;
+        var handlerType = _handlers.GetOrAdd(command.Type, typeof(ICommand).Assembly.GetType($"{command.Type}Handler")!);
         dynamic handler = scope.ServiceProvider.GetRequiredService(handlerType);
         return handler;
     }

@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using Syki.Back.Events;
 using System.Diagnostics;
 using Syki.Back.Database;
+using System.Collections.Concurrent;
 
 namespace Syki.Daemon.Events;
 
@@ -50,16 +51,18 @@ public class DomainEventsProcessor(IServiceScopeFactory serviceScopeFactory)
         await Process(scope, ctx, processorId);
     }
 
+    private static readonly ConcurrentDictionary<string, Type> _types = new();
     private static dynamic GetData(DomainEvent evt)
     {
-        var type = typeof(DomainEvent).Assembly.GetType(evt.Type)!;
+        var type = _types.GetOrAdd(evt.Type, typeof(DomainEvent).Assembly.GetType(evt.Type)!);
         dynamic data = JsonConvert.DeserializeObject(evt.Data, type)!;
         return data;
     }
 
+    private static readonly ConcurrentDictionary<string, Type> _handlers = new();
     private static dynamic GetHandler(IServiceScope scope, DomainEvent evt)
     {
-        var handlerType = typeof(IDomainEvent).Assembly.GetType($"{evt.Type}Handler")!;
+        var handlerType = _handlers.GetOrAdd(evt.Type, typeof(IDomainEvent).Assembly.GetType($"{evt.Type}Handler")!);
         dynamic handler = scope.ServiceProvider.GetRequiredService(handlerType);
         return handler;
     }
@@ -73,7 +76,7 @@ public class DomainEventsProcessor(IServiceScopeFactory serviceScopeFactory)
             WHERE processor_id IS NULL
             ORDER BY occurred_at
             FOR UPDATE SKIP LOCKED
-            LIMIT 1000
+            LIMIT 100
         )
         RETURNING *;
     ";

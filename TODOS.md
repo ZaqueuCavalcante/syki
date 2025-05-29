@@ -17,3 +17,39 @@
 
 - Ja logado, o usuario pode mudar seu user name
 - Eh preciso ter senha? Caso ele queira acessar de outro computador sem precisar logar no seu email
+
+---------------------------------------------------------------------------------------------------
+
+# WebHooks
+
+- Adicionar no README
+
+- Academic pode escolher evento e vincular uma URL pra receber o POST com os dados
+
+- Precisa de algum metodo de autenticacao
+    - API Key
+
+- Um mesmo evento pode ter mais de uma URL inscrita
+
+- Eventos possiveis
+    - StudentCreatedDomainEvent
+    - ClassActivityCreatedDomainEvent
+
+- Retry caso a chamada falhe
+    - Configurar quantas chamadas devem ser feitas
+    - Qual o intervalo entre as chamadas
+
+- Listar todas as chamadas
+    - Sucessos
+    - Erros
+    - Faltam retry
+    - Range de datas
+
+- Dados sobre as chamadas
+    - Quando foi feita
+    - Qual o payload
+    - Quanto tempo levou
+    - Quantas tentativas foram feitas
+    - Quando o evento acorreu (delta entre isso e a chamada)
+
+

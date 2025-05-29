@@ -14,6 +14,12 @@ public class DomainEventsProcessorDbListener(IConfiguration configuration, IServ
 
         await CreateTrigger(connection);
 
+        _ = Task.Run(async () =>
+        {
+            var processor = new DomainEventsProcessor(serviceScopeFactory);
+            await processor.Run();
+        }, CancellationToken.None);
+
         connection.Notification += async (o, e) =>
         {
             await _throttler.WaitAsync(stoppingToken);

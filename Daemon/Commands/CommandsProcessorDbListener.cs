@@ -16,6 +16,12 @@ public class CommandsProcessorDbListener(IConfiguration configuration, IServiceS
         await CreateCommandTrigger(connection);
         await CreateCommandBatchTrigger(connection);
 
+        _ = Task.Run(async () =>
+        {
+            var processor = new CommandsProcessor(serviceScopeFactory);
+            await processor.Run();
+        }, CancellationToken.None);
+
         connection.Notification += async (o, e) =>
         {
             await _throttler.WaitAsync(stoppingToken);

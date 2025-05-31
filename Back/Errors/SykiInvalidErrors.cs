@@ -100,3 +100,13 @@ public class InvalidStudentClassActivityNote : SykiError
     public override string Code { get; set; } = nameof(InvalidStudentClassActivityNote);
     public override string Message { get; set; } = "Nota de atividade inválida.";
 }
+public class InvalidWebhookAuthentication : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidWebhookAuthentication);
+    public override string Message { get; set; } = "Autenticação de webhook inválida.";
+}
+public class InvalidWebhookEventsList : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidWebhookEventsList);
+    public override string Message { get; set; } = "Lista de eventos de webhook inválida.";
+}

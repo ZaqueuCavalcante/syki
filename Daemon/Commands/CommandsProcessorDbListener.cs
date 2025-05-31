@@ -24,7 +24,8 @@ public class CommandsProcessorDbListener(IConfiguration configuration, IServiceS
 
         connection.Notification += async (o, e) =>
         {
-            await _throttler.WaitAsync(stoppingToken);
+            if (!await _throttler.WaitAsync(0, CancellationToken.None))
+                return;
 
             _ = Task.Run(async () =>
             {

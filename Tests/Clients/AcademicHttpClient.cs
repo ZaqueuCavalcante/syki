@@ -30,6 +30,7 @@ using Syki.Front.Features.Academic.UpdateEnrollmentPeriod;
 using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
 using Syki.Front.Features.Academic.ReleaseClassesForEnrollment;
+using Syki.Front.Features.Academic.CreateWebhookSubscription;
 
 namespace Syki.Tests.Clients;
 
@@ -304,6 +305,18 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Finalize(classes);
     }
 
+    public async Task<OneOf<CreateWebhookSubscriptionOut, ErrorOut>> CreateWebhookSubscription(
+        string name = "Aluno Criado",
+        string url = "https://example.com/webhook",
+        List<WebhookEvent> events = null,
+        WebhookAuthenticationType authenticationType = WebhookAuthenticationType.ApiKey,
+        string? apiKey = "z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X"
+    ) {
+        events ??= [WebhookEvent.StudentCreated];
+        var client = new CreateWebhookSubscriptionClient(Http);
+        return await client.Create(name, url, events, authenticationType, apiKey);
+    }
+
     public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()
     {
         var data = new BasicInstitutionTestDto();
@@ -363,7 +376,7 @@ public class AcademicHttpClient(HttpClient http)
             new(data.AdsDisciplines.Poo.Id, 1, 6, 45),
             new(data.AdsDisciplines.IntegratorProjectTwo.Id, 1, 7, 65),
         ]);
-        
+
         data.AdsCourseOffering = await CreateCourseOffering(data.Campus.Id, data.AdsCourse.Id, data.AdsCourseCurriculum.Id, data.AcademicPeriod2.Id, Shift.Noturno);
 
         // Direito
@@ -392,7 +405,7 @@ public class AcademicHttpClient(HttpClient http)
             new(data.DireitoDisciplines.PoliticsAndStateInFocus.Id, 1, 4, 50),
             new(data.DireitoDisciplines.GeneralTheoryOfLaw.Id, 1, 6, 45),
         ]);
-        
+
         data.DireitoCourseOffering = await CreateCourseOffering(data.Campus.Id, data.DireitoCourse.Id, data.DireitoCourseCurriculum.Id, data.AcademicPeriod2.Id, Shift.Noturno);
 
         return data;

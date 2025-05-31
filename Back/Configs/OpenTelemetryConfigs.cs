@@ -11,7 +11,7 @@ public static class OpenTelemetryConfigs
 {
     public static void AddOpenTelemetryConfigs(this WebApplicationBuilder builder)
     {
-        if (Env.IsTesting()) return;
+        if (Env.IsTesting() || Env.IsDevelopment()) return;
 
         var settins = new SentrySettings(builder.Configuration);
 

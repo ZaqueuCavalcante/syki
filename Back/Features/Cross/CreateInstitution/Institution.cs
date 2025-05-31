@@ -1,3 +1,4 @@
+using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateTeacher;
@@ -7,6 +8,7 @@ using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Academic.CreateCourseOffering;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 using Syki.Back.Features.Academic.CreateCourseCurriculum;
+using Syki.Back.Features.Academic.CreateWebhookSubscription;
 
 namespace Syki.Back.Features.Cross.CreateInstitution;
 
@@ -17,11 +19,13 @@ public class Institution : Entity
     public DateTime CreatedAt { get; set; }
     public List<Campus> Campi { get; set; }
     public List<Course> Courses { get; set; }
+    public List<SykiUser> Users { get; set; }
     public List<SykiStudent> Students { get; set; }
     public InstitutionConfigs Configs { get; set; }
     public List<SykiTeacher> Teachers { get; set; }
     public List<Discipline> Disciplines { get; set; }
     public List<Notification> Notifications { get; set; }
+    public List<WebhookSubscription> Webhooks { get; set; }
     public List<CourseOffering> CourseOfferings { get; set; }
     public List<AcademicPeriod> AcademicPeriods { get; set; }
     public List<CourseCurriculum> CourseCurriculums { get; set; }

@@ -81,7 +81,7 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
             WHERE processor_id IS NULL
             ORDER BY created_at
             FOR UPDATE SKIP LOCKED
-            LIMIT 100
+            LIMIT 10
         )
         RETURNING *;
     ";

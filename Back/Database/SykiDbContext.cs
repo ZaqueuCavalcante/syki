@@ -22,6 +22,7 @@ using Syki.Back.Features.Academic.CreateCourseCurriculum;
 using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 using Syki.Back.Features.Student.CreateClassActivityWork;
+using Syki.Back.Features.Academic.CreateWebhookSubscription;
 
 namespace Syki.Back.Database;
 
@@ -44,6 +45,8 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfigurati
     public DbSet<UserNotification> UserNotifications { get; set; }
     public DbSet<UserRegister> UserRegisters { get; set; }
     public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }
+
+    public DbSet<WebhookSubscription> Webhooks { get; set; }
 
     public DbSet<Class> Classes { get; set; }
     public DbSet<SykiTeacher> Teachers { get; set; }

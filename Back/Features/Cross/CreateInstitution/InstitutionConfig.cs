@@ -1,5 +1,3 @@
-using Syki.Back.Features.Cross.CreateUser;
-
 namespace Syki.Back.Features.Cross.CreateInstitution;
 
 public class InstitutionConfig : IEntityTypeConfiguration<Institution>
@@ -43,7 +41,11 @@ public class InstitutionConfig : IEntityTypeConfiguration<Institution>
             .WithOne()
             .HasForeignKey(a => a.InstitutionId);
 
-        institution.HasMany<SykiUser>()
+        institution.HasMany(i => i.Users)
+            .WithOne()
+            .HasForeignKey(u => u.InstitutionId);
+
+        institution.HasMany(i => i.Webhooks)
             .WithOne()
             .HasForeignKey(u => u.InstitutionId);
 

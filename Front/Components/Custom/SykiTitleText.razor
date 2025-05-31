@@ -1,0 +1,15 @@
+﻿@namespace Syki.Front.Components.Custom
+
+<MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.FlexStart" Spacing="1">
+	<MudIcon Icon="@Icon" Size="Size.Small" />
+	<MudText><b>@Text</b></MudText>
+</MudStack>
+
+@code
+{
+	[Parameter]
+	public string Icon { get; set; }
+
+	[Parameter]
+	public string Text { get; set; }
+}

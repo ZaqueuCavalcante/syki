@@ -26,14 +26,25 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateWebhookSubscrip
     public IEnumerable<SwaggerExample<CreateWebhookSubscriptionIn>> GetExamples()
     {
         yield return SwaggerExample.Create(
-			"Aluno criado",
-			new CreateWebhookSubscriptionIn
+            "Aluno criado",
+            new CreateWebhookSubscriptionIn
             {
                 Name = "Aluno criado",
                 Url = "https://webhook.site/my-webhook",
                 AuthenticationType = WebhookAuthenticationType.ApiKey,
                 ApiKey = "z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X",
                 Events = [WebhookEvent.StudentCreated]
+            }
+        );
+        yield return SwaggerExample.Create(
+			"Atividade publicada",
+			new CreateWebhookSubscriptionIn
+            {
+                Name = "Atividade publicada",
+                Url = "https://webhook.site/my-other-webhook",
+                AuthenticationType = WebhookAuthenticationType.ApiKey,
+                ApiKey = "z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X",
+                Events = [WebhookEvent.ClassActivityCreated]
 			}
 		);
     }

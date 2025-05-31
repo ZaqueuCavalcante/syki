@@ -13,8 +13,8 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20250529145953_Webhooks")]
-    partial class Webhooks
+    [Migration("20250531135404_Bootstrap")]
+    partial class Bootstrap
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -960,9 +960,9 @@ namespace Back.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.PrimitiveCollection<int[]>("Events")
+                    b.PrimitiveCollection<string[]>("Events")
                         .IsRequired()
-                        .HasColumnType("integer[]")
+                        .HasColumnType("text[]")
                         .HasColumnName("events");
 
                     b.Property<Guid>("InstitutionId")

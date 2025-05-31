@@ -9,7 +9,7 @@ public class IntegrationTestBase
     protected DaemonFactory _daemon = null!;
 
     [OneTimeSetUp]
-    public void OneTimeSetUp()
+    public async Task OneTimeSetUp()
     {
         Env.SetAsTesting();
 
@@ -19,8 +19,8 @@ public class IntegrationTestBase
 
         if (ctx.HasMissingMigration()) throw new AssertionException("Missing Migration!");
 
-        // await ctx.ResetTestDbAsync();
-        // await _api.RegisterAdm();
+        await ctx.ResetTestDbAsync();
+        await _api.RegisterAdm();
 
         _daemon = new DaemonFactory();
         _daemon.Services.CreateScope();

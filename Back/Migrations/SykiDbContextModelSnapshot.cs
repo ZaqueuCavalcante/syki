@@ -957,9 +957,9 @@ namespace Back.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.PrimitiveCollection<int[]>("Events")
+                    b.PrimitiveCollection<string[]>("Events")
                         .IsRequired()
-                        .HasColumnType("integer[]")
+                        .HasColumnType("text[]")
                         .HasColumnName("events");
 
                     b.Property<Guid>("InstitutionId")

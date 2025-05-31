@@ -24,6 +24,19 @@
 
 - Adicionar no README
 
+- Porque usar webhooks
+    - Uso eficiente de recursos (sem polling)
+    - Real-time updates
+
+- Desvantagens
+    - Erros na hora da notificacao
+    - Possivel perca de updates
+    - Necessidade de mecanismos de retry e de consciliacao de mensagens
+
+- A URL informada pelo cliente deve ser indepotente
+    - Facilita nos casos de retry e consciliacao
+
+
 - Academic pode escolher evento e vincular uma URL pra receber o POST com os dados
 
 - Precisa de algum metodo de autenticacao

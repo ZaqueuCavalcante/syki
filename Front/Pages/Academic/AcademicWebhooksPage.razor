@@ -1,0 +1,73 @@
+﻿@using Syki.Front.Features.Academic.CreateWebhookSubscription
+
+@namespace Syki.Front.Pages.Academic
+
+@page "/academic/webhooks"
+@attribute [Authorize(Roles = "Academic")]
+
+<SykiPageTitle Title="Webhooks" />
+
+<MudContainer Class="my-4 px-4">
+    <SykiPageHeader Icon="@Icons.Material.Filled.Webhook" Title="Webhooks" ButtonText="Novo Webhook" OnClick="@OpenDrawer" />
+    <SykiPageAlert Text="Configure webhooks para receber notificações quando determinados eventos acontecerem no sistema." />
+    <MudContainer Class="px-0 mb-4">
+        <MudDataGrid
+            T="GetWebhooksOut"
+            Class="pa-4"
+            Items="@_webhooks"
+            Dense="true"
+            Hover="true"
+            ReadOnly="true"
+            Loading="@_loading"
+            RowsPerPage="10"
+            FooterClass="d-flex"
+        >
+            <Columns>
+                <PropertyColumn Property="x => x.Name" Title="Nome" />
+                <PropertyColumn Property="x => x.Url" Title="Url" />
+                <PropertyColumn Property="x => x.CreatedAt.ToLocalTime().Format()" Title="Criado em" />
+            </Columns>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiDataGridPager T="GetWebhooksOut"/>
+            </PagerContent>
+        </MudDataGrid>
+    </MudContainer>
+</MudContainer>
+
+<CreateWebhookSubscriptionDrawer @ref="@_drawer" AfterSubmit="LoadData" />
+
+@inject IDialogService DialogService
+@inject GetWebhooksClient GetWebhooksClient
+
+@code
+{
+    private bool _loading;
+    private string _searchString;
+    private List<GetWebhooksOut> _webhooks = [];
+    private CreateWebhookSubscriptionDrawer _drawer = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        _loading = true;
+        _webhooks = await GetWebhooksClient.Get();
+        _loading = false;
+    }
+
+    private async Task OpenDrawer()
+    {
+        await _drawer.Open();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem webhooks cadastrados ainda." : "Nenhum webhook encontrado.";
+    }
+}

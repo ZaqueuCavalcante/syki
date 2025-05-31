@@ -9,6 +9,10 @@ public class WebhookSubscriptionConfig : IEntityTypeConfiguration<WebhookSubscri
         webhookSubscription.HasKey(w => w.Id);
         webhookSubscription.Property(w => w.Id).ValueGeneratedNever();
 
+        webhookSubscription.Property(x => x.Events)
+            .IsRequired()
+            .HasColumnType("text[]");
+
         webhookSubscription.HasOne(w => w.Authentication)
             .WithOne()
             .HasForeignKey<WebhookAuthentication>(w => w.WebhookId)

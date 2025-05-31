@@ -34,4 +34,15 @@ public class WebhookSubscription
             Id = Id,
         };
     }
+
+    public GetWebhooksOut ToGetOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Name = Name,
+            Url = Url,
+            CreatedAt = CreatedAt
+        };
+    }
 }

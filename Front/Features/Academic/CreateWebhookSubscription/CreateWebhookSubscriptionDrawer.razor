@@ -1,0 +1,122 @@
+@namespace Syki.Front.Features.Academic.CreateWebhookSubscription
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+	<MudDrawerHeader Class="justify-space-between">
+		<MudStack Row="true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+			<MudIcon Icon="@Icons.Material.Filled.Add" />
+			<MudText Typo="Typo.h5"><b>Novo Webhook</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+
+    <style>
+        .mud-treeview-item-arrow {
+            width: 0;
+        }
+    </style>
+    <MudGrid Spacing="1" Class="px-6">
+        <MudForm @ref="@_form" Style="width: 100%">
+            <MudItem xs="12">
+                <SykiTitleText Icon="@Icons.Material.Filled.Adjust" Text="Endpoint" />
+                <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" Class="py-2" />
+                <SykiTextField Label="Url" @bind-Value="@_url" />
+            </MudItem>
+
+            <MudItem xs="12" Class="mt-4">
+                <SykiTitleText Icon="@Icons.Material.Filled.NotificationAdd" Text="Notificações" />
+                <MudTreeView T="WebhookEvent" SelectionMode="SelectionMode.MultiSelection" TriState="false" SelectedValues="@_events" SelectedValuesChanged="@OnEventsChanged" CheckBoxColor="Color.Info">
+                    <MudTreeViewItem Value="WebhookEvent.StudentCreated" Text="@WebhookEvent.StudentCreated.GetDescription()" />
+                    <MudTreeViewItem Value="WebhookEvent.ClassActivityCreated" Text="@WebhookEvent.ClassActivityCreated.GetDescription()" />
+                </MudTreeView>
+            </MudItem>
+
+            <MudItem xs="12" Class="mt-4">
+                <SykiTitleText Icon="@Icons.Material.Filled.LockPerson" Text="Autenticação" />
+                <SykiTextField Label="ApiKey" @bind-Value="@_apiKey" Class="pt-2" />
+            </MudItem>
+        </MudForm>
+    </MudGrid>
+
+    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 pt-6">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject NavigationManager Nav
+@inject IBrowserViewportService BrowserViewportService
+@inject CreateWebhookSubscriptionClient CreateWebhookSubscriptionClient
+
+@code
+{
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private bool _open;
+    private string _width = "500px";
+    private Breakpoint _breakpoint;
+    
+    private MudForm _form;
+    private bool _loading;
+
+    private string? _name;
+    private string? _url;
+    private List<WebhookEvent> _events = [];
+    private WebhookAuthenticationType _authenticationType;
+    private string? _apiKey;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "500px";
+    }
+
+    private void OnEventsChanged(IEnumerable<WebhookEvent> values)
+    {
+        _events = values.ToList();
+    }
+
+    public async Task Open()
+    {
+        _open = true;
+        _name = null;
+        _url = null;
+        _events = [];
+        _authenticationType = WebhookAuthenticationType.ApiKey;
+        _apiKey = null;
+
+        await _form?.ResetAsync();
+
+        _loading = false;
+
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+      
+        _loading = true;
+        var response = await CreateWebhookSubscriptionClient.Create(_name!, _url!, _events, _authenticationType, _apiKey);
+        if (response.IsSuccess())
+        {
+            Snackbar.Add("Webhook criado com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.GetError().Message, Severity.Error);
+        }
+        _loading = false;
+    }
+}

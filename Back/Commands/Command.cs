@@ -36,6 +36,8 @@ public class Command
     /// </summary>
     public Guid? BatchId { get; set; }
 
+    public DateTime? NotBefore { get; set; }
+
     public Command() { }
 
     public Command(
@@ -44,7 +46,8 @@ public class Command
         Guid? eventId = null,
         Guid? parentId = null,
         Guid? originalId = null,
-        Guid? batchId = null
+        Guid? batchId = null,
+        int? delaySeconds = null
     ) {
         Id = Guid.NewGuid();
         InstitutionId = institutionId;
@@ -55,6 +58,7 @@ public class Command
         ParentId = parentId;
         OriginalId = originalId;
         BatchId = batchId;
+        NotBefore = delaySeconds != null ? DateTime.UtcNow.AddSeconds(delaySeconds.Value) : null;
     }
 
     public void SetAwaiting()

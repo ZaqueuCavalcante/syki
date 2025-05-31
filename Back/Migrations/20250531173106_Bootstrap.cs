@@ -57,7 +57,8 @@ namespace Back.Migrations
                     event_id = table.Column<Guid>(type: "uuid", nullable: true),
                     parent_id = table.Column<Guid>(type: "uuid", nullable: true),
                     original_id = table.Column<Guid>(type: "uuid", nullable: true),
-                    batch_id = table.Column<Guid>(type: "uuid", nullable: true)
+                    batch_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    not_before = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -669,6 +670,40 @@ namespace Back.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "webhook_calls",
+                schema: "syki",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    institution_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    webhook_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    url = table.Column<string>(type: "text", nullable: false),
+                    payload = table.Column<string>(type: "text", nullable: false),
+                    @event = table.Column<string>(name: "event", type: "text", nullable: false),
+                    status = table.Column<string>(type: "text", nullable: false),
+                    retry_count = table.Column<int>(type: "integer", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_webhook_calls", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_webhook_calls_institutions_institution_id",
+                        column: x => x.institution_id,
+                        principalSchema: "syki",
+                        principalTable: "institutions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_webhook_calls_webhook_subscriptions_webhook_id",
+                        column: x => x.webhook_id,
+                        principalSchema: "syki",
+                        principalTable: "webhook_subscriptions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "course_curriculums__disciplines",
                 schema: "syki",
                 columns: table => new
@@ -787,6 +822,30 @@ namespace Back.Migrations
                         column: x => x.teacher_id,
                         principalSchema: "syki",
                         principalTable: "teachers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "webhook_call_attempts",
+                schema: "syki",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    webhook_call_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    status = table.Column<string>(type: "text", nullable: false),
+                    status_code = table.Column<int>(type: "integer", nullable: false),
+                    response = table.Column<string>(type: "text", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_webhook_call_attempts", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_webhook_call_attempts_webhook_calls_webhook_call_id",
+                        column: x => x.webhook_call_id,
+                        principalSchema: "syki",
+                        principalTable: "webhook_calls",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1332,6 +1391,24 @@ namespace Back.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "ix_webhook_call_attempts_webhook_call_id",
+                schema: "syki",
+                table: "webhook_call_attempts",
+                column: "webhook_call_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_webhook_calls_institution_id",
+                schema: "syki",
+                table: "webhook_calls",
+                column: "institution_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_webhook_calls_webhook_id",
+                schema: "syki",
+                table: "webhook_calls",
+                column: "webhook_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_webhook_subscriptions_institution_id",
                 schema: "syki",
                 table: "webhook_subscriptions",
@@ -1434,6 +1511,10 @@ namespace Back.Migrations
                 schema: "syki");
 
             migrationBuilder.DropTable(
+                name: "webhook_call_attempts",
+                schema: "syki");
+
+            migrationBuilder.DropTable(
                 name: "class_activities",
                 schema: "syki");
 
@@ -1454,7 +1535,7 @@ namespace Back.Migrations
                 schema: "syki");
 
             migrationBuilder.DropTable(
-                name: "webhook_subscriptions",
+                name: "webhook_calls",
                 schema: "syki");
 
             migrationBuilder.DropTable(
@@ -1463,6 +1544,10 @@ namespace Back.Migrations
 
             migrationBuilder.DropTable(
                 name: "course_offerings",
+                schema: "syki");
+
+            migrationBuilder.DropTable(
+                name: "webhook_subscriptions",
                 schema: "syki");
 
             migrationBuilder.DropTable(

@@ -5,7 +5,7 @@ public class CreateWebhookSubscriptionClient(HttpClient http) : IAcademicClient
     public async Task<OneOf<CreateWebhookSubscriptionOut, ErrorOut>> Create(
         string name,
         string url,
-        List<WebhookEvent> events,
+        List<WebhookEventType> events,
         WebhookAuthenticationType AuthenticationType,
         string? apiKey
     ) {

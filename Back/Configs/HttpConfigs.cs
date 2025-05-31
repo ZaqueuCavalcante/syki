@@ -8,13 +8,15 @@ public static class HttpConfigs
 {
     public static void AddHttpConfigs(this WebApplicationBuilder builder)
     {
-        builder.Services.AddControllers().AddJsonOptions(options => 
+        builder.Services.AddControllers().AddJsonOptions(options =>
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
-        
+
         builder.Services.AddSignalR();
+        
+        builder.Services.AddHttpClient();
     }
 
     public static void UseExceptions(this IApplicationBuilder app)

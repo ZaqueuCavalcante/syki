@@ -24,9 +24,11 @@
 
             <MudItem xs="12" Class="mt-4">
                 <SykiTitleText Icon="@Icons.Material.Filled.NotificationAdd" Text="Notificações" />
-                <MudTreeView T="WebhookEvent" SelectionMode="SelectionMode.MultiSelection" TriState="false" SelectedValues="@_events" SelectedValuesChanged="@OnEventsChanged" CheckBoxColor="Color.Info">
-                    <MudTreeViewItem Value="WebhookEvent.StudentCreated" Text="@WebhookEvent.StudentCreated.GetDescription()" />
-                    <MudTreeViewItem Value="WebhookEvent.ClassActivityCreated" Text="@WebhookEvent.ClassActivityCreated.GetDescription()" />
+                <MudTreeView T="WebhookEventType" SelectionMode="SelectionMode.MultiSelection" TriState="false" SelectedValues="@_events" SelectedValuesChanged="@OnEventsChanged" CheckBoxColor="Color.Info">
+                    @foreach (WebhookEventType eventType in Enum.GetValues<WebhookEventType>())
+                    {
+                        <MudTreeViewItem Value="@eventType" Text="@eventType.GetDescription()" />
+                    }
                 </MudTreeView>
             </MudItem>
 
@@ -62,7 +64,7 @@
 
     private string? _name;
     private string? _url;
-    private List<WebhookEvent> _events = [];
+    private List<WebhookEventType> _events = [];
     private WebhookAuthenticationType _authenticationType;
     private string? _apiKey;
 
@@ -72,7 +74,7 @@
         _width = _breakpoint == Breakpoint.Xs ? "100%" : "500px";
     }
 
-    private void OnEventsChanged(IEnumerable<WebhookEvent> values)
+    private void OnEventsChanged(IEnumerable<WebhookEventType> values)
     {
         _events = values.ToList();
     }

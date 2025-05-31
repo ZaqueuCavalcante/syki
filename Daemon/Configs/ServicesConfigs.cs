@@ -47,5 +47,7 @@ public static class ServicesConfigs
         builder.AddIdentityConfigs();
         builder.AddCommandsConfigs();
         builder.Services.AddTransient<DomainEventsProcessor>();
+
+        builder.Services.AddHttpClient();
     }
 }

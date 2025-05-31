@@ -54,7 +54,8 @@ public static class DbContextExtensions
         Guid? eventId = null,
         Guid? parentId = null,
         Guid? originalId = null,
-        Guid? batchId = null
+        Guid? batchId = null,
+        int? delaySeconds = null
     ) {
         return ctx.Add(
             new Command(
@@ -63,7 +64,8 @@ public static class DbContextExtensions
                 eventId: eventId,
                 parentId: parentId,
                 originalId: originalId,
-                batchId: batchId
+                batchId: batchId,
+                delaySeconds: delaySeconds
             )
         ).Entity;
     }

@@ -308,11 +308,11 @@ public class AcademicHttpClient(HttpClient http)
     public async Task<OneOf<CreateWebhookSubscriptionOut, ErrorOut>> CreateWebhookSubscription(
         string name = "Aluno Criado",
         string url = "https://example.com/webhook",
-        List<WebhookEvent> events = null,
+        List<WebhookEventType> events = null,
         WebhookAuthenticationType authenticationType = WebhookAuthenticationType.ApiKey,
         string? apiKey = "z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X"
     ) {
-        events ??= [WebhookEvent.StudentCreated];
+        events ??= [WebhookEventType.StudentCreated];
         var client = new CreateWebhookSubscriptionClient(Http);
         return await client.Create(name, url, events, authenticationType, apiKey);
     }

@@ -21,7 +21,7 @@ public partial class IntegrationTests
 
         webhook.Name.Should().Be("Aluno Criado");
         webhook.Url.Should().Be("https://example.com/webhook");
-        webhook.Events.Should().BeEquivalentTo([WebhookEvent.StudentCreated]);
+        webhook.Events.Should().BeEquivalentTo([WebhookEventType.StudentCreated]);
         webhook.Authentication.Type.Should().Be(WebhookAuthenticationType.ApiKey);
         webhook.Authentication.ApiKey.Should().Be("z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X");
     }

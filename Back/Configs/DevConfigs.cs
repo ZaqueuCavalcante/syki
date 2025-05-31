@@ -6,10 +6,16 @@ public static class DevConfigs
     {
         if (!Env.IsDevelopment()) return;
 
+        var ctx = app.Services.CreateScope().ServiceProvider.GetRequiredService<SykiDbContext>();
+
         var settings = new DatabaseSettings(app.Configuration);
         if (settings.Reset)
         {
-            app.Services.CreateScope().ServiceProvider.GetRequiredService<SykiDbContext>().ResetDevDb(); 
+            ctx.ResetDevDb();
+        }
+        else
+        {
+            ctx.Database.Migrate();
         }
     }
 }

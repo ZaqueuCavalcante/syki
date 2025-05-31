@@ -15,7 +15,7 @@ public class CreateWebhookSubscriptionIn
     /// <summary>
     /// Lista de eventos que serão enviados para o Webhook.
     /// </summary>
-    public List<WebhookEvent> Events { get; set; }
+    public List<WebhookEventType> Events { get; set; }
 
     /// <summary>
     /// Tipo de autenticação do endpoint.

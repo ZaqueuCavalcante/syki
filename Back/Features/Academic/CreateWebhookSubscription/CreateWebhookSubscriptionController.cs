@@ -33,7 +33,7 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateWebhookSubscrip
                 Url = "https://webhook.site/my-webhook",
                 AuthenticationType = WebhookAuthenticationType.ApiKey,
                 ApiKey = "z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X",
-                Events = [WebhookEvent.StudentCreated]
+                Events = [WebhookEventType.StudentCreated]
             }
         );
         yield return SwaggerExample.Create(
@@ -44,7 +44,7 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateWebhookSubscrip
                 Url = "https://webhook.site/my-other-webhook",
                 AuthenticationType = WebhookAuthenticationType.ApiKey,
                 ApiKey = "z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X",
-                Events = [WebhookEvent.ClassActivityCreated]
+                Events = [WebhookEventType.ClassActivityCreated]
 			}
 		);
     }

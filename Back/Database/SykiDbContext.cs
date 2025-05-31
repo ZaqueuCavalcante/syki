@@ -3,6 +3,7 @@ using Audit.EntityFramework;
 using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateCourse;
+using Syki.Back.Features.Academic.CallWebhooks;
 using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateTeacher;
@@ -47,6 +48,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfigurati
     public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }
 
     public DbSet<WebhookSubscription> Webhooks { get; set; }
+    public DbSet<WebhookCall> WebhookCalls { get; set; }
 
     public DbSet<Class> Classes { get; set; }
     public DbSet<SykiTeacher> Teachers { get; set; }

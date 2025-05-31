@@ -78,7 +78,7 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
         WHERE id IN (
             SELECT id
             FROM syki.commands
-            WHERE processor_id IS NULL
+            WHERE processor_id IS NULL AND (not_before IS NULL OR not_before < NOW())
             ORDER BY created_at
             FOR UPDATE SKIP LOCKED
             LIMIT 10

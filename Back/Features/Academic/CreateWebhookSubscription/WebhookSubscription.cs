@@ -1,3 +1,5 @@
+using Syki.Back.Features.Academic.CallWebhooks;
+
 namespace Syki.Back.Features.Academic.CreateWebhookSubscription;
 
 /// <summary>
@@ -11,12 +13,14 @@ public class WebhookSubscription
     public string Url { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public List<WebhookEvent> Events { get; set; }
+    public List<WebhookEventType> Events { get; set; }
     public WebhookAuthentication Authentication { get; set; }
+
+    public List<WebhookCall> Calls { get; set; }
 
     private WebhookSubscription() { }
 
-    public WebhookSubscription(Guid institutionId, string name, string url, List<WebhookEvent> events, string apiKey)
+    public WebhookSubscription(Guid institutionId, string name, string url, List<WebhookEventType> events, string apiKey)
     {
         Id = Guid.NewGuid();
         InstitutionId = institutionId;

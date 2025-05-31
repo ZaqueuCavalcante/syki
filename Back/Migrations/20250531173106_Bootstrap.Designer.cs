@@ -13,7 +13,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20250531135404_Bootstrap")]
+    [Migration("20250531173106_Bootstrap")]
     partial class Bootstrap
     {
         /// <inheritdoc />
@@ -238,6 +238,10 @@ namespace Back.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("institution_id");
 
+                    b.Property<DateTime?>("NotBefore")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("not_before");
+
                     b.Property<Guid?>("OriginalId")
                         .HasColumnType("uuid")
                         .HasColumnName("original_id");
@@ -373,6 +377,97 @@ namespace Back.Migrations
                         .HasName("pk_domain_events");
 
                     b.ToTable("domain_events", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Features.Academic.CallWebhooks.WebhookCall", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Event")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("event");
+
+                    b.Property<Guid>("InstitutionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("institution_id");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("payload");
+
+                    b.Property<int>("RetryCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("retry_count");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("status");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("url");
+
+                    b.Property<Guid>("WebhookId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("webhook_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_webhook_calls");
+
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_webhook_calls_institution_id");
+
+                    b.HasIndex("WebhookId")
+                        .HasDatabaseName("ix_webhook_calls_webhook_id");
+
+                    b.ToTable("webhook_calls", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Features.Academic.CallWebhooks.WebhookCallAttempt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Response")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("response");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("status");
+
+                    b.Property<int>("StatusCode")
+                        .HasColumnType("integer")
+                        .HasColumnName("status_code");
+
+                    b.Property<Guid>("WebhookCallId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("webhook_call_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_webhook_call_attempts");
+
+                    b.HasIndex("WebhookCallId")
+                        .HasDatabaseName("ix_webhook_call_attempts_webhook_call_id");
+
+                    b.ToTable("webhook_call_attempts", "syki");
                 });
 
             modelBuilder.Entity("Syki.Back.Features.Academic.CreateAcademicPeriod.AcademicPeriod", b =>
@@ -1545,6 +1640,33 @@ namespace Back.Migrations
                         .HasConstraintName("fk_audit_logs_asp_net_users_institution_id_user_id");
                 });
 
+            modelBuilder.Entity("Syki.Back.Features.Academic.CallWebhooks.WebhookCall", b =>
+                {
+                    b.HasOne("Syki.Back.Features.Cross.CreateInstitution.Institution", null)
+                        .WithMany("WebhookCalls")
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_webhook_calls_institutions_institution_id");
+
+                    b.HasOne("Syki.Back.Features.Academic.CreateWebhookSubscription.WebhookSubscription", null)
+                        .WithMany("Calls")
+                        .HasForeignKey("WebhookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_webhook_calls_webhook_subscriptions_webhook_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Features.Academic.CallWebhooks.WebhookCallAttempt", b =>
+                {
+                    b.HasOne("Syki.Back.Features.Academic.CallWebhooks.WebhookCall", null)
+                        .WithMany("Attempts")
+                        .HasForeignKey("WebhookCallId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_webhook_call_attempts_webhook_calls_webhook_call_id");
+                });
+
             modelBuilder.Entity("Syki.Back.Features.Academic.CreateAcademicPeriod.AcademicPeriod", b =>
                 {
                     b.HasOne("Syki.Back.Features.Cross.CreateInstitution.Institution", null)
@@ -1960,6 +2082,11 @@ namespace Back.Migrations
                         .HasConstraintName("fk_class_lesson_attendances_students_student_id");
                 });
 
+            modelBuilder.Entity("Syki.Back.Features.Academic.CallWebhooks.WebhookCall", b =>
+                {
+                    b.Navigation("Attempts");
+                });
+
             modelBuilder.Entity("Syki.Back.Features.Academic.CreateClass.Class", b =>
                 {
                     b.Navigation("Activities");
@@ -2002,6 +2129,8 @@ namespace Back.Migrations
                 {
                     b.Navigation("Authentication")
                         .IsRequired();
+
+                    b.Navigation("Calls");
                 });
 
             modelBuilder.Entity("Syki.Back.Features.Cross.CreateInstitution.Institution", b =>
@@ -2028,6 +2157,8 @@ namespace Back.Migrations
                     b.Navigation("Teachers");
 
                     b.Navigation("Users");
+
+                    b.Navigation("WebhookCalls");
 
                     b.Navigation("Webhooks");
                 });

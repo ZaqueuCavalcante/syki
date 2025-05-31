@@ -11,6 +11,16 @@ public class StudentCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventH
     {
         ctx.AddCommand(institutionId, new LinkOldNotificationsCommand(evt.InstitutionId, evt.UserId), eventId: eventId);
         ctx.AddCommand(institutionId, new SendStudentWelcomeEmailCommand(evt.InstitutionId, evt.UserId), eventId: eventId);
+
+        var webhooks = await ctx.Webhooks.AsNoTracking()
+            .Where(x => x.InstitutionId == evt.InstitutionId && x.Events.Contains(WebhookEventType.StudentCreated))
+            .ToListAsync();
+
+        foreach (var webhook in webhooks)
+        {
+            ctx.AddCommand(institutionId, new CreateStudentCreatedWebhookCallCommand(eventId, webhook.Id, evt.UserId), eventId: eventId);
+        }
+
         await Task.CompletedTask;
     }
 }

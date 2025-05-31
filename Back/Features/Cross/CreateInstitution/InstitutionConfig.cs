@@ -49,6 +49,10 @@ public class InstitutionConfig : IEntityTypeConfiguration<Institution>
             .WithOne()
             .HasForeignKey(u => u.InstitutionId);
 
+        institution.HasMany(i => i.WebhookCalls)
+            .WithOne()
+            .HasForeignKey(u => u.InstitutionId);
+
         institution.HasMany(f => f.Notifications)
             .WithOne()
             .HasForeignKey(n => n.InstitutionId);

@@ -17,5 +17,9 @@ public class WebhookSubscriptionConfig : IEntityTypeConfiguration<WebhookSubscri
             .WithOne()
             .HasForeignKey<WebhookAuthentication>(w => w.WebhookId)
             .IsRequired(false);
+
+        webhookSubscription.HasMany(w => w.Calls)
+            .WithOne()
+            .HasForeignKey(w => w.WebhookId);
     }
 }

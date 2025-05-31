@@ -5,7 +5,7 @@ namespace Syki.Shared;
 /// <summary>
 /// Eventos que podem ser enviados via Webhook
 /// </summary>
-public enum WebhookEvent
+public enum WebhookEventType
 {
     [Description("Aluno criado")]
     StudentCreated,

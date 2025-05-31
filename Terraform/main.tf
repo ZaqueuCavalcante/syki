@@ -2,7 +2,7 @@ resource "digitalocean_droplet" "app" {
   image  = "ubuntu-22-04-x64"
   name   = "syki-app"
   region = var.region
-  size   = "s-2vcpu-2gb"
+  size   = "s-1vcpu-2gb-amd"
   ssh_keys = [data.digitalocean_ssh_key.main.id]
 
   user_data = <<-EOF

@@ -1,6 +1,6 @@
 - name: Clonar repositório
   git:
-    repo: https://github.com/GuttoF/syki-devops.git
+    repo: https://github.com/ZaqueuCavalcante/syki.git
     dest: /opt/syki
     clone: yes
     update: yes

@@ -11,6 +11,8 @@ builder.AddHandlersConfigs();
 builder.AddDapperConfigs();
 builder.AddCacheConfigs();
 
+builder.AddQuartzConfigs();
+
 builder.Services.AddHostedService<CommandsProcessorDbListener>();
 builder.Services.AddHostedService<DomainEventsProcessorDbListener>();
 

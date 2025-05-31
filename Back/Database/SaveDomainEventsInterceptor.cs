@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Syki.Back.Database;
 
-public class SaveDomainEventsInterceptor : SaveChangesInterceptor
+public sealed class SaveDomainEventsInterceptor : SaveChangesInterceptor
 {
 	public override async ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
 	{

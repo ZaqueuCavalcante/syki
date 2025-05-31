@@ -77,6 +77,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfigurati
         optionsBuilder.AddInterceptors(new SetBatchSizeInterceptor());
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
         optionsBuilder.AddInterceptors(new SaveDomainEventsInterceptor());
+        optionsBuilder.AddInterceptors(new CommandsDelayInterceptor());
     }
 
     protected override void OnModelCreating(ModelBuilder builder)

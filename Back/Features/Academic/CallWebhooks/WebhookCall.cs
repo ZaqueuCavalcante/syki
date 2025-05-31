@@ -12,7 +12,7 @@ public class WebhookCall : Entity
     public string Payload { get; set; }
     public WebhookEventType Event { get; set; }
     public WebhookCallStatus Status { get; set; }
-    public int RetryCount { get; set; }
+    public int AttemptsCount { get; set; }
     public DateTime CreatedAt { get; set; }
     public List<WebhookCallAttempt> Attempts { get; set; }
 
@@ -39,6 +39,7 @@ public class WebhookCall : Entity
 
     public void Success(int statusCode, string response)
     {
+        AttemptsCount++;
         Status = WebhookCallStatus.Success;
         Attempts.Add(new WebhookCallAttempt(Id, WebhookCallAttemptStatus.Success, statusCode, response));
     }
@@ -48,11 +49,11 @@ public class WebhookCall : Entity
         Status = WebhookCallStatus.Error;
         Attempts.Add(new WebhookCallAttempt(Id, WebhookCallAttemptStatus.Error, statusCode, response));
 
-        RetryCount++;
+        AttemptsCount++;
 
-        if (RetryCount < 4)
+        if (AttemptsCount < 4)
         {
-            var delaySeconds = RetryCount switch
+            var delaySeconds = AttemptsCount switch
             {
                 1 => 1 * 60,
                 2 => 5 * 60,

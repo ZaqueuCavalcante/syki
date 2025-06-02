@@ -26,6 +26,12 @@
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.Url" Title="Url" />
                 <PropertyColumn Property="x => x.CreatedAt.ToLocalTime().Format()" Title="Criado em" />
+
+                <TemplateColumn>
+                    <CellTemplate>
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Item.Id))" />
+                    </CellTemplate>
+                </TemplateColumn>
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -39,6 +45,7 @@
 
 <CreateWebhookSubscriptionDrawer @ref="@_drawer" AfterSubmit="LoadData" />
 
+@inject NavigationManager Nav
 @inject IDialogService DialogService
 @inject GetWebhooksClient GetWebhooksClient
 
@@ -64,6 +71,11 @@
     private async Task OpenDrawer()
     {
         await _drawer.Open();
+    }
+
+    private void GoToDetails(Guid id)
+    {
+        Nav.NavigateTo($"/academic/webhooks/{id}");
     }
 
     private string GetNotFoundMessage()

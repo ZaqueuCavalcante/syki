@@ -38,11 +38,9 @@
 
 
 - Academic pode escolher evento e vincular uma URL pra receber o POST com os dados
-
-- Precisa de algum metodo de autenticacao
-    - API Key
-
-- Um mesmo evento pode ter mais de uma URL inscrita
+    - Precisa de algum metodo de autenticacao (no caso, apenas ApiKey atualmente)
+    - Uma mesma URL pode receber varios eventos diferentes
+    - Um mesmo evento pode ter mais de uma URL inscrita
 
 - Eventos possiveis
     - StudentCreatedDomainEvent

@@ -9,6 +9,6 @@ public class GetWebhooksService(SykiDbContext ctx) : IAcademicService
             .OrderByDescending(c => c.CreatedAt)
             .ToListAsync();
 
-        return webhooks.ConvertAll(c => c.ToGetOut());
+        return webhooks.ConvertAll(c => c.ToGetWebhooksOut());
     }
 }

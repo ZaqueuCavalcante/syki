@@ -681,7 +681,7 @@ namespace Back.Migrations
                     payload = table.Column<string>(type: "text", nullable: false),
                     @event = table.Column<string>(name: "event", type: "text", nullable: false),
                     status = table.Column<string>(type: "text", nullable: false),
-                    retry_count = table.Column<int>(type: "integer", nullable: false),
+                    attempts_count = table.Column<int>(type: "integer", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

@@ -64,4 +64,16 @@ public class WebhookCall : Entity
             AddDomainEvent(new WebhookCallFailedDomainEvent(Id, delaySeconds));
         }
     }
+
+    public GetWebhookCallOut ToGetWebhookCallOut()
+    {
+        return new GetWebhookCallOut
+        {
+            Id = Id,
+            Event = Event,
+            Status = Status,
+            CreatedAt = CreatedAt,
+            AttemptsCount = AttemptsCount,
+        };
+    }
 }

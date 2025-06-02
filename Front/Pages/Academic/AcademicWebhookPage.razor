@@ -1,0 +1,107 @@
+﻿@namespace Syki.Front.Pages.Academic
+
+@page "/academic/webhooks/{id:guid}"
+@attribute [Authorize(Roles = "Academic")]
+
+<SykiPageTitle Title="Webhook" />
+
+<MudContainer Class="my-4 px-4">
+    <MudCard>
+        <MudCardContent>
+            <MudStack Row="true" AlignItems="AlignItems.Center">
+                <MudIcon Icon="@Icons.Material.Filled.Webhook" Class="mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@($"Webhook - {_data.Name}")</MudText>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="px-0 my-4">
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="9" md="9" lg="9">
+                <InfoCard Icon="@Icons.Material.Filled.Link" Color="@Colors.Pink.Darken1" Title="Url" Content="@_data.Url" />
+            </MudItem>
+            <MudItem xs="12" sm="3" md="3" lg="3">
+                <InfoCard Icon="@Icons.Material.Filled.LockPerson" Color="@Colors.Green.Darken1" Title="Autenticação" Content="@_data.AuthenticationType.GetDescription()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.BlueGray.Darken1" Title="Criação" Content="@_data.CreatedAt.ToMinuteString()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.StickyNote2" Color="@Colors.Blue.Darken1" Title="Eventos" Content="@_data.EventsCount.ToThousandSeparated()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.CallMade" Color="@Colors.Indigo.Darken1" Title="Chamadas" Content="@_data.CallsCount.ToThousandSeparated()" />
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+
+    <MudContainer Class="px-0 my-4">
+        <style>
+            .mud-table-toolbar {
+                height: auto;
+            }
+        </style>
+        <MudTable
+            Class="mb-4"
+            Dense="true"
+            Hover="true"
+            RowsPerPage="10"
+            Loading="@_loading"
+            Items="@_data.Calls"
+            T="GetWebhookCallOut"
+            Breakpoint="Breakpoint.Sm"
+        >
+            <ToolBarContent>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
+                    <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
+                    <MudText Typo="Typo.h6" Style="font-weight: bold">Chamadas</MudText>
+                </MudStack>
+            </ToolBarContent>
+
+            <HeaderContent>
+                <MudTh>Evento</MudTh>
+                <MudTh>Criação</MudTh>
+                <MudTh>Status</MudTh>
+                <MudTh>Tentativas</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Evento">@context.Event.GetDescription()</MudTd>
+                <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
+                <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
+                <MudTd DataLabel="Tentativas">@context.AttemptsCount.ToThousandSeparated()</MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+@inject NavigationManager Nav
+@inject GetWebhookClient GetWebhookClient
+
+@code
+{
+	[Parameter]
+	public Guid Id { get; set; }
+
+    private bool _loading;
+    private GetWebhookOut _data = new();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _data = await GetWebhookClient.Get(Id);
+        _loading = false;
+    }
+
+    private void GoToTaskDetails(Guid id)
+    {
+        // OPEN DRAWER
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return "Este webhook não possui chamadas.";
+    }
+}

@@ -39,7 +39,7 @@ public class WebhookSubscription
         };
     }
 
-    public GetWebhooksOut ToGetOut()
+    public GetWebhooksOut ToGetWebhooksOut()
     {
         return new()
         {
@@ -47,6 +47,21 @@ public class WebhookSubscription
             Name = Name,
             Url = Url,
             CreatedAt = CreatedAt
+        };
+    }
+
+    public GetWebhookOut ToGetWebhookOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Url = Url,
+            Name = Name,
+            CreatedAt = CreatedAt,
+            CallsCount = Calls.Count,
+            EventsCount = Events.Count,
+            AuthenticationType = Authentication.Type,
+            Calls = Calls.ConvertAll(x => x.ToGetWebhookCallOut())
         };
     }
 }

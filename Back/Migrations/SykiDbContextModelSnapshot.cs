@@ -382,6 +382,10 @@ namespace Back.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<int>("AttemptsCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("attempts_count");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
@@ -399,10 +403,6 @@ namespace Back.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("payload");
-
-                    b.Property<int>("RetryCount")
-                        .HasColumnType("integer")
-                        .HasColumnName("retry_count");
 
                     b.Property<string>("Status")
                         .IsRequired()

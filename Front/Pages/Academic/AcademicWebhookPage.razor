@@ -1,4 +1,6 @@
-﻿@namespace Syki.Front.Pages.Academic
+﻿@using Syki.Front.Features.Academic.GetWebhook
+
+@namespace Syki.Front.Pages.Academic
 
 @page "/academic/webhooks/{id:guid}"
 @attribute [Authorize(Roles = "Academic")]
@@ -67,12 +69,17 @@
             <RowTemplate>
                 <MudTd DataLabel="Evento">@context.Event.GetDescription()</MudTd>
                 <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
-                <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
+                <MudTd DataLabel="Status">
+                    <WebhookCallStatusChip Status="@context.Status" />
+                </MudTd>
                 <MudTd DataLabel="Tentativas">@context.AttemptsCount.ToThousandSeparated()</MudTd>
             </RowTemplate>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
             </NoRecordsContent>
+            <PagerContent>
+                <SykiTablePager />
+            </PagerContent>
         </MudTable>
     </MudContainer>
 </MudContainer>

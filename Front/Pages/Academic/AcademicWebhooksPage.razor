@@ -29,7 +29,7 @@
 
                 <TemplateColumn>
                     <CellTemplate>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => GoToDetails(context.Item.Id))" />
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" Href="@($"/academic/webhooks/{context.Item.Id}")" />
                     </CellTemplate>
                 </TemplateColumn>
             </Columns>
@@ -71,11 +71,6 @@
     private async Task OpenDrawer()
     {
         await _drawer.Open();
-    }
-
-    private void GoToDetails(Guid id)
-    {
-        Nav.NavigateTo($"/academic/webhooks/{id}");
     }
 
     private string GetNotFoundMessage()

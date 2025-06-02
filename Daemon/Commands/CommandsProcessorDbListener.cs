@@ -5,7 +5,7 @@ namespace Syki.Daemon.Commands;
 
 public class CommandsProcessorDbListener(IConfiguration configuration, IServiceScopeFactory serviceScopeFactory) : BackgroundService
 {
-    private readonly SemaphoreSlim _throttler = new(5);
+    private readonly SemaphoreSlim _throttler = new(10);
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {

@@ -11,9 +11,18 @@
 			</MudText>
 			@if (Content.HasValue())
 			{
-				<MudText Style="font-size: 18px; font-weight: 700">
-					@Content
-				</MudText>
+				@if (Json)
+				{
+					<MudText Typo="Typo.body2" Style="font-size: 16px; font-weight: 700; white-space: pre-wrap;">
+						@Content
+					</MudText>
+				}
+				else
+				{
+					<MudText Style="font-size: 18px; font-weight: 700">
+						@Content
+					</MudText>
+				}
 			}
 			else
 			{
@@ -39,4 +48,7 @@
 
 	[Parameter]
 	public string Content { get; set; }
+
+	[Parameter]
+	public bool Json { get; set; }
 }

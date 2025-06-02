@@ -23,4 +23,15 @@ public class WebhookCallAttempt
         Response = response;
         CreatedAt = DateTime.UtcNow;
     }
+
+    public GetWebhookCallAttemptOut ToOut()
+    {
+        return new()
+        {
+            Status = Status,
+            Response = Response,
+            CreatedAt = CreatedAt,
+            StatusCode = StatusCode,
+        };
+    }
 }

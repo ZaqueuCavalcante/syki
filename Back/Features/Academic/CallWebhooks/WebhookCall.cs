@@ -76,4 +76,21 @@ public class WebhookCall : Entity
             AttemptsCount = AttemptsCount,
         };
     }
+
+
+    public GetWebhookCallFullOut ToGetWebhookCallFullOut(string webhookName)
+    {
+        return new()
+        {
+            Id = Id,
+            Event = Event,
+            Status = Status,
+            Payload = Payload,
+            CreatedAt = CreatedAt,
+            WebhookId = WebhookId,
+            WebhookName = webhookName,
+            AttemptsCount = AttemptsCount,
+            Attempts = Attempts.OrderByDescending(x => x.CreatedAt).Select(x => x.ToOut()).ToList(),
+        };
+    }
 }

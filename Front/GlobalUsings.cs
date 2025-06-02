@@ -27,6 +27,7 @@ global using Syki.Front.Features.Academic.GetAcademicClass;
 global using Syki.Front.Features.Academic.UpdateEnrollmentPeriod;
 global using Syki.Front.Features.Academic.CreateClass;
 global using Syki.Front.Features.Academic.StartClasses;
+global using Syki.Front.Features.Academic.GetWebhookCall;
 global using Syki.Front.Features.Academic.GetWebhooks;
 global using Syki.Front.Features.Academic.GetWebhook;
 global using Syki.Front.Features.Academic.FinalizeClasses;

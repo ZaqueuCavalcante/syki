@@ -1,0 +1,156 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Syki.Front.Features.Academic.GetWebhookCall
+
+@namespace Syki.Front.Pages.Academic
+
+@page "/academic/webhooks/calls/{id:guid}"
+@attribute [Authorize(Roles = "Academic")]
+
+<SykiPageTitle Title="Chamada de Webhook" />
+
+<MudContainer Class="my-4 px-4">
+    <MudCard>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.CallMade" Class="mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">Chamada de Webhook</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudChip
+                        T="string"
+                        Class="px-5 ma-0"
+                        Size="Size.Large"
+                        Icon="@_data.Status.GetIcon()"
+                        Color="@_data.Status.GetColor()"
+                        IconColor="Color.Default"
+                    >
+                        @_data.Status.GetDescription()
+                    </MudChip>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="px-0 my-4">
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Webhook">
+                    <MudLink Href="@($"/academic/webhooks/{_data.WebhookId}")" Color="Color.Primary">Esta chamada pertence ao Webhook "@_data.WebhookName"</MudLink>
+                </InfoCard>
+            </MudItem>
+
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.BlueGray.Lighten4" Title="Criação" Content="@_data.CreatedAt.ToMinuteString()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.StickyNote2" Color="@Colors.Green.Darken1" Title="Evento" Content="@_data.Event.GetDescription()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.CallMissedOutgoing" Color="@Colors.BlueGray.Lighten4" Title="Tentativas" Content="@_data.AttemptsCount.ToThousandSeparated()" />
+            </MudItem>
+
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <InfoCard Icon="@Icons.Material.Filled.DataObject" Color="@Colors.Blue.Darken1" Title="Dados" Content="@GetIdentedData()" Json="true" />
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+
+    <style>
+        .mud-table-toolbar {
+            height: auto;
+        }
+    </style>
+    <MudContainer Class="px-0 my-4">
+        <MudTable
+            Class="mb-4"
+            Dense="true"
+            Hover="true"
+            RowsPerPage="10"
+            Loading="@_loading"
+            Items="@_data.Attempts"
+            Breakpoint="Breakpoint.Sm"
+            T="GetWebhookCallAttemptOut"
+        >
+            <ToolBarContent>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Class="my-4 ml-1 mr-2" Style="width: 100%">
+                    <MudItem xs="12" sm="8" md="8" lg="8">
+                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudIcon Icon="@Icons.Material.Filled.CallMissedOutgoing" Class="mb-1" Size="Size.Medium"/>
+                            <MudText Typo="Typo.h6" Style="font-weight: bold">Tentativas</MudText>
+                        </MudStack>
+                    </MudItem>
+                    <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                        <MudButton
+                            OnClick="@Reprocess"
+                            Size="Size.Medium"
+                            Color="Color.Primary"
+                            IconSize="Size.Medium"
+                            Variant="Variant.Filled"
+                            Disabled="@_disableButton"
+                            StartIcon="@Icons.Material.Outlined.Autorenew"
+                        >
+                            Reprocessar
+                        </MudButton>
+                    </MudItem>
+                </MudStack>
+            </ToolBarContent>
+
+            <HeaderContent>
+                <MudTh>Status</MudTh>
+                <MudTh>Criação</MudTh>
+                <MudTh>Status Code</MudTh>
+                <MudTh>Response</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Status">
+                    <WebhookCallAttemptStatusChip Status="@context.Status" />
+                </MudTd>
+                <MudTd DataLabel="Criação">@context.CreatedAt.ToMinuteString()</MudTd>
+                <MudTd DataLabel="Status Code">@context.StatusCode</MudTd>
+                <MudTd DataLabel="Response">@context.Response</MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+                Esta chamada não possui tentativas.
+            </NoRecordsContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+@inject GetWebhookCallClient GetWebhookCallClient
+@inject ReprocessCommandClient ReprocessCommandClient
+
+@code
+{
+	[Parameter]
+	public Guid Id { get; set; }
+
+    private bool _loading;
+    private bool _disableButton;
+    private GetWebhookCallFullOut _data = new();
+
+    private string GetIdentedData()
+    {
+        return _data.Payload.ParseJsonString();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        _data = await GetWebhookCallClient.Get(Id);
+        _loading = false;
+    }
+
+    private async Task Reprocess()
+    {
+        _disableButton = true;
+        await ReprocessCommandClient.Reprocess(Id);
+        _loading = true;
+        _data = await GetWebhookCallClient.Get(Id);
+        _loading = false;
+        _disableButton = false;
+    }
+}

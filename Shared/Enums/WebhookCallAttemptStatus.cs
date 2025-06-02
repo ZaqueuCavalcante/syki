@@ -5,8 +5,8 @@ namespace Syki.Shared;
 public enum WebhookCallAttemptStatus
 {
     [Description("Sucesso")]
-    Success = 1,
+    Success = 0,
 
     [Description("Erro")]
-    Error = 2,
+    Error = 1,
 }

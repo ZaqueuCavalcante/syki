@@ -3,6 +3,7 @@ using QRCoder;
 using Newtonsoft.Json;
 using System.Reflection;
 using System.Globalization;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Primitives;
@@ -87,15 +88,15 @@ public static class StringExtensions
         return Regex.IsMatch(email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
     }
 
-	private static JsonSerializerSettings _settings = new()
-	{
-		Converters = [new StringEnumConverter()],
-	};
+    private static JsonSerializerSettings _settings = new()
+    {
+        Converters = [new StringEnumConverter()],
+    };
 
-	public static string Serialize(this object obj)
-	{
-		return JsonConvert.SerializeObject(obj, _settings);
-	}
+    public static string Serialize(this object obj)
+    {
+        return JsonConvert.SerializeObject(obj, _settings);
+    }
 
     public static Byte[] GenerateQrCodeBytes(this string key, string email)
     {
@@ -106,7 +107,7 @@ public static class StringExtensions
             $"otpauth://totp/{provider}:{email}?secret={key}&issuer={provider}",
             QRCodeGenerator.ECCLevel.Q
         );
-        
+
         var qrCode = new PngByteQRCode(qrCodeData);
 
         return qrCode.GetGraphic(20);
@@ -124,31 +125,31 @@ public static class StringExtensions
         return $"{hours}h e {minutes}min";
     }
 
-	public static string ToThousandSeparated(this int value)
-	{
-		return value.ToString("N0", CultureInfo.CreateSpecificCulture("pt-BR"));
-	}
+    public static string ToThousandSeparated(this int value)
+    {
+        return value.ToString("N0", CultureInfo.CreateSpecificCulture("pt-BR"));
+    }
 
     public static string ToTwo(this int value)
     {
         return value < 10 ? $"0{value}" : value.ToString();
     }
 
-	public static string ToMinuteString(this DateTime date)
-	{
-		if (date == DateTime.MinValue)
-			return "-";
+    public static string ToMinuteString(this DateTime date)
+    {
+        if (date == DateTime.MinValue)
+            return "-";
 
-		return date.ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss");
-	}
+        return date.ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss");
+    }
 
-	public static string ToMinuteString(this DateTime? date)
-	{
-		if (date == null)
-			return "-";
+    public static string ToMinuteString(this DateTime? date)
+    {
+        if (date == null)
+            return "-";
 
-		return date.Value.ToMinuteString();
-	}
+        return date.Value.ToMinuteString();
+    }
 
     public static string AddQueryString(this string path, object obj)
     {
@@ -173,7 +174,7 @@ public static class StringExtensions
 
                 if (property.PropertyType == typeof(DateTime))
                     valueAsString = ((DateTime)propertyValue).ToString("yyyy-MM-ddTHH:mm:sszzz");
-                
+
                 if (property.PropertyType == typeof(DateOnly))
                     valueAsString = ((DateOnly)propertyValue).ToString("yyyy-MM-dd");
 
@@ -182,5 +183,21 @@ public static class StringExtensions
         }
 
         return dictionary;
+    }
+
+    public static string ParseJsonString(this string input)
+    {
+        if (input.IsEmpty()) return "";
+
+        try
+        {
+            return JToken
+                .Parse(input)
+                .ToString(Formatting.Indented);
+        }
+        catch
+        {
+            return input;
+        }
     }
 }

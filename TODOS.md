@@ -53,8 +53,6 @@
 - Listar todas as chamadas
     - Sucessos
     - Erros
-    - Faltam retry
-    - Range de datas
 
 - Dados sobre as chamadas
     - Quando foi feita

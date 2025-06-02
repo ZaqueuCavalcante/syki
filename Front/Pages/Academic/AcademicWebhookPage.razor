@@ -56,7 +56,7 @@
             <ToolBarContent>
                 <MudStack Style="width: 100%">
                     <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-4" Style="width: 100%">
-                        <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
+                        <MudIcon Icon="@Icons.Material.Filled.CallMade" Class="mb-1" Size="Size.Medium"/>
                         <MudText Typo="Typo.h6" Style="font-weight: bold">Chamadas</MudText>
                     </MudStack>
                     <MudCard Class="mt-0 mb-4 mr-2" Style="width: 100%" Elevation="0" Outlined="true">
@@ -129,6 +129,7 @@
                 <MudTh>Criação</MudTh>
                 <MudTh>Status</MudTh>
                 <MudTh>Tentativas</MudTh>
+                <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Evento">@context.Event.GetDescription()</MudTd>
@@ -137,6 +138,9 @@
                     <WebhookCallStatusChip Status="@context.Status" />
                 </MudTd>
                 <MudTd DataLabel="Tentativas">@context.AttemptsCount.ToThousandSeparated()</MudTd>
+                <MudTd>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" Href="@($"/academic/webhooks/calls/{context.Id}")" />
+                </MudTd>
             </RowTemplate>
             <NoRecordsContent>
                 @(GetNotFoundMessage())
@@ -169,11 +173,6 @@
         _data = await GetWebhookClient.Get(Id);
         _calls = _data.Calls.Select(x => x).ToList();
         _loading = false;
-    }
-
-    private void GoToTaskDetails(Guid id)
-    {
-        // OPEN DRAWER
     }
 
     private void Filter()

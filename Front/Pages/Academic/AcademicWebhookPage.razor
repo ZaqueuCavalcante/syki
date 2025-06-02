@@ -49,14 +49,78 @@
             Hover="true"
             RowsPerPage="10"
             Loading="@_loading"
-            Items="@_data.Calls"
+            Items="@_calls"
             T="GetWebhookCallOut"
             Breakpoint="Breakpoint.Sm"
         >
             <ToolBarContent>
-                <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
-                    <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
-                    <MudText Typo="Typo.h6" Style="font-weight: bold">Chamadas</MudText>
+                <MudStack Style="width: 100%">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-4" Style="width: 100%">
+                        <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
+                        <MudText Typo="Typo.h6" Style="font-weight: bold">Chamadas</MudText>
+                    </MudStack>
+                    <MudCard Class="mt-0 mb-4 mr-2" Style="width: 100%" Elevation="0" Outlined="true">
+                        <MudCardContent>
+                            <MudGrid Spacing="2">
+                                <MudItem xs="12" sm="3" md="3" lg="3">
+                                    <MudSelect
+                                        Dense="true"
+                                        Margin="Margin.Dense"
+                                        Variant="Variant.Outlined"
+                                        @bind-Value="@_statusFilter"
+                                        Label="Status"
+                                        Clearable="true"
+                                        AdornmentColor="Color.Primary
+                                    ">
+                                        @foreach (WebhookCallStatus? item in Enum.GetValues<WebhookCallStatus>())
+                                        {
+                                            <MudSelectItem Value="@item">
+                                                <MudStack Row="true" AlignItems="AlignItems.Center">
+                                                    <MudIcon Class="mb-1" Icon="@item.Value.GetIcon()" Color="@item.Value.GetColor()" Size="Size.Small"/>
+                                                    <MudText>@item.GetDescription()</MudText>
+                                                </MudStack>
+                                            </MudSelectItem>
+                                        }
+                                    </MudSelect>
+                                </MudItem>
+
+                                <MudItem xs="12" sm="4" md="4" lg="4">
+                                    <MudSelect
+                                        Dense="true"
+                                        Margin="Margin.Dense"
+                                        Variant="Variant.Outlined"
+                                        @bind-Value="@_eventTypeFilter"
+                                        Label="Evento"
+                                        Clearable="true"
+                                        AdornmentColor="Color.Primary
+                                    ">
+                                        @foreach (WebhookEventType? item in Enum.GetValues<WebhookEventType>())
+                                        {
+                                            <MudSelectItem Value="@item">
+                                                <MudText>@item.GetDescription()</MudText>
+                                            </MudSelectItem>
+                                        }
+                                    </MudSelect>
+                                </MudItem>
+
+                                <MudItem xs="12" sm="5" md="5" lg="5" Class="d-flex justify-end align-center pt-1">
+                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                        <MudChip T="string" Variant="Variant.Text" Color="Color.Primary" Class="mt-1 pt-1">@_calls.Count.ToThousandSeparated()</MudChip>
+                                        <MudButton
+                                            OnClick="@Filter"
+                                            Size="Size.Medium"
+                                            Color="Color.Primary"
+                                            IconSize="Size.Medium"
+                                            Variant="Variant.Filled"
+                                            StartIcon="@Icons.Material.Outlined.FilterList"
+                                        >
+                                            Filtrar
+                                        </MudButton>
+                                    </MudStack>
+                                </MudItem>
+                            </MudGrid>
+                        </MudCardContent>
+                    </MudCard>
                 </MudStack>
             </ToolBarContent>
 
@@ -94,17 +158,32 @@
 
     private bool _loading;
     private GetWebhookOut _data = new();
-    
+    private List<GetWebhookCallOut> _calls = [];
+
+    private WebhookCallStatus? _statusFilter;
+    private WebhookEventType? _eventTypeFilter;
+
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
         _data = await GetWebhookClient.Get(Id);
+        _calls = _data.Calls.Select(x => x).ToList();
         _loading = false;
     }
 
     private void GoToTaskDetails(Guid id)
     {
         // OPEN DRAWER
+    }
+
+    private void Filter()
+    {
+        _loading = true;
+        _calls = _data.Calls.Where(x =>
+            (_statusFilter == null || x.Status == _statusFilter) &&
+            (_eventTypeFilter == null || x.Event == _eventTypeFilter)
+        ).ToList();
+        _loading = false;
     }
 
     private string GetNotFoundMessage()

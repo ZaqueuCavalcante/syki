@@ -18,14 +18,13 @@ public class CreateStudentCreatedWebhookCallCommandHandler(SykiDbContext ctx) : 
         var webhook = await ctx.Webhooks.AsNoTracking()
             .Include(x => x.Authentication)
             .Where(x => x.Id == command.WebhookId)
-            .Select(x => new { x.InstitutionId, x.Url, x.Authentication.ApiKey })
+            .Select(x => new { x.InstitutionId, x.Authentication.ApiKey })
             .FirstAsync();
 
         var payload = new StudentCreatedWebhookPayload(student.Id, student.Name, student.Email);
         var call = new WebhookCall(
             webhook.InstitutionId,
             command.WebhookId,
-            webhook.Url,
             payload,
             command.EventId,
             WebhookEventType.StudentCreated

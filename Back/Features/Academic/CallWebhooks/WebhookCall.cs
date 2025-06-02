@@ -8,7 +8,6 @@ public class WebhookCall : Entity
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
     public Guid WebhookId { get; set; }
-    public string Url { get; set; }
     public string Payload { get; set; }
     public WebhookEventType Event { get; set; }
     public WebhookCallStatus Status { get; set; }
@@ -21,7 +20,6 @@ public class WebhookCall : Entity
     public WebhookCall(
         Guid institutionId,
         Guid webhookId,
-        string url,
         object data,
         Guid eventId,
         WebhookEventType eventType)
@@ -29,7 +27,6 @@ public class WebhookCall : Entity
         Id = Guid.NewGuid();
         InstitutionId = institutionId;
         WebhookId = webhookId;
-        Url = url;
         Payload = (new { EventId = eventId, EventType = eventType, Data = data }).Serialize();
         Event = eventType;
         CreatedAt = DateTime.UtcNow;

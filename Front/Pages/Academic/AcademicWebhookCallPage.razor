@@ -121,7 +121,7 @@
 </MudContainer>
 
 @inject GetWebhookCallClient GetWebhookCallClient
-@inject ReprocessCommandClient ReprocessCommandClient
+@inject ReprocessWebhookCallClient ReprocessWebhookCallClient
 
 @code
 {
@@ -147,7 +147,7 @@
     private async Task Reprocess()
     {
         _disableButton = true;
-        await ReprocessCommandClient.Reprocess(Id);
+        await ReprocessWebhookCallClient.Reprocess(Id);
         _loading = true;
         _data = await GetWebhookCallClient.Get(Id);
         _loading = false;

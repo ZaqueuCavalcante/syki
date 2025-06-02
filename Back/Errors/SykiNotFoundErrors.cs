@@ -75,3 +75,8 @@ public class ClassActivityNotFound : SykiError
     public override string Code { get; set; } = nameof(ClassActivityNotFound);
     public override string Message { get; set; } = "Atividade não encontrada.";
 }
+public class WebhookCallNotFound : SykiError
+{
+    public override string Code { get; set; } = nameof(WebhookCallNotFound);
+    public override string Message { get; set; } = "Chamada de webhook não encontrada.";
+}

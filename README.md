@@ -21,12 +21,13 @@ Se cadastre em https://app.syki.com.br e teste o sistema em produção!
 9. [Observabilidade](#observability)
 10. [Rate Limiting](#rate-limiting)
 11. [Documentação](#docs)
-12. [Real Time](#real-time)
+12. [Real-Time](#real-time)
 13. [Cache](#cache)
 14. [Arquitetura](#arch)
 15. [Banco de Dados](#db)
-16. [Desenvolvimento](#dev)
-17. [Contribuições](#contributions)
+16. [Webhooks](#webhooks)
+17. [Desenvolvimento](#dev)
+18. [Contribuições](#contributions)
 
 ## 1 - Funcionalidades <a name="features"></a>
 
@@ -539,7 +540,7 @@ Utilizo o Scalar para ler esse documento e gerar a documentação completa da AP
   <img src="./Docs/Readme/11_Scalar.gif" style="display: block; margin: 0 auto" />
 </p>
 
-## 12 - Real Time <a name="real-time"></a>
+## 12 - Real-Time <a name="real-time"></a>
 
 A biblioteca SignalR foi utilizada para trazer funcionalidades em tempo real para o sistema.
 
@@ -575,7 +576,40 @@ E agora o estado atual do banco (omiti alguns relacionamentos para não poluir o
   <img src="./Docs/Readme/15_DatabaseTables.gif" style="display: block; margin: 0 auto" />
 </p>
 
-## 16 - Desenvolvimento <a name="dev"></a>
+
+## 16 - Webhooks <a name="webhooks"></a>
+
+O sistema possui suporte à Webhooks, permitindo a realização de integrações mais rápidas e eficientes.
+
+Ele é capaz de emitir eventos quando certas ações são executadas pelos usuários, como por exemplo:
+  - Um novo aluno é cadastrado no sistema
+  - Uma nova atividade é publicada pelo professor de uma turma
+
+Digamos que seja preciso integrar o Syki à outro serviço XYZ, que vai executar um determinado processamento toda vez que um desses eventos ocorrer.
+
+Talvez a maneira mais simples de realizar essa integração seja através de pooling: a aplicação XYZ fica, periodicamente, chamando a Api do Syki para buscar novos eventos. Isso é simples de implementar, mas também é custoso e ineficiente, pois a maioria das chamadas não vai encontrar dados novos para serem processados, sobrecarregando a Api do Syki desnecessariamente.
+
+Um outro jeito de abordar esse problema é através do uso de 𝘄𝗲𝗯𝗵𝗼𝗼𝗸𝘀: o serviço XYZ cadastra uma url (+ ApiKey) no Syki e escolhe quais eventos quer receber através dela. Dessa forma, toda vez que um dos eventos escolhidos ocorrer, o Syki monta um payload e chama a aplicação XYZ com os dados, em uma integração rápida e eficiente.
+
+<p align="center">
+  <img src="./Docs/Readme/16.1_WebhookSubscription.gif" style="display: block; margin: 0 auto" />
+</p>
+
+O GIF abaixo mostra essa integração acontecendo quando um novo aluno é cadastrado no sistema.
+
+<p align="center">
+  <img src="./Docs/Readme/16.2_WebhookCall.gif" style="display: block; margin: 0 auto" />
+</p>
+
+Obviamente essa chamada para o endpoint na aplicação XYZ pode falhar, por isso implementei também uma política de retry exponencial: caso a primeira chamada falhe, o Syki vai tentar novamente após 1 min. Caso falhe, tenta novamente após 5 min. Caso falhe novamente, tenta pela última vez após 30 min.
+
+Ainda é possível reprocessar uma chamada manualmente via tela, para o caso onde todas as retentativas automáticas falharam ou mesmo em caso de reconciliação de dados, por exemplo.
+
+<p align="center">
+  <img src="./Docs/Readme/16.3_WebhookRetry.gif" style="display: block; margin: 0 auto" />
+</p>
+
+## 17 - Desenvolvimento <a name="dev"></a>
 
 Para rodar o sistema na sua máquina, siga os passos abaixo:
 - Clone o projeto pra sua máquina
@@ -589,7 +623,7 @@ Para rodar os testes automatizados:
 - Unit: `dotnet test --filter "FullyQualifiedName~UnitTests"`
 - Integration: `dotnet test --filter "FullyQualifiedName!~UnitTests"`
 
-## 17 - Contribuições <a name="contributions"></a>
+## 18 - Contribuições <a name="contributions"></a>
 
 Qualquer contribuição é bem-vinda!
 

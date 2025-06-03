@@ -409,11 +409,6 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("status");
 
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("url");
-
                     b.Property<Guid>("WebhookId")
                         .HasColumnType("uuid")
                         .HasColumnName("webhook_id");

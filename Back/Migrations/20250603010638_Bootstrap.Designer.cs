@@ -13,7 +13,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20250602005232_Bootstrap")]
+    [Migration("20250603010638_Bootstrap")]
     partial class Bootstrap
     {
         /// <inheritdoc />
@@ -411,11 +411,6 @@ namespace Back.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("status");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("url");
 
                     b.Property<Guid>("WebhookId")
                         .HasColumnType("uuid")

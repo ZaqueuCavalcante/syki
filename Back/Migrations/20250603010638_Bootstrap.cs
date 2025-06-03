@@ -677,7 +677,6 @@ namespace Back.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     webhook_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    url = table.Column<string>(type: "text", nullable: false),
                     payload = table.Column<string>(type: "text", nullable: false),
                     @event = table.Column<string>(name: "event", type: "text", nullable: false),
                     status = table.Column<string>(type: "text", nullable: false),

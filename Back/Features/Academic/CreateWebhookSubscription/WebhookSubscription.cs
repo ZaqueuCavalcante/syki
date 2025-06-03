@@ -46,7 +46,8 @@ public class WebhookSubscription
             Id = Id,
             Name = Name,
             Url = Url,
-            CreatedAt = CreatedAt
+            CreatedAt = CreatedAt,
+            CallsCount = Calls.Count,
         };
     }
 

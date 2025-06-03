@@ -25,6 +25,7 @@
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.Url" Title="Url" />
+                <PropertyColumn Property="x => x.CallsCount.ToThousandSeparated()" Title="Chamadas" />
                 <PropertyColumn Property="x => x.CreatedAt.ToLocalTime().Format()" Title="Criado em" />
 
                 <TemplateColumn>

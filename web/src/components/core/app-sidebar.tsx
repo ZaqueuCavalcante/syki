@@ -2,21 +2,28 @@
 
 import * as React from "react"
 import {
+    IconBell,
+    IconCalendarShare,
   IconCamera,
+  IconCategoryMinus,
+  IconChalkboard,
+  IconChalkboardTeacher,
   IconChartBar,
-  IconDashboard,
-  IconDatabase,
+  IconContract,
   IconFileAi,
   IconFileDescription,
-  IconFileWord,
   IconFolder,
   IconHelp,
   IconInnerShadowTop,
-  IconListDetails,
-  IconReport,
+  IconLayoutBoardSplitFilled,
+  IconNotebook,
+  IconSchool,
   IconSearch,
   IconSettings,
+  IconShieldCheck,
+  IconSitemap,
   IconUsers,
+  IconWebhook,
 } from "@tabler/icons-react"
 
 import {
@@ -28,42 +35,76 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { NavDocuments } from "./nav-documents"
 import { NavMain } from "./nav-main"
 import { NavSecondary } from "./nav-secondary"
 import { NavUser } from "./nav-user"
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "Zaqueu C.",
+    email: "zaqueu@syki.com",
+    avatar: "https://avatars.githubusercontent.com/u/52336768",
   },
   navMain: [
     {
-      title: "Dashboard",
+      title: "Campi",
       url: "#",
-      icon: IconDashboard,
+      icon: IconCategoryMinus,
     },
     {
-      title: "Lifecycle",
+      title: "Cursos",
       url: "#",
-      icon: IconListDetails,
+      icon: IconNotebook,
     },
     {
-      title: "Analytics",
+      title: "Disciplinas",
       url: "#",
-      icon: IconChartBar,
+      icon: IconLayoutBoardSplitFilled,
     },
     {
-      title: "Projects",
+      title: "Grades",
       url: "#",
-      icon: IconFolder,
+      icon: IconSitemap,
     },
     {
-      title: "Team",
+      title: "Ofertas",
+      url: "#",
+      icon: IconShieldCheck,
+    },
+    {
+      title: "Professores",
+      url: "#",
+      icon: IconChalkboardTeacher,
+    },
+    {
+      title: "Turmas",
+      url: "#",
+      icon: IconSchool,
+    },
+    {
+      title: "Alunos",
       url: "#",
       icon: IconUsers,
+    },
+        {
+      title: "Períodos",
+      url: "#",
+      icon: IconCalendarShare,
+    },
+        {
+      title: "Matrículas",
+      url: "#",
+      icon: IconContract,
+    },
+    {
+      title: "Notificações",
+      url: "#",
+      icon: IconBell,
+    },
+    {
+      title: "Webhooks",
+      url: "#",
+      icon: IconWebhook,
     },
   ],
   navClouds: [
@@ -130,24 +171,7 @@ const data = {
       url: "#",
       icon: IconSearch,
     },
-  ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
-    },
-  ],
+  ]
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -162,7 +186,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">Syki</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -170,7 +194,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

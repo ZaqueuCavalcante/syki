@@ -2,7 +2,7 @@
 
 Learn ACID, Indexing, Partitioning, Sharding, Concurrency control, Replication, DB Engines, Best Practices and More!
 
-## ACID + Transactions
+## 2. ACID + Transactions
 
 - Transaction
     - Um monte e comandos SQL, tratados como uma coisa só (unit of work)
@@ -36,6 +36,46 @@ Learn ACID, Indexing, Partitioning, Sharding, Concurrency control, Replication, 
     - 
 
 - Durability
+
+
+## 3. Understanding Database Internals
+
+- How tables and indexes are stored on disk?
+    - Table
+    - RowId / TupleId
+    - Page
+    - IO
+    - Heap
+    - B-Tree
+    - Query Example
+
+- Row-Based vs Column-Based Databases
+    - Depends
+    - OLTP vs OLAP
+
+- Primary Key vs Secondary Key
+    - Heap
+    - Clustered Index (PK)
+
+## 4. Database Indexing
+
+- SQL Query Planner
+    - EXPLAIN
+    - EXPLAIN ANALYSE
+
+- Scans
+    - Seq Table Scan
+    - Index Scan
+    - Bitmap Index Scan
+
+- Include
+    - Index + other columns
+
+- Index Scan vs Index Only Scan
+
+- 
+
+
 
 
 

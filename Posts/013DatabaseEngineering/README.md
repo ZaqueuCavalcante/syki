@@ -73,6 +73,8 @@ Learn ACID, Indexing, Partitioning, Sharding, Concurrency control, Replication, 
 
 - Index Scan vs Index Only Scan
 
+- Composed Index
+
 - 
 
 

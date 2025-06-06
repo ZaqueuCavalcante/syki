@@ -15,7 +15,7 @@ public class Campus
 
     public Campus(Guid institutionId, string name, BrazilState state, string city)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         Name = name;
         State = state;

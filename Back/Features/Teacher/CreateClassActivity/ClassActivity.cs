@@ -40,7 +40,7 @@ public class ClassActivity : Entity
         Hour dueHour,
         List<Guid> students
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         ClassId = classId;
         Note = note;
         Title = title;

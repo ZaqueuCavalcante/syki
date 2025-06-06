@@ -31,7 +31,7 @@ internal class RequestExamples : IMultipleExamplesProvider<ResetPasswordIn>
 			"Acadêmico",
 			new ResetPasswordIn
 			{
-				Token = Guid.NewGuid().ToString(),
+				Token = Guid.CreateVersion7().ToString(),
 				Password = "M1@Str0ngP4ssword#"
 			}
 		);

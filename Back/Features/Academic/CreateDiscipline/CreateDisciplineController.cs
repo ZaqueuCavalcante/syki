@@ -30,7 +30,7 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateDisciplineIn>
 			new CreateDisciplineIn
 			{
 				Name = "Banco de Dados",
-				Courses = [Guid.NewGuid(), Guid.NewGuid()]
+				Courses = [Guid.CreateVersion7(), Guid.CreateVersion7()]
 			}
 		);
         yield return SwaggerExample.Create(
@@ -38,7 +38,7 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateDisciplineIn>
 			new CreateDisciplineIn
 			{
 				Name = "Programação Orientada a Objetos",
-				Courses = [Guid.NewGuid()]
+				Courses = [Guid.CreateVersion7()]
 			}
 		);
     }

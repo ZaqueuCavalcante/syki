@@ -7,6 +7,6 @@ public class CreateTeacherIn
 
     public static CreateTeacherIn Seed(string name)
     {
-        return new CreateTeacherIn { Name = name, Email = $"professor.{Guid.NewGuid().ToString().OnlyNumbers()[..8]}@syki.seed.com" };
+        return new CreateTeacherIn { Name = name, Email = $"professor.{Guid.CreateVersion7().ToString().OnlyNumbers()[^8..]}@syki.seed.com" };
     }
 }

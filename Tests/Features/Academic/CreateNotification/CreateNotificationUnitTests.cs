@@ -8,7 +8,7 @@ public class CreateNotificationUnitTests
     public void Should_create_notification_with_correct_data()
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
         var target = UsersGroup.Students;
@@ -29,7 +29,7 @@ public class CreateNotificationUnitTests
     public void Should_convert_notification_to_out()
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
         var target = UsersGroup.Students;

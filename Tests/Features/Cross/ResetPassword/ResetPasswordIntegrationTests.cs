@@ -34,7 +34,7 @@ public partial class IntegrationTests
         client.Logout();
 
         // Act
-        var response = await client.ResetPassword(Guid.NewGuid().ToString(), "My@new@strong@P4ssword");
+        var response = await client.ResetPassword(Guid.CreateVersion7().ToString(), "My@new@strong@P4ssword");
 
         // Assert
         await response.AssertBadRequest(new UserNotFound());

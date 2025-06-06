@@ -29,7 +29,7 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateStudent(Guid.NewGuid());
+        var response = await client.CreateStudent(Guid.CreateVersion7());
 
         // Assert
         response.ShouldBeError(new CourseOfferingNotFound());

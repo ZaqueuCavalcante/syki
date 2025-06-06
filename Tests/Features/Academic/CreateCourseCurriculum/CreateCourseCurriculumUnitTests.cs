@@ -10,8 +10,8 @@ public class CreateCourseCurriculumUnitTests
     public void Should_convert_course_curruculum_to_out()
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
-        var courseId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
+        var courseId = Guid.CreateVersion7();
         const string name = "Grade de ADS - 1.0";
 
         var cc = new CourseCurriculum(institutionId, courseId, name)

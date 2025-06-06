@@ -44,8 +44,8 @@ public class AuditUnitTests
     {
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
+        var userId = Guid.CreateVersion7();
+        var institutionId = Guid.CreateVersion7();
         evt.CustomFields["UserId"] = userId;
         evt.CustomFields["InstitutionId"] = institutionId;;
 
@@ -83,8 +83,8 @@ public class AuditUnitTests
     {
         // Arrange
         var evt = new AuditEvent { CustomFields = [] };
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
+        var userId = Guid.CreateVersion7();
+        var institutionId = Guid.CreateVersion7();
         evt.CustomFields["UserId"] = userId;
         evt.CustomFields["InstitutionId"] = institutionId;
 

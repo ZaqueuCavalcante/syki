@@ -13,7 +13,7 @@ public class CreateStudentIn
         {
             Name = name,
             CourseOfferingId = courseOfferingId,
-            Email = $"aluno.{Guid.NewGuid().ToString().OnlyNumbers()[..8]}@syki.seed.com"
+            Email = $"aluno.{Guid.CreateVersion7().ToString().OnlyNumbers()[^8..]}@syki.seed.com"
         };
     }
 }

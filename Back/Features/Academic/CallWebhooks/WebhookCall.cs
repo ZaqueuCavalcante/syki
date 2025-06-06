@@ -24,7 +24,7 @@ public class WebhookCall : Entity
         Guid eventId,
         WebhookEventType eventType)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         WebhookId = webhookId;
         Payload = (new { EventId = eventId, EventType = eventType, Data = data }).Serialize();

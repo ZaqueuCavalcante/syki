@@ -30,7 +30,7 @@ internal class RequestsExamples : IExamplesProvider<FinishUserRegisterIn>
 	public FinishUserRegisterIn GetExamples()
 	{
 		return new FinishUserRegisterIn(
-			Guid.NewGuid().ToString(),
+			Guid.CreateVersion7().ToString(),
 			"M1@Str0ngP4ssword#"
 		);
 	}
@@ -44,11 +44,11 @@ internal class ResponseExamples : IMultipleExamplesProvider<UserOut>
 			"User",
 			new UserOut
 			{
-				Id = Guid.NewGuid(),
+				Id = Guid.CreateVersion7(),
 				Name = "Zaqueu Cavalcante",
 				Email = "zaqueu.cavalcante@gmail.com",
 				Password = "M1@Str0ngP4ssword#",
-				InstitutionId = Guid.NewGuid(),
+				InstitutionId = Guid.CreateVersion7(),
 				Institution = "Universidade Federal Caruaruense",
 				Role = UserRole.Student.ToString()
 			}

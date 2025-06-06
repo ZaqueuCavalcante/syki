@@ -8,7 +8,7 @@ public class UserExtensionsUnitTests
     public void Should_get_user_id()
     {
         // Arrange
-        var userIdClaim = new Claim("sub", Guid.NewGuid().ToString());
+        var userIdClaim = new Claim("sub", Guid.CreateVersion7().ToString());
         var claimsIdentity = new ClaimsIdentity([userIdClaim]);
         var user = new ClaimsPrincipal(claimsIdentity);
 
@@ -23,7 +23,7 @@ public class UserExtensionsUnitTests
     public void Should_get_user_institution_id()
     {
         // Arrange
-        var institutionIdClaim = new Claim("institution", Guid.NewGuid().ToString());
+        var institutionIdClaim = new Claim("institution", Guid.CreateVersion7().ToString());
         var claimsIdentity = new ClaimsIdentity([institutionIdClaim]);
         var user = new ClaimsPrincipal(claimsIdentity);
 

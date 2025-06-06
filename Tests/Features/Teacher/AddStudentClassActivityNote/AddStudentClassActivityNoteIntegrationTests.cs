@@ -43,7 +43,7 @@ public partial class IntegrationTests
         await studentClient.CreateClassActivityWork(work.Id, "https://github.com/ZaqueuCavalcante/syki");
 
         // Act
-        var response = await teacherClient.AddStudentClassActivityNote(Guid.NewGuid(), data.Student.Id, 8.12M);
+        var response = await teacherClient.AddStudentClassActivityNote(Guid.CreateVersion7(), data.Student.Id, 8.12M);
 
         // Assert
         response.ShouldBeError(new ClassActivityNotFound());

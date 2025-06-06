@@ -32,7 +32,7 @@ internal class ResponseExamples : IMultipleExamplesProvider<List<UserNotificatio
 			{
 				new()
 				{
-					NotificationId = Guid.NewGuid(),
+					NotificationId = Guid.CreateVersion7(),
 					Title = "Boas-vindas!",
 					Description = "Agradecemos a confiança na nossa instituição, que seja uma jornada cheia de aprendizado!",
 					CreatedAt = DateTime.UtcNow.AddDays(-50),
@@ -40,7 +40,7 @@ internal class ResponseExamples : IMultipleExamplesProvider<List<UserNotificatio
 				},
 				new()
 				{
-					NotificationId = Guid.NewGuid(),
+					NotificationId = Guid.CreateVersion7(),
 					Title = "Semana de prova chegando!",
 					Description = "Preparado(a) pras avaliações? Elas começam semana que vem, revise os assuntos e boas provas!",
 					CreatedAt = DateTime.UtcNow,

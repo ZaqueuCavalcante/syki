@@ -18,7 +18,7 @@ public class DomainEvent
 
     public DomainEvent(Guid institutionId, Guid entityId, object data)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         EntityId = entityId;
         Type = data.GetType().ToString();
         Data = data.Serialize();

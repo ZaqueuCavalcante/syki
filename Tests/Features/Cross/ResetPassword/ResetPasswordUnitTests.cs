@@ -8,9 +8,9 @@ public class ResetPasswordUnitTests
     public void Should_use_a_reset_password_token()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
-        var token = Guid.NewGuid().ToString();
+        var userId = Guid.CreateVersion7();
+        var institutionId = Guid.CreateVersion7();
+        var token = Guid.CreateVersion7().ToString();
         var reset = new ResetPasswordToken(userId, institutionId, token);
 
         // Act

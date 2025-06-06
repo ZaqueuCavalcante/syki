@@ -36,7 +36,7 @@ public partial class IntegrationTests
 
         // Act
         var studentClient = await _api.LoggedAsStudent(data.Student.Email);
-        var response = await studentClient.CreateClassActivityWork(Guid.NewGuid(), "https://github.com/ZaqueuCavalcante/syki");
+        var response = await studentClient.CreateClassActivityWork(Guid.CreateVersion7(), "https://github.com/ZaqueuCavalcante/syki");
 
         // Assert
         response.ShouldBeError(new ClassActivityNotFound());

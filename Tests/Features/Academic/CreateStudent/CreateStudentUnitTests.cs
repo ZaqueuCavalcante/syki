@@ -8,10 +8,10 @@ public class CreateStudentUnitTests
     public void Should_create_student_with_correct_data()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
+        var userId = Guid.CreateVersion7();
+        var institutionId = Guid.CreateVersion7();
         const string name = "Zaqueu";
-        var courseOfferingId = Guid.NewGuid();
+        var courseOfferingId = Guid.CreateVersion7();
 
         // Act
         var student = new SykiStudent(userId, institutionId, "Zaqueu", courseOfferingId);
@@ -32,9 +32,9 @@ public class CreateStudentUnitTests
     public void Should_create_students_with_distinct_enrollment_codes()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
-        var courseOfferingId = Guid.NewGuid();
+        var userId = Guid.CreateVersion7();
+        var institutionId = Guid.CreateVersion7();
+        var courseOfferingId = Guid.CreateVersion7();
 
         // Act
         var maria = new SykiStudent(userId, institutionId, "Maria", courseOfferingId);
@@ -48,7 +48,7 @@ public class CreateStudentUnitTests
     public void Should_convert_student_to_out_without_course_offering()
     {
         // Arrange
-        var student = new SykiStudent(Guid.NewGuid(), Guid.NewGuid(), "Zaqueu", Guid.NewGuid());
+        var student = new SykiStudent(Guid.CreateVersion7(), Guid.CreateVersion7(), "Zaqueu", Guid.CreateVersion7());
 
         // Act
         var studentOut = student.ToOut();
@@ -65,15 +65,15 @@ public class CreateStudentUnitTests
     public void Should_convert_student_to_out_with_course_offering()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
-        var campusId = Guid.NewGuid();
-        var courseId = Guid.NewGuid();
-        var courseCurriculumId = Guid.NewGuid();
+        var userId = Guid.CreateVersion7();
+        var institutionId = Guid.CreateVersion7();
+        var campusId = Guid.CreateVersion7();
+        var courseId = Guid.CreateVersion7();
+        var courseCurriculumId = Guid.CreateVersion7();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 
-        var student = new SykiStudent(userId, institutionId, "Zaqueu", Guid.NewGuid())
+        var student = new SykiStudent(userId, institutionId, "Zaqueu", Guid.CreateVersion7())
         {
             CourseOffering = new(institutionId, campusId, courseId, courseCurriculumId, period, shift)
             {

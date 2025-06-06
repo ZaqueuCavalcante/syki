@@ -9,7 +9,7 @@ public class CreateAcademicPeriodUnitTests
     public void Should_create_academic_period_with_valid_id(string id)
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         var year = int.Parse(id.Substring(0, 4));
         var start = new DateOnly(year, 02, 01);
         var end = new DateOnly(year, 06, 01);
@@ -32,7 +32,7 @@ public class CreateAcademicPeriodUnitTests
     public void Should_not_create_academic_period_with_invalid_id(string id)
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
@@ -48,7 +48,7 @@ public class CreateAcademicPeriodUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         var start = new DateOnly(2022, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
@@ -64,7 +64,7 @@ public class CreateAcademicPeriodUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2024, 06, 01);
 
@@ -80,7 +80,7 @@ public class CreateAcademicPeriodUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 02, 01);
 
@@ -96,7 +96,7 @@ public class CreateAcademicPeriodUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         var start = new DateOnly(2023, 06, 01);
         var end = new DateOnly(2023, 02, 01);
 
@@ -112,7 +112,7 @@ public class CreateAcademicPeriodUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 

@@ -37,7 +37,7 @@ public class CommandBatch
         return new()
         {
             Type = type,
-            Id = Guid.NewGuid(),
+            Id = Guid.CreateVersion7(),
             CreatedAt = DateTime.UtcNow,
             InstitutionId = institutionId,
             Status = CommandBatchStatus.Pending,

@@ -31,7 +31,7 @@ public class RequestExamples : IMultipleExamplesProvider<UpdateCampusIn>
 			"Agreste I",
 			new UpdateCampusIn
 			{
-				Id = Guid.NewGuid(),
+				Id = Guid.CreateVersion7(),
 				Name = "Agreste I",
                 State = BrazilState.AP,
 				City = "Caruaru",
@@ -41,7 +41,7 @@ public class RequestExamples : IMultipleExamplesProvider<UpdateCampusIn>
 			"Interior",
 			new UpdateCampusIn
 			{
-				Id = Guid.NewGuid(),
+				Id = Guid.CreateVersion7(),
 				Name = "Interior",
                 State = BrazilState.TO,
 				City = "Palmas",

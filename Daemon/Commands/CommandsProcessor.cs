@@ -12,7 +12,7 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
         using var scope = serviceScopeFactory.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
 
-        await Process(scope, ctx, Guid.NewGuid());
+        await Process(scope, ctx, Guid.CreateVersion7());
     }
 
     private static async Task Process(IServiceScope scope, SykiDbContext ctx, Guid processorId)

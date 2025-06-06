@@ -11,9 +11,9 @@ public class UserRegister : Entity
 
     public UserRegister(string email)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         Email = email.ToLower();
-        InstitutionId = Guid.NewGuid();
+        InstitutionId = Guid.CreateVersion7();
         AddDomainEvent(new PendingUserRegisterCreatedDomainEvent(Id));
     }
 

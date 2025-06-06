@@ -8,8 +8,8 @@ public class CreateTeacherUnitTests
     public void Should_create_teacher_with_correct_data()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
+        var userId = Guid.CreateVersion7();
+        var institutionId = Guid.CreateVersion7();
         const string name = "Chico Science";
 
         // Act
@@ -26,8 +26,8 @@ public class CreateTeacherUnitTests
     public void Should_convert_teacher_to_out()
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
-        var userId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
+        var userId = Guid.CreateVersion7();
         const string name = "Chico Science";
         var teacher = new SykiTeacher(userId, institutionId, name);
 

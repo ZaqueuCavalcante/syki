@@ -29,7 +29,7 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateCourseOffering(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
+        var response = await client.CreateCourseOffering(Guid.CreateVersion7(), Guid.CreateVersion7(), Guid.CreateVersion7(), "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CampusNotFound());      
@@ -46,7 +46,7 @@ public partial class IntegrationTests
         var campusUfpe = await clientUfpe.CreateCampus();
 
         // Act
-        var response = await clientNovaRoma.CreateCourseOffering(campusUfpe.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
+        var response = await clientNovaRoma.CreateCourseOffering(campusUfpe.Id, Guid.CreateVersion7(), Guid.CreateVersion7(), "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CampusNotFound());      
@@ -60,7 +60,7 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus();
 
         // Act
-        var response = await client.CreateCourseOffering(campus.Id, Guid.NewGuid(), Guid.NewGuid(), "2024.1", Shift.Matutino);
+        var response = await client.CreateCourseOffering(campus.Id, Guid.CreateVersion7(), Guid.CreateVersion7(), "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CourseNotFound());
@@ -77,7 +77,7 @@ public partial class IntegrationTests
         var campusNovaRoma = await clientNovaRoma.CreateCampus();
 
         // Act
-        var response = await clientNovaRoma.CreateCourseOffering(campusNovaRoma.Id, courseUfpe.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
+        var response = await clientNovaRoma.CreateCourseOffering(campusNovaRoma.Id, courseUfpe.Id, Guid.CreateVersion7(), "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CourseNotFound());
@@ -92,7 +92,7 @@ public partial class IntegrationTests
         CourseOut course = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
 
         // Act
-        var response = await client.CreateCourseOffering(campus.Id, course.Id, Guid.NewGuid(), "2024.1", Shift.Matutino);
+        var response = await client.CreateCourseOffering(campus.Id, course.Id, Guid.CreateVersion7(), "2024.1", Shift.Matutino);
 
         // Assert
         response.ShouldBeError(new CourseCurriculumNotFound());

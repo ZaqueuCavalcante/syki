@@ -14,7 +14,7 @@ public class WebhookAuthentication
 
     public WebhookAuthentication(Guid webhookId, WebhookAuthenticationType type, string apiKey)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         WebhookId = webhookId;
         Type = type;
         ApiKey = apiKey;

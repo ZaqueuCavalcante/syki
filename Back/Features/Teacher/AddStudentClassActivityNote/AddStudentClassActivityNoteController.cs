@@ -30,14 +30,14 @@ internal class RequestExamples : IMultipleExamplesProvider<AddStudentClassActivi
         yield return SwaggerExample.Create(
 			"Nota do trabalho",
 			new AddStudentClassActivityNoteIn(
-				Guid.NewGuid(),
+				Guid.CreateVersion7(),
 				5.48M
 			)
 		);
         yield return SwaggerExample.Create(
 			"Nota da prova",
 			new AddStudentClassActivityNoteIn(
-				Guid.NewGuid(),
+				Guid.CreateVersion7(),
 				10.00M
 			)
 		);

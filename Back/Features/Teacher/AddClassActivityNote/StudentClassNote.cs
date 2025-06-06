@@ -19,7 +19,7 @@ public class StudentClassNote : Entity
         ClassNoteType examType,
         decimal note
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         ClassId = classId;
         StudentId = studentId;
         Type = examType;

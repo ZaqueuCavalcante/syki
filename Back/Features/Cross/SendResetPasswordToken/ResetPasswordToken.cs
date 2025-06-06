@@ -11,7 +11,7 @@ public class ResetPasswordToken : Entity
 
     public ResetPasswordToken(Guid userId, Guid institutionId, string token)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         UserId = userId;
         InstitutionId = institutionId;
         Token = token;

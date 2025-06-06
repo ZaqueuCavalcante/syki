@@ -8,7 +8,7 @@ public class CreateInstitutionUnitTests
     public void Should_create_institution_with_correct_data()
     {
         // Arrange
-        var id = Guid.NewGuid();
+        var id = Guid.CreateVersion7();
         const string name = "UFPE";
 
         // Act
@@ -26,7 +26,7 @@ public class CreateInstitutionUnitTests
     public void Should_convert_institution_to_out()
     {
         // Arrange
-        var id = Guid.NewGuid();
+        var id = Guid.CreateVersion7();
         var institution = new Institution(id, "UFPE");
 
         // Act
@@ -43,7 +43,7 @@ public class CreateInstitutionUnitTests
     public void Should_return_institution_name_on_to_string()
     {
         // Arrange
-        var id = Guid.NewGuid();
+        var id = Guid.CreateVersion7();
         var institution = new Institution(id, "UFPE");
         var institutionOut = institution.ToOut();
 

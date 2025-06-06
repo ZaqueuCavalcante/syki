@@ -10,9 +10,9 @@ public class CreateClassUnitTests
     public void Should_create_class_with_correct_data()
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
-        var disciplineId = Guid.NewGuid();
-        var teacherId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
+        var disciplineId = Guid.CreateVersion7();
+        var teacherId = Guid.CreateVersion7();
         const string period = "2023.2";
         const int vacancies = 40;
         var schedules = new List<Schedule>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
@@ -35,9 +35,9 @@ public class CreateClassUnitTests
     public void Should_not_create_class_with_totally_conflicting_schedules()
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
-        var disciplineId = Guid.NewGuid();
-        var teacherId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
+        var disciplineId = Guid.CreateVersion7();
+        var teacherId = Guid.CreateVersion7();
         const string period = "2023.2";
         const int vacancies = 40;
         var schedules = new List<Schedule>()
@@ -58,9 +58,9 @@ public class CreateClassUnitTests
     public void Should_not_create_class_with_partially_conflicting_schedules(List<Schedule> schedules)
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
-        var disciplineId = Guid.NewGuid();
-        var teacherId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
+        var disciplineId = Guid.CreateVersion7();
+        var teacherId = Guid.CreateVersion7();
         const string period = "2023.2";
         const int vacancies = 40;
 
@@ -76,9 +76,9 @@ public class CreateClassUnitTests
     public void Should_create_class_with_valid_schedules(List<Schedule> schedules)
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
-        var disciplineId = Guid.NewGuid();
-        var teacherId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
+        var disciplineId = Guid.CreateVersion7();
+        var teacherId = Guid.CreateVersion7();
         const string period = "2023.2";
         const int vacancies = 40;
 
@@ -93,10 +93,10 @@ public class CreateClassUnitTests
     public void Should_convert_class_to_out()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
-        var disciplineId = Guid.NewGuid();
-        var teacherId = Guid.NewGuid();
+        var userId = Guid.CreateVersion7();
+        var institutionId = Guid.CreateVersion7();
+        var disciplineId = Guid.CreateVersion7();
+        var teacherId = Guid.CreateVersion7();
         const string period = "2023.2";
         const int vacancies = 40;
 

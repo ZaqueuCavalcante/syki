@@ -40,7 +40,7 @@ public partial class IntegrationTests
         var academicClient = await _api.LoggedAsAcademic();
 
         // Act
-        var response = await academicClient.StartClasses([Guid.NewGuid()]);
+        var response = await academicClient.StartClasses([Guid.CreateVersion7()]);
 
         // Assert
         response.ShouldBeError(new InvalidClassesList());

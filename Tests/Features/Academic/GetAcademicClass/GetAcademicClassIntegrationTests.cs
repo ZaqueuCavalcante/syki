@@ -77,7 +77,7 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        var response = await client.GetAcademicClass(Guid.NewGuid());
+        var response = await client.GetAcademicClass(Guid.CreateVersion7());
 
         // Assert
         response.ShouldBeError(new ClassNotFound());

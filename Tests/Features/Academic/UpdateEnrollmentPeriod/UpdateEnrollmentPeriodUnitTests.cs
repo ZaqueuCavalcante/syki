@@ -9,7 +9,7 @@ public class CreateEnrollmentPeriodUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 06, 01);
 
@@ -28,7 +28,7 @@ public class CreateEnrollmentPeriodUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         var start = new DateOnly(2023, 02, 01);
         var end = new DateOnly(2023, 02, 01);
 
@@ -44,7 +44,7 @@ public class CreateEnrollmentPeriodUnitTests
     {
         // Arrange
         const string id = "2023.1";
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         var start = new DateOnly(2023, 06, 01);
         var end = new DateOnly(2023, 02, 01);
 

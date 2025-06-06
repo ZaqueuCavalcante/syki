@@ -10,7 +10,7 @@ public class CreateClassActivityUnitTests
     {
         // Arrange // Act
         var activity = ClassActivity.New(
-            Guid.NewGuid(),
+            Guid.CreateVersion7(),
             ClassNoteType.N1,
             "Banco de Dados",
             "Modele um banco de dados.",
@@ -31,7 +31,7 @@ public class CreateClassActivityUnitTests
     {
         // Arrange // Act
         var activity = ClassActivity.New(
-            Guid.NewGuid(),
+            Guid.CreateVersion7(),
             ClassNoteType.N1,
             "Banco de Dados",
             "Modele um banco de dados.",

@@ -8,8 +8,8 @@ public class CreateUserNotificationUnitTests
     public void Should_create_notification_with_correct_data()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var notificationId = Guid.NewGuid();
+        var userId = Guid.CreateVersion7();
+        var notificationId = Guid.CreateVersion7();
 
         // Act
         var userNotification = new UserNotification(userId, notificationId);
@@ -26,9 +26,9 @@ public class CreateUserNotificationUnitTests
         const string title = "Boas-vindas!";
         const string description = "Seja muito bem-vindo(a)!";
         var target = UsersGroup.Students;
-        var notification = new Notification(Guid.NewGuid(), title, description, target, true);
+        var notification = new Notification(Guid.CreateVersion7(), title, description, target, true);
 
-        var userId = Guid.NewGuid();
+        var userId = Guid.CreateVersion7();
         var userNotification = new UserNotification(userId, notification.Id)
         {
             Notification = notification,

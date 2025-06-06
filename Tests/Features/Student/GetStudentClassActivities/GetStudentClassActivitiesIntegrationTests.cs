@@ -37,7 +37,7 @@ public partial class IntegrationTests
 
         // Act
         var studentClient = await _api.LoggedAsStudent(data.Student.Email);
-        var response = await studentClient.GetStudentClassActivities(Guid.NewGuid());
+        var response = await studentClient.GetStudentClassActivities(Guid.CreateVersion7());
 
         // Assert
         response.ShouldBeError(new ClassNotFound());

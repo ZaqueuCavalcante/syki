@@ -9,7 +9,7 @@ public class CreateCourseUnitTests
     public void Should_convert_course_to_out()
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
         const string name = "Análise e Desenvolvimento de Sistemas";
         var course = new Course(institutionId, name, Bacharelado);
 
@@ -26,7 +26,7 @@ public class CreateCourseUnitTests
     public void Should_return_true_when_is_the_same_course()
     {
         // Arrange
-        var course = new Course(Guid.NewGuid(), "Curso", Bacharelado);
+        var course = new Course(Guid.CreateVersion7(), "Curso", Bacharelado);
         var courseOut1 = course.ToOut();
         var courseOut2 = course.ToOut();
 
@@ -41,8 +41,8 @@ public class CreateCourseUnitTests
     public void Should_return_false_when_is_not_the_same_course()
     {
         // Arrange
-        var course1 = new Course(Guid.NewGuid(), "Course1", Bacharelado);
-        var course2 = new Course(Guid.NewGuid(), "Course2", Bacharelado);
+        var course1 = new Course(Guid.CreateVersion7(), "Course1", Bacharelado);
+        var course2 = new Course(Guid.CreateVersion7(), "Course2", Bacharelado);
         var courseOut1 = course1.ToOut();
         var courseOut2 = course2.ToOut();
 
@@ -57,7 +57,7 @@ public class CreateCourseUnitTests
     public void Should_return_false_when_other_course_is_null()
     {
         // Arrange
-        var course = new Course(Guid.NewGuid(), "Course1", Bacharelado);
+        var course = new Course(Guid.CreateVersion7(), "Course1", Bacharelado);
         var courseOut = course.ToOut();
 
         // Act
@@ -77,7 +77,7 @@ public class CreateCourseUnitTests
         var hashCode = courseOut.GetHashCode();
 
         // Assert
-        hashCode.Should().Be(4523_9002);
+        hashCode.Should().Be(9473_3118);
     }
 
     [Test]

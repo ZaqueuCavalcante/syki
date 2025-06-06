@@ -19,7 +19,7 @@ public class ClassLessonAttendance
         Guid studentId,
         bool present
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         ClassId = classId;
         LessonId = lessonId;
         StudentId = studentId;

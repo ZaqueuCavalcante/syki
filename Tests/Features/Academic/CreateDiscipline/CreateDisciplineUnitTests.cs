@@ -8,9 +8,9 @@ public class CreateDisciplineUnitTests
     public void Should_convert_discipline_to_out()
     {
         // Arrange
-        var discipline = new Discipline(Guid.NewGuid(), "Banco de Dados");
-        discipline.Links.Add(new() { CourseId = Guid.NewGuid() });
-        discipline.Links.Add(new() { CourseId = Guid.NewGuid() });
+        var discipline = new Discipline(Guid.CreateVersion7(), "Banco de Dados");
+        discipline.Links.Add(new() { CourseId = Guid.CreateVersion7() });
+        discipline.Links.Add(new() { CourseId = Guid.CreateVersion7() });
 
         // Act
         var disciplineOut = discipline.ToOut();
@@ -25,7 +25,7 @@ public class CreateDisciplineUnitTests
     public void Should_return_true_when_is_the_same_discipline()
     {
         // Arrange
-        var discipline = new Discipline(Guid.NewGuid(), "Banco de Dados");
+        var discipline = new Discipline(Guid.CreateVersion7(), "Banco de Dados");
         var disciplineOut1 = discipline.ToOut();
         var disciplineOut2 = discipline.ToOut();
 
@@ -40,8 +40,8 @@ public class CreateDisciplineUnitTests
     public void Should_return_false_when_is_not_the_same_discipline()
     {
         // Arrange
-        var discipline1 = new Discipline(Guid.NewGuid(), "Banco de Dados");
-        var discipline2 = new Discipline(Guid.NewGuid(), "Banco de Dados");
+        var discipline1 = new Discipline(Guid.CreateVersion7(), "Banco de Dados");
+        var discipline2 = new Discipline(Guid.CreateVersion7(), "Banco de Dados");
         var disciplineOut1 = discipline1.ToOut();
         var disciplineOut2 = discipline2.ToOut();
 
@@ -56,7 +56,7 @@ public class CreateDisciplineUnitTests
     public void Should_return_false_when_other_discipline_is_null()
     {
         // Arrange
-        var discipline = new Discipline(Guid.NewGuid(), "Banco de Dados");
+        var discipline = new Discipline(Guid.CreateVersion7(), "Banco de Dados");
         var disciplineOut = discipline.ToOut();
 
         // Act
@@ -70,13 +70,13 @@ public class CreateDisciplineUnitTests
     public void Should_return_the_hash_code()
     {
         // Arrange
-        var disciplineOut = new DisciplineOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
+        var disciplineOut = new DisciplineOut { Id = Guid.Parse("01974291-4c9b-7431-bf80-8456e9bf3ba4") };
 
         // Act
         var hashCode = disciplineOut.GetHashCode();
 
         // Assert
-        hashCode.Should().Be(4523_9002);
+        hashCode.Should().Be(0845_6934);
     }
 
     [Test]

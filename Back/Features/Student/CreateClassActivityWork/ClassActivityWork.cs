@@ -21,7 +21,7 @@ public class ClassActivityWork : Entity
         Guid classActivityId,
         Guid studentId
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         ClassActivityId = classActivityId;
         SykiStudentId = studentId;
         Note = 0;

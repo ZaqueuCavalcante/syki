@@ -22,7 +22,7 @@ public class CourseCurriculum
         Guid courseId,
         string name
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         CourseId = courseId;
         Name = name;

@@ -31,8 +31,8 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateClassIn>
         yield return SwaggerExample.Create(
 			"Banco de Dados",
 			new CreateClassIn(
-				Guid.NewGuid(),
-				Guid.NewGuid(),
+				Guid.CreateVersion7(),
+				Guid.CreateVersion7(),
 				"2024.1",
 				40,
 				[
@@ -45,8 +45,8 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateClassIn>
         yield return SwaggerExample.Create(
 			"Programação Orientada a Objetos",
 			new CreateClassIn(
-				Guid.NewGuid(),
-				Guid.NewGuid(),
+				Guid.CreateVersion7(),
+				Guid.CreateVersion7(),
 				"2024.2",
 				40,
 				[

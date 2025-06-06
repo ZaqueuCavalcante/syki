@@ -38,7 +38,7 @@ public partial class IntegrationTests
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
         // Act
-        var response = await teacherClient.CreateLessonAttendance(Guid.NewGuid(), []);
+        var response = await teacherClient.CreateLessonAttendance(Guid.CreateVersion7(), []);
 
         // Assert
         response.ShouldBeError(new LessonNotFound());
@@ -93,7 +93,7 @@ public partial class IntegrationTests
         var lessonId = classDb.Lessons[0].Id;
 
         // Act
-        var response = await teacherClient.CreateLessonAttendance(lessonId, [Guid.NewGuid()]);
+        var response = await teacherClient.CreateLessonAttendance(lessonId, [Guid.CreateVersion7()]);
 
         // Assert
         response.ShouldBeError(new InvalidStudentsList());

@@ -9,9 +9,9 @@ public class CreateCourseOfferingUnitTests
     public void Should_convert_course_offering_to_out()
     {
         // Arrange
-        var institutionId = Guid.NewGuid();
-        var campusId = Guid.NewGuid();
-        var courseId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
+        var campusId = Guid.CreateVersion7();
+        var courseId = Guid.CreateVersion7();
         const string period = "2024.1";
         var shift = Shift.Matutino;
 

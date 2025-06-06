@@ -22,7 +22,7 @@ public class WebhookSubscription
 
     public WebhookSubscription(Guid institutionId, string name, string url, List<WebhookEventType> events, string apiKey)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         Name = name;
         Url = url;

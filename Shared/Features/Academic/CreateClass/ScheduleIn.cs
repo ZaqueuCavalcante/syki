@@ -9,7 +9,7 @@ public class ScheduleIn
 
     public ScheduleIn()
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
     }
 
     public ScheduleIn(
@@ -17,7 +17,7 @@ public class ScheduleIn
         Hour start,
         Hour end
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         Day = dia;
         Start = start;
         End = end;

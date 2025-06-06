@@ -27,7 +27,7 @@ public partial class IntegrationTests
         await client.CreateCampus();
 
         // Act
-        var response = await client.UpdateCampus(Guid.NewGuid(), "Agreste II", BrazilState.PE, "Bonito");
+        var response = await client.UpdateCampus(Guid.CreateVersion7(), "Agreste II", BrazilState.PE, "Bonito");
 
         // Assert
         response.ShouldBeError(new CampusNotFound()); 

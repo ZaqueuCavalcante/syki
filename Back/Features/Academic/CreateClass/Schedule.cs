@@ -15,7 +15,7 @@ public class Schedule
         Hour startAt,
         Hour endAt
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         Day = day;
         StartAt = startAt;
         EndAt = endAt;

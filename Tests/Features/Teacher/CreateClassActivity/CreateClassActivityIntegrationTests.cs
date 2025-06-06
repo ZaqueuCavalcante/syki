@@ -73,7 +73,7 @@ public partial class IntegrationTests
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
         // Act
-        var response = await teacherClient.CreateClassActivity(Guid.NewGuid());
+        var response = await teacherClient.CreateClassActivity(Guid.CreateVersion7());
 
         // Assert
         response.ShouldBeError(new ClassNotFound());

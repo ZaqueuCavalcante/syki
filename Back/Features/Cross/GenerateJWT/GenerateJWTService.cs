@@ -15,7 +15,7 @@ public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> use
 
         var claims = new List<Claim>
         {
-            new("jti", Guid.NewGuid().ToString()),
+            new("jti", Guid.CreateVersion7().ToString()),
             new("sub", user.Id.ToString()),
             new("role", role),
             new("name", user.Name),

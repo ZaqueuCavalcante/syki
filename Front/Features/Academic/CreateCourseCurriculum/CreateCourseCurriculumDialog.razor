@@ -103,7 +103,7 @@
 
     void NewGradeDiscipline()
     {
-        Disciplines.Add(new() { Id = Guid.NewGuid() });
+        Disciplines.Add(new() { Id = Guid.CreateVersion7() });
     }
 
     void DeleteGradeDiscipline(Guid id)

@@ -8,8 +8,8 @@ public class CreateClassStudentUnitTests
     public void Should_create_class_student_with_correct_data()
     {
         // Arrange
-        var classId = Guid.NewGuid();
-        var studentId = Guid.NewGuid();
+        var classId = Guid.CreateVersion7();
+        var studentId = Guid.CreateVersion7();
         var status = StudentDisciplineStatus.Matriculado;
 
         // Act

@@ -20,7 +20,7 @@ public class Notification
         UsersGroup target,
         bool timeless
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         Title = title;
         Description = description;

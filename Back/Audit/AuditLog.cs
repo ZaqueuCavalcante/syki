@@ -23,7 +23,7 @@ public class AuditLog
         if (evt.CustomFields.Count == 0 || evt.CustomFields.ContainsKey("Skip"))
             return false;
 
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         EntityId = Guid.Parse(entry.PrimaryKey.First().Value.ToString()!);
         EntityType = entry.EntityType.Name;
         Action = entry.Action;

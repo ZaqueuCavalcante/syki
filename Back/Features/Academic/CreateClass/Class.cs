@@ -41,7 +41,7 @@ public class Class
         int vacancies,
         List<Schedule> schedules
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         DisciplineId = disciplineId;
         TeacherId = teacherId;

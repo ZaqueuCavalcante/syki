@@ -30,7 +30,7 @@ public class CourseOffering
         string period,
         Shift shift
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         CampusId = campusId;
         CourseId = courseId;

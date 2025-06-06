@@ -9,7 +9,7 @@ public class ScheduleInFillable
 
     public ScheduleInFillable()
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
     }
 
     public override bool Equals(object? obj)

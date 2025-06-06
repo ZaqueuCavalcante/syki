@@ -6,7 +6,7 @@ namespace Syki.Tests.Base;
 
 public static class TestData
 {
-    public static string Email => $"{Guid.NewGuid().ToString().OnlyNumbers()}@syki.com";
+    public static string Email => $"{Guid.CreateVersion7().ToString().OnlyNumbers()}@syki.com";
 
     public static IEnumerable<object[]> ValidNames()
     {
@@ -27,7 +27,7 @@ public static class TestData
     public static IEnumerable<object[]> InvalidUserRegisterTokens()
     {
         var empty = Guid.Empty.ToString();
-        var random = Guid.NewGuid().ToString();
+        var random = Guid.CreateVersion7().ToString();
         foreach (var name in new List<string>() { null, "", "a", "42", "qwerty123", " ", "  ", "     ", "JP", empty, random, })
         {
             yield return [name];
@@ -124,7 +124,7 @@ public static class TestData
             ("AspNetRoleClaims", "asp_net_role_claims"),
         })
         {
-            yield return new object[] { camel, snake };
+            yield return [camel, snake];
         }
     }
 
@@ -132,12 +132,13 @@ public static class TestData
     {
         foreach (var (guid, hashCode) in new List<(Guid, int)>()
         {
-            (Guid.Parse("e2e833ce-9eee-4755-96be-66c52d7dc260"), 2833_9475),
-            (Guid.Parse("bab5f379-ac8b-446d-9325-13d18cd42227"), 5379_8446),
-            (Guid.Parse("439f1f9d-5be0-4456-8364-a2a2391953bb"), 4391_9504),
+            (Guid.Parse("e2e833ce-9eee-4755-96be-66c52d7dc260"), 6652_7260),
+            (Guid.Parse("bab5f379-ac8b-446d-9325-13d18cd42227"), 3184_2227),
+            (Guid.Parse("439f1f9d-5be0-4456-8364-a2a2391953bb"), 2239_1953),
+            (Guid.Parse("0197428e-be72-7d8a-94d3-6cf24a0e55f4"), 3624_0554)
         })
         {
-            yield return new object[] { guid, hashCode };
+            yield return [guid, hashCode];
         }
     }
 
@@ -155,7 +156,7 @@ public static class TestData
             ("18.297.767/0001-90", "18297767000190"),
         })
         {
-            yield return new object[]  { text, numbers };
+            yield return [text, numbers];
         }
     }
 
@@ -184,7 +185,7 @@ public static class TestData
             ("6841861", "68416", "84"),
         })
         {
-            yield return new object[] { text1, text2, search! };
+            yield return [text1, text2, search!];
         }
     }
 
@@ -210,7 +211,7 @@ public static class TestData
             ("6841861", "68416", "68419"),
         })
         {
-            yield return new object[] { text1, text2, search! };
+            yield return [text1, text2, search!];
         }
     }
 
@@ -225,7 +226,7 @@ public static class TestData
             (153.87M, "153.87"),
         })
         {
-            yield return new object[] { number, text };
+            yield return [number, text];
         }
     }
 
@@ -242,7 +243,7 @@ public static class TestData
             (CourseType.PosDoutorado, "Pós-Doutorado"),
         })
         {
-            yield return new object[] { type, description };
+            yield return [type, description];
         }
     }
 
@@ -256,7 +257,7 @@ public static class TestData
             (Shift.Vespertino, false),
         })
         {
-            yield return new object[] { value, isIn };
+            yield return [value, isIn];
         }
     }
 
@@ -389,7 +390,7 @@ public static class TestData
             (Hour.H08_45, Hour.H07_15, 01*60+30),
         })
         {
-            yield return new object[] { hourA, hourB, diff };
+            yield return [hourA, hourB, diff];
         }
     }
 
@@ -407,7 +408,7 @@ public static class TestData
             (135, "2h e 15min"),
         })
         {
-            yield return new object[] { minutes, text };
+            yield return [minutes, text];
         }
     }
 
@@ -508,9 +509,9 @@ public static class TestData
 
     public static Class GetClass()
     {
-        var institutionId = Guid.NewGuid();
-        var disciplineId = Guid.NewGuid();
-        var teacherId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
+        var disciplineId = Guid.CreateVersion7();
+        var teacherId = Guid.CreateVersion7();
         const string period = "2024.2";
         const int vacancies = 40;
 
@@ -521,9 +522,9 @@ public static class TestData
 
     public static Class GetClass(string start, string end, List<Schedule> schedules)
     {
-        var institutionId = Guid.NewGuid();
-        var disciplineId = Guid.NewGuid();
-        var teacherId = Guid.NewGuid();
+        var institutionId = Guid.CreateVersion7();
+        var disciplineId = Guid.CreateVersion7();
+        var teacherId = Guid.CreateVersion7();
         const string period = "2024.2";
         const int vacancies = 40;
 

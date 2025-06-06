@@ -8,9 +8,9 @@ public class SendResetPasswordTokenUnitTests
     public void Should_create_a_reset_password_with_correct_data()
     {
         // Arrange
-        var userId = Guid.NewGuid();
-        var institutionId = Guid.NewGuid();
-        var token = Guid.NewGuid().ToString();
+        var userId = Guid.CreateVersion7();
+        var institutionId = Guid.CreateVersion7();
+        var token = Guid.CreateVersion7().ToString();
 
         // Act
         var reset = new ResetPasswordToken(userId, institutionId, token);

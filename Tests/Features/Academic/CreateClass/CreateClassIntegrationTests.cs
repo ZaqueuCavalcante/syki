@@ -33,7 +33,7 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateClass(Guid.NewGuid(), Guid.NewGuid(), "2024.1", 40, []);
+        var response = await client.CreateClass(Guid.CreateVersion7(), Guid.CreateVersion7(), "2024.1", 40, []);
 
         // Assert
         response.ShouldBeError(new DisciplineNotFound());
@@ -48,7 +48,7 @@ public partial class IntegrationTests
         var discipline = await client.CreateDiscipline();
 
         // Act
-        var response = await client.CreateClass(discipline.Id, Guid.NewGuid(), "2024.1", 40, []);
+        var response = await client.CreateClass(discipline.Id, Guid.CreateVersion7(), "2024.1", 40, []);
 
         // Assert
         response.ShouldBeError(new TeacherNotFound());

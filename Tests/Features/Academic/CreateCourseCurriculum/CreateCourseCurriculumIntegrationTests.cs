@@ -79,7 +79,7 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateCourseCurriculum("Grade de ADS 1.0", Guid.NewGuid(), []);
+        var response = await client.CreateCourseCurriculum("Grade de ADS 1.0", Guid.CreateVersion7(), []);
         
         // Assert
         response.ShouldBeError(new CourseNotFound());
@@ -171,7 +171,7 @@ public partial class IntegrationTests
         var disciplines = new List<CreateCourseCurriculumDisciplineIn>
         {
             new(course.Disciplines[0].Id, 1, 10, 70),
-            new(Guid.NewGuid(), 2, 9, 55)
+            new(Guid.CreateVersion7(), 2, 9, 55)
         };
 
         // Act

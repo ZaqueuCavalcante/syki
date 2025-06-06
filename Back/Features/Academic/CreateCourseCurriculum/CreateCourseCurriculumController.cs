@@ -30,8 +30,8 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateCourseCurriculu
 			new CreateCourseCurriculumIn
 			{
 				Name = "Grade ADS - 1.0",
-				CourseId = Guid.NewGuid(),
-				Disciplines = [new(Guid.NewGuid(), 1, 55, 70)]
+				CourseId = Guid.CreateVersion7(),
+				Disciplines = [new(Guid.CreateVersion7(), 1, 55, 70)]
 			}
 		);
     }

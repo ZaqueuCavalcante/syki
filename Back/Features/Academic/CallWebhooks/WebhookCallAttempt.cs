@@ -16,7 +16,7 @@ public class WebhookCallAttempt
 
     public WebhookCallAttempt(Guid webhookCallId, WebhookCallAttemptStatus status, int statusCode, string response)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         WebhookCallId = webhookCallId;
         Status = status;
         StatusCode = statusCode;

@@ -49,7 +49,7 @@ public class Command
         Guid? batchId = null,
         int? delaySeconds = null
     ) {
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         Type = data.GetType().ToString();
         Data = data.Serialize();

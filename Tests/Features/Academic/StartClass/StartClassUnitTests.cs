@@ -9,9 +9,9 @@ public class StartClassUnitTests
     public void Should_start_class_with_2_students()
     {
         // Arrange
-        var studentA = new SykiStudent(Guid.NewGuid(), Guid.NewGuid(), "Zaqueu", Guid.NewGuid());
-        var studentB = new SykiStudent(Guid.NewGuid(), Guid.NewGuid(), "Maria", Guid.NewGuid());
-        var @class = Class.New(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "2023.2", 40, []).GetSuccess();
+        var studentA = new SykiStudent(Guid.CreateVersion7(), Guid.CreateVersion7(), "Zaqueu", Guid.CreateVersion7());
+        var studentB = new SykiStudent(Guid.CreateVersion7(), Guid.CreateVersion7(), "Maria", Guid.CreateVersion7());
+        var @class = Class.New(Guid.CreateVersion7(), Guid.CreateVersion7(), Guid.CreateVersion7(), "2023.2", 40, []).GetSuccess();
         @class.Students = [studentA, studentB];
 
         // Act

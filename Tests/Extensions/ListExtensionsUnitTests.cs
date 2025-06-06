@@ -71,7 +71,7 @@ public class ListExtensionsUnitTests
         // Arrange
         List<Guid> guids = 
         [
-            Guid.NewGuid(),
+            Guid.CreateVersion7(),
         ];
 
         var result = guids.IsSubsetOf(_guids);
@@ -120,7 +120,7 @@ public class ListExtensionsUnitTests
         // Arrange
         List<Guid> guids = 
         [
-            Guid.NewGuid(),
+            Guid.CreateVersion7(),
             Guid.Parse("17a84760-c56b-4af0-8701-d6ba9e11495e"),
             Guid.Parse("0e88b426-f78b-42f2-a7b7-3bc1d8508ef1"),
         ];

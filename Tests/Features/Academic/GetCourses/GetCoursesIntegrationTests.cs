@@ -27,4 +27,29 @@ public partial class IntegrationTests
         courses[3].Should().BeEquivalentTo(direito);
         courses[4].Should().BeEquivalentTo(pedagogia);
     }
+
+    [Test]
+    public async Task Should_get_courses_in_parallel_requests_to_test_cache_stampede()
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+
+        await client.CreateCourse("Direito", Tecnologo, []);
+        await client.CreateCourse("Pedagogia", Mestrado, []);
+        await client.CreateCourse("Administração", Doutorado, []);
+        await client.CreateCourse("Ciência da Computação", Especializacao, []);
+        await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado, []);
+
+        // Act
+        var coursesA = client.GetCourses();
+        var coursesB = client.GetCourses();
+        var coursesC = client.GetCourses();
+
+        await Task.WhenAll(coursesA, coursesB, coursesC);
+
+        // Assert
+        coursesA.Result.Should().HaveCount(5);
+        coursesB.Result.Should().HaveCount(5);
+        coursesC.Result.Should().HaveCount(5);
+    }
 }

@@ -4,7 +4,7 @@ O [Scalar](https://github.com/scalar/scalar) é uma excelente alternativa ao Swa
 
 Dá pra agrupar e descrever como cada endpoint funciona, adicionando exemplos de requests/responses/erros. Ele também oferece suporte a diferentes client libraries e métodos de autenticação.
 
-Os exemplos a seguir foram retirados da documentação do [Syki](https://github.com/ZaqueuCavalcante/syki), um projeto open source que estou desenvolvendo, voltado para o gerenciamento acadêmico de faculdades. Até o momento ele possui cerca de 70 endpoints, que podem ser acessados [aqui](https://syki-api.zaqbit.com/docs/v1).
+Os exemplos a seguir foram retirados da documentação do [Syki](https://github.com/ZaqueuCavalcante/syki), um projeto open source que estou desenvolvendo, voltado para o gerenciamento acadêmico de faculdades. Até o momento ele possui cerca de 70 endpoints, que podem ser acessados [aqui](https://api.syki.com.br/docs/v1).
 
 ## 0️⃣ Interface moderna
 

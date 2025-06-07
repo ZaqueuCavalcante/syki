@@ -1,16 +1,8 @@
 using Audit.Core;
 using Syki.Back.Audit;
-using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
-using Syki.Back.Features.Academic.CreateTeacher;
-using Syki.Back.Features.Academic.CreateStudent;
-using Syki.Back.Features.Cross.CreateInstitution;
-using Syki.Back.Features.Academic.CreateDiscipline;
-using Syki.Back.Features.Academic.CreateNotification;
-using Syki.Back.Features.Academic.CreateCourseOffering;
-using Syki.Back.Features.Academic.CreateCourseCurriculum;
 
 namespace Syki.Back.Configs;
 
@@ -20,20 +12,7 @@ public static class AuditConfigs
     {
         Configuration.Setup().UseEntityFramework(_ => _
             .AuditTypeExplicitMapper(_ => _
-                .Map<Class, AuditLog>()
                 .Map<Campus, AuditLog>()
-                .Map<Course, AuditLog>()
-                .Map<Schedule, AuditLog>()
-                .Map<SykiUser, AuditLog>()
-                .Map<Discipline, AuditLog>()
-                .Map<SykiStudent, AuditLog>()
-                .Map<Institution, AuditLog>()
-                .Map<SykiTeacher, AuditLog>()
-                .Map<Notification, AuditLog>()
-                .Map<CourseOffering, AuditLog>()
-                .Map<CourseCurriculum, AuditLog>()
-                .Map<CourseDiscipline, AuditLog>()
-                .Map<CourseCurriculumDiscipline, AuditLog>()
                 .AuditEntityAction<AuditLog>((evt, entry, log) => log.Fill(evt, entry)))
             .IgnoreMatchedProperties(true));
     }

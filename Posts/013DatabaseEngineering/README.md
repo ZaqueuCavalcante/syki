@@ -75,7 +75,14 @@ Learn ACID, Indexing, Partitioning, Sharding, Concurrency control, Replication, 
 
 - Composed Index
 
+- Bloom Filters
+
+- UUID vs B+Tree
+
+## 5. B-Tree vs B+Tree in Production
+
 - 
+
 
 
 

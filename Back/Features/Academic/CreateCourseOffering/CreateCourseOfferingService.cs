@@ -4,12 +4,10 @@ public class CreateCourseOfferingService(SykiDbContext ctx, HybridCache cache) :
 {
     public async Task<OneOf<CourseOfferingOut, SykiError>> Create(Guid institutionId, CreateCourseOfferingIn data)
     {
-        var campusOk = await ctx.Campi
-            .AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CampusId);
+        var campusOk = await ctx.Campi.AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CampusId);
         if (!campusOk) return new CampusNotFound();
 
-        var courseOk = await ctx.Courses
-            .AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CourseId);
+        var courseOk = await ctx.Courses.AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CourseId);
         if (!courseOk) return new CourseNotFound();
 
         var courseCurriculumOk = await ctx.CourseCurriculums

@@ -50,4 +50,27 @@ public partial class IntegrationTests
         // Assert
         campi.Should().BeEquivalentTo([campusA]);
     }
+
+    [Test]
+    public async Task Should_get_campi_in_parallel_requests_to_test_cache_stampede()
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+
+        await client.CreateCampus("Suassuna I", BrazilState.PE, "Recife");
+        await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
+        await client.CreateCampus("Agreste II", BrazilState.PE, "Bezerros");
+
+        // Act
+        var campiA = client.GetCampi();
+        var campiB = client.GetCampi();
+        var campiC = client.GetCampi();
+
+        await Task.WhenAll(campiA, campiB, campiC);
+
+        // Assert
+        campiA.Result.Should().HaveCount(3);
+        campiB.Result.Should().HaveCount(3);
+        campiC.Result.Should().HaveCount(3);
+    }
 }

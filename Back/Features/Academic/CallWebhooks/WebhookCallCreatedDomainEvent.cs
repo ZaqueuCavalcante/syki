@@ -5,7 +5,7 @@ public record WebhookCallCreatedDomainEvent(Guid WebhookCallId) : IDomainEvent;
 
 public class WebhookCallCreatedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<WebhookCallCreatedDomainEvent>
 {
-    public async Task Handle(Guid institutionId, Guid eventId, WebhookCallCreatedDomainEvent evt)
+    public async Task Handle(Guid institutionId, DomainEventId eventId, WebhookCallCreatedDomainEvent evt)
     {
         ctx.AddCommand(institutionId, new CallWebhookCommand(evt.WebhookCallId), eventId: eventId);
 

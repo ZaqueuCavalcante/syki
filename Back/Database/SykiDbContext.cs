@@ -110,5 +110,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfigurati
     {
         configurationBuilder.Properties<Enum>().HaveConversion<string>();
         configurationBuilder.Properties<CommandId>().HaveConversion<CommandId.CommandIdEfCoreValueConverter>();
+        configurationBuilder.Properties<DomainEventId>().HaveConversion<DomainEventId.DomainEventIdEfCoreValueConverter>();
+        configurationBuilder.Properties<CommandBatchId>().HaveConversion<CommandBatchId.CommandBatchIdEfCoreValueConverter>();
     }
 }

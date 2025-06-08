@@ -1,8 +1,10 @@
+using StronglyTypedIds;
+
 namespace Syki.Back.Events;
 
 public class DomainEvent
 {
-    public Guid Id { get; set; }
+    public DomainEventId Id { get; set; }
     public Guid InstitutionId { get; set; }
     public Guid EntityId { get; set; }
     public string Type { get; set; }
@@ -18,7 +20,7 @@ public class DomainEvent
 
     public DomainEvent(Guid institutionId, Guid entityId, object data)
     {
-        Id = Guid.CreateVersion7();
+        Id = DomainEventId.CreateNew();
         EntityId = entityId;
         Type = data.GetType().ToString();
         Data = data.Serialize();
@@ -31,5 +33,27 @@ public class DomainEvent
         ProcessedAt = DateTime.UtcNow;
         Duration = Convert.ToInt32(duration);
         Status = Error.HasValue() ? DomainEventStatus.Error : DomainEventStatus.Success;
+    }
+}
+
+[StronglyTypedId]
+public partial struct DomainEventId
+{
+    public static DomainEventId CreateNew()
+    {
+        return new DomainEventId(Guid.CreateVersion7());
+    }
+
+    public class DomainEventIdEfCoreValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<DomainEventId, Guid>
+    {
+        public DomainEventIdEfCoreValueConverter() : this(null) { }
+
+        public DomainEventIdEfCoreValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            : base(
+                id => id.Value,
+                value => new DomainEventId(value),
+                mappingHints
+            )
+        { }
     }
 }

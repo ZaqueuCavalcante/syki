@@ -21,7 +21,7 @@ public class WebhookCall : Entity
         Guid institutionId,
         Guid webhookId,
         object data,
-        Guid eventId,
+        DomainEventId eventId,
         WebhookEventType eventType)
     {
         Id = Guid.CreateVersion7();

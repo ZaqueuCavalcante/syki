@@ -18,7 +18,7 @@ public class Command
     /// <summary>
     /// Id do evento que gerou o comando
     /// </summary>
-    public Guid? EventId { get; set; }
+    public DomainEventId? EventId { get; set; }
 
     /// <summary>
     /// Id do comando que gerou o comando
@@ -36,7 +36,7 @@ public class Command
     /// <summary>
     /// Id do lote que contém o comando
     /// </summary>
-    public Guid? BatchId { get; set; }
+    public CommandBatchId? BatchId { get; set; }
 
     public DateTime? NotBefore { get; set; }
 
@@ -45,10 +45,10 @@ public class Command
     public Command(
         Guid institutionId,
         object data,
-        Guid? eventId = null,
+        DomainEventId? eventId = null,
         CommandId? parentId = null,
         CommandId? originalId = null,
-        Guid? batchId = null,
+        CommandBatchId? batchId = null,
         int? delaySeconds = null
     ) {
         Id = CommandId.CreateNew();

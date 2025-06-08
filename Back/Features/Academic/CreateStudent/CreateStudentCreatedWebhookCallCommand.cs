@@ -3,7 +3,7 @@ using Syki.Back.Features.Academic.CallWebhooks;
 namespace Syki.Back.Features.Academic.CreateStudent;
 
 [CommandDescription("Criar chamada de webhook para o evento 'Aluno criado'")]
-public record CreateStudentCreatedWebhookCallCommand(Guid EventId, Guid WebhookId, Guid UserId) : ICommand;
+public record CreateStudentCreatedWebhookCallCommand(DomainEventId EventId, Guid WebhookId, Guid UserId) : ICommand;
 
 public class CreateStudentCreatedWebhookCallCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateStudentCreatedWebhookCallCommand>
 {

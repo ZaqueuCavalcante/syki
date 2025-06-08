@@ -60,10 +60,10 @@ public static class DbContextExtensions
         this DbContext ctx,
         Guid institutionId,
         ICommand command,
-        Guid? eventId = null,
+        DomainEventId? eventId = null,
         CommandId? parentId = null,
         CommandId? originalId = null,
-        Guid? batchId = null,
+        CommandBatchId? batchId = null,
         int? delaySeconds = null
     ) {
         return ctx.Add(

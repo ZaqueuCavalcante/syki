@@ -1,8 +1,10 @@
+using StronglyTypedIds;
+
 namespace Syki.Back.Commands;
 
 public class CommandBatch
 {
-    public Guid Id { get; set; }
+    public CommandBatchId Id { get; set; }
     public Guid InstitutionId { get; set; }
     public CommandBatchType Type { get; set; }
     public CommandBatchStatus Status { get; set; }
@@ -12,7 +14,7 @@ public class CommandBatch
     /// <summary>
     /// Id do evento que gerou o lote
     /// </summary>
-    public Guid? EventId { get; set; }
+    public DomainEventId? EventId { get; set; }
 
     /// <summary>
     /// Id do comando que gerou o lote
@@ -31,13 +33,13 @@ public class CommandBatch
     public static CommandBatch New(
         Guid institutionId,
         CommandBatchType type,
-        Guid? eventId = null,
+        DomainEventId? eventId = null,
         CommandId? sourceCommandId = null)
     {
         return new()
         {
             Type = type,
-            Id = Guid.CreateVersion7(),
+            Id = CommandBatchId.CreateNew(),
             CreatedAt = DateTime.UtcNow,
             InstitutionId = institutionId,
             Status = CommandBatchStatus.Pending,
@@ -50,5 +52,27 @@ public class CommandBatch
     {
         NextCommandId = command.Id;
         command.SetAwaiting();
+    }
+}
+
+[StronglyTypedId]
+public partial struct CommandBatchId
+{
+    public static CommandBatchId CreateNew()
+    {
+        return new CommandBatchId(Guid.CreateVersion7());
+    }
+
+    public class CommandBatchIdEfCoreValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<CommandBatchId, Guid>
+    {
+        public CommandBatchIdEfCoreValueConverter() : this(null) { }
+
+        public CommandBatchIdEfCoreValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            : base(
+                id => id.Value,
+                value => new CommandBatchId(value),
+                mappingHints
+            )
+        { }
     }
 }

@@ -5,7 +5,7 @@ public record StudentClassNoteAddedDomainEvent(Guid StudentId, Guid ClassActivit
 
 public class StudentClassNoteAddedDomainEventHandler(SykiDbContext ctx) : IDomainEventHandler<StudentClassNoteAddedDomainEvent>
 {
-    public async Task Handle(Guid institutionId, Guid eventId, StudentClassNoteAddedDomainEvent evt)
+    public async Task Handle(Guid institutionId, DomainEventId eventId, StudentClassNoteAddedDomainEvent evt)
     {
         ctx.AddCommand(institutionId, new CreateNewStudentClassNoteNotificationCommand(evt.ClassActivityId, evt.StudentId), eventId: eventId);
         await Task.CompletedTask;

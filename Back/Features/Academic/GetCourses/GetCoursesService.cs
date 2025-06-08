@@ -7,12 +7,9 @@ public class GetCoursesService(SykiDbContext ctx, HybridCache cache) : IAcademic
         return await cache.GetOrCreateAsync(
             key: $"courses:{institutionId}",
             state: (ctx, institutionId),
-            factory: async (state, cancellationToken) =>
+            factory: async (state, _) =>
             {
-                var courses = await state.ctx.Courses.AsNoTracking()
-                    .Where(c => c.InstitutionId == state.institutionId)
-                    .OrderBy(c => c.Name)
-                    .ToListAsync(cancellationToken);
+                var courses = await state.ctx.GetCourses(state.institutionId);
                 return courses.ConvertAll(c => c.ToOut());
             }
         );

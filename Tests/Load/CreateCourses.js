@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, sleep } from 'k6';
 
 const COURSE_NAMES = [
   'Ciência da Computação',
@@ -46,4 +46,6 @@ export default function () {
   check(res, {
     'status is 2xx': (r) => r.status >= 200 && r.status < 300,
   });
+
+  sleep(1);
 }

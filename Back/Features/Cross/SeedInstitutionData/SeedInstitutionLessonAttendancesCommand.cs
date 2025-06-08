@@ -9,7 +9,7 @@ public class SeedInstitutionLessonAttendancesCommandHandler(
     SykiDbContext ctx,
     CreateLessonAttendanceService createLessonAttendanceService) : ICommandHandler<SeedInstitutionLessonAttendancesCommand>
 {
-    public async Task Handle(Guid commandId, SeedInstitutionLessonAttendancesCommand command)
+    public async Task Handle(CommandId commandId, SeedInstitutionLessonAttendancesCommand command)
     {
         var id = command.InstitutionId;
 

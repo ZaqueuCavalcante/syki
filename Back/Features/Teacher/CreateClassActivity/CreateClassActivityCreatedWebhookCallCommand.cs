@@ -7,7 +7,7 @@ public record CreateClassActivityCreatedWebhookCallCommand(Guid EventId, Guid We
 
 public class CreateClassActivityCreatedWebhookCallCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateClassActivityCreatedWebhookCallCommand>
 {
-    public async Task Handle(Guid commandId, CreateClassActivityCreatedWebhookCallCommand command)
+    public async Task Handle(CommandId commandId, CreateClassActivityCreatedWebhookCallCommand command)
     {
         var activity = await ctx.ClassActivities
             .Where(x => x.Id == command.ClassActivityId)

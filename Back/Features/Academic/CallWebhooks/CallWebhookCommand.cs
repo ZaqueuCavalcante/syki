@@ -7,7 +7,7 @@ public record CallWebhookCommand(Guid WebhookCallId) : ICommand;
 
 public class CallWebhookCommandHandler(SykiDbContext ctx, IHttpClientFactory factory) : ICommandHandler<CallWebhookCommand>
 {
-    public async Task Handle(Guid commandId, CallWebhookCommand command)
+    public async Task Handle(CommandId commandId, CallWebhookCommand command)
     {
         var call = await ctx.WebhookCalls
             .Include(x => x.Attempts)

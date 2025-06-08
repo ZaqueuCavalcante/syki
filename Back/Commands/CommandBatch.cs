@@ -17,12 +17,12 @@ public class CommandBatch
     /// <summary>
     /// Id do comando que gerou o lote
     /// </summary>
-    public Guid? SourceCommandId { get; set; }
+    public CommandId? SourceCommandId { get; set; }
 
     /// <summary>
     /// Id do comando que será executado quando o lote for processado com sucesso
     /// </summary>
-    public Guid? NextCommandId { get; set; }
+    public CommandId? NextCommandId { get; set; }
 
     public int Size { get; set; }
 
@@ -32,7 +32,7 @@ public class CommandBatch
         Guid institutionId,
         CommandBatchType type,
         Guid? eventId = null,
-        Guid? sourceCommandId = null)
+        CommandId? sourceCommandId = null)
     {
         return new()
         {

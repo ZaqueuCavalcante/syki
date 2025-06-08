@@ -7,7 +7,7 @@ public record CreateStudentCreatedWebhookCallCommand(Guid EventId, Guid WebhookI
 
 public class CreateStudentCreatedWebhookCallCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateStudentCreatedWebhookCallCommand>
 {
-    public async Task Handle(Guid commandId, CreateStudentCreatedWebhookCallCommand command)
+    public async Task Handle(CommandId commandId, CreateStudentCreatedWebhookCallCommand command)
     {
         var student = await ctx.Students.AsNoTracking()
             .Include(x => x.User)

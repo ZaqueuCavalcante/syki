@@ -11,7 +11,7 @@ public record SeedInstitutionBasicDataCommand(Guid InstitutionId) : ICommand;
 
 public class SeedInstitutionBasicDataCommandHandler(SykiDbContext ctx) : ICommandHandler<SeedInstitutionBasicDataCommand>
 {
-    public async Task Handle(Guid commandId, SeedInstitutionBasicDataCommand command)
+    public async Task Handle(CommandId commandId, SeedInstitutionBasicDataCommand command)
     {
         if (Env.IsTesting()) return;
 

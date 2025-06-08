@@ -7,7 +7,7 @@ public record SendResetPasswordEmailCommand(Guid UserId) : ICommand;
 
 public class SendResetPasswordEmailCommandHandler(SykiDbContext ctx, IEmailsService emailsService) : ICommandHandler<SendResetPasswordEmailCommand>
 {
-    public async Task Handle(Guid commandId, SendResetPasswordEmailCommand command)
+    public async Task Handle(CommandId commandId, SendResetPasswordEmailCommand command)
     {
         var user = await ctx.Users.AsNoTracking().FirstAsync(u => u.Id == command.UserId);
 

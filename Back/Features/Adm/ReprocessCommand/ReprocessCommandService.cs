@@ -4,7 +4,7 @@ namespace Syki.Back.Features.Adm.ReprocessCommand;
 
 public class ReprocessCommandService(SykiDbContext ctx) : IAdmService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Reprocess(Guid id)
+    public async Task<OneOf<SykiSuccess, SykiError>> Reprocess(CommandId id)
     {
         var command = await ctx.Commands.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 

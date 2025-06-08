@@ -9,7 +9,7 @@ public class SeedInstitutionClassesCommandHandler(
     SykiDbContext ctx,
     CreateClassService createClassService) : ICommandHandler<SeedInstitutionClassesCommand>
 {
-    public async Task Handle(Guid commandId, SeedInstitutionClassesCommand command)
+    public async Task Handle(CommandId commandId, SeedInstitutionClassesCommand command)
     {
         var id = command.InstitutionId;
         var academicPeriod = $"{DateTime.UtcNow.Year}.1";

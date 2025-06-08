@@ -7,7 +7,7 @@ public record SendUserRegisterEmailConfirmationCommand(Guid UserRegisterId) : IC
 
 public class SendUserRegisterEmailConfirmationCommandHandler(SykiDbContext ctx, IEmailsService emailsService) : ICommandHandler<SendUserRegisterEmailConfirmationCommand>
 {
-    public async Task Handle(Guid commandId, SendUserRegisterEmailConfirmationCommand command)
+    public async Task Handle(CommandId commandId, SendUserRegisterEmailConfirmationCommand command)
     {
         var register = await ctx.UserRegisters.AsNoTracking().FirstAsync(d => d.Id == command.UserRegisterId);
 

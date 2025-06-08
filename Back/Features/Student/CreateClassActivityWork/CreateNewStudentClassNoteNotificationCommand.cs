@@ -7,7 +7,7 @@ public record CreateNewStudentClassNoteNotificationCommand(Guid ClassActivityId,
 
 public class CreateNewStudentClassNoteNotificationCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateNewStudentClassNoteNotificationCommand>
 {
-    public async Task Handle(Guid commandId, CreateNewStudentClassNoteNotificationCommand command)
+    public async Task Handle(CommandId commandId, CreateNewStudentClassNoteNotificationCommand command)
     {
         var activity = await ctx.ClassActivities
             .Where(x => x.Id == command.ClassActivityId)

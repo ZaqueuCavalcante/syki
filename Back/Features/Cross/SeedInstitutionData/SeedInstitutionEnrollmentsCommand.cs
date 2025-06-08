@@ -17,7 +17,7 @@ public class SeedInstitutionEnrollmentsCommandHandler(
     CreateStudentEnrollmentService createStudentEnrollmentService,
     ReleaseClassesForEnrollmentService releaseClassesForEnrollmentService) : ICommandHandler<SeedInstitutionEnrollmentsCommand>
 {
-    public async Task Handle(Guid commandId, SeedInstitutionEnrollmentsCommand command)
+    public async Task Handle(CommandId commandId, SeedInstitutionEnrollmentsCommand command)
     {
         var id = command.InstitutionId;
         var today = DateTime.UtcNow.ToDateOnly();

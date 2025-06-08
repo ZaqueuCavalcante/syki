@@ -109,5 +109,6 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfigurati
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<Enum>().HaveConversion<string>();
+        configurationBuilder.Properties<CommandId>().HaveConversion<CommandId.CommandIdEfCoreValueConverter>();
     }
 }

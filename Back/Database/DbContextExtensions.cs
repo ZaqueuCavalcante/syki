@@ -61,8 +61,8 @@ public static class DbContextExtensions
         Guid institutionId,
         ICommand command,
         Guid? eventId = null,
-        Guid? parentId = null,
-        Guid? originalId = null,
+        CommandId? parentId = null,
+        CommandId? originalId = null,
         Guid? batchId = null,
         int? delaySeconds = null
     ) {

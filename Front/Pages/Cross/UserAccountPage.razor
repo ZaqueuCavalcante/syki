@@ -7,20 +7,40 @@
 
 <SykiPageTitle Title="Conta" />
 
-<MudContainer Class="my-4 px-4">
+<MudContainer Class="mt-10 px-8">
     <MudContainer Class="px-0 mb-4">
         <MudGrid Spacing="4">
             <MudItem xs="12" sm="12" md="12" lg="12">
-                <MudStack Row="true" AlignItems="AlignItems.Center">
-                    <MudAvatar Size="Size.Large">
-                        <MudImage FallbackSrc="user-photo-fallback.png" Src="https://avatars.githubusercontent.com/u/52336768?s=400"></MudImage>
-                    </MudAvatar>
-                    <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-2">Zaqueu Cavalcante</MudText>
+                <MudStack Row Justify="Justify.Center">
+                    <MudStack Spacing="2">
+                        <style>
+                            .mud-badge.mud-badge-icon .mud-icon-badge {
+                                font-size: 18px;
+                            }
+                        </style>
+                        <MudBadge OnClick="@Edit" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Overlap="true" Origin="Origin.BottomRight" BadgeClass="cursor-pointer syki-profile-photo-badge-icon">
+                            <MudImage Style="border-radius: 50%;" Width="180" FallbackSrc="user-photo-fallback.png" Src="https://avatars.githubusercontent.com/u/52336768?s=400"></MudImage>
+                        </MudBadge>
+                        <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-2">Zaqueu Cavalcante</MudText>
+                        <MudText Class="ml-2" Style="margin-top: -8px;">Acadêmico</MudText>
+                    </MudStack>
                 </MudStack>
             </MudItem>
-            <MudItem xs="12" sm="12" md="12" lg="12">
-                FORM?
+            <MudItem xs="12" sm="12" md="6" lg="6">
+                <InfoCard Icon="@Icons.Material.Filled.Email" Title="Email" Content="zaqueudovale@gmail.com" />
+            </MudItem>
+            <MudItem xs="12" sm="12" md="6" lg="6">
+                <InfoCard Icon="@Icons.Material.Filled.School" Title="Instituição" Content="Faculdade Nova Roma" />
             </MudItem>
         </MudGrid>
     </MudContainer>
 </MudContainer>
+
+@code
+{
+    private async Task Edit()
+    {
+        await Task.Delay(0);
+        Console.WriteLine("EDIT");
+    }
+}

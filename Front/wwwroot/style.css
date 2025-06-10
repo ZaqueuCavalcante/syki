@@ -56,3 +56,10 @@ svg.apexcharts-svg {
     min-width: 18px !important;
     padding: 5px 5px !important;
 }
+
+.syki-profile-photo-badge-icon {
+    inset: auto auto calc(1%) calc(75%) !important;
+    height: 35px !important;
+    min-width: 35px !important;
+    border-radius: 50% !important;
+}

@@ -19,25 +19,34 @@
                             }
                         </style>
                         <MudBadge OnClick="@Edit" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Overlap="true" Origin="Origin.BottomRight" BadgeClass="cursor-pointer syki-profile-photo-badge-icon">
-                            <MudImage Style="border-radius: 50%;" Width="180" FallbackSrc="user-photo-fallback.png" Src="https://avatars.githubusercontent.com/u/52336768?s=400"></MudImage>
+                            <MudImage Style="border-radius: 50%;" Width="180" FallbackSrc="user-photo-fallback.png" Src="@(_data.ProfilePhoto ?? "")"></MudImage>
                         </MudBadge>
-                        <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-2">Zaqueu Cavalcante</MudText>
-                        <MudText Class="ml-2" Style="margin-top: -8px;">Acadêmico</MudText>
+                        <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-2">@_data.Name</MudText>
+                        <MudText Class="ml-2" Style="margin-top: -8px;">@_data.Role.GetDescription()</MudText>
                     </MudStack>
                 </MudStack>
             </MudItem>
-            <MudItem xs="12" sm="12" md="6" lg="6">
-                <InfoCard Icon="@Icons.Material.Filled.Email" Title="Email" Content="zaqueudovale@gmail.com" />
+            <MudItem xs="12" sm="12" md="12" lg="6">
+                <InfoCard Icon="@Icons.Material.Filled.Email" Title="Email" Content="@_data.Email" />
             </MudItem>
-            <MudItem xs="12" sm="12" md="6" lg="6">
-                <InfoCard Icon="@Icons.Material.Filled.School" Title="Instituição" Content="Faculdade Nova Roma" />
+            <MudItem xs="12" sm="12" md="12" lg="6">
+                <InfoCard Icon="@Icons.Material.Filled.School" Title="Instituição" Content="@_data.Institution" />
             </MudItem>
         </MudGrid>
     </MudContainer>
 </MudContainer>
 
+@inject GetUserAccountClient GetUserAccountClient
+
 @code
 {
+    private GetUserAccountOut _data = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _data = await GetUserAccountClient.Get();
+    }
+
     private async Task Edit()
     {
         await Task.Delay(0);

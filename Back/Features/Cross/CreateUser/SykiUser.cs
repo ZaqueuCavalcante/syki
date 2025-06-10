@@ -5,6 +5,7 @@ public class SykiUser : IdentityUser<Guid>
     public Guid InstitutionId { get; set; }
     public string Name { get; set; }
     public DateTime CreatedAt { get; set; }
+    public string? ProfilePhoto { get; set; }
 
     public SykiUser(
         Guid institutionId,
@@ -18,6 +19,11 @@ public class SykiUser : IdentityUser<Guid>
         Email = email;
         PhoneNumber = phoneNumber;
         CreatedAt = DateTime.UtcNow;
+    }
+
+    public void SetProfilePhoto(string profilePhoto)
+    {
+        ProfilePhoto = profilePhoto;
     }
 
     public UserOut ToOut()

@@ -1,6 +1,7 @@
 ﻿@namespace Syki.Front.Shared
 
 <MudNavMenu Rounded="true" Color="Color.Primary" Class="pa-2">
+    <MudNavLink Href="account" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.AccountCircle" IconColor="Color.Inherit">Conta</MudNavLink>
     <MudNavLink Href="setup-mfa" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Lock" IconColor="Color.Inherit">Segurança</MudNavLink>
     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Logout" OnClick="@Logout" IconColor="Color.Inherit">Sair</MudNavLink>
 </MudNavMenu>

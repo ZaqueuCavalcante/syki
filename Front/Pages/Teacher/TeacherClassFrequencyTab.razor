@@ -109,9 +109,8 @@
     </MudTable>
 </MudContainer>
 
-<ClassLessonsDialog @ref="@_dialog" OnRowClick="@SetLesson" />
-
 @inject ISnackbar Snackbar
+@inject IDialogService DialogService
 @inject IBrowserViewportService BrowserViewportService
 @inject GetTeacherClassLessonsClient GetTeacherClassLessonsClient
 @inject CreateLessonAttendanceClient CreateLessonAttendanceClient
@@ -123,7 +122,6 @@
 	public Guid ClassId { get; set; }
 
     private Breakpoint _breakpoint;
-    private ClassLessonsDialog _dialog;
 
     private bool _loading;
     private bool _showButtons;
@@ -176,9 +174,15 @@
         return 100M*(1M * presences / (1M * total));
     }
 
-    private async Task OnEditLessonClick()
+    private Task OnEditLessonClick()
     {
-        await _dialog.Open(_lessons);
+        var parameters = new DialogParameters<ClassLessonsDialog>()
+        {
+            { x => x.Lessons, _lessons },
+            { x => x.OnRowClick, EventCallback.Factory.Create<Guid>(this, SetLesson) }
+        };
+
+        return DialogService.ShowAsync<ClassLessonsDialog>("", parameters);
     }
 
     private async Task SaveFrequency()

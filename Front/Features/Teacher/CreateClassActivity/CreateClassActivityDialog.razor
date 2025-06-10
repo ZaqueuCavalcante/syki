@@ -1,6 +1,6 @@
 ﻿@namespace Syki.Front.Features.Teacher.CreateClassActivity
 
-<MudDialog Class="pb-2" @bind-Visible="@_visible" Options="@_options" DefaultFocus="DefaultFocus.None">
+<MudDialog Class="pb-2" DefaultFocus="DefaultFocus.None">
     <TitleContent>
         <SykiDialogTitle Text="Nova Atividade" />
     </TitleContent>
@@ -108,8 +108,16 @@
 
 @code
 {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Guid ClassId { get; set; }
+    
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
     private MudForm _form;
-    private bool _visible;
     private bool _loading;
 
     private List<ClassNoteRemainingWeightsOut> _remainingWeights = [];
@@ -123,21 +131,25 @@
     private DateTime? _dueDate = DateTime.UtcNow.AddDays(7);
     private Hour _dueHour = Hour.H12_00;
 
-    private readonly DialogOptions _options = new()
+    protected override async Task OnInitializedAsync()
     {
-        FullWidth = true,
-        CloseButton = true,
-        BackdropClick = false,
-        MaxWidth = MaxWidth.Medium,
-    };
+        await base.OnInitializedAsync();
 
-    [Parameter]
-    public Guid ClassId { get; set; }
-    
-    [Parameter]
-    public EventCallback AfterSubmit { get; set; }
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = MudDialog.Options with
+        {
+            FullWidth = true,
+            CloseButton = true,
+            BackdropClick = false,
+            MaxWidth = MaxWidth.Medium,
+            FullScreen = breakpoint == Breakpoint.Xs
+        };
+        await MudDialog.SetOptionsAsync(options);
 
-    public async Task Open()
+        await Setup();
+    }
+
+    private async Task Setup()
     {
         Reset();
         var response = await GetClassNotesRemainingWeightsClient.Get(ClassId);
@@ -146,9 +158,6 @@
             _remainingWeights = response.GetSuccess();
         }
         _maxWeight = _remainingWeights.Where(x => x.Note == _note).Select(x => x.Weight).First();
-        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        _options.FullScreen = breakpoint == Breakpoint.Xs;
-        _visible = true;
     }
 
     private void Reset()
@@ -160,14 +169,12 @@
         _weight = 0;
         _dueDate = DateTime.UtcNow.AddDays(7);
         _dueHour = Hour.H12_00;
-
-        _visible = false;
     }
 
     private void Close()
     {
         Reset();
-        _visible = false;
+        MudDialog.Cancel();
     }
 
     private async Task Submit()

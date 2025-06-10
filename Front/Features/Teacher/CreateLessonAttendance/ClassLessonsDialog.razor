@@ -1,6 +1,6 @@
 @namespace Syki.Front.Features.Teacher.CreateLessonAttendance
 
-<MudDialog @bind-Visible="@_visible" Options="@_options">
+<MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Class" Class="mr-1 mb-n1" />
@@ -10,7 +10,7 @@
     <DialogContent>
         <MudTable
             T="ClassLessonOut"
-            Items="@_lessons"
+            Items="@Lessons"
             Class="mb-4"
             Breakpoint="Breakpoint.Sm"
             Dense="true"
@@ -50,30 +50,35 @@
 
 @code
 {
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; }
+
     [Parameter]
     public EventCallback<Guid> OnRowClick { get; set; }
 
-    private bool _visible;
-    private List<ClassLessonOut> _lessons = [];
+    [Parameter]
+    public List<ClassLessonOut> Lessons { get; set; } = [];
 
-    private readonly DialogOptions _options = new()
+    protected override async Task OnInitializedAsync()
     {
-        FullWidth = true,
-        CloseButton = true,
-        MaxWidth = MaxWidth.Medium,
-    };
+        await base.OnInitializedAsync();
 
-    public async Task Open(List<ClassLessonOut> lessons)
-    {
         var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        _options.FullScreen = breakpoint == Breakpoint.Xs;
-        _lessons = lessons.Where(x => x.Date <= DateTime.UtcNow.ToDateOnly()).ToList();
-        _visible = true;
+        var options = MudDialog.Options with
+        {
+            FullWidth = true,
+            CloseButton = true,
+            MaxWidth = MaxWidth.Medium,
+            FullScreen = breakpoint == Breakpoint.Xs
+        };
+        await MudDialog.SetOptionsAsync(options);
+
+        Lessons = Lessons.Where(x => x.Date <= DateTime.UtcNow.ToDateOnly()).ToList();
     }
 
     private void Close()
     {
-        _visible = false;
+        MudDialog.Cancel();
     }
 
     private async Task HandleRowClick(TableRowClickEventArgs<ClassLessonOut> row)

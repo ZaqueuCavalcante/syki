@@ -67,17 +67,14 @@
     </MudDataGrid>
 </MudContainer>
 
-<CreateClassActivityDialog @ref="@_dialog" ClassId="@ClassId" AfterSubmit="@Load" />
-
 @inject NavigationManager Nav
+@inject IDialogService DialogService
 @inject GetTeacherClassActivitiesClient GetTeacherClassActivitiesClient
 
 @code
 {
 	[Parameter]
 	public Guid ClassId { get; set; }
-
-    private CreateClassActivityDialog _dialog;
 
     private bool _loading;
     private string _searchString;
@@ -123,9 +120,15 @@
         Nav.NavigateTo($"/teacher/classes/{ClassId}/activities/{activityId}");
     }
 
-    private async Task NewActivity()
+    private Task NewActivity()
     {
-        await _dialog.Open();
+        var parameters = new DialogParameters<CreateClassActivityDialog>
+        {
+            { x => x.ClassId, ClassId },
+            { x => x.AfterSubmit, EventCallback.Factory.Create(this, Load) }
+        };
+
+        return DialogService.ShowAsync<CreateClassActivityDialog>("", parameters);
     }
 
     private string GetDeliveryRateFraction(TeacherClassActivityOut activity)

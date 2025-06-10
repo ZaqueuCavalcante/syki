@@ -27,9 +27,9 @@ public class SykiStudent : Entity
         Guid courseOfferingId
     ) {
         Id = userId;
+        Name = name;
         InstitutionId = institutionId;
         CourseOfferingId = courseOfferingId;
-        Name = name;
         EnrollmentCode = $"{DateTime.UtcNow.Year}{Guid.CreateVersion7().ToString()[^8..].ToUpper()}";
         Status = StudentStatus.Enrolled;
 
@@ -47,26 +47,6 @@ public class SykiStudent : Entity
             EnrollmentCode = EnrollmentCode,
             CourseOfferingId = CourseOfferingId,
             CourseOffering = CourseOffering?.Course?.Name ?? "-",
-        };
-    }
-
-    public TeacherClassStudentOut ToTeacherClassStudentOut()
-    {
-        return new()
-        {
-            Id = Id,
-            Name = Name,
-            Notes = [],
-        };
-    }
-
-    public AcademicClassStudentOut ToAcademicClassStudentOut()
-    {
-        return new()
-        {
-            Id = Id,
-            Name = Name,
-            Notes = [],
         };
     }
 }

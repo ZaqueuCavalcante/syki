@@ -1,5 +1,6 @@
 using Syki.Back.Emails;
 using Syki.Back.Configs;
+using Syki.Back.Storage;
 using Syki.Daemon.Events;
 using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Cross.ResetPassword;
@@ -39,9 +40,11 @@ public static class ServicesConfigs
         builder.Services.AddScoped<FinalizeClassesService>();
 
         builder.Services.AddScoped<IEmailsService, EmailsService>();
+        builder.Services.AddScoped<IStorageService, AzureBlobStorageService>();
         if (Env.IsDevelopment() || Env.IsTesting())
         {
             builder.Services.Replace(ServiceDescriptor.Singleton<IEmailsService, FakeEmailsService>());
+            builder.Services.Replace(ServiceDescriptor.Singleton<IStorageService, FakeStorageService>());
         }
 
         builder.AddIdentityConfigs();

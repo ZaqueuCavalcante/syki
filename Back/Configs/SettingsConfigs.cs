@@ -9,6 +9,7 @@ public static class SettingsConfigs
         builder.Services.AddSingleton<DatabaseSettings>();
         builder.Services.AddSingleton<FeaturesSettings>();
         builder.Services.AddSingleton<RateLimiterSettings>();
+        builder.Services.AddSingleton<AzureBlobStorageSettings>();
 
         builder.Services.Configure<HostOptions>(x => x.ServicesStartConcurrently = true);
         // builder.Services.AddHostedService<LoadFeatureFlagsFromDb>();

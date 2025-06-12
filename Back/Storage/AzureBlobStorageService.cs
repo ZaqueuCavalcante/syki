@@ -1,13 +1,25 @@
+using Azure.Storage.Sas;
 using Azure.Storage.Blobs;
 
 namespace Syki.Back.Storage;
 
 public class AzureBlobStorageService(AzureBlobStorageSettings settings) : IStorageService
 {
-    public async Task UploadProfilePhoto(string name, Stream stream)
+    public async Task<string> CreatePreSignedUrlForUpload(StorageContainer container, string path)
     {
-        var client = new BlobContainerClient(settings.ConnectionString, "profile-photos");
+        var blobContainer = new BlobContainerClient(settings.ConnectionString, container.GetDescription());
+        var blob = blobContainer.GetBlobClient(path);
 
-        await client.UploadBlobAsync(name, stream);
+        var permissions = BlobSasPermissions.Write | BlobSasPermissions.Create;
+        var sasBuilder = new BlobSasBuilder(permissions, DateTimeOffset.UtcNow.AddMinutes(5))
+        {
+            Resource = "b",
+            BlobName = blob.Name,
+            BlobContainerName = blobContainer.Name,
+        };
+
+        Uri uri = blob.GenerateSasUri(sasBuilder);
+
+        return await Task.FromResult(uri.ToString());
     }
 }

@@ -7,7 +7,7 @@
 
 <SykiPageTitle Title="Conta" />
 
-<MudContainer Class="mt-10 px-8">
+<MudContainer Class="mt-10 px-4" MaxWidth="MaxWidth.Small">
     <MudContainer Class="px-0 mb-4">
         <MudGrid Spacing="4">
             <MudItem xs="12" sm="12" md="12" lg="12">
@@ -18,25 +18,40 @@
                                 font-size: 18px;
                             }
                         </style>
-                        <MudBadge OnClick="@Edit" Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Overlap="true" Origin="Origin.BottomRight" BadgeClass="cursor-pointer syki-profile-photo-badge-icon">
-                            <MudImage Style="border-radius: 50%;" Width="180" FallbackSrc="user-photo-fallback.png" Src="@(_data.ProfilePhoto ?? "")"></MudImage>
-                        </MudBadge>
+                        <MudFileUpload T="IBrowserFile" OnFilesChanged="@UploadProfilePhoto" MaximumFileCount="1">
+                            <ActivatorContent>
+                                <MudBadge Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Overlap="true" Origin="Origin.BottomRight" BadgeClass="cursor-pointer syki-profile-photo-badge-icon">
+                                    <MudImage ObjectFit="ObjectFit.Cover" Style="border-radius: 50%;" Width="180" Height="180" FallbackSrc="user-photo-fallback.png" Src="@(_data.ProfilePhoto ?? "")"></MudImage>
+                                </MudBadge>
+                            </ActivatorContent>
+                        </MudFileUpload>
                         <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-2">@_data.Name</MudText>
                         <MudText Class="ml-2" Style="margin-top: -8px;">@_data.Role.GetDescription()</MudText>
                     </MudStack>
                 </MudStack>
             </MudItem>
-            <MudItem xs="12" sm="12" md="12" lg="6">
+            <MudItem xs="12" sm="12" md="12" lg="12">
                 <InfoCard Icon="@Icons.Material.Filled.Email" Title="Email" Content="@_data.Email" />
             </MudItem>
-            <MudItem xs="12" sm="12" md="12" lg="6">
+            @if (_data.Course.HasValue())
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.Class" Title="Curso" Content="@_data.Course" />
+                </MudItem>
+            }
+            <MudItem xs="12" sm="12" md="12" lg="12">
                 <InfoCard Icon="@Icons.Material.Filled.School" Title="Instituição" Content="@_data.Institution" />
             </MudItem>
         </MudGrid>
     </MudContainer>
 </MudContainer>
 
+@inject ISnackbar Snackbar
 @inject GetUserAccountClient GetUserAccountClient
+@inject IBrowserViewportService BrowserViewportService
+@inject UpdateUserAccountClient UpdateUserAccountClient
+@inject CreatePreSignedUrlForUploadClient CreatePreSignedUrlForUploadClient
+
 
 @code
 {
@@ -47,9 +62,45 @@
         _data = await GetUserAccountClient.Get();
     }
 
-    private async Task Edit()
+    private long _maxFileSize = 2 * 1024 * 1024;
+    private async Task UploadProfilePhoto(InputFileChangeEventArgs evt)
     {
-        await Task.Delay(0);
-        Console.WriteLine("EDIT");
+        if (evt.File.Size > _maxFileSize)
+        {
+            Snackbar.Add("O tamanho máximo permitido é de 2Mb", Severity.Error);
+            return;
+        }
+
+        var data = evt.File.OpenReadStream(maxAllowedSize: _maxFileSize);
+        var memoryStream = new MemoryStream();
+        await data.CopyToAsync(memoryStream);
+        memoryStream.Seek(0, SeekOrigin.Begin);
+
+        var randomFileName = $"{Guid.CreateVersion7().ToHashCode().ToString()}.{evt.File.Name.Split(".").Last()}";
+        var responseUrl = await CreatePreSignedUrlForUploadClient.Create(StorageContainer.ProfilePhotos, randomFileName);
+        var url = responseUrl.IsSuccess() ? responseUrl.GetSuccess() : "";
+
+        using var httpClient = new HttpClient() { BaseAddress = new Uri(url) };
+        httpClient.DefaultRequestHeaders.Add("x-ms-blob-type", "BlockBlob");
+        await httpClient.PutAsync("", new StreamContent(memoryStream));
+
+        _data.ProfilePhoto = url.Split("?").First();
+
+        await UpdateUserAccountData();
+    }
+
+    private async Task UpdateUserAccountData()
+    {
+        var response = await UpdateUserAccountClient.Update(_data.Name, _data.ProfilePhoto);
+        if (response.IsSuccess())
+        {
+            await OnInitializedAsync();
+            Snackbar.Add("Foto atualizada com sucesso!", Severity.Success);
+        }
+        else
+        {
+            var error = response.GetError();
+            Snackbar.Add(error.Message, Severity.Error);
+        }
     }
 }

@@ -26,4 +26,9 @@ public class GetUserAccountOut
     /// Url da foto de perfil do usuário.
     /// </summary>
     public string ProfilePhoto { get; set; }
+
+    /// <summary>
+    /// Curso, caso seja um Aluno.
+    /// </summary>
+    public string? Course { get; set; }
 }

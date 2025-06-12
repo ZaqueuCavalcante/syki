@@ -17,7 +17,7 @@ public class Discipline
         Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         Name = name;
-        Code = $"{Guid.CreateVersion7().ToString()[..8].ToUpper()}";
+        Code = $"{Guid.NewGuid().ToString()[..8].ToUpper()}";
         Links = [];
     }
 

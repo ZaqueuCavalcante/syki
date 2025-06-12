@@ -1,3 +1,6 @@
+using Syki.Back.Storage;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
 namespace Syki.Back.Configs;
 
 public static class ServicesConfigs
@@ -9,6 +12,12 @@ public static class ServicesConfigs
         builder.Services.AddServiceConfigs(typeof(ICrossService));
         builder.Services.AddServiceConfigs(typeof(IStudentService));
         builder.Services.AddServiceConfigs(typeof(ITeacherService));
+
+        builder.Services.AddScoped<IStorageService, AzureBlobStorageService>();
+        if (Env.IsTesting())
+        {
+            builder.Services.Replace(ServiceDescriptor.Singleton<IStorageService, FakeStorageService>());
+        }
     }
 
     private static void AddServiceConfigs(this IServiceCollection services, Type marker)

@@ -30,7 +30,7 @@ public class SykiStudent : Entity
         Name = name;
         InstitutionId = institutionId;
         CourseOfferingId = courseOfferingId;
-        EnrollmentCode = $"{DateTime.UtcNow.Year}{Guid.CreateVersion7().ToString()[^8..].ToUpper()}";
+        EnrollmentCode = $"{DateTime.UtcNow.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
         Status = StudentStatus.Enrolled;
 
         AddDomainEvent(new StudentCreatedDomainEvent(Id, InstitutionId));

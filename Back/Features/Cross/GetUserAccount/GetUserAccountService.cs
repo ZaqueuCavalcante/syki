@@ -30,6 +30,22 @@ public class GetUserAccountService(DatabaseSettings settings) : ICrossService
             LIMIT 1
         ";
 
-        return await connection.QueryFirstAsync<GetUserAccountOut>(sql, new { userId });
+        var data = await connection.QueryFirstAsync<GetUserAccountOut>(sql, new { userId });
+
+        if (data.Role == UserRole.Student)
+        {
+            const string studentSql = @"
+                SELECT name FROM syki.courses WHERE id =
+                (
+                    SELECT course_id
+                    FROM syki.course_offerings co
+                    INNER JOIN syki.students s ON s.course_offering_id = co.id
+                    WHERE s.id = @UserId
+                )
+            ";
+            data.Course = await connection.QueryFirstAsync<string?>(studentSql, new { userId });
+        }
+
+        return data;
     }
 }

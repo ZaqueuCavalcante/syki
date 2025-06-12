@@ -54,7 +54,9 @@ global using Syki.Front.Features.Cross.Login;
 global using Syki.Front.Features.Cross.LoginMfa;
 global using Syki.Front.Features.Cross.GetUserAccount;
 global using Syki.Front.Features.Cross.ResetPassword;
+global using Syki.Front.Features.Cross.UpdateUserAccount;
 global using Syki.Front.Features.Cross.SendResetPasswordToken;
+global using Syki.Front.Features.Cross.CreatePreSignedUrlForUpload;
 
 global using Syki.Front.Features.Teacher.GetTeacherClassStudents;
 global using Syki.Front.Features.Student.CreateStudentEnrollment;

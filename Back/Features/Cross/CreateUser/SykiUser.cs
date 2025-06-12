@@ -21,8 +21,9 @@ public class SykiUser : IdentityUser<Guid>
         CreatedAt = DateTime.UtcNow;
     }
 
-    public void SetProfilePhoto(string profilePhoto)
+    public void Update(string name, string profilePhoto)
     {
+        Name = name;
         ProfilePhoto = profilePhoto;
     }
 

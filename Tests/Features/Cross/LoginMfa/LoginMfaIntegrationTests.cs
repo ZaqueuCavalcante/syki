@@ -54,7 +54,7 @@ public partial class IntegrationTests
         await client.SetupMfa(totp);
 
         await client.Login(user.Email, user.Password);
-        var randomToken = Guid.CreateVersion7().ToHashCode().ToString()[^6..];
+        var randomToken = Guid.NewGuid().ToHashCode().ToString()[..6];
 
         // Act
         var response = await client.LoginMfa(randomToken);

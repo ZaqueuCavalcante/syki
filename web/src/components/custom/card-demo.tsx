@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardAction,
@@ -8,9 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 export function CardDemo() {
   return (
@@ -51,14 +51,14 @@ export function CardDemo() {
           </div>
         </form>
       </CardContent>
-      <CardFooter className="flex-col gap-2">
+      <CardFooter className="flex-col gap-6">
         <Button type="submit" className="w-full">
           Login
         </Button>
         <Button variant="outline" className="w-full">
           Login with Google
         </Button>
-        <Link href="/dashboard">
+        <Link href="/dashboard" className="w-full">
           <Button type="submit" className="w-full">
             Dashboard
           </Button>

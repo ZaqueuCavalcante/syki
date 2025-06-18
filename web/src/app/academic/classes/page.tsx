@@ -36,6 +36,10 @@ async function ClassesTable() {
       },
     });
 
+    if (!res.ok) {
+        return (<></>);
+    }
+
     const classes : AcademicClass[] = await res.json();
 
     return (

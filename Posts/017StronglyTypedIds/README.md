@@ -1,23 +1,24 @@
-# Strongly Typed Ids
+# 🏷️ Você usa UUID pra tudo?
 
-Dica sobre tipagem em C#
+Primitive Obsession é um anti-pattern dentro do Domain Driven Design, sendo caracterizado pelo uso excessivo de tipos primitivos (string, int, uuid...) para representar conceitos de domínio.
 
-O sistema possui as seguintes entidades
-    - Evento de Domínio
-    - Comando
-    - Lote de Comandos
+Isso deixa o domínio menos expressivo, dificultando seu entendimento.
 
-DIAGRAMA COM TODAS AS RELAÇÕES ENTRE ESSAS 2 CLASSES
+Vamos para um caso de uso mais completo, retirado do Syki (https://github.com/ZaqueuCavalcante/syki), um sistema de gerenciamento de instituições de ensino open-source.
 
-PRECISA FICAR CLARO QUE NÃO TER TIPAGEM FORTE COMPLICA AS COISAS
+Na imagem do post temos o conceito de Comando, que se relaciona com outras entidades do sistema:
 
+- Um Comando pertence à uma Instituição de Ensino
+- Um Comando pode ser gerado por um Evento de Domínio
+- Um Comando pode ser gerado por outro Comando
+- Um Comando pode estar agrupado dentro de um Lote de Comandos
 
-Um comando pode ter os seguintes ids:
-    - Id do evento que gerou o comando
-    - Id do comando que gerou o comando (utilizado quando um comando gera outro em seu handler)
-    - Id do comando com erro que gerou o comando atual (utilizado quando o comando original está com erro e é reprocessado)
-    - Id do lote que contém o comando
+Na parte supeior da imagem, todos esses relacionamentos são feitos através de UUIDs, logo é preciso muita atenção do desenvolvedor para não passar o id de um evento no lugar do de um comando/lote por exemplo.
 
-Todos esses ids são UUIDs, logo eh preciso muita atenção do desenvolvedor para não passar o id de um evento no lugar do de um comando/lote por exemplo.
+Pensando nisso, podemos utilizar ids fortemente tipados para evitar esses erros, como mostrado na parte inferior da imagem. Dessa forma, todos os lugares que referenciem o id de um comando precisam possuir a tipagem correta (CommandId) ao invés da tipagem mais genérica (Guid).
 
-Pensando nisso, podemos utilizar ids fortemente tipados para evitar esses erros. Dessa forma, todos os lugares que referenciem o id de um comando precisam possuir a tipagem correta (CommandId) ao invés da tipagem mais genérica (Guid).
+Na implementação utilizei a biblioteca StronglyTypedId (https://github.com/andrewlock/StronglyTypedId), criada pelo @Andrew Lock.
+
+Para funcionar junto com o Entity Framework, basta criar um ValueConverter do novo Id para Guid.
+
+#uuid #api #aspnet #postgres #opensource #ddd

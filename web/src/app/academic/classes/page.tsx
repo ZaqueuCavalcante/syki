@@ -25,9 +25,10 @@ export default function ClassesPage() {
 }
 
 async function ClassesTable() {
-    const authToken = '123';
+    const authToken = '';
+    const apiUrl = process.env.API_URL;
 
-    const res = await fetch('https://api.syki.com.br/academic/classes', {
+    const res = await fetch(`${apiUrl}/academic/classes`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${authToken}`,

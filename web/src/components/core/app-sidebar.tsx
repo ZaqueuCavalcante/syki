@@ -76,7 +76,7 @@ const data = {
     },
     {
       title: "Turmas",
-      url: "#",
+      url: "/academic/classes",
       icon: IconSchool,
     },
     {

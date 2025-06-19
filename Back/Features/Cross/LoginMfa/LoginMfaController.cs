@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Cross.LoginMfa;
 [ApiController]
 [EnableRateLimiting("Small")]
 [Consumes("application/json"), Produces("application/json")]
-public class LoginMfaController(LoginMfaService service) : ControllerBase
+public class LoginMfaController(LoginMfaService service, AuthSettings settings) : ControllerBase
 {
     /// <summary>
     /// Login MFA 🔓
@@ -19,6 +19,21 @@ public class LoginMfaController(LoginMfaService service) : ControllerBase
     public async Task<IActionResult> LoginMfa([FromBody] LoginMfaIn data)
     {
         var result = await service.LoginMfa(data);
+
+        if (result.IsSuccess())
+        {
+            Response.Cookies.Append(
+                "syki_jwt",
+                result.GetSuccess().AccessToken,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    SameSite = SameSiteMode.Lax,
+                    Secure = settings.CookieSecure,
+                    Domain = settings.CookieDomain,
+                }
+            );
+        }
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

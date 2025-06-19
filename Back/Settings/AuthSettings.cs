@@ -6,6 +6,8 @@ public class AuthSettings
     public string Audience { get; set; }
     public string SecurityKey { get; set; }
     public int ExpirationTimeInMinutes { get; set; }
+    public bool CookieSecure { get; set; }
+    public string? CookieDomain { get; set; }
 
     public AuthSettings(IConfiguration configuration)
     {

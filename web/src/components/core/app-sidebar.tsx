@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import {
-    IconBell,
-    IconCalendarShare,
+  IconBell,
+  IconCalendarShare,
   IconCamera,
   IconCategoryMinus,
   IconChalkboardTeacher,

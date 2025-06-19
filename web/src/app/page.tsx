@@ -19,6 +19,13 @@ export default function Home() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
+
+            <Button asChild size="lg" className="h-16 text-lg font-semibold w-full md:w-auto px-8 mt-4">
+              <Link href="/login">
+                Login
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
           </div>
 
           <div className="md:col-span-7">

@@ -1,4 +1,5 @@
 import { UUID } from "crypto";
+import { cookies } from "next/headers";
 import { Suspense } from "react";
 
 interface AcademicClass {
@@ -25,7 +26,8 @@ export default function ClassesPage() {
 }
 
 async function ClassesTable() {
-    const authToken = '';
+    const cookieStore = await cookies();
+    const authToken = cookieStore.get('syki_jwt')?.value;
     const apiUrl = process.env.API_URL;
 
     const res = await fetch(`${apiUrl}/academic/classes`, {

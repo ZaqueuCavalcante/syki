@@ -13,4 +13,6 @@ public class AcademicInsightsOut
     public int Teachers { get; set; }
     public int Students { get; set; }
     public int Notifications { get; set; }
+
+    public int Webhooks { get; set; }
 }

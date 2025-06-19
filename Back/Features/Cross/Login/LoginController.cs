@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Cross.Login;
 [ApiController]
 [EnableRateLimiting("Small")]
 [Consumes("application/json"), Produces("application/json")]
-public class LoginController(LoginService service) : ControllerBase
+public class LoginController(LoginService service, AuthSettings settings) : ControllerBase
 {
     /// <summary>
     /// Login 🔓
@@ -19,6 +19,21 @@ public class LoginController(LoginService service) : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginIn data)
     {
         var result = await service.Login(data);
+
+        if (result.IsSuccess())
+        {
+            Response.Cookies.Append(
+                "syki_jwt",
+                result.GetSuccess().AccessToken,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    SameSite = SameSiteMode.Lax,
+                    Secure = settings.CookieSecure,
+                    Domain = settings.CookieDomain,
+                }
+            );
+        }
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

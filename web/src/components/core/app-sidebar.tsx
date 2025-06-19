@@ -56,7 +56,7 @@ const data = {
     },
     {
       title: "Disciplinas",
-      url: "/aaa",
+      url: "#",
       icon: IconLayoutBoardSplitFilled,
     },
     {

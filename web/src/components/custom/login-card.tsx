@@ -38,8 +38,16 @@ export function LoginCard() {
       });
 
       if (response.ok) {
-        // Redirect to a protected dashboard or home page
-        router.push('/dashboard'); // Or whatever your protected route is
+        const userJwt = (await response.json()).accessToken;
+
+        const payload = userJwt.split('.')[1];
+        const decodedPayload = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+        const claims = JSON.parse(decodedPayload);
+
+        const userData = { role: claims.role, name: claims.name, email: claims.email }
+
+        localStorage.setItem('user', JSON.stringify(userData));
+        router.push('/dashboard');
       } else {
         const errorData = await response.json(); // Assuming your API sends error messages in JSON
         setError(errorData.message || 'Credenciais inválidas. Por favor, tente novamente.');

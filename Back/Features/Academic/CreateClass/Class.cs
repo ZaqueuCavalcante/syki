@@ -163,6 +163,8 @@ public class Class
         FillRatio = $"{count}/{Vacancies}";
     }
 
+    // OUTS
+
     public ClassOut ToOut()
     {
         var presences = Lessons.Sum(l => l.Attendances.Count(a => a.Present));

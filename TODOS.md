@@ -30,6 +30,3 @@
 - Ter todas as chamadas centralizadas (endpoint + ins + outs)
 
 - Mostrar apenas o que cada usuário deve/pode ver
-
-
-

@@ -1,4 +1,5 @@
 using Syki.Back.Storage;
+using Syki.Back.Metrics;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Syki.Back.Configs;
@@ -16,6 +17,7 @@ public static class ServicesConfigs
         builder.Services.AddScoped<IStorageService, AzureBlobStorageService>();
         if (Env.IsTesting())
         {
+            builder.Services.AddHostedService<SetupCurrentMetricsStore>();
             builder.Services.Replace(ServiceDescriptor.Singleton<IStorageService, FakeStorageService>());
         }
     }

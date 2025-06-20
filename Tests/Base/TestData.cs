@@ -1,5 +1,4 @@
 using Syki.Back.Features.Academic.CreateClass;
-using Syki.Back.Features.Teacher.AddClassActivityNote;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
 
 namespace Syki.Tests.Base;

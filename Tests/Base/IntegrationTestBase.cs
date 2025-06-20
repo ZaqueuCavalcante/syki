@@ -27,10 +27,10 @@ public class IntegrationTestBase
     }
 
     [OneTimeTearDown]
-    public void OneTimeTearDown()
+    public async Task OneTimeTearDown()
     {
-        _api.Dispose();
-        _daemon.Dispose();
+        await _api.DisposeAsync();
+        await _daemon.DisposeAsync();
     }
 
     protected async Task AssertDomainEvent<T>(string like) where T : IDomainEvent

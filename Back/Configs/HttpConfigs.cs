@@ -29,6 +29,12 @@ public static class HttpConfigs
         app.UseMiddleware<CustomHeadersMiddleware>();
     }
 
+    public static void UseMetrics(this IApplicationBuilder app)
+    {
+        if (!Env.IsTesting()) return;
+        app.UseMiddleware<MetricsMiddleware>();
+    }
+
     public static void UseControllers(this IApplicationBuilder app)
     {
         app.UseEndpoints(options =>
@@ -51,7 +57,7 @@ public static class HttpConfigs
                     {
                         bearer.Token = "your.bearer.token";
                     })
-                    .WithHttpBasicAuthentication(basic => {});
+                    .WithHttpBasicAuthentication(basic => { });
             });
         });
     }

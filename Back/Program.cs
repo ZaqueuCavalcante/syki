@@ -25,6 +25,8 @@ var app = builder.Build();
 
 app.AddDevConfigs();
 
+app.UseMetrics();
+
 app.UseLogs();
 app.UseCors();
 

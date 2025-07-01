@@ -116,16 +116,16 @@ public partial class IntegrationTests
     {
         // Arrange
         var admClient = await _api.LoggedAsAdm();
-        await admClient.SetupFeatureFlags(crossLogin: false);
 
         var client = await _api.LoggedAsAcademic();
         TeacherOut teacher = await client.CreateTeacher();
 
         // Act
+        await admClient.SetupFeatureFlags(crossLogin: false);
         var response = await client.Http.CrossLogin(teacher.Id);
+        await admClient.SetupFeatureFlags(crossLogin: true);
 
         // Assert
         response.ShouldBeError(new ForbiddenErrorOut());
-        await admClient.SetupFeatureFlags(crossLogin: true);
     }
 }

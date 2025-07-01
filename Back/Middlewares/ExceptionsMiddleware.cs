@@ -1,7 +1,7 @@
 using System.Text.Json;
 using ILogger = Serilog.ILogger;
 
-namespace Syki.Back.Exceptions;
+namespace Syki.Back.Middlewares;
 
 public class ExceptionsMiddleware(RequestDelegate next, ILogger logger)
 {

@@ -1,7 +1,6 @@
 using Npgsql;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
-using Sentry.OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
@@ -11,43 +10,24 @@ public static class OpenTelemetryConfigs
 {
     public static void AddOpenTelemetryConfigs(this WebApplicationBuilder builder)
     {
-        if (Env.IsTesting() || Env.IsDevelopment()) return;
+        if (Env.IsTesting()) return;
 
-        var settins = new SentrySettings(builder.Configuration);
+        var settings = builder.Configuration.Tracing();
 
         builder.Services
             .AddOpenTelemetry()
-            .ConfigureResource(resource => resource.AddService("SykiAPI"))
-            .WithMetrics(metrics =>
-            {
-                metrics
-                    .AddNpgsqlInstrumentation()
-                    .AddRuntimeInstrumentation()
-                    .AddAspNetCoreInstrumentation();
-
-                metrics.AddOtlpExporter();
-            })
+            .ConfigureResource(resource => resource.AddService("Back"))
             .WithTracing(tracing =>
             {
                 tracing
-                    .AddSentry()
                     .AddNpgsql()
-                    .AddAspNetCoreInstrumentation()
-                    .AddEntityFrameworkCoreInstrumentation();
+                    .AddQuartzInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddAspNetCoreInstrumentation();
 
-                tracing.AddOtlpExporter();
-            })
-            .WithLogging(logging =>
-            {
-                logging.AddOtlpExporter();
+                tracing
+                    .SetSampler(new TraceIdRatioBasedSampler(settings.SamplingRatio))
+                    .AddOtlpExporter();
             });
-
-        builder.WebHost.UseSentry(options =>
-        {
-            options.Dsn = settins.Dsn;
-            options.UseOpenTelemetry();
-            options.SendDefaultPii = true;
-            options.TracesSampleRate = settins.TracesSampleRate;
-        });
     }
 }

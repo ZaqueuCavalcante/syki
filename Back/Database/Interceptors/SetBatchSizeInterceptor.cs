@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.Database.Interceptors;
 
 public class SetBatchSizeInterceptor : SaveChangesInterceptor
 {

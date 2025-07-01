@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Syki.Back.Features.Academic.CreateCourse;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Diagnostics;
 
 namespace Syki.Back.Database;
 
@@ -66,6 +67,8 @@ public static class DbContextExtensions
         CommandBatchId? batchId = null,
         int? delaySeconds = null
     ) {
+        var activityId = Activity.Current?.Id;
+
         return ctx.Add(
             new Command(
                 institutionId,
@@ -74,7 +77,8 @@ public static class DbContextExtensions
                 parentId: parentId,
                 originalId: originalId,
                 batchId: batchId,
-                delaySeconds: delaySeconds
+                delaySeconds: delaySeconds,
+                activityId: activityId
             )
         ).Entity;
     }

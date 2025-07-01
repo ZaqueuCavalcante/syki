@@ -1,4 +1,5 @@
 using StronglyTypedIds;
+using System.Diagnostics;
 
 namespace Syki.Back.Events;
 
@@ -15,10 +16,11 @@ public class DomainEvent
     public Guid? ProcessorId { get; set; }
     public string? Error { get; set; }
     public int Duration { get; set; }
+    public string? ActivityId { get; set; }
 
     public DomainEvent() { }
 
-    public DomainEvent(Guid institutionId, Guid entityId, object data)
+    public DomainEvent(Guid institutionId, Guid entityId, object data, string? activityId)
     {
         Id = DomainEventId.CreateNew();
         EntityId = entityId;
@@ -26,6 +28,7 @@ public class DomainEvent
         Data = data.Serialize();
         OccurredAt = DateTime.UtcNow;
         InstitutionId = institutionId;
+        ActivityId = activityId;
     }
 
     public void Processed(double duration)
@@ -33,6 +36,12 @@ public class DomainEvent
         ProcessedAt = DateTime.UtcNow;
         Duration = Convert.ToInt32(duration);
         Status = Error.HasValue() ? DomainEventStatus.Error : DomainEventStatus.Success;
+    }
+
+    public ActivityContext GetParentContext()
+    {
+        ActivityContext.TryParse(ActivityId, null, out var parsedContext);
+        return parsedContext;
     }
 }
 

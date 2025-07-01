@@ -1,5 +1,4 @@
 using Syki.Back.Hubs;
-using Scalar.AspNetCore;
 using System.Text.Json.Serialization;
 
 namespace Syki.Back.Configs;
@@ -29,12 +28,6 @@ public static class HttpConfigs
         app.UseMiddleware<CustomHeadersMiddleware>();
     }
 
-    public static void UseMetrics(this IApplicationBuilder app)
-    {
-        if (!Env.IsTesting()) return;
-        app.UseMiddleware<MetricsMiddleware>();
-    }
-
     public static void UseControllers(this IApplicationBuilder app)
     {
         app.UseEndpoints(options =>
@@ -44,21 +37,7 @@ public static class HttpConfigs
             options.MapHub<SykiHub>("/syki-hub");
 
             options.MapOpenApi();
-            options.MapScalarApiReference(options =>
-            {
-                options.WithModels(false);
-                options.WithDownloadButton(false);
-                options.WithTitle("Syki API Docs");
-                options.WithEndpointPrefix("/docs/{documentName}");
-                options.WithOpenApiRoutePattern("/swagger/v1/swagger.json");
-                options
-                    .WithPreferredScheme("Bearer")
-                    .WithHttpBearerAuthentication(bearer =>
-                    {
-                        bearer.Token = "your.bearer.token";
-                    })
-                    .WithHttpBasicAuthentication(basic => { });
-            });
+            options.MapScalarDocs();
         });
     }
 

@@ -18,7 +18,6 @@ public class SykiHub : Hub
             SykiHubUsersStore.Users.TryAdd(userId, [Context.ConnectionId]);
         }
 
-        Log.Information("Client connected: {0} / UserId = {1}", Context.ConnectionId, userId);
         return base.OnConnectedAsync();
     }
 
@@ -35,7 +34,6 @@ public class SykiHub : Hub
             }
         }
         
-        Log.Information("Client disconnected: {0} / UserId = {1}", Context.ConnectionId, userId);
         return base.OnDisconnectedAsync(exception);
     }
 }

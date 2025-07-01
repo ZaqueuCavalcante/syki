@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Syki.Back.Database;
+namespace Syki.Back.Database.Interceptors;
 
 public sealed class CommandsDelayInterceptor : SaveChangesInterceptor
 {

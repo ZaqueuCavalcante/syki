@@ -4,16 +4,16 @@ public static class ServicesConfigs
 {
     public static void AddServicesConfigs(this WebAssemblyHostBuilder builder)
     {
-        builder.Services.AddServiceConfigs(typeof(IAcademicClient));
-        builder.Services.AddServiceConfigs(typeof(IAdmClient));
-        builder.Services.AddServiceConfigs(typeof(ICrossClient));
-        builder.Services.AddServiceConfigs(typeof(IStudentClient));
-        builder.Services.AddServiceConfigs(typeof(ITeacherClient));
+        builder.Services.AddClients(typeof(IAdmClient));
+        builder.Services.AddClients(typeof(ICrossClient));
+        builder.Services.AddClients(typeof(IStudentClient));
+        builder.Services.AddClients(typeof(ITeacherClient));
+        builder.Services.AddClients(typeof(IAcademicClient));
 
         builder.Services.AddScoped<ClipboardService>();
     }
 
-    private static void AddServiceConfigs(this IServiceCollection services, Type? marker)
+    private static void AddClients(this IServiceCollection services, Type? marker)
     {
         var types = AppDomain.CurrentDomain.GetAssemblies()
             .Where(s => s.FullName.StartsWith("Front"))

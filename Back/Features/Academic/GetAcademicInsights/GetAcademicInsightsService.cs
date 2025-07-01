@@ -3,11 +3,10 @@ using Npgsql;
 
 namespace Syki.Back.Features.Academic.GetAcademicInsights;
 
-public class GetAcademicInsightsService(DatabaseSettings settings) : IAcademicService
+public class GetAcademicInsightsService(NpgsqlDataSource dataSource) : IAcademicService
 {
     public async Task<AcademicInsightsOut> Get(Guid institutionId)
     {
-        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
 
         const string sql = @"

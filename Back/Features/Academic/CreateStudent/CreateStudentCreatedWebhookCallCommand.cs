@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Syki.Back.Features.Academic.CallWebhooks;
 
 namespace Syki.Back.Features.Academic.CreateStudent;
@@ -9,6 +10,8 @@ public class CreateStudentCreatedWebhookCallCommandHandler(SykiDbContext ctx) : 
 {
     public async Task Handle(CommandId commandId, CreateStudentCreatedWebhookCallCommand command)
     {
+        var activityId = Activity.Current?.Id;
+
         var student = await ctx.Students.AsNoTracking()
             .Include(x => x.User)
             .Where(x => x.Id == command.UserId)

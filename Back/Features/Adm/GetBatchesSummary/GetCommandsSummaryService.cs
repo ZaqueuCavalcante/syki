@@ -3,11 +3,10 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetBatchesSummary;
 
-public class GetBatchesSummaryService(DatabaseSettings settings) : IAdmService
+public class GetBatchesSummaryService(NpgsqlDataSource dataSource) : IAdmService
 {
     public async Task<GetBatchesSummaryOut> Get()
     {
-        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
 
         var result = new GetBatchesSummaryOut();

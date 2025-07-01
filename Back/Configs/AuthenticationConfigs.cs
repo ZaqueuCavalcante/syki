@@ -11,7 +11,7 @@ public static class AuthenticationConfigs
 
     public static void AddAuthenticationConfigs(this WebApplicationBuilder builder)
     {
-        var settings = new AuthSettings(builder.Configuration);
+        var settings = builder.Configuration.Auth();
 
         JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();

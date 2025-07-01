@@ -3,11 +3,10 @@ using Npgsql;
 
 namespace Syki.Back.Features.Cross.GetUserAccount;
 
-public class GetUserAccountService(DatabaseSettings settings) : ICrossService
+public class GetUserAccountService(NpgsqlDataSource dataSource) : ICrossService
 {
     public async Task<GetUserAccountOut> Get(Guid userId)
     {
-        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
 
         const string sql = @"

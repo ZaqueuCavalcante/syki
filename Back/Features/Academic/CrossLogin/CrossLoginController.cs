@@ -14,7 +14,7 @@ public class CrossLoginController(CrossLoginService service) : ControllerBase
     /// Realiza o login a partir do Acadêmico, indo para conta de um Aluno ou Professor da instituição. <br/>
     /// Essa operação pode ser ativada/desativada globalmente pelo usuário Adm através da feature flag CrossLogin.
     /// </remarks>
-    [Authorize(BackPolicy.CrossLogin)]
+    [Authorize(BackPolicies.CrossLogin)]
     [HttpPost("academic/cross-login")]
     [ProducesResponseType(200)]
     public async Task<IActionResult> Login([FromBody] CrossLoginIn data)

@@ -13,7 +13,9 @@ public partial class IntegrationTests
         CrossLoginOut response = await client.Http.CrossLogin(teacher.Id);
 
         // Assert
-        response.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+        var claims = response.AccessToken.ToClaims();
+        claims.First(x => x.Type == "sub").Value.Should().Be(teacher.Id.ToString());
+        claims.First(x => x.Type == "role").Value.Should().Be(UserRole.Teacher.ToString());
     }
 
     [Test]
@@ -29,7 +31,9 @@ public partial class IntegrationTests
         CrossLoginOut response = await client.Http.CrossLogin(student.Id);
 
         // Assert
-        response.AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+        var claims = response.AccessToken.ToClaims();
+        claims.First(x => x.Type == "sub").Value.Should().Be(student.Id.ToString());
+        claims.First(x => x.Type == "role").Value.Should().Be(UserRole.Student.ToString());
     }
 
     [Test]
@@ -105,5 +109,23 @@ public partial class IntegrationTests
 
         // Assert
         response.ShouldBeError(new ForbiddenErrorOut());
+    }
+
+    [Test]
+    public async Task Should_not_cross_login_when_feature_flag_is_disabled()
+    {
+        // Arrange
+        var admClient = await _api.LoggedAsAdm();
+        await admClient.SetupFeatureFlags(crossLogin: false);
+
+        var client = await _api.LoggedAsAcademic();
+        TeacherOut teacher = await client.CreateTeacher();
+
+        // Act
+        var response = await client.Http.CrossLogin(teacher.Id);
+
+        // Assert
+        response.ShouldBeError(new ForbiddenErrorOut());
+        await admClient.SetupFeatureFlags(crossLogin: true);
     }
 }

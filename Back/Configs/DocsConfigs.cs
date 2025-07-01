@@ -1,4 +1,5 @@
 using System.Reflection;
+using Scalar.AspNetCore;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Interfaces;
@@ -66,17 +67,29 @@ public static class DocsConfigs
         builder.Services.AddOpenApi();
     }
 
+    public static void MapScalarDocs(this IEndpointRouteBuilder options)
+    {
+        options.MapScalarApiReference(options =>
+        {
+            options.WithModels(false);
+            options.WithDownloadButton(false);
+            options.WithTitle("Syki API Docs");
+            options.WithEndpointPrefix("/docs/{documentName}");
+            options.WithOpenApiRoutePattern("/swagger/v1/swagger.json");
+            options
+                .WithPreferredScheme("Bearer")
+                .WithHttpBearerAuthentication(bearer =>
+                {
+                    bearer.Token = "your.bearer.token";
+                })
+                .WithHttpBasicAuthentication(basic => { });
+        });
+    }
+
     public static void UseDocs(this IApplicationBuilder app)
     {
         app.UseStaticFiles();
-
         app.UseSwagger();
-        app.UseSwaggerUI(options =>
-        {
-            options.DocumentTitle = "Syki API Docs";
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Syki 1.0");
-            options.DefaultModelsExpandDepth(-1);
-        });
     }
 
     private static string ReadResource(string name)

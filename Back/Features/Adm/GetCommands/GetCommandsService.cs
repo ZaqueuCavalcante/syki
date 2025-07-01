@@ -3,11 +3,10 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetCommands;
 
-public class GetCommandsService(DatabaseSettings settings) : IAdmService
+public class GetCommandsService(NpgsqlDataSource dataSource) : IAdmService
 {
     public async Task<List<CommandTableOut>> Get(CommandTableFilterIn filters)
     {
-        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
 
         const string sql = @"

@@ -3,11 +3,10 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetCommandsSummary;
 
-public class GetCommandsSummaryService(DatabaseSettings settings) : IAdmService
+public class GetCommandsSummaryService(NpgsqlDataSource dataSource) : IAdmService
 {
     public async Task<GetCommandsSummaryOut> Get()
     {
-        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
 
         var result = new GetCommandsSummaryOut();

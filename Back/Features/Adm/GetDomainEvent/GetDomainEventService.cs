@@ -3,11 +3,10 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetDomainEvent;
 
-public class GetDomainEventService(DatabaseSettings settings) : IAdmService
+public class GetDomainEventService(NpgsqlDataSource dataSource) : IAdmService
 {
     public async Task<DomainEventOut> Get(Guid id)
     {
-        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
 
         const string sql = @"

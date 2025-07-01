@@ -30,15 +30,15 @@ public class CreateNewClassActivityNotificationCommandHandler(SykiDbContext ctx)
         );
         ctx.Add(notification);
 
-        var batch = CommandBatch.New(@class.InstitutionId, CommandBatchType.SendNewClassActivityEmailCommandsBatch, sourceCommandId: commandId);
-        ctx.Add(batch);
+        // var batch = CommandBatch.New(@class.InstitutionId, CommandBatchType.SendNewClassActivityEmailCommandsBatch, sourceCommandId: commandId);
+        // ctx.Add(batch);
         foreach (var student in students)
         {
             ctx.Add(new UserNotification(student.Id, notification.Id));
-            ctx.AddCommand(@class.InstitutionId, new SendNewClassActivityEmailCommand(student.Id, notification.Id), parentId: commandId, batchId: batch.Id);
+            // ctx.AddCommand(@class.InstitutionId, new SendNewClassActivityEmailCommand(student.Id, notification.Id), parentId: commandId, batchId: batch.Id);
         }
 
-        var nexCommand = ctx.AddCommand(@class.InstitutionId, new NotifyTeacherNewClassActivityEmailsSendedCommand(@class.InstitutionId, @class.TeacherId, command.ClassActivityId));
-        batch.ContinueWith(nexCommand);
+        // var nexCommand = ctx.AddCommand(@class.InstitutionId, new NotifyTeacherNewClassActivityEmailsSendedCommand(@class.InstitutionId, @class.TeacherId, command.ClassActivityId));
+        // batch.ContinueWith(nexCommand);
     }
 }

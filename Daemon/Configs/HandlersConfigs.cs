@@ -2,13 +2,13 @@ namespace Syki.Daemon.Configs;
 
 public static class HandlersConfigs
 {
-    public static void AddHandlersConfigs(this WebApplicationBuilder builder)
+    public static void AddDaemonHandlersConfigs(this WebApplicationBuilder builder)
     {
-        builder.Services.AddHandlersConfigs("DomainEventHandler");
-        builder.Services.AddHandlersConfigs("CommandHandler");
+        builder.Services.AddHandlers("CommandHandler");
+        builder.Services.AddHandlers("DomainEventHandler");
     }
 
-    private static void AddHandlersConfigs(this IServiceCollection services, string handlerName)
+    private static void AddHandlers(this IServiceCollection services, string handlerName)
     {
         var types = AppDomain.CurrentDomain.GetAssemblies()
             .Where(s => s.FullName.StartsWith("Back"))

@@ -1,5 +1,7 @@
+using Npgsql;
 using Syki.Back.Audit;
 using Audit.EntityFramework;
+using Syki.Back.Database.Interceptors;
 using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateCourse;
@@ -27,7 +29,7 @@ using Syki.Back.Features.Academic.CreateWebhookSubscription;
 
 namespace Syki.Back.Database;
 
-public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfiguration configuration) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
+public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSource npgsqlDataSource) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
 {
     public DbSet<Institution> Institutions { get; set; }
     public DbSet<InstitutionConfigs> Configs { get; set; }
@@ -68,7 +70,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, IConfigurati
     {
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.UseNpgsql(
-            configuration.Database().ConnectionString,
+            npgsqlDataSource,
             x => x.MigrationsHistoryTable("migrations", "syki")
         );
 

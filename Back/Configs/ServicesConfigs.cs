@@ -1,5 +1,4 @@
 using Syki.Back.Storage;
-using Syki.Back.Metrics;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Syki.Back.Configs;
@@ -8,21 +7,21 @@ public static class ServicesConfigs
 {
     public static void AddServicesConfigs(this WebApplicationBuilder builder)
     {
-        builder.Services.AddServiceConfigs(typeof(IAcademicService));
-        builder.Services.AddServiceConfigs(typeof(IAdmService));
-        builder.Services.AddServiceConfigs(typeof(ICrossService));
-        builder.Services.AddServiceConfigs(typeof(IStudentService));
-        builder.Services.AddServiceConfigs(typeof(ITeacherService));
+        builder.Services.AddServices(typeof(IAdmService));
+        builder.Services.AddServices(typeof(ICrossService));
+        builder.Services.AddServices(typeof(IStudentService));
+        builder.Services.AddServices(typeof(ITeacherService));
+        builder.Services.AddServices(typeof(IAcademicService));
 
         builder.Services.AddScoped<IStorageService, AzureBlobStorageService>();
-        if (Env.IsTesting())
+
+        if (Env.IsDevelopment() || Env.IsTesting())
         {
-            builder.Services.AddHostedService<SetupCurrentMetricsStore>();
             builder.Services.Replace(ServiceDescriptor.Singleton<IStorageService, FakeStorageService>());
         }
     }
 
-    private static void AddServiceConfigs(this IServiceCollection services, Type marker)
+    private static void AddServices(this IServiceCollection services, Type marker)
     {
         var types = AppDomain.CurrentDomain.GetAssemblies()
             .Where(s => s.FullName.StartsWith("Back"))

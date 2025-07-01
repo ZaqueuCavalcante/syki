@@ -1,14 +1,14 @@
 namespace Syki.Back.Configs;
 
-public static class DevConfigs
+public static class DevelopmentConfigs
 {
-    public static void AddDevConfigs(this WebApplication app)
+    public static void RunDevelopmentConfigs(this WebApplication app)
     {
         if (!Env.IsDevelopment()) return;
 
         var ctx = app.Services.CreateScope().ServiceProvider.GetRequiredService<SykiDbContext>();
 
-        var settings = new DatabaseSettings(app.Configuration);
+        var settings = app.Configuration.Database();
         if (settings.Reset)
         {
             ctx.ResetDevDb();

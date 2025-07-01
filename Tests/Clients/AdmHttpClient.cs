@@ -1,6 +1,7 @@
 using Syki.Front.Features.Adm.GetUsers;
 using Syki.Front.Features.Adm.GetAdmInsights;
 using Syki.Front.Features.Adm.GetInstitutions;
+using Syki.Front.Features.Adm.SetupFeatureFlags;
 
 namespace Syki.Tests.Clients;
 
@@ -24,5 +25,11 @@ public class AdmHttpClient(HttpClient http)
     {
         var client = new GetAdmInsightsClient(Cross);
         return await client.Get();
+    }
+
+    public async Task SetupFeatureFlags(bool crossLogin)
+    {
+        var client = new SetupFeatureFlagsClient(Cross);
+        await client.Setup(crossLogin);
     }
 }

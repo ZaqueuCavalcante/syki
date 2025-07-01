@@ -1,4 +1,5 @@
 using StronglyTypedIds;
+using System.Diagnostics;
 
 namespace Syki.Back.Commands;
 
@@ -40,6 +41,8 @@ public class Command
 
     public DateTime? NotBefore { get; set; }
 
+    public string? ActivityId { get; set; }
+
     public Command() { }
 
     public Command(
@@ -49,7 +52,8 @@ public class Command
         CommandId? parentId = null,
         CommandId? originalId = null,
         CommandBatchId? batchId = null,
-        int? delaySeconds = null
+        int? delaySeconds = null,
+        string? activityId = null
     ) {
         Id = CommandId.CreateNew();
         InstitutionId = institutionId;
@@ -60,6 +64,7 @@ public class Command
         ParentId = parentId;
         OriginalId = originalId;
         BatchId = batchId;
+        ActivityId = activityId;
         NotBefore = delaySeconds != null ? DateTime.UtcNow.AddSeconds(delaySeconds.Value) : null;
     }
 
@@ -73,6 +78,12 @@ public class Command
         ProcessedAt = DateTime.UtcNow;
         Duration = Convert.ToInt32(duration);
         Status = Error.HasValue() ? CommandStatus.Error : CommandStatus.Success;
+    }
+
+    public ActivityContext GetParentContext()
+    {
+        ActivityContext.TryParse(ActivityId, null, out var parsedContext);
+        return parsedContext;
     }
 }
 

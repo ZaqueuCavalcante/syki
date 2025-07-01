@@ -2,12 +2,15 @@ using Newtonsoft.Json;
 using Syki.Back.Events;
 using System.Diagnostics;
 using Syki.Back.Database;
+using Syki.Daemon.Configs;
 using System.Collections.Concurrent;
 
 namespace Syki.Daemon.Events;
 
 public class DomainEventsProcessor(IServiceScopeFactory serviceScopeFactory)
 {
+    private static readonly ActivitySource _activitySource = new (OpenTelemetryConfigs.DomainEventsProcessing);
+
     public async Task Run()
     {
         using var scope = serviceScopeFactory.CreateScope();
@@ -27,26 +30,38 @@ public class DomainEventsProcessor(IServiceScopeFactory serviceScopeFactory)
 
         foreach (var evt in events)
         {
-            sw.Restart();
-
-            try
+            using (var activity = _activitySource.StartActivity($"Process {evt.Type.Split('.').Last()}", ActivityKind.Consumer, evt.GetParentContext()))
             {
-                dynamic data = GetData(evt);
-                dynamic handler = GetHandler(scope, evt);
-                await handler.Handle(evt.InstitutionId, evt.Id, data);
-            }
-            catch (Exception ex)
-            {
-                evt.Error = ex.Message + ex.InnerException?.Message;
-            }
+                activity?.SetTag("event.id", evt.Id);
+                activity?.SetTag("event.type", evt.Type.Split('.').Last());
+                activity?.SetTag("event.institutionId", evt.InstitutionId);
 
-            sw.Stop();
-
-            evt.Processed(sw.Elapsed.TotalMilliseconds);
+                try
+                {
+                    sw.Restart();
+                    dynamic data = GetData(evt);
+                    dynamic handler = GetHandler(scope, evt);
+                    await handler.Handle(evt.InstitutionId, evt.Id, data);
+                }
+                catch (Exception ex)
+                {
+                    evt.Error = ex.Message + ex.InnerException?.Message;
+                    activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
+                    activity?.AddException(ex);
+                }
+                finally
+                {
+                    sw.Stop();
+                    evt.Processed(sw.Elapsed.TotalMilliseconds);
+                    activity?.SetTag("event.duration", evt.Duration);
+                }
+            }
         }
 
         await ctx.SaveChangesAsync();
         await ctx.Database.CommitTransactionAsync();
+
+        ctx.ChangeTracker.Clear();
 
         await Process(scope, ctx, processorId);
     }
@@ -70,8 +85,8 @@ public class DomainEventsProcessor(IServiceScopeFactory serviceScopeFactory)
     private static readonly string Sql = @"
         UPDATE syki.domain_events
         SET processor_id = {0}, status = 'Processing'
-        WHERE id IN (
-            SELECT id
+        WHERE ctid IN (
+            SELECT ctid
             FROM syki.domain_events
             WHERE processor_id IS NULL
             ORDER BY occurred_at

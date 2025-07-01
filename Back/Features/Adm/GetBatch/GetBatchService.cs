@@ -3,11 +3,10 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetBatch;
 
-public class GetBatchService(DatabaseSettings settings) : IAdmService
+public class GetBatchService(NpgsqlDataSource dataSource) : IAdmService
 {
     public async Task<BatchOut> Get(Guid id)
     {
-        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
 
         const string sql = @"

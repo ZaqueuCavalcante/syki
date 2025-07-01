@@ -1,7 +1,5 @@
 using Audit.Core;
 using Syki.Back.Audit;
-using Syki.Back.Features.Academic.CreateClass;
-using Syki.Back.Features.Academic.CreateCourse;
 using Syki.Back.Features.Academic.CreateCampus;
 
 namespace Syki.Back.Configs;

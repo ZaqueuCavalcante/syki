@@ -21,7 +21,10 @@ public partial class IntegrationTests
         var response = await client.LoginMfa(totp);
 
         // Assert
-        response.GetSuccess().AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+        var claims = response.GetSuccess().AccessToken.ToClaims();
+        claims.First(x => x.Type == "email").Value.Should().Be(user.Email);
+        claims.First(x => x.Type == "sub").Value.Should().Be(user.Id.ToString());
+        claims.First(x => x.Type == "role").Value.Should().Be(UserRole.Academic.ToString());
     }
 
     [Test]

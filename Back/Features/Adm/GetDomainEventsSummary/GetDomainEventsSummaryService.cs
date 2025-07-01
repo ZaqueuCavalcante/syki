@@ -3,11 +3,10 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetDomainEventsSummary;
 
-public class GetDomainEventsSummaryService(DatabaseSettings settings) : IAdmService
+public class GetDomainEventsSummaryService(NpgsqlDataSource dataSource) : IAdmService
 {
     public async Task<GetDomainEventsSummaryOut> Get()
     {
-        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
 
         var result = new GetDomainEventsSummaryOut();

@@ -1,25 +1,23 @@
-﻿using Syki.Daemon.Events;
+﻿using Syki.Back.Configs;
 using Syki.Daemon.Configs;
-using Syki.Daemon.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
-Audit.Core.Configuration.AuditDisabled = builder.Configuration.Audit().Disabled;
 
-builder.AddServicesConfigs();
-builder.AddHandlersConfigs();
-
+builder.AddEfCoreConfigs();
 builder.AddDapperConfigs();
 builder.AddCacheConfigs();
+builder.AddSettingsConfigs();
+builder.AddServicesConfigs();
 
-builder.AddQuartzConfigs();
-
-builder.Services.AddHostedService<CommandsProcessorDbListener>();
-builder.Services.AddHostedService<DomainEventsProcessorDbListener>();
+builder.AddDaemonAuditConfigs();
+builder.AddDaemonSettingsConfigs();
+builder.AddDaemonServicesConfigs();
+builder.AddDaemonHandlersConfigs();
+builder.AddDaemonQuartzConfigs();
+builder.AddDaemonOpenTelemetryConfigs();
+builder.AddDaemonHostedServicesConfigs();
 
 var app = builder.Build();
-
-app.UseRouting();
-app.UseStaticFiles();
 
 app.MapGet("/health", () => Results.Ok(new { Status = "Healthy" }));
 

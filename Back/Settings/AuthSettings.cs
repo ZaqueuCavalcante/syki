@@ -14,3 +14,8 @@ public class AuthSettings
         configuration.GetSection("Auth").Bind(this);
     }
 }
+
+public static class AuthSettingsExtensions
+{
+    public static AuthSettings Auth(this IConfiguration configuration) => new(configuration);
+}

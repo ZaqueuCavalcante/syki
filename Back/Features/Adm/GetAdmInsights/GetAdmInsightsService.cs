@@ -3,11 +3,10 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetAdmInsights;
 
-public class GetAdmInsightsService(DatabaseSettings settings) : IAdmService
+public class GetAdmInsightsService(NpgsqlDataSource dataSource) : IAdmService
 {
     public async Task<AdmInsightsOut> Get()
     {
-        await using var dataSource = NpgsqlDataSource.Create(settings.ConnectionString);
         await using var connection = await dataSource.OpenConnectionAsync();
 
         const string sql = @"

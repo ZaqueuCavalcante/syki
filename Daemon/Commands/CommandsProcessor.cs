@@ -1,12 +1,15 @@
 using Newtonsoft.Json;
 using System.Diagnostics;
 using Syki.Back.Database;
+using Syki.Daemon.Configs;
 using System.Collections.Concurrent;
 
 namespace Syki.Daemon.Commands;
 
 public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
 {
+    private static readonly ActivitySource _activitySource = new (OpenTelemetryConfigs.CommandsProcessing);
+
     public async Task Run()
     {
         using var scope = serviceScopeFactory.CreateScope();
@@ -24,33 +27,42 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
 
         foreach (var command in commands)
         {
-            sw.Restart();
-
-            ctx.Attach(command);
-            await ctx.Database.BeginTransactionAsync();
-            ctx.Database.AutoSavepointsEnabled = false;
-
-            dynamic data = GetData(command);
-            dynamic handler = GetHandler(scope, command);
-
-            try
+            using (var activity = _activitySource.StartActivity($"Process {command.Type.Split('.').Last()}", ActivityKind.Consumer, command.GetParentContext()))
             {
-                await handler.Handle(command.Id, data);
+                activity?.SetTag("command.id", command.Id);
+                activity?.SetTag("command.type", command.Type.Split('.').Last());
+                activity?.SetTag("command.institutionId", command.InstitutionId);
+
+                try
+                {
+                    sw.Restart();
+
+                    ctx.ChangeTracker.Clear();
+                    ctx.Attach(command);
+
+                    await ctx.Database.BeginTransactionAsync();
+                    ctx.Database.AutoSavepointsEnabled = false;
+
+                    dynamic data = GetData(command);
+                    dynamic handler = GetHandler(scope, command);
+                    await handler.Handle(command.Id, data);
+                }
+                catch (Exception ex)
+                {
+                    ctx.ChangeTracker.Clear();
+                    ctx.Attach(command);
+                    command.Error = ex.Message + ex.InnerException?.Message;
+                    activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
+                    activity?.AddException(ex);
+                }
+
+                sw.Stop();
+                command.Processed(sw.Elapsed.TotalMilliseconds);
+                activity?.SetTag("command.duration", command.Duration);
+
+                await ctx.SaveChangesAsync();
+                await ctx.Database.CommitTransactionAsync();
             }
-            catch (Exception ex)
-            {
-                ctx.ChangeTracker.Clear();
-                ctx.Attach(command);
-                command.Error = ex.Message + ex.InnerException?.Message;
-            }
-
-            sw.Stop();
-
-            command.Processed(sw.Elapsed.TotalMilliseconds);
-
-            await ctx.SaveChangesAsync();
-            ctx.ChangeTracker.Clear();
-            await ctx.Database.CommitTransactionAsync();
         }
 
         await Process(scope, ctx, processorId);
@@ -75,8 +87,8 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory)
     private static readonly string Sql = @"
         UPDATE syki.commands
         SET processor_id = {0}, status = 'Processing'
-        WHERE id IN (
-            SELECT id
+        WHERE ctid IN (
+            SELECT ctid
             FROM syki.commands
             WHERE processor_id IS NULL AND (not_before IS NULL OR not_before < NOW())
             ORDER BY created_at

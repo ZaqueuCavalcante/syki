@@ -16,11 +16,14 @@ public partial class IntegrationTests
 
         // Act
         var response = await client.ResetPassword(token!, password);
+        var login = await client.Login(user.Email, password);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var login = await client.Login(user.Email, password);
-        login.GetSuccess().AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+        var claims = login.GetSuccess().AccessToken.ToClaims();
+        claims.First(x => x.Type == "email").Value.Should().Be(user.Email);
+        claims.First(x => x.Type == "sub").Value.Should().Be(user.Id.ToString());
+        claims.First(x => x.Type == "role").Value.Should().Be(UserRole.Academic.ToString());
     }
 
     [Test]

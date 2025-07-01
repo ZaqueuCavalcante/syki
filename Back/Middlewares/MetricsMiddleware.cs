@@ -1,7 +1,7 @@
 using Syki.Back.Metrics;
 using System.Collections.Concurrent;
 
-namespace Syki.Back.Exceptions;
+namespace Syki.Back.Middlewares;
 
 public class MetricsMiddleware(RequestDelegate next)
 {

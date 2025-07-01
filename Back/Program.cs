@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddSettingsConfigs();
 builder.AddServicesConfigs();
+builder.AddHostedServicesConfigs();
 
 builder.AddIdentityConfigs();
 builder.AddAuthenticationConfigs();
@@ -23,9 +24,8 @@ builder.AddOpenTelemetryConfigs();
 
 var app = builder.Build();
 
-app.AddDevConfigs();
-
-app.UseMetrics();
+app.RunDevelopmentConfigs();
+app.UseTestingMetrics();
 
 app.UseLogs();
 app.UseCors();

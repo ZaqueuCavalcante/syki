@@ -13,7 +13,10 @@ public partial class IntegrationTests
         var result = await client.Login(user.Email, user.Password);
 
         // Assert
-        result.GetSuccess().AccessToken.Should().StartWith("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.");
+        var claims = result.GetSuccess().AccessToken.ToClaims();
+        claims.First(x => x.Type == "email").Value.Should().Be(user.Email);
+        claims.First(x => x.Type == "sub").Value.Should().Be(user.Id.ToString());
+        claims.First(x => x.Type == "role").Value.Should().Be(UserRole.Academic.ToString());
     }
 
     [Test]

@@ -4,6 +4,11 @@ namespace Syki.Tests.Base;
 
 public static class DaemonFactoryExtensions
 {
+    public static HttpClient GetClient(this DaemonFactory factory)
+    {
+        return factory.CreateClient();
+    }
+
     public static SykiDbContext GetDbContext(this DaemonFactory factory)
     {
         var scope = factory.Services.CreateScope();

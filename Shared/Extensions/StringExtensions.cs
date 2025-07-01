@@ -8,6 +8,7 @@ using Newtonsoft.Json.Converters;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
 
 namespace Syki.Shared;
 
@@ -199,5 +200,24 @@ public static class StringExtensions
         {
             return input;
         }
+    }
+
+    public static string GetSqlSpanName(this string sql)
+    {
+        var comparer = StringComparison.InvariantCultureIgnoreCase;
+        var insert = sql.Contains("INSERT", comparer);
+        var update = sql.Contains("UPDATE", comparer);
+        var delete = sql.Contains("DELETE", comparer);
+        var select = sql.Contains("SELECT", comparer);
+
+        var builder = new StringBuilder();
+
+        if (insert) builder.Append("INSERT ");
+        if (update) builder.Append("UPDATE ");
+        if (delete) builder.Append("DELETE");
+
+        if (!insert && !update && !delete && select) builder.Append("SELECT");
+
+        return builder.ToString().Trim();
     }
 }

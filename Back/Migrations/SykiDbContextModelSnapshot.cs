@@ -206,6 +206,10 @@ namespace Back.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<string>("ActivityId")
+                        .HasColumnType("text")
+                        .HasColumnName("activity_id");
+
                     b.Property<Guid?>("BatchId")
                         .HasColumnType("uuid")
                         .HasColumnName("batch_id");
@@ -326,6 +330,10 @@ namespace Back.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<string>("ActivityId")
+                        .HasColumnType("text")
+                        .HasColumnName("activity_id");
 
                     b.Property<string>("Data")
                         .IsRequired()
@@ -2109,10 +2117,11 @@ namespace Back.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("integer");
 
-                            b1.Property<int>("Count")
-                                .HasColumnType("integer");
-
                             b1.Property<string>("Endpoint")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Values")
                                 .IsRequired()
                                 .HasColumnType("text");
 

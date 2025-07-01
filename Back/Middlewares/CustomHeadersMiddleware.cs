@@ -1,4 +1,4 @@
-namespace Syki.Back.Exceptions;
+namespace Syki.Back.Middlewares;
 
 public class CustomHeadersMiddleware(RequestDelegate next, FeaturesSettings settings)
 {

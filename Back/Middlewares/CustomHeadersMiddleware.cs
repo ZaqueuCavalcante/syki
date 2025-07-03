@@ -6,7 +6,7 @@ public class CustomHeadersMiddleware(RequestDelegate next, FeaturesSettings sett
     {
         context.Response.OnStarting(() =>
         {
-            context.Response.Headers["X-Hash"] = Env.GetLastCommitHash();
+            context.Response.Headers["X-DeployHash"] = Env.DeployHash;
             context.Response.Headers["X-CrossLogin"] = settings.CrossLogin.ToString();
             return Task.CompletedTask;
         });

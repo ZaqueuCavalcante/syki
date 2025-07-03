@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace Syki.Back.Extensions;
 
 public static class Env
@@ -27,10 +25,5 @@ public static class Env
         return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "NOT_FOUND";
     }
 
-    public static string GetLastCommitHash()
-    {
-        return typeof(Program).Assembly
-            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            .InformationalVersion;
-    }
+    public static string DeployHash = Guid.NewGuid().ToHashCode().ToString();
 }

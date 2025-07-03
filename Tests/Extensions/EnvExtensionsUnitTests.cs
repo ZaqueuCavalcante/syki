@@ -3,13 +3,13 @@ namespace Syki.Tests.Extensions;
 public class EnvExtensionsUnitTests
 {
     [Test]
-    public void Should_get_last_commit_hash()
+    public void Should_get_deploy_hash()
     {
         // Arrange / Act
-        var hash = Env.GetLastCommitHash();
+        var hash = Env.DeployHash;
 
         // Assert
-        hash.Should().HaveLength(16);
+        hash.OnlyNumbers().Should().HaveLength(8);
     }
 
     [Test]

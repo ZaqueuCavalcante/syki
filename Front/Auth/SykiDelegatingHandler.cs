@@ -31,7 +31,15 @@ public class SykiDelegatingHandler(ILocalStorageService storage, NavigationManag
         response.Headers.TryGetValues("X-CrossLogin", out var crossLogin);
         await storage.SetItemAsync("CrossLogin", crossLogin?.FirstOrDefault() ?? "False");
 
-        // await _js.InvokeVoidAsync("location.reload");
+        response.Headers.TryGetValues("X-DeployHash", out var deployHashHeader);
+        var deployHash = deployHashHeader?.FirstOrDefault() ?? "0";
+        var storedDeployHash = await storage.GetItemAsync("DeployHash");
+
+        if (deployHash != storedDeployHash)
+        {
+            await storage.SetItemAsync("DeployHash", deployHash);
+            nav.Refresh(true);
+        }
 
         return response;
     }

@@ -12,6 +12,11 @@
     <UserSecretsId>73852cbc-85df-4a66-b30c-e60af7d726c0</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Version>1.0.1</Version>
+    <InformationalVersion>1.0.1+$(SourceRevisionId)</InformationalVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />

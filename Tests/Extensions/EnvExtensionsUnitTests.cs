@@ -9,7 +9,7 @@ public class EnvExtensionsUnitTests
         var hash = Env.GetLastCommitHash();
 
         // Assert
-        hash.Should().HaveLength(47);
+        hash.Should().HaveLength(16);
     }
 
     [Test]

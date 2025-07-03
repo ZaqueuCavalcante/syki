@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "publicReleaseRefSpec": [
+    "^refs/heads/main$"
+  ],
+  "cloudBuild": {
+    "setVersionVariables": true
+  }
+}

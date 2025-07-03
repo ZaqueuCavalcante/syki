@@ -10,7 +10,7 @@ public static class CorsConfigs
                 .AllowAnyHeader()
                 .AllowCredentials()
                 .WithExposedHeaders("X-Hash", "X-CrossLogin")
-                .SetIsOriginAllowed(_ => true)
+                .WithOrigins("http://localhost:5002", "https://app.syki.com.br")
             )
         );
     }

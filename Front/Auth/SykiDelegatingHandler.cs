@@ -31,6 +31,8 @@ public class SykiDelegatingHandler(ILocalStorageService storage, NavigationManag
         response.Headers.TryGetValues("X-CrossLogin", out var crossLogin);
         await storage.SetItemAsync("CrossLogin", crossLogin?.FirstOrDefault() ?? "False");
 
+        // await _js.InvokeVoidAsync("location.reload");
+
         return response;
     }
 }

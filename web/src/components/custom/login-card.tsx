@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -10,8 +9,11 @@ import { useState } from 'react'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import { useNavigate } from "react-router"
+import login from "@/api/cross/loginClient"
 
 export function LoginCard() {
+  const nav = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,46 +23,21 @@ export function LoginCard() {
     setLoading(true);
     setError(null);
 
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const response = await fetch(`${apiUrl}/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+    const result = await login({ email, password });
 
-      if (response.ok) {
-        const userJwt = (await response.json()).accessToken;
-
-        const payload = userJwt.split('.')[1];
-        const decodedPayload = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
-        const claims = JSON.parse(decodedPayload);
-
-        const userData = { role: claims.role, name: claims.name, email: claims.email }
-
-        localStorage.setItem('user', JSON.stringify(userData));
-      } else {
-        const errorData = await response.json(); // Assuming your API sends error messages in JSON
-        setError(errorData.message || 'Credenciais inválidas. Por favor, tente novamente.');
-        console.error('Login failed:', response.status, errorData);
-      }
-    } catch (err) {
-      console.error('Network error during login:', err);
-      setError('Ocorreu um erro de rede. Por favor, tente novamente mais tarde.');
-    } finally {
-      setLoading(false);
+    if (result.isSuccess) {
+      nav('/home')
+    } else {
+      setError(result.error?.message ?? "Error");
     }
+
+    setLoading(false);
   };
 
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle>Faça login na sua conta</CardTitle>
-        <CardDescription>
-          Insira duas credenciais abaixo para realizar o login
-        </CardDescription>
       </CardHeader>
       <CardContent>
         <form>
@@ -97,7 +74,7 @@ export function LoginCard() {
           </div>
         </form>
       </CardContent>
-      {error && <p className="text-red-500 text-sm pl-8">{error}</p>}
+      {error && <p className="text-red-500 text-sm pl-7">{error}</p>}
       <CardFooter className="flex-col gap-6">
         <Button type="button" onClick={handleSubmit} className="w-full" disabled={loading}>
           {loading ? 'Entrando...' : 'Login'}

@@ -9,7 +9,7 @@ public class EnvExtensionsUnitTests
         var hash = Env.DeployHash;
 
         // Assert
-        hash.OnlyNumbers().Should().HaveLength(8);
+        hash.Should().HaveLength(8);
     }
 
     [Test]

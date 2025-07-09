@@ -8,9 +8,7 @@
   - React Router
 
 - Data Fetching
+  - Axios
   - React Query
-
-
-
 
 

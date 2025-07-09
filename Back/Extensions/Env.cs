@@ -25,5 +25,5 @@ public static class Env
         return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "NOT_FOUND";
     }
 
-    public static string DeployHash = Guid.NewGuid().ToHashCode().ToString();
+    public static string DeployHash = Guid.NewGuid().ToString()[^8..];
 }

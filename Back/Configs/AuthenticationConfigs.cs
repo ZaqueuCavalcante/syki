@@ -47,11 +47,21 @@ public static class AuthenticationConfigs
                     OnMessageReceived = context =>
                     {
                         var path = context.HttpContext.Request.Path;
-                        var jwt = context.Request.Query["access_token"];
-                        if (jwt.HasValue() && path.StartsWithSegments("/syki-hub"))
+
+                        var webSocketJwt = context.Request.Query["access_token"];
+                        if (webSocketJwt.HasValue() && path.StartsWithSegments("/syki-hub"))
                         {
-                            context.Token = jwt;
+                            context.Token = webSocketJwt;
+                            return Task.CompletedTask;
                         }
+
+                        var cookieJwt = context.Request.Cookies["syki_jwt"];
+                        if (cookieJwt.HasValue())
+                        {
+                            context.Token = cookieJwt;
+                            return Task.CompletedTask;
+                        }
+
                         return Task.CompletedTask;
                     }
                 };

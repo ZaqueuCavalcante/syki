@@ -14,7 +14,7 @@ public static class CorsConfigs
                     "http://localhost:3000",
                     "http://localhost:5002",
                     "https://app.syki.com.br",
-                    "https://syki-frontend-react-production.up.railway.app"
+                    "https://react.syki.com.br"
                 )
             )
         );

@@ -1,6 +1,7 @@
 import api from "@/syki-api";
 import type { AxiosResponse } from "axios";
 import type { ApiResult, ErrorOut } from "../dtos";
+import type { UUID } from "crypto";
 
 export interface LoginIn {
     email: string;
@@ -9,7 +10,11 @@ export interface LoginIn {
 
 export interface LoginOut
 {
+    id: UUID;
+    name: string;
+    email: string;
     accessToken: string;
+    role: 'Adm' | 'Academic' | 'Teacher' | 'Student';
 }
 
 export default async function login(data: LoginIn): Promise<ApiResult<LoginOut>> {

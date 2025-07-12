@@ -10,7 +10,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router"
-import login from "@/api/cross/loginClient"
+import login, { type LoginOut } from "@/api/cross/loginClient"
+import { useAuth } from "./AuthProvider"
 
 export function LoginCard() {
   const nav = useNavigate()
@@ -19,6 +20,8 @@ export function LoginCard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const { setUser } = useAuth();
+
   const handleSubmit = async () => {
     setLoading(true);
     setError(null);
@@ -26,7 +29,9 @@ export function LoginCard() {
     const result = await login({ email, password });
 
     if (result.isSuccess) {
-      nav('/home')
+      const { accessToken, ...user } = result.data as LoginOut;
+      setUser(user);
+      nav('/academic/campi')
     } else {
       setError(result.error?.message ?? "Error");
     }

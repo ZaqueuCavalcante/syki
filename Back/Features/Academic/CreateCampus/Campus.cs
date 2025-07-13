@@ -10,23 +10,26 @@ public class Campus
     public string Name { get; set; }
     public BrazilState State { get; set; }
     public string City { get; set; }
+    public int Capacity { get; set; }
 
     private Campus() { }
 
-    public Campus(Guid institutionId, string name, BrazilState state, string city)
+    public Campus(Guid institutionId, string name, BrazilState state, string city, int capacity)
     {
         Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         Name = name;
         State = state;
         City = city;
+        Capacity = capacity;
     }
 
-    public void Update(string name, BrazilState state, string city)
+    public void Update(string name, BrazilState state, string city, int capacity)
     {
         Name = name;
         State = state;
         City = city;
+        Capacity = capacity;
     }
 
     public CampusOut ToOut()
@@ -37,6 +40,19 @@ public class Campus
             Name = Name,
             State = State,
             City = City,
+            Capacity = Capacity,
+        };
+    }
+
+    public GetCampusEnrollmentOut ToEnrollmentOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Name = Name,
+            State = State,
+            City = City,
+            Capacity = Capacity,
         };
     }
 }

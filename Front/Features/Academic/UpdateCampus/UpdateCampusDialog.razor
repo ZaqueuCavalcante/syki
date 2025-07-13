@@ -58,7 +58,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Client.Update(Campus.Id, Campus.Name, Campus.State, Campus.City);
+        var response = await Client.Update(Campus.Id, Campus.Name, Campus.State, Campus.City, 100);
         if (response.IsSuccess())
         {
             MudDialog.Close(DialogResult.Ok(true));

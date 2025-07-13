@@ -10,13 +10,14 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus();
 
         // Act
-        CampusOut updatedCampus = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito");
+        CampusOut updatedCampus = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito", 789);
 
         // Assert
         updatedCampus.Id.Should().Be(campus.Id);
         updatedCampus.Name.Should().Be("Agreste II");
         updatedCampus.State.Should().Be(BrazilState.PE);
         updatedCampus.City.Should().Be("Bonito");
+        updatedCampus.Capacity.Should().Be(789);
     }
 
     [Test]

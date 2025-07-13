@@ -74,10 +74,10 @@ public class SeedInstitutionBasicDataCommandHandler(SykiDbContext ctx) : IComman
 
         institution.Campi =
         [
-            new(institution.Id, "Garoa", BrazilState.PE, "Garanhuns"),
-            new(institution.Id, "Sertão", BrazilState.PE, "Petrolina"),
-            new(institution.Id, "Agreste", BrazilState.PE, "Caruaru"),
-            new(institution.Id, "Suassuna", BrazilState.PE, "Recife"),
+            new(institution.Id, "Garoa", BrazilState.PE, "Garanhuns", 150),
+            new(institution.Id, "Sertão", BrazilState.PE, "Petrolina", 500),
+            new(institution.Id, "Agreste", BrazilState.PE, "Caruaru", 750),
+            new(institution.Id, "Suassuna", BrazilState.PE, "Recife", 1200),
         ];
     }
 

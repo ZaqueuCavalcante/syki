@@ -58,7 +58,7 @@
         if (!_form.IsValid) return;
 
         _loading = true;
-        var response = await Client.Create(_name, _state!.Value, _city);
+        var response = await Client.Create(_name, _state!.Value, _city, 100);
         if (response.IsSuccessStatusCode)
         {
             MudDialog.Close(DialogResult.Ok(true));

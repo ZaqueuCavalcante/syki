@@ -28,19 +28,21 @@ internal class RequestExamples : IMultipleExamplesProvider<CreateCampusIn>
         yield return SwaggerExample.Create(
 			"Agreste I",
 			new CreateCampusIn
-			{
-				Name = "Agreste I",
+            {
+                Name = "Agreste I",
                 State = BrazilState.PE,
-				City = "Caruaru",
+                City = "Caruaru",
+                Capacity = 150,
 			}
 		);
         yield return SwaggerExample.Create(
 			"Suassuna I",
 			new CreateCampusIn
-			{
-				Name = "Suassuna I",
+            {
+                Name = "Suassuna I",
                 State = BrazilState.PE,
-				City = "Recife",
+                City = "Recife",
+                Capacity = 500,
 			}
 		);
     }

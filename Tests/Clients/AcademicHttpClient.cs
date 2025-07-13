@@ -58,10 +58,11 @@ public class AcademicHttpClient(HttpClient http)
     public async Task<CampusOut> CreateCampus(
         string name = "Agreste I",
         BrazilState state = BrazilState.PE,
-        string city = "Caruaru"
+        string city = "Caruaru",
+        int capacity = 100
     ) {
         var client = new CreateCampusClient(Http);
-        var response = await client.Create(name, state, city);
+        var response = await client.Create(name, state, city, capacity);
         return await response.DeserializeTo<CampusOut>();
     }
 
@@ -96,10 +97,11 @@ public class AcademicHttpClient(HttpClient http)
         Guid id,
         string name = "Agreste I",
         BrazilState state = BrazilState.PE,
-        string city = "Caruaru"
+        string city = "Caruaru",
+        int capacity = 100
     ) {
         var client = new UpdateCampusClient(Http);
-        return await client.Update(id, name, state, city);
+        return await client.Update(id, name, state, city, capacity);
     }
 
     public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(

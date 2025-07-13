@@ -30,21 +30,23 @@ public class RequestExamples : IMultipleExamplesProvider<UpdateCampusIn>
         yield return SwaggerExample.Create(
 			"Agreste I",
 			new UpdateCampusIn
-			{
-				Id = Guid.CreateVersion7(),
-				Name = "Agreste I",
+            {
+                Id = Guid.CreateVersion7(),
+                Name = "Agreste I",
                 State = BrazilState.AP,
-				City = "Caruaru",
+                City = "Caruaru",
+                Capacity = 150,
 			}
 		);
         yield return SwaggerExample.Create(
 			"Interior",
 			new UpdateCampusIn
-			{
-				Id = Guid.CreateVersion7(),
-				Name = "Interior",
+            {
+                Id = Guid.CreateVersion7(),
+                Name = "Interior",
                 State = BrazilState.TO,
-				City = "Palmas",
+                City = "Palmas",
+                Capacity = 500,
 			}
 		);
     }

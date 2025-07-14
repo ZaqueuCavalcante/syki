@@ -18,24 +18,9 @@
 - Ja logado, o usuario pode mudar seu user name
 - Eh preciso ter senha? Caso ele queira acessar de outro computador sem precisar logar no seu email
 
-
-
-# Next.js Authentication and Authorization
-
-- Cadastrar email
-- Definir senha
-- Logar
-- Salvar JWT
-- Realizar requisições HTTP usando o token salvo
-- Ter todas as chamadas centralizadas (endpoint + ins + outs)
-
-- Mostrar apenas o que cada usuário deve/pode ver
-
+---------------------------------------------------------------------------------------------------
 
 # Flutter App
 
 - Apenas pro Aluno
 - Seguir a doc do Flutter
-
-
-

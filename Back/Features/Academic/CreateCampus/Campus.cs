@@ -43,16 +43,4 @@ public class Campus
             Capacity = Capacity,
         };
     }
-
-    public GetCampusEnrollmentOut ToEnrollmentOut()
-    {
-        return new()
-        {
-            Id = Id,
-            Name = Name,
-            State = State,
-            City = City,
-            Capacity = Capacity,
-        };
-    }
 }

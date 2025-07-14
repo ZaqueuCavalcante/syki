@@ -17,5 +17,7 @@ public partial class IntegrationTests
         campus.State.Should().Be(BrazilState.PE);
         campus.City.Should().Be("Caruaru");
         campus.Capacity.Should().Be(123);
+        campus.Students.Should().Be(0);
+        campus.FillRate.Should().Be(0);
     }
 }

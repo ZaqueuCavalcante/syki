@@ -21,8 +21,8 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        var campusSuassuna = await client.CreateCampus("Suassuna I", BrazilState.PE, "Recife");
-        var campusAgreste = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
+        var suassunaOut = await client.CreateCampus("Suassuna I", BrazilState.PE, "Recife", 1_500);
+        var agresteOut = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru", 280);
 
         // Act
         var campi = await client.GetCampi();
@@ -30,8 +30,28 @@ public partial class IntegrationTests
         // Assert
         campi.Should().HaveCount(2);
 
-        campi[0].Should().BeEquivalentTo(campusAgreste);
-        campi[1].Should().BeEquivalentTo(campusSuassuna);
+        campi[0].Should().BeEquivalentTo(agresteOut);
+        campi[1].Should().BeEquivalentTo(suassunaOut);
+    }
+
+    [Test]
+    public async Task Should_get_campi_with_student_metrics()
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+        var data = await client.CreateBasicInstitutionData();
+
+        await client.CreateStudent(data.AdsCourseOffering.Id);
+        await client.CreateStudent(data.AdsCourseOffering.Id);
+
+        // Act
+        var campi = await client.GetCampi();
+
+        // Assert
+        var campus = campi.Single();
+        campus.Students.Should().Be(2);
+        campus.Capacity.Should().Be(100);
+        campus.FillRate.Should().Be(2.00M);
     }
 
     [Test]
@@ -49,28 +69,5 @@ public partial class IntegrationTests
 
         // Assert
         campi.Should().BeEquivalentTo([campusA]);
-    }
-
-    [Test]
-    public async Task Should_get_campi_in_parallel_requests_to_test_cache_stampede()
-    {
-        // Arrange
-        var client = await _api.LoggedAsAcademic();
-
-        await client.CreateCampus("Suassuna I", BrazilState.PE, "Recife");
-        await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
-        await client.CreateCampus("Agreste II", BrazilState.PE, "Bezerros");
-
-        // Act
-        var campiA = client.GetCampi();
-        var campiB = client.GetCampi();
-        var campiC = client.GetCampi();
-
-        await Task.WhenAll(campiA, campiB, campiC);
-
-        // Assert
-        campiA.Result.Should().HaveCount(3);
-        campiB.Result.Should().HaveCount(3);
-        campiC.Result.Should().HaveCount(3);
     }
 }

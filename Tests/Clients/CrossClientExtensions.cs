@@ -7,6 +7,7 @@ using Syki.Front.Features.Cross.LoginMfa;
 using Syki.Front.Features.Cross.GetMfaKey;
 using Syki.Front.Features.Cross.ResetPassword;
 using Syki.Front.Features.Academic.CrossLogin;
+using Syki.Front.Features.Cross.GetUserAccount;
 using Syki.Front.Features.Cross.ViewNotifications;
 using Syki.Front.Features.Cross.FinishUserRegister;
 using Syki.Front.Features.Cross.GetUserNotifications;
@@ -65,7 +66,7 @@ public static class CrossClientExtensions
 
     public static async Task<OneOf<LoginMfaOut, ErrorOut>> LoginMfa(this HttpClient http, string token)
     {
-        var storage=  new LocalStorageServiceMock();
+        var storage = new LocalStorageServiceMock();
         var client = new LoginMfaClient(http, storage, new SykiAuthStateProvider(storage));
         var response = await client.LoginMfa(token);
 
@@ -114,5 +115,11 @@ public static class CrossClientExtensions
         var storage = new LocalStorageServiceMock();
         var client = new CrossLoginClient(http, storage, new SykiAuthStateProvider(storage));
         return await client.Login(targetUserId);
+    }
+
+    public static async Task<GetUserAccountOut> GetUserAccount(this HttpClient http)
+    {
+        var client = new GetUserAccountClient(http);
+        return await client.Get();
     }
 }

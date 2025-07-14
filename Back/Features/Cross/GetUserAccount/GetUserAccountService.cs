@@ -11,6 +11,7 @@ public class GetUserAccountService(NpgsqlDataSource dataSource) : ICrossService
 
         const string sql = @"
             SELECT
+                u.id,
                 u.name,
                 u.email,
                 u.profile_photo,

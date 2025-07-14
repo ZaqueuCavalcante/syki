@@ -3,6 +3,11 @@ namespace Syki.Shared;
 public class GetUserAccountOut
 {
     /// <summary>
+    /// Id do usuário.
+    /// </summary>
+    public Guid Id { get; set; }
+
+    /// <summary>
     /// Nome do usuário.
     /// </summary>
     public string Name { get; set; }

@@ -30,6 +30,7 @@ internal class ResponseExamples : IMultipleExamplesProvider<GetUserAccountOut>
 			"Edson Gomes",
 			new GetUserAccountOut()
 			{
+				Id = Guid.CreateVersion7(),
 				Name = "Edson Gomes",
 				Email = "edson.gomes@syki.com.br",
 				Institution = "UFPE",
@@ -40,6 +41,7 @@ internal class ResponseExamples : IMultipleExamplesProvider<GetUserAccountOut>
 			"Maria Júlia",
 			new GetUserAccountOut()
 			{
+				Id = Guid.CreateVersion7(),
 				Name = "Maria Júlia",
 				Email = "maria.julia@syki.com.br",
 				Institution = "Faculdade Nova Roma",

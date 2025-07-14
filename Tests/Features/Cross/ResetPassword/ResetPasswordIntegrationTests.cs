@@ -10,7 +10,7 @@ public partial class IntegrationTests
         var user = await client.RegisterUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
-        client.Logout();
+        await client.Logout();
         var token = await _api.GetResetPasswordToken(user.Email);
         var password = "My@new@strong@P4ssword";
 
@@ -20,10 +20,12 @@ public partial class IntegrationTests
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var claims = login.GetSuccess().AccessToken.ToClaims();
-        claims.First(x => x.Type == "email").Value.Should().Be(user.Email);
-        claims.First(x => x.Type == "sub").Value.Should().Be(user.Id.ToString());
-        claims.First(x => x.Type == "role").Value.Should().Be(UserRole.Academic.ToString());
+
+        var loginOut = login.GetSuccess();
+        loginOut.Id.Should().Be(user.Id);
+        loginOut.Name.Should().Be(user.Email);
+        loginOut.Email.Should().Be(user.Email);
+        loginOut.Role.Should().Be(UserRole.Academic);
     }
 
     [Test]
@@ -34,7 +36,7 @@ public partial class IntegrationTests
         var user = await client.RegisterUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
-        client.Logout();
+        await client.Logout();
 
         // Act
         var response = await client.ResetPassword(Guid.CreateVersion7().ToString(), "My@new@strong@P4ssword");
@@ -51,7 +53,7 @@ public partial class IntegrationTests
         var user = await client.RegisterUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
-        client.Logout();
+        await client.Logout();
         var token = await _api.GetResetPasswordToken(user.Email);
         var password = "My@new@strong@P4ssword";
         await client.ResetPassword(token!, password);
@@ -71,7 +73,7 @@ public partial class IntegrationTests
         var user = await client.RegisterUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
-        client.Logout();
+        await client.Logout();
         var token = await _api.GetResetPasswordToken(user.Email);
         var password = "My@new@strong@P4ssword";
         await client.ResetPassword(token!, password);
@@ -92,7 +94,7 @@ public partial class IntegrationTests
         var user = await client.RegisterUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
-        client.Logout();
+        await client.Logout();
         var token = await _api.GetResetPasswordToken(user.Email);
 
         // Act

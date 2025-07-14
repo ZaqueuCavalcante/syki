@@ -13,10 +13,11 @@ public partial class IntegrationTests
         var result = await client.Login(user.Email, user.Password);
 
         // Assert
-        var claims = result.GetSuccess().AccessToken.ToClaims();
-        claims.First(x => x.Type == "email").Value.Should().Be(user.Email);
-        claims.First(x => x.Type == "sub").Value.Should().Be(user.Id.ToString());
-        claims.First(x => x.Type == "role").Value.Should().Be(UserRole.Academic.ToString());
+        var loginOut = result.GetSuccess();
+        loginOut.Id.Should().Be(user.Id);
+        loginOut.Name.Should().Be(user.Email);
+        loginOut.Email.Should().Be(user.Email);
+        loginOut.Role.Should().Be(UserRole.Academic);
     }
 
     [Test]
@@ -75,7 +76,7 @@ public partial class IntegrationTests
         var token = keyResponse.Key.GenerateTOTP();
         await client.SetupMfa(token);
 
-        client.Logout();
+        await client.Logout();
 
         // Act
         var result = await client.Login(user.Email, user.Password);

@@ -1,6 +1,7 @@
 using Syki.Tests.Mock;
 using Syki.Front.Auth;
 using Syki.Front.Features.Cross.Login;
+using Syki.Front.Features.Cross.Logout;
 using Syki.Front.Features.Cross.SetupMfa;
 using Syki.Front.Features.Cross.LoginMfa;
 using Syki.Front.Features.Cross.GetMfaKey;
@@ -47,9 +48,6 @@ public static class CrossClientExtensions
         var client = new LoginClient(http, storage, new SykiAuthStateProvider(storage));
         var response = await client.Login(email, password);
 
-        http.Logout();
-        http.AddAuthToken(response.IsSuccess() ? response.GetSuccess().AccessToken : "");
-
         return response;
     }
 
@@ -70,9 +68,6 @@ public static class CrossClientExtensions
         var storage=  new LocalStorageServiceMock();
         var client = new LoginMfaClient(http, storage, new SykiAuthStateProvider(storage));
         var response = await client.LoginMfa(token);
-
-        http.Logout();
-        http.AddAuthToken(response.IsSuccess() ? response.GetSuccess().AccessToken : "");
 
         return response;
     }
@@ -108,14 +103,10 @@ public static class CrossClientExtensions
         await client.View();
     }
 
-    public static void Logout(this HttpClient client)
+    public static async Task<HttpResponseMessage> Logout(this HttpClient http)
     {
-        client.DefaultRequestHeaders.Remove("Authorization");
-    }
-
-    public static void AddAuthToken(this HttpClient client, string token)
-    {
-        client.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+        var client = new LogoutClient(http);
+        return await client.Logout();
     }
 
     public static async Task<OneOf<CrossLoginOut, ErrorOut>> CrossLogin(this HttpClient http, Guid targetUserId)

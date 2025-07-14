@@ -14,17 +14,18 @@ public partial class IntegrationTests
         var totp = keyResponse.Key.GenerateTOTP();
         await client.SetupMfa(totp);
 
-        client.Logout();
+        await client.Logout();
         await client.Login(user.Email, user.Password);
 
         // Act
         var response = await client.LoginMfa(totp);
 
         // Assert
-        var claims = response.GetSuccess().AccessToken.ToClaims();
-        claims.First(x => x.Type == "email").Value.Should().Be(user.Email);
-        claims.First(x => x.Type == "sub").Value.Should().Be(user.Id.ToString());
-        claims.First(x => x.Type == "role").Value.Should().Be(UserRole.Academic.ToString());
+        var loginOut = response.GetSuccess();
+        loginOut.Id.Should().Be(user.Id);
+        loginOut.Name.Should().Be(user.Email);
+        loginOut.Email.Should().Be(user.Email);
+        loginOut.Role.Should().Be(UserRole.Academic);
     }
 
     [Test]

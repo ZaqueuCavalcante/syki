@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Cross.GenerateJWT;
 
@@ -16,7 +17,15 @@ public class LoginMfaService(GenerateJWTService service, SignInManager<SykiUser>
         var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
 
         var jwt = await service.Generate(user!.Email!);
+        var claims = new JwtSecurityToken(jwt).Claims.ToList();
 
-        return new LoginMfaOut { AccessToken = jwt };
+        return new LoginMfaOut
+        {
+            AccessToken = jwt,
+            Name = claims.First(x => x.Type == "name").Value,
+            Email = claims.First(x => x.Type == "email").Value,
+            Id = Guid.Parse(claims.First(x => x.Type == "sub").Value),
+            Role = Enum.Parse<UserRole>(claims.First(x => x.Type == "role").Value),
+        };
     }
 }

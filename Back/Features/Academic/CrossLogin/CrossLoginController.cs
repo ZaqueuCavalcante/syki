@@ -5,7 +5,7 @@ namespace Syki.Back.Features.Academic.CrossLogin;
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
 [Consumes("application/json"), Produces("application/json")]
-public class CrossLoginController(CrossLoginService service) : ControllerBase
+public class CrossLoginController(CrossLoginService service, AuthSettings settings) : ControllerBase
 {
     /// <summary>
     /// Login interno
@@ -20,6 +20,21 @@ public class CrossLoginController(CrossLoginService service) : ControllerBase
     public async Task<IActionResult> Login([FromBody] CrossLoginIn data)
     {
         var result = await service.Login(User.InstitutionId(), data);
+
+        if (result.IsSuccess())
+        {
+            Response.Cookies.Append(
+                "syki_jwt",
+                result.GetSuccess().AccessToken,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    SameSite = SameSiteMode.Lax,
+                    Secure = settings.CookieSecure,
+                    Domain = settings.CookieDomain,
+                }
+            );
+        }
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

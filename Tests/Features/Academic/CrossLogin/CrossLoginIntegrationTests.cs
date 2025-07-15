@@ -13,9 +13,10 @@ public partial class IntegrationTests
         CrossLoginOut response = await client.Http.CrossLogin(teacher.Id);
 
         // Assert
-        var claims = response.AccessToken.ToClaims();
-        claims.First(x => x.Type == "sub").Value.Should().Be(teacher.Id.ToString());
-        claims.First(x => x.Type == "role").Value.Should().Be(UserRole.Teacher.ToString());
+        response.Id.Should().Be(teacher.Id);
+        response.Name.Should().Be(teacher.Name);
+        response.Email.Should().Be(teacher.Email);
+        response.Role.Should().Be(UserRole.Teacher);
     }
 
     [Test]
@@ -31,9 +32,10 @@ public partial class IntegrationTests
         CrossLoginOut response = await client.Http.CrossLogin(student.Id);
 
         // Assert
-        var claims = response.AccessToken.ToClaims();
-        claims.First(x => x.Type == "sub").Value.Should().Be(student.Id.ToString());
-        claims.First(x => x.Type == "role").Value.Should().Be(UserRole.Student.ToString());
+        response.Id.Should().Be(student.Id);
+        response.Name.Should().Be(student.Name);
+        response.Email.Should().Be(student.Email);
+        response.Role.Should().Be(UserRole.Student);
     }
 
     [Test]

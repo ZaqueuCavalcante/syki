@@ -17,10 +17,3 @@
 
 - Ja logado, o usuario pode mudar seu user name
 - Eh preciso ter senha? Caso ele queira acessar de outro computador sem precisar logar no seu email
-
----------------------------------------------------------------------------------------------------
-
-# Flutter App
-
-- Apenas pro Aluno
-- Seguir a doc do Flutter

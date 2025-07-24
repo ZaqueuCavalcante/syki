@@ -18,9 +18,7 @@ public class CreateCourseCurriculumService(SykiDbContext ctx, HybridCache cache)
 
         var courseCurriculum = new CourseCurriculum(institutionId, data.CourseId, data.Name);
 
-        data.Disciplines.ForEach(d =>
-            courseCurriculum.Links.Add(new(d.Id, d.Period, d.Credits, d.Workload))
-        );
+        courseCurriculum.AddDisciplines(data.Disciplines);
 
         ctx.Add(courseCurriculum);
         await ctx.SaveChangesAsync();

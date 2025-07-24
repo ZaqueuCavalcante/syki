@@ -29,8 +29,9 @@ using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Academic.UpdateEnrollmentPeriod;
 using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
-using Syki.Front.Features.Academic.ReleaseClassesForEnrollment;
 using Syki.Front.Features.Academic.CreateWebhookSubscription;
+using Syki.Front.Features.Academic.AddDisciplinePreRequisites;
+using Syki.Front.Features.Academic.ReleaseClassesForEnrollment;
 
 namespace Syki.Tests.Clients;
 
@@ -319,6 +320,16 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Create(name, url, events, authenticationType, apiKey);
     }
 
+    public async Task<OneOf<SuccessOut, ErrorOut>> AddDisciplinePreRequisites(
+        Guid courseCurriculumId,
+        Guid disciplineId,
+        List<Guid> preRequisites
+    ) {
+        var client = new AddDisciplinePreRequisitesClient(Http);
+
+        return await client.Add(courseCurriculumId, disciplineId, preRequisites);
+    }
+
     public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()
     {
         var data = new BasicInstitutionTestDto();
@@ -371,12 +382,12 @@ public class AcademicHttpClient(HttpClient http)
             new(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Id, 1, 6, 45),
             new(data.AdsDisciplines.IntegratorProjectOne.Id, 1, 7, 65),
 
-            new(data.AdsDisciplines.Arch.Id, 1, 7, 60),
-            new(data.AdsDisciplines.Databases.Id, 1, 6, 55),
-            new(data.AdsDisciplines.DataStructures.Id, 1, 8, 60),
-            new(data.AdsDisciplines.InfoAndSociety.Id, 1, 4, 50),
-            new(data.AdsDisciplines.Poo.Id, 1, 6, 45),
-            new(data.AdsDisciplines.IntegratorProjectTwo.Id, 1, 7, 65),
+            new(data.AdsDisciplines.Arch.Id, 2, 7, 60),
+            new(data.AdsDisciplines.Databases.Id, 2, 6, 55),
+            new(data.AdsDisciplines.DataStructures.Id, 2, 8, 60),
+            new(data.AdsDisciplines.InfoAndSociety.Id, 2, 4, 50),
+            new(data.AdsDisciplines.Poo.Id, 2, 6, 45),
+            new(data.AdsDisciplines.IntegratorProjectTwo.Id, 2, 7, 65),
         ]);
 
         data.AdsCourseOffering = await CreateCourseOffering(data.Campus.Id, data.AdsCourse.Id, data.AdsCourseCurriculum.Id, data.AcademicPeriod2.Id, Shift.Noturno);

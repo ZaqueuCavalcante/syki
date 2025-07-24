@@ -45,6 +45,10 @@ public class InstitutionConfig : IEntityTypeConfiguration<Institution>
             .WithOne()
             .HasForeignKey(u => u.InstitutionId);
 
+        institution.HasMany(f => f.Classrooms)
+            .WithOne()
+            .HasForeignKey(c => c.InstitutionId);
+
         institution.HasMany(i => i.Webhooks)
             .WithOne()
             .HasForeignKey(u => u.InstitutionId);

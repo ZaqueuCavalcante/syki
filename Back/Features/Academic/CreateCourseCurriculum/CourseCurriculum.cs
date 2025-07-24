@@ -30,6 +30,35 @@ public class CourseCurriculum
         Links = [];
     }
 
+    public void AddDisciplines(List<CreateCourseCurriculumDisciplineIn> disciplines)
+    {
+        // TODO: Validar que não têm disciplinas repetidas (mesmo id)
+
+        disciplines.ForEach(d =>
+            Links.Add(new(d.Id, d.Period, d.Credits, d.Workload))
+        );
+    }
+
+    public OneOf<SykiSuccess, SykiError> AddDisciplinePreRequisites(Guid targetDisciplineId, List<Guid> preRequisites)
+    {
+        if (!Links.Any(x => x.DisciplineId == targetDisciplineId))
+            return new DisciplineNotFound();
+
+        if (preRequisites.Contains(targetDisciplineId) || !preRequisites.IsSubsetOf(Links.ConvertAll(d => d.DisciplineId)))
+            return new InvalidDisciplinesList();
+
+        var targetDiscipline = Links.First(x => x.DisciplineId == targetDisciplineId);
+        foreach (var id in preRequisites)
+        {
+            if (Links.First(x => x.DisciplineId == id).Period >= targetDiscipline.Period)
+                return new InvalidDisciplinesList();
+        }
+
+        targetDiscipline.AddPreRequisites(preRequisites);
+
+        return new SykiSuccess();
+    }
+
     public CourseCurriculumOut ToOut()
     {
         var result = new CourseCurriculumOut
@@ -47,6 +76,7 @@ public class CourseCurriculum
             discipline.Period = link.Period;
             discipline.Credits = link.Credits;
             discipline.Workload = link.Workload;
+            discipline.PreRequisites = link.PreRequisites;
         }
 
         return result;

@@ -7,6 +7,7 @@ public class CourseCurriculumDiscipline
     public byte Period { get; set; }
     public byte Credits { get; set; }
     public ushort Workload { get; set; }
+    public List<Guid> PreRequisites { get; set; }
 
     public CourseCurriculumDiscipline(
         Guid disciplineId,
@@ -18,5 +19,10 @@ public class CourseCurriculumDiscipline
         Period = period;
         Credits = credits;
         Workload = workload;
+    }
+
+    public void AddPreRequisites(List<Guid> preRequisites)
+    {
+        PreRequisites = preRequisites;
     }
 }

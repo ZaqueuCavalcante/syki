@@ -71,7 +71,6 @@ public class SeedInstitutionBasicDataCommandHandler(SykiDbContext ctx) : IComman
 
     private static void AddCampi(Institution institution)
     {
-
         institution.Campi =
         [
             new(institution.Id, "Garoa", BrazilState.PE, "Garanhuns", 150),

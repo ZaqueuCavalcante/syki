@@ -1,5 +1,6 @@
 using OtpNet;
 using QRCoder;
+using System.Text;
 using Newtonsoft.Json;
 using System.Reflection;
 using System.Globalization;
@@ -8,7 +9,6 @@ using Newtonsoft.Json.Converters;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.WebUtilities;
-using System.Text;
 
 namespace Syki.Shared;
 

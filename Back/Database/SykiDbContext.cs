@@ -12,6 +12,7 @@ using Syki.Back.Features.Academic.CreateTeacher;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.Features.Cross.SetupFeatureFlags;
+using Syki.Back.Features.Academic.CreateClassroom;
 using Syki.Back.Features.Academic.CreateDiscipline;
 using Syki.Back.Features.Academic.CreateNotification;
 using Syki.Back.Features.Teacher.CreateClassActivity;
@@ -53,6 +54,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
     public DbSet<WebhookCall> WebhookCalls { get; set; }
 
     public DbSet<Class> Classes { get; set; }
+    public DbSet<Classroom> Classrooms { get; set; }
     public DbSet<SykiTeacher> Teachers { get; set; }
     public DbSet<SykiStudent> Students { get; set; }
     public DbSet<ClassStudent> ClassesStudents { get; set; }

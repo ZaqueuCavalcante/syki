@@ -17,5 +17,9 @@ public class CourseCurriculumDisciplineConfig : IEntityTypeConfiguration<CourseC
         ccd.HasOne<Discipline>()
             .WithMany()
             .HasForeignKey(x => x.DisciplineId);
+
+        ccd.Property(x => x.PreRequisites)
+            .HasColumnType("uuid[]")
+            .IsRequired(false);
     }
 }

@@ -31,6 +31,7 @@
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.State.GetDescription()" Title="Estado" />
                 <PropertyColumn Property="x => x.City" Title="Cidade" />
+                <PropertyColumn Property="x => x.Capacity.ToThousandSeparated()" Title="Capacidade" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@(() => OpenEditDialog(context.Item))" />

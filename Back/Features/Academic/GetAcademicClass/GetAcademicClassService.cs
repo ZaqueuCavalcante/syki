@@ -28,7 +28,7 @@ public class GetAcademicClassService(SykiDbContext ctx, GetTeacherClassStudentsS
 
         var result = @class.ToGetAcademicClassOut();
 
-        var classStudents = (await service.Get(@class.TeacherId, @class.Id)).GetSuccess();
+        var classStudents = (await service.Get(@class.TeacherId!.Value, @class.Id)).GetSuccess();
 
         result.Students = classStudents.ConvertAll(x => new AcademicClassStudentOut
         {

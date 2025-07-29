@@ -31,6 +31,7 @@ using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
 using Syki.Front.Features.Academic.CreateWebhookSubscription;
 using Syki.Front.Features.Academic.AddDisciplinePreRequisites;
+using Syki.Front.Features.Academic.AssignDisciplinesToTeacher;
 using Syki.Front.Features.Academic.ReleaseClassesForEnrollment;
 
 namespace Syki.Tests.Clients;
@@ -328,6 +329,12 @@ public class AcademicHttpClient(HttpClient http)
         var client = new AddDisciplinePreRequisitesClient(Http);
 
         return await client.Add(courseCurriculumId, disciplineId, preRequisites);
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> AssignDisciplinesToTeacher(Guid teacherId, List<Guid> classes)
+    {
+        var client = new AssignDisciplinesToTeacherClient(Http);
+        return await client.Assign(teacherId, classes);
     }
 
     public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()

@@ -1,3 +1,5 @@
+using Syki.Back.Features.Academic.CreateDiscipline;
+
 namespace Syki.Back.Features.Academic.CreateTeacher;
 
 /// <summary>
@@ -9,7 +11,12 @@ public class SykiTeacher : Entity
     public Guid InstitutionId { get; set; }
     public string Name { get; set; }
 
-    private SykiTeacher() {}
+    /// <summary>
+    /// Disciplinas que o professor está apto a lecionar
+    /// </summary>
+    public List<Discipline> Disciplines { get; set; }
+
+    private SykiTeacher() { }
 
     public SykiTeacher(
         Guid userId,

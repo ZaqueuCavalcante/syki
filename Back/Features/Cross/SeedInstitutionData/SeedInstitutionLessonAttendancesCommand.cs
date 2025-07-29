@@ -26,7 +26,7 @@ public class SeedInstitutionLessonAttendancesCommandHandler(
             foreach (var lesson in @class.Lessons.Where(l => l.Date < today))
             {
                 var presentStudents = @class.Students.Select(s => s.Id).PickRandom(random.Next(3, 7)).ToList();
-                await createLessonAttendanceService.CreateWithThrowOnError(@class.TeacherId, lesson.Id, new(presentStudents));
+                await createLessonAttendanceService.CreateWithThrowOnError(@class.TeacherId!.Value, lesson.Id, new(presentStudents));
             }
         }
     }

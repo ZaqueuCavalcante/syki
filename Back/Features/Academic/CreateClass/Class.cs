@@ -16,13 +16,16 @@ public class Class
     public Guid InstitutionId { get; set; }
     public Guid DisciplineId { get; set; }
     public Discipline Discipline { get; set; }
-    public Guid TeacherId { get; set; }
-    public SykiTeacher Teacher { get; set; }
     public string PeriodId { get; set; }
     public AcademicPeriod Period { get; set; }
     public int Vacancies { get; set; }
     public ClassStatus Status { get; set; }
     public int Workload { get; set; }
+
+    public Guid? CampusId { get; set; }
+    public Guid? TeacherId { get; set; }
+    public SykiTeacher Teacher { get; set; }
+
     public List<Schedule> Schedules { get; set; }
     public List<ClassLesson> Lessons { get; set; }
     public List<SykiStudent> Students { get; set; }

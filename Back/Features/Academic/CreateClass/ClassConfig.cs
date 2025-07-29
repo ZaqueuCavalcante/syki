@@ -1,3 +1,4 @@
+using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 
 namespace Syki.Back.Features.Academic.CreateClass;
@@ -10,6 +11,10 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
 
         @class.HasKey(c => c.Id);
         @class.Property(c => c.Id).ValueGeneratedNever();
+
+        @class.HasOne<Campus>()
+            .WithMany()
+            .HasForeignKey(c => c.CampusId);
 
         @class.HasOne(c => c.Teacher)
             .WithMany()

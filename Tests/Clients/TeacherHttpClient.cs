@@ -7,6 +7,7 @@ using Syki.Front.Features.Teacher.CreateLessonAttendance;
 using Syki.Front.Features.Teacher.GetTeacherClassLessons;
 using Syki.Front.Features.Teacher.GetTeacherClassActivity;
 using Syki.Front.Features.Teacher.GetTeacherClassStudents;
+using Syki.Front.Features.Teacher.SetSchedulingPreferences;
 using Syki.Front.Features.Teacher.GetTeacherClassActivities;
 using Syki.Front.Features.Teacher.AddStudentClassActivityNote;
 using Syki.Front.Features.Teacher.GetClassNotesRemainingWeights;
@@ -103,5 +104,11 @@ public class TeacherHttpClient(HttpClient http)
     {
         CreateClassActivityOut activity = await CreateClassActivity(classId, note: type, weight: weight);
         await AddStudentClassActivityNote(activity.Id, studentId, note);
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> SetSchedulingPreferences(List<ScheduleIn> schedules)
+    {
+        var client = new SetSchedulingPreferencesClient(Cross);
+        return await client.Set(schedules);
     }
 }

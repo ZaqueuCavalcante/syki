@@ -1,3 +1,4 @@
+using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateDiscipline;
 
 namespace Syki.Back.Features.Academic.CreateTeacher;
@@ -15,6 +16,11 @@ public class SykiTeacher : Entity
     /// Disciplinas que o professor está apto a lecionar
     /// </summary>
     public List<Discipline> Disciplines { get; set; }
+
+    /// <summary>
+    /// Preferências de horários do professor no semestre atual
+    /// </summary>
+    public List<Schedule> SchedulingPreferences { get; set; }
 
     private SykiTeacher() { }
 

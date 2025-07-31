@@ -19,5 +19,9 @@ public class SykiTeacherConfig : IEntityTypeConfiguration<SykiTeacher>
         teacher.HasMany(c => c.Disciplines)
             .WithMany()
             .UsingEntity<TeacherDiscipline>();
+
+        teacher.HasMany(c => c.SchedulingPreferences)
+            .WithOne()
+            .HasForeignKey(s => s.TeacherId);
     }
 }

@@ -63,7 +63,7 @@ public class AllClassLessonsMustHaveFinalizedStatus : SykiError
 public class ClassMustHaveStartedStatus : SykiError
 {
     public override string Code { get; set; } = nameof(ClassMustHaveStartedStatus);
-    public override string Message { get; set; } = "A turma precisam ter o status de Iniciada para ser finalizada.";
+    public override string Message { get; set; } = "A turma precisa ter o status de Iniciada para ser finalizada.";
 }
 
 public class LoginWrongEmailOrPassword : SykiError

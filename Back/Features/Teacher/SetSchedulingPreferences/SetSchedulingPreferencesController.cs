@@ -11,42 +11,19 @@ public class SetSchedulingPreferencesController(SetSchedulingPreferencesService 
     /// Define as preferências de horários do professor no semestre atual.
     /// </remarks>
     [HttpPut("teacher/scheduling-preferences")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(typeof(ErrorOut), 400)]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Set([FromBody] SetSchedulingPreferencesIn data)
     {
         var result = await service.Set(User.InstitutionId(), User.Id(), data);
-
-        return result.Match<IActionResult>(_ => NoContent(), BadRequest);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
-internal class RequestExamples : IMultipleExamplesProvider<SetSchedulingPreferencesIn>
-{
-    public IEnumerable<SwaggerExample<SetSchedulingPreferencesIn>> GetExamples()
-    {
-        yield return SwaggerExample.Create(
-			"Horários",
-			new SetSchedulingPreferencesIn
-            {
-                Schedules =
-				[
-					new(Day.Monday, Hour.H07_00, Hour.H10_00),
-					new(Day.Thursday, Hour.H08_00, Hour.H10_30),
-				]
-			}
-		);
-    }
-}
-
-internal class ErrorsExamples : IMultipleExamplesProvider<ErrorOut>
-{
-    public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
-    {
-        yield return new InvalidDay().ToSwaggerExampleErrorOut();
-        yield return new InvalidHour().ToSwaggerExampleErrorOut();
-        yield return new InvalidSchedule().ToSwaggerExampleErrorOut();
-        yield return new ConflictingSchedules().ToSwaggerExampleErrorOut();
-    }
-}
+internal class RequestExamples : ExamplesProvider<SetSchedulingPreferencesIn>;
+internal class ResponseExamples : ExamplesProvider<SuccessOut>;
+internal class ErrorsExamples : ErrorExamplesProvider<
+    InvalidDay,
+    InvalidHour,
+    InvalidSchedule,
+    ConflictingSchedules>;

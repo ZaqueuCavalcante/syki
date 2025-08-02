@@ -11,36 +11,17 @@ public class AssignDisciplinesToTeacherController(AssignDisciplinesToTeacherServ
     /// Vincula disciplinas que o professor esta apto a lecionar.
     /// </remarks>
     [HttpPut("academic/teachers/{id}/assign-disciplines")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(typeof(ErrorOut), 400)]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Assign([FromRoute] Guid id, [FromBody] AssignDisciplinesToTeacherIn data)
     {
         var result = await service.Assign(User.InstitutionId(), id, data);
-
-        return result.Match<IActionResult>(_ => NoContent(), BadRequest);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
-internal class RequestExamples : IMultipleExamplesProvider<AssignDisciplinesToTeacherIn>
-{
-    public IEnumerable<SwaggerExample<AssignDisciplinesToTeacherIn>> GetExamples()
-    {
-        yield return SwaggerExample.Create(
-			"Disciplinas",
-			new AssignDisciplinesToTeacherIn
-			{
-				Disciplines = [Guid.CreateVersion7(), Guid.CreateVersion7(), Guid.CreateVersion7()]
-			}
-		);
-    }
-}
-
-internal class ErrorsExamples : IMultipleExamplesProvider<ErrorOut>
-{
-    public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
-    {
-        yield return new TeacherNotFound().ToSwaggerExampleErrorOut();
-        yield return new InvalidDisciplinesList().ToSwaggerExampleErrorOut();
-    }
-}
+internal class RequestExamples : ExamplesProvider<AssignDisciplinesToTeacherIn>;
+internal class ResponseExamples : ExamplesProvider<SuccessOut>;
+internal class ErrorsExamples : ErrorExamplesProvider<
+    TeacherNotFound,
+    InvalidDisciplinesList>;

@@ -93,3 +93,18 @@ Todo início de semestre, temos que:
 - Inviável de resolver por força bruta
 
 
+
+# Scalar API Docs
+
+- Request examples
+    - Body
+    - Route
+    - Query
+
+- Response examples
+    - Many
+
+- Error examples
+    - Many
+
+

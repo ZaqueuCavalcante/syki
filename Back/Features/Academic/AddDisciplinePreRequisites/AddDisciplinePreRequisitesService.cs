@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Academic.AddDisciplinePreRequisites;
 
 public class AddDisciplinePreRequisitesService(SykiDbContext ctx) : IAcademicService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Add(Guid institutionId, Guid courseCurriculumId, Guid disciplineId, AddDisciplinePreRequisitesIn data)
+    public async Task<OneOf<SykiSuccess, SykiError>> Add(Guid institutionId, Guid courseCurriculumId, AddDisciplinePreRequisitesIn data)
     {
         var courseCurriculum = await ctx.CourseCurriculums
             .Where(x => x.InstitutionId == institutionId && x.Id == courseCurriculumId)
@@ -11,7 +11,7 @@ public class AddDisciplinePreRequisitesService(SykiDbContext ctx) : IAcademicSer
 
         if (courseCurriculum == null) return new CourseCurriculumNotFound();
 
-        var result = courseCurriculum.AddDisciplinePreRequisites(disciplineId, data.PreRequisites);
+        var result = courseCurriculum.AddDisciplinePreRequisites(data.DisciplineId, data.PreRequisites);
 
         if (result.IsError()) return result;
 

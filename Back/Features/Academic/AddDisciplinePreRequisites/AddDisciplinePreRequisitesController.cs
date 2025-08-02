@@ -11,21 +11,18 @@ public class AddDisciplinePreRequisitesController(AddDisciplinePreRequisitesServ
     /// <remarks>
     /// Adiciona pré-requisitos à uma disciplina, dentro de uma grade curricular.
     /// </remarks>
-    [HttpPost("academic/course-curriculums/{courseCurriculumId}/{disciplineId}/pre-requisites")]
+    [HttpPost("academic/course-curriculums/{id}/pre-requisites")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
-    public async Task<IActionResult> Add([FromRoute] Guid courseCurriculumId, [FromRoute] Guid disciplineId, [FromBody] AddDisciplinePreRequisitesIn data)
+    public async Task<IActionResult> Add([FromRoute] Guid id, [FromBody] AddDisciplinePreRequisitesIn data)
     {
-        var result = await service.Add(User.InstitutionId(), courseCurriculumId, disciplineId, data);
-
+        var result = await service.Add(User.InstitutionId(), id, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
-internal class RequestExamples : RequestExamplesProvider<AddDisciplinePreRequisitesIn> { }
-
-internal class ResponseExamples : ResponseExamplesProvider<SuccessOut> { }
-
+internal class RequestExamples : ExamplesProvider<AddDisciplinePreRequisitesIn> { }
+internal class ResponseExamples : ExamplesProvider<SuccessOut> { }
 internal class ErrorsExamples : ErrorExamplesProvider<
     CourseCurriculumNotFound,
     DisciplineNotFound,

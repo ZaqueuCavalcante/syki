@@ -11,10 +11,10 @@ public class GetStudentClassFrequencyController(GetStudentClassFrequencyService 
     /// <remarks>
     /// Retorna a frequência total do aluno no curso.
     /// </remarks>
-    [HttpGet("student/classes/{classId}/frequency")]
-    public async Task<IActionResult> Get([FromRoute] Guid classId)
+    [HttpGet("student/classes/{id}/frequency")]
+    public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        var result = await service.Get(User.Id(), classId);
+        var result = await service.Get(User.Id(), id);
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

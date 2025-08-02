@@ -11,10 +11,10 @@ public class GetTeacherClassActivityController(GetTeacherClassActivityService se
     /// <remarks>
     /// Retorna a atividade informada.
     /// </remarks>
-    [HttpGet("teacher/classes/{classId}/activities/{activityId}")]
-    public async Task<IActionResult> Get([FromRoute] Guid classId, [FromRoute] Guid activityId)
+    [HttpGet("teacher/classes/{id}/activities/{activityId}")]
+    public async Task<IActionResult> Get([FromRoute] Guid id, [FromRoute] Guid activityId)
     {
-        var result = await service.Get(User.Id(), classId, activityId);
+        var result = await service.Get(User.Id(), id, activityId);
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

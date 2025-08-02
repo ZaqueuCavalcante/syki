@@ -22,9 +22,9 @@ public class CreateAcademicPeriodController(CreateAcademicPeriodService service)
     }
 }
 
-internal class RequestExamples : RequestExamplesProvider<CreateAcademicPeriodIn> { }
+internal class RequestExamples : ExamplesProvider<CreateAcademicPeriodIn> { }
 
-internal class ResponseExamples : ResponseExamplesProvider<AcademicPeriodOut> { }
+internal class ResponseExamples : ExamplesProvider<AcademicPeriodOut> { }
 
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidAcademicPeriod,

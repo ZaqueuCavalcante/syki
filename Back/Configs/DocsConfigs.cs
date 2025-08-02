@@ -40,6 +40,7 @@ public static class DocsConfigs
 
             options.SchemaFilter<EnumSchemaFilter>();
             options.OperationFilter<AuthOperationsFilter>();
+            options.OperationFilter<IdParameterExamplesFilter>();
             options.OperationFilter<ExamplesOperationsFilterFilter>();
             options.DocumentFilter<HttpMethodSorterDocumentFilter>();
 

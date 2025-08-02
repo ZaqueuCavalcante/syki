@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace Syki.Back.Errors;
 
-public abstract class RequestExamplesProvider<T> : IMultipleExamplesProvider<T>
+public abstract class ExamplesProvider<T> : IMultipleExamplesProvider<T>
 {
     public IEnumerable<SwaggerExample<T>> GetExamples()
     {

@@ -11,13 +11,13 @@ public class AssignDisciplinesToTeacherController(AssignDisciplinesToTeacherServ
     /// <remarks>
     /// Vincula disciplinas que o professor esta apto a lecionar.
     /// </remarks>
-    [HttpPut("academic/teachers/{teacherId}/assign-disciplines")]
+    [HttpPut("academic/teachers/{id}/assign-disciplines")]
     [ProducesResponseType(200)]
     [ProducesResponseType(typeof(ErrorOut), 400)]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
-    public async Task<IActionResult> Assign([FromRoute] Guid teacherId, [FromBody] AssignDisciplinesToTeacherIn data)
+    public async Task<IActionResult> Assign([FromRoute] Guid id, [FromBody] AssignDisciplinesToTeacherIn data)
     {
-        var result = await service.Assign(User.InstitutionId(), teacherId, data);
+        var result = await service.Assign(User.InstitutionId(), id, data);
 
         return result.Match<IActionResult>(_ => NoContent(), BadRequest);
     }

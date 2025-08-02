@@ -11,38 +11,16 @@ public class CreateCampusController(CreateCampusService service) : ControllerBas
     /// Cria um novo campus.
     /// </remarks>
     [HttpPost("academic/campi")]
-    [ProducesResponseType(200)]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
+    [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateCampusIn data)
     {
-        var campus = await service.Create(User.InstitutionId(), data);
-
-        return Ok(campus);
+        var result = await service.Create(User.InstitutionId(), data);
+        return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
-internal class RequestExamples : IMultipleExamplesProvider<CreateCampusIn>
-{
-    public IEnumerable<SwaggerExample<CreateCampusIn>> GetExamples()
-    {
-        yield return SwaggerExample.Create(
-			"Agreste I",
-			new CreateCampusIn
-            {
-                Name = "Agreste I",
-                State = BrazilState.PE,
-                City = "Caruaru",
-                Capacity = 150,
-			}
-		);
-        yield return SwaggerExample.Create(
-			"Suassuna I",
-			new CreateCampusIn
-            {
-                Name = "Suassuna I",
-                State = BrazilState.PE,
-                City = "Recife",
-                Capacity = 500,
-			}
-		);
-    }
-}
+internal class RequestExamples : ExamplesProvider<CreateCampusIn>;
+internal class ResponseExamples : ExamplesProvider<CampusOut>;
+internal class ErrorsExamples : ErrorExamplesProvider<
+    InvalidCampusCapacity>;

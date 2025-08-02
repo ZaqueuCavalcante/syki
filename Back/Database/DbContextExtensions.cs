@@ -1,8 +1,8 @@
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Syki.Back.Features.Academic.CreateCourse;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Diagnostics;
 
 namespace Syki.Back.Database;
 

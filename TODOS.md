@@ -107,4 +107,5 @@ Todo início de semestre, temos que:
 - Error examples
     - Many
 
-
+- Filters
+    - Global configs

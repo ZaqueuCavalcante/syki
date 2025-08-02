@@ -110,3 +110,8 @@ public class InvalidWebhookEventsList : SykiError
     public override string Code { get; set; } = nameof(InvalidWebhookEventsList);
     public override string Message { get; set; } = "Lista de eventos de webhook inválida.";
 }
+public class InvalidCampusCapacity : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidCampusCapacity);
+    public override string Message { get; set; } = "Capacidade inválida (deve ser maior que zero).";
+}

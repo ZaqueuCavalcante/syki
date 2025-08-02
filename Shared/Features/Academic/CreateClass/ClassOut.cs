@@ -26,6 +26,22 @@ public class ClassOut
         return Id.ToHashCode();
     }
 
+    public static IEnumerable<(string, ClassOut)> GetExamples() =>
+    [
+        ("Banco de Dados",
+        new ClassOut
+        {
+            Id = Guid.CreateVersion7(),
+            Discipline = "Banco de Dados",
+        }),
+        ("Programação Orientada a Objetos",
+        new ClassOut
+        {
+            Id = Guid.CreateVersion7(),
+            Discipline = "Programação Orientada a Objetos",
+        }),
+    ];
+
     public static implicit operator ClassOut(OneOf<ClassOut, ErrorOut> value)
     {
         return value.GetSuccess();

@@ -1,13 +1,15 @@
 namespace Syki.Back.Features.Academic.CreateCampus;
 
-public class CreateCampusService(SykiDbContext ctx, HybridCache cache) : IAcademicService
+public class CreateCampusService(SykiDbContext ctx) : IAcademicService
 {
-    public async Task<CampusOut> Create(Guid institutionId, CreateCampusIn data)
+    public async Task<OneOf<CampusOut, SykiError>> Create(Guid institutionId, CreateCampusIn data)
     {
-        var campus = new Campus(institutionId, data.Name, data.State, data.City, data.Capacity);
+        var result = Campus.New(institutionId, data.Name, data.State, data.City, data.Capacity);
+        if (result.IsError()) return result.GetError();
+
+        var campus = result.GetSuccess();
 
         await ctx.SaveChangesAsync(campus);
-        await cache.RemoveAsync($"campi:{institutionId}");
 
         return campus.ToOut();
     }

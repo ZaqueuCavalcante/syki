@@ -31,6 +31,32 @@ public class CampusOut
     /// </summary>
     public decimal FillRate { get; set; }
 
+    public static IEnumerable<(string, CampusOut)> GetExamples() =>
+    [
+        ("Agreste",
+        new CampusOut
+        {
+            Id = Guid.CreateVersion7(),
+            Name = "Agreste",
+            State = BrazilState.PE,
+            City = "Caruaru",
+            Capacity = 150,
+            Students = 120,
+            FillRate = 80,
+        }),
+        ("Suassuna",
+        new CampusOut
+        {
+            Id = Guid.CreateVersion7(),
+            Name = "Suassuna",
+            State = BrazilState.PE,
+            City = "Recife",
+            Capacity = 500,
+            Students = 234,
+            FillRate = 46.80M,
+        }),
+    ];
+
     public static implicit operator CampusOut(OneOf<CampusOut, ErrorOut> value)
     {
         return value.GetSuccess();

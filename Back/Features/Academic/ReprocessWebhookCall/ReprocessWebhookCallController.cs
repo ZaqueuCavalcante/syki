@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Academic.ReprocessWebhookCall;
 public class ReprocessWebhookCallController(ReprocessWebhookCallService service) : ControllerBase
 {
     /// <summary>
-    /// Reprocessar chamada de Webhook
+    /// Reprocessar Webhook
     /// </summary>
     /// <remarks>
     /// Reprocessa uma chamada de Webhook.

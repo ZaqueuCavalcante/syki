@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Academic.CreateWebhookSubscription;
 public class CreateWebhookSubscriptionController(CreateWebhookSubscriptionService service) : ControllerBase
 {
     /// <summary>
-    /// Criar inscrição de Webhook
+    /// Criar Webhook
     /// </summary>
     /// <remarks>
     /// Cria uma inscrição de Webhook.

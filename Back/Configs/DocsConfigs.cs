@@ -40,6 +40,7 @@ public static class DocsConfigs
 
             options.SchemaFilter<EnumSchemaFilter>();
             options.OperationFilter<AuthOperationsFilter>();
+            options.OperationFilter<ExamplesOperationsFilterFilter>();
             options.DocumentFilter<HttpMethodSorterDocumentFilter>();
 
             options.ExampleFilters();
@@ -69,20 +70,21 @@ public static class DocsConfigs
 
     public static void MapScalarDocs(this IEndpointRouteBuilder options)
     {
-        options.MapScalarApiReference(options =>
+        options.MapScalarApiReference("/docs", options =>
         {
             options.WithModels(false);
-            options.WithDownloadButton(false);
             options.WithTitle("Syki API Docs");
-            options.WithEndpointPrefix("/docs/{documentName}");
-            options.WithOpenApiRoutePattern("/swagger/v1/swagger.json");
+            options.WithDocumentDownloadType(DocumentDownloadType.Json);
+            options.WithOpenApiRoutePattern("/swagger/{documentName}/swagger.json");
             options
-                .WithPreferredScheme("Bearer")
-                .WithHttpBearerAuthentication(bearer =>
-                {
-                    bearer.Token = "your.bearer.token";
-                })
-                .WithHttpBasicAuthentication(basic => { });
+                .AddPreferredSecuritySchemes("Bearer")
+                .AddHttpAuthentication("Bearer", x => x.Token = "your.bearer.token");
+
+            options.CustomCss = @"
+                :root {
+                    --scalar-sidebar-width: 300px;
+                }
+            ";
         });
     }
 

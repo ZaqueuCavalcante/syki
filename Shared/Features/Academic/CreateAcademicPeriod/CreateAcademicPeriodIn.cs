@@ -14,7 +14,7 @@ public class CreateAcademicPeriodIn
     /// </summary>
     public DateOnly EndAt { get; set; }
 
-    public CreateAcademicPeriodIn() {}
+    public CreateAcademicPeriodIn() { }
 
     public CreateAcademicPeriodIn(string id)
     {
@@ -26,4 +26,10 @@ public class CreateAcademicPeriodIn
         StartAt = digit == 1 ? new DateOnly(year, 02, 01) : new DateOnly(year, 06, 01);
         EndAt = digit == 1 ? new DateOnly(year, 07, 01) : new DateOnly(year, 12, 01);
     }
+
+    public static IEnumerable<(string, CreateAcademicPeriodIn)> GetExamples() =>
+    [
+        ("2024.1", new() { Id = "2024.1", StartAt = new(2024, 02, 01), EndAt = new(2024, 06, 05) }),
+        ("2024.2", new() { Id = "2024.2", StartAt = new(2024, 07, 08), EndAt = new(2024, 12, 10) }),
+    ];
 }

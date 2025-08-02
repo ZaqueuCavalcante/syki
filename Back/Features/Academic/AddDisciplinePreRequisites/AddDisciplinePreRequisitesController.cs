@@ -6,14 +6,13 @@ namespace Syki.Back.Features.Academic.AddDisciplinePreRequisites;
 public class AddDisciplinePreRequisitesController(AddDisciplinePreRequisitesService service) : ControllerBase
 {
     /// <summary>
-    /// Adicionar pré-requisitos à uma disciplina
+    /// Adicionar pré-requisitos
     /// </summary>
     /// <remarks>
     /// Adiciona pré-requisitos à uma disciplina, dentro de uma grade curricular.
     /// </remarks>
     [HttpPost("academic/course-curriculums/{courseCurriculumId}/{disciplineId}/pre-requisites")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(typeof(ErrorOut), 400)]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Add([FromRoute] Guid courseCurriculumId, [FromRoute] Guid disciplineId, [FromBody] AddDisciplinePreRequisitesIn data)
     {
@@ -23,26 +22,12 @@ public class AddDisciplinePreRequisitesController(AddDisciplinePreRequisitesServ
     }
 }
 
-internal class RequestExamples : IMultipleExamplesProvider<AddDisciplinePreRequisitesIn>
-{
-    public IEnumerable<SwaggerExample<AddDisciplinePreRequisitesIn>> GetExamples()
-    {
-        yield return SwaggerExample.Create(
-			"Pré-Requisitos",
-			new AddDisciplinePreRequisitesIn
-			{
-				PreRequisites = [Guid.CreateVersion7(), Guid.CreateVersion7(), Guid.CreateVersion7()]
-			}
-		);
-    }
-}
+internal class RequestExamples : RequestExamplesProvider<AddDisciplinePreRequisitesIn> { }
 
-internal class ErrorsExamples : IMultipleExamplesProvider<ErrorOut>
-{
-    public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
-    {
-        yield return new CourseCurriculumNotFound().ToSwaggerExampleErrorOut();
-        yield return new DisciplineNotFound().ToSwaggerExampleErrorOut();
-        yield return new InvalidDisciplinesList().ToSwaggerExampleErrorOut();
-    }
-}
+internal class ResponseExamples : ResponseExamplesProvider<SuccessOut> { }
+
+internal class ErrorsExamples : ErrorExamplesProvider<
+    CourseCurriculumNotFound,
+    DisciplineNotFound,
+    InvalidDisciplinesList>
+{ }

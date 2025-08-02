@@ -2,6 +2,9 @@
 
 namespace Syki.Shared;
 
+/// <summary>
+/// Estado do Brasil
+/// </summary>
 public enum BrazilState
 {
     [Description("Acre")] AC,

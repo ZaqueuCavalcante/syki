@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Academic.AssignDisciplinesToTeacher;
 public class AssignDisciplinesToTeacherController(AssignDisciplinesToTeacherService service) : ControllerBase
 {
     /// <summary>
-    /// Vincular disciplinas à um professor
+    /// Vincular disciplinas
     /// </summary>
     /// <remarks>
     /// Vincula disciplinas que o professor esta apto a lecionar.

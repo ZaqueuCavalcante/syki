@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.CreateTeacher;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class CreateTeacherController(CreateTeacherService service) : ControllerBase
 {
     /// <summary>

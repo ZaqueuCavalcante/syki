@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class CreateStudentEnrollmentController(CreateStudentEnrollmentService service) : ControllerBase
 {
     /// <summary>

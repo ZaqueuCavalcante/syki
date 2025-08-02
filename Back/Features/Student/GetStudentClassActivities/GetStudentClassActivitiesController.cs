@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Student.GetStudentClassActivities;
 
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class GetStudentClassActivitiesController(GetStudentClassActivitiesService service) : ControllerBase
 {
     /// <summary>

@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Cross.SetupMfa;
 
 [ApiController, AuthBearer]
 [EnableRateLimiting("Small")]
-[Consumes("application/json"), Produces("application/json")]
 public class SetupMfaController(SetupMfaService service) : ControllerBase
 {
     /// <summary>

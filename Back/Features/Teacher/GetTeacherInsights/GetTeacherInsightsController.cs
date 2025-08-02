@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Teacher.GetTeacherInsights;
 
 [ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class GetTeacherInsightsController(GetTeacherInsightsService service) : ControllerBase
 {
     /// <summary>

@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Cross.GetUserAccount;
 
 [ApiController, AuthBearer]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class GetUserAccountController(GetUserAccountService service) : ControllerBase
 {
     /// <summary>

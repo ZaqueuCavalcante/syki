@@ -4,7 +4,6 @@ namespace Syki.Back.Features.Cross.Logout;
 
 [ApiController]
 [EnableRateLimiting("Small")]
-[Consumes("application/json"), Produces("application/json")]
 public class LogoutController(SignInManager<SykiUser> signInManager) : ControllerBase
 {
     /// <summary>

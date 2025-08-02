@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Teacher.AddStudentClassActivityNote;
 
 [ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class AddStudentClassActivityNoteController(AddStudentClassActivityNoteService service) : ControllerBase
 {
     /// <summary>

@@ -1,7 +1,6 @@
 namespace Syki.Back.Features.Adm.GetCommands;
 
 [ApiController, AuthAdm]
-[Consumes("application/json"), Produces("application/json")]
 public class GetCommandsController(GetCommandsService service) : ControllerBase
 {
     /// <summary>

@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Cross.Login;
 
 [ApiController]
 [EnableRateLimiting("Small")]
-[Consumes("application/json"), Produces("application/json")]
 public class LoginController(LoginService service, AuthSettings settings) : ControllerBase
 {
     /// <summary>

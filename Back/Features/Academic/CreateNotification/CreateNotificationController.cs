@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.CreateNotification;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class CreateNotificationController(CreateNotificationService service) : ControllerBase
 {
     /// <summary>

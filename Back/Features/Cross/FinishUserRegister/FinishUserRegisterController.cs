@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Cross.FinishUserRegister;
 
 [ApiController]
 [EnableRateLimiting("Small")]
-[Consumes("application/json"), Produces("application/json")]
 public class FinishUserRegisterController(FinishUserRegisterService service) : ControllerBase
 {
     /// <summary>

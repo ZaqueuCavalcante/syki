@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.CreateWebhookSubscription;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class CreateWebhookSubscriptionController(CreateWebhookSubscriptionService service) : ControllerBase
 {
     /// <summary>

@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Teacher.SetSchedulingPreferences;
 
 [ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class SetSchedulingPreferencesController(SetSchedulingPreferencesService service) : ControllerBase
 {
     /// <summary>

@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Teacher.GetClassNotesRemainingWeights;
 
 [ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class GetClassNotesRemainingWeightsController(GetClassNotesRemainingWeightsService service) : ControllerBase
 {
     /// <summary>

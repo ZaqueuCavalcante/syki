@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.AddDisciplinePreRequisites;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class AddDisciplinePreRequisitesController(AddDisciplinePreRequisitesService service) : ControllerBase
 {
     /// <summary>
@@ -21,10 +20,9 @@ public class AddDisciplinePreRequisitesController(AddDisciplinePreRequisitesServ
     }
 }
 
-internal class RequestExamples : ExamplesProvider<AddDisciplinePreRequisitesIn> { }
-internal class ResponseExamples : ExamplesProvider<SuccessOut> { }
+internal class RequestExamples : ExamplesProvider<AddDisciplinePreRequisitesIn>;
+internal class ResponseExamples : ExamplesProvider<SuccessOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     CourseCurriculumNotFound,
     DisciplineNotFound,
-    InvalidDisciplinesList>
-{ }
+    InvalidDisciplinesList>;

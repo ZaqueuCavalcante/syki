@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.ReleaseClassesForEnrollment;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class ReleaseClassesForEnrollmentController(ReleaseClassesForEnrollmentService service) : ControllerBase
 {
     /// <summary>

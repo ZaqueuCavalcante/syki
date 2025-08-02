@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.ReprocessWebhookCall;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class ReprocessWebhookCallController(ReprocessWebhookCallService service) : ControllerBase
 {
     /// <summary>

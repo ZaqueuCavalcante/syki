@@ -1,7 +1,6 @@
 namespace Syki.Back.Features.Adm.GetUsers;
 
 [ApiController, AuthAdm]
-[Consumes("application/json"), Produces("application/json")]
 public class GetUsersController(GetUsersService service) : ControllerBase
 {
     /// <summary>

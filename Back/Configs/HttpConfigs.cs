@@ -10,6 +10,12 @@ public static class HttpConfigs
         builder.Services.AddControllers().AddJsonOptions(options =>
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
+        builder.Services.Configure<MvcOptions>(options =>
+        {
+            options.Filters.Add(new ProducesAttribute("application/json"));
+            options.Filters.Add(new ConsumesAttribute("application/json"));
+        });
+
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddRouting(options => options.LowercaseUrls = true);
 

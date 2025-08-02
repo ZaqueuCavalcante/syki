@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Cross.GetMfaKey;
 
 [ApiController, AuthBearer]
 [EnableRateLimiting("Small")]
-[Consumes("application/json"), Produces("application/json")]
 public class GetMfaKeyController(GetMfaKeyService service) : ControllerBase
 {
     /// <summary>

@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Cross.CreatePreSignedUrlForUpload;
 
 [ApiController, AuthBearer]
 [EnableRateLimiting("Small")]
-[Consumes("application/json"), Produces("application/json")]
 public class CreatePreSignedUrlForUploadController(CreatePreSignedUrlForUploadService service) : ControllerBase
 {
     /// <summary>

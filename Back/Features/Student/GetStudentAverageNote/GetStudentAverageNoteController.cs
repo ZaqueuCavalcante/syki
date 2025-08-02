@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Student.GetStudentAverageNote;
 
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class GetStudentAverageNoteController(GetStudentAverageNoteService service) : ControllerBase
 {
     /// <summary>

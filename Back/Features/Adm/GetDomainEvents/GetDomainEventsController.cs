@@ -1,7 +1,6 @@
 namespace Syki.Back.Features.Adm.GetDomainEvents;
 
 [ApiController, AuthAdm]
-[Consumes("application/json"), Produces("application/json")]
 public class GetDomainEventsController(GetDomainEventsService service) : ControllerBase
 {
     /// <summary>

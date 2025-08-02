@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Student.GetCurrentEnrollmentPeriod;
 
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class GetEnrollmentPeriodsController(GetCurrentEnrollmentPeriodService service) : ControllerBase
 {
     /// <summary>

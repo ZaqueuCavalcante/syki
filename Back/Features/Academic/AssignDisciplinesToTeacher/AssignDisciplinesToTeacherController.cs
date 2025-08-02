@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.AssignDisciplinesToTeacher;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class AssignDisciplinesToTeacherController(AssignDisciplinesToTeacherService service) : ControllerBase
 {
     /// <summary>

@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Student.GetStudentClassFrequency;
 
 [ApiController, AuthStudent]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class GetStudentClassFrequencyController(GetStudentClassFrequencyService service) : ControllerBase
 {
     /// <summary>

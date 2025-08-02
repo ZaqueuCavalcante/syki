@@ -1,7 +1,6 @@
 namespace Syki.Back.Features.Adm.GetBatches;
 
 [ApiController, AuthAdm]
-[Consumes("application/json"), Produces("application/json")]
 public class GetBatchesController(GetBatchesService service) : ControllerBase
 {
     /// <summary>

@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Teacher.CreateLessonAttendance;
 
 [ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class CreateLessonAttendanceController(CreateLessonAttendanceService service) : ControllerBase
 {
     /// <summary>

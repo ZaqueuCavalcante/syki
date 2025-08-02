@@ -1,7 +1,6 @@
 namespace Syki.Back.Features.Adm.SetupFeatureFlags;
 
 [ApiController, AuthAdm]
-[Consumes("application/json"), Produces("application/json")]
 public class SetupFeatureFlagsController(SetupFeatureFlagsService service) : ControllerBase
 {
     /// <summary>

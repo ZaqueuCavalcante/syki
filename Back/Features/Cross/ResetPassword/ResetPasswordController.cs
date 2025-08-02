@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Cross.ResetPassword;
 
 [ApiController]
 [EnableRateLimiting("Small")]
-[Consumes("application/json"), Produces("application/json")]
 public class ResetPasswordController(ResetPasswordService service) : ControllerBase
 {
     /// <summary>

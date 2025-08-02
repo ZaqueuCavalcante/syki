@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.FinalizeClasses;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class FinalizeClassesController(FinalizeClassesService service) : ControllerBase
 {
     /// <summary>

@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.UpdateEnrollmentPeriod;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class UpdateEnrollmentPeriodController(UpdateEnrollmentPeriodService service) : ControllerBase
 {
     /// <summary>

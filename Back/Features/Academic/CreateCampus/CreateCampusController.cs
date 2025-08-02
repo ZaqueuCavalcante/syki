@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.CreateCampus;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class CreateCampusController(CreateCampusService service) : ControllerBase
 {
     /// <summary>

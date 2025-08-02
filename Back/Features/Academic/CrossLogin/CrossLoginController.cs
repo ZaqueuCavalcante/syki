@@ -4,7 +4,6 @@ namespace Syki.Back.Features.Academic.CrossLogin;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class CrossLoginController(CrossLoginService service, AuthSettings settings) : ControllerBase
 {
     /// <summary>

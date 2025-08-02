@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Teacher.GetTeacherClassStudents;
 
 [ApiController, AuthTeacher]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class GetTeacherClassStudentsController(GetTeacherClassStudentsService service) : ControllerBase
 {
     /// <summary>

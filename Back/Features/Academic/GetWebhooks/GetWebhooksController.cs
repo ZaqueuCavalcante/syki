@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.GetWebhooks;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class GetWebhooksController(GetWebhooksService service) : ControllerBase
 {
     /// <summary>

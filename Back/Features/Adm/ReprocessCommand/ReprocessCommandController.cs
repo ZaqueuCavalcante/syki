@@ -1,7 +1,6 @@
 namespace Syki.Back.Features.Adm.ReprocessCommand;
 
 [ApiController, AuthAdm]
-[Consumes("application/json"), Produces("application/json")]
 public class ReprocessCommandController(ReprocessCommandService service) : ControllerBase
 {
     /// <summary>

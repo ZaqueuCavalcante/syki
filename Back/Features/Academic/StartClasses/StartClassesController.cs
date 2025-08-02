@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Academic.StartClasses;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-[Consumes("application/json"), Produces("application/json")]
 public class StartClassesController(StartClassesService service) : ControllerBase
 {
     /// <summary>

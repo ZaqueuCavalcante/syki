@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Cross.SendResetPasswordToken;
 
 [ApiController]
 [EnableRateLimiting("Small")]
-[Consumes("application/json"), Produces("application/json")]
 public class SendResetPasswordTokenController(SendResetPasswordTokenService service) : ControllerBase
 {
     /// <summary>

@@ -2,7 +2,6 @@ namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 
 [ApiController]
 [EnableRateLimiting("SuperVerySmall")]
-[Consumes("application/json"), Produces("application/json")]
 public class CreatePendingUserRegisterController(CreatePendingUserRegisterService service) : ControllerBase
 {
     /// <summary>

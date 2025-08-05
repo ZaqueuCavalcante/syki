@@ -1,15 +1,15 @@
-# Guia de Contribuição – Projeto Syki
+ï»¿# Guia de ContribuiÃ§Ã£o â€“ Projeto Syki
 
-Olá! ??  
-Ficamos felizes pelo seu interesse em contribuir com o Syki – um sistema open-source para gestão acadêmica, feito com carinho para facilitar a vida de gestores, professores e alunos. ??
+OlÃ¡! ??  
+Ficamos felizes pelo seu interesse em contribuir com o Syki â€“ um sistema open-source para gestÃ£o acadÃªmica, feito com carinho para facilitar a vida de gestores, professores e alunos. ??
 
 ## ? Como contribuir
 
 Siga os passos abaixo para colaborar de forma eficiente com o projeto:
 
-1. **Fork o repositório**
-   - Clique em "Fork" no topo da página.
-   - Clone seu fork para sua máquina:
+1. **Fork o repositÃ³rio**
+   - Clique em "Fork" no topo da pÃ¡gina.
+   - Clone seu fork para sua mÃ¡quina:
      ```bash
      git clone https://github.com/seu-usuario/syki.git
      cd syki
@@ -21,42 +21,42 @@ Siga os passos abaixo para colaborar de forma eficiente com o projeto:
      git checkout -b minha-feature-legal
      ```
 
-3. **Faça suas alterações**
-   - Adicione sua feature, correção ou melhoria.
-   - Certifique-se de seguir o padrão de organização do código.
+3. **FaÃ§a suas alteraÃ§Ãµes**
+   - Adicione sua feature, correÃ§Ã£o ou melhoria.
+   - Certifique-se de seguir o padrÃ£o de organizaÃ§Ã£o do cÃ³digo.
 
 4. **Escreva commits claros**
    - Exemplo:
      ```bash
-     git commit -m "feat: adiciona exportação de boletins em PDF"
+     git commit -m "feat: adiciona exportaÃ§Ã£o de boletins em PDF"
      ```
 
-5. **Teste suas alterações**
-   - O projeto possui testes automatizados. Sempre que possível, execute:
+5. **Teste suas alteraÃ§Ãµes**
+   - O projeto possui testes automatizados. Sempre que possÃ­vel, execute:
      ```bash
      dotnet test
      ```
 
 6. **Abra um Pull Request**
-   - Depois de fazer push da sua branch, vá até o GitHub e abra um PR.
-   - Descreva claramente o que sua contribuição faz.
-   - Marque o @ZaqueuCavalcante ou mantenedores caso precise de revisão.
+   - Depois de fazer push da sua branch, vÃ¡ atÃ© o GitHub e abra um PR.
+   - Descreva claramente o que sua contribuiÃ§Ã£o faz.
+   - Marque o @ZaqueuCavalcante ou mantenedores caso precise de revisÃ£o.
 
 ---
 
 ## ?? Dicas
 
-- Prefira alterações pequenas e bem definidas.
+- Prefira alteraÃ§Ãµes pequenas e bem definidas.
 - Se for algo maior, abra uma **issue antes** para discutirmos juntos.
 - Use `docker-compose up` para rodar o projeto localmente.
 
 ---
 
-## ?? Licença
+## ?? LicenÃ§a
 
-Ao enviar contribuições, você concorda com os termos da [LICENSE](./LICENSE) do projeto.
+Ao enviar contribuiÃ§Ãµes, vocÃª concorda com os termos da [LICENSE](./LICENSE) do projeto.
 
 ---
 
 **Obrigado por fazer parte do projeto Syki!** ??  
-Juntos construímos ferramentas melhores para a educação.
+Juntos construÃ­mos ferramentas melhores para a educaÃ§Ã£o.

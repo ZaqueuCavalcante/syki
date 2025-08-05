@@ -4,4 +4,20 @@ public class CreateClassroomOut
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+
+    public static IEnumerable<(string, CreateClassroomOut)> GetExamples() =>
+    [
+        ("Sala 05",
+        new CreateClassroomOut
+        {
+            Id = Guid.CreateVersion7(),
+            Name = "Sala 05",
+        }),
+        ("Laboratório de Química",
+        new CreateClassroomOut
+        {
+            Id = Guid.CreateVersion7(),
+            Name = "Laboratório de Química",
+        }),
+    ];
 }

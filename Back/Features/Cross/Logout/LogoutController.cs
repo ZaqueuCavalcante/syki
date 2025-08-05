@@ -17,7 +17,6 @@ public class LogoutController(SignInManager<SykiUser> signInManager) : Controlle
     {
         Response.Cookies.Delete("syki_jwt");
         await signInManager.SignOutAsync();
-
         return Ok();
     }
 }

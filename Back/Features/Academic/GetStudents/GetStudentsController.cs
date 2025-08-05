@@ -14,7 +14,6 @@ public class GetStudentsController(GetStudentsService service) : ControllerBase
     public async Task<IActionResult> Get()
     {
         var students = await service.Get(User.InstitutionId());
-        
         return Ok(students);
     }
 }

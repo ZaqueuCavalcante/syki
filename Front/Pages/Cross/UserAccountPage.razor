@@ -78,7 +78,7 @@
 
         var randomFileName = $"{Guid.CreateVersion7().ToHashCode().ToString()}.{evt.File.Name.Split(".").Last()}";
         var responseUrl = await CreatePreSignedUrlForUploadClient.Create(StorageContainer.ProfilePhotos, randomFileName);
-        var url = responseUrl.IsSuccess() ? responseUrl.GetSuccess() : "";
+        var url = responseUrl.IsSuccess() ? responseUrl.GetSuccess().Url : "";
 
         using var httpClient = new HttpClient() { BaseAddress = new Uri(url) };
         httpClient.DefaultRequestHeaders.Add("x-ms-blob-type", "BlockBlob");

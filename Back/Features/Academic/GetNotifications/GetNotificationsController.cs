@@ -14,7 +14,6 @@ public class GetNotificationsController(GetNotificationsService service) : Contr
     public async Task<IActionResult> Get()
     {
         var notifications = await service.Get(User.InstitutionId());
-        
         return Ok(notifications);
     }
 }

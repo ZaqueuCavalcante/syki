@@ -8,14 +8,25 @@ public class IdParameterExamplesFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
+        var routeTemplate = context.ApiDescription.RelativePath?.ToLowerInvariant() ?? string.Empty;
+
         foreach (var parameter in operation.Parameters)
         {
-            if (parameter.In.IsIn(ParameterLocation.Path, ParameterLocation.Query) && parameter.Name.Contains("id", StringComparison.OrdinalIgnoreCase))
+            if (!parameter.In.IsIn(ParameterLocation.Path, ParameterLocation.Query))
+                continue;
+
+            if (parameter.Example != null)
+                continue;
+
+            if (routeTemplate.Contains("academic/enrollment-periods") && parameter.Name.Equals("id", StringComparison.OrdinalIgnoreCase))
             {
-                if (parameter.Example == null)
-                {
-                    parameter.Example = new OpenApiString(Guid.CreateVersion7().ToString());
-                }
+                parameter.Example = new OpenApiString($"{DateTime.Now.Year}.1");
+                continue;
+            }
+
+            if (parameter.Name.Contains("id", StringComparison.OrdinalIgnoreCase))
+            {
+                parameter.Example = new OpenApiString(Guid.CreateVersion7().ToString());
             }
         }
     }

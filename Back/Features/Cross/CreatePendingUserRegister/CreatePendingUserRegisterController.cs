@@ -12,8 +12,7 @@ public class CreatePendingUserRegisterController(CreatePendingUserRegisterServic
     /// Um link de confirmação será enviado para o email informado.
     /// </remarks>
     [HttpPost("users")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(typeof(ErrorOut), 400)]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreatePendingUserRegisterIn data)
     {
@@ -23,30 +22,8 @@ public class CreatePendingUserRegisterController(CreatePendingUserRegisterServic
     }
 }
 
-internal class RequestsExamples : IMultipleExamplesProvider<CreatePendingUserRegisterIn>
-{
-    public IEnumerable<SwaggerExample<CreatePendingUserRegisterIn>> GetExamples()
-    {
-        yield return SwaggerExample.Create(
-			"Acadêmico",
-			new CreatePendingUserRegisterIn("academico@syki.com")
-		);
-        yield return SwaggerExample.Create(
-			"Professor",
-			new CreatePendingUserRegisterIn("professor@syki.com")
-		);
-        yield return SwaggerExample.Create(
-			"Aluno",
-			new CreatePendingUserRegisterIn("aluno@syki.com")
-		);
-    }
-}
-
-internal class ErrorsExamples : IMultipleExamplesProvider<ErrorOut>
-{
-    public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
-    {
-        yield return new InvalidEmail().ToSwaggerExampleErrorOut();
-        yield return new EmailAlreadyUsed().ToSwaggerExampleErrorOut();
-    }
-}
+internal class RequestExamples : ExamplesProvider<CreatePendingUserRegisterIn>;
+internal class ResponseExamples : ExamplesProvider<SuccessOut>;
+internal class ErrorsExamples : ErrorExamplesProvider<
+    InvalidEmail,
+    EmailAlreadyUsed>;

@@ -15,26 +15,21 @@ public class CrossLoginController(CrossLoginService service, AuthSettings settin
     /// </remarks>
     [Authorize(BackPolicies.CrossLogin)]
     [HttpPost("academic/cross-login")]
-    [ProducesResponseType(200)]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
+    [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Login([FromBody] CrossLoginIn data)
     {
         var result = await service.Login(User.InstitutionId(), data);
 
         if (result.IsSuccess())
         {
-            Response.Cookies.Append(
-                "syki_jwt",
-                result.GetSuccess().AccessToken,
-                new CookieOptions
-                {
-                    HttpOnly = true,
-                    SameSite = SameSiteMode.Lax,
-                    Secure = settings.CookieSecure,
-                    Domain = settings.CookieDomain,
-                }
-            );
+            Response.AppendSykiJwtCookie(result.GetSuccess().AccessToken, settings);
         }
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
+
+internal class RequestExamples : ExamplesProvider<CrossLoginIn>;
+internal class ResponseExamples : ExamplesProvider<CrossLoginOut>;
+internal class ErrorsExamples : ErrorExamplesProvider<UserNotFound>;

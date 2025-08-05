@@ -9,6 +9,11 @@ public class ClassLessonOut
     public ClassLessonStatus Status { get; set; }
     public decimal Frequency { get; set; }
 
+    public static IEnumerable<(string, ClassLessonOut)> GetExamples() =>
+    [
+        ("Exemplo", new() { }),
+    ];
+
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;

@@ -14,7 +14,6 @@ public class GetEnrollmentPeriodsController(GetEnrollmentPeriodsService service)
     public async Task<IActionResult> Get()
     {
         var periods = await service.Get(User.InstitutionId());
-
         return Ok(periods);
     }
 }

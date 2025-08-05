@@ -11,11 +11,12 @@ public class GetAcademicInsightsController(GetAcademicInsightsService service) :
     /// Retorna os Insights do Acadêmico.
     /// </remarks>
     [HttpGet("academic/insights")]
-    [ProducesResponseType(200)]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {
         var insights = await service.Get(User.InstitutionId());
-        
         return Ok(insights);
     }
 }
+
+internal class ResponseExamples : ExamplesProvider<AcademicInsightsOut>;

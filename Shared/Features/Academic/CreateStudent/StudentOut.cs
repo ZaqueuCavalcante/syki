@@ -10,6 +10,11 @@ public class StudentOut
     public string? PhoneNumber { get; set; }
     public string EnrollmentCode { get; set; }
 
+    public static IEnumerable<(string, StudentOut)> GetExamples() =>
+    [
+        ("Exemplo", new() { }),
+    ];
+
     public static implicit operator StudentOut(OneOf<StudentOut, ErrorOut> value)
     {
         return value.GetSuccess();

@@ -9,7 +9,7 @@ public class ReprocessCommandController(ReprocessCommandService service) : Contr
     /// <remarks>
     /// Reprocessa o comando especificado.
     /// </remarks>
-    [HttpPost("adm/commands/{id:guid}/reprocess")]
+    [HttpPost("adm/commands/{id}/reprocess")]
     public async Task<IActionResult> Reprocess([FromRoute] CommandId id)
     {
         var result = await service.Reprocess(id);

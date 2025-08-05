@@ -9,4 +9,9 @@ public class NotificationOut
     public bool Timeless { get; set; }
     public DateTime CreatedAt { get; set; }
     public string Views { get; set; }
+
+    public static IEnumerable<(string, NotificationOut)> GetExamples() =>
+    [
+        ("Exemplo", new() { }),
+    ];
 }

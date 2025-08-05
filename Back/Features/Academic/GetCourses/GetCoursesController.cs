@@ -11,11 +11,9 @@ public class GetCoursesController(GetCoursesService service) : ControllerBase
     /// Retorna todos os cursos.
     /// </remarks>
     [HttpGet("academic/courses")]
-    [ProducesResponseType(200)]
     public async Task<IActionResult> Get()
     {
         var courses = await service.Get(User.InstitutionId());
-
         return Ok(courses);
     }
 }

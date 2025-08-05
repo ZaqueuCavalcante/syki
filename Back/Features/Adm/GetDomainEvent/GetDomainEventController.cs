@@ -9,7 +9,7 @@ public class GetDomainEventController(GetDomainEventService service) : Controlle
     /// <remarks>
     /// Retorna o evento de domínio especificado.
     /// </remarks>
-    [HttpGet("adm/domain-events/{id:guid}")]
+    [HttpGet("adm/domain-events/{id}")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
         var evt = await service.Get(id);

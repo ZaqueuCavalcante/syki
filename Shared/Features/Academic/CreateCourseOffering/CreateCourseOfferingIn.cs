@@ -7,4 +7,9 @@ public class CreateCourseOfferingIn
     public Guid CourseCurriculumId { get; set; }
     public string? Period { get; set; }
     public Shift Shift { get; set; }
+
+    public static IEnumerable<(string, CreateCourseOfferingIn)> GetExamples() =>
+    [
+        ("Exemplo", new() { }),
+    ];
 }

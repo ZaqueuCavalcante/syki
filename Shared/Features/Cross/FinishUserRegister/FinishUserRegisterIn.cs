@@ -17,4 +17,9 @@ public class FinishUserRegisterIn
         Token = token;
         Password = password;
     }
+
+    public static IEnumerable<(string, FinishUserRegisterIn)> GetExamples() =>
+    [
+        ("Exemplo", new FinishUserRegisterIn(Guid.CreateVersion7().ToString(), "M1@Str0ngP4ssword#")),
+    ];
 }

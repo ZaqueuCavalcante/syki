@@ -11,34 +11,13 @@ public class CreateDisciplineController(CreateDisciplineService service) : Contr
     /// Cria uma nova disciplina.
     /// </remarks>
     [HttpPost("academic/disciplines")]
-    [ProducesResponseType(200)]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Create([FromBody] CreateDisciplineIn data)
     {
         var discipline = await service.Create(User.InstitutionId(), data);
-
         return Ok(discipline);
     }
 }
 
-internal class RequestExamples : IMultipleExamplesProvider<CreateDisciplineIn>
-{
-    public IEnumerable<SwaggerExample<CreateDisciplineIn>> GetExamples()
-    {
-        yield return SwaggerExample.Create(
-			"Banco de Dados",
-			new CreateDisciplineIn
-			{
-				Name = "Banco de Dados",
-				Courses = [Guid.CreateVersion7(), Guid.CreateVersion7()]
-			}
-		);
-        yield return SwaggerExample.Create(
-			"Programação Orientada a Objetos",
-			new CreateDisciplineIn
-			{
-				Name = "Programação Orientada a Objetos",
-				Courses = [Guid.CreateVersion7()]
-			}
-		);
-    }
-}
+internal class RequestExamples : ExamplesProvider<CreateDisciplineIn>;
+internal class ResponseExamples : ExamplesProvider<DisciplineOut>;

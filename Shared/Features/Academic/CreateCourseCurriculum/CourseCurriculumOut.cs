@@ -8,6 +8,11 @@ public class CourseCurriculumOut
     public string Name { get; set; }
     public List<DisciplineOut> Disciplines { get; set; }
 
+    public static IEnumerable<(string, CourseCurriculumOut)> GetExamples() =>
+    [
+        ("Exemplo", new() { Id = Guid.CreateVersion7(), CourseId = Guid.CreateVersion7(), CourseName = "ADS", Name = "Grade ADS", Disciplines = [] }),
+    ];
+
     public static implicit operator CourseCurriculumOut(OneOf<CourseCurriculumOut, ErrorOut> value)
     {
         return value.GetSuccess();

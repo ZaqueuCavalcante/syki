@@ -9,7 +9,7 @@ public class GetCommandController(GetCommandService service) : ControllerBase
     /// <remarks>
     /// Retorna o comando especificado.
     /// </remarks>
-    [HttpGet("adm/commands/{id:guid}")]
+    [HttpGet("adm/commands/{id}")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
         var command = await service.Get(id);

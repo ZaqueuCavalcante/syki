@@ -14,7 +14,6 @@ public class GetCoursesWithCurriculumsController(GetCoursesWithCurriculumsServic
     public async Task<IActionResult> Get()
     {
         var courses = await service.Get(User.InstitutionId());
-
         return Ok(courses);
     }
 }

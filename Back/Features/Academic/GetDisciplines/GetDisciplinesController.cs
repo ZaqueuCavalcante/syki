@@ -12,11 +12,9 @@ public class GetDisciplinesController(GetDisciplinesService service) : Controlle
     /// Caso informe o "CourseId", filtra as disciplinas vinculadas com o curso informado.
     /// </remarks>
     [HttpGet("academic/disciplines")]
-    [ProducesResponseType(200)]
     public async Task<IActionResult> Get([FromQuery] Guid? courseId)
     {
         var disciplines = await service.Get(User.InstitutionId(), courseId);
-
         return Ok(disciplines);
     }
 }

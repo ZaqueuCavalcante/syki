@@ -15,4 +15,9 @@ public class AcademicInsightsOut
     public int Notifications { get; set; }
 
     public int Webhooks { get; set; }
+
+    public static IEnumerable<(string, AcademicInsightsOut)> GetExamples() =>
+    [
+        ("Exemplo", new() { }),
+    ];
 }

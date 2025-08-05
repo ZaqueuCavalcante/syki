@@ -11,11 +11,9 @@ public class GetClassroomsController(GetClassroomsService service) : ControllerB
     /// Retorna todas as salas de aula.
     /// </remarks>
     [HttpGet("academic/classrooms")]
-    [ProducesResponseType(200)]
     public async Task<IActionResult> Get()
     {
         var classrooms = await service.Get(User.InstitutionId());
-
         return Ok(classrooms);
     }
 }

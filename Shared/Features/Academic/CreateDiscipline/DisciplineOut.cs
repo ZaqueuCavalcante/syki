@@ -12,6 +12,11 @@ public class DisciplineOut
     public StudentDisciplineStatus StudentDisciplineStatus { get; set; }
     public List<Guid> Courses { get; set; } = [];
 
+    public static IEnumerable<(string, DisciplineOut)> GetExamples() =>
+    [
+        ("Exemplo", new() { }),
+    ];
+
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;

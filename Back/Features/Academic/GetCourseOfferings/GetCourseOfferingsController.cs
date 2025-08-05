@@ -14,7 +14,6 @@ public class GetCourseOfferingsController(GetCourseOfferingsService service) : C
     public async Task<IActionResult> Get()
     {
         var offerings = await service.Get(User.InstitutionId());
-
         return Ok(offerings);
     }
 }

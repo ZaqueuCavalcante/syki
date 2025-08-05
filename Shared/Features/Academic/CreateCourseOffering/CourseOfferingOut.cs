@@ -10,6 +10,11 @@ public class CourseOfferingOut
     public string Period { get; set; }
     public Shift Shift { get; set; }
 
+    public static IEnumerable<(string, CourseOfferingOut)> GetExamples() =>
+    [
+        ("Exemplo", new() { }),
+    ];
+
     public override string ToString()
     {
         return $"{CourseCurriculum} | {Campus} | {Period} | {Shift.GetDescription()}";

@@ -36,4 +36,26 @@ public class GetUserAccountOut
     /// Curso, caso seja um Aluno.
     /// </summary>
     public string? Course { get; set; }
+
+    public static IEnumerable<(string, GetUserAccountOut)> GetExamples() =>
+    [
+        ("Edson Gomes",
+        new GetUserAccountOut()
+        {
+            Id = Guid.CreateVersion7(),
+            Name = "Edson Gomes",
+            Email = "edson.gomes@syki.com.br",
+            Institution = "UFPE",
+            Role = UserRole.Student,
+        }),
+        ("Maria Júlia",
+        new GetUserAccountOut()
+        {
+            Id = Guid.CreateVersion7(),
+            Name = "Maria Júlia",
+            Email = "maria.julia@syki.com.br",
+            Institution = "Faculdade Nova Roma",
+            Role = UserRole.Teacher,
+        }),
+    ];
 }

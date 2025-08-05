@@ -11,9 +11,8 @@ public class UpdateCampusController(UpdateCampusService service) : ControllerBas
     /// Edita os dados do campus informado.
     /// </remarks>
     [HttpPut("academic/campi")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(typeof(ErrorOut), 400)]
-    [SwaggerResponseExample(400, typeof(ErrorExamples))]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
+    [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Update([FromBody] UpdateCampusIn data)
     {
         var result = await service.Update(User.InstitutionId(), data);
@@ -22,39 +21,6 @@ public class UpdateCampusController(UpdateCampusService service) : ControllerBas
     }
 }
 
-public class RequestExamples : IMultipleExamplesProvider<UpdateCampusIn>
-{
-    public IEnumerable<SwaggerExample<UpdateCampusIn>> GetExamples()
-    {
-        yield return SwaggerExample.Create(
-			"Agreste I",
-			new UpdateCampusIn
-            {
-                Id = Guid.CreateVersion7(),
-                Name = "Agreste I",
-                State = BrazilState.AP,
-                City = "Caruaru",
-                Capacity = 150,
-			}
-		);
-        yield return SwaggerExample.Create(
-			"Interior",
-			new UpdateCampusIn
-            {
-                Id = Guid.CreateVersion7(),
-                Name = "Interior",
-                State = BrazilState.TO,
-                City = "Palmas",
-                Capacity = 500,
-			}
-		);
-    }
-}
-
-public class ErrorExamples : IMultipleExamplesProvider<ErrorOut>
-{
-    public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
-    {
-        yield return new CampusNotFound().ToSwaggerExampleErrorOut();
-    }
-}
+internal class RequestExamples : ExamplesProvider<UpdateCampusIn>;
+internal class ResponseExamples : ExamplesProvider<CampusOut>;
+internal class ErrorsExamples : ErrorExamplesProvider<CampusNotFound>;

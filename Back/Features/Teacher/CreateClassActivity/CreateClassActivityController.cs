@@ -11,39 +11,17 @@ public class CreateClassActivityController(CreateClassActivityService service) :
     /// Cria uma atividade vinculada à turma especificada
     /// </remarks>
     [HttpPost("teacher/classes/{id}/activities")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(typeof(ErrorOut), 400)]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromRoute] Guid id, [FromBody] CreateClassActivityIn data)
     {
         var result = await service.Create(User.Id(), id, data);
-
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
-internal class RequestExamples : IMultipleExamplesProvider<CreateClassActivityIn>
-{
-    public IEnumerable<SwaggerExample<CreateClassActivityIn>> GetExamples()
-    {
-        yield return SwaggerExample.Create(
-			"Atividade",
-			new CreateClassActivityIn
-			{
-                Title = "Modelagem de Banco de Dados",
-                Description = "Modele um banco de dados para um sistema de gerenciamento de biblioteca.",
-                DueDate = DateTime.UtcNow.AddDays(7).ToDateOnly(),
-                DueHour = Hour.H19_00,
-			}
-		);
-    }
-}
-
-internal class ErrorsExamples : IMultipleExamplesProvider<ErrorOut>
-{
-    public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
-    {
-        yield return new ClassNotFound().ToSwaggerExampleErrorOut();
-        yield return new InvalidClassActivityWeight().ToSwaggerExampleErrorOut();
-    }
-}
+internal class RequestExamples : ExamplesProvider<CreateClassActivityIn>;
+internal class ResponseExamples : ExamplesProvider<CreateClassActivityOut>;
+internal class ErrorsExamples : ErrorExamplesProvider<
+    ClassNotFound,
+    InvalidClassActivityWeight>;

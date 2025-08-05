@@ -18,6 +18,11 @@ public class GetAcademicClassOut
     public string Progress { get; set; }
     public decimal Frequency { get; set; }
 
+    public static IEnumerable<(string, GetAcademicClassOut)> GetExamples() =>
+    [
+        ("Exemplo", new() { }),
+    ];
+
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;

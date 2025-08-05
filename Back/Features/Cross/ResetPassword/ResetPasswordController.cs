@@ -11,38 +11,18 @@ public class ResetPasswordController(ResetPasswordService service) : ControllerB
     /// Redefine a senha do usuário.
     /// </remarks>
     [HttpPost("reset-password")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(typeof(ErrorOut), 400)]
-    [SwaggerResponseExample(400, typeof(ErrorExamples))]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
+    [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Reset([FromBody] ResetPasswordIn data)
     {
         var result = await service.Reset(data);
-
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
-internal class RequestExamples : IMultipleExamplesProvider<ResetPasswordIn>
-{
-    public IEnumerable<SwaggerExample<ResetPasswordIn>> GetExamples()
-    {
-        yield return SwaggerExample.Create(
-			"Acadêmico",
-			new ResetPasswordIn
-			{
-				Token = Guid.CreateVersion7().ToString(),
-				Password = "M1@Str0ngP4ssword#"
-			}
-		);
-    }
-}
-
-internal class ErrorExamples : IMultipleExamplesProvider<ErrorOut>
-{
-    public IEnumerable<SwaggerExample<ErrorOut>> GetExamples()
-    {
-        yield return new UserNotFound().ToSwaggerExampleErrorOut();
-        yield return new WeakPassword().ToSwaggerExampleErrorOut();
-        yield return new InvalidResetToken().ToSwaggerExampleErrorOut();
-    }
-}
+internal class RequestExamples : ExamplesProvider<ResetPasswordIn>;
+internal class ResponseExamples : ExamplesProvider<SuccessOut>;
+internal class ErrorsExamples : ErrorExamplesProvider<
+    UserNotFound,
+    WeakPassword,
+    InvalidResetToken>;

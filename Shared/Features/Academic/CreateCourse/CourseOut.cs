@@ -23,6 +23,26 @@ public class CourseOut
         return Name;
     }
 
+    public static IEnumerable<(string, CourseOut)> GetExamples() =>
+    [
+        ("Direito",
+        new CourseOut
+        {
+            Id = Guid.CreateVersion7(),
+            Name = "Direito",
+            Type = CourseType.Bacharelado,
+            Disciplines = [],
+        }),
+        ("ADS",
+        new CourseOut
+        {
+            Id = Guid.CreateVersion7(),
+            Name = "Análise e Desenvolvimento de Sistemas",
+            Type = CourseType.Tecnologo,
+            Disciplines = [],
+        }),
+    ];
+
     public static implicit operator CourseOut(OneOf<CourseOut, ErrorOut> value)
     {
         return value.GetSuccess();

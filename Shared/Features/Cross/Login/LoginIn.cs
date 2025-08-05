@@ -10,4 +10,11 @@ public class LoginIn
         Email = email;
         Password = password;
     }
+
+    public static IEnumerable<(string, LoginIn)> GetExamples() =>
+    [
+        ("Acadêmico", new("academico@syki.com", "M1@Str0ngP4ssword#")),
+        ("Professor", new("professor@syki.com", "M1@Str0ngP4ssword#")),
+        ("Aluno", new("aluno@syki.com", "M1@Str0ngP4ssword#")),
+    ];
 }

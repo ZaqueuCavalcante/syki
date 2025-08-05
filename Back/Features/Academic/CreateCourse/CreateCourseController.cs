@@ -11,36 +11,15 @@ public class CreateCourseController(CreateCourseService service) : ControllerBas
     /// Cria um novo curso.
     /// </remarks>
     [HttpPost("academic/courses")]
-    [ProducesResponseType(200)]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
+    [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateCourseIn data)
     {
         var result = await service.Create(User.InstitutionId(), data);
-
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
-internal class RequestExamples : IMultipleExamplesProvider<CreateCourseIn>
-{
-    public IEnumerable<SwaggerExample<CreateCourseIn>> GetExamples()
-    {
-        yield return SwaggerExample.Create(
-			"Direito",
-			new CreateCourseIn
-			{
-				Name = "Direito",
-                Type = CourseType.Bacharelado,
-                Disciplines = ["Direito Civil", "Direito Penal"],
-			}
-		);
-        yield return SwaggerExample.Create(
-			"ADS",
-			new CreateCourseIn
-			{
-				Name = "Análise e Desenvolvimento de Sistemas",
-                Type = CourseType.Tecnologo,
-                Disciplines = ["Programação Orientada a Objetos", "Banco de Dados"],
-			}
-		);
-    }
-}
+internal class RequestExamples : ExamplesProvider<CreateCourseIn>;
+internal class ResponseExamples : ExamplesProvider<CourseOut>;
+internal class ErrorsExamples : ErrorExamplesProvider<InvalidCourseType>;

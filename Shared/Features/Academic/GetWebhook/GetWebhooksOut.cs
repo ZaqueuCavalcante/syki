@@ -11,4 +11,9 @@ public class GetWebhookOut
     public int CallsCount { get; set; }
 
     public List<GetWebhookCallOut> Calls { get; set; }
+
+    public static IEnumerable<(string, GetWebhookOut)> GetExamples() =>
+    [
+        ("Exemplo", new() { }),
+    ];
 }

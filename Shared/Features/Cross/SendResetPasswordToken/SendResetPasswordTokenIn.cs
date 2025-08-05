@@ -1,3 +1,20 @@
 namespace Syki.Shared;
 
-public record SendResetPasswordTokenIn(string Email);
+public class SendResetPasswordTokenIn
+{
+    public string Email { get; set; }
+
+    public SendResetPasswordTokenIn() {}
+
+    public SendResetPasswordTokenIn(string email)
+    {
+        Email = email;
+    }
+
+    public static IEnumerable<(string, SendResetPasswordTokenIn)> GetExamples() =>
+    [
+        ("Acadêmico", new() { Email = "academico@syki.com" }),
+        ("Professor", new() { Email = "professor@syki.com" }),
+        ("Aluno", new() { Email = "aluno@syki.com" }),
+    ];
+}

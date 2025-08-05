@@ -36,4 +36,16 @@ public class CreateClassActivityIn
     /// Hora limite para entrega
     /// </summary>
     public Hour DueHour { get; set; }
+
+    public static IEnumerable<(string, CreateClassActivityIn)> GetExamples() =>
+    [
+        ("Atividade",
+        new CreateClassActivityIn
+        {
+            Title = "Modelagem de Banco de Dados",
+            Description = "Modele um banco de dados para um sistema de gerenciamento de biblioteca.",
+            DueDate = DateTime.UtcNow.AddDays(7).ToDateOnly(),
+            DueHour = Hour.H19_00,
+        })
+    ];
 }

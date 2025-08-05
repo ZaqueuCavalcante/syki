@@ -26,4 +26,26 @@ public class CreateWebhookSubscriptionIn
     /// Chave de Api para autenticação no endpoint.
     /// </summary>
     public string? ApiKey { get; set; }
+
+    public static IEnumerable<(string, CreateWebhookSubscriptionIn)> GetExamples() =>
+    [
+        ("Aluno criado",
+        new CreateWebhookSubscriptionIn
+        {
+            Name = "Aluno criado",
+            Url = "https://webhook.site/my-webhook",
+            AuthenticationType = WebhookAuthenticationType.ApiKey,
+            ApiKey = "z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X",
+            Events = [WebhookEventType.StudentCreated]
+        }),
+        ("Atividade publicada",
+        new CreateWebhookSubscriptionIn
+        {
+            Name = "Atividade publicada",
+            Url = "https://webhook.site/my-other-webhook",
+            AuthenticationType = WebhookAuthenticationType.ApiKey,
+            ApiKey = "z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X",
+            Events = [WebhookEventType.ClassActivityCreated]
+        }),
+    ];
 }

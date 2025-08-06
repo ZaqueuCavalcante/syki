@@ -17,6 +17,8 @@ public static class HttpConfigs
 
         builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>()
             .CreateClient("HttpClient"));
+        
+        builder.Services.AddScoped<SignalRConnectionManager>();
     }
 
     public static JsonSerializerOptions JsonOptions = new()

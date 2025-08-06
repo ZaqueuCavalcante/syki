@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
 
-public class IntegrationTestBase
+public abstract class IntegrationTestBase
 {
     protected BackFactory _api = null!;
     protected DaemonFactory _daemon = null!;

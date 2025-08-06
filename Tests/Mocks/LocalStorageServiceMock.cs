@@ -1,4 +1,6 @@
+using System.Text.Json;
 using Microsoft.JSInterop;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Syki.Tests.Mock;
 
@@ -33,6 +35,29 @@ public class LocalStorageServiceMock : ILocalStorageService
     public ValueTask SetItemAsync(string key, string value)
     {
         _storage.Add(key, value);
+        return new ValueTask();
+    }
+
+    public ValueTask<TValue?> GetItemAsync<TValue>(string key, JsonTypeInfo<TValue>? jsonTypeInfo)
+    {
+        if (_storage.TryGetValue(key, out var json))
+        {
+            var value = jsonTypeInfo != null
+                ? JsonSerializer.Deserialize(json, jsonTypeInfo)
+                : JsonSerializer.Deserialize<TValue>(json);
+            return new ValueTask<TValue?>(value);
+        }
+
+        return new ValueTask<TValue?>((TValue?)default);
+    }
+
+    public ValueTask SetItemAsync<TValue>(string key, TValue value, JsonTypeInfo<TValue>? jsonTypeInfo)
+    {
+        var json = jsonTypeInfo != null
+            ? JsonSerializer.Serialize(value, jsonTypeInfo)
+            : JsonSerializer.Serialize(value);
+
+        _storage[key] = json;
         return new ValueTask();
     }
 }

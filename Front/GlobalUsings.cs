@@ -52,6 +52,7 @@ global using Syki.Front.Features.Cross.GetUserNotifications;
 global using Syki.Front.Features.Cross.Health;
 global using Syki.Front.Features.Cross.Login;
 global using Syki.Front.Features.Cross.LoginMfa;
+global using Syki.Front.Features.Cross.Logout;
 global using Syki.Front.Features.Cross.GetUserAccount;
 global using Syki.Front.Features.Cross.ResetPassword;
 global using Syki.Front.Features.Cross.UpdateUserAccount;

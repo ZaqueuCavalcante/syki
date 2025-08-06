@@ -9,7 +9,7 @@ public class CrossLoginAuthReqHandler(ILocalStorageService localStorage) : Autho
 {
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CrossLoginAuthReq requirement)
     {
-        var canCrossLogin = await localStorage.GetItemAsync("CrossLogin");
+        var canCrossLogin = await localStorage.GetItemAsync<string>("CrossLogin");
 
         if (canCrossLogin == "True") context.Succeed(requirement);
     }

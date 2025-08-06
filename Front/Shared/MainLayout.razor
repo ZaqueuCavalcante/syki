@@ -75,6 +75,8 @@
 
 @inject NavigationManager Nav
 @inject AuthManager AuthManager
+@inject LogoutClient LogoutClient
+@inject SignalRConnectionManager SignalR
 @inject ILocalStorageService LocalStorage
 @inject SykiAuthStateProvider AuthStateProvider
 @inject ApexCharts.IApexChartService ApexChartService
@@ -117,7 +119,7 @@
     protected override async Task OnInitializedAsync()
     {
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        var isDark = await LocalStorage.GetItemAsync("IsDark");
+        var isDark = await LocalStorage.GetItemAsync<string>("IsDark");
         _isDark = isDark == null || bool.Parse(isDark);
     }
 
@@ -166,7 +168,9 @@
     private async Task Logout()
     {
         _rightOpen = false;
-        await LocalStorage.RemoveItemAsync("AccessToken");
+        await LogoutClient.Logout();
+        await LocalStorage.RemoveItemAsync("User");
+        await SignalR.StopAsync();
         AuthStateProvider.MarkUserAsLoggedOut();
         Nav.NavigateTo("/");
     }

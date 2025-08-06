@@ -5,27 +5,21 @@ using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 namespace Syki.Front.Auth;
 
-public class SykiDelegatingHandler(ILocalStorageService storage, NavigationManager nav, SykiAuthStateProvider auth) : DelegatingHandler
+public class SykiDelegatingHandler(ILocalStorageService storage, SykiAuthStateProvider auth, NavigationManager nav) : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         request.SetBrowserRequestCredentials(BrowserRequestCredentials.Include);
 
-        var token = await storage.GetItemAsync("AccessToken");
-
-        if (token != null)
-        {
-            request.Headers.Add("Authorization", $"Bearer {token}");
-        }
-
         var response = await base.SendAsync(request, cancellationToken);
 
-        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        if (response.StatusCode.IsIn(HttpStatusCode.Unauthorized, HttpStatusCode.Forbidden))
         {
-            await storage.RemoveItemAsync("AccessToken");
+            await storage.RemoveItemAsync("User");
             auth.MarkUserAsLoggedOut();
-            if (!nav.Uri.Equals("/"))
-                nav.NavigateTo("/", forceLoad: true);
+
+            if (!nav.Uri.Equals("/login"))
+                nav.NavigateTo("/login", forceLoad: true);
         }
 
         response.Headers.TryGetValues("X-CrossLogin", out var crossLogin);
@@ -33,7 +27,7 @@ public class SykiDelegatingHandler(ILocalStorageService storage, NavigationManag
 
         response.Headers.TryGetValues("X-DeployHash", out var deployHashHeader);
         var deployHash = deployHashHeader?.FirstOrDefault() ?? "0";
-        var storedDeployHash = await storage.GetItemAsync("DeployHash");
+        var storedDeployHash = await storage.GetItemAsync<string>("DeployHash");
 
         if (deployHash != storedDeployHash)
         {
@@ -42,5 +36,11 @@ public class SykiDelegatingHandler(ILocalStorageService storage, NavigationManag
         }
 
         return response;
+    }
+
+    public SykiDelegatingHandler WithInnerHandler(HttpMessageHandler innerHandler)
+    {
+        InnerHandler = innerHandler;
+        return this;
     }
 }

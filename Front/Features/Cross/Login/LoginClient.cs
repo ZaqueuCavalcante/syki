@@ -13,7 +13,7 @@ public class LoginClient(HttpClient http, ILocalStorageService localStorage, Syk
 
         if (result.IsSuccess())
         {
-            await localStorage.SetItemAsync("AccessToken", result.GetSuccess().AccessToken);
+            await localStorage.SetItemAsync("User", result.GetSuccess());
             authStateProvider.MarkUserAsAuthenticated();
         }
 

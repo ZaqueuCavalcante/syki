@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNetCore.SignalR.Client
-
-@namespace Syki.Front.Shared
+﻿@namespace Syki.Front.Shared
 
 @implements IAsyncDisposable
 
@@ -55,7 +53,7 @@
 </MudNavMenu>
 
 @inject AuthManager AuthManager
-@inject IConfiguration Configuration
+@inject SignalRConnectionManager SignalR
 @inject ILocalStorageService LocalStorage
 @inject GetTeacherCurrentClassesClient GetTeacherCurrentClassesClient
 @inject GetStudentCurrentClassesClient GetStudentCurrentClassesClient
@@ -83,7 +81,6 @@
         }
     }
 
-    private HubConnection? _hubConnection;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -98,23 +95,11 @@
         var user = await AuthManager.GetUser();
         if (!user.IsAuthenticated) return;
 
-        var apiUrl = Configuration.GetSection("ApiUrl").Value!;
-        _hubConnection = new HubConnectionBuilder()
-            .WithUrl($"{apiUrl}/syki-hub", options =>
-            {
-                options.AccessTokenProvider = async () => await LocalStorage.GetItemAsync("AccessToken");
-            })
-            .WithAutomaticReconnect()
-            .Build();
-        await _hubConnection.StartAsync();
+        await SignalR.StartAsync();
     }
 
     public async ValueTask DisposeAsync()
     {
-        if (_hubConnection is not null)
-        {
-            await _hubConnection.StopAsync();
-            await _hubConnection.DisposeAsync();
-        }
+        await SignalR.StopAsync();
     }
 }

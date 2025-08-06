@@ -1,6 +1,5 @@
 using Microsoft.JSInterop;
 using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Syki.Front.Auth;
@@ -9,14 +8,14 @@ public class SykiAuthStateProvider(ILocalStorageService storage) : Authenticatio
 {
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var jwt = await storage.GetItemAsync("AccessToken");
+        var user = await storage.GetItemAsync<GetUserAccountOut>("User");
 
-        if (jwt.IsEmpty())
+        if (user == null)
         {
             return new(new ClaimsPrincipal(new ClaimsIdentity()));
         }
 
-        return new(CreateClaimsPrincipalFromToken(jwt!));
+        return new(CreateClaimsPrincipalFromToken(user));
     }
 
     public void MarkUserAsAuthenticated()
@@ -29,19 +28,15 @@ public class SykiAuthStateProvider(ILocalStorageService storage) : Authenticatio
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 
-    private static ClaimsPrincipal CreateClaimsPrincipalFromToken(string token)
+    private static ClaimsPrincipal CreateClaimsPrincipalFromToken(GetUserAccountOut user)
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
+        var identity = new ClaimsIdentity("Bearer");
 
-        var identity = new ClaimsIdentity();
-
-        if (tokenHandler.CanReadToken(token))
-        {
-            var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
-            identity = new(jwtSecurityToken.Claims, "Bearer");
-
-            identity.AddClaim(new Claim(ClaimTypes.Role, identity.FindFirst("role")!.Value));
-        }
+        identity.AddClaim(new Claim("sub", user.Id.ToString()));
+        identity.AddClaim(new Claim("name", user.Name));
+        identity.AddClaim(new Claim("email", user.Email));
+        identity.AddClaim(new Claim("role", user.Role.ToString()));
+        identity.AddClaim(new Claim(ClaimTypes.Role, user.Role.ToString()));
 
         return new(identity);
     }

@@ -119,7 +119,7 @@
     {
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
 
-        _classes = JsonConvert.DeserializeObject<List<CascadingClassDto>>(await LocalStorage.GetItemAsync("Classes") ?? "[]") ?? [];
+        _classes = JsonConvert.DeserializeObject<List<CascadingClassDto>>(await LocalStorage.GetItemAsync<string>("Classes") ?? "[]") ?? [];
         var @class = _classes.FirstOrDefault(x => x.Id == ClassId);
         if (@class != null)
         {

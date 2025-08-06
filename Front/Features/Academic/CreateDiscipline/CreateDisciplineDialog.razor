@@ -8,17 +8,19 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
-            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" />
+            <SykiTextField Label="Nome" AutoFocus @bind-Value="@_name" />
             <MudSelect
-                Dense="true"
+                Dense
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
                 T="CourseOut"
                 Label="Cursos"
-                MultiSelection="true"
+                MultiSelection
+                Required
+                RequiredError="Informe!"
                 @bind-SelectedValues="@SelectedCourses"
-                AnchorOrigin="Origin.BottomCenter"
+                MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
             >
                 @foreach (var course in _courses)
                 {
@@ -53,6 +55,17 @@
     protected override async Task OnInitializedAsync()
     {
         _courses = await GetCoursesClient.Get();
+    }
+
+    private string GetMultiSelectionText(List<string> selected)
+    {
+        if (selected.Count == 1)
+            return selected.First();
+
+        if (selected.Count > 1)
+            return $"{selected.Count} cursos selecionados";
+
+        return "";
     }
 
     private async Task Submit()

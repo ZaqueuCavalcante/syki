@@ -13,7 +13,7 @@ public class LoginMfaClient(HttpClient http, ILocalStorageService localStorage, 
 
         if (result.IsSuccess())
         {
-            await localStorage.SetItemAsync("AccessToken", result.GetSuccess().AccessToken);
+            await localStorage.SetItemAsync("User", result.GetSuccess());
             authStateProvider.MarkUserAsAuthenticated();
         }
 

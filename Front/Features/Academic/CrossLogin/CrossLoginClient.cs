@@ -13,7 +13,7 @@ public class CrossLoginClient(HttpClient http, ILocalStorageService localStorage
 
         if (result.IsError()) return result.GetError();
 
-        await localStorage.SetItemAsync("AccessToken", result.GetSuccess().AccessToken);
+        await localStorage.SetItemAsync("User", result.GetSuccess());
         authStateProvider.MarkUserAsAuthenticated();
 
         return result;

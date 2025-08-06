@@ -16,7 +16,7 @@ public partial class IntegrationTests
         var response = await studentClient.GetStudentFrequencies();
 
         // Assert
-        var frequencies = response.GetSuccess();
+        var frequencies = response.Success;
         frequencies.Should().HaveCount(0);
     }
 
@@ -44,7 +44,7 @@ public partial class IntegrationTests
         await academicClient.StartClasses([discreteMathClass.Id]);
 
         var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
-        var mathClassLessons = (await teacherClient.GetTeacherClassLessons(discreteMathClass.Id)).GetSuccess();
+        var mathClassLessons = (await teacherClient.GetTeacherClassLessons(discreteMathClass.Id)).Success;
         var firstLesson = mathClassLessons.First();
 
         await teacherClient.CreateLessonAttendance(firstLesson.Id, [student.Id]);
@@ -53,7 +53,7 @@ public partial class IntegrationTests
         var response = await studentClient.GetStudentFrequencies();
 
         // Assert
-        var frequencies = response.GetSuccess();
+        var frequencies = response.Success;
         frequencies[0].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.DiscreteMath.Name, "1", 1, 1, StudentDisciplineStatus.Matriculado));
     }
 
@@ -104,12 +104,12 @@ public partial class IntegrationTests
         await academicClient.StartClasses([integratorProjectOne.Id]);
 
         var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
-        var teacherDiscreteMathLessons = (await teacherClient.GetTeacherClassLessons(discreteMath.Id)).GetSuccess();
-        var teacherIntroToWebDevLessons = (await teacherClient.GetTeacherClassLessons(introToWebDev.Id)).GetSuccess();
-        var teacherHumanMachineInteractionDesignLessons = (await teacherClient.GetTeacherClassLessons(humanMachineInteractionDesign.Id)).GetSuccess();
-        var teacherIntroToComputerNetworksLessons = (await teacherClient.GetTeacherClassLessons(introToComputerNetworks.Id)).GetSuccess();
-        var teacherComputationalThinkingAndAlgorithmsLessons = (await teacherClient.GetTeacherClassLessons(computationalThinkingAndAlgorithms.Id)).GetSuccess();
-        var teacherIntegratorProjectOneLessons = (await teacherClient.GetTeacherClassLessons(integratorProjectOne.Id)).GetSuccess();
+        var teacherDiscreteMathLessons = (await teacherClient.GetTeacherClassLessons(discreteMath.Id)).Success;
+        var teacherIntroToWebDevLessons = (await teacherClient.GetTeacherClassLessons(introToWebDev.Id)).Success;
+        var teacherHumanMachineInteractionDesignLessons = (await teacherClient.GetTeacherClassLessons(humanMachineInteractionDesign.Id)).Success;
+        var teacherIntroToComputerNetworksLessons = (await teacherClient.GetTeacherClassLessons(introToComputerNetworks.Id)).Success;
+        var teacherComputationalThinkingAndAlgorithmsLessons = (await teacherClient.GetTeacherClassLessons(computationalThinkingAndAlgorithms.Id)).Success;
+        var teacherIntegratorProjectOneLessons = (await teacherClient.GetTeacherClassLessons(integratorProjectOne.Id)).Success;
 
         var lessons = new List<ClassLessonOut>();
         lessons.AddRange(teacherHumanMachineInteractionDesignLessons.PickRandom(1));
@@ -129,7 +129,7 @@ public partial class IntegrationTests
         var response = await studentClient.GetStudentFrequencies();
 
         // Assert
-        var frequencies = response.GetSuccess();
+        var frequencies = response.Success;
         frequencies.Should().HaveCount(6);
         frequencies[0].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.HumanMachineInteractionDesign.Name, "1", 1, 1, StudentDisciplineStatus.Matriculado));
         frequencies[1].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.IntroToComputerNetworks.Name, "1", 3, 2, StudentDisciplineStatus.Matriculado));

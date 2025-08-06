@@ -135,9 +135,9 @@
     {
         _loading = true;
         var response = await GetTeacherClassActivityClient.Get(ClassId, ActivityId);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
-            _activity = response.GetSuccess();
+            _activity = response.Success;
         }
         _statusFilter = [ClassActivityWorkStatus.Pending, ClassActivityWorkStatus.Delivered, ClassActivityWorkStatus.Finalized];
         _loading = false;

@@ -208,9 +208,9 @@
     {
         _loading = true;
         var response = await GetAcademicClassClient.Get(Id);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
-            _class = response.GetSuccess();
+            _class = response.Success;
             _students = _class.Students.OrderBy(x => x.Name).ToList();
         }
         _loading = false;

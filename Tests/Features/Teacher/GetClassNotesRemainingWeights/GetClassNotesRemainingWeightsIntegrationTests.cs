@@ -34,7 +34,7 @@ public partial class IntegrationTests
         }
 
         // Assert
-        var remainingWeights = (await teacherClient.GetClassNotesRemainingWeights(mathClass.Id)).GetSuccess();
+        var remainingWeights = (await teacherClient.GetClassNotesRemainingWeights(mathClass.Id)).Success;
         remainingWeights[0].Should().BeEquivalentTo(new ClassNoteRemainingWeightsOut { Note = ClassNoteType.N1, Weight = result[0] });
         remainingWeights[1].Should().BeEquivalentTo(new ClassNoteRemainingWeightsOut { Note = ClassNoteType.N2, Weight = result[1] });
         remainingWeights[2].Should().BeEquivalentTo(new ClassNoteRemainingWeightsOut { Note = ClassNoteType.N3, Weight = result[2] });

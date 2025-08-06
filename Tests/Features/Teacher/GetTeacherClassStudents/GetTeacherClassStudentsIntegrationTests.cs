@@ -26,7 +26,7 @@ public partial class IntegrationTests
 
         // Assert
         response.ShouldBeSuccess();
-        var students = response.GetSuccess();
+        var students = response.Success;
         students[0].Name.Should().Be(data.Student.Name);
         students[0].Frequency.Should().Be(66.67M);
         students[0].Notes.First(x => x.Type == ClassNoteType.N1).Note.Should().Be(9.00M);

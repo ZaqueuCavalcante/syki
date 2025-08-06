@@ -22,6 +22,6 @@ public class CourseOfferingOut
 
     public static implicit operator CourseOfferingOut(OneOf<CourseOfferingOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

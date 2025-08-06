@@ -13,7 +13,7 @@ public partial class IntegrationTests
         var result = await client.Login(user.Email, user.Password);
 
         // Assert
-        var loginOut = result.GetSuccess();
+        var loginOut = result.Success;
         loginOut.Id.Should().Be(user.Id);
         loginOut.Name.Should().Be(user.Email);
         loginOut.Email.Should().Be(user.Email);

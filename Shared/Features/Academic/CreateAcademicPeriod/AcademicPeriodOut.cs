@@ -22,6 +22,6 @@ public class AcademicPeriodOut
 
     public static implicit operator AcademicPeriodOut(OneOf<AcademicPeriodOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

@@ -177,14 +177,14 @@
 
         _loading = true;
         var response = await CreateCourseOfferingClient.Create(campusId, courseId, courseCurriculumId, period, shift);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
             MudDialog.Close(DialogResult.Ok(true));
             Snackbar.Add("Oferta cadastrada com sucesso!", Severity.Success);
         }
         else
         {
-            Snackbar.Add(response.GetError().Message, Severity.Error);
+            Snackbar.Add(response.Error.Message, Severity.Error);
         }
         _loading = false;
     }

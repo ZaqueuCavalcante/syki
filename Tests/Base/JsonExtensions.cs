@@ -12,32 +12,32 @@ public static class JsonExtensions
 
     public static void ShouldBeError<S>(this OneOf<S, ErrorOut> oneOf, SykiError expected)
     {
-        oneOf.IsSuccess().Should().BeFalse();
-        oneOf.IsError().Should().BeTrue();
-        oneOf.GetError().Code.Should().Be(expected.Code);
-        oneOf.GetError().Message.Should().Be(expected.Message);
+        oneOf.IsSuccess.Should().BeFalse();
+        oneOf.IsError.Should().BeTrue();
+        oneOf.Error.Code.Should().Be(expected.Code);
+        oneOf.Error.Message.Should().Be(expected.Message);
     }
 
     public static void ShouldBeSuccess<S, E>(this OneOf<S, E> oneOf)
     {
-        oneOf.IsSuccess().Should().BeTrue();
-        oneOf.IsError().Should().BeFalse();
+        oneOf.IsSuccess.Should().BeTrue();
+        oneOf.IsError.Should().BeFalse();
     }
 
     public static void ShouldBeError<S>(this OneOf<S, SykiError> oneOf, SykiError expected)
     {
-        oneOf.IsSuccess().Should().BeFalse();
-        oneOf.IsError().Should().BeTrue();
-        oneOf.GetError().Should().BeOfType(expected.GetType());
-        oneOf.GetError().Code.Should().Be(expected.Code);
-        oneOf.GetError().Message.Should().Be(expected.Message);
+        oneOf.IsSuccess.Should().BeFalse();
+        oneOf.IsError.Should().BeTrue();
+        oneOf.Error.Should().BeOfType(expected.GetType());
+        oneOf.Error.Code.Should().Be(expected.Code);
+        oneOf.Error.Message.Should().Be(expected.Message);
     }
 
     public static void ShouldBeError<S>(this OneOf<S, ErrorOut> oneOf, ErrorOut expected)
     {
-        oneOf.IsSuccess().Should().BeFalse();
-        oneOf.IsError().Should().BeTrue();
-        oneOf.GetError().Code.Should().Be(expected.Code);
-        oneOf.GetError().Message.Should().Be(expected.Message);
+        oneOf.IsSuccess.Should().BeFalse();
+        oneOf.IsError.Should().BeTrue();
+        oneOf.Error.Code.Should().Be(expected.Code);
+        oneOf.Error.Message.Should().Be(expected.Message);
     }
 }

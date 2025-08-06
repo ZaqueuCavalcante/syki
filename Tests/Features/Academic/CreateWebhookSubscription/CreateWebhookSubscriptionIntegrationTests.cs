@@ -13,7 +13,7 @@ public partial class IntegrationTests
 
         // Assert
         response.ShouldBeSuccess();
-        CreateWebhookSubscriptionOut responseOut = response.GetSuccess();
+        CreateWebhookSubscriptionOut responseOut = response.Success;
 
         var ctx = _api.GetDbContext();
         var webhook = await ctx.Webhooks.Include(x => x.Authentication)

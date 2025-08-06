@@ -11,9 +11,9 @@ public class LoginMfaClient(HttpClient http, ILocalStorageService localStorage, 
 
         var result = await response.Resolve<LoginMfaOut>();
 
-        if (result.IsSuccess())
+        if (result.IsSuccess)
         {
-            await localStorage.SetItemAsync("User", result.GetSuccess());
+            await localStorage.SetItemAsync("User", result.Success);
             authStateProvider.MarkUserAsAuthenticated();
         }
 

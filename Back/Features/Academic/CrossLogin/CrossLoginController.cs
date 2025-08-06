@@ -19,10 +19,10 @@ public class CrossLoginController(CrossLoginService service, AuthSettings settin
     {
         var result = await service.Login(User.InstitutionId, data);
 
-        if (result.IsSuccess())
+        if (result.IsSuccess)
         {
-            Response.AppendSykiJwtCookie(result.GetSuccess().AccessToken, settings);
-            result.GetSuccess().AccessToken = "";
+            Response.AppendSykiJwtCookie(result.Success.AccessToken, settings);
+            result.Success.AccessToken = "";
         }
 
         return result.Match<IActionResult>(Ok, BadRequest);

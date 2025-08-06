@@ -18,7 +18,7 @@ public partial class IntegrationTests
 
         // Act
         var studentClient = await _api.LoggedAsStudent(data.Student.Email);
-        var activities = (await studentClient.GetStudentClassActivities(data.AdsClasses.DiscreteMath.Id)).GetSuccess();
+        var activities = (await studentClient.GetStudentClassActivities(data.AdsClasses.DiscreteMath.Id)).Success;
 
         // Assert
         activities.Should().HaveCount(3);

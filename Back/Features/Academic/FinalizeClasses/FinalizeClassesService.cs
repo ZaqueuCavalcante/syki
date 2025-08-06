@@ -20,7 +20,7 @@ public class FinalizeClassesService(SykiDbContext ctx) : IAcademicService
         var results = classes.ConvertAll(c => c.Finish());
         foreach (var result in results)
         {
-            if (result.IsError()) return result.GetError();
+            if (result.IsError) return result.Error;
         }
 
         var ids = classes.ConvertAll(x => x.Id);

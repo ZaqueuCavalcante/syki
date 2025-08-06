@@ -63,14 +63,14 @@
 
         _loading = true;
         var response = await Client.Update(Period.Id, start, end);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
             MudDialog.Close(DialogResult.Ok(true));
             Snackbar.Add("Período editado com sucesso!", Severity.Success);
         }
         else
         {
-            Snackbar.Add(response.GetError().Message, Severity.Error);
+            Snackbar.Add(response.Error.Message, Severity.Error);
         }
         _loading = false;
     }

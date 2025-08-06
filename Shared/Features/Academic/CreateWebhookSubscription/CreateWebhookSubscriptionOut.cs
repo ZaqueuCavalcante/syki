@@ -11,6 +11,6 @@ public class CreateWebhookSubscriptionOut
 
     public static implicit operator CreateWebhookSubscriptionOut(OneOf<CreateWebhookSubscriptionOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

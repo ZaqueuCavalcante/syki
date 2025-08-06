@@ -18,7 +18,7 @@ public partial class IntegrationTests
         await studentClient.CreateClassActivityWork(work.Id, "https://github.com/ZaqueuCavalcante/syki");
 
         // Act
-        var activity = (await teacherClient.GetTeacherClassActivity(data.AdsClasses.DiscreteMath.Id, work.Id)).GetSuccess();
+        var activity = (await teacherClient.GetTeacherClassActivity(data.AdsClasses.DiscreteMath.Id, work.Id)).Success;
 
         // Assert
         activity.DeliveredWorks.Should().Be(1);

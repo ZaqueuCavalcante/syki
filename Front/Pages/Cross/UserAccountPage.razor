@@ -78,7 +78,7 @@
 
         var randomFileName = $"{Guid.CreateVersion7().ToHashCode().ToString()}.{evt.File.Name.Split(".").Last()}";
         var responseUrl = await CreatePreSignedUrlForUploadClient.Create(StorageContainer.ProfilePhotos, randomFileName);
-        var url = responseUrl.IsSuccess() ? responseUrl.GetSuccess().Url : "";
+        var url = responseUrl.IsSuccess ? responseUrl.Success.Url : "";
 
         using var httpClient = new HttpClient() { BaseAddress = new Uri(url) };
         httpClient.DefaultRequestHeaders.Add("x-ms-blob-type", "BlockBlob");
@@ -92,14 +92,14 @@
     private async Task UpdateUserAccountData()
     {
         var response = await UpdateUserAccountClient.Update(_data.Name, _data.ProfilePhoto);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
             await OnInitializedAsync();
             Snackbar.Add("Foto atualizada com sucesso!", Severity.Success);
         }
         else
         {
-            var error = response.GetError();
+            var error = response.Error;
             Snackbar.Add(error.Message, Severity.Error);
         }
     }

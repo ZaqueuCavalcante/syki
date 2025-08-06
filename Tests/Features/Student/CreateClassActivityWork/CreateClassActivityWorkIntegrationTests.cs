@@ -16,7 +16,7 @@ public partial class IntegrationTests
 
         // Act
         var studentClient = await _api.LoggedAsStudent(data.Student.Email);
-        var activity = (await studentClient.CreateClassActivityWork(work.Id, "https://github.com/ZaqueuCavalcante/syki")).GetSuccess();
+        var activity = (await studentClient.CreateClassActivityWork(work.Id, "https://github.com/ZaqueuCavalcante/syki")).Success;
 
         // Assert
         activity.Status.Should().Be(ClassActivityWorkStatus.Delivered);

@@ -16,6 +16,6 @@ public class CrossLoginOut
 
     public static implicit operator CrossLoginOut(OneOf<CrossLoginOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

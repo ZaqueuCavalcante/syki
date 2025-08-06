@@ -12,9 +12,9 @@ public class CreateEnrollmentPeriodService(SykiDbContext ctx, HybridCache cache)
         
         var result = EnrollmentPeriod.New(data.Id, institutionId, data.StartAt, data.EndAt);
 
-        if (result.IsError()) return result.GetError();
+        if (result.IsError) return result.Error;
 
-        var period = result.GetSuccess();
+        var period = result.Success;
         ctx.Add(period);
         await ctx.SaveChangesAsync();
 

@@ -136,7 +136,7 @@
     {
         _loading = true;
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        _lessons = (await GetTeacherClassLessonsClient.Get(ClassId)).GetSuccess();
+        _lessons = (await GetTeacherClassLessonsClient.Get(ClassId)).Success;
         var id = _lessons.Where(x => x.Date <= DateTime.UtcNow.ToDateOnly()).MaxBy(x => x.Date)?.Id ?? Guid.Empty;
         await SetLesson(id);
         _loading = false;
@@ -189,15 +189,15 @@
     {
         var ids = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
         var result = await CreateLessonAttendanceClient.Create(_classLesson.Id, ids);
-        if (result.IsSuccess())
+        if (result.IsSuccess)
         {
-            _lessons = (await GetTeacherClassLessonsClient.Get(ClassId)).GetSuccess();
+            _lessons = (await GetTeacherClassLessonsClient.Get(ClassId)).Success;
             _initialState = _attendances.Where(x => x.Present).Select(x => x.StudentId).ToList();
             Snackbar.Add("Frequência salva com sucesso!", Severity.Success);
         }
         else
         {
-            Snackbar.Add(result.GetError().Message, Severity.Error);
+            Snackbar.Add(result.Error.Message, Severity.Error);
         }
     }
 

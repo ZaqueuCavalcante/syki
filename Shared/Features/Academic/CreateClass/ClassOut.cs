@@ -44,6 +44,6 @@ public class ClassOut
 
     public static implicit operator ClassOut(OneOf<ClassOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

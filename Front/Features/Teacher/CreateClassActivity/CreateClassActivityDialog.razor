@@ -153,9 +153,9 @@
     {
         Reset();
         var response = await GetClassNotesRemainingWeightsClient.Get(ClassId);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
-            _remainingWeights = response.GetSuccess();
+            _remainingWeights = response.Success;
         }
         _maxWeight = _remainingWeights.Where(x => x.Note == _note).Select(x => x.Weight).First();
     }
@@ -187,7 +187,7 @@
         _loading = true;
 
         var response = await Client.Create(ClassId, _note, _title, _description, _type, _weight, _dueDate!.Value.ToDateOnly(), _dueHour);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
             await AfterSubmit.InvokeAsync();
             Close();
@@ -195,7 +195,7 @@
         }
         else
         {
-            Snackbar.Add(response.GetError().Message, Severity.Error);
+            Snackbar.Add(response.Error.Message, Severity.Error);
         }
         
         _loading = false;

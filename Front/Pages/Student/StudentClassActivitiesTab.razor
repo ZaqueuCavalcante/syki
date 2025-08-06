@@ -133,9 +133,9 @@
         _loading = true;
         _class = await GetStudentClassClient.Get(ClassId);
         var response = await GetStudentClassActivitiesClient.Get(ClassId);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
-            _activities = response.GetSuccess();
+            _activities = response.Success;
         }
         await RenderChart();
         _loading = false;

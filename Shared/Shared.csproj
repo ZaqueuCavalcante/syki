@@ -3,6 +3,7 @@
   <PropertyGroup>
     <Nullable>enable</Nullable>
 		<NoWarn>CS1591;CS8618;</NoWarn>
+    <LangVersion>preview</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <TargetFramework>net10.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

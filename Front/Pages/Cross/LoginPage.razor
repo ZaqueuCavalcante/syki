@@ -62,17 +62,17 @@
 
         _loading = true;
         var result = await Client.Login(_email, _password);
-        if (result.IsSuccess())
+        if (result.IsSuccess)
         {
             Nav.NavigateTo("/");
         }
         else
         {
-            if (result.GetError().Code == "LoginRequiresTwoFactor")
+            if (result.Error.Code == "LoginRequiresTwoFactor")
             {
                 Nav.NavigateTo("/login-mfa");
             }
-            if (result.GetError().Code == "LoginWrongEmailOrPassword")
+            if (result.Error.Code == "LoginWrongEmailOrPassword")
             {
                 Snackbar.Add("Email ou senha inválidos!", Severity.Error);
             }

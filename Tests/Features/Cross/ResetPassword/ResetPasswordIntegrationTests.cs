@@ -21,7 +21,7 @@ public partial class IntegrationTests
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var loginOut = login.GetSuccess();
+        var loginOut = login.Success;
         loginOut.Id.Should().Be(user.Id);
         loginOut.Name.Should().Be(user.Email);
         loginOut.Email.Should().Be(user.Email);

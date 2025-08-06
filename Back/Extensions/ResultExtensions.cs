@@ -6,7 +6,7 @@ public static class ResultExtensions
     {
         public void ThrowOnError()
         {
-            if (value.IsError()) throw new Exception((value.GetError() as SykiError).Message);
+            if (value.IsError) throw new Exception((value.Error as SykiError).Message);
         }
     }
 }

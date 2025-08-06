@@ -21,7 +21,7 @@ public partial class IntegrationTests
         var response = await client.LoginMfa(totp);
 
         // Assert
-        var loginOut = response.GetSuccess();
+        var loginOut = response.Success;
         loginOut.Id.Should().Be(user.Id);
         loginOut.Name.Should().Be(user.Email);
         loginOut.Email.Should().Be(user.Email);

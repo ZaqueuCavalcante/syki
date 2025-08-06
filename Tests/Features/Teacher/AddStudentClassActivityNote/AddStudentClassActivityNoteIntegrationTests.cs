@@ -22,7 +22,7 @@ public partial class IntegrationTests
 
         // Assert
         response.ShouldBeSuccess();
-        var activity = (await teacherClient.GetTeacherClassActivity(data.AdsClasses.DiscreteMath.Id, work.Id)).GetSuccess();
+        var activity = (await teacherClient.GetTeacherClassActivity(data.AdsClasses.DiscreteMath.Id, work.Id)).Success;
         activity.Works[0].Status.Should().Be(ClassActivityWorkStatus.Finalized);
         activity.Works[0].Note.Should().Be(8.12M);
     }

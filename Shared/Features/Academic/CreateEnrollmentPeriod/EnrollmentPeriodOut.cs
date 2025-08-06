@@ -13,6 +13,6 @@ public class EnrollmentPeriodOut
 
     public static implicit operator EnrollmentPeriodOut(OneOf<EnrollmentPeriodOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

@@ -22,6 +22,6 @@ public class TeacherClassOut
 
     public static implicit operator TeacherClassOut(OneOf<TeacherClassOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

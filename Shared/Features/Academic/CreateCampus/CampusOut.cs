@@ -59,6 +59,6 @@ public class CampusOut
 
     public static implicit operator CampusOut(OneOf<CampusOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

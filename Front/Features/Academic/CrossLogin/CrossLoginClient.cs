@@ -11,9 +11,9 @@ public class CrossLoginClient(HttpClient http, ILocalStorageService localStorage
 
         var result = await response.Resolve<CrossLoginOut>();
 
-        if (result.IsError()) return result.GetError();
+        if (result.IsError) return result.Error;
 
-        await localStorage.SetItemAsync("User", result.GetSuccess());
+        await localStorage.SetItemAsync("User", result.Success);
         authStateProvider.MarkUserAsAuthenticated();
 
         return result;

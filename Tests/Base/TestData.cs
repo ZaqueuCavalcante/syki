@@ -514,7 +514,7 @@ public static class TestData
         const string period = "2024.2";
         const int vacancies = 40;
 
-        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, []).GetSuccess();
+        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, []).Success;
 
         return @class;
     }
@@ -527,7 +527,7 @@ public static class TestData
         const string period = "2024.2";
         const int vacancies = 40;
 
-        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).GetSuccess();
+        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).Success;
         @class.Period = AcademicPeriod.New(period, institutionId, start.ToDateOnly(), end.ToDateOnly());
 
         return @class;

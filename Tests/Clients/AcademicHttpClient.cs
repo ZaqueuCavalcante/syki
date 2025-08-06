@@ -180,14 +180,14 @@ public class AcademicHttpClient(HttpClient http)
 
         var response = await client.Create(name, email);
 
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
-            var teacher = response.GetSuccess();
+            var teacher = response.Success;
             teacher.Email = email;
             return teacher;
         }
 
-        return response.GetError();
+        return response.Error;
     }
 
     public async Task<List<TeacherOut>> GetTeachers()
@@ -236,14 +236,14 @@ public class AcademicHttpClient(HttpClient http)
         var client = new CreateStudentClient(Http);
         var response = await client.Create(name, email, courseOfferingId, phoneNumber);
 
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
-            var student = response.GetSuccess();
+            var student = response.Success;
             student.Email = email;
             return student;
         }
 
-        return response.GetError();
+        return response.Error;
     }
 
     public async Task<List<StudentOut>> GetStudents()

@@ -13,6 +13,6 @@ public class TeacherOut
 
     public static implicit operator TeacherOut(OneOf<TeacherOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

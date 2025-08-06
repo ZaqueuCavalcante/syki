@@ -109,7 +109,7 @@
       
         _loading = true;
         var response = await CreateWebhookSubscriptionClient.Create(_name!, _url!, _events, _authenticationType, _apiKey);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
             Snackbar.Add("Webhook criado com sucesso!", Severity.Success);
             await AfterSubmit.InvokeAsync();
@@ -117,7 +117,7 @@
         }
         else
         {
-            Snackbar.Add(response.GetError().Message, Severity.Error);
+            Snackbar.Add(response.Error.Message, Severity.Error);
         }
         _loading = false;
     }

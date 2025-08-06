@@ -68,7 +68,7 @@ public class Class
     ) {
         var result = Validate(schedules);
 
-        if (result.IsError()) return result.GetError();
+        if (result.IsError) return result.Error;
 
         return new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
     }

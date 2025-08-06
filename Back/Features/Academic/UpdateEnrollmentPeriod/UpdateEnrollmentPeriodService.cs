@@ -12,7 +12,7 @@ public class UpdateEnrollmentPeriodService(SykiDbContext ctx, HybridCache cache)
 
         var result = period.Update(data.StartAt, data.EndAt);
 
-        if (result.IsError()) return result.GetError();
+        if (result.IsError) return result.Error;
         
         await ctx.SaveChangesAsync();
 

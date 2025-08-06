@@ -74,7 +74,7 @@
             _loading = true;
             var result = await Client.LoginMfa(_code.ToString()!);
 
-            if (result.IsSuccess())
+            if (result.IsSuccess)
             {
                 Nav.NavigateTo("/");
             }

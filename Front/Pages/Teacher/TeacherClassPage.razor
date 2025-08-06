@@ -59,9 +59,9 @@
         _loading = true;
         _index = 0;
         var response = await GetTeacherClassClient.Get(Id);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
-            _class = response.GetSuccess();
+            _class = response.Success;
         }
         _loading = false;
     }

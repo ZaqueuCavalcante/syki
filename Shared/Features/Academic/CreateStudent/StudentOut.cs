@@ -17,6 +17,6 @@ public class StudentOut
 
     public static implicit operator StudentOut(OneOf<StudentOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

@@ -32,6 +32,6 @@ public class ClassLessonOut
 
     public static implicit operator ClassLessonOut(OneOf<ClassLessonOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

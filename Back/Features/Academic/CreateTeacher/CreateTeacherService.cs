@@ -9,9 +9,9 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
         var userIn = CreateUserIn.NewTeacher(institutionId, data.Name, data.Email);
         var result = await service.Create(userIn);
 
-        if (result.IsError()) return result.GetError();
+        if (result.IsError) return result.Error;
 
-        var user = result.GetSuccess();
+        var user = result.Success;
 
         var teacher = new SykiTeacher(user.Id, institutionId, data.Name);
         ctx.Add(teacher);

@@ -68,14 +68,14 @@
 
         _loading = true;
         var result = await AddStudentClassActivityNoteClient.Add(ActivityId, Work.StudentId, Work.Note);
-        if (result.IsSuccess())
+        if (result.IsSuccess)
         {
             MudDialog.Close(DialogResult.Ok(true));
             Snackbar.Add("Nota adicionada com sucesso!", Severity.Success);
         }
         else
         {
-            Snackbar.Add(result.GetError().Message, Severity.Error);
+            Snackbar.Add(result.Error.Message, Severity.Error);
         }
         _loading = false;
     }

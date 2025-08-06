@@ -16,7 +16,7 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
         var schedules = data.Schedules.ConvertAll(h => Schedule.New(h.Day, h.Start, h.End));
         foreach (var schedule in schedules)
         {
-            if (schedule.IsError()) return schedule.GetError();
+            if (schedule.IsError) return schedule.Error;
         }
 
         var result = Class.New(
@@ -25,12 +25,12 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
             data.TeacherId,
             data.Period,
             data.Vacancies,
-            schedules.ConvertAll(x => x.GetSuccess())
+            schedules.ConvertAll(x => x.Success)
         );
 
-        if (result.IsError()) return result.GetError();
+        if (result.IsError) return result.Error;
 
-        var @class = result.GetSuccess();
+        var @class = result.Success;
 
         ctx.Add(@class);
         await ctx.SaveChangesAsync();

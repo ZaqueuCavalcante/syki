@@ -13,7 +13,7 @@ public class AddDisciplinePreRequisitesService(SykiDbContext ctx) : IAcademicSer
 
         var result = courseCurriculum.AddDisciplinePreRequisites(data.DisciplineId, data.PreRequisites);
 
-        if (result.IsError()) return result;
+        if (result.IsError) return result;
 
         await ctx.SaveChangesAsync();
 

@@ -12,7 +12,7 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
         if (register == null) return new InvalidRegistrationToken();
 
         var finish = register.Finish();
-        if (finish.IsError()) return finish.GetError();
+        if (finish.IsError) return finish.Error;
 
         var institution = new Institution(register.InstitutionId, BrazilianInstitutions.PickRandom());
 
@@ -22,9 +22,9 @@ public class FinishUserRegisterService(SykiDbContext ctx, CreateUserService serv
         var userIn = CreateUserIn.NewAcademic(institution.Id, register.Email, data.Password);
         var result = await service.Create(userIn);
 
-        if (result.IsError()) return result.GetError();
+        if (result.IsError) return result.Error;
 
-        var user = result.GetSuccess();
+        var user = result.Success;
 
         await ctx.SaveChangesAsync();
 

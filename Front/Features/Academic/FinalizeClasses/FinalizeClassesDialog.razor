@@ -117,14 +117,14 @@
         _loading = true;
         var ids = _classes.Where(c => c.IsSelected).Select(c => c.Id).ToList();
         var response = await FinalizeClient.Finalize(ids);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
             MudDialog.Close(DialogResult.Ok(true));
             Snackbar.Add("Turmas finalizadas com sucesso!", Severity.Success);
         }
         else
         {
-            Snackbar.Add(response.GetError().Message, Severity.Error);
+            Snackbar.Add(response.Error.Message, Severity.Error);
         }
         _loading = false;
     }

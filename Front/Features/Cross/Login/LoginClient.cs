@@ -11,9 +11,9 @@ public class LoginClient(HttpClient http, ILocalStorageService localStorage, Syk
 
         var result = await response.Resolve<LoginOut>();
 
-        if (result.IsSuccess())
+        if (result.IsSuccess)
         {
-            await localStorage.SetItemAsync("User", result.GetSuccess());
+            await localStorage.SetItemAsync("User", result.Success);
             authStateProvider.MarkUserAsAuthenticated();
         }
 

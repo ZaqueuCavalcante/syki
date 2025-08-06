@@ -92,9 +92,9 @@
         _searchString = string.Empty;
         _notesFilter = [ClassNoteType.N1, ClassNoteType.N2, ClassNoteType.N3];
         var response = await GetTeacherClassActivitiesClient.Get(ClassId);
-        if (response.IsSuccess())
+        if (response.IsSuccess)
         {
-            _activities = response.GetSuccess();
+            _activities = response.Success;
         }
         _loading = false;
     }

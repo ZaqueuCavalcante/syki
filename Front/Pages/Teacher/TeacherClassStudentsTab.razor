@@ -60,15 +60,15 @@
     {
         _loading = true;
         var classResponse = await GetTeacherClassClient.Get(ClassId);
-        if (classResponse.IsSuccess())
+        if (classResponse.IsSuccess)
         {
-            _class = classResponse.GetSuccess();
+            _class = classResponse.Success;
         }
 
         var studentsResponse = await GetTeacherClassStudentsClient.Get(ClassId);
-        if (studentsResponse.IsSuccess())
+        if (studentsResponse.IsSuccess)
         {
-            _students = studentsResponse.GetSuccess().ToList();
+            _students = studentsResponse.Success.ToList();
         }
 
         _loading = false;

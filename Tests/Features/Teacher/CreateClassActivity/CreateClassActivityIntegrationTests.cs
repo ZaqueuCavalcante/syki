@@ -27,7 +27,7 @@ public partial class IntegrationTests
             Hour.H08_30);
 
         // Assert
-        var activity = (await teacherClient.GetTeacherClassActivity(mathClass.Id, response.GetSuccess().Id)).GetSuccess();
+        var activity = (await teacherClient.GetTeacherClassActivity(mathClass.Id, response.Success.Id)).Success;
         activity.Note.Should().Be(ClassNoteType.N2);
         activity.Title.Should().Be("Test activity");
         activity.Description.Should().Be("Test description");
@@ -59,7 +59,7 @@ public partial class IntegrationTests
         await teacherClient.CreateClassActivity(mathClass.Id, ClassNoteType.N3, type: ClassActivityType.Project, weight: 100);
 
         // Assert
-        var activities = (await teacherClient.GetTeacherClassActivities(mathClass.Id)).GetSuccess();
+        var activities = (await teacherClient.GetTeacherClassActivities(mathClass.Id)).Success;
         activities.Should().HaveCount(6);
     }
 

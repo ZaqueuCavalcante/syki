@@ -36,6 +36,6 @@ public class GetAcademicClassOut
 
     public static implicit operator GetAcademicClassOut(OneOf<GetAcademicClassOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

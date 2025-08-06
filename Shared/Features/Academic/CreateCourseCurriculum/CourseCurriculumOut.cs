@@ -15,6 +15,6 @@ public class CourseCurriculumOut
 
     public static implicit operator CourseCurriculumOut(OneOf<CourseCurriculumOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

@@ -11,10 +11,10 @@ public class SetSchedulingPreferencesService(SykiDbContext ctx) : IAcademicServi
         var schedules = data.Schedules.ConvertAll(h => Schedule.New(h.Day, h.Start, h.End));
         foreach (var schedule in schedules)
         {
-            if (schedule.IsError()) return schedule.GetError();
+            if (schedule.IsError) return schedule.Error;
         }
 
-        teacher.SchedulingPreferences = schedules.ConvertAll(x => x.GetSuccess());
+        teacher.SchedulingPreferences = schedules.ConvertAll(x => x.Success);
 
         await ctx.SaveChangesAsync();
 

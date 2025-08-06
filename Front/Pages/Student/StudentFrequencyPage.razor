@@ -125,7 +125,7 @@
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _student = await FrequencyClient.Get();
         var response = await FrequenciesClient.Get();
-        if (response.IsSuccess()) _frequencies = response.GetSuccess();
+        if (response.IsSuccess) _frequencies = response.Success;
         _loading = false;
     }
 

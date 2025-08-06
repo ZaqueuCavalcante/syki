@@ -45,6 +45,6 @@ public class CourseOut
 
     public static implicit operator CourseOut(OneOf<CourseOut, ErrorOut> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

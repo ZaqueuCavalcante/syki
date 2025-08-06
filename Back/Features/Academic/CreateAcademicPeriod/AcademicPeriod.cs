@@ -29,9 +29,9 @@ public class AcademicPeriod
     ) {
         var result = Validate(id, startAt, endAt);
 
-        if (result.IsError()) return result.GetError();
+        if (result.IsError) return result.Error;
 
-        return new AcademicPeriod(result.GetSuccess(), institutionId, startAt, endAt);
+        return new AcademicPeriod(result.Success, institutionId, startAt, endAt);
     }
 
     private static OneOf<string, SykiError> Validate(
@@ -77,6 +77,6 @@ public class AcademicPeriod
 
     public static implicit operator AcademicPeriod(OneOf<AcademicPeriod, SykiError> value)
     {
-        return value.GetSuccess();
+        return value.Success;
     }
 }

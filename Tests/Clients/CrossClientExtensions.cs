@@ -40,7 +40,7 @@ public static class CrossClientExtensions
 
         var response = await client.FinishUserRegister(token!, password);
 
-        return new UserOut { Id = response.GetSuccess().Id, Email = email, Password = password };
+        return new UserOut { Id = response.Success.Id, Email = email, Password = password };
     }
 
     public static async Task<OneOf<LoginOut, ErrorOut>> Login(this HttpClient http, string email, string password)

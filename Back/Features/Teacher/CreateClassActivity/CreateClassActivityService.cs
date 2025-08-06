@@ -23,13 +23,13 @@ public class CreateClassActivityService(SykiDbContext ctx) : ITeacherService
             data.DueHour,
             students
         );
-        if (activity.IsError()) return activity.GetError();
+        if (activity.IsError) return activity.Error;
 
-        var result = @class.AddActivity(activity.GetSuccess());
-        if (result.IsError()) return result.GetError();
+        var result = @class.AddActivity(activity.Success);
+        if (result.IsError) return result.Error;
 
         await ctx.SaveChangesAsync();
 
-        return activity.GetSuccess().ToCreateOut();
+        return activity.Success.ToCreateOut();
     }
 }

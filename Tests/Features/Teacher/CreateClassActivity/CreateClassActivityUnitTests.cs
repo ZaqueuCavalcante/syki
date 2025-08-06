@@ -64,7 +64,7 @@ public class CreateClassActivityUnitTests
                 DateTime.UtcNow.AddDays(7).ToDateOnly(),
                 Hour.H19_00,
                 []
-            ).GetSuccess();
+            ).Success;
             
             // Act
             var result = @class.AddActivity(activity);
@@ -95,7 +95,7 @@ public class CreateClassActivityUnitTests
                 DateTime.UtcNow.AddDays(7).ToDateOnly(),
                 Hour.H19_00,
                 []
-            ).GetSuccess();
+            ).Success;
 
             // Act
             result = @class.AddActivity(activity);

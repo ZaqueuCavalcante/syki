@@ -16,7 +16,7 @@ public class AddStudentClassActivityNoteService(SykiDbContext ctx) : ITeacherSer
         if (work == null) return new ClassActivityNotFound();
 
         var result = work.AddNote(data.Value);
-        if (result.IsError()) return result.GetError();
+        if (result.IsError) return result.Error;
 
         await ctx.SaveChangesAsync();
 

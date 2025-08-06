@@ -11,7 +11,7 @@ public class StartClassUnitTests
         // Arrange
         var studentA = new SykiStudent(Guid.CreateVersion7(), Guid.CreateVersion7(), "Zaqueu", Guid.CreateVersion7());
         var studentB = new SykiStudent(Guid.CreateVersion7(), Guid.CreateVersion7(), "Maria", Guid.CreateVersion7());
-        var @class = Class.New(Guid.CreateVersion7(), Guid.CreateVersion7(), Guid.CreateVersion7(), "2023.2", 40, []).GetSuccess();
+        var @class = Class.New(Guid.CreateVersion7(), Guid.CreateVersion7(), Guid.CreateVersion7(), "2023.2", 40, []).Success;
         @class.Students = [studentA, studentB];
 
         // Act

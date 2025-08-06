@@ -20,6 +20,7 @@ public class LoginController(LoginService service, AuthSettings settings) : Cont
         if (result.IsSuccess())
         {
             Response.AppendSykiJwtCookie(result.GetSuccess().AccessToken, settings);
+            result.GetSuccess().AccessToken = "";
         }
 
         return result.Match<IActionResult>(Ok, BadRequest);

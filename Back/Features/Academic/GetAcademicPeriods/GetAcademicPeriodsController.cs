@@ -13,7 +13,7 @@ public class GetAcademicPeriods(GetAcademicPeriodsService service) : ControllerB
     [HttpGet("academic/academic-periods")]
     public async Task<IActionResult> Get()
     {
-        var periods = await service.Get(User.InstitutionId());
+        var periods = await service.Get(User.InstitutionId);
         return Ok(periods);
     }
 }

@@ -13,7 +13,7 @@ public class GetStudentClassFrequencyController(GetStudentClassFrequencyService 
     [HttpGet("student/classes/{id}/frequency")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        var result = await service.Get(User.Id(), id);
+        var result = await service.Get(User.Id, id);
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

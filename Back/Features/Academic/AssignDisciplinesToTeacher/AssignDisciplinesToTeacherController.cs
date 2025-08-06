@@ -15,7 +15,7 @@ public class AssignDisciplinesToTeacherController(AssignDisciplinesToTeacherServ
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Assign([FromRoute] Guid id, [FromBody] AssignDisciplinesToTeacherIn data)
     {
-        var result = await service.Assign(User.InstitutionId(), id, data);
+        var result = await service.Assign(User.InstitutionId, id, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

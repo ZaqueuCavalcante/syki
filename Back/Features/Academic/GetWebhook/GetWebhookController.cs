@@ -15,7 +15,7 @@ public class GetWebhookController(GetWebhookService service) : ControllerBase
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        var result = await service.Get(User.InstitutionId(), id);
+        var result = await service.Get(User.InstitutionId, id);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

@@ -14,7 +14,7 @@ public class CreatePreSignedUrlForUploadController(CreatePreSignedUrlForUploadSe
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Create([FromBody] CreatePreSignedUrlForUploadIn data)
     {
-        var result = await service.Create(User.InstitutionId(), User.Id(), data);
+        var result = await service.Create(User.InstitutionId, User.Id, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

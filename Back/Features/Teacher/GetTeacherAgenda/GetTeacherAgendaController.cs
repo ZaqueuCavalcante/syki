@@ -13,7 +13,7 @@ public class GetTeacherAgendaController(GetTeacherAgendaService service) : Contr
     [HttpGet("teacher/agenda")]
     public async Task<IActionResult> Get()
     {
-        var data = await service.Get(User.InstitutionId(), User.Id());
+        var data = await service.Get(User.InstitutionId, User.Id);
         
         return Ok(data);
     }

@@ -15,7 +15,7 @@ public class CreateLessonAttendanceController(CreateLessonAttendanceService serv
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromRoute] Guid id, [FromBody] CreateLessonAttendanceIn data)
     {
-        var result = await service.Create(User.Id(), id, data);
+        var result = await service.Create(User.Id, id, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

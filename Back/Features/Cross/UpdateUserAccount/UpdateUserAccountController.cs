@@ -13,7 +13,7 @@ public class UpdateUserAccountController(UpdateUserAccountService service) : Con
     [HttpPut("user/account")]
     public async Task<IActionResult> Update([FromBody] UpdateUserAccountIn data)
     {
-        var result = await service.Update(User.Id(), data);
+        var result = await service.Update(User.Id, data);
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

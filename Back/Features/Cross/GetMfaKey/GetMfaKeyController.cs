@@ -15,7 +15,7 @@ public class GetMfaKeyController(GetMfaKeyService service) : ControllerBase
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {
-        var key = await service.Get(User.Id());
+        var key = await service.Get(User.Id);
 
         return Ok(key);
     }

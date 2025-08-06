@@ -15,7 +15,7 @@ public class AddStudentClassActivityNoteController(AddStudentClassActivityNoteSe
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Add([FromRoute] Guid id, [FromBody] AddStudentClassActivityNoteIn data)
     {
-        var result = await service.Add(User.Id(), id, data);
+        var result = await service.Add(User.Id, id, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

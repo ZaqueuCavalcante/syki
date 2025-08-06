@@ -14,7 +14,7 @@ public class GetUserAccountController(GetUserAccountService service) : Controlle
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {
-        var account = await service.Get(User.Id());
+        var account = await service.Get(User.Id);
         return Ok(account);
     }
 }

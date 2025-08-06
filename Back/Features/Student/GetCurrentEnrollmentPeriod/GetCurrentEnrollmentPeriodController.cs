@@ -13,7 +13,7 @@ public class GetEnrollmentPeriodsController(GetCurrentEnrollmentPeriodService se
     [HttpGet("student/enrollment-periods/current")]
     public async Task<IActionResult> Get()
     {
-        var period = await service.Get(User.InstitutionId());
+        var period = await service.Get(User.InstitutionId);
 
         return Ok(period);
     }

@@ -13,7 +13,7 @@ public class UserExtensionsUnitTests
         var user = new ClaimsPrincipal(claimsIdentity);
 
         // Act
-        var result = user.Id();
+        var result = user.Id;
 
         // Assert
         result.Should().Be(userIdClaim.Value);
@@ -28,7 +28,7 @@ public class UserExtensionsUnitTests
         var user = new ClaimsPrincipal(claimsIdentity);
 
         // Act
-        var result = user.InstitutionId();
+        var result = user.InstitutionId;
 
         // Assert
         result.Should().Be(institutionIdClaim.Value);

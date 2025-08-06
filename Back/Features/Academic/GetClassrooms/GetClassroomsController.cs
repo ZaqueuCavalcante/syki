@@ -13,7 +13,7 @@ public class GetClassroomsController(GetClassroomsService service) : ControllerB
     [HttpGet("academic/classrooms")]
     public async Task<IActionResult> Get()
     {
-        var classrooms = await service.Get(User.InstitutionId());
+        var classrooms = await service.Get(User.InstitutionId);
         return Ok(classrooms);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Syki.Back.Extensions;
+﻿namespace Syki.Back.Auth;
 
 public class AuthTeacherAttribute : AuthorizeAttribute
 {

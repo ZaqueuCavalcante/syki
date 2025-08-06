@@ -14,7 +14,7 @@ public class CreateNotificationController(CreateNotificationService service) : C
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Create([FromBody] CreateNotificationIn data)
     {
-        var notification = await service.Create(User.InstitutionId(), data);
+        var notification = await service.Create(User.InstitutionId, data);
         return Ok(notification);
     }
 }

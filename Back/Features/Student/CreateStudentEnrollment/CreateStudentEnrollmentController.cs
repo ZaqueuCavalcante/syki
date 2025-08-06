@@ -15,7 +15,7 @@ public class CreateStudentEnrollmentController(CreateStudentEnrollmentService se
     [ProducesResponseType<SykiError>(400)]
     public async Task<IActionResult> Create([FromBody] CreateStudentEnrollmentIn data)
     {
-        var result = await service.Create(User.InstitutionId(), User.Id(), User.CourseCurriculumId(), data);
+        var result = await service.Create(User.InstitutionId, User.Id, User.CourseCurriculumId, data);
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

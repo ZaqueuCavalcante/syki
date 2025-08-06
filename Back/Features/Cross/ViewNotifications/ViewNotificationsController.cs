@@ -13,7 +13,7 @@ public class ViewNotificationsController(ViewNotificationsService service) : Con
     [HttpPut("notifications/user")]
     public async Task<IActionResult> View()
     {
-        await service.View(User.InstitutionId(), User.Id());
+        await service.View(User.InstitutionId, User.Id);
 
         return Ok();
     }

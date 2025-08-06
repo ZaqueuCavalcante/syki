@@ -15,7 +15,7 @@ public class FinalizeClassesController(FinalizeClassesService service) : Control
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Finalize([FromBody] FinalizeClassesIn data)
     {
-        var result = await service.Finalize(User.InstitutionId(), data);
+        var result = await service.Finalize(User.InstitutionId, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

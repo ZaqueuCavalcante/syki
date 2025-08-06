@@ -24,14 +24,14 @@ public static class AuditConfigs
             var httpContext = contextAccessor.HttpContext;
             if (httpContext == null) return;
 
-            if (!httpContext.User.IsAuthenticated())
+            if (!httpContext.User.IsAuthenticated)
             {
                 scope.Event.CustomFields["Skip"] = true;
                 return;
             }
 
-            scope.Event.CustomFields["UserId"] = httpContext.User.Id();
-            scope.Event.CustomFields["InstitutionId"] = httpContext.User.InstitutionId();
+            scope.Event.CustomFields["UserId"] = httpContext.User.Id;
+            scope.Event.CustomFields["InstitutionId"] = httpContext.User.InstitutionId;
         });
     }
 }

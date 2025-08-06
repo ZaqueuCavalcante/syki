@@ -1,6 +1,7 @@
 global using OneOf;
 global using Serilog;
 global using Syki.Shared;
+global using Syki.Back.Auth;
 global using Syki.Back.Events;
 global using Syki.Back.Errors;
 global using Syki.Back.Filters;

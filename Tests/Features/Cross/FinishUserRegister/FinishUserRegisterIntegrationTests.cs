@@ -34,7 +34,7 @@ public partial class IntegrationTests
         user!.Email.Should().Be(email);
         user!.TwoFactorEnabled.Should().BeFalse();
 
-        var isOnlyInAcademicRole = await userManager.IsOnlyInRole(user!, UserRole.Academic);
+        var isOnlyInAcademicRole = await userManager.IsOnlyInRoleAsync(user!, UserRole.Academic);
         isOnlyInAcademicRole.Should().BeTrue();
 
         await AssertDomainEvent<InstitutionCreatedDomainEvent>(institution.Id.ToString());
@@ -102,7 +102,7 @@ public partial class IntegrationTests
         user!.Email.Should().Be(email);
         user!.TwoFactorEnabled.Should().BeFalse();
 
-        var isOnlyInAcademicRole = await userManager.IsOnlyInRole(user!, UserRole.Academic);
+        var isOnlyInAcademicRole = await userManager.IsOnlyInRoleAsync(user!, UserRole.Academic);
         isOnlyInAcademicRole.Should().BeTrue();
     }
 

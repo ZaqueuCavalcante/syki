@@ -13,7 +13,7 @@ public class GetStudentFrequencyController(GetStudentFrequencyService service) :
     [HttpGet("student/frequency")]
     public async Task<IActionResult> Get()
     {
-        var frequency = await service.Get(User.Id());
+        var frequency = await service.Get(User.Id);
 
         return Ok(frequency);
     }

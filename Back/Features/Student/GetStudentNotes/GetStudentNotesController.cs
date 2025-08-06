@@ -13,7 +13,7 @@ public class GetStudentNotesController(GetStudentNotesService service) : Control
     [HttpGet("student/notes")]
     public async Task<IActionResult> Get()
     {
-        var notes = await service.Get(User.Id());
+        var notes = await service.Get(User.Id);
 
         return Ok(notes);
     }

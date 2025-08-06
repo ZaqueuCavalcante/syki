@@ -13,7 +13,7 @@ public class GetCampiController(GetCampiService service) : ControllerBase
     [HttpGet("academic/campi")]
     public async Task<IActionResult> Get()
     {
-        var campi = await service.Get(User.InstitutionId());
+        var campi = await service.Get(User.InstitutionId);
         return Ok(campi);
     }
 }

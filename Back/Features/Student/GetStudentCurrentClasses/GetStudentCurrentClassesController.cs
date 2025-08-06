@@ -13,7 +13,7 @@ public class GetStudentCurrentClassesController(GetStudentCurrentClassesService 
     [HttpGet("student/classes/current")]
     public async Task<IActionResult> Get()
     {
-        var classes = await service.Get(User.InstitutionId(), User.Id());
+        var classes = await service.Get(User.InstitutionId, User.Id);
 
         return Ok(classes);
     }

@@ -7,7 +7,7 @@ public class SykiHub : Hub
 {
     public override Task OnConnectedAsync()
     {
-        var userId = Context.User.Id();
+        var userId = Context.User.Id;
 
         if (SykiHubUsersStore.Users.ContainsKey(userId))
         {
@@ -23,7 +23,7 @@ public class SykiHub : Hub
 
     public override Task OnDisconnectedAsync(Exception? exception)
     {
-        var userId = Context.User.Id();
+        var userId = Context.User.Id;
         
         if (SykiHubUsersStore.Users.ContainsKey(userId))
         {

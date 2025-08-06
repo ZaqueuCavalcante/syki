@@ -15,7 +15,7 @@ public class UpdateEnrollmentPeriodController(UpdateEnrollmentPeriodService serv
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Update([FromRoute] string id, [FromBody] UpdateEnrollmentPeriodIn data)
     {
-        var result = await service.Update(User.InstitutionId(), id, data);
+        var result = await service.Update(User.InstitutionId, id, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

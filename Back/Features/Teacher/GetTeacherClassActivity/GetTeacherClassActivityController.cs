@@ -13,7 +13,7 @@ public class GetTeacherClassActivityController(GetTeacherClassActivityService se
     [HttpGet("teacher/classes/{id}/activities/{activityId}")]
     public async Task<IActionResult> Get([FromRoute] Guid id, [FromRoute] Guid activityId)
     {
-        var result = await service.Get(User.Id(), id, activityId);
+        var result = await service.Get(User.Id, id, activityId);
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

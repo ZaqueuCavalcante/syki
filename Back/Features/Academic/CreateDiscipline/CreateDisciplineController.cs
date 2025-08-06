@@ -14,7 +14,7 @@ public class CreateDisciplineController(CreateDisciplineService service) : Contr
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Create([FromBody] CreateDisciplineIn data)
     {
-        var discipline = await service.Create(User.InstitutionId(), data);
+        var discipline = await service.Create(User.InstitutionId, data);
         return Ok(discipline);
     }
 }

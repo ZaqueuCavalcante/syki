@@ -15,7 +15,7 @@ public class CreateWebhookSubscriptionController(CreateWebhookSubscriptionServic
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateWebhookSubscriptionIn data)
     {
-        var result = await service.Create(User.InstitutionId(), data);
+        var result = await service.Create(User.InstitutionId, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

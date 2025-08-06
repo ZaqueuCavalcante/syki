@@ -15,7 +15,7 @@ public class SetSchedulingPreferencesController(SetSchedulingPreferencesService 
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Set([FromBody] SetSchedulingPreferencesIn data)
     {
-        var result = await service.Set(User.InstitutionId(), User.Id(), data);
+        var result = await service.Set(User.InstitutionId, User.Id, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

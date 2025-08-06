@@ -1,5 +1,3 @@
-using Syki.Back.Auth;
-
 namespace Syki.Back.Features.Academic.CrossLogin;
 
 [ApiController, AuthAcademic]
@@ -19,7 +17,7 @@ public class CrossLoginController(CrossLoginService service, AuthSettings settin
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Login([FromBody] CrossLoginIn data)
     {
-        var result = await service.Login(User.InstitutionId(), data);
+        var result = await service.Login(User.InstitutionId, data);
 
         if (result.IsSuccess())
         {

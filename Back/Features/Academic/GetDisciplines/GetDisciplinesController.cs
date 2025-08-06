@@ -14,7 +14,7 @@ public class GetDisciplinesController(GetDisciplinesService service) : Controlle
     [HttpGet("academic/disciplines")]
     public async Task<IActionResult> Get([FromQuery] Guid? courseId)
     {
-        var disciplines = await service.Get(User.InstitutionId(), courseId);
+        var disciplines = await service.Get(User.InstitutionId, courseId);
         return Ok(disciplines);
     }
 }

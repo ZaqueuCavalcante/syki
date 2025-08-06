@@ -15,7 +15,7 @@ public class ReprocessWebhookCallController(ReprocessWebhookCallService service)
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Reprocess([FromRoute] Guid id)
     {
-        var result = await service.Reprocess(User.InstitutionId(), id);
+        var result = await service.Reprocess(User.InstitutionId, id);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

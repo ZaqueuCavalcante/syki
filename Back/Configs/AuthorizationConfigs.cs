@@ -1,5 +1,3 @@
-using Syki.Back.Auth;
-
 namespace Syki.Back.Configs;
 
 public static class AuthorizationConfigs

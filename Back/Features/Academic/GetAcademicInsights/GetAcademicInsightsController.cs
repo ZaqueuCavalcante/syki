@@ -14,7 +14,7 @@ public class GetAcademicInsightsController(GetAcademicInsightsService service) :
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {
-        var insights = await service.Get(User.InstitutionId());
+        var insights = await service.Get(User.InstitutionId);
         return Ok(insights);
     }
 }

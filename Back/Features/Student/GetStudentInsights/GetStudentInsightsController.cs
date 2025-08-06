@@ -13,7 +13,7 @@ public class GetStudentInsightsController(GetStudentInsightsService service) : C
     [HttpGet("student/insights")]
     public async Task<IActionResult> Get()
     {
-        var insights = await service.Get(User.Id(), User.CourseCurriculumId());
+        var insights = await service.Get(User.Id, User.CourseCurriculumId);
         
         return Ok(insights);
     }

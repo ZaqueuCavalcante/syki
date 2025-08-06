@@ -13,7 +13,7 @@ public sealed class SaveDomainEventsInterceptor : SaveChangesInterceptor
 
         var httpContextAccessor = eventData.Context.GetService<IHttpContextAccessor>();
         var ctx = httpContextAccessor?.HttpContext;
-        Guid? institutionId = (ctx != null && ctx.User.IsAuthenticated()) ? ctx.User.InstitutionId() : null;
+        Guid? institutionId = (ctx != null && ctx.User.IsAuthenticated) ? ctx.User.InstitutionId : null;
 
         var domainEvents = eventData.Context.ChangeTracker
             .Entries<Entity>()

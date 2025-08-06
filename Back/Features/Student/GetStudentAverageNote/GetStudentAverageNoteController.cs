@@ -13,7 +13,7 @@ public class GetStudentAverageNoteController(GetStudentAverageNoteService servic
     [HttpGet("student/average-note")]
     public async Task<IActionResult> Get()
     {
-        var averageNote = await service.Get(User.Id());
+        var averageNote = await service.Get(User.Id);
 
         return Ok(new GetStudentAverageNoteOut { AverageNote = averageNote });
     }

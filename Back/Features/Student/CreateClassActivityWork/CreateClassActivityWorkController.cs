@@ -15,7 +15,7 @@ public class CreateClassActivityWorkController(CreateClassActivityWorkService se
     [ProducesResponseType<SykiError>(400)]
     public async Task<IActionResult> Create([FromRoute] Guid id, [FromBody] CreateClassActivityWorkIn data)
     {
-        var result = await service.Create(id, User.Id(), data);
+        var result = await service.Create(id, User.Id, data);
 
         return result.Match<IActionResult>(Ok, BadRequest);
     }

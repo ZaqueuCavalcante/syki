@@ -13,7 +13,7 @@ public class GetAcademicClassesController(GetAcademicClassesService service) : C
     [HttpGet("academic/classes")]
     public async Task<IActionResult> Get([FromQuery] GetAcademicClassesIn query)
     {
-        var classes = await service.Get(User.InstitutionId(), query);
+        var classes = await service.Get(User.InstitutionId, query);
         return Ok(classes);
     }
 }

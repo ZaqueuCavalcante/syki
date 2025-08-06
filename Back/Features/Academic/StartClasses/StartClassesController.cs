@@ -16,7 +16,7 @@ public class StartClassesController(StartClassesService service) : ControllerBas
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Start([FromBody] StartClassesIn data)
     {
-        var result = await service.Start(User.InstitutionId(), data);
+        var result = await service.Start(User.InstitutionId, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

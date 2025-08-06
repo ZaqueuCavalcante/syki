@@ -15,7 +15,7 @@ public class CreateEnrollmentPeriodController(CreateEnrollmentPeriodService serv
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateEnrollmentPeriodIn data)
     {
-        var result = await service.Create(User.InstitutionId(), data);
+        var result = await service.Create(User.InstitutionId, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

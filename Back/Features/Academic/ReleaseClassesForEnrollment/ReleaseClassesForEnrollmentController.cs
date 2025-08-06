@@ -15,7 +15,7 @@ public class ReleaseClassesForEnrollmentController(ReleaseClassesForEnrollmentSe
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Release([FromBody] ReleaseClassesForEnrollmentIn data)
     {
-        var result = await service.Release(User.InstitutionId(), data);
+        var result = await service.Release(User.InstitutionId, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

@@ -14,7 +14,7 @@ public class GetWebhooksController(GetWebhooksService service) : ControllerBase
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {
-        var webhooks = await service.Get(User.InstitutionId());
+        var webhooks = await service.Get(User.InstitutionId);
         return Ok(webhooks);
     }
 }

@@ -13,7 +13,7 @@ public class GetCourseCurriculumsController(GetCourseCurriculumsService service)
     [HttpGet("academic/course-curriculums")]
     public async Task<IActionResult> Get()
     {
-        var courseCurriculums = await service.Get(User.InstitutionId());
+        var courseCurriculums = await service.Get(User.InstitutionId);
 
         return Ok(courseCurriculums);
     }

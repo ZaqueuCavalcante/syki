@@ -15,7 +15,7 @@ public class SetupMfaController(SetupMfaService service) : ControllerBase
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Setup([FromBody] SetupMfaIn data)
     {
-        var result = await service.Setup(User.Id(), data.Token);
+        var result = await service.Setup(User.Id, data.Token);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }

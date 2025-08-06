@@ -80,7 +80,7 @@ public partial class IntegrationTests
         // Assert
         using var userManager = _api.GetUserManager();
         var user = await userManager.FindByEmailAsync(student.Email);
-        var isOnlyInStudentRole = await userManager.IsOnlyInRole(user!, UserRole.Student);
+        var isOnlyInStudentRole = await userManager.IsOnlyInRoleAsync(user!, UserRole.Student);
         isOnlyInStudentRole.Should().BeTrue();
     }
 }

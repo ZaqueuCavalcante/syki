@@ -15,7 +15,7 @@ public class GetUserNotificationsController(GetUserNotificationsService service)
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {
-        var notifications = await service.Get(User.InstitutionId(), User.Id());
+        var notifications = await service.Get(User.InstitutionId, User.Id);
         return Ok(notifications);
     }
 }

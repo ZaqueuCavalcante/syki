@@ -99,7 +99,7 @@ public static class StringExtensions
         return JsonConvert.SerializeObject(obj, _settings);
     }
 
-    public static Byte[] GenerateQrCodeBytes(this string key, string email)
+    public static string GenerateQrCodeBase64(this string key, string email)
     {
         const string provider = "Syki";
 
@@ -111,7 +111,9 @@ public static class StringExtensions
 
         var qrCode = new PngByteQRCode(qrCodeData);
 
-        return qrCode.GetGraphic(20);
+        var bytes = qrCode.GetGraphic(20);
+
+        return string.Format("data:image/png;base64,{0}", Convert.ToBase64String(bytes));
     }
 
     public static string MinutesToString(this int value)

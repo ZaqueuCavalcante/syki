@@ -13,6 +13,7 @@ public partial class IntegrationTests
 
         // Assert
         response.Key.Should().HaveLength(32);
+        response.QrCodeBase64.Should().StartWith("data:image/png;base64,iVBORw0KGgoAAAAN");
     }
 
     [Test]

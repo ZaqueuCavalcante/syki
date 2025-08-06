@@ -16,6 +16,6 @@ public class GetMfaKeyService(UserManager<SykiUser> userManager) : ICrossService
             key = await userManager.GetAuthenticatorKeyAsync(user);
         }
 
-        return new GetMfaKeyOut { Key = key! };
+        return new GetMfaKeyOut { Key = key!, QrCodeBase64 = key.GenerateQrCodeBase64(user.Email) };
     }
 }

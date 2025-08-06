@@ -18,7 +18,7 @@
                 else
                 {
                     <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0">
-                        <MudImage Src="@(GetQrCodeImageSrc())" Fluid="true" Elevation="25" Class="rounded-lg"/>
+                        <MudImage Src="@_qrCodeBase64" Fluid="true" Elevation="25" Class="rounded-lg"/>
                     </MudContainer>
                     <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0">
                         <SykiTextField Value="@_key" CopyAdornment="true" ReadOnly="true" />
@@ -35,8 +35,8 @@
 @code
 {
     private string _key;
+    private string _qrCodeBase64;
     private bool _qrCodeLoading;
-    private Byte[] _codeBytes;
 
     protected override async Task OnInitializedAsync()
     {
@@ -45,14 +45,8 @@
         var result = await Client.Get();
         var email = (await AuthManager.GetUser()).Email;
         _key = result.Key;
-        _codeBytes = _key.GenerateQrCodeBytes(email);
+        _qrCodeBase64 = result.QrCodeBase64;
 
         _qrCodeLoading = false;
-    }
-
-    private string GetQrCodeImageSrc()
-    {
-        if (_codeBytes == null) return "";
-        return string.Format("data:image/png;base64,{0}", Convert.ToBase64String(_codeBytes));
     }
 }

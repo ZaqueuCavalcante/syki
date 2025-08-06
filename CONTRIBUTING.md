@@ -1,9 +1,9 @@
-﻿# Guia de Contribuição – Projeto Syki
+﻿# Guia de Contribuição
 
-Olá! ??  
-Ficamos felizes pelo seu interesse em contribuir com o Syki – um sistema open-source para gestão acadêmica, feito com carinho para facilitar a vida de gestores, professores e alunos. ??
+Olá!
+Ficamos felizes pelo seu interesse em contribuir com o Syki – um sistema open-source para gestão acadêmica, feito com carinho para facilitar a vida de gestores, professores e alunos.
 
-## ? Como contribuir
+## Como contribuir
 
 Siga os passos abaixo para colaborar de forma eficiente com o projeto:
 
@@ -44,7 +44,7 @@ Siga os passos abaixo para colaborar de forma eficiente com o projeto:
 
 ---
 
-## ?? Dicas
+## Dicas
 
 - Prefira alterações pequenas e bem definidas.
 - Se for algo maior, abra uma **issue antes** para discutirmos juntos.
@@ -52,11 +52,12 @@ Siga os passos abaixo para colaborar de forma eficiente com o projeto:
 
 ---
 
-## ?? Licença
+## Licença
 
-Ao enviar contribuições, você concorda com os termos da [LICENSE](./LICENSE) do projeto.
+Ao enviar contribuições, você concorda com os termos da [licença](./LICENSE) do projeto.
 
 ---
 
-**Obrigado por fazer parte do projeto Syki!** ??  
+**Obrigado por fazer parte do projeto Syki!**
+
 Juntos construímos ferramentas melhores para a educação.

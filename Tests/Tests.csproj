@@ -14,7 +14,7 @@
     <PackageReference Include="NUnit" Version="4.3.2" />
     <PackageReference Include="Bogus" Version="35.6.3" />
     <PackageReference Include="ReportGenerator" Version="5.4.11" />
-    <PackageReference Include="FluentAssertions" Version="8.5.0" />
+    <PackageReference Include="FluentAssertions" Version="7.2.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.8" />

@@ -4,7 +4,10 @@ public class GetClassroomsService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<List<GetClassroomsOut>> Get(Guid institutionId)
     {
-        var classrooms = await ctx.Classrooms.Where(x => x.InstitutionId == institutionId).ToListAsync();
+        var classrooms = await ctx.Classrooms
+            .Include(x => x.Campus)
+            .Where(x => x.InstitutionId == institutionId).ToListAsync();
+
         return classrooms.ConvertAll(c => c.ToGetClassroomsOut());
     }
 }

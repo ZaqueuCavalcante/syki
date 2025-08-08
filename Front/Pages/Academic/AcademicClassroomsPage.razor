@@ -1,0 +1,101 @@
+﻿@using Syki.Front.Features.Academic.CreateTeacher
+@using Syki.Front.Features.Academic.AssignDisciplinesToTeacher
+
+@namespace Syki.Front.Pages.Academic
+
+@page "/academic/classrooms"
+@attribute [Authorize(Roles = "Academic")]
+
+<SykiPageTitle Title="Salas" />
+
+<MudContainer Class="my-4 px-4">
+    <SykiPageHeader Icon="@Icons.Material.Filled.VideoLabel" Title="Salas" ButtonText="Nova Sala" OnClick="@OpenDialog" />
+    <SykiPageAlert Text="Uma mesma sala pode ser usada por diversas turmas durante o dia." />
+    <MudContainer Class="px-0 mb-4">
+        <MudTable
+            Hover
+            Dense
+            Class="pa-4"
+            Items="@_classrooms"
+            Filter="@_quickFilter"
+            Loading="@_loading"
+            RowsPerPage="10"
+        >
+            <ToolBarContent>
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou campus"/>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Campus</MudTh>
+                <MudTh>Capacidade</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nome">@context.Name</MudTd>
+                <MudTd DataLabel="Campus">@context.Campus</MudTd>
+                <MudTd DataLabel="Capacidade">@context.Capacity</MudTd>
+            </RowTemplate>
+            <LoadingContent>
+                @if (_breakpoint == Breakpoint.Xs)
+                {
+                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                }
+            </LoadingContent>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+            <PagerContent>
+                <SykiTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+@inject IDialogService DialogService
+@inject GetClassroomsClient GetClassroomsClient
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    private bool _loading;
+    private string _searchString;
+    private List<GetClassroomsOut> _classrooms = [];
+
+    private Breakpoint _breakpoint;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        _loading = true;
+        _classrooms = await GetClassroomsClient.Get();
+        _loading = false;
+    }
+
+    private Func<GetClassroomsOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Campus);
+
+    private async Task OpenDialog()
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
+        };
+        var dialog = await DialogService.ShowAsync<CreateClassroomDialog>("", options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        await OnInitializedAsync();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return (_searchString.IsEmpty()) ? "Não existem salas cadastradas ainda." : "Nenhuma sala encontrada.";
+    }
+}

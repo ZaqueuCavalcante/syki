@@ -1,0 +1,107 @@
+@namespace Syki.Front.Features.Academic.CreateClassroom
+
+<MudDialog Class="pb-2" DefaultFocus="DefaultFocus.None">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-1 mb-n1" />
+            Nova Sala
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="@_form" Class="pt-1">
+            <MudSelect
+                Dense="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="pb-2"
+                AutoFocus="true"
+                @bind-Value="@_campus"
+                Label="Campus"
+                Required="true"
+                RequiredError="Informe!"
+                AdornmentColor="Color.Primary"
+            >
+                @foreach (CampusOut? item in _campi)
+                {
+                    <MudSelectItem Value="@item">@item.Name</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudTextField
+                OnlyValidateIfDirty="true"
+                Immediate="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Class="pb-2"
+                AutoFocus="true"
+                @bind-Value="@_name"
+                T="String"
+                Label="Nome"
+                Required="true"
+                RequiredError="Informe!"
+            />
+
+            <MudNumericField
+                MaxLength="5"
+                HideSpinButtons="true"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                @bind-Value="@_capacity"
+                Label="Capacidade"
+                Required="true"
+                RequiredError="Informe!"
+            />
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Cancel" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject CreateClassroomClient Client
+@inject GetCampiClient GetCampiClient
+
+@code
+{
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; }
+
+    private MudForm _form;
+    private bool _loading;
+
+    private CampusOut? _campus;
+    private List<CampusOut> _campi = [];
+    private string _name;
+    private int _capacity = 25;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _campi = await GetCampiClient.Get();
+    }
+
+    async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+        var response = await Client.Create(_campus.Id, _name, _capacity);
+        if (response.IsSuccess)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Sala cadastrada com sucesso!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

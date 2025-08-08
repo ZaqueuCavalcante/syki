@@ -1,3 +1,5 @@
+using Syki.Back.Features.Academic.CreateCampus;
+
 namespace Syki.Back.Features.Academic.CreateClassroom;
 
 /// <summary>
@@ -8,6 +10,7 @@ public class Classroom
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
     public Guid CampusId { get; set; }
+    public Campus Campus { get; set; }
     public string Name { get; set; }
     public int Capacity { get; set; }
 
@@ -41,6 +44,8 @@ public class Classroom
         {
             Id = Id,
             Name = Name,
+            Campus = Campus.Name,
+            Capacity = Capacity,
         };
     }
 }

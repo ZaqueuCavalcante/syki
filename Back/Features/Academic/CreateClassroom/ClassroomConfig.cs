@@ -1,5 +1,3 @@
-using Syki.Back.Features.Academic.CreateCampus;
-
 namespace Syki.Back.Features.Academic.CreateClassroom;
 
 public class ClassroomConfig : IEntityTypeConfiguration<Classroom>
@@ -11,7 +9,7 @@ public class ClassroomConfig : IEntityTypeConfiguration<Classroom>
         classroom.HasKey(c => c.Id);
         classroom.Property(c => c.Id).ValueGeneratedNever();
 
-        classroom.HasOne<Campus>()
+        classroom.HasOne(x => x.Campus)
             .WithMany()
             .HasForeignKey(c => c.CampusId);
     }

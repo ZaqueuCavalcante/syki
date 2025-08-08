@@ -1,0 +1,253 @@
+@namespace Syki.Front.Features.Academic.AssignDisciplinesToTeacher
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+	<MudDrawerHeader Class="justify-space-between">
+		<MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+			<MudIcon Icon="@Icons.Material.Filled.Apps" />
+			<MudText Typo="Typo.h5"><b>Disciplinas do professor</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+
+    <MudGrid Spacing="1" Class="px-6">
+        <MudForm @ref="@_form" Style="width: 100%">
+            <MudGrid Spacing="2">
+                <MudItem xs="12" Class="my-2">
+                    <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexStart" Spacing="1">
+                        <MudIcon Icon="@Icons.Material.Filled.Person4" Size="Size.Medium" />
+                        <MudText Typo="Typo.h6"><b>@_teacher.Name</b></MudText>
+                    </MudStack>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <SykiTitleText Icon="@GetSelectedDisciplinesIcon()" Text="@GetSelectedDisciplinesTitle()" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudSelect
+                        Dense
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        Value="@_course"
+                        ValueChanged="@((CourseOut newValue) => HandleSelectCourse(newValue))"
+                        Label="Curso"
+                        AdornmentColor="Color.Primary"
+                    >
+                        @foreach (CourseOut? item in _courses)
+                        {
+                            <MudSelectItem Value="@item">@item.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudAutocomplete
+                        MaxItems="50"
+                        T="AssignDisciplinesToTeacherSelect"
+                        SearchFunc="@SearchDiscipline"
+                        Dense
+                        Placeholder=""
+                        ToStringFunc="@(e => null)"
+                        DebounceInterval="100"
+                        ResetValueOnEmptyText
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        Class="mb-2"
+                        Value="@_discipline"
+                        ValueChanged="(AssignDisciplinesToTeacherSelect newValue) => HandleDisciplineChanged(newValue)"
+                        Label="Disciplina"
+                        AdornmentColor="Color.Primary"
+                    >
+                        <ItemTemplate Context="e">
+                            <MudStack Row Spacing="0">
+                                <MudText Typo="Typo.body1">@e.Name</MudText>
+                            </MudStack>
+                        </ItemTemplate>
+                        <NoItemsTemplate>
+                            <MudStack Row Spacing="0" AlignItems="AlignItems.Center" Justify="Justify.Center">
+                                <MudText Typo="Typo.body1">@GetEmptyDisciplinesText()</MudText>
+                            </MudStack>
+                        </NoItemsTemplate>
+                    </MudAutocomplete>
+                </MudItem>
+            </MudGrid>
+
+            <MudItem xs="12" Class="mt-2">
+                @if (_selectedDisciplines.Count > 0)
+                {
+                    <MudDataGrid
+                        Dense
+                        Hover
+                        Class="my-2"
+                        SortMode="SortMode.None"
+                        Items="@_selectedDisciplines.OrderBy(d => d.Name)"
+                    >
+                        <Columns>
+                            <PropertyColumn Property="x => x.Name" Title="Disciplina" />
+                            <TemplateColumn>
+                                <CellTemplate>
+                                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Delete" Color="@Color.Error" OnClick="@(() => UnselectDiscipline(context.Item))" />
+                                </CellTemplate>
+                            </TemplateColumn>
+                        </Columns>
+                    </MudDataGrid>
+                }
+            </MudItem>
+        </MudForm>
+    </MudGrid>
+
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 pt-6">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" Disabled="@_selectedDisciplines.Select(x => x.Id).ToList().IsEquivalentTo(_teacher.Disciplines.ConvertAll(x => x.Id))" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject NavigationManager Nav
+@inject IBrowserViewportService BrowserViewportService
+@inject GetAcademicTeacherClient GetAcademicTeacherClient
+@inject GetCourseDisciplinesClient GetCourseDisciplinesClient
+@inject GetCoursesWithDisciplinesClient GetCoursesWithDisciplinesClient
+@inject AssignDisciplinesToTeacherClient AssignDisciplinesToTeacherClient
+
+@code
+{
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private bool _open;
+    private string _width = "520px";
+    private Breakpoint _breakpoint;
+    
+    private MudForm _form;
+    private bool _loading;
+
+    private GetAcademicTeacherOut _teacher = new();
+
+    private CourseOut? _course;
+    private List<CourseOut> _courses = [];
+
+    private AssignDisciplinesToTeacherSelect? _discipline;
+    private List<CourseDisciplineOut> _disciplines = [];
+    private HashSet<AssignDisciplinesToTeacherSelect> _selectedDisciplines = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "500px";
+        _courses = await GetCoursesWithDisciplinesClient.Get();
+    }
+
+    async Task HandleSelectCourse(CourseOut newValue)
+    {
+        _course = newValue;
+        _disciplines = _course != null ? await GetCourseDisciplinesClient.Get(_course!.Id) : [];
+        _disciplines.ForEach(d => d.IsSelected = _selectedDisciplines.Any(td => td.Id == d.Id));
+    }
+
+    private async Task<IEnumerable<AssignDisciplinesToTeacherSelect>> SearchDiscipline(string value, CancellationToken cancellationToken)
+    {
+        await Task.Yield();
+
+        var filtered = _disciplines.Where(d => !d.IsSelected)
+            .ToList().ConvertAll(x => new AssignDisciplinesToTeacherSelect { Id = x.Id, Name = x.Name });
+
+        if (string.IsNullOrEmpty(value))
+            return filtered;
+
+        return filtered.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    private void HandleDisciplineChanged(AssignDisciplinesToTeacherSelect newValue)
+    {
+        _disciplines.First(d => d.Id == newValue.Id).IsSelected = true;
+        _selectedDisciplines.Add(newValue);
+    }
+
+    private void UnselectDiscipline(AssignDisciplinesToTeacherSelect discipline)
+    {
+        _disciplines.FirstOrDefault(d => d.Id == discipline.Id)?.IsSelected = false;
+        _selectedDisciplines.Remove(discipline);
+    }
+
+    public async Task Open(Guid teacherId)
+    {
+        _loading = true;
+
+        var response = await GetAcademicTeacherClient.Get(teacherId);
+        if (response.IsSuccess)
+        {
+            _teacher = response.Success;
+            _selectedDisciplines = _teacher.Disciplines
+                .Select(x => new AssignDisciplinesToTeacherSelect() { Id = x.Id, Name = x.Name })
+                .ToHashSet();
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+
+        _course = null;
+        _discipline = null;
+        _disciplines = [];
+
+        _open = true;
+        await _form?.ResetAsync();
+
+        _loading = false;
+
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+      
+        _loading = true;
+        var selectedDisciplines = _selectedDisciplines.Select(x => x.Id).ToList();
+        var response = await AssignDisciplinesToTeacherClient.Assign(_teacher.Id, selectedDisciplines);
+        if (response.IsSuccess)
+        {
+            Snackbar.Add("Disciplinas salvas com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+
+    private string GetSelectedDisciplinesIcon()
+    {
+        var count = _selectedDisciplines.Count;
+        if (count == 0) return Icons.Material.Filled.Error;
+
+        return Icons.Material.Filled.Check;
+    }
+
+    private string GetSelectedDisciplinesTitle()
+    {
+        var count = _selectedDisciplines.Count;
+        if (count == 0) return "Nenhuma disciplina selecionada";
+
+        if (count == 1) return $"1 disciplina selecionada";
+
+        return $"{count} disciplinas selecionadas";
+    }
+
+    private string GetEmptyDisciplinesText()
+    {
+        if (_course == null) return "Selecione um curso";
+
+        return "Selecione outro curso";
+    }
+}

@@ -31,4 +31,13 @@ public class Discipline
             Courses = Links?.ConvertAll(v => v.CourseId) ?? [],
         };
     }
+
+    public GetAcademicTeacherDisciplineOut ToGetAcademicTeacherDisciplineOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Name = Name,
+        };
+    }
 }

@@ -24,6 +24,7 @@ global using Syki.Front.Features.Academic.GetNotifications;
 global using Syki.Front.Features.Academic.GetStudents;
 global using Syki.Front.Features.Academic.GetTeachers;
 global using Syki.Front.Features.Academic.GetAcademicClass;
+global using Syki.Front.Features.Academic.GetAcademicTeacher;
 global using Syki.Front.Features.Academic.UpdateEnrollmentPeriod;
 global using Syki.Front.Features.Academic.CreateClass;
 global using Syki.Front.Features.Academic.StartClasses;

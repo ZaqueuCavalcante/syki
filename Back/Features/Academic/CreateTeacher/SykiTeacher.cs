@@ -44,4 +44,14 @@ public class SykiTeacher : Entity
             Name = Name,
         };
     }
+
+    public GetAcademicTeacherOut ToGetAcademicTeacherOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Name = Name,
+            Disciplines = Disciplines.ConvertAll(x => x.ToGetAcademicTeacherDisciplineOut()),
+        };
+    }
 }

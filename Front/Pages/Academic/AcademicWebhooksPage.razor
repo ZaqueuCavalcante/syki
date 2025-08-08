@@ -44,7 +44,7 @@
     </MudContainer>
 </MudContainer>
 
-<CreateWebhookSubscriptionDrawer @ref="@_drawer" AfterSubmit="LoadData" />
+<CreateWebhookSubscriptionDrawer @ref="@_drawer" AfterSubmit="@LoadData" />
 
 @inject NavigationManager Nav
 @inject IDialogService DialogService

@@ -1,4 +1,5 @@
 ﻿@using Syki.Front.Features.Academic.CreateTeacher
+@using Syki.Front.Features.Academic.AssignDisciplinesToTeacher
 
 @namespace Syki.Front.Pages.Academic
 
@@ -12,12 +13,12 @@
     <SykiPageAlert Text="Um professor pode lecionar várias disciplinas ao longo de um período, inclusive em mais de um campus." />
     <MudContainer Class="px-0 mb-4">
         <MudTable
+            Hover
+            Dense
             Class="pa-4"
             Items="@_teachers"
             Filter="@_quickFilter"
-            Hover="true"
             Loading="@_loading"
-            Dense="true"
             RowsPerPage="10"
         >
             <ToolBarContent>
@@ -26,18 +27,21 @@
             <HeaderContent>
                 <MudTh>Nome</MudTh>
                 <MudTh>Email</MudTh>
-                <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
-                    <MudTh></MudTh>
-                </AuthorizeView>
+                <MudTh>Disciplinas</MudTh>
+                <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Nome">@context.Name</MudTd>
                 <MudTd DataLabel="Email">@context.Email</MudTd>
-                <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
-                    <MudTd>
+                <MudTd DataLabel="Disciplinas">@context.Disciplines.ToThousandSeparated()</MudTd>
+                <MudTd>
+                    <MudTooltip Text="Disciplinas" Arrow="true" Placement="Placement.Top">
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Apps" OnClick="@(() => OpenDrawer(context))" />
+                    </MudTooltip>
+                    <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context))" />
-                    </MudTd>
-                </AuthorizeView>
+                    </AuthorizeView>
+                </MudTd>
             </RowTemplate>
             <LoadingContent>
                 @if (_breakpoint == Breakpoint.Xs)
@@ -55,6 +59,8 @@
     </MudContainer>
 </MudContainer>
 
+<AssignDisciplinesToTeacherDrawer @ref="@_drawer" AfterSubmit="@LoadData" />
+
 @inject NavigationManager Nav
 @inject IDialogService DialogService
 @inject CrossLoginClient CrossLoginClient
@@ -68,10 +74,16 @@
     private List<TeacherOut> _teachers = [];
 
     private Breakpoint _breakpoint;
+    private AssignDisciplinesToTeacherDrawer _drawer = default!;
 
     protected override async Task OnInitializedAsync()
     {
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
         _loading = true;
         _teachers = await GetTeachersClient.Get();
         _loading = false;
@@ -83,6 +95,11 @@
         await CrossLoginClient.Login(teacher.Id);
         Nav.NavigateTo("/", forceLoad: true);
         _loading = false;
+    }
+
+    private async Task OpenDrawer(TeacherOut teacher)
+    {
+        await _drawer.Open(teacher.Id);
     }
 
     private Func<TeacherOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Email);

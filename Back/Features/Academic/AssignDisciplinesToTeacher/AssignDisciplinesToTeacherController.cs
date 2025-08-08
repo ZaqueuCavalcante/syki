@@ -8,7 +8,7 @@ public class AssignDisciplinesToTeacherController(AssignDisciplinesToTeacherServ
     /// Vincular disciplinas
     /// </summary>
     /// <remarks>
-    /// Vincula disciplinas que o professor esta apto a lecionar.
+    /// Vincula as disciplinas que o professor está apto a lecionar.
     /// </remarks>
     [HttpPut("academic/teachers/{id}/assign-disciplines")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]

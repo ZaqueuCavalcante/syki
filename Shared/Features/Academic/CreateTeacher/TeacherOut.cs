@@ -5,6 +5,7 @@ public class TeacherOut
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
+    public int Disciplines { get; set; }
 
     public static IEnumerable<(string, TeacherOut)> GetExamples() =>
     [

@@ -15,6 +15,13 @@ public static class ListExtensions
         return true;
     }
 
+    public static bool IsEquivalentTo(this List<Guid> selfs, List<Guid> others)
+    {
+        if (selfs.Count != others.Count) return false;
+
+        return selfs.IsSubsetOf(others);
+    }
+
     public static List<AgendaDayOut> ToAgendas(this List<EnrollmentClassOut> classes)
     {
         var agendas = new List<AgendaDayOut>();

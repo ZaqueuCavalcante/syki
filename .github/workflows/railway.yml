@@ -62,7 +62,7 @@ jobs:
           --no-restore \
           --no-build \
           --verbosity normal \
-          --logger trx;LogFileName=integration_results.trx \
+          --logger "trx;LogFileName=unit_results.trx" \
           --collect:"XPlat Code Coverage" \
           --results-directory ./TestResults
 

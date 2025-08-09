@@ -79,7 +79,7 @@ jobs:
         with:
           reports: "**/*.cobertura.xml"
           targetdir: "coverage"
-          reporttypes: "HtmlInline_AzurePipelines"
+          reporttypes: "HtmlInline_AzurePipelines;Cobertura"
           toolpath: "reportgeneratortool"
 
       - name: Generate coverage badges
@@ -98,18 +98,6 @@ jobs:
         run: |
           shopt -s nullglob
           mv *.svg coverage/ || true
-
-      - name: Include badges in coverage site
-        shell: bash
-        run: |
-          mkdir -p coverage
-          shopt -s nullglob
-          files=(*.svg)
-          if [ ${#files[@]} -gt 0 ]; then
-            mv "${files[@]}" coverage/
-          else
-            echo "No badge SVGs found (skipping move)."
-          fi
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3

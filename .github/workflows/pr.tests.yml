@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-      contents: read
+      contents: write
       checks: write
 
     services:
@@ -43,30 +43,39 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
+      run: |
+        dotnet test \
+        --no-restore \
+        --no-build \
+        --configuration Release \
+        --verbosity normal \
+        --logger "trx;LogFileName=test_results.trx" \
+        --collect:"XPlat Code Coverage"
+        --results-directory ./TestResults \
+        -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
 
     - name: Combine Coverage Reports
       uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.10
       with:
         reports: "**/*.cobertura.xml"
-        targetdir: "${{ github.workspace }}"
-        reporttypes: "Cobertura"
+        targetdir: "coverage-html"
+        reporttypes: "HtmlInline_AzurePipelines;Cobertura"
         verbosity: "Info"
-        title: "Code Coverage"
+        title: "Code Coverage (PR #${{ github.event.number }})"
         tag: "${{ github.run_number }}_${{ github.run_id }}"
         toolpath: "reportgeneratortool"
 
     - name: Upload Combined Coverage XML
       uses: actions/upload-artifact@v4
       with:
-        name: coverage
-        path: ${{ github.workspace }}/Cobertura.xml
+        name: coverage-html-pr-${{ github.event.number }}
+        path: coverage-html
         retention-days: 5
 
     - name: Publish Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        filename: "Cobertura.xml"
+        filename: "coverage-html/Cobertura.xml"
         badge: true
         fail_below_min: true
         format: markdown
@@ -86,15 +95,28 @@ jobs:
     - name: Write to Job Summary
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
-    - name: Upload Test Result Files
-      uses: actions/upload-artifact@v4
+    - name: Publish Coverage to gh-pages/pr/<PR_NUMBER>
+      if: github.event.pull_request.head.repo.fork == false
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        name: test-results
-        path: ${{ github.workspace }}/**/TestResults/**/*
-        retention-days: 5
-        
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: coverage-html
+        destination_dir: pr/${{ github.event.number }}
+        keep_files: true
+
+    - name: Comment link to Coverage (Pages)
+      if: github.event.pull_request.head.repo.fork == false
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: coverage-pages-link
+        message: |
+          📊 **Full HTML Coverage report**:
+          https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr/${{ github.event.number }}/
+
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2.20.0
       if: always()
       with:
-        files: "${{ github.workspace }}/**/*.trx"
+        files: "**/*.trx"
+        check_run: ${{ github.event.pull_request.head.repo.fork == false }}

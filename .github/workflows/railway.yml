@@ -47,9 +47,9 @@ jobs:
       - name: Unit Tests
         run: |
           dotnet test --filter "FullyQualifiedName~UnitTests" \
-          --configuration Release \
           --no-restore \
           --no-build \
+          --configuration Release \
           --verbosity normal \
           --logger "trx;LogFileName=unit_results.trx" \
           --collect:"XPlat Code Coverage" \
@@ -89,6 +89,10 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
     needs: build-test-migrate
 

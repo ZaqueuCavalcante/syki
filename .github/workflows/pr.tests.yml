@@ -5,10 +5,12 @@ on:
     branches: [ master ]
 
 jobs:
-  tests:
-    permissions: write-all
+  pr-tests:
     runs-on: ubuntu-latest
-    name: Tests
+    permissions:
+      pull-requests: write
+      contents: read
+      checks: write
 
     services:
       postgres:
@@ -27,10 +29,10 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+    - name: Setup
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0.100-preview.6.25358.103
 
@@ -41,17 +43,38 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+      run: dotnet test --no-build --configuration Release --verbosity normal --logger trx --collect:"XPlat Code Coverage"
 
-    - name: Code Coverage Report
+    - name: Combine Coverage Reports
+      uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.10
+      with:
+        reports: "**/*.cobertura.xml"
+        targetdir: "${{ github.workspace }}"
+        reporttypes: "Cobertura"
+        verbosity: "Info"
+        title: "Code Coverage"
+        tag: "${{ github.run_number }}_${{ github.run_id }}"
+        toolpath: "reportgeneratortool"
+
+    - name: Upload Combined Coverage XML
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage
+        path: ${{ github.workspace }}/Cobertura.xml
+        retention-days: 5
+
+    - name: Publish Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        filename: coverage/**/coverage.cobertura.xml
+        filename: "Cobertura.xml"
         badge: true
-        output: both
+        fail_below_min: true
         format: markdown
+        hide_branch_rate: false
+        hide_complexity: false
         indicators: true
-        thresholds: '55 55'
+        output: both
+        thresholds: "70 80"
 
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
@@ -63,40 +86,15 @@ jobs:
     - name: Write to Job Summary
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
-    - name: ReportGenerator
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.3.11
-      with:
-        reports: coverage/**/coverage.cobertura.xml
-        targetdir: coveragereport
-
-    - name: Upload coverage report artifact
+    - name: Upload Test Result Files
       uses: actions/upload-artifact@v4
       with:
-        name: CoverageReport
-        path: coveragereport
-
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
-
-    - name: Upload Artifact
-      uses: actions/upload-pages-artifact@v3
+        name: test-results
+        path: ${{ github.workspace }}/**/TestResults/**/*
+        retention-days: 5
+        
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2.20.0
+      if: always()
       with:
-        path: coveragereport
-
-  deploy:
-    runs-on: ubuntu-latest
-    name: Deploy
-    needs: tests
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        files: "${{ github.workspace }}/**/*.trx"

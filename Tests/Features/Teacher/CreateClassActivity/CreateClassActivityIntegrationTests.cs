@@ -103,7 +103,7 @@ public partial class IntegrationTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.ClassActivityInvalidWeightsLists))]
-    public async Task Should_not_add_class_activities_with_invalid_weights(List<int> weights)
+    public async Task Should_not_add_class_activities_with_invalid_weights(int[] weights)
     {
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();

@@ -12,7 +12,10 @@ public static class JsonExtensions
 
     public static void ShouldBeError<S>(this OneOf<S, ErrorOut> oneOf, SykiError expected)
     {
-        oneOf.IsSuccess.Should().BeFalse();
+        if (oneOf.IsSuccess)
+        {
+            throw new InvalidOperationException($"Expected error '{expected}' not found");
+        }
         oneOf.IsError.Should().BeTrue();
         oneOf.Error.Code.Should().Be(expected.Code);
         oneOf.Error.Message.Should().Be(expected.Message);
@@ -20,13 +23,19 @@ public static class JsonExtensions
 
     public static void ShouldBeSuccess<S, E>(this OneOf<S, E> oneOf)
     {
+        if (oneOf.IsError)
+        {
+            throw new InvalidOperationException($"'{oneOf.Error}'");
+        }
         oneOf.IsSuccess.Should().BeTrue();
-        oneOf.IsError.Should().BeFalse();
     }
 
     public static void ShouldBeError<S>(this OneOf<S, SykiError> oneOf, SykiError expected)
     {
-        oneOf.IsSuccess.Should().BeFalse();
+        if (oneOf.IsSuccess)
+        {
+            throw new InvalidOperationException($"Expected error '{expected}' not found");
+        }
         oneOf.IsError.Should().BeTrue();
         oneOf.Error.Should().BeOfType(expected.GetType());
         oneOf.Error.Code.Should().Be(expected.Code);
@@ -35,7 +44,10 @@ public static class JsonExtensions
 
     public static void ShouldBeError<S>(this OneOf<S, ErrorOut> oneOf, ErrorOut expected)
     {
-        oneOf.IsSuccess.Should().BeFalse();
+        if (oneOf.IsSuccess)
+        {
+            throw new InvalidOperationException($"Expected error '{expected}' not found");
+        }
         oneOf.IsError.Should().BeTrue();
         oneOf.Error.Code.Should().Be(expected.Code);
         oneOf.Error.Message.Should().Be(expected.Message);

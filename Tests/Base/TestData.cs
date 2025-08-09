@@ -276,66 +276,72 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> ConflictingSchedules()
+    public static IEnumerable<Schedule[]> ConflictingSchedules()
     {
-        foreach (var list in new List<List<Schedule>>()
+        yield return new[]
         {
-            new() {
-                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-                new Schedule(Day.Monday, Hour.H07_30, Hour.H07_45),
-            },
-            new() {
-                new Schedule(Day.Monday, Hour.H10_00, Hour.H11_00),
-                new Schedule(Day.Monday, Hour.H09_30, Hour.H12_15),
-            },
-            new() {
-                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-                new Schedule(Day.Monday, Hour.H07_30, Hour.H08_30),
-            },
-            new() {
-                new Schedule(Day.Monday, Hour.H07_30, Hour.H08_30),
-                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-            },
-            new() {
-                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-                new Schedule(Day.Tuesday, Hour.H08_00, Hour.H09_00),
-                new Schedule(Day.Monday, Hour.H07_15, Hour.H07_45),
-            },
-            new() {
-                new Schedule(Day.Wednesday, Hour.H12_00, Hour.H15_30),
-                new Schedule(Day.Wednesday, Hour.H13_00, Hour.H14_15),
-            },
-        })
+            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new Schedule(Day.Monday, Hour.H07_30, Hour.H07_45),
+        };
+
+        yield return new[]
         {
-            yield return [list];
-        }
+            new Schedule(Day.Monday, Hour.H10_00, Hour.H11_00),
+            new Schedule(Day.Monday, Hour.H09_30, Hour.H12_15),
+        };
+
+        yield return new[]
+        {
+            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new Schedule(Day.Monday, Hour.H07_30, Hour.H08_30),
+        };
+
+        yield return new[]
+        {
+            new Schedule(Day.Monday, Hour.H07_30, Hour.H08_30),
+            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+        };
+
+        yield return new[]
+        {
+            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new Schedule(Day.Tuesday, Hour.H08_00, Hour.H09_00),
+            new Schedule(Day.Monday, Hour.H07_15, Hour.H07_45),
+        };
+
+        yield return new[]
+        {
+            new Schedule(Day.Wednesday, Hour.H12_00, Hour.H15_30),
+            new Schedule(Day.Wednesday, Hour.H13_00, Hour.H14_15),
+        };
     }
 
-    public static IEnumerable<object[]> ValidSchedules()
+    public static IEnumerable<Schedule[]> ValidSchedules()
     {
-        foreach (var list in new List<List<Schedule>>()
+        yield return new[]
         {
-            new() {
-                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-                new Schedule(Day.Monday, Hour.H08_00, Hour.H09_00),
-            },
-            new() {
-                new Schedule(Day.Monday, Hour.H08_00, Hour.H09_00),
-                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-            },
-            new() {
-                new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-                new Schedule(Day.Tuesday, Hour.H08_00, Hour.H09_00),
-                new Schedule(Day.Monday, Hour.H09_45, Hour.H10_15),
-            },
-            new() {
-                new Schedule(Day.Wednesday, Hour.H12_00, Hour.H15_30),
-                new Schedule(Day.Wednesday, Hour.H11_15, Hour.H12_00),
-            },
-        })
+            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new Schedule(Day.Monday, Hour.H08_00, Hour.H09_00),
+        };
+
+        yield return new[]
         {
-            yield return [list];
-        }
+            new Schedule(Day.Monday, Hour.H08_00, Hour.H09_00),
+            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+        };
+
+        yield return new[]
+        {
+            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new Schedule(Day.Tuesday, Hour.H08_00, Hour.H09_00),
+            new Schedule(Day.Monday, Hour.H09_45, Hour.H10_15),
+        };
+
+        yield return new[]
+        {
+            new Schedule(Day.Wednesday, Hour.H12_00, Hour.H15_30),
+            new Schedule(Day.Wednesday, Hour.H11_15, Hour.H12_00),
+        };
     }
 
     public static IEnumerable<object[]> Holidays()
@@ -458,52 +464,41 @@ public static class TestData
         };
     }
 
-    public static IEnumerable<object[]> ClassActivityValidWeightsLists()
+    public static IEnumerable<int[]> ClassActivityValidWeightsLists()
     {
-        foreach (var weight in new List<List<int>>()
-        {
-            new() { 0 },
-            new() { 1 },
-            new() { 60 },
-            new() { 99 },
-            new() { 100 },
-            new() { 0, 0 },
-            new() { 0, 50 },
-            new() { 0, 100 },
-            new() { 100, 0 },
-            new() { 10, 20 },
-            new() { 70, 30 },
-            new() { 0, 0, 0 },
-            new() { 50, 50, 0 },
-            new() { 50, 10, 40 },
-            new() { 10, 80, 10 },
-            new() { 33, 33, 34 },
-            new() { 0, 0, 0, 0 },
-            new() { 0, 0, 50, 40 },
-            new() { 25, 25, 25, 25 },
-        })
-        {
-            yield return [weight];
-        };
+        yield return new[] { 0 };
+        yield return new[] { 1 };
+        yield return new[] { 60 };
+        yield return new[] { 99 };
+        yield return new[] { 100 };
+        yield return new[] { 0, 0 };
+        yield return new[] { 0, 50 };
+        yield return new[] { 0, 100 };
+        yield return new[] { 100, 0 };
+        yield return new[] { 10, 20 };
+        yield return new[] { 70, 30 };
+        yield return new[] { 0, 0, 0 };
+        yield return new[] { 50, 50, 0 };
+        yield return new[] { 50, 10, 40 };
+        yield return new[] { 10, 80, 10 };
+        yield return new[] { 33, 33, 34 };
+        yield return new[] { 0, 0, 0, 0 };
+        yield return new[] { 0, 0, 50, 40 };
+        yield return new[] { 25, 25, 25, 25 };
     }
 
-    public static IEnumerable<object[]> ClassActivityInvalidWeightsLists()
+    public static IEnumerable<int[]> ClassActivityInvalidWeightsLists()
     {
-        foreach (var weight in new List<List<int>>()
-        {
-            new() { 100, 1 },
-            new() { 50, 51 },
-            new() { 100, 100 },
-            new() { 99, 2 },
-            new() { 0, 80, 21 },
-            new() { 50, 50, 1 },
-            new() { 90, 5, 6 },
-            new() { 90, 5, 5, 1 },
-            new() { 0, 50, 45, 6 },
-        })
-        {
-            yield return [weight];
-        };
+        yield return new[] { 100, 1 };
+        yield return new[] { 100, 1 };
+        yield return new[] { 50, 51 };
+        yield return new[] { 100, 100 };
+        yield return new[] { 99, 2 };
+        yield return new[] { 0, 80, 21 };
+        yield return new[] { 50, 50, 1 };
+        yield return new[] { 90, 5, 6 };
+        yield return new[] { 90, 5, 5, 1 };
+        yield return new[] { 0, 50, 45, 6 };
     }
 
     public static Class GetClass()

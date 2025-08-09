@@ -82,6 +82,23 @@ jobs:
           reporttypes: "HtmlInline_AzurePipelines"
           toolpath: "reportgeneratortool"
 
+      - name: Generate coverage badges
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: "coverage/Cobertura.xml"
+          badge: true
+          format: markdown
+          output: both
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          thresholds: "70 80"
+
+      - name: Include badges in coverage site
+        run: |
+          shopt -s nullglob
+          mv *.svg coverage/ || true
+
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:

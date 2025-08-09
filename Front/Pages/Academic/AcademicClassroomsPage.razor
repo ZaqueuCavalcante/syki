@@ -10,7 +10,24 @@
 
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.VideoLabel" Title="Salas" ButtonText="Nova Sala" OnClick="@OpenDialog" />
-    <SykiPageAlert Text="Uma mesma sala pode ser usada por diversas turmas durante o dia." />
+    <MudCard Class="pl-1 my-4">
+        <MudCardContent>
+            <MudGrid Spacing="3">
+                <MudItem>
+                    <MudButton
+                        IconSize="Size.Medium"
+                        StartIcon="@Icons.Material.Filled.Sort"
+                        Variant="Variant.Filled"
+                        Size="Size.Medium"
+                        Color="Color.Tertiary"
+                        OnClick="@GoToClassroomAssignmentPage"
+                    >
+                        Ensalamento
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
     <MudContainer Class="px-0 mb-4">
         <MudTable
             Hover
@@ -50,6 +67,7 @@
     </MudContainer>
 </MudContainer>
 
+@inject NavigationManager Nav
 @inject IDialogService DialogService
 @inject GetClassroomsClient GetClassroomsClient
 @inject IBrowserViewportService BrowserViewportService
@@ -97,5 +115,10 @@
     private string GetNotFoundMessage()
     {
         return (_searchString.IsEmpty()) ? "Não existem salas cadastradas ainda." : "Nenhuma sala encontrada.";
+    }
+
+    private void GoToClassroomAssignmentPage()
+    {
+        Nav.NavigateTo("/academic/classrooms/assignment");
     }
 }

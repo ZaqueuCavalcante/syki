@@ -6,6 +6,7 @@ public class GetAcademicTeacherOut
     public string Name { get; set; }
     public string Email { get; set; }
     public List<GetAcademicTeacherDisciplineOut> Disciplines { get; set; } = [];
+    public List<GetAcademicTeacherCampusOut> Campi { get; set; } = [];
 
     public static IEnumerable<(string, GetAcademicTeacherOut)> GetExamples() =>
     [
@@ -14,16 +15,12 @@ public class GetAcademicTeacherOut
             Name = "Davi Pessoa da Silva",
             Email = "davi.pessoa@syki.com.br",
             Disciplines = [
-                new()
-                {
-                    Id = Guid.CreateVersion7(),
-                    Name = "Banco de Dados",
-                },
-                new()
-                {
-                    Id = Guid.CreateVersion7(),
-                    Name = "Programação Orientada a Objetos",
-                },
+                new() { Id = Guid.CreateVersion7(), Name = "Banco de Dados" },
+                new() { Id = Guid.CreateVersion7(), Name = "Programação Orientada a Objetos" },
+            ],
+            Campi = [
+                new() { Id = Guid.CreateVersion7(), Name = "Suassuna" },
+                new() { Id = Guid.CreateVersion7(), Name = "Agreste" },
             ]
         }),
     ];

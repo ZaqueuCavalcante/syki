@@ -27,6 +27,11 @@ public class CampusOut
     public int Students { get; set; }
 
     /// <summary>
+    /// Total de professores
+    /// </summary>
+    public int Teachers { get; set; }
+
+    /// <summary>
     /// Taxa de ocupação
     /// </summary>
     public decimal FillRate { get; set; }
@@ -56,6 +61,16 @@ public class CampusOut
             FillRate = 46.80M,
         }),
     ];
+
+    public string GetFillRate()
+    {
+        return $"{FillRate.Format()}%";
+    }
+
+    public override string ToString()
+    {
+        return Name;
+    }
 
     public static implicit operator CampusOut(OneOf<CampusOut, ErrorOut> value)
     {

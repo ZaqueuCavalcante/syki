@@ -1,10 +1,10 @@
-@namespace Syki.Front.Features.Academic.AssignDisciplinesToTeacher
+@namespace Syki.Front.Features.Academic.AssignCampiToTeacher
 
 <MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
 	<MudDrawerHeader Class="justify-space-between">
 		<MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
-			<MudIcon Icon="@Icons.Material.Filled.Apps" />
-			<MudText Typo="Typo.h5"><b>Disciplinas do professor</b></MudText>
+			<MudIcon Icon="@Icons.Material.Filled.GroupWork" />
+			<MudText Typo="Typo.h5"><b>Campi do professor</b></MudText>
 		</MudStack>
 		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
     </MudDrawerHeader>
@@ -20,30 +20,14 @@
                 </MudItem>
 
                 <MudItem xs="12">
-                    <SykiTitleText Icon="@GetSelectedDisciplinesIcon()" Text="@GetSelectedDisciplinesTitle()" />
+                    <SykiTitleText Icon="@GetSelectedCampiIcon()" Text="@GetSelectedCampiTitle()" />
                 </MudItem>
 
                 <MudItem xs="12">
-                    <MudSelect
-                        Dense
-                        Margin="Margin.Dense"
-                        Variant="Variant.Outlined"
-                        Value="@_course"
-                        ValueChanged="@((CourseOut newValue) => HandleSelectCourse(newValue))"
-                        Label="Curso"
-                        AdornmentColor="Color.Primary"
-                    >
-                        @foreach (CourseOut? item in _courses)
-                        {
-                            <MudSelectItem Value="@item">@item.Name</MudSelectItem>
-                        }
-                    </MudSelect>
-                </MudItem>
-                <MudItem xs="12">
                     <MudAutocomplete
                         MaxItems="50"
-                        T="AssignDisciplinesToTeacherSelect"
-                        SearchFunc="@SearchDiscipline"
+                        T="AssignCampiToTeacherSelect"
+                        SearchFunc="@SearchCampus"
                         Dense
                         Placeholder=""
                         ToStringFunc="@(e => null)"
@@ -52,9 +36,9 @@
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Class="mb-2"
-                        Value="@_discipline"
-                        ValueChanged="(AssignDisciplinesToTeacherSelect newValue) => HandleDisciplineChanged(newValue)"
-                        Label="Disciplina"
+                        Value="@_campus"
+                        ValueChanged="(AssignCampiToTeacherSelect newValue) => HandleCampusChanged(newValue)"
+                        Label="Campus"
                         AdornmentColor="Color.Primary"
                     >
                         <ItemTemplate Context="e">
@@ -64,7 +48,7 @@
                         </ItemTemplate>
                         <NoItemsTemplate>
                             <MudStack Row Spacing="0" AlignItems="AlignItems.Center" Justify="Justify.Center">
-                                <MudText Typo="Typo.body1">@GetEmptyDisciplinesText()</MudText>
+                                <MudText Typo="Typo.body1">Nenhum campus encontrado</MudText>
                             </MudStack>
                         </NoItemsTemplate>
                     </MudAutocomplete>
@@ -72,20 +56,20 @@
             </MudGrid>
 
             <MudItem xs="12" Class="mt-2">
-                @if (_selectedDisciplines.Count > 0)
+                @if (_selectedCampi.Count > 0)
                 {
                     <MudDataGrid
                         Dense
                         Hover
                         Class="my-2"
                         SortMode="SortMode.None"
-                        Items="@_selectedDisciplines.OrderBy(d => d.Name)"
+                        Items="@_selectedCampi.OrderBy(d => d.Name)"
                     >
                         <Columns>
-                            <PropertyColumn Property="x => x.Name" Title="Disciplina" />
+                            <PropertyColumn Property="x => x.Name" Title="Campus" />
                             <TemplateColumn CellClass="d-flex justify-end">
                                 <CellTemplate>
-                                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Delete" Color="@Color.Error" OnClick="@(() => UnselectDiscipline(context.Item))" />
+                                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Delete" Color="@Color.Error" OnClick="@(() => UnselectCampus(context.Item))" />
                                 </CellTemplate>
                             </TemplateColumn>
                         </Columns>
@@ -97,17 +81,16 @@
 
     <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 pt-6">
         <DialogCancelButton OnClick="@Close" />
-        <DialogSaveButton OnClick="@Submit" Disabled="@_selectedDisciplines.Select(x => x.Id).ToList().IsEquivalentTo(_teacher.Disciplines.ConvertAll(x => x.Id))" />
+        <DialogSaveButton OnClick="@Submit" Disabled="@_selectedCampi.Select(x => x.Id).ToList().IsEquivalentTo(_teacher.Campi.ConvertAll(x => x.Id))" />
     </MudStack>
 </MudDrawer>
 
 @inject ISnackbar Snackbar
 @inject NavigationManager Nav
+@inject GetCampiClient GetCampiClient
 @inject IBrowserViewportService BrowserViewportService
 @inject GetAcademicTeacherClient GetAcademicTeacherClient
-@inject GetCourseDisciplinesClient GetCourseDisciplinesClient
-@inject GetCoursesWithDisciplinesClient GetCoursesWithDisciplinesClient
-@inject AssignDisciplinesToTeacherClient AssignDisciplinesToTeacherClient
+@inject AssignCampiToTeacherClient AssignCampiToTeacherClient
 
 @code
 {
@@ -123,33 +106,23 @@
 
     private GetAcademicTeacherOut _teacher = new();
 
-    private CourseOut? _course;
-    private List<CourseOut> _courses = [];
-
-    private AssignDisciplinesToTeacherSelect? _discipline;
-    private List<CourseDisciplineOut> _disciplines = [];
-    private HashSet<AssignDisciplinesToTeacherSelect> _selectedDisciplines = [];
+    private AssignCampiToTeacherSelect? _campus;
+    private List<AssignCampiToTeacherSelect> _campi = [];
+    private HashSet<AssignCampiToTeacherSelect> _selectedCampi = [];
 
     protected override async Task OnInitializedAsync()
     {
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
-        _width = _breakpoint == Breakpoint.Xs ? "100%" : "500px";
-        _courses = await GetCoursesWithDisciplinesClient.Get();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "520px";
+        _campi = (await GetCampiClient.Get()).ConvertAll(x => new AssignCampiToTeacherSelect() { Id = x.Id, Name = x.Name });
     }
 
-    async Task HandleSelectCourse(CourseOut newValue)
-    {
-        _course = newValue;
-        _disciplines = _course != null ? await GetCourseDisciplinesClient.Get(_course!.Id) : [];
-        _disciplines.ForEach(d => d.IsSelected = _selectedDisciplines.Any(td => td.Id == d.Id));
-    }
-
-    private async Task<IEnumerable<AssignDisciplinesToTeacherSelect>> SearchDiscipline(string value, CancellationToken cancellationToken)
+    private async Task<IEnumerable<AssignCampiToTeacherSelect>> SearchCampus(string value, CancellationToken cancellationToken)
     {
         await Task.Yield();
 
-        var filtered = _disciplines.Where(d => !d.IsSelected)
-            .ToList().ConvertAll(x => new AssignDisciplinesToTeacherSelect { Id = x.Id, Name = x.Name });
+        var filtered = _campi.Where(d => !d.IsSelected)
+            .ToList().ConvertAll(x => new AssignCampiToTeacherSelect { Id = x.Id, Name = x.Name });
 
         if (string.IsNullOrEmpty(value))
             return filtered;
@@ -157,16 +130,16 @@
         return filtered.Where(x => x.Name.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    private void HandleDisciplineChanged(AssignDisciplinesToTeacherSelect newValue)
+    private void HandleCampusChanged(AssignCampiToTeacherSelect newValue)
     {
-        _disciplines.First(d => d.Id == newValue.Id).IsSelected = true;
-        _selectedDisciplines.Add(newValue);
+        _campi.First(d => d.Id == newValue.Id).IsSelected = true;
+        _selectedCampi.Add(newValue);
     }
 
-    private void UnselectDiscipline(AssignDisciplinesToTeacherSelect discipline)
+    private void UnselectCampus(AssignCampiToTeacherSelect campus)
     {
-        _disciplines.FirstOrDefault(d => d.Id == discipline.Id)?.IsSelected = false;
-        _selectedDisciplines.Remove(discipline);
+        _campi.FirstOrDefault(d => d.Id == campus.Id)?.IsSelected = false;
+        _selectedCampi.Remove(campus);
     }
 
     public async Task Open(Guid teacherId)
@@ -177,8 +150,8 @@
         if (response.IsSuccess)
         {
             _teacher = response.Success;
-            _selectedDisciplines = _teacher.Disciplines
-                .Select(x => new AssignDisciplinesToTeacherSelect() { Id = x.Id, Name = x.Name })
+            _selectedCampi = _teacher.Campi
+                .Select(x => new AssignCampiToTeacherSelect() { Id = x.Id, Name = x.Name })
                 .ToHashSet();
         }
         else
@@ -186,9 +159,8 @@
             Snackbar.Add(response.Error.Message, Severity.Error);
         }
 
-        _course = null;
-        _discipline = null;
-        _disciplines = [];
+        _campus = null;
+        _campi.ForEach(x => x.IsSelected = _selectedCampi.Any(c => c.Id == x.Id));
 
         _open = true;
         await _form?.ResetAsync();
@@ -211,11 +183,11 @@
         if (!_form.IsValid) return;
       
         _loading = true;
-        var selectedDisciplines = _selectedDisciplines.Select(x => x.Id).ToList();
-        var response = await AssignDisciplinesToTeacherClient.Assign(_teacher.Id, selectedDisciplines);
+        var selectedCampi = _selectedCampi.Select(x => x.Id).ToList();
+        var response = await AssignCampiToTeacherClient.Assign(_teacher.Id, selectedCampi);
         if (response.IsSuccess)
         {
-            Snackbar.Add("Disciplinas salvas com sucesso!", Severity.Success);
+            Snackbar.Add("Campus salvos com sucesso!", Severity.Success);
             await AfterSubmit.InvokeAsync();
             _open = false;
         }
@@ -226,28 +198,21 @@
         _loading = false;
     }
 
-    private string GetSelectedDisciplinesIcon()
+    private string GetSelectedCampiIcon()
     {
-        var count = _selectedDisciplines.Count;
+        var count = _selectedCampi.Count;
         if (count == 0) return Icons.Material.Filled.Error;
 
         return Icons.Material.Filled.Check;
     }
 
-    private string GetSelectedDisciplinesTitle()
+    private string GetSelectedCampiTitle()
     {
-        var count = _selectedDisciplines.Count;
-        if (count == 0) return "Nenhuma disciplina selecionada";
+        var count = _selectedCampi.Count;
+        if (count == 0) return "Nenhum campus selecionado";
 
-        if (count == 1) return $"1 disciplina selecionada";
+        if (count == 1) return $"1 campus selecionado";
 
-        return $"{count} disciplinas selecionadas";
-    }
-
-    private string GetEmptyDisciplinesText()
-    {
-        if (_course == null) return "Selecione um curso";
-
-        return "Selecione outro curso";
+        return $"{count} campus selecionados";
     }
 }

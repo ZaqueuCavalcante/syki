@@ -8,6 +8,7 @@ public class DisciplineOut
     public byte Period { get; set; }
     public byte Credits { get; set; }
     public ushort Workload { get; set; }
+    public int Teachers { get; set; }
     public List<Guid> PreRequisites { get; set; }
     public StudentDisciplineStatus StudentDisciplineStatus { get; set; }
     public List<Guid> Courses { get; set; } = [];

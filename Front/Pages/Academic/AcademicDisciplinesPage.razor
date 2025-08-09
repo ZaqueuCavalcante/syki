@@ -19,6 +19,7 @@
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
                 <PropertyColumn Property="x => x.Code" Title="Código" />
+                <PropertyColumn Property="x => x.Teachers.ToThousandSeparated()" Title="Professores" />
             </Columns>
             <NoRecordsContent>
                 @(GetNotFoundMessage())

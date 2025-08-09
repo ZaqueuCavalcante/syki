@@ -20,6 +20,10 @@ public class SykiTeacherConfig : IEntityTypeConfiguration<SykiTeacher>
             .WithMany()
             .UsingEntity<TeacherDiscipline>();
 
+        teacher.HasMany(c => c.Campi)
+            .WithMany()
+            .UsingEntity<TeacherCampus>();
+
         teacher.HasMany(c => c.SchedulingPreferences)
             .WithOne()
             .HasForeignKey(s => s.TeacherId);

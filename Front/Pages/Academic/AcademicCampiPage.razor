@@ -25,13 +25,16 @@
             RowsPerPage="10"
         >
             <ToolBarContent>
-                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome ou cidade" />
+                <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por nome, estado ou cidade" />
             </ToolBarContent>
             <Columns>
                 <PropertyColumn Property="x => x.Name" Title="Nome" />
-                <PropertyColumn Property="x => x.State.GetDescription()" Title="Estado" />
+                <PropertyColumn Property="x => x.State" Title="Estado" />
                 <PropertyColumn Property="x => x.City" Title="Cidade" />
+                <PropertyColumn Property="x => x.Students.ToThousandSeparated()" Title="Alunos" />
                 <PropertyColumn Property="x => x.Capacity.ToThousandSeparated()" Title="Capacidade" />
+                <PropertyColumn Property="x => x.GetFillRate()" Title="Ocupação" />
+                <PropertyColumn Property="x => x.Teachers.ToThousandSeparated()" Title="Professores" />
                 <TemplateColumn CellClass="d-flex justify-end">
                     <CellTemplate>
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@(() => OpenEditDialog(context.Item))" />
@@ -65,7 +68,7 @@
         _loading = false;
     }
 
-    private Func<CampusOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.City);
+    private Func<CampusOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.State.ToString(), x.City);
 
     private async Task OpenDialog()
     {

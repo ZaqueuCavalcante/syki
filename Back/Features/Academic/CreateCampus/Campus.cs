@@ -55,4 +55,13 @@ public class Campus
             Capacity = Capacity,
         };
     }
+
+    public GetAcademicTeacherCampusOut ToGetAcademicTeacherCampusOut()
+    {
+        return new()
+        {
+            Id = Id,
+            Name = $"{Name} ({City} - {State})",
+        };
+    }
 }

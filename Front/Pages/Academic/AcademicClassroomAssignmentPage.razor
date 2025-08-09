@@ -1,0 +1,103 @@
+﻿@using Syki.Front.Features.Academic.CreateTeacher
+@using Syki.Front.Features.Academic.BuildClassroomAssignment
+@using Syki.Front.Features.Academic.AssignDisciplinesToTeacher
+
+@namespace Syki.Front.Pages.Academic
+
+@page "/academic/classrooms/assignment"
+@attribute [Authorize(Roles = "Academic")]
+
+<SykiPageTitle Title="Ensalamento" />
+
+<MudContainer Class="my-4 px-4">
+    <MudGrid Class="align-center">
+        <MudItem xs="12" sm="8" md="8" lg="8">
+            <MudStack Row AlignItems="AlignItems.Center">
+                <MudIcon Icon="@Icons.Material.Filled.Sort" Class="mb-1" Size="Size.Large"/>
+                <MudText Typo="@Typo.h5" Style="font-weight: bold">Ensalamento</MudText>
+            </MudStack>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="4" lg="4">
+            <MudSelect
+                Dense
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                @bind-Value="@_campus"
+                Label="Campus"
+                AdornmentColor="Color.Primary"
+            >
+                @foreach (var item in _campi)
+                {
+                    <MudSelectItem Value="@item">@item.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+    </MudGrid>
+
+    <MudCard Class="my-4 pa-4">
+        <MudCardContent>
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="mt-1">
+                        <MudProgressLinear Color="Color.Primary" Rounded Size="Size.Large" Value="@decimal.ToDouble(56)" Style="height: 40px">
+                            <MudText Typo="Typo.body1">
+                                <b>56%</b>
+                            </MudText>
+                        </MudProgressLinear>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <MudStack Spacing="1">
+                        <MudText><strong>Professores:</strong> 15</MudText>
+                        <MudText><strong>Cursos:</strong> 5</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <MudStack Spacing="1">
+                        <MudText><strong>Salas:</strong> 26</MudText>
+                        <MudText><strong>Vagas:</strong> 645</MudText>
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <MudCard Class="my-4 pa-4">
+        <MudCardContent>
+            <MudGrid>
+                @foreach (var classroom in _classrooms.Where(x => _campus == null || x.CampusId == _campus.Id))
+                {
+                    <ClassroomAssignmentCard Name="@classroom.Name" Capacity="@classroom.Capacity" />
+                }
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@inject IDialogService DialogService
+@inject GetCampiClient GetCampiClient
+@inject GetClassroomsClient GetClassroomsClient
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    private List<GetClassroomsOut> _classrooms = [];
+
+    private CampusOut _campus = new();
+    private List<CampusOut> _campi = [];
+
+    private Breakpoint _breakpoint;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        _campi = await GetCampiClient.Get();
+        _campus = _campi.FirstOrDefault() ?? new();
+        _classrooms = await GetClassroomsClient.Get();
+    }
+}

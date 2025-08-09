@@ -44,6 +44,7 @@ public class Classroom
         {
             Id = Id,
             Name = Name,
+            CampusId = CampusId,
             Campus = Campus.Name,
             Capacity = Capacity,
         };

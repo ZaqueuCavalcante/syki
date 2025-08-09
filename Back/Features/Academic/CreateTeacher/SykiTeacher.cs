@@ -1,4 +1,5 @@
 using Syki.Back.Features.Academic.CreateClass;
+using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateDiscipline;
 
 namespace Syki.Back.Features.Academic.CreateTeacher;
@@ -16,6 +17,11 @@ public class SykiTeacher : Entity
     /// Disciplinas que o professor está apto a lecionar
     /// </summary>
     public List<Discipline> Disciplines { get; set; }
+
+    /// <summary>
+    /// Conjunto de campus que o professor trabalha
+    /// </summary>
+    public List<Campus> Campi { get; set; }
 
     /// <summary>
     /// Preferências de horários do professor no semestre atual
@@ -52,6 +58,7 @@ public class SykiTeacher : Entity
             Id = Id,
             Name = Name,
             Disciplines = Disciplines.ConvertAll(x => x.ToGetAcademicTeacherDisciplineOut()),
+            Campi = Campi.ConvertAll(x => x.ToGetAcademicTeacherCampusOut()),
         };
     }
 }

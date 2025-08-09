@@ -16,6 +16,13 @@ public class GetDisciplinesService(SykiDbContext ctx) : IAcademicService
             .OrderBy(d => d.Name)
             .ToListAsync();
 
-        return disciplines.ConvertAll(d => d.ToOut());
+        var teachers = await ctx.TeachersDisciplines.AsNoTracking()
+            .Where(d => ids.Count == 0 || ids.Contains(d.DisciplineId))
+            .ToListAsync();
+
+        var result = disciplines.ConvertAll(d => d.ToOut());
+        result.ForEach(x => x.Teachers = teachers.Count(t => t.DisciplineId == x.Id));
+
+        return result;
     }
 }

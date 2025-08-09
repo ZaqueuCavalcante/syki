@@ -6,6 +6,7 @@ public class GetAcademicTeacherService(SykiDbContext ctx) : IAcademicService
     {
         var teacher = await ctx.Teachers
             .Include(x => x.Disciplines)
+            .Include(x => x.Campi)
             .FirstOrDefaultAsync(p => p.InstitutionId == institutionId && p.Id == teacherId);
 
         if (teacher == null) return new TeacherNotFound();

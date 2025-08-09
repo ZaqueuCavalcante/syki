@@ -1,6 +1,6 @@
 # Alocação de Salas e Professores
 
-- ClassRoom Assignment Problem
+- Classroom Assignment Problem
 - School Timetabling Problem
 
 - Utilizar Metaheurísticas
@@ -109,3 +109,23 @@ Todo início de semestre, temos que:
 
 - Filters
     - Global configs
+
+
+
+
+# Start Simple
+
+- Dados um Campus e um Período
+    - Listar todas as ofertas de curso ativas
+    - Com base na grade de cada oferta (o no primeiro período de cada uma), determinar quais disciplinas devem ser abertas no período atual
+    - Para cada oferta, determinar quais alunos estão aptos a cursar cada disciplina (aprovados/reprovados)
+    - Montar uma lista com items assim:
+        - DisciplineId, CourseOfferingId, StudentId
+    - Agrupando:
+        - DisciplineId, CourseOfferingId -> 15 alunos
+        - DisciplineId -> 87 alunos
+
+
+
+
+

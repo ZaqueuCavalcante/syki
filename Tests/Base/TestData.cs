@@ -320,7 +320,7 @@ public static class TestData
     {
         yield return new[]
         {
-            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new Schedule(Day.Monday, Hour.H07_00, Hour.H09_00), // ERROR
             new Schedule(Day.Monday, Hour.H08_00, Hour.H09_00),
         };
 

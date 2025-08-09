@@ -94,10 +94,19 @@ jobs:
           indicators: true
           thresholds: "70 80"
 
-      - name: Include badges in coverage site
+      - name: Move badges into coverage site
+        shell: bash
         run: |
+          mkdir -p coverage
           shopt -s nullglob
-          mv *.svg coverage/ || true
+          for f in line-coverage.svg branch-coverage.svg coverage-badge-line.svg coverage-badge-branches.svg; do
+            if [ -f "$f" ]; then mv "$f" coverage/; fi
+          done
+          svgs=( *.svg )
+          if [ ${#svgs[@]} -gt 0 ]; then mv "${svgs[@]}" coverage/; fi
+
+      - name: List coverage site contents
+        run: ls -lah coverage
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3

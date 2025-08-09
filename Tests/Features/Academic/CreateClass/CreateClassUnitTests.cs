@@ -55,7 +55,7 @@ public class CreateClassUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.ConflictingSchedules))]
-    public void Should_not_create_class_with_partially_conflicting_schedules(List<Schedule> schedules)
+    public void Should_not_create_class_with_partially_conflicting_schedules(Schedule[] schedules)
     {
         // Arrange
         var institutionId = Guid.CreateVersion7();
@@ -65,7 +65,7 @@ public class CreateClassUnitTests
         const int vacancies = 40;
 
         // Act
-        var result = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules);
+        var result = Class.New(institutionId, disciplineId, teacherId, period, vacancies, [.. schedules]);
 
         // Assert
         result.ShouldBeError(new ConflictingSchedules());
@@ -73,7 +73,7 @@ public class CreateClassUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.ValidSchedules))]
-    public void Should_create_class_with_valid_schedules(List<Schedule> schedules)
+    public void Should_create_class_with_valid_schedules(Schedule[] schedules)
     {
         // Arrange
         var institutionId = Guid.CreateVersion7();
@@ -83,7 +83,7 @@ public class CreateClassUnitTests
         const int vacancies = 40;
 
         // Act
-        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).Success;
+        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, [.. schedules]).Success;
 
         // Assert
         @class.Schedules.Should().BeEquivalentTo(schedules);

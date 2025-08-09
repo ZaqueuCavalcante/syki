@@ -48,7 +48,7 @@ public class CreateClassActivityUnitTests
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.ClassActivityValidWeightsLists))]
-    public void Should_add_class_activities_with_valid_weights(List<int> weights)
+    public void Should_add_class_activities_with_valid_weights(int[] weights)
     {
         // Arrange
         var @class = TestData.GetClass();
@@ -72,12 +72,12 @@ public class CreateClassActivityUnitTests
             // Assert
             result.ShouldBeSuccess();
         }
-        @class.Activities.Should().HaveCount(weights.Count);
+        @class.Activities.Should().HaveCount(weights.Length);
     }
 
     [Test]
     [TestCaseSource(typeof(TestData), nameof(TestData.ClassActivityInvalidWeightsLists))]
-    public void Should_not_add_class_activities_with_invalid_weights(List<int> weights)
+    public void Should_not_add_class_activities_with_invalid_weights(int[] weights)
     {
         // Arrange
         var @class = TestData.GetClass();
@@ -103,6 +103,6 @@ public class CreateClassActivityUnitTests
 
         // Assert
         result.ShouldBeError(new InvalidClassActivityWeight());
-        @class.Activities.Should().HaveCount(weights.Count-1);
+        @class.Activities.Should().HaveCount(weights.Length-1);
     }
 }

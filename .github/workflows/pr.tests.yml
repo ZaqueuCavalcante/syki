@@ -95,4 +95,4 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v2.20.0
       if: always()
       with:
-        trx_files: "${{ github.workspace }}/**/*.trx"
+        files: "${{ github.workspace }}/**/*.trx"

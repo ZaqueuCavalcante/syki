@@ -99,6 +99,18 @@ jobs:
           shopt -s nullglob
           mv *.svg coverage/ || true
 
+      - name: Include badges in coverage site
+        shell: bash
+        run: |
+          mkdir -p coverage
+          shopt -s nullglob
+          files=(*.svg)
+          if [ ${#files[@]} -gt 0 ]; then
+            mv "${files[@]}" coverage/
+          else
+            echo "No badge SVGs found (skipping move)."
+          fi
+
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:

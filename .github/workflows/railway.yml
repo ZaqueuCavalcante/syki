@@ -9,6 +9,11 @@ jobs:
   build-test-migrate:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
     services:
       postgres:
         image: postgres
@@ -40,10 +45,26 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Unit Tests
-        run: dotnet test --filter "FullyQualifiedName~UnitTests" --configuration Release --no-restore --no-build --verbosity normal
+        run: |
+          dotnet test --filter "FullyQualifiedName~UnitTests" \
+          --configuration Release \
+          --no-restore \
+          --no-build \
+          --verbosity normal \
+          --logger "trx;LogFileName=unit_results.trx" \
+          --collect:"XPlat Code Coverage" \
+          --results-directory ./TestResults
 
       - name: Integration Tests
-        run: dotnet test --filter "FullyQualifiedName!~UnitTests" --configuration Release --no-restore --no-build --verbosity normal
+        run: |
+          dotnet test --filter "FullyQualifiedName!~UnitTests" \
+          --configuration Release \
+          --no-restore \
+          --no-build \
+          --verbosity normal \
+          --logger trx;LogFileName=integration_results.trx \
+          --collect:"XPlat Code Coverage" \
+          --results-directory ./TestResults
 
       - name: Create Migrations Bundle
         run: |
@@ -52,3 +73,30 @@ jobs:
 
       - name: Run Migrations
         run: ./efbundle --connection "${{ secrets.MIGRATIONS_DB_CONNECTION_STRING }}"
+
+      - name: Generate coverage HTML report
+        uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.10
+        with:
+          reports: "**/*.cobertura.xml"
+          targetdir: "coverage"
+          reporttypes: "HtmlInline_AzurePipelines"
+          toolpath: "reportgeneratortool"
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: coverage
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    needs: build-test-migrate
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

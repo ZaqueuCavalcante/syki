@@ -4,9 +4,9 @@
 
 [![Coverage Report](https://img.shields.io/badge/Coverage-Report-blue)](https://ZaqueuCavalcante.github.io/syki)
 
-![Line Coverage](https://ZaqueuCavalcante.github.io/syki/line-coverage.svg)
+![Line Coverage](https://ZaqueuCavalcante.github.io/syki/badge_linecoverage.svg)
 
-![Branch Coverage](https://ZaqueuCavalcante.github.io/syki/branch-coverage.svg)
+![Branch Coverage](https://ZaqueuCavalcante.github.io/syki/badge_branchcoverage.svg)
 
 **Syki** é um sistema open-source para gerenciamento educacional, que pode ser usado por gestores, professores e alunos.
 

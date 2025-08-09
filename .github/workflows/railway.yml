@@ -79,7 +79,7 @@ jobs:
         with:
           reports: "**/*.cobertura.xml"
           targetdir: "coverage"
-          reporttypes: "HtmlInline_AzurePipelines;Cobertura"
+          reporttypes: "HtmlInline_AzurePipelines;Cobertura;Badges"
           toolpath: "reportgeneratortool"
 
       - name: Generate coverage badges

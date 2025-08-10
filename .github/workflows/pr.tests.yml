@@ -50,7 +50,7 @@ jobs:
         --configuration Release \
         --verbosity normal \
         --logger "trx;LogFileName=test_results.trx" \
-        --collect:"XPlat Code Coverage"
+        --collect:"XPlat Code Coverage" \
         --results-directory ./TestResults \
         -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
 

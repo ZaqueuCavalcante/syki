@@ -1,12 +1,6 @@
 # SYKI - Sistema de Gerenciamento Acadêmico
 
-[![Tests](https://github.com/ZaqueuCavalcante/syki/actions/workflows/railway.yml/badge.svg)](https://github.com/ZaqueuCavalcante/syki/actions/workflows/railway.yml)
-
-[![Coverage Report](https://img.shields.io/badge/Coverage-Report-blue)](https://ZaqueuCavalcante.github.io/syki)
-
-![Line Coverage](https://ZaqueuCavalcante.github.io/syki/badge_linecoverage.svg)
-
-![Branch Coverage](https://ZaqueuCavalcante.github.io/syki/badge_branchcoverage.svg)
+[![CI/CD](https://github.com/ZaqueuCavalcante/syki/actions/workflows/ci.cd.yml/badge.svg)](https://github.com/ZaqueuCavalcante/syki/actions/workflows/ci.cd.yml) [![Coverage Report](https://img.shields.io/badge/Coverage-Report-blue)](https://ZaqueuCavalcante.github.io/syki) ![Line Coverage](https://ZaqueuCavalcante.github.io/syki/badge_linecoverage.svg) ![Branch Coverage](https://ZaqueuCavalcante.github.io/syki/badge_branchcoverage.svg)
 
 **Syki** é um sistema open-source para gerenciamento educacional, que pode ser usado por gestores, professores e alunos.
 

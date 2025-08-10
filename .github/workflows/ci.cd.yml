@@ -1,4 +1,4 @@
-name: Railway
+name: CI/CD
 
 on:
   push:

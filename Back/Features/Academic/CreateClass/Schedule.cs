@@ -31,7 +31,8 @@ public class Schedule
         if (!startAt.IsValid()) return new InvalidHour();
         if (!endAt.IsValid()) return new InvalidHour();
 
-        if (startAt == endAt || endAt < startAt)
+        // if (startAt == endAt || endAt < startAt)
+        if (endAt < startAt)
             return new InvalidSchedule();
 
         return new Schedule(day, startAt, endAt);

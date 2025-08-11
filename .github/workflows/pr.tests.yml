@@ -61,7 +61,7 @@ jobs:
         targetdir: "coverage-html"
         reporttypes: "HtmlInline_AzurePipelines;Cobertura"
         verbosity: "Info"
-        title: "Code Coverage (PR #${{ github.event.number }})"
+        title: "PR #${{ github.event.number }}"
         tag: "${{ github.run_number }}_${{ github.run_id }}"
         toolpath: "reportgeneratortool"
 

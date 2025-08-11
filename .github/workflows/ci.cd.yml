@@ -78,6 +78,7 @@ jobs:
           reports: "**/*.cobertura.xml"
           targetdir: "coverage"
           reporttypes: "HtmlInline_AzurePipelines;Cobertura;Badges"
+          title: "Syki"
           toolpath: "reportgeneratortool"
 
       - name: Generate coverage badges

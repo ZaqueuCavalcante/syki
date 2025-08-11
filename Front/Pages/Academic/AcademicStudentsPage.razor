@@ -39,7 +39,9 @@
                 <MudTd DataLabel="Curso">@context.CourseOffering</MudTd>
                 <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
                     <MudTd>
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context))" />
+                        <MudTooltip Text="Cross Login" Arrow="true" Placement="Placement.Top" ShowOnFocus="false">
+                            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context))" />
+                        </MudTooltip>
                     </MudTd>
                 </AuthorizeView>
             </RowTemplate>

@@ -10,22 +10,13 @@ Ao final, 3 comentários são automaticamente adicionados ao PR:
 - Tabela com os índices de cobertura (line/branch) de cada projeto
 - Link para um relatório completo de cobertura do código submetido no PR
 
-Os testes que falham são agrupados em uma página específica, cujo link é inserido junto com o sumário no primeiro comentário.
+Os testes que eventualmente falharem são agrupados em uma página específica, cujo link é inserido junto com o sumário no primeiro comentário.
 
 Utilizei o ReportGenerator para gerar o relatório de cobertura e o GitHub Pages para hospedá-lo. Com ele é possível visualizar a cobertura do código a nível de classe/método/linha.
 
-Quando o PR é mergeado, um outro workflow roda para buildar, testar, 
-
-
-
-
-
+Quando o PR é mergeado, um outro workflow roda para buildar, testar, executar migrations no banco de dados e realizar o deploy do sistema no Railway.
 
 ## Referências
 
-- https://seankilleen.com/2024/03/beautiful-net-test-reports-using-github-actions
-- https://github.com/danielpalme/ReportGenerator
-
-
-
-
+- Beautiful .NET Test Reports Using GitHub Actions, by Sean Killeen (https://seankilleen.com/2024/03/beautiful-net-test-reports-using-github-actions)
+- ReportGenerator, by Daniel Palme (https://github.com/danielpalme/ReportGenerator)

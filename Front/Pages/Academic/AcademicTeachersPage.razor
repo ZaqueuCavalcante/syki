@@ -43,7 +43,9 @@
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.GroupWork" OnClick="@(() => OpenCampiDrawer(context))" />
                     </MudTooltip>
                     <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context))" />
+                        <MudTooltip Text="Cross Login" Arrow="true" Placement="Placement.Top" ShowOnFocus="false">
+                            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context))" />
+                        </MudTooltip>
                     </AuthorizeView>
                 </MudTd>
             </RowTemplate>

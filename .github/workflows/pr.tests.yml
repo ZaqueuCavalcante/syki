@@ -50,7 +50,7 @@ jobs:
         --configuration Release \
         --verbosity normal \
         --logger "trx;LogFileName=test_results.trx" \
-        --collect:"XPlat Code Coverage"
+        --collect:"XPlat Code Coverage" \
         --results-directory ./TestResults \
         -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
 
@@ -95,7 +95,7 @@ jobs:
     - name: Write to Job Summary
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
-    - name: Publish Coverage to gh-pages/pr/<PR_NUMBER>
+    - name: Publish Coverage to https://zaqueucavalcante.github.io/syki/pr/<PR_NUMBER>
       if: github.event.pull_request.head.repo.fork == false
       uses: peaceiris/actions-gh-pages@v3
       with:

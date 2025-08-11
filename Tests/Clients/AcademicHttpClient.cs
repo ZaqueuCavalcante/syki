@@ -19,6 +19,7 @@ using Syki.Front.Features.Academic.GetCourseOfferings;
 using Syki.Front.Features.Academic.GetAcademicPeriods;
 using Syki.Front.Features.Academic.CreateNotification;
 using Syki.Front.Features.Academic.GetAcademicInsights;
+using Syki.Front.Features.Academic.AssignCampiToTeacher;
 using Syki.Front.Features.Academic.CreateAcademicPeriod;
 using Syki.Front.Features.Academic.GetCourseDisciplines;
 using Syki.Front.Features.Academic.CreateCourseOffering;
@@ -335,6 +336,12 @@ public class AcademicHttpClient(HttpClient http)
     {
         var client = new AssignDisciplinesToTeacherClient(Http);
         return await client.Assign(teacherId, classes);
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> AssignCampiToTeacher(Guid teacherId, List<Guid> campi)
+    {
+        var client = new AssignCampiToTeacherClient(Http);
+        return await client.Assign(teacherId, campi);
     }
 
     public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()

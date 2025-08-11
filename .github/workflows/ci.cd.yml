@@ -10,9 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
-      pages: write
-      id-token: write
+      contents: write
 
     services:
       postgres:
@@ -108,25 +106,10 @@ jobs:
       - name: List coverage site contents
         run: ls -lah coverage
 
-      - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Publish Coverage to https://zaqueucavalcante.github.io/syki
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: coverage
-
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-    needs: build-test-migrate
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: coverage
+          keep_files: true

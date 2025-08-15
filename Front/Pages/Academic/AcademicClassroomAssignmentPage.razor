@@ -1,4 +1,5 @@
-﻿@using Syki.Front.Features.Academic.CreateTeacher
+﻿@using Syki.Front.Features.Academic.CreateClass
+@using Syki.Front.Features.Academic.CreateTeacher
 @using Syki.Front.Features.Academic.BuildClassroomAssignment
 @using Syki.Front.Features.Academic.AssignDisciplinesToTeacher
 
@@ -14,17 +15,18 @@
         <MudItem xs="12" sm="8" md="8" lg="8">
             <MudStack Row AlignItems="AlignItems.Center">
                 <MudIcon Icon="@Icons.Material.Filled.Sort" Class="mb-1" Size="Size.Large"/>
-                <MudText Typo="@Typo.h5" Style="font-weight: bold">Ensalamento</MudText>
+                <MudText Typo="@Typo.h5" Style="font-weight: bold">Ensalamento - @_period.Id</MudText>
             </MudStack>
         </MudItem>
         <MudItem xs="12" sm="4" md="4" lg="4">
             <MudSelect
                 Dense
+                Label="Campus"
+                Value="@_campus"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
-                @bind-Value="@_campus"
-                Label="Campus"
                 AdornmentColor="Color.Primary"
+                ValueChanged="(CampusOut newValue) => HandleCampusChanged(newValue)"
             >
                 @foreach (var item in _campi)
                 {
@@ -38,26 +40,61 @@
         <MudCardContent>
             <MudGrid Spacing="2">
                 <MudItem xs="12" sm="6" md="6" lg="6">
-                    <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="mt-1">
-                        <MudProgressLinear Color="Color.Primary" Rounded Size="Size.Large" Value="@decimal.ToDouble(56)" Style="height: 40px">
-                            <MudText Typo="Typo.body1">
-                                <b>56%</b>
-                            </MudText>
-                        </MudProgressLinear>
-                    </MudStack>
+                    <MudDataGrid
+                        Dense
+                        Hover
+                        SortMode="SortMode.None"
+                        Items="@_teachers"
+                    >
+                        <Columns>
+                            <PropertyColumn Property="x => x.Name" Title="@($"Professores ({_teachers.Count})")" />
+                        </Columns>
+                    </MudDataGrid>
                 </MudItem>
+
+
                 <MudItem xs="12" sm="6" md="6" lg="6">
-                    <MudStack Spacing="1">
-                        <MudText><strong>Professores:</strong> 15</MudText>
-                        <MudText><strong>Cursos:</strong> 5</MudText>
-                    </MudStack>
+                    <MudDataGrid
+                        Dense
+                        Hover
+                        SortMode="SortMode.None"
+                        Items="@_courseOfferings"
+                    >
+                        <Columns>
+                            <PropertyColumn Property="x => x.Course" Title="@($"Cursos ({_courseOfferings.Count})")" />
+                            <PropertyColumn Property="x => x.Disciplines.Count" Title="Disciplinas" />
+                        </Columns>
+                    </MudDataGrid>
                 </MudItem>
+
+
                 <MudItem xs="12" sm="6" md="6" lg="6">
-                    <MudStack Spacing="1">
-                        <MudText><strong>Salas:</strong> 26</MudText>
-                        <MudText><strong>Vagas:</strong> 645</MudText>
-                    </MudStack>
+                    <MudDataGrid
+                        Dense
+                        Hover
+                        SortMode="SortMode.None"
+                        Items="@_students"
+                    >
+                        <Columns>
+                            <PropertyColumn Property="x => x.Name" Title="@($"Alunos ({_students.Count})")" />
+                        </Columns>
+                    </MudDataGrid>
                 </MudItem>
+
+
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <MudDataGrid
+                        Dense
+                        Hover
+                        SortMode="SortMode.None"
+                        Items="@_disciplines"
+                    >
+                        <Columns>
+                            <PropertyColumn Property="x => x.Name" Title="@($"Disciplinas ({_disciplines.Count})")" />
+                        </Columns>
+                    </MudDataGrid>
+                </MudItem>
+       
             </MudGrid>
         </MudCardContent>
     </MudCard>
@@ -65,7 +102,30 @@
     <MudCard Class="my-4 pa-4">
         <MudCardContent>
             <MudGrid>
-                @foreach (var classroom in _classrooms.Where(x => _campus == null || x.CampusId == _campus.Id))
+                <MudItem xs="12" sm="3" md="3" lg="3">
+                    <MudButton
+                        StartIcon="@Icons.Material.Outlined.Add"
+                        IconSize="Size.Large"
+                        Variant="Variant.Filled"
+                        Size="Size.Medium"
+                        Color="Color.Primary"
+                        OnClick="@OpenNewClassDialog"
+                    >
+                        Nova Turma
+                    </MudButton>
+                </MudItem>
+                @foreach (var item in _classes)
+                {
+                    <ClassAssignmentCard Name="@item.Discipline" Capacity="@item.Vacancies" />
+                }
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <MudCard Class="my-4 pa-4">
+        <MudCardContent>
+            <MudGrid>
+                @foreach (var classroom in _classrooms)
                 {
                     <ClassroomAssignmentCard Name="@classroom.Name" Capacity="@classroom.Capacity" />
                 }
@@ -77,27 +137,74 @@
 @inject IDialogService DialogService
 @inject GetCampiClient GetCampiClient
 @inject GetClassroomsClient GetClassroomsClient
+@inject GetCampusClassesClient GetCampusClassesClient
 @inject IBrowserViewportService BrowserViewportService
+@inject GetCampusTeachersClient GetCampusTeachersClient
+@inject GetCampusStudentsClient GetCampusStudentsClient
+@inject GetCurrentAcademicPeriodClient GetCurrentAcademicPeriodClient
+@inject GetCampusCourseOfferingsClient GetCampusCourseOfferingsClient
 
 @code
 {
-    private List<GetClassroomsOut> _classrooms = [];
-
+    private AcademicPeriodOut _period = new();
     private CampusOut _campus = new();
     private List<CampusOut> _campi = [];
 
-    private Breakpoint _breakpoint;
+    private List<GetClassroomsOut> _classrooms = [];
+    private List<GetCampusClassesOut> _classes = [];
+    private List<GetCampusTeachersOut> _teachers = [];
+    private List<GetCampusStudentsOut> _students = [];
+    private List<GetCampusCourseOfferingsOut> _courseOfferings = [];
+    private List<GetCampusCourseOfferingsDisciplineOut> _disciplines = [];
 
     protected override async Task OnInitializedAsync()
     {
-        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var periodResponse = await GetCurrentAcademicPeriodClient.Get();
+        if (periodResponse.IsError) return;
+        _period = periodResponse.Success;
+
+        _campi = await GetCampiClient.Get();
+        _campus = _campi.FirstOrDefault() ?? new();
         await LoadData();
     }
 
     private async Task LoadData()
     {
-        _campi = await GetCampiClient.Get();
-        _campus = _campi.FirstOrDefault() ?? new();
-        _classrooms = await GetClassroomsClient.Get();
+        _teachers = await GetCampusTeachersClient.Get(_campus.Id);
+        _students = await GetCampusStudentsClient.Get(_campus.Id);
+        _courseOfferings = await GetCampusCourseOfferingsClient.Get(_campus.Id);
+        _disciplines = _courseOfferings.SelectMany(x => x.Disciplines).ToList();
+        _classes = await GetCampusClassesClient.Get(_campus.Id);
+        _classrooms = (await GetClassroomsClient.Get()).Where(x => x.CampusId == _campus.Id).ToList();
+    }
+
+    private async Task HandleCampusChanged(CampusOut newValue)
+    {
+        _campus = newValue;
+        await LoadData();
+    }
+
+    private async Task OpenNewClassDialog()
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
+        };
+
+        var parameters = new DialogParameters<CreateCampusClassDialog>();
+        parameters.Add(x => x.Period, _period.Id);
+        parameters.Add(x => x.CampusId, _campus.Id);
+        parameters.Add(x => x.Teachers, _teachers);
+        parameters.Add(x => x.Disciplines, _disciplines);
+
+        var dialog = await DialogService.ShowAsync<CreateCampusClassDialog>("", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        _classes = await GetCampusClassesClient.Get(_campus.Id);
     }
 }

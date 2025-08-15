@@ -57,6 +57,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
     public DbSet<Classroom> Classrooms { get; set; }
     public DbSet<SykiTeacher> Teachers { get; set; }
     public DbSet<TeacherDiscipline> TeachersDisciplines { get; set; }
+    public DbSet<TeacherCampus> TeachersCampi { get; set; }
     public DbSet<SykiStudent> Students { get; set; }
     public DbSet<ClassStudent> ClassesStudents { get; set; }
     public DbSet<ClassLesson> Lessons { get; set; }

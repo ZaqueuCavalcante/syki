@@ -199,13 +199,14 @@ public class AcademicHttpClient(HttpClient http)
 
     public async Task<OneOf<ClassOut, ErrorOut>> CreateClass(
         Guid disciplineId,
-        Guid teacherId,
+        Guid? campusId,
+        Guid? teacherId,
         string period,
         int vacancies,
         List<ScheduleIn> schedules
     ) {
         var client = new CreateClassClient(Http);
-        return await client.Create(disciplineId, teacherId, period, vacancies, schedules);
+        return await client.Create(disciplineId, campusId, teacherId, period, vacancies, schedules);
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> ReleaseClassesForEnrollment(List<Guid> classes)
@@ -445,12 +446,12 @@ public class AcademicHttpClient(HttpClient http)
         await CreateEnrollmentPeriod(period, -2, 2);
 
         data.Teacher = await CreateTeacher();
-        data.AdsClasses.HumanMachineInteractionDesign = await CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, data.Teacher.Id, period, 45, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
-        data.AdsClasses.IntroToComputerNetworks = await CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, data.Teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
-        data.AdsClasses.IntroToWebDev = await CreateClass(data.AdsDisciplines.IntroToWebDev.Id, data.Teacher.Id, period, 45, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
-        data.AdsClasses.DiscreteMath = await CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Teacher.Id, period, 40, [new(Day.Thursday, Hour.H07_00, Hour.H10_00)]);
-        data.AdsClasses.ComputationalThinkingAndAlgorithms = await CreateClass(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Id, data.Teacher.Id, period, 45, [new(Day.Friday, Hour.H07_00, Hour.H10_00)]);
-        data.AdsClasses.IntegratorProjectOne = await CreateClass(data.AdsDisciplines.IntegratorProjectOne.Id, data.Teacher.Id, period, 45, [new(Day.Saturday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.HumanMachineInteractionDesign = await CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, data.Campus.Id, data.Teacher.Id, period, 45, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.IntroToComputerNetworks = await CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, data.Campus.Id, data.Teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.IntroToWebDev = await CreateClass(data.AdsDisciplines.IntroToWebDev.Id, data.Campus.Id, data.Teacher.Id, period, 45, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.DiscreteMath = await CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, data.Teacher.Id, period, 40, [new(Day.Thursday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.ComputationalThinkingAndAlgorithms = await CreateClass(data.AdsDisciplines.ComputationalThinkingAndAlgorithms.Id, data.Campus.Id, data.Teacher.Id, period, 45, [new(Day.Friday, Hour.H07_00, Hour.H10_00)]);
+        data.AdsClasses.IntegratorProjectOne = await CreateClass(data.AdsDisciplines.IntegratorProjectOne.Id, data.Campus.Id, data.Teacher.Id, period, 45, [new(Day.Saturday, Hour.H07_00, Hour.H10_00)]);
 
         await ReleaseClassesForEnrollment([
             data.AdsClasses.DiscreteMath.Id,

@@ -39,7 +39,8 @@ public class Class
     private Class(
         Guid institutionId,
         Guid disciplineId,
-        Guid teacherId,
+        Guid? campusId,
+        Guid? teacherId,
         string period,
         int vacancies,
         List<Schedule> schedules
@@ -47,6 +48,7 @@ public class Class
         Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         DisciplineId = disciplineId;
+        CampusId = campusId;
         TeacherId = teacherId;
         PeriodId = period;
         Vacancies = vacancies;
@@ -61,7 +63,8 @@ public class Class
     public static OneOf<Class, SykiError> New(
         Guid institutionId,
         Guid disciplineId,
-        Guid teacherId,
+        Guid? campusId,
+        Guid? teacherId,
         string period,
         int vacancies,
         List<Schedule> schedules
@@ -70,7 +73,7 @@ public class Class
 
         if (result.IsError) return result.Error;
 
-        return new Class(institutionId, disciplineId, teacherId, period, vacancies, schedules);
+        return new Class(institutionId, disciplineId, campusId, teacherId, period, vacancies, schedules);
     }
 
     private static OneOf<SykiSuccess, SykiError> Validate(List<Schedule> schedules)

@@ -187,7 +187,7 @@
         var schedules = _schedules.ConvertAll(x => new ScheduleIn(x.Day!.Value, x.Start!.Value, x.End!.Value));
 
         _loading = true;
-        var response = await CreateClassClient.Create(disciplineId, teacherId, period, vacancies, schedules);
+        var response = await CreateClassClient.Create(disciplineId, null, teacherId, period, vacancies, schedules);
         if (response.IsSuccess)
         {
             Snackbar.Add("Turma cadastrada com sucesso!", Severity.Success);

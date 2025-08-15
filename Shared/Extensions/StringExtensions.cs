@@ -222,4 +222,9 @@ public static class StringExtensions
 
         return builder.ToString().Trim();
     }
+
+    public static int ToInt(this string value)
+    {
+        return int.TryParse(value, out int integer) ? integer : 0;
+    }
 }

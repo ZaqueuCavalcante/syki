@@ -13,7 +13,7 @@ public partial class IntegrationTests
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
-        ClassOut createdClass = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        ClassOut createdClass = await client.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
 
         // Act
         GetAcademicClassOut @class = await client.GetAcademicClass(createdClass.Id);
@@ -32,7 +32,7 @@ public partial class IntegrationTests
         await academicClient.CreateEnrollmentPeriod(period.Id);
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
-        ClassOut createdClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut createdClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         await academicClient.ReleaseClassesForEnrollment([createdClass.Id]);
 
         await academicClient.UpdateEnrollmentPeriod(period.Id, -4, -1);
@@ -55,7 +55,7 @@ public partial class IntegrationTests
         await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
-        ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);

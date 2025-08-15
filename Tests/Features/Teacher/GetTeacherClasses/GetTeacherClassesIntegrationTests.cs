@@ -11,7 +11,7 @@ public partial class IntegrationTests
         var period = data.AcademicPeriod2;
 
         TeacherOut chico = await client.CreateTeacher("Chico");
-        await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 
@@ -31,7 +31,7 @@ public partial class IntegrationTests
         var period = data.AcademicPeriod2;
 
         TeacherOut chico = await client.CreateTeacher("Chico");
-        ClassOut discreteMathClass = await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut discreteMathClass = await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
 
         await client.ReleaseClassesForEnrollment([discreteMathClass.Id]);
 
@@ -55,7 +55,7 @@ public partial class IntegrationTests
         TeacherOut chico = await client.CreateTeacher("Chico");
         TeacherOut ana = await client.CreateTeacher("Ana");
 
-        await client.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
+        await client.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, data.Campus.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 

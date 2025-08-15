@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Syki.Back.Features.Academic.CreateCourse;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Syki.Back.Features.Academic.CreateAcademicPeriod;
 
 namespace Syki.Back.Database;
 
@@ -47,6 +48,14 @@ public static class DbContextExtensions
     public static async Task<bool> AcademicPeriodExists(this SykiDbContext ctx, Guid institutionId, string id)
     {
         return await ctx.AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
+    }
+
+    public static async Task<AcademicPeriod?> GetCurrentAcademicPeriod(this SykiDbContext ctx, Guid institutionId)
+    {
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        return await ctx.AcademicPeriods
+            .Where(p => p.InstitutionId == institutionId && p.StartAt <= today && p.EndAt >= today)
+            .FirstOrDefaultAsync();
     }
 
     public static async Task<List<Course>> GetCourses(this SykiDbContext ctx, Guid institutionId)

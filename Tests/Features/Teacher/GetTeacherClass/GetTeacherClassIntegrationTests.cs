@@ -15,7 +15,7 @@ public partial class IntegrationTests
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        ClassOut mathClass = await academicClient.CreateClass(math.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+        ClassOut mathClass = await academicClient.CreateClass(math.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
         await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);
 
@@ -47,7 +47,7 @@ public partial class IntegrationTests
         var math = data.AdsDisciplines.DiscreteMath;
 
         TeacherOut chico = await academicClient.CreateTeacher();
-        ClassOut mathClass = await academicClient.CreateClass(math.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+        await academicClient.CreateClass(math.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 

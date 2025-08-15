@@ -2,7 +2,6 @@
 
 - Classroom Assignment Problem
 - School Timetabling Problem
-
 - Utilizar Metaheurísticas
 
 1 - Pegar cursos/grades/alunos
@@ -14,14 +13,10 @@
 
 4 - Juntar tudo num esquema consolidado
 
-
-
-
 - Aulas de uma mesma disciplina não poderão ser alocadas em dias consecutivos
 - Posso ter no máximo X aulas de cada disciplina consecutivas
 - Disciplinas do periodo atual de um curso nao podem ter horarios conflitantes
     - Um aluno blocado precisa poder cursar todas as disciplinas do periodo durante a semana
-
 
 - Alunos com necessidades especiais devem estar em salas com acessibilidade
 - Os alunos devem utilizar a mesma sala durante a semana, de preferencia
@@ -31,8 +26,6 @@
     - Intervalos (meia hora a cada 3 aulas...)
     - Feriados
     - Carga horaria total no periodo deve ser maior ou igual a da disciplina
-
-
 
 - Criar turma vinculada apenas com Disciplina
     - Sem Professor
@@ -53,7 +46,6 @@
 - Reserva de salas
     - Recorrente
     - Dia e horario especifico
-
 
 Todo início de semestre, temos que:
     - Para cada campus, definir quais disciplinas devem ser ofertadas
@@ -88,6 +80,30 @@ Todo início de semestre, temos que:
     - Preferência por salas com projetor
     - Agrupar aulas do mesmo curso na mesma região do campus
 
+# Start Simple
+
+- Dados um Campus e um Período
+    - Listar apenas os professores do campus
+    - Listar todas as ofertas de curso ativas
+    - Com base na grade de cada oferta (o no primeiro período de cada uma), determinar quais disciplinas devem ser abertas no período atual
+    - Para cada oferta, determinar quais alunos estão aptos a cursar cada disciplina (aprovados/reprovados)
+    - Montar uma lista com items assim:
+        - DisciplineId, CourseOfferingId, StudentId
+    - Agrupando:
+        - DisciplineId, CourseOfferingId -> 15 alunos
+        - DisciplineId -> 87 alunos
+
+## Configs
+    - Configurar quais dias da semana a faculdade opera
+    - Quais sao os horarios que ela opera (manha/tarde/noite)
+    - Horario dos intervalos
+
+
+
+
+
+
+
 ## NP-Hard Problem
 
 - Inviável de resolver por força bruta
@@ -113,17 +129,6 @@ Todo início de semestre, temos que:
 
 
 
-# Start Simple
-
-- Dados um Campus e um Período
-    - Listar todas as ofertas de curso ativas
-    - Com base na grade de cada oferta (o no primeiro período de cada uma), determinar quais disciplinas devem ser abertas no período atual
-    - Para cada oferta, determinar quais alunos estão aptos a cursar cada disciplina (aprovados/reprovados)
-    - Montar uma lista com items assim:
-        - DisciplineId, CourseOfferingId, StudentId
-    - Agrupando:
-        - DisciplineId, CourseOfferingId -> 15 alunos
-        - DisciplineId -> 87 alunos
 
 
 

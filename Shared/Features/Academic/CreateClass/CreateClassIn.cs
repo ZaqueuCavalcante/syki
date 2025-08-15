@@ -3,7 +3,8 @@ namespace Syki.Shared;
 public class CreateClassIn
 {
     public Guid DisciplineId { get; set; }
-    public Guid TeacherId { get; set; }
+    public Guid? CampusId { get; set; }
+    public Guid? TeacherId { get; set; }
     public string Period { get; set; }
     public int Vacancies { get; set; }
     public List<ScheduleIn> Schedules { get; set; }
@@ -12,12 +13,14 @@ public class CreateClassIn
 
     public CreateClassIn(
         Guid disciplineId,
-        Guid teacherId,
+        Guid? campusId,
+        Guid? teacherId,
         string period,
         int vacancies,
         List<ScheduleIn> schedules
     ) {
         DisciplineId = disciplineId;
+        CampusId = campusId;
         TeacherId = teacherId;
         Period = period;
         Vacancies = vacancies;
@@ -30,6 +33,7 @@ public class CreateClassIn
         new CreateClassIn(
             Guid.CreateVersion7(),
             Guid.CreateVersion7(),
+            Guid.CreateVersion7(),
             "2024.1",
             40,
             [
@@ -39,6 +43,7 @@ public class CreateClassIn
         )),
         ("Programação Orientada a Objetos",
         new CreateClassIn(
+            Guid.CreateVersion7(),
             Guid.CreateVersion7(),
             Guid.CreateVersion7(),
             "2024.2",

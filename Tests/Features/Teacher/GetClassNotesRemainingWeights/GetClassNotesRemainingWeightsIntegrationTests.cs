@@ -15,7 +15,7 @@ public partial class IntegrationTests
         var period = data.AcademicPeriod2.Id;
 
         TeacherOut chico = await academicClient.CreateTeacher();
-        ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+        ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
 

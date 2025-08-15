@@ -85,3 +85,9 @@ public class WebhookCallNotFound : SykiError
     public override string Code { get; set; } = nameof(WebhookCallNotFound);
     public override string Message { get; set; } = "Chamada de webhook não encontrada.";
 }
+
+public class CurrentAcademicPeriodNotFound : SykiError
+{
+    public override string Code { get; set; } = nameof(CurrentAcademicPeriodNotFound);
+    public override string Message { get; set; } = "Período acadêmico atual não encontrado.";
+}

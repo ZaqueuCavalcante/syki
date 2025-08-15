@@ -22,6 +22,7 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
         var result = Class.New(
             institutionId,
             data.DisciplineId,
+            data.CampusId,
             data.TeacherId,
             data.Period,
             data.Vacancies,

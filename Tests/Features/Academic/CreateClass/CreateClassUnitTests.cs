@@ -12,18 +12,20 @@ public class CreateClassUnitTests
         // Arrange
         var institutionId = Guid.CreateVersion7();
         var disciplineId = Guid.CreateVersion7();
+        var campusId = Guid.CreateVersion7();
         var teacherId = Guid.CreateVersion7();
         const string period = "2023.2";
         const int vacancies = 40;
         var schedules = new List<Schedule>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
         // Act
-        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).Success;
+        var @class = Class.New(institutionId, disciplineId, campusId, teacherId, period, vacancies, schedules).Success;
 
         // Assert
         @class.Id.Should().NotBeEmpty();
         @class.InstitutionId.Should().Be(institutionId);
         @class.DisciplineId.Should().Be(disciplineId);
+        @class.CampusId.Should().Be(campusId);
         @class.TeacherId.Should().Be(teacherId);
         @class.PeriodId.Should().Be(period);
         @class.Status.Should().Be(ClassStatus.OnPreEnrollment);
@@ -37,6 +39,7 @@ public class CreateClassUnitTests
         // Arrange
         var institutionId = Guid.CreateVersion7();
         var disciplineId = Guid.CreateVersion7();
+        var campusId = Guid.CreateVersion7();
         var teacherId = Guid.CreateVersion7();
         const string period = "2023.2";
         const int vacancies = 40;
@@ -47,7 +50,7 @@ public class CreateClassUnitTests
         };
 
         // Act
-        var result = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules);
+        var result = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, schedules);
 
         // Assert
         result.ShouldBeError(new ConflictingSchedules());
@@ -60,12 +63,13 @@ public class CreateClassUnitTests
         // Arrange
         var institutionId = Guid.CreateVersion7();
         var disciplineId = Guid.CreateVersion7();
+        var campusId = Guid.CreateVersion7();
         var teacherId = Guid.CreateVersion7();
         const string period = "2023.2";
         const int vacancies = 40;
 
         // Act
-        var result = Class.New(institutionId, disciplineId, teacherId, period, vacancies, [.. schedules]);
+        var result = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, [.. schedules]);
 
         // Assert
         result.ShouldBeError(new ConflictingSchedules());
@@ -78,12 +82,13 @@ public class CreateClassUnitTests
         // Arrange
         var institutionId = Guid.CreateVersion7();
         var disciplineId = Guid.CreateVersion7();
+        var campusId = Guid.CreateVersion7();
         var teacherId = Guid.CreateVersion7();
         const string period = "2023.2";
         const int vacancies = 40;
 
         // Act
-        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, [.. schedules]).Success;
+        var @class = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, [.. schedules]).Success;
 
         // Assert
         @class.Schedules.Should().BeEquivalentTo(schedules);
@@ -96,6 +101,7 @@ public class CreateClassUnitTests
         var userId = Guid.CreateVersion7();
         var institutionId = Guid.CreateVersion7();
         var disciplineId = Guid.CreateVersion7();
+        var campusId = Guid.CreateVersion7();
         var teacherId = Guid.CreateVersion7();
         const string period = "2023.2";
         const int vacancies = 40;
@@ -104,7 +110,7 @@ public class CreateClassUnitTests
         var teacher = new SykiTeacher(userId, institutionId, "Chico Science");
         var schedules = new List<Schedule>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
-        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).Success;
+        var @class = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, schedules).Success;
         @class.Discipline = discipline;
         @class.Teacher = teacher;
 

@@ -22,6 +22,8 @@ public class CourseOffering
     public string Period { get; set; }
     public Shift Shift { get; set; }
 
+    public CourseOffering() {}
+
     public CourseOffering(
         Guid institutionId,
         Guid campusId,
@@ -37,6 +39,22 @@ public class CourseOffering
         CourseCurriculumId = courseCurriculumId;
         Period = period;
         Shift = shift;
+    }
+
+    public byte GetCurrentPeriodNumber(string academicPeriodId)
+    {
+        var currentYear = academicPeriodId.Split(".").First().ToInt();
+        var currentNumber = academicPeriodId.Split(".").Last().ToInt();
+        var startYear = Period.Split(".").First().ToInt();
+        var startNumber = Period.Split(".").Last().ToInt();
+
+        if (currentYear == startYear) return (byte)(currentNumber - startNumber + 1);
+
+        if (currentNumber == startNumber) return (byte)((currentYear - startYear) * 2 + 1);
+
+        if (currentNumber < startNumber) return (byte)((currentYear - startYear) * 2);
+
+        return (byte)((currentYear - startYear) * 2 + 2);
     }
 
     public CourseOfferingOut ToOut()

@@ -15,7 +15,7 @@ public partial class IntegrationTests
         var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        ClassOut @class = await academicClient.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        ClassOut @class = await academicClient.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
 
         var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
         GetAcademicClassOut classDb = await academicClient.GetAcademicClass(@class.Id);
@@ -57,10 +57,10 @@ public partial class IntegrationTests
         var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };
 
         TeacherOut teacher1 = await academicClient.CreateTeacher();
-        ClassOut class1 = await academicClient.CreateClass(discipline.Id, teacher1.Id, period.Id, 40, schedules);
+        ClassOut class1 = await academicClient.CreateClass(discipline.Id, null, teacher1.Id, period.Id, 40, schedules);
 
         TeacherOut teacher2 = await academicClient.CreateTeacher();
-        ClassOut class2 = await academicClient.CreateClass(discipline.Id, teacher2.Id, period.Id, 40, schedules);
+        ClassOut class2 = await academicClient.CreateClass(discipline.Id, null, teacher2.Id, period.Id, 40, schedules);
 
         var teacherClient = await _api.LoggedAsTeacher(teacher1.Email);
         GetAcademicClassOut classDb = await academicClient.GetAcademicClass(class2.Id);
@@ -86,7 +86,7 @@ public partial class IntegrationTests
         var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        ClassOut @class = await academicClient.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        ClassOut @class = await academicClient.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
 
         var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
         GetAcademicClassOut classDb = await academicClient.GetAcademicClass(@class.Id);

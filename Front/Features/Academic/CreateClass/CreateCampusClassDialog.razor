@@ -1,0 +1,139 @@
+@namespace Syki.Front.Features.Academic.CreateClass
+
+<MudDialog Class="pb-2">
+    <TitleContent>
+        <SykiDialogTitle Text="Nova Turma" />
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="@_form" Class="pt-1" Spacing="0">
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <MudAutocomplete
+                        T="GetCampusCourseOfferingsDisciplineOut"
+                        MaxItems="50"
+                        SearchFunc="@SearchDiscipline"
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        @bind-Value="@_discipline"
+                        Label="Disciplina"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary"
+                    />
+                </MudItem>
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <MudSelect
+                        Dense="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        @bind-Value="@_teacher"
+                        Label="Professor"
+                        Required="true"
+                        RequiredError="Informe!"
+                        AdornmentColor="Color.Primary"
+                        Disabled="@(_discipline == null)"
+                    >
+                        @foreach (GetCampusTeachersOut? item in Teachers.Where(t => _discipline != null && t.Disciplines.Contains(_discipline.Id)))
+                        {
+                            <MudSelectItem Value="@item">@item.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="6" sm="6" md="6" lg="6">
+                    <MudNumericField
+                        MaxLength="2"
+                        HideSpinButtons="true"
+                        Margin="Margin.Dense"
+                        Variant="Variant.Outlined"
+                        T="byte?"
+                        @bind-Value="@_vacancies"
+                        Label="Vagas"
+                        Required="true"
+                        RequiredError="Informe!"
+                    />
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Cancel" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject CreateClassClient CreateClassClient
+@inject GetTeachersClient GetTeachersClient
+@inject GetDisciplinesClient GetDisciplinesClient
+@inject IBrowserViewportService BrowserViewportService
+@inject GetAcademicPeriodsClient GetAcademicPeriodsClient
+
+@code
+{
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public string Period { get; set; }
+
+    [Parameter]
+    public Guid CampusId { get; set; }
+
+    [Parameter]
+    public List<GetCampusTeachersOut> Teachers { get; set; } = [];
+
+    [Parameter]
+    public List<GetCampusCourseOfferingsDisciplineOut> Disciplines { get; set; } = [];
+
+    private MudForm _form;
+    private bool _loading;
+    private Breakpoint _breakpoint;
+
+    private byte? _vacancies;
+    private GetCampusTeachersOut? _teacher;
+    private GetCampusCourseOfferingsDisciplineOut? _discipline;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+    }
+
+    private async Task<IEnumerable<GetCampusCourseOfferingsDisciplineOut>> SearchDiscipline(string value, CancellationToken cancellationToken)
+    {
+        await Task.Delay(0);
+
+        if (string.IsNullOrEmpty(value))
+            return Disciplines;
+
+        return Disciplines.Where(x => value.IsIn(x.Name));
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        var disciplineId = _discipline!.Id;
+        var teacherId = _teacher!.Id;
+        var vacancies = _vacancies!.Value;
+
+        _loading = true;
+        var response = await CreateClassClient.Create(disciplineId, CampusId, teacherId, Period, vacancies, []);
+        if (response.IsSuccess)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Turma cadastrada com sucesso!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

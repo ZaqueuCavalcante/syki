@@ -13,7 +13,7 @@ public partial class IntegrationTests
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         var schedules = new List<ScheduleIn>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
-        ClassOut @class = await client.CreateClass(discipline.Id, teacher.Id, period.Id, 40, schedules);
+        ClassOut @class = await client.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
 
         // Act
         var classes = await client.GetAcademicClasses();
@@ -33,7 +33,7 @@ public partial class IntegrationTests
         await academicClient.CreateEnrollmentPeriod(period.Id);
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
-        ClassOut @class = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut @class = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         await academicClient.ReleaseClassesForEnrollment([@class.Id]);
 
         await academicClient.UpdateEnrollmentPeriod(period.Id, -4, -1);
@@ -57,7 +57,7 @@ public partial class IntegrationTests
         await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
-        ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, chico.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
+        ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);
@@ -83,6 +83,7 @@ public partial class IntegrationTests
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
         ClassOut mathClass = await academicClient.CreateClass(
             data.AdsDisciplines.DiscreteMath.Id,
+            data.Campus.Id,
             chico.Id,
             data.AcademicPeriod2.Id,
             40,

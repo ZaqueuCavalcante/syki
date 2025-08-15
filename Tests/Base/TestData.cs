@@ -505,11 +505,12 @@ public static class TestData
     {
         var institutionId = Guid.CreateVersion7();
         var disciplineId = Guid.CreateVersion7();
+        var campusId = Guid.CreateVersion7();
         var teacherId = Guid.CreateVersion7();
         const string period = "2024.2";
         const int vacancies = 40;
 
-        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, []).Success;
+        var @class = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, []).Success;
 
         return @class;
     }
@@ -518,11 +519,12 @@ public static class TestData
     {
         var institutionId = Guid.CreateVersion7();
         var disciplineId = Guid.CreateVersion7();
+        var campusId = Guid.CreateVersion7();
         var teacherId = Guid.CreateVersion7();
         const string period = "2024.2";
         const int vacancies = 40;
 
-        var @class = Class.New(institutionId, disciplineId, teacherId, period, vacancies, schedules).Success;
+        var @class = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, schedules).Success;
         @class.Period = AcademicPeriod.New(period, institutionId, start.ToDateOnly(), end.ToDateOnly());
 
         return @class;

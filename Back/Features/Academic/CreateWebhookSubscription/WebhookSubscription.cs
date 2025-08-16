@@ -51,7 +51,7 @@ public class WebhookSubscription
         };
     }
 
-    public GetWebhookOut ToGetWebhookOut()
+    public GetWebhookSubscriptionOut ToGetWebhookSubscriptionOut()
     {
         return new()
         {

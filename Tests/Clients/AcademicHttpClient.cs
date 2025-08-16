@@ -36,6 +36,7 @@ using Syki.Front.Features.Academic.AssignDisciplinesToTeacher;
 using Syki.Front.Features.Academic.ReleaseClassesForEnrollment;
 using Syki.Front.Features.Academic.CreateClassroom;
 using Syki.Front.Features.Academic.AssignClassToClassroom;
+using Syki.Front.Features.Academic.GetWebhookSubscription;
 
 namespace Syki.Tests.Clients;
 
@@ -332,6 +333,12 @@ public class AcademicHttpClient(HttpClient http)
         events ??= [WebhookEventType.StudentCreated];
         var client = new CreateWebhookSubscriptionClient(Http);
         return await client.Create(name, url, events, authenticationType, apiKey);
+    }
+
+    public async Task<OneOf<GetWebhookSubscriptionOut, SykiError>> GetWebhookSubscription(Guid id)
+    {
+        var client = new GetWebhookSubscriptionClient(Http);
+        return await client.Get(id);
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> AddDisciplinePreRequisites(

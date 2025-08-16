@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.GetWebhook;
+namespace Syki.Back.Features.Academic.GetWebhookSubscription;
 
-public class GetWebhookService(SykiDbContext ctx) : IAcademicService
+public class GetWebhookSubscriptionService(SykiDbContext ctx) : IAcademicService
 {
-    public async Task<OneOf<GetWebhookOut, SykiError>> Get(Guid institutionId, Guid id)
+    public async Task<OneOf<GetWebhookSubscriptionOut, SykiError>> Get(Guid institutionId, Guid id)
     {
         var webhook = await ctx.Webhooks.AsNoTracking()
             .Include(w => w.Calls)
@@ -13,6 +13,6 @@ public class GetWebhookService(SykiDbContext ctx) : IAcademicService
 
         if (webhook == null) return new WebhookNotFound();
 
-        return webhook.ToGetWebhookOut();
+        return webhook.ToGetWebhookSubscriptionOut();
     }
 }

@@ -40,7 +40,7 @@ global using Syki.Front.Features.Academic.StartClasses;
 global using Syki.Front.Features.Academic.GetWebhookCall;
 global using Syki.Front.Features.Academic.ReprocessWebhookCall;
 global using Syki.Front.Features.Academic.GetWebhooks;
-global using Syki.Front.Features.Academic.GetWebhook;
+global using Syki.Front.Features.Academic.GetWebhookSubscription;
 global using Syki.Front.Features.Academic.FinalizeClasses;
 global using Syki.Front.Features.Academic.ReleaseClassesForEnrollment;
 

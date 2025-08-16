@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class GetWebhookOut
+public class GetWebhookSubscriptionOut
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -12,7 +12,7 @@ public class GetWebhookOut
 
     public List<GetWebhookCallOut> Calls { get; set; }
 
-    public static IEnumerable<(string, GetWebhookOut)> GetExamples() =>
+    public static IEnumerable<(string, GetWebhookSubscriptionOut)> GetExamples() =>
     [
         ("Exemplo", new() { }),
     ];

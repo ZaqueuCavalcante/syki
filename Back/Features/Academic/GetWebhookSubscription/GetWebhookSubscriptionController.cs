@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.GetWebhook;
+namespace Syki.Back.Features.Academic.GetWebhookSubscription;
 
 [ApiController, AuthAcademic]
 [EnableRateLimiting("Medium")]
-public class GetWebhookController(GetWebhookService service) : ControllerBase
+public class GetWebhookSubscriptionController(GetWebhookSubscriptionService service) : ControllerBase
 {
     /// <summary>
     /// Webhook
@@ -20,5 +20,5 @@ public class GetWebhookController(GetWebhookService service) : ControllerBase
     }
 }
 
-internal class ResponseExamples : ExamplesProvider<GetWebhookOut>;
+internal class ResponseExamples : ExamplesProvider<GetWebhookSubscriptionOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<WebhookNotFound>;

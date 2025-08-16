@@ -1,6 +1,6 @@
 ﻿using MudBlazor;
 
-namespace Syki.Front.Features.Academic.GetWebhook;
+namespace Syki.Front.Features.Academic.GetWebhookSubscription;
 
 public static class WebhookCallStatusMapper
 {

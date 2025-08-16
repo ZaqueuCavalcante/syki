@@ -1,4 +1,4 @@
-﻿@using Syki.Front.Features.Academic.GetWebhook
+﻿@using Syki.Front.Features.Academic.GetWebhookSubscription
 
 @namespace Syki.Front.Pages.Academic
 
@@ -153,7 +153,7 @@
 </MudContainer>
 
 @inject NavigationManager Nav
-@inject GetWebhookClient GetWebhookClient
+@inject GetWebhookSubscriptionClient GetWebhookSubscriptionClient
 
 @code
 {
@@ -161,7 +161,7 @@
 	public Guid Id { get; set; }
 
     private bool _loading;
-    private GetWebhookOut _data = new();
+    private GetWebhookSubscriptionOut _data = new();
     private List<GetWebhookCallOut> _calls = [];
 
     private WebhookCallStatus? _statusFilter;
@@ -170,7 +170,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _data = await GetWebhookClient.Get(Id);
+        _data = await GetWebhookSubscriptionClient.Get(Id);
         _calls = _data.Calls.Select(x => x).ToList();
         _loading = false;
     }

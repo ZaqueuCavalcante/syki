@@ -363,10 +363,10 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Assign(teacherId, campi);
     }
 
-    public async Task<OneOf<SuccessOut, ErrorOut>> AssignClassToClassroom(Guid classroomId, Guid classId)
+    public async Task<OneOf<SuccessOut, ErrorOut>> AssignClassToClassroom(Guid classroomId, Guid classId, List<ScheduleIn> schedules)
     {
         var client = new AssignClassToClassroomClient(Http);
-        return await client.Assign(classroomId, classId);
+        return await client.Assign(classroomId, classId, schedules);
     }
 
     public async Task<AcademicPeriodOut> CreateCurrentAcademicPeriod()

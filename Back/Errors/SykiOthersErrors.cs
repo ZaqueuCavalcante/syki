@@ -96,3 +96,8 @@ public class TeacherNotAssignedToDiscipline : SykiError
     public override string Code { get; set; } = nameof(TeacherNotAssignedToDiscipline);
     public override string Message { get; set; } = "Professor não vinculado a disciplina.";
 }
+public class ClassVacanciesGreaterThanClassroomCapacity : SykiError
+{
+    public override string Code { get; set; } = nameof(ClassVacanciesGreaterThanClassroomCapacity);
+    public override string Message { get; set; } = "Turma com mais vagas que a capacidade da sala.";
+}

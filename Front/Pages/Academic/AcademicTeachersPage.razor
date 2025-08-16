@@ -28,22 +28,24 @@
             <HeaderContent>
                 <MudTh>Nome</MudTh>
                 <MudTh>Email</MudTh>
+                <MudTh>Campi</MudTh>
                 <MudTh>Disciplinas</MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Nome">@context.Name</MudTd>
                 <MudTd DataLabel="Email">@context.Email</MudTd>
+                <MudTd DataLabel="Campi">@context.Campi.ToThousandSeparated()</MudTd>
                 <MudTd DataLabel="Disciplinas">@context.Disciplines.ToThousandSeparated()</MudTd>
                 <MudTd>
-                    <MudTooltip Text="Disciplinas" Arrow="true" Placement="Placement.Top" ShowOnFocus="false">
-                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Apps" OnClick="@(() => OpenDisciplinesDrawer(context))" />
-                    </MudTooltip>
-                    <MudTooltip Text="Campi" Arrow="true" Placement="Placement.Top" ShowOnFocus="false">
+                    <MudTooltip Text="Campi" Arrow Placement="Placement.Top" ShowOnFocus="false">
                         <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.GroupWork" OnClick="@(() => OpenCampiDrawer(context))" />
                     </MudTooltip>
+                    <MudTooltip Text="Disciplinas" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Apps" OnClick="@(() => OpenDisciplinesDrawer(context))" />
+                    </MudTooltip>
                     <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
-                        <MudTooltip Text="Cross Login" Arrow="true" Placement="Placement.Top" ShowOnFocus="false">
+                        <MudTooltip Text="Cross Login" Arrow Placement="Placement.Top" ShowOnFocus="false">
                             <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context))" />
                         </MudTooltip>
                     </AuthorizeView>
@@ -52,7 +54,7 @@
             <LoadingContent>
                 @if (_breakpoint == Breakpoint.Xs)
                 {
-                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                    <MudProgressLinear Color="Color.Info" Indeterminate />
                 }
             </LoadingContent>
             <NoRecordsContent>

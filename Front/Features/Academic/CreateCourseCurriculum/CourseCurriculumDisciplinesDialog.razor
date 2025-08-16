@@ -10,8 +10,8 @@
     <DialogContent>
         <MudDataGrid
             Class="mb-4"
-            Dense="true"
-            Hover="true"
+            Dense
+            Hover
             Items="@Disciplines.OrderBy(d => d.Period).ThenBy(d => d.Name)"
         >
             <Columns>

@@ -40,17 +40,17 @@
             <MudCardContent Class="px-6">
                 @if (_loading)
                 {
-                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                    <MudProgressLinear Color="Color.Info" Indeterminate />
                 }
                 else
                 {
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
-                        <MudProgressLinear Color="@GetFrequencyColor(_student.Frequency)" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.Frequency)" Style="height: 24px">
+                    <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                        <MudProgressLinear Color="@GetFrequencyColor(_student.Frequency)" Rounded Size="Size.Large" Value="@decimal.ToDouble(_student.Frequency)" Style="height: 24px">
                             <MudText Typo="Typo.body1">
                                 <b>@_student.Frequency.Format()%</b>
                             </MudText>
                         </MudProgressLinear>
-                        <MudTooltip Text="Total de presenças durante todo o curso" Arrow="true" Placement="Placement.Bottom">
+                        <MudTooltip Text="Total de presenças durante todo o curso" Arrow Placement="Placement.Bottom">
                             <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
                         </MudTooltip>
                     </MudStack>
@@ -65,8 +65,8 @@
                 Items="@_frequencies"
                 Class="pa-4"
                 Breakpoint="Breakpoint.Sm"
-                Dense="true"
-                Hover="true"
+                Dense
+                Hover
                 Filter="@_quickFilter"
                 Loading="@_loading"
                 RowsPerPage="100"
@@ -87,7 +87,7 @@
                     <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
                     <MudTd DataLabel="Aulas">@context.GetFormated()</MudTd>
                     <MudTd DataLabel="Frequência">
-                        <MudProgressLinear Color="@GetFrequencyColor(context.GetPercentage())" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.GetPercentage())" Style="height: 24px">
+                        <MudProgressLinear Color="@GetFrequencyColor(context.GetPercentage())" Rounded Size="Size.Large" Value="@decimal.ToDouble(context.GetPercentage())" Style="height: 24px">
                             <MudText Typo="Typo.body1">
                                 <b>@context.GetPercentage().Format()%</b>
                             </MudText>
@@ -97,7 +97,7 @@
                 <LoadingContent>
                     @if (_breakpoint == Breakpoint.Xs)
                     {
-                        <MudProgressLinear Color="Color.Info" Indeterminate="true"/>
+                        <MudProgressLinear Color="Color.Info" Indeterminate/>
                     }
                 </LoadingContent>
             </MudTable>

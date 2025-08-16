@@ -10,7 +10,7 @@
 <MudContainer Class="my-4 px-4">
     <MudCard>
         <MudCardContent>
-            <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudStack Row AlignItems="AlignItems.Center">
                 <MudIcon Icon="@Icons.Material.Filled.Webhook" Class="mb-1" Size="Size.Large"/>
                 <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@($"Webhook - {_data.Name}")</MudText>
             </MudStack>
@@ -45,8 +45,8 @@
         </style>
         <MudTable
             Class="mb-4"
-            Dense="true"
-            Hover="true"
+            Dense
+            Hover
             RowsPerPage="10"
             Loading="@_loading"
             Items="@_calls"
@@ -55,27 +55,27 @@
         >
             <ToolBarContent>
                 <MudStack Style="width: 100%">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-4" Style="width: 100%">
+                    <MudStack Row AlignItems="AlignItems.Center" Class="mt-4" Style="width: 100%">
                         <MudIcon Icon="@Icons.Material.Filled.CallMade" Class="mb-1" Size="Size.Medium"/>
                         <MudText Typo="Typo.h6" Style="font-weight: bold">Chamadas</MudText>
                     </MudStack>
-                    <MudCard Class="mt-0 mb-4 mr-2" Style="width: 100%" Elevation="0" Outlined="true">
+                    <MudCard Class="mt-0 mb-4 mr-2" Style="width: 100%" Elevation="0" Outlined>
                         <MudCardContent>
                             <MudGrid Spacing="2">
                                 <MudItem xs="12" sm="3" md="3" lg="3">
                                     <MudSelect
-                                        Dense="true"
+                                        Dense
                                         Margin="Margin.Dense"
                                         Variant="Variant.Outlined"
                                         @bind-Value="@_statusFilter"
                                         Label="Status"
-                                        Clearable="true"
+                                        Clearable
                                         AdornmentColor="Color.Primary
                                     ">
                                         @foreach (WebhookCallStatus? item in Enum.GetValues<WebhookCallStatus>())
                                         {
                                             <MudSelectItem Value="@item">
-                                                <MudStack Row="true" AlignItems="AlignItems.Center">
+                                                <MudStack Row AlignItems="AlignItems.Center">
                                                     <MudIcon Class="mb-1" Icon="@item.Value.GetIcon()" Color="@item.Value.GetColor()" Size="Size.Small"/>
                                                     <MudText>@item.GetDescription()</MudText>
                                                 </MudStack>
@@ -86,12 +86,12 @@
 
                                 <MudItem xs="12" sm="4" md="4" lg="4">
                                     <MudSelect
-                                        Dense="true"
+                                        Dense
                                         Margin="Margin.Dense"
                                         Variant="Variant.Outlined"
                                         @bind-Value="@_eventTypeFilter"
                                         Label="Evento"
-                                        Clearable="true"
+                                        Clearable
                                         AdornmentColor="Color.Primary
                                     ">
                                         @foreach (WebhookEventType? item in Enum.GetValues<WebhookEventType>())
@@ -104,7 +104,7 @@
                                 </MudItem>
 
                                 <MudItem xs="12" sm="5" md="5" lg="5" Class="d-flex justify-end align-center pt-1">
-                                <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
                                         <MudChip T="string" Variant="Variant.Text" Color="Color.Primary" Class="mt-1 pt-1">@_calls.Count.ToThousandSeparated()</MudChip>
                                         <MudButton
                                             OnClick="@Filter"

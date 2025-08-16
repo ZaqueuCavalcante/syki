@@ -15,7 +15,7 @@
             <MudContainer Class="px-0">
                 <MudCard>
                     <MudCardContent>
-                        <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                        <MudProgressLinear Color="Color.Info" Indeterminate />
                     </MudCardContent>
                 </MudCard>
             </MudContainer>
@@ -26,7 +26,7 @@
         }
         else
         {
-            <MudAlert NoIcon="true" Class="mt-4 mb-4 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
+            <MudAlert NoIcon Class="mt-4 mb-4 pl-6" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
                 <MudText>
                     Selecione as disciplinas que você irá cursar nesse semestre.
                     O período de matrícula vai até <strong>@_enrollmentPeriod.EndAt.FormatBr()</strong>.
@@ -43,8 +43,8 @@
                     Items="@_options"
                     Class="pa-4"
                     Breakpoint="Breakpoint.Sm"
-                    Dense="true"
-                    Hover="true"
+                    Dense
+                    Hover
                     Loading="@_loading"
                     RowsPerPage="100">
                     <HeaderContent>
@@ -65,7 +65,7 @@
                             <MudCheckBox
                                 T="bool"
                                 Class="pl-9 pr-1"
-                                Dense="true"
+                                Dense
                                 Size="Size.Small"
                                 Color="Color.Success"
                                 Value="@context.IsSelected"
@@ -78,7 +78,7 @@
                     </NoRecordsContent>
                     <PagerContent>
                         <MudDivider/>
-                        <MudStack Row="true" Class="mt-4">
+                        <MudStack Row Class="mt-4">
                             <SykiProgressCircular Loading="@_loading"/>
                             <DialogSaveButton OnClick="@Submit"/>
                         </MudStack>

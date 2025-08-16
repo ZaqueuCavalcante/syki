@@ -9,13 +9,13 @@
     <MudBreadcrumbs Items="@_breadcrumbs" Class="px-0" />
     <MudGrid Class="align-center">
         <MudItem xs="12" sm="8" md="8" lg="8">
-            <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudStack Row AlignItems="AlignItems.Center">
                 <MudIcon Icon="@Icons.Material.Filled.EditNote" Class="mb-1" Size="Size.Large"/>
                 <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">Atividade</MudText>
             </MudStack>
         </MudItem>
         <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
-            <MudProgressLinear Color="@GetDeliveryRateColor(_activity.GetDeliveryRate())" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_activity.GetDeliveryRate())" Style="height: 28px">
+            <MudProgressLinear Color="@GetDeliveryRateColor(_activity.GetDeliveryRate())" Rounded Size="Size.Large" Value="@decimal.ToDouble(_activity.GetDeliveryRate())" Style="height: 28px">
                 <MudText Typo="Typo.body1">
                     <b>@GetDeliveryRateFraction(_activity)</b>
                 </MudText>
@@ -57,11 +57,11 @@
 
     <MudContainer Class="px-0 mb-4">
         <style>.mud-table-toolbar { height: auto }</style>
-        <MudDataGrid Class="pa-4" Items="@GetWorks()" QuickFilter="@_quickFilter" Hover="true" SortMode="@SortMode.None" Loading="@_loading" Dense="true" RowsPerPage="100">
+        <MudDataGrid Class="pa-4" Items="@GetWorks()" QuickFilter="@_quickFilter" Hover SortMode="@SortMode.None" Loading="@_loading" Dense RowsPerPage="100">
             <ToolBarContent>
                 <MudGrid Class="align-center" Spacing="3">
                     <MudItem xs="12" sm="5" md="5" lg="5">
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
                             <MudToggleGroup T="ClassActivityWorkStatus" SelectionMode="SelectionMode.MultiSelection" Values="@_statusFilter" ValuesChanged="@HandleStatusFilterChange" Style="width: 100%;" Color="Color.Tertiary" CheckMark="@(_breakpoint != Breakpoint.Xs)">
                                 <MudToggleItem Value="@(ClassActivityWorkStatus.Pending)" Text="@ClassActivityWorkStatus.Pending.GetDescription()" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
                                 <MudToggleItem Value="@(ClassActivityWorkStatus.Delivered)" Text="@ClassActivityWorkStatus.Delivered.GetDescription()" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />

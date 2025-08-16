@@ -8,17 +8,17 @@
         <MudForm @ref="@_form" Class="pt-1" Spacing="0">
             <MudGrid Spacing="2">
                 <MudItem xs="12" sm="12" md="6" lg="6">
-                    <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@data.Name" Class="pb-0"/>
+                    <SykiTextField Label="Nome" AutoFocus @bind-Value="@data.Name" Class="pb-0"/>
                 </MudItem>
                 <MudItem xs="12" sm="12" md="6" lg="6">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Value="@_course"
                         ValueChanged="@((CourseOut newValue) => HandleSelectCourse(newValue))"
                         Label="Curso"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary">
                         @foreach (CourseOut? item in Courses)
@@ -27,7 +27,7 @@
                         }
                         @if (Courses.Count == 0)
                         {
-                            <MudSelectItem Value="@_course" Disabled="true">Não existem cursos com disciplinas ainda.</MudSelectItem>
+                            <MudSelectItem Value="@_course" Disabled>Não existem cursos com disciplinas ainda.</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>
@@ -54,7 +54,7 @@
                         StartIcon="@Icons.Material.Outlined.Add"
                         IconSize="Size.Large"
                         Variant="Variant.Outlined"
-                        FullWidth="true"
+                        FullWidth
                         Class="mt-2 border-dashed border-2 mud-border-secundary"
                         Style="max-width: fit-content"
                         Color="Color.Primary"

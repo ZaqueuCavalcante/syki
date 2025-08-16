@@ -5,15 +5,15 @@
 <SykiPageTitle Title="Login MFA" />
 
 <MudContainer Class="mt-4 mb-8" MaxWidth="MaxWidth.ExtraSmall">
-    <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
-        <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
+    <MudOverlay @bind-Visible="@_loading" LightBackground Absolute="false">
+        <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
     </MudOverlay>
     <style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
     <MudCard Class="px-4 pt-8" Style="height: 460px">
         <MudCardContent>
             <MudStack AlignItems="AlignItems.Center">
-                <MudAlert NoIcon="true" Class="px-4 mb-4" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center">
-                    <MudStack Row="true" Justify="Justify.SpaceAround">
+                <MudAlert NoIcon Class="px-4 mb-4" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center">
+                    <MudStack Row Justify="Justify.SpaceAround">
                         <MudText>Insira o código gerado pelo app Google Authenticator para realizar o login</MudText>
                     </MudStack>
                 </MudAlert>
@@ -25,15 +25,15 @@
                     </style>
                     <MudNumericField
                         T="int?"
-                        Immediate="true"
-                        OnlyValidateIfDirty="true"
+                        Immediate
+                        OnlyValidateIfDirty
                         ReadOnly="@_loading"
                         Style="width: 200px;"
                         Value="@_code"
                         ValueChanged="@HandleCodeChanged"
                         Variant="Variant.Outlined"
-                        HideSpinButtons="true"
-                        AutoFocus="true"
+                        HideSpinButtons
+                        AutoFocus
                         Typo="Typo.h6"
                         Class="mt-8"
                         Margin="Margin.Dense"
@@ -45,7 +45,7 @@
                 @if (_showCodeFeedback)
                 {
                     <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Text">
-                        <MudStack Row="true" Justify="Justify.SpaceAround">
+                        <MudStack Row Justify="Justify.SpaceAround">
                             <MudText>Código inválido</MudText>
                         </MudStack>
                     </MudAlert>

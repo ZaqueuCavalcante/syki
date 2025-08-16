@@ -12,7 +12,7 @@
         <MudCardContent>
             <MudGrid>
                 <MudItem xs="12" sm="8" md="8" lg="8">
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                    <MudStack Row AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.StickyNote2" Class="mb-1" Size="Size.Large"/>
                         <MudText Typo="Typo.h5" Style="font-weight: bold">Eventos</MudText>
                     </MudStack>
@@ -92,8 +92,8 @@
     <MudContainer Class="px-0 my-4">
         <MudTable
             Class="mb-4"
-            Dense="true"
-            Hover="true"
+            Dense
+            Hover
             Items="@_events"
             RowsPerPage="10"
             T="DomainEventTableOut"
@@ -101,23 +101,23 @@
             Breakpoint="Breakpoint.Sm"
         >
             <ToolBarContent>
-                <MudCard Class="my-4 mr-2" Style="width: 100%" Elevation="0" Outlined="true">
+                <MudCard Class="my-4 mr-2" Style="width: 100%" Elevation="0" Outlined>
                     <MudCardContent>
                         <MudGrid Spacing="2">
                             <MudItem xs="12" sm="3" md="3" lg="3">
                                 <MudSelect
-                                    Dense="true"
+                                    Dense
                                     Margin="Margin.Dense"
                                     Variant="Variant.Outlined"
                                     @bind-Value="@_status"
                                     Label="Status"
-                                    Clearable="true"
+                                    Clearable
                                     AdornmentColor="Color.Primary
                                 ">
                                     @foreach (DomainEventStatus? item in Enum.GetValues<DomainEventStatus>())
                                     {
                                         <MudSelectItem Value="@item">
-                                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                            <MudStack Row AlignItems="AlignItems.Center">
                                                 <MudIcon Class="mb-1" Icon="@item.Value.GetIcon()" Color="@item.Value.GetColor()" Size="Size.Small"/>
                                                 <MudText>@item.GetDescription()</MudText>
                                             </MudStack>
@@ -128,18 +128,18 @@
 
                             <MudItem xs="12" sm="4" md="4" lg="4">
                                 <MudSelect
-                                    Dense="true"
+                                    Dense
                                     Margin="Margin.Dense"
                                     Variant="Variant.Outlined"
                                     @bind-Value="@_type"
                                     Label="Tipo"
-                                    Clearable="true"
+                                    Clearable
                                     AdornmentColor="Color.Primary
                                 ">
                                     @foreach (DomainEventTypeCountOut item in _data.EventTypes)
                                     {
                                         <MudSelectItem Value="@item.Type">
-                                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                            <MudStack Row AlignItems="AlignItems.Center">
                                                 <MudIcon Class="mb-1" Icon="@Icons.Material.Filled.Circle" Style="@($"color: {@GetPointColor(item)}")" Size="Size.Small"/>
                                                 <MudText>@item.Description</MudText>
                                             </MudStack>
@@ -153,12 +153,12 @@
                                     T="TinyInstitutionOut"
                                     MaxItems="50"
                                     SearchFunc="@SearchInstitution"
-                                    Dense="true"
+                                    Dense
                                     Margin="Margin.Dense"
                                     Variant="Variant.Outlined"
                                     @bind-Value="@_institution"
                                     Label="Instituição"
-                                    Clearable="true"
+                                    Clearable
                                     OnClearButtonClick="@(() => _institution = null)"
                                     AdornmentColor="Color.Primary"
                                 />
@@ -166,18 +166,18 @@
 
                             <MudItem xs="12" sm="3" md="3" lg="3" Class="pt-1">
                                 <MudSelect
-                                    Dense="true"
+                                    Dense
                                     Margin="Margin.Dense"
                                     Variant="Variant.Outlined"
                                     @bind-Value="@_commands"
                                     Label="Comandos"
-                                    Clearable="true"
+                                    Clearable
                                     AdornmentColor="Color.Primary
                                 ">
                                     @foreach (CommandStatus? item in Enum.GetValues<CommandStatus>())
                                     {
                                         <MudSelectItem Value="@item">
-                                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                                            <MudStack Row AlignItems="AlignItems.Center">
                                                 <MudIcon Class="mb-1" Icon="@item.Value.GetIcon()" Color="@item.Value.GetColor()" Size="Size.Small"/>
                                                 <MudText>@item.GetDescription()</MudText>
                                             </MudStack>
@@ -186,7 +186,7 @@
                                 </MudSelect>
                             </MudItem>
                             <MudItem xs="12" sm="9" md="9" lg="9" Class="d-flex justify-end align-center pt-1">
-                               <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                               <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
                                     <MudChip T="string" Variant="Variant.Text" Color="Color.Primary" Class="mt-1 pt-1">@_events.Count.ToThousandSeparated()</MudChip>
                                     <MudButton
                                         OnClick="@Filter"
@@ -214,7 +214,7 @@
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Tipo">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                    <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
                         <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
                         <MudText Typo="Typo.body2">@context.Description</MudText>
                     </MudStack>

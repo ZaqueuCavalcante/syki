@@ -7,8 +7,8 @@
 <SykiPageTitle Title="Cadastro" />
 
 <MudContainer Class="mt-4 mb-8" MaxWidth="MaxWidth.ExtraSmall">
-    <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
-        <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
+    <MudOverlay @bind-Visible="@_loading" LightBackground Absolute="false">
+        <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
     </MudOverlay>
     <MudForm>
         <MudCard Class="px-4 pt-0 pb-4">
@@ -16,7 +16,7 @@
             @if (_saved)
             {
                 <MudStack AlignItems="AlignItems.Center">
-                    <MudAlert NoIcon="true" Class="mt-6 mb-6" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
+                    <MudAlert NoIcon Class="mt-6 mb-6" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                         <MudText>Pronto, agora é só logar!</MudText>
                     </MudAlert>
                     <MudButton

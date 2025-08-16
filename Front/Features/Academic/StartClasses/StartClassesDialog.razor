@@ -11,8 +11,8 @@
             Class="pa-4 mb-2"
             Items="@_classes"
             Filter="@_quickFilter"
-            Hover="true"
-            Dense="true"
+            Hover
+            Dense
             Loading="@_loading"
             RowsPerPage="100"
             ContainerClass="pt-0"
@@ -22,7 +22,7 @@
                     <MudItem xs="12" sm="5" md="5" lg="5">
                         @if (_showButtons)
                         {
-                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="3">
                                 <MudButton OnClick="@SelectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBox" Size="Size.Small">Todos</MudButton>
                                 <MudButton OnClick="@UnselectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" Size="Size.Small">Nenhum</MudButton>
                             </MudStack>
@@ -45,7 +45,7 @@
                     <MudCheckBox
                         T="bool"
                         Class="pl-7 pr-1"
-                        Dense="true"
+                        Dense
                         Size="Size.Small"
                         Color="Color.Success"
                         Value="@context.IsSelected"
@@ -58,14 +58,14 @@
             <LoadingContent>
                 @if (_breakpoint == Breakpoint.Xs)
                 {
-                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                    <MudProgressLinear Color="Color.Info" Indeterminate />
                 }
             </LoadingContent>
             <PagerContent>
                 <MudDivider/>
                 @if (_showButtons)
                 {
-                    <MudStack Row="true" Class="mt-4">
+                    <MudStack Row Class="mt-4">
                         <DialogCancelButton OnClick="@Cancel" />
                         <SykiProgressCircular Loading="@_loading" />
                         <DialogSaveButton Class="mr-2" OnClick="@Submit" Text="Iniciar" />

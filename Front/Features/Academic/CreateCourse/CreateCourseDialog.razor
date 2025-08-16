@@ -6,15 +6,15 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
-            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" />
+            <SykiTextField Label="Nome" AutoFocus @bind-Value="@_name" />
             <MudSelect
-                Dense="true"
+                Dense
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
                 @bind-Value="@_type"
                 Label="Tipo"
-                Required="true"
+                Required
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary
             ">

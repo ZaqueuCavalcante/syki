@@ -56,8 +56,8 @@
         <MudTable
             Items="@_classes"
             Class="pa-4"
-            Dense="true"
-            Hover="true"
+            Dense
+            Hover
             Filter="@_quickFilter"
             Loading="@_loading"
             RowsPerPage="10"
@@ -79,7 +79,7 @@
                 <MudTd DataLabel="Período">@context.Period</MudTd>
                 <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
                 <MudTd DataLabel="Frequência">
-                    <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Frequency)" Style="height: 24px">
+                    <MudProgressLinear Color="Color.Primary" Rounded Size="Size.Large" Value="@decimal.ToDouble(context.Frequency)" Style="height: 24px">
                         <MudText Typo="Typo.body1">
                             <b>@context.Frequency.Format()%</b>
                         </MudText>
@@ -92,7 +92,7 @@
             <LoadingContent>
                 @if (_breakpoint == Breakpoint.Xs)
                 {
-                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                    <MudProgressLinear Color="Color.Info" Indeterminate />
                 }
             </LoadingContent>
             <NoRecordsContent>

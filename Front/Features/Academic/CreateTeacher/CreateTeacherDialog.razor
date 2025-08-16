@@ -10,28 +10,28 @@
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
             <MudTextField
-                OnlyValidateIfDirty="true"
-                Immediate="true"
+                OnlyValidateIfDirty
+                Immediate
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="pb-2"
-                AutoFocus="true"
+                AutoFocus
                 @bind-Value="@_name"
                 T="String"
                 Label="Nome"
-                Required="true"
+                Required
                 RequiredError="Informe!"
             />
             <MudTextField
-                OnlyValidateIfDirty="true"
-                Immediate="true"
+                OnlyValidateIfDirty
+                Immediate
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
                 @bind-Value="@_email"
                 T="String"
                 Label="Email"
-                Required="true"
+                Required
                 RequiredError="Informe!"
             />
         </MudForm>

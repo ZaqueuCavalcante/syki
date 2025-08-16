@@ -2,7 +2,7 @@
 
 @implements IAsyncDisposable
 
-<MudNavMenu Rounded="true" Color="Color.Primary" Class="pa-2">
+<MudNavMenu Rounded Color="Color.Primary" Class="pa-2">
     <AuthorizeView Roles="@UserRole.Adm.ToString()">
         <MudNavLink Href="adm/users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Usuários</MudNavLink>
         <MudNavLink Href="adm/institutions" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.School" IconColor="Color.Inherit">Instituições</MudNavLink>
@@ -28,7 +28,7 @@
     </AuthorizeView>
     <AuthorizeView Roles="@UserRole.Teacher.ToString()">
         <MudNavLink Href="teacher/agenda" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.CalendarMonth" IconColor="Color.Inherit">Agenda</MudNavLink>
-        <MudNavGroup Title="Turmas" Expanded="true" Icon="@Icons.Material.Filled.CenterFocusStrong">
+        <MudNavGroup Title="Turmas" Expanded Icon="@Icons.Material.Filled.CenterFocusStrong">
             @foreach(var item in _teacherClasses)
             {
                 <MudNavLink Href="@($"teacher/classes/{item.Id}")" Match="NavLinkMatch.Prefix">@item.Discipline</MudNavLink>
@@ -44,7 +44,7 @@
         {
             <MudNavLink Href="student/enrollments" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Article" IconColor="Color.Inherit">Matrícula</MudNavLink>
         }
-        <MudNavGroup Title="Turmas" Expanded="true" Icon="@Icons.Material.Filled.CenterFocusStrong">
+        <MudNavGroup Title="Turmas" Expanded Icon="@Icons.Material.Filled.CenterFocusStrong">
             @foreach(var item in _studentClasses)
             {
                 <MudNavLink Href="@($"student/classes/{item.Id}")" Match="NavLinkMatch.Prefix">@item.Discipline</MudNavLink>

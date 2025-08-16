@@ -10,13 +10,13 @@
         <MudCardContent>
             <MudGrid>
                 <MudItem xs="12" sm="8" md="8" lg="8">
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                    <MudStack Row AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.People" Class="mb-1" Size="Size.Large"/>
                         <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">Usuários</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
-                    <MudTooltip Text="@GetOnlineChipText()" Arrow="true" Placement="Placement.Left">
+                    <MudTooltip Text="@GetOnlineChipText()" Arrow Placement="Placement.Left">
                         <MudChip
                             T="string"
                             Class="px-5 ma-0"
@@ -34,11 +34,11 @@
     
     <MudContainer Class="px-0 my-4">
         <style>.mud-table-toolbar { height: auto }</style>
-        <MudDataGrid Class="px-4 pt-4 pb-2" Items="@GetUsers()" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="px-4 pt-4 pb-2" Items="@GetUsers()" QuickFilter="@_quickFilter" Hover Loading="@_loading" Dense RowsPerPage="10">
             <ToolBarContent>
                 <MudGrid Class="align-center" Spacing="3">
                     <MudItem xs="12" sm="3" md="3" lg="3">
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
                             <MudToggleGroup T="string" SelectionMode="SelectionMode.SingleSelection" @bind-Value="@_statusFilter" Style="width: 100%;" Color="Color.Tertiary" CheckMark>
                                 <MudToggleItem Value="@("Todos")" UnselectedIcon="" SelectedIcon="" />
                                 <MudToggleItem Value="@("Online")" UnselectedIcon="@Icons.Material.Filled.CheckCircle" SelectedIcon="@Icons.Material.Filled.CheckCircle" />
@@ -57,7 +57,7 @@
                 <PropertyColumn Property="x => x.Role" Title="Role"/>
                 <TemplateColumn>
                     <CellTemplate>
-                        <MudTooltip Text="@GetOnlineText(context.Item)" Arrow="true" Placement="Placement.Top">
+                        <MudTooltip Text="@GetOnlineText(context.Item)" Arrow Placement="Placement.Top">
                             <MudIcon
                                 Size="@Size.Small"
                                 Icon="@GetOnlineIcon(context.Item.Online)"

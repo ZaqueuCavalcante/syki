@@ -14,7 +14,7 @@
         <MudCardContent>
             <MudGrid>
                 <MudItem xs="12" sm="8" md="8" lg="8">
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                    <MudStack Row AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.CallMade" Class="mb-1" Size="Size.Large"/>
                         <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">Chamada de Webhook</MudText>
                     </MudStack>
@@ -54,7 +54,7 @@
             </MudItem>
 
             <MudItem xs="12" sm="12" md="12" lg="12">
-                <InfoCard Icon="@Icons.Material.Filled.DataObject" Color="@Colors.Blue.Darken1" Title="Dados" Content="@GetIdentedData()" Json="true" />
+                <InfoCard Icon="@Icons.Material.Filled.DataObject" Color="@Colors.Blue.Darken1" Title="Dados" Content="@GetIdentedData()" Json />
             </MudItem>
         </MudGrid>
     </MudContainer>
@@ -67,8 +67,8 @@
     <MudContainer Class="px-0 my-4">
         <MudTable
             Class="mb-4"
-            Dense="true"
-            Hover="true"
+            Dense
+            Hover
             RowsPerPage="10"
             Loading="@_loading"
             Items="@_data.Attempts"
@@ -76,9 +76,9 @@
             T="GetWebhookCallAttemptOut"
         >
             <ToolBarContent>
-                <MudStack Row="true" AlignItems="AlignItems.Center" Class="my-4 ml-1 mr-2" Style="width: 100%">
+                <MudStack Row AlignItems="AlignItems.Center" Class="my-4 ml-1 mr-2" Style="width: 100%">
                     <MudItem xs="12" sm="8" md="8" lg="8">
-                        <MudStack Row="true" AlignItems="AlignItems.Center">
+                        <MudStack Row AlignItems="AlignItems.Center">
                             <MudIcon Icon="@Icons.Material.Filled.CallMissedOutgoing" Class="mb-1" Size="Size.Medium"/>
                             <MudText Typo="Typo.h6" Style="font-weight: bold">Tentativas</MudText>
                         </MudStack>

@@ -11,7 +11,7 @@
     <SykiPageHeader Icon="@Icons.Material.Filled.AccountTree" Title="Grades" ButtonText="Nova Grade" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Um mesmo curso pode ter várias grades diferentes ao longo do tempo, com diferentes disciplinas." />
     <MudContainer Class="px-0 mb-4">
-        <MudDataGrid Class="pa-4" T="CourseCurriculumOut" Items="@_grades" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" T="CourseCurriculumOut" Items="@_grades" QuickFilter="@_quickFilter" Hover Loading="@_loading" Dense RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por curso ou grade" />
             </ToolBarContent>

@@ -4,24 +4,24 @@
     <MudCard Class="px-4 py-0" Elevation="0">
         <MudCardContent>
             <MudStack AlignItems="AlignItems.Center">
-                <MudAlert NoIcon="true" Severity="Severity.Info" Variant="Variant.Text">
-                    <MudStack Row="true" Justify="Justify.SpaceAround">
+                <MudAlert NoIcon Severity="Severity.Info" Variant="Variant.Text">
+                    <MudStack Row Justify="Justify.SpaceAround">
                         <MudText>Utilize o app Google Authenticator para ler o QR-Code</MudText>
                     </MudStack>
                 </MudAlert>
                 @if (_qrCodeLoading)
                 {
                     <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0 d-flex align-center justify-center rounded-lg border-dashed border-1 mud-border-secundary">
-                        <MudProgressCircular Class="py-10" Style="width: 50%; height: 50%" Color="Color.Dark" Indeterminate="true" Size="Size.Large" />
+                        <MudProgressCircular Class="py-10" Style="width: 50%; height: 50%" Color="Color.Dark" Indeterminate Size="Size.Large" />
                     </MudContainer>
                 }
                 else
                 {
                     <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0">
-                        <MudImage Src="@_qrCodeBase64" Fluid="true" Elevation="25" Class="rounded-lg"/>
+                        <MudImage Src="@_qrCodeBase64" Fluid Elevation="25" Class="rounded-lg"/>
                     </MudContainer>
                     <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0">
-                        <SykiTextField Value="@_key" CopyAdornment="true" ReadOnly="true" />
+                        <SykiTextField Value="@_key" CopyAdornment ReadOnly />
                     </MudContainer>
                 }
             </MudStack>

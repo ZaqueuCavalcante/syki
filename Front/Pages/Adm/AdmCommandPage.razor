@@ -14,7 +14,7 @@
         <MudCardContent>
             <MudGrid>
                 <MudItem xs="12" sm="8" md="8" lg="8">
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                    <MudStack Row AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Large"/>
                         <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@($"Comando - {_data.Description}")</MudText>
                     </MudStack>
@@ -108,8 +108,8 @@
         <MudContainer Class="px-0 my-4">
             <MudTable
                 Class="mb-4"
-                Dense="true"
-                Hover="true"
+                Dense
+                Hover
                 T="CommandOut"
                 RowsPerPage="10"
                 Loading="@_loading"
@@ -117,9 +117,9 @@
                 Breakpoint="Breakpoint.Sm"
             >
                 <ToolBarContent>
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Class="my-4 ml-1 mr-2" Style="width: 100%">
+                    <MudStack Row AlignItems="AlignItems.Center" Class="my-4 ml-1 mr-2" Style="width: 100%">
                         <MudItem xs="12" sm="8" md="8" lg="8">
-                            <MudStack Row="true" AlignItems="AlignItems.Center">
+                            <MudStack Row AlignItems="AlignItems.Center">
                                 <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
                                 <MudText Typo="Typo.h6" Style="font-weight: bold">Reprocessamentos</MudText>
                             </MudStack>
@@ -149,7 +149,7 @@
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Tipo">
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
                             <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
                             <MudText Typo="Typo.body2">@context.Description</MudText>
                         </MudStack>
@@ -178,8 +178,8 @@
         <MudContainer Class="px-0 my-4">
             <MudTable
                 Class="mb-4"
-                Dense="true"
-                Hover="true"
+                Dense
+                Hover
                 T="CommandOut"
                 RowsPerPage="10"
                 Loading="@_loading"
@@ -187,7 +187,7 @@
                 Breakpoint="Breakpoint.Sm"
             >
                 <ToolBarContent>
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
+                    <MudStack Row AlignItems="AlignItems.Center" Class="mt-2">
                         <MudIcon Icon="@Icons.Material.Filled.SubdirectoryArrowRight" Class="mb-1" Size="Size.Medium"/>
                         <MudText Typo="Typo.h6" Style="font-weight: bold">Subcomandos</MudText>
                     </MudStack>
@@ -202,7 +202,7 @@
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Tipo">
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
                             <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
                             <MudText Typo="Typo.body2">@context.Description</MudText>
                         </MudStack>
@@ -231,8 +231,8 @@
         <MudContainer Class="px-0 my-4">
             <MudTable
                 Class="mb-4"
-                Dense="true"
-                Hover="true"
+                Dense
+                Hover
                 T="BatchOut"
                 RowsPerPage="10"
                 Loading="@_loading"
@@ -240,7 +240,7 @@
                 Breakpoint="Breakpoint.Sm"
             >
                 <ToolBarContent>
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
+                    <MudStack Row AlignItems="AlignItems.Center" Class="mt-2">
                         <MudIcon Icon="@Icons.Material.Filled.SubdirectoryArrowRight" Class="mb-1" Size="Size.Medium"/>
                         <MudText Typo="Typo.h6" Style="font-weight: bold">Lotes</MudText>
                     </MudStack>
@@ -255,7 +255,7 @@
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd DataLabel="Tipo">
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
                             <MudIcon Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
                             <MudText Typo="Typo.body2">@context.Type.GetDescription()</MudText>
                         </MudStack>

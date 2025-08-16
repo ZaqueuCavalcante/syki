@@ -20,7 +20,7 @@
                         </style>
                         <MudFileUpload T="IBrowserFile" OnFilesChanged="@UploadProfilePhoto" MaximumFileCount="1">
                             <ActivatorContent>
-                                <MudBadge Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Overlap="true" Origin="Origin.BottomRight" BadgeClass="cursor-pointer syki-profile-photo-badge-icon">
+                                <MudBadge Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Overlap Origin="Origin.BottomRight" BadgeClass="cursor-pointer syki-profile-photo-badge-icon">
                                     <MudImage ObjectFit="ObjectFit.Cover" Style="border-radius: 50%;" Width="180" Height="180" FallbackSrc="user-photo-fallback.png" Src="@(_data.ProfilePhoto ?? "")"></MudImage>
                                 </MudBadge>
                             </ActivatorContent>

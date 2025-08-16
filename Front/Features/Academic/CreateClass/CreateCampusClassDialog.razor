@@ -12,24 +12,24 @@
                         T="GetCampusCourseOfferingsDisciplineOut"
                         MaxItems="50"
                         SearchFunc="@SearchDiscipline"
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         @bind-Value="@_discipline"
                         Label="Disciplina"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     />
                 </MudItem>
                 <MudItem xs="12" sm="12" md="12" lg="12">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         @bind-Value="@_teacher"
                         Label="Professor"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                         Disabled="@(_discipline == null)"
@@ -43,13 +43,13 @@
                 <MudItem xs="6" sm="6" md="6" lg="6">
                     <MudNumericField
                         MaxLength="2"
-                        HideSpinButtons="true"
+                        HideSpinButtons
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         T="byte?"
                         @bind-Value="@_vacancies"
                         Label="Vagas"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                     />
                 </MudItem>

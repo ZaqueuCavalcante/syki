@@ -10,14 +10,14 @@
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
             <MudSelect
-                Dense="true"
+                Dense
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="pb-2"
-                AutoFocus="true"
+                AutoFocus
                 @bind-Value="@_campus"
                 Label="Campus"
-                Required="true"
+                Required
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
@@ -28,27 +28,27 @@
             </MudSelect>
 
             <MudTextField
-                OnlyValidateIfDirty="true"
-                Immediate="true"
+                OnlyValidateIfDirty
+                Immediate
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="pb-2"
-                AutoFocus="true"
+                AutoFocus
                 @bind-Value="@_name"
                 T="String"
                 Label="Nome"
-                Required="true"
+                Required
                 RequiredError="Informe!"
             />
 
             <MudNumericField
                 MaxLength="5"
-                HideSpinButtons="true"
+                HideSpinButtons
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 @bind-Value="@_capacity"
                 Label="Capacidade"
-                Required="true"
+                Required
                 RequiredError="Informe!"
             />
         </MudForm>

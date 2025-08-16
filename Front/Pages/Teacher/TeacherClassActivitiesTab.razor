@@ -15,8 +15,8 @@
         Class="pa-4 mt-4"
         Items="@GetActivities()"
         QuickFilter="@_quickFilter"
-        Hover="true"
-        Dense="true"
+        Hover
+        Dense
         Loading="@_loading"
         SortMode="@SortMode.None"
         RowsPerPage="100"
@@ -24,7 +24,7 @@
         <ToolBarContent>
             <MudGrid Class="align-center" Spacing="3">
                 <MudItem xs="12" sm="3" md="3" lg="3">
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
+                    <MudStack Row AlignItems="AlignItems.Center" Spacing="3" Style="width: 100%;">
                         <MudToggleGroup T="ClassNoteType" SelectionMode="SelectionMode.MultiSelection" Values="@_notesFilter" ValuesChanged="@HandleNotesFilterChange" Style="width: 100%;" Color="Color.Tertiary" CheckMark>
                             <MudToggleItem Value="@(ClassNoteType.N1)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
                             <MudToggleItem Value="@(ClassNoteType.N2)" UnselectedIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" SelectedIcon="@Icons.Material.Filled.CheckBox" />
@@ -46,7 +46,7 @@
             <PropertyColumn Property="x => x.GetDueDate()" Title="Data de entrega" />
             <TemplateColumn Title="Entregas">
                 <CellTemplate>
-                    <MudProgressLinear Color="@GetDeliveryRateColor(context.Item.GetDeliveryRate())" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Item.GetDeliveryRate())" Style="height: 24px">
+                    <MudProgressLinear Color="@GetDeliveryRateColor(context.Item.GetDeliveryRate())" Rounded Size="Size.Large" Value="@decimal.ToDouble(context.Item.GetDeliveryRate())" Style="height: 24px">
                         <MudText Typo="Typo.body1">
                             <b>@GetDeliveryRateFraction(context.Item)</b>
                         </MudText>

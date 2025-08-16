@@ -11,7 +11,7 @@
     <SykiPageHeader Icon="@Icons.Material.Filled.PlaylistAddCheck" Title="Ofertas" ButtonText="Nova Oferta" OnClick="@OpenDialog"/>
     <SykiPageAlert Text="Uma oferta de curso pode acontecer a cada período, com variações de campus, turno e grade." />
     <MudContainer Class="px-0 mb-4">
-        <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover="true" Loading="@_loading" Dense="true" RowsPerPage="10">
+        <MudDataGrid Class="pa-4" Items="@_ofertas" QuickFilter="@_quickFilter" Hover Loading="@_loading" Dense RowsPerPage="10">
             <ToolBarContent>
                 <SykiDataGridSearchTextField @bind-Value="@_searchString" Placeholder="Busque por qualquer atributo" />
             </ToolBarContent>

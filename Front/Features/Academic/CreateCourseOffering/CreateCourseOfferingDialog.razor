@@ -12,14 +12,14 @@
             <MudGrid Justify="Justify.FlexStart" Spacing="2">
                 <MudItem xs="12" sm="12" md="12" lg="12">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Class="mb-4"
-                        AutoFocus="true"
+                        AutoFocus
                         @bind-Value="@_campus"
                         Label="Campus"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
@@ -31,13 +31,13 @@
                 </MudItem>
                 <MudItem xs="6" sm="6" md="6" lg="6">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Class="mb-4"
                         @bind-Value="@_period"
                         Label="Período"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
@@ -49,13 +49,13 @@
                 </MudItem>
                 <MudItem xs="6" sm="6" md="6" lg="6">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Class="mb-4"
                         @bind-Value="@_shift"
                         Label="Turno"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
@@ -70,34 +70,34 @@
                 T="CourseOut"
                 MaxItems="50"
                 SearchFunc="@SearchCourse"
-                Dense="true"
+                Dense
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="py-2"
                 @bind-Value="@_course"
                 Label="Curso"
-                Required="true"
+                Required
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             />
             <MudSelect
-                Dense="true"
+                Dense
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
                 @bind-Value="@_courseCurriculum"
                 Label="Grade"
-                Required="true"
+                Required
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
                 @if (_course == null)
                 {
-                    <MudSelectItem Value="@_courseCurriculum" Disabled="true">Selecione o curso!</MudSelectItem>
+                    <MudSelectItem Value="@_courseCurriculum" Disabled>Selecione o curso!</MudSelectItem>
                 }
                 @if (_course != null && CourseCurriculums.Where(x => x.CourseId == _course.Id).Count() == 0)
                 {
-                    <MudSelectItem Value="@_courseCurriculum" Disabled="true">Este curso não possui grades vinculadas.</MudSelectItem>
+                    <MudSelectItem Value="@_courseCurriculum" Disabled>Este curso não possui grades vinculadas.</MudSelectItem>
                 }
                 @if (_course != null)
                 {

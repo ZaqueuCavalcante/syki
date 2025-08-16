@@ -2,7 +2,7 @@
 
 <MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
 	<MudDrawerHeader Class="justify-space-between">
-		<MudStack Row="true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+		<MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
 			<MudIcon Icon="@Icons.Material.Filled.Add" />
 			<MudText Typo="Typo.h5"><b>Novo Webhook</b></MudText>
 		</MudStack>
@@ -18,7 +18,7 @@
         <MudForm @ref="@_form" Style="width: 100%">
             <MudItem xs="12">
                 <SykiTitleText Icon="@Icons.Material.Filled.Adjust" Text="Endpoint" />
-                <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" Class="py-2" />
+                <SykiTextField Label="Nome" AutoFocus @bind-Value="@_name" Class="py-2" />
                 <SykiTextField Label="Url" @bind-Value="@_url" />
             </MudItem>
 
@@ -39,7 +39,7 @@
         </MudForm>
     </MudGrid>
 
-    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 pt-6">
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 pt-6">
         <DialogCancelButton OnClick="@Close" />
         <DialogSaveButton OnClick="@Submit" />
     </MudStack>

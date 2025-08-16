@@ -13,14 +13,14 @@
             {
                 <MudGrid Class="align-center">
                     <MudItem xs="12" sm="6" md="6" lg="6">
-                        <MudStack Row="true" AlignItems="AlignItems.Center">
-                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                        <MudStack Row AlignItems="AlignItems.Center">
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="3">
                                 <MudText Typo="Typo.h6">Aula @_classLesson.Number <b>·</b> @_classLesson.Date.FormatBr() <b>·</b> @_classLesson.Schedule</MudText>
                             </MudStack>
                         </MudStack>
                     </MudItem>
                     <MudItem xs="12" sm="4" md="4" lg="4">
-                        <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_classLesson.Frequency)" Style="height: 24px">
+                        <MudProgressLinear Color="Color.Primary" Rounded Size="Size.Large" Value="@decimal.ToDouble(_classLesson.Frequency)" Style="height: 24px">
                             <MudText Typo="Typo.body1">
                                 <b>@_classLesson.Frequency.Format()%</b>
                             </MudText>
@@ -48,8 +48,8 @@
         Class="pa-4"
         Items="@_attendances"
         Filter="@_quickFilter"
-        Hover="true"
-        Dense="true"
+        Hover
+        Dense
         Loading="@_loading"
         RowsPerPage="100"
         ContainerClass="pt-0"
@@ -59,7 +59,7 @@
                 <MudItem xs="12" sm="5" md="5" lg="5">
                     @if (_showButtons)
                     {
-                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="3">
                             <MudButton OnClick="@SelectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBox" Size="Size.Small">Todos</MudButton>
                             <MudButton OnClick="@UnselectAll" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CheckBoxOutlineBlank" Size="Size.Small">Nenhum</MudButton>
                         </MudStack>
@@ -80,7 +80,7 @@
                 <MudCheckBox
                     T="bool"
                     Class="pl-7 pr-1"
-                    Dense="true"
+                    Dense
                     Size="Size.Small"
                     Color="Color.Success"
                     Value="@context.Present"
@@ -93,14 +93,14 @@
         <LoadingContent>
             @if (_breakpoint == Breakpoint.Xs)
             {
-                <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                <MudProgressLinear Color="Color.Info" Indeterminate />
             }
         </LoadingContent>
         <PagerContent>
             <MudDivider/>
             @if (_showButtons)
             {
-                <MudStack Row="true" Class="mt-4">
+                <MudStack Row Class="mt-4">
                     <MudSpacer/>
                     <DialogSaveButton Class="mr-2" OnClick="@SaveFrequency"/>
                 </MudStack>

@@ -5,21 +5,21 @@
 <SykiPageTitle Title="Cadastro" />
 
 <MudContainer Class="mt-4 mb-8" MaxWidth="MaxWidth.ExtraSmall">
-    <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
-        <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
+    <MudOverlay @bind-Visible="@_loading" LightBackground Absolute="false">
+        <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
     </MudOverlay>
     <MudForm @ref="@_form">
         <MudCard Class="px-4 pt-0 pb-4">
             <MudImage Src="logo_512x512.png" Alt="Syki" Elevation="25" Class="rounded-lg mx-20 mt-10 mb-10"/>
             @if (_saved)
             {
-                <MudAlert NoIcon="true" Class="mx-4 mb-4" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
+                <MudAlert NoIcon Class="mx-4 mb-4" Severity="Severity.Success" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                     <MudText>Verifique seu email e utilize o link para definir sua senha de acesso.</MudText>
                 </MudAlert>
             }
             else
             {
-                <MudAlert NoIcon="true" Class="mx-4" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
+                <MudAlert NoIcon Class="mx-4" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center" Elevation="1">
                     <MudText Align="Align.Center">Cadastre seu email para ter acesso ao sistema.</MudText>
                 </MudAlert>
                 <MudCardContent Class="px-0 mx-4 pt-8 pb-0">

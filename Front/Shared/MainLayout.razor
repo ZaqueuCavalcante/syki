@@ -12,7 +12,7 @@
 <AuthorizeView>
     <Authorized>
         <MudLayout>
-            <MudAppBar Elevation="0" Dense="true" ToolBarClass="pl-1 pr-1">
+            <MudAppBar Elevation="0" Dense ToolBarClass="pl-1 pr-1">
                 @if (_breakpoint != Breakpoint.Xs)
                 {
                     <MudIconButton OnClick="@ToggleLeftOpen" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" />
@@ -28,7 +28,7 @@
             <MudDrawer @bind-Open="@_leftOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
                 <NavMenu />
             </MudDrawer>
-            <MudDrawer Anchor="Anchor.Right" @bind-Open="@_rightOpen" ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Temporary" OverlayAutoClose="true" Elevation="2" Width="160px">
+            <MudDrawer Anchor="Anchor.Right" @bind-Open="@_rightOpen" ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Temporary" OverlayAutoClose Elevation="2" Width="160px">
                 <SettingsMenu OnLogoutClick="@Logout" />
             </MudDrawer>
             <MudMainContent Class="pb-12">
@@ -43,8 +43,8 @@
     <NotAuthorized>
         @if (IsAnonymous())
         {
-            <MudAppBar Elevation="1" Dense="true">
-                <MudStack Row="true" Class="d-flex justify-space-around flex-grow-1">
+            <MudAppBar Elevation="1" Dense>
+                <MudStack Row Class="d-flex justify-space-around flex-grow-1">
                     <HomeButton />
                     <MudSpacer />
                     <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ToggleTheme" />

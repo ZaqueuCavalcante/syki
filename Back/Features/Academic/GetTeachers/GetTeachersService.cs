@@ -9,19 +9,24 @@ public class GetTeachersService(SykiDbContext ctx) : IAcademicService
                 t.id,
                 t.name,
                 u.email,
-                COUNT(td.syki_teacher_id) AS disciplines
+                COALESCE(tc.total, 0) AS campi,
+                COALESCE(td.total, 0) AS disciplines
             FROM
                 syki.teachers t
             INNER JOIN
                 syki.users u ON u.id = t.id
-            LEFT JOIN
-                syki.teachers__disciplines td ON td.syki_teacher_id = t.id
+            LEFT JOIN (
+                SELECT syki_teacher_id, COUNT(1) AS total
+                FROM syki.teachers__campi
+                GROUP BY syki_teacher_id
+            ) tc ON tc.syki_teacher_id = t.id
+            LEFT JOIN (
+                SELECT syki_teacher_id, COUNT(1) AS total
+                FROM syki.teachers__disciplines
+                GROUP BY syki_teacher_id
+            ) td ON td.syki_teacher_id = t.id
             WHERE
                 u.institution_id = {institutionId}
-            GROUP BY
-                t.id,
-                t.name,
-                u.email
             ORDER BY
                 t.name
         ";

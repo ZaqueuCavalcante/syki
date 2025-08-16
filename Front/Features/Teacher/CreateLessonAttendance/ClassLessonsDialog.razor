@@ -13,8 +13,8 @@
             Items="@Lessons"
             Class="mb-4"
             Breakpoint="Breakpoint.Sm"
-            Dense="true"
-            Hover="true"
+            Dense
+            Hover
             RowClass="cursor-pointer"
             OnRowClick="@HandleRowClick"
             RowsPerPage="100"
@@ -34,7 +34,7 @@
                 <MudTd DataLabel="Frequência">
                     @if (context.Status == ClassLessonStatus.Finalized)
                     {
-                        <MudProgressLinear Color="Color.Primary" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Frequency)" Style="height: 24px">
+                        <MudProgressLinear Color="Color.Primary" Rounded Size="Size.Large" Value="@decimal.ToDouble(context.Frequency)" Style="height: 24px">
                             <MudText Typo="Typo.body1">
                                 <b>@context.Frequency.Format()%</b>
                             </MudText>

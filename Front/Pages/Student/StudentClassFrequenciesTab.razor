@@ -32,7 +32,7 @@
         <ApexCharts.ApexChart @ref="@_chart" TItem="GetStudentClassLessonFrequencyOut" Options="@_options" Height="350">
             <ApexPointTooltip>
                 <MudPaper Class="pa-4">
-                    <MudStack Row="true" Class="mb-2" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
+                    <MudStack Row Class="mb-2" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween">
                         <MudText><b>@context.DataPoint.X.ToString().Split(" - ").First()</b></MudText>
                         <MudIcon
                             Icon="@GetTooltipIcon(context.DataPoint.Items.FirstOrDefault()?.Frequency)"

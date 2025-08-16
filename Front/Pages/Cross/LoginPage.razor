@@ -7,8 +7,8 @@
 <SykiPageTitle Title="Login" />
 
 <MudContainer Class="mt-4 mb-8" MaxWidth="MaxWidth.ExtraSmall">
-    <MudOverlay @bind-Visible="@_loading" LightBackground="true" Absolute="false">
-        <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
+    <MudOverlay @bind-Visible="@_loading" LightBackground Absolute="false">
+        <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
     </MudOverlay>
     <MudForm @ref="@_form">
         <MudCard Class="px-4 pt-0 pb-4">
@@ -17,13 +17,13 @@
                 <MudTextField
                     InputType="InputType.Email"
                     Margin="Margin.Dense"
-                    AutoFocus="true"
+                    AutoFocus
                     Label="Email"
                     Class="mt-0 pb-3"
-                    OnlyValidateIfDirty="true"
+                    OnlyValidateIfDirty
                     @bind-Value="@_email"
                     Variant="Variant.Outlined"
-                    Required="true"
+                    Required
                     RequiredError="Informe!"/>
                 <PasswordTextField @bind-Value="@_password"/>
             </MudCardContent>

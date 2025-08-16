@@ -6,17 +6,17 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
-            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" />
+            <SykiTextField Label="Nome" AutoFocus @bind-Value="@_name" />
             <SykiTextField Label="Email" @bind-Value="@_email" />
             <MudSelect
-                Dense="true"
+                Dense
                 Disabled="@(_courseOfferings.Count == 0)"
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
                 @bind-Value="@_courseOffering"
                 Label="Oferta"
-                Required="true"
+                Required
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary
             ">

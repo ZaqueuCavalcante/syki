@@ -8,21 +8,21 @@
         <MudForm @ref="@_form" Class="pt-1" Spacing="0">
             <MudGrid Spacing="2">
                 <MudItem xs="12" sm="12" md="12" lg="12">
-                    <SykiTextField Label="Título" AutoFocus="true" @bind-Value="@_title" MaxLength="50" />
+                    <SykiTextField Label="Título" AutoFocus @bind-Value="@_title" MaxLength="50" />
                 </MudItem>
                 <MudItem xs="12" sm="12" md="12" lg="12">
-                    <SykiTextField Label="Descrição" @bind-Value="@_description" AutoGrow="true" Lines="8" MaxLines="20" MaxLength="10000" />
+                    <SykiTextField Label="Descrição" @bind-Value="@_description" AutoGrow Lines="8" MaxLines="20" MaxLength="10000" />
                 </MudItem>
 
                 <MudItem xs="12" sm="4" md="4" lg="4">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         T="ClassActivityType"
                         @bind-Value="@_type"
                         Label="Tipo"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
@@ -35,14 +35,14 @@
 
                 <MudItem xs="12" sm="4" md="4" lg="4">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         T="ClassNoteType"
                         Value="@_note"
                         ValueChanged="x => HandleNoteChanged(x)"
                         Label="Nota"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
@@ -60,11 +60,11 @@
                         Max="@_maxWeight"
                         MaxLength="@(GetWeightMaxWidth())"
                         Min="0"
-                        HideSpinButtons="true"
+                        HideSpinButtons
                         Variant="Variant.Outlined"
                         Margin="Margin.Dense"
                         HelperText="@($"Máx: {_maxWeight}")"
-                        Required="true"
+                        Required
                         Label="Peso (%)"
                         RequiredError="Informe!"
                     />
@@ -75,13 +75,13 @@
                 </MudItem>
                 <MudItem xs="12" sm="6" md="6" lg="6">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         T="Hour"
                         @bind-Value="@_dueHour"
                         Label="Hora de entrega"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >

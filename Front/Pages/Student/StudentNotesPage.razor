@@ -7,7 +7,7 @@
 
 <MudContainer Class="my-4 px-4">
     <SykiPageHeader Icon="@Icons.Material.Filled.StickyNote2" Title="Notas" />
-    <MudAlert Class="my-4 pl-6" NoIcon="true" Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
+    <MudAlert Class="my-4 pl-6" NoIcon Severity="Severity.Normal" Variant="Variant.Text" Elevation="1">
         <MudText>A nota mínima para ser aprovado é <b>7.00</b></MudText>
     </MudAlert>
     <MudContainer Class="px-0">
@@ -15,17 +15,17 @@
             <MudCardContent Class="px-6">
                 @if (_loading)
                 {
-                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                    <MudProgressLinear Color="Color.Info" Indeterminate />
                 }
                 else
                 {
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
-                        <MudProgressLinear Color="@GetAverageNoteColor(_student.AverageNote)" Max="10" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(_student.AverageNote)" Style="height: 24px">
+                    <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                        <MudProgressLinear Color="@GetAverageNoteColor(_student.AverageNote)" Max="10" Rounded Size="Size.Large" Value="@decimal.ToDouble(_student.AverageNote)" Style="height: 24px">
                             <MudText Typo="Typo.body1">
                                 <b>@_student.AverageNote.Format()</b>
                             </MudText>
                         </MudProgressLinear>
-                        <MudTooltip Text="Nota média no curso" Arrow="true" Placement="Placement.Bottom">
+                        <MudTooltip Text="Nota média no curso" Arrow Placement="Placement.Bottom">
                             <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
                         </MudTooltip>
                     </MudStack>
@@ -40,9 +40,9 @@
                 T="StudentNoteOut"
                 Items="@_disciplines"
                 Breakpoint="Breakpoint.Sm"
-                Dense="true"
+                Dense
                 Class="pa-4"
-                Hover="true"
+                Hover
                 Filter="@_quickFilter"
                 Loading="@_loading"
                 RowsPerPage="100"
@@ -67,7 +67,7 @@
                     <MudTd DataLabel="N2">@context.GetNote(ClassNoteType.N2)</MudTd>
                     <MudTd DataLabel="N3">@context.GetNote(ClassNoteType.N3)</MudTd>
                     <MudTd DataLabel="Média">
-                        <MudProgressLinear Color="@GetAverageNoteColor(context.AverageNote)" Max="10" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.AverageNote)" Style="height: 24px">
+                        <MudProgressLinear Color="@GetAverageNoteColor(context.AverageNote)" Max="10" Rounded Size="Size.Large" Value="@decimal.ToDouble(context.AverageNote)" Style="height: 24px">
                             <MudText Typo="Typo.body1">
                                 <b>@context.AverageNote.Format()</b>
                             </MudText>
@@ -77,7 +77,7 @@
                 <LoadingContent>
                     @if (_breakpoint == Breakpoint.Xs)
                     {
-                        <MudProgressLinear Color="Color.Info" Indeterminate="true"/>
+                        <MudProgressLinear Color="Color.Info" Indeterminate/>
                     }
                 </LoadingContent>
             </MudTable>

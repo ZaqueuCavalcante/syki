@@ -6,8 +6,8 @@
         Class="pa-4"
         Items="@_students"
         QuickFilter="@_quickFilter"
-        Hover="true"
-        Dense="true"
+        Hover
+        Dense
         Loading="@_loading"
         RowsPerPage="100"
     >
@@ -22,7 +22,7 @@
             <PropertyColumn Property="x => x.AverageNote.Format()" Title="Média" />
             <TemplateColumn Title="Frequência">
                 <CellTemplate>
-                        <MudProgressLinear Color="@GetFrequencyColor(context.Item.Frequency)" Rounded="true" Size="Size.Large" Value="@decimal.ToDouble(context.Item.Frequency)" Style="height: 24px">
+                        <MudProgressLinear Color="@GetFrequencyColor(context.Item.Frequency)" Rounded Size="Size.Large" Value="@decimal.ToDouble(context.Item.Frequency)" Style="height: 24px">
                             <MudText Typo="Typo.body1">
                                 <b>@context.Item.Frequency.Format()%</b>
                             </MudText>

@@ -15,8 +15,8 @@
             Class="pa-4"
             Items="@_students"
             Filter="@_quickFilter"
-            Dense="true"
-            Hover="true"
+            Dense
+            Hover
             Loading="@_loading"
             RowsPerPage="10"
         >
@@ -39,7 +39,7 @@
                 <MudTd DataLabel="Curso">@context.CourseOffering</MudTd>
                 <AuthorizeView Policy="@FrontPolicy.CrossLogin" Context="authContext">
                     <MudTd>
-                        <MudTooltip Text="Cross Login" Arrow="true" Placement="Placement.Top" ShowOnFocus="false">
+                        <MudTooltip Text="Cross Login" Arrow Placement="Placement.Top" ShowOnFocus="false">
                             <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Login" OnClick="@(() => CrossLogin(context))" />
                         </MudTooltip>
                     </MudTd>
@@ -48,7 +48,7 @@
             <LoadingContent>
                 @if (_breakpoint == Breakpoint.Xs)
                 {
-                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                    <MudProgressLinear Color="Color.Info" Indeterminate />
                 }
             </LoadingContent>
             <NoRecordsContent>

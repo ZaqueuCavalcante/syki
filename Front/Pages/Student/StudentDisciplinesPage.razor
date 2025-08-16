@@ -13,14 +13,14 @@
             <MudContainer Class="px-0">
                 <MudCard>
                     <MudCardContent>
-                        <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                        <MudProgressLinear Color="Color.Info" Indeterminate />
                     </MudCardContent>
                 </MudCard>
             </MudContainer>
         }
         else
         {
-            <MudExpansionPanels MultiExpansion="true">
+            <MudExpansionPanels MultiExpansion>
                 @foreach (var period in _disciplines.ConvertAll(d => d.Period).Distinct().Order())
                 {
                     <MudExpansionPanel Expanded="@(period == 1)">
@@ -31,7 +31,7 @@
                             </div>
                         </TitleContent>
                         <ChildContent>
-                            <MudTable Items="@_disciplines.Where(x => x.Period == period).OrderBy(x => x.Name)" Breakpoint="Breakpoint.Sm" Dense="true">
+                            <MudTable Items="@_disciplines.Where(x => x.Period == period).OrderBy(x => x.Name)" Breakpoint="Breakpoint.Sm" Dense>
                                 <HeaderContent>
                                     <MudTh>Nome</MudTh>
                                     <MudTh>Créditos</MudTh>

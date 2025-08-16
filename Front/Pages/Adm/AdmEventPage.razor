@@ -15,7 +15,7 @@
         <MudCardContent>
             <MudGrid>
                 <MudItem xs="12" sm="8" md="8" lg="8">
-                    <MudStack Row="true" AlignItems="AlignItems.Center">
+                    <MudStack Row AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.StickyNote2" Class="mb-1" Size="Size.Large"/>
                         <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@($"Evento - {_data.Type}")</MudText>
                     </MudStack>
@@ -72,8 +72,8 @@
         </style>
         <MudTable
             Class="mb-4"
-            Dense="true"
-            Hover="true"
+            Dense
+            Hover
             RowsPerPage="10"
             Loading="@_loading"
             Items="@_data.Commands"
@@ -81,7 +81,7 @@
             Breakpoint="Breakpoint.Sm"
         >
             <ToolBarContent>
-                <MudStack Row="true" AlignItems="AlignItems.Center" Class="mt-2">
+                <MudStack Row AlignItems="AlignItems.Center" Class="mt-2">
                     <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
                     <MudText Typo="Typo.h6" Style="font-weight: bold">Comandos</MudText>
                 </MudStack>

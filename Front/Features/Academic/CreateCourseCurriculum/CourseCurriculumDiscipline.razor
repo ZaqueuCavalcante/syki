@@ -3,17 +3,17 @@
 <MudForm Class="mx-0">
     <MudGrid Spacing="2">
         <MudItem xs="12" sm="12" md="6" lg="6">
-            <MudStack Row="true" Spacing="2">
+            <MudStack Row Spacing="2">
                 <MudItem xs="4">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         T="byte?"
                         Value="@Data.Period"
                         ValueChanged="x => HandlePeriodoChanged(x)"
                         Label="Período"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary">
                         @foreach (byte? item in Enumerable.Range(1, 10).ToList())
@@ -25,27 +25,27 @@
                 <MudItem xs="4">
                     <MudNumericField
                         MaxLength="2"
-                        HideSpinButtons="true"
+                        HideSpinButtons
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         T="byte?"
                         Value="@Data.Credits"
                         ValueChanged="x => HandleCreditosChanged(x)"
                         Label="Créditos"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"/>
                 </MudItem>
                 <MudItem xs="4">
                     <MudNumericField
                         MaxLength="3"
-                        HideSpinButtons="true"
+                        HideSpinButtons
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         T="ushort?"
                         Value="@Data.Workload"
                         ValueChanged="x => HandleCargaHorariaChanged(x)"
                         Label="Carga"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"/>
                 </MudItem>
 
@@ -53,20 +53,20 @@
         </MudItem>
 
         <MudItem xs="12" sm="12" md="6" lg="6">
-            <MudStack Row="true" Spacing="2">
+            <MudStack Row Spacing="2">
                 <MudItem xs="11">
                     <MudAutocomplete
                         MaxItems="50"
                         T="CourseCurriculumDisciplineFillable"
                         SearchFunc="@SearchDiscipline"
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Class="mb-2"
                         Value="@Data"
                         ValueChanged="(CourseCurriculumDisciplineFillable newValue) => HandleDisciplineChanged(newValue)"
                         Label="Disciplina"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     />

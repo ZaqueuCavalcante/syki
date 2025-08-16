@@ -1,15 +1,15 @@
 ﻿@namespace Syki.Front.Features.Cross.SetupMfa
 
 <MudPaper Style="position: relative; height: 100%">
-    <MudOverlay @bind-Visible="@_validateCodeLoading" LightBackground="true" Absolute="true">
-        <MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
+    <MudOverlay @bind-Visible="@_validateCodeLoading" LightBackground Absolute>
+        <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
     </MudOverlay>
 
     <MudCard Class="px-4 py-0" Elevation="0" Style="height: 100%">
         <MudCardContent>
             <MudStack AlignItems="AlignItems.Center">
-                <MudAlert NoIcon="true" Severity="Severity.Info" Variant="Variant.Text">
-                    <MudStack Row="true" Justify="Justify.SpaceAround">
+                <MudAlert NoIcon Severity="Severity.Info" Variant="Variant.Text">
+                    <MudStack Row Justify="Justify.SpaceAround">
                         <MudText>Insira o código gerado pelo app para finalizar o setup</MudText>
                     </MudStack>
                 </MudAlert>
@@ -22,15 +22,15 @@
                     <MudNumericField
                         data-testid="mfa-code-input"
                         T="int?"
-                        Immediate="true"
-                        OnlyValidateIfDirty="true"
+                        Immediate
+                        OnlyValidateIfDirty
                         ReadOnly="@_validateCodeLoading"
                         Disabled="@_codeIsCorrect"
                         Style="width: 200px;"
                         Value="@_userCode"
                         ValueChanged="@HandleCodeChanged"
                         Variant="Variant.Outlined"
-                        HideSpinButtons="true"
+                        HideSpinButtons
                         Typo="Typo.h6"
                         Class="mt-8"
                         Margin="Margin.Dense"
@@ -43,7 +43,7 @@
                 @if (_showCodeFeedback && !_codeIsCorrect)
                 {
                     <MudAlert Class="mt-2" Severity="Severity.Error" Variant="Variant.Text">
-                        <MudStack Row="true" Justify="Justify.SpaceAround">
+                        <MudStack Row Justify="Justify.SpaceAround">
                             <MudText>Código inválido</MudText>
                         </MudStack>
                     </MudAlert>

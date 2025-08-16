@@ -4,13 +4,13 @@
     <MudGrid Spacing="2">
         <MudItem xs="12" sm="4" md="4" lg="4">
             <MudSelect
-                Dense="true"
+                Dense
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 T="Day?"
                 @bind-Value="@Data.Day"
                 Label="Dia"
-                Required="true"
+                Required
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
@@ -21,16 +21,16 @@
             </MudSelect>
         </MudItem>
         <MudItem xs="12" sm="8" md="8" lg="8">
-            <MudStack Row="true" Class="mb-2" Spacing="2">
+            <MudStack Row Class="mb-2" Spacing="2">
                 <MudItem xs="5">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         T="Hour?"
                         @bind-Value="@Data.Start"
                         Label="Início"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
@@ -42,13 +42,13 @@
                 </MudItem>
                 <MudItem xs="5">
                     <MudSelect
-                        Dense="true"
+                        Dense
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         T="Hour?"
                         @bind-Value="@Data.End"
                         Label="Fim"
-                        Required="true"
+                        Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >

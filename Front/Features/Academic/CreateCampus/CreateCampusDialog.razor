@@ -6,17 +6,17 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form">
-            <SykiTextField Label="Nome" AutoFocus="true" @bind-Value="@_name" />
+            <SykiTextField Label="Nome" AutoFocus @bind-Value="@_name" />
 
             <MudSelect
-                Dense="true"
+                Dense
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 T="BrazilState?"
                 @bind-Value="@_state"
                 Label="Estado"
                 Class="pb-2"
-                Required="true"
+                Required
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
@@ -30,12 +30,12 @@
 
             <MudNumericField
                 MaxLength="5"
-                HideSpinButtons="true"
+                HideSpinButtons
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 @bind-Value="@_capacity"
                 Label="Capacidade"
-                Required="true"
+                Required
                 RequiredError="Informe!"
             />
         </MudForm>

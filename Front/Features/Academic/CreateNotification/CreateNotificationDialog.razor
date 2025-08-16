@@ -9,16 +9,16 @@
     </TitleContent>
     <DialogContent>
         <MudForm @ref="@_form" Class="pt-1">
-            <SykiTextField Label="Título" AutoFocus="true" @bind-Value="@_title" />
+            <SykiTextField Label="Título" AutoFocus @bind-Value="@_title" />
             <SykiTextField Label="Descrição" @bind-Value="@_description" />
             <MudSelect
-                Dense="true"
+                Dense
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-4"
                 @bind-Value="@_targetUsers"
                 Label="Usuários"
-                Required="true"
+                Required
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
@@ -27,9 +27,9 @@
                     <MudSelectItem Value="@item">@item.GetDescription()</MudSelectItem>
                 }
             </MudSelect>
-            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1" Class="pl-0">
+            <MudStack Row AlignItems="AlignItems.Center" Spacing="1" Class="pl-0">
                 <MudCheckBox @bind-Value="@_timeless" Label="Notificar novos usuários?" Color="Color.Primary" />
-                <MudTooltip Text="Se marcado, usuários criados após a notificação também irão recebê-la." Arrow="true" Placement="Placement.Bottom">
+                <MudTooltip Text="Se marcado, usuários criados após a notificação também irão recebê-la." Arrow Placement="Placement.Bottom">
                     <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
                 </MudTooltip>
             </MudStack>

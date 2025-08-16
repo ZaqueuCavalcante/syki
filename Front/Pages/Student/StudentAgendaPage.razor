@@ -14,7 +14,7 @@
         <MudContainer Class="px-0">
             <MudCard>
                 <MudCardContent>
-                    <MudProgressLinear Color="Color.Info" Indeterminate="true" />
+                    <MudProgressLinear Color="Color.Info" Indeterminate />
                 </MudCardContent>
             </MudCard>
         </MudContainer>
@@ -29,8 +29,8 @@
         }
         else
         {
-            <MudAlert Class="mt-4" Severity="Severity.Normal" NoIcon="true" Variant="Variant.Text" Elevation="1">
-                <MudStack Row="true" Justify="Justify.SpaceAround">
+            <MudAlert Class="mt-4" Severity="Severity.Normal" NoIcon Variant="Variant.Text" Elevation="1">
+                <MudStack Row Justify="Justify.SpaceAround">
                     <MudText>Sua agenda está vazia...</MudText>
                 </MudStack>
             </MudAlert>

@@ -12,7 +12,12 @@ public partial class IntegrationTests
         await academicClient.CreateEnrollmentPeriod(period.Id);
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
+        await academicClient.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id, data.AdsDisciplines.IntroToWebDev.Id]);
+
         TeacherOut ana = await academicClient.CreateTeacher("Ana");
+        await academicClient.AssignCampiToTeacher(ana.Id, [data.Campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(ana.Id, [data.AdsDisciplines.HumanMachineInteractionDesign.Id, data.AdsDisciplines.IntroToComputerNetworks.Id]);
 
         ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);

@@ -13,7 +13,12 @@ public partial class IntegrationTests
         await client.CreateEnrollmentPeriod(period.Id, -2, 2);
 
         TeacherOut chico = await client.CreateTeacher("Chico");
+        await client.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await client.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id, data.AdsDisciplines.Databases.Id]);
+
         TeacherOut ana = await client.CreateTeacher("Ana");
+        await client.AssignCampiToTeacher(ana.Id, [data.Campus.Id]);
+        await client.AssignDisciplinesToTeacher(ana.Id, [data.DireitoDisciplines.ManSocietyAndLaw.Id]);
 
         ClassOut discreteMathClass = await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         ClassOut databasesClass = await client.CreateClass(data.AdsDisciplines.Databases.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
@@ -110,6 +115,9 @@ public partial class IntegrationTests
 
         var period = data.AcademicPeriod2;
         TeacherOut chico = await client.CreateTeacher("Chico");
+        await client.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await client.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
+
         ClassOut discreteMathClass = await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
 
         await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id, -4, 4);
@@ -135,6 +143,9 @@ public partial class IntegrationTests
 
         var period = data.AcademicPeriod2;
         TeacherOut chico = await client.CreateTeacher("Chico");
+        await client.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await client.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
+
         await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
 
         await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id, -2, 2);

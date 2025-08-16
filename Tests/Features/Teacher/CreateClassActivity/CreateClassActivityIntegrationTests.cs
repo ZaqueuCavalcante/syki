@@ -11,6 +11,8 @@ public partial class IntegrationTests
         var period = data.AcademicPeriod2.Id;
 
         TeacherOut chico = await academicClient.CreateTeacher();
+        await academicClient.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
@@ -46,6 +48,8 @@ public partial class IntegrationTests
         var period = data.AcademicPeriod2.Id;
 
         TeacherOut chico = await academicClient.CreateTeacher();
+        await academicClient.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
@@ -90,6 +94,8 @@ public partial class IntegrationTests
         var period = data.AcademicPeriod2.Id;
 
         TeacherOut chico = await academicClient.CreateTeacher();
+        await academicClient.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);
@@ -111,6 +117,8 @@ public partial class IntegrationTests
         var period = data.AcademicPeriod2.Id;
 
         TeacherOut chico = await academicClient.CreateTeacher();
+        await academicClient.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
         var teacherClient = await _api.LoggedAsTeacher(chico.Email);

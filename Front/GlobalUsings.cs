@@ -20,6 +20,7 @@ global using Syki.Front.Features.Academic.GetCourseCurriculums;
 global using Syki.Front.Features.Academic.GetCourseDisciplines;
 global using Syki.Front.Features.Academic.GetCourseOfferings;
 global using Syki.Front.Features.Academic.GetCourses;
+global using Syki.Front.Features.Academic.AssignClassToClassroom;
 global using Syki.Front.Features.Academic.GetClassrooms;
 global using Syki.Front.Features.Academic.CreateClassroom;
 global using Syki.Front.Features.Academic.AssignCampiToTeacher;

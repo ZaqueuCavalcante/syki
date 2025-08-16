@@ -8,13 +8,16 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
+        var campus = await client.CreateCampus();
+        var period = await client.CreateCurrentAcademicPeriod();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
+        await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
+        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
         var schedules = new List<ScheduleIn>() { new(Day.Monday, Hour.H07_00, Hour.H08_00) };
 
         // Act
-        ClassOut @class = await client.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
+        ClassOut @class = await client.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
         @class.Id.Should().NotBeEmpty();
@@ -27,13 +30,27 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_not_create_class_without_discipline()
+    public async Task Should_not_create_class_without_campus()
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateClass(Guid.CreateVersion7(), null, Guid.CreateVersion7(), "2024.1", 40, []);
+
+        // Assert
+        response.ShouldBeError(new CampusNotFound());
+    }
+
+    [Test]
+    public async Task Should_not_create_class_without_discipline()
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+        var campus = await client.CreateCampus();
+
+        // Act
+        var response = await client.CreateClass(Guid.CreateVersion7(), campus.Id, Guid.CreateVersion7(), "2024.1", 40, []);
 
         // Assert
         response.ShouldBeError(new DisciplineNotFound());
@@ -45,26 +62,66 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
+        var campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
 
         // Act
-        var response = await client.CreateClass(discipline.Id, null, Guid.CreateVersion7(), "2024.1", 40, []);
+        var response = await client.CreateClass(discipline.Id, campus.Id, Guid.CreateVersion7(), "2024.1", 40, []);
 
         // Assert
         response.ShouldBeError(new TeacherNotFound());
     }
 
     [Test]
-    public async Task Should_not_create_class_without_period()
+    public async Task Should_not_create_class_without_teacher_campus_assign()
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
+        var campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        
+
         // Act
-        var response = await client.CreateClass(discipline.Id, null, teacher.Id, "2024.1", 40, []);
+        var response = await client.CreateClass(discipline.Id, campus.Id, teacher.Id, "2024.1", 40, []);
+
+        // Assert
+        response.ShouldBeError(new TeacherNotAssignedToCampus());
+    }
+
+    [Test]
+    public async Task Should_not_create_class_without_teacher_discipline_assign()
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+
+        var campus = await client.CreateCampus();
+        var period = await client.CreateCurrentAcademicPeriod();
+        var discipline = await client.CreateDiscipline();
+        TeacherOut teacher = await client.CreateTeacher();
+        await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
+
+        // Act
+        var response = await client.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, []);
+
+        // Assert
+        response.ShouldBeError(new TeacherNotAssignedToDiscipline());
+    }
+
+    [Test]
+    public async Task Should_not_create_class_without_academic_period()
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+
+        var campus = await client.CreateCampus();
+        var discipline = await client.CreateDiscipline();
+        TeacherOut teacher = await client.CreateTeacher();
+        await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
+        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        // Act
+        var response = await client.CreateClass(discipline.Id, campus.Id, teacher.Id, "2024.1", 40, []);
 
         // Assert
         response.ShouldBeError(new AcademicPeriodNotFound());
@@ -76,13 +133,16 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
+        var campus = await client.CreateCampus();
+        var period = await client.CreateCurrentAcademicPeriod();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
+        await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
+        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
         var schedules = new List<ScheduleIn>() { new(Day.Monday, Hour.H07_00, Hour.H07_00) };
 
         // Act
-        var response = await client.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
+        var response = await client.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
         response.ShouldBeError(new InvalidSchedule());
@@ -94,9 +154,12 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
+        var campus = await client.CreateCampus();
+        var period = await client.CreateCurrentAcademicPeriod();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
+        await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
+        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
         var schedules = new List<ScheduleIn>()
         {
             new(Day.Monday, Hour.H07_00, Hour.H08_00),
@@ -105,7 +168,7 @@ public partial class IntegrationTests
         };
 
         // Act
-        var response = await client.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
+        var response = await client.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
         response.ShouldBeError(new InvalidSchedule());
@@ -117,9 +180,12 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
+        var campus = await client.CreateCampus();
+        var period = await client.CreateCurrentAcademicPeriod();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
-        AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
+        await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
+        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
         var schedules = new List<ScheduleIn>()
         {
             new(Day.Monday, Hour.H07_00, Hour.H08_00),
@@ -127,7 +193,7 @@ public partial class IntegrationTests
         };
 
         // Act
-        var response = await client.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
+        var response = await client.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
         response.ShouldBeError(new ConflictingSchedules());
@@ -139,8 +205,11 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
+        var campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
+        await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
+        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var (start, end) = (new DateOnly(2024, 08, 12), new DateOnly(2024, 08, 30));
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1", start, end);
@@ -148,7 +217,7 @@ public partial class IntegrationTests
         var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };
 
         // Act
-        ClassOut @class = await client.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
+        ClassOut @class = await client.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
         GetAcademicClassOut classDb = await client.GetAcademicClass(@class.Id);
@@ -165,8 +234,11 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
+        var campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
+        await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
+        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var (start, end) = (new DateOnly(2024, 08, 12), new DateOnly(2024, 08, 30));
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1", start, end);
@@ -178,7 +250,7 @@ public partial class IntegrationTests
         };
 
         // Act
-        ClassOut @class = await client.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
+        ClassOut @class = await client.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, schedules);
 
         // Assert
         GetAcademicClassOut classDb = await client.GetAcademicClass(@class.Id);

@@ -4,11 +4,20 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
 {
     public async Task<OneOf<ClassOut, SykiError>> Create(Guid institutionId, CreateClassIn data)
     {
+        var campusOk = await ctx.Campi.AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CampusId);
+        if (!campusOk) return new CampusNotFound();
+
         var disciplineOk = await ctx.Disciplines.AnyAsync(x => x.InstitutionId == institutionId && x.Id == data.DisciplineId);
         if (!disciplineOk) return new DisciplineNotFound();
 
         var teacherOk = await ctx.Teachers.AnyAsync(p => p.InstitutionId == institutionId && p.Id == data.TeacherId);
         if (!teacherOk) return new TeacherNotFound();
+
+        var teacherCampusOk = await ctx.TeachersCampi.AnyAsync(x => x.SykiTeacherId == data.TeacherId && x.CampusId == data.CampusId);
+        if (!teacherCampusOk) return new TeacherNotAssignedToCampus();
+
+        var teacherDisciplineOk = await ctx.TeachersDisciplines.AnyAsync(x => x.SykiTeacherId == data.TeacherId && x.DisciplineId == data.DisciplineId);
+        if (!teacherDisciplineOk) return new TeacherNotAssignedToDiscipline();
 
         var periodExists = await ctx.AcademicPeriodExists(institutionId, data.Period);
         if (!periodExists) return new AcademicPeriodNotFound();

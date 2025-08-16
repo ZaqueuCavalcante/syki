@@ -8,14 +8,15 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
 
+        var campus = await academicClient.CreateCampus();
+        var period = await academicClient.CreateCurrentAcademicPeriod();
         var discipline = await academicClient.CreateDiscipline();
-        var start = new DateOnly(2024, 08, 12);
-        var end = new DateOnly(2024, 08, 30);
-        AcademicPeriodOut period = await academicClient.CreateAcademicPeriod("2024.1", start, end);
+        TeacherOut teacher = await academicClient.CreateTeacher();
+        await academicClient.AssignCampiToTeacher(teacher.Id, [campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
         var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };
 
-        TeacherOut teacher = await academicClient.CreateTeacher();
-        ClassOut @class = await academicClient.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
+        ClassOut @class = await academicClient.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, schedules);
 
         var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
         GetAcademicClassOut classDb = await academicClient.GetAcademicClass(@class.Id);
@@ -50,17 +51,20 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
 
-        var discipline = await academicClient.CreateDiscipline();
-        var start = new DateOnly(2024, 08, 12);
-        var end = new DateOnly(2024, 08, 30);
-        AcademicPeriodOut period = await academicClient.CreateAcademicPeriod("2024.1", start, end);
+        var campus = await academicClient.CreateCampus();
+        var period = await academicClient.CreateCurrentAcademicPeriod();
+        var discipline = await academicClient.CreateDiscipline(); 
         var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };
 
         TeacherOut teacher1 = await academicClient.CreateTeacher();
-        ClassOut class1 = await academicClient.CreateClass(discipline.Id, null, teacher1.Id, period.Id, 40, schedules);
+        await academicClient.AssignCampiToTeacher(teacher1.Id, [campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(teacher1.Id, [discipline.Id]);
+        ClassOut class1 = await academicClient.CreateClass(discipline.Id, campus.Id, teacher1.Id, period.Id, 40, schedules);
 
         TeacherOut teacher2 = await academicClient.CreateTeacher();
-        ClassOut class2 = await academicClient.CreateClass(discipline.Id, null, teacher2.Id, period.Id, 40, schedules);
+        await academicClient.AssignCampiToTeacher(teacher2.Id, [campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(teacher2.Id, [discipline.Id]);
+        ClassOut class2 = await academicClient.CreateClass(discipline.Id, campus.Id, teacher2.Id, period.Id, 40, schedules);
 
         var teacherClient = await _api.LoggedAsTeacher(teacher1.Email);
         GetAcademicClassOut classDb = await academicClient.GetAcademicClass(class2.Id);
@@ -79,14 +83,15 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
 
-        var discipline = await academicClient.CreateDiscipline();
-        var start = new DateOnly(2024, 08, 12);
-        var end = new DateOnly(2024, 08, 30);
-        AcademicPeriodOut period = await academicClient.CreateAcademicPeriod("2024.1", start, end);
+        var campus = await academicClient.CreateCampus();
+        var period = await academicClient.CreateCurrentAcademicPeriod();
+        var discipline = await academicClient.CreateDiscipline(); 
         var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        ClassOut @class = await academicClient.CreateClass(discipline.Id, null, teacher.Id, period.Id, 40, schedules);
+        await academicClient.AssignCampiToTeacher(teacher.Id, [campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+        ClassOut @class = await academicClient.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, schedules);
 
         var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
         GetAcademicClassOut classDb = await academicClient.GetAcademicClass(@class.Id);

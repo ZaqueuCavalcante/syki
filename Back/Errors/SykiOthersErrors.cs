@@ -86,3 +86,13 @@ public class OnlyRootCommandsCanBeReprocessed : SykiError
     public override string Code { get; set; } = nameof(OnlyRootCommandsCanBeReprocessed);
     public override string Message { get; set; } = "Apenas o comando original pode ser reprocessado.";
 }
+public class TeacherNotAssignedToCampus : SykiError
+{
+    public override string Code { get; set; } = nameof(TeacherNotAssignedToCampus);
+    public override string Message { get; set; } = "Professor não vinculado ao campus.";
+}
+public class TeacherNotAssignedToDiscipline : SykiError
+{
+    public override string Code { get; set; } = nameof(TeacherNotAssignedToDiscipline);
+    public override string Message { get; set; } = "Professor não vinculado a disciplina.";
+}

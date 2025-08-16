@@ -34,6 +34,8 @@ using Syki.Front.Features.Academic.CreateWebhookSubscription;
 using Syki.Front.Features.Academic.AddDisciplinePreRequisites;
 using Syki.Front.Features.Academic.AssignDisciplinesToTeacher;
 using Syki.Front.Features.Academic.ReleaseClassesForEnrollment;
+using Syki.Front.Features.Academic.CreateClassroom;
+using Syki.Front.Features.Academic.AssignClassToClassroom;
 
 namespace Syki.Tests.Clients;
 
@@ -209,6 +211,15 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Create(disciplineId, campusId, teacherId, period, vacancies, schedules);
     }
 
+    public async Task<OneOf<CreateClassroomOut, ErrorOut>> CreateClassroom(
+        Guid campusId,
+        string name,
+        int capacity
+    ) {
+        var client = new CreateClassroomClient(Http);
+        return await client.Create(campusId, name, capacity);
+    }
+
     public async Task<OneOf<SuccessOut, ErrorOut>> ReleaseClassesForEnrollment(List<Guid> classes)
     {
         var client = new ReleaseClassesForEnrollmentClient(Http);
@@ -345,16 +356,28 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Assign(teacherId, campi);
     }
 
-    public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()
+    public async Task<OneOf<SuccessOut, ErrorOut>> AssignClassToClassroom(Guid classroomId, Guid classId)
     {
-        var data = new BasicInstitutionTestDto();
+        var client = new AssignClassToClassroomClient(Http);
+        return await client.Assign(classroomId, classId);
+    }
 
-        data.AcademicPeriod1 = await CreateAcademicPeriod($"{DateTime.UtcNow.Year}.1");
-        data.AcademicPeriod2 = await CreateAcademicPeriod($"{DateTime.UtcNow.Year}.2");
+    public async Task<AcademicPeriodOut> CreateCurrentAcademicPeriod()
+    {
+        var today = DateTime.UtcNow;
+        var number = today.Month <= 6 ? 1 : 2;
+        var startAt = today.AddDays(-30).ToDateOnly();
+        var endAt = today.AddDays(30).ToDateOnly();
+        return await CreateAcademicPeriod($"{today.Year}.{number}", startAt, endAt);
+    }
 
-        data.Campus = await CreateCampus();
+    public async Task<BasicInstitutionTestDto> CreateAdsCourseOffering(
+        BasicInstitutionTestDto data = null,
+        Guid? campusId = null,
+        string periodId = null)
+    {
+        data ??= new BasicInstitutionTestDto();
 
-        // Ads
         var adsDisciplines = new List<string>()
         {
             "Matemática Discreta",
@@ -405,7 +428,21 @@ public class AcademicHttpClient(HttpClient http)
             new(data.AdsDisciplines.IntegratorProjectTwo.Id, 2, 7, 65),
         ]);
 
-        data.AdsCourseOffering = await CreateCourseOffering(data.Campus.Id, data.AdsCourse.Id, data.AdsCourseCurriculum.Id, data.AcademicPeriod2.Id, Shift.Noturno);
+        data.AdsCourseOffering = await CreateCourseOffering(campusId ?? data.Campus.Id, data.AdsCourse.Id, data.AdsCourseCurriculum.Id, periodId ?? data.AcademicPeriod2.Id, Shift.Noturno);
+        return data;
+    }
+
+    public async Task<BasicInstitutionTestDto> CreateBasicInstitutionData()
+    {
+        var data = new BasicInstitutionTestDto();
+
+        data.AcademicPeriod1 = await CreateAcademicPeriod($"{DateTime.UtcNow.Year}.1");
+        data.AcademicPeriod2 = await CreateAcademicPeriod($"{DateTime.UtcNow.Year}.2");
+
+        data.Campus = await CreateCampus();
+
+        // Ads
+        await CreateAdsCourseOffering(data);
 
         // Direito
         var direitoDisciplines = new List<string>()
@@ -446,6 +483,9 @@ public class AcademicHttpClient(HttpClient http)
         await CreateEnrollmentPeriod(period, -2, 2);
 
         data.Teacher = await CreateTeacher();
+        await AssignCampiToTeacher(data.Teacher.Id, [data.Campus.Id]);
+        await AssignDisciplinesToTeacher(data.Teacher.Id, data.AdsDisciplines.GetIds());
+
         data.AdsClasses.HumanMachineInteractionDesign = await CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, data.Campus.Id, data.Teacher.Id, period, 45, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         data.AdsClasses.IntroToComputerNetworks = await CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, data.Campus.Id, data.Teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
         data.AdsClasses.IntroToWebDev = await CreateClass(data.AdsDisciplines.IntroToWebDev.Id, data.Campus.Id, data.Teacher.Id, period, 45, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);

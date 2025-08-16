@@ -91,3 +91,8 @@ public class CurrentAcademicPeriodNotFound : SykiError
     public override string Code { get; set; } = nameof(CurrentAcademicPeriodNotFound);
     public override string Message { get; set; } = "Período acadêmico atual não encontrado.";
 }
+public class ClassroomNotFound : SykiError
+{
+    public override string Code { get; set; } = nameof(ClassroomNotFound);
+    public override string Message { get; set; } = "Sala não encontrada.";
+}

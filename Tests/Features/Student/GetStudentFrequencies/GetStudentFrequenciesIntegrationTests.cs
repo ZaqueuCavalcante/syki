@@ -31,6 +31,9 @@ public partial class IntegrationTests
         await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut teacher = await academicClient.CreateTeacher();
+        await academicClient.AssignCampiToTeacher(teacher.Id, [data.Campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(teacher.Id, [data.AdsDisciplines.DiscreteMath.Id, data.AdsDisciplines.IntroToWebDev.Id]);
+
         ClassOut discreteMathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, teacher.Id, period, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         ClassOut introToWebDevClass = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, data.Campus.Id, teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
 
@@ -68,6 +71,9 @@ public partial class IntegrationTests
         await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut teacher = await academicClient.CreateTeacher();
+        await academicClient.AssignCampiToTeacher(teacher.Id, [data.Campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(teacher.Id, data.AdsDisciplines.GetIds());
+
         ClassOut humanMachineInteractionDesign = await academicClient.CreateClass(data.AdsDisciplines.HumanMachineInteractionDesign.Id, data.Campus.Id, teacher.Id, period, 45, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
         ClassOut introToComputerNetworks = await academicClient.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, data.Campus.Id, teacher.Id, period, 45, [new(Day.Tuesday, Hour.H07_00, Hour.H10_00)]);
         ClassOut introToWebDev = await academicClient.CreateClass(data.AdsDisciplines.IntroToWebDev.Id, data.Campus.Id, teacher.Id, period, 45, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);

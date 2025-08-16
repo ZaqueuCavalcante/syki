@@ -11,6 +11,9 @@ public partial class IntegrationTests
         await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id);
 
         TeacherOut chico = await client.CreateTeacher("Chico");
+        await client.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await client.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
+
         ClassOut mathClass = await client.CreateClass(
             data.AdsDisciplines.DiscreteMath.Id,
             data.Campus.Id,
@@ -35,6 +38,9 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         TeacherOut chico = await client.CreateTeacher("Chico");
+        await client.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await client.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
+
         ClassOut mathClass = await client.CreateClass(
             data.AdsDisciplines.DiscreteMath.Id,
             data.Campus.Id,
@@ -59,6 +65,9 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         TeacherOut chico = await client.CreateTeacher("Chico");
+        await client.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await client.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
+
         ClassOut mathClass = await client.CreateClass(
             data.AdsDisciplines.DiscreteMath.Id,
             data.Campus.Id,
@@ -85,6 +94,9 @@ public partial class IntegrationTests
         var data = await client.CreateBasicInstitutionData();
 
         TeacherOut chico = await client.CreateTeacher("Chico");
+        await client.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await client.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
+
         ClassOut mathClass = await client.CreateClass(
             data.AdsDisciplines.DiscreteMath.Id,
             data.Campus.Id,
@@ -113,6 +125,9 @@ public partial class IntegrationTests
         await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id, -4, 4);
 
         TeacherOut chico = await client.CreateTeacher("Chico");
+        await client.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await client.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
+
         ClassOut mathClass = await client.CreateClass(
             data.AdsDisciplines.DiscreteMath.Id,
             data.Campus.Id,

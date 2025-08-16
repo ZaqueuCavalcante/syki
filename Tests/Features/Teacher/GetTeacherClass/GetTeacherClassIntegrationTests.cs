@@ -14,8 +14,11 @@ public partial class IntegrationTests
         await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
-        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
+        await academicClient.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await academicClient.AssignDisciplinesToTeacher(chico.Id, [math.Id]);
         ClassOut mathClass = await academicClient.CreateClass(math.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
+
+        StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
         await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);
 

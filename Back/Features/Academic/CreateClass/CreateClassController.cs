@@ -24,8 +24,11 @@ public class CreateClassController(CreateClassService service) : ControllerBase
 internal class RequestExamples : ExamplesProvider<CreateClassIn>;
 internal class ResponseExamples : ExamplesProvider<ClassOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
+    CampusNotFound,
     DisciplineNotFound,
     TeacherNotFound,
+    TeacherNotAssignedToCampus,
+    TeacherNotAssignedToDiscipline,
     AcademicPeriodNotFound,
     InvalidDay,
     InvalidHour,

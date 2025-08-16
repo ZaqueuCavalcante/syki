@@ -20,4 +20,9 @@ public class CreateClassroomOut
             Name = "Laboratório de Química",
         }),
     ];
+
+    public static implicit operator CreateClassroomOut(OneOf<CreateClassroomOut, ErrorOut> value)
+    {
+        return value.Success;
+    }
 }

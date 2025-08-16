@@ -31,6 +31,8 @@ public partial class IntegrationTests
         var period = data.AcademicPeriod2;
 
         TeacherOut chico = await client.CreateTeacher("Chico");
+        await client.AssignCampiToTeacher(chico.Id, [data.Campus.Id]);
+        await client.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
         ClassOut discreteMathClass = await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
 
         await client.ReleaseClassesForEnrollment([discreteMathClass.Id]);

@@ -30,13 +30,23 @@ public class BasicInstitutionTestAdsDisciplinesDto
     public DisciplineOut IntroToComputerNetworks { get; set; }
     public DisciplineOut ComputationalThinkingAndAlgorithms { get; set; }
     public DisciplineOut IntegratorProjectOne { get; set; }
-    
+
     public DisciplineOut Arch { get; set; }
     public DisciplineOut Databases { get; set; }
     public DisciplineOut DataStructures { get; set; }
     public DisciplineOut InfoAndSociety { get; set; }
     public DisciplineOut Poo { get; set; }
     public DisciplineOut IntegratorProjectTwo { get; set; }
+
+    public List<Guid> GetIds()
+    {
+        return [.. GetType()
+            .GetProperties()
+            .Where(p => p.PropertyType == typeof(DisciplineOut))
+            .Select(p => (DisciplineOut?)p.GetValue(this))
+            .Where(co => co != null)
+            .Select(co => co!.Id)];
+    }
 }
 
 public class BasicInstitutionTestAdsClassesDto

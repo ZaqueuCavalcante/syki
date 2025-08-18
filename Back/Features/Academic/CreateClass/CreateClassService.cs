@@ -22,11 +22,9 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
         var periodExists = await ctx.AcademicPeriodExists(institutionId, data.Period);
         if (!periodExists) return new AcademicPeriodNotFound();
 
-        var schedules = data.Schedules.ConvertAll(h => Schedule.New(h.Day, h.Start, h.End));
-        foreach (var schedule in schedules)
-        {
-            if (schedule.IsError) return schedule.Error;
-        }
+        var schedulesResult = data.Schedules.ToSchedules();
+        if (schedulesResult.IsError) return schedulesResult.Error;
+        var schedules = schedulesResult.Success;
 
         var result = Class.New(
             institutionId,
@@ -35,7 +33,7 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
             data.TeacherId,
             data.Period,
             data.Vacancies,
-            schedules.ConvertAll(x => x.Success)
+            schedules
         );
 
         if (result.IsError) return result.Error;

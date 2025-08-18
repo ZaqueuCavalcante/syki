@@ -10,7 +10,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
 
         // Act
         await client.SendResetPasswordToken(user.Email);
@@ -27,7 +27,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
 
         // Act
         await client.SendResetPasswordToken(user.Email);

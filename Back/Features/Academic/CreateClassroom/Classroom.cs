@@ -1,3 +1,4 @@
+using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateCampus;
 
 namespace Syki.Back.Features.Academic.CreateClassroom;
@@ -13,6 +14,7 @@ public class Classroom
     public Campus Campus { get; set; }
     public string Name { get; set; }
     public int Capacity { get; set; }
+    public List<Schedule> Schedules { get; set; }
 
     private Classroom() { }
 

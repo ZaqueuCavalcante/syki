@@ -7,7 +7,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
         await client.Logout();
@@ -33,7 +33,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
         await client.Logout();
@@ -50,7 +50,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
         await client.Logout();
@@ -70,7 +70,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
         await client.Logout();
@@ -91,7 +91,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
         await client.SendResetPasswordToken(user.Email);
 
         await client.Logout();

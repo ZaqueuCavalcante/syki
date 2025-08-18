@@ -7,7 +7,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
         await client.Login(user.Email, user.Password);
 
         var keyResponse = await client.GetMfaKey();
@@ -50,7 +50,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
         await client.Login(user.Email, user.Password);
 
         var keyResponse = await client.GetMfaKey();

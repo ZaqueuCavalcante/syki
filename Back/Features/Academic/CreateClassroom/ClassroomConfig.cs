@@ -12,5 +12,9 @@ public class ClassroomConfig : IEntityTypeConfiguration<Classroom>
         classroom.HasOne(x => x.Campus)
             .WithMany()
             .HasForeignKey(c => c.CampusId);
+
+        classroom.HasMany(c => c.Schedules)
+            .WithOne()
+            .HasForeignKey(s => s.ClassroomId);
     }
 }

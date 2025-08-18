@@ -276,71 +276,71 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<Schedule[]> ConflictingSchedules()
+    public static IEnumerable<ScheduleIn[]> ConflictingSchedules()
     {
         yield return new[]
         {
-            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-            new Schedule(Day.Monday, Hour.H07_30, Hour.H07_45),
+            new ScheduleIn(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new ScheduleIn(Day.Monday, Hour.H07_30, Hour.H07_45),
         };
 
         yield return new[]
         {
-            new Schedule(Day.Monday, Hour.H10_00, Hour.H11_00),
-            new Schedule(Day.Monday, Hour.H09_30, Hour.H12_15),
+            new ScheduleIn(Day.Monday, Hour.H10_00, Hour.H11_00),
+            new ScheduleIn(Day.Monday, Hour.H09_30, Hour.H12_15),
         };
 
         yield return new[]
         {
-            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-            new Schedule(Day.Monday, Hour.H07_30, Hour.H08_30),
+            new ScheduleIn(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new ScheduleIn(Day.Monday, Hour.H07_30, Hour.H08_30),
         };
 
         yield return new[]
         {
-            new Schedule(Day.Monday, Hour.H07_30, Hour.H08_30),
-            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new ScheduleIn(Day.Monday, Hour.H07_30, Hour.H08_30),
+            new ScheduleIn(Day.Monday, Hour.H07_00, Hour.H08_00),
         };
 
         yield return new[]
         {
-            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-            new Schedule(Day.Tuesday, Hour.H08_00, Hour.H09_00),
-            new Schedule(Day.Monday, Hour.H07_15, Hour.H07_45),
+            new ScheduleIn(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new ScheduleIn(Day.Tuesday, Hour.H08_00, Hour.H09_00),
+            new ScheduleIn(Day.Monday, Hour.H07_15, Hour.H07_45),
         };
 
         yield return new[]
         {
-            new Schedule(Day.Wednesday, Hour.H12_00, Hour.H15_30),
-            new Schedule(Day.Wednesday, Hour.H13_00, Hour.H14_15),
+            new ScheduleIn(Day.Wednesday, Hour.H12_00, Hour.H15_30),
+            new ScheduleIn(Day.Wednesday, Hour.H13_00, Hour.H14_15),
         };
     }
 
-    public static IEnumerable<Schedule[]> ValidSchedules()
+    public static IEnumerable<ScheduleIn[]> ValidSchedules()
     {
         yield return new[]
         {
-            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-            new Schedule(Day.Monday, Hour.H08_00, Hour.H09_00),
+            new ScheduleIn(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new ScheduleIn(Day.Monday, Hour.H08_00, Hour.H09_00),
         };
 
         yield return new[]
         {
-            new Schedule(Day.Monday, Hour.H08_00, Hour.H09_00),
-            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new ScheduleIn(Day.Monday, Hour.H08_00, Hour.H09_00),
+            new ScheduleIn(Day.Monday, Hour.H07_00, Hour.H08_00),
         };
 
         yield return new[]
         {
-            new Schedule(Day.Monday, Hour.H07_00, Hour.H08_00),
-            new Schedule(Day.Tuesday, Hour.H08_00, Hour.H09_00),
-            new Schedule(Day.Monday, Hour.H09_45, Hour.H10_15),
+            new ScheduleIn(Day.Monday, Hour.H07_00, Hour.H08_00),
+            new ScheduleIn(Day.Tuesday, Hour.H08_00, Hour.H09_00),
+            new ScheduleIn(Day.Monday, Hour.H09_45, Hour.H10_15),
         };
 
         yield return new[]
         {
-            new Schedule(Day.Wednesday, Hour.H12_00, Hour.H15_30),
-            new Schedule(Day.Wednesday, Hour.H11_15, Hour.H12_00),
+            new ScheduleIn(Day.Wednesday, Hour.H12_00, Hour.H15_30),
+            new ScheduleIn(Day.Wednesday, Hour.H11_15, Hour.H12_00),
         };
     }
 

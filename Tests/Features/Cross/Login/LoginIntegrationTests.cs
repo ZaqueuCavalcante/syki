@@ -7,7 +7,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
 
         // Act
         var result = await client.Login(user.Email, user.Password);
@@ -25,7 +25,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        await client.RegisterUser(_api);
+        await client.RegisterAcademicUser(_api);
         var email = "academico@novaroma.com";
         var password = "Academico@123";
 
@@ -41,7 +41,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
 
         // Act
         var result = await client.Login(user.Email + "1", user.Password);
@@ -55,7 +55,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
 
         // Act
         var result = await client.Login(user.Email, user.Password + "1");
@@ -69,7 +69,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var user = await client.RegisterUser(_api);
+        var user = await client.RegisterAcademicUser(_api);
         await client.Login(user.Email, user.Password);
 
         var keyResponse = await client.GetMfaKey();

@@ -34,67 +34,6 @@ public class CreateClassUnitTests
     }
 
     [Test]
-    public void Should_not_create_class_with_totally_conflicting_schedules()
-    {
-        // Arrange
-        var institutionId = Guid.CreateVersion7();
-        var disciplineId = Guid.CreateVersion7();
-        var campusId = Guid.CreateVersion7();
-        var teacherId = Guid.CreateVersion7();
-        const string period = "2023.2";
-        const int vacancies = 40;
-        var schedules = new List<Schedule>()
-        {
-            new(Day.Monday, Hour.H07_00, Hour.H08_00),
-            new(Day.Monday, Hour.H07_00, Hour.H08_00),
-        };
-
-        // Act
-        var result = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, schedules);
-
-        // Assert
-        result.ShouldBeError(new ConflictingSchedules());
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.ConflictingSchedules))]
-    public void Should_not_create_class_with_partially_conflicting_schedules(Schedule[] schedules)
-    {
-        // Arrange
-        var institutionId = Guid.CreateVersion7();
-        var disciplineId = Guid.CreateVersion7();
-        var campusId = Guid.CreateVersion7();
-        var teacherId = Guid.CreateVersion7();
-        const string period = "2023.2";
-        const int vacancies = 40;
-
-        // Act
-        var result = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, [.. schedules]);
-
-        // Assert
-        result.ShouldBeError(new ConflictingSchedules());
-    }
-
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.ValidSchedules))]
-    public void Should_create_class_with_valid_schedules(Schedule[] schedules)
-    {
-        // Arrange
-        var institutionId = Guid.CreateVersion7();
-        var disciplineId = Guid.CreateVersion7();
-        var campusId = Guid.CreateVersion7();
-        var teacherId = Guid.CreateVersion7();
-        const string period = "2023.2";
-        const int vacancies = 40;
-
-        // Act
-        var @class = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, [.. schedules]).Success;
-
-        // Assert
-        @class.Schedules.Should().BeEquivalentTo(schedules);
-    }
-
-    [Test]
     public void Should_convert_class_to_out()
     {
         // Arrange

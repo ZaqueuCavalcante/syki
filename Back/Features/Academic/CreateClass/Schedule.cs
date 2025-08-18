@@ -4,6 +4,7 @@ public class Schedule
 {
     public Guid Id { get; set; }
     public Guid? ClassId { get; set; }
+    public Guid? ClassroomId { get; set; }
     public Guid? TeacherId { get; set; }
     public Day Day { get; set; }
     public Hour StartAt { get; set; }

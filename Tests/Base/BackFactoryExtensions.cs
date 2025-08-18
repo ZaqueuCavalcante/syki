@@ -22,7 +22,7 @@ public static class BackFactoryExtensions
     public static async Task<AcademicHttpClient> LoggedAsAcademic(this BackFactory factory)
     {
         var client = factory.GetClient();
-        var user = await client.RegisterUser(factory);
+        var user = await client.RegisterAcademicUser(factory);
         await client.Login(user.Email, user.Password);
         return new(client);
     }

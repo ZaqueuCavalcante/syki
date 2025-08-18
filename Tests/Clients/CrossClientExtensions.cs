@@ -30,7 +30,7 @@ public static class CrossClientExtensions
         return await client.Finish(token, password);
     }
 
-    public static async Task<UserOut> RegisterUser(this HttpClient client, BackFactory factory)
+    public static async Task<UserOut> RegisterAcademicUser(this HttpClient client, BackFactory factory)
     {
         var email = TestData.Email;
         var password = "Test@123";

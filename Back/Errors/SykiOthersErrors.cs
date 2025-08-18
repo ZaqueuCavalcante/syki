@@ -101,3 +101,13 @@ public class ClassVacanciesGreaterThanClassroomCapacity : SykiError
     public override string Code { get; set; } = nameof(ClassVacanciesGreaterThanClassroomCapacity);
     public override string Message { get; set; } = "Turma com mais vagas que a capacidade da sala.";
 }
+public class ClassAndClassroomShouldStayOnSameCampus : SykiError
+{
+    public override string Code { get; set; } = nameof(ClassAndClassroomShouldStayOnSameCampus);
+    public override string Message { get; set; } = "Turma e sala precisam estar no mesmo campus.";
+}
+public class InvalidScheduleForAssignClassToClassroom : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidScheduleForAssignClassToClassroom);
+    public override string Message { get; set; } = "Ao reservar a sala pra turma, informe ao menos um horário.";
+}

@@ -11,6 +11,7 @@ using Syki.Front.Features.Academic.CreateStudent;
 using Syki.Front.Features.Academic.CreateTeacher;
 using Syki.Front.Features.Academic.GetDisciplines;
 using Syki.Front.Features.Academic.FinalizeClasses;
+using Syki.Front.Features.Academic.CreateClassroom;
 using Syki.Front.Features.Academic.CreateDiscipline;
 using Syki.Front.Features.Academic.GetNotifications;
 using Syki.Front.Features.Academic.GetAcademicClass;
@@ -28,21 +29,35 @@ using Syki.Front.Features.Academic.GetCourseCurriculums;
 using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Front.Features.Academic.CreateCourseCurriculum;
 using Syki.Front.Features.Academic.UpdateEnrollmentPeriod;
+using Syki.Front.Features.Academic.GetWebhookSubscription;
+using Syki.Front.Features.Academic.AssignClassToClassroom;
 using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
 using Syki.Front.Features.Academic.CreateWebhookSubscription;
 using Syki.Front.Features.Academic.AddDisciplinePreRequisites;
 using Syki.Front.Features.Academic.AssignDisciplinesToTeacher;
 using Syki.Front.Features.Academic.ReleaseClassesForEnrollment;
-using Syki.Front.Features.Academic.CreateClassroom;
-using Syki.Front.Features.Academic.AssignClassToClassroom;
-using Syki.Front.Features.Academic.GetWebhookSubscription;
 
 namespace Syki.Tests.Clients;
 
 public class AcademicHttpClient(HttpClient http)
 {
     public readonly HttpClient Http = http;
+
+    public async Task<CampusOut> CreateCampus(
+        string name = "Agreste I",
+        BrazilState state = BrazilState.PE,
+        string city = "Caruaru",
+        int capacity = 100
+    ) {
+        var client = new CreateCampusClient(Http);
+        var response = await client.Create(name, state, city, capacity);
+        return await response.DeserializeTo<CampusOut>();
+    }
+
+
+
+
 
     public async Task<NotificationOut> CreateNotification(
         string title,
@@ -59,17 +74,6 @@ public class AcademicHttpClient(HttpClient http)
     {
         var client = new GetNotificationsClient(Http);
         return await client.Get();
-    }
-
-    public async Task<CampusOut> CreateCampus(
-        string name = "Agreste I",
-        BrazilState state = BrazilState.PE,
-        string city = "Caruaru",
-        int capacity = 100
-    ) {
-        var client = new CreateCampusClient(Http);
-        var response = await client.Create(name, state, city, capacity);
-        return await response.DeserializeTo<CampusOut>();
     }
 
     public async Task<List<CampusOut>> GetCampi()

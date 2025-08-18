@@ -79,7 +79,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var academicUser = await client.RegisterUser(_api);
+        var academicUser = await client.RegisterAcademicUser(_api);
         await client.Login(academicUser.Email, academicUser.Password);
         var academicClient = new AcademicHttpClient(client);
 
@@ -98,7 +98,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = _api.GetClient();
-        var academicUser = await client.RegisterUser(_api);
+        var academicUser = await client.RegisterAcademicUser(_api);
         await client.Login(academicUser.Email, academicUser.Password);
         var academicClient = new AcademicHttpClient(client);
 

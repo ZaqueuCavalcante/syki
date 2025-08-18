@@ -36,7 +36,7 @@ public class Class
 
     private Class() {}
 
-    private Class(
+    public Class(
         Guid institutionId,
         Guid disciplineId,
         Guid? campusId,
@@ -69,24 +69,7 @@ public class Class
         int vacancies,
         List<Schedule> schedules
     ) {
-        var result = Validate(schedules);
-
-        if (result.IsError) return result.Error;
-
         return new Class(institutionId, disciplineId, campusId, teacherId, period, vacancies, schedules);
-    }
-
-    private static OneOf<SykiSuccess, SykiError> Validate(List<Schedule> schedules)
-    {
-        for (int i = 0; i < schedules.Count-1; i++)
-        {
-            for (int j = i+1; j < schedules.Count; j++)
-            {
-                if (schedules[i].Conflict(schedules[j]))
-                    return new ConflictingSchedules();
-            }
-        }
-        return new SykiSuccess();
     }
 
     public void CreateLessons()

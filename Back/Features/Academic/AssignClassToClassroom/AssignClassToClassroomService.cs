@@ -21,7 +21,7 @@ public class AssignClassToClassroomService(SykiDbContext ctx) : IAcademicService
         var ids = await ctx.ClassroomsClasses.Where(c => c.ClassroomId == classroomId && c.IsActive).Select(x => x.ClassId).ToListAsync() ?? [];
         var currentSchedules = await ctx.Schedules.AsNoTracking().Where(x => x.ClassId != null && ids.Contains(x.ClassId.Value)).ToListAsync() ?? [];
 
-        data.Schedules.AddRange(currentSchedules.ConvertAll(x => new ScheduleIn(x.Day, x.StartAt, x.EndAt)));
+        data.Schedules.AddRange(currentSchedules.ConvertAll(x => new ScheduleIn(x.Day, x.Start, x.End)));
 
         var schedulesResult = data.Schedules.ToSchedules();
         if (schedulesResult.IsError) return schedulesResult.Error;

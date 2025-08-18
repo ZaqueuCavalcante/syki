@@ -17,7 +17,7 @@ public class ScheduleExtensionsUnitTests
 
         // Assert
         result.ShouldBeSuccess();
-        result.Success.Should().BeEquivalentTo([new { Day = Day.Monday, StartAt = Hour.H07_00, EndAt = Hour.H08_00 }]);
+        result.Success.Should().BeEquivalentTo([new { Day = Day.Monday, Start = Hour.H07_00, End = Hour.H08_00 }]);
     }
 
     [Test]
@@ -56,7 +56,7 @@ public class ScheduleExtensionsUnitTests
         var result = schedulesIn.ToList().ToSchedules();
 
         // Assert
-        result.Success.Should().BeEquivalentTo(schedulesIn.Select(x => new { x.Day, StartAt = x.Start, EndAt = x.End }));
+        result.Success.Should().BeEquivalentTo(schedulesIn.Select(x => new { x.Day, x.Start, x.End }));
     }
 
     [Test]

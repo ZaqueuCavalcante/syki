@@ -7,8 +7,8 @@ public class Schedule
     public Guid? ClassroomId { get; set; }
     public Guid? TeacherId { get; set; }
     public Day Day { get; set; }
-    public Hour StartAt { get; set; }
-    public Hour EndAt { get; set; }
+    public Hour Start { get; set; }
+    public Hour End { get; set; }
 
     private Schedule() {}
 
@@ -19,8 +19,8 @@ public class Schedule
     ) {
         Id = Guid.CreateVersion7();
         Day = day;
-        StartAt = startAt;
-        EndAt = endAt;
+        Start = startAt;
+        End = endAt;
     }
 
     public static OneOf<Schedule, SykiError> New(
@@ -40,7 +40,7 @@ public class Schedule
 
     public int GetDiff()
     {
-        return StartAt.DiffInMinutes(EndAt);
+        return Start.DiffInMinutes(End);
     }
 
     public bool Conflict(Schedule other)
@@ -48,19 +48,19 @@ public class Schedule
         if (Day != other.Day)
             return false;
 
-        if (StartAt == other.StartAt || EndAt == other.EndAt)
+        if (Start == other.Start || End == other.End)
             return true;
 
-        if (StartAt < other.StartAt && other.StartAt < EndAt)
+        if (Start < other.Start && other.Start < End)
             return true;
 
-        if (StartAt < other.EndAt && other.EndAt < EndAt)
+        if (Start < other.End && other.End < End)
             return true;
 
-        if (other.StartAt < StartAt && StartAt < other.EndAt)
+        if (other.Start < Start && Start < other.End)
             return true;
 
-        if (other.StartAt < EndAt && EndAt < other.EndAt)
+        if (other.Start < End && End < other.End)
             return true;
 
         return false;
@@ -68,7 +68,7 @@ public class Schedule
 
     public override string ToString()
     {
-        return $"{Day.GetDescription()} {StartAt.GetDescription()}-{EndAt.GetDescription()}";
+        return $"{Day.GetDescription()} {Start.GetDescription()}-{End.GetDescription()}";
     }
 
     public ScheduleOut ToOut()
@@ -76,8 +76,8 @@ public class Schedule
         return new()
         {
             Day = Day,
-            StartAt = StartAt,
-            EndAt = EndAt,
+            StartAt = Start,
+            EndAt = End,
         };
     }
 }

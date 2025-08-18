@@ -74,7 +74,7 @@ public class Class
 
     public void CreateLessons()
     {
-        var schedules = Schedules.OrderBy(x => x.Day).ThenBy(x => x.StartAt).ToList();
+        var schedules = Schedules.OrderBy(x => x.Day).ThenBy(x => x.Start).ToList();
 
         var number = 1;
         var current = Period.StartAt;
@@ -84,7 +84,7 @@ public class Class
             {
                 if (current.DayOfWeek.Is(schedule.Day))
                 {
-                    Lessons.Add(new(Id, number, current, schedule.StartAt, schedule.EndAt));
+                    Lessons.Add(new(Id, number, current, schedule.Start, schedule.End));
                     Workload += schedule.GetDiff();
                     number++;
                 }
@@ -132,7 +132,7 @@ public class Class
 
     private string GetScheduleAsString()
     {
-        return string.Join(" | ", Schedules.OrderBy(h => h.Day).ThenBy(h => h.StartAt).ToList().ConvertAll(h => h.ToString()));
+        return string.Join(" | ", Schedules.OrderBy(h => h.Day).ThenBy(h => h.Start).ToList().ConvertAll(h => h.ToString()));
     }
 
     private string GetWorkloadAsString()

@@ -32,6 +32,8 @@ public class SeedInstitutionBasicDataCommandHandler(SykiDbContext ctx) : IComman
         institution.Courses[1].Disciplines = adsDisciplines;
         institution.Courses[4].Disciplines = direitoDisciplines;
 
+        var periodIndex = DateTime.Now.Month < 6 ? 0 : 1;
+
         var adsCC = GetAdsCourseCurriculum(institution, adsDisciplines);
         ctx.Add(adsCC);
         var courseOfferingAds = new CourseOffering(
@@ -39,7 +41,7 @@ public class SeedInstitutionBasicDataCommandHandler(SykiDbContext ctx) : IComman
             institution.Campi[2].Id,
             institution.Courses[1].Id,
             adsCC.Id,
-            institution.AcademicPeriods[0].Id,
+            institution.AcademicPeriods[periodIndex].Id,
             Shift.Noturno
         );
         ctx.Add(courseOfferingAds);
@@ -51,7 +53,7 @@ public class SeedInstitutionBasicDataCommandHandler(SykiDbContext ctx) : IComman
             institution.Campi[2].Id,
             institution.Courses[4].Id,
             direitoCC.Id,
-            institution.AcademicPeriods[0].Id,
+            institution.AcademicPeriods[periodIndex].Id,
             Shift.Noturno
         );
         ctx.Add(courseOfferingDireito);

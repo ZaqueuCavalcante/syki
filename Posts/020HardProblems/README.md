@@ -27,3 +27,25 @@ Sendo assim, vamos abrir uma turma para cada disciplina, onde todas as turmas se
 - Ao tentar colocar uma turma com 20 alunos em uma sala com 15 vagas
 
 
+
+# TODOS
+
+- Criar config para determinar
+    - Quais dias da semana a instituicao opera (default segunda a sexta)
+    - Quais os turnos (default manhã, tarde e noite)
+    - Em cada turno, quais os horários de início, intervalo, fim
+    - Ter valores default para cada turno
+        - Manhã -> 08:00 - 10:00 | 10:00 - 10:15 | 10:15 - 12:00
+        - Tarde -> 14:00 - 16:00 | 16:00 - 16:15 | 16:15 - 18:00
+        - Noite -> 19:00 - 20:30 | 20:30 - 20:45 | 20:45 - 22:00
+
+- Button no card de sala para "+ Adicionar turma"
+- Abrir dialog para selecionar quais os horários
+    - Exibir as turmas + horários já vinculados com a sala
+    - Caso o professor tenha suas preferências, mostrar um hint
+    - O select de horário deve ser exibido em um componente grande com colunas sendo os dias da semana
+    - Validar no backend a consistência dos dados
+    
+
+
+

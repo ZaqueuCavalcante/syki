@@ -95,7 +95,7 @@
         </MudForm>
     </MudGrid>
 
-    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 pt-6">
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 py-4">
         <DialogCancelButton OnClick="@Close" />
         <DialogSaveButton OnClick="@Submit" Disabled="@_selectedDisciplines.Select(x => x.Id).ToList().IsEquivalentTo(_teacher.Disciplines.ConvertAll(x => x.Id))" />
     </MudStack>

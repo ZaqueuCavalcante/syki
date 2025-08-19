@@ -7,7 +7,8 @@ public class GetCampusStudentsService(SykiDbContext ctx) : IAcademicService
         FormattableString sql = $@"
             SELECT
                 s.id,
-                s.name
+                s.name,
+                s.course_offering_id
             FROM
                 syki.students s
             INNER JOIN

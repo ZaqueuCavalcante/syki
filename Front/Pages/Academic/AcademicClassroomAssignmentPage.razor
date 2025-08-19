@@ -39,21 +39,8 @@
     <MudCard Class="my-4 pa-4">
         <MudCardContent>
             <MudGrid Spacing="2">
-                <MudItem xs="12" sm="6" md="6" lg="6">
-                    <MudDataGrid
-                        Dense
-                        Hover
-                        SortMode="SortMode.None"
-                        Items="@_teachers"
-                    >
-                        <Columns>
-                            <PropertyColumn Property="x => x.Name" Title="@($"Professores ({_teachers.Count})")" />
-                        </Columns>
-                    </MudDataGrid>
-                </MudItem>
 
-
-                <MudItem xs="12" sm="6" md="6" lg="6">
+                <MudItem xs="12" sm="8" md="8" lg="8">
                     <MudDataGrid
                         Dense
                         Hover
@@ -68,21 +55,23 @@
                 </MudItem>
 
 
-                <MudItem xs="12" sm="6" md="6" lg="6">
+
+                <MudItem xs="12" sm="4" md="4" lg="4">
                     <MudDataGrid
                         Dense
                         Hover
                         SortMode="SortMode.None"
-                        Items="@_students"
+                        Items="@_teachers"
                     >
                         <Columns>
-                            <PropertyColumn Property="x => x.Name" Title="@($"Alunos ({_students.Count})")" />
+                            <PropertyColumn Property="x => x.Name" Title="@($"Professores ({_teachers.Count})")" />
+                            <PropertyColumn Property="x => x.Disciplines.Count(d => _disciplines.Select(y => y.Id).Contains(d))" Title="Disciplinas" />
                         </Columns>
                     </MudDataGrid>
                 </MudItem>
 
 
-                <MudItem xs="12" sm="6" md="6" lg="6">
+                <MudItem xs="12" sm="8" md="8" lg="8">
                     <MudDataGrid
                         Dense
                         Hover
@@ -91,10 +80,46 @@
                     >
                         <Columns>
                             <PropertyColumn Property="x => x.Name" Title="@($"Disciplinas ({_disciplines.Count})")" />
-                        </Columns>
+                            <PropertyColumn Property="x => _teachers.Count(t => t.Disciplines.Contains(x.Id))" Title="Professores" />
+                            <PropertyColumn Property="x => _students.Count(s => _courseOfferings.FirstOrDefault(c => c.CourseOfferingId == s.CourseOfferingId).Disciplines.Select(y => y.Id).Contains(x.Id))" Title="Alunos" />
+                            <PropertyColumn Property="x => _classes.Where(c => c.DisciplineId == x.Id).Sum(c => c.Vacancies)" Title="Vagas" />
+
+                            <TemplateColumn CellClass="d-flex justify-end">
+                                <CellTemplate>
+                                    @{
+                                        var students = _students.Count(s => _courseOfferings.FirstOrDefault(c => c.CourseOfferingId == s.CourseOfferingId).Disciplines.Select(y => y.Id).Contains(context.Item.Id));
+                                        var vacancies = _classes.Where(c => c.DisciplineId == context.Item.Id).Sum(c => c.Vacancies);
+                                        var icon = vacancies < students ? Icons.Material.Filled.Error : Icons.Material.Filled.CheckCircle;
+                                        var color = vacancies < students ? Color.Error : Color.Success;
+                                    }
+                                    <MudIcon
+                                        Size="@Size.Small"
+                                        Icon="@icon"
+                                        Color="@color"
+                                    />
+                                </CellTemplate>
+                            </TemplateColumn>
+                        </Columns>  
                     </MudDataGrid>
                 </MudItem>
        
+
+
+                <MudItem xs="12" sm="4" md="4" lg="4">
+                    <MudDataGrid
+                        Dense
+                        Hover
+                        SortMode="SortMode.None"
+                        Items="@_students"
+                    >
+                        <Columns>
+                            <PropertyColumn Property="x => x.Name" Title="@($"Alunos ({_students.Count})")" />
+                            <PropertyColumn Property="x => _disciplines.Count(d => _courseOfferings.FirstOrDefault(c => c.CourseOfferingId == x.CourseOfferingId).Disciplines.Select(y => y.Id).Contains(d.Id))" Title="Disciplinas" />
+                        </Columns>
+                    </MudDataGrid>
+                </MudItem>
+
+
             </MudGrid>
         </MudCardContent>
     </MudCard>
@@ -103,16 +128,18 @@
         <MudCardContent>
             <MudGrid>
                 <MudItem xs="12" sm="3" md="3" lg="3">
-                    <MudButton
-                        StartIcon="@Icons.Material.Outlined.Add"
-                        IconSize="Size.Large"
-                        Variant="Variant.Filled"
-                        Size="Size.Medium"
-                        Color="Color.Primary"
-                        OnClick="@OpenNewClassDialog"
-                    >
-                        Nova Turma
-                    </MudButton>
+                    <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Style="height:100%">
+                        <MudButton
+                            StartIcon="@Icons.Material.Outlined.Add"
+                            IconSize="Size.Large"
+                            Variant="Variant.Filled"
+                            Size="Size.Medium"
+                            Color="Color.Primary"
+                            OnClick="@OpenNewClassDialog"
+                        >
+                            Nova Turma
+                        </MudButton>
+                    </MudStack>
                 </MudItem>
                 @foreach (var item in _classes)
                 {
@@ -173,7 +200,7 @@
         _teachers = await GetCampusTeachersClient.Get(_campus.Id);
         _students = await GetCampusStudentsClient.Get(_campus.Id);
         _courseOfferings = await GetCampusCourseOfferingsClient.Get(_campus.Id);
-        _disciplines = _courseOfferings.SelectMany(x => x.Disciplines).ToList();
+        _disciplines = _courseOfferings.SelectMany(x => x.Disciplines).OrderBy(x => x.Name).ToList();
         _classes = await GetCampusClassesClient.Get(_campus.Id);
         _classrooms = (await GetClassroomsClient.Get()).Where(x => x.CampusId == _campus.Id).ToList();
     }
@@ -197,7 +224,7 @@
         parameters.Add(x => x.Period, _period.Id);
         parameters.Add(x => x.CampusId, _campus.Id);
         parameters.Add(x => x.Teachers, _teachers);
-        parameters.Add(x => x.Disciplines, _disciplines);
+        parameters.Add(x => x.Disciplines, _disciplines.Where(d => _teachers.Any(t => t.Disciplines.Contains(d.Id))).ToList());
 
         var dialog = await DialogService.ShowAsync<CreateCampusClassDialog>("", parameters, options);
 

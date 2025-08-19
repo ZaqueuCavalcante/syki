@@ -7,7 +7,7 @@ namespace Syki.Back.Features.Cross.SeedInstitutionData;
 public record SeedInstitutionUsersCommand(Guid InstitutionId, Guid DireitoCourseOfferingId, Guid AdsCourseOfferingId) : ICommand;
 
 public class SeedInstitutionUsersCommandHandler(
-    SykiDbContext ctx,
+    // SykiDbContext ctx,
     CreateTeacherService createTeacherService,
     CreateStudentService createStudentService) : ICommandHandler<SeedInstitutionUsersCommand>
 {
@@ -53,6 +53,6 @@ public class SeedInstitutionUsersCommandHandler(
             await createStudentService.CreateWithThrowOnError(id, CreateStudentIn.Seed(name, command.AdsCourseOfferingId));
         }
 
-        ctx.AddCommand(id, new SeedInstitutionClassesCommand(id), parentId: commandId);
+        // ctx.AddCommand(id, new SeedInstitutionClassesCommand(id), parentId: commandId);
     }
 }

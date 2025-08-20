@@ -37,6 +37,6 @@ public class ScheduleIn
 
     public override int GetHashCode()
     {
-        return Id.ToHashCode();
+        return (int)Day + (int)Start + (int)End;
     }
 }

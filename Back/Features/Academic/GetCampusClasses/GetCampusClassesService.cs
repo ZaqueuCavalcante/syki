@@ -18,11 +18,15 @@ public class GetCampusClassesService(SykiDbContext ctx, NpgsqlDataSource dataSou
                 d.name AS discipline,
                 c.vacancies,
                 c.workload,
-                c.status
+                c.status,
+                c.teacher_id,
+                t.name AS teacher
             FROM
                 syki.classes c
             INNER JOIN
                 syki.disciplines d ON d.id = c.discipline_id
+            LEFT JOIN
+            	syki.teachers t ON t.id = c.teacher_id
             WHERE
                 c.institution_id = @InstitutionId
                     AND

@@ -2,6 +2,17 @@
 
 <MudContainer Class="@Class">
     <MudGrid Spacing="2" Justify="Justify.SpaceBetween">
+        @if (Days.Count == 0)
+        {
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="py-4">
+                    <MudPaper Class="px-4 py-4" Style="height: 100%">
+                        <MudText>SEM HORÁRIOS PARA EXIBIR</MudText>
+                    </MudPaper>
+                </MudStack>
+            </MudItem>
+        }
+
         @foreach (AgendaDayOut day in GetDays())
         {
             <MudItem xs="12" sm="6" md="4" lg="2">

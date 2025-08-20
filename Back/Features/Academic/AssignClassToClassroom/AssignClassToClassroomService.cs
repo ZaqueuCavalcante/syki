@@ -19,16 +19,31 @@ public class AssignClassToClassroomService(SykiDbContext ctx) : IAcademicService
         if (data.Schedules == null || data.Schedules.Count == 0) return new InvalidScheduleForAssignClassToClassroom();
 
         var ids = await ctx.ClassroomsClasses.Where(c => c.ClassroomId == classroomId && c.IsActive).Select(x => x.ClassId).ToListAsync() ?? [];
-        var currentSchedules = await ctx.Schedules.AsNoTracking().Where(x => x.ClassId != null && ids.Contains(x.ClassId.Value)).ToListAsync() ?? [];
+        var currentSchedules = await ctx.Schedules.Where(x => x.ClassId != null && ids.Contains(x.ClassId.Value)).ToListAsync() ?? [];
 
         data.Schedules.AddRange(currentSchedules.ConvertAll(x => new ScheduleIn(x.Day, x.Start, x.End)));
 
-        var schedulesResult = data.Schedules.ToSchedules();
+        var schedulesResult = data.Schedules.ToHashSet().ToList().ToSchedules();
         if (schedulesResult.IsError) return schedulesResult.Error;
-        var schedules = schedulesResult.Success;
 
-        var assign = new ClassroomClass(classroom.Id, @class.Id);
-        await ctx.SaveChangesAsync(assign);
+        ctx.RemoveRange(currentSchedules);
+
+        var newSchedules = schedulesResult.Success;
+        newSchedules.ForEach(x =>
+        {
+            x.ClassId = @class.Id;
+            x.TeacherId = @class.TeacherId;
+            x.ClassroomId = classroom.Id;
+        });
+        ctx.AddRange(newSchedules);
+
+        var assignExists = await ctx.ClassroomsClasses.AnyAsync(x => x.ClassroomId == classroom.Id && x.ClassId == @class.Id);
+        if (!assignExists)
+        {
+            ctx.Add(new ClassroomClass(classroom.Id, @class.Id));
+        }
+
+        await ctx.SaveChangesAsync();
 
         return new SykiSuccess();
     }

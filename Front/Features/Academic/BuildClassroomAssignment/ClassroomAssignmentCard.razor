@@ -10,6 +10,17 @@
         <MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
             <MudText>@Capacity Vagas</MudText>
         </MudStack>
+
+        <MudButton
+            StartIcon="@Icons.Material.Outlined.Add"
+            IconSize="Size.Large"
+            Variant="Variant.Filled"
+            Size="Size.Medium"
+            Color="Color.Primary"
+            OnClick="@(() => OnClick?.Invoke())"
+        >
+            Turma
+        </MudButton>
     </MudPaper>
 </MudItem>
 
@@ -26,4 +37,7 @@
 
     [Parameter]
     public int Capacity { get; set; }
+
+    [Parameter]
+    public Action OnClick { get; set; }
 }

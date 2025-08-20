@@ -143,7 +143,7 @@
                 </MudItem>
                 @foreach (var item in _classes)
                 {
-                    <ClassAssignmentCard Name="@item.Discipline" Capacity="@item.Vacancies" />
+                    <ClassAssignmentCard Name="@item.Discipline" Teacher="@item.Teacher" Capacity="@item.Vacancies" />
                 }
             </MudGrid>
         </MudCardContent>
@@ -154,7 +154,7 @@
             <MudGrid>
                 @foreach (var classroom in _classrooms)
                 {
-                    <ClassroomAssignmentCard Name="@classroom.Name" Capacity="@classroom.Capacity" />
+                    <ClassroomAssignmentCard Name="@classroom.Name" Capacity="@classroom.Capacity" OnClick="@(async () => await OpenAssignClassToClassroomDialog(classroom))" />
                 }
             </MudGrid>
         </MudCardContent>
@@ -233,5 +233,28 @@
         if (result!.Canceled) return;
         
         _classes = await GetCampusClassesClient.Get(_campus.Id);
+    }
+
+    private async Task OpenAssignClassToClassroomDialog(GetClassroomsOut classroom)
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            FullWidth = true,
+            MaxWidth = MaxWidth.Large,
+            FullScreen = breakpoint == Breakpoint.Xs,
+        };
+
+        var parameters = new DialogParameters<AssignClassToClassroomDialog>();
+        parameters.Add(x => x.Classroom, classroom);
+        parameters.Add(x => x.Classes, _classes);
+
+        var dialog = await DialogService.ShowAsync<AssignClassToClassroomDialog>("", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        _classes = await GetCampusClassesClient.Get(_campus.Id);
+        _classrooms = (await GetClassroomsClient.Get()).Where(x => x.CampusId == _campus.Id).ToList();
     }
 }

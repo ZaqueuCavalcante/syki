@@ -1,0 +1,122 @@
+@using Syki.Front.Components.Agenda
+@using Syki.Front.Features.Academic.CreateClass
+
+@namespace Syki.Front.Features.Academic.BuildClassroomAssignment
+
+<MudDialog Class="pb-2" DefaultFocus="DefaultFocus.None">
+    <TitleContent>
+        <SykiDialogTitle Text="@($"{Classroom.Name} ({Classroom.Capacity} vagas)")" />
+    </TitleContent>
+    <DialogContent>
+        <MudForm @ref="@_form" Class="pt-1">
+            <MudSelect
+                Dense
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                @bind-Value="@_class"
+                Label="Turma"
+                Required
+                RequiredError="Informe!"
+                AdornmentColor="Color.Primary"
+            >
+                @foreach (GetCampusClassesOut? item in Classes)
+                {
+                    <MudSelectItem Value="@item">@item.Discipline ● @item.Teacher</MudSelectItem>
+                }
+            </MudSelect>
+        </MudForm>
+
+        <MudStack Row>
+            <ClassSchedule Data="@_schedule" />
+            <MudButton
+                StartIcon="@Icons.Material.Outlined.Add"
+                IconSize="Size.Small"
+                Variant="Variant.Filled"
+                Size="Size.Small"
+                Color="Color.Primary"
+                OnClick="@AddNewSchedule"
+            >
+                Horário
+            </MudButton>
+        </MudStack>
+
+
+        <CascadingValue Name="Days" Value="@_agenda">
+            <WeeklyAgenda Class="px-0 py-2" />
+        </CascadingValue>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Cancel" />
+        <SykiProgressCircular Loading="@_loading" />
+        <DialogSaveButton OnClick="@Submit" />
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject GetClassroomAgendaClient GetClassroomAgendaClient
+@inject AssignClassToClassroomClient AssignClassToClassroomClient
+
+@code
+{
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public GetClassroomsOut Classroom { get; set; } = new();
+
+    [Parameter]
+    public List<GetCampusClassesOut> Classes { get; set; } = [];
+
+    private MudForm _form;
+    private bool _loading;
+    private ScheduleInFillable? _schedule = new();
+    private GetCampusClassesOut? _class;
+    private List<AgendaDayOut> _agenda = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _agenda = await GetClassroomAgendaClient.Get(Classroom.Id);
+    }
+
+    private void AddNewSchedule()
+    {
+        // BUG QUANDO JA TEM UMA TURMA PRO DIA E ADICIONO OUTRA
+        var disciplines = Classes.Where(x => x.Id == _class.Id)
+            .Select(x => new AgendaDisciplineOut() { Name = x.Discipline, Start = _schedule.Start!.Value, End = _schedule.End!.Value }).ToList();
+        var day = _agenda.First(x => x.Day == _schedule.Day!.Value);
+        day.Disciplines = disciplines;
+        _schedule = new();
+    }
+
+    async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        var schedules = new List<ScheduleIn>();
+        foreach (var agenda in _agenda)
+        {
+            foreach (var discipline in agenda.Disciplines)
+            {
+                schedules.Add(new ScheduleIn(agenda.Day, discipline.Start, discipline.End));
+            }
+        }
+
+        _loading = true;
+        var response = await AssignClassToClassroomClient.Assign(Classroom.Id, _class.Id, schedules);
+        if (response.IsSuccess)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Turmas salvas com sucesso!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+
+    void Cancel() => MudDialog.Cancel();
+}

@@ -7,6 +7,7 @@ global using Syki.Front.Constants;
 global using Syki.Front.Extensions;
 
 global using Syki.Front.Features.Academic.CreateAcademicPeriod;
+global using Syki.Front.Features.Teacher.GetClassroomAgenda;
 global using Syki.Front.Features.Academic.GetCampusTeachers;
 global using Syki.Front.Features.Academic.GetCampusStudents;
 global using Syki.Front.Features.Academic.GetCurrentAcademicPeriod;

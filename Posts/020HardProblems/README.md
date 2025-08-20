@@ -39,7 +39,6 @@ Sendo assim, vamos abrir uma turma para cada disciplina, onde todas as turmas se
         - Tarde -> 14:00 - 16:00 | 16:00 - 16:15 | 16:15 - 18:00
         - Noite -> 19:00 - 20:30 | 20:30 - 20:45 | 20:45 - 22:00
 
-- Button no card de sala para "+ Adicionar turma"
 - Abrir dialog para selecionar quais os horários
     - Exibir as turmas + horários já vinculados com a sala
     - Caso o professor tenha suas preferências, mostrar um hint

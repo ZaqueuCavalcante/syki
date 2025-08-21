@@ -9,6 +9,7 @@ public class CreateCampusService(SykiDbContext ctx) : IAcademicService
             RuleFor(x => x.Name).NotEmpty().WithError(new InvalidCampusName());
             RuleFor(x => x.Name).MaximumLength(50).WithError(new InvalidCampusName());
 
+            RuleFor(x => x.State).NotNull().WithError(new InvalidBrazilState());
             RuleFor(x => x.State).IsInEnum().WithError(new InvalidBrazilState());
 
             RuleFor(x => x.City).NotEmpty().WithError(new InvalidCampusCity());
@@ -23,7 +24,7 @@ public class CreateCampusService(SykiDbContext ctx) : IAcademicService
     {
         if (V.Run(data, out var error)) return error;
 
-        var campus = new Campus(institutionId, data.Name, data.State, data.City, data.Capacity);
+        var campus = new Campus(institutionId, data.Name, data.State!.Value, data.City, data.Capacity);
         await ctx.SaveChangesAsync(campus);
 
         return campus.ToOut();

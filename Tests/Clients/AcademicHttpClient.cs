@@ -46,7 +46,7 @@ public class AcademicHttpClient(HttpClient http)
 
     public async Task<OneOf<CampusOut, ErrorOut>> CreateCampus(
         string name = "Agreste I",
-        BrazilState state = BrazilState.PE,
+        BrazilState? state = BrazilState.PE,
         string city = "Caruaru",
         int capacity = 100
     ) {

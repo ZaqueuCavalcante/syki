@@ -7,7 +7,7 @@ public class CreateCampusIn
     /// </summary>
     public string Name { get; set; }
 
-    public BrazilState State { get; set; }
+    public BrazilState? State { get; set; }
 
     /// <summary>
     /// Cidade

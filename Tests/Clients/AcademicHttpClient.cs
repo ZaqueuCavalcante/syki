@@ -44,15 +44,14 @@ public class AcademicHttpClient(HttpClient http)
 {
     public readonly HttpClient Http = http;
 
-    public async Task<CampusOut> CreateCampus(
+    public async Task<OneOf<CampusOut, ErrorOut>> CreateCampus(
         string name = "Agreste I",
         BrazilState state = BrazilState.PE,
         string city = "Caruaru",
         int capacity = 100
     ) {
         var client = new CreateCampusClient(Http);
-        var response = await client.Create(name, state, city, capacity);
-        return await response.DeserializeTo<CampusOut>();
+        return await client.Create(name, state, city, capacity);
     }
 
 

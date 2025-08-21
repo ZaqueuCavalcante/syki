@@ -7,7 +7,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        var campus = await client.CreateCampus();
+        CampusOut campus = await client.CreateCampus();
 
         // Act
         CampusOut updatedCampus = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito", 789);
@@ -18,6 +18,68 @@ public partial class IntegrationTests
         updatedCampus.State.Should().Be(BrazilState.PE);
         updatedCampus.City.Should().Be("Bonito");
         updatedCampus.Capacity.Should().Be(789);
+    }
+
+    [Test]
+    [TestCase("")]
+    [TestCase(TestStrings.S51)]
+    public async Task Should_not_update_campus_with_invalid_name(string name)
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+        CampusOut campus = await client.CreateCampus();
+
+        // Act
+        var response = await client.UpdateCampus(campus.Id, name, BrazilState.PE, "Bonito");
+
+        // Assert
+        response.ShouldBeError(new InvalidCampusName());
+    }
+
+    [Test]
+    public async Task Should_not_update_campus_with_invalid_brazil_state()
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+        CampusOut campus = await client.CreateCampus();
+
+        // Act
+        var response = await client.UpdateCampus(campus.Id, "Agreste II", (BrazilState)69, "Bonito");
+
+        // Assert
+        response.ShouldBeError(new InvalidBrazilState());
+    }
+
+    [Test]
+    [TestCase("")]
+    [TestCase(TestStrings.S51)]
+    public async Task Should_not_update_campus_with_invalid_city(string city)
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+        CampusOut campus = await client.CreateCampus();
+
+        // Act
+        var response = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, city);
+
+        // Assert
+        response.ShouldBeError(new InvalidCampusCity());
+    }
+
+    [Test]
+    [TestCase(0)]
+    [TestCase(-1)]
+    public async Task Should_not_update_campus_with_invalid_capacity(int capacity)
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+        CampusOut campus = await client.CreateCampus();
+
+        // Act
+        var response = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito", capacity);
+
+        // Assert
+        response.ShouldBeError(new InvalidCampusCapacity());
     }
 
     [Test]
@@ -42,7 +104,7 @@ public partial class IntegrationTests
         await client.CreateCampus();
 
         var otherClient = await _api.LoggedAsAcademic();
-        var otherCampus = await otherClient.CreateCampus();
+        CampusOut otherCampus = await otherClient.CreateCampus();
         
         // Act
         var response = await client.UpdateCampus(otherCampus.Id, "Agreste II", BrazilState.PE, "Bonito");

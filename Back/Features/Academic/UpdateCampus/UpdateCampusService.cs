@@ -1,17 +1,35 @@
 namespace Syki.Back.Features.Academic.UpdateCampus;
 
-public class UpdateCampusService(SykiDbContext ctx, HybridCache cache) : IAcademicService
+public class UpdateCampusService(SykiDbContext ctx) : IAcademicService
 {
-	public async Task<OneOf<CampusOut, SykiError>> Update(Guid institutionId, UpdateCampusIn data)
-	{
-		var campus = await ctx.Campi.FirstOrDefaultAsync(x => x.InstitutionId == institutionId && x.Id == data.Id);
-		if (campus == null) return new CampusNotFound();
+    internal class Validator : AbstractValidator<UpdateCampusIn>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.Name).NotEmpty().WithError(new InvalidCampusName());
+            RuleFor(x => x.Name).MaximumLength(50).WithError(new InvalidCampusName());
 
-		campus.Update(data.Name, data.State, data.City, data.Capacity);
+            RuleFor(x => x.State).IsInEnum().WithError(new InvalidBrazilState());
 
-		await ctx.SaveChangesAsync();
-		await cache.RemoveAsync($"campi:{institutionId}");
+            RuleFor(x => x.City).NotEmpty().WithError(new InvalidCampusCity());
+            RuleFor(x => x.City).MaximumLength(50).WithError(new InvalidCampusCity());
 
-		return campus.ToOut();
-	}
+            RuleFor(x => x.Capacity).GreaterThan(0).WithError(new InvalidCampusCapacity());
+        }
+    }
+    private static readonly Validator V = new();
+
+    public async Task<OneOf<CampusOut, SykiError>> Update(Guid institutionId, UpdateCampusIn data)
+    {
+        if (V.Run(data, out var error)) return error;
+
+        var campus = await ctx.Campi.FirstOrDefaultAsync(x => x.InstitutionId == institutionId && x.Id == data.Id);
+        if (campus == null) return new CampusNotFound();
+
+        campus.Update(data.Name, data.State, data.City, data.Capacity);
+
+        await ctx.SaveChangesAsync();
+
+        return campus.ToOut();
+    }
 }

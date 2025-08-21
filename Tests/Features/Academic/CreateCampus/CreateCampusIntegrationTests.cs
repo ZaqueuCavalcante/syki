@@ -9,7 +9,7 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        var campus = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru", 123);
+        CampusOut campus = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru", 123);
 
         // Assert
         campus.Id.Should().NotBeEmpty();
@@ -19,5 +19,63 @@ public partial class IntegrationTests
         campus.Capacity.Should().Be(123);
         campus.Students.Should().Be(0);
         campus.FillRate.Should().Be(0);
+    }
+
+    [Test]
+    [TestCase("")]
+    [TestCase(TestStrings.S51)]
+    public async Task Should_not_create_campus_with_invalid_name(string name)
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+
+        // Act
+        var response = await client.CreateCampus(name, BrazilState.PE, "Caruaru", 123);
+
+        // Assert
+        response.ShouldBeError(new InvalidCampusName());
+    }
+
+    [Test]
+    public async Task Should_not_create_campus_with_invalid_brazil_state()
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+
+        // Act
+        var response = await client.CreateCampus("Agreste", (BrazilState)69, "Caruaru", 123);
+
+        // Assert
+        response.ShouldBeError(new InvalidBrazilState());
+    }
+
+    [Test]
+    [TestCase("")]
+    [TestCase(TestStrings.S51)]
+    public async Task Should_not_create_campus_with_invalid_city(string city)
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+
+        // Act
+        var response = await client.CreateCampus("Agreste", BrazilState.PE, city, 123);
+
+        // Assert
+        response.ShouldBeError(new InvalidCampusCity());
+    }
+
+    [Test]
+    [TestCase(0)]
+    [TestCase(-1)]
+    public async Task Should_not_create_campus_with_invalid_capacity(int capacity)
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+
+        // Act
+        var response = await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", capacity);
+
+        // Assert
+        response.ShouldBeError(new InvalidCampusCapacity());
     }
 }

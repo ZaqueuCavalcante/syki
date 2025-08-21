@@ -71,15 +71,14 @@
 
         _loading = true;
         var response = await Client.Create(_name, _state!.Value, _city, _capacity);
-        if (response.IsSuccessStatusCode)
+        if (response.IsSuccess)
         {
             MudDialog.Close(DialogResult.Ok(true));
             Snackbar.Add("Campus cadastrado com sucesso!", Severity.Success);
         }
         else
         {
-            var error = await response.ToError();
-            Snackbar.Add(error.Message, Severity.Error);
+            Snackbar.Add(response.Error.Message, Severity.Error);
         }
         _loading = false;
     }

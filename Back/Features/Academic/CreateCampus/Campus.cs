@@ -24,18 +24,6 @@ public class Campus
         Capacity = capacity;
     }
 
-    public static OneOf<Campus, SykiError> New(
-        Guid institutionId,
-        string name,
-        BrazilState state,
-        string city,
-        int capacity
-    ) {
-        if (capacity <= 0) return new InvalidCampusCapacity();
-
-        return new Campus(institutionId, name, state, city, capacity);
-    }
-
     public void Update(string name, BrazilState state, string city, int capacity)
     {
         Name = name;

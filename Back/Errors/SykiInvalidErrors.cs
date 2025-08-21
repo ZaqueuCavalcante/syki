@@ -1,5 +1,14 @@
 namespace Syki.Back.Errors;
 
+public class InvalidBrazilState : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidBrazilState);
+    public override string Message { get; set; } = "Estado inválido.";
+}
+
+
+
+
 public class InvalidDisciplinesList : SykiError
 {
     public override string Code { get; set; } = nameof(InvalidDisciplinesList);
@@ -119,4 +128,16 @@ public class InvalidCampusList : SykiError
 {
     public override string Code { get; set; } = nameof(InvalidCampusList);
     public override string Message { get; set; } = "Lista de campus inválida.";
+}
+public class InvalidCampusName : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidCampusName);
+    public override string Message { get; set; } = "Nome de campus inválido.";
+}
+
+
+public class InvalidCampusCity : SykiError
+{
+    public override string Code { get; set; } = nameof(InvalidCampusCity);
+    public override string Message { get; set; } = "Cidade do campus inválida.";
 }

@@ -1,5 +1,5 @@
 using Syki.Back.Hubs;
-using System.Text.Json.Serialization;
+using Syki.Back.Converters;
 
 namespace Syki.Back.Configs;
 
@@ -8,7 +8,7 @@ public static class HttpConfigs
     public static void AddHttpConfigs(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers().AddJsonOptions(options =>
-            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+            options.JsonSerializerOptions.Converters.Add(new SykiStringEnumConverter()));
 
         builder.Services.Configure<MvcOptions>(options =>
         {

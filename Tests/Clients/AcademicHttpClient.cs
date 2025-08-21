@@ -105,7 +105,7 @@ public class AcademicHttpClient(HttpClient http)
     public async Task<OneOf<CampusOut, ErrorOut>> UpdateCampus(
         Guid id,
         string name = "Agreste I",
-        BrazilState state = BrazilState.PE,
+        BrazilState? state = BrazilState.PE,
         string city = "Caruaru",
         int capacity = 100
     ) {
@@ -115,7 +115,7 @@ public class AcademicHttpClient(HttpClient http)
 
     public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(
         string name, 
-        CourseType type, 
+        CourseType? type, 
         List<string> disciplines
     ) {
         var client = new CreateCourseClient(Http);
@@ -160,7 +160,7 @@ public class AcademicHttpClient(HttpClient http)
         Guid courseId,
         Guid courseCurriculumId,
         string? period,
-        Shift shift
+        Shift? shift
     ) {
         var client = new CreateCourseOfferingClient(Http);
         return await client.Create(campusId, courseId, courseCurriculumId, period, shift);

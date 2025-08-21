@@ -7,7 +7,7 @@ public class CreateCourseOfferingClient(HttpClient http) : IAcademicClient
         Guid courseId,
         Guid courseCurriculumId,
         string? period,
-        Shift shift
+        Shift? shift
     ) {
         var data = new CreateCourseOfferingIn
         {

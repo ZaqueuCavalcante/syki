@@ -132,7 +132,9 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_not_create_course_offering_with_invalid_shift()
+    [TestCase(null)]
+    [TestCase((Shift)69)]
+    public async Task Should_not_create_course_offering_with_invalid_shift(Shift? shift)
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
@@ -142,8 +144,8 @@ public partial class IntegrationTests
         CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
-        var response = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, (Shift)69);
-        
+        var response = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, shift);
+
         // Assert
         response.ShouldBeError(new InvalidShift());
     }

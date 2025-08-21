@@ -2,8 +2,20 @@ namespace Syki.Back.Features.Academic.CreateCourseOffering;
 
 public class CreateCourseOfferingService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
+    internal class Validator : AbstractValidator<CreateCourseOfferingIn>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.Shift).NotNull().WithError(new InvalidShift());
+            RuleFor(x => x.Shift).IsInEnum().WithError(new InvalidShift());
+        }
+    }
+    private static readonly Validator V = new();
+
     public async Task<OneOf<CourseOfferingOut, SykiError>> Create(Guid institutionId, CreateCourseOfferingIn data)
     {
+        if (V.Run(data, out var error)) return error;
+
         var campusOk = await ctx.Campi.AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CampusId);
         if (!campusOk) return new CampusNotFound();
 
@@ -17,15 +29,13 @@ public class CreateCourseOfferingService(SykiDbContext ctx, HybridCache cache) :
         var periodExists = await ctx.AcademicPeriodExists(institutionId, data.Period);
         if (!periodExists) return new AcademicPeriodNotFound();
 
-        if (!data.Shift.IsValid()) return new InvalidShift();
-
         var courseOffering = new CourseOffering(
             institutionId,
             data.CampusId,
             data.CourseId,
             data.CourseCurriculumId,
             data.Period!,
-            data.Shift
+            data.Shift!.Value
         );
 
         ctx.CourseOfferings.Add(courseOffering);

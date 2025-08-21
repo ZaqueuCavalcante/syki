@@ -22,13 +22,15 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_not_create_course_with_invalid_type()
+    [TestCase(null)]
+    [TestCase((CourseType)69)]
+    public async Task Should_not_create_course_with_invalid_type(CourseType? type)
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        var response = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", (CourseType)69, []);
+        var response = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", type, []);
 
         // Assert
         response.ShouldBeError(new InvalidCourseType());

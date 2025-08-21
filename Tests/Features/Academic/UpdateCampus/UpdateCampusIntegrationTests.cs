@@ -37,14 +37,16 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Should_not_update_campus_with_invalid_brazil_state()
+    [TestCase(null)]
+    [TestCase((BrazilState)69)]
+    public async Task Should_not_update_campus_with_invalid_brazil_state(BrazilState? state)
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
         CampusOut campus = await client.CreateCampus();
 
         // Act
-        var response = await client.UpdateCampus(campus.Id, "Agreste II", (BrazilState)69, "Bonito");
+        var response = await client.UpdateCampus(campus.Id, "Agreste II", state, "Bonito");
 
         // Assert
         response.ShouldBeError(new InvalidBrazilState());

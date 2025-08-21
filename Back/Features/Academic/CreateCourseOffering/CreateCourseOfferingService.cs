@@ -2,35 +2,27 @@ namespace Syki.Back.Features.Academic.CreateCourseOffering;
 
 public class CreateCourseOfferingService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
-    internal class Validator : AbstractValidator<CreateCourseOfferingIn>
+    private class Validator : AbstractValidator<CreateCourseOfferingIn>
     {
         public Validator()
         {
-            RuleFor(x => x.Shift).NotNull().WithError(new InvalidShift());
-            RuleFor(x => x.Shift).IsInEnum().WithError(new InvalidShift());
+            RuleFor(x => x.Shift).NotNull().WithError(InvalidShift.I);
+            RuleFor(x => x.Shift).IsInEnum().WithError(InvalidShift.I);
         }
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CourseOfferingOut, SykiError>> Create(Guid institutionId, CreateCourseOfferingIn data)
+    public async Task<OneOf<CourseOfferingOut, SykiError>> Create(CreateCourseOfferingIn data)
     {
         if (V.Run(data, out var error)) return error;
 
-        var campusOk = await ctx.Campi.AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CampusId);
-        if (!campusOk) return new CampusNotFound();
-
-        var courseOk = await ctx.Courses.AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CourseId);
-        if (!courseOk) return new CourseNotFound();
-
-        var courseCurriculumOk = await ctx.CourseCurriculums
-            .AnyAsync(g => g.InstitutionId == institutionId && g.Id == data.CourseCurriculumId && g.CourseId == data.CourseId);
-        if (!courseCurriculumOk) return new CourseCurriculumNotFound();
-
-        var periodExists = await ctx.AcademicPeriodExists(institutionId, data.Period);
-        if (!periodExists) return new AcademicPeriodNotFound();
+        if (await ctx.CampusNotFound(data.CampusId)) return CampusNotFound.I;
+        if (await ctx.CourseNotFound(data.CourseId)) return CourseNotFound.I;
+        if (await ctx.CourseCurriculumNotFound(data.CourseCurriculumId, data.CourseId)) return CourseCurriculumNotFound.I;
+        if (await ctx.AcademicPeriodNotFound(data.Period)) return AcademicPeriodNotFound.I;
 
         var courseOffering = new CourseOffering(
-            institutionId,
+            ctx.InstitutionId,
             data.CampusId,
             data.CourseId,
             data.CourseCurriculumId,
@@ -38,10 +30,9 @@ public class CreateCourseOfferingService(SykiDbContext ctx, HybridCache cache) :
             data.Shift!.Value
         );
 
-        ctx.CourseOfferings.Add(courseOffering);
-        await ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync(courseOffering);
 
-        await cache.RemoveAsync($"courseOfferings:{institutionId}");
+        await cache.RemoveAsync($"courseOfferings:{ctx.InstitutionId}");
 
         courseOffering = await ctx.CourseOfferings.AsNoTracking()
             .Include(x => x.Campus)

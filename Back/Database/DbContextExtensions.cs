@@ -45,6 +45,41 @@ public static class DbContextExtensions
             designTimeModel.Model.GetRelationalModel());
     }
 
+    extension(SykiDbContext ctx)
+    {
+        public Guid UserId => ctx.GetService<IHttpContextAccessor>().HttpContext.User.Id;
+        public Guid InstitutionId => ctx.GetService<IHttpContextAccessor>().HttpContext.User.InstitutionId;
+        public Guid CourseCurriculumId => ctx.GetService<IHttpContextAccessor>().HttpContext.User.CourseCurriculumId;
+    }
+
+    public static async Task<bool> CampusNotFound(this SykiDbContext ctx, Guid id)
+    {
+        var institutionId = ctx.InstitutionId;
+        return !await ctx.Campi.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
+    }
+
+    public static async Task<bool> CourseNotFound(this SykiDbContext ctx, Guid id)
+    {
+        var institutionId = ctx.InstitutionId;
+        return !await ctx.Courses.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
+    }
+
+    public static async Task<bool> CourseCurriculumNotFound(this SykiDbContext ctx, Guid id, Guid courseId)
+    {
+        var institutionId = ctx.InstitutionId;
+        return !await ctx.CourseCurriculums.AnyAsync(g => g.InstitutionId == institutionId && g.Id == id && g.CourseId == courseId);
+    }
+
+    public static async Task<bool> AcademicPeriodNotFound(this SykiDbContext ctx, string id)
+    {
+        var institutionId = ctx.InstitutionId;
+        return !await ctx.AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);
+    }
+
+
+
+
+
     public static async Task<bool> AcademicPeriodExists(this SykiDbContext ctx, Guid institutionId, string id)
     {
         return await ctx.AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Id == id);

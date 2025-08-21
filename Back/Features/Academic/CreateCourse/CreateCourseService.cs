@@ -2,12 +2,12 @@ namespace Syki.Back.Features.Academic.CreateCourse;
 
 public class CreateCourseService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
-    internal class Validator : AbstractValidator<CreateCourseIn>
+    private class Validator : AbstractValidator<CreateCourseIn>
     {
         public Validator()
         {
-            RuleFor(x => x.Type).NotNull().WithError(new InvalidCourseType());
-            RuleFor(x => x.Type).IsInEnum().WithError(new InvalidCourseType());
+            RuleFor(x => x.Type).NotNull().WithError(InvalidCourseType.I);
+            RuleFor(x => x.Type).IsInEnum().WithError(InvalidCourseType.I);
         }
     }
     private static readonly Validator V = new();

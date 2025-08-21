@@ -32,7 +32,7 @@ public partial class IntegrationTests
         var response = await client.CreateCourseOffering(Guid.CreateVersion7(), Guid.CreateVersion7(), Guid.CreateVersion7(), "2024.1", Shift.Matutino);
 
         // Assert
-        response.ShouldBeError(new CampusNotFound());      
+        response.ShouldBeError(CampusNotFound.I);      
     }
 
     [Test]
@@ -49,7 +49,7 @@ public partial class IntegrationTests
         var response = await clientNovaRoma.CreateCourseOffering(campusUfpe.Id, Guid.CreateVersion7(), Guid.CreateVersion7(), "2024.1", Shift.Matutino);
 
         // Assert
-        response.ShouldBeError(new CampusNotFound());      
+        response.ShouldBeError(CampusNotFound.I);      
     }
 
     [Test]
@@ -63,7 +63,7 @@ public partial class IntegrationTests
         var response = await client.CreateCourseOffering(campus.Id, Guid.CreateVersion7(), Guid.CreateVersion7(), "2024.1", Shift.Matutino);
 
         // Assert
-        response.ShouldBeError(new CourseNotFound());
+        response.ShouldBeError(CourseNotFound.I);
     }
 
     [Test]
@@ -80,7 +80,7 @@ public partial class IntegrationTests
         var response = await clientNovaRoma.CreateCourseOffering(campusNovaRoma.Id, courseUfpe.Id, Guid.CreateVersion7(), "2024.1", Shift.Matutino);
 
         // Assert
-        response.ShouldBeError(new CourseNotFound());
+        response.ShouldBeError(CourseNotFound.I);
     }
 
     [Test]
@@ -95,7 +95,7 @@ public partial class IntegrationTests
         var response = await client.CreateCourseOffering(campus.Id, course.Id, Guid.CreateVersion7(), "2024.1", Shift.Matutino);
 
         // Assert
-        response.ShouldBeError(new CourseCurriculumNotFound());
+        response.ShouldBeError(CourseCurriculumNotFound.I);
     }
 
     [Test]
@@ -112,7 +112,7 @@ public partial class IntegrationTests
         var response = await client.CreateCourseOffering(campus.Id, courseDireito.Id, cc.Id, "2024.1", Shift.Matutino);
 
         // Assert
-        response.ShouldBeError(new CourseCurriculumNotFound());
+        response.ShouldBeError(CourseCurriculumNotFound.I);
     }
 
     [Test]
@@ -128,7 +128,7 @@ public partial class IntegrationTests
         var response = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, "2024.1", Shift.Matutino);
         
         // Assert
-        response.ShouldBeError(new AcademicPeriodNotFound());
+        response.ShouldBeError(AcademicPeriodNotFound.I);
     }
 
     [Test]
@@ -147,7 +147,7 @@ public partial class IntegrationTests
         var response = await client.CreateCourseOffering(campus.Id, course.Id, cc.Id, period.Id, shift);
 
         // Assert
-        response.ShouldBeError(new InvalidShift());
+        response.ShouldBeError(InvalidShift.I);
     }
     
     [Test]
@@ -167,6 +167,6 @@ public partial class IntegrationTests
         var response = await clientNovaRoma.CreateCourseOffering(campus.Id, course.Id, cc.Id, "2023.1", Shift.Matutino);
 
         // Assert
-        response.ShouldBeError(new AcademicPeriodNotFound());
+        response.ShouldBeError(AcademicPeriodNotFound.I);
     }
 }

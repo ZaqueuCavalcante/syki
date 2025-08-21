@@ -5,7 +5,7 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
     public async Task<OneOf<ClassOut, SykiError>> Create(Guid institutionId, CreateClassIn data)
     {
         var campusOk = await ctx.Campi.AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CampusId);
-        if (!campusOk) return new CampusNotFound();
+        if (!campusOk) return CampusNotFound.I;
 
         var disciplineOk = await ctx.Disciplines.AnyAsync(x => x.InstitutionId == institutionId && x.Id == data.DisciplineId);
         if (!disciplineOk) return new DisciplineNotFound();
@@ -20,7 +20,7 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
         if (!teacherDisciplineOk) return new TeacherNotAssignedToDiscipline();
 
         var periodExists = await ctx.AcademicPeriodExists(institutionId, data.Period);
-        if (!periodExists) return new AcademicPeriodNotFound();
+        if (!periodExists) return AcademicPeriodNotFound.I;
 
         var schedulesResult = data.Schedules.ToSchedules();
         if (schedulesResult.IsError) return schedulesResult.Error;

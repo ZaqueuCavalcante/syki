@@ -29,7 +29,7 @@ public partial class IntegrationTests
         var response = await client.UpdateEnrollmentPeriod("2024.1");
 
         // Assert
-        response.ShouldBeError(new AcademicPeriodNotFound());
+        response.ShouldBeError(AcademicPeriodNotFound.I);
     }
 
     [Test]

@@ -5,7 +5,7 @@ public class CreateClassroomService(SykiDbContext ctx) : IAcademicService
     public async Task<OneOf<CreateClassroomOut, SykiError>> Create(Guid institutionId, CreateClassroomIn data)
     {
         var campusOk = await ctx.Campi.AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CampusId);
-        if (!campusOk) return new CampusNotFound();
+        if (!campusOk) return CampusNotFound.I;
 
         var classroom = new Classroom(institutionId, data.CampusId, data.Name, data.Capacity);
 

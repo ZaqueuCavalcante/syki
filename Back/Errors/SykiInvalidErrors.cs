@@ -1,10 +1,47 @@
 namespace Syki.Back.Errors;
 
+public class InvalidCampusName : SykiError
+{
+    public static readonly InvalidCampusName I = new();
+    public override string Code { get; set; } = nameof(InvalidCampusName);
+    public override string Message { get; set; } = "Nome de campus inválido.";
+}
+public class InvalidCampusCity : SykiError
+{
+    public static readonly InvalidCampusCity I = new();
+    public override string Code { get; set; } = nameof(InvalidCampusCity);
+    public override string Message { get; set; } = "Cidade do campus inválida.";
+}
 public class InvalidBrazilState : SykiError
 {
+    public static readonly InvalidBrazilState I = new();
     public override string Code { get; set; } = nameof(InvalidBrazilState);
     public override string Message { get; set; } = "Estado inválido.";
 }
+public class InvalidCampusCapacity : SykiError
+{
+    public static readonly InvalidCampusCapacity I = new();
+    public override string Code { get; set; } = nameof(InvalidCampusCapacity);
+    public override string Message { get; set; } = "Capacidade inválida (deve ser maior que zero).";
+}
+
+public class InvalidShift : SykiError
+{
+    public static readonly InvalidShift I = new();
+    public override string Code { get; set; } = nameof(InvalidShift);
+    public override string Message { get; set; } = "Turno inválido.";
+}
+
+public class InvalidCourseType : SykiError
+{
+    public static readonly InvalidCourseType I = new();
+    public override string Code { get; set; } = nameof(InvalidCourseType);
+    public override string Message { get; set; } = "Tipo de curso inválido.";
+}
+
+
+
+
 
 
 
@@ -34,16 +71,8 @@ public class InvalidAcademicPeriodDates : SykiError
     public override string Code { get; set; } = nameof(InvalidAcademicPeriodDates);
     public override string Message { get; set; } = "A data de início deve ser menor que a de fim.";
 }
-public class InvalidCourseType : SykiError
-{
-    public override string Code { get; set; } = nameof(InvalidCourseType);
-    public override string Message { get; set; } = "Tipo de curso inválido.";
-}
-public class InvalidShift : SykiError
-{
-    public override string Code { get; set; } = nameof(InvalidShift);
-    public override string Message { get; set; } = "Turno inválido.";
-}
+
+
 public class InvalidEmail : SykiError
 {
     public override string Code { get; set; } = nameof(InvalidEmail);
@@ -119,25 +148,8 @@ public class InvalidWebhookEventsList : SykiError
     public override string Code { get; set; } = nameof(InvalidWebhookEventsList);
     public override string Message { get; set; } = "Lista de eventos de webhook inválida.";
 }
-public class InvalidCampusCapacity : SykiError
-{
-    public override string Code { get; set; } = nameof(InvalidCampusCapacity);
-    public override string Message { get; set; } = "Capacidade inválida (deve ser maior que zero).";
-}
 public class InvalidCampusList : SykiError
 {
     public override string Code { get; set; } = nameof(InvalidCampusList);
     public override string Message { get; set; } = "Lista de campus inválida.";
-}
-public class InvalidCampusName : SykiError
-{
-    public override string Code { get; set; } = nameof(InvalidCampusName);
-    public override string Message { get; set; } = "Nome de campus inválido.";
-}
-
-
-public class InvalidCampusCity : SykiError
-{
-    public override string Code { get; set; } = nameof(InvalidCampusCity);
-    public override string Message { get; set; } = "Cidade do campus inválida.";
 }

@@ -6,7 +6,7 @@ public class CreateCourseCurriculumService(SykiDbContext ctx, HybridCache cache)
     {
         var courseOk = await ctx.Courses
             .AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CourseId);
-        if (!courseOk) return new CourseNotFound();
+        if (!courseOk) return CourseNotFound.I;
 
         var disciplines = await ctx.CoursesDisciplines.AsNoTracking()
             .Where(x => x.CourseId == data.CourseId)

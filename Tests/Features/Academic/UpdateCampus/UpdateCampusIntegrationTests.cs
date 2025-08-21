@@ -33,7 +33,7 @@ public partial class IntegrationTests
         var response = await client.UpdateCampus(campus.Id, name, BrazilState.PE, "Bonito");
 
         // Assert
-        response.ShouldBeError(new InvalidCampusName());
+        response.ShouldBeError(InvalidCampusName.I);
     }
 
     [Test]
@@ -49,7 +49,7 @@ public partial class IntegrationTests
         var response = await client.UpdateCampus(campus.Id, "Agreste II", state, "Bonito");
 
         // Assert
-        response.ShouldBeError(new InvalidBrazilState());
+        response.ShouldBeError(InvalidBrazilState.I);
     }
 
     [Test]
@@ -65,7 +65,7 @@ public partial class IntegrationTests
         var response = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, city);
 
         // Assert
-        response.ShouldBeError(new InvalidCampusCity());
+        response.ShouldBeError(InvalidCampusCity.I);
     }
 
     [Test]
@@ -81,7 +81,7 @@ public partial class IntegrationTests
         var response = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito", capacity);
 
         // Assert
-        response.ShouldBeError(new InvalidCampusCapacity());
+        response.ShouldBeError(InvalidCampusCapacity.I);
     }
 
     [Test]
@@ -95,7 +95,7 @@ public partial class IntegrationTests
         var response = await client.UpdateCampus(Guid.CreateVersion7(), "Agreste II", BrazilState.PE, "Bonito");
 
         // Assert
-        response.ShouldBeError(new CampusNotFound()); 
+        response.ShouldBeError(CampusNotFound.I); 
     }
 
     [Test]
@@ -112,6 +112,6 @@ public partial class IntegrationTests
         var response = await client.UpdateCampus(otherCampus.Id, "Agreste II", BrazilState.PE, "Bonito");
 
         // Assert
-        response.ShouldBeError(new CampusNotFound()); 
+        response.ShouldBeError(CampusNotFound.I); 
     }
 }

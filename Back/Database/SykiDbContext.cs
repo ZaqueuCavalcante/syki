@@ -26,8 +26,8 @@ using Syki.Back.Features.Academic.CreateCourseCurriculum;
 using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
 using Syki.Back.Features.Student.CreateStudentEnrollment;
 using Syki.Back.Features.Student.CreateClassActivityWork;
-using Syki.Back.Features.Academic.CreateWebhookSubscription;
 using Syki.Back.Features.Academic.AssignClassToClassroom;
+using Syki.Back.Features.Academic.CreateWebhookSubscription;
 
 namespace Syki.Back.Database;
 

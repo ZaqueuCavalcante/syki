@@ -39,7 +39,7 @@ public partial class IntegrationTests
         var response = await client.CreateClass(Guid.CreateVersion7(), null, Guid.CreateVersion7(), "2024.1", 40, []);
 
         // Assert
-        response.ShouldBeError(new CampusNotFound());
+        response.ShouldBeError(CampusNotFound.I);
     }
 
     [Test]
@@ -124,7 +124,7 @@ public partial class IntegrationTests
         var response = await client.CreateClass(discipline.Id, campus.Id, teacher.Id, "2024.1", 40, []);
 
         // Assert
-        response.ShouldBeError(new AcademicPeriodNotFound());
+        response.ShouldBeError(AcademicPeriodNotFound.I);
     }
 
     [Test]

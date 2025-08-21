@@ -26,7 +26,7 @@ public partial class IntegrationTests
         var response = await client.CreateEnrollmentPeriod("2024.1", 0, 0);
 
         // Assert
-        response.ShouldBeError(new AcademicPeriodNotFound());
+        response.ShouldBeError(AcademicPeriodNotFound.I);
     }
 
     [Test]

@@ -30,7 +30,7 @@ public partial class IntegrationTests
         var response = await client.AddDisciplinePreRequisites(Guid.CreateVersion7(), Guid.CreateVersion7(), []);
 
         // Assert
-        response.ShouldBeError(new CourseCurriculumNotFound());
+        response.ShouldBeError(CourseCurriculumNotFound.I);
     }
 
     [Test]

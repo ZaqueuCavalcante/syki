@@ -33,7 +33,7 @@ public partial class IntegrationTests
         var response = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", type, []);
 
         // Assert
-        response.ShouldBeError(new InvalidCourseType());
+        response.ShouldBeError(InvalidCourseType.I);
     }
 
     [Test]
@@ -46,6 +46,6 @@ public partial class IntegrationTests
         var response = await client.Http.PostAsJsonAsync("/academic/courses", new { Name = "ADS" });
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        await response.AssertBadRequest(InvalidCourseType.I);
     }
 }

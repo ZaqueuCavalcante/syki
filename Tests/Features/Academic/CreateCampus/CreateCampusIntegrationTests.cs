@@ -33,7 +33,7 @@ public partial class IntegrationTests
         var response = await client.CreateCampus(name, BrazilState.PE, "Caruaru", 123);
 
         // Assert
-        response.ShouldBeError(new InvalidCampusName());
+        response.ShouldBeError(InvalidCampusName.I);
     }
 
     [Test]
@@ -48,7 +48,7 @@ public partial class IntegrationTests
         var response = await client.CreateCampus("Agreste", state, "Caruaru", 123);
 
         // Assert
-        response.ShouldBeError(new InvalidBrazilState());
+        response.ShouldBeError(InvalidBrazilState.I);
     }
 
     [Test]
@@ -63,7 +63,7 @@ public partial class IntegrationTests
         var response = await client.CreateCampus("Agreste", BrazilState.PE, city, 123);
 
         // Assert
-        response.ShouldBeError(new InvalidCampusCity());
+        response.ShouldBeError(InvalidCampusCity.I);
     }
 
     [Test]
@@ -78,6 +78,6 @@ public partial class IntegrationTests
         var response = await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", capacity);
 
         // Assert
-        response.ShouldBeError(new InvalidCampusCapacity());
+        response.ShouldBeError(InvalidCampusCapacity.I);
     }
 }

@@ -9,7 +9,7 @@ public class AddDisciplinePreRequisitesService(SykiDbContext ctx) : IAcademicSer
             .Include(x => x.Links)
             .FirstOrDefaultAsync();
 
-        if (courseCurriculum == null) return new CourseCurriculumNotFound();
+        if (courseCurriculum == null) return CourseCurriculumNotFound.I;
 
         var result = courseCurriculum.AddDisciplinePreRequisites(data.DisciplineId, data.PreRequisites);
 

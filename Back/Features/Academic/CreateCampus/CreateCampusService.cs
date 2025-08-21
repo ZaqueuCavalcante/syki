@@ -2,20 +2,20 @@ namespace Syki.Back.Features.Academic.CreateCampus;
 
 public class CreateCampusService(SykiDbContext ctx) : IAcademicService
 {
-    internal class Validator : AbstractValidator<CreateCampusIn>
+    private class Validator : AbstractValidator<CreateCampusIn>
     {
         public Validator()
         {
-            RuleFor(x => x.Name).NotEmpty().WithError(new InvalidCampusName());
-            RuleFor(x => x.Name).MaximumLength(50).WithError(new InvalidCampusName());
+            RuleFor(x => x.Name).NotEmpty().WithError(InvalidCampusName.I);
+            RuleFor(x => x.Name).MaximumLength(50).WithError(InvalidCampusName.I);
 
-            RuleFor(x => x.State).NotNull().WithError(new InvalidBrazilState());
-            RuleFor(x => x.State).IsInEnum().WithError(new InvalidBrazilState());
+            RuleFor(x => x.State).NotNull().WithError(InvalidBrazilState.I);
+            RuleFor(x => x.State).IsInEnum().WithError(InvalidBrazilState.I);
 
-            RuleFor(x => x.City).NotEmpty().WithError(new InvalidCampusCity());
-            RuleFor(x => x.City).MaximumLength(50).WithError(new InvalidCampusCity());
+            RuleFor(x => x.City).NotEmpty().WithError(InvalidCampusCity.I);
+            RuleFor(x => x.City).MaximumLength(50).WithError(InvalidCampusCity.I);
 
-            RuleFor(x => x.Capacity).GreaterThan(0).WithError(new InvalidCampusCapacity());
+            RuleFor(x => x.Capacity).GreaterThan(0).WithError(InvalidCampusCapacity.I);
         }
     }
     private static readonly Validator V = new();

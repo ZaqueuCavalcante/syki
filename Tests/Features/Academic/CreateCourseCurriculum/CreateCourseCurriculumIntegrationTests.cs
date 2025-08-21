@@ -82,7 +82,7 @@ public partial class IntegrationTests
         var response = await client.CreateCourseCurriculum("Grade de ADS 1.0", Guid.CreateVersion7(), []);
         
         // Assert
-        response.ShouldBeError(new CourseNotFound());
+        response.ShouldBeError(CourseNotFound.I);
     }
 
     [Test]
@@ -98,7 +98,7 @@ public partial class IntegrationTests
         var response = await clientNovaRoma.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, []);
         
         // Assert
-        response.ShouldBeError(new CourseNotFound());
+        response.ShouldBeError(CourseNotFound.I);
     }
 
     [Test]

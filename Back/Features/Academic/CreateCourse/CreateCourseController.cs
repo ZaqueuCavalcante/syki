@@ -15,11 +15,13 @@ public class CreateCourseController(CreateCourseService service) : ControllerBas
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateCourseIn data)
     {
-        var result = await service.Create(User.InstitutionId, data);
+        var result = await service.Create(data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
 internal class RequestExamples : ExamplesProvider<CreateCourseIn>;
 internal class ResponseExamples : ExamplesProvider<CourseOut>;
-internal class ErrorsExamples : ErrorExamplesProvider<InvalidCourseType>;
+internal class ErrorsExamples : ErrorExamplesProvider<
+    InvalidCourseName,
+    InvalidCourseType>;

@@ -6,23 +6,25 @@ public class CreateCourseService(SykiDbContext ctx, HybridCache cache) : IAcadem
     {
         public Validator()
         {
+            RuleFor(x => x.Name).NotEmpty().WithError(InvalidCourseName.I);
+            RuleFor(x => x.Name).MaximumLength(50).WithError(InvalidCourseName.I);
+
             RuleFor(x => x.Type).NotNull().WithError(InvalidCourseType.I);
             RuleFor(x => x.Type).IsInEnum().WithError(InvalidCourseType.I);
         }
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CourseOut, SykiError>> Create(Guid institutionId, CreateCourseIn data)
+    public async Task<OneOf<CourseOut, SykiError>> Create(CreateCourseIn data)
     {
         if (V.Run(data, out var error)) return error;
 
-        var course = new Course(institutionId, data.Name, data.Type!.Value);
-
-        data.Disciplines.ForEach(d => course.Disciplines.Add(new(institutionId, d)));
+        var course = new Course(ctx.InstitutionId, data.Name, data.Type!.Value);
+        data.Disciplines?.ForEach(d => course.Disciplines.Add(new(ctx.InstitutionId, d)));
 
         await ctx.SaveChangesAsync(course);
 
-        await cache.RemoveAsync($"courses:{institutionId}");
+        await cache.RemoveAsync($"courses:{ctx.InstitutionId}");
 
         return course.ToOut();
     }

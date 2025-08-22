@@ -22,6 +22,21 @@ public partial class IntegrationTests
     }
 
     [Test]
+    [TestCase("")]
+    [TestCase(TestStrings.S51)]
+    public async Task Should_not_create_course_with_invalid_name(string name)
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+
+        // Act
+        var response = await client.CreateCourse(name, Bacharelado, []);
+
+        // Assert
+        response.ShouldBeError(InvalidCourseName.I);
+    }
+
+    [Test]
     [TestCase(null)]
     [TestCase((CourseType)69)]
     public async Task Should_not_create_course_with_invalid_type(CourseType? type)

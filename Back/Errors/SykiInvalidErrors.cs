@@ -39,7 +39,12 @@ public class InvalidCourseType : SykiError
     public override string Message { get; set; } = "Tipo de curso inválido.";
 }
 
-
+public class InvalidCourseName : SykiError
+{
+    public static readonly InvalidCourseName I = new();
+    public override string Code { get; set; } = nameof(InvalidCourseName);
+    public override string Message { get; set; } = "Nome de curso inválido.";
+}
 
 
 

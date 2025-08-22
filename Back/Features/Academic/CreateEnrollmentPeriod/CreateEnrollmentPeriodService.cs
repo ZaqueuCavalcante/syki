@@ -4,8 +4,7 @@ public class CreateEnrollmentPeriodService(SykiDbContext ctx, HybridCache cache)
 {
     public async Task<OneOf<EnrollmentPeriodOut, SykiError>> Create(Guid institutionId, CreateEnrollmentPeriodIn data)
     {
-        var academicPeriodExists = await ctx.AcademicPeriodExists(institutionId, data.Id);
-        if (!academicPeriodExists) return AcademicPeriodNotFound.I;
+        if (await ctx.AcademicPeriodNotFound(data.Id)) return AcademicPeriodNotFound.I;
 
         var enrollmentPeriodExists = await ctx.EnrollmentPeriods.AnyAsync(x => x.InstitutionId == institutionId && x.Id == data.Id);
         if (enrollmentPeriodExists) return new EnrollmentPeriodAlreadyExists();

@@ -19,8 +19,7 @@ public class CreateClassService(SykiDbContext ctx) : IAcademicService
         var teacherDisciplineOk = await ctx.TeachersDisciplines.AnyAsync(x => x.SykiTeacherId == data.TeacherId && x.DisciplineId == data.DisciplineId);
         if (!teacherDisciplineOk) return new TeacherNotAssignedToDiscipline();
 
-        var periodExists = await ctx.AcademicPeriodExists(institutionId, data.Period);
-        if (!periodExists) return AcademicPeriodNotFound.I;
+        if (await ctx.AcademicPeriodNotFound(data.Period)) return AcademicPeriodNotFound.I;
 
         var schedulesResult = data.Schedules.ToSchedules();
         if (schedulesResult.IsError) return schedulesResult.Error;

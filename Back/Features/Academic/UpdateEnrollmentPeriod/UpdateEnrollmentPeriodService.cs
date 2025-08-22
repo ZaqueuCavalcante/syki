@@ -4,8 +4,7 @@ public class UpdateEnrollmentPeriodService(SykiDbContext ctx, HybridCache cache)
 {
     public async Task<OneOf<EnrollmentPeriodOut, SykiError>> Update(Guid institutionId, string id, UpdateEnrollmentPeriodIn data)
     {
-        var academicPeriodExists = await ctx.AcademicPeriodExists(institutionId, id);
-        if (!academicPeriodExists) return AcademicPeriodNotFound.I;
+        if (await ctx.AcademicPeriodNotFound(id)) return AcademicPeriodNotFound.I;
 
         var period = await ctx.EnrollmentPeriods.FirstOrDefaultAsync(x => x.InstitutionId == institutionId && x.Id == id);
         if (period == null) return new EnrollmentPeriodNotFound();

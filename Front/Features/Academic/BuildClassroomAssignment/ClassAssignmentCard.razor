@@ -3,12 +3,10 @@
 <MudItem xs="12" sm="6" md="3" lg="3">
     <MudPaper Class="px-4 py-2" Style="height:100%">
         <MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
-            <MudIcon Icon="@Icon" Color="@Color" />
             <MudText><b>@Name</b></MudText>
         </MudStack>
 
         <MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
-            <MudIcon Icon="@Icons.Material.Filled.Person4" />
             <MudText>@Teacher</MudText>
         </MudStack>
 
@@ -20,9 +18,6 @@
 
 @code
 {
-    [Parameter]
-    public string Icon { get; set; } = Icons.Material.Filled.CenterFocusStrong;
-
     [Parameter]
     public Color Color { get; set; }
 

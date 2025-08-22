@@ -18,6 +18,7 @@ public class GetClassroomAgendaService(SykiDbContext ctx) : ITeacherService
         {
             return new EnrollmentClassOut
             {
+                Id = t.Id,
                 Discipline = t.Discipline.Name,
                 Schedules = t.Schedules.ConvertAll(h => h.ToOut()),
             };

@@ -30,7 +30,7 @@ public static class ListExtensions
         {
             foreach (var schedule in @class.Schedules)
             {
-                var discipline = new AgendaDisciplineOut { Name = @class.Discipline, Start = schedule.StartAt, End = schedule.EndAt };
+                var discipline = new AgendaDisciplineOut { ClassId = @class.Id, Name = @class.Discipline, Start = schedule.StartAt, End = schedule.EndAt };
 
                 var agenda = agendas.FirstOrDefault(a => a.Day == schedule.Day);
                 if (agenda == null)

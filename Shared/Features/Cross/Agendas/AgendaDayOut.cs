@@ -8,6 +8,7 @@ public class AgendaDayOut
 
 public class AgendaDisciplineOut
 {
+    public Guid? ClassId { get; set; }
     public string Name { get; set; }
     public Hour Start { get; set; }
     public Hour End { get; set; }

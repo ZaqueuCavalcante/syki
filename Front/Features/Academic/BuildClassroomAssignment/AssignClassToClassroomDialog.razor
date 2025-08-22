@@ -5,51 +5,103 @@
 
 <MudDialog Class="pb-2" DefaultFocus="DefaultFocus.None">
     <TitleContent>
-        <SykiDialogTitle Text="@($"{Classroom.Name} ({Classroom.Capacity} vagas)")" />
+        <SykiDialogTitle Icon="@Icons.Material.Filled.VideoLabel" Text="@($"{Classroom.Name} ({Classroom.Capacity} vagas)")" />
     </TitleContent>
     <DialogContent>
-        <MudForm @ref="@_form" Class="pt-1">
-            <MudSelect
-                Dense
-                Margin="Margin.Dense"
-                Variant="Variant.Outlined"
-                @bind-Value="@_class"
-                Label="Turma"
-                Required
-                RequiredError="Informe!"
-                AdornmentColor="Color.Primary"
-            >
-                @foreach (GetCampusClassesOut? item in Classes)
-                {
-                    <MudSelectItem Value="@item">@item.Discipline ● @item.Teacher</MudSelectItem>
-                }
-            </MudSelect>
-        </MudForm>
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <MudSelect
+                    Dense
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    @bind-Value="@_class"
+                    Label="Turma"
+                    Required
+                    RequiredError="Informe!"
+                    AdornmentColor="Color.Primary"
+                >
+                    @foreach (GetCampusClassesOut? item in Classes)
+                    {
+                        <MudSelectItem Value="@item">@item.Discipline ● @item.Teacher</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
 
-        <MudStack Row>
-            <ClassSchedule Data="@_schedule" />
-            <MudButton
-                StartIcon="@Icons.Material.Outlined.Add"
-                IconSize="Size.Small"
-                Variant="Variant.Filled"
-                Size="Size.Small"
-                Color="Color.Primary"
-                OnClick="@AddNewSchedule"
-            >
-                Horário
-            </MudButton>
-        </MudStack>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <MudSelect
+                    Dense
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    T="Day?"
+                    @bind-Value="@_schedule.Day"
+                    Label="Dia"
+                    Required
+                    RequiredError="Informe!"
+                    AdornmentColor="Color.Primary"
+                >
+                    @foreach (Day? day in Enum.GetValues<Day>())
+                    {
+                        <MudSelectItem Value="@day">@day.GetDescription()</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="3" md="3" lg="3">
+                <MudSelect
+                    Dense
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    T="Hour?"
+                    @bind-Value="@_schedule.Start"
+                    Label="Início"
+                    Required
+                    RequiredError="Informe!"
+                    AdornmentColor="Color.Primary"
+                >
+                    @foreach (Hour? hour in Enum.GetValues<Hour>())
+                    {
+                    <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="3" md="3" lg="3">
+                <MudSelect
+                    Dense
+                    Margin="Margin.Dense"
+                    Variant="Variant.Outlined"
+                    T="Hour?"
+                    @bind-Value="@_schedule.End"
+                    Label="Fim"
+                    Required
+                    RequiredError="Informe!"
+                    AdornmentColor="Color.Primary"
+                >
+                    @foreach (Hour? hour in Enum.GetValues<Hour>())
+                    {
+                        if (_schedule.Start == null || hour <= _schedule.Start) continue;
+                        <MudSelectItem Value="@hour">@hour.GetDescription()</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudItem>
 
+            <MudItem xs="12" sm="2" md="2" lg="2" Class="d-flex align-center justify-center">
+                <MudButton
+                    StartIcon="@Icons.Material.Outlined.Add"
+                    IconSize="Size.Medium"
+                    Variant="Variant.Filled"
+                    Size="Size.Medium"
+                    Color="Color.Primary"
+                    OnClick="@AddNewSchedule"
+                    Disabled="@(_class == null || _schedule == null || _schedule.Day == null || _schedule.Start == null || _schedule.End == null || _loading)"
+                >
+                    Horário
+                </MudButton>
+            </MudItem>
+        </MudGrid>
 
         <CascadingValue Name="Days" Value="@_agenda">
-            <WeeklyAgenda Class="px-0 py-2" />
+            <WeeklyAgenda Class="px-0 pt-4 pb-2" />
         </CascadingValue>
     </DialogContent>
-    <DialogActions>
-        <DialogCancelButton OnClick="@Cancel" />
-        <SykiProgressCircular Loading="@_loading" />
-        <DialogSaveButton OnClick="@Submit" />
-    </DialogActions>
 </MudDialog>
 
 @inject ISnackbar Snackbar
@@ -67,7 +119,6 @@
     [Parameter]
     public List<GetCampusClassesOut> Classes { get; set; } = [];
 
-    private MudForm _form;
     private bool _loading;
     private ScheduleInFillable? _schedule = new();
     private GetCampusClassesOut? _class;
@@ -78,38 +129,36 @@
         _agenda = await GetClassroomAgendaClient.Get(Classroom.Id);
     }
 
-    private void AddNewSchedule()
+    private async Task AddNewSchedule()
     {
-        // BUG QUANDO JA TEM UMA TURMA PRO DIA E ADICIONO OUTRA
-        var disciplines = Classes.Where(x => x.Id == _class.Id)
-            .Select(x => new AgendaDisciplineOut() { Name = x.Discipline, Start = _schedule.Start!.Value, End = _schedule.End!.Value }).ToList();
-        var day = _agenda.First(x => x.Day == _schedule.Day!.Value);
-        day.Disciplines = disciplines;
-        _schedule = new();
-    }
+        if (_schedule == null) return;
+        if (_schedule.Day == null) return;
+        if (_schedule.Start == null) return;
+        if (_schedule.End == null) return;
 
-    async Task Submit()
-    {
+        var @class = Classes.FirstOrDefault(x => x.Id == _class?.Id);
+        if (@class == null) return;
+
         if (_loading) return;
-
-        await _form.Validate();
-        if (!_form.IsValid) return;
+        _loading = true;
 
         var schedules = new List<ScheduleIn>();
         foreach (var agenda in _agenda)
         {
-            foreach (var discipline in agenda.Disciplines)
+            foreach (var d in agenda.Disciplines.Where(d => d.ClassId == _class.Id))
             {
-                schedules.Add(new ScheduleIn(agenda.Day, discipline.Start, discipline.End));
+                schedules.Add(new ScheduleIn(agenda.Day, d.Start, d.End));
             }
         }
+        schedules.Add(new ScheduleIn(_schedule.Day!.Value, _schedule.Start!.Value, _schedule.End!.Value));
 
-        _loading = true;
         var response = await AssignClassToClassroomClient.Assign(Classroom.Id, _class.Id, schedules);
         if (response.IsSuccess)
         {
-            MudDialog.Close(DialogResult.Ok(true));
-            Snackbar.Add("Turmas salvas com sucesso!", Severity.Success);
+            Snackbar.Add("Horário salvo com sucesso!", Severity.Success);
+            _class = null;
+            _schedule = new();
+            _agenda = await GetClassroomAgendaClient.Get(Classroom.Id);
         }
         else
         {

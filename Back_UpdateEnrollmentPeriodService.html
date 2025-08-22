@@ -677,7 +677,7 @@ a.percentagebar {
 </tr>
 <tr>
 <th>Tag:</th>
-<td class="limit-width " title="12_17140863774">12_17140863774</td>
+<td class="limit-width " title="13_17144328057">13_17144328057</td>
 </tr>
 </table>
 </div>
@@ -688,12 +688,12 @@ a.percentagebar {
 <div class="card">
 <div class="card-header">Line coverage</div>
 <div class="card-body">
-<div class="large cardpercentagebar cardpercentagebar15">84%</div>
+<div class="large cardpercentagebar cardpercentagebar17">83%</div>
 <div class="table">
 <table>
 <tr>
 <th>Covered lines:</th>
-<td class="limit-width right" title="11">11</td>
+<td class="limit-width right" title="10">10</td>
 </tr>
 <tr>
 <th>Uncovered lines:</th>
@@ -701,15 +701,15 @@ a.percentagebar {
 </tr>
 <tr>
 <th>Coverable lines:</th>
-<td class="limit-width right" title="13">13</td>
+<td class="limit-width right" title="12">12</td>
 </tr>
 <tr>
 <th>Total lines:</th>
-<td class="limit-width right" title="28">28</td>
+<td class="limit-width right" title="27">27</td>
 </tr>
 <tr>
 <th>Line coverage:</th>
-<td class="limit-width right" title="11 of 13">84.6%</td>
+<td class="limit-width right" title="10 of 12">83.3%</td>
 </tr>
 </table>
 </div>
@@ -761,7 +761,7 @@ a.percentagebar {
 <tbody>
 <tr><td title=".ctor(Syki.Back.Database.SykiDbContext,Microsoft.Extensions.Caching.Hybrid.HybridCache)"><a href="#file0_line3" class="navigatetohash">.ctor(...)</a></td><td>100%</td><td>1</td><td>1</td><td>100%</td></tr>
 <tr><td title="Update()"><a href="#file0_line7" class="navigatetohash">Update()</a></td><td>100%</td><td>6</td><td>6</td><td>100%</td></tr>
-<tr><td title="UpdateWithThrowOnError()"><a href="#file0_line26" class="navigatetohash">UpdateWithThrowOnError()</a></td><td>100%</td><td>2</td><td>1</td><td>0%</td></tr>
+<tr><td title="UpdateWithThrowOnError()"><a href="#file0_line25" class="navigatetohash">UpdateWithThrowOnError()</a></td><td>100%</td><td>2</td><td>1</td><td>0%</td></tr>
 </tbody>
 </table>
 </div>
@@ -777,38 +777,37 @@ a.percentagebar {
 <tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line4"></a><code>4</code></td><td></td><td class="lightgray"><code>{</code></td></tr>
 <tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line5"></a><code>5</code></td><td></td><td class="lightgray"><code>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;async&nbsp;Task&lt;OneOf&lt;EnrollmentPeriodOut,&nbsp;SykiError&gt;&gt;&nbsp;Update(Guid&nbsp;institutionId,&nbsp;string&nbsp;id,&nbsp;UpdateEnrollmentPerio</code></td></tr>
 <tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line6"></a><code>6</code></td><td></td><td class="lightgray"><code>&nbsp;&nbsp;&nbsp;&nbsp;{</code></td></tr>
-<tr class="coverableline" title="Covered (100 visits)" data-coverage="{'AllTestMethods': {'VC': '100', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">100</td><td class="rightmargin right"><a id="file0_line7"></a><code>7</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;academicPeriodExists&nbsp;=&nbsp;await&nbsp;ctx.AcademicPeriodExists(institutionId,&nbsp;id);</code></td></tr>
-<tr class="coverableline" title="Covered (102 visits, 2 of 2 branches are covered)" data-coverage="{'AllTestMethods': {'VC': '102', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">102</td><td class="rightmargin right"><a id="file0_line8"></a><code>8</code></td><td class="percentagebar percentagebar100"><i class="icon-fork"></i></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!academicPeriodExists)&nbsp;return&nbsp;AcademicPeriodNotFound.I;</code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line9"></a><code>9</code></td><td></td><td class="lightgray"><code></code></td></tr>
-<tr class="coverableline" title="Covered (98 visits)" data-coverage="{'AllTestMethods': {'VC': '98', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">98</td><td class="rightmargin right"><a id="file0_line10"></a><code>10</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;period&nbsp;=&nbsp;await&nbsp;ctx.EnrollmentPeriods.FirstOrDefaultAsync(x&nbsp;=&gt;&nbsp;x.InstitutionId&nbsp;==&nbsp;institutionId&nbsp;&amp;&amp;&nbsp;x.Id&nbsp;==&nbsp;id</code></td></tr>
-<tr class="coverableline" title="Covered (100 visits, 2 of 2 branches are covered)" data-coverage="{'AllTestMethods': {'VC': '100', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">100</td><td class="rightmargin right"><a id="file0_line11"></a><code>11</code></td><td class="percentagebar percentagebar100"><i class="icon-fork"></i></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(period&nbsp;==&nbsp;null)&nbsp;return&nbsp;new&nbsp;EnrollmentPeriodNotFound();</code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line12"></a><code>12</code></td><td></td><td class="lightgray"><code></code></td></tr>
-<tr class="coverableline" title="Covered (96 visits)" data-coverage="{'AllTestMethods': {'VC': '96', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">96</td><td class="rightmargin right"><a id="file0_line13"></a><code>13</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;result&nbsp;=&nbsp;period.Update(data.StartAt,&nbsp;data.EndAt);</code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line14"></a><code>14</code></td><td></td><td class="lightgray"><code></code></td></tr>
-<tr class="coverableline" title="Covered (100 visits, 2 of 2 branches are covered)" data-coverage="{'AllTestMethods': {'VC': '100', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">100</td><td class="rightmargin right"><a id="file0_line15"></a><code>15</code></td><td class="percentagebar percentagebar100"><i class="icon-fork"></i></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(result.IsError)&nbsp;return&nbsp;result.Error;</code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line16"></a><code>16</code></td><td></td><td class="lightgray"><code></code></td></tr>
-<tr class="coverableline" title="Covered (92 visits)" data-coverage="{'AllTestMethods': {'VC': '92', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">92</td><td class="rightmargin right"><a id="file0_line17"></a><code>17</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;ctx.SaveChangesAsync();</code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line18"></a><code>18</code></td><td></td><td class="lightgray"><code></code></td></tr>
-<tr class="coverableline" title="Covered (92 visits)" data-coverage="{'AllTestMethods': {'VC': '92', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">92</td><td class="rightmargin right"><a id="file0_line19"></a><code>19</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;cache.RemoveAsync($&quot;enrollmentPeriods:{institutionId}&quot;);</code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line20"></a><code>20</code></td><td></td><td class="lightgray"><code></code></td></tr>
-<tr class="coverableline" title="Covered (92 visits)" data-coverage="{'AllTestMethods': {'VC': '92', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">92</td><td class="rightmargin right"><a id="file0_line21"></a><code>21</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;period.ToOut();</code></td></tr>
-<tr class="coverableline" title="Covered (100 visits)" data-coverage="{'AllTestMethods': {'VC': '100', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">100</td><td class="rightmargin right"><a id="file0_line22"></a><code>22</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;}</code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line23"></a><code>23</code></td><td></td><td class="lightgray"><code></code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line24"></a><code>24</code></td><td></td><td class="lightgray"><code>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;async&nbsp;Task&nbsp;UpdateWithThrowOnError(Guid&nbsp;institutionId,&nbsp;string&nbsp;id,&nbsp;UpdateEnrollmentPeriodIn&nbsp;data)</code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line25"></a><code>25</code></td><td></td><td class="lightgray"><code>&nbsp;&nbsp;&nbsp;&nbsp;{</code></td></tr>
-<tr class="coverableline" title="Not covered (0 visits)" data-coverage="{'AllTestMethods': {'VC': '0', 'LVS': 'red'}}"><td class="red">&nbsp;</td><td class="leftmargin rightmargin right">0</td><td class="rightmargin right"><a id="file0_line26"></a><code>26</code></td><td></td><td class="lightred"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(await&nbsp;Update(institutionId,&nbsp;id,&nbsp;data)).ThrowOnError();</code></td></tr>
-<tr class="coverableline" title="Not covered (0 visits)" data-coverage="{'AllTestMethods': {'VC': '0', 'LVS': 'red'}}"><td class="red">&nbsp;</td><td class="leftmargin rightmargin right">0</td><td class="rightmargin right"><a id="file0_line27"></a><code>27</code></td><td></td><td class="lightred"><code>&nbsp;&nbsp;&nbsp;&nbsp;}</code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line28"></a><code>28</code></td><td></td><td class="lightgray"><code>}</code></td></tr>
+<tr class="coverableline" title="Covered (102 visits, 2 of 2 branches are covered)" data-coverage="{'AllTestMethods': {'VC': '102', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">102</td><td class="rightmargin right"><a id="file0_line7"></a><code>7</code></td><td class="percentagebar percentagebar100"><i class="icon-fork"></i></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(await&nbsp;ctx.AcademicPeriodNotFound(id))&nbsp;return&nbsp;AcademicPeriodNotFound.I;</code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line8"></a><code>8</code></td><td></td><td class="lightgray"><code></code></td></tr>
+<tr class="coverableline" title="Covered (98 visits)" data-coverage="{'AllTestMethods': {'VC': '98', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">98</td><td class="rightmargin right"><a id="file0_line9"></a><code>9</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;period&nbsp;=&nbsp;await&nbsp;ctx.EnrollmentPeriods.FirstOrDefaultAsync(x&nbsp;=&gt;&nbsp;x.InstitutionId&nbsp;==&nbsp;institutionId&nbsp;&amp;&amp;&nbsp;x.Id&nbsp;==&nbsp;id</code></td></tr>
+<tr class="coverableline" title="Covered (100 visits, 2 of 2 branches are covered)" data-coverage="{'AllTestMethods': {'VC': '100', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">100</td><td class="rightmargin right"><a id="file0_line10"></a><code>10</code></td><td class="percentagebar percentagebar100"><i class="icon-fork"></i></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(period&nbsp;==&nbsp;null)&nbsp;return&nbsp;new&nbsp;EnrollmentPeriodNotFound();</code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line11"></a><code>11</code></td><td></td><td class="lightgray"><code></code></td></tr>
+<tr class="coverableline" title="Covered (96 visits)" data-coverage="{'AllTestMethods': {'VC': '96', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">96</td><td class="rightmargin right"><a id="file0_line12"></a><code>12</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;result&nbsp;=&nbsp;period.Update(data.StartAt,&nbsp;data.EndAt);</code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line13"></a><code>13</code></td><td></td><td class="lightgray"><code></code></td></tr>
+<tr class="coverableline" title="Covered (100 visits, 2 of 2 branches are covered)" data-coverage="{'AllTestMethods': {'VC': '100', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">100</td><td class="rightmargin right"><a id="file0_line14"></a><code>14</code></td><td class="percentagebar percentagebar100"><i class="icon-fork"></i></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(result.IsError)&nbsp;return&nbsp;result.Error;</code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line15"></a><code>15</code></td><td></td><td class="lightgray"><code></code></td></tr>
+<tr class="coverableline" title="Covered (92 visits)" data-coverage="{'AllTestMethods': {'VC': '92', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">92</td><td class="rightmargin right"><a id="file0_line16"></a><code>16</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;ctx.SaveChangesAsync();</code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line17"></a><code>17</code></td><td></td><td class="lightgray"><code></code></td></tr>
+<tr class="coverableline" title="Covered (92 visits)" data-coverage="{'AllTestMethods': {'VC': '92', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">92</td><td class="rightmargin right"><a id="file0_line18"></a><code>18</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;cache.RemoveAsync($&quot;enrollmentPeriods:{institutionId}&quot;);</code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line19"></a><code>19</code></td><td></td><td class="lightgray"><code></code></td></tr>
+<tr class="coverableline" title="Covered (92 visits)" data-coverage="{'AllTestMethods': {'VC': '92', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">92</td><td class="rightmargin right"><a id="file0_line20"></a><code>20</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;period.ToOut();</code></td></tr>
+<tr class="coverableline" title="Covered (100 visits)" data-coverage="{'AllTestMethods': {'VC': '100', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">100</td><td class="rightmargin right"><a id="file0_line21"></a><code>21</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;}</code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line22"></a><code>22</code></td><td></td><td class="lightgray"><code></code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line23"></a><code>23</code></td><td></td><td class="lightgray"><code>&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;async&nbsp;Task&nbsp;UpdateWithThrowOnError(Guid&nbsp;institutionId,&nbsp;string&nbsp;id,&nbsp;UpdateEnrollmentPeriodIn&nbsp;data)</code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line24"></a><code>24</code></td><td></td><td class="lightgray"><code>&nbsp;&nbsp;&nbsp;&nbsp;{</code></td></tr>
+<tr class="coverableline" title="Not covered (0 visits)" data-coverage="{'AllTestMethods': {'VC': '0', 'LVS': 'red'}}"><td class="red">&nbsp;</td><td class="leftmargin rightmargin right">0</td><td class="rightmargin right"><a id="file0_line25"></a><code>25</code></td><td></td><td class="lightred"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(await&nbsp;Update(institutionId,&nbsp;id,&nbsp;data)).ThrowOnError();</code></td></tr>
+<tr class="coverableline" title="Not covered (0 visits)" data-coverage="{'AllTestMethods': {'VC': '0', 'LVS': 'red'}}"><td class="red">&nbsp;</td><td class="leftmargin rightmargin right">0</td><td class="rightmargin right"><a id="file0_line26"></a><code>26</code></td><td></td><td class="lightred"><code>&nbsp;&nbsp;&nbsp;&nbsp;}</code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line27"></a><code>27</code></td><td></td><td class="lightgray"><code>}</code></td></tr>
 </tbody>
 </table>
 </div>
-<div class="footer">Generated by: ReportGenerator 5.4.10.0<br />08/21/2025 - 22:45:51<br /><a href="https://github.com/danielpalme/ReportGenerator">GitHub</a> | <a href="https://reportgenerator.io">reportgenerator.io</a></div></div>
+<div class="footer">Generated by: ReportGenerator 5.4.10.0<br />08/22/2025 - 02:30:47<br /><a href="https://github.com/danielpalme/ReportGenerator">GitHub</a> | <a href="https://reportgenerator.io">reportgenerator.io</a></div></div>
 <div class="containerright">
 <div class="containerrightfixed">
 <h1>Methods/Properties</h1>
 <a href="#file0_line3" class="navigatetohash percentagebar percentagebar100" title="Line coverage: 100% - .ctor(Syki.Back.Database.SykiDbContext,Microsoft.Extensions.Caching.Hybrid.HybridCache)"><i class="icon-cube"></i>.ctor(Syki.Back.Database.SykiDbContext,Microsoft.Extensions.Caching.Hybrid.HybridCache)</a><br />
 <a href="#file0_line7" class="navigatetohash percentagebar percentagebar100" title="Line coverage: 100% - Update()"><i class="icon-cube"></i>Update()</a><br />
-<a href="#file0_line26" class="navigatetohash percentagebar percentagebar0" title="Line coverage: 0% - UpdateWithThrowOnError()"><i class="icon-cube"></i>UpdateWithThrowOnError()</a><br />
+<a href="#file0_line25" class="navigatetohash percentagebar percentagebar0" title="Line coverage: 0% - UpdateWithThrowOnError()"><i class="icon-cube"></i>UpdateWithThrowOnError()</a><br />
 <br/></div>
 </div></div>
 <script type="text/javascript">/* <![CDATA[ */ /* Chartist.js 0.11.4

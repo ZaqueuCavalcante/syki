@@ -44,7 +44,7 @@ public class AcademicHttpClient(HttpClient http)
 {
     public readonly HttpClient Http = http;
 
-    public async Task<OneOf<CampusOut, ErrorOut>> CreateCampus(
+    public async Task<OneOf<CreateCampusOut, ErrorOut>> CreateCampus(
         string name = "Agreste I",
         BrazilState? state = BrazilState.PE,
         string city = "Caruaru",
@@ -75,7 +75,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-    public async Task<List<CampusOut>> GetCampi()
+    public async Task<List<CreateCampusOut>> GetCampi()
     {
         var client = new GetCampiClient(Http);
         return await client.Get();
@@ -102,7 +102,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get(courseId);
     }
 
-    public async Task<OneOf<CampusOut, ErrorOut>> UpdateCampus(
+    public async Task<OneOf<CreateCampusOut, ErrorOut>> UpdateCampus(
         Guid id,
         string name = "Agreste I",
         BrazilState? state = BrazilState.PE,

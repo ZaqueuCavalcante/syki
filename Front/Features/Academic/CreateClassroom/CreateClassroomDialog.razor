@@ -21,7 +21,7 @@
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
-                @foreach (CampusOut? item in _campi)
+                @foreach (CreateCampusOut? item in _campi)
                 {
                     <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                 }
@@ -72,8 +72,8 @@
     private MudForm _form;
     private bool _loading;
 
-    private CampusOut? _campus;
-    private List<CampusOut> _campi = [];
+    private CreateCampusOut? _campus;
+    private List<CreateCampusOut> _campi = [];
     private string _name;
     private int _capacity = 25;
 

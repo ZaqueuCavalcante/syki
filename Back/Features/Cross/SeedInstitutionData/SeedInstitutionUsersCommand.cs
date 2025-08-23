@@ -7,7 +7,6 @@ namespace Syki.Back.Features.Cross.SeedInstitutionData;
 public record SeedInstitutionUsersCommand(Guid InstitutionId, Guid DireitoCourseOfferingId, Guid AdsCourseOfferingId) : ICommand;
 
 public class SeedInstitutionUsersCommandHandler(
-    // SykiDbContext ctx,
     CreateTeacherService createTeacherService,
     CreateStudentService createStudentService) : ICommandHandler<SeedInstitutionUsersCommand>
 {
@@ -24,7 +23,7 @@ public class SeedInstitutionUsersCommandHandler(
         };
         foreach (var name in teachers)
         {
-            await createTeacherService.CreateWithThrowOnError(id, CreateTeacherIn.Seed(name));
+            await createTeacherService.Create(id, CreateTeacherIn.Seed(name));
         }
 
         var direitoStudents = new List<string>()
@@ -36,7 +35,7 @@ public class SeedInstitutionUsersCommandHandler(
         };
         foreach (var name in direitoStudents)
         {
-            await createStudentService.CreateWithThrowOnError(id, CreateStudentIn.Seed(name, command.DireitoCourseOfferingId));
+            await createStudentService.Create(id, CreateStudentIn.Seed(name, command.DireitoCourseOfferingId));
         }
 
         var adsStudents = new List<string>()
@@ -50,9 +49,7 @@ public class SeedInstitutionUsersCommandHandler(
         };
         foreach (var name in adsStudents)
         {
-            await createStudentService.CreateWithThrowOnError(id, CreateStudentIn.Seed(name, command.AdsCourseOfferingId));
+            await createStudentService.Create(id, CreateStudentIn.Seed(name, command.AdsCourseOfferingId));
         }
-
-        // ctx.AddCommand(id, new SeedInstitutionClassesCommand(id), parentId: commandId);
     }
 }

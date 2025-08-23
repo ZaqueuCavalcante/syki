@@ -27,9 +27,4 @@ public class CreateStudentEnrollmentService(SykiDbContext ctx) : IStudentService
 
         return new SykiSuccess();
     }
-
-    public async Task CreateWithThrowOnError(Guid institutionId, Guid userId, Guid courseCurriculumId, CreateStudentEnrollmentIn data)
-    {
-        (await Create(institutionId, userId, courseCurriculumId, data)).ThrowOnError();
-    }
 }

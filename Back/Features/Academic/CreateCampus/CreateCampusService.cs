@@ -20,13 +20,13 @@ public class CreateCampusService(SykiDbContext ctx) : IAcademicService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CampusOut, SykiError>> Create(CreateCampusIn data)
+    public async Task<OneOf<CreateCampusOut, SykiError>> Create(CreateCampusIn data)
     {
         if (V.Run(data, out var error)) return error;
 
         var campus = new Campus(ctx.InstitutionId, data.Name, data.State!.Value, data.City, data.Capacity);
         await ctx.SaveChangesAsync(campus);
 
-        return campus.ToOut();
+        return campus.ToCreateCampusOut();
     }
 }

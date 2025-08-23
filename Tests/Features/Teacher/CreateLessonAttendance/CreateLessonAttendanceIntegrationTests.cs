@@ -8,7 +8,7 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await academicClient.CreateCampus();
+        CreateCampusOut campus = await academicClient.CreateCampus();
         var period = await academicClient.CreateCurrentAcademicPeriod();
         var discipline = await academicClient.CreateDiscipline();
         TeacherOut teacher = await academicClient.CreateTeacher();
@@ -51,7 +51,7 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await academicClient.CreateCampus();
+        CreateCampusOut campus = await academicClient.CreateCampus();
         var period = await academicClient.CreateCurrentAcademicPeriod();
         var discipline = await academicClient.CreateDiscipline(); 
         var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };
@@ -83,7 +83,7 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await academicClient.CreateCampus();
+        CreateCampusOut campus = await academicClient.CreateCampus();
         var period = await academicClient.CreateCurrentAcademicPeriod();
         var discipline = await academicClient.CreateDiscipline(); 
         var schedules = new List<ScheduleIn>() { new(Day.Tuesday, Hour.H19_00, Hour.H22_00) };

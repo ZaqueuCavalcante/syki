@@ -5,7 +5,7 @@ public class BasicInstitutionTestDto
     public AcademicPeriodOut AcademicPeriod1 { get; set; }
     public AcademicPeriodOut AcademicPeriod2 { get; set; }
 
-    public CampusOut Campus { get; set; }
+    public CreateCampusOut Campus { get; set; }
 
     public CourseOut AdsCourse { get; set; }
     public BasicInstitutionTestAdsDisciplinesDto AdsDisciplines { get; set; } = new();

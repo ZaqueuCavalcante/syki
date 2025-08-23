@@ -20,7 +20,7 @@ public class UpdateCampusService(SykiDbContext ctx) : IAcademicService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CampusOut, SykiError>> Update(Guid institutionId, UpdateCampusIn data)
+    public async Task<OneOf<CreateCampusOut, SykiError>> Update(Guid institutionId, UpdateCampusIn data)
     {
         if (V.Run(data, out var error)) return error;
 

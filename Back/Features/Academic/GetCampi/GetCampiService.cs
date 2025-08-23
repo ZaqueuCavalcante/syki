@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Academic.GetCampi;
 
 public class GetCampiService(SykiDbContext ctx) : IAcademicService
 {
-    public async Task<List<CampusOut>> Get(Guid institutionId)
+    public async Task<List<CreateCampusOut>> Get(Guid institutionId)
     {
         var campi = await ctx.Campi.AsNoTracking()
             .Where(c => c.InstitutionId == institutionId)

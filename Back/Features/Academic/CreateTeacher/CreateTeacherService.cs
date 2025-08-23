@@ -22,9 +22,4 @@ public class CreateTeacherService(SykiDbContext ctx, CreateUserService service, 
 
         return teacher.ToOut();
     }
-
-    public async Task CreateWithThrowOnError(Guid institutionId, CreateTeacherIn data)
-    {
-        (await Create(institutionId, data)).ThrowOnError();
-    }
 }

@@ -32,7 +32,7 @@ public class Campus
         Capacity = capacity;
     }
 
-    public CampusOut ToOut()
+    public CreateCampusOut ToOut()
     {
         return new()
         {

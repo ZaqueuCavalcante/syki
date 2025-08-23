@@ -21,8 +21,8 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut suassunaOut = await client.CreateCampus("Suassuna I", BrazilState.PE, "Recife", 1_500);
-        CampusOut agresteOut = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru", 280);
+        CreateCampusOut suassunaOut = await client.CreateCampus("Suassuna I", BrazilState.PE, "Recife", 1_500);
+        CreateCampusOut agresteOut = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru", 280);
 
         // Act
         var campi = await client.GetCampi();
@@ -61,7 +61,7 @@ public partial class IntegrationTests
         var clientA = await _api.LoggedAsAcademic();
         var clientB = await _api.LoggedAsAcademic();
 
-        CampusOut campusA = await clientA.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
+        CreateCampusOut campusA = await clientA.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
         await clientB.CreateCampus("Suassuna I", BrazilState.PE, "Recife");
 
         // Act

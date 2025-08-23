@@ -7,10 +7,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
 
         // Act
-        CampusOut updatedCampus = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito", 789);
+        CreateCampusOut updatedCampus = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito", 789);
 
         // Assert
         updatedCampus.Id.Should().Be(campus.Id);
@@ -27,7 +27,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
 
         // Act
         var response = await client.UpdateCampus(campus.Id, name, BrazilState.PE, "Bonito");
@@ -43,7 +43,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
 
         // Act
         var response = await client.UpdateCampus(campus.Id, "Agreste II", state, "Bonito");
@@ -59,7 +59,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
 
         // Act
         var response = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, city);
@@ -75,7 +75,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
 
         // Act
         var response = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito", capacity);
@@ -106,7 +106,7 @@ public partial class IntegrationTests
         await client.CreateCampus();
 
         var otherClient = await _api.LoggedAsAcademic();
-        CampusOut otherCampus = await otherClient.CreateCampus();
+        CreateCampusOut otherCampus = await otherClient.CreateCampus();
         
         // Act
         var response = await client.UpdateCampus(otherCampus.Id, "Agreste II", BrazilState.PE, "Bonito");

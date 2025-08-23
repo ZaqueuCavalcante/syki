@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CampusOut
+public class CreateCampusOut
 {
     public Guid Id { get; set; }
 
@@ -36,10 +36,10 @@ public class CampusOut
     /// </summary>
     public decimal FillRate { get; set; }
 
-    public static IEnumerable<(string, CampusOut)> GetExamples() =>
+    public static IEnumerable<(string, CreateCampusOut)> GetExamples() =>
     [
         ("Agreste",
-        new CampusOut
+        new CreateCampusOut
         {
             Id = Guid.CreateVersion7(),
             Name = "Agreste",
@@ -50,7 +50,7 @@ public class CampusOut
             FillRate = 80,
         }),
         ("Suassuna",
-        new CampusOut
+        new CreateCampusOut
         {
             Id = Guid.CreateVersion7(),
             Name = "Suassuna",
@@ -72,7 +72,7 @@ public class CampusOut
         return Name;
     }
 
-    public static implicit operator CampusOut(OneOf<CampusOut, ErrorOut> value)
+    public static implicit operator CreateCampusOut(OneOf<CreateCampusOut, ErrorOut> value)
     {
         return value.Success;
     }

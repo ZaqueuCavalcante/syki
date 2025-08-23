@@ -29,9 +29,4 @@ public class StartClassesService(SykiDbContext ctx) : IAcademicService
 
         return new SykiSuccess();
     }
-
-    public async Task StartWithThrowOnError(Guid institutionId, StartClassesIn data)
-    {
-        (await Start(institutionId, data)).ThrowOnError();
-    }
 }

@@ -12,7 +12,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
 
         // Assert
         await using var ctx = _api.GetDbContext();
@@ -26,7 +26,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
 
         // Act
         await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito");

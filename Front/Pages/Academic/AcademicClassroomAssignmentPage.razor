@@ -26,7 +26,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 AdornmentColor="Color.Primary"
-                ValueChanged="(CampusOut newValue) => HandleCampusChanged(newValue)"
+                ValueChanged="(CreateCampusOut newValue) => HandleCampusChanged(newValue)"
             >
                 @foreach (var item in _campi)
                 {
@@ -181,8 +181,8 @@
 @code
 {
     private AcademicPeriodOut _period = new();
-    private CampusOut _campus = new();
-    private List<CampusOut> _campi = [];
+    private CreateCampusOut _campus = new();
+    private List<CreateCampusOut> _campi = [];
 
     private List<GetClassroomsOut> _classrooms = [];
     private List<GetCampusClassesOut> _classes = [];
@@ -212,7 +212,7 @@
         _classrooms = (await GetClassroomsClient.Get()).Where(x => x.CampusId == _campus.Id).ToList();
     }
 
-    private async Task HandleCampusChanged(CampusOut newValue)
+    private async Task HandleCampusChanged(CreateCampusOut newValue)
     {
         _campus = newValue;
         await LoadData();

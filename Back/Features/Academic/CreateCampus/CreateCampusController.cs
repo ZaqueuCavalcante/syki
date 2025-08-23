@@ -21,7 +21,7 @@ public class CreateCampusController(CreateCampusService service) : ControllerBas
 }
 
 internal class RequestExamples : ExamplesProvider<CreateCampusIn>;
-internal class ResponseExamples : ExamplesProvider<CampusOut>;
+internal class ResponseExamples : ExamplesProvider<CreateCampusOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidCampusName,
     InvalidBrazilState,

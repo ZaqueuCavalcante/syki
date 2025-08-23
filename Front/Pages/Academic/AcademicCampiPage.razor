@@ -14,7 +14,7 @@
     <SykiPageAlert Text="Sua instituição pode ser formada por vários campus." />
     <MudContainer Class="px-0 mb-4">
         <MudDataGrid
-            T="CampusOut"
+            T="CreateCampusOut"
             Class="pa-4"
             Items="@_campi"
             QuickFilter="@_quickFilter"
@@ -45,7 +45,7 @@
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="@CampusOut" />
+                <SykiDataGridPager T="@CreateCampusOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -59,7 +59,7 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<CampusOut> _campi = [];
+    private List<CreateCampusOut> _campi = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -68,7 +68,7 @@
         _loading = false;
     }
 
-    private Func<CampusOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.State.ToString(), x.City);
+    private Func<CreateCampusOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.State.ToString(), x.City);
 
     private async Task OpenDialog()
     {
@@ -87,7 +87,7 @@
         await OnInitializedAsync();
     }
 
-    private async Task OpenEditDialog(CampusOut item)
+    private async Task OpenEditDialog(CreateCampusOut item)
     {
         var parameters = new DialogParameters<UpdateCampusDialog>();
         parameters.Add(x => x.Campus, item);

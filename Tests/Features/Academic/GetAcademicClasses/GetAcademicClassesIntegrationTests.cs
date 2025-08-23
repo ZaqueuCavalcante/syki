@@ -8,7 +8,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();

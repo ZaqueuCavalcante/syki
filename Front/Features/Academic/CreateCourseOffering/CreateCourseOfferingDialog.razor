@@ -23,7 +23,7 @@
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (CampusOut? item in Campi)
+                        @foreach (CreateCampusOut? item in Campi)
                         {
                             <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                         }
@@ -131,13 +131,13 @@
     MudForm _form;
     private bool _loading;
 
-    private CampusOut? _campus;
+    private CreateCampusOut? _campus;
     private CourseOut? _course;
     private CourseCurriculumOut? _courseCurriculum;
     private string? _period;
     private Shift? _shift;
 
-    List<CampusOut> Campi = [];
+    List<CreateCampusOut> Campi = [];
     List<CourseOut> Courses = [];
     List<AcademicPeriodOut> Periods = [];
     List<CourseCurriculumOut> CourseCurriculums = [];

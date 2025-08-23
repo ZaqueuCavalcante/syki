@@ -8,7 +8,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -47,7 +47,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
 
         // Act
         var response = await client.CreateClass(Guid.CreateVersion7(), campus.Id, Guid.CreateVersion7(), "2024.1", 40, []);
@@ -62,7 +62,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
 
         // Act
@@ -78,7 +78,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
 
@@ -95,7 +95,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -114,7 +114,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
         await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
@@ -133,7 +133,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -154,7 +154,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -180,7 +180,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
@@ -205,7 +205,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
         await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
@@ -234,7 +234,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CampusOut campus = await client.CreateCampus();
+        CreateCampusOut campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
         TeacherOut teacher = await client.CreateTeacher();
         await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);

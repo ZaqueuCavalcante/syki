@@ -60,6 +60,19 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
+    public async Task<OneOf<UpdateCampusOut, ErrorOut>> UpdateCampus(
+        Guid id,
+        string name = "Agreste I",
+        BrazilState? state = BrazilState.PE,
+        string city = "Caruaru",
+        int capacity = 100
+    ) {
+        var client = new UpdateCampusClient(Http);
+        return await client.Update(id, name, state, city, capacity);
+    }
+
+
+
 
 
 
@@ -104,16 +117,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get(courseId);
     }
 
-    public async Task<OneOf<CreateCampusOut, ErrorOut>> UpdateCampus(
-        Guid id,
-        string name = "Agreste I",
-        BrazilState? state = BrazilState.PE,
-        string city = "Caruaru",
-        int capacity = 100
-    ) {
-        var client = new UpdateCampusClient(Http);
-        return await client.Update(id, name, state, city, capacity);
-    }
+
 
     public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(
         string name, 

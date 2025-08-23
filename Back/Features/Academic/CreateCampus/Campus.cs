@@ -31,25 +31,4 @@ public class Campus
         City = city;
         Capacity = capacity;
     }
-
-    public CreateCampusOut ToOut()
-    {
-        return new()
-        {
-            Id = Id,
-            Name = Name,
-            State = State,
-            City = City,
-            Capacity = Capacity,
-        };
-    }
-
-    public GetAcademicTeacherCampusOut ToGetAcademicTeacherCampusOut()
-    {
-        return new()
-        {
-            Id = Id,
-            Name = $"{Name} ({City} - {State})",
-        };
-    }
 }

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateCampusOut
+public class UpdateCampusOut
 {
     public Guid Id { get; set; }
 
@@ -21,29 +21,29 @@ public class CreateCampusOut
     /// </summary>
     public int Capacity { get; set; }
 
-    public static IEnumerable<(string, CreateCampusOut)> GetExamples() =>
+    public static IEnumerable<(string, UpdateCampusOut)> GetExamples() =>
     [
         ("Agreste",
-        new CreateCampusOut
+        new UpdateCampusOut
         {
             Id = Guid.CreateVersion7(),
             Name = "Agreste",
             State = BrazilState.PE,
             City = "Caruaru",
-            Capacity = 150,
+            Capacity = 220,
         }),
         ("Suassuna",
-        new CreateCampusOut
+        new UpdateCampusOut
         {
             Id = Guid.CreateVersion7(),
             Name = "Suassuna",
             State = BrazilState.PE,
             City = "Recife",
-            Capacity = 500,
+            Capacity = 600,
         }),
     ];
 
-    public static implicit operator CreateCampusOut(OneOf<CreateCampusOut, ErrorOut> value)
+    public static implicit operator UpdateCampusOut(OneOf<UpdateCampusOut, ErrorOut> value)
     {
         return value.Success;
     }

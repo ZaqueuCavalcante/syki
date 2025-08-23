@@ -21,7 +21,7 @@
                 RequiredError="Informe!"
                 AdornmentColor="Color.Primary"
             >
-                @foreach (CreateCampusOut? item in _campi)
+                @foreach (GetCampiItemOut? item in _campi)
                 {
                     <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                 }
@@ -72,14 +72,14 @@
     private MudForm _form;
     private bool _loading;
 
-    private CreateCampusOut? _campus;
-    private List<CreateCampusOut> _campi = [];
+    private GetCampiItemOut? _campus;
+    private List<GetCampiItemOut> _campi = [];
     private string _name;
     private int _capacity = 25;
 
     protected override async Task OnInitializedAsync()
     {
-        _campi = await GetCampiClient.Get();
+        _campi = (await GetCampiClient.Get()).Items;
     }
 
     async Task Submit()

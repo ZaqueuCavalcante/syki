@@ -2,8 +2,8 @@ namespace Syki.Front.Features.Academic.GetCampi;
 
 public class GetCampiClient(HttpClient http) : IAcademicClient
 {
-    public async Task<List<CreateCampusOut>> Get()
+    public async Task<GetCampiOut> Get()
     {
-        return await http.GetFromJsonAsync<List<CreateCampusOut>>("/academic/campi", HttpConfigs.JsonOptions) ?? [];
+        return await http.GetFromJsonAsync<GetCampiOut>("/academic/campi", HttpConfigs.JsonOptions) ?? new();
     }
 }

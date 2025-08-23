@@ -114,7 +114,7 @@
     {
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _width = _breakpoint == Breakpoint.Xs ? "100%" : "520px";
-        _campi = (await GetCampiClient.Get()).ConvertAll(x => new AssignCampiToTeacherSelect() { Id = x.Id, Name = x.Name });
+        _campi = (await GetCampiClient.Get()).Items.ConvertAll(x => new AssignCampiToTeacherSelect() { Id = x.Id, Name = x.Name });
     }
 
     private async Task<IEnumerable<AssignCampiToTeacherSelect>> SearchCampus(string value, CancellationToken cancellationToken)

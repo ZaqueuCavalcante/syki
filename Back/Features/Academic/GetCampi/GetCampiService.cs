@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Academic.GetCampi;
 
 public class GetCampiService(SykiDbContext ctx) : IAcademicService
 {
-    public async Task<List<CreateCampusOut>> Get(Guid institutionId)
+    public async Task<GetCampiOut> Get(Guid institutionId)
     {
         var campi = await ctx.Campi.AsNoTracking()
             .Where(c => c.InstitutionId == institutionId)
@@ -29,16 +29,14 @@ public class GetCampiService(SykiDbContext ctx) : IAcademicService
         ";
         var totals = await ctx.Database.SqlQuery<CampusEnrollmentDto>(sql).ToListAsync();
 
-        var result = campi.ConvertAll(x =>
+        var items = campi.ConvertAll(x =>
         {
-            var campusOut = x.ToOut();
-            campusOut.Students = totals.FirstOrDefault(t => t.Id == x.Id)?.Students ?? 0;
-            campusOut.Teachers = totals.FirstOrDefault(t => t.Id == x.Id)?.Teachers ?? 0;
-            campusOut.FillRate = campusOut.Capacity > 0 ? Math.Round(100M * (1M * campusOut.Students / (1M * campusOut.Capacity)), 2) : 0;
-            return campusOut;
+            var students = totals.FirstOrDefault(t => t.Id == x.Id)?.Students ?? 0;
+            var teachers = totals.FirstOrDefault(t => t.Id == x.Id)?.Teachers ?? 0;
+            return x.ToGetCampiItemOut(students, teachers);
         });
 
-        return result;
+        return new GetCampiOut() { Total = items.Count, Items = items };
     }
 
     private class CampusEnrollmentDto

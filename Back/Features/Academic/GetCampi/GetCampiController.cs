@@ -11,9 +11,12 @@ public class GetCampiController(GetCampiService service) : ControllerBase
     /// Retorna todos os campus da insitituição.
     /// </remarks>
     [HttpGet("academic/campi")]
+    [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {
         var campi = await service.Get(User.InstitutionId);
         return Ok(campi);
     }
 }
+
+internal class ResponseExamples : ExamplesProvider<GetCampiOut>;

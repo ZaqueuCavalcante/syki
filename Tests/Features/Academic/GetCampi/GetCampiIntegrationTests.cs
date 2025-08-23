@@ -12,7 +12,8 @@ public partial class IntegrationTests
         var campi = await client.GetCampi();
 
         // Assert
-        campi.Should().BeEmpty();
+        campi.Total.Should().Be(0);
+        campi.Items.Should().BeEmpty();
     }
 
     [Test]
@@ -28,10 +29,9 @@ public partial class IntegrationTests
         var campi = await client.GetCampi();
 
         // Assert
-        campi.Should().HaveCount(2);
-
-        campi[0].Should().BeEquivalentTo(agresteOut);
-        campi[1].Should().BeEquivalentTo(suassunaOut);
+        campi.Total.Should().Be(2);
+        campi.Items[0].Should().BeEquivalentTo(agresteOut);
+        campi.Items[1].Should().BeEquivalentTo(suassunaOut);
     }
 
     [Test]
@@ -48,7 +48,8 @@ public partial class IntegrationTests
         var campi = await client.GetCampi();
 
         // Assert
-        var campus = campi.Single();
+        campi.Total.Should().Be(1);
+        var campus = campi.Items.Single();
         campus.Students.Should().Be(2);
         campus.Capacity.Should().Be(100);
         campus.FillRate.Should().Be(2.00M);
@@ -68,6 +69,6 @@ public partial class IntegrationTests
         var campi = await clientA.GetCampi();
 
         // Assert
-        campi.Should().BeEquivalentTo([campusA]);
+        campi.Items.Should().BeEquivalentTo([campusA]);
     }
 }

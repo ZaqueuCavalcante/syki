@@ -26,7 +26,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 AdornmentColor="Color.Primary"
-                ValueChanged="(CreateCampusOut newValue) => HandleCampusChanged(newValue)"
+                ValueChanged="(GetCampiItemOut newValue) => HandleCampusChanged(newValue)"
             >
                 @foreach (var item in _campi)
                 {
@@ -181,8 +181,8 @@
 @code
 {
     private AcademicPeriodOut _period = new();
-    private CreateCampusOut _campus = new();
-    private List<CreateCampusOut> _campi = [];
+    private GetCampiItemOut _campus = new();
+    private List<GetCampiItemOut> _campi = [];
 
     private List<GetClassroomsOut> _classrooms = [];
     private List<GetCampusClassesOut> _classes = [];
@@ -197,7 +197,7 @@
         if (periodResponse.IsError) return;
         _period = periodResponse.Success;
 
-        _campi = await GetCampiClient.Get();
+        _campi = (await GetCampiClient.Get()).Items;
         _campus = _campi.FirstOrDefault() ?? new();
         await LoadData();
     }
@@ -212,7 +212,7 @@
         _classrooms = (await GetClassroomsClient.Get()).Where(x => x.CampusId == _campus.Id).ToList();
     }
 
-    private async Task HandleCampusChanged(CreateCampusOut newValue)
+    private async Task HandleCampusChanged(GetCampiItemOut newValue)
     {
         _campus = newValue;
         await LoadData();

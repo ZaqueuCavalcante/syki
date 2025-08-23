@@ -14,7 +14,7 @@ public class GetCampiController(GetCampiService service) : ControllerBase
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {
-        var campi = await service.Get(User.InstitutionId);
+        var campi = await service.Get();
         return Ok(campi);
     }
 }

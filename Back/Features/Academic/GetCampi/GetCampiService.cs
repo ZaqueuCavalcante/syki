@@ -2,10 +2,10 @@ namespace Syki.Back.Features.Academic.GetCampi;
 
 public class GetCampiService(SykiDbContext ctx) : IAcademicService
 {
-    public async Task<GetCampiOut> Get(Guid institutionId)
+    public async Task<GetCampiOut> Get()
     {
         var campi = await ctx.Campi.AsNoTracking()
-            .Where(c => c.InstitutionId == institutionId)
+            .Where(c => c.InstitutionId == ctx.InstitutionId)
             .OrderBy(c => c.Name)
             .ToListAsync();
 
@@ -23,7 +23,7 @@ public class GetCampiService(SykiDbContext ctx) : IAcademicService
             LEFT JOIN
                 syki.students s ON s.course_offering_id = co.id
             WHERE
-                c.institution_id = {institutionId}
+                c.institution_id = {ctx.InstitutionId}
             GROUP BY
                 c.id
         ";

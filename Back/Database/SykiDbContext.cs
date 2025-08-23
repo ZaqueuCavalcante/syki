@@ -73,6 +73,9 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
     public DbSet<DomainEvent> DomainEvents { get; set; }
     public DbSet<Command> Commands { get; set; }
 
+    public Guid UserId { get; set; }
+    public Guid InstitutionId { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSnakeCaseNamingConvention();

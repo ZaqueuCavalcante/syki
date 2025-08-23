@@ -37,6 +37,7 @@ app.UseCustomHeaders();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseUserData();
 
 app.UseAudit();
 app.UseDocs();

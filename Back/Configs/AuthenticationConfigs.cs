@@ -26,7 +26,7 @@ public static class AuthenticationConfigs
                 Encoding.ASCII.GetBytes(settings.SecurityKey)
             ),
 
-            ValidAlgorithms = [ "HS256" ],
+            ValidAlgorithms = ["HS256"],
 
             ValidateAudience = true,
             ValidAudience = settings.Audience,
@@ -57,5 +57,10 @@ public static class AuthenticationConfigs
                     }
                 };
             });
+    }
+
+    public static void UseUserData(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<UserDataMiddleware>();
     }
 }

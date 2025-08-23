@@ -71,7 +71,7 @@ public class CreateCourseUnitTests
     public void Should_return_the_hash_code()
     {
         // Arrange
-        var courseOut = new CourseOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
+        var courseOut = new CreateCourseOut { Id = Guid.Parse("ef45239e-0d02-4eb0-b759-47331cfd1a8e") };
 
         // Act
         var hashCode = courseOut.GetHashCode();
@@ -84,7 +84,7 @@ public class CreateCourseUnitTests
     public void Should_return_the_course_name_as_to_string_representation()
     {
         // Arrange
-        var courseOut = new CourseOut { Name = "Direito" };
+        var courseOut = new CreateCourseOut { Name = "Direito" };
 
         // Act
         var name = courseOut.ToString();

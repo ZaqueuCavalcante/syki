@@ -12,13 +12,32 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
 
         // Act
-        CourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado, []);
+        CreateCourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado, []);
 
         // Assert
         course.Id.Should().NotBeEmpty();
         course.Name.Should().Be("Análise e Desenvolvimento de Sistemas");
         course.Type.Should().Be(Bacharelado);
         course.Disciplines.Should().BeEmpty();
+    }
+
+    [Test]
+    public async Task Should_create_course_with_disciplines()
+    {
+        // Arrange
+        var client = await _api.LoggedAsAcademic();
+
+        // Act
+        CreateCourseOut course = await client.CreateCourse("ADS", Bacharelado, ["Programação Orientada a Objetos", "Banco de Dados"]);
+
+        // Assert
+        course.Id.Should().NotBeEmpty();
+        course.Name.Should().Be("ADS");
+        course.Type.Should().Be(Bacharelado);
+        course.Disciplines[0].Id.Should().NotBeEmpty();
+        course.Disciplines[0].Name.Should().Be("Banco de Dados");
+        course.Disciplines[1].Id.Should().NotBeEmpty();
+        course.Disciplines[1].Name.Should().Be("Programação Orientada a Objetos");
     }
 
     [Test]

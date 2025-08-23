@@ -21,7 +21,7 @@ public class CreateCourseController(CreateCourseService service) : ControllerBas
 }
 
 internal class RequestExamples : ExamplesProvider<CreateCourseIn>;
-internal class ResponseExamples : ExamplesProvider<CourseOut>;
+internal class ResponseExamples : ExamplesProvider<CreateCourseOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidCourseName,
     InvalidCourseType>;

@@ -71,6 +71,22 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Update(id, name, state, city, capacity);
     }
 
+    public async Task<OneOf<CreateCourseOut, ErrorOut>> CreateCourse(
+        string name, 
+        CourseType? type, 
+        List<string> disciplines
+    ) {
+        var client = new CreateCourseClient(Http);
+        return await client.Create(name, type, disciplines);
+    }
+
+
+
+
+
+
+
+
 
 
 
@@ -119,28 +135,21 @@ public class AcademicHttpClient(HttpClient http)
 
 
 
-    public async Task<OneOf<CourseOut, ErrorOut>> CreateCourse(
-        string name, 
-        CourseType? type, 
-        List<string> disciplines
-    ) {
-        var client = new CreateCourseClient(Http);
-        return await client.Create(name, type, disciplines);
-    }
 
-    public async Task<List<CourseOut>> GetCourses()
+
+    public async Task<List<CreateCourseOut>> GetCourses()
     {
         var client = new GetCoursesClient(Http);
         return await client.Get();
     }
 
-    public async Task<List<CourseOut>> GetCoursesWithCurriculums()
+    public async Task<List<CreateCourseOut>> GetCoursesWithCurriculums()
     {
         var client = new GetCoursesWithCurriculumsClient(Http);
         return await client.Get();
     }
 
-    public async Task<List<CourseOut>> GetCoursesWithDisciplines()
+    public async Task<List<CreateCourseOut>> GetCoursesWithDisciplines()
     {
         var client = new GetCoursesWithDisciplinesClient(Http);
         return await client.Get();
@@ -413,19 +422,19 @@ public class AcademicHttpClient(HttpClient http)
 
         data.AdsCourse = await CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, adsDisciplines);
 
-        data.AdsDisciplines.DiscreteMath = data.AdsCourse.Disciplines[0];
-        data.AdsDisciplines.IntroToWebDev = data.AdsCourse.Disciplines[1];
-        data.AdsDisciplines.HumanMachineInteractionDesign = data.AdsCourse.Disciplines[2];
-        data.AdsDisciplines.IntroToComputerNetworks = data.AdsCourse.Disciplines[3];
-        data.AdsDisciplines.ComputationalThinkingAndAlgorithms = data.AdsCourse.Disciplines[4];
-        data.AdsDisciplines.IntegratorProjectOne = data.AdsCourse.Disciplines[5];
+        data.AdsDisciplines.DiscreteMath = data.AdsCourse.Disciplines.Single(x => x.Name == "Matemática Discreta");
+        data.AdsDisciplines.IntroToWebDev = data.AdsCourse.Disciplines.Single(x => x.Name == "Introdução ao Desenvolvimento Web");
+        data.AdsDisciplines.HumanMachineInteractionDesign = data.AdsCourse.Disciplines.Single(x => x.Name == "Design de Interação Humano-Máquina");
+        data.AdsDisciplines.IntroToComputerNetworks = data.AdsCourse.Disciplines.Single(x => x.Name == "Introdução à Redes de Computadores");
+        data.AdsDisciplines.ComputationalThinkingAndAlgorithms = data.AdsCourse.Disciplines.Single(x => x.Name == "Pensamento Computacional e Algoritmos");
+        data.AdsDisciplines.IntegratorProjectOne = data.AdsCourse.Disciplines.Single(x => x.Name == "Projeto Integrador I: Concepção e Prototipação");
 
-        data.AdsDisciplines.Arch = data.AdsCourse.Disciplines[6];
-        data.AdsDisciplines.Databases = data.AdsCourse.Disciplines[7];
-        data.AdsDisciplines.DataStructures = data.AdsCourse.Disciplines[8];
-        data.AdsDisciplines.InfoAndSociety = data.AdsCourse.Disciplines[9];
-        data.AdsDisciplines.Poo = data.AdsCourse.Disciplines[10];
-        data.AdsDisciplines.IntegratorProjectTwo = data.AdsCourse.Disciplines[11];
+        data.AdsDisciplines.Arch = data.AdsCourse.Disciplines.Single(x => x.Name == "Arquitetura de Computadores e Sistemas Operacionais");
+        data.AdsDisciplines.Databases = data.AdsCourse.Disciplines.Single(x => x.Name == "Banco de Dados");
+        data.AdsDisciplines.DataStructures = data.AdsCourse.Disciplines.Single(x => x.Name == "Estrutura de Dados");
+        data.AdsDisciplines.InfoAndSociety = data.AdsCourse.Disciplines.Single(x => x.Name == "Informática e Sociedade");
+        data.AdsDisciplines.Poo = data.AdsCourse.Disciplines.Single(x => x.Name == "Programação Orientada a Objetos");
+        data.AdsDisciplines.IntegratorProjectTwo = data.AdsCourse.Disciplines.Single(x => x.Name == "Projeto Integrador II: Modelagem de Banco de Dados");
 
         data.AdsCourseCurriculum = await CreateCourseCurriculum("Grade ADS 1.0", data.AdsCourse.Id,
         [
@@ -472,11 +481,11 @@ public class AcademicHttpClient(HttpClient http)
 
         data.DireitoCourse = await CreateCourse("Direito", CourseType.Bacharelado, direitoDisciplines);
 
-        data.DireitoDisciplines.PhilosophicalBases = data.DireitoCourse.Disciplines[0];
-        data.DireitoDisciplines.CommunicationAndLegalArgumentation = data.DireitoCourse.Disciplines[1];
-        data.DireitoDisciplines.ManSocietyAndLaw = data.DireitoCourse.Disciplines[2];
-        data.DireitoDisciplines.PoliticsAndStateInFocus = data.DireitoCourse.Disciplines[3];
-        data.DireitoDisciplines.GeneralTheoryOfLaw = data.DireitoCourse.Disciplines[4];
+        data.DireitoDisciplines.PhilosophicalBases = data.DireitoCourse.Disciplines.Single(x => x.Name == "Bases Filosóficas");
+        data.DireitoDisciplines.CommunicationAndLegalArgumentation = data.DireitoCourse.Disciplines.Single(x => x.Name == "Comunicação e Argumentação Jurídica");
+        data.DireitoDisciplines.ManSocietyAndLaw = data.DireitoCourse.Disciplines.Single(x => x.Name == "Homem, Sociedade e Direito");
+        data.DireitoDisciplines.PoliticsAndStateInFocus = data.DireitoCourse.Disciplines.Single(x => x.Name == "Política e Estado em Foco");
+        data.DireitoDisciplines.GeneralTheoryOfLaw = data.DireitoCourse.Disciplines.Single(x => x.Name == "Teoria Geral do Direito");
 
         data.DireitoCourseCurriculum = await CreateCourseCurriculum("Grade Direito 1.0", data.DireitoCourse.Id,
         [

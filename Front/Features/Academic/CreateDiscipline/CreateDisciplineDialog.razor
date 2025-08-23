@@ -14,7 +14,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
-                T="CourseOut"
+                T="CreateCourseOut"
                 Label="Cursos"
                 MultiSelection
                 Required
@@ -24,7 +24,7 @@
             >
                 @foreach (var course in _courses)
                 {
-                    <MudSelectItem Class="d-flex align-start gap-0" T="CourseOut" Value="@course">@course.Name</MudSelectItem>
+                    <MudSelectItem Class="d-flex align-start gap-0" T="CreateCourseOut" Value="@course">@course.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudForm>
@@ -49,8 +49,8 @@
     private bool _loading;
     private string _name;
 
-    private List<CourseOut> _courses = [];
-    IEnumerable<CourseOut> SelectedCourses { get; set; } = new HashSet<CourseOut>();
+    private List<CreateCourseOut> _courses = [];
+    IEnumerable<CreateCourseOut> SelectedCourses { get; set; } = new HashSet<CreateCourseOut>();
 
     protected override async Task OnInitializedAsync()
     {

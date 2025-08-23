@@ -15,7 +15,7 @@ public class CreateCourseService(SykiDbContext ctx, HybridCache cache) : IAcadem
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CourseOut, SykiError>> Create(CreateCourseIn data)
+    public async Task<OneOf<CreateCourseOut, SykiError>> Create(CreateCourseIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -26,6 +26,6 @@ public class CreateCourseService(SykiDbContext ctx, HybridCache cache) : IAcadem
 
         await cache.RemoveAsync($"courses:{ctx.InstitutionId}");
 
-        return course.ToOut();
+        return course.ToCreateCourseOut();
     }
 }

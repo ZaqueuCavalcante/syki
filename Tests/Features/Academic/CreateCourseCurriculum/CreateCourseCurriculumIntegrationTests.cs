@@ -7,7 +7,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
+        CreateCourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
 
         // Act
         CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
@@ -25,7 +25,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CourseOut course = await client.CreateCourse(
+        CreateCourseOut course = await client.CreateCourse(
             "Análise e Desenvolvimento de Sistemas",
             CourseType.Tecnologo,
             ["Banco de Dados", "Estrutura de Dados", "Programação Orientada a Objetos"]
@@ -54,7 +54,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, ["Banco de Dados"]);
+        CreateCourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, ["Banco de Dados"]);
 
         var disciplines = new List<CreateCourseCurriculumDisciplineIn> { new(course.Disciplines[0].Id, 1, 10, 80) };
 
@@ -92,7 +92,7 @@ public partial class IntegrationTests
         var clientNovaRoma = await _api.LoggedAsAcademic();
         var clientUfpe = await _api.LoggedAsAcademic();
 
-        CourseOut course = await clientUfpe.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
+        CreateCourseOut course = await clientUfpe.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
 
         // Act
         var response = await clientNovaRoma.CreateCourseCurriculum("Grade de ADS 1.0", course.Id, []);
@@ -107,8 +107,8 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, ["Banco de Dados"]);
-        CourseOut direito = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
+        CreateCourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, ["Banco de Dados"]);
+        CreateCourseOut direito = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
 
         // Act
         var response = await client.CreateCourseCurriculum("Grade de Direito 1.0", direito.Id, [ new(ads.Disciplines[0].Id, 1, 10, 70) ]);
@@ -124,9 +124,9 @@ public partial class IntegrationTests
         var clientNovaRoma = await _api.LoggedAsAcademic();
         var clientUfpe = await _api.LoggedAsAcademic();
 
-        CourseOut courseNovaRoma = await clientNovaRoma.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, ["Banco de Dados"]);
+        CreateCourseOut courseNovaRoma = await clientNovaRoma.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, ["Banco de Dados"]);
 
-        CourseOut courseUfpe = await clientUfpe.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, ["Banco de Dados"]);
+        CreateCourseOut courseUfpe = await clientUfpe.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, ["Banco de Dados"]);
 
         // Act
         var response = await clientNovaRoma.CreateCourseCurriculum("Grade ADS", courseNovaRoma.Id, [ new(courseUfpe.Disciplines[0].Id, 1, 10, 70) ]);
@@ -140,7 +140,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CourseOut course = await client.CreateCourse(
+        CreateCourseOut course = await client.CreateCourse(
             "Análise e Desenvolvimento de Sistemas",
             CourseType.Tecnologo,
             ["Banco de Dados", "Estrutura de Dados", "Programação Orientada a Objetos"]
@@ -166,7 +166,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _api.LoggedAsAcademic();
-        CourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, ["Banco de Dados"]);
+        CreateCourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, ["Banco de Dados"]);
 
         var disciplines = new List<CreateCourseCurriculumDisciplineIn>
         {

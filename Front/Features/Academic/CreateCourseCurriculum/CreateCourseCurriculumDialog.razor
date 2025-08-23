@@ -16,12 +16,12 @@
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Value="@_course"
-                        ValueChanged="@((CourseOut newValue) => HandleSelectCourse(newValue))"
+                        ValueChanged="@((CreateCourseOut newValue) => HandleSelectCourse(newValue))"
                         Label="Curso"
                         Required
                         RequiredError="Informe!"
                         AdornmentColor="Color.Primary">
-                        @foreach (CourseOut? item in Courses)
+                        @foreach (CreateCourseOut? item in Courses)
                         {
                             <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                         }
@@ -86,8 +86,8 @@
     private MudForm _form;
     private bool _loading;
 
-    private CourseOut? _course;
-    List<CourseOut> Courses = [];
+    private CreateCourseOut? _course;
+    List<CreateCourseOut> Courses = [];
 
     List<CourseDisciplineOut> Options = [];
     List<CourseCurriculumDisciplineFillable> Disciplines = [];
@@ -120,7 +120,7 @@
         return _course == null || Options.Count == Disciplines.Count;
     }
 
-    async Task HandleSelectCourse(CourseOut newValue)
+    async Task HandleSelectCourse(CreateCourseOut newValue)
     {
         _course = newValue;
         Options = await GetCourseDisciplinesClient.Get(_course!.Id);

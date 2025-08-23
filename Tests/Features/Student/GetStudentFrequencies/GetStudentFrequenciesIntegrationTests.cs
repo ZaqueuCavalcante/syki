@@ -66,7 +66,7 @@ public partial class IntegrationTests
         // Arrange
         var academicClient = await _api.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        var period = data.AcademicPeriod1.Id;
+        var period = data.AcademicPeriod2.Id;
 
         await academicClient.CreateEnrollmentPeriod(period, -2, 2);
 

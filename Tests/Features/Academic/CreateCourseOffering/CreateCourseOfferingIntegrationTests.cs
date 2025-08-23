@@ -10,7 +10,7 @@ public partial class IntegrationTests
 
         CreateCampusOut campus = await client.CreateCampus();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
-        CourseOut course = await client.CreateCourse("ADS", CourseType.Tecnologo, []);
+        CreateCourseOut course = await client.CreateCourse("ADS", CourseType.Tecnologo, []);
         CourseCurriculumOut courseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
@@ -73,7 +73,7 @@ public partial class IntegrationTests
         var clientNovaRoma = await _api.LoggedAsAcademic();
         var clientUfpe = await _api.LoggedAsAcademic();
 
-        CourseOut courseUfpe = await clientUfpe.CreateCourse("Direito", CourseType.Bacharelado, []);
+        CreateCourseOut courseUfpe = await clientUfpe.CreateCourse("Direito", CourseType.Bacharelado, []);
         CreateCampusOut campusNovaRoma = await clientNovaRoma.CreateCampus();
 
         // Act
@@ -89,7 +89,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
         CreateCampusOut campus = await client.CreateCampus();
-        CourseOut course = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
+        CreateCourseOut course = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
 
         // Act
         var response = await client.CreateCourseOffering(campus.Id, course.Id, Guid.CreateVersion7(), "2024.1", Shift.Matutino);
@@ -104,8 +104,8 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
         CreateCampusOut campus = await client.CreateCampus();
-        CourseOut courseAds = await client.CreateCourse("ADS", CourseType.Tecnologo, []);
-        CourseOut courseDireito = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
+        CreateCourseOut courseAds = await client.CreateCourse("ADS", CourseType.Tecnologo, []);
+        CreateCourseOut courseDireito = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
         CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", courseAds.Id);
 
         // Act
@@ -121,7 +121,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
         CreateCampusOut campus = await client.CreateCampus();
-        CourseOut course = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
+        CreateCourseOut course = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
         CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
@@ -140,7 +140,7 @@ public partial class IntegrationTests
         var client = await _api.LoggedAsAcademic();
         CreateCampusOut campus = await client.CreateCampus();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
-        CourseOut course = await client.CreateCourse("ADS", CourseType.Tecnologo, []);
+        CreateCourseOut course = await client.CreateCourse("ADS", CourseType.Tecnologo, []);
         CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act
@@ -160,7 +160,7 @@ public partial class IntegrationTests
         await clientUfpe.CreateAcademicPeriod("2023.1");
 
         CreateCampusOut campus = await clientNovaRoma.CreateCampus();
-        CourseOut course = await clientNovaRoma.CreateCourse("Direito", CourseType.Bacharelado, []);
+        CreateCourseOut course = await clientNovaRoma.CreateCourse("Direito", CourseType.Bacharelado, []);
         CourseCurriculumOut cc = await clientNovaRoma.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
 
         // Act

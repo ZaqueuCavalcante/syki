@@ -67,7 +67,7 @@
                 </MudItem>
             </MudGrid>
             <MudAutocomplete
-                T="CourseOut"
+                T="CreateCourseOut"
                 MaxItems="50"
                 SearchFunc="@SearchCourse"
                 Dense
@@ -132,13 +132,13 @@
     private bool _loading;
 
     private GetCampiItemOut? _campus;
-    private CourseOut? _course;
+    private CreateCourseOut? _course;
     private CourseCurriculumOut? _courseCurriculum;
     private string? _period;
     private Shift? _shift;
 
     List<GetCampiItemOut> Campi = [];
-    List<CourseOut> Courses = [];
+    List<CreateCourseOut> Courses = [];
     List<AcademicPeriodOut> Periods = [];
     List<CourseCurriculumOut> CourseCurriculums = [];
 
@@ -152,7 +152,7 @@
         });
     }
 
-    private async Task<IEnumerable<CourseOut>> SearchCourse(string value, CancellationToken cancellationToken)
+    private async Task<IEnumerable<CreateCourseOut>> SearchCourse(string value, CancellationToken cancellationToken)
     {
         await Task.Delay(0);
 

@@ -31,14 +31,14 @@ public class Course
         Disciplines = [];
     }
 
-    public CourseOut ToOut()
+    public CreateCourseOut ToOut()
     {
-        return new CourseOut
+        return new CreateCourseOut
         {
             Id = Id,
             Name = Name,
             Type = Type,
-            Disciplines = Disciplines?.ConvertAll(x => x.ToOut()) ?? [],
+            Disciplines = [],
         };
     }
 }

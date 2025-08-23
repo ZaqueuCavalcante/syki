@@ -9,10 +9,10 @@ public partial class IntegrationTests
         var clientNovaRoma = await _api.LoggedAsAcademic();
         var clientUfpe = await _api.LoggedAsAcademic();
 
-        CourseOut courseNovaRoma = await clientNovaRoma.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
+        CreateCourseOut courseNovaRoma = await clientNovaRoma.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
         CourseCurriculumOut courseCurriculumNovaRoma = await clientNovaRoma.CreateCourseCurriculum("NR - Grade de ADS - 1.0", courseNovaRoma.Id);
 
-        CourseOut courseUfpe = await clientUfpe.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
+        CreateCourseOut courseUfpe = await clientUfpe.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
         await clientUfpe.CreateCourseCurriculum("UFPE - Grade de ADS - 1.0", courseUfpe.Id);
 
         // Act
@@ -30,10 +30,10 @@ public partial class IntegrationTests
         // Arrange
         var client = await _api.LoggedAsAcademic();
 
-        CourseOut direito = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
+        CreateCourseOut direito = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
         CourseCurriculumOut direitoCourseCurriculum = await client.CreateCourseCurriculum("Grade de Direito 1.0", direito.Id);
 
-        CourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
+        CreateCourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
         CourseCurriculumOut adsCourseCurriculum = await client.CreateCourseCurriculum("Grade de ADS 1.0", ads.Id);
 
         // Act

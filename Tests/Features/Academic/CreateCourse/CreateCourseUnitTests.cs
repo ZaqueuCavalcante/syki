@@ -14,7 +14,7 @@ public class CreateCourseUnitTests
         var course = new Course(institutionId, name, Bacharelado);
 
         // Act
-        var courseOut = course.ToOut();
+        var courseOut = course.ToCreateCourseOut();
 
         // Assert
         courseOut.Id.Should().Be(course.Id);
@@ -27,8 +27,8 @@ public class CreateCourseUnitTests
     {
         // Arrange
         var course = new Course(Guid.CreateVersion7(), "Curso", Bacharelado);
-        var courseOut1 = course.ToOut();
-        var courseOut2 = course.ToOut();
+        var courseOut1 = course.ToCreateCourseOut();
+        var courseOut2 = course.ToCreateCourseOut();
 
         // Act
         var equals = courseOut1.Equals(courseOut2);
@@ -43,8 +43,8 @@ public class CreateCourseUnitTests
         // Arrange
         var course1 = new Course(Guid.CreateVersion7(), "Course1", Bacharelado);
         var course2 = new Course(Guid.CreateVersion7(), "Course2", Bacharelado);
-        var courseOut1 = course1.ToOut();
-        var courseOut2 = course2.ToOut();
+        var courseOut1 = course1.ToCreateCourseOut();
+        var courseOut2 = course2.ToCreateCourseOut();
 
         // Act
         var equals = courseOut1.Equals(courseOut2);
@@ -58,7 +58,7 @@ public class CreateCourseUnitTests
     {
         // Arrange
         var course = new Course(Guid.CreateVersion7(), "Course1", Bacharelado);
-        var courseOut = course.ToOut();
+        var courseOut = course.ToCreateCourseOut();
 
         // Act
         var equals = courseOut.Equals(null);

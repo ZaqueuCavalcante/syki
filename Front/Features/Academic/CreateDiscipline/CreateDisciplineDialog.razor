@@ -14,7 +14,7 @@
                 Margin="Margin.Dense"
                 Variant="Variant.Outlined"
                 Class="mb-2"
-                T="CreateCourseOut"
+                T="GetCoursesItemOut"
                 Label="Cursos"
                 MultiSelection
                 Required
@@ -22,9 +22,9 @@
                 @bind-SelectedValues="@SelectedCourses"
                 MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
             >
-                @foreach (var course in _courses)
+                @foreach (var course in _courses.Items)
                 {
-                    <MudSelectItem Class="d-flex align-start gap-0" T="CreateCourseOut" Value="@course">@course.Name</MudSelectItem>
+                    <MudSelectItem Class="d-flex align-start gap-0" T="GetCoursesItemOut" Value="@course">@course.Name</MudSelectItem>
                 }
             </MudSelect>
         </MudForm>
@@ -49,8 +49,8 @@
     private bool _loading;
     private string _name;
 
-    private List<CreateCourseOut> _courses = [];
-    IEnumerable<CreateCourseOut> SelectedCourses { get; set; } = new HashSet<CreateCourseOut>();
+    private GetCoursesOut _courses = new();
+    IEnumerable<GetCoursesItemOut> SelectedCourses { get; set; } = new HashSet<GetCoursesItemOut>();
 
     protected override async Task OnInitializedAsync()
     {

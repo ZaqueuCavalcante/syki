@@ -2,8 +2,8 @@ namespace Syki.Front.Features.Academic.GetCourses;
 
 public class GetCoursesClient(HttpClient http) : IAcademicClient
 {
-    public async Task<List<CreateCourseOut>> Get()
+    public async Task<GetCoursesOut> Get()
     {
-        return await http.GetFromJsonAsync<List<CreateCourseOut>>("/academic/courses", HttpConfigs.JsonOptions) ?? [];
+        return await http.GetFromJsonAsync<GetCoursesOut>("/academic/courses", HttpConfigs.JsonOptions) ?? new();
     }
 }

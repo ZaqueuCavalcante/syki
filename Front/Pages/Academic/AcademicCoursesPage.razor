@@ -13,7 +13,7 @@
     <MudContainer Class="px-0 mb-4">
         <MudDataGrid
             Class="pa-4"
-            Items="@_courses"
+            Items="@_courses.Items"
             QuickFilter="@_quickFilter"
             Hover
             Dense
@@ -31,7 +31,7 @@
                 @(GetNotFoundMessage())
             </NoRecordsContent>
             <PagerContent>
-                <SykiDataGridPager T="CreateCourseOut" />
+                <SykiDataGridPager T="GetCoursesItemOut" />
             </PagerContent>
         </MudDataGrid>
     </MudContainer>
@@ -45,16 +45,16 @@
 {
     private bool _loading;
     private string _searchString;
-    private List<CreateCourseOut> _courses = [];
+    private GetCoursesOut _courses = new();
 
     protected override async Task OnInitializedAsync()
     {
         _loading = true;
-        _courses = await Client.Get() ?? [];
+        _courses = await Client.Get() ?? new();
         _loading = false;
     }
 
-    private Func<CreateCourseOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Type.GetDescription());
+    private Func<GetCoursesItemOut, bool> _quickFilter => x => _searchString.IsIn(x.Name, x.Type.GetDescription());
 
     private async Task OpenDialog()
     {

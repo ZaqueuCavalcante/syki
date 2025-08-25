@@ -2,15 +2,19 @@ namespace Syki.Back.Features.Academic.GetCourses;
 
 public class GetCoursesService(SykiDbContext ctx, HybridCache cache) : IAcademicService
 {
-    public async Task<List<CreateCourseOut>> Get(Guid institutionId)
+    public async Task<GetCoursesOut> Get()
     {
         return await cache.GetOrCreateAsync(
-            key: $"courses:{institutionId}",
-            state: (ctx, institutionId),
+            key: $"courses:{ctx.InstitutionId}",
+            state: ctx,
             factory: async (state, _) =>
             {
-                var courses = await state.ctx.GetCourses(state.institutionId);
-                return courses.ConvertAll(c => c.ToOut());
+                var courses = await state.GetCourses(state.InstitutionId);
+                return new GetCoursesOut
+                {
+                    Total = courses.Count,
+                    Items = courses.ConvertAll(c => c.ToGetCoursesItemOut())
+                };
             }
         );
     }

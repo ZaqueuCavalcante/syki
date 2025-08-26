@@ -86,8 +86,17 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
+    public async Task<GetCoursesWithCurriculumsOut> GetCoursesWithCurriculums()
+    {
+        var client = new GetCoursesWithCurriculumsClient(Http);
+        return await client.Get();
+    }
 
-
+    public async Task<GetCoursesWithDisciplinesOut> GetCoursesWithDisciplines()
+    {
+        var client = new GetCoursesWithDisciplinesClient(Http);
+        return await client.Get();
+    }
 
 
 
@@ -102,8 +111,7 @@ public class AcademicHttpClient(HttpClient http)
         string description,
         UsersGroup targetUsers,
         bool timeless
-    )
-    {
+    ) {
         var client = new CreateNotificationClient(Http);
         var response = await client.Create(title, description, targetUsers, timeless);
         return await response.DeserializeTo<NotificationOut>();
@@ -114,8 +122,6 @@ public class AcademicHttpClient(HttpClient http)
         var client = new GetNotificationsClient(Http);
         return await client.Get();
     }
-
-
 
     public async Task<DisciplineOut> CreateDiscipline(
         string name = "Banco de Dados",
@@ -138,17 +144,7 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get(courseId);
     }
 
-    public async Task<GetCoursesWithCurriculumsOut> GetCoursesWithCurriculums()
-    {
-        var client = new GetCoursesWithCurriculumsClient(Http);
-        return await client.Get();
-    }
 
-    public async Task<GetCoursesWithDisciplinesOut> GetCoursesWithDisciplines()
-    {
-        var client = new GetCoursesWithDisciplinesClient(Http);
-        return await client.Get();
-    }
 
 
 

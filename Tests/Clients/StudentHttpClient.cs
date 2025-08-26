@@ -1,15 +1,15 @@
+using Syki.Front.Features.Student.GetStudentNotes;
 using Syki.Front.Features.Student.GetStudentAgenda;
 using Syki.Front.Features.Student.GetStudentInsights;
 using Syki.Front.Features.Student.GetStudentFrequency;
-using Syki.Front.Features.Student.GetStudentNotes;
 using Syki.Front.Features.Student.GetStudentAverageNote;
 using Syki.Front.Features.Student.GetStudentDisciplines;
 using Syki.Front.Features.Student.GetStudentFrequencies;
 using Syki.Front.Features.Student.CreateStudentEnrollment;
+using Syki.Front.Features.Student.CreateClassActivityWork;
+using Syki.Front.Features.Student.GetStudentClassActivities;
 using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 using Syki.Front.Features.Student.GetStudentEnrollmentClasses;
-using Syki.Front.Features.Student.GetStudentClassActivities;
-using Syki.Front.Features.Student.CreateClassActivityWork;
 
 namespace Syki.Tests.Clients;
 

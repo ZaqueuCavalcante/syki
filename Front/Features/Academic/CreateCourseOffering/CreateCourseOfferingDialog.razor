@@ -67,7 +67,7 @@
                 </MudItem>
             </MudGrid>
             <MudAutocomplete
-                T="CreateCourseOut"
+                T="GetCoursesWithCurriculumsItemOut"
                 MaxItems="50"
                 SearchFunc="@SearchCourse"
                 Dense
@@ -132,13 +132,13 @@
     private bool _loading;
 
     private GetCampiItemOut? _campus;
-    private CreateCourseOut? _course;
+    private GetCoursesWithCurriculumsItemOut? _course;
     private CourseCurriculumOut? _courseCurriculum;
     private string? _period;
     private Shift? _shift;
 
     List<GetCampiItemOut> Campi = [];
-    List<CreateCourseOut> Courses = [];
+    List<GetCoursesWithCurriculumsItemOut> Courses = [];
     List<AcademicPeriodOut> Periods = [];
     List<CourseCurriculumOut> CourseCurriculums = [];
 
@@ -147,12 +147,12 @@
         await Task.WhenAll(new Task[] { 
             Task.Run(async () => Campi = (await GetCampiClient.Get()).Items),
             Task.Run(async () => Periods = await GetAcademicPeriodsClient.Get()),
-            Task.Run(async () => Courses = await GetCoursesWithCurriculumsClient.Get()),
+            Task.Run(async () => Courses = (await GetCoursesWithCurriculumsClient.Get()).Items),
             Task.Run(async () => CourseCurriculums = await GetCourseCurriculumsClient.Get()),
         });
     }
 
-    private async Task<IEnumerable<CreateCourseOut>> SearchCourse(string value, CancellationToken cancellationToken)
+    private async Task<IEnumerable<GetCoursesWithCurriculumsItemOut>> SearchCourse(string value, CancellationToken cancellationToken)
     {
         await Task.Delay(0);
 

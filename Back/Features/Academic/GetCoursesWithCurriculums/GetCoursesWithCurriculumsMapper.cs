@@ -1,12 +1,12 @@
 using Syki.Back.Features.Academic.CreateCourse;
 
-namespace Syki.Back.Features.Academic.GetCourses;
+namespace Syki.Back.Features.Academic.GetCoursesWithCurriculums;
 
-public static class GetCoursesMapper
+public static class GetCoursesWithCurriculumsMapper
 {
     extension(Course course)
     {
-        public GetCoursesItemOut ToGetCoursesItemOut()
+        public GetCoursesWithCurriculumsItemOut ToGetCoursesWithCurriculumsItemOut()
         {
             return new()
             {

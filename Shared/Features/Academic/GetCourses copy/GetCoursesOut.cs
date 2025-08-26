@@ -1,31 +1,31 @@
 namespace Syki.Shared;
 
-public class GetCoursesWithCurriculumsOut
+public class GetCoursesOut
 {
     public int Total { get; set; }
-    public List<GetCoursesWithCurriculumsItemOut> Items { get; set; } = [];
+    public List<GetCoursesItemOut> Items { get; set; } = [];
 
-    public static IEnumerable<(string, GetCoursesWithCurriculumsOut)> GetExamples() =>
+    public static IEnumerable<(string, GetCoursesOut)> GetExamples() =>
     [
         ("Courses",
-        new GetCoursesWithCurriculumsOut()
+        new GetCoursesOut()
         {
             Total = 3,
             Items =
             [
-                new GetCoursesWithCurriculumsItemOut
+                new GetCoursesItemOut
                 {
                     Id = Guid.NewGuid(),
                     Name = "ADS",
                     Type = CourseType.Tecnologo,
                 },
-                new GetCoursesWithCurriculumsItemOut
+                new GetCoursesItemOut
                 {
                     Id = Guid.NewGuid(),
                     Name = "Medicina",
                     Type = CourseType.Bacharelado,
                 },
-                new GetCoursesWithCurriculumsItemOut
+                new GetCoursesItemOut
                 {
                     Id = Guid.NewGuid(),
                     Name = "Direito",
@@ -36,7 +36,7 @@ public class GetCoursesWithCurriculumsOut
     ];
 }
 
-public class GetCoursesWithCurriculumsItemOut
+public class GetCoursesItemOut
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -45,7 +45,7 @@ public class GetCoursesWithCurriculumsItemOut
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;
-        return Id == ((GetCoursesWithCurriculumsItemOut)obj).Id;
+        return Id == ((GetCoursesItemOut)obj).Id;
     }
 
     public override int GetHashCode()

@@ -144,17 +144,17 @@ public class AcademicHttpClient(HttpClient http)
         return await client.Get();
     }
 
-
-
-
-
-
-
-    public async Task<List<CreateCourseOut>> GetCoursesWithDisciplines()
+    public async Task<GetCoursesWithDisciplinesOut> GetCoursesWithDisciplines()
     {
         var client = new GetCoursesWithDisciplinesClient(Http);
         return await client.Get();
     }
+
+
+
+
+
+
 
     public async Task<OneOf<CourseCurriculumOut, ErrorOut>> CreateCourseCurriculum(
         string name,

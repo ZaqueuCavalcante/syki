@@ -19,8 +19,8 @@ public partial class IntegrationTests
 
         // Assert
         var courses = await client.GetCoursesWithDisciplines();
-        courses.Should().HaveCount(2);
-        courses[0].Name.Should().Be("Análise e Desenvolvimento de Sistemas");
-        courses[1].Name.Should().Be("Direito");
+        courses.Total.Should().Be(2);
+        courses.Items[0].Name.Should().Be("Análise e Desenvolvimento de Sistemas");
+        courses.Items[1].Name.Should().Be("Direito");
     }
 }

@@ -29,11 +29,11 @@
                         Margin="Margin.Dense"
                         Variant="Variant.Outlined"
                         Value="@_course"
-                        ValueChanged="@((CreateCourseOut newValue) => HandleSelectCourse(newValue))"
+                        ValueChanged="@((GetCoursesWithDisciplinesItemOut newValue) => HandleSelectCourse(newValue))"
                         Label="Curso"
                         AdornmentColor="Color.Primary"
                     >
-                        @foreach (CreateCourseOut? item in _courses)
+                        @foreach (GetCoursesWithDisciplinesItemOut? item in _courses)
                         {
                             <MudSelectItem Value="@item">@item.Name</MudSelectItem>
                         }
@@ -123,8 +123,8 @@
 
     private GetAcademicTeacherOut _teacher = new();
 
-    private CreateCourseOut? _course;
-    private List<CreateCourseOut> _courses = [];
+    private GetCoursesWithDisciplinesItemOut? _course;
+    private List<GetCoursesWithDisciplinesItemOut> _courses = [];
 
     private AssignDisciplinesToTeacherSelect? _discipline;
     private List<CourseDisciplineOut> _disciplines = [];
@@ -134,10 +134,10 @@
     {
         _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
         _width = _breakpoint == Breakpoint.Xs ? "100%" : "500px";
-        _courses = await GetCoursesWithDisciplinesClient.Get();
+        _courses = (await GetCoursesWithDisciplinesClient.Get()).Items;
     }
 
-    async Task HandleSelectCourse(CreateCourseOut newValue)
+    async Task HandleSelectCourse(GetCoursesWithDisciplinesItemOut newValue)
     {
         _course = newValue;
         _disciplines = _course != null ? await GetCourseDisciplinesClient.Get(_course!.Id) : [];

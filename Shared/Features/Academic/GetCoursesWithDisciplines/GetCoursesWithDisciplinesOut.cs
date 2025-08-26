@@ -1,31 +1,31 @@
 namespace Syki.Shared;
 
-public class GetCoursesOut
+public class GetCoursesWithDisciplinesOut
 {
     public int Total { get; set; }
-    public List<GetCoursesItemOut> Items { get; set; } = [];
+    public List<GetCoursesWithDisciplinesItemOut> Items { get; set; } = [];
 
-    public static IEnumerable<(string, GetCoursesOut)> GetExamples() =>
+    public static IEnumerable<(string, GetCoursesWithDisciplinesOut)> GetExamples() =>
     [
         ("Courses",
-        new GetCoursesOut()
+        new GetCoursesWithDisciplinesOut()
         {
             Total = 3,
             Items =
             [
-                new GetCoursesItemOut
+                new GetCoursesWithDisciplinesItemOut
                 {
                     Id = Guid.NewGuid(),
                     Name = "ADS",
                     Type = CourseType.Tecnologo,
                 },
-                new GetCoursesItemOut
+                new GetCoursesWithDisciplinesItemOut
                 {
                     Id = Guid.NewGuid(),
                     Name = "Medicina",
                     Type = CourseType.Bacharelado,
                 },
-                new GetCoursesItemOut
+                new GetCoursesWithDisciplinesItemOut
                 {
                     Id = Guid.NewGuid(),
                     Name = "Direito",
@@ -36,7 +36,7 @@ public class GetCoursesOut
     ];
 }
 
-public class GetCoursesItemOut
+public class GetCoursesWithDisciplinesItemOut
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -45,7 +45,7 @@ public class GetCoursesItemOut
     public override bool Equals(object? obj)
     {
         if (obj is null) return false;
-        return Id == ((GetCoursesItemOut)obj).Id;
+        return Id == ((GetCoursesWithDisciplinesItemOut)obj).Id;
     }
 
     public override int GetHashCode()

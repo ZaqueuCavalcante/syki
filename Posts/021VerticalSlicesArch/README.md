@@ -6,8 +6,8 @@ A ideia principal da Vertical Slice Architecture (VSA) é organizar seu código 
 
 Como exemplo, temos a funcionalidade de criar um curso, mostrada na imagem abaixo.
 
-Essa controller possui:
-- Autorização (apenas usuários com role=Academic podem acessar)
+A CreateCourseController possui:
+- Autorização (apenas usuários Academic podem acessar)
 - Rota (POST /academic/courses)
 - Documentação + exemplos de requests, responses e erros
 - Chamada do CreateCourseService que executa lógica de negócio

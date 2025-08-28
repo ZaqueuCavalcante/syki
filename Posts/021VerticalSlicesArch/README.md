@@ -7,20 +7,20 @@ A ideia principal da Vertical Slice Architecture (VSA) é organizar seu código 
 Como exemplo, temos a funcionalidade de criar um curso, mostrada na imagem abaixo.
 
 Essa controller possui:
-    - Autorização (apenas usuários com role=Academic podem acessar)
-    - Rota (POST /academic/courses)
-    - Documentação + exemplos de requests, responses e erros
-    - Chamada do CreateCourseService que executa lógica de negócio
+- Autorização (apenas usuários com role=Academic podem acessar)
+- Rota (POST /academic/courses)
+- Documentação + exemplos de requests, responses e erros
+- Chamada do CreateCourseService que executa lógica de negócio
 
 <p align="center">
   <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/021VerticalSlicesArch/00_endpoint.png?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 O CreateCourseService possui:
-    - Validação do input usando FluentValidation
-    - Uso de Result Pattern para retornar sucesso ou erro
-    - SykiDbContext para operações no banco de dados
-    - Mapper para converter a entidade de domínio em DTO de resposta
+- Validação do input usando FluentValidation
+- Uso de Result Pattern para retornar sucesso ou erro
+- SykiDbContext para operações no banco de dados
+- Mapper para converter a entidade de domínio em DTO de resposta
 
 <p align="center">
   <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/021VerticalSlicesArch/01_service.png?raw=true" style="display: block; margin: 0 auto" />

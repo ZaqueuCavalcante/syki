@@ -12,11 +12,30 @@ public static class OpenTelemetryConfigs
     {
         if (Env.IsTesting()) return;
 
+        // builder.Logging.AddOpenTelemetry(logging =>
+        // {
+        //     logging.IncludeScopes = true;
+        //     logging.IncludeFormattedMessage = true;
+        // });
+
         var settings = builder.Configuration.Tracing();
 
         builder.Services
             .AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddService("Back"))
+            // .WithMetrics(metrics =>
+            // {
+            //     metrics
+            //         .AddNpgsqlInstrumentation()
+            //         .AddRuntimeInstrumentation()
+            //         .AddAspNetCoreInstrumentation()
+            //         .AddHttpClientInstrumentation();
+
+            //     metrics.AddMeter("Microsoft.AspNetCore.Hosting");
+            //     metrics.AddMeter("Microsoft.AspNetCore.Server.Kestrel");
+
+            //     metrics.AddOtlpExporter();
+            // })
             .WithTracing(tracing =>
             {
                 tracing

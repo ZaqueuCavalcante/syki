@@ -31,7 +31,7 @@ public class CreateCourseOut
             Id = Guid.CreateVersion7(),
             Name = "Direito",
             Type = CourseType.Bacharelado,
-            Disciplines = [new() { Id = Guid.NewGuid(), Name = "Direito Civil" }, new() { Id = Guid.NewGuid(), Name = "Direito Penal" }],
+            Disciplines = [new() { Id = Guid.NewGuid(), Name = "Direito Civil", Code = "F5FFCA51" }, new() { Id = Guid.NewGuid(), Name = "Direito Penal", Code = "270FD018" }],
         }),
         ("ADS",
         new CreateCourseOut
@@ -39,7 +39,7 @@ public class CreateCourseOut
             Id = Guid.CreateVersion7(),
             Name = "Análise e Desenvolvimento de Sistemas",
             Type = CourseType.Tecnologo,
-            Disciplines = [new() { Id = Guid.NewGuid(), Name = "Programação Orientada a Objetos" }, new() { Id = Guid.NewGuid(), Name = "Banco de Dados" }],
+            Disciplines = [new() { Id = Guid.NewGuid(), Name = "Programação Orientada a Objetos", Code = "2B7FBD49" }, new() { Id = Guid.NewGuid(), Name = "Banco de Dados", Code = "1732C09D" }],
         }),
     ];
 

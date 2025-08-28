@@ -1,3 +1,5 @@
+using Syki.Back.Features.Academic.CreateDiscipline;
+
 namespace Syki.Back.Features.Academic.CreateCourse;
 
 public static class CreateCourseMapper
@@ -12,8 +14,22 @@ public static class CreateCourseMapper
                 Name = course.Name,
                 Type = course.Type,
                 Disciplines = course.Disciplines
-                    .Select(x => new CreateCourseDisciplineOut() { Id = x.Id, Name = x.Name, Code = x.Code })
-                    .OrderBy(x => x.Name).ToList()
+                    .Select(x => x.ToCreateCourseDisciplineOut())
+                    .OrderBy(x => x.Name)
+                    .ToList()
+            };
+        }
+    }
+
+    extension(Discipline discipline)
+    {
+        public CreateCourseDisciplineOut ToCreateCourseDisciplineOut()
+        {
+            return new()
+            {
+                Id = discipline.Id,
+                Name = discipline.Name,
+                Code = discipline.Code,
             };
         }
     }

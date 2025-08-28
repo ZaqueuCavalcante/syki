@@ -30,15 +30,4 @@ public class Course
         Links = [];
         Disciplines = [];
     }
-
-    public CreateCourseOut ToOut()
-    {
-        return new CreateCourseOut
-        {
-            Id = Id,
-            Name = Name,
-            Type = Type,
-            Disciplines = [],
-        };
-    }
 }

@@ -560,6 +560,50 @@ Todo o desenvolvimento é orientado por simplicidade.
 
 Utilizo *Vertical Slices* e *Result Pattern* em praticamente todas as funcionalidades do sistema.
 
+A ideia principal da Vertical Slice Architecture (VSA) é organizar seu código por funcionalidade e não por camadas.
+
+Como exemplo, temos a funcionalidade de criar um curso, mostrada na imagem abaixo.
+
+A CreateCourseController possui:
+- Autorização (apenas usuários Academic podem acessar)
+- Rota (POST /academic/courses)
+- Documentação + exemplos de requests, responses e erros
+- Chamada do CreateCourseService que executa lógica de negócio
+
+<p align="center">
+  <img src="./Docs/Readme/14.1_Endpoint.png" style="display: block; margin: 0 auto" />
+</p>
+
+O CreateCourseService possui:
+- Validação do input usando FluentValidation
+- Uso de Result Pattern para retornar sucesso ou erro
+- SykiDbContext para operações no banco de dados
+- Mapper para converter a entidade de domínio em DTO de resposta
+
+<p align="center">
+  <img src="./Docs/Readme/14.2_Service.png" style="display: block; margin: 0 auto" />
+</p>
+
+<p align="center">
+  <img src="./Docs/Readme/14.3_Mapper.png" style="display: block; margin: 0 auto" />
+</p>
+
+Os objetos de input e output do endpoint possuem um método que retorna exemplos com valores, usados na documentação.
+
+<p align="center">
+  <img src="./Docs/Readme/14.4_Examples.png" style="display: block; margin: 0 auto" />
+</p>
+
+<p align="center">
+  <img src="./Docs/Readme/14.5_Docs.png" style="display: block; margin: 0 auto" />
+</p>
+
+Por fim, é extremamente fácil entender e encontrar as coisas no projeto, pois todos os arquivos relacionados com uma determinada funcionalidade possuem o mesmo prefixo, inclusive os de testes automatizados.
+
+<p align="center">
+  <img src="./Docs/Readme/14.6_Files.png" style="display: block; margin: 0 auto" />
+</p>
+
 ## 15 - Banco de Dados <a name="db"></a>
 
 Toda a estrutura do banco está mepeada no Entity Framework Core.

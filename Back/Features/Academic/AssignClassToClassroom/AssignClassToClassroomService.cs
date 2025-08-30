@@ -19,7 +19,7 @@ public class AssignClassToClassroomService(SykiDbContext ctx) : IAcademicService
         if (data.Schedules == null || data.Schedules.Count == 0) return new InvalidScheduleForAssignClassToClassroom();
 
         var ids = await ctx.ClassroomsClasses.Where(c => c.ClassroomId == classroomId && c.IsActive).Select(x => x.ClassId).ToListAsync() ?? [];
-        var currentSchedules = await ctx.Schedules.Where(x => x.ClassId != null && ids.Contains(x.ClassId.Value)).ToListAsync() ?? [];
+        var currentSchedules = await ctx.Schedules.Where(x => x.ClassroomId == classroomId && x.ClassId != null && ids.Contains(x.ClassId.Value)).ToListAsync() ?? [];
 
         data.Schedules.AddRange(currentSchedules.ConvertAll(x => new ScheduleIn(x.Day, x.Start, x.End)));
 
@@ -32,8 +32,8 @@ public class AssignClassToClassroomService(SykiDbContext ctx) : IAcademicService
         newSchedules.ForEach(x =>
         {
             x.ClassId = @class.Id;
-            x.TeacherId = @class.TeacherId;
             x.ClassroomId = classroom.Id;
+            x.TeacherId = @class.TeacherId;
         });
         ctx.AddRange(newSchedules);
 

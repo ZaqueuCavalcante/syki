@@ -2,7 +2,7 @@ namespace Syki.Back.Features.Academic.GetCampusStudents;
 
 public class GetCampusStudentsService(SykiDbContext ctx) : IAcademicService
 {
-    public async Task<List<GetCampusStudentsOut>> Get(Guid institutionId, Guid campusId)
+    public async Task<List<GetCampusStudentsOut>> Get(Guid campusId)
     {
         FormattableString sql = $@"
             SELECT
@@ -14,12 +14,11 @@ public class GetCampusStudentsService(SykiDbContext ctx) : IAcademicService
             INNER JOIN
                 syki.course_offerings co ON co.id = s.course_offering_id
             WHERE
-                s.institution_id = {institutionId}
+                s.institution_id = {ctx.InstitutionId}
                     AND
                 co.campus_id = {campusId}
             GROUP BY
-                s.id,
-                s.name
+                s.id, s.name
             ORDER BY
                 s.name
         ";

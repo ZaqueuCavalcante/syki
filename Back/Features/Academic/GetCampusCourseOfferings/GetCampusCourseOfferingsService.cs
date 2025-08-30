@@ -2,11 +2,11 @@ namespace Syki.Back.Features.Academic.GetCampusCourseOfferings;
 
 public class GetCampusCourseOfferingsService(SykiDbContext ctx) : IAcademicService
 {
-    public async Task<List<GetCampusCourseOfferingsOut>> Get(Guid institutionId, Guid campusId)
+    public async Task<List<GetCampusCourseOfferingsOut>> Get(Guid campusId)
     {
         var courseOfferings = await ctx.CourseOfferings.AsNoTracking()
+            .Where(x => x.InstitutionId == ctx.InstitutionId && x.CampusId == campusId)
             .Include(x => x.Course)
-            .Where(x => x.InstitutionId == institutionId && x.CampusId == campusId)
             .ToListAsync();
 
         var ccIds = courseOfferings.ConvertAll(x => x.CourseCurriculumId);
@@ -19,7 +19,7 @@ public class GetCampusCourseOfferingsService(SykiDbContext ctx) : IAcademicServi
             .Where(x => disciplinesIds.Contains(x.Id))
             .ToListAsync();
 
-        var academicPeriod = await ctx.GetCurrentAcademicPeriod(institutionId);
+        var academicPeriod = await ctx.GetCurrentAcademicPeriod(ctx.InstitutionId);
 
         var result = new List<GetCampusCourseOfferingsOut>();
 
@@ -33,12 +33,14 @@ public class GetCampusCourseOfferingsService(SykiDbContext ctx) : IAcademicServi
                     Id = x.DisciplineId,
                     Workload = x.Workload,
                     Name = disciplines.First(d => d.Id == x.DisciplineId).Name,
-                });
+                }).ToList();
+            if (disciplinesOut.Count == 0) continue;
+
             var campusCO = new GetCampusCourseOfferingsOut
             {
                 CourseOfferingId = item.Id,
                 Course = item.Course.Name,
-                Disciplines = disciplinesOut.ToList(),
+                Disciplines = disciplinesOut,
             };
             result.Add(campusCO);
         }

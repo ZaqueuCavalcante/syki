@@ -40,7 +40,7 @@
         <MudCardContent>
             <MudGrid Spacing="2">
 
-                <MudItem xs="12" sm="8" md="8" lg="8">
+                <MudItem xs="12" sm="12" md="12" lg="12">
                     <MudDataGrid
                         Dense
                         Hover
@@ -48,15 +48,17 @@
                         Items="@_courseOfferings"
                     >
                         <Columns>
-                            <PropertyColumn Property="x => x.Course" Title="@($"Cursos ({_courseOfferings.Count})")" />
+                            <PropertyColumn Property="x => x.Course" Title="@($"Ofertas de Curso ({_courseOfferings.Count})")" />
+                            <PropertyColumn Property="x => _students.Count(s => s.CourseOfferingId == x.CourseOfferingId)" Title="Alunos" />
                             <PropertyColumn Property="x => x.Disciplines.Count" Title="Disciplinas" />
                         </Columns>
+                        <NoRecordsContent>
+                            <MudText Typo="Typo.body2">Nenhuma oferta de curso encontrada</MudText>
+                        </NoRecordsContent>
                     </MudDataGrid>
                 </MudItem>
 
-
-
-                <MudItem xs="12" sm="4" md="4" lg="4">
+                <MudItem xs="12" sm="12" md="12" lg="12">
                     <MudDataGrid
                         Dense
                         Hover
@@ -66,12 +68,21 @@
                         <Columns>
                             <PropertyColumn Property="x => x.Name" Title="@($"Professores ({_teachers.Count})")" />
                             <PropertyColumn Property="x => x.Disciplines.Count(d => _disciplines.Select(y => y.Id).Contains(d))" Title="Disciplinas" />
+                            <TemplateColumn CellClass="d-flex justify-end">
+                                <CellTemplate>
+                                    <MudTooltip Text="Disciplinas" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Apps" OnClick="@(() => OpenDisciplinesDrawer(context.Item.Id))" />
+                                    </MudTooltip>
+                                </CellTemplate>
+                            </TemplateColumn>
                         </Columns>
+                        <NoRecordsContent>
+                            <MudText Typo="Typo.body2">Nenhum professor encontrado para este campus</MudText>
+                        </NoRecordsContent>
                     </MudDataGrid>
                 </MudItem>
 
-
-                <MudItem xs="12" sm="8" md="8" lg="8">
+                <MudItem xs="12" sm="12" md="12" lg="12">
                     <MudDataGrid
                         Dense
                         Hover
@@ -87,25 +98,21 @@
                             <TemplateColumn CellClass="d-flex justify-end">
                                 <CellTemplate>
                                     @{
-                                        var students = _students.Count(s => _courseOfferings.FirstOrDefault(c => c.CourseOfferingId == s.CourseOfferingId).Disciplines.Select(y => y.Id).Contains(context.Item.Id));
-                                        var vacancies = _classes.Where(c => c.DisciplineId == context.Item.Id).Sum(c => c.Vacancies);
-                                        var icon = vacancies < students ? Icons.Material.Filled.Error : Icons.Material.Filled.CheckCircle;
-                                        var color = vacancies < students ? Color.Error : Color.Success;
+                                        var (icon, color, message) = GetDisciplineIconData(context.Item.Id);
                                     }
-                                    <MudIcon
-                                        Size="@Size.Small"
-                                        Icon="@icon"
-                                        Color="@color"
-                                    />
+                                    <MudTooltip Text="@message" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                                        <MudIcon Size="@Size.Small" Icon="@icon" Color="@color" />
+                                    </MudTooltip>
                                 </CellTemplate>
                             </TemplateColumn>
-                        </Columns>  
+                        </Columns>
+                        <NoRecordsContent>
+                            <MudText Typo="Typo.body2">Nenhuma disciplina encontrada</MudText>
+                        </NoRecordsContent>
                     </MudDataGrid>
                 </MudItem>
        
-
-
-                <MudItem xs="12" sm="4" md="4" lg="4">
+                <MudItem xs="12" sm="12" md="12" lg="12">
                     <MudDataGrid
                         Dense
                         Hover
@@ -114,11 +121,14 @@
                     >
                         <Columns>
                             <PropertyColumn Property="x => x.Name" Title="@($"Alunos ({_students.Count})")" />
+                            <PropertyColumn Property="x => _courseOfferings.FirstOrDefault(c => c.CourseOfferingId == x.CourseOfferingId).Course" Title="Oferta de Curso" />
                             <PropertyColumn Property="x => _disciplines.Count(d => _courseOfferings.FirstOrDefault(c => c.CourseOfferingId == x.CourseOfferingId).Disciplines.Select(y => y.Id).Contains(d.Id))" Title="Disciplinas" />
                         </Columns>
+                        <NoRecordsContent>
+                            <MudText Typo="Typo.body2">Nenhum aluno encontrado</MudText>
+                        </NoRecordsContent>
                     </MudDataGrid>
                 </MudItem>
-
 
             </MudGrid>
         </MudCardContent>
@@ -142,10 +152,24 @@
                         </MudButton>
                     </MudStack>
                 </MudItem>
-                @foreach (var item in _classes)
-                {
-                    <ClassAssignmentCard Name="@item.Discipline" Teacher="@item.Teacher" Capacity="@item.Vacancies" />
-                }
+
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <MudDataGrid
+                        Dense
+                        Hover
+                        SortMode="SortMode.None"
+                        Items="@_classes"
+                    >
+                        <Columns>
+                            <PropertyColumn Property="x => x.Discipline" Title="Disciplina" />
+                            <PropertyColumn Property="x => x.Teacher" Title="Professor" />
+                            <PropertyColumn Property="x => x.Vacancies" Title="Vagas" />
+                        </Columns>
+                        <NoRecordsContent>
+                            <MudText Typo="Typo.body2">Nenhuma turma encontrada</MudText>
+                        </NoRecordsContent>
+                    </MudDataGrid>
+                </MudItem>
             </MudGrid>
         </MudCardContent>
     </MudCard>
@@ -156,17 +180,36 @@
                 <MudItem xs="12" sm="12" md="12" lg="12">
                     <MudText Typo="Typo.h6" Style="font-weight: bold">Salas (@_classrooms.Count)</MudText>
                 </MudItem>
-                @foreach (var classroom in _classrooms)
-                {
-                    <ClassroomAssignmentCard
-                        Name="@classroom.Name"
-                        Capacity="@classroom.Capacity"
-                        OnClick="@(async () => await OpenAssignClassToClassroomDialog(classroom))" />
-                }
+
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <MudDataGrid
+                        Dense
+                        Hover
+                        SortMode="SortMode.None"
+                        Items="@_classrooms"
+                    >
+                        <Columns>
+                            <PropertyColumn Property="x => x.Name" Title="Nome" />
+                            <PropertyColumn Property="x => x.Capacity" Title="Capacidade" />
+                            <TemplateColumn CellClass="d-flex justify-end">
+                                <CellTemplate>
+                                    <MudTooltip Text="Horários" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.VideoLabel" OnClick="@(async () => await OpenAssignClassToClassroomDialog(context.Item))" />
+                                    </MudTooltip>
+                                </CellTemplate>
+                            </TemplateColumn>
+                        </Columns>
+                        <NoRecordsContent>
+                            <MudText Typo="Typo.body2">Nenhuma sala encontrada</MudText>
+                        </NoRecordsContent>
+                    </MudDataGrid>
+                </MudItem>
             </MudGrid>
         </MudCardContent>
     </MudCard>
 </MudContainer>
+
+<AssignDisciplinesToTeacherDrawer @ref="@_disciplinesDrawer" AfterSubmit="@LoadData" />
 
 @inject IDialogService DialogService
 @inject GetCampiClient GetCampiClient
@@ -191,6 +234,8 @@
     private List<GetCampusCourseOfferingsOut> _courseOfferings = [];
     private List<GetCampusCourseOfferingsDisciplineOut> _disciplines = [];
 
+    private AssignDisciplinesToTeacherDrawer _disciplinesDrawer = default!;
+
     protected override async Task OnInitializedAsync()
     {
         var periodResponse = await GetCurrentAcademicPeriodClient.Get();
@@ -199,6 +244,7 @@
 
         _campi = (await GetCampiClient.Get()).Items;
         _campus = _campi.FirstOrDefault() ?? new();
+
         await LoadData();
     }
 
@@ -216,6 +262,24 @@
     {
         _campus = newValue;
         await LoadData();
+    }
+
+    private async Task OpenDisciplinesDrawer(Guid teacherId)
+    {
+        await _disciplinesDrawer.Open(teacherId);
+    }
+
+    private (string icon, Color color, string message) GetDisciplineIconData(Guid disciplineId)
+    {
+        var teachers = _teachers.Count(t => t.Disciplines.Contains(disciplineId));
+        if (teachers == 0) return (Icons.Material.Filled.Error, Color.Error, "Disciplina sem professor");
+
+        var students = _students.Count(s => _courseOfferings.FirstOrDefault(c => c.CourseOfferingId == s.CourseOfferingId).Disciplines.Select(y => y.Id).Contains(disciplineId));
+        var vacancies = _classes.Where(c => c.DisciplineId == disciplineId).Sum(c => c.Vacancies);
+
+        if (vacancies < students) return (Icons.Material.Filled.WarningAmber, Color.Warning, "Disciplina sem vagas suficientes");
+
+        return (Icons.Material.Filled.CheckCircle, Color.Success, "Disciplina ok");
     }
 
     private async Task OpenNewClassDialog()

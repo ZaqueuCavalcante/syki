@@ -67,8 +67,8 @@
     </MudContainer>
 </MudContainer>
 
-<AssignDisciplinesToTeacherDrawer @ref="@_disciplinesDrawer" AfterSubmit="@LoadData" />
 <AssignCampiToTeacherDrawer @ref="@_campiDrawer" AfterSubmit="@LoadData" />
+<AssignDisciplinesToTeacherDrawer @ref="@_disciplinesDrawer" AfterSubmit="@LoadData" />
 
 @inject NavigationManager Nav
 @inject IDialogService DialogService
@@ -83,8 +83,8 @@
     private List<TeacherOut> _teachers = [];
 
     private Breakpoint _breakpoint;
-    private AssignDisciplinesToTeacherDrawer _disciplinesDrawer = default!;
     private AssignCampiToTeacherDrawer _campiDrawer = default!;
+    private AssignDisciplinesToTeacherDrawer _disciplinesDrawer = default!;
 
     protected override async Task OnInitializedAsync()
     {

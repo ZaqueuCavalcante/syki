@@ -13,8 +13,7 @@ public class GetCampusStudentsController(GetCampusStudentsService service) : Con
     [HttpGet("academic/campi/{id}/students")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        var students = await service.Get(User.InstitutionId, id);
-
+        var students = await service.Get(id);
         return Ok(students);
     }
 }

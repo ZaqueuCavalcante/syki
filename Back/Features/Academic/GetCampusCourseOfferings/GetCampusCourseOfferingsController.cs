@@ -13,8 +13,7 @@ public class GetCampusCourseOfferingsController(GetCampusCourseOfferingsService 
     [HttpGet("academic/campi/{id}/course-offerings")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
-        var courseOfferings = await service.Get(User.InstitutionId, id);
-
+        var courseOfferings = await service.Get(id);
         return Ok(courseOfferings);
     }
 }

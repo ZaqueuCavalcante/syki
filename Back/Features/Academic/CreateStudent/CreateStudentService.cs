@@ -16,7 +16,7 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService createSer
         if (result.IsError) return result.Error;
 
         var user = result.Success;
-        var student = new SykiStudent(user.Id, institutionId, data.Name, data.CourseOfferingId);
+        var student = new SykiStudent(user.Id, institutionId, data.Name, data.CourseOfferingId, data.DateOfBirth);
         ctx.Add(student);
 
         await ctx.SaveChangesAsync();

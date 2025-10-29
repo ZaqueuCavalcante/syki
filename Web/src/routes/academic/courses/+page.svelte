@@ -1,4 +1,3 @@
-
 <svelte:head>
 	<title>Cursos</title>
 </svelte:head>

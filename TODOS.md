@@ -1,3 +1,10 @@
+# TODOS
+
+- Add FluentValidation
+- Add dynamic roles system (feature based)
+
+
+
 # Alocação de Salas e Professores
 
 - Classroom Assignment Problem
@@ -125,12 +132,3 @@ Todo início de semestre, temos que:
 
 - Filters
     - Global configs
-
-
-
-
-
-
-
-
-

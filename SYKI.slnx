@@ -1,0 +1,7 @@
+﻿<Solution>
+    <Project Path="Back/Back.csproj" />
+    <Project Path="Front/Front.csproj" />
+    <Project Path="Tests/Tests.csproj" />
+    <Project Path="Shared/Shared.csproj" />
+    <Project Path="Daemon/Daemon.csproj" />
+</Solution>

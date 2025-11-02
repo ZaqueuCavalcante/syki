@@ -13,7 +13,6 @@ EduSec
 EduKool ERP
 Wisenet
 
-
 ## FEDENA
 
 https://fedena.com/feature-tour

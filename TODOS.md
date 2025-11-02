@@ -3,7 +3,15 @@
 - Add FluentValidation
 - Add dynamic roles system (feature based)
 
+# Svelte Frontend
 
+- Daisy UI
+- Preline UI
+- Tailwind UI
+
+# Suporte para Ensino Fundamental e Médio
+
+- Pais dos alunos
 
 # Alocação de Salas e Professores
 

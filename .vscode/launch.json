@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "compounds": [
         {
-            "name": "RUN_ALL",
+            "name": "BACK_DAEMON",
             "configurations": [
                 "BACK",
                 "DAEMON",

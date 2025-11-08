@@ -22,6 +22,32 @@ public static class ListExtensions
         return selfs.IsSubsetOf(others);
     }
 
+    public static bool IsAllDistinct(this IEnumerable<int> list)
+    {
+        if (list is null) return true;
+
+        var set = new HashSet<int>();
+        foreach (var x in list)
+        {
+            if (!set.Add(x)) return false;
+        }
+
+        return true;
+    }
+
+    public static bool IsAllDistinct(this IEnumerable<string> list)
+    {
+        if (list is null) return true;
+
+        var set = new HashSet<string>();
+        foreach (var x in list)
+        {
+            if (!set.Add(x)) return false;
+        }
+
+        return true;
+    }
+
     public static List<AgendaDayOut> ToAgendas(this List<EnrollmentClassOut> classes)
     {
         var agendas = new List<AgendaDayOut>();

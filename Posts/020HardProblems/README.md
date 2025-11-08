@@ -6,7 +6,7 @@ Este é um ótimo exercício de pensamento analítico: como quebrar um problemã
 
 O problema consiste em vincular professores, alunos e disciplinas a turmas. Depois cada turma deve ser vinculada a salas de aulas, em determinados horários.
 
-Classroom Assignment Problem +  School Timetabling Problem
+Classroom Assignment Problem + School Timetabling Problem
 
 ## Versão simplificada
 
@@ -42,7 +42,3 @@ Sendo assim, vamos abrir uma turma para cada disciplina, onde todas as turmas se
     - Caso o professor tenha suas preferências, mostrar um hint
     - O select de horário deve ser exibido em um componente grande com colunas sendo os dias da semana
     - Validar no backend a consistência dos dados
-    
-
-
-

@@ -15,12 +15,12 @@ public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> use
 
         var claims = new List<Claim>
         {
-            new("jti", Guid.CreateVersion7().ToString()),
-            new("sub", user.Id.ToString()),
-            new("role", role),
-            new("name", user.Name),
-            new("email", user.Email!),
-            new("institution", user.InstitutionId.ToString()),
+            new(Claims.Jti, Guid.CreateVersion7().ToString()),
+            new(Claims.UserId, user.Id.ToString()),
+            new(Claims.UserRole, role),
+            new(Claims.UserName, user.Name),
+            new(Claims.UserEmail, user.Email!),
+            new(Claims.InstitutionId, user.InstitutionId.ToString()),
         };
         claims.AddRange(await GetDbClaims(user.Id, role));
 
@@ -57,8 +57,8 @@ public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> use
                 .Select(a => a.CourseOfferingId).FirstAsync();
             var courseCurriculumId = await ctx.CourseOfferings.Where(o => o.Id == courseOfferingId)
                 .Select(o => o.CourseCurriculumId).FirstAsync();
-            
-            return [ new("CourseCurriculumId", courseCurriculumId.ToString()) ];
+
+            return [ new(Claims.CourseCurriculumId, courseCurriculumId.ToString()) ];
         }
 
         return [];

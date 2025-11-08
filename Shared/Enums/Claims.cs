@@ -2,6 +2,7 @@
 
 public static class Claims
 {
+	public const string Jti = "jti";
 	public const string UserId = "sub";
 	public const string UserName = "name";
 	public const string UserRole = "role";

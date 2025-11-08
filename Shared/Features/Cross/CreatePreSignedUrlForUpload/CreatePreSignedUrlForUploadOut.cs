@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreatePreSignedUrlForUploadOut
+public class CreatePreSignedUrlForUploadOut : IApiDto<CreatePreSignedUrlForUploadOut>
 {
     public string Url { get; set; }
 

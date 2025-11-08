@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class AssignCampiToTeacherIn
+public class AssignCampiToTeacherIn : IApiDto<AssignCampiToTeacherIn>
 {
     public List<Guid> Campi { get; set; }
 

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class GetCampiOut
+public class GetCampiOut : IApiDto<GetCampiOut>
 {
     public int Total { get; set; }
     public List<GetCampiItemOut> Items { get; set; } = [];

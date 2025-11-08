@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateClassActivityIn
+public class CreateClassActivityIn : IApiDto<CreateClassActivityIn>
 {
     /// <summary>
     /// Nota

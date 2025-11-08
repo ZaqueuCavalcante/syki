@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class AcademicPeriodOut
+public class AcademicPeriodOut : IApiDto<AcademicPeriodOut>
 {
     public string Id { get; set; }
 

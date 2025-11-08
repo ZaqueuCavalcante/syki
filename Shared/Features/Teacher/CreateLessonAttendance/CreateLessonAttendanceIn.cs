@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateLessonAttendanceIn
+public class CreateLessonAttendanceIn : IApiDto<CreateLessonAttendanceIn>
 {
     public List<Guid> PresentStudents { get; set; }
 

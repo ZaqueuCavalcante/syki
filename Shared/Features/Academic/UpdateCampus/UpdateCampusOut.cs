@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class UpdateCampusOut
+public class UpdateCampusOut : IApiDto<UpdateCampusOut>
 {
     public Guid Id { get; set; }
 

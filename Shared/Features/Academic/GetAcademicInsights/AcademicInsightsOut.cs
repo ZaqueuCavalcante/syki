@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class AcademicInsightsOut
+public class AcademicInsightsOut : IApiDto<AcademicInsightsOut>
 {
     public int Campus { get; set; }
     public int Courses { get; set; }

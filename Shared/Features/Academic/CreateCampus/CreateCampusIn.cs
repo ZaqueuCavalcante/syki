@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateCampusIn
+public class CreateCampusIn : IApiDto<CreateCampusIn>
 {
     /// <summary>
     /// Nome

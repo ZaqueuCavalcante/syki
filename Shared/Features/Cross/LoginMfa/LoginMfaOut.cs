@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class LoginMfaOut
+public class LoginMfaOut : IApiDto<LoginMfaOut>
 {
     public string AccessToken { get; set; }
     public Guid Id { get; set; }

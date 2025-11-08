@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class StudentOut
+public class StudentOut : IApiDto<StudentOut>
 {
     public Guid Id { get; set; }
     public Guid CourseOfferingId { get; set; }

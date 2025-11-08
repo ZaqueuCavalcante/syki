@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class UserNotificationOut
+public class UserNotificationOut : IApiDto<UserNotificationOut>
 {
     public Guid NotificationId { get; set; }
     public string Title { get; set; }
@@ -8,7 +8,7 @@ public class UserNotificationOut
     public DateTime CreatedAt { get; set; }
     public DateTime? ViewedAt { get; set; }
 
-    public static IEnumerable<(string, CreateNotificationIn)> GetExamples() =>
+    public static IEnumerable<(string, UserNotificationOut)> GetExamples() =>
     [
         ("Exemplo", new() { }),
     ];

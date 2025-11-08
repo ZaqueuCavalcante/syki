@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateTeacherIn
+public class CreateTeacherIn : IApiDto<CreateTeacherIn>
 {
     public string Name { get; set; }
     public string Email { get; set; }

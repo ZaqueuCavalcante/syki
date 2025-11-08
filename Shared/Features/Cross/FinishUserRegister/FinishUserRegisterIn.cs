@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class FinishUserRegisterIn
+public class FinishUserRegisterIn : IApiDto<FinishUserRegisterIn>
 {
     /// <summary>
     /// Token enviado para o email informado no cadastro.

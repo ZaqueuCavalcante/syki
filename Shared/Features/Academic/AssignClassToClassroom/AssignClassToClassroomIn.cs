@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class AssignClassToClassroomIn
+public class AssignClassToClassroomIn : IApiDto<AssignClassToClassroomIn>
 {
     public Guid ClassId { get; set; }
     public List<ScheduleIn> Schedules { get; set; }

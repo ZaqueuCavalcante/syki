@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateWebhookSubscriptionOut
+public class CreateWebhookSubscriptionOut : IApiDto<CreateWebhookSubscriptionOut>
 {
     public Guid Id { get; set; }
 

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class SetSchedulingPreferencesIn
+public class SetSchedulingPreferencesIn : IApiDto<SetSchedulingPreferencesIn>
 {
     public List<ScheduleIn> Schedules { get; set; }
 

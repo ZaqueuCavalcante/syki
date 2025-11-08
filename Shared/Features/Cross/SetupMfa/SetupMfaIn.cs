@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class SetupMfaIn
+public class SetupMfaIn : IApiDto<SetupMfaIn>
 {
     public string Token { get; set; }
 

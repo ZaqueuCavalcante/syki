@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class LoginIn
+public class LoginIn : IApiDto<LoginIn>
 {
     public string Email { get; set; }
     public string Password { get; set; }

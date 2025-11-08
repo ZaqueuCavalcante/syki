@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class GetUserAccountOut
+public class GetUserAccountOut : IApiDto<GetUserAccountOut>
 {
     /// <summary>
     /// Id do usuário.

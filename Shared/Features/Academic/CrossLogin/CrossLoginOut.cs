@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CrossLoginOut
+public class CrossLoginOut : IApiDto<CrossLoginOut>
 {
     public string AccessToken { get; set; }
     public Guid Id { get; set; }

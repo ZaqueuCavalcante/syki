@@ -14,7 +14,8 @@ public static class CorsConfigs
                     "http://localhost:5173",
                     "http://localhost:5002",
                     "https://app.syki.com.br",
-                    "https://react.syki.com.br"
+                    "https://react.syki.com.br",
+                    "https://svelte.syki.com.br"
                 )
             )
         );

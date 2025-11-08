@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateDisciplineIn
+public class CreateDisciplineIn : IApiDto<CreateDisciplineIn>
 {
     public string Name { get; set; }
     public List<Guid> Courses { get; set; } = [];

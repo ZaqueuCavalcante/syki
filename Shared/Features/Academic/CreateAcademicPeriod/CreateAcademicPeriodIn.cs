@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateAcademicPeriodIn
+public class CreateAcademicPeriodIn : IApiDto<CreateAcademicPeriodIn>
 {
     public string? Id { get; set; }
 

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class FinalizeClassesIn
+public class FinalizeClassesIn : IApiDto<FinalizeClassesIn>
 {
     public List<Guid> Classes { get; set; }
 

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class GetWebhookCallFullOut
+public class GetWebhookCallFullOut : IApiDto<GetWebhookCallFullOut>
 {
     public Guid Id { get; set; }
     public Guid WebhookId { get; set; }

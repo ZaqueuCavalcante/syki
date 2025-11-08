@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class NotificationOut
+public class NotificationOut : IApiDto<NotificationOut>
 {
     public Guid Id { get; set; }
     public string Title { get; set; }

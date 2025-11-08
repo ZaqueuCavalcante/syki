@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class GetMfaKeyOut
+public class GetMfaKeyOut : IApiDto<GetMfaKeyOut>
 {
     /// <summary>
     /// Chave MFA do usuário.

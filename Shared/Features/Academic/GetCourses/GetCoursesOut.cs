@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class GetCoursesOut
+public class GetCoursesOut : IApiDto<GetCoursesOut>
 {
     public int Total { get; set; }
     public List<GetCoursesItemOut> Items { get; set; } = [];

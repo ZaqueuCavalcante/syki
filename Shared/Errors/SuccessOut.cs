@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class SuccessOut
+public class SuccessOut : IApiDto<SuccessOut>
 {
     public static IEnumerable<(string, SuccessOut)> GetExamples() =>
     [

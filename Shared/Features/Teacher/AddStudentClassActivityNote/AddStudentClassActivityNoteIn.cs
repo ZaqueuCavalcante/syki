@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class AddStudentClassActivityNoteIn
+public class AddStudentClassActivityNoteIn : IApiDto<AddStudentClassActivityNoteIn>
 {
     public Guid StudentId { get; set; }
     public decimal Value { get; set; }

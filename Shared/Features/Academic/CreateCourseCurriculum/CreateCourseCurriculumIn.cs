@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateCourseCurriculumIn
+public class CreateCourseCurriculumIn : IApiDto<CreateCourseCurriculumIn>
 {
     public string Name { get; set; }
     public Guid CourseId { get; set; }

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class StudentCreatedWebhookPayload
+public class StudentCreatedWebhookPayload : IApiDto<StudentCreatedWebhookPayload>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

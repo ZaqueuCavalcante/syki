@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class AddDisciplinePreRequisitesIn
+public class AddDisciplinePreRequisitesIn : IApiDto<AddDisciplinePreRequisitesIn>
 {
     public Guid DisciplineId { get; set; }
     public List<Guid> PreRequisites { get; set; } = [];

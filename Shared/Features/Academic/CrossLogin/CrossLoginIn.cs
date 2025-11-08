@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CrossLoginIn
+public class CrossLoginIn : IApiDto<CrossLoginIn>
 {
     public Guid TargetUserId { get; set; }
 

@@ -26,8 +26,6 @@ Sendo assim, vamos abrir uma turma para cada disciplina, onde todas as turmas se
 - Ao tentar colocar 25 alunos em uma turma com limite de 22 alunos
 - Ao tentar colocar uma turma com 20 alunos em uma sala com 15 vagas
 
-
-
 # TODOS
 
 - Criar config para determinar

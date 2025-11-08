@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreatePendingUserRegisterIn
+public class CreatePendingUserRegisterIn : IApiDto<CreatePendingUserRegisterIn>
 {
     public string Email { get; set; }
 

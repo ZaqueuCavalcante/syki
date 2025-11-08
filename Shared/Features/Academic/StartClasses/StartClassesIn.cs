@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class StartClassesIn
+public class StartClassesIn : IApiDto<StartClassesIn>
 {
     public List<Guid> Classes { get; set; }
 

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class SendResetPasswordTokenIn
+public class SendResetPasswordTokenIn : IApiDto<SendResetPasswordTokenIn>
 {
     public string Email { get; set; }
 

@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateNotificationIn
+public class CreateNotificationIn : IApiDto<CreateNotificationIn>
 {
     public string Title { get; set; }
     public string Description { get; set; }

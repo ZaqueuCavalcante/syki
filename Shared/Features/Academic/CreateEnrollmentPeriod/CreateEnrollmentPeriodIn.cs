@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateEnrollmentPeriodIn
+public class CreateEnrollmentPeriodIn : IApiDto<CreateEnrollmentPeriodIn>
 {
     public string Id { get; set; }
     public DateOnly StartAt { get; set; }

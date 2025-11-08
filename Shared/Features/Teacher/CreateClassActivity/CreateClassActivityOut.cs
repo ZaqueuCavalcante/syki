@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateClassActivityOut
+public class CreateClassActivityOut : IApiDto<CreateClassActivityOut>
 {
     public Guid Id { get; set; }
 

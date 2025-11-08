@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class GetCoursesWithDisciplinesOut
+public class GetCoursesWithDisciplinesOut : IApiDto<GetCoursesWithDisciplinesOut>
 {
     public int Total { get; set; }
     public List<GetCoursesWithDisciplinesItemOut> Items { get; set; } = [];

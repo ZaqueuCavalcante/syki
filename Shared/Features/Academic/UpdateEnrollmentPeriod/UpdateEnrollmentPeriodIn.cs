@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class UpdateEnrollmentPeriodIn
+public class UpdateEnrollmentPeriodIn : IApiDto<UpdateEnrollmentPeriodIn>
 {
     public DateOnly StartAt { get; set; }
     public DateOnly EndAt { get; set; }

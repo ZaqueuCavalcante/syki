@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateCourseIn
+public class CreateCourseIn : IApiDto<CreateCourseIn>
 {
     /// <summary>
     /// Nome do curso

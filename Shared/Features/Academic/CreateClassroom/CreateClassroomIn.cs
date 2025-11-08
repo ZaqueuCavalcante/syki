@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateClassroomIn
+public class CreateClassroomIn : IApiDto<CreateClassroomIn>
 {
     public Guid CampusId { get; set; }
     public string Name { get; set; }

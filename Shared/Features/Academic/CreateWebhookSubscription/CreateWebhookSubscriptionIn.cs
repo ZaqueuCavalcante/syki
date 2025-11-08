@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class CreateWebhookSubscriptionIn
+public class CreateWebhookSubscriptionIn : IApiDto<CreateWebhookSubscriptionIn>
 {
     /// <summary>
     /// Nome descritivo para o Webhook.

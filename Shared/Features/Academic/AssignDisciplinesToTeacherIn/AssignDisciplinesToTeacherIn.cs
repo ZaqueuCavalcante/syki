@@ -1,6 +1,6 @@
 namespace Syki.Shared;
 
-public class AssignDisciplinesToTeacherIn
+public class AssignDisciplinesToTeacherIn : IApiDto<AssignDisciplinesToTeacherIn>
 {
     public List<Guid> Disciplines { get; set; }
 

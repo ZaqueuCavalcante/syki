@@ -7,10 +7,14 @@
         <MudNavLink Href="adm/users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Usuários</MudNavLink>
         <MudNavLink Href="adm/institutions" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.School" IconColor="Color.Inherit">Instituições</MudNavLink>
         <MudNavLink Href="adm/feature-flags" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Flag" IconColor="Color.Inherit">Features</MudNavLink>
-        <MudNavLink Href="adm/events" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.StickyNote2" IconColor="Color.Inherit">Eventos</MudNavLink>
         <MudNavLink Href="adm/commands" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Task" IconColor="Color.Inherit">Comandos</MudNavLink>
         <MudNavLink Href="adm/batches" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.BorderOuter" IconColor="Color.Inherit">Lotes</MudNavLink>
     </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewDomainEventsPage">
+        <MudNavLink Href="adm/events" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.StickyNote2" IconColor="Color.Inherit">Eventos</MudNavLink>
+    </AuthorizeView>
+
+
     <AuthorizeView Roles="@UserRole.Academic.ToString()">
         <MudNavLink Href="academic/campi" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.GroupWork" IconColor="Color.Inherit">Campi</MudNavLink>
         <MudNavLink Href="academic/courses" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Class" IconColor="Color.Inherit">Cursos</MudNavLink>

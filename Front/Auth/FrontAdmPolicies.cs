@@ -1,6 +1,7 @@
 ﻿using Syki.Shared.Auth;
+using Microsoft.AspNetCore.Authorization;
 
-namespace Syki.Back.Auth;
+namespace Syki.Front.Auth;
 
 public static partial class Policies
 {
@@ -15,7 +16,7 @@ public static partial class Policies
     public const string GetFeatures = nameof(GetFeatures);
     public const string GetPolicies = nameof(GetPolicies);
 
-    public const string GetDomainEvents = nameof(GetDomainEvents);
+    public const string ViewDomainEventsPage = nameof(ViewDomainEventsPage);
 	public const string GetDomainEvent = nameof(GetDomainEvent);
 
 	public const string GetCommands = nameof(GetCommands);
@@ -30,33 +31,34 @@ public static partial class Policies
 	public const string GetAuditTrail = nameof(GetAuditTrail);
 	public const string GetAuditTrailOperations = nameof(GetAuditTrailOperations);
 
-    public static AuthorizationBuilder AddAdmPolicy(this AuthorizationBuilder builder, string name, params SykiFeature[] features)
+    private static AuthorizationOptions AddAdmPolicy(this AuthorizationOptions options, string name, params SykiFeature[] features)
     {
         Adm.Add(new() { Name = name, Features = features.ToList() });
 
         var ids = features.Select(x => x.Id).ToList();
 
-        return builder.AddPolicy(name, policy => policy
+        options.AddPolicy(name, policy => policy
             .RequireAuthenticatedUser()
-            .RequireAssertion(x => x.User.Features.Any(f => ids.Contains(f)))
-            .AddAuthenticationSchemes(AuthenticationConfigs.BearerScheme));
+            .RequireAssertion(x => x.User.Features.Any(f => ids.Contains(f))));
+        
+        return options;
     }
 
-    public static AuthorizationBuilder AddAdmPolicies(this AuthorizationBuilder builder)
+    public static AuthorizationOptions AddAdmPolicies(this AuthorizationOptions options)
     {
-        builder
+        options
             .AddAdmPolicy(GetUsers, FeaturesStore.ViewUsers)
             .AddAdmPolicy(CreateUser, FeaturesStore.CreateUser);
 
-        builder
+        options
             .AddAdmPolicy(GetRoles, FeaturesStore.ViewRoles)
             .AddAdmPolicy(CreateRole, FeaturesStore.CreateRole)
             .AddAdmPolicy(UpdateRole, FeaturesStore.UpdateRole)
             .AddAdmPolicy(GetFeatures, FeaturesStore.ViewFeatures)
             .AddAdmPolicy(GetPolicies, FeaturesStore.ViewPolicies);
 
-        builder
-            .AddAdmPolicy(GetDomainEvents, FeaturesStore.ViewDomainEvents)
+        options
+            .AddAdmPolicy(ViewDomainEventsPage, FeaturesStore.ViewDomainEvents)
             .AddAdmPolicy(GetDomainEvent, FeaturesStore.ViewDomainEventDetails)
             .AddAdmPolicy(GetCommands, FeaturesStore.ViewCommands)
             .AddAdmPolicy(GetCommand, FeaturesStore.ViewCommandDetails)
@@ -65,11 +67,11 @@ public static partial class Policies
             .AddAdmPolicy(GetCommandBatch, FeaturesStore.ViewCommandBatchDetails)
             .AddAdmPolicy(GetCommandBatchCommands, FeaturesStore.ViewCommandBatchDetails);
 
-        builder
+        options
             .AddAdmPolicy(GetAuditTrails, FeaturesStore.ViewAuditTrails)
             .AddAdmPolicy(GetAuditTrail, FeaturesStore.ViewAuditTrailDetails)
             .AddAdmPolicy(GetAuditTrailOperations, FeaturesStore.ViewAuditTrails);
 
-        return builder;
+        return options;
     }
 }

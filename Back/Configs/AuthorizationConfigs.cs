@@ -16,6 +16,7 @@ public static class AuthorizationConfigs
         builder.Services.AddSingleton<IAuthorizationHandler, CrossLoginAuthReqHandler>();
 
         builder.Services.AddAuthorizationBuilder()
+            .AddAdmPolicies()
             .AddPolicy(BackPolicies.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthRequirement()));
     }
 }

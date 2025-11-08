@@ -11,7 +11,9 @@ public static class AuthConfigs
 
         builder.Services.AddAuthorizationCore(options =>
         {
-            options.AddPolicy(FrontPolicy.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthReq()));
+            options
+                .AddAdmPolicies()
+                .AddPolicy(FrontPolicy.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthReq()));
         });
 
         builder.Services.AddScoped<AuthManager>();

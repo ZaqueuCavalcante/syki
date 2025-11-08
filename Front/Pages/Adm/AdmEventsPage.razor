@@ -3,7 +3,7 @@
 @namespace Syki.Front.Pages.Adm
 
 @page "/adm/events"
-@attribute [Authorize(Roles = "Adm")]
+@attribute [Authorize(Policies.ViewDomainEventsPage)]
 
 <SykiPageTitle Title="Eventos" />
 

@@ -1,0 +1,56 @@
+﻿@using Exato.Front.Features.Cross.Logout
+@using Exato.Front.Features.Cross.GetUserAccount
+
+@namespace Exato.Front.Pages.Cross
+
+@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<MudStack AlignItems="AlignItems.Center" Class="mt-16">
+    <MudText Style="font-size: 18px">
+        @if (_user.IsAuthenticated)
+        {
+            <strong>@_user.Name (@_user.Role)</strong>
+        }
+    </MudText>
+</MudStack>
+
+@inject NavigationManager Nav
+@inject AuthManager AuthManager
+@inject LogoutClient LogoutClient
+@inject GetUserAccountClient Client
+@inject ILocalStorageService LocalStorage
+@inject ExatoAuthStateProvider AuthStateProvider
+
+@code
+{
+    private AuthUser _user = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _user = await AuthManager.GetUser();
+
+        if (_user.IsAuthenticated) return;
+
+        var user = await Client.Get();
+
+        if (user.Id != Guid.Empty)
+        {
+            _user = new()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Email = user.Email,
+                Role = user.Role,
+                IsAuthenticated = true,
+                Features = user.Features,
+            };
+            await LocalStorage.SetItemAsync("User", _user);
+            AuthStateProvider.MarkUserAsAuthenticated();
+            return;
+        }
+
+        Nav.NavigateTo("/api/login/azure", forceLoad: true);
+    }
+}

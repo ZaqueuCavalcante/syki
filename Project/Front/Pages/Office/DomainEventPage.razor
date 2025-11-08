@@ -1,0 +1,142 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Exato.Front.Features.Office.GetDomainEvent
+@using Exato.Shared.Features.Office.GetDomainEvent
+@using Exato.Front.Features.Office.GetDomainEvents
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/domain-events/{id:guid}"
+@attribute [Authorize(Policies.ViewOfficeDomainEventPage)]
+
+<ExatoPageTitle Title="Evento" />
+
+<MudContainer Class="my-4 px-4">
+    <MudCard>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="8" md="8" lg="8">
+                    <MudStack Row AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.StickyNote2" Class="mb-1" Size="Size.Large"/>
+                        <MudText Typo="Typo.h5" Class="mt-1" Style="font-weight: bold">@_data.Type?.Split('.')?.Last()</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="4" md="4" lg="4" Class="d-flex justify-end">
+                    <MudChip
+                        T="string"
+                        Class="px-5 ma-0"
+                        Size="Size.Large"
+                        Icon="@_data.Status.GetIcon()"
+                        Color="@_data.Status.GetColor()"
+                        IconColor="Color.Default"
+                    >
+                        @_data.Status.GetDescription()
+                    </MudChip>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer Class="px-0 my-4">
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.BlueGray.Lighten4" Title="Ocorrido" Content="@_data.OccurredAt.ToDateTimeString()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.AccessTimeFilled" Color="@GetProcessedAtIconColor()" Title="Processado" Content="@_data.ProcessedAt.ToDateTimeString()" />
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" lg="4">
+                <InfoCard Icon="@Icons.Material.Filled.Timer" Color="@Colors.Indigo.Darken1" Title="Duração (ms)" Content="@_data.Duration.ToIntFormat()" />
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <InfoCard Icon="@Icons.Material.Filled.DataObject" Color="@Colors.Blue.Darken1" Title="Dados" Content="@GetIdentedData()" />
+            </MudItem>
+            @if (_data.Error.HasValue())
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <InfoCard Icon="@Icons.Material.Filled.Error" Color="@Colors.Red.Darken1" Title="Erro" Content="@_data.Error" />
+                </MudItem>
+            }
+        </MudGrid>
+    </MudContainer>
+
+    <MudContainer Class="px-0 my-4">
+        <MudTable
+            Class="mb-4"
+            Dense
+            Hover
+            RowsPerPage="10"
+            Loading="@_loading"
+            Items="@_data.Commands"
+            T="GetDomainEventOutCommandOut"
+            Breakpoint="Breakpoint.Sm"
+        >
+            <ToolBarContent>
+                <MudStack Row AlignItems="AlignItems.Center" Class="mt-2">
+                    <MudIcon Icon="@Icons.Material.Filled.Task" Class="mb-1" Size="Size.Medium"/>
+                    <MudText Typo="Typo.h6" Style="font-weight: bold">Comandos</MudText>
+                </MudStack>
+            </ToolBarContent>
+
+            <HeaderContent>
+                <MudTh>Tipo</MudTh>
+                <MudTh>Status</MudTh>
+                <MudTh>Criação</MudTh>
+                <MudTh>Processamento</MudTh>
+                <MudTh>Duração (ms)</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Tipo">@context.Type?.Split('.')?.Last()</MudTd>
+                <MudTd DataLabel="Status">@context.Status.GetDescription()</MudTd>
+                <MudTd DataLabel="Criação">@context.CreatedAt.ToDateTimeString()</MudTd>
+                <MudTd DataLabel="Processamento">@context.ProcessedAt.ToDateTimeString()</MudTd>
+                <MudTd DataLabel="Duração (ms)">@context.Duration.ToIntFormat()</MudTd>
+                <MudTd>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" Href="@($"/office/commands/{context.Id}")" />
+                </MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+                @(GetNotFoundMessage())
+            </NoRecordsContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+@inject NavigationManager Nav
+@inject GetDomainEventClient Client
+
+@code
+{
+	[Parameter]
+	public Guid Id { get; set; }
+
+    private bool _loading;
+    private GetDomainEventOut _data = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        var response = await Client.Get(Id);
+        if (response.IsSuccess)
+        {
+            _data = response.Success;
+        }
+        _loading = false;
+    }
+
+    private string GetProcessedAtIconColor()
+    {
+        return _data.ProcessedAt == null ? Colors.BlueGray.Lighten4 : Colors.Green.Darken1;
+    }
+
+    private string GetIdentedData()
+    {
+        return _data.Data.HasValue() ? JValue.Parse(_data.Data).ToString(Formatting.Indented) : "";
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return "Este evento não possui comandos.";
+    }
+}

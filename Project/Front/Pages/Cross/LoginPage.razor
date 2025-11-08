@@ -1,0 +1,89 @@
+﻿@using Exato.Front.Components.Passwords
+@using Exato.Front.Features.Cross.Login
+
+@namespace Exato.Front.Pages.Cross
+
+@page "/login"
+
+<ExatoPageTitle Title="Login" />
+
+<MudContainer Class="mt-4 mb-8" MaxWidth="MaxWidth.ExtraSmall">
+    <MudOverlay @bind-Visible="@_loading" LightBackground Absolute="false">
+        <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
+    </MudOverlay>
+    <MudForm @ref="@_form">
+        <MudCard Class="px-4 pt-0 pb-4">
+            <MudImage Src="exato-logo.jpg" Alt="Exato" Elevation="25" Class="rounded-lg mx-20 mt-10 mb-5"/>
+            <MudCardContent>
+                <MudTextField
+                    InputType="InputType.Email"
+                    Margin="Margin.Dense"
+                    AutoFocus
+                    Label="Email"
+                    Class="mt-0 pb-3"
+                    OnlyValidateIfDirty
+                    @bind-Value="@_email"
+                    Variant="Variant.Outlined"
+                    Required
+                    RequiredError="Informe!"/>
+                <PasswordTextField @bind-Value="@_password"/>
+            </MudCardContent>
+            <MudCardActions Class="justify-center">
+                <MudStack Spacing="1">
+                    <MudButton
+                        Size="Size.Large"
+                        OnClick="@OnClick"
+                        Variant="Variant.Filled"
+                        Color="Color.Primary"
+                        Class="mx-auto mb-4 px-12">
+                        Login
+                    </MudButton>
+                    <MudLink Href="/reset-password-token">Esqueci minha senha</MudLink>
+                </MudStack>
+            </MudCardActions>
+        </MudCard>
+    </MudForm>
+</MudContainer>
+
+@inject ISnackbar Snackbar
+@inject LoginClient Client
+@inject NavigationManager Nav
+@inject AuthManager AuthManager
+
+@code
+{
+    private bool _loading;
+    private MudForm _form;
+    private string _email;
+    private string _password;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthManager.GetUser();
+        if (user.IsAuthenticated) Nav.NavigateTo("/");
+    }
+
+    private async Task OnClick()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+        var result = await Client.Login(_email, _password);
+        if (result.IsSuccess)
+        {
+            Nav.NavigateTo("/");
+        }
+        else
+        {
+            if (result.Error.Code == "LoginRequiresTwoFactor")
+            {
+                Nav.NavigateTo("/2fa/login");
+                return;
+            }
+
+            Snackbar.Add(result.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+}

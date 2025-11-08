@@ -1,0 +1,81 @@
+﻿@using Exato.Shared.Auth
+@using Exato.Front.Features.Office.GetPolicies
+@using Exato.Shared.Features.Office.GetPolicies
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/policies"
+@attribute [Authorize(Policies.ViewOfficePoliciesPage)]
+
+<ExatoPageTitle Title="Policies" />
+
+<MudContainer Class="my-4 px-4">
+    <ExatoPageHeader Icon="@Icons.Material.Filled.Policy" Title="Policies" />
+    <MudContainer Class="px-0 my-4">
+        @if (_loading)
+        {
+            <MudPaper Class="px-4">
+                <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.Center">
+                    <MudProgressLinear Color="Color.Info" Indeterminate Class="my-7" />
+                </MudStack>
+            </MudPaper>
+        }
+        else
+        {
+            <MudDataGrid
+                Dense
+                Hover
+                Class="my-2"
+                SortMode="SortMode.None"
+                Items="@_frontPolicies.Items"
+            >
+                <Columns>
+                    <PropertyColumn Property="x => x.Policy" Title="@($"{_frontPolicies.Items.Count} frontend policies")" />
+                    <PropertyColumn Property="x => x.Features.ToStringList()" Title="Features" />
+                </Columns>
+            </MudDataGrid>
+
+            <MudDataGrid
+                Dense
+                Hover
+                Class="mt-6"
+                SortMode="SortMode.None"
+                Items="@_backPolicies.Items"
+            >
+                <Columns>
+                    <PropertyColumn Property="x => x.Policy" Title="@($"{_backPolicies.Items.Count} backend policies")" />
+                    <PropertyColumn Property="x => x.Features.ToStringList()" Title="Features" />
+                </Columns>
+            </MudDataGrid>
+        }
+    </MudContainer>
+</MudContainer>
+
+@inject GetPoliciesClient Client
+
+@code
+{
+    private bool _loading;
+    private GetPoliciesOut _backPolicies = new();
+    private GetPoliciesOut _frontPolicies = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _backPolicies = await Client.Get();
+
+        var policies = new List<PolicyMetadata>();
+        policies.AddRange(Policies.Cross);
+        policies.AddRange(Policies.Office);
+        policies.AddRange(Policies.Orgs);
+
+        foreach (var policy in policies)
+        {
+            var item = new GetPoliciesItemOut() { Policy = policy.Name };
+            item.Features = policy.Features;
+            _frontPolicies.Items.Add(item);
+        }
+
+        _loading = false;
+    }
+}

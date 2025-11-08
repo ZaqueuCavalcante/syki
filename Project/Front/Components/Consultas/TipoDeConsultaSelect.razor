@@ -1,0 +1,67 @@
+﻿@using System.Linq.Expressions
+@using Exato.Front.Features.Office.BuscarTiposDeConsulta
+@using Exato.Shared.Features.Office.BuscarTiposDeConsulta
+
+@namespace Exato.Front.Components.Consultas
+
+<MudAutocomplete
+	Dense
+	For="@For"
+	Clearable
+	MaxItems=50
+	Class="pb-0"
+	Value="@Value"
+	Label="Tipo"
+	Strict="false"
+	SearchFunc="@Search"
+	Margin="Margin.Dense"
+	ResetValueOnEmptyText
+	ShowProgressIndicator
+	DebounceInterval="500"
+	Variant="Variant.Outlined"
+	T="TipoDeConsultaSelectData"
+	ValueChanged="@ValueChanged"
+	AdornmentIcon="@Icons.Material.Filled.Search"
+	ToStringFunc="@(e => e == null ? null : $"{e.ToString()}")"
+>
+	<ItemTemplate Context="e">
+		<MudStack Spacing="0">
+			<MudText Typo="Typo.body2">@e.ToString()</MudText>
+			<MudStack Row Spacing="2">
+				@{ var (visivelColor, visivel) = e.GetVisivel(); }
+				<MudChip T="string" Label="true" Color="@visivelColor" Size="@Size.Small" Style="max-width: fit-content;">@visivel</MudChip>
+				@{ var (disponivelColor, disponivel) = e.GetDisponivel(); }
+				<MudChip T="string" Label="true" Color="@disponivelColor" Size="@Size.Small" Style="max-width: fit-content;">@disponivel</MudChip>
+			</MudStack>
+		</MudStack>
+	</ItemTemplate>
+</MudAutocomplete>
+
+@inject BuscarTiposDeConsultaClient Client
+
+@code
+{
+	[Parameter]
+	public TipoDeConsultaSelectData Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TipoDeConsultaSelectData> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<TipoDeConsultaSelectData>>? For { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+		await Task.Yield();
+    }
+
+    private async Task<IEnumerable<TipoDeConsultaSelectData>> Search(string value, CancellationToken token)
+    {
+        var nome = value.HasValue() ? value : null;
+        var query = new BuscarTiposDeConsultaIn { Nome = nome };
+
+		var response = await Client.Get(query);
+
+		return response.Items.ConvertAll(x => new TipoDeConsultaSelectData { Id = x.Id, Nome = x.Nome, Visivel = x.Visivel, Disponivel = x.Disponivel });
+    }
+}

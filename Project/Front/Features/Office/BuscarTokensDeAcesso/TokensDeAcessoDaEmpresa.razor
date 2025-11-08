@@ -1,0 +1,194 @@
+﻿@using Exato.Front.Features.Office.CriarTokenDeAcesso
+@using Exato.Front.Features.Office.EditarTokenDeAcesso
+@using Exato.Shared.Features.Office.BuscarTokensDeAcesso
+@using Exato.Front.Features.Office.VerDetalhesDoTokenDeAcesso
+@using Exato.Front.Features.Office.BuscarConfiguracoesDeFaturamentoDaEmpresa
+@using Exato.Shared.Features.Office.BuscarConfiguracoesDeFaturamentoDaEmpresa
+
+@namespace Exato.Front.Features.Office.BuscarTokensDeAcesso
+
+<MudGrid Spacing="3">
+    <MudItem Class="pt-2" xs="12" sm="3" md="3" lg="3">
+        <MudSelect
+            Dense
+            Clearable
+            Label="Tipo"
+            Margin="Margin.Dense"
+            @bind-Value="@_keyType"
+            Variant="Variant.Outlined"
+            @bind-Value:after="@Refresh"
+        >
+            @foreach (TokenAcessoKeyType? option in Enum.GetValues<TokenAcessoKeyType>())
+            {
+                <MudSelectItem Value="@option">@option?.GetDescription()</MudSelectItem>
+            }
+        </MudSelect>
+    </MudItem>
+    <AuthorizeView Policy="@Policies.OfficeCriarTokenDeAcessoDaEmpresa">
+        <MudItem xs="12" sm="9" md="9" lg="9" Class="d-flex justify-end" Style="max-height: 50px">
+            <TabEditButton Text="Token" Icon="@Icons.Material.Outlined.Add" OnClick="@OpenCriarTokenDeAcessoDrawer" />
+        </MudItem>
+    </AuthorizeView>
+</MudGrid>
+
+<MudTable @ref="@_table" Items="@_tokens.Items" Loading="@_loading" RowsPerPage="10" Hover Dense Elevation="0" Class="mt-4">
+    <HeaderContent>
+        <MudTh>Tipo</MudTh>
+        <MudTh>Token</MudTh>
+        <MudTh>Nome</MudTh>
+        <MudTh>Criado</MudTh>
+        <MudTh>Validade</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Tipo">
+            <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                @{ var (color, icon, text) = context.GetStatus(); }
+                <MudTooltip Text="@text" Arrow Placement="Placement.Top">
+                    <MudIcon Size="@Size.Small" Icon="@icon" Color="@color" />
+                </MudTooltip>
+                <MudText Typo="Typo.body2">@context.KeyType.GetDescription()</MudText>
+            </MudStack>
+        </MudTd>
+        <MudTd DataLabel="Token">@context.Token</MudTd>
+        <MudTd DataLabel="Nome">@context.Name</MudTd>
+        <MudTd DataLabel="Criado">
+            <MudTooltip Text="@context.IncluidoEm.ToTimeString()" Arrow Placement="Placement.Top">
+                @context.IncluidoEm.ToDateString()
+            </MudTooltip>
+        </MudTd>
+        <MudTd DataLabel="Validade">
+            <MudTooltip Text="@context.ValidoAte.ToTimeString()" Arrow Placement="Placement.Top">
+                @context.ValidoAte.ToDateString()
+            </MudTooltip>
+        </MudTd>
+        <MudTd>
+            <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Spacing="1">
+                @if (context.UsuarioId > 0)
+                {
+                    <AuthorizeView Policy="@Policies.ViewOfficeUsuarioPage" Context="authCtx">
+                        <MudTooltip Text="@context.Usuario" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Person" Href="@($"/office/usuarios/{context.UsuarioId}")" />
+                        </MudTooltip>
+                    </AuthorizeView>
+                }
+                <MudTooltip Text="Detalhes" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenVerDetalhesDoTokenDeAcessoDrawer(context))" />
+                </MudTooltip>
+                <AuthorizeView Policy="@Policies.OfficeEditarTokenDeAcessoDaEmpresa" Context="authCtx">
+                    <MudTooltip Text="Editar" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => OpenEditarTokenDeAcessoDrawer(context))" />
+                    </MudTooltip>
+                </AuthorizeView>
+            </MudStack>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudDivider DividerType="DividerType.FullWidth"/>
+        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mx-4">
+            <MudTooltip Text="Total de registros" Arrow Placement="Placement.Top">
+                <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                    <MudIcon Size="@Size.Medium" Icon="@Icons.Material.Filled.ViewHeadline" />
+                    <MudText><strong>@_tokens.Total.ToIntFormat()</strong></MudText>
+                </MudStack>
+            </MudTooltip>
+            <MudPagination
+                Rectangular
+                Class="pa-4"
+                MiddleCount="3"
+                BoundaryCount="1"
+                Color="Color.Secondary"
+                @bind-Selected="@_page"
+                @bind-Selected:after="@HandlePageChange"
+                Variant="Variant.Text"
+                Count="@((_tokens.Total + 9) / 10)"
+            />
+        </MudStack>
+    </PagerContent>
+    <NoRecordsContent>
+        Nenhum token encontrado.
+    </NoRecordsContent>
+</MudTable>
+
+<AuthorizeView Policy="@Policies.OfficeCriarTokenDeAcessoDaEmpresa">
+    <CriarTokenDeAcessoDrawer @ref="@_criarTokenDeAcessoDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+<AuthorizeView Policy="@Policies.OfficeEditarTokenDeAcessoDaEmpresa">
+    <EditarTokenDeAcessoDrawer @ref="@_editarTokenDeAcessoDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+<VerDetalhesDoTokenDeAcessoDrawer @ref="@_verDetalhesDoTokenDeAcessoDrawer" />
+
+@inject BuscarTokensDeAcessoClient Client
+@inject BuscarConfiguracoesDeFaturamentoDaEmpresaClient FaturamentoClient
+
+@code
+{
+    [Parameter]
+    public int ClienteId { get; set; }
+
+    private int _page = 1;
+    private bool _loading;
+
+    private CriarTokenDeAcessoDrawer _criarTokenDeAcessoDrawer;
+    private EditarTokenDeAcessoDrawer _editarTokenDeAcessoDrawer;
+    private VerDetalhesDoTokenDeAcessoDrawer _verDetalhesDoTokenDeAcessoDrawer;
+
+    private TokenAcessoKeyType? _keyType;
+
+    private MudTable<BuscarTokensDeAcessoItemOut> _table;
+    private BuscarTokensDeAcessoOut _tokens = new();
+
+    private BuscarConfiguracoesDeFaturamentoDaEmpresaOut _faturamentoConfigs = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+        _faturamentoConfigs = await FaturamentoClient.Get(ClienteId);
+        await Refresh();
+    }
+
+    private void OpenCriarTokenDeAcessoDrawer()
+    {
+        _criarTokenDeAcessoDrawer.Open(ClienteId, _faturamentoConfigs.MetodoDePagamento, _faturamentoConfigs.BalanceType);
+    }
+
+    private async Task OpenEditarTokenDeAcessoDrawer(BuscarTokensDeAcessoItemOut token)
+    {
+        await _editarTokenDeAcessoDrawer.Open(token, _faturamentoConfigs.MetodoDePagamento, _faturamentoConfigs.BalanceType);
+    }
+
+    private void OpenVerDetalhesDoTokenDeAcessoDrawer(BuscarTokensDeAcessoItemOut token)
+    {
+        _verDetalhesDoTokenDeAcessoDrawer.Open(token);
+    }
+
+    private async Task Refresh()
+    {
+        _loading = true;
+
+        var query = new BuscarTokensDeAcessoIn { ClienteId = ClienteId, Page = 0, KeyType = _keyType };
+        _tokens = await Client.Get(query);
+
+        if (_page != 1)
+        {
+            _page = 1;
+            _table.NavigateTo(0);
+        }
+
+        _loading = false;
+    }
+
+    private async Task HandlePageChange()
+    {
+        _loading = true;
+
+        var query = new BuscarTokensDeAcessoIn { ClienteId = ClienteId, Page = _page - 1, KeyType = _keyType };
+        _tokens = await Client.Get(query);
+
+        _table.NavigateTo(_page - 1);
+
+        _loading = false;
+    }
+}

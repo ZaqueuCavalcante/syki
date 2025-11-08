@@ -1,0 +1,235 @@
+﻿@using Exato.Front.Features.Office.BuscarUsuario
+@using Exato.Front.Features.Office.ExcluirUsuario
+@using Exato.Shared.Features.Office.BuscarUsuario
+@using Exato.Front.Features.Office.EditarSaldoDaEmpresa
+@using Exato.Front.Features.Office.EditarClaimsDoUsuario
+@using Exato.Front.Features.Office.BuscarEventosDoUsuario
+@using Exato.Front.Features.Office.EditarCadastroDoUsuario
+@using Exato.Front.Features.Office.BuscarEmpresasDoUsuario
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/usuarios/{id::int}"
+@attribute [Authorize(Policies.ViewOfficeUsuarioPage)]
+
+<ExatoPageTitle Title="Usuário" />
+
+<MudContainer Class="my-4 px-4">
+    <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+        @{ var (color, icon, status) = _usuario.GetIsActive(); }
+        <MudTooltip Text="@status" Arrow Placement="Placement.Top">
+            <MudIcon Size="@Size.Medium" Icon="@icon" Color="color" Class="mt-1" />
+        </MudTooltip>
+        <MudText Typo="Typo.h5" Style="font-weight: bold">@_usuario.Nome</MudText>
+    </MudStack>
+
+    <MudContainer Class="px-0 my-2">
+        <MudTabs @ref="@_tabs" Position="@Position.Left" Outlined Rounded Border ApplyEffectsToContainer Elevation="2" Class="mt-2" PanelClass="px-6 py-6" TabPanelClass="justify-start text-transform-none">
+            <MudTabPanel Icon="@Icons.Material.Filled.Assignment" Text="Cadastro" Style="width: 100%">
+                <MudGrid Spacing="3">
+                    <MudItem xs="12" sm="9" md="9" lg="9">
+                        <ExatoLabelField Label="Documento" Text="@_usuario.Documento.AsFormatedDocument()" />
+                    </MudItem>
+
+                    <AuthorizeView Policy="@Policies.OfficeEditarCadastroDoUsuario">
+                        <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 50px">
+                            <TabEditButton OnClick="@OpenEditarCadastroDoUsuarioDrawer" />
+                        </MudItem>
+                    </AuthorizeView>
+
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Email" Text="@_usuario.Email" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Telefone" Text="@(_usuario.Phone?.AsFormatedPhoneNumber() ?? "-")" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Status do onboard">
+                            <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                                @{ var (color, icon, status) = _usuario.GetOnboardStatus(); }
+                                <MudIcon Icon="@icon" Color="@color" Size="Size.Small" Class="mb-1" />
+                                <MudText>@status</MudText>
+                            </MudStack>
+                        </ExatoLabelField>
+                    </MudItem>
+
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Criado em" Text="@_usuario.CriadoEm.ToDateTimeString()" />
+                    </MudItem>
+
+                    @if (_usuario.DeletedAt != null)
+                    {
+                        <MudItem xs="12" sm="12" md="12" lg="12">
+                            <ExatoLabelField Label="Excluído em" Text="@_usuario.DeletedAt.ToDateTimeString()" />
+                        </MudItem>
+                    }
+                    @if (_usuario.DeletedAt == null && _usuario.Id > 0)
+                    {
+                        <AuthorizeView Policy="@Policies.OfficeExcluirUsuario">
+                            <MudItem xs="12" sm="12" md="12" lg="12">
+                                <MudButton
+                                    Size="Size.Medium"
+                                    Color="Color.Default"
+                                    IconSize="Size.Medium"
+                                    Variant="Variant.Filled"
+                                    @onclick="@OpenExcluirUsuarioDialog"
+                                    StartIcon="@Icons.Material.Filled.DeleteOutline"
+                                >
+                                    Excluir
+                                </MudButton>
+                            </MudItem>
+                        </AuthorizeView>
+                    }
+                </MudGrid>
+            </MudTabPanel>
+
+            <MudTabPanel Icon="@Icons.Material.Filled.Business" Text="Empresas" Style="width: 100%">
+                <BuscarEmpresasDoUsuarioTab Id="@Id" ReloadUserData="@Refresh" />
+            </MudTabPanel>
+
+            <MudTabPanel Icon="@Icons.Material.Filled.StickyNote2" Text="Eventos" Style="width: 100%">
+                <BuscarEventosDoUsuarioTab Id="@_usuario.WebUserId" />
+            </MudTabPanel>
+
+            @if (_usuario.MetodoDePagamento == MetodoDePagamento.PrePago)
+            {
+                var (icon, type) = @_usuario.GetBalanceType();
+                <MudTabPanel Icon="@icon" Text="@type" Style="width: 100%">
+                    <MudGrid Spacing="3">
+                        <MudItem xs="12" sm="9" md="9" lg="9">
+                            @if (_usuario.BalanceType == BalanceType.Reais)
+                            {
+                                <ExatoLabelField Label="Saldo" Text="@_usuario.GetBalance()" />
+                            }
+                            else
+                            {
+                                <ExatoLabelField Label="Créditos" Text="@_usuario.GetCreditos()" />
+                            }
+                        </MudItem>
+                        <AuthorizeView Policy="@Policies.OfficeEditarSaldoDaEmpresa">
+                            <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 50px">
+                                <TabEditButton OnClick="@OpenEditarSaldoDaEmpresaDrawer" />
+                            </MudItem>
+                        </AuthorizeView>
+
+                        <MudItem xs="12" sm="12" md="12" lg="12">
+                            <ExatoLabelField Label="Pagamento">
+                                @{ var (color, method) = @_usuario.GetPaymentMethod(); }
+                                <MudChip T="string" Label="true" Color="@color" Style="max-width: fit-content;">@method</MudChip>    
+                            </ExatoLabelField>
+                        </MudItem>
+                    </MudGrid>
+                </MudTabPanel>
+            }
+        
+            <MudTabPanel Icon="@Icons.Material.Filled.Key" Text="Permissões" Style="width: 100%">
+                <MudGrid Spacing="3">
+                    <MudItem xs="12" sm="9" md="9" lg="9">
+                        <MudText><b>Permissões</b></MudText>
+                    </MudItem>
+                    <AuthorizeView Policy="@Policies.OfficeEditarPermissoesDoUsuario">
+                        <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 50px">
+                            <TabEditButton OnClick="@OpenEditarClaimsDoUsuarioDrawer" />
+                        </MudItem>
+                    </AuthorizeView>
+                    @foreach (var claim in Enum.GetValues<ExatoWebClaims>())
+                    {
+                        <MudItem xs="12" sm="12" md="12" lg="12">
+                            <ExatoCheckBox Label="@claim.GetDescription()" Value="@_usuario.Claims.Contains(claim)" />
+                        </MudItem>
+                    }
+                </MudGrid>
+            </MudTabPanel>
+
+            <MudTabPanel Icon="@Icons.Material.Filled.Chat" Text="Dexter" Style="width: 100%">
+                <MudGrid Spacing="3">
+                    <MudItem xs="12" sm="9" md="9" lg="9">
+                        <ExatoLabelField Label="Empresa vinculada" Text="@_usuario.GetDexterCliente()" />
+                    </MudItem>
+                </MudGrid>
+            </MudTabPanel>
+        </MudTabs>
+    </MudContainer>
+</MudContainer>
+
+<AuthorizeView Policy="@Policies.OfficeEditarCadastroDoUsuario">
+    <EditarCadastroDoUsuarioDrawer @ref="@_editarCadastroDoUsuarioDrawer" Id="@Id" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+<AuthorizeView Policy="@Policies.OfficeEditarPermissoesDoUsuario">
+    <EditarClaimsDoUsuarioDrawer @ref="@_editarClaimsDoUsuarioDrawer" Id="@Id" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+<AuthorizeView Policy="@Policies.OfficeEditarSaldoDaEmpresa">
+    <EditarSaldoDaEmpresaDrawer @ref="@_editarSaldoDaEmpresaDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+@inject BuscarUsuarioClient Client
+@inject IDialogService DialogService
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+	[Parameter]
+	public int Id { get; set; }
+
+    private MudTabs _tabs;
+    private EditarSaldoDaEmpresaDrawer _editarSaldoDaEmpresaDrawer;
+    private EditarClaimsDoUsuarioDrawer _editarClaimsDoUsuarioDrawer;
+    private EditarCadastroDoUsuarioDrawer _editarCadastroDoUsuarioDrawer;
+
+    private BuscarUsuarioOut _usuario = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        var response = await Client.Get(Id);
+
+        if (response.IsSuccess)
+        {
+            _usuario = response.Success;
+        }
+    }
+
+    private async Task OpenEditarCadastroDoUsuarioDrawer()
+    {
+        await _editarCadastroDoUsuarioDrawer.Open(_usuario);
+    }
+
+    private void OpenEditarClaimsDoUsuarioDrawer()
+    {
+        _editarClaimsDoUsuarioDrawer.Open(_usuario.Claims);
+    }
+
+    private async Task OpenEditarSaldoDaEmpresaDrawer()
+    {
+        await _editarSaldoDaEmpresaDrawer.Open(_usuario.ClienteId, _usuario.BalanceType);
+    }
+
+    private async Task OpenExcluirUsuarioDialog()
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.ExtraSmall,
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
+        };
+        var parameters = new DialogParameters<ExcluirUsuarioDialog>
+        {
+            { x => x.UserId, Id },
+        };
+        var dialog = await DialogService.ShowAsync<ExcluirUsuarioDialog>("", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        await Refresh();
+    }
+}

@@ -1,0 +1,137 @@
+@using Exato.Shared.Enums
+@using Exato.Shared.Extensions
+@using Exato.Shared.Features.Office.BuscarEmpresa
+
+@namespace Exato.Front.Features.Office.EditarConsultasDaEmpresa
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+    <MudDrawerHeader Class="justify-space-between">
+        <MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+            <MudIcon Icon="@Icons.Material.Filled.DataUsage" />
+            <MudText Typo="Typo.h5"><b>Consultas</b></MudText>
+        </MudStack>
+        <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="1" Class="px-7">
+        <MudForm @ref="@_form" Model="@_model" Validation="@(EditarConsultasDaEmpresaFormData.V.ValidateValue)" Style="width: 100%">
+            <MudSelect @bind-Value="@_model.DataAccessLevel" For="@(() => _model.DataAccessLevel)" Label="Nível de acesso a dados" Class="pb-1" Margin="Margin.Dense" Variant="Variant.Outlined" Dense>
+                @foreach (var option in Enum.GetValues<DataAccessLevel>())
+                {
+                    <MudSelectItem Value="@option">@option.GetDescription()</MudSelectItem>
+                }
+            </MudSelect>
+
+            <ExatoIntField
+                Immediate
+                Label="Limite de consultas semanal"
+                @bind-Value="@_model.TransLimitPerWeek"
+                For="@(() => _model.TransLimitPerWeek)"
+            />
+
+            <MudDivider Class="my-2" />
+
+            <ExatoSwitch @bind-Value="@_model.HighPerformance" For="@(() => _model.HighPerformance)" Label="Alta performance" />
+            <ExatoSwitch @bind-Value="@_model.BlockSensitiveDataInQueryString" For="@(() => _model.BlockSensitiveDataInQueryString)" Label="Restringir envio de informações sensíveis na URL" />
+
+            <MudDivider Class="my-2" />
+
+            <ExatoSwitch @bind-Value="@_model.GerarPdfConsultas" For="@(() => _model.GerarPdfConsultas)" Label="Gerar PDF das consultas" />
+            <ExatoSwitch @bind-Value="@_model.HabilitarConsultasPorEmail" For="@(() => _model.HabilitarConsultasPorEmail)" Label="Habilitar consultas por email" />
+
+            <MudDivider Class="my-2" />
+
+            <ExatoSwitch @bind-Value="@_model.ReceitaCpfUseSerproAsMainSource" For="@(() => _model.ReceitaCpfUseSerproAsMainSource)" Label="Receita CPF - Usar SERPRO" />
+            <ExatoSwitch @bind-Value="@_model.ReceitaCpfShouldReturnMinor18AgeData" For="@(() => _model.ReceitaCpfShouldReturnMinor18AgeData)" Label="Receita CPF - Retornar dados de menores de idade" />
+        </MudForm>
+    </MudGrid>
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 py-4">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" Loading="@_loading" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject IBrowserViewportService BrowserViewportService
+@inject EditarConsultasDaEmpresaClient EditarConsultasDaEmpresaClient
+
+@code
+{
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private bool _open;
+    private string _width = "550px";
+    private Breakpoint _breakpoint;
+
+    private MudForm _form;
+    private bool _loading;
+    private EditarConsultasDaEmpresaFormData _model = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "550px";
+    }
+
+    public async Task Open(BuscarEmpresaOut empresa)
+    {
+        _loading = true;
+
+        await _form?.ResetAsync();
+
+        _model = new()
+        {
+            Id = empresa.Id,
+            DataAccessLevel = empresa.DataAccessLevel,
+            TransLimitPerWeek = empresa.TransLimitPerWeek,
+            HighPerformance = empresa.HighPerformance,
+            BlockSensitiveDataInQueryString = empresa.BlockSensitiveDataInQueryString,
+            GerarPdfConsultas = empresa.GerarPdfConsultas,
+            HabilitarConsultasPorEmail = empresa.HabilitarConsultasPorEmail,
+            ReceitaCpfUseSerproAsMainSource = empresa.ReceitaCpfUseSerproAsMainSource,
+            ReceitaCpfShouldReturnMinor18AgeData = empresa.ReceitaCpfShouldReturnMinor18AgeData,
+        };
+
+        _open = true;
+        _loading = false;
+
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+        var response = await EditarConsultasDaEmpresaClient.Editar(
+            _model.Id,
+            _model.HighPerformance,
+            _model.BlockSensitiveDataInQueryString,
+            _model.DataAccessLevel,
+            _model.TransLimitPerWeek,
+            _model.GerarPdfConsultas,
+            _model.HabilitarConsultasPorEmail,
+            _model.ReceitaCpfUseSerproAsMainSource,
+            _model.ReceitaCpfShouldReturnMinor18AgeData
+        );
+        if (response.IsSuccess)
+        {
+            Snackbar.Add("Consultas salvas com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+}

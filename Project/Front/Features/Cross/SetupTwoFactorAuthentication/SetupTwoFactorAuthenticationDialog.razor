@@ -1,0 +1,34 @@
+@namespace Exato.Front.Features.Cross.SetupTwoFactorAuthentication
+
+<MudDialog Class="pb-2" ContentClass="pt-0">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Done" Class="mr-1 mb-n1" />
+            2FA configurado com sucesso!
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudDivider Class="mb-4"/>
+        <MudText>No seu próximo login já vai ser necessário informar os dois fatores de autenticação.</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudSpacer/>
+        <DialogSaveButton Text="Continuar" OnClick="@Submit" />
+        <MudSpacer/>
+    </DialogActions>
+</MudDialog>
+
+@inject NavigationManager Nav
+
+@code
+{
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; }
+
+    private void Submit()
+    {
+        Nav.NavigateTo("/");
+
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}

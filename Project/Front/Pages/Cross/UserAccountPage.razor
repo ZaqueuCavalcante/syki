@@ -1,0 +1,42 @@
+﻿@using Exato.Front.Features.Cross.GetUserAccount
+@using Exato.Shared.Features.Cross.GetUserAccount
+
+@namespace Exato.Front.Pages.Cross
+
+@page "/account"
+@attribute [Authorize(Policies.ViewCrossUserAccountPage)]
+
+<ExatoPageTitle Title="Conta" />
+
+<MudContainer Class="mt-10 px-4" MaxWidth="MaxWidth.Small">
+    <MudContainer Class="px-0 mb-4">
+        <MudGrid Spacing="4">
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <MudStack Row Justify="Justify.Center">
+                    <MudStack Spacing="2">
+                        <MudText Typo="Typo.h5" Style="font-weight: bold" Class="ml-2">@_data.Name</MudText>
+                        <MudText Class="ml-2" Style="margin-top: -8px;">@_data.Role</MudText>
+                    </MudStack>
+                </MudStack>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <InfoCard Icon="@Icons.Material.Filled.Email" Title="Email" Content="@_data.Email" />
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <InfoCard Icon="@Icons.Material.Filled.Business" Title="Empresa" Content="@_data.Organization" />
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject GetUserAccountClient GetUserAccountClient
+
+@code
+{
+    private GetUserAccountOut _data = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _data = await GetUserAccountClient.Get();
+    }
+}

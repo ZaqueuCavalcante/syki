@@ -1,0 +1,74 @@
+@using Exato.Shared.Features.Office.BuscarFiliaisDaEmpresa
+
+@namespace Exato.Front.Features.Office.BuscarFiliaisDaEmpresa
+
+@if (_loading)
+{
+    <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="mt-6">
+        <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
+    </MudStack>
+}
+
+@if (TreeItems.Count > 0)
+{
+    <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+        <MudText><strong>@GetTotalMessage()</strong></MudText>
+    </MudStack>
+
+    <MudTreeView T="BuscarFiliaisDaEmpresaItemOut" Items="@TreeItems" ReadOnly>
+        <ItemTemplate>
+            <MudTreeViewItem @bind-Expanded="@context.Expanded" Items="@context.Children" Value="@context.Value">
+                <Content>
+                    <MudTreeViewItemToggleButton @bind-Expanded="@context.Expanded" Visible="@context.HasChildren" />
+                    @if (context.Value.Filiais.Count > 0)
+                    {
+                        <MudText>(@context.Value.Filiais.Count) @context.Value.Nome</MudText>
+                    }
+                    else
+                    {
+                        <MudText>@context.Value.Nome</MudText>
+                    }
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.SubdirectoryArrowRight" Class="ml-2" Href="@($"/office/empresas/{context.Value.Id}")" />
+                </Content>
+            </MudTreeViewItem>
+        </ItemTemplate>
+    </MudTreeView>
+}
+
+@inject BuscarFiliaisDaEmpresaClient BuscarFiliaisDaEmpresaClient
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    private bool _loading;
+    public List<TreeItemData<BuscarFiliaisDaEmpresaItemOut>> TreeItems { get; set; } = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+
+        var response = await BuscarFiliaisDaEmpresaClient.Get(Id);
+
+        TreeItems = response.Items
+            .Select(ToTreeItem)
+            .ToList();
+
+        _loading = false;
+    }
+
+    private string GetTotalMessage()
+    {
+        return TreeItems.Count == 1 ? "(1) Filial direta" : $"({TreeItems.Count.ToIntFormat()}) Filiais diretas";
+    }
+
+    private static TreeItemData<BuscarFiliaisDaEmpresaItemOut> ToTreeItem(BuscarFiliaisDaEmpresaItemOut node)
+    {
+        return new TreeItemData<BuscarFiliaisDaEmpresaItemOut>
+        {
+            Value = node,
+            Children = (node.Filiais.Select(ToTreeItem).ToList() ?? [])
+        };
+    }
+}

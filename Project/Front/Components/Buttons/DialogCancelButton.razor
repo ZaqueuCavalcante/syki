@@ -1,0 +1,18 @@
+@namespace Exato.Front.Components.Buttons
+
+<MudButton
+    Class="@Class"
+    OnClick="@OnClick"
+    Variant="Variant.Filled"
+>
+    Cancelar
+</MudButton>
+
+@code
+{
+    [Parameter]
+    public string Class { get; set; } = "ml-4";
+    
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

@@ -1,0 +1,132 @@
+@using Exato.Front.Features.Office.UpdateCompany
+@using Exato.Shared.Features.Office.GetCompany
+@using Exato.Front.Features.Office.CreateCompany
+
+@namespace Exato.Front.Features.Office.GetCompany
+
+@if (_data.Id > 0)
+{
+    <MudGrid Spacing="3">
+        <MudItem xs="12" sm="9" md="9" lg="9">
+            <ExatoLabelField Label="CNPJ">
+                <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+                    @{ var (color, icon, status) = _data.GetIsActive(); }
+                    <MudTooltip Text="@status" Arrow Placement="Placement.Top">
+                        <MudIcon Size="@Size.Medium" Icon="@icon" Color="color" />
+                    </MudTooltip>
+                    <MudText>@_data.Cnpj.AsFormatedDocument()</MudText>
+                </MudStack>
+            </ExatoLabelField>
+        </MudItem>
+
+        <AuthorizeView Policy="@Policies.OfficeEditarEmpresaNoExatoWeb">
+            <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 50px">
+                <TabEditButton OnClick="@OpenUpdateCompanyDrawer" />
+            </MudItem>
+        </AuthorizeView>
+
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Nome" Text="@_data.Name" />
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Status do onboard">
+                <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                    @{ var (color, icon, status) = _data.GetOnboardStatus(); }
+                    <MudIcon Icon="@icon" Color="@color" Size="Size.Small" Class="mb-1" />
+                    <MudText>@status</MudText>
+                </MudStack>
+            </ExatoLabelField>
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Data do onboard" Text="@_data.OnboardDate.ToDateTimeString()" />
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Pagamento">
+                @{ var (color, method) = @_data.GetPaymentMode(); }
+                <MudChip T="string" Label="true" Color="@color" Style="max-width: fit-content;">@method</MudChip>
+            </ExatoLabelField>
+        </MudItem>
+    </MudGrid>
+}
+else
+{
+    <MudGrid Spacing="3">
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="mt-6">
+                @if (_loading)
+                {
+                    <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
+                }
+                else
+                {
+                    <MudIcon Icon="@Icons.Material.Outlined.Info" Size="Size.Large" />
+                    <MudText Typo="Typo.h6">Essa empresa não possui cadastro no Exato Web.</MudText>
+                    <AuthorizeView Policy="@Policies.OfficeCriarEmpresaNoExatoWeb">
+                        <TabEditButton Icon="@Icons.Material.Filled.Add" Text="Criar" OnClick="@OpenDialog" />
+                    </AuthorizeView>
+                }
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+}
+
+<AuthorizeView Policy="@Policies.OfficeEditarEmpresaNoExatoWeb">
+    <UpdateCompanyDrawer @ref="@_updateCompanyDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject GetCompanyClient GetCompanyClient
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    [Parameter]
+    public Guid ExternalId { get; set; }
+
+    private bool _loading;
+    private GetCompanyOut _data = new();
+
+    private UpdateCompanyDrawer _updateCompanyDrawer;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        _loading = true;
+        _data = await GetCompanyClient.Get(ExternalId);
+        _loading = false;
+    }
+
+    private async Task OpenDialog()
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.ExtraSmall,
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
+        };
+        var parameters = new DialogParameters<CreateCompanyDialog>
+        {
+            { x => x.ExternalId, ExternalId }
+        };
+        var dialog = await DialogService.ShowAsync<CreateCompanyDialog>("", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        await Refresh();
+    }
+
+    private async Task OpenUpdateCompanyDrawer()
+    {
+        await _updateCompanyDrawer.Open(_data);
+    }
+}

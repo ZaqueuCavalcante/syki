@@ -1,0 +1,175 @@
+﻿@using Exato.Front.Features.Office.VincularEmpresaUsuario
+@using Exato.Shared.Features.Office.BuscarUsuariosDaEmpresa
+@using Exato.Front.Features.Office.DesvincularEmpresaUsuario
+
+@namespace Exato.Front.Features.Office.BuscarUsuariosDaEmpresa
+
+<MudGrid Spacing="3">
+    <MudItem Class="pt-0" xs="12" sm="9" md="9" lg="9">
+        <ExatoSearchTextField
+            Clearable
+            OnClick="@Refresh"
+            Disabled="@_loading"
+            @bind-Value="@_searchString"
+            @bind-Value:after="@HandleSearchClear"
+            Placeholder="Documento, nome ou email"
+        />
+    </MudItem>
+    <AuthorizeView Policy="@Policies.OfficeVincularUsuarioEmpresa">
+        <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 50px">
+            <TabEditButton Text="Usuário" Icon="@Icons.Material.Outlined.Add" OnClick="@OpenDrawer" />
+        </MudItem>
+    </AuthorizeView>
+</MudGrid>
+
+<MudTable @ref="@_table" Items="@_usuarios.Items" Loading="@_loading" RowsPerPage="10" Hover Dense Elevation="0" Class="mt-4">
+    <HeaderContent>
+        <MudTh>Nome</MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh>Documento</MudTh>
+        <MudTh>Criado em</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nome">
+            <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                @{ var (color, icon, text) = context.GetIsActive(); }
+                <MudTooltip Text="@text" Arrow Placement="Placement.Top">
+                    <MudIcon Size="@Size.Small" Icon="@icon" Color="@color" />
+                </MudTooltip>
+                <MudText Typo="Typo.body2">@context.Nome</MudText>
+            </MudStack>
+        </MudTd>
+        <MudTd DataLabel="Email">@context.Email</MudTd>
+        <MudTd DataLabel="Documento">@context.Documento.AsFormatedDocument()</MudTd>
+        <MudTd DataLabel="Criado em">@context.CriadoEm.ToDateTimeString()</MudTd>
+        <MudTd>
+            <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Spacing="1">
+                <AuthorizeView Policy="@Policies.ViewOfficeUsuarioPage" Context="authCtx">
+                    <MudTooltip Text="Detalhes" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" Href="@($"/office/usuarios/{context.Id}")" />
+                    </MudTooltip>
+                </AuthorizeView>
+                <AuthorizeView Policy="@Policies.OfficeDesvincularUsuarioEmpresa" Context="authCtx">
+                    <MudTooltip Text="Desvincular" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.DeleteOutline" OnClick="@(() => OpenDesvincularEmpresaUsuarioDialog(context.Id))" />
+                    </MudTooltip>
+                </AuthorizeView>
+            </MudStack>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudDivider DividerType="DividerType.FullWidth"/>
+        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mx-4">
+            <MudTooltip Text="Total de registros" Arrow Placement="Placement.Top">
+                <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                    <MudIcon Size="@Size.Medium" Icon="@Icons.Material.Filled.ViewHeadline" />
+                    <MudText><strong>@_usuarios.Total.ToIntFormat()</strong></MudText>
+                </MudStack>
+            </MudTooltip>
+            <MudPagination
+                Rectangular
+                Class="pa-4"
+                MiddleCount="3"
+                BoundaryCount="1"
+                Color="Color.Secondary"
+                @bind-Selected="@_page"
+                @bind-Selected:after="@HandlePageChange"
+                Variant="Variant.Text"
+                Count="@((_usuarios.Total + 9) / 10)"
+            />
+        </MudStack>
+    </PagerContent>
+    <NoRecordsContent>
+        Nenhum usuário encontrado.
+    </NoRecordsContent>
+</MudTable>
+
+<AuthorizeView Policy="@Policies.OfficeVincularUsuarioEmpresa">
+    <VincularUsuarioAEmpresaDrawer @ref="@_drawer" Id="@Id" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+@inject IDialogService DialogService
+@inject BuscarUsuariosDaEmpresaClient Client
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    private int _page = 1;
+    private bool _loading;
+    private string _searchString;
+    private VincularUsuarioAEmpresaDrawer _drawer;
+
+    private MudTable<BuscarUsuariosDaEmpresaItemOut> _table;
+    private BuscarUsuariosDaEmpresaOut _usuarios = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Refresh();
+    }
+
+    private async Task HandleSearchClear()
+    {
+        if (_searchString.HasValue()) return;
+
+        await Refresh();
+    }
+
+    private void OpenDrawer()
+    {
+        _drawer.Open();
+    }
+
+    private async Task Refresh()
+    {
+        _loading = true;
+
+        var query = new BuscarUsuariosDaEmpresaIn { Page = 0, SearchTerm = _searchString };
+        _usuarios = await Client.Get(Id, query);
+
+        if (_page != 1)
+        {
+            _page = 1;
+            _table.NavigateTo(0);
+        }
+
+        _loading = false;
+    }
+
+    private async Task HandlePageChange()
+    {
+        _loading = true;
+
+        var query = new BuscarUsuariosDaEmpresaIn { Page = _page - 1, SearchTerm = _searchString };
+        _usuarios = await Client.Get(Id, query);
+
+        _table.NavigateTo(_page - 1);
+
+        _loading = false;
+    }
+
+    private async Task OpenDesvincularEmpresaUsuarioDialog(int userId)
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            MaxWidth = MaxWidth.ExtraSmall,
+            FullWidth = true,
+            FullScreen = breakpoint == Breakpoint.Xs,
+        };
+        var parameters = new DialogParameters<DesvincularEmpresaUsuarioDialog>
+        {
+            { x => x.ClienteId, Id },
+            { x => x.UserId, userId },
+        };
+        var dialog = await DialogService.ShowAsync<DesvincularEmpresaUsuarioDialog>("", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (result!.Canceled) return;
+        
+        await Refresh();
+    }
+}

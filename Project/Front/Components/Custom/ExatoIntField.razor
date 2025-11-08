@@ -1,0 +1,74 @@
+@using System.Globalization
+@using System.Linq.Expressions
+
+@namespace Exato.Front.Components.Custom
+
+<MudNumericField
+    Min="0"
+    T="int?"
+    For="@For"
+    Format="N0"
+    Typo="@Typo"
+    Class="@Class"
+    Label="@Label"
+    Value="@Value"
+    Style="@Style"
+    HideSpinButtons
+    Max="999_999_999"
+    Culture="@_culture"
+    Required="@Required"
+    OnlyValidateIfDirty
+    ReadOnly="@ReadOnly"
+    Disabled="@Disabled"
+    Margin="Margin.Dense"
+    Immediate="@Immediate"
+    MaxLength="@MaxLength"
+    AutoFocus="@AutoFocus"
+    RequiredError="Informe!"
+    Variant="Variant.Outlined"
+    ValueChanged="@ValueChanged"
+/>
+
+@code
+{
+    [Parameter]
+    public int? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<int?> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<int?>>? For { get; set; }
+
+    [Parameter]
+    public Typo Typo { get; set; } = Typo.body1;
+
+    [Parameter]
+    public bool Required { get; set; }
+
+    [Parameter]
+    public bool Immediate { get; set; }
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public string Style { get; set; }
+
+    [Parameter]
+    public string Class { get; set; } = "pb-2";
+    
+    [Parameter]
+    public bool AutoFocus { get; set; }
+
+    [Parameter]
+    public bool ReadOnly { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public int MaxLength { get; set; } = 9;
+
+    private CultureInfo _culture = CultureInfo.GetCultureInfo("pt-BR");
+}

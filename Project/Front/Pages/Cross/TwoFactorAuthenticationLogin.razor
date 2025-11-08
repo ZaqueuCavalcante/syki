@@ -1,0 +1,83 @@
+﻿@using Exato.Front.Features.Cross.TwoFactorAuthenticationLogin
+
+@namespace Exato.Front.Pages.Cross
+
+@page "/2fa/login"
+
+<ExatoPageTitle Title="2FA Login" />
+
+<MudContainer Class="mt-4 mb-8" MaxWidth="MaxWidth.ExtraSmall">
+    <MudOverlay @bind-Visible="@_loading" LightBackground Absolute="false">
+        <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
+    </MudOverlay>
+    <style>input { text-align: center; font-size: 24px !important; letter-spacing: 3px !important; }</style>
+    <MudCard Class="px-4 pt-8" Style="height: 460px">
+        <MudCardContent>
+            <MudStack AlignItems="AlignItems.Center">
+                <MudAlert NoIcon Class="px-4 mb-4" Severity="Severity.Info" Variant="Variant.Text" ContentAlignment="HorizontalAlignment.Center">
+                    <MudStack Row Justify="Justify.SpaceAround">
+                        <MudText>Insira o código gerado pelo Authenticator App para realizar o login</MudText>
+                    </MudStack>
+                </MudAlert>
+                <MudForm>
+                    <style> .align-center input { text-align: center; } </style>
+                    <ExatoTextField
+                        AutoFocus
+                        ReadOnly="@_loading"
+                        Disabled="@_loading"
+                        Style="width: 200px;"
+                        @bind-Value="@_code"
+                        @bind-Value:after="@HandleCodeChanged"
+                        Typo="Typo.h6"
+                        Class="mt-8"
+                        Mask="@(new PatternMask("000-000"))"
+                    />
+                </MudForm>
+                @if (_showCodeFeedback)
+                {
+                    <MudAlert Class="mt-4" Severity="Severity.Error" Variant="Variant.Text">
+                        <MudStack Row Justify="Justify.SpaceAround">
+                            <MudText>Código inválido</MudText>
+                        </MudStack>
+                    </MudAlert>
+                }
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
+
+@inject NavigationManager Nav
+@inject AuthManager AuthManager
+@inject TwoFactorAuthenticationLoginClient Client
+
+@code
+{
+    private string _code;
+    private bool _loading;
+    private bool _showCodeFeedback;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthManager.GetUser();
+        if (user.IsAuthenticated) Nav.NavigateTo("/");
+    }
+
+    private async Task HandleCodeChanged()
+    {
+        _showCodeFeedback = false;
+
+        if (_code.HasValue() && _code.OnlyNumbers().Length == 6)
+        {
+            _loading = true;
+            var result = await Client.Login(_code);
+
+            if (result.IsSuccess)
+            {
+                Nav.NavigateTo("/");
+            }
+   
+            _showCodeFeedback = true;
+            _loading = false;
+        }
+    }
+}

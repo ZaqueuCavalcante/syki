@@ -1,0 +1,184 @@
+﻿@using MudBlazor.Utilities
+@using Exato.Front.Features.Cross.Logout
+
+@namespace Exato.Front.Layout
+
+@inherits LayoutComponentBase
+
+<MudPopoverProvider />
+<MudSnackbarProvider />
+<MudDialogProvider CloseOnEscapeKey="true" CloseButton="true" />
+<MudThemeProvider IsDarkMode="@_isDark" Theme="@ExatoTheme" />
+
+<AuthorizeView>
+    <Authorized>
+        <MudLayout>
+            <MudAppBar Elevation="1" Dense ToolBarClass="pl-1 pr-1">
+                @if (_breakpoint != Breakpoint.Xs)
+                {
+                    <MudIconButton OnClick="@ToggleLeftOpen" Icon="@Icons.Material.Filled.Menu" />
+                }
+                <HomeButton />
+                <MudSpacer />
+                <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ToggleTheme" />
+            </MudAppBar>
+            <MudDrawer @bind-Open="@_leftOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+                <NavMenu OnLogoutClick="@Logout" />
+            </MudDrawer>
+            <MudMainContent Class="pb-12">
+                @Body
+                @if (_breakpoint == Breakpoint.Xs)
+                {
+                    <MudFab
+                        Size="@Size.Large"
+                        Color="Color.Primary"
+                        OnClick="@ToggleLeftOpen"
+                        StartIcon="@Icons.Material.Filled.Menu"
+                        Style="position:fixed; bottom:15px; right:25px;"
+                    />
+                }
+            </MudMainContent>
+        </MudLayout>
+    </Authorized>
+    <NotAuthorized>
+        @if (IsAnonymous())
+        {
+            <MudAppBar Elevation="1" Dense>
+                <MudStack Row Class="d-flex justify-space-around flex-grow-1">
+                    <HomeButton />
+                    <MudSpacer />
+                    <ThemeIconButton @bind-IsDark="@_isDark" OnClick="@ToggleTheme" />
+                    <LoginButton />
+                </MudStack>
+            </MudAppBar>
+            <CascadingValue Name="IsDarkTheme" Value="@_isDark">
+                <MudMainContent>
+                    <ErrorBoundary>
+                        @Body
+                    </ErrorBoundary>
+                </MudMainContent>
+            </CascadingValue>
+        }
+        else
+        {
+            <RedirectToLogin />
+        }
+    </NotAuthorized>
+</AuthorizeView>
+
+@inject NavigationManager Nav
+@inject AuthManager AuthManager
+@inject LogoutClient LogoutClient
+@inject ILocalStorageService LocalStorage
+@inject ExatoAuthStateProvider AuthStateProvider
+@inject ApexCharts.IApexChartService ApexChartService
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    private MudTheme ExatoTheme = new()
+    {
+        LayoutProperties = new LayoutProperties
+        {
+            DrawerWidthLeft = "160px"
+        },
+
+        PaletteLight = new PaletteLight
+        {
+            Primary = Colors.Yellow.Darken2,
+            Secondary = Colors.Teal.Lighten3,
+            Tertiary = Colors.Lime.Lighten2,
+
+            Error = Colors.Red.Default,
+            Info = Colors.Blue.Lighten3,
+            Warning = Colors.Amber.Default,
+            Success = Colors.Green.Lighten1,
+            Dark = Colors.Gray.Lighten2,
+
+            Surface = Colors.Shades.White,
+            Background = Colors.Gray.Lighten4,
+            AppbarBackground = Colors.Gray.Lighten5,
+            DrawerBackground = Colors.Gray.Lighten5,
+
+            TextPrimary = new MudColor("#1F2937"),
+            TextSecondary = new MudColor("#6B7280"),
+            PrimaryContrastText = new MudColor("#4A4A4A"),
+        },
+
+        PaletteDark = new PaletteDark
+        {
+            Primary = Colors.Yellow.Darken2,
+            Secondary = Colors.Teal.Lighten3,
+            Tertiary = Colors.Lime.Lighten2,
+
+            Error = Colors.Red.Default,
+            Info = Colors.Blue.Lighten3,
+            Warning = Colors.Amber.Default,
+            Success = Colors.Green.Default,
+
+            Surface = new MudColor("#2D333B"),
+            Background = new MudColor("#22272E"),
+            DrawerBackground = new MudColor("#2B3139"),
+            AppbarBackground = new MudColor("#2D333B"),
+
+            TextPrimary = new MudColor("#E6EDF3"),
+            TextSecondary = new MudColor("#9DA7B3"),
+            DrawerText = new MudColor("#E6EDF3"),
+        }
+    };
+
+    private bool _isDark = true;
+    private bool _leftOpen = true;
+    private Breakpoint _breakpoint;
+
+    private bool IsAnonymous()
+    {
+        var uri = Nav.Uri.ToLower();
+        return uri.EndsWith("/") ||
+            uri.Contains("register") ||
+            uri.Contains("login") ||
+            uri.Contains("reset-password");
+    }
+
+    private void ToggleLeftOpen()
+    {
+        _leftOpen = !_leftOpen;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var isDark = await LocalStorage.GetItemAsync<string>("IsDark");
+        _isDark = isDark == null || bool.Parse(isDark);
+    }
+
+    private async Task ToggleTheme()
+    {
+        _isDark = !_isDark;
+
+        await UpdateApexChartsTheme();
+
+        await LocalStorage.SetItemAsync("IsDark", _isDark.ToString()); 
+    }
+
+    private async Task UpdateApexChartsTheme()
+    {
+        var options = new ApexCharts.ApexChartBaseOptions
+        {
+            Theme = new ApexCharts.Theme
+            {
+                Mode = _isDark ? ApexCharts.Mode.Dark : ApexCharts.Mode.Light
+            }
+        };
+        
+        await ApexChartService.SetGlobalOptionsAsync(options, true);
+    }
+
+    private async Task Logout()
+    {
+        await LogoutClient.Logout();
+        await LocalStorage.RemoveItemAsync("User");
+        AuthStateProvider.MarkUserAsLoggedOut();
+        Nav.NavigateTo("/");
+    }
+}

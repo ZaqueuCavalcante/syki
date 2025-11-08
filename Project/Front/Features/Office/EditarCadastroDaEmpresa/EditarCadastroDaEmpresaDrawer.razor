@@ -1,0 +1,145 @@
+@using Exato.Front.Components.Empresas
+@using Exato.Shared.Features.Office.BuscarEmpresa
+@using Exato.Front.Features.Office.BuscarVendedores
+
+@namespace Exato.Front.Features.Office.EditarCadastroDaEmpresa
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+	<MudDrawerHeader Class="justify-space-between">
+		<MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+			<MudIcon Icon="@Icons.Material.Filled.Apps" />
+			<MudText Typo="Typo.h5"><b>Cadastro</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="1" Class="px-7">
+        <MudForm @ref="@_form" Model="@_model" Validation="@(EditarCadastroDaEmpresaFormData.V.ValidateValue)" Style="width: 100%">
+            <ExatoSwitch @bind-Value="@_model.Ativa" For="@(() => _model.Ativa)" Label="Ativa" />
+
+            <ExatoTextField @bind-Value="@_model.Nome" For="@(() => _model.Nome)" Label="Nome" MaxLength="150" />
+            <ExatoTextField @bind-Value="@_model.CNPJ" For="@(() => _model.CNPJ)" Label="CNPJ" Mask="@(new PatternMask("00.000.000/0000-00"))" />
+
+            <MatrizSelect Id="@_model.Id" @bind-Value="@_model.Matriz" />
+
+            <ExatoTextField @bind-Value="@_model.RazaoSocial" For="@(() => _model.RazaoSocial)" Label="Razão social" MaxLength="150" />
+            <ExatoTextField @bind-Value="@_model.NomeFantasia" For="@(() => _model.NomeFantasia)" Label="Nome fantasia" MaxLength="150" />
+            <ExatoTextField @bind-Value="@_model.Slug" For="@(() => _model.Slug)" Label="Slug" MaxLength="30" Mask="@(new RegexMask(@"^[a-z-]*$"))" />
+
+            <MudSelect
+                Dense
+                Clearable
+                Class="pb-2"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                Label="Vendedor responsável"
+                @bind-Value="@_model.SalesContact"
+                For="@(() => _model.SalesContact)"
+            >
+                @foreach (var option in _salesContacts)
+                {
+                    <MudSelectItem Value="@option">@option</MudSelectItem>
+                }
+            </MudSelect>
+        </MudForm>
+    </MudGrid>
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 py-4">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" Loading="@_loading" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject BuscarVendedoresClient BuscarVendedoresClient
+@inject IBrowserViewportService BrowserViewportService
+@inject EditarCadastroDaEmpresaClient EditarCadastroDaEmpresaClient
+
+@code
+{
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private bool _open;
+    private string _width = "550px";
+    private Breakpoint _breakpoint;
+
+    private MudForm _form;
+    private bool _loading;
+    private EditarCadastroDaEmpresaFormData _model = new();
+
+    private List<string> _salesContacts = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "550px";
+        _salesContacts = (await BuscarVendedoresClient.Get()).Items;
+    }
+
+    public async Task Open(BuscarEmpresaOut empresa)
+    {
+        _loading = true;
+
+        await _form?.ResetAsync();
+
+        _model = new()
+        {
+            Id = empresa.Id,
+            Nome = empresa.Nome,
+            CNPJ = empresa.CNPJ,
+            Slug = empresa.Slug,
+            Ativa = empresa.Ativa,
+            RazaoSocial = empresa.RazaoSocial,
+            NomeFantasia = empresa.NomeFantasia,
+            SalesContact = empresa.SalesContact,
+        };
+
+        if (empresa.MatrizId != null)
+        {
+            _model.Matriz = new()
+            {
+                Id = empresa.MatrizId.Value,
+                Nome = empresa.Matriz ?? "-",
+            };
+        }
+
+        _open = true;
+        _loading = false;
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+      
+        _loading = true;
+        var response = await EditarCadastroDaEmpresaClient.Editar(
+            _model.Id,
+            _model.Ativa,
+            _model.Nome,
+            _model.CNPJ,
+            _model.RazaoSocial,
+            _model.Matriz?.GetId(),
+            _model.NomeFantasia,
+            _model.Slug,
+            _model.SalesContact
+        );
+        if (response.IsSuccess)
+        {
+            Snackbar.Add("Cadastro salvo com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+}

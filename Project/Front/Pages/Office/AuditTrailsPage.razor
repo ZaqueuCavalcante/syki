@@ -1,0 +1,173 @@
+﻿@using Exato.Front.Components.Users
+@using Exato.Front.Features.Office.GetAuditTrail
+@using Exato.Front.Features.Office.GetAuditTrails
+@using Exato.Shared.Features.Office.GetAuditTrails
+@using Exato.Front.Features.Office.GetAuditTrailOperations
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/audit-trails"
+@attribute [Authorize(Policies.ViewOfficeAuditTrailsPage)]
+
+<ExatoPageTitle Title="Auditoria" />
+
+<MudContainer Class="my-4 px-4">
+    <ExatoPageHeader Icon="@Icons.Material.Filled.Grading" Title="Auditoria" />
+    <MudContainer Class="px-0 my-4">
+        <MudTable @ref="@_table" Items="@_trails.Items" Loading="@_loading" RowsPerPage="10" Hover Dense Class="pt-2">
+            <ToolBarContent>
+                <MudGrid Justify="Justify.FlexStart" Class="mr-2">
+                    <MudItem xs="12" sm="5" md="5" lg="5">
+                        <MudSelect
+                            Dense
+                            Margin="Margin.Dense"
+                            Variant="Variant.Outlined"
+                            @bind-Value="@_operation"
+                            @bind-Value:after="@Refresh"
+                            Label="Operação"
+                            Clearable
+                        >
+                            @foreach (var operation in _operations)
+                            {
+                                <MudSelectItem Value="@operation">@operation</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" sm="3" md="2" lg="2">
+                        <MudSelect
+                            Dense
+                            Margin="Margin.Dense"
+                            Variant="Variant.Outlined"
+                            @bind-Value="@_action"
+                            @bind-Value:after="@Refresh"
+                            Label="Ação"
+                            Clearable
+                        >
+                            @foreach (var action in _actions)
+                            {
+                                <MudSelectItem Value="@action">@action</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" sm="4" md="5" lg="5">
+                        <UserSelect @bind-Value="@_user" @bind-Value:after="@Refresh" />
+                    </MudItem>
+                </MudGrid>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Operação</MudTh>
+                <MudTh>Entidade</MudTh>
+                <MudTh>Usuário</MudTh>
+                <MudTh>Ação</MudTh>
+                <MudTh>Criação</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Operação">@context.Operation</MudTd>
+                <MudTd DataLabel="Entidade">@context.EntityType</MudTd>
+                <MudTd DataLabel="Usuário">@(context.User ?? "-")</MudTd>
+                <MudTd DataLabel="Ação">@context.Action</MudTd>
+                <MudTd DataLabel="Criação">@context.CreatedAt.ToDateTimeString()</MudTd>
+                <MudTd>
+                    <AuthorizeView Policy="@Policies.ViewOfficeAuditTrailDrawer" Context="authCtx">
+                        <MudTooltip Text="Detalhes" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" OnClick="@(() => OpenDrawer(context.Id))" />
+                        </MudTooltip>
+                    </AuthorizeView>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudDivider DividerType="DividerType.FullWidth"/>
+                <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mx-4">
+                    <MudTooltip Text="Total de registros" Arrow Placement="Placement.Top">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                            <MudIcon Size="@Size.Medium" Icon="@Icons.Material.Filled.ViewHeadline" />
+                            <MudText><strong>@_trails.Total.ToIntFormat()</strong></MudText>
+                        </MudStack>
+                    </MudTooltip>
+                    <MudPagination
+                        Rectangular
+                        Class="pa-4"
+                        MiddleCount="3"
+                        BoundaryCount="1"
+                        Color="Color.Secondary"
+                        @bind-Selected="@_page"
+                        @bind-Selected:after="@HandlePageChange"
+                        Variant="Variant.Text"
+                        Count="@((_trails.Total + 9) / 10)"
+                    />
+                </MudStack>
+            </PagerContent>
+            <NoRecordsContent>
+                Nenhum dado encontrado.
+            </NoRecordsContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+<AuthorizeView Policy="@Policies.ViewOfficeAuditTrailDrawer">
+    <GetAuditTrailDrawer @ref="@_drawer" />
+</AuthorizeView>
+
+@inject GetAuditTrailsClient Client
+@inject GetAuditTrailOperationsClient OperationsClient
+
+@code
+{
+    private int _page = 1;
+    private bool _loading;
+
+    private string? _operation;
+    private string? _action;
+    private UserSelectData _user = new();
+
+    private GetAuditTrailDrawer _drawer;
+
+    private List<string> _operations = [];
+    private List<string> _actions = ["Insert", "Update", "Delete"];
+
+    private MudTable<GetAuditTrailsItemOut> _table;
+    private GetAuditTrailsOut _trails = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+
+        _operations = (await OperationsClient.Get()).Items;
+
+        await Refresh();
+    }
+
+    private async Task OpenDrawer(Guid id)
+    {
+        await _drawer.Open(id);
+    }
+
+    private async Task Refresh()
+    {
+        _loading = true;
+
+        var query = new GetAuditTrailsIn { Page = 0, Operation = _operation, Action = _action, UserId = _user?.GetId() };
+        _trails = await Client.Get(query);
+
+        if (_page != 1)
+        {
+            _page = 1;
+            _table.NavigateTo(0);
+        }
+
+        _loading = false;
+    }
+
+    private async Task HandlePageChange()
+    {
+        _loading = true;
+
+        var query = new GetAuditTrailsIn { Page = _page - 1, Operation = _operation, Action = _action, UserId = _user?.GetId() };
+        _trails = await Client.Get(query);
+
+        _table.NavigateTo(_page - 1);
+
+        _loading = false;
+    }
+}

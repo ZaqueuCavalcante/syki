@@ -1,0 +1,59 @@
+@using Exato.Shared.Features.Office.BuscarTokensDeAcesso
+
+@namespace Exato.Front.Features.Office.VerDetalhesDoTokenDeAcesso
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+    <MudDrawerHeader Class="justify-space-between">
+        <MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+            <MudIcon Icon="@Icons.Material.Filled.RemoveRedEye" />
+            <MudText Typo="Typo.h5"><b>Detalhes do token</b></MudText>
+        </MudStack>
+        <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="4" Class="px-7">
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Token" Text="@_model.Token" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Key Id" Text="@_model.KeyId" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Secret Hash" Text="@_model.SecretHash" />
+        </MudItem>
+    </MudGrid>
+</MudDrawer>
+
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    private bool _open;
+    private string _width = "550px";
+    private Breakpoint _breakpoint;
+
+    private VerDetalhesDoTokenDeAcessoFormData _model = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "550px";
+    }
+
+    public void Open(BuscarTokensDeAcessoItemOut token)
+    {
+        _model = new()
+        {
+            Token = token.Token,
+            KeyId = token.KeyId,
+            SecretHash = token.SecretHash,
+        };
+
+        _open = true;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+}

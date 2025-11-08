@@ -1,0 +1,63 @@
+@namespace Exato.Front.Components.Custom
+
+<MudGrid Class="@($"align-center {Class}")">
+    <MudItem xs="12" sm="9" md="9" lg="9">
+        <MudStack Row AlignItems="AlignItems.Center">
+            @if (Icon.HasValue())
+            {
+                <MudIcon Icon="@Icon" Class="mb-1" Size="Size.Large"/>
+            }
+            <MudText Typo="@Typo" Style="font-weight: bold">@Title</MudText>
+        </MudStack>
+    </MudItem>
+    @if (OnClick.HasDelegate)
+    {
+        <AuthorizeView Policy="@ButtonPolicy">
+            <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 64px">
+                <MudButton
+                    Disabled="@ButtonDisabled"
+                    StartIcon="@ButtonIcon"
+                    IconSize="Size.Large"
+                    Variant="Variant.Filled"
+                    Size="Size.Medium"
+                    Color="Color.Primary"
+                    @onclick="@OnClick"
+                >
+                    @ButtonText
+                </MudButton>
+            </MudItem>
+        </AuthorizeView>
+    }
+</MudGrid>
+
+@code
+{
+    [Parameter]
+    public string Class { get; set; }
+    
+    [Parameter]
+    public string Icon { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public Typo Typo { get; set; } = Typo.h5;
+    
+    [Parameter]
+    public string ButtonText { get; set; }
+
+    [Parameter]
+    public string ButtonIcon { get; set; } = Icons.Material.Outlined.Add;
+
+    [Parameter]
+    public bool ButtonDisabled { get; set; }
+    [Parameter]
+    public EventCallback<bool> ButtonDisabledChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter]
+    public string ButtonPolicy { get; set; }
+}

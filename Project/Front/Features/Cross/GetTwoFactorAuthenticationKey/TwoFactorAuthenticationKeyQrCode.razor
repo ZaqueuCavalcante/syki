@@ -1,0 +1,41 @@
+﻿@namespace Exato.Front.Features.Cross.GetTwoFactorAuthenticationKey
+
+<MudPaper>
+    <MudCard Class="px-4 py-0" Elevation="0">
+        <MudCardContent>
+            <MudStack AlignItems="AlignItems.Center">
+                <MudAlert NoIcon Severity="Severity.Info" Variant="Variant.Text">
+                    <MudStack Row Justify="Justify.SpaceAround">
+                        <MudText>Utilize um Authenticator App para ler o QR-Code</MudText>
+                    </MudStack>
+                </MudAlert>
+                @if (Key.IsEmpty())
+                {
+                    <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0 d-flex align-center justify-center rounded-lg border-dashed border-1 mud-border-secundary">
+                        <MudProgressCircular Size="Size.Large" Color="Color.Info" Indeterminate StrokeWidth="4" />
+                    </MudContainer>
+                }
+                else
+                {
+                    <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0">
+                        <MudImage Src="@QrCodeBase64" Fluid Elevation="25" Class="rounded-lg"/>
+                    </MudContainer>
+                    <MudContainer MaxWidth="MaxWidth.False" Style="max-width: 380px" Class="px-0">
+                        <ExatoTextField Value="@Key" CopyAdornment ReadOnly />
+                    </MudContainer>
+                }
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudPaper>
+
+@inject GetTwoFactorAuthenticationKeyClient Client
+
+@code
+{
+    [Parameter]
+    public string Key { get; set; }
+
+    [Parameter]
+    public string QrCodeBase64 { get; set; }
+}

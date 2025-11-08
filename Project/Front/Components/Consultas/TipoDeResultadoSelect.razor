@@ -1,0 +1,61 @@
+﻿@using System.Linq.Expressions
+@using Exato.Front.Features.Office.BuscarTiposDeResultado
+@using Exato.Shared.Features.Office.BuscarTiposDeResultado
+
+@namespace Exato.Front.Components.Consultas
+
+<MudAutocomplete
+	Dense
+	For="@For"
+	Clearable
+	MaxItems=50
+	Class="pb-0"
+	Value="@Value"
+	Strict="false"
+	Label="Resultado"
+	SearchFunc="@Search"
+	Margin="Margin.Dense"
+	ResetValueOnEmptyText
+	ShowProgressIndicator
+	DebounceInterval="500"
+	Variant="Variant.Outlined"
+	T="TipoDeResultadoSelectData"
+	ValueChanged="@ValueChanged"
+	AdornmentIcon="@Icons.Material.Filled.Search"
+	ToStringFunc="@(e => e == null ? null : $"{e.ToString()}")"
+>
+	<ItemTemplate Context="e">
+		<MudStack Spacing="0">
+			<MudText Typo="Typo.body2">@e.ToString()</MudText>
+		</MudStack>
+	</ItemTemplate>
+</MudAutocomplete>
+
+@inject BuscarTiposDeResultadoClient Client
+
+@code
+{
+	[Parameter]
+	public TipoDeResultadoSelectData Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TipoDeResultadoSelectData> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<TipoDeResultadoSelectData>>? For { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+		await Task.Yield();
+    }
+
+    private async Task<IEnumerable<TipoDeResultadoSelectData>> Search(string value, CancellationToken token)
+    {
+        var nome = value.HasValue() ? value : null;
+        var query = new BuscarTiposDeResultadoIn { Page = 0, Nome = nome };
+
+		var response = await Client.Get(query);
+
+		return response.Items.ConvertAll(x => new TipoDeResultadoSelectData { Id = x.Id, Nome = x.Nome });
+    }
+}

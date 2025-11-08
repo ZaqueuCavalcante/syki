@@ -1,0 +1,122 @@
+@using Exato.Shared.Features.Office.BuscarEmpresa
+
+@namespace Exato.Front.Features.Office.EditarFaturamentoDaEmpresa
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+	<MudDrawerHeader Class="justify-space-between">
+		<MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+			<MudIcon Icon="@Icons.Material.Filled.LocalAtm" />
+			<MudText Typo="Typo.h5"><b>Faturamento</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="1" Class="px-7">
+        <MudForm Model="@_model" Style="width: 100%">
+            @{ var icon = _model.Habilitado ? @Icons.Material.Filled.AttachMoney : Icons.Material.Filled.MoneyOff; }
+            <MudSwitch
+                Class="pb-2"
+                ThumbIcon="@icon"
+                Color="Color.Success"
+                ThumbIconColor="Color.Dark"
+                Style="max-width: fit-content;"
+                @bind-Value="@_model.Habilitado"
+            >
+                Habilitado
+            </MudSwitch>
+
+            <MudSelect
+                Dense
+                T="MetodoDePagamento"
+                Label="Pagamento"
+                Margin="Margin.Dense"
+                @bind-Value="@_model.MetodoDePagamento"
+                Variant="Variant.Outlined"
+            >
+                <MudSelectItem T="MetodoDePagamento" Value="MetodoDePagamento.PrePago">
+                    <MudStack Row AlignItems="AlignItems.Center">
+                        <MudIcon Class="mb-1" Icon="@Icons.Material.Filled.Circle" Color="Color.Tertiary" Size="Size.Small" />
+                        <MudText>@MetodoDePagamento.PrePago.GetDescription()</MudText>
+                    </MudStack>
+                </MudSelectItem>
+                <MudSelectItem T="MetodoDePagamento" Value="MetodoDePagamento.PosPago">
+                    <MudStack Row AlignItems="AlignItems.Center">
+                        <MudIcon Class="mb-1" Icon="@Icons.Material.Filled.Circle" Color="Color.Info" Size="Size.Small" />
+                        <MudText>@MetodoDePagamento.PosPago.GetDescription()</MudText>
+                    </MudStack>
+                </MudSelectItem>
+            </MudSelect>
+        </MudForm>
+    </MudGrid>
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 py-4">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" Loading="@_loading" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject IBrowserViewportService BrowserViewportService
+@inject EditarFaturamentoDaEmpresaClient EditarFaturamentoDaEmpresaClient
+
+@code
+{
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private bool _open;
+    private string _width = "550px";
+    private Breakpoint _breakpoint;
+
+    private bool _loading;
+    private EditarFaturamentoDaEmpresaFormData _model = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "550px";
+    }
+
+    public void Open(BuscarEmpresaOut empresa)
+    {
+        _loading = true;
+
+        _model = new()
+        {
+            Id = empresa.Id,
+            EhMatriz = empresa.MatrizId == null,
+            Habilitado = empresa.IsBillingCustomer,
+            MetodoDePagamento = empresa.MetodoDePagamento,
+        };
+
+        _open = true;
+        _loading = false;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        _loading = true;
+        var response = await EditarFaturamentoDaEmpresaClient.Editar(
+            _model.Id,
+            _model.Habilitado,
+            _model.MetodoDePagamento
+        );
+        if (response.IsSuccess)
+        {
+            Snackbar.Add("Faturamento salvo com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+}

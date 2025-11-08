@@ -1,0 +1,116 @@
+﻿@using Exato.Front.Features.Office.BuscarConsulta
+@using Exato.Shared.Features.Office.BuscarConsulta
+@using Exato.Front.Features.Office.BuscarConsultas
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/consultas/{uid}"
+@attribute [Authorize(Policies.ViewOfficeConsultaPage)]
+
+<ExatoPageTitle Title="Consulta" />
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="my-4 px-4">
+    <MudCard>
+        <MudCardContent>
+            <MudStack Row AlignItems="AlignItems.Center">
+                <MudIcon Icon="@Icons.Material.Filled.QueryStats" Class="mb-1" Size="Size.Large"/>
+                <MudText Typo="Typo.h6" Class="mt-1" Style="font-weight: bold">@_data.Tipo</MudText>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="px-0 my-4">
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <InfoCard Icon="@Icons.Material.Filled.Business" Color="@Colors.Gray.Default" Title="Cliente" Content="@_data.Cliente" />
+            </MudItem>
+
+            <MudItem xs="12" sm="3" md="3" lg="3">
+                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.Green.Darken2" Title="Início" Content="@_data.Inicio.ToDateTimeString()" />
+            </MudItem>
+            <MudItem xs="12" sm="3" md="3" lg="3">
+                <InfoCard Icon="@Icons.Material.Filled.AccessTime" Color="@Colors.Red.Darken2" Title="Fim" Content="@_data.Fim.ToDateTimeString()" />
+            </MudItem>
+            <MudItem xs="12" sm="6" md="6" lg="6">
+                <InfoCard Icon="@Icons.Material.Filled.ArrowRight" Color="@Colors.Gray.Default" Title="Resultado" Content="@_data.Resultado" />
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="px-0 my-4">
+        <MudTable
+            Dense
+            Hover
+            Class="mb-4"
+            RowsPerPage="10"
+            T="BuscarConsultaOut"
+            Loading="@_loading"
+            Items="@_data.Subconsultas"
+            Breakpoint="Breakpoint.Sm"
+        >
+            <ToolBarContent>
+                <MudStack Row AlignItems="AlignItems.Center" Class="my-4 ml-1 mr-2" Style="width: 100%">
+                    <MudItem xs="12" sm="8" md="8" lg="8">
+                        <MudStack Row AlignItems="AlignItems.Center">
+                            <MudIcon Icon="@Icons.Material.Filled.AccountTree" Class="mb-1" Size="Size.Medium"/>
+                            <MudText Typo="Typo.h6" Style="font-weight: bold">Subconsultas (@_data.Subconsultas.Count)</MudText>
+                        </MudStack>
+                    </MudItem>
+                </MudStack>
+            </ToolBarContent>
+
+            <HeaderContent>
+                <MudTh>Uid</MudTh>
+                <MudTh>Tipo</MudTh>
+                <MudTh>Início</MudTh>
+                <MudTh>Fim</MudTh>
+                <MudTh>Resultado</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Uid">@context.UId</MudTd>
+                <MudTd DataLabel="Tipo">@context.GetTipo()</MudTd>
+                <MudTd DataLabel="Início">@context.Inicio.ToDateTimeString()</MudTd>
+                <MudTd DataLabel="Fim">@context.Fim.ToDateTimeString()</MudTd>
+                <MudTd DataLabel="Resultado">@context.Resultado</MudTd>
+                <MudTd>
+                    <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Spacing="1">
+                        @if (context.HasPdf)
+                        {
+                            <MudTooltip Text="Ver PDF" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                                <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.PictureAsPdf" Target="_blank" Href="@($"https://api.exato.digital/services/pdf/{context.UId}")" />
+                            </MudTooltip>
+                        }
+                    </MudStack>
+                </MudTd>
+            </RowTemplate>
+            <NoRecordsContent>
+                Nenhuma subconsulta encontrada.
+            </NoRecordsContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+@inject BuscarConsultaClient Client
+
+@code
+{
+	[Parameter]
+	public string Uid { get; set; }
+
+    private bool _loading;
+
+    private BuscarConsultaOut _data = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        _loading = true;
+        _data = await Client.Buscar(Uid);
+        _loading = false;
+    }
+}

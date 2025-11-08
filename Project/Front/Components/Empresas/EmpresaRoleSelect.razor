@@ -1,0 +1,66 @@
+﻿@using System.Linq.Expressions
+@using Exato.Front.Features.Office.GetOrganizationRoles
+@using Exato.Shared.Features.Office.GetOrganizationRoles
+
+@namespace Exato.Front.Components.Empresas
+
+<MudAutocomplete
+	Dense
+	Clearable
+	For="@For"
+	MaxItems=50
+	Class="@Class"
+	Value="@Value"
+	Label="Role"
+	Strict="false"
+	T="EmpresaRoleSelectData"
+	SearchFunc="@Search"
+	Margin="Margin.Dense"
+	ResetValueOnEmptyText
+	ShowProgressIndicator
+	DebounceInterval="500"
+	Variant="Variant.Outlined"
+	ValueChanged="@ValueChanged"
+	AdornmentIcon="@Icons.Material.Filled.Search"
+	ToStringFunc="@(e => e == null ? null : $"{e.Name}")"
+>
+	<ItemTemplate Context="e">
+		<MudStack Spacing="0">
+			<MudText>@e.Name</MudText>
+		</MudStack>
+	</ItemTemplate>
+</MudAutocomplete>
+
+@inject GetOrganizationRolesClient Client
+
+@code
+{
+	[Parameter]
+	public int Id { get; set; }
+
+	[Parameter]
+	public string Class { get; set; }
+
+	[Parameter]
+	public EmpresaRoleSelectData Value { get; set; }
+
+    [Parameter]
+    public EventCallback<EmpresaRoleSelectData> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<EmpresaRoleSelectData>>? For { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+		await Task.Yield();
+    }
+
+    private async Task<IEnumerable<EmpresaRoleSelectData>> Search(string value, CancellationToken token)
+    {
+        var query = new GetOrganizationRolesIn { Page = 0, Name = value };
+
+		var response = await Client.Get(Id, query);
+
+		return response.Items.ConvertAll(x => new EmpresaRoleSelectData { Id = x.Id, Name = x.Name });
+    }
+}

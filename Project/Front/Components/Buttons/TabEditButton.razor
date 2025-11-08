@@ -1,0 +1,29 @@
+@namespace Exato.Front.Components.Buttons
+
+<MudButton
+    StartIcon="@Icon"
+    IconSize="Size.Medium"
+    Variant="Variant.Filled"
+    Size="Size.Medium"
+    Color="Color.Primary"
+    @onclick="@HandleClick"
+>
+    @Text
+</MudButton>
+
+@code
+{
+    [Parameter]
+    public string Text { get; set; } = "Editar";
+
+    [Parameter]
+    public string Icon { get; set; } = @Icons.Material.Filled.ModeEditOutline;
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    private async Task HandleClick()
+    {
+        await OnClick.InvokeAsync();
+    }
+}

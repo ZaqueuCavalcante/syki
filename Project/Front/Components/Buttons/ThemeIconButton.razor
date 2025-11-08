@@ -1,0 +1,22 @@
+@namespace Exato.Front.Components.Buttons
+
+@if (IsDark)
+{
+    <MudIconButton Icon="@Icons.Material.Filled.LightMode" OnClick="@OnClick" />
+}
+else
+{
+    <MudIconButton Icon="@Icons.Material.Filled.DarkMode" OnClick="@OnClick" />
+}
+
+@code
+{
+    [Parameter]
+    public bool IsDark { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsDarkChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

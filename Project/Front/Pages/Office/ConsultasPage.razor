@@ -1,0 +1,281 @@
+﻿@using Exato.Front.Components.Empresas
+@using Exato.Front.Components.Consultas
+@using Exato.Front.Features.Office.BuscarConsultas
+@using Exato.Shared.Features.Office.BuscarConsultas
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/consultas"
+@attribute [Authorize(Policies.ViewOfficeConsultasPage)]
+
+<ExatoPageTitle Title="Consultas" />
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="my-4 px-4">
+    <ExatoPageHeader Icon="@Icons.Material.Filled.QueryStats" Title="Consultas" />
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="px-0 my-4">
+        <MudTable @ref="@_table" Items="@_consultas.Items" Loading="@_loading" RowsPerPage="10" Hover Dense Class="pt-3" Breakpoint="@Breakpoint.Sm">
+            <ToolBarContent>
+                <MudGrid Spacing="2" Justify="Justify.FlexStart" Class="pr-2">
+                    <MudItem xs="12" sm="8" md="4" lg="4">
+                        <MudDatePicker
+                            Editable
+                            Label="Data inicial"
+                            Margin="Margin.Dense"
+                            DateFormat="dd/MM/yyyy"
+                            @bind-Date="@_filters.StartDate"
+                            Variant="Variant.Outlined"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="4" md="2" lg="2">
+                        <MudTimePicker
+                            Editable
+                            Label="Hora inicial"
+                            Margin="Margin.Dense"
+                            @bind-Time="@_filters.StartTime"
+                            Variant="Variant.Outlined"
+                        />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="8" md="4" lg="4">
+                        <MudDatePicker
+                            Editable
+                            Label="Data final"
+                            Margin="Margin.Dense"
+                            DateFormat="dd/MM/yyyy"
+                            @bind-Date="@_filters.EndDate"
+                            Variant="Variant.Outlined"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="4" md="2" lg="2">
+                        <MudTimePicker
+                            Editable
+                            Label="Hora final"
+                            Margin="Margin.Dense"
+                            @bind-Time="@_filters.EndTime"
+                            Variant="Variant.Outlined"
+                        />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="12" md="12" lg="6">
+                        <EmpresaSelect @bind-Value="@_filters.Cliente" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="6">
+                        <TipoDeConsultaSelect @bind-Value="@_filters.Tipo" />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="6" md="3" lg="3">
+                        <MudTextField
+                            Immediate
+                            Clearable
+                            Label="Uid"
+                            @bind-Value="@_filters.Uid"
+                            Margin="Margin.Dense"
+                            OnKeyDown="@HandleKeyDown"
+                            Variant="Variant.Outlined"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="3" lg="3">
+                        <MudTextField
+                            Immediate
+                            Clearable
+                            Label="Documento"
+                            Margin="Margin.Dense"
+                            @bind-Value="@_filters.Document"
+                            OnKeyDown="@HandleKeyDown"
+                            Variant="Variant.Outlined"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="6" lg="6">
+                        <MudTextField
+                            Immediate
+                            Clearable
+                            Label="Chave"
+                            @bind-Value="@_filters.Chave"
+                            Margin="Margin.Dense"
+                            OnKeyDown="@HandleKeyDown"
+                            Variant="Variant.Outlined"
+                        />
+                    </MudItem>
+
+                    <MudItem xs="12" sm="12" md="12" lg="6">
+                        <TipoDeResultadoSelect @bind-Value="@_filters.Resultado" />
+                    </MudItem>
+
+                    <MudFlexBreak />
+
+                    <MudItem xs="12" sm="6" md="6" lg="6" Class="mt-1 mb-2" Style="max-height: 50px">
+                        <MudButton
+                            Disabled="@_loading"
+                            StartIcon="@Icons.Material.Filled.Search"
+                            IconSize="Size.Large"
+                            Variant="Variant.Filled"
+                            Size="Size.Medium"
+                            Style="height: 40px;"
+                            Color="Color.Secondary"
+                            @onclick="@Refresh"
+                        >
+                            Pesquisar
+                        </MudButton>
+                    </MudItem>
+
+                </MudGrid>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Uid</MudTh>
+                <MudTh>Tipo</MudTh>
+                <MudTh>Empresa</MudTh>
+                <MudTh>Início</MudTh>
+                <MudTh>Fim</MudTh>
+                <MudTh>Resultado</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Uid">@context.UId</MudTd>
+                <MudTd DataLabel="Tipo">@context.GetTipo()</MudTd>
+                <MudTd DataLabel="Empresa">@context.Cliente</MudTd>
+                <MudTd DataLabel="Início">@context.Inicio.ToDateTimeString()</MudTd>
+                <MudTd DataLabel="Fim">@context.Fim.ToDateTimeString()</MudTd>
+                <MudTd DataLabel="Resultado">@context.Resultado</MudTd>
+                <MudTd>
+                    <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Spacing="1">
+                        @if (context.HasPdf)
+                        {
+                            <MudTooltip Text="Ver PDF" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                                <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.PictureAsPdf" OnClick="@(() => CopyPdfPassword(context.PdfPassword))" Target="_blank" Href="@($"https://api.exato.digital/services/pdf/{context.UId}")" />
+                            </MudTooltip>
+                        }
+                        <AuthorizeView Policy="@Policies.ViewOfficeConsultaPage" Context="authCtx">
+                            <MudTooltip Text="Detalhes" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                                <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" Href="@($"/office/consultas/{context.UId}")" />
+                            </MudTooltip>
+                        </AuthorizeView>
+                    </MudStack>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudDivider DividerType="DividerType.FullWidth"/>
+                <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mx-4">
+                    <MudTooltip Text="Total de registros" Arrow Placement="Placement.Top">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                            <MudIcon Size="@Size.Medium" Icon="@Icons.Material.Filled.ViewHeadline" />
+                            <MudText><strong>@_consultas.Total.ToIntFormat()</strong></MudText>
+                        </MudStack>
+                    </MudTooltip>
+                    <MudPagination
+                        Rectangular
+                        Class="pa-4"
+                        MiddleCount="3"
+                        BoundaryCount="1"
+                        Variant="Variant.Text"
+                        Color="Color.Secondary"
+                        @bind-Selected="@_page"
+                        @bind-Selected:after="@HandlePageChange"
+                        Count="@((_consultas.Total + 9) / 10)"
+                    />
+                </MudStack>
+            </PagerContent>
+            <NoRecordsContent>
+                Nenhuma consulta encontrada.
+            </NoRecordsContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+@inject NavigationManager Nav
+@inject BuscarConsultasClient Client
+@inject ClipboardService ClipboardService
+
+@code
+{
+    private int _page = 1;
+    private bool _loading;
+
+    private BuscarConsultasFilterData _filters = new();
+    private MudTable<BuscarConsultasItemOut> _table;
+    private BuscarConsultasOut _consultas = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Nav.ApplyQueryToFilterState(_filters);
+
+        _filters.Cliente?.Id = _filters.ClienteId ?? 0;
+        _filters.Cliente?.Nome = _filters.ClienteName ?? "";
+        _filters.Tipo?.Id = _filters.TipoId ?? 0;
+        _filters.Tipo?.Nome = _filters.TipoName ?? "";
+        _filters.Resultado?.Id = _filters.ResultadoId ?? 0;
+        _filters.Resultado?.Nome = _filters.ResultadoName ?? "";
+
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        _filters.ClienteId = _filters.Cliente?.GetId();
+        _filters.ClienteName = _filters.Cliente?.Nome ?? "";
+        _filters.TipoId = _filters.Tipo?.GetId();
+        _filters.TipoName = _filters.Tipo?.Nome ?? "";
+        _filters.ResultadoId = _filters.Resultado?.GetId();
+        _filters.ResultadoName = _filters.Resultado?.Nome ?? "";
+
+        Nav.UpdateQueryString(_filters);
+
+        _loading = true;
+
+        var query = new BuscarConsultasIn {
+            Page = 0,
+            Start = (_filters.StartDate ?? DateTime.Now.Date) + (_filters.StartTime ?? new TimeSpan(00, 00, 00)),
+            End = (_filters.EndDate ?? DateTime.Now.Date) + (_filters.EndTime ?? new TimeSpan(23, 59, 59)),
+            ClienteId = _filters.ClienteId,
+            TipoId = _filters.TipoId,
+            ResultadoId = _filters.ResultadoId,
+            Uid = _filters.Uid,
+            Chave = _filters.Chave,
+            Document = _filters.Document,
+        };
+        _consultas = await Client.Buscar(query);
+
+        if (_page != 1)
+        {
+            _page = 1;
+            _table.NavigateTo(0);
+        }
+
+        _loading = false;
+    }
+
+    private async Task HandlePageChange()
+    {
+        _loading = true;
+
+        var query = new BuscarConsultasIn {
+            Page = _page - 1,
+            Start = (_filters.StartDate ?? DateTime.Now.Date) + (_filters.StartTime ?? new TimeSpan(00, 00, 00)),
+            End = (_filters.EndDate ?? DateTime.Now.Date.AddHours(24)) + (_filters.EndTime ?? new TimeSpan(23, 59, 59)),
+            ClienteId = _filters.ClienteId,
+            TipoId = _filters.TipoId,
+            ResultadoId = _filters.ResultadoId,
+            Uid = _filters.Uid,
+            Chave = _filters.Chave,
+            Document = _filters.Document,
+        };
+
+        _consultas = await Client.Buscar(query);
+
+        _table.NavigateTo(_page - 1);
+
+        _loading = false;
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            await Refresh();
+        }
+    }
+
+	private async Task CopyPdfPassword(string pdfPassword)
+	{
+		await ClipboardService.CopyToClipboard(pdfPassword);
+	}
+}

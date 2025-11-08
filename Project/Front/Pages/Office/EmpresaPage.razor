@@ -1,0 +1,302 @@
+﻿@using Exato.Front.Components.Empresas
+@using Exato.Front.Features.Office.GetCompany
+@using Exato.Front.Features.Office.BuscarEmpresa
+@using Exato.Shared.Features.Office.BuscarEmpresa
+@using Exato.Front.Features.Office.EditarSaldoDaEmpresa
+@using Exato.Front.Features.Office.BuscarTokensDeAcesso
+@using Exato.Front.Features.Office.BuscarFiliaisDaEmpresa
+@using Exato.Front.Features.Office.EditarCadastroDaEmpresa
+@using Exato.Front.Features.Office.BuscarUsuariosDaEmpresa
+@using Exato.Front.Features.Office.EditarConsultasDaEmpresa
+@using Exato.Front.Features.Office.EditarRelatoriosDaEmpresa
+@using Exato.Front.Features.Office.EditarFaturamentoDaEmpresa
+@using Exato.Front.Features.Office.BuscarConfiguracoesDeFaturamentoDaEmpresa
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/empresas/{id::int}"
+@attribute [Authorize(Policies.ViewOfficeEmpresaPage)]
+
+<ExatoPageTitle Title="Empresa" />
+
+<MudContainer Class="my-4 px-4">
+    <MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+        @{ var (color, icon, status) = _empresa.GetIsActive(); }
+        <MudTooltip Text="@status" Arrow Placement="Placement.Top">
+            <MudIcon Size="@Size.Medium" Icon="@icon" Color="color" Class="mt-1" />
+        </MudTooltip>
+        @{ var (typeColor, typeIcon, _) = @_empresa.Tipo.GetProps(); }
+        <MudTooltip Text="@_empresa.Tipo.GetDescription()" Arrow Placement="Placement.Top">
+            <MudIcon Size="@Size.Small" Icon="@typeIcon" Color="@typeColor" Class="mt-1" />
+        </MudTooltip>
+        <MudText Typo="Typo.h5" Style="font-weight: bold">@_empresa.Nome</MudText>
+    </MudStack>
+
+    <MudContainer Class="px-0 my-2">
+        <MudTabs @ref="@_tabs" Position="@Position.Left" Outlined Rounded Border ApplyEffectsToContainer Elevation="2" Class="mt-2" PanelClass="px-6 py-6" TabPanelClass="justify-start text-transform-none">
+            <MudTabPanel Icon="@Icons.Material.Filled.Assignment" Text="Cadastro" Style="width: 100%">
+                <MudGrid Spacing="3">
+                    <MudItem xs="12" sm="9" md="9" lg="9">
+                        <ExatoLabelField Label="CNPJ" Text="@_empresa.CNPJ.AsFormatedDocument()" />
+                    </MudItem>
+                    <AuthorizeView Policy="@Policies.OfficeEditarCadastroDaEmpresa">
+                        <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 50px">
+                            <TabEditButton OnClick="@OpenEditarCadastroDaEmpresaDrawer" />
+                        </MudItem>
+                    </AuthorizeView>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Id" Text="@_empresa.Id.ToString()" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Criada em" Text="@_empresa.CriadaEm.ToDateTimeString()" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Matriz">
+                            <MudStack Row Spacing="2" AlignItems="AlignItems.Center">
+                                <MudText>@_empresa.Matriz</MudText>
+                                @if (_empresa.MatrizId != null)
+                                {
+                                    <MudIconButton Size="@Size.Small" Color="Color.Primary" Icon="@Icons.Material.Filled.ArrowUpward" Href="@($"/office/empresas/{_empresa.MatrizId}")" />
+                                }
+                            </MudStack>
+                        </ExatoLabelField>
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Razão social" Text="@_empresa.RazaoSocial" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Nome fantasia" Text="@_empresa.NomeFantasia" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Segmento QUOD" Text="@(_empresa.QuodSegmentId == null ? "-" : "Definido")" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Slug" TooltipText="Nome usado em arquivos e URLs" Text="@_empresa.Slug" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Vendedor responsável" Text="@_empresa.SalesContact" />
+                    </MudItem>
+                </MudGrid>
+            </MudTabPanel>
+            <MudTabPanel Icon="@Icons.Material.Filled.DataUsage" Text="Consultas" Style="width: 100%">
+                <MudGrid Spacing="3">
+                    <MudItem xs="12" sm="9" md="9" lg="9">
+                        <ExatoLabelField Label="Nível de acesso a dados" Text="@_empresa.DataAccessLevel.GetDescription()" />
+                    </MudItem>
+                    <AuthorizeView Policy="@Policies.OfficeEditarConsultasDaEmpresa">
+                        <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 50px">
+                            <TabEditButton OnClick="@OpenEditarConsultasDaEmpresaDrawer" />
+                        </MudItem>
+                    </AuthorizeView>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Limite de consultas semanal" Text="@(_empresa.TransLimitPerWeek == null ? "-" : _empresa.TransLimitPerWeek.Value.ToIntFormat())" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoCheckBox Label="Alta performance" Value="@_empresa.HighPerformance" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoCheckBox Label="Restringir envio de informações sensíveis na URL" Value="@_empresa.BlockSensitiveDataInQueryString" />
+                    </MudItem>
+
+                    <MudDivider Class="mt-2" />
+
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoCheckBox Label="Gerar PDF das consultas" Value="@_empresa.GerarPdfConsultas" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoCheckBox Label="Habilitar consultas por email" Value="@_empresa.HabilitarConsultasPorEmail" />
+                    </MudItem>
+
+                    <MudDivider Class="mt-2" />
+
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoCheckBox Label="Receita CPF - Usar SERPRO" Value="@_empresa.ReceitaCpfUseSerproAsMainSource" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoCheckBox Label="Receita CPF - Retornar dados de menores de idade" Value="@_empresa.ReceitaCpfShouldReturnMinor18AgeData" />
+                    </MudItem>
+                </MudGrid>
+            </MudTabPanel>
+            <MudTabPanel Icon="@Icons.Custom.FileFormats.FileDocument" Text="Relatórios" Style="width: 100%">
+                <MudGrid Spacing="3">
+                    <MudItem xs="12" sm="9" md="9" lg="9">
+                        <ExatoLabelField Label="Relatório PF" Text="@_empresa.RelatorioPF.Nome" />
+                    </MudItem>
+                    <AuthorizeView Policy="@Policies.OfficeEditarRelatoriosDaEmpresa">
+                        <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 50px">
+                            <TabEditButton OnClick="@OpenEditarRelatoriosDaEmpresaDrawer" />
+                        </MudItem>
+                    </AuthorizeView>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Relatório PF + Quod" Text="@_empresa.RelatorioPFQuod.Nome" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Relatório PJ" Text="@_empresa.RelatorioPJ.Nome" />
+                    </MudItem>
+                    <MudItem xs="12" sm="12" md="12" lg="12">
+                        <ExatoLabelField Label="Relatório PJ + Quod" Text="@_empresa.RelatorioPJQuod.Nome" />
+                    </MudItem>
+                </MudGrid>
+            </MudTabPanel>
+
+            <MudTabPanel Icon="@Icons.Material.Filled.Key" Text="Tokens" Class="overflow-y-auto" Style="width: 100%;">
+                <TokensDeAcessoDaEmpresa ClienteId="@Id" />
+            </MudTabPanel>
+
+            <MudTabPanel Icon="@Icons.Material.Filled.People" Text="Usuários" Class="overflow-y-auto" Style="width: 100%;">
+                <BuscarUsuariosDaEmpresaTab Id="@Id" />
+            </MudTabPanel>
+
+            @if (_empresa.PossuiFiliais)
+            {
+                <MudTabPanel Icon="@Icons.Material.Filled.OtherHouses" Text="Filiais" Class="overflow-y-auto" Style="width: 100%; max-height: 650px;">
+                    <FiliaisDaEmpresaTabPanel Id="@Id" />
+                </MudTabPanel>
+            }
+
+            <MudTabPanel Icon="@Icons.Material.Filled.Web" Text="Exato Web" Class="overflow-y-auto" Style="width: 100%;">
+                <GetCompanyTabPanel ExternalId="@_empresa.ExternalId" />
+            </MudTabPanel>
+
+            @if (_empresa.MatrizId == null)
+            {
+                <MudTabPanel Icon="@Icons.Material.Filled.LocalAtm" Text="Faturamento" Style="width: 100%">
+                    <MudGrid Spacing="3">
+                        <MudItem xs="12" sm="9" md="9" lg="9">
+                            <ExatoLabelField Label="Status do faturamento">
+                                <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                                    @{ var (color, icon, status) = _empresa.GetIsBillingCustomer(); }
+                                    <MudIcon Icon="@icon" Color="@color" Size="Size.Small" />
+                                    <MudText>@status</MudText>
+                                </MudStack>
+                            </ExatoLabelField>
+                        </MudItem>
+                        <AuthorizeView Policy="@Policies.OfficeEditarFaturamentoDaEmpresa">
+                            <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 50px">
+                                <TabEditButton OnClick="@OpenEditarFaturamentoDaEmpresaDrawer" />
+                            </MudItem>
+                        </AuthorizeView>
+                        <MudItem xs="12" sm="12" md="12" lg="12">
+                            <ExatoLabelField Label="Pagamento">
+                                @{ var (color, method) = @_empresa.GetPaymentMethod(); }
+                                <MudChip T="string" Label="true" Color="@color" Style="max-width: fit-content;">@method</MudChip>    
+                            </ExatoLabelField>
+                        </MudItem>
+                        @if (_empresa.IsBillingCustomer)
+                        {
+                            <BuscarConfiguracoesDeFaturamentoDaEmpresaTabPanel Id="@Id" />
+                        }
+                    </MudGrid>
+                </MudTabPanel>
+            }
+
+            @if (_empresa.MetodoDePagamento == MetodoDePagamento.PrePago)
+            {
+                var (icon, type) = @_empresa.GetBalanceType();
+                <MudTabPanel Icon="@icon" Text="@type" Style="width: 100%">
+                    <MudGrid Spacing="3">
+                        <MudItem xs="12" sm="9" md="9" lg="9">
+                            @if (_empresa.BalanceType == BalanceType.Reais)
+                            {
+                                <ExatoLabelField Label="Saldo" Text="@_empresa.GetBalance()" />
+                            }
+                            else
+                            {
+                                <ExatoLabelField Label="Créditos" Text="@_empresa.GetCreditos()" />
+                            }
+                        </MudItem>
+                        <AuthorizeView Policy="@Policies.OfficeEditarSaldoDaEmpresa">
+                            <MudItem xs="12" sm="3" md="3" lg="3" Class="d-flex justify-end" Style="max-height: 50px">
+                                <TabEditButton OnClick="@OpenEditarSaldoDaEmpresaDrawer" />
+                            </MudItem>
+                        </AuthorizeView>
+                    </MudGrid>
+                </MudTabPanel>
+            }
+        </MudTabs>
+    </MudContainer>
+</MudContainer>
+
+<AuthorizeView Policy="@Policies.OfficeEditarCadastroDaEmpresa">
+    <EditarCadastroDaEmpresaDrawer @ref="@_editarCadastroDaEmpresaDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+<AuthorizeView Policy="@Policies.OfficeEditarConsultasDaEmpresa">
+    <EditarConsultasDaEmpresaDrawer @ref="@_editarConsultasDaEmpresaDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+<AuthorizeView Policy="@Policies.OfficeEditarRelatoriosDaEmpresa">
+    <EditarRelatoriosDaEmpresaDrawer @ref="@_editarRelatoriosDaEmpresaDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+<AuthorizeView Policy="@Policies.OfficeEditarFaturamentoDaEmpresa">
+    <EditarFaturamentoDaEmpresaDrawer @ref="@_editarFaturamentoDaEmpresaDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+<AuthorizeView Policy="@Policies.OfficeEditarSaldoDaEmpresa">
+    <EditarSaldoDaEmpresaDrawer @ref="@_editarSaldoDaEmpresaDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+@inject ISnackbar Snackbar
+@inject BuscarEmpresaClient Client
+
+@code
+{
+	[Parameter]
+	public int Id { get; set; }
+
+    private MudTabs _tabs;
+
+    private EditarCadastroDaEmpresaDrawer _editarCadastroDaEmpresaDrawer;
+    private EditarConsultasDaEmpresaDrawer _editarConsultasDaEmpresaDrawer;
+    private EditarRelatoriosDaEmpresaDrawer _editarRelatoriosDaEmpresaDrawer;
+    private EditarFaturamentoDaEmpresaDrawer _editarFaturamentoDaEmpresaDrawer;
+    private EditarSaldoDaEmpresaDrawer _editarSaldoDaEmpresaDrawer;
+
+    private BuscarEmpresaOut _empresa = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _tabs?.ActivatePanel(0);
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        var response = await Client.Get(Id);
+
+        if (response.IsSuccess)
+        {
+            _empresa = response.Success;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+    }
+
+    private async Task OpenEditarCadastroDaEmpresaDrawer()
+    {
+        await _editarCadastroDaEmpresaDrawer.Open(_empresa);
+    }
+
+    private async Task OpenEditarConsultasDaEmpresaDrawer()
+    {
+        await _editarConsultasDaEmpresaDrawer.Open(_empresa);
+    }
+
+    private async Task OpenEditarRelatoriosDaEmpresaDrawer()
+    {
+        await _editarRelatoriosDaEmpresaDrawer.Open(_empresa);
+    }
+
+    private void OpenEditarFaturamentoDaEmpresaDrawer()
+    {
+        _editarFaturamentoDaEmpresaDrawer.Open(_empresa);
+    }
+
+    private async Task OpenEditarSaldoDaEmpresaDrawer()
+    {
+        await _editarSaldoDaEmpresaDrawer.Open(_empresa.Id, _empresa.BalanceType);
+    }
+}

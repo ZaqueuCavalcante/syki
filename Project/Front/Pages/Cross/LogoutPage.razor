@@ -1,0 +1,25 @@
+﻿@using Exato.Front.Features.Cross.GetUserAccount
+
+@namespace Exato.Front.Pages.Cross
+
+@page "/logout"
+
+<PageTitle>Logout</PageTitle>
+
+<MudStack AlignItems="AlignItems.Center" Class="mt-16">
+    <MudText Style="font-size: 18px">
+        <strong>You are out!</strong>
+    </MudText>
+</MudStack>
+
+@inject NavigationManager Nav
+@inject AuthManager AuthManager
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await AuthManager.GetUser();
+        if (user.IsAuthenticated) Nav.NavigateTo("/");
+    }
+}

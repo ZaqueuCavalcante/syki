@@ -1,0 +1,70 @@
+﻿@using System.Linq.Expressions
+@using Exato.Front.Features.Office.BuscarEmpresas
+@using Exato.Shared.Features.Office.BuscarEmpresas
+
+@namespace Exato.Front.Components.Empresas
+
+<MudAutocomplete
+	Dense
+	Clearable
+	For="@For"
+	MaxItems=50
+	Class="@Class"
+	Value="@Value"
+	Label="Empresa"
+	Strict="false"
+	T="EmpresaSelectData"
+	SearchFunc="@Search"
+	Margin="Margin.Dense"
+	ResetValueOnEmptyText
+	ShowProgressIndicator
+	DebounceInterval="500"
+	Variant="Variant.Outlined"
+	ValueChanged="@ValueChanged"
+	AdornmentIcon="@Icons.Material.Filled.Search"
+	ToStringFunc="@(e => e == null ? null : $"{e.Nome}")"
+>
+	<ItemTemplate Context="e">
+		<MudStack Spacing="0">
+			<MudText Typo="Typo.body2">@e.Nome</MudText>
+			<MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+				@{ var (color, icon) = e.GetIsActive(); }
+				<MudIcon Size="@Size.Small" Icon="@icon" Color="color" />
+				@{ var (typeColor, typeIcon, _) = @e.Tipo.GetProps(); }
+				<MudIcon Size="@Size.Small" Icon="@typeIcon" Color="@typeColor" />
+				<MudText Typo="Typo.body2">@e.CNPJ.AsFormatedDocument()</MudText>
+			</MudStack>
+		</MudStack>
+	</ItemTemplate>
+</MudAutocomplete>
+
+@inject BuscarEmpresasClient Client
+
+@code
+{
+	[Parameter]
+	public string Class { get; set; }
+
+	[Parameter]
+	public EmpresaSelectData Value { get; set; }
+
+    [Parameter]
+    public EventCallback<EmpresaSelectData> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<EmpresaSelectData>>? For { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+		await Task.Yield();
+    }
+
+    private async Task<IEnumerable<EmpresaSelectData>> Search(string value, CancellationToken token)
+    {
+        var query = new BuscarEmpresasIn { Page = 0, Search = value };
+
+		var response = await Client.Get(query);
+
+		return response.Items.ConvertAll(x => new EmpresaSelectData { Id = x.Id, Ativa = x.Ativa, Nome = x.Nome, CNPJ = x.CNPJ, Tipo = x.Tipo });
+    }
+}

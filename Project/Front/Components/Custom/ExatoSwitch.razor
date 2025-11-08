@@ -1,0 +1,33 @@
+@using System.Linq.Expressions
+
+@namespace Exato.Front.Components.Custom
+
+<MudSwitch
+    For="@For"
+    Class="pb-2"
+    Value="@Value"
+    ThumbIcon="@GetIcon"
+    Color="Color.Success"
+    ThumbIconColor="Color.Dark"
+    ValueChanged="@ValueChanged"
+    Style="max-width: fit-content;"
+>
+    @Label
+</MudSwitch>
+
+@code
+{
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public Expression<Func<bool>>? For { get; set; }
+
+    [Parameter]
+    public bool Value { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+
+    private string GetIcon => Value ? Icons.Material.Filled.Done : Icons.Material.Filled.Remove;
+}

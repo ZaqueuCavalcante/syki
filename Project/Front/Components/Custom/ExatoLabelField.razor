@@ -1,0 +1,41 @@
+﻿@namespace Exato.Front.Components.Custom
+
+<MudStack Spacing="0">
+	<MudStack Row Spacing="1" Style="height: 20px;">
+		<MudText Typo="Typo.body2"><b>@Label</b></MudText>
+		@if (TooltipText.HasValue())
+		{
+			<MudTooltip Text="@TooltipText" Arrow Placement="Placement.Top" ShowOnFocus="false">
+				<MudIcon Icon="@Icons.Material.Outlined.Info" Size="Size.Small" Class="pb-1" />
+			</MudTooltip>
+		}
+	</MudStack>
+	@if (ChildContent != null)
+	{
+		@ChildContent
+	}
+	else
+	{
+		<MudText>@GetText()</MudText>
+	}
+</MudStack>
+
+@code
+{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+	[Parameter]
+	public string Label { get; set; }
+
+	[Parameter]
+	public string TooltipText { get; set; }
+
+	[Parameter]
+	public string Text { get; set; }
+
+	private string GetText()
+	{
+		return Text.HasValue() ? Text : "-";
+	}
+}

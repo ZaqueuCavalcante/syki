@@ -1,0 +1,107 @@
+@using Exato.Shared.Features.Office.GetAuditTrail
+
+@namespace Exato.Front.Features.Office.GetAuditTrail
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+    <MudDrawerHeader Class="justify-space-between">
+        <MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+            <MudIcon Icon="@Icons.Material.Filled.RemoveRedEye" />
+            <MudText Typo="Typo.h5"><b>Trail details</b></MudText>
+        </MudStack>
+        <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="3" Class="px-7 pb-4">
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Entidade / Tabela / Id" Text="@GetEntityAndTable()" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Operação / Ação" Text="@GetOperationAndAction()" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Usuário" Text="@_trail.User" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="12" lg="12">
+            <ExatoLabelField Label="Criação" Text="@_trail.CreatedAt.ToDateTimeString()" />
+        </MudItem>
+
+        @if (_trail.Values.Count > 0)
+        {
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <MudDataGrid
+                    Dense
+                    Hover
+                    SortMode="SortMode.None"
+                    Items="@_trail.Values"
+                >
+                    <Columns>
+                        <PropertyColumn Property="x => x.Column" Title="Column" />
+                        <PropertyColumn Property="x => x.Value" Title="Value" />
+                    </Columns>
+                </MudDataGrid>
+            </MudItem>
+        }
+
+        @if (_trail.Changes.Count > 0)
+        {
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <MudDataGrid
+                    Dense
+                    Hover
+                    SortMode="SortMode.None"
+                    Items="@_trail.Changes"
+                >
+                    <Columns>
+                        <PropertyColumn Property="x => x.Column" Title="Column" />
+                        <PropertyColumn Property="x => x.Old" Title="Old" />
+                        <PropertyColumn Property="x => x.New" Title="New" />
+                    </Columns>
+                </MudDataGrid>
+            </MudItem>
+        }
+    </MudGrid>
+</MudDrawer>
+
+@inject GetAuditTrailClient Client
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    private bool _open;
+    private string _width = "700px";
+    private Breakpoint _breakpoint;
+
+    private GetAuditTrailOut _trail = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "700px";
+    }
+
+    private string GetEntityAndTable()
+    {
+        return $"{_trail.Name} / {_trail.Schema}.{_trail.Table} / {_trail.EntityId}";
+    }
+
+    private string GetOperationAndAction()
+    {
+        return $"{_trail.Operation} / {_trail.Action}";
+    }
+
+    public async Task Open(Guid id)
+    {
+        var response = await Client.Get(id);
+        if (response.IsError) return;
+
+        _trail = response.Success;
+
+        _open = true;
+
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+}

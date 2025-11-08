@@ -1,0 +1,164 @@
+@using Exato.Shared.Features.Office.BuscarEmpresa
+@using Exato.Front.Features.Office.BuscarTiposDeRelatorios
+@using Exato.Shared.Features.Office.BuscarTiposDeRelatorios
+
+@namespace Exato.Front.Features.Office.EditarRelatoriosDaEmpresa
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+	<MudDrawerHeader Class="justify-space-between">
+		<MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+			<MudIcon Icon="@Icons.Custom.FileFormats.FileDocument" />
+			<MudText Typo="Typo.h5"><b>Relatórios</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="1" Class="px-7">
+        <MudForm @ref="@_form" Style="width: 100%">
+            <MudSelect
+                Dense
+                Class="pb-2"
+                Label="Relatório PF"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                @bind-Value="@_model.RelatorioPF.Id"
+            >
+                @foreach (BuscarTiposDeRelatoriosItemOut option in _options.Pf)
+                {
+                    <MudSelectItem Value="@option.Id">@option.Nome</MudSelectItem>
+                }
+            </MudSelect>
+            <MudSelect
+                Dense
+                Class="pb-2"
+                Label="Relatório PF + Quod"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                @bind-Value="@_model.RelatorioPFQuod.Id"
+            >
+                @foreach (BuscarTiposDeRelatoriosItemOut option in _options.PfQuod)
+                {
+                    <MudSelectItem Value="@option.Id">@option.Nome</MudSelectItem>
+                }
+            </MudSelect>
+            <MudSelect
+                Dense
+                Class="pb-2"
+                Label="Relatório PJ"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                @bind-Value="@_model.RelatorioPJ.Id"
+            >
+                @foreach (BuscarTiposDeRelatoriosItemOut option in _options.Pj)
+                {
+                    <MudSelectItem Value="@option.Id">@option.Nome</MudSelectItem>
+                }
+            </MudSelect>
+            <MudSelect
+                Dense
+                Label="Relatório PJ + Quod"
+                Margin="Margin.Dense"
+                Variant="Variant.Outlined"
+                @bind-Value="@_model.RelatorioPJQuod.Id"
+            >
+                @foreach (BuscarTiposDeRelatoriosItemOut option in _options.PjQuod)
+                {
+                    <MudSelectItem Value="@option.Id">@option.Nome</MudSelectItem>
+                }
+            </MudSelect>
+        </MudForm>
+    </MudGrid>
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 py-4">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" Loading="@_loading" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject IBrowserViewportService BrowserViewportService
+@inject BuscarTiposDeRelatoriosClient BuscarTiposDeRelatoriosClient
+@inject EditarRelatoriosDaEmpresaClient EditarRelatoriosDaEmpresaClient
+
+@code
+{
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private bool _open;
+    private MudForm _form;
+    private string _width = "600px";
+    private Breakpoint _breakpoint;
+
+    private bool _loading;
+    private BuscarTiposDeRelatoriosOut _options = new();
+    private EditarRelatoriosDaEmpresaFormData _model = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "600px";
+        _options = await BuscarTiposDeRelatoriosClient.Get();
+    }
+
+    public async Task Open(BuscarEmpresaOut empresa)
+    {
+        _loading = true;
+
+        if (!_options.Pf.Any(x => x.Id == empresa.RelatorioPF.Id))
+            _options.Pf.Add(new() { Id = empresa.RelatorioPF.Id, Nome = empresa.RelatorioPF.Nome });
+
+        if (!_options.PfQuod.Any(x => x.Id == empresa.RelatorioPFQuod.Id))
+            _options.PfQuod.Add(new() { Id = empresa.RelatorioPFQuod.Id, Nome = empresa.RelatorioPFQuod.Nome });
+
+        if (!_options.Pj.Any(x => x.Id == empresa.RelatorioPJ.Id))
+            _options.Pj.Add(new() { Id = empresa.RelatorioPJ.Id, Nome = empresa.RelatorioPJ.Nome });
+
+        if (!_options.PjQuod.Any(x => x.Id == empresa.RelatorioPJQuod.Id))
+            _options.PjQuod.Add(new() { Id = empresa.RelatorioPJQuod.Id, Nome = empresa.RelatorioPJQuod.Nome });
+
+        await _form.ResetAsync();
+
+        _model = new()
+        {
+            Id = empresa.Id,
+            RelatorioPF = empresa.RelatorioPF.ToItemFormData(),
+            RelatorioPJ = empresa.RelatorioPJ.ToItemFormData(),
+            RelatorioPFQuod = empresa.RelatorioPFQuod.ToItemFormData(),
+            RelatorioPJQuod = empresa.RelatorioPJQuod.ToItemFormData(),
+        };
+
+        _open = true;
+        _loading = false;
+
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        _loading = true;
+        var response = await EditarRelatoriosDaEmpresaClient.Editar(
+            _model.Id,
+            _model.RelatorioPF.Id,
+            _model.RelatorioPJ.Id,
+            _model.RelatorioPFQuod.Id,
+            _model.RelatorioPJQuod.Id
+        );
+        if (response.IsSuccess)
+        {
+            Snackbar.Add("Relatórios salvos com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+}

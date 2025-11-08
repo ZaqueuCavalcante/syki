@@ -1,0 +1,60 @@
+@namespace Exato.Front.Components.Custom
+
+<MudGrid Justify="Justify.FlexStart" Spacing="1" Class="my-2">
+    <MudItem xs="12" sm="6" md="6" lg="6">
+        <MudTextField
+            Immediate
+            Value="@Value"
+            Class="mt-0 mx-0"
+            Margin="Margin.Dense"
+            Clearable="@Clearable"
+            OnKeyDown="@HandleKeyDown"
+            Placeholder="@Placeholder"
+            Variant="Variant.Outlined"
+            ValueChanged="@ValueChanged"
+        />
+    </MudItem>
+    <MudItem xs="12" sm="2" md="2" lg="2">
+        <MudButton
+            Disabled="@Disabled"
+            StartIcon="@Icons.Material.Filled.Search"
+            IconSize="Size.Large"
+            Variant="Variant.Filled"
+            Size="Size.Medium"
+            Style="height: 40px;"
+            Color="Color.Secondary"
+            @onclick="@OnClick"
+        >
+            Pesquisar
+        </MudButton>
+    </MudItem>
+</MudGrid>
+
+@code
+{
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public string Placeholder { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public bool Clearable { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private async Task HandleKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            await OnClick.InvokeAsync();
+        }
+    }
+}

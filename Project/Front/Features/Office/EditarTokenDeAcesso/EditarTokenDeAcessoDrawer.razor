@@ -1,0 +1,296 @@
+@using Exato.Shared.Features.Office.BuscarTokensDeAcesso
+
+@namespace Exato.Front.Features.Office.EditarTokenDeAcesso
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+    <MudDrawerHeader Class="justify-space-between">
+        <MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" />
+            <MudText Typo="Typo.h5"><b>Editar token</b></MudText>
+        </MudStack>
+        <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="1" Class="px-7">
+        <MudForm @ref="@_form" Model="@_model" Validation="@(EditarTokenDeAcessoFormData.V.ValidateValue)" Style="width: 100%">
+            <MudDatePicker
+                Editable
+                Class="pb-2"
+                Label="Validade"
+                Margin="Margin.Dense"
+                DateFormat="dd/MM/yyyy"
+                MinDate="@_minValidoAte"
+                Variant="Variant.Outlined"
+                @bind-Date="@_model.ValidoAte"
+                For="@(() => _model.ValidoAte)"
+            />
+
+            <ExatoTextField @bind-Value="@_model.Name" For="@(() => _model.Name)" Label="Nome" MaxLength="60" />
+            <ExatoTextField @bind-Value="@_model.Description" For="@(() => _model.Description)" Label="Descrição" MaxLength="150" />
+
+            <MudStack Row Class="mt-2">
+                <MudText><b>Limite de transações por</b></MudText>
+            </MudStack>
+
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <ExatoIntField
+                        Class=""
+                        Immediate
+                        Label="Hora"
+                        @bind-Value="@_model.TransLimitPerHour"
+                        For="@(() => _model.TransLimitPerHour)"
+                    />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6">
+                    <ExatoIntField
+                        Class=""
+                        Immediate
+                        Label="Dia"
+                        @bind-Value="@_model.TransLimitPerDay"
+                        For="@(() => _model.TransLimitPerDay)"
+                    />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6" Class="py-1">
+                    <ExatoIntField
+                        Class=""
+                        Immediate
+                        Label="Semana"
+                        @bind-Value="@_model.TransLimitPerWeek"
+                        For="@(() => _model.TransLimitPerWeek)"
+                    />
+                </MudItem>
+                <MudItem xs="12" sm="6" md="6" lg="6" Class="py-1">
+                    <ExatoIntField
+                        Class=""
+                        Immediate
+                        Label="Mês"
+                        @bind-Value="@_model.TransLimitPerMonth"
+                        For="@(() => _model.TransLimitPerMonth)"
+                    />
+                </MudItem>
+            </MudGrid>
+
+            @if (_model.MetodoDePagamento == MetodoDePagamento.PrePago && _model.BalanceType == BalanceType.Creditos)
+            {
+                <MudStack Row Class="mt-2">
+                    <MudText><b>Limite de créditos por</b></MudText>
+                </MudStack>
+
+                <MudGrid Spacing="2">
+                    <MudItem xs="12" sm="6" md="6" lg="6">
+                        <ExatoIntField
+                            Class=""
+                            Immediate
+                            Label="Hora"
+                            @bind-Value="@_model.CreditsLimitPerHour"
+                            For="@(() => _model.CreditsLimitPerHour)"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="6" lg="6">
+                        <ExatoIntField
+                            Class=""
+                            Immediate
+                            Label="Dia"
+                            @bind-Value="@_model.CreditsLimitPerDay"
+                            For="@(() => _model.CreditsLimitPerDay)"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="6" lg="6" Class="py-1">
+                        <ExatoIntField
+                            Class=""
+                            Immediate
+                            Label="Semana"
+                            @bind-Value="@_model.CreditsLimitPerWeek"
+                            For="@(() => _model.CreditsLimitPerWeek)"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="6" lg="6" Class="py-1">
+                        <ExatoIntField
+                            Class=""
+                            Immediate
+                            Label="Mês"
+                            @bind-Value="@_model.CreditsLimitPerMonth"
+                            For="@(() => _model.CreditsLimitPerMonth)"
+                        />
+                    </MudItem>
+                </MudGrid>
+            }
+
+            @if (_model.MetodoDePagamento == MetodoDePagamento.PrePago && _model.BalanceType == BalanceType.Reais)
+            {
+                <MudStack Row Class="mt-2">
+                    <MudText><b>Limite de saldo por</b></MudText>
+                </MudStack>
+
+                <MudGrid Spacing="2">
+                    <MudItem xs="12" sm="6" md="6" lg="6">
+                        <MudNumericField
+                            T="decimal?"
+                            Format="N2"
+                            Step="0.01M"
+                            HideSpinButtons
+                            Label="Hora"
+                            Margin="Margin.Dense"
+                            Culture="@(new("pt-BR"))"
+                            Variant="Variant.Outlined"
+                            @bind-Value="_model.CurrencyLimitPerHour"
+                            For="@(() => _model.CurrencyLimitPerHour)"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="6" lg="6">
+                        <MudNumericField
+                            T="decimal?"
+                            Format="N2"
+                            Step="0.01M"
+                            HideSpinButtons
+                            Label="Dia"
+                            Margin="Margin.Dense"
+                            Culture="@(new("pt-BR"))"
+                            Variant="Variant.Outlined"
+                            @bind-Value="_model.CurrencyLimitPerDay"
+                            For="@(() => _model.CurrencyLimitPerDay)"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="6" lg="6">
+                        <MudNumericField
+                            T="decimal?"
+                            Format="N2"
+                            Step="0.01M"
+                            HideSpinButtons
+                            Label="Semana"
+                            Margin="Margin.Dense"
+                            Culture="@(new("pt-BR"))"
+                            Variant="Variant.Outlined"
+                            @bind-Value="_model.CurrencyLimitPerWeek"
+                            For="@(() => _model.CurrencyLimitPerWeek)"
+                        />
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="6" lg="6">
+                        <MudNumericField
+                            T="decimal?"
+                            Format="N2"
+                            Step="0.01M"
+                            HideSpinButtons
+                            Label="Mês"
+                            Margin="Margin.Dense"
+                            Culture="@(new("pt-BR"))"
+                            Variant="Variant.Outlined"
+                            @bind-Value="_model.CurrencyLimitPerMonth"
+                            For="@(() => _model.CurrencyLimitPerMonth)"
+                        />
+                    </MudItem>
+                </MudGrid>
+            }
+        </MudForm>
+    </MudGrid>
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 py-4">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" Loading="@_loading" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject IBrowserViewportService BrowserViewportService
+@inject EditarTokenDeAcessoClient Client
+
+@code
+{
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private MudForm _form;
+    private bool _open;
+    private string _width = "550px";
+    private Breakpoint _breakpoint;
+
+    private bool _loading;
+    private EditarTokenDeAcessoFormData _model = new();
+    private DateTime _minValidoAte => DateTime.Now.AddDays(-1);
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "550px";
+    }
+
+    public async Task Open(
+        BuscarTokensDeAcessoItemOut token,
+        MetodoDePagamento metodoDePagamento,
+        BalanceType balanceType)
+    {
+        _loading = true;
+
+        await _form?.ResetAsync();
+
+        _model = new()
+        {
+            Id = token.Id,
+            KeyType = token.KeyType,
+            MetodoDePagamento = metodoDePagamento,
+            BalanceType = balanceType,
+            Name = token.Name,
+            Description = token.Description,
+            ValidoAte = token.ValidoAte,
+            TransLimitPerHour = token.TransLimitPerHour,
+            TransLimitPerDay = token.TransLimitPerDay,
+            TransLimitPerWeek = token.TransLimitPerWeek,
+            TransLimitPerMonth = token.TransLimitPerMonth,
+            CreditsLimitPerHour = token.CreditsLimitPerHour,
+            CreditsLimitPerDay = token.CreditsLimitPerDay,
+            CreditsLimitPerWeek = token.CreditsLimitPerWeek,
+            CreditsLimitPerMonth = token.CreditsLimitPerMonth,
+            CurrencyLimitPerHour = token.CurrencyLimitPerHour,
+            CurrencyLimitPerDay = token.CurrencyLimitPerDay,
+            CurrencyLimitPerWeek = token.CurrencyLimitPerWeek,
+            CurrencyLimitPerMonth = token.CurrencyLimitPerMonth,
+        };
+
+        _open = true;
+        _loading = false;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+        var response = await Client.Editar(
+            _model.Id,
+            _model.Name,
+            _model.Description,
+            _model.GetDateTime(),
+            _model.TransLimitPerHour,
+            _model.TransLimitPerDay,
+            _model.TransLimitPerWeek,
+            _model.TransLimitPerMonth,
+            _model.CreditsLimitPerHour,
+            _model.CreditsLimitPerDay,
+            _model.CreditsLimitPerWeek,
+            _model.CreditsLimitPerMonth,
+            _model.CurrencyLimitPerHour,
+            _model.CurrencyLimitPerDay,
+            _model.CurrencyLimitPerWeek,
+            _model.CurrencyLimitPerMonth
+        );
+        if (response.IsSuccess)
+        {
+            Snackbar.Add("Token atualizado com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+}

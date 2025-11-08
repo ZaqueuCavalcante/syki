@@ -1,0 +1,108 @@
+@using Exato.Front.Components.Empresas
+
+@namespace Exato.Front.Features.Office.CreateUser
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+	<MudDrawerHeader Class="justify-space-between">
+		<MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+			<MudIcon Icon="@Icons.Material.Filled.Add" />
+			<MudText Typo="Typo.h5"><b>Novo usuário</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="1" Class="px-7">
+        <MudForm @ref="@_form" Model="@_model" Validation="@(CreateUserFormData.V.ValidateValue)" Style="width: 100%">
+            <EmpresaSelect
+                @bind-Value="@_model.Empresa"
+                @bind-Value:after="@HandleEmpresaChanged"
+                For="@(() => _model.Empresa)"
+                Class="pb-2"
+            />
+
+            <ExatoTextField @bind-Value="@_model.Nome" For="@(() => _model.Nome)" Label="Nome" MaxLength="60" />
+            <ExatoTextField @bind-Value="@_model.Email" For="@(() => _model.Email)" Label="Email" MaxLength="150" />
+
+            <EmpresaRoleSelect Id="@_empresaId" @bind-Value="@_model.Role" For="@(() => _model.Role)" />
+        </MudForm>
+    </MudGrid>
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 py-4">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" Loading="@_loading" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject CreateUserClient Client
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private MudForm _form;
+    private bool _open;
+    private string _width = "550px";
+    private Breakpoint _breakpoint;
+
+    private bool _loading;
+    private CreateUserFormData _model = new();
+    private int _empresaId = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "550px";
+    }
+
+    public async Task Open()
+    {
+        _loading = true;
+
+        await _form?.ResetAsync();
+
+        _model = new();
+
+        _open = true;
+        _loading = false;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+        var response = await Client.Create(
+            _model.Empresa.Id,
+            _model.Nome,
+            _model.Email,
+            _model.Role.Id
+        );
+        if (response.IsSuccess)
+        {
+            Snackbar.Add("Usuário criado com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+
+    private void HandleEmpresaChanged()
+    {
+        _empresaId = _model.Empresa?.Id ?? 0;
+        _model.Role = new();
+    }
+}

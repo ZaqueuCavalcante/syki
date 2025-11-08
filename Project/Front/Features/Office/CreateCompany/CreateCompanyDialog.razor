@@ -1,0 +1,53 @@
+@namespace Exato.Front.Features.Office.CreateCompany
+
+<MudDialog Class="pb-2" DefaultFocus="DefaultFocus.None">
+    <TitleContent>
+        <ExatoDialogTitle Text="Novo cadastro" />
+    </TitleContent>
+    <DialogContent>
+        <MudText Class="mb-4">
+            Um novo cadastro será criado no Exato Web.
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Cancel" />
+        <MudSpacer />
+        <DialogSaveButton OnClick="@Submit" Text="Criar" Loading="@_loading" />
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject CreateCompanyClient Client
+
+@code
+{
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Guid ExternalId { get; set; }
+
+    private bool _loading;
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        _loading = true;
+
+        var response = await Client.Create(ExternalId);
+        if (response.IsSuccess)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Cadastro criado com sucesso!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+
+        _loading = false;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

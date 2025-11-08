@@ -1,0 +1,106 @@
+﻿@using Exato.Shared.Auth
+@using Exato.Front.Features.Office.GetFeatures
+@using Exato.Shared.Features.Office.GetFeatures
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/features"
+@attribute [Authorize(Policies.ViewOfficeFeaturesPage)]
+
+<ExatoPageTitle Title="Features" />
+
+<MudContainer Class="my-4 px-4">
+    <ExatoPageHeader Icon="@Icons.Material.Filled.PlaylistAddCheck" Title="Features" />
+    <MudContainer Class="px-0 my-4">
+        @if (_loading)
+        {
+            <MudPaper Class="px-4">
+                <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.Center">
+                    <MudProgressLinear Color="Color.Info" Indeterminate Class="my-7" />
+                </MudStack>
+            </MudPaper>
+        }
+        else
+        {
+            @foreach (var group in ExatoFeaturesStore.Groups)
+            {
+                <MudText Typo="@Typo.h5" Class="ml-1 mb-2" Style="font-weight: bold">@group.Name</MudText>
+
+                @foreach (var feature in ExatoFeaturesStore.Features.Where(x => x.GroupId == group.Id).OrderBy(x => x.Id))
+                {
+                    <MudCard Style="height: 100%" Class="mb-3">
+                        <MudCardHeader Class="pb-0">
+                            <CardHeaderContent>
+                                <MudText Style="font-weight: 500;">@feature.Name</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent Class="pt-0 pb-2">
+                            <MudGrid Spacing="3">
+                                <MudItem xs="12" sm="6" md="6" lg="6">
+                                    @{ var frontPolicies = _frontFeatures.Items.First(x => x.Feature.Id == feature.Id).Policies.ToList(); }
+                                    <MudDataGrid
+                                        Dense
+                                        Hover
+                                        Class="my-2"
+                                        Elevation="0"
+                                        SortMode="SortMode.None"
+                                        Items="@frontPolicies"
+                                    >
+                                        <Columns>
+                                            <PropertyColumn Property="x => x" Title="@($"{frontPolicies.Count} frontend policies")" />
+                                        </Columns>
+                                    </MudDataGrid>
+                                </MudItem>
+                                <MudItem xs="12" sm="6" md="6" lg="6">
+                                    @{ var backPolicies = _backFeatures.Items.First(x => x.Feature.Id == feature.Id).Policies.ToList(); }
+                                    <MudDataGrid
+                                        Dense
+                                        Hover
+                                        Class="my-2"
+                                        Elevation="0"
+                                        SortMode="SortMode.None"
+                                        Items="@backPolicies"
+                                    >
+                                        <Columns>
+                                            <PropertyColumn Property="x => x" Title="@($"{backPolicies.Count} backend policies")" />
+                                        </Columns>
+                                    </MudDataGrid>
+                                </MudItem>
+                            </MudGrid>
+                        </MudCardContent>
+                    </MudCard>
+                }
+                <div class="mb-8"></div>
+            }
+        }
+    </MudContainer>
+</MudContainer>
+
+@inject GetFeaturesClient Client
+
+@code
+{
+    private bool _loading;
+    private GetFeaturesOut _backFeatures = new();
+    private GetFeaturesOut _frontFeatures = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loading = true;
+        _backFeatures = await Client.Get();
+
+        var policies = new List<PolicyMetadata>();
+        policies.AddRange(Policies.Cross);
+        policies.AddRange(Policies.Office);
+        policies.AddRange(Policies.Orgs);
+
+        foreach (var feature in ExatoFeaturesStore.Features)
+        {
+            var item = new GetFeaturesItemOut() { Feature = feature };
+            item.Policies = policies.Where(x => x.Features.Any(f => f.Id == feature.Id)).Select(x => x.Name).ToList();
+            _frontFeatures.Items.Add(item);
+        }
+
+        _loading = false;
+    }
+}

@@ -1,0 +1,67 @@
+﻿@namespace Exato.Front.Layout
+
+<MudNavMenu Color="Color.Primary" Class="py-2 drawer-menu">
+    <AuthorizeView Policy="@Policies.ViewOfficeUsersPage">
+        <MudNavLink Href="office/users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Users</MudNavLink>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewOfficeRolesPage">
+        <MudNavLink Href="office/roles" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Security" IconColor="Color.Inherit">Roles</MudNavLink>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewOfficeFeaturesPage">
+        <MudNavLink Href="office/features" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.PlaylistAddCheck" IconColor="Color.Inherit">Features</MudNavLink>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewOfficePoliciesPage">
+        <MudNavLink Href="office/policies" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Policy" IconColor="Color.Inherit">Policies</MudNavLink>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewOfficeAuditTrailsPage">
+        <MudNavLink Href="office/audit-trails" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Grading" IconColor="Color.Inherit">Auditoria</MudNavLink>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewOfficeDomainEventsPage">
+        <MudNavLink Href="office/domain-events" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.StickyNote2" IconColor="Color.Inherit">Eventos</MudNavLink>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewOfficeCommandsPage">
+        <MudNavLink Href="office/commands" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Task" IconColor="Color.Inherit">Comandos</MudNavLink>
+    </AuthorizeView>
+
+    <AuthorizeView Policy="@Policies.ViewOfficeEmpresasPage">
+        <MudNavLink Href="office/empresas" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Business" IconColor="Color.Inherit">Empresas</MudNavLink>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewOfficeUsuariosPage">
+        <MudNavLink Href="office/usuarios" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.People" IconColor="Color.Inherit">Usuários</MudNavLink>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewOfficeConsultasPage">
+        <MudNavLink Href="office/consultas" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.QueryStats" IconColor="Color.Inherit">Consultas</MudNavLink>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewOfficeWebPaymentsPage">
+        <MudNavLink Href="office/web-payments" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AttachMoney" IconColor="Color.Inherit">Pagamentos</MudNavLink>
+    </AuthorizeView>
+
+    <AuthorizeView Policy="@Policies.ViewOrgsReportsPage">
+        <MudNavLink Href="orgs/reports" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.TextSnippet" IconColor="Color.Inherit">Relatórios</MudNavLink>
+    </AuthorizeView>
+    <AuthorizeView Policy="@Policies.ViewOrgsSettingsPage">
+        <MudNavLink Href="orgs/settings" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Settings" IconColor="Color.Inherit">Configurações</MudNavLink>
+    </AuthorizeView>
+
+    <MudSpacer />
+    <div class="push-bottom">
+        <AuthorizeView Policy="@Policies.ViewCrossUserAccountPage">
+            <MudNavLink Href="/account" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.AccountCircle" IconColor="Color.Inherit">Conta</MudNavLink>
+        </AuthorizeView>
+        <AuthorizeView Policy="@Policies.ViewCrossSetupTwoFactorAuthenticationPage">
+            <MudNavLink Href="/2fa/setup" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ScreenLockPortrait" IconColor="Color.Inherit">2FA</MudNavLink>
+        </AuthorizeView>
+        <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Logout" OnClick="@Logout" IconColor="Color.Inherit">Sair</MudNavLink>
+    </div>
+</MudNavMenu>
+
+@code
+{
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnLogoutClick { get; set; }
+
+    private async Task Logout()
+    {
+        await OnLogoutClick.InvokeAsync();
+    }
+}

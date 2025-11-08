@@ -1,0 +1,70 @@
+@using Exato.Shared.Features.Office.BuscarConfiguracoesDeFaturamentoDaEmpresa
+
+@namespace Exato.Front.Features.Office.BuscarConfiguracoesDeFaturamentoDaEmpresa
+
+@if (_loading)
+{
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="mt-6">
+            <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
+        </MudStack>
+    </MudItem>
+}
+else
+{
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <MudStack Row AlignItems="AlignItems.Center" Spacing="3" Class="mt-1">
+            <MudText><strong>Configurações</strong></MudText>
+            <MudDivider Style="width: fit-content;" />
+        </MudStack>
+    </MudItem>
+
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <ExatoLabelField Label="Franquina mínima" Text="@(_data.FranquiaMinima == null ? "-" : _data.FranquiaMinima.Value.ToBrl())" />
+    </MudItem>
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <ExatoCheckBox Label="Dados desmascarados" Value="@_data.UnmaskedCustomer" />
+    </MudItem>
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <ExatoCheckBox Label="Faturamento resumido" Value="@_data.SummaryCustomer" />
+    </MudItem>
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <ExatoCheckBox Label="Faturamento prévio" Value="@_data.PreviousCustomer" />
+    </MudItem>
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <ExatoCheckBox Label="Faturamento por faixa" Value="@_data.FaturamentoPorFaixa" />
+    </MudItem>
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <ExatoCheckBox Label="Fluxo V1" Value="@_data.V1Customer" />
+    </MudItem>
+
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <ExatoCheckBox Label="Faturamento por rateio" Value="@_data.FaturamentoPorRateio" />
+    </MudItem>
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <ExatoCheckBox Label="Detalhar relatórios" Value="@_data.DetalharRelatorios" />
+    </MudItem>
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <ExatoCheckBox Label="Exibir não consumidores" Value="@_data.ExibirNaoConsumidores" />
+    </MudItem>
+}
+
+@inject BuscarConfiguracoesDeFaturamentoDaEmpresaClient Client
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    private bool _loading;
+    private BuscarConfiguracoesDeFaturamentoDaEmpresaOut _data = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _loading = true;
+
+        _data = await Client.Get(Id);
+
+        _loading = false;
+    }
+}

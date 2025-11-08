@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="Web/Web.csproj" />
+  <Project Path="Back/Back.csproj" />
+  <Project Path="Front/Front.csproj" />
+  <Project Path="Mocks/Mocks.csproj" />
+  <Project Path="Tests/Tests.csproj" />
+  <Project Path="Shared/Shared.csproj" />
+  <Project Path="Workers/Workers.csproj" />
+</Solution>

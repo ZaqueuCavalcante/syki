@@ -1,0 +1,74 @@
+﻿@using Exato.Front.Features.Cross.SetupTwoFactorAuthentication
+@using Exato.Front.Features.Cross.GetTwoFactorAuthenticationKey
+@using Exato.Shared.Features.Cross.GetTwoFactorAuthenticationKey
+
+@namespace Exato.Front.Pages.Cross
+
+@page "/2fa/setup"
+@attribute [Authorize(Policies.ViewCrossSetupTwoFactorAuthenticationPage)]
+
+<ExatoPageTitle Title="2FA" />
+
+<MudContainer Class="my-4 px-4">
+    <ExatoPageHeader Icon="@Icons.Material.Filled.ScreenLockPortrait" Title="Configurar 2FA" />
+    <MudPaper Class="my-4 px-2">
+        <MudCard Class="py-0" Elevation="0">
+            <MudCardContent>
+                <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Style="width: 100%;">
+                    <MudItem>
+                        <MudText>A autenticação de dois fatores ajuda a manter sua conta segura.</MudText>
+                    </MudItem>
+                    <MudItem>
+                        <MudStack Row AlignItems="AlignItems.Center">
+                            @if (_twoFactor.TwoFactorEnabled)
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.SecurityUpdateGood" Color="Color.Success" Size="Size.Small" />
+                                <MudText>Habilitada</MudText>
+                            }
+                            else
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.SecurityUpdateWarning" Color="Color.Default" Size="Size.Small" />
+                                <MudText>Inabilitada</MudText>
+                            }
+                        </MudStack>
+                    </MudItem>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudPaper>
+    <MudContainer Class="px-0 mb-4">
+        <MudGrid Spacing="4">
+            @if (_twoFactor.Key.IsEmpty())
+            {
+                <MudItem xs="12" sm="12" md="12" lg="12">
+                    <MudPaper Class="px-4">
+                        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.Center">
+                            <MudProgressLinear Color="Color.Info" Indeterminate Class="my-7" />
+                        </MudStack>
+                    </MudPaper>
+                </MudItem>
+            }
+            else
+            {
+                <MudItem xs="12" sm="12" md="6" lg="6">
+                    <TwoFactorAuthenticationKeyQrCode Key="@_twoFactor.Key" QrCodeBase64="@_twoFactor.QrCodeBase64" />
+                </MudItem>
+                <MudItem xs="12" sm="12" md="6" lg="6">
+                    <SetupTwoFactorAuthenticationInput />
+                </MudItem>
+            }
+        </MudGrid>
+    </MudContainer>
+</MudContainer>
+
+@inject GetTwoFactorAuthenticationKeyClient Client
+
+@code
+{
+    private GetTwoFactorAuthenticationKeyOut _twoFactor = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _twoFactor = await Client.Get();
+    }
+}

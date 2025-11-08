@@ -1,0 +1,66 @@
+﻿@using System.Linq.Expressions
+@using Exato.Front.Features.Office.BuscarPotenciaisMatrizesDaEmpresa
+@using Exato.Shared.Features.Office.BuscarPotenciaisMatrizesDaEmpresa
+
+@namespace Exato.Front.Components.Empresas
+
+<MudAutocomplete
+	Dense
+	For="@For"
+	MaxItems=50
+	Class="pb-2"
+	Value="@Value"
+	Label="Matriz"
+	Strict="false"
+	T="MatrizSelectData"
+	SearchFunc="@Search"
+	Margin="Margin.Dense"
+	ResetValueOnEmptyText
+	ShowProgressIndicator
+	DebounceInterval="500"
+	Variant="Variant.Outlined"
+	ValueChanged="@ValueChanged"
+	AdornmentIcon="@Icons.Material.Filled.Search"
+	ToStringFunc="@(e => e == null ? null : $"{e.Nome}")"
+>
+	<ItemTemplate Context="e">
+		<MudStack Spacing="0">
+			<MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+				@{ var (color, icon) = e.GetIsActive(); }
+				<MudIcon Size="@Size.Small" Icon="@icon" Color="color" />
+				<MudText>@e.Nome</MudText>
+			</MudStack>
+			<MudText Typo="Typo.body2" Class="ml-1">@e.CNPJ.AsFormatedDocument()</MudText>
+		</MudStack>
+	</ItemTemplate>
+</MudAutocomplete>
+
+@inject BuscarPotenciaisMatrizesDaEmpresaClient Client
+
+@code
+{
+	[Parameter]
+	public int Id { get; set; }
+
+	[Parameter]
+	public MatrizSelectData Value { get; set; }
+
+    [Parameter]
+    public EventCallback<MatrizSelectData> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<MatrizSelectData>>? For { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+		await Task.Yield();
+    }
+
+    private async Task<IEnumerable<MatrizSelectData>> Search(string value, CancellationToken token)
+    {
+		var query = new BuscarPotenciaisMatrizesDaEmpresaIn { CnpjOuNome = value };
+		var response = await Client.Get(Id, query);
+
+		return response.Items.ConvertAll(x => new MatrizSelectData { Id = x.Id, Ativa = x.Ativa, Nome = x.Nome, CNPJ = x.CNPJ });
+    }
+}

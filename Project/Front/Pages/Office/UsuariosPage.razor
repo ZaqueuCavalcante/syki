@@ -1,0 +1,183 @@
+﻿@using Exato.Front.Features.Office.CriarUsuario
+@using Exato.Front.Features.Office.BuscarUsuarios
+@using Exato.Shared.Features.Office.BuscarUsuarios
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/usuarios"
+@attribute [Authorize(Policies.ViewOfficeUsuariosPage)]
+
+<ExatoPageTitle Title="Usuários" />
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="my-4 px-4">
+    <ExatoPageHeader Icon="@Icons.Material.Filled.People" Title="Usuários" ButtonText="Novo Usuário" OnClick="@OpenCriarUsuarioDrawer" ButtonPolicy="@Policies.OfficeCriarUsuario" />
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="px-0 my-4">
+        <MudTable @ref="@_table" Items="@_users.Items" Loading="@_loading" RowsPerPage="10" Hover Dense Class="pt-2">
+            <ToolBarContent>
+                <ExatoSearchTextField
+                    Clearable
+                    OnClick="@Refresh"
+                    Disabled="@_loading"
+                    @bind-Value="@_filters.Search"
+                    @bind-Value:after="@HandleSearchClear"
+                    Placeholder="Documento, nome ou email"
+                />
+                <MudGrid Justify="Justify.FlexEnd" Class="mr-2">
+                    <MudItem xs="12" sm="6" md="6" lg="4">
+                        <MudSelect
+                            Dense
+                            T="bool?"
+                            Clearable
+                            Label="Status"
+                            Placeholder="Todos"
+                            Margin="Margin.Dense"
+                            @bind-Value="@_filters.IsActive"
+                            @bind-Value:after="@Refresh"
+                            Variant="Variant.Outlined"
+                        >
+                            <MudSelectItem T="bool?" Value="true">
+                                <MudStack Row AlignItems="AlignItems.Center">
+                                    <MudIcon Class="mb-1" Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" />
+                                    <MudText>Ativos</MudText>
+                                </MudStack>
+                            </MudSelectItem>
+                            <MudSelectItem T="bool?" Value="false">
+                                <MudStack Row AlignItems="AlignItems.Center">
+                                    <MudIcon Class="mb-1" Icon="@Icons.Material.Filled.RemoveCircleOutline" Color="Color.Default" Size="Size.Small" />
+                                    <MudText>Inativos</MudText>
+                                </MudStack>
+                            </MudSelectItem>
+                        </MudSelect>
+                    </MudItem>
+                </MudGrid>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Email</MudTh>
+                <MudTh>Documento</MudTh>
+                <MudTh>Criado em</MudTh>
+                <MudTh>Último acesso</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nome">
+                    <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                        @{ var (color, icon, text) = context.GetIsActive(); }
+                        <MudTooltip Text="@text" Arrow Placement="Placement.Top">
+                            <MudIcon
+                                Size="@Size.Small"
+                                Icon="@icon"
+                                Color="@color"
+                            />
+                        </MudTooltip>
+                        <MudText Typo="Typo.body2">@context.Nome</MudText>
+                    </MudStack>
+                </MudTd>
+                <MudTd DataLabel="Email">@context.Email</MudTd>
+                <MudTd DataLabel="Documento">@context.Documento.AsFormatedDocument()</MudTd>
+                <MudTd DataLabel="Criado em">@context.CriadoEm.ToDateTimeString()</MudTd>
+                <MudTd DataLabel="Último acesso">@context.LastAccessAt.ToDateTimeString()</MudTd>
+                <MudTd>
+                    <MudTooltip Text="Detalhes" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" Href="@($"/office/usuarios/{context.Id}")" />
+                    </MudTooltip>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudDivider DividerType="DividerType.FullWidth"/>
+                <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mx-4">
+                    <MudTooltip Text="Total de registros" Arrow Placement="Placement.Top">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                            <MudIcon Size="@Size.Medium" Icon="@Icons.Material.Filled.ViewHeadline" />
+                            <MudText><strong>@_users.Total.ToIntFormat()</strong></MudText>
+                        </MudStack>
+                    </MudTooltip>
+                    <MudPagination
+                        Rectangular
+                        Class="pa-4"
+                        MiddleCount="3"
+                        BoundaryCount="1"
+                        Color="Color.Secondary"
+                        @bind-Selected="@_page"
+                        @bind-Selected:after="@HandlePageChange"
+                        Variant="Variant.Text"
+                        Count="@((_users.Total + 9) / 10)"
+                    />
+                </MudStack>
+            </PagerContent>
+            <NoRecordsContent>
+                @GetNotFoundMessage()
+            </NoRecordsContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+<AuthorizeView Policy="@Policies.OfficeCriarUsuario">
+    <CriarUsuarioDrawer @ref="@_criarUsuarioDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+@inject NavigationManager Nav
+@inject BuscarUsuariosClient Client
+
+@code
+{
+    private int _page = 1;
+    private bool _loading;
+
+    private BuscarUsuariosFilterData _filters = new();
+    private MudTable<BuscarUsuariosItemOut> _table;
+    private CriarUsuarioDrawer _criarUsuarioDrawer;
+
+    private BuscarUsuariosOut _users = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Nav.ApplyQueryToFilterState(_filters);
+        await Refresh();
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return "Nenhum usuário encontrado.";
+    }
+
+    private async Task HandleSearchClear()
+    {
+        if (_filters.Search.HasValue()) return;
+
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        Nav.UpdateQueryString(_filters);
+
+        _loading = true;
+
+        _users = await Client.Get(new() { Page = 0, IsActive = _filters.IsActive, SearchTerm = _filters.Search });
+
+        if (_page != 1)
+        {
+            _page = 1;
+            _table.NavigateTo(0);
+        }
+
+        _loading = false;
+    }
+
+    private async Task HandlePageChange()
+    {
+        _loading = true;
+
+        _users = await Client.Get(new() { Page = _page - 1, IsActive = _filters.IsActive, SearchTerm = _filters.Search });
+
+        _table.NavigateTo(_page - 1);
+
+        _loading = false;
+    }
+
+    private async Task OpenCriarUsuarioDrawer()
+    {
+        await _criarUsuarioDrawer.Open();
+    }
+}

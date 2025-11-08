@@ -1,0 +1,85 @@
+@using Exato.Front.Features.Office.BuscarVinculoEmpresaUsuario
+@using Exato.Shared.Features.Office.BuscarVinculoEmpresaUsuario
+
+@namespace Exato.Front.Features.Office.DesvincularEmpresaUsuario
+
+<MudDialog Class="pb-2" DefaultFocus="DefaultFocus.None">
+    <TitleContent>
+        <ExatoDialogTitle Icon="@Icons.Material.Filled.DeleteOutline" Text="Desfazer vínculo" />
+    </TitleContent>
+    <DialogContent>
+        @if (_pending)
+        {
+            <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="mt-6">
+                <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
+            </MudStack>
+        }
+        else
+        {
+            <MudText Class="mb-4">
+                O vínculo entre empresa e usuário será desfeito.
+                @if (_data.UsedByDexter) { <b>O Dexter utilizará o saldo do próprio usuário para fazer consultas a partir de agora.</b> }
+            </MudText>
+        }
+    </DialogContent>
+    <DialogActions>
+        @if (!_pending)
+        {
+            <DialogCancelButton OnClick="@Cancel" />
+            <MudSpacer />
+            <DialogSaveButton OnClick="@Submit" Text="Desfazer" SaveColor="@Colors.Red.Accent2" Loading="@_loading" />
+        }
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject DesvincularEmpresaUsuarioClient DesvincularEmpresaUsuarioClient
+@inject BuscarVinculoEmpresaUsuarioClient BuscarVinculoEmpresaUsuarioClient
+
+@code
+{
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public int ClienteId { get; set; }
+
+    [Parameter]
+    public int UserId { get; set; }
+
+    private bool _loading;
+    private bool _pending;
+    private BuscarVinculoEmpresaUsuarioOut _data = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _pending = true;
+
+        var response = await BuscarVinculoEmpresaUsuarioClient.Buscar(ClienteId, UserId);
+        if (response.IsSuccess) _data = response.Success;
+
+        _pending = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        _loading = true;
+
+        var response = await DesvincularEmpresaUsuarioClient.Desvincular(ClienteId, UserId);
+        if (response.IsSuccess)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Vínculo desfeito com sucesso!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+
+        _loading = false;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

@@ -1,0 +1,91 @@
+﻿@using Exato.Front.Components.Empresas
+@using Exato.Front.Features.Office.VincularEmpresaUsuario
+@using Exato.Shared.Features.Office.BuscarEventosDoUsuario
+@using Exato.Front.Features.Office.VincularEmpresasAoUsuario
+@using Exato.Front.Features.Office.DesvincularEmpresaUsuario
+
+@namespace Exato.Front.Features.Office.BuscarEventosDoUsuario
+
+<MudTable @ref="@_table" Items="@_eventos.Items" Loading="@_loading" RowsPerPage="10" Hover Dense Elevation="0" Class="mt-4">
+    <HeaderContent>
+        <MudTh>Ocorrido em</MudTh>
+        <MudTh>Descrição</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Ocorrido em">@context.EventDate.ToDateTimeString()</MudTd>
+        <MudTd DataLabel="Descrição">@context.Description</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudDivider DividerType="DividerType.FullWidth"/>
+        <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mx-4">
+            <MudTooltip Text="Total de registros" Arrow Placement="Placement.Top">
+                <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                    <MudIcon Size="@Size.Medium" Icon="@Icons.Material.Filled.ViewHeadline" />
+                    <MudText><strong>@_eventos.Total.ToIntFormat()</strong></MudText>
+                </MudStack>
+            </MudTooltip>
+            <MudPagination
+                Rectangular
+                Class="pa-4"
+                MiddleCount="3"
+                BoundaryCount="1"
+                Color="Color.Secondary"
+                @bind-Selected="@_page"
+                @bind-Selected:after="@HandlePageChange"
+                Variant="Variant.Text"
+                Count="@((_eventos.Total + 9) / 10)"
+            />
+        </MudStack>
+    </PagerContent>
+    <NoRecordsContent>
+        Nenhum evento encontrado.
+    </NoRecordsContent>
+</MudTable>
+
+@inject BuscarEventosDoUsuarioClient Client
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    private int _page = 1;
+    private bool _loading;
+
+    private MudTable<BuscarEventosDoUsuarioItemOut> _table;
+    private BuscarEventosDoUsuarioOut _eventos = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        _loading = true;
+
+        var query = new BuscarEventosDoUsuarioIn { Page = 0 };
+        _eventos = await Client.Get(Id, query);
+
+        if (_page != 1)
+        {
+            _page = 1;
+            _table.NavigateTo(0);
+        }
+
+        _loading = false;
+    }
+
+    private async Task HandlePageChange()
+    {
+        _loading = true;
+
+        var query = new BuscarEventosDoUsuarioIn { Page = _page - 1 };
+        _eventos = await Client.Get(Id, query);
+
+        _table.NavigateTo(_page - 1);
+
+        _loading = false;
+    }
+}

@@ -1,0 +1,124 @@
+﻿@using Exato.Front.Features.Office.GetRoles
+@using Exato.Shared.Features.Office.GetRoles
+@using Exato.Front.Features.Office.UpdateRole
+@using Exato.Front.Features.Office.CreateRole
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/roles"
+@attribute [Authorize(Policies.ViewOfficeRolesPage)]
+
+<ExatoPageTitle Title="Roles" />
+
+<MudContainer Class="my-4 px-4">
+    <ExatoPageHeader Icon="@Icons.Material.Filled.Security" Title="Roles" ButtonText="Nova Role" OnClick="@OpenCreateRoleDrawer" ButtonPolicy="@Policies.OfficeCreateExatoRole" />
+    <MudContainer Class="px-0 my-4">
+        <MudTable @ref="@_table" Items="@_roles.Items" Loading="@_loading" RowsPerPage="10" Hover Dense>
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Descrição</MudTh>
+                <MudTh>Organização</MudTh>
+                <MudTh>Features</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nome">@context.Name</MudTd>
+                <MudTd DataLabel="Descrição">@context.Description</MudTd>
+                <MudTd DataLabel="Organização">@context.Organization</MudTd>
+                <MudTd DataLabel="Features">@context.GetFeaturesFraction()</MudTd>
+                <MudTd>
+                    <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.FlexEnd" Spacing="1">
+                        <AuthorizeView Policy="@Policies.OfficeUpdateExatoRole" Context="authCtx">
+                            <MudTooltip Text="Editar" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                                <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => OpenUpdateRoleDrawer(context))" />
+                            </MudTooltip>
+                        </AuthorizeView>
+                    </MudStack>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudDivider DividerType="DividerType.FullWidth"/>
+                <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mx-4">
+                    <MudTooltip Text="Total de registros" Arrow Placement="Placement.Top">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                            <MudIcon Size="@Size.Medium" Icon="@Icons.Material.Filled.ViewHeadline" />
+                            <MudText><strong>@_roles.Total.ToIntFormat()</strong></MudText>
+                        </MudStack>
+                    </MudTooltip>
+                    <MudPagination
+                        Rectangular
+                        Class="pa-4"
+                        MiddleCount="3"
+                        BoundaryCount="1"
+                        Color="Color.Secondary"
+                        @bind-Selected="@_page"
+                        @bind-Selected:after="@HandlePageChange"
+                        Variant="Variant.Text"
+                        Count="@((_roles.Total + 9) / 10)"
+                    />
+                </MudStack>
+            </PagerContent>
+            <NoRecordsContent>
+                @GetNotFoundMessage()
+            </NoRecordsContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+<AuthorizeView Policy="@Policies.OfficeCreateExatoRole">
+    <CreateRoleDrawer @ref="@_createRoleDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+<AuthorizeView Policy="@Policies.OfficeUpdateExatoRole">
+    <UpdateRoleDrawer @ref="@_updateRoleDrawer" AfterSubmit="@Refresh" />
+</AuthorizeView>
+
+@inject GetRolesClient Client
+
+@code
+{
+    private int _page = 1;
+    private bool _loading;
+    private MudTable<GetRolesItemOut> _table;
+    private GetRolesOut _roles = new();
+
+    private CreateRoleDrawer _createRoleDrawer;
+    private UpdateRoleDrawer _updateRoleDrawer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        _loading = true;
+        _roles = await Client.Get(new());
+        _loading = false;
+    }
+
+    private async Task OpenCreateRoleDrawer()
+    {
+        await _createRoleDrawer.Open();
+    }
+
+    private async Task OpenUpdateRoleDrawer(GetRolesItemOut role)
+    {
+        await _updateRoleDrawer.Open(role);
+    }
+
+    private string GetNotFoundMessage()
+    {
+        return "Nenhuma role encontrada.";
+    }
+
+    private async Task HandlePageChange()
+    {
+        _loading = true;
+
+        _roles = await Client.Get(new() { Page = _page - 1 });
+        _table.NavigateTo(_page - 1);
+
+        _loading = false;
+    }
+}

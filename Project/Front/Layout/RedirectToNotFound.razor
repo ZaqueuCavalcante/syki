@@ -1,0 +1,13 @@
+﻿@namespace Exato.Front.Layout
+
+@inject NavigationManager Nav
+
+@code 
+{
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        Nav.NavigateTo("/not-found");
+    }
+}

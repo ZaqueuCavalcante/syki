@@ -1,0 +1,124 @@
+@using Exato.Shared.Auth
+@using Exato.Front.Components.Empresas
+
+@namespace Exato.Front.Features.Office.CreateRole
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+	<MudDrawerHeader Class="justify-space-between">
+		<MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+			<MudIcon Icon="@Icons.Material.Filled.Add" />
+			<MudText Typo="Typo.h5"><b>Nova role</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="1" Class="px-7">
+        <MudForm @ref="@_form" Model="@_model" Validation="@(CreateRoleFormData.V.ValidateValue)" Style="width: 100%">
+            <EmpresaSelect
+                @bind-Value="@_model.Empresa"
+                For="@(() => _model.Empresa)"
+                Class="pb-2"
+            />
+
+            <ExatoTextField @bind-Value="@_model.Nome" For="@(() => _model.Nome)" Label="Nome" MaxLength="40" />
+            <ExatoTextField @bind-Value="@_model.Description" For="@(() => _model.Description)" Label="Descrição" MaxLength="150" />
+
+            <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                <MudText><strong>@GetTotalFeatures()</strong></MudText>
+            </MudStack>
+
+            <MudTreeView @ref="@_tree" @bind-SelectedValues="@_features" Dense TriState="false" SelectionMode="SelectionMode.MultiSelection" CheckBoxColor="Color.Success">
+                @foreach (var group in ExatoFeaturesStore.Groups.Select(x => new ExatoFeature(x.Id, 1000 + x.Id, x.Name)))
+                {
+                    <MudTreeViewItem Text="@group.Name" Value="@group">
+                        @foreach (var feature in ExatoFeaturesStore.Features.Where(x => x.GroupId == group.GroupId).OrderBy(x => x.Id))
+                        {
+                            <MudTreeViewItem Text="@feature.Name" Value="@feature" />
+                        }
+                    </MudTreeViewItem>
+                }
+            </MudTreeView>
+        </MudForm>
+    </MudGrid>
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 py-4">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" Loading="@_loading" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject CreateRoleClient Client
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private MudForm _form;
+    private bool _open;
+    private string _width = "550px";
+    private Breakpoint _breakpoint;
+    private MudTreeView<ExatoFeature>? _tree;
+
+    private bool _loading;
+    private CreateRoleFormData _model = new();
+    private IReadOnlyCollection<ExatoFeature> _features = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "550px";
+    }
+
+    public async Task Open()
+    {
+        _loading = true;
+
+        await _form?.ResetAsync();
+        await _tree.CollapseAllAsync();
+
+        _model = new();
+        _features = [];
+
+        _open = true;
+        _loading = false;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private string GetTotalFeatures()
+    {
+        return $"({_features.Count(x => x.Id < 999).ToIntFormat()}) Features";
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+        var response = await Client.Create(
+            _model.Nome,
+            _model.Description,
+            _model.Empresa.Id,
+            _features.Where(x => x.Id < 999).Select(x => x.Id).ToList()
+        );
+        if (response.IsSuccess)
+        {
+            Snackbar.Add("Role criada com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+}

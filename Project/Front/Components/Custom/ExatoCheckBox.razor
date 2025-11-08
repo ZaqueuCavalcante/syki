@@ -1,0 +1,25 @@
+﻿@namespace Exato.Front.Components.Custom
+
+<MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+	<MudIcon Icon="@GetIcon()" Color="@GetColor()" Size="Size.Small" Class="mb-1" />
+	<MudText>@Label</MudText>
+</MudStack>
+
+@code
+{
+	[Parameter]
+	public string Label { get; set; }
+
+	[Parameter]
+	public bool Value { get; set; }
+
+	private string GetIcon()
+	{
+		return Value ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.RemoveCircleOutline;
+	}
+
+	private Color GetColor()
+	{
+		return Value ? Color.Success : Color.Default;
+	}
+}

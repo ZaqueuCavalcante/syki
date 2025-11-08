@@ -1,0 +1,14 @@
+@namespace Exato.Front.Components.Custom
+
+<MudSpacer />
+    @if (Loading)
+    {
+        <MudProgressCircular Size="Size.Medium" Color="Color.Info" Indeterminate StrokeWidth="4" />
+    }
+<MudSpacer />
+
+@code
+{
+    [Parameter]
+    public bool Loading { get; set; }
+}

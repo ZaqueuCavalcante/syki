@@ -1,0 +1,84 @@
+﻿@namespace Exato.Front.Features.Cross.SetupTwoFactorAuthentication
+
+<MudPaper Style="position: relative; height: 100%">
+    <MudOverlay @bind-Visible="@_validateCodeLoading" LightBackground Absolute>
+        <MudProgressCircular Color="Color.Info" Indeterminate Size="Size.Large" />
+    </MudOverlay>
+
+    <MudCard Class="px-4 py-0" Elevation="0" Style="height: 100%">
+        <MudCardContent>
+            <MudStack AlignItems="AlignItems.Center">
+                <MudAlert NoIcon Severity="Severity.Info" Variant="Variant.Text">
+                    <MudStack Row Justify="Justify.SpaceAround">
+                        <MudText>Insira o código gerado pelo app para finalizar o setup</MudText>
+                    </MudStack>
+                </MudAlert>
+                <MudForm>
+                    <style> .align-center input { text-align: center; } </style>
+                    <ExatoTextField
+                        AutoFocus
+                        ReadOnly="@_validateCodeLoading"
+                        Disabled="@_codeIsCorrect"
+                        Style="width: 200px;"
+                        @bind-Value="@_userCode"
+                        @bind-Value:after="@HandleCodeChanged"
+                        Typo="Typo.h6"
+                        Class="mt-8"
+                        Mask="@(new PatternMask("000-000"))"
+                    />
+                </MudForm>
+
+                @if (_showCodeFeedback && !_codeIsCorrect)
+                {
+                    <MudAlert Class="mt-2" Severity="Severity.Error" Variant="Variant.Text">
+                        <MudStack Row Justify="Justify.SpaceAround">
+                            <MudText>Código inválido</MudText>
+                        </MudStack>
+                    </MudAlert>
+                }
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudPaper>
+
+@inject IDialogService DialogService
+@inject SetupTwoFactorAuthenticationClient Client
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    private string _userCode;
+    private bool _validateCodeLoading;
+    private bool _showCodeFeedback;
+    private bool _codeIsCorrect;
+
+    private async Task HandleCodeChanged()
+    {
+        _showCodeFeedback = false;
+
+        if (_userCode.HasValue() && _userCode.OnlyNumbers().Length == 6)
+        {
+            _validateCodeLoading = true;
+            _codeIsCorrect = await Client.Setup(_userCode);
+            _showCodeFeedback = true;
+            _validateCodeLoading = false;
+        }
+
+        if (_codeIsCorrect)
+        {
+            await OpenDialog();
+        }
+    }
+
+    private async Task OpenDialog()
+    {
+        var breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        var options = new DialogOptions {
+            FullWidth = true,
+            CloseButton = false,
+            MaxWidth = MaxWidth.ExtraSmall,
+            FullScreen = breakpoint == Breakpoint.Xs,
+        };
+        await DialogService.ShowAsync<SetupTwoFactorAuthenticationDialog>("", options);
+    }
+}

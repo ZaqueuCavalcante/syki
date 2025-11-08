@@ -1,0 +1,66 @@
+﻿@using System.Linq.Expressions
+@using Exato.Front.Features.Office.BuscarPotenciaisUsuariosDaEmpresa
+@using Exato.Shared.Features.Office.BuscarPotenciaisUsuariosDaEmpresa
+
+@namespace Exato.Front.Components.Empresas
+
+<MudAutocomplete
+	Dense
+	For="@For"
+	MaxItems=50
+	Class="pb-2"
+	Value="@Value"
+	Label="Usuário"
+	Strict="false"
+	SearchFunc="@Search"
+	Margin="Margin.Dense"
+	ResetValueOnEmptyText
+	ShowProgressIndicator
+	DebounceInterval="500"
+	Variant="Variant.Outlined"
+	ValueChanged="@ValueChanged"
+	T="PotencialUsuarioDaEmpresaSelectData"
+	AdornmentIcon="@Icons.Material.Filled.Search"
+	ToStringFunc="@(e => e == null ? null : $"{e.Name}")"
+>
+	<ItemTemplate Context="e">
+		<MudStack Spacing="0">
+			<MudStack Row AlignItems="AlignItems.Center" Spacing="2">
+				@{ var (color, icon) = e.GetIsActive(); }
+				<MudIcon Size="@Size.Small" Icon="@icon" Color="color" />
+				<MudText>@e.Name</MudText>
+			</MudStack>
+			<MudText Typo="Typo.body2" Class="ml-1">@e.Email</MudText>
+		</MudStack>
+	</ItemTemplate>
+</MudAutocomplete>
+
+@inject BuscarPotenciaisUsuariosDaEmpresaClient Client
+
+@code
+{
+	[Parameter]
+	public int Id { get; set; }
+
+	[Parameter]
+	public PotencialUsuarioDaEmpresaSelectData Value { get; set; }
+
+    [Parameter]
+    public EventCallback<PotencialUsuarioDaEmpresaSelectData> ValueChanged { get; set; }
+
+    [Parameter]
+    public Expression<Func<PotencialUsuarioDaEmpresaSelectData>>? For { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+		await Task.Yield();
+    }
+
+    private async Task<IEnumerable<PotencialUsuarioDaEmpresaSelectData>> Search(string value, CancellationToken token)
+    {
+		var query = new BuscarPotenciaisUsuariosDaEmpresaIn { NameOuEmail = value };
+		var response = await Client.Get(Id, query);
+
+		return response.Items.ConvertAll(x => new PotencialUsuarioDaEmpresaSelectData { Id = x.Id, Active = x.Active, Name = x.Name, Email = x.Email });
+    }
+}

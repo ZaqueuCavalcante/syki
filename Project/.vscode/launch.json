@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "RUN_ALL",
+            "configurations": [
+                "BACK",
+                "WORKERS",
+            ],
+            "preLaunchTask": "build",
+            "stopAll": true
+        }
+    ],
+    "configurations": [
+        {
+            "name": "BACK",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "requireExactSource": false,
+            "cwd": "${workspaceFolder}/Back",
+            "program": "${workspaceFolder}/Back/bin/Debug/net10.0/Back.dll",
+        },
+        {
+            "name": "WORKERS",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "requireExactSource": false,
+            "cwd": "${workspaceFolder}/Workers",
+            "program": "${workspaceFolder}/Workers/bin/Debug/net10.0/Workers.dll",
+        }
+    ]
+}

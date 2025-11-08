@@ -1,0 +1,91 @@
+@using Exato.Front.Components.Usuarios
+@using Exato.Front.Components.Empresas
+@using Exato.Front.Features.Office.VincularEmpresaUsuario
+
+@namespace Exato.Front.Features.Office.VincularEmpresaUsuario
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+	<MudDrawerHeader Class="justify-space-between">
+		<MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+			<MudIcon Icon="@Icons.Material.Filled.Add" />
+			<MudText Typo="Typo.h5"><b>Vincular usuário</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="1" Class="px-7">
+        <MudForm @ref="@_form" Model="@_model" Validation="@(VincularUsuarioAEmpresaFormData.V.ValidateValue)" Style="width: 100%">
+            <PotencialUsuarioDaEmpresaSelect Id="@Id" @bind-Value="@_model.Usuario" For="@(() => _model.Usuario)" />
+        </MudForm>
+    </MudGrid>
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 py-4">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" Loading="@_loading" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject VincularEmpresaUsuarioClient Client
+@inject IBrowserViewportService BrowserViewportService
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private bool _open;
+    private string _width = "550px";
+    private Breakpoint _breakpoint;
+
+    private bool _loading;
+
+    private MudForm _form;
+    private VincularUsuarioAEmpresaFormData _model = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "550px";
+    }
+
+    public void Open()
+    {
+        _loading = true;
+
+        _model = new();
+
+        _open = true;
+
+        _loading = false;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+        var response = await Client.Vincular(Id, _model.Usuario.Id);
+        if (response.IsSuccess)
+        {
+            Snackbar.Add("Usuário vinculado com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+}

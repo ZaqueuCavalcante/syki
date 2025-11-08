@@ -1,0 +1,155 @@
+﻿@using Exato.Front.Features.Office.GetCommands
+@using Exato.Shared.Features.Office.GetCommands
+
+@namespace Exato.Front.Pages.Office
+
+@page "/office/commands"
+@attribute [Authorize(Policies.ViewOfficeCommandsPage)]
+
+<ExatoPageTitle Title="Comandos" />
+
+<MudContainer Class="my-4 px-4">
+    <ExatoPageHeader Icon="@Icons.Material.Filled.Task" Title="Comandos" />
+    <MudContainer Class="px-0 my-4">
+        <MudTable @ref="@_table" Items="@_commands.Items" Loading="@_loading" RowsPerPage="10" Hover Dense Class="pt-2">
+            <ToolBarContent>
+                <MudGrid Justify="Justify.FlexStart" Class="mr-2">
+                    <MudItem xs="12" sm="3" md="3" lg="3">
+                        <MudSelect
+                            Dense
+                            Margin="Margin.Dense"
+                            Variant="Variant.Outlined"
+                            @bind-Value="@_status"
+                            @bind-Value:after="@Refresh"
+                            Label="Status"
+                            Clearable
+                        >
+                            @foreach (CommandStatus? item in Enum.GetValues<CommandStatus>())
+                            {
+                                <MudSelectItem Value="@item">
+                                    <MudStack Row AlignItems="AlignItems.Center">
+                                        <MudIcon Class="mb-1" Icon="@item.Value.GetIcon()" Color="@item.Value.GetColor()" Size="Size.Small" />
+                                        <MudText>@item.GetDescription()</MudText>
+                                    </MudStack>
+                                </MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" sm="6" md="6" lg="6">
+                        <MudSelect
+                            Dense
+                            Margin="Margin.Dense"
+                            Variant="Variant.Outlined"
+                            @bind-Value="@_type"
+                            @bind-Value:after="@Refresh"
+                            Label="Tipo"
+                            Clearable
+                        >
+                            @foreach (var type in _commands.Types)
+                            {
+                                <MudSelectItem Value="@type">@type.Split('.').Last()</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                </MudGrid>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Tipo</MudTh>
+                <MudTh>Criado</MudTh>
+                <MudTh>Processado</MudTh>
+                <MudTh>Duração (ms)</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Tipo">
+                    <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                        <MudIcon Class="mb-1" Icon="@context.Status.GetIcon()" Color="@context.Status.GetColor()" Size="Size.Small" />
+                        <MudText Typo="Typo.body2">@context.Type.Split('.').Last()</MudText>
+                    </MudStack>
+                </MudTd>
+                <MudTd DataLabel="Criado">@context.CreatedAt.ToDateTimeString()</MudTd>
+                <MudTd DataLabel="Processado">@context.ProcessedAt.ToDateTimeString()</MudTd>
+                <MudTd DataLabel="Duração (ms)">@context.Duration.ToIntFormat()</MudTd>
+                <MudTd>
+                    <AuthorizeView Policy="@Policies.ViewOfficeCommandPage" Context="authCtx">
+                        <MudTooltip Text="Detalhes" Arrow Placement="Placement.Top" ShowOnFocus="false">
+                            <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Filled.RemoveRedEye" Href="@($"/office/commands/{context.Id}")" />
+                        </MudTooltip>
+                    </AuthorizeView>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudDivider DividerType="DividerType.FullWidth"/>
+                <MudStack Row AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="mx-4">
+                    <MudTooltip Text="Total de registros" Arrow Placement="Placement.Top">
+                        <MudStack Row AlignItems="AlignItems.Center" Spacing="1">
+                            <MudIcon Size="@Size.Medium" Icon="@Icons.Material.Filled.ViewHeadline" />
+                            <MudText><strong>@_commands.Total.ToIntFormat()</strong></MudText>
+                        </MudStack>
+                    </MudTooltip>
+                    <MudPagination
+                        Rectangular
+                        Class="pa-4"
+                        MiddleCount="3"
+                        BoundaryCount="1"
+                        Color="Color.Secondary"
+                        @bind-Selected="@_page"
+                        @bind-Selected:after="@HandlePageChange"
+                        Variant="Variant.Text"
+                        Count="@((_commands.Total + 9) / 10)"
+                    />
+                </MudStack>
+            </PagerContent>
+            <NoRecordsContent>
+                Nenhum comando encontrado.
+            </NoRecordsContent>
+        </MudTable>
+    </MudContainer>
+</MudContainer>
+
+@inject GetCommandsClient Client
+
+@code
+{
+    private int _page = 1;
+    private bool _loading;
+
+    private string? _type;
+    private CommandStatus? _status;
+
+    private MudTable<GetCommandsItemOut> _table;
+    private GetCommandsOut _commands = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Refresh();
+    }
+
+    private async Task Refresh()
+    {
+        _loading = true;
+
+        var query = new GetCommandsIn { Page = 0, Type = _type, Status = _status };
+        _commands = await Client.Get(query);
+
+        if (_page != 1)
+        {
+            _page = 1;
+            _table.NavigateTo(0);
+        }
+
+        _loading = false;
+    }
+
+    private async Task HandlePageChange()
+    {
+        _loading = true;
+
+        var query = new GetCommandsIn { Page = _page - 1, Type = _type, Status = _status };
+        _commands = await Client.Get(query);
+
+        _table.NavigateTo(_page - 1);
+
+        _loading = false;
+    }
+}

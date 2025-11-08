@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><svg id="b" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+  <style>    
+    .symbol { fill: #edc33f; }
+    .shield { fill: #5f5c5c; }
+    @media (prefers-color-scheme: dark) {
+    .symbol { fill: #ffffff; }
+    .shield { fill: #ffffff; }
+    }
+  </style>
+  </defs>
+<path d="M352.89,200.1v44.8h-47.79v-44.8h47.79Z" class="symbol"/><path d="M352.89,110.5v44.8h-194.13v-44.8h194.13ZM158.76,200.1v44.8h122.45v-44.8h-122.45ZM158.76,289.7v44.8h194.13v-44.8h-194.13ZM460.41,0v416.6l-204.58,95.4-204.58-95.4V0h409.16ZM415.61,388.06V44.8H96.04v343.26l159.78,74.51,159.78-74.51Z" class="shield"/><path d="M512,512H0V0h512v512Z" fill="none"/></svg>

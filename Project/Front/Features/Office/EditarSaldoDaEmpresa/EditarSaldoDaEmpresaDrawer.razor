@@ -1,0 +1,123 @@
+@using Exato.Shared.Features.Office.BuscarEmpresa
+
+@namespace Exato.Front.Features.Office.EditarSaldoDaEmpresa
+
+<MudDrawer @bind-Open="@_open" Width="@_width" Anchor="Anchor.Right" Elevation="1" Variant="@DrawerVariant.Temporary">
+	<MudDrawerHeader Class="justify-space-between">
+		<MudStack Row Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Spacing="3">
+            @{ var (icon, type) = @_model.GetBalanceType();  }
+			<MudIcon Icon="@icon" />
+			<MudText Typo="Typo.h5"><b>@type</b></MudText>
+		</MudStack>
+		<MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close" />
+    </MudDrawerHeader>
+    <MudGrid Spacing="1" Class="px-7">
+        <MudForm @ref="@_form" Model="@_model" Validation="@(EditarSaldoDaEmpresaFormData.V.ValidateValue)" Style="width: 100%">
+            <MudToggleGroup T="bool" @bind-Value="@_model.IsUp" Outlined CheckMark Color="@Color.Secondary" Style="width: 100%" Class="mb-4">
+                <MudToggleItem SelectedIcon="@Icons.Material.Filled.Add" UnselectedIcon="@Icons.Material.Filled.Add" Value="true" Text="Creditar" />
+                <MudToggleItem SelectedIcon="@Icons.Material.Filled.Remove" UnselectedIcon="@Icons.Material.Filled.Remove" Value="false" Text="Debitar" />
+            </MudToggleGroup>
+            @if (_model.BalanceType == BalanceType.Reais)
+            {
+                <MudNumericField
+                    T="decimal"
+                    Format="N2"
+                    Step="0.01M"
+                    HideSpinButtons
+                    Label="Valor (R$)"
+                    Margin="Margin.Dense"
+                    Culture="@(new("pt-BR"))"
+                    Variant="Variant.Outlined"
+                    @bind-Value="_model.Amount"
+                    For="@(() => _model.Amount)"
+                />
+            }
+            else
+            {
+                <ExatoIntField
+                    Immediate
+                    Label="Créditos"
+                    @bind-Value="@_model.Credits"
+                    For="@(() => _model.Credits)"
+                />
+            }
+        </MudForm>
+    </MudGrid>
+    <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Spacing="3" Class="px-2 py-4 mt-2">
+        <DialogCancelButton OnClick="@Close" />
+        <DialogSaveButton OnClick="@Submit" Loading="@_loading" />
+    </MudStack>
+</MudDrawer>
+
+@inject ISnackbar Snackbar
+@inject IBrowserViewportService BrowserViewportService
+@inject EditarSaldoDaEmpresaClient EditarSaldoDaEmpresaClient
+
+@code
+{
+    [Parameter]
+    public EventCallback AfterSubmit { get; set; }
+
+    private bool _open;
+    private string _width = "550px";
+    private Breakpoint _breakpoint;
+    private MudForm _form;
+
+    private bool _loading;
+    private EditarSaldoDaEmpresaFormData _model = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _breakpoint = await BrowserViewportService.GetCurrentBreakpointAsync();
+        _width = _breakpoint == Breakpoint.Xs ? "100%" : "550px";
+    }
+
+    public async Task Open(int id, BalanceType balanceType)
+    {
+        _loading = true;
+
+        await _form?.ResetAsync();
+
+        _model = new()
+        {
+            Id = id,
+            IsUp = true,
+            BalanceType = balanceType,
+        };
+
+        _open = true;
+        _loading = false;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _open = false;
+    }
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        _loading = true;
+        var response = await EditarSaldoDaEmpresaClient.Editar(
+            _model.Id,
+            _model.GetAmount(),
+            _model.GetCredits()
+        );
+        if (response.IsSuccess)
+        {
+            Snackbar.Add($"Alteração salva com sucesso!", Severity.Success);
+            await AfterSubmit.InvokeAsync();
+            _open = false;
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+        _loading = false;
+    }
+}

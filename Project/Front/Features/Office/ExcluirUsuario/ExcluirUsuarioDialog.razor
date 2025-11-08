@@ -1,0 +1,53 @@
+@namespace Exato.Front.Features.Office.ExcluirUsuario
+
+<MudDialog Class="pb-2" DefaultFocus="DefaultFocus.None">
+    <TitleContent>
+        <ExatoDialogTitle Icon="@Icons.Material.Filled.DeleteOutline" Text="Excluir usuário" />
+    </TitleContent>
+    <DialogContent>
+        <MudText Class="mb-4">
+            O usuário será excluído.
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <DialogCancelButton OnClick="@Cancel" />
+        <MudSpacer />
+        <DialogSaveButton OnClick="@Submit" Text="Excluir" SaveColor="@Colors.Red.Accent2" Loading="@_loading" />
+    </DialogActions>
+</MudDialog>
+
+@inject ISnackbar Snackbar
+@inject ExcluirUsuarioClient Client
+
+@code
+{
+    [CascadingParameter]
+    IMudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public int UserId { get; set; }
+
+    private bool _loading;
+
+    private async Task Submit()
+    {
+        if (_loading) return;
+
+        _loading = true;
+
+        var response = await Client.Excluir(UserId);
+        if (response.IsSuccess)
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add("Usuário excluído com sucesso!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add(response.Error.Message, Severity.Error);
+        }
+
+        _loading = false;
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+}

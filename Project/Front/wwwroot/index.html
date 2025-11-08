@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Exato</title>
+        <base href="/" />
+        <link rel="preload" id="webassembly" />
+        <link href="styles.css" rel="stylesheet" />
+        <link rel="icon" type="image/x-icon" href="/favicon.svg">
+        <link href="_content/MudBlazor/MudBlazor.min.css?v=9" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+        <script type="importmap"></script>
+    </head>
+    <body>
+        <div id="app">
+            <div id="loading-progress" style="height:100%;width:100%;margin:0;position:fixed;background-color:#22272E">
+                <div class="loader"></div>
+            </div>
+        </div>
+        <div id="blazor-error-ui">
+            Unhandled error...
+            <a href="." class="reload">Reload</a>
+            <span class="dismiss">🗙</span>
+        </div>
+        <script src="_framework/blazor.webassembly#[.{fingerprint}].js" autostart="false"></script>
+
+        <script>
+            Blazor.start({
+                environment: window.location.hostname.includes("localhost") ?
+                            "Development" : window.location.hostname.includes("uat") ?
+                                "Uat" : "Production"
+            });
+        </script>
+
+        <script src="_content/MudBlazor/MudBlazor.min.js?v=9"></script>
+    </body>
+</html>

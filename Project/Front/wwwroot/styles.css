@@ -1,0 +1,66 @@
+.loader {
+  width: 100px;
+  aspect-ratio: 1;
+  display: grid;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+}
+
+.loader::before, .loader::after {
+  content: "";
+  grid-area: 1/1;
+  background: #FBC02D;
+  clip-path: polygon(0 0, 50% 50%, 0 100%);
+  animation: l11 2s infinite;
+}
+
+.loader::after {
+  animation-delay: -1.5s;
+  --s: 90deg;
+}
+
+@keyframes l11 {
+  0%, 12.5% {
+    transform: rotate(var(--s, 0deg)) rotate(0deg)
+  }
+
+  37.5%, 62.5% {
+    transform: rotate(var(--s, 0deg)) rotate(-180deg)
+  }
+
+  87.5%, 100% {
+    transform: rotate(var(--s, 0deg)) rotate(-360deg)
+  }
+}
+
+.drawer-menu {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.push-bottom {
+  margin-top: auto;
+}
+
+.mud-table-toolbar {
+  height: auto !important;
+}
+
+svg.apexcharts-svg {
+  background: transparent !important;
+}
+
+.text-transform-none {
+  text-transform: none !important;
+}
+
+.mud-tabs-panels.mud-tabs-vertical {
+  background-color: var(--mud-palette-surface);
+}
+
+.table-money-column {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}

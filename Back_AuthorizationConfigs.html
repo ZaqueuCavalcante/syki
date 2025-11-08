@@ -677,7 +677,7 @@ a.percentagebar {
 </tr>
 <tr>
 <th>Tag:</th>
-<td class="limit-width " title="34_19193614366">34_19193614366</td>
+<td class="limit-width " title="35_19195278339">35_19195278339</td>
 </tr>
 </table>
 </div>
@@ -688,12 +688,12 @@ a.percentagebar {
 <div class="card">
 <div class="card-header">Line coverage</div>
 <div class="card-body">
-<div class="large cardpercentagebar cardpercentagebar17">83%</div>
+<div class="large cardpercentagebar cardpercentagebar15">84%</div>
 <div class="table">
 <table>
 <tr>
 <th>Covered lines:</th>
-<td class="limit-width right" title="10">10</td>
+<td class="limit-width right" title="11">11</td>
 </tr>
 <tr>
 <th>Uncovered lines:</th>
@@ -701,15 +701,15 @@ a.percentagebar {
 </tr>
 <tr>
 <th>Coverable lines:</th>
-<td class="limit-width right" title="12">12</td>
+<td class="limit-width right" title="13">13</td>
 </tr>
 <tr>
 <th>Total lines:</th>
-<td class="limit-width right" title="21">21</td>
+<td class="limit-width right" title="22">22</td>
 </tr>
 <tr>
 <th>Line coverage:</th>
-<td class="limit-width right" title="10 of 12">83.3%</td>
+<td class="limit-width right" title="11 of 13">84.6%</td>
 </tr>
 </table>
 </div>
@@ -759,7 +759,7 @@ a.percentagebar {
 </colgroup>
 <thead><tr><th>Method</th><th>Branch coverage <a href="https://en.wikipedia.org/wiki/Code_coverage" target="_blank"><i class="icon-info-circled"></i></a></th><th>Crap Score <a href="https://googletesting.blogspot.de/2011/02/this-code-is-crap.html" target="_blank"><i class="icon-info-circled"></i></a></th><th>Cyclomatic complexity <a href="https://en.wikipedia.org/wiki/Cyclomatic_complexity" target="_blank"><i class="icon-info-circled"></i></a></th><th>Line coverage <a href="https://en.wikipedia.org/wiki/Code_coverage" target="_blank"><i class="icon-info-circled"></i></a></th></tr></thead>
 <tbody>
-<tr><td title="AddAuthorizationConfigs(Microsoft.AspNetCore.Builder.WebApplicationBuilder)"><a href="#file0_line7" class="navigatetohash">AddAuthorizationConfigs(...)</a></td><td>100%</td><td>1</td><td>1</td><td>83.33%</td></tr>
+<tr><td title="AddAuthorizationConfigs(Microsoft.AspNetCore.Builder.WebApplicationBuilder)"><a href="#file0_line7" class="navigatetohash">AddAuthorizationConfigs(...)</a></td><td>100%</td><td>1</td><td>1</td><td>84.61%</td></tr>
 </tbody>
 </table>
 </div>
@@ -787,17 +787,18 @@ a.percentagebar {
 <tr class="coverableline" title="Covered (2 visits)" data-coverage="{'AllTestMethods': {'VC': '2', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">2</td><td class="rightmargin right"><a id="file0_line16"></a><code>16</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder.Services.AddSingleton&lt;IAuthorizationHandler,&nbsp;CrossLoginAuthReqHandler&gt;();</code></td></tr>
 <tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line17"></a><code>17</code></td><td></td><td class="lightgray"><code></code></td></tr>
 <tr class="coverableline" title="Covered (2 visits)" data-coverage="{'AllTestMethods': {'VC': '2', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">2</td><td class="rightmargin right"><a id="file0_line18"></a><code>18</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder.Services.AddAuthorizationBuilder()</code></td></tr>
-<tr class="coverableline" title="Covered (4 visits)" data-coverage="{'AllTestMethods': {'VC': '4', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">4</td><td class="rightmargin right"><a id="file0_line19"></a><code>19</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.AddPolicy(BackPolicies.CrossLogin,&nbsp;p&nbsp;=&gt;&nbsp;p.Requirements.Add(new&nbsp;CrossLoginAuthRequirement()));</code></td></tr>
-<tr class="coverableline" title="Covered (2 visits)" data-coverage="{'AllTestMethods': {'VC': '2', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">2</td><td class="rightmargin right"><a id="file0_line20"></a><code>20</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;}</code></td></tr>
-<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line21"></a><code>21</code></td><td></td><td class="lightgray"><code>}</code></td></tr>
+<tr class="coverableline" title="Covered (2 visits)" data-coverage="{'AllTestMethods': {'VC': '2', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">2</td><td class="rightmargin right"><a id="file0_line19"></a><code>19</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.AddAdmPolicies()</code></td></tr>
+<tr class="coverableline" title="Covered (4 visits)" data-coverage="{'AllTestMethods': {'VC': '4', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">4</td><td class="rightmargin right"><a id="file0_line20"></a><code>20</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.AddPolicy(BackPolicies.CrossLogin,&nbsp;p&nbsp;=&gt;&nbsp;p.Requirements.Add(new&nbsp;CrossLoginAuthRequirement()));</code></td></tr>
+<tr class="coverableline" title="Covered (2 visits)" data-coverage="{'AllTestMethods': {'VC': '2', 'LVS': 'green'}}"><td class="green">&nbsp;</td><td class="leftmargin rightmargin right">2</td><td class="rightmargin right"><a id="file0_line21"></a><code>21</code></td><td></td><td class="lightgreen"><code>&nbsp;&nbsp;&nbsp;&nbsp;}</code></td></tr>
+<tr class="" title="Not coverable" data-coverage="{'AllTestMethods': {'VC': '', 'LVS': 'gray'}}"><td class="gray">&nbsp;</td><td class="leftmargin rightmargin right"></td><td class="rightmargin right"><a id="file0_line22"></a><code>22</code></td><td></td><td class="lightgray"><code>}</code></td></tr>
 </tbody>
 </table>
 </div>
-<div class="footer">Generated by: ReportGenerator 5.4.10.0<br />11/08/2025 - 13:25:17<br /><a href="https://github.com/danielpalme/ReportGenerator">GitHub</a> | <a href="https://reportgenerator.io">reportgenerator.io</a></div></div>
+<div class="footer">Generated by: ReportGenerator 5.4.10.0<br />11/08/2025 - 16:02:01<br /><a href="https://github.com/danielpalme/ReportGenerator">GitHub</a> | <a href="https://reportgenerator.io">reportgenerator.io</a></div></div>
 <div class="containerright">
 <div class="containerrightfixed">
 <h1>Methods/Properties</h1>
-<a href="#file0_line7" class="navigatetohash percentagebar percentagebar80" title="Line coverage: 83.3% - AddAuthorizationConfigs(Microsoft.AspNetCore.Builder.WebApplicationBuilder)"><i class="icon-cube"></i>AddAuthorizationConfigs(Microsoft.AspNetCore.Builder.WebApplicationBuilder)</a><br />
+<a href="#file0_line7" class="navigatetohash percentagebar percentagebar80" title="Line coverage: 84.6% - AddAuthorizationConfigs(Microsoft.AspNetCore.Builder.WebApplicationBuilder)"><i class="icon-cube"></i>AddAuthorizationConfigs(Microsoft.AspNetCore.Builder.WebApplicationBuilder)</a><br />
 <br/></div>
 </div></div>
 <script type="text/javascript">/* <![CDATA[ */ /* Chartist.js 0.11.4

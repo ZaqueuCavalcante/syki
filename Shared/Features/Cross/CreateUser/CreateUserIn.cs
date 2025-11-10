@@ -6,8 +6,9 @@ public class CreateUserIn
     public string Name { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public DateTime BirthDate { get; set; }
     public UserRole Role { get; set; }
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
 
     public static CreateUserIn NewAcademic(Guid institutionId, string email, string password)
     {
@@ -33,7 +34,7 @@ public class CreateUserIn
         };
     }
 
-    public static CreateUserIn NewStudent(Guid institutionId, string name, string email, string? phoneNumber)
+    public static CreateUserIn NewStudent(Guid institutionId, string name, string email, string phoneNumber, DateTime birthDate)
     {
         return new()
         {
@@ -41,6 +42,7 @@ public class CreateUserIn
             Email = email,
             Role = UserRole.Student,
             PhoneNumber = phoneNumber,
+            BirthDate = birthDate,
             InstitutionId = institutionId,
             Password = $"Student@{Guid.CreateVersion7()}",
         };

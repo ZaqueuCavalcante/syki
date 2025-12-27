@@ -389,7 +389,7 @@ public class AcademicHttpClient(HttpClient http)
         var today = DateTime.UtcNow;
         var number = today.Month <= 6 ? 1 : 2;
         var startAt = today.AddDays(-30).ToDateOnly();
-        var endAt = today.AddDays(30).ToDateOnly();
+        var endAt = today.AddDays(3).ToDateOnly();
         return await CreateAcademicPeriod($"{today.Year}.{number}", startAt, endAt);
     }
 

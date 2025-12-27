@@ -7,7 +7,6 @@ global using Syki.Front.Constants;
 global using Syki.Front.Extensions;
 
 global using Syki.Front.Features.Academic.CreateAcademicPeriod;
-global using Syki.Front.Features.Teacher.GetClassroomAgenda;
 global using Syki.Front.Features.Academic.GetCampusTeachers;
 global using Syki.Front.Features.Academic.GetCampusStudents;
 global using Syki.Front.Features.Academic.GetCurrentAcademicPeriod;
@@ -24,7 +23,6 @@ global using Syki.Front.Features.Academic.GetCourses;
 global using Syki.Front.Features.Academic.AssignClassToClassroom;
 global using Syki.Front.Features.Academic.GetClassrooms;
 global using Syki.Front.Features.Academic.CreateClassroom;
-global using Syki.Front.Features.Academic.AssignCampiToTeacher;
 global using Syki.Front.Features.Academic.CrossLogin;
 global using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
 global using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
@@ -70,7 +68,6 @@ global using Syki.Front.Features.Cross.UpdateUserAccount;
 global using Syki.Front.Features.Cross.SendResetPasswordToken;
 global using Syki.Front.Features.Cross.CreatePreSignedUrlForUpload;
 
-global using Syki.Front.Features.Teacher.GetTeacherClassStudents;
 global using Syki.Front.Features.Student.CreateStudentEnrollment;
 global using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
 global using Syki.Front.Features.Student.GetStudentAgenda;
@@ -87,6 +84,8 @@ global using Syki.Front.Features.Student.GetStudentClassActivity;
 global using Syki.Front.Features.Student.GetStudentClassActivities;
 global using Syki.Front.Features.Student.GetStudentClassFrequency;
 
+global using Syki.Front.Features.Teacher.GetClassroomAgenda;
+global using Syki.Front.Features.Teacher.GetTeacherClassStudents;
 global using Syki.Front.Features.Teacher.GetTeacherClass;
 global using Syki.Front.Features.Teacher.GetTeacherAgenda;
 global using Syki.Front.Features.Teacher.GetTeacherClasses;

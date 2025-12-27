@@ -2,11 +2,11 @@ FROM node:lts-alpine
 
 WORKDIR /app
 
-COPY Web/package*.json ./
+COPY App/package*.json ./
 
 RUN npm ci
 
-COPY Web/ ./
+COPY App/ ./
 
 RUN npm run build
 

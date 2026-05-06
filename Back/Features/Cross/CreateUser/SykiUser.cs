@@ -4,6 +4,7 @@ public class SykiUser : IdentityUser<Guid>
 {
     public Guid InstitutionId { get; set; }
     public string Name { get; set; }
+    public DateTime BirthDate { get; set; }
     public DateTime CreatedAt { get; set; }
     public string? ProfilePhoto { get; set; }
 
@@ -35,6 +36,8 @@ public class SykiUser : IdentityUser<Guid>
             InstitutionId = InstitutionId,
             Name = Name,
             Email = Email!,
+            PhoneNumber = PhoneNumber!,
+            BirthDate = BirthDate,
         };
     }
 }

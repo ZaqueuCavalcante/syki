@@ -8,6 +8,8 @@
         <MudForm @ref="@_form" Class="pt-1">
             <SykiTextField Label="Nome" AutoFocus @bind-Value="@_name" />
             <SykiTextField Label="Email" @bind-Value="@_email" />
+            <SykiTextField Label="Telefone" @bind-Value="@_phoneNumber" Mask='@(new PatternMask("(00) 00000-0000"))' />
+            <SykiDatePicker Label="Data de Nascimento" @bind-Date="@_birthDate" Editable="false" />
             <MudSelect
                 Dense
                 Disabled="@(_courseOfferings.Count == 0)"
@@ -18,8 +20,8 @@
                 Label="Oferta"
                 Required
                 RequiredError="Informe!"
-                AdornmentColor="Color.Primary
-            ">
+                AdornmentColor="Color.Primary"
+            >
                 @foreach (CourseOfferingOut? item in _courseOfferings)
                 {
                     <MudSelectItem Value="@item">@item.ToString()</MudSelectItem>
@@ -47,10 +49,12 @@
     private bool _loading;
 
     private CourseOfferingOut? _courseOffering;
-    private List<CourseOfferingOut> _courseOfferings = [];
+    private List<CourseOfferingOut> _courseOfferings = new();
 
     private string _name;
     private string _email;
+    private string _phoneNumber;
+    private DateTime? _birthDate;
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,7 +71,12 @@
         var courseOfferingId = _courseOffering!.Id;
 
         _loading = true;
-        var response = await CreateStudentClient.Create(_name, _email, courseOfferingId);
+        var response = await CreateStudentClient.Create(
+            _name,
+            _email,
+            _phoneNumber,
+            _birthDate!.Value,
+            courseOfferingId);
         if (response.IsSuccess)
         {
             MudDialog.Close(DialogResult.Ok(true));

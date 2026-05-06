@@ -6,6 +6,7 @@
     Class="@Class"
     Label="@Label"
     Value="@Value"
+    Mask="@Mask"
     Required
     Immediate
     AutoGrow="@AutoGrow"
@@ -59,6 +60,9 @@
 
 	[Parameter]
 	public bool CopyAdornment { get; set; }
+
+    [Parameter]
+    public IMask Mask { get; set; }
 
 	private async Task OnAdornmentClick()
 	{

@@ -258,12 +258,13 @@ public class AcademicHttpClient(HttpClient http)
         Guid courseOfferingId,
         string name = "Zezin",
         string email = null,
-        string? phoneNumber = null
+        string? phoneNumber = null,
+        DateTime? birthDate = null
     ) {
         email ??= TestData.Email;
 
         var client = new CreateStudentClient(Http);
-        var response = await client.Create(name, email, courseOfferingId, phoneNumber);
+        var response = await client.Create(name, email, phoneNumber ?? string.Empty, birthDate ?? DateTime.UtcNow, courseOfferingId);
 
         if (response.IsSuccess)
         {

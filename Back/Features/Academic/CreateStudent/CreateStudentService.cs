@@ -10,13 +10,19 @@ public class CreateStudentService(SykiDbContext ctx, CreateUserService createSer
             .AnyAsync(o => o.InstitutionId == institutionId && o.Id == data.CourseOfferingId);
         if (!courseOfferingExists) return new CourseOfferingNotFound();
 
-        var userIn = CreateUserIn.NewStudent(institutionId, data.Name, data.Email, data.PhoneNumber);
+        var userIn = CreateUserIn.NewStudent(institutionId, data.Name, data.Email, data.PhoneNumber, data.BirthDate);
         var result = await createService.Create(userIn);
 
         if (result.IsError) return result.Error;
 
-        var user = result.Success;
-        var student = new SykiStudent(user.Id, institutionId, data.Name, data.CourseOfferingId);
+        var userOut = result.Success;
+        var user = await ctx.Users.FindAsync(userOut.Id);
+
+        var student = new SykiStudent(user.Id, institutionId, data.Name, data.CourseOfferingId, data.BirthDate)
+            {
+                User = user,
+            };
+
         ctx.Add(student);
 
         await ctx.SaveChangesAsync();

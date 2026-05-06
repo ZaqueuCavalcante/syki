@@ -14,6 +14,7 @@ public class SykiStudent : Entity
     public Guid CourseOfferingId { get; set; }
     public CourseOffering CourseOffering { get; set; }
     public string Name { get; set; }
+    public DateTime BirthDate { get; set; }
     public string EnrollmentCode { get; set; }
     public StudentStatus Status { get; set; }
     public decimal YieldCoefficient { get; set; }
@@ -24,12 +25,14 @@ public class SykiStudent : Entity
         Guid userId,
         Guid institutionId,
         string name,
-        Guid courseOfferingId
-    ) {
+        Guid courseOfferingId,
+        DateTime birthDate
+        ) {
         Id = userId;
         Name = name;
         InstitutionId = institutionId;
         CourseOfferingId = courseOfferingId;
+        BirthDate = birthDate;
         EnrollmentCode = $"{DateTime.UtcNow.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
         Status = StudentStatus.Enrolled;
 
@@ -44,6 +47,7 @@ public class SykiStudent : Entity
             Name = Name,
             Email = User?.Email ?? "-",
             PhoneNumber = User?.PhoneNumber,
+            BirthDate = BirthDate,
             EnrollmentCode = EnrollmentCode,
             CourseOfferingId = CourseOfferingId,
             CourseOffering = CourseOffering?.Course?.Name ?? "-",

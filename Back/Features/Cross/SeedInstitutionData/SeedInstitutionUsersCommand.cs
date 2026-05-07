@@ -10,7 +10,7 @@ public class SeedInstitutionUsersCommandHandler(
     CreateTeacherService createTeacherService,
     CreateStudentService createStudentService) : ICommandHandler<SeedInstitutionUsersCommand>
 {
-    public async Task Handle(CommandId commandId, SeedInstitutionUsersCommand command)
+    public async Task Handle(Guid commandId, SeedInstitutionUsersCommand command)
     {
         var id = command.InstitutionId;
 

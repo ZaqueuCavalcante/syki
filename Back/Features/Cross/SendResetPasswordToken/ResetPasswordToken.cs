@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Cross.SendResetPasswordToken;
 
-public class ResetPasswordToken : Entity
+public class ResetPasswordToken
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
@@ -16,8 +16,6 @@ public class ResetPasswordToken : Entity
         InstitutionId = institutionId;
         Token = token;
         CreatedAt = DateTime.UtcNow;
-
-        AddDomainEvent(new ResetPasswordTokenCreatedDomainEvent(userId));
     }
 
     public void Use()

@@ -22,7 +22,7 @@ Tools:
 
 ## 0 - Objetivo
 
-Tenho um sistema com Back + Daemon + Front + Banco (+ integrações + app mobile?).
+Tenho um sistema com Back + Front + Banco (+ integrações + app mobile?).
 Quero monitorar tudo que acontece nele:
 - Performance e comportamento
 - Requests com erro (taxa de erros)
@@ -31,7 +31,6 @@ Quero monitorar tudo que acontece nele:
 - Anomalias no uso do sistema
 - Usos de recursos (CPU/Memoria)
 - Requests/segundo
-- Fluxo completo, desde o front -> back -> banco -> daemon (eventos + tasks) -> moodle
 
 Configurar alertas para quando determinada coisa acontecer:
 - Endpoints lentos

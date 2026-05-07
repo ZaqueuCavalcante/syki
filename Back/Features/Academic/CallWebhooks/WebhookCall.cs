@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Academic.CallWebhooks;
 /// <summary>
 /// Chamada de Webhook
 /// </summary>
-public class WebhookCall : Entity
+public class WebhookCall
 {
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
@@ -21,17 +21,14 @@ public class WebhookCall : Entity
         Guid institutionId,
         Guid webhookId,
         object data,
-        DomainEventId eventId,
         WebhookEventType eventType)
     {
         Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         WebhookId = webhookId;
-        Payload = (new { EventId = eventId, EventType = eventType, Data = data }).Serialize();
+        Payload = (new { EventType = eventType, Data = data }).Serialize();
         Event = eventType;
         CreatedAt = DateTime.UtcNow;
-
-        AddDomainEvent(new WebhookCallCreatedDomainEvent(Id));
     }
 
     public void Success(int statusCode, string response)
@@ -47,19 +44,6 @@ public class WebhookCall : Entity
         Attempts.Add(new WebhookCallAttempt(Id, WebhookCallAttemptStatus.Error, statusCode, response));
 
         AttemptsCount++;
-
-        if (AttemptsCount < 4)
-        {
-            var delaySeconds = AttemptsCount switch
-            {
-                1 => 1 * 60,
-                2 => 5 * 60,
-                3 => 30 * 60,
-                _ => 0
-            };
-
-            AddDomainEvent(new WebhookCallFailedDomainEvent(Id, delaySeconds));
-        }
     }
 
     public GetWebhookCallOut ToGetWebhookCallOut()

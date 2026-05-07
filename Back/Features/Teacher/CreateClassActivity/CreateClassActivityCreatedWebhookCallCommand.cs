@@ -3,11 +3,11 @@ using Syki.Back.Features.Academic.CallWebhooks;
 namespace Syki.Back.Features.Teacher.CreateClassActivity;
 
 [CommandDescription("Criar chamada de webhook para o evento 'Atividade publicada'")]
-public record CreateClassActivityCreatedWebhookCallCommand(DomainEventId EventId, Guid WebhookId, Guid ClassActivityId) : ICommand;
+public record CreateClassActivityCreatedWebhookCallCommand(Guid WebhookId, Guid ClassActivityId) : ICommand;
 
 public class CreateClassActivityCreatedWebhookCallCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateClassActivityCreatedWebhookCallCommand>
 {
-    public async Task Handle(CommandId commandId, CreateClassActivityCreatedWebhookCallCommand command)
+    public async Task Handle(Guid commandId, CreateClassActivityCreatedWebhookCallCommand command)
     {
         var activity = await ctx.ClassActivities
             .Where(x => x.Id == command.ClassActivityId)
@@ -25,7 +25,6 @@ public class CreateClassActivityCreatedWebhookCallCommandHandler(SykiDbContext c
             webhook.InstitutionId,
             command.WebhookId,
             payload,
-            command.EventId,
             WebhookEventType.ClassActivityCreated
         );
         ctx.Add(call);

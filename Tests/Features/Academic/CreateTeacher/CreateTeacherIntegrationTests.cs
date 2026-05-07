@@ -16,8 +16,6 @@ public partial class IntegrationTests
         // Assert
         teacher.Id.Should().NotBeEmpty();
         teacher.Name.Should().Be("Richard");
-
-        await AssertDomainEvent<TeacherCreatedDomainEvent>(teacher.Id.ToString());
     }
 
     [Test]

@@ -5,7 +5,7 @@ namespace Syki.Back.Features.Teacher.CreateClassActivity;
 /// <summary>
 /// Atividade vinculada à uma Turma
 /// </summary>
-public class ClassActivity : Entity
+public class ClassActivity
 {
     public Guid Id { get; set; }
     public Guid ClassId { get; set; }
@@ -52,8 +52,6 @@ public class ClassActivity : Entity
         DueHour = dueHour;
 
         Works = students.ConvertAll(x => new ClassActivityWork(Id, x));
-
-        AddDomainEvent(new ClassActivityCreatedDomainEvent(Id));
     }
 
     public static OneOf<ClassActivity, SykiError> New(

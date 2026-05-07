@@ -1,4 +1,3 @@
-using Syki.Back.Events;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
@@ -6,7 +5,6 @@ namespace Syki.Tests.Base;
 public abstract class IntegrationTestBase
 {
     protected BackFactory _api = null!;
-    protected DaemonFactory _daemon = null!;
 
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
@@ -21,26 +19,12 @@ public abstract class IntegrationTestBase
 
         await ctx.ResetTestDbAsync();
         await _api.RegisterAdm();
-
-        _daemon = new DaemonFactory();
-        _daemon.Services.CreateScope();
     }
 
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
     {
         await _api.DisposeAsync();
-        await _daemon.DisposeAsync();
-    }
-
-    protected async Task AssertDomainEvent<T>(string like) where T : IDomainEvent
-    {
-        using var ctx = _api.GetDbContext();
-
-        var events = await ctx.DomainEvents.AsNoTracking().Where(x => x.Data.Contains(like)).ToListAsync();
-
-        events.Should().ContainSingle();
-        typeof(Command).Assembly.GetType(events[0].Type).Should().Be<T>();
     }
 
     protected async Task AssertCommand<T>(string like) where T : ICommand

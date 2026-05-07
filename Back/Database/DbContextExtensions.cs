@@ -54,10 +54,9 @@ public static class DbContextExtensions
         this DbContext ctx,
         Guid institutionId,
         ICommand command,
-        DomainEventId? eventId = null,
-        CommandId? parentId = null,
-        CommandId? originalId = null,
-        CommandBatchId? batchId = null,
+        Guid? parentId = null,
+        Guid? originalId = null,
+        Guid? batchId = null,
         int? delaySeconds = null
     )
     {
@@ -67,7 +66,6 @@ public static class DbContextExtensions
             new Command(
                 institutionId,
                 command,
-                eventId: eventId,
                 parentId: parentId,
                 originalId: originalId,
                 batchId: batchId,

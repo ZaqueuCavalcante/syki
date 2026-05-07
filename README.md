@@ -437,7 +437,6 @@ A stack predominante é a da Microsoft, utilizo C# tanto no backend quanto no fr
 
 - API em ASP.NET
 - Front em Blazor Webassembly
-- Daemon em ASP.NET
 - Banco PostgreSQL
 - Build com Docker
 - Deploy no Railway
@@ -454,7 +453,7 @@ O projeto possui mais de 500 testes automatizados, divididos entre Unidade e Int
 
 Os testes de unidade validam regras de negócio apenas utilizando as entidades em memória, sem dependências com o banco de dados.
 
-Já os testes de integração são mais robustos, pois validam que os fluxos de negócio envolvendo Back + Daemon + Postgres estão funcionando corretamente.
+Já os testes de integração são mais robustos, pois validam que os fluxos de negócio envolvendo Back + Postgres estão funcionando corretamente.
 
 <p align="center">
   <img src="./Docs/Readme/3_Tests.gif" style="display: block; margin: 0 auto" />
@@ -657,9 +656,9 @@ Ainda é possível reprocessar uma chamada manualmente via tela, para o caso ond
 
 Para rodar o sistema na sua máquina, siga os passos abaixo:
 - Clone o projeto pra sua máquina
-- Para subir banco + back + daemon + front, rode o comando: `docker-compose up`
+- Para subir banco + back + front, rode o comando: `docker-compose up`
 - Para rebuildar caso tenha alguma alteração no código: `docker-compose build --no-cache`
-- O back vai subir na porta 5001, o front na 5002 e o daemon na 5003
+- O back vai subir na porta 5001 e o front na 5002
 
 Para rodar os testes automatizados:
 

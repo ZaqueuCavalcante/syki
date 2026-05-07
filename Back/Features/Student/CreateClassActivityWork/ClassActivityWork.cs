@@ -5,7 +5,7 @@ namespace Syki.Back.Features.Student.CreateClassActivityWork;
 /// <summary>
 /// Entrega de uma atividade feita por um aluno
 /// </summary>
-public class ClassActivityWork : Entity
+public class ClassActivityWork
 {
     public Guid Id { get; set; }
     public Guid ClassActivityId { get; set; }
@@ -40,8 +40,6 @@ public class ClassActivityWork : Entity
 
         Note = note;
         Status = ClassActivityWorkStatus.Finalized;
-
-        AddDomainEvent(new StudentClassNoteAddedDomainEvent(SykiStudentId, ClassActivityId));
 
         return new SykiSuccess();
     }

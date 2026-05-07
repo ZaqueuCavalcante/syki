@@ -1,10 +1,8 @@
-using StronglyTypedIds;
-
 namespace Syki.Back.Commands;
 
 public class CommandBatch
 {
-    public CommandBatchId Id { get; set; }
+    public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
     public CommandBatchType Type { get; set; }
     public CommandBatchStatus Status { get; set; }
@@ -14,17 +12,17 @@ public class CommandBatch
     /// <summary>
     /// Id do evento que gerou o lote
     /// </summary>
-    public DomainEventId? EventId { get; set; }
+    public Guid? EventId { get; set; }
 
     /// <summary>
     /// Id do comando que gerou o lote
     /// </summary>
-    public CommandId? SourceCommandId { get; set; }
+    public Guid? SourceCommandId { get; set; }
 
     /// <summary>
     /// Id do comando que será executado quando o lote for processado com sucesso
     /// </summary>
-    public CommandId? NextCommandId { get; set; }
+    public Guid? NextCommandId { get; set; }
 
     public int Size { get; set; }
 
@@ -33,13 +31,13 @@ public class CommandBatch
     public static CommandBatch New(
         Guid institutionId,
         CommandBatchType type,
-        DomainEventId? eventId = null,
-        CommandId? sourceCommandId = null)
+        Guid? eventId = null,
+        Guid? sourceCommandId = null)
     {
         return new()
         {
             Type = type,
-            Id = CommandBatchId.CreateNew(),
+            Id = Guid.CreateVersion7(),
             CreatedAt = DateTime.UtcNow,
             InstitutionId = institutionId,
             Status = CommandBatchStatus.Pending,
@@ -52,27 +50,5 @@ public class CommandBatch
     {
         NextCommandId = command.Id;
         command.SetAwaiting();
-    }
-}
-
-[StronglyTypedId]
-public partial struct CommandBatchId
-{
-    public static CommandBatchId CreateNew()
-    {
-        return new CommandBatchId(Guid.CreateVersion7());
-    }
-
-    public class CommandBatchIdEfCoreValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<CommandBatchId, Guid>
-    {
-        public CommandBatchIdEfCoreValueConverter() : this(null) { }
-
-        public CommandBatchIdEfCoreValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
-            : base(
-                id => id.Value,
-                value => new CommandBatchId(value),
-                mappingHints
-            )
-        { }
     }
 }

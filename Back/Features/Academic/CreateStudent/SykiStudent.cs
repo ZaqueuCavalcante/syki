@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Academic.CreateStudent;
 /// <summary>
 /// Representa um Aluno.
 /// </summary>
-public class SykiStudent : Entity
+public class SykiStudent
 {
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
@@ -32,8 +32,6 @@ public class SykiStudent : Entity
         CourseOfferingId = courseOfferingId;
         EnrollmentCode = $"{DateTime.UtcNow.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
         Status = StudentStatus.Enrolled;
-
-        AddDomainEvent(new StudentCreatedDomainEvent(Id, InstitutionId));
     }
 
     public StudentOut ToOut()

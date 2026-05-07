@@ -3,7 +3,7 @@ namespace Syki.Back.Features.Teacher.AddClassActivityNote;
 /// <summary>
 /// Representa uma nota de um aluno em uma turma.
 /// </summary>
-public class StudentClassNote : Entity
+public class StudentClassNote
 {
     public Guid Id { get; set; }
     public Guid ClassId { get; set; }

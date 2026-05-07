@@ -51,7 +51,6 @@ Acompanhe abaixo como resolvi esses problemas e comente como você os resolveria
 Os sistema é basicamente composto por 4 componentes:
 - **Client**: frontend feito em Blazor WebAssembly
 - **Back**: api feita em ASP.NET
-- **Daemon**: worker para execução de tarefas em background, usando o Hangfire
 - **Banco**: um PostgreSQL da vida
 
 ## 1️⃣ - Conceitos fundamentais
@@ -73,16 +72,12 @@ Acompanhe no diagrama abaixo todos os conceitos que fazem parte da solução fin
 - **Workflow**: encadeamento lógico de comandos e/ou lotes.
     - Examplo: quando todos os comandos do lote *SendNewClassActivityEmailCommandsBatch* são executados com sucesso, um novo comando é enfileirado em sequência para notificar o professor que todos os alunos da turma receberam o email.
 
-- **Event Listener**: componente do Daemon que é notificado toda vez que um novo evento de domínio é inserido no banco de dados.
-    - Essa notificação é feita através de um trigger na tabela de eventos, que ao ser disparado chama uma função que utiliza a feature de LISTEN/NOTIFY do Postgres para informar o Daemon que um novo evento precisa ser processado.
-- **Events Processor**: componente do Daemon que busca os eventos pendentes de processamento do banco de dados e os processa sequencialmente.
+- **Events Processor**: componente que busca os eventos pendentes de processamento do banco de dados e os processa sequencialmente.
     - Sendo mais específico, cada Processor busca os 1000 eventos pendentes mais antigos do banco, processa todos em memória e os salva utilizando uma única transação.
 - **Event Handler**: método que contém a lógica executada no processamento de um evento.
     - Normalmente é responsável por criar comandos ou lotes de comandos.
 
-- **Command Listener**: componente do Daemon que é notificado toda vez que um novo comando é inserido no banco de dados.
-    - Segue a mesma ideia do Event Listener.
-- **Commands Processor**: componente do Daemon que busca os 100 comandos pendentes de processamento (priorizando os mais antigos) do banco de dados e os processa sequencialmente.
+- **Commands Processor**: componente que busca os 100 comandos pendentes de processamento (priorizando os mais antigos) do banco de dados e os processa sequencialmente.
     - Cada comando é executado de maneira atômica, ou seja, dentro de uma transação exclusiva com o Postgres.
 - **Command Handler**: método que contém a lógica executada no processamento de um comando.
     - Aqui podemos realizar praticamente qualquer ação, como envio de emails e seed de dados.

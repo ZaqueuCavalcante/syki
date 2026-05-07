@@ -18,8 +18,6 @@ public partial class IntegrationTests
         student.Id.Should().NotBeEmpty(); 
         student.CourseOfferingId.Should().Be(data.AdsCourseOffering.Id); 
         student.Name.Should().Be("Zezin");
-
-        await AssertDomainEvent<StudentCreatedDomainEvent>(student.Id.ToString());
     }
 
     [Test]

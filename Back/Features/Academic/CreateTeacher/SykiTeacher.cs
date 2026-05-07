@@ -7,7 +7,7 @@ namespace Syki.Back.Features.Academic.CreateTeacher;
 /// <summary>
 /// Representa um Professor.
 /// </summary>
-public class SykiTeacher : Entity
+public class SykiTeacher
 {
     public Guid Id { get; set; }
     public Guid InstitutionId { get; set; }
@@ -38,8 +38,6 @@ public class SykiTeacher : Entity
         Id = userId;
         InstitutionId = institutionId;
         Name = name;
-
-        AddDomainEvent(new TeacherCreatedDomainEvent(Id, InstitutionId));
     }
 
     public TeacherOut ToOut()

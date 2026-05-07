@@ -33,6 +33,12 @@ namespace Syki.Back.Database;
 
 public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSource npgsqlDataSource) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
 {
+    public string ActivityId { get; set; }
+    public string Operation { get; set; }
+
+    public bool HasPendingCommands { get; set; }
+    public List<string> CommandLogs { get; set; } = [];
+
     public DbSet<Institution> Institutions { get; set; }
     public DbSet<InstitutionConfigs> Configs { get; set; }
 
@@ -70,7 +76,6 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
 
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<FeatureFlags> FeatureFlags { get; set; }
-    public DbSet<DomainEvent> DomainEvents { get; set; }
     public DbSet<Command> Commands { get; set; }
 
     public Guid UserId { get; set; }
@@ -88,7 +93,6 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
 
         optionsBuilder.AddInterceptors(new SetBatchSizeInterceptor());
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
-        optionsBuilder.AddInterceptors(new SaveDomainEventsInterceptor());
         optionsBuilder.AddInterceptors(new CommandsDelayInterceptor());
     }
 
@@ -121,8 +125,5 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<Enum>().HaveConversion<string>();
-        configurationBuilder.Properties<CommandId>().HaveConversion<CommandId.CommandIdEfCoreValueConverter>();
-        configurationBuilder.Properties<DomainEventId>().HaveConversion<DomainEventId.DomainEventIdEfCoreValueConverter>();
-        configurationBuilder.Properties<CommandBatchId>().HaveConversion<CommandBatchId.CommandBatchIdEfCoreValueConverter>();
     }
 }

@@ -16,9 +16,6 @@ public static partial class Policies
     public const string GetFeatures = nameof(GetFeatures);
     public const string GetPolicies = nameof(GetPolicies);
 
-    public const string ViewDomainEventsPage = nameof(ViewDomainEventsPage);
-	public const string GetDomainEvent = nameof(GetDomainEvent);
-
 	public const string GetCommands = nameof(GetCommands);
 	public const string GetCommand = nameof(GetCommand);
 	public const string ReprocessCommand = nameof(ReprocessCommand);
@@ -58,8 +55,6 @@ public static partial class Policies
             .AddAdmPolicy(GetPolicies, FeaturesStore.ViewPolicies);
 
         options
-            .AddAdmPolicy(ViewDomainEventsPage, FeaturesStore.ViewDomainEvents)
-            .AddAdmPolicy(GetDomainEvent, FeaturesStore.ViewDomainEventDetails)
             .AddAdmPolicy(GetCommands, FeaturesStore.ViewCommands)
             .AddAdmPolicy(GetCommand, FeaturesStore.ViewCommandDetails)
             .AddAdmPolicy(ReprocessCommand, FeaturesStore.ReprocessCommand)

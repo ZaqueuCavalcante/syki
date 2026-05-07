@@ -1,5 +1,4 @@
 using Npgsql;
-using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -8,44 +7,40 @@ namespace Syki.Back.Configs;
 
 public static class OpenTelemetryConfigs
 {
+    public const string CommandsProcessing = nameof(CommandsProcessing);
+    public const string WebhookEventsProcessing = nameof(WebhookEventsProcessing);
+
     public static void AddOpenTelemetryConfigs(this WebApplicationBuilder builder)
     {
-        if (Env.IsTesting()) return;
+        var settings = builder.Configuration.OpenTelemetry;
 
-        // builder.Logging.AddOpenTelemetry(logging =>
-        // {
-        //     logging.IncludeScopes = true;
-        //     logging.IncludeFormattedMessage = true;
-        // });
-
-        var settings = builder.Configuration.Tracing();
+        if (!settings.Enabled) return;
 
         builder.Services
             .AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddService("Back"))
-            // .WithMetrics(metrics =>
-            // {
-            //     metrics
-            //         .AddNpgsqlInstrumentation()
-            //         .AddRuntimeInstrumentation()
-            //         .AddAspNetCoreInstrumentation()
-            //         .AddHttpClientInstrumentation();
+            .WithMetrics(metrics =>
+            {
+                metrics
+                    .AddNpgsqlInstrumentation()
+                    .AddRuntimeInstrumentation()
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation();
 
-            //     metrics.AddMeter("Microsoft.AspNetCore.Hosting");
-            //     metrics.AddMeter("Microsoft.AspNetCore.Server.Kestrel");
-
-            //     metrics.AddOtlpExporter();
-            // })
+                metrics
+                    .AddMeter("Microsoft.AspNetCore.Hosting")
+                    .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
+                    .AddOtlpExporter();
+            })
             .WithTracing(tracing =>
             {
                 tracing
                     .AddNpgsql()
-                    .AddQuartzInstrumentation()
                     .AddHttpClientInstrumentation()
                     .AddAspNetCoreInstrumentation();
 
                 tracing
-                    .SetSampler(new TraceIdRatioBasedSampler(settings.SamplingRatio))
+                    .SetSampler(new TraceIdRatioBasedSampler(settings.TracingSamplingRatio))
                     .AddOtlpExporter();
             });
     }

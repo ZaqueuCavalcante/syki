@@ -37,8 +37,6 @@ public partial class IntegrationTests
 
         var isOnlyInAcademicRole = await userManager.IsOnlyInRoleAsync(user!, UserRole.Academic);
         isOnlyInAcademicRole.Should().BeTrue();
-
-        await AssertDomainEvent<InstitutionCreatedDomainEvent>(institution.Id.ToString());
     }
 
     [Test]

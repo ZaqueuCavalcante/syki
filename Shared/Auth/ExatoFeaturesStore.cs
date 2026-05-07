@@ -14,8 +14,6 @@ public static class FeaturesStore
     public static readonly SykiFeature ViewAuditTrails = new(0, 7, "Ver audit trails.");
     public static readonly SykiFeature ViewAuditTrailDetails = new(0, 8, "Ver detalhes de um audit trail.");
 
-    public static readonly SykiFeature ViewDomainEvents = new(1, 9, "Ver eventos de domínio.");
-    public static readonly SykiFeature ViewDomainEventDetails = new(1, 10, "Ver detalhes de um evento de domínio.");
     public static readonly SykiFeature ViewCommands = new(1, 11, "Ver comandos.");
     public static readonly SykiFeature ViewCommandDetails = new(1, 12, "Ver detalhes de um comando.");
     public static readonly SykiFeature ReprocessCommand = new(1, 13, "Reprocessar um comando.");
@@ -33,8 +31,8 @@ public static class FeaturesStore
         Groups =
         [
             new(0, "Users"),
-            new(1, "Daemon"),
-            new(2, "Instituições"),
+            new(1, "Workers"),
+            new(2, "Institutions"),
         ];
 
         Features = typeof(FeaturesStore)

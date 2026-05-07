@@ -14,7 +14,7 @@ using Syki.Back.Features.Academic.CreateWebhookSubscription;
 
 namespace Syki.Back.Features.Cross.CreateInstitution;
 
-public class Institution : Entity
+public class Institution
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -42,8 +42,6 @@ public class Institution : Entity
         Name = name;
         CreatedAt = DateTime.UtcNow;
         Configs = new InstitutionConfigs(Id, 7, 70);
-
-        AddDomainEvent(new InstitutionCreatedDomainEvent(Id));
     }
 
     public InstitutionOut ToOut()

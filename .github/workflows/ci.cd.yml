@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build-test-migrate:
+  build-test:
     runs-on: ubuntu-latest
 
     permissions:

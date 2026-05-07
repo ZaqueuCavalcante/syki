@@ -1,0 +1,18 @@
+@import "@nuxt/ui";
+@import "tailwindcss" theme(static);
+
+@theme static {
+  --font-sans: 'Public Sans', sans-serif;
+
+  --color-violet-50: #f4f2fe;
+  --color-violet-100: #ebe6fd;
+  --color-violet-200: #d9cffc;
+  --color-violet-300: #bfaaf9;
+  --color-violet-400: #a07ff6;
+  --color-violet-500: #7d52f4;
+  --color-violet-600: #6b3de8;
+  --color-violet-700: #5829cf;
+  --color-violet-800: #481fb0;
+  --color-violet-900: #3a1a8e;
+  --color-violet-950: #220d61;
+}

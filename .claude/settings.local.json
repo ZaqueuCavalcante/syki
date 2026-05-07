@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Select-Object Name)",
+      "Bash(xargs -I {} find {} -maxdepth 2 -type d)",
+      "Bash(Select-Object -Property Name, PSIsContainer)",
+      "Bash(Get-ChildItem -Path *)",
+      "PowerShell(Get-ChildItem -Path *)"
+    ]
+  }
+}

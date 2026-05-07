@@ -1,13 +1,20 @@
 # TODOS
 
+- Base color = #7d52f4
 - Add FluentValidation
-- Add dynamic roles system (feature based)
-
-# Svelte Frontend
-
-- Daisy UI
-- Preline UI
-- Tailwind UI
+- Magic links
+- Login with Google
+- SSO Multi-Tenant
+- Add RBAC dynamic roles system (feature based)
+- Database schema viz with Vue
+- Remover projeto Daemon
+- Projeto deve mostrar que eu sei contruir um sistema full-stack
+- Testes com prefix de feature context
+- Testes com ordem bem definida (auth, validation, regras de negocio, happy path)
+- Update project libs versions
+- Sistema de tranking de eventos relevantes
+- https://github.com/ZaqueuCavalcante/syki/issues/81
+- Domínio estud.com.br na Hostinger
 
 # Suporte para Ensino Fundamental e Médio
 

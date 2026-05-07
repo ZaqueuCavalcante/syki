@@ -1,13 +1,35 @@
-FROM node:lts-alpine
+FROM node:22-alpine AS build
+
+RUN corepack enable && corepack prepare pnpm@10.28.1 --activate
 
 WORKDIR /app
 
-COPY App/package*.json ./
+COPY Web/package.json Web/pnpm-lock.yaml Web/pnpm-workspace.yaml ./
 
-RUN npm ci
+RUN pnpm install --frozen-lockfile
 
-COPY App/ ./
+COPY Web/ .
 
-RUN npm run build
+ARG NUXT_PUBLIC_BACKEND_URL
+ENV NUXT_PUBLIC_BACKEND_URL=$NUXT_PUBLIC_BACKEND_URL
 
-CMD ["node", "build"]
+ARG NUXT_PUBLIC_COMMIT_SHA
+ENV NUXT_PUBLIC_COMMIT_SHA=$NUXT_PUBLIC_COMMIT_SHA
+
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN pnpm build
+
+FROM node:22-alpine
+
+RUN apk update && apk upgrade --no-cache
+
+WORKDIR /app
+
+COPY --from=build /app/.output ./.output
+
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+
+EXPOSE 3000
+
+CMD ["node", ".output/server/index.mjs"]

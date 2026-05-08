@@ -55,14 +55,6 @@
                     <InfoCard Icon="@Icons.Material.Filled.Error" Color="@Colors.Red.Darken1" Title="Erro" Content="@_data.Error" />
                 </MudItem>
             }
-            @if (_data.EventId != null)
-            {
-                <MudItem xs="12" sm="12" md="12" lg="12">
-                    <InfoCard Icon="@Icons.Material.Filled.TripOrigin" Color="@Colors.Orange.Darken1" Title="Origem">
-                        <MudLink OnClick="@(() => GoToEvent(_data.EventId.Value))" Color="Color.Primary">Este comando foi originado de um evento.</MudLink>
-                    </InfoCard>
-                </MudItem>
-            }
             @if (_data.ParentId != null)
             {
                 <MudItem xs="12" sm="12" md="12" lg="12">

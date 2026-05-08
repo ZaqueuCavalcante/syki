@@ -1,7 +1,7 @@
 using Npgsql;
 using Syki.Back.Audit;
 using Audit.EntityFramework;
-using Syki.Back.Database.Interceptors;
+using Syki.Back.Commands.Domain.Commands;
 using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Academic.CreateClass;
 using Syki.Back.Features.Academic.CreateCourse;
@@ -9,7 +9,6 @@ using Syki.Back.Features.Academic.CallWebhooks;
 using Syki.Back.Features.Academic.CreateCampus;
 using Syki.Back.Features.Academic.CreateStudent;
 using Syki.Back.Features.Academic.CreateTeacher;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Syki.Back.Features.Cross.CreateInstitution;
 using Syki.Back.Features.Cross.SetupFeatureFlags;
 using Syki.Back.Features.Academic.CreateClassroom;
@@ -89,22 +88,28 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
             x => x.MigrationsHistoryTable("migrations", "syki")
         );
 
-        optionsBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
-
-        optionsBuilder.AddInterceptors(new SetBatchSizeInterceptor());
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
-        optionsBuilder.AddInterceptors(new CommandsDelayInterceptor());
     }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
-        builder.HasDefaultSchema("syki");
+        modelBuilder.HasDefaultSchema("syki");
 
-        builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
-        foreach (var entity in builder.Model.GetEntityTypes())
+        ConfigureDatabaseNames(modelBuilder);
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<Enum>().HaveConversion<string>();
+    }
+
+    private static void ConfigureDatabaseNames(ModelBuilder modelBuilder)
+    {
+        foreach (var entity in modelBuilder.Model.GetEntityTypes())
         {
             if (entity.GetTableName().IsEmpty()) continue;
 
@@ -112,7 +117,10 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
 
             foreach (var fk in entity.GetForeignKeys())
             {
-                fk.SetConstraintName(fk.GetConstraintName().Replace("1", ""));
+                if (fk.GetConstraintName().HasValue())
+                {
+                    fk.SetConstraintName(fk.GetConstraintName()!.Replace("~", "").Replace("1", ""));
+                }
             }
 
             foreach (var index in entity.GetIndexes())
@@ -120,10 +128,5 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
                 index.SetDatabaseName(index.GetDatabaseName()?.ToSnakeCase());
             }
         }
-    }
-
-    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-    {
-        configurationBuilder.Properties<Enum>().HaveConversion<string>();
     }
 }

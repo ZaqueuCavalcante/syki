@@ -10,7 +10,6 @@ public static class IdentityConfigs
             .AddEntityFrameworkStores<SykiDbContext>()
             .AddDefaultTokenProviders();
 
-        // TODO: Validate this with integration tests (password reset)
         builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
         {
             options.TokenLifespan = TimeSpan.FromHours(1);
@@ -32,7 +31,6 @@ public static class IdentityConfigs
             options.Password.RequireNonAlphanumeric = true; // Requires a non-alphanumeric character (@, %, #, !, &, $, ...).
         });
 
-        // TODO: Validate this with integration tests
         builder.Services.Configure<IdentityOptions>(options =>
         {
             options.Lockout.AllowedForNewUsers = true;                        // Determines if a new user can be locked out.

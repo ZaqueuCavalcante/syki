@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Syki.Back.Commands.Domain.Commands;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Syki.Back.Features.Academic.CreateCourse;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -51,16 +52,17 @@ public static class DbContextExtensions
     }
 
     public static Command AddCommand(
-        this DbContext ctx,
+        this SykiDbContext ctx,
         Guid institutionId,
         ICommand command,
         Guid? parentId = null,
         Guid? originalId = null,
         Guid? batchId = null,
-        int? delaySeconds = null
-    )
+        int? delaySeconds = null)
     {
         var activityId = Activity.Current?.Id;
+
+        ctx.HasPendingCommands = true;
 
         return ctx.Add(
             new Command(

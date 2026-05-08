@@ -1,6 +1,8 @@
-﻿namespace Syki.Back.Commands;
+﻿using Syki.Back.Commands.Domain.Commands;
 
-public class CommandBatchConfig : IEntityTypeConfiguration<CommandBatch>
+namespace Syki.Back.Database.Commands;
+
+public class CommandBatchDbConfig : IEntityTypeConfiguration<CommandBatch>
 {
     public void Configure(EntityTypeBuilder<CommandBatch> commandBatch)
     {

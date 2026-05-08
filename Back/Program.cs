@@ -42,6 +42,8 @@ app.UseUserData();
 app.UseAudit();
 app.UseDocs();
 
+app.UseCommandsProcessorTrigger();
+
 app.UseControllers();
 
 app.Run();

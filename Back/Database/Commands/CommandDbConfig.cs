@@ -1,6 +1,8 @@
-namespace Syki.Back.Commands;
+using Syki.Back.Commands.Domain.Commands;
 
-public class CommandConfig : IEntityTypeConfiguration<Command>
+namespace Syki.Back.Database.Commands;
+
+public class CommandDbConfig : IEntityTypeConfiguration<Command>
 {
     public void Configure(EntityTypeBuilder<Command> command)
     {

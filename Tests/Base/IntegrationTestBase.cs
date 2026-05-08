@@ -1,3 +1,4 @@
+using Syki.Back.Commands.Domain.Commands;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;

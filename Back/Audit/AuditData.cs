@@ -21,9 +21,8 @@ public class AuditData
         Name = entry.Name;
         Table = entry.Table;
         Schema = entry.Schema;
+        if (entry.Action == "Insert") Values = entry.ColumnValues;
         Changes = entry.Changes?.ConvertAll(x => new AuditChange(x)).Where(c => c.New?.ToString() != c.Old?.ToString()).ToList() ?? [];
-        if (entry.Action == "Insert")
-            Values = entry.ColumnValues;
     }
 
     public static JsonDocument NewAsJson(EventEntry entry)

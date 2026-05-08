@@ -16,7 +16,6 @@ public class GetBatchService(NpgsqlDataSource dataSource) : IAdmService
                 status,
                 created_at,
                 processed_at,
-                event_id,
                 source_command_id,
                 next_command_id
             FROM

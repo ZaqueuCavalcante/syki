@@ -1,4 +1,4 @@
-namespace Syki.Back.Commands;
+namespace Syki.Back.Commands.Domain.Commands;
 
 public class CommandBatch
 {
@@ -8,11 +8,6 @@ public class CommandBatch
     public CommandBatchStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? ProcessedAt { get; set; }
-
-    /// <summary>
-    /// Id do evento que gerou o lote
-    /// </summary>
-    public Guid? EventId { get; set; }
 
     /// <summary>
     /// Id do comando que gerou o lote
@@ -31,7 +26,6 @@ public class CommandBatch
     public static CommandBatch New(
         Guid institutionId,
         CommandBatchType type,
-        Guid? eventId = null,
         Guid? sourceCommandId = null)
     {
         return new()
@@ -41,7 +35,6 @@ public class CommandBatch
             CreatedAt = DateTime.UtcNow,
             InstitutionId = institutionId,
             Status = CommandBatchStatus.Pending,
-            EventId = eventId,
             SourceCommandId = sourceCommandId,
         };
     }

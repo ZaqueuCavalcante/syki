@@ -14,5 +14,5 @@
 - Sistema de tranking de eventos relevantes
 - https://github.com/ZaqueuCavalcante/syki/issues/81
 - Domínio estud.com.br na Hostinger
-- GenerateJWTService deve setar o cookie internamente (mudar pra SignInService)
+- SignInService deve setar o cookie internamente (mudar pra SignInService)
 - Suporte para Ensino Fundamental e Médio (pais dos alunos)

@@ -5,6 +5,7 @@ using Syki.Back.Features.Academic.CreateCourse;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
+using Syki.Back.Commands.Domain.Enums;
 
 namespace Syki.Back.Database;
 
@@ -58,7 +59,10 @@ public static class DbContextExtensions
         Guid? parentId = null,
         Guid? originalId = null,
         Guid? batchId = null,
-        int? delaySeconds = null)
+        int? delaySeconds = null,
+        int maxRetries = 0,
+        int baseDelaySeconds = 5,
+        BackoffStrategy backoffStrategy = BackoffStrategy.None)
     {
         var activityId = Activity.Current?.Id;
 
@@ -72,7 +76,10 @@ public static class DbContextExtensions
                 originalId: originalId,
                 batchId: batchId,
                 delaySeconds: delaySeconds,
-                activityId: activityId
+                activityId: activityId,
+                maxRetries: maxRetries,
+                backoffStrategy: backoffStrategy,
+                baseDelaySeconds: baseDelaySeconds
             )
         ).Entity;
     }

@@ -1,4 +1,5 @@
 ﻿using Syki.Shared.Auth;
+using Syki.Back.Auth.Schemes;
 
 namespace Syki.Back.Auth;
 
@@ -36,7 +37,7 @@ public static partial class Policies
         return builder.AddPolicy(name, policy => policy
             .RequireAuthenticatedUser()
             .RequireAssertion(x => x.User.Features.Any(f => ids.Contains(f)))
-            .AddAuthenticationSchemes(AuthenticationConfigs.BearerScheme));
+            .AddAuthenticationSchemes(JwtBearerScheme.Name));
     }
 
     public static AuthorizationBuilder AddAdmPolicies(this AuthorizationBuilder builder)

@@ -1,10 +1,12 @@
-﻿namespace Syki.Back.Auth;
+﻿using Syki.Back.Auth.Schemes;
+
+namespace Syki.Back.Auth;
 
 public class AuthAdmAttribute : AuthorizeAttribute
 {
 	public AuthAdmAttribute()
 	{
 		Roles = UserRole.Adm.ToString();
-		AuthenticationSchemes = AuthenticationConfigs.BearerScheme;
+		AuthenticationSchemes = JwtBearerScheme.Name;
 	}
 }

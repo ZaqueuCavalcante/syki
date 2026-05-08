@@ -12,6 +12,7 @@ public class CreatePendingUserRegisterService(SykiDbContext ctx) : ICrossService
         if (!email.IsValidEmail()) return new InvalidEmail();
 
         ctx.Add(new UserRegister(email));
+        ctx.AddCommand(Guid.Empty, new SendFirstAccessMagicLinkEmailCommand(email), maxRetries: 1);
 
         await ctx.SaveChangesAsync();
 

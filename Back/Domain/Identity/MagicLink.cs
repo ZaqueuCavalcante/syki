@@ -1,0 +1,28 @@
+namespace Syki.Back.Domain.Identity;
+
+public class MagicLink
+{
+    public Guid Id { get; set; }
+    public Guid UserId { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime ExpiresAt { get; set; }
+    public DateTime? UsedAt { get; set; }
+
+    public MagicLink() {}
+
+    public MagicLink(Guid userId)
+    {
+        Id = Guid.NewGuid();
+        UserId = userId;
+        CreatedAt = DateTime.Now;
+        ExpiresAt = DateTime.Now.Add(TimeSpan.FromHours(24));
+    }
+
+    public bool IsUsed() => UsedAt != null;
+    public bool IsExpired() => DateTime.Now > ExpiresAt;
+
+    public void Use()
+    {
+        UsedAt = DateTime.Now;
+    }
+}

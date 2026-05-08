@@ -2,20 +2,25 @@ using System.Text;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Syki.Back.Features.Identity.SignIn;
 using Syki.Back.Features.Cross.CreateUser;
 
-namespace Syki.Back.Features.Cross.GenerateJWT;
+namespace Syki.Back.Features.Cross.SignIn;
 
-public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> userManager, SykiDbContext ctx) : ICrossService
+public class SignInService(
+    SykiDbContext ctx,
+    AuthSettings settings,
+    IHttpContextAccessor httpCtx,
+    UserManager<SykiUser> userManager) : ICrossService
 {
-    public async Task<string> Generate(string email)
+    public async Task<SignInOut> SignIn(string email)
     {
         var user = (await userManager.FindByEmailAsync(email))!;
         var role = (await userManager.GetRolesAsync(user))[0];
 
         var claims = new List<Claim>
         {
-            new(Claims.Jti, Guid.CreateVersion7().ToString()),
+            new(Claims.Jti, Guid.NewGuid().ToString()),
             new(Claims.UserId, user.Id.ToString()),
             new(Claims.UserRole, role),
             new(Claims.UserName, user.Name),
@@ -44,9 +49,15 @@ public class GenerateJWTService(AuthSettings settings, UserManager<SykiUser> use
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();
-        var token = tokenHandler.CreateToken(tokenDescriptor);
+        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
 
-        return tokenHandler.WriteToken(token);
+        httpCtx.HttpContext.Response.AppendJWTCookie(tokenHandler.WriteToken(securityToken), settings);
+
+        return new SignInOut
+        {
+            UserId = user.Id,
+            Permissions = [],
+        };
     }
 
     private async Task<List<Claim>> GetDbClaims(Guid userId, string role)

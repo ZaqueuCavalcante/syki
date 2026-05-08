@@ -27,6 +27,7 @@ using Syki.Back.Features.Student.CreateStudentEnrollment;
 using Syki.Back.Features.Student.CreateClassActivityWork;
 using Syki.Back.Features.Academic.AssignClassToClassroom;
 using Syki.Back.Features.Academic.CreateWebhookSubscription;
+using Syki.Back.Domain.Identity;
 
 namespace Syki.Back.Database;
 
@@ -76,6 +77,8 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
     public DbSet<AuditLog> AuditLogs { get; set; }
     public DbSet<FeatureFlags> FeatureFlags { get; set; }
     public DbSet<Command> Commands { get; set; }
+
+    public DbSet<MagicLink> WebMagicLinks { get; set; }
 
     public Guid UserId { get; set; }
     public Guid InstitutionId { get; set; }

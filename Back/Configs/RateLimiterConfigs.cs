@@ -4,6 +4,8 @@ namespace Syki.Back.Configs;
 
 public static class RateLimiterConfigs
 {
+    public const string SensitivePolicy = nameof(SensitivePolicy);
+
     public static void AddRateLimiterConfigs(this WebApplicationBuilder builder)
     {
         var settings = new RateLimiterSettings(builder.Configuration);

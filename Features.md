@@ -39,7 +39,7 @@ Cross/
 ├── Auth/           (7) Login, LoginMfa, Logout, SetupMfa, GetMfaKey, SendResetPasswordToken, ResetPassword
 ├── Users/          (5) CreatePendingUserRegister, FinishUserRegister, GetUserAccount, UpdateUserAccount, CreateUser
 ├── Notifications/  (3) GetUserNotifications, ViewNotifications, LinkOldNotifications
-└── System/         (8) Health, Home, LoadFeatureFlags, SeedInstitutionData, SeedInstitutionTeachersCommand, CreateInstitution, GenerateJWT, CreatePreSignedUrlForUpload
+└── System/         (8) Health, Home, LoadFeatureFlags, SeedInstitutionData, SeedInstitutionTeachersCommand, CreateInstitution, SignIn, CreatePreSignedUrlForUpload
 ```
 
 ## Student (16 features → 4 grupos)

@@ -1,9 +1,13 @@
+using System.Collections.Concurrent;
+using System.Reflection;
+
 namespace Syki.Back.Emails;
 
 public class EmailsService : IEmailsService
 {
     private readonly HttpClient _client;
     private readonly EmailSettings _settings;
+    private static readonly ConcurrentDictionary<string, string> Templates = new();
     public EmailsService(EmailSettings settings)
     {
         _settings = settings;
@@ -53,6 +57,38 @@ public class EmailsService : IEmailsService
         );
 
         await _client.PostAsJsonAsync("", body);
+    }
+
+    public async Task SendFirstAccessMagicLinkEmail(string to, string token)
+    {
+        if (to.Contains("@syki")) return;
+
+        var link = $"{_settings.FrontUrl}/magic-link?token={token}";
+
+        var body = new BrevoEmailMessage(
+            sender: "syki@zaqbit.com",
+            to: to,
+            subject: "Syki - Acesse sua conta",
+            content: LoadTemplate("FirstAccessMagicLink.html", link)
+        );
+
+        await _client.PostAsJsonAsync("", body);
+    }
+
+    private static string LoadTemplate(string name, string link)
+    {
+        var raw = Templates.GetOrAdd(name, static n =>
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourcePath = assembly.GetManifestResourceNames().Single(str => str.EndsWith(n));
+
+            using var stream = assembly.GetManifestResourceStream(resourcePath)!;
+            using var reader = new StreamReader(stream);
+
+            return reader.ReadToEnd();
+        });
+
+        return raw.Replace("{{link}}", link);
     }
 
 	private static string GetContent(string title, string description, string button, string link)

@@ -6,8 +6,9 @@ public class AuthSettings
     public string Audience { get; set; }
     public string SecurityKey { get; set; }
     public int ExpirationTimeInMinutes { get; set; }
-    public bool CookieSecure { get; set; }
     public string? CookieDomain { get; set; }
+    public bool CookieSecure { get; set; } = true;
+    public SameSiteMode CookieSameSite { get; set; } = SameSiteMode.Lax;
 
     public AuthSettings(IConfiguration configuration)
     {
@@ -17,5 +18,8 @@ public class AuthSettings
 
 public static class AuthSettingsExtensions
 {
-    public static AuthSettings Auth(this IConfiguration configuration) => new(configuration);
+    extension(IConfiguration configuration)
+    {
+        public AuthSettings Auth => new(configuration);
+    }
 }

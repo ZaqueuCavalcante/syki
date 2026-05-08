@@ -1,9 +1,8 @@
-using System.IdentityModel.Tokens.Jwt;
-using Syki.Back.Features.Cross.GenerateJWT;
+using Syki.Back.Features.Cross.SignIn;
 
 namespace Syki.Back.Features.Academic.CrossLogin;
 
-public class CrossLoginService(SykiDbContext ctx, GenerateJWTService service) : IAcademicService
+public class CrossLoginService(SykiDbContext ctx, SignInService service) : IAcademicService
 {
     public async Task<OneOf<CrossLoginOut, SykiError>> Login(Guid institutionId, CrossLoginIn data)
     {
@@ -13,16 +12,8 @@ public class CrossLoginService(SykiDbContext ctx, GenerateJWTService service) : 
 
         if (targetUser == null) return new UserNotFound();
 
-        var jwt = await service.Generate(targetUser.Email);
-        var claims = new JwtSecurityToken(jwt).Claims.ToList();
+        await service.SignIn(targetUser.Email);
 
-        return new CrossLoginOut
-        {
-            AccessToken = jwt,
-            Name = claims.First(x => x.Type == "name").Value,
-            Email = claims.First(x => x.Type == "email").Value,
-            Id = Guid.Parse(claims.First(x => x.Type == "sub").Value),
-            Role = Enum.Parse<UserRole>(claims.First(x => x.Type == "role").Value),
-        };
+        return new CrossLoginOut();
     }
 }

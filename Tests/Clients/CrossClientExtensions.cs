@@ -1,5 +1,6 @@
 using Syki.Tests.Mock;
 using Syki.Front.Auth;
+using System.Net.Http.Json;
 using Syki.Front.Features.Cross.Login;
 using Syki.Front.Features.Cross.Logout;
 using Syki.Front.Features.Cross.SetupMfa;
@@ -8,6 +9,7 @@ using Syki.Front.Features.Cross.GetMfaKey;
 using Syki.Front.Features.Cross.ResetPassword;
 using Syki.Front.Features.Academic.CrossLogin;
 using Syki.Front.Features.Cross.GetUserAccount;
+using Syki.Back.Features.Identity.MagicLinkLogin;
 using Syki.Front.Features.Cross.ViewNotifications;
 using Syki.Front.Features.Cross.FinishUserRegister;
 using Syki.Front.Features.Cross.GetUserNotifications;
@@ -102,6 +104,15 @@ public static class CrossClientExtensions
     {
         var client = new ViewNotificationsClient(http);
         await client.View();
+    }
+
+    public static async Task<OneOf<MagicLinkLoginOut, ErrorOut>> MagicLinkLogin(this HttpClient http, string token)
+    {
+        var data = new MagicLinkLoginIn { Token = token };
+
+        var response = await http.PostAsJsonAsync("identity/magic-link-login", data);
+
+        return await response.Resolve<MagicLinkLoginOut>();
     }
 
     public static async Task<HttpResponseMessage> Logout(this HttpClient http)

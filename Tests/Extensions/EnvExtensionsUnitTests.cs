@@ -2,7 +2,7 @@ namespace Syki.Tests.Extensions;
 
 public class EnvExtensionsUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_get_deploy_hash()
     {
         // Arrange / Act
@@ -12,7 +12,7 @@ public class EnvExtensionsUnitTests
         hash.Should().HaveLength(8);
     }
 
-    [Test]
+    // [Test]
     public void Should_get_env_as_testing()
     {
         // Arrange

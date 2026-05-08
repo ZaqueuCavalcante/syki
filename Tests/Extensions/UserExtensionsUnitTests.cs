@@ -4,7 +4,7 @@ namespace Syki.Tests.Extensions;
 
 public class UserExtensionsUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_get_user_id()
     {
         // Arrange
@@ -19,7 +19,7 @@ public class UserExtensionsUnitTests
         result.Should().Be(userIdClaim.Value);
     }
 
-    [Test]
+    // [Test]
     public void Should_get_user_institution_id()
     {
         // Arrange

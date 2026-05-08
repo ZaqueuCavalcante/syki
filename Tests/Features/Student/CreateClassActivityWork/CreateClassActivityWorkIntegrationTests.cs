@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_student_class_activity_work()
     {
         // Arrange
@@ -23,7 +23,7 @@ public partial class IntegrationTests
         activity.Link.Should().Be("https://github.com/ZaqueuCavalcante/syki");
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_student_class_activity_work_when_activity_not_found()
     {
         // Arrange

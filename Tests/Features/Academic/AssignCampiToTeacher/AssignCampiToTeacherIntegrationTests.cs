@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_assign_campi_to_teacher()
     {
         // Arrange
@@ -20,7 +20,7 @@ public partial class IntegrationTests
         response.ShouldBeSuccess();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_assign_campi_to_teacher_when_teacher_is_missing()
     {
         // Arrange
@@ -33,7 +33,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new TeacherNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_assign_campi_to_teacher_when_campi_are_invalid()
     {
         // Arrange

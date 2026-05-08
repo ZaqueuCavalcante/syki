@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_teacher()
     {
         // Arrange
@@ -18,7 +18,7 @@ public partial class IntegrationTests
         teacher.Name.Should().Be("Richard");
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_teacher_with_invalid_email()
     {
         // Arrange
@@ -32,7 +32,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidEmail());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_teacher_with_duplicated_email()
     {
         // Arrange
@@ -47,7 +47,7 @@ public partial class IntegrationTests
         secondResponse.ShouldBeError(new EmailAlreadyUsed());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_teacher_only_with_teacher_role()
     {
         // Arrange

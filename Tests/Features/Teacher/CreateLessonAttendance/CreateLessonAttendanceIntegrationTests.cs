@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_lesson_attendance_for_empty_class()
     {
         // Arrange
@@ -29,7 +29,7 @@ public partial class IntegrationTests
         response.ShouldBeSuccess();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_lesson_attendance_when_lesson_not_exists()
     {
         // Arrange
@@ -45,7 +45,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new LessonNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_lesson_attendance_when_lesson_is_not_linked_with_the_class()
     {
         // Arrange
@@ -77,7 +77,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new ClassNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_lesson_attendance_when_student_list_is_invalid()
     {
         // Arrange

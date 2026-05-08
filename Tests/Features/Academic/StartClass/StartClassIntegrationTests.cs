@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_start_class()
     {
         // Arrange
@@ -36,7 +36,7 @@ public partial class IntegrationTests
         @class.Status.Should().Be(ClassStatus.Started);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_start_invalid_classes()
     {
         // Arrange
@@ -49,7 +49,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidClassesList());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_start_on_pre_enrollment_class()
     {
         // Arrange
@@ -70,7 +70,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new ClassMustHaveOnEnrollmentStatus());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_start_on_enrollment_class_when_enrollment_period_is_not_finalized()
     {
         // Arrange

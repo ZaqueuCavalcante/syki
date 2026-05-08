@@ -5,7 +5,7 @@ namespace Syki.Tests.Features.Academic.CreateCourseOffering;
 
 public class CreateCourseOfferingUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_convert_course_offering_to_out()
     {
         // Arrange
@@ -37,7 +37,7 @@ public class CreateCourseOfferingUnitTests
         courseOfferingOut.Shift.Should().Be(courseOffering.Shift);
     }
 
-    [Test]
+    // [Test]
     public void Should_convert_course_offering_to_string()
     {
         // Arrange

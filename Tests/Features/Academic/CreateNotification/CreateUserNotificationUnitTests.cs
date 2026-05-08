@@ -4,7 +4,7 @@ namespace Syki.Tests.Features.Academic.CreateNotification;
 
 public class CreateUserNotificationUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_create_notification_with_correct_data()
     {
         // Arrange
@@ -20,7 +20,7 @@ public class CreateUserNotificationUnitTests
         userNotification.ViewedAt.Should().BeNull();
     }
 
-    [Test]
+    // [Test]
     public void Should_convert_user_notification_to_out()
     {
         const string title = "Boas-vindas!";

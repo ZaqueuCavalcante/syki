@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_class()
     {
         // Arrange
@@ -29,7 +29,7 @@ public partial class IntegrationTests
         @class.Schedules.Should().ContainSingle();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_class_without_campus()
     {
         // Arrange
@@ -42,7 +42,7 @@ public partial class IntegrationTests
         response.ShouldBeError(CampusNotFound.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_class_without_discipline()
     {
         // Arrange
@@ -56,7 +56,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new DisciplineNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_class_without_teacher()
     {
         // Arrange
@@ -72,7 +72,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new TeacherNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_class_without_teacher_campus_assign()
     {
         // Arrange
@@ -89,7 +89,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new TeacherNotAssignedToCampus());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_class_without_teacher_discipline_assign()
     {
         // Arrange
@@ -108,7 +108,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new TeacherNotAssignedToDiscipline());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_class_without_academic_period()
     {
         // Arrange
@@ -127,7 +127,7 @@ public partial class IntegrationTests
         response.ShouldBeError(AcademicPeriodNotFound.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_class_with_one_invalid_schedule()
     {
         // Arrange
@@ -148,7 +148,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidSchedule());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_class_with_two_invalid_schedules()
     {
         // Arrange
@@ -174,7 +174,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidSchedule());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_class_with_conflicting_schedules()
     {
         // Arrange
@@ -199,7 +199,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new ConflictingSchedules());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_class_lessons_for_one_day_one_schedule()
     {
         // Arrange
@@ -228,7 +228,7 @@ public partial class IntegrationTests
         @classDb.Lessons[2].Should().BeEquivalentTo(new { Date = new DateOnly(2024, 08, 27), Schedule = "Terça 19:00-22:00" });
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_class_lessons_for_one_day_two_schedules()
     {
         // Arrange

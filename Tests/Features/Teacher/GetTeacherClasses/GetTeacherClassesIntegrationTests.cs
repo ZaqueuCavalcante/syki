@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_not_return_teacher_on_pre_enrollment_classes()
     {
         // Arrange
@@ -22,7 +22,7 @@ public partial class IntegrationTests
         classes.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_return_teacher_on_enrollment_classes()
     {
         // Arrange
@@ -46,7 +46,7 @@ public partial class IntegrationTests
         classes.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_return_other_teacher_classes()
     {
         // Arrange

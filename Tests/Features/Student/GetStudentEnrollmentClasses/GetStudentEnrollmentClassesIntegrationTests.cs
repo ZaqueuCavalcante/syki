@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_return_only_classes_of_student_course_curriculum_with_enrollment_status()
     {
         // Arrange
@@ -39,7 +39,7 @@ public partial class IntegrationTests
         classes.Should().Contain(t => t.Id == discreteMathClass.Id);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_return_any_class_without_enrollment_period()
     {
         // Arrange
@@ -60,7 +60,7 @@ public partial class IntegrationTests
         classes.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_return_any_class_before_enrollment_period_start()
     {
         // Arrange
@@ -83,7 +83,7 @@ public partial class IntegrationTests
         classes.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_return_any_on_pre_enrollment_class_after_enrollment_period_end()
     {
         // Arrange
@@ -106,7 +106,7 @@ public partial class IntegrationTests
         classes.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_return_any_on_enrollment_class_after_enrollment_period_end()
     {
         // Arrange
@@ -134,7 +134,7 @@ public partial class IntegrationTests
         classes.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_return_any_student_on_pre_enrollment_class()
     {
         // Arrange

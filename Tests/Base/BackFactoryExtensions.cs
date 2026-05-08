@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Syki.Tests.Integration.Clients;
 using Syki.Back.Features.Cross.CreateUser;
 using Microsoft.Extensions.DependencyInjection;
 using Syki.Back.Features.Cross.CreateInstitution;
@@ -7,6 +8,17 @@ namespace Syki.Tests.Base;
 
 public static class BackFactoryExtensions
 {
+    public static TestsHttpClient GetTestsClient(this BackFactory factory)
+    {
+        return new TestsHttpClient(factory.CreateClient());
+    }
+
+
+
+
+
+
+
     public static HttpClient GetClient(this BackFactory factory)
     {
         return factory.CreateClient();

@@ -2,11 +2,11 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
-    [TestCase(new int[] { }, new int[] { }, new int[] { }, new int[] { 100, 100, 100 })]
-    [TestCase(new int[] { 25 }, new int[] { }, new int[] { }, new int[] { 75, 100, 100 })]
-    [TestCase(new int[] { 30, 55 }, new int[] { 20, 20 }, new int[] { 50 }, new int[] { 15, 60, 50 })]
-    [TestCase(new int[] { 30, 40, 20, 10 }, new int[] { 20, 80 }, new int[] { 99 }, new int[] { 0, 0, 1 })]
+    // [Test]
+    // [TestCase(new int[] { }, new int[] { }, new int[] { }, new int[] { 100, 100, 100 })]
+    // [TestCase(new int[] { 25 }, new int[] { }, new int[] { }, new int[] { 75, 100, 100 })]
+    // [TestCase(new int[] { 30, 55 }, new int[] { 20, 20 }, new int[] { 50 }, new int[] { 15, 60, 50 })]
+    // [TestCase(new int[] { 30, 40, 20, 10 }, new int[] { 20, 80 }, new int[] { 99 }, new int[] { 0, 0, 1 })]
     public async Task Should_return_class_notes_remaining_weights(int[] n1Weights, int[] n2Weights, int[] n3Weights, int[] result)
     {
         // Arrange

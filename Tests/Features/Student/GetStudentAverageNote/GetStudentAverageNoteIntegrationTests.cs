@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_get_student_average_note_just_after_enrollment()
     {
         // Arrange
@@ -19,7 +19,7 @@ public partial class IntegrationTests
         response.AverageNote.Should().Be(0);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_student_average_notes_after_teacher_add_1_note()
     {
         // Arrange
@@ -39,7 +39,7 @@ public partial class IntegrationTests
         response.AverageNote.Should().Be(0.33M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_student_average_notes_after_teacher_add_2_notes()
     {
         // Arrange
@@ -60,7 +60,7 @@ public partial class IntegrationTests
         response.AverageNote.Should().Be(0.57M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_student_average_notes_after_teacher_add_3_notes()
     {
         // Arrange

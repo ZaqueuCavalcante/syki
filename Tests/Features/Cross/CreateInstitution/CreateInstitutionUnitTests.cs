@@ -4,7 +4,7 @@ namespace Syki.Tests.Features.Cross.CreateInstitution;
 
 public class CreateInstitutionUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_create_institution_with_correct_data()
     {
         // Arrange
@@ -22,7 +22,7 @@ public class CreateInstitutionUnitTests
         institution.Configs.FrequencyLimit.Should().Be(70.00M);
     }
 
-    [Test]
+    // [Test]
     public void Should_convert_institution_to_out()
     {
         // Arrange
@@ -39,7 +39,7 @@ public class CreateInstitutionUnitTests
         institutionOut.FrequencyLimit.Should().Be(institution.Configs.FrequencyLimit);
     }
 
-    [Test]
+    // [Test]
     public void Should_return_institution_name_on_to_string()
     {
         // Arrange

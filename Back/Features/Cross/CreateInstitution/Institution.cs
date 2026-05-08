@@ -44,6 +44,18 @@ public class Institution
         Configs = new InstitutionConfigs(Id, 7, 70);
     }
 
+    public static Institution NewForUserRegister()
+    {
+        var prefix = new List<string> { "UF", "IF" }.PickRandom();
+        var state = Enum.GetValues<BrazilState>().PickRandom();
+        return new Institution(Guid.NewGuid(), $"{prefix}{state}");
+    }
+
+
+
+
+
+
     public InstitutionOut ToOut()
     {
         return new()

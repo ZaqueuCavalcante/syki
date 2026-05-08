@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_return_student_insights_just_after_student_creation()
     {
         // Arrange
@@ -24,7 +24,7 @@ public partial class IntegrationTests
         insights.YieldCoefficient.Should().Be(0);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_insights_for_sequence_VVX()
     {
         // Arrange

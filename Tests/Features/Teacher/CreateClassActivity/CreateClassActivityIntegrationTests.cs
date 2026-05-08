@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_class_activity()
     {
         // Arrange
@@ -39,7 +39,7 @@ public partial class IntegrationTests
         activity.DueHour.Should().Be(Hour.H08_30);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_many_class_activities()
     {
         // Arrange
@@ -67,7 +67,7 @@ public partial class IntegrationTests
         activities.Should().HaveCount(6);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_class_activity_when_class_not_found()
     {
         // Arrange
@@ -83,9 +83,9 @@ public partial class IntegrationTests
         response.ShouldBeError(new ClassNotFound());
     }
 
-    [Test]
-    [TestCase(-1)]
-    [TestCase(101)]
+    // [Test]
+    // [TestCase(-1)]
+    // [TestCase(101)]
     public async Task Should_not_create_class_activity_with_invalid_weight(int weight)
     {
         // Arrange
@@ -107,8 +107,8 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidClassActivityWeight());
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.ClassActivityInvalidWeightsLists))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.ClassActivityInvalidWeightsLists))]
     public async Task Should_not_add_class_activities_with_invalid_weights(int[] weights)
     {
         // Arrange

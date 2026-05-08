@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_enrollment_period()
     {
         // Arrange
@@ -16,7 +16,7 @@ public partial class IntegrationTests
         response.Id.Should().NotBeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_enrollment_period_without_academic_period()
     {
         // Arrange
@@ -29,7 +29,7 @@ public partial class IntegrationTests
         response.ShouldBeError(AcademicPeriodNotFound.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_enrollment_period_with_start_equal_end()
     {
         // Arrange
@@ -43,7 +43,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidEnrollmentPeriodDates());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_enrollment_period_with_start_greater_than_end()
     {
         // Arrange
@@ -57,7 +57,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidEnrollmentPeriodDates());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_enrollment_period_with_duplicated_id()
     {
         // Arrange

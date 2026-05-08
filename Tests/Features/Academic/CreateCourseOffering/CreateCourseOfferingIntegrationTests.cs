@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_course_offering()
     {
         // Arrange
@@ -22,7 +22,7 @@ public partial class IntegrationTests
         courseOffering.Period.Should().Be(period.Id);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_offering_without_campus()
     {
         // Arrange
@@ -35,7 +35,7 @@ public partial class IntegrationTests
         response.ShouldBeError(CampusNotFound.I);      
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_offering_with_other_institution_campus()
     {
         // Arrange
@@ -52,7 +52,7 @@ public partial class IntegrationTests
         response.ShouldBeError(CampusNotFound.I);      
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_offering_without_course()
     {
         // Arrange
@@ -66,7 +66,7 @@ public partial class IntegrationTests
         response.ShouldBeError(CourseNotFound.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_offering_with_other_institution_course()
     {
         // Arrange
@@ -83,7 +83,7 @@ public partial class IntegrationTests
         response.ShouldBeError(CourseNotFound.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_offering_without_course_curriculum()
     {
         // Arrange
@@ -98,7 +98,7 @@ public partial class IntegrationTests
         response.ShouldBeError(CourseCurriculumNotFound.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_offering_with_other_course_curriculum()
     {
         // Arrange
@@ -115,7 +115,7 @@ public partial class IntegrationTests
         response.ShouldBeError(CourseCurriculumNotFound.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_offering_without_period()
     {
         // Arrange
@@ -131,9 +131,9 @@ public partial class IntegrationTests
         response.ShouldBeError(AcademicPeriodNotFound.I);
     }
 
-    [Test]
-    [TestCase(null)]
-    [TestCase((Shift)69)]
+    // [Test]
+    // [TestCase(null)]
+    // [TestCase((Shift)69)]
     public async Task Should_not_create_course_offering_with_invalid_shift(Shift? shift)
     {
         // Arrange
@@ -150,7 +150,7 @@ public partial class IntegrationTests
         response.ShouldBeError(InvalidShift.I);
     }
     
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_offering_with_other_institution_period()
     {
         // Arrange

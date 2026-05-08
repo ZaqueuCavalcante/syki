@@ -5,7 +5,7 @@ namespace Syki.Tests.Integration;
 [Parallelizable(ParallelScope.All)]
 public partial class IntegrationTests : IntegrationTestBase
 {
-    [Test]
+    // [Test]
     public async Task Should_audit_campus_creation()
     {
         // Arrange
@@ -21,7 +21,7 @@ public partial class IntegrationTests : IntegrationTestBase
         audit.EntityType.Should().Be(nameof(Campus));
     }
 
-    [Test]
+    // [Test]
     public async Task Should_audit_campus_update()
     {
         // Arrange

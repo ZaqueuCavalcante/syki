@@ -27,14 +27,29 @@ public class SykiUser : IdentityUser<Guid>
         ProfilePhoto = profilePhoto;
     }
 
+    public void ConfirmEmail()
+    {
+        EmailConfirmed = true;
+    }
+
+
+
+
+
+
+
+
+
+
+
     public UserOut ToOut()
     {
         return new()
         {
             Id = Id,
-            InstitutionId = InstitutionId,
             Name = Name,
             Email = Email!,
+            InstitutionId = InstitutionId,
         };
     }
 }

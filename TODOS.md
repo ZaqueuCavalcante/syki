@@ -16,3 +16,4 @@
 - Domínio estud.com.br na Hostinger
 - SignInService deve setar o cookie internamente (mudar pra SignInService)
 - Suporte para Ensino Fundamental e Médio (pais dos alunos)
+- EnableRateLimiting com constantes e não strings soltas

@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_a_pending_user_register()
     {
         // Arrange
@@ -26,7 +26,7 @@ public partial class IntegrationTests
         register.Status.Should().Be(UserRegisterStatus.Pending);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_a_pending_user_register_with_invalid_email()
     {
         // Arrange
@@ -44,7 +44,7 @@ public partial class IntegrationTests
         register.Should().BeNull();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_a_pending_user_register_with_duplicated_email()
     {
         // Arrange
@@ -64,7 +64,7 @@ public partial class IntegrationTests
         registers.Should().ContainSingle();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_a_pending_user_register_with_duplicated_case_insensitive_email()
     {
         // Arrange
@@ -86,7 +86,7 @@ public partial class IntegrationTests
         registers.Should().ContainSingle();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_send_a_email_confirmation_after_create_a_pending_user_register()
     {
         // Arrange

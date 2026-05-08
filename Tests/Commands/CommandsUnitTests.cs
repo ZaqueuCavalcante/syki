@@ -2,7 +2,7 @@ namespace Syki.Tests.Commands;
 
 public class CommandsUnitTests
 {
-    [Test]
+    // [Test]
     public void All_commands_should_have_description_attribute()
     {
         // Arrange

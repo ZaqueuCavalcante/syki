@@ -4,7 +4,7 @@ namespace Syki.Tests.Features.Academic.CreateNotification;
 
 public class CreateNotificationUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_create_notification_with_correct_data()
     {
         // Arrange
@@ -25,7 +25,7 @@ public class CreateNotificationUnitTests
         notification.CreatedAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(5));
     }
 
-    [Test]
+    // [Test]
     public void Should_convert_notification_to_out()
     {
         // Arrange

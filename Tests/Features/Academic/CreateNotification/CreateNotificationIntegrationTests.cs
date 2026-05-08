@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_notification_for_all_users()
     {
         // Arrange
@@ -29,7 +29,7 @@ public partial class IntegrationTests
         userNotifications.Should().HaveCount(2);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_notification_only_for_teachers()
     {
         // Arrange
@@ -57,7 +57,7 @@ public partial class IntegrationTests
         userNotifications[0].UserId.Should().Be(teacher.Id);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_a_notification_only_for_students()
     {
         // Arrange

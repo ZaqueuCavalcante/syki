@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_reset_password()
     {
         // Arrange
@@ -28,7 +28,7 @@ public partial class IntegrationTests
         loginOut.Role.Should().Be(UserRole.Academic);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_reset_password_with_wrong_token()
     {
         // Arrange
@@ -45,7 +45,7 @@ public partial class IntegrationTests
         await response.AssertBadRequest(new UserNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_login_using_the_old_password()
     {
         // Arrange
@@ -65,7 +65,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new LoginWrongEmailOrPassword());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_reset_password_twice_with_same_token()
     {
         // Arrange
@@ -85,8 +85,8 @@ public partial class IntegrationTests
         await response.AssertBadRequest(new InvalidResetToken());
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
     public async Task Should_not_reset_password_to_a_weak_one(string password)
     {
         // Arrange

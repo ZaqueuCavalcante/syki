@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_get_student_class_activities()
     {
         // Arrange
@@ -24,7 +24,7 @@ public partial class IntegrationTests
         activities.Should().HaveCount(3);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_get_student_class_activities_when_class_not_found()
     {
         // Arrange

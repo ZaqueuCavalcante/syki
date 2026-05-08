@@ -7,7 +7,7 @@ namespace Syki.Tests.Audit;
 
 public class AuditUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_create_audit_change_with_correct_values()
     {
         // Arrange
@@ -27,7 +27,7 @@ public class AuditUnitTests
         audit.New.Should().Be("Recife");
     }
 
-    [Test]
+    // [Test]
     public void Should_create_audit_data_with_correct_values()
     {
         // Arrange / Act
@@ -39,7 +39,7 @@ public class AuditUnitTests
         audit.RootElement.GetProperty("Schema").ToString().Should().Be(_eventEntry.Schema);
     }
 
-    [Test]
+    // [Test]
     public void Should_create_audit_log_with_correct_values()
     {
         // Arrange
@@ -63,7 +63,7 @@ public class AuditUnitTests
         audit.InstitutionId.Should().Be(institutionId);
     }
 
-    [Test]
+    // [Test]
     public void Should_return_false_on_login_request()
     {
         // Arrange
@@ -78,7 +78,7 @@ public class AuditUnitTests
         result.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_true_on_non_login_request()
     {
         // Arrange

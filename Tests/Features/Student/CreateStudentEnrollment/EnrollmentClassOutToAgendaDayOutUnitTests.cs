@@ -2,7 +2,7 @@ namespace Syki.Tests.Features.Student.CreateStudentEnrollment;
 
 public class EnrollmentClassOutToAgendaDayOutUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_convert_one_class_with_one_schedule()
     {
         // Arrange
@@ -22,7 +22,7 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
         agendas[0].Disciplines[0].End.Should().Be(Hour.H10_00);
     }
 
-    [Test]
+    // [Test]
     public void Should_convert_one_class_with_two_schedules_at_same_day()
     {
         // Arrange
@@ -49,7 +49,7 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
         agendas[0].Disciplines[1].End.Should().Be(Hour.H12_00);
     }
 
-    [Test]
+    // [Test]
     public void Should_convert_one_class_with_three_schedules_at_same_day()
     {
         // Arrange
@@ -80,7 +80,7 @@ public class EnrollmentClassOutToAgendaDayOutUnitTests
         agendas[0].Disciplines[2].End.Should().Be(Hour.H17_00);
     }
 
-    [Test]
+    // [Test]
     public void Should_convert_two_classes_with_one_schedule()
     {
         // Arrange

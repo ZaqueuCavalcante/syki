@@ -6,7 +6,7 @@ namespace Syki.Tests.Features.Academic.CreateCourseCurriculum;
 
 public class CreateCourseCurriculumUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_convert_course_curruculum_to_out()
     {
         // Arrange

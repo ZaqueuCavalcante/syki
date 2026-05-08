@@ -9,6 +9,18 @@ public class CreateUserIn
     public UserRole Role { get; set; }
     public string? PhoneNumber { get; set; }
 
+    public static CreateUserIn New(Guid institutionId, string email, string password)
+    {
+        return new()
+        {
+            Name = email,
+            Email = email,
+            Password = password,
+            Role = UserRole.Academic,
+            InstitutionId = institutionId,
+        };
+    }
+
     public static CreateUserIn NewAcademic(Guid institutionId, string email, string password)
     {
         return new()

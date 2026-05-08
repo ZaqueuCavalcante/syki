@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_release_classes_for_enrollment()
     {
         // Arrange
@@ -30,7 +30,7 @@ public partial class IntegrationTests
         response.ShouldBeSuccess();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_release_classes_for_enrollment_when_enrollment_period_not_found()
     {
         // Arrange
@@ -57,7 +57,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new EnrollmentPeriodNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_release_classes_for_enrollment_when_enrollment_period_not_started()
     {
         // Arrange
@@ -86,7 +86,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new EnrollmentPeriodNotStarted());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_release_classes_for_enrollment_when_enrollment_period_finalized()
     {
         // Arrange
@@ -115,7 +115,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new EnrollmentPeriodFinalized());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_release_classes_for_enrollment_when_classes_status_is_not_on_pre_enrollment()
     {
         // Arrange

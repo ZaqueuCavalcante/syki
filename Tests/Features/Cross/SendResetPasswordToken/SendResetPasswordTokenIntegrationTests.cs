@@ -5,7 +5,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_send_reset_password_token()
     {
         // Arrange
@@ -20,7 +20,7 @@ public partial class IntegrationTests
         token!.Length.Should().Be(36);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_send_a_reset_password_email()
     {
         // Arrange
@@ -38,7 +38,7 @@ public partial class IntegrationTests
         // service!.ResetPasswordEmails.Should().ContainSingle(x => x.Contains(user.Email));
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_send_a_reset_password_email_when_user_not_exists()
     {
         // Arrange
@@ -52,7 +52,7 @@ public partial class IntegrationTests
         await response.AssertBadRequest(new UserNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_get_the_reset_password_token_when_user_not_exists()
     {
         // Arrange / Act

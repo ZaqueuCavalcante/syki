@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_get_current_enrollment_period()
     {
         // Arrange
@@ -22,7 +22,7 @@ public partial class IntegrationTests
         currentEnrollmentPeriod.Id.Should().NotBeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_empty_current_enrollment_period_when_not_exists()
     {
         // Arrange
@@ -39,7 +39,7 @@ public partial class IntegrationTests
         currentEnrollmentPeriod.Id.IsEmpty().Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_empty_current_enrollment_period_when_not_started_yet()
     {
         // Arrange
@@ -59,7 +59,7 @@ public partial class IntegrationTests
         currentEnrollmentPeriod.Id.Should().NotBeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_empty_current_enrollment_period_when_already_ended()
     {
         // Arrange

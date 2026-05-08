@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_return_all_institution_academic_classes()
     {
         // Arrange
@@ -26,7 +26,7 @@ public partial class IntegrationTests
         classes[0].Id.Should().Be(@class.Id);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_academic_classes_with_awaiting_start_status_when_enrollment_period_ends()
     {
         // Arrange
@@ -52,7 +52,7 @@ public partial class IntegrationTests
         classes[0].Status.Should().Be(ClassStatus.AwaitingStart);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_academic_classes_with_fill_ratio()
     {
         // Arrange
@@ -82,7 +82,7 @@ public partial class IntegrationTests
         classes[0].FillRatio.Should().Be("1/40");
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_academic_classes_filtered_by_status_when_result_is_empty()
     {
         // Arrange

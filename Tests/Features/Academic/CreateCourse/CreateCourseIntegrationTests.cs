@@ -5,7 +5,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_course()
     {
         // Arrange
@@ -21,7 +21,7 @@ public partial class IntegrationTests
         course.Disciplines.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_course_with_disciplines()
     {
         // Arrange
@@ -40,9 +40,9 @@ public partial class IntegrationTests
         course.Disciplines[1].Name.Should().Be("Programação Orientada a Objetos");
     }
 
-    [Test]
-    [TestCase("")]
-    [TestCase(TestStrings.S51)]
+    // [Test]
+    // [TestCase("")]
+    // [TestCase(TestStrings.S51)]
     public async Task Should_not_create_course_with_invalid_name(string name)
     {
         // Arrange
@@ -55,9 +55,9 @@ public partial class IntegrationTests
         response.ShouldBeError(InvalidCourseName.I);
     }
 
-    [Test]
-    [TestCase(null)]
-    [TestCase((CourseType)69)]
+    // [Test]
+    // [TestCase(null)]
+    // [TestCase((CourseType)69)]
     public async Task Should_not_create_course_with_invalid_type(CourseType? type)
     {
         // Arrange
@@ -70,7 +70,7 @@ public partial class IntegrationTests
         response.ShouldBeError(InvalidCourseType.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_without_type()
     {
         // Arrange

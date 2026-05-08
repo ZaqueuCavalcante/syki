@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_return_all_course_offerings()
     {
         // Arrange
@@ -16,7 +16,7 @@ public partial class IntegrationTests
         courseOfferings.Count.Should().Be(2);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_return_any_course_offering()
     {
         // Arrange

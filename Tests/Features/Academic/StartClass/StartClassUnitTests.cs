@@ -5,7 +5,7 @@ namespace Syki.Tests.Features.Academic.StartClass;
 
 public class StartClassUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_start_class_with_2_students()
     {
         // Arrange

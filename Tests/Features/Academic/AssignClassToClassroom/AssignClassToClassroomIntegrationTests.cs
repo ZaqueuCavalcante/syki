@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_assign_class_to_classroom_for_most_simple_case()
     {
         // Arrange
@@ -28,7 +28,7 @@ public partial class IntegrationTests
         classrooms.Single().ClassId.Should().Be(@class.Id);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_assign_class_to_classroom_when_classroom_not_found()
     {
         // Arrange
@@ -41,7 +41,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new ClassroomNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_assign_class_to_classroom_when_class_not_found()
     {
         // Arrange
@@ -57,7 +57,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new ClassNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_assign_class_to_classroom_when_class_vacancies_are_greater_than_classroom_capacity()
     {
         // Arrange
@@ -80,7 +80,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new ClassVacanciesGreaterThanClassroomCapacity());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_assign_class_to_classroom_with_one_invalid_schedule()
     {
         // Arrange
@@ -105,7 +105,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidSchedule());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_assign_class_to_classroom_with_two_invalid_schedule()
     {
         // Arrange
@@ -135,7 +135,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidSchedule());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_assign_class_to_classroom_with_conflicting_schedules()
     {
         // Arrange

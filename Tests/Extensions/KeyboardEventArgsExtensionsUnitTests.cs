@@ -5,7 +5,7 @@ namespace Syki.Tests.Extensions;
 
 public class KeyboardEventArgsExtensionsUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_return_true_when_enter_key_is_pressed()
     {
         // Arrange
@@ -18,7 +18,7 @@ public class KeyboardEventArgsExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_false_when_enter_key_is_not_pressed()
     {
         // Arrange

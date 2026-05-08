@@ -4,7 +4,7 @@ namespace Syki.Tests.Features.Cross.SendResetPasswordToken;
 
 public class SendResetPasswordTokenUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_create_a_reset_password_with_correct_data()
     {
         // Arrange

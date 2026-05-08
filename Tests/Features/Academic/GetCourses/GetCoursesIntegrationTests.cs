@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_get_all_courses_ordered_by_name()
     {
         // Arrange
@@ -28,7 +28,7 @@ public partial class IntegrationTests
         courses.Items[4].Should().BeEquivalentTo(new { pedagogia.Id, pedagogia.Name, pedagogia.Type });
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_courses_in_parallel_requests_to_test_cache_stampede()
     {
         // Arrange

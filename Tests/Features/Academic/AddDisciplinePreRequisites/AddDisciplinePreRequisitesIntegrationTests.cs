@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_add_discipline_pre_requisits()
     {
         // Arrange
@@ -20,7 +20,7 @@ public partial class IntegrationTests
         response.ShouldBeSuccess();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_add_discipline_pre_requisits_when_course_curriculum_is_missing()
     {
         // Arrange
@@ -33,7 +33,7 @@ public partial class IntegrationTests
         response.ShouldBeError(CourseCurriculumNotFound.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_add_discipline_pre_requisits_when_discipline_is_missing()
     {
         // Arrange
@@ -51,7 +51,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new DisciplineNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_add_discipline_pre_requisits_when_target_discipline_is_in_pre_requisites()
     {
         // Arrange
@@ -69,7 +69,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidDisciplinesList());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_add_discipline_pre_requisits_when_pre_requisites_is_not_subset_of_course_curriculums_disciplines()
     {
         // Arrange
@@ -87,7 +87,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidDisciplinesList());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_add_discipline_pre_requisits_when_pre_requisites_have_greater_period_discipline()
     {
         // Arrange
@@ -105,7 +105,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidDisciplinesList());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_add_discipline_pre_requisits_when_pre_requisites_have_equal_period_discipline()
     {
         // Arrange

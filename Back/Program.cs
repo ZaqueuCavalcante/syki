@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddSettingsConfigs();
 builder.AddServicesConfigs();
+builder.AddQuartzConfigs();
 builder.AddHostedServicesConfigs();
 
 builder.AddIdentityConfigs();

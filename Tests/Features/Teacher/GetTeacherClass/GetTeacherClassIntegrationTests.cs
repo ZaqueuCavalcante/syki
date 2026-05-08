@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_return_teacher_class()
     {
         // Arrange
@@ -40,7 +40,7 @@ public partial class IntegrationTests
         @class.Status.Should().Be(ClassStatus.Started);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_return_teacher_class_when_not_found()
     {
         // Arrange

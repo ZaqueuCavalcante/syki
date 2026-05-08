@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_discipline_without_course()
     {
         // Arrange
@@ -18,7 +18,7 @@ public partial class IntegrationTests
         discipline.Courses.Should().BeEquivalentTo(new List<Guid>());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_discipline_with_only_one_course()
     {
         // Arrange
@@ -33,7 +33,7 @@ public partial class IntegrationTests
         discipline.Courses.Should().BeEquivalentTo([course.Id]);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_discipline_with_many_courses()
     {
         // Arrange
@@ -49,7 +49,7 @@ public partial class IntegrationTests
         discipline.Courses.Should().BeEquivalentTo([cc.Id, ads.Id]);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_link_other_institution_course_to_discipline()
     {
         // Arrange

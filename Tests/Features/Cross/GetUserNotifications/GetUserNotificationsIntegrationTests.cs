@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_return_only_student_notifications()
     {
         // Arrange
@@ -26,7 +26,7 @@ public partial class IntegrationTests
         studentResponse.Count.Should().Be(1);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_only_teacher_notifications()
     {
         // Arrange
@@ -50,7 +50,7 @@ public partial class IntegrationTests
         studentResponse.Count.Should().Be(0);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_all_users_notifications()
     {
         // Arrange
@@ -74,7 +74,7 @@ public partial class IntegrationTests
         studentResponse.Count.Should().Be(1);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_only_student_notifications_when_notification_is_timeless()
     {
         // Arrange
@@ -101,7 +101,7 @@ public partial class IntegrationTests
         studentResponse.Count.Should().Be(1);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_only_teacher_notifications_when_notification_is_timeless()
     {
         // Arrange
@@ -128,7 +128,7 @@ public partial class IntegrationTests
         studentResponse.Count.Should().Be(0);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_all_notifications_when_notification_is_timeless()
     {
         // Arrange

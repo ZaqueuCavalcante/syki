@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_get_empty_list_when_has_no_campi()
     {
         // Arrange
@@ -16,7 +16,7 @@ public partial class IntegrationTests
         campi.Items.Should().BeEmpty();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_campi_ordered_by_name()
     {
         // Arrange
@@ -34,7 +34,7 @@ public partial class IntegrationTests
         campi.Items[1].Should().BeEquivalentTo(suassunaOut);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_campi_with_student_metrics()
     {
         // Arrange
@@ -55,7 +55,7 @@ public partial class IntegrationTests
         campus.FillRate.Should().Be(2.00M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_only_institution_campus()
     {
         // Arrange

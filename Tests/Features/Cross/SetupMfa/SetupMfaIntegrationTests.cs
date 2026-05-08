@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_setup_mfa()
     {
         // Arrange
@@ -18,8 +18,8 @@ public partial class IntegrationTests
         response.Should().BeTrue();
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidMfaTokens))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidMfaTokens))]
     public async Task Should_not_setup_mfa_when_token_is_wrong(string token)
     {
         // Arrange

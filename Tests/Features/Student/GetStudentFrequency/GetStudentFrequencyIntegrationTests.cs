@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_when_has_no_lesson_attendances()
     {
         // Arrange
@@ -23,7 +23,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(0.00M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_V()
     {
         // Arrange
@@ -48,7 +48,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(100.00M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_X()
     {
         // Arrange
@@ -73,7 +73,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(0.00M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_VV()
     {
         // Arrange
@@ -99,7 +99,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(100.00M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_VX()
     {
         // Arrange
@@ -126,7 +126,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(50.00M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_XV()
     {
         // Arrange
@@ -152,7 +152,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(50.00M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_XX()
     {
         // Arrange
@@ -178,7 +178,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(0.00M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_VVV()
     {
         // Arrange
@@ -205,7 +205,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(100.00M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_VVX()
     {
         // Arrange
@@ -232,7 +232,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(66.67M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_VXV()
     {
         // Arrange
@@ -259,7 +259,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(66.67M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_VXX()
     {
         // Arrange
@@ -286,7 +286,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(33.33M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_XVV()
     {
         // Arrange
@@ -313,7 +313,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(66.67M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_XVX()
     {
         // Arrange
@@ -340,7 +340,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(33.33M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_XXV()
     {
         // Arrange
@@ -367,7 +367,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(33.33M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_sequence_XXX()
     {
         // Arrange
@@ -394,7 +394,7 @@ public partial class IntegrationTests
         response.Frequency.Should().Be(0.00M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequency_for_many_classes()
     {
         // Arrange

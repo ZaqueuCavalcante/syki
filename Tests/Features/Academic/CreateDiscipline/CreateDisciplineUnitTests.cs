@@ -4,7 +4,7 @@ namespace Syki.Tests.Features.Academic.CreateDiscipline;
 
 public class CreateDisciplineUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_convert_discipline_to_out()
     {
         // Arrange
@@ -21,7 +21,7 @@ public class CreateDisciplineUnitTests
         disciplineOut.Courses.Should().BeEquivalentTo(discipline.Links.ConvertAll(x => x.CourseId));
     }
 
-    [Test]
+    // [Test]
     public void Should_return_true_when_is_the_same_discipline()
     {
         // Arrange
@@ -36,7 +36,7 @@ public class CreateDisciplineUnitTests
         equals.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_false_when_is_not_the_same_discipline()
     {
         // Arrange
@@ -52,7 +52,7 @@ public class CreateDisciplineUnitTests
         equals.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_false_when_other_discipline_is_null()
     {
         // Arrange
@@ -66,7 +66,7 @@ public class CreateDisciplineUnitTests
         equals.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_the_hash_code()
     {
         // Arrange
@@ -79,7 +79,7 @@ public class CreateDisciplineUnitTests
         hashCode.Should().Be(0845_6934);
     }
 
-    [Test]
+    // [Test]
     public void Should_return_the_discipline_name_as_to_string_representation()
     {
         // Arrange

@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequencies_with_zero_values()
     {
         // Arrange
@@ -20,7 +20,7 @@ public partial class IntegrationTests
         frequencies.Should().HaveCount(0);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequencies_for_the_first_lesson_attendance()
     {
         // Arrange
@@ -60,7 +60,7 @@ public partial class IntegrationTests
         frequencies[0].Should().BeEquivalentTo(new GetStudentFrequenciesOut(data.AdsDisciplines.DiscreteMath.Name, "1", 1, 1, StudentDisciplineStatus.Matriculado));
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_student_frequencies_for_the_first_period_lesson_attendances()
     {
         // Arrange

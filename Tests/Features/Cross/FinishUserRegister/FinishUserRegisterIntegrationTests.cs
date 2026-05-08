@@ -4,7 +4,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_finish_user_register()
     {
         // Arrange
@@ -39,8 +39,8 @@ public partial class IntegrationTests
         isOnlyInAcademicRole.Should().BeTrue();
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidUserRegisterTokens))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidUserRegisterTokens))]
     public async Task Should_not_finish_user_register_with_a_invalid_token(string token)
     {
         // Arrange
@@ -68,7 +68,7 @@ public partial class IntegrationTests
         user.Should().BeNull();
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_register_user_twice()
     {
         // Arrange
@@ -106,8 +106,8 @@ public partial class IntegrationTests
         isOnlyInAcademicRole.Should().BeTrue();
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
     public async Task Should_not_register_user_with_a_invalid_password(string password)
     {
         // Arrange

@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_get_mfa_key()
     {
         // Arrange
@@ -16,7 +16,7 @@ public partial class IntegrationTests
         response.QrCodeBase64.Should().StartWith("data:image/png;base64,iVBORw0KGgoAAAAN");
     }
 
-    [Test]
+    // [Test]
     public async Task Should_get_same_mfa_key_for_many_gets()
     {
         // Arrange

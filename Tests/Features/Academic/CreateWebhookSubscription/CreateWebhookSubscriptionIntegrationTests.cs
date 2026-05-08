@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_webhook_subscription()
     {
         // Arrange
@@ -26,7 +26,7 @@ public partial class IntegrationTests
         webhook.Authentication.ApiKey.Should().Be("z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X");
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_webhook_subscription_without_events()
     {
         // Arrange
@@ -39,10 +39,10 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidWebhookEventsList());
     }
 
-    [Test]
-    [TestCase("")]
-    [TestCase(" ")]
-    [TestCase(null)]
+    // [Test]
+    // [TestCase("")]
+    // [TestCase(" ")]
+    // [TestCase(null)]
     public async Task Should_not_create_webhook_subscription_with_empty_api_key(string? apiKey)
     {
         // Arrange

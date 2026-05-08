@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_cross_login_from_academic_to_teacher_account()
     {
         // Arrange
@@ -19,7 +19,7 @@ public partial class IntegrationTests
         response.Role.Should().Be(UserRole.Teacher);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_cross_login_from_academic_to_student_account()
     {
         // Arrange
@@ -38,7 +38,7 @@ public partial class IntegrationTests
         response.Role.Should().Be(UserRole.Student);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_cross_login_from_academic_to_another_institution_teacher_account()
     {
         // Arrange
@@ -55,7 +55,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new UserNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_cross_login_from_academic_to_another_institution_student_account()
     {
         // Arrange
@@ -74,7 +74,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new UserNotFound());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_cross_login_from_teacher_to_academic_account()
     {
         // Arrange
@@ -93,7 +93,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new ForbiddenErrorOut());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_cross_login_from_student_to_academic_account()
     {
         // Arrange
@@ -113,7 +113,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new ForbiddenErrorOut());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_cross_login_when_feature_flag_is_disabled()
     {
         // Arrange

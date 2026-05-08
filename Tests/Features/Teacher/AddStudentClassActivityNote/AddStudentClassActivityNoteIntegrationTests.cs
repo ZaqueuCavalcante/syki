@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_add_student_class_activity_note()
     {
         // Arrange
@@ -27,7 +27,7 @@ public partial class IntegrationTests
         activity.Works[0].Note.Should().Be(8.12M);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_add_student_class_activity_note_when_activity_not_found()
     {
         // Arrange

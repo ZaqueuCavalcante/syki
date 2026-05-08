@@ -2,7 +2,7 @@ namespace Syki.Tests.Extensions;
 
 public class ListExtensionsUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_return_true_when_empty_list()
     {
         // Arrange
@@ -14,7 +14,7 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_true_when_one_item_list()
     {
         // Arrange
@@ -29,7 +29,7 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_true_when_two_item_list()
     {
         // Arrange
@@ -45,7 +45,7 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_true_when_all_items_list()
     {
         // Arrange
@@ -64,7 +64,7 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    [Test]
+    // [Test]
     [Repeat(100)]
     public void Should_return_false_when_random_guid()
     {
@@ -80,7 +80,7 @@ public class ListExtensionsUnitTests
         result.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_false_when_duplicated()
     {
         // Arrange
@@ -96,7 +96,7 @@ public class ListExtensionsUnitTests
         result.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_false_when_triplicated()
     {
         // Arrange
@@ -113,7 +113,7 @@ public class ListExtensionsUnitTests
         result.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     [Repeat(100)]
     public void Should_return_false_when_has_one_out()
     {

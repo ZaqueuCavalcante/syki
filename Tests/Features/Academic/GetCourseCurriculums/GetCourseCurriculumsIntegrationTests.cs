@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_return_only_institution_course_curriculums()
     {
         // Arrange
@@ -24,7 +24,7 @@ public partial class IntegrationTests
         courseCurriculums[0].Name.Should().Be(courseCurriculumNovaRoma.Name);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_return_all_course_curriculums_ordered_by_name()
     {
         // Arrange

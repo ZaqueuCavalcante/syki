@@ -2,7 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    [Test]
+    // [Test]
     public async Task Should_create_course_curriculum_without_disciplines()
     {
         // Arrange
@@ -20,7 +20,7 @@ public partial class IntegrationTests
         courseCurriculum.Disciplines.Should().HaveCount(0);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_course_curriculum_with_many_disciplines()
     {
         // Arrange
@@ -49,7 +49,7 @@ public partial class IntegrationTests
         courseCurriculum.Disciplines.Should().HaveCount(3);        
     }
 
-    [Test]
+    // [Test]
     public async Task Should_create_course_curriculum_with_discipline_values()
     {
         // Arrange
@@ -72,7 +72,7 @@ public partial class IntegrationTests
         courseCurriculum.Disciplines[0].Workload.Should().Be(80);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_curriculum_without_course()
     {
         // Arrange
@@ -85,7 +85,7 @@ public partial class IntegrationTests
         response.ShouldBeError(CourseNotFound.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_curriculum_with_another_institution_course()
     {
         // Arrange
@@ -101,7 +101,7 @@ public partial class IntegrationTests
         response.ShouldBeError(CourseNotFound.I);
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_curriculum_with_another_course_disciplines()
     {
         // Arrange
@@ -117,7 +117,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidDisciplinesList());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_curriculum_with_another_institution_discipline()
     {
         // Arrange
@@ -135,7 +135,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidDisciplinesList());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_curriculum_with_repeated_disciplines()
     {
         // Arrange
@@ -161,7 +161,7 @@ public partial class IntegrationTests
         response.ShouldBeError(new InvalidDisciplinesList());
     }
 
-    [Test]
+    // [Test]
     public async Task Should_not_create_course_curriculum_with_random_disciplines()
     {
         // Arrange

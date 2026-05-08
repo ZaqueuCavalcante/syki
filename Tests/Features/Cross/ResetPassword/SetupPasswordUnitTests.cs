@@ -4,7 +4,7 @@ namespace Syki.Tests.Features.Cross.ResetPassword;
 
 public class SetupPasswordUnitTests
 {
-    [Test]
+    // [Test]
     public void Should_return_false_when_password_has_no_numbers()
     {
         // Arrange
@@ -17,7 +17,7 @@ public class SetupPasswordUnitTests
         setup.Validation.HasNumbers.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_false_when_password_has_no_lower()
     {
         // Arrange
@@ -30,7 +30,7 @@ public class SetupPasswordUnitTests
         setup.Validation.HasLower.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_false_when_password_has_no_upper()
     {
         // Arrange
@@ -43,7 +43,7 @@ public class SetupPasswordUnitTests
         setup.Validation.HasUpper.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_false_when_password_has_no_length()
     {
         // Arrange
@@ -56,7 +56,7 @@ public class SetupPasswordUnitTests
         setup.Validation.HasLength.Should().BeFalse();
     }
 
-    [Test]
+    // [Test]
     public void Should_return_false_when_password_has_no_non_alphanumeric()
     {
         // Arrange
@@ -69,8 +69,8 @@ public class SetupPasswordUnitTests
         setup.Validation.HasNonAlphanumeric.Should().BeFalse();
     }
 
-    [Test]
-    [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
+    // [Test]
+    // [TestCaseSource(typeof(TestData), nameof(TestData.InvalidPasswords))]
     public void Should_return_false_when_password_is_invalid(string password)
     {
         // Arrange

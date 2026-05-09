@@ -20,7 +20,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var result = await client.MagicLinkLogin("");
 
         // Assert
-        result.ShouldBeError(InvalidMagicLinkToken.I);
+        result.ShouldBeError(InvalidMagicLink.I);
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -38,7 +38,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var result = await client.MagicLinkLogin(Guid.NewGuid().ToString());
 
         // Assert
-        result.ShouldBeError(InvalidMagicLinkToken.I);
+        result.ShouldBeError(InvalidMagicLink.I);
     }
 
     [Test]
@@ -61,7 +61,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var result = await client.MagicLinkLogin(token!);
 
         // Assert
-        result.ShouldBeError(InvalidMagicLinkToken.I);
+        result.ShouldBeError(InvalidMagicLink.I);
     }
 
     [Test]
@@ -86,7 +86,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var result = await client.MagicLinkLogin(token!);
 
         // Assert
-        result.ShouldBeError(InvalidMagicLinkToken.I);
+        result.ShouldBeError(InvalidMagicLink.I);
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -22,5 +22,5 @@ public class MagicLinkLoginController(MagicLinkLoginService service) : Controlle
 internal class RequestExamples : ExamplesProvider<MagicLinkLoginIn>;
 internal class ResponseExamples : ExamplesProvider<MagicLinkLoginOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
-    InvalidMagicLinkToken
+    InvalidMagicLink
 >;

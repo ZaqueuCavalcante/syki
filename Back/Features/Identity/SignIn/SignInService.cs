@@ -21,8 +21,6 @@ public class SignInService(
         {
             new(Claims.Jti, Guid.NewGuid().ToString()),
             new(Claims.UserId, user.Id.ToString()),
-            new(Claims.UserName, user.Name),
-            new(Claims.UserEmail, user.Email!),
             new(Claims.InstitutionId, user.InstitutionId.ToString()),
         };
 

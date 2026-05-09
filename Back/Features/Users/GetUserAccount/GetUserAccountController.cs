@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Cross.GetUserAccount;
+namespace Syki.Back.Features.Users.GetUserAccount;
 
 [ApiController, AuthBearer]
 [EnableRateLimiting("Medium")]
@@ -10,7 +10,7 @@ public class GetUserAccountController(GetUserAccountService service) : Controlle
     /// <remarks>
     /// Retorna dados da conta do usuário.
     /// </remarks>
-    [HttpGet("user/account")]
+    [HttpGet("users/account")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {

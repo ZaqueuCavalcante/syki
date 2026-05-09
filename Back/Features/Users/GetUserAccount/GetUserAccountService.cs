@@ -1,7 +1,7 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Cross.GetUserAccount;
+namespace Syki.Back.Features.Users.GetUserAccount;
 
 public class GetUserAccountService(NpgsqlDataSource dataSource) : ICrossService
 {
@@ -30,22 +30,6 @@ public class GetUserAccountService(NpgsqlDataSource dataSource) : ICrossService
             LIMIT 1
         ";
 
-        var data = await connection.QueryFirstAsync<GetUserAccountOut>(sql, new { userId });
-
-        if (data.Role == UserRole.Student)
-        {
-            const string studentSql = @"
-                SELECT name FROM syki.courses WHERE id =
-                (
-                    SELECT course_id
-                    FROM syki.course_offerings co
-                    INNER JOIN syki.students s ON s.course_offering_id = co.id
-                    WHERE s.id = @UserId
-                )
-            ";
-            data.Course = await connection.QueryFirstAsync<string?>(studentSql, new { userId });
-        }
-
-        return data;
+        return await connection.QueryFirstAsync<GetUserAccountOut>(sql, new { userId });
     }
 }

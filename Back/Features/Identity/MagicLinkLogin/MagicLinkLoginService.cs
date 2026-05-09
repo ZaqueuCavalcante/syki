@@ -8,7 +8,7 @@ public class MagicLinkLoginService(SykiDbContext ctx, SignInService signInServic
     {
         public Validator()
         {
-            RuleFor(x => x.Token).NotEmpty().WithError(InvalidMagicLinkToken.I);
+            RuleFor(x => x.Token).NotEmpty().WithError(InvalidMagicLink.I);
         }
     }
     private static readonly Validator V = new();
@@ -17,14 +17,14 @@ public class MagicLinkLoginService(SykiDbContext ctx, SignInService signInServic
     {
         if (V.Run(data, out var error)) return error;
 
-        if (!Guid.TryParse(data.Token, out var tokenId)) return InvalidMagicLinkToken.I;
+        if (!Guid.TryParse(data.Token, out var tokenId)) return InvalidMagicLink.I;
 
         var magicLink = await ctx.WebMagicLinks.FirstOrDefaultAsync(t => t.Id == tokenId);
-        if (magicLink == null) return InvalidMagicLinkToken.I;
+        if (magicLink == null) return InvalidMagicLink.I;
 
-        if (magicLink.IsUsed()) return InvalidMagicLinkToken.I;
+        if (magicLink.IsUsed()) return InvalidMagicLink.I;
 
-        if (magicLink.IsExpired()) return InvalidMagicLinkToken.I;
+        if (magicLink.IsExpired()) return InvalidMagicLink.I;
     
         magicLink.Use();
 

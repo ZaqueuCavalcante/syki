@@ -121,15 +121,6 @@ public static class CrossClientExtensions
         await client.View();
     }
 
-    public static async Task<OneOf<MagicLinkLoginOut, ErrorOut>> MagicLinkLogin(this HttpClient http, string token)
-    {
-        var data = new MagicLinkLoginIn { Token = token };
-
-        var response = await http.PostAsJsonAsync("identity/magic-link-login", data);
-
-        return await response.Resolve<MagicLinkLoginOut>();
-    }
-
     public static async Task<HttpResponseMessage> Logout(this HttpClient http)
     {
         var client = new LogoutClient(http);

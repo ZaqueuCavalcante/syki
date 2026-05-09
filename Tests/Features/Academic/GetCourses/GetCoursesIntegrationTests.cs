@@ -8,7 +8,7 @@ public partial class IntegrationTests
     public async Task Should_get_all_courses_ordered_by_name()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCourseOut direito = await client.CreateCourse("Direito", Tecnologo, []);
         CreateCourseOut pedagogia = await client.CreateCourse("Pedagogia", Mestrado, []);
@@ -32,7 +32,7 @@ public partial class IntegrationTests
     public async Task Should_get_courses_in_parallel_requests_to_test_cache_stampede()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         await client.CreateCourse("Direito", Tecnologo, []);
         await client.CreateCourse("Pedagogia", Mestrado, []);

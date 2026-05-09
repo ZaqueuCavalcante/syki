@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_create_webhook_subscription()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateWebhookSubscription();
@@ -15,7 +15,7 @@ public partial class IntegrationTests
         response.ShouldBeSuccess();
         CreateWebhookSubscriptionOut responseOut = response.Success;
 
-        var ctx = _api.GetDbContext();
+        var ctx = _back.GetDbContext();
         var webhook = await ctx.Webhooks.Include(x => x.Authentication)
             .FirstAsync(x => x.Id == responseOut.Id);
 
@@ -30,7 +30,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_webhook_subscription_without_events()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateWebhookSubscription(events: []);
@@ -46,7 +46,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_webhook_subscription_with_empty_api_key(string? apiKey)
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateWebhookSubscription(apiKey: apiKey);

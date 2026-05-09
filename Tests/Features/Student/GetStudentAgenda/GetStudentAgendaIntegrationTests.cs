@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_get_student_agenda()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2;
         await academicClient.CreateEnrollmentPeriod(period.Id);
@@ -26,7 +26,7 @@ public partial class IntegrationTests
         await academicClient.ReleaseClassesForEnrollment([discreteMathClass.Id, humanMachineInteractionDesignClass.Id, introToComputerNetworksClass.Id]);
 
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _api.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         await studentClient.CreateStudentEnrollment([discreteMathClass.Id, introToComputerNetworksClass.Id]);
 

@@ -14,7 +14,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20260508230409_Bootstrap")]
+    [Migration("20260508233635_Bootstrap")]
     partial class Bootstrap
     {
         /// <inheritdoc />
@@ -214,9 +214,8 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("activity_id");
 
-                    b.Property<string>("BackoffStrategy")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("BackoffStrategy")
+                        .HasColumnType("integer")
                         .HasColumnName("backoff_strategy");
 
                     b.Property<int>("BaseDelaySeconds")
@@ -281,9 +280,8 @@ namespace Back.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("retry_attempt");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
                     b.Property<string>("Type")
@@ -327,14 +325,12 @@ namespace Back.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("source_command_id");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
                         .HasColumnName("type");
 
                     b.HasKey("Id")
@@ -411,9 +407,8 @@ namespace Back.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<string>("Event")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Event")
+                        .HasColumnType("integer")
                         .HasColumnName("event");
 
                     b.Property<Guid>("InstitutionId")
@@ -425,9 +420,8 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("payload");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
                     b.Property<Guid>("WebhookId")
@@ -461,9 +455,8 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("response");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
                     b.Property<int>("StatusCode")
@@ -534,9 +527,8 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("State")
+                        .HasColumnType("integer")
                         .HasColumnName("state");
 
                     b.HasKey("Id")
@@ -571,9 +563,8 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("period_id");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
                     b.Property<Guid?>("TeacherId")
@@ -620,23 +611,20 @@ namespace Back.Migrations
                         .HasColumnType("date")
                         .HasColumnName("date");
 
-                    b.Property<string>("EndAt")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("EndAt")
+                        .HasColumnType("integer")
                         .HasColumnName("end_at");
 
                     b.Property<int>("Number")
                         .HasColumnType("integer")
                         .HasColumnName("number");
 
-                    b.Property<string>("StartAt")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("StartAt")
+                        .HasColumnType("integer")
                         .HasColumnName("start_at");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -662,19 +650,16 @@ namespace Back.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("classroom_id");
 
-                    b.Property<string>("Day")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Day")
+                        .HasColumnType("integer")
                         .HasColumnName("day");
 
-                    b.Property<string>("End")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("End")
+                        .HasColumnType("integer")
                         .HasColumnName("end");
 
-                    b.Property<string>("Start")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Start")
+                        .HasColumnType("integer")
                         .HasColumnName("start");
 
                     b.Property<Guid?>("TeacherId")
@@ -746,9 +731,8 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
                         .HasColumnName("type");
 
                     b.HasKey("Id")
@@ -853,9 +837,8 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("period");
 
-                    b.Property<string>("Shift")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Shift")
+                        .HasColumnType("integer")
                         .HasColumnName("shift");
 
                     b.HasKey("Id")
@@ -970,9 +953,8 @@ namespace Back.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("institution_id");
 
-                    b.Property<string>("Target")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Target")
+                        .HasColumnType("integer")
                         .HasColumnName("target");
 
                     b.Property<bool>("Timeless")
@@ -1040,9 +1022,8 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
                     b.Property<decimal>("YieldCoefficient")
@@ -1141,9 +1122,8 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("api_key");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
                         .HasColumnName("type");
 
                     b.Property<Guid>("WebhookId")
@@ -1255,9 +1235,8 @@ namespace Back.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("institution_id");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -1510,9 +1489,8 @@ namespace Back.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("note");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
                     b.Property<Guid>("SykiStudentId")
@@ -1541,9 +1519,8 @@ namespace Back.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("syki_student_id");
 
-                    b.Property<string>("StudentDisciplineStatus")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("StudentDisciplineStatus")
+                        .HasColumnType("integer")
                         .HasColumnName("student_discipline_status");
 
                     b.HasKey("ClassId", "SykiStudentId")
@@ -1574,9 +1551,8 @@ namespace Back.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("student_id");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
                         .HasColumnName("type");
 
                     b.HasKey("Id")
@@ -1615,19 +1591,16 @@ namespace Back.Migrations
                         .HasColumnType("date")
                         .HasColumnName("due_date");
 
-                    b.Property<string>("DueHour")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("DueHour")
+                        .HasColumnType("integer")
                         .HasColumnName("due_hour");
 
-                    b.Property<string>("Note")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Note")
+                        .HasColumnType("integer")
                         .HasColumnName("note");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
                         .HasColumnName("status");
 
                     b.Property<string>("Title")
@@ -1635,9 +1608,8 @@ namespace Back.Migrations
                         .HasColumnType("text")
                         .HasColumnName("title");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
                         .HasColumnName("type");
 
                     b.Property<int>("Weight")

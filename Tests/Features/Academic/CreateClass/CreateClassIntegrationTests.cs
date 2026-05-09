@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_create_class()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
@@ -33,7 +33,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_without_campus()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateClass(Guid.CreateVersion7(), null, Guid.CreateVersion7(), "2024.1", 40, []);
@@ -46,7 +46,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_without_discipline()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         CreateCampusOut campus = await client.CreateCampus();
 
         // Act
@@ -60,7 +60,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_without_teacher()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
@@ -76,7 +76,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_without_teacher_campus_assign()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
@@ -93,7 +93,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_without_teacher_discipline_assign()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
@@ -112,7 +112,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_without_academic_period()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
@@ -131,7 +131,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_with_one_invalid_schedule()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
@@ -152,7 +152,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_with_two_invalid_schedules()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
@@ -178,7 +178,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_with_conflicting_schedules()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
@@ -203,7 +203,7 @@ public partial class IntegrationTests
     public async Task Should_create_class_lessons_for_one_day_one_schedule()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();
@@ -232,7 +232,7 @@ public partial class IntegrationTests
     public async Task Should_create_class_lessons_for_one_day_two_schedules()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var discipline = await client.CreateDiscipline();

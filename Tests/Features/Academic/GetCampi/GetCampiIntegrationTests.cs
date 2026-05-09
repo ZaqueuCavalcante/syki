@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_get_empty_list_when_has_no_campi()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var campi = await client.GetCampi();
@@ -20,7 +20,7 @@ public partial class IntegrationTests
     public async Task Should_get_campi_ordered_by_name()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut suassunaOut = await client.CreateCampus("Suassuna I", BrazilState.PE, "Recife", 1_500);
         CreateCampusOut agresteOut = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru", 280);
@@ -38,7 +38,7 @@ public partial class IntegrationTests
     public async Task Should_get_campi_with_student_metrics()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         await client.CreateStudent(data.AdsCourseOffering.Id);
@@ -59,8 +59,8 @@ public partial class IntegrationTests
     public async Task Should_get_only_institution_campus()
     {
         // Arrange
-        var clientA = await _api.LoggedAsAcademic();
-        var clientB = await _api.LoggedAsAcademic();
+        var clientA = await _back.LoggedAsAcademic();
+        var clientB = await _back.LoggedAsAcademic();
 
         CreateCampusOut campusA = await clientA.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
         await clientB.CreateCampus("Suassuna I", BrazilState.PE, "Recife");

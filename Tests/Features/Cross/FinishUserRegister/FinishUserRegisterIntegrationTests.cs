@@ -8,11 +8,11 @@ public partial class IntegrationTests
     public async Task Should_finish_user_register()
     {
         // Arrange
-        var client = _api.GetClient();
+        var client = _back.GetClient();
 
         var email = TestData.Email;
         await client.CreatePendingUserRegister(email);
-        var token = await _api.GetRegisterSetupToken(email);
+        var token = await _back.GetRegisterSetupToken(email);
 
         // Act
         var response = await client.FinishUserRegister(token!, "Lalala@123");
@@ -20,8 +20,8 @@ public partial class IntegrationTests
         // Assert
         response.ShouldBeSuccess();
 
-        await using var ctx = _api.GetDbContext();
-        using var userManager = _api.GetUserManager();
+        await using var ctx = _back.GetDbContext();
+        using var userManager = _back.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.Status.Should().Be(UserRegisterStatus.Finished);
@@ -44,7 +44,7 @@ public partial class IntegrationTests
     public async Task Should_not_finish_user_register_with_a_invalid_token(string token)
     {
         // Arrange
-        var client = _api.GetClient();
+        var client = _back.GetClient();
 
         var email = TestData.Email;
         await client.CreatePendingUserRegister(email);
@@ -55,8 +55,8 @@ public partial class IntegrationTests
         // Assert
         response.ShouldBeError(new InvalidRegistrationToken());
 
-        using var ctx = _api.GetDbContext();
-        using var userManager = _api.GetUserManager();
+        using var ctx = _back.GetDbContext();
+        using var userManager = _back.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.Status.Should().Be(UserRegisterStatus.Pending);
@@ -72,12 +72,12 @@ public partial class IntegrationTests
     public async Task Should_not_register_user_twice()
     {
         // Arrange
-        var client = _api.GetClient();
+        var client = _back.GetClient();
 
         var email = TestData.Email;
         await client.CreatePendingUserRegister(email);
 
-        var token = await _api.GetRegisterSetupToken(email);
+        var token = await _back.GetRegisterSetupToken(email);
         var firstResponse = await client.FinishUserRegister(token!, "Lalala@123");
 
         // Act
@@ -87,8 +87,8 @@ public partial class IntegrationTests
         firstResponse.ShouldBeSuccess();
         secondResponse.ShouldBeError(new UserAlreadyRegistered());
 
-        using var ctx = _api.GetDbContext();
-        using var userManager = _api.GetUserManager();
+        using var ctx = _back.GetDbContext();
+        using var userManager = _back.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.Status.Should().Be(UserRegisterStatus.Finished);
@@ -111,11 +111,11 @@ public partial class IntegrationTests
     public async Task Should_not_register_user_with_a_invalid_password(string password)
     {
         // Arrange
-        var client = _api.GetClient();
+        var client = _back.GetClient();
 
         var email = TestData.Email;
         await client.CreatePendingUserRegister(email);
-        var token = await _api.GetRegisterSetupToken(email);
+        var token = await _back.GetRegisterSetupToken(email);
 
         // Act
         var response = await client.FinishUserRegister(token!, password);
@@ -123,8 +123,8 @@ public partial class IntegrationTests
         // Assert
         response.ShouldBeError(new WeakPassword());
 
-        using var ctx = _api.GetDbContext();
-        using var userManager = _api.GetUserManager();
+        using var ctx = _back.GetDbContext();
+        using var userManager = _back.GetUserManager();
 
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
         register.Status.Should().Be(UserRegisterStatus.Pending);

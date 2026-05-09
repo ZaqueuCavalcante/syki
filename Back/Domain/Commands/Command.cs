@@ -78,7 +78,7 @@ public class Command
     ) {
         Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
-        Type = data.GetType().ToString();
+        Type = data.GetType().Name;
         Data = data.Serialize();
         CreatedAt = DateTime.UtcNow;
         ParentId = parentId;

@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_get_webhook_subscription()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         CreateWebhookSubscriptionOut webhookSubscription = await client.CreateWebhookSubscription();
 
         // Act

@@ -6,9 +6,9 @@ public partial class IntegrationTests
     public async Task Should_assign_disciplines_to_teacher()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
-        await client.AddStartedAdsClasses(data, _api);
+        await client.AddStartedAdsClasses(data, _back);
 
         // Act
         var response = await client.AssignDisciplinesToTeacher(
@@ -24,7 +24,7 @@ public partial class IntegrationTests
     public async Task Should_not_assign_disciplines_to_teacher_when_teacher_is_missing()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.AssignDisciplinesToTeacher(Guid.CreateVersion7(), []);
@@ -37,9 +37,9 @@ public partial class IntegrationTests
     public async Task Should_not_assign_disciplines_to_teacher_when_disciplines_are_invalid()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
-        await client.AddStartedAdsClasses(data, _api);
+        await client.AddStartedAdsClasses(data, _back);
 
         // Act
         var response = await client.AssignDisciplinesToTeacher(

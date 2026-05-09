@@ -6,11 +6,11 @@ public partial class IntegrationTests
     public async Task Should_return_teacher_class_students()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _api);
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
 
         await teacherClient.AddClassActivityNote(data.AdsClasses.DiscreteMath.Id, data.Student.Id, ClassNoteType.N1, 50, 8);
         await teacherClient.AddClassActivityNote(data.AdsClasses.DiscreteMath.Id, data.Student.Id, ClassNoteType.N1, 50, 10);

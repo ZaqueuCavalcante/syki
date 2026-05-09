@@ -1,11 +1,11 @@
 using System.Diagnostics;
+using Syki.Back.Commands.Domain.Enums;
 using Syki.Back.Commands.Domain.Commands;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Syki.Back.Features.Academic.CreateCourse;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Syki.Back.Features.Academic.CreateAcademicPeriod;
-using Syki.Back.Commands.Domain.Enums;
 
 namespace Syki.Back.Database;
 
@@ -101,6 +101,9 @@ public static class DbContextExtensions
     public static async Task ResetTestDbAsync(this SykiDbContext ctx)
     {
         if (!Env.IsTesting()) return;
+
+        var cnn = ctx.Database.GetDbConnection().ConnectionString;
+        if (!cnn.Contains("Host=localhost;")) throw new Exception("WRONG TESTS DB");
 
         await ctx.Database.EnsureDeletedAsync();
         await ctx.Database.MigrateAsync();

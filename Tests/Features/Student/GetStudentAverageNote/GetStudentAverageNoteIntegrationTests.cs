@@ -6,11 +6,11 @@ public partial class IntegrationTests
     public async Task Should_get_student_average_note_just_after_enrollment()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _api);
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
+        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
 
         // Act
         var response = await studentClient.GetStudentAverageNote();
@@ -23,12 +23,12 @@ public partial class IntegrationTests
     public async Task Should_get_student_average_notes_after_teacher_add_1_note()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _api);
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
 
         await teacherClient.AddClassActivityNote(data.AdsClasses.DiscreteMath.Id, data.Student.Id, ClassNoteType.N1, 50, 8);
         
@@ -43,12 +43,12 @@ public partial class IntegrationTests
     public async Task Should_get_student_average_notes_after_teacher_add_2_notes()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _api);
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
 
         await teacherClient.AddClassActivityNote(data.AdsClasses.DiscreteMath.Id, data.Student.Id, ClassNoteType.N1, 50, 10);
         await teacherClient.AddClassActivityNote(data.AdsClasses.IntroToWebDev.Id, data.Student.Id, ClassNoteType.N1, 30, 6);
@@ -64,12 +64,12 @@ public partial class IntegrationTests
     public async Task Should_get_student_average_notes_after_teacher_add_3_notes()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _api);
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
-        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
+        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
+        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
 
         await teacherClient.AddClassActivityNote(data.AdsClasses.DiscreteMath.Id, data.Student.Id, ClassNoteType.N1, 10, 10);
         await teacherClient.AddClassActivityNote(data.AdsClasses.IntroToWebDev.Id, data.Student.Id, ClassNoteType.N1, 80, 8);

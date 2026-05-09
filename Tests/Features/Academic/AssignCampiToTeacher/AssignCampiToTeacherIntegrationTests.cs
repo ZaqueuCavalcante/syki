@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_assign_campi_to_teacher()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
         TeacherOut teacher = await client.CreateTeacher();
 
@@ -24,7 +24,7 @@ public partial class IntegrationTests
     public async Task Should_not_assign_campi_to_teacher_when_teacher_is_missing()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.AssignCampiToTeacher(Guid.CreateVersion7(), []);
@@ -37,7 +37,7 @@ public partial class IntegrationTests
     public async Task Should_not_assign_campi_to_teacher_when_campi_are_invalid()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
         TeacherOut teacher = await client.CreateTeacher();
 

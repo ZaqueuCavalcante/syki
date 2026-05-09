@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_create_class_activity()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -15,7 +15,7 @@ public partial class IntegrationTests
         await academicClient.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
-        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Act
         var response = await teacherClient.CreateClassActivity(
@@ -43,7 +43,7 @@ public partial class IntegrationTests
     public async Task Should_create_many_class_activities()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -52,7 +52,7 @@ public partial class IntegrationTests
         await academicClient.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
-        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Act
         await teacherClient.CreateClassActivity(mathClass.Id, ClassNoteType.N1, type: ClassActivityType.Work, weight: 25);
@@ -71,10 +71,10 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_activity_when_class_not_found()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
 
         TeacherOut chico = await academicClient.CreateTeacher();
-        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Act
         var response = await teacherClient.CreateClassActivity(Guid.CreateVersion7());
@@ -89,7 +89,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_class_activity_with_invalid_weight(int weight)
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -98,7 +98,7 @@ public partial class IntegrationTests
         await academicClient.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
-        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Act
         var response = await teacherClient.CreateClassActivity(mathClass.Id, weight: weight);
@@ -112,7 +112,7 @@ public partial class IntegrationTests
     public async Task Should_not_add_class_activities_with_invalid_weights(int[] weights)
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -121,7 +121,7 @@ public partial class IntegrationTests
         await academicClient.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
-        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         OneOf<CreateClassActivityOut, ErrorOut> response = new CreateClassActivityOut();
 

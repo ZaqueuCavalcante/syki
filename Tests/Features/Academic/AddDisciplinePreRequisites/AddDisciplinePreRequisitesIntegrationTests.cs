@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_add_discipline_pre_requisits()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         // Act
@@ -24,7 +24,7 @@ public partial class IntegrationTests
     public async Task Should_not_add_discipline_pre_requisits_when_course_curriculum_is_missing()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.AddDisciplinePreRequisites(Guid.CreateVersion7(), Guid.CreateVersion7(), []);
@@ -37,7 +37,7 @@ public partial class IntegrationTests
     public async Task Should_not_add_discipline_pre_requisits_when_discipline_is_missing()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         // Act
@@ -55,7 +55,7 @@ public partial class IntegrationTests
     public async Task Should_not_add_discipline_pre_requisits_when_target_discipline_is_in_pre_requisites()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         // Act
@@ -73,7 +73,7 @@ public partial class IntegrationTests
     public async Task Should_not_add_discipline_pre_requisits_when_pre_requisites_is_not_subset_of_course_curriculums_disciplines()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         // Act
@@ -91,7 +91,7 @@ public partial class IntegrationTests
     public async Task Should_not_add_discipline_pre_requisits_when_pre_requisites_have_greater_period_discipline()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         // Act
@@ -109,7 +109,7 @@ public partial class IntegrationTests
     public async Task Should_not_add_discipline_pre_requisits_when_pre_requisites_have_equal_period_discipline()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         // Act

@@ -8,7 +8,7 @@ public partial class IntegrationTests
     public async Task Should_create_teacher()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         TeacherOut teacher = await client.CreateTeacher("Richard");
@@ -23,7 +23,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var email = TestData.InvalidEmails().PickRandom().First().ToString()!;
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateTeacher("Chico", email);
@@ -36,7 +36,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_teacher_with_duplicated_email()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var email = TestData.Email;
 
         var firstResponse = await client.CreateTeacher("Chico", email);
@@ -51,13 +51,13 @@ public partial class IntegrationTests
     public async Task Should_create_teacher_only_with_teacher_role()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         TeacherOut teacher = await client.CreateTeacher();
 
         // Assert
-        using var userManager = _api.GetUserManager();
+        using var userManager = _back.GetUserManager();
         var user = await userManager.FindByEmailAsync(teacher.Email);
         var isOnlyInTeacherRole = await userManager.IsOnlyInRoleAsync(user!, UserRole.Teacher);
         isOnlyInTeacherRole.Should().BeTrue();

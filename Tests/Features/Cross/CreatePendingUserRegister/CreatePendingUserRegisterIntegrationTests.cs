@@ -8,7 +8,7 @@ public partial class IntegrationTests
     public async Task Should_create_a_pending_user_register()
     {
         // Arrange
-        var client = _api.GetClient();
+        var client = _back.GetClient();
         var email = TestData.Email;
 
         // Act
@@ -17,7 +17,7 @@ public partial class IntegrationTests
         // Assert
         response.ShouldBeSuccess();
 
-        await using var ctx = _api.GetDbContext();
+        await using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.FirstAsync(x => x.Email == email);
 
         register.Id.Should().NotBeEmpty();
@@ -30,7 +30,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_a_pending_user_register_with_invalid_email()
     {
         // Arrange
-        var client = _api.GetClient();
+        var client = _back.GetClient();
         var email = TestData.InvalidEmails().PickRandom().First().ToString()!;
 
         // Act
@@ -39,7 +39,7 @@ public partial class IntegrationTests
         // Assert
         response.ShouldBeError(new InvalidEmail());
 
-        await using var ctx = _api.GetDbContext();
+        await using var ctx = _back.GetDbContext();
         var register = await ctx.UserRegisters.FirstOrDefaultAsync(x => x.Email == email);
         register.Should().BeNull();
     }
@@ -48,7 +48,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_a_pending_user_register_with_duplicated_email()
     {
         // Arrange
-        var client = _api.GetClient();
+        var client = _back.GetClient();
         var email = TestData.Email;
 
         // Act
@@ -59,7 +59,7 @@ public partial class IntegrationTests
         firstResponse.ShouldBeSuccess();
         secondResponse.ShouldBeError(new EmailAlreadyUsed());
 
-        await using var ctx = _api.GetDbContext();
+        await using var ctx = _back.GetDbContext();
         var registers = await ctx.UserRegisters.Where(x => x.Email == email).ToListAsync();
         registers.Should().ContainSingle();
     }
@@ -68,7 +68,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_a_pending_user_register_with_duplicated_case_insensitive_email()
     {
         // Arrange
-        var client = _api.GetClient();
+        var client = _back.GetClient();
         var email = TestData.Email;
         var emailLow = $"a{email}";
         var emailUpper = $"A{email}";
@@ -81,7 +81,7 @@ public partial class IntegrationTests
         firstResponse.ShouldBeSuccess();
         secondResponse.ShouldBeError(new EmailAlreadyUsed());
 
-        using var ctx = _api.GetDbContext();
+        using var ctx = _back.GetDbContext();
         var registers = await ctx.UserRegisters.Where(x => x.Email == emailLow).ToListAsync();
         registers.Should().ContainSingle();
     }
@@ -90,7 +90,7 @@ public partial class IntegrationTests
     public async Task Should_send_a_email_confirmation_after_create_a_pending_user_register()
     {
         // Arrange
-        var client = _api.GetClient();
+        var client = _back.GetClient();
         var email = TestData.Email;
 
         // Act

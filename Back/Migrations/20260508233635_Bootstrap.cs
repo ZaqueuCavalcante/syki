@@ -24,8 +24,8 @@ namespace Back.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    type = table.Column<string>(type: "text", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false),
+                    type = table.Column<int>(type: "integer", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     processed_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     source_command_id = table.Column<Guid>(type: "uuid", nullable: true),
@@ -46,7 +46,7 @@ namespace Back.Migrations
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     type = table.Column<string>(type: "text", nullable: false),
                     data = table.Column<string>(type: "text", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     duration = table.Column<int>(type: "integer", nullable: false),
                     processed_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -59,7 +59,7 @@ namespace Back.Migrations
                     activity_id = table.Column<string>(type: "text", nullable: true),
                     max_retries = table.Column<int>(type: "integer", nullable: false),
                     retry_attempt = table.Column<int>(type: "integer", nullable: false),
-                    backoff_strategy = table.Column<string>(type: "text", nullable: false),
+                    backoff_strategy = table.Column<int>(type: "integer", nullable: false),
                     base_delay_seconds = table.Column<int>(type: "integer", nullable: false),
                     logs = table.Column<List<string>>(type: "text[]", nullable: false)
                 },
@@ -134,7 +134,7 @@ namespace Back.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     email = table.Column<string>(type: "text", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false)
+                    status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -171,7 +171,7 @@ namespace Back.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
-                    state = table.Column<string>(type: "text", nullable: false),
+                    state = table.Column<int>(type: "integer", nullable: false),
                     city = table.Column<string>(type: "text", nullable: false),
                     capacity = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -195,7 +195,7 @@ namespace Back.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
-                    type = table.Column<string>(type: "text", nullable: false)
+                    type = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -262,7 +262,7 @@ namespace Back.Migrations
                     title = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false),
                     timeless = table.Column<bool>(type: "boolean", nullable: false),
-                    target = table.Column<string>(type: "text", nullable: false),
+                    target = table.Column<int>(type: "integer", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
@@ -707,7 +707,7 @@ namespace Back.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     webhook_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    type = table.Column<string>(type: "text", nullable: false),
+                    type = table.Column<int>(type: "integer", nullable: false),
                     api_key = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -730,8 +730,8 @@ namespace Back.Migrations
                     institution_id = table.Column<Guid>(type: "uuid", nullable: false),
                     webhook_id = table.Column<Guid>(type: "uuid", nullable: false),
                     payload = table.Column<string>(type: "text", nullable: false),
-                    @event = table.Column<string>(name: "event", type: "text", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false),
+                    @event = table.Column<int>(name: "event", type: "integer", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
                     attempts_count = table.Column<int>(type: "integer", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -796,7 +796,7 @@ namespace Back.Migrations
                     course_id = table.Column<Guid>(type: "uuid", nullable: false),
                     course_curriculum_id = table.Column<Guid>(type: "uuid", nullable: false),
                     period = table.Column<string>(type: "text", nullable: false),
-                    shift = table.Column<string>(type: "text", nullable: false)
+                    shift = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -848,7 +848,7 @@ namespace Back.Migrations
                     discipline_id = table.Column<Guid>(type: "uuid", nullable: false),
                     period_id = table.Column<string>(type: "text", nullable: false),
                     vacancies = table.Column<int>(type: "integer", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
                     workload = table.Column<int>(type: "integer", nullable: false),
                     campus_id = table.Column<Guid>(type: "uuid", nullable: true),
                     teacher_id = table.Column<Guid>(type: "uuid", nullable: true)
@@ -945,7 +945,7 @@ namespace Back.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     webhook_call_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
                     status_code = table.Column<int>(type: "integer", nullable: false),
                     response = table.Column<string>(type: "text", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -972,7 +972,7 @@ namespace Back.Migrations
                     course_offering_id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     enrollment_code = table.Column<string>(type: "text", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
                     yield_coefficient = table.Column<decimal>(type: "numeric(4,2)", precision: 4, scale: 2, nullable: false)
                 },
                 constraints: table =>
@@ -1008,15 +1008,15 @@ namespace Back.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     class_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    note = table.Column<string>(type: "text", nullable: false),
+                    note = table.Column<int>(type: "integer", nullable: false),
                     title = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false),
-                    type = table.Column<string>(type: "text", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false),
+                    type = table.Column<int>(type: "integer", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
                     weight = table.Column<int>(type: "integer", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     due_date = table.Column<DateOnly>(type: "date", nullable: false),
-                    due_hour = table.Column<string>(type: "text", nullable: false)
+                    due_hour = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1039,9 +1039,9 @@ namespace Back.Migrations
                     class_id = table.Column<Guid>(type: "uuid", nullable: false),
                     number = table.Column<int>(type: "integer", nullable: false),
                     date = table.Column<DateOnly>(type: "date", nullable: false),
-                    start_at = table.Column<string>(type: "text", nullable: false),
-                    end_at = table.Column<string>(type: "text", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false)
+                    start_at = table.Column<int>(type: "integer", nullable: false),
+                    end_at = table.Column<int>(type: "integer", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1092,9 +1092,9 @@ namespace Back.Migrations
                     class_id = table.Column<Guid>(type: "uuid", nullable: true),
                     classroom_id = table.Column<Guid>(type: "uuid", nullable: true),
                     teacher_id = table.Column<Guid>(type: "uuid", nullable: true),
-                    day = table.Column<string>(type: "text", nullable: false),
-                    start = table.Column<string>(type: "text", nullable: false),
-                    end = table.Column<string>(type: "text", nullable: false)
+                    day = table.Column<int>(type: "integer", nullable: false),
+                    start = table.Column<int>(type: "integer", nullable: false),
+                    end = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1126,7 +1126,7 @@ namespace Back.Migrations
                 {
                     class_id = table.Column<Guid>(type: "uuid", nullable: false),
                     syki_student_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    student_discipline_status = table.Column<string>(type: "text", nullable: false)
+                    student_discipline_status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1155,7 +1155,7 @@ namespace Back.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     class_id = table.Column<Guid>(type: "uuid", nullable: false),
                     student_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    type = table.Column<string>(type: "text", nullable: false),
+                    type = table.Column<int>(type: "integer", nullable: false),
                     note = table.Column<decimal>(type: "numeric(4,2)", precision: 4, scale: 2, nullable: false)
                 },
                 constraints: table =>
@@ -1187,7 +1187,7 @@ namespace Back.Migrations
                     syki_student_id = table.Column<Guid>(type: "uuid", nullable: false),
                     link = table.Column<string>(type: "text", nullable: true),
                     note = table.Column<decimal>(type: "numeric", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false)
+                    status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

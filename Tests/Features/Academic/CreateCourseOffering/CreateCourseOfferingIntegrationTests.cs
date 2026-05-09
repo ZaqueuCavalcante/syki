@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_create_course_offering()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
@@ -26,7 +26,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_offering_without_campus()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateCourseOffering(Guid.CreateVersion7(), Guid.CreateVersion7(), Guid.CreateVersion7(), "2024.1", Shift.Matutino);
@@ -39,8 +39,8 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_offering_with_other_institution_campus()
     {
         // Arrange
-        var clientNovaRoma = await _api.LoggedAsAcademic();
-        var clientUfpe = await _api.LoggedAsAcademic();
+        var clientNovaRoma = await _back.LoggedAsAcademic();
+        var clientUfpe = await _back.LoggedAsAcademic();
 
         await clientNovaRoma.CreateCampus();
         CreateCampusOut campusUfpe = await clientUfpe.CreateCampus();
@@ -56,7 +56,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_offering_without_course()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         CreateCampusOut campus = await client.CreateCampus();
 
         // Act
@@ -70,8 +70,8 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_offering_with_other_institution_course()
     {
         // Arrange
-        var clientNovaRoma = await _api.LoggedAsAcademic();
-        var clientUfpe = await _api.LoggedAsAcademic();
+        var clientNovaRoma = await _back.LoggedAsAcademic();
+        var clientUfpe = await _back.LoggedAsAcademic();
 
         CreateCourseOut courseUfpe = await clientUfpe.CreateCourse("Direito", CourseType.Bacharelado, []);
         CreateCampusOut campusNovaRoma = await clientNovaRoma.CreateCampus();
@@ -87,7 +87,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_offering_without_course_curriculum()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         CreateCampusOut campus = await client.CreateCampus();
         CreateCourseOut course = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
 
@@ -102,7 +102,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_offering_with_other_course_curriculum()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         CreateCampusOut campus = await client.CreateCampus();
         CreateCourseOut courseAds = await client.CreateCourse("ADS", CourseType.Tecnologo, []);
         CreateCourseOut courseDireito = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
@@ -119,7 +119,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_offering_without_period()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         CreateCampusOut campus = await client.CreateCampus();
         CreateCourseOut course = await client.CreateCourse("Direito", CourseType.Bacharelado, []);
         CourseCurriculumOut cc = await client.CreateCourseCurriculum("Grade de ADS 1.0", course.Id);
@@ -137,7 +137,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_offering_with_invalid_shift(Shift? shift)
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         CreateCampusOut campus = await client.CreateCampus();
         AcademicPeriodOut period = await client.CreateAcademicPeriod("2024.1");
         CreateCourseOut course = await client.CreateCourse("ADS", CourseType.Tecnologo, []);
@@ -154,8 +154,8 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_offering_with_other_institution_period()
     {
         // Arrange
-        var clientNovaRoma = await _api.LoggedAsAcademic();
-        var clientUfpe = await _api.LoggedAsAcademic();
+        var clientNovaRoma = await _back.LoggedAsAcademic();
+        var clientUfpe = await _back.LoggedAsAcademic();
 
         await clientUfpe.CreateAcademicPeriod("2023.1");
 

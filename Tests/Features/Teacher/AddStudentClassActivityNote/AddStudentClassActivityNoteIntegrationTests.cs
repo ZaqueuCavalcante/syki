@@ -6,15 +6,15 @@ public partial class IntegrationTests
     public async Task Should_add_student_class_activity_note()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _api);
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
         CreateClassActivityOut work = await teacherClient.CreateClassActivity(data.AdsClasses.DiscreteMath.Id, ClassNoteType.N1, type: ClassActivityType.Work, weight: 25);
         await teacherClient.CreateClassActivity(data.AdsClasses.IntroToWebDev.Id, ClassNoteType.N2, type: ClassActivityType.Presentation, weight: 80);
 
-        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
+        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
         await studentClient.CreateClassActivityWork(work.Id, "https://github.com/ZaqueuCavalcante/syki");
 
         // Act
@@ -31,15 +31,15 @@ public partial class IntegrationTests
     public async Task Should_not_add_student_class_activity_note_when_activity_not_found()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
-        await academicClient.AddStartedAdsClasses(data, _api);
+        await academicClient.AddStartedAdsClasses(data, _back);
 
-        var teacherClient = await _api.LoggedAsTeacher(data.Teacher.Email);
+        var teacherClient = await _back.LoggedAsTeacher(data.Teacher.Email);
         CreateClassActivityOut work = await teacherClient.CreateClassActivity(data.AdsClasses.DiscreteMath.Id, ClassNoteType.N1, type: ClassActivityType.Work, weight: 25);
         await teacherClient.CreateClassActivity(data.AdsClasses.IntroToWebDev.Id, ClassNoteType.N2, type: ClassActivityType.Presentation, weight: 80);
 
-        var studentClient = await _api.LoggedAsStudent(data.Student.Email);
+        var studentClient = await _back.LoggedAsStudent(data.Student.Email);
         await studentClient.CreateClassActivityWork(work.Id, "https://github.com/ZaqueuCavalcante/syki");
 
         // Act

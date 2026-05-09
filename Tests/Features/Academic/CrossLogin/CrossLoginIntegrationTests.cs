@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_cross_login_from_academic_to_teacher_account()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         TeacherOut teacher = await client.CreateTeacher();
 
         // Act
@@ -23,7 +23,7 @@ public partial class IntegrationTests
     public async Task Should_cross_login_from_academic_to_student_account()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
@@ -42,10 +42,10 @@ public partial class IntegrationTests
     public async Task Should_not_cross_login_from_academic_to_another_institution_teacher_account()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         await client.CreateTeacher();
 
-        var otherClient = await _api.LoggedAsAcademic();
+        var otherClient = await _back.LoggedAsAcademic();
         TeacherOut otherTeacher = await otherClient.CreateTeacher();
 
         // Act
@@ -59,11 +59,11 @@ public partial class IntegrationTests
     public async Task Should_not_cross_login_from_academic_to_another_institution_student_account()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
         await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
 
-        var otherClient = await _api.LoggedAsAcademic();
+        var otherClient = await _back.LoggedAsAcademic();
         var otherData = await otherClient.CreateBasicInstitutionData();
         StudentOut otherStudent = await otherClient.CreateStudent(otherData.AdsCourseOffering.Id, "Zezin");
 
@@ -78,13 +78,13 @@ public partial class IntegrationTests
     public async Task Should_not_cross_login_from_teacher_to_academic_account()
     {
         // Arrange
-        var client = _api.GetClient();
-        var academicUser = await client.RegisterAcademicUser(_api);
+        var client = _back.GetClient();
+        var academicUser = await client.RegisterAcademicUser(_back);
         await client.Login(academicUser.Email, academicUser.Password);
         var academicClient = new AcademicHttpClient(client);
 
         TeacherOut teacher = await academicClient.CreateTeacher();
-        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
+        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
 
         // Act
         var response = await teacherClient.Cross.CrossLogin(academicUser.Id);
@@ -97,14 +97,14 @@ public partial class IntegrationTests
     public async Task Should_not_cross_login_from_student_to_academic_account()
     {
         // Arrange
-        var client = _api.GetClient();
-        var academicUser = await client.RegisterAcademicUser(_api);
+        var client = _back.GetClient();
+        var academicUser = await client.RegisterAcademicUser(_back);
         await client.Login(academicUser.Email, academicUser.Password);
         var academicClient = new AcademicHttpClient(client);
 
         var data = await academicClient.CreateBasicInstitutionData();
         StudentOut student = await academicClient.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _api.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var response = await studentClient.Http.CrossLogin(academicUser.Id);
@@ -117,9 +117,9 @@ public partial class IntegrationTests
     public async Task Should_not_cross_login_when_feature_flag_is_disabled()
     {
         // Arrange
-        var admClient = await _api.LoggedAsAdm();
+        var admClient = await _back.LoggedAsAdm();
 
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         TeacherOut teacher = await client.CreateTeacher();
 
         // Act

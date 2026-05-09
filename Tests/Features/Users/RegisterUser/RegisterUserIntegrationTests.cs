@@ -18,7 +18,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Users_RegisterUser_Should_not_create_user_with_invalid_email(string email)
     {
         // Arrange
-        var client = _api.GetTestsClient();
+        var client = _back.GetTestsClient();
 
         // Act
         var response = await client.RegisterUser(email);
@@ -37,7 +37,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Users_RegisterUser_Should_not_create_user_with_already_used_email()
     {
         // Arrange
-        var client = _api.GetTestsClient();
+        var client = _back.GetTestsClient();
 
         var email = DataGen.Email;
         await client.RegisterUser(email);
@@ -53,7 +53,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Users_RegisterUser_Should_not_create_user_with_already_used_email_different_casing()
     {
         // Arrange
-        var client = _api.GetTestsClient();
+        var client = _back.GetTestsClient();
 
         var email = DataGen.Email.ToUpper();
         await client.RegisterUser(email);
@@ -77,7 +77,7 @@ public partial class IntegrationTests : IntegrationTestBase
     public async Task Users_RegisterUser_Should_create_a_new_user()
     {
        // Arrange
-        var client = _api.GetTestsClient();
+        var client = _back.GetTestsClient();
         var email = DataGen.Email;
 
         // Act

@@ -6,14 +6,14 @@ public partial class IntegrationTests
     public async Task Should_not_return_teacher_on_pre_enrollment_classes()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2;
 
         TeacherOut chico = await client.CreateTeacher("Chico");
         await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
 
-        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Act
         var classes = await teacherClient.GetTeacherClasses();
@@ -26,7 +26,7 @@ public partial class IntegrationTests
     public async Task Should_not_return_teacher_on_enrollment_classes()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2;
 
@@ -37,7 +37,7 @@ public partial class IntegrationTests
 
         await client.ReleaseClassesForEnrollment([discreteMathClass.Id]);
 
-        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Act
         var classes = await teacherClient.GetTeacherClasses();
@@ -50,7 +50,7 @@ public partial class IntegrationTests
     public async Task Should_not_return_other_teacher_classes()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2;
 
@@ -59,7 +59,7 @@ public partial class IntegrationTests
 
         await client.CreateClass(data.AdsDisciplines.IntroToComputerNetworks.Id, data.Campus.Id, ana.Id, period.Id, 40, [new(Day.Wednesday, Hour.H07_00, Hour.H10_00)]);
 
-        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Act
         var classes = await teacherClient.GetTeacherClasses();

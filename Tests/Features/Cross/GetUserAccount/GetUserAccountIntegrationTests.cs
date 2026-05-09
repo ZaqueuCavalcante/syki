@@ -6,8 +6,8 @@ public partial class IntegrationTests
     public async Task Should_get_user_account()
     {
         // Arrange
-        var client = _api.GetClient();
-        var user = await client.RegisterAcademicUser(_api);
+        var client = _back.GetClient();
+        var user = await client.RegisterAcademicUser(_back);
         await client.Login(user.Email, user.Password);
 
         // Act

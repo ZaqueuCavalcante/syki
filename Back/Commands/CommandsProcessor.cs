@@ -130,11 +130,11 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory) : IJob
     /// See <see cref="CommandStatus"/> for status mapping
     /// </summary>
     private static readonly string Sql = @"
-        UPDATE web.commands
+        UPDATE syki.commands
         SET processor_id = {0}, status = 2
         WHERE ctid IN (
             SELECT ctid
-            FROM web.commands
+            FROM syki.commands
             WHERE processor_id IS NULL AND status = 0 AND (not_before IS NULL OR not_before < NOW())
             ORDER BY created_at
             FOR UPDATE SKIP LOCKED

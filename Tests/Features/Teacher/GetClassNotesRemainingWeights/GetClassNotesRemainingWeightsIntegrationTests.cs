@@ -10,7 +10,7 @@ public partial class IntegrationTests
     public async Task Should_return_class_notes_remaining_weights(int[] n1Weights, int[] n2Weights, int[] n3Weights, int[] result)
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -19,7 +19,7 @@ public partial class IntegrationTests
         await academicClient.AssignDisciplinesToTeacher(chico.Id, [data.AdsDisciplines.DiscreteMath.Id]);
         ClassOut mathClass = await academicClient.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period, 40, [ new(Day.Monday, Hour.H07_00, Hour.H10_00) ]);
 
-        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Act
         foreach (var weight in n1Weights)

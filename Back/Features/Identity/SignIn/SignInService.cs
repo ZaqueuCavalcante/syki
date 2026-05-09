@@ -16,18 +16,15 @@ public class SignInService(
     public async Task<SignInOut> SignIn(string email)
     {
         var user = (await userManager.FindByEmailAsync(email))!;
-        var role = (await userManager.GetRolesAsync(user))[0];
 
         var claims = new List<Claim>
         {
             new(Claims.Jti, Guid.NewGuid().ToString()),
             new(Claims.UserId, user.Id.ToString()),
-            new(Claims.UserRole, role),
             new(Claims.UserName, user.Name),
             new(Claims.UserEmail, user.Email!),
             new(Claims.InstitutionId, user.InstitutionId.ToString()),
         };
-        claims.AddRange(await GetDbClaims(user.Id, role));
 
         var identityClaims = new ClaimsIdentity();
         identityClaims.AddClaims(claims);
@@ -57,6 +54,7 @@ public class SignInService(
         {
             UserId = user.Id,
             Permissions = [],
+            InstitutionId = user.InstitutionId,
         };
     }
 

@@ -6,8 +6,8 @@ public partial class IntegrationTests
     public async Task Should_login_when_supply_right_totp()
     {
         // Arrange
-        var client = _api.GetClient();
-        var user = await client.RegisterAcademicUser(_api);
+        var client = _back.GetClient();
+        var user = await client.RegisterAcademicUser(_back);
         await client.Login(user.Email, user.Password);
 
         var keyResponse = await client.GetMfaKey();
@@ -32,7 +32,7 @@ public partial class IntegrationTests
     public async Task Should_not_login_with_right_totp_but_without_supply_email_and_password()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         var keyResponse = await client.Http.GetMfaKey();
         var totp = keyResponse.Key.GenerateTOTP();
@@ -49,8 +49,8 @@ public partial class IntegrationTests
     public async Task Should_not_login_when_supply_wrong_totp()
     {
         // Arrange
-        var client = _api.GetClient();
-        var user = await client.RegisterAcademicUser(_api);
+        var client = _back.GetClient();
+        var user = await client.RegisterAcademicUser(_back);
         await client.Login(user.Email, user.Password);
 
         var keyResponse = await client.GetMfaKey();

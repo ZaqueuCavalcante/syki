@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_create_lesson_attendance_for_empty_class()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await academicClient.CreateCampus();
         var period = await academicClient.CreateCurrentAcademicPeriod();
@@ -18,7 +18,7 @@ public partial class IntegrationTests
 
         ClassOut @class = await academicClient.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, schedules);
 
-        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
+        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         GetAcademicClassOut classDb = await academicClient.GetAcademicClass(@class.Id);
         var lessonId = classDb.Lessons[0].Id;
 
@@ -33,10 +33,10 @@ public partial class IntegrationTests
     public async Task Should_not_create_lesson_attendance_when_lesson_not_exists()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
 
         TeacherOut chico = await academicClient.CreateTeacher("Chico");
-        var teacherClient = await _api.LoggedAsTeacher(chico.Email);
+        var teacherClient = await _back.LoggedAsTeacher(chico.Email);
 
         // Act
         var response = await teacherClient.CreateLessonAttendance(Guid.CreateVersion7(), []);
@@ -49,7 +49,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_lesson_attendance_when_lesson_is_not_linked_with_the_class()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await academicClient.CreateCampus();
         var period = await academicClient.CreateCurrentAcademicPeriod();
@@ -66,7 +66,7 @@ public partial class IntegrationTests
         await academicClient.AssignDisciplinesToTeacher(teacher2.Id, [discipline.Id]);
         ClassOut class2 = await academicClient.CreateClass(discipline.Id, campus.Id, teacher2.Id, period.Id, 40, schedules);
 
-        var teacherClient = await _api.LoggedAsTeacher(teacher1.Email);
+        var teacherClient = await _back.LoggedAsTeacher(teacher1.Email);
         GetAcademicClassOut classDb = await academicClient.GetAcademicClass(class2.Id);
         var lessonId = classDb.Lessons[0].Id;
 
@@ -81,7 +81,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_lesson_attendance_when_student_list_is_invalid()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await academicClient.CreateCampus();
         var period = await academicClient.CreateCurrentAcademicPeriod();
@@ -93,7 +93,7 @@ public partial class IntegrationTests
         await academicClient.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
         ClassOut @class = await academicClient.CreateClass(discipline.Id, campus.Id, teacher.Id, period.Id, 40, schedules);
 
-        var teacherClient = await _api.LoggedAsTeacher(teacher.Email);
+        var teacherClient = await _back.LoggedAsTeacher(teacher.Email);
         GetAcademicClassOut classDb = await academicClient.GetAcademicClass(@class.Id);
         var lessonId = classDb.Lessons[0].Id;
 

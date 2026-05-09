@@ -8,17 +8,17 @@ namespace Syki.Shared;
 public enum CommandStatus
 {
     [Description("Pendente")]
-    Pending,
+    Pending = 0,
 
     [Description("Aguardando")]
-    Awaiting,
+    Awaiting = 1,
 
     [Description("Processando")]
-    Processing,
+    Processing = 2,
 
     [Description("Sucesso")]
-    Success,
+    Success = 3,
 
     [Description("Erro")]
-    Error,
+    Error = 4,
 }

@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_assign_class_to_classroom_for_most_simple_case()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
@@ -24,7 +24,7 @@ public partial class IntegrationTests
 
         // Assert
         response.ShouldBeSuccess();
-        var classrooms = await _api.GetDbContext().ClassroomsClasses.Where(x => x.ClassroomId == classroom.Id).ToListAsync();
+        var classrooms = await _back.GetDbContext().ClassroomsClasses.Where(x => x.ClassroomId == classroom.Id).ToListAsync();
         classrooms.Single().ClassId.Should().Be(@class.Id);
     }
 
@@ -32,7 +32,7 @@ public partial class IntegrationTests
     public async Task Should_not_assign_class_to_classroom_when_classroom_not_found()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.AssignClassToClassroom(Guid.NewGuid(), Guid.NewGuid(), []);
@@ -45,7 +45,7 @@ public partial class IntegrationTests
     public async Task Should_not_assign_class_to_classroom_when_class_not_found()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         CreateClassroomOut classroom = await client.CreateClassroom(campus.Id, "Sala 05", 25);
@@ -61,7 +61,7 @@ public partial class IntegrationTests
     public async Task Should_not_assign_class_to_classroom_when_class_vacancies_are_greater_than_classroom_capacity()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
@@ -84,7 +84,7 @@ public partial class IntegrationTests
     public async Task Should_not_assign_class_to_classroom_with_one_invalid_schedule()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
@@ -109,7 +109,7 @@ public partial class IntegrationTests
     public async Task Should_not_assign_class_to_classroom_with_two_invalid_schedule()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
@@ -139,7 +139,7 @@ public partial class IntegrationTests
     public async Task Should_not_assign_class_to_classroom_with_conflicting_schedules()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();

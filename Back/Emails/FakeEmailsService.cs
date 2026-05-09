@@ -1,13 +1,19 @@
 namespace Syki.Back.Emails;
 
-public class FakeEmailsService(EmailSettings settings) : IEmailsService
+public class FakeEmailsService : IEmailsService
 {
+    private readonly EmailSettings _settings;
     public List<string> FirstAccessMagicLinkEmails = [];
+
+    public FakeEmailsService(IConfiguration configuration)
+    {
+        _settings = configuration.Email;
+    }
 
     public async Task SendFirstAccessMagicLinkEmail(string to, string token)
     {
         await Task.Yield();
-        var link = $"{settings.FrontUrl}/magic-link?token={token}";
+        var link = $"{_settings.FrontUrl}/magic-link?token={token}";
         Console.WriteLine($"[{to} -> {link}]");
         FirstAccessMagicLinkEmails.Add($"[{to} -> {link}]");
     }
@@ -31,7 +37,7 @@ public class FakeEmailsService(EmailSettings settings) : IEmailsService
     public async Task SendResetPasswordEmail(string to, string token)
     {
         await Task.Delay(0);
-        var link = $"{settings.FrontUrl}/reset-password?token={token}";
+        var link = $"{_settings.FrontUrl}/reset-password?token={token}";
         Console.WriteLine($"[{to} -> {link}]");
         ResetPasswordEmails.Add($"[{to} -> {link}]");
     }
@@ -39,7 +45,7 @@ public class FakeEmailsService(EmailSettings settings) : IEmailsService
     public async Task SendUserRegisterEmailConfirmation(string to, string token)
     {
         await Task.Delay(0);
-        var link = $"{settings.FrontUrl}/register-setup?token={token}";
+        var link = $"{_settings.FrontUrl}/register-setup?token={token}";
         Console.WriteLine($"[{to} -> {link}]");
         UserRegisterEmailConfirmationEmails.Add($"[{to} -> {link}]");
     }

@@ -11,3 +11,11 @@ public class EmailSettings
         configuration.GetSection("Email").Bind(this);
     }
 }
+
+public static class EmailSettingsExtensions
+{
+    extension(IConfiguration configuration)
+    {
+        public EmailSettings Email => new(configuration);
+    }
+}

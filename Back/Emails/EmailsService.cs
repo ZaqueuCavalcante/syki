@@ -9,11 +9,11 @@ public class EmailsService : IEmailsService
     private readonly EmailSettings _settings;
     private static readonly ConcurrentDictionary<string, string> Templates = new();
 
-    public EmailsService(EmailSettings settings)
+    public EmailsService(IConfiguration configuration)
     {
-        _settings = settings;
-        _client = new HttpClient { BaseAddress = new Uri(settings.ApiUrl) };
-        _client.DefaultRequestHeaders.Add("api-key", settings.ApiKey);
+        _settings = configuration.Email;
+        _client = new HttpClient { BaseAddress = new Uri(_settings.ApiUrl) };
+        _client.DefaultRequestHeaders.Add("api-key", _settings.ApiKey);
     }
 
     public async Task SendFirstAccessMagicLinkEmail(string to, string token)

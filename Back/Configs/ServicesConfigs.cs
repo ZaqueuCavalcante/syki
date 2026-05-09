@@ -1,3 +1,4 @@
+using Syki.Back.Emails;
 using Syki.Back.Storage;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -13,10 +14,12 @@ public static class ServicesConfigs
         builder.Services.AddServices(typeof(ITeacherService));
         builder.Services.AddServices(typeof(IAcademicService));
 
+        builder.Services.AddScoped<IEmailsService, EmailsService>();
         builder.Services.AddScoped<IStorageService, AzureBlobStorageService>();
 
         if (Env.IsDevelopment() || Env.IsTesting())
         {
+            builder.Services.Replace(ServiceDescriptor.Singleton<IEmailsService, FakeEmailsService>());
             builder.Services.Replace(ServiceDescriptor.Singleton<IStorageService, FakeStorageService>());
         }
     }

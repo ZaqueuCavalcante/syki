@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_create_discipline_without_course()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var discipline = await client.CreateDiscipline("Banco de Dados");
@@ -22,7 +22,7 @@ public partial class IntegrationTests
     public async Task Should_create_discipline_with_only_one_course()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         CreateCourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
 
         // Act
@@ -37,7 +37,7 @@ public partial class IntegrationTests
     public async Task Should_create_discipline_with_many_courses()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         CreateCourseOut ads = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo, []);
         CreateCourseOut cc = await client.CreateCourse("Ciência da Computação", CourseType.Bacharelado, []);
 
@@ -53,10 +53,10 @@ public partial class IntegrationTests
     public async Task Should_not_link_other_institution_course_to_discipline()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         await client.CreateCourse("ADS", CourseType.Tecnologo, []);
 
-        var otherClient = await _api.LoggedAsAcademic();
+        var otherClient = await _back.LoggedAsAcademic();
         CreateCourseOut otherCourse = await otherClient.CreateCourse("ADS", CourseType.Tecnologo, []);
         
         // Act

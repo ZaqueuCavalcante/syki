@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_create_campus()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         CreateCampusOut campus = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru", 123);
@@ -25,7 +25,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_campus_with_invalid_name(string name)
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateCampus(name, BrazilState.PE, "Caruaru", 123);
@@ -40,7 +40,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_campus_with_invalid_brazil_state(BrazilState? state)
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateCampus("Agreste", state, "Caruaru", 123);
@@ -55,7 +55,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_campus_with_invalid_city(string city)
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateCampus("Agreste", BrazilState.PE, city, 123);
@@ -70,7 +70,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_campus_with_invalid_capacity(int capacity)
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", capacity);

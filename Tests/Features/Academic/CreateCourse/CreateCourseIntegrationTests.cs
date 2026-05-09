@@ -9,7 +9,7 @@ public partial class IntegrationTests
     public async Task Should_create_course()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         CreateCourseOut course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", Bacharelado, []);
@@ -25,7 +25,7 @@ public partial class IntegrationTests
     public async Task Should_create_course_with_disciplines()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         CreateCourseOut course = await client.CreateCourse("ADS", Bacharelado, ["Programação Orientada a Objetos", "Banco de Dados"]);
@@ -46,7 +46,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_with_invalid_name(string name)
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateCourse(name, Bacharelado, []);
@@ -61,7 +61,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_with_invalid_type(CourseType? type)
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", type, []);
@@ -74,7 +74,7 @@ public partial class IntegrationTests
     public async Task Should_not_create_course_without_type()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.Http.PostAsJsonAsync("/academic/courses", new { Name = "ADS" });

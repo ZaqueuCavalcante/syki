@@ -8,7 +8,7 @@ public partial class IntegrationTests
     public async Task Should_logout()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.Http.Logout();

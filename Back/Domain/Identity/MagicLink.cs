@@ -14,15 +14,15 @@ public class MagicLink
     {
         Id = Guid.NewGuid();
         UserId = userId;
-        CreatedAt = DateTime.Now;
-        ExpiresAt = DateTime.Now.Add(TimeSpan.FromHours(24));
+        CreatedAt = DateTime.UtcNow;
+        ExpiresAt = DateTime.UtcNow.Add(TimeSpan.FromHours(24));
     }
 
     public bool IsUsed() => UsedAt != null;
-    public bool IsExpired() => DateTime.Now > ExpiresAt;
+    public bool IsExpired() => DateTime.UtcNow > ExpiresAt;
 
     public void Use()
     {
-        UsedAt = DateTime.Now;
+        UsedAt = DateTime.UtcNow;
     }
 }

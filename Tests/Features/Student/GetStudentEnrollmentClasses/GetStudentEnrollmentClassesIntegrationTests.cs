@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_return_only_classes_of_student_course_curriculum_with_enrollment_status()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2;
 
@@ -29,7 +29,7 @@ public partial class IntegrationTests
         StudentOut zaqueu = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
         StudentOut maju = await client.CreateStudent(data.DireitoCourseOffering.Id, "Maju");
 
-        var studentClient = await _api.LoggedAsStudent(zaqueu.Email);
+        var studentClient = await _back.LoggedAsStudent(zaqueu.Email);
 
         // Act
         var classes = await studentClient.GetStudentEnrollmentClasses();
@@ -43,7 +43,7 @@ public partial class IntegrationTests
     public async Task Should_not_return_any_class_without_enrollment_period()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         var period = data.AcademicPeriod2;
@@ -51,7 +51,7 @@ public partial class IntegrationTests
         await client.CreateClass(data.AdsDisciplines.DiscreteMath.Id, data.Campus.Id, chico.Id, period.Id, 40, [new(Day.Monday, Hour.H07_00, Hour.H10_00)]);
 
         StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _api.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var classes = await studentClient.GetStudentEnrollmentClasses();
@@ -64,7 +64,7 @@ public partial class IntegrationTests
     public async Task Should_not_return_any_class_before_enrollment_period_start()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         var period = data.AcademicPeriod2;
@@ -74,7 +74,7 @@ public partial class IntegrationTests
         await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id, 2, 4);
 
         StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _api.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var classes = await studentClient.GetStudentEnrollmentClasses();
@@ -87,7 +87,7 @@ public partial class IntegrationTests
     public async Task Should_not_return_any_on_pre_enrollment_class_after_enrollment_period_end()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         var period = data.AcademicPeriod2;
@@ -97,7 +97,7 @@ public partial class IntegrationTests
         await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id, -4, -2);
 
         StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _api.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var classes = await studentClient.GetStudentEnrollmentClasses();
@@ -110,7 +110,7 @@ public partial class IntegrationTests
     public async Task Should_not_return_any_on_enrollment_class_after_enrollment_period_end()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         var period = data.AcademicPeriod2;
@@ -125,7 +125,7 @@ public partial class IntegrationTests
         await client.UpdateEnrollmentPeriod(data.AcademicPeriod2.Id, -4, -1);
 
         StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _api.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var classes = await studentClient.GetStudentEnrollmentClasses();
@@ -138,7 +138,7 @@ public partial class IntegrationTests
     public async Task Should_not_return_any_student_on_pre_enrollment_class()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         var data = await client.CreateBasicInstitutionData();
 
         var period = data.AcademicPeriod2;
@@ -151,7 +151,7 @@ public partial class IntegrationTests
         await client.CreateEnrollmentPeriod(data.AcademicPeriod2.Id, -2, 2);
 
         StudentOut student = await client.CreateStudent(data.AdsCourseOffering.Id, "Zaqueu");
-        var studentClient = await _api.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
 
         // Act
         var classes = await studentClient.GetStudentEnrollmentClasses();

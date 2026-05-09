@@ -105,11 +105,6 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
         ConfigureDatabaseNames(modelBuilder);
     }
 
-    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-    {
-        configurationBuilder.Properties<Enum>().HaveConversion<string>();
-    }
-
     private static void ConfigureDatabaseNames(ModelBuilder modelBuilder)
     {
         foreach (var entity in modelBuilder.Model.GetEntityTypes())

@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_return_course_disciplines()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
         CreateCourseOut ads = await client.CreateCourse(
             "Análise e Desenvolvimento de Sistemas",
             CourseType.Tecnologo,

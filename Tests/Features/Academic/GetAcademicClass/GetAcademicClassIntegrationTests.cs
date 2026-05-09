@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Should_return_academic_class()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         CreateCampusOut campus = await client.CreateCampus();
         var period = await client.CreateCurrentAcademicPeriod();
@@ -30,7 +30,7 @@ public partial class IntegrationTests
     public async Task Should_return_academic_class_with_awaiting_start_status_when_enrollment_period_ends()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2;
         await academicClient.CreateEnrollmentPeriod(period.Id);
@@ -55,7 +55,7 @@ public partial class IntegrationTests
     public async Task Should_return_academic_class_with_fill_ratio()
     {
         // Arrange
-        var academicClient = await _api.LoggedAsAcademic();
+        var academicClient = await _back.LoggedAsAcademic();
         var data = await academicClient.CreateBasicInstitutionData();
         var period = data.AcademicPeriod2.Id;
 
@@ -70,7 +70,7 @@ public partial class IntegrationTests
 
         await academicClient.ReleaseClassesForEnrollment([mathClass.Id]);
 
-        var studentClient = await _api.LoggedAsStudent(student.Email);
+        var studentClient = await _back.LoggedAsStudent(student.Email);
         await studentClient.CreateStudentEnrollment([mathClass.Id]);
 
         // Act
@@ -84,7 +84,7 @@ public partial class IntegrationTests
     public async Task Should_not_get_random_academic_class()
     {
         // Arrange
-        var client = await _api.LoggedAsAcademic();
+        var client = await _back.LoggedAsAcademic();
 
         // Act
         var response = await client.GetAcademicClass(Guid.CreateVersion7());

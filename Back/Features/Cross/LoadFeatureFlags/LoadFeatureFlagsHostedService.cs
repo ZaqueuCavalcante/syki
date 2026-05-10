@@ -4,7 +4,7 @@ public class LoadFeatureFlagsHostedService(IServiceScopeFactory serviceScopeFact
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        if (Env.IsTesting()) return;
+        if (EnvironmentExtensions.IsTesting()) return;
 
         await Task.Delay(10_000, cancellationToken);
 

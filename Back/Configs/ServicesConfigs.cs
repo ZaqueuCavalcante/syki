@@ -17,7 +17,7 @@ public static class ServicesConfigs
         builder.Services.AddScoped<IEmailsService, EmailsService>();
         builder.Services.AddScoped<IStorageService, AzureBlobStorageService>();
 
-        if (Env.IsDevelopment() || Env.IsTesting())
+        if (EnvironmentExtensions.IsDevelopment() || EnvironmentExtensions.IsTesting())
         {
             builder.Services.Replace(ServiceDescriptor.Singleton<IEmailsService, FakeEmailsService>());
             builder.Services.Replace(ServiceDescriptor.Singleton<IStorageService, FakeStorageService>());

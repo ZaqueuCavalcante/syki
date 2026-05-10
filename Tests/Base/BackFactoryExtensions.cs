@@ -99,30 +99,6 @@ public static class BackFactoryExtensions
         return new(client);
     }
 
-    public static async Task RegisterAdm(this BackFactory factory)
-    {
-        await using var ctx = factory.GetDbContext();
-        using var userManager = factory.GetUserManager();
-
-        var institution = new Institution { Id = Guid.Empty, Name = "Syki", CreatedAt = DateTime.UtcNow };
-        ctx.Add(institution);
-        await ctx.SaveChangesAsync();
-
-        var userIn = new CreateUserIn
-        {
-            Name = "Adm",
-            Email = "adm@syki.com",
-            Role = UserRole.Adm,
-            Password = "Test@123",
-            InstitutionId = institution.Id,
-        };
-
-        var user = new SykiUser(institution.Id, userIn.Name, userIn.Email);
-        await userManager.CreateAsync(user, userIn.Password);
-
-        await userManager.AddToRoleAsync(user, userIn.Role.ToString());
-    }
-
     public static async Task<AdmHttpClient> LoggedAsAdm(this BackFactory factory)
     {
         var client = factory.GetClient();

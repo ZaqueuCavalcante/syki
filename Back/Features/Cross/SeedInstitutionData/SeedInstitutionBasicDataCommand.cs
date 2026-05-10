@@ -13,7 +13,7 @@ public class SeedInstitutionBasicDataCommandHandler(SykiDbContext ctx) : IComman
 {
     public async Task Handle(Guid commandId, SeedInstitutionBasicDataCommand command)
     {
-        if (Env.IsTesting()) return;
+        if (EnvironmentExtensions.IsTesting()) return;
 
         var id = command.InstitutionId;
         var institution = await ctx.Institutions.FirstAsync(f => f.Id == id);

@@ -92,21 +92,10 @@ public static class DbContextExtensions
 
     public static void ResetDevDb(this SykiDbContext ctx)
     {
-        if (!Env.IsDevelopment()) return;
+        if (!EnvironmentExtensions.IsDevelopment()) return;
 
         ctx.Database.EnsureDeleted();
         ctx.Database.Migrate();
-    }
-
-    public static async Task ResetTestDbAsync(this SykiDbContext ctx)
-    {
-        if (!Env.IsTesting()) return;
-
-        var cnn = ctx.Database.GetDbConnection().ConnectionString;
-        if (!cnn.Contains("Host=localhost;")) throw new Exception("WRONG TESTS DB");
-
-        await ctx.Database.EnsureDeletedAsync();
-        await ctx.Database.MigrateAsync();
     }
 
     public static bool HasMissingMigration(this SykiDbContext context)

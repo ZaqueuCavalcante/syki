@@ -27,9 +27,8 @@ public partial class IntegrationTests : IntegrationTestBase
     // Business logic errors
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
     [Test]
-    public async Task MagicLinkLogin_Should_return_error_when_token_does_not_exist()
+    public async Task Identity_MagicLinkLogin_Should_return_error_when_token_does_not_exist()
     {
         // Arrange
         var client = _back.GetTestsClient();
@@ -42,7 +41,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task MagicLinkLogin_Should_return_error_when_token_is_already_used()
+    public async Task Identity_MagicLinkLogin_Should_return_error_when_token_is_already_used()
     {
         // Arrange
         var client = _back.GetTestsClient();
@@ -65,7 +64,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task MagicLinkLogin_Should_return_error_when_token_is_expired()
+    public async Task Identity_MagicLinkLogin_Should_return_error_when_token_is_expired()
     {
         // Arrange
         var client = _back.GetTestsClient();
@@ -94,7 +93,7 @@ public partial class IntegrationTests : IntegrationTestBase
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     [Test]
-    public async Task MagicLinkLogin_Should_login_successfully_with_valid_token()
+    public async Task Identity_MagicLinkLogin_Should_login_successfully_with_valid_token()
     {
         // Arrange
         var client = _back.GetTestsClient();
@@ -115,7 +114,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task MagicLinkLogin_Should_set_email_confirmed_to_true()
+    public async Task Identity_MagicLinkLogin_Should_set_email_confirmed_to_true()
     {
         // Arrange
         var client = _back.GetTestsClient();
@@ -145,7 +144,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task MagicLinkLogin_Should_enqueue_magic_link_command_on_registration()
+    public async Task Identity_MagicLinkLogin_Should_enqueue_magic_link_command_on_registration()
     {
         // Arrange
         var client = _back.GetTestsClient();

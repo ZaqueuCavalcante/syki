@@ -13,7 +13,7 @@ public partial class IntegrationTests
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        response.Headers.GetValues("X-DeployHash").Should().BeEquivalentTo([Env.DeployHash]);
+        response.Headers.GetValues("X-DeployHash").Should().BeEquivalentTo([EnvironmentExtensions.DeployHash]);
         response.Headers.GetValues("X-CrossLogin").Should().BeEquivalentTo(["True"]);
     }
 }

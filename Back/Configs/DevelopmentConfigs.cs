@@ -4,7 +4,7 @@ public static class DevelopmentConfigs
 {
     public static void RunDevelopmentConfigs(this WebApplication app)
     {
-        if (!Env.IsDevelopment()) return;
+        if (!EnvironmentExtensions.IsDevelopment()) return;
 
         var ctx = app.Services.CreateScope().ServiceProvider.GetRequiredService<SykiDbContext>();
 

@@ -1,4 +1,3 @@
-using Syki.Front.Configs;
 using System.Net.Http.Json;
 
 namespace Syki.Tests.Clients;

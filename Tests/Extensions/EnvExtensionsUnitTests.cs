@@ -6,7 +6,7 @@ public class EnvExtensionsUnitTests
     public void Should_get_deploy_hash()
     {
         // Arrange / Act
-        var hash = Env.DeployHash;
+        var hash = EnvironmentExtensions.DeployHash;
 
         // Assert
         hash.Should().HaveLength(8);
@@ -16,10 +16,10 @@ public class EnvExtensionsUnitTests
     public void Should_get_env_as_testing()
     {
         // Arrange
-        Env.SetAsTesting();
+        EnvironmentExtensions.SetAsTesting();
 
         // Act
-        var env = Env.IsTesting();
+        var env = EnvironmentExtensions.IsTesting();
 
         // Assert
         env.Should().BeTrue();

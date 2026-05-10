@@ -2,7 +2,7 @@
 
 ## Criar uma nova migration
 
-dotnet ef migrations add Bootstrap
+dotnet ef migrations add AddInstitutionRole
 
 ## Generate SQL script for migrations
 

@@ -12,9 +12,9 @@
 - Testes com ordem bem definida (auth, validation, regras de negocio, happy path)
 - Update project libs versions
 - Sistema de tranking de eventos relevantes
-- https://github.com/ZaqueuCavalcante/syki/issues/81
 - Domínio estud.com.br na Hostinger
 - SignInService deve setar o cookie internamente (mudar pra SignInService)
 - Suporte para Ensino Fundamental e Médio (pais dos alunos)
 - EnableRateLimiting com constantes e não strings soltas
 - Eliminar todos os usos do DbContextTransactionFilter
+- https://github.com/ZaqueuCavalcante/syki/issues/81

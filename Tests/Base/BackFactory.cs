@@ -13,7 +13,7 @@ public class BackFactory : WebApplicationFactory<Back::Program>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        Env.SetAsTesting();
+        EnvironmentExtensions.SetAsTesting();
 
         builder.UseTestServer();
 

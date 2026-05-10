@@ -11,7 +11,7 @@ public class SetupCurrentMetricsStore(IServiceScopeFactory serviceScopeFactory) 
 
     public async Task StopAsync(CancellationToken cancellationToken)
     {
-        if (!Env.IsTesting()) return;
+        if (!EnvironmentExtensions.IsTesting()) return;
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();

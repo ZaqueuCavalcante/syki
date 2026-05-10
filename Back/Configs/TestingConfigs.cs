@@ -4,7 +4,7 @@ public static class TestingConfigs
 {
     public static void UseTestingMetrics(this IApplicationBuilder app)
     {
-        if (!Env.IsTesting()) return;
+        if (!EnvironmentExtensions.IsTesting()) return;
 
         app.UseMiddleware<MetricsMiddleware>();
     }

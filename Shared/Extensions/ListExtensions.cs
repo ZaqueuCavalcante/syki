@@ -15,6 +15,19 @@ public static class ListExtensions
         return true;
     }
 
+    public static bool IsSubsetOf(this List<int> selfs, List<int> others)
+    {
+        HashSet<int> set = [];
+        foreach (var self in selfs)
+        {
+            if (!set.Add(self)) return false;
+
+            if (!others.Contains(self)) return false;
+        }
+
+        return true;
+    }
+
     public static bool IsEquivalentTo(this List<Guid> selfs, List<Guid> others)
     {
         if (selfs.Count != others.Count) return false;

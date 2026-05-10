@@ -1,7 +1,5 @@
-using Syki.Front.Features.Adm.GetUsers;
-using Syki.Front.Features.Adm.GetAdmInsights;
-using Syki.Front.Features.Adm.GetInstitutions;
-using Syki.Front.Features.Adm.SetupFeatureFlags;
+using Syki.Front.Configs;
+using System.Net.Http.Json;
 
 namespace Syki.Tests.Clients;
 
@@ -11,25 +9,22 @@ public class AdmHttpClient(HttpClient http)
 
     public async Task<List<UserOut>> GetUsers()
     {
-        var client = new GetUsersClient(Cross);
-        return await client.Get();
+        return await Cross.GetFromJsonAsync<List<UserOut>>("/adm/users", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<List<InstitutionOut>> GetInstitutions()
     {
-        var client = new GetInstitutionsClient(Cross);
-        return await client.Get();
+        return await Cross.GetFromJsonAsync<List<InstitutionOut>>("/adm/institutions", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<AdmInsightsOut> GetAdmInsights()
     {
-        var client = new GetAdmInsightsClient(Cross);
-        return await client.Get();
+        return await Cross.GetFromJsonAsync<AdmInsightsOut>("/adm/insights", HttpConfigs.JsonOptions) ?? new();
     }
 
     public async Task SetupFeatureFlags(bool crossLogin)
     {
-        var client = new SetupFeatureFlagsClient(Cross);
-        await client.Setup(crossLogin);
+        var data = new SetupFeatureFlagsIn { CrossLogin = crossLogin };
+        await Cross.PutAsJsonAsync("/adm/feature-flags", data);
     }
 }

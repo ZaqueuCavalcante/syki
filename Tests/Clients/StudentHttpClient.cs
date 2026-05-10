@@ -1,15 +1,5 @@
-using Syki.Front.Features.Student.GetStudentNotes;
-using Syki.Front.Features.Student.GetStudentAgenda;
-using Syki.Front.Features.Student.GetStudentInsights;
-using Syki.Front.Features.Student.GetStudentFrequency;
-using Syki.Front.Features.Student.GetStudentAverageNote;
-using Syki.Front.Features.Student.GetStudentDisciplines;
-using Syki.Front.Features.Student.GetStudentFrequencies;
-using Syki.Front.Features.Student.CreateStudentEnrollment;
-using Syki.Front.Features.Student.CreateClassActivityWork;
-using Syki.Front.Features.Student.GetStudentClassActivities;
-using Syki.Front.Features.Student.GetCurrentEnrollmentPeriod;
-using Syki.Front.Features.Student.GetStudentEnrollmentClasses;
+using Syki.Front.Configs;
+using System.Net.Http.Json;
 
 namespace Syki.Tests.Clients;
 
@@ -19,73 +9,67 @@ public class StudentHttpClient(HttpClient http)
 
     public async Task<List<EnrollmentClassOut>> GetStudentEnrollmentClasses()
     {
-        var client = new GetStudentEnrollmentClassesClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<EnrollmentClassOut>>("/student/enrollment-classes", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<List<DisciplineOut>> GetStudentDisciplines()
     {
-        var client = new GetStudentDisciplinesClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<DisciplineOut>>("/student/disciplines", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<List<StudentNoteOut>> GetStudentNotes()
     {
-        var client = new GetStudentNotesClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<StudentNoteOut>>("/student/notes", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<EnrollmentPeriodOut> GetCurrentEnrollmentPeriod()
     {
-        var client = new GetCurrentEnrollmentPeriodClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<EnrollmentPeriodOut>("/student/enrollment-periods/current", HttpConfigs.JsonOptions) ?? new();
     }
 
     public async Task<StudentInsightsOut> GetStudentInsights()
     {
-        var client = new GetStudentInsightsClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<StudentInsightsOut>("/student/insights", HttpConfigs.JsonOptions) ?? new();
     }
 
     public async Task<GetStudentFrequencyOut> GetStudentFrequency()
     {
-        var client = new GetStudentFrequencyClient(Http);
-        return await client.Get();
+        var response = await Http.GetAsync("/student/frequency");
+        return await response.DeserializeTo<GetStudentFrequencyOut>();
     }
 
     public async Task<OneOf<List<GetStudentFrequenciesOut>, ErrorOut>> GetStudentFrequencies()
     {
-        var client = new GetStudentFrequenciesClient(Http);
-        return await client.Get();
+        var response = await Http.GetAsync("/student/frequencies");
+        return await response.Resolve<List<GetStudentFrequenciesOut>>();
     }
 
     public async Task<HttpResponseMessage> CreateStudentEnrollment(List<Guid> classes)
     {
-        var client = new CreateStudentEnrollmentClient(Http);
-        return await client.Create(classes);
+        var data = new CreateStudentEnrollmentIn { Classes = classes };
+        return await Http.PostAsJsonAsync("/student/enrollments", data);
     }
 
     public async Task<List<AgendaDayOut>> GetStudentAgenda()
     {
-        var client = new GetStudentAgendaClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<AgendaDayOut>>("/student/agenda", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<GetStudentAverageNoteOut> GetStudentAverageNote()
     {
-        var client = new GetStudentAverageNoteClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<GetStudentAverageNoteOut>("/student/average-note", HttpConfigs.JsonOptions) ?? new();
     }
 
     public async Task<OneOf<List<StudentClassActivityOut>, ErrorOut>> GetStudentClassActivities(Guid classId)
     {
-        var client = new GetStudentClassActivitiesClient(Http);
-        return await client.Get(classId);
+        var response = await Http.GetAsync($"/student/classes/{classId}/activities");
+        return await response.Resolve<List<StudentClassActivityOut>>();
     }
 
     public async Task<OneOf<ClassActivityWorkOut, ErrorOut>> CreateClassActivityWork(Guid activityId, string link)
     {
-        var client = new CreateClassActivityWorkClient(Http);
-        return await client.Create(activityId, link);
+        var data = new CreateClassActivityWorkIn { Link = link };
+        var response = await Http.PostAsJsonAsync($"/student/activities/{activityId}/works", data);
+        return await response.Resolve<ClassActivityWorkOut>();
     }
 }

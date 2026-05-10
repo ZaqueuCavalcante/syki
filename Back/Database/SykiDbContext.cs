@@ -1,5 +1,6 @@
 using Npgsql;
 using Syki.Back.Audit;
+using Syki.Back.Auth.Users;
 using Audit.EntityFramework;
 using Syki.Back.Commands.Domain.Commands;
 using Syki.Back.Features.Cross.CreateUser;
@@ -82,6 +83,7 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
 
     public Guid UserId { get; set; }
     public Guid InstitutionId { get; set; }
+    public RequestUser RequestUser { get; set; } = new();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

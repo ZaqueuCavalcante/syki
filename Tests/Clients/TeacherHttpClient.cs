@@ -1,16 +1,5 @@
-using Syki.Front.Features.Teacher.GetTeacherClass;
-using Syki.Front.Features.Teacher.GetTeacherAgenda;
-using Syki.Front.Features.Teacher.GetTeacherClasses;
-using Syki.Front.Features.Teacher.GetTeacherInsights;
-using Syki.Front.Features.Teacher.CreateClassActivity;
-using Syki.Front.Features.Teacher.CreateLessonAttendance;
-using Syki.Front.Features.Teacher.GetTeacherClassLessons;
-using Syki.Front.Features.Teacher.GetTeacherClassActivity;
-using Syki.Front.Features.Teacher.GetTeacherClassStudents;
-using Syki.Front.Features.Teacher.SetSchedulingPreferences;
-using Syki.Front.Features.Teacher.GetTeacherClassActivities;
-using Syki.Front.Features.Teacher.AddStudentClassActivityNote;
-using Syki.Front.Features.Teacher.GetClassNotesRemainingWeights;
+using Syki.Front.Configs;
+using System.Net.Http.Json;
 
 namespace Syki.Tests.Clients;
 
@@ -20,8 +9,9 @@ public class TeacherHttpClient(HttpClient http)
 
     public async Task<OneOf<SuccessOut, ErrorOut>> CreateLessonAttendance(Guid id, List<Guid> presentStudents)
     {
-        var client = new CreateLessonAttendanceClient(Cross);
-        return await client.Create(id, presentStudents);
+        var data = new CreateLessonAttendanceIn() { PresentStudents = presentStudents };
+        var response = await Cross.PutAsJsonAsync($"/teacher/lessons/{id}/attendance", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<OneOf<CreateClassActivityOut, ErrorOut>> CreateClassActivity(
@@ -35,69 +25,68 @@ public class TeacherHttpClient(HttpClient http)
         Hour dueHour = Hour.H12_00)
     {
         dueDate = dueDate == default ? DateTime.UtcNow.AddDays(15).ToDateOnly() : dueDate;
-        var client = new CreateClassActivityClient(Cross);
-        return await client.Create(classId, note, title, description, type, weight, dueDate, dueHour);
+
+        var data = new CreateClassActivityIn { Note = note, Title = title, Description = description, Type = type, Weight = weight, DueDate = dueDate, DueHour = dueHour };
+        var response = await Cross.PostAsJsonAsync($"/teacher/classes/{classId}/activities", data);
+        return await response.Resolve<CreateClassActivityOut>();
     }
 
     public async Task<TeacherInsightsOut> GetTeacherInsights()
     {
-        var client = new GetTeacherInsightsClient(Cross);
-        return await client.Get();
+        return await Cross.GetFromJsonAsync<TeacherInsightsOut>("/teacher/insights", HttpConfigs.JsonOptions) ?? new();
     }
 
     public async Task<OneOf<TeacherClassOut, ErrorOut>> GetTeacherClass(Guid id)
     {
-        var client = new GetTeacherClassClient(Cross);
-        return await client.Get(id);
+        var response = await Cross.GetAsync($"/teacher/classes/{id}");
+        return await response.Resolve<TeacherClassOut>();
     }
 
     public async Task<OneOf<List<TeacherClassStudentOut>, ErrorOut>> GetTeacherClassStudents(Guid classId)
     {
-        var client = new GetTeacherClassStudentsClient(Cross);
-        return await client.Get(classId);
+        var response = await Cross.GetAsync($"teacher/classes/{classId}/students");
+        return await response.Resolve<List<TeacherClassStudentOut>>();
     }
 
     public async Task<OneOf<List<ClassNoteRemainingWeightsOut>, ErrorOut>> GetClassNotesRemainingWeights(Guid classId)
     {
-        var client = new GetClassNotesRemainingWeightsClient(Cross);
-        return await client.Get(classId);
+        var response = await Cross.GetAsync($"/teacher/classes/{classId}/remaining-weights");
+        return await response.Resolve<List<ClassNoteRemainingWeightsOut>>();
     }
 
     public async Task<OneOf<TeacherClassActivityOut, ErrorOut>> GetTeacherClassActivity(Guid classId, Guid activityId)
     {
-        var client = new GetTeacherClassActivityClient(Cross);
-        return await client.Get(classId, activityId);
+        var response = await Cross.GetAsync($"teacher/classes/{classId}/activities/{activityId}");
+        return await response.Resolve<TeacherClassActivityOut>();
     }
 
     public async Task<OneOf<List<TeacherClassActivityOut>, ErrorOut>> GetTeacherClassActivities(Guid classId)
     {
-        var client = new GetTeacherClassActivitiesClient(Cross);
-        return await client.Get(classId);
+        var response = await Cross.GetAsync($"teacher/classes/{classId}/activities");
+        return await response.Resolve<List<TeacherClassActivityOut>>();
     }
 
     public async Task<OneOf<List<ClassLessonOut>, ErrorOut>> GetTeacherClassLessons(Guid classId)
     {
-        var client = new GetTeacherClassLessonsClient(Cross);
-        return await client.Get(classId);
+        var response = await Cross.GetAsync($"teacher/classes/{classId}/lessons");
+        return await response.Resolve<List<ClassLessonOut>>();
     }
 
     public async Task<List<TeacherClassesOut>> GetTeacherClasses()
     {
-        var client = new GetTeacherClassesClient(Cross);
-        return await client.Get();
+        return await Cross.GetFromJsonAsync<List<TeacherClassesOut>>("/teacher/classes", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<List<AgendaDayOut>> GetTeacherAgenda()
     {
-        var client = new GetTeacherAgendaClient(Cross);
-        return await client.Get();
+        return await Cross.GetFromJsonAsync<List<AgendaDayOut>>("/teacher/agenda", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> AddStudentClassActivityNote(Guid classActivityId, Guid studentId, decimal value)
     {
-        var client = new AddStudentClassActivityNoteClient(Cross);
-
-        return await client.Add(classActivityId, studentId, value);
+        var data = new AddStudentClassActivityNoteIn(studentId, value);
+        var response = await Cross.PostAsJsonAsync($"teacher/class-activities/{classActivityId}", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task AddClassActivityNote(Guid classId, Guid studentId, ClassNoteType type, int weight, decimal note)
@@ -108,7 +97,8 @@ public class TeacherHttpClient(HttpClient http)
 
     public async Task<OneOf<SuccessOut, ErrorOut>> SetSchedulingPreferences(List<ScheduleIn> schedules)
     {
-        var client = new SetSchedulingPreferencesClient(Cross);
-        return await client.Set(schedules);
+        var data = new SetSchedulingPreferencesIn { Schedules = schedules };
+        var response = await Cross.PutAsJsonAsync($"teacher/scheduling-preferences", data);
+        return await response.Resolve<SuccessOut>();
     }
 }

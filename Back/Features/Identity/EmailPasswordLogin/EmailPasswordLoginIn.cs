@@ -8,6 +8,6 @@ public class EmailPasswordLoginIn : IApiDto<EmailPasswordLoginIn>
 
     public static IEnumerable<(string, EmailPasswordLoginIn)> GetExamples() =>
     [
-        ("Exemplo", new EmailPasswordLoginIn { Email = "user@exato.com", Password = "M1@Str0ngP4ssword#" }),
+        ("Exemplo", new EmailPasswordLoginIn { Email = "user@syki.com", Password = "M1@Str0ngP4ssword#" }),
     ];
 }

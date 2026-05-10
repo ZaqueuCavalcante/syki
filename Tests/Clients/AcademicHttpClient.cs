@@ -1,42 +1,5 @@
-using Syki.Front.Features.Academic.GetCampi;
-using Syki.Front.Features.Academic.GetCourses;
-using Syki.Front.Features.Academic.CreateClass;
-using Syki.Front.Features.Academic.GetTeachers;
-using Syki.Front.Features.Academic.GetStudents;
-using Syki.Front.Features.Academic.StartClasses;
-using Syki.Front.Features.Academic.CreateCampus;
-using Syki.Front.Features.Academic.UpdateCampus;
-using Syki.Front.Features.Academic.CreateCourse;
-using Syki.Front.Features.Academic.CreateStudent;
-using Syki.Front.Features.Academic.CreateTeacher;
-using Syki.Front.Features.Academic.GetDisciplines;
-using Syki.Front.Features.Academic.FinalizeClasses;
-using Syki.Front.Features.Academic.CreateClassroom;
-using Syki.Front.Features.Academic.CreateDiscipline;
-using Syki.Front.Features.Academic.GetNotifications;
-using Syki.Front.Features.Academic.GetAcademicClass;
-using Syki.Front.Features.Academic.GetAcademicClasses;
-using Syki.Front.Features.Academic.GetCourseOfferings;
-using Syki.Front.Features.Academic.GetAcademicPeriods;
-using Syki.Front.Features.Academic.CreateNotification;
-using Syki.Front.Features.Academic.GetAcademicInsights;
-using Syki.Front.Features.Academic.AssignCampiToTeacher;
-using Syki.Front.Features.Academic.CreateAcademicPeriod;
-using Syki.Front.Features.Academic.GetCourseDisciplines;
-using Syki.Front.Features.Academic.CreateCourseOffering;
-using Syki.Front.Features.Academic.GetEnrollmentPeriods;
-using Syki.Front.Features.Academic.GetCourseCurriculums;
-using Syki.Front.Features.Academic.CreateEnrollmentPeriod;
-using Syki.Front.Features.Academic.CreateCourseCurriculum;
-using Syki.Front.Features.Academic.UpdateEnrollmentPeriod;
-using Syki.Front.Features.Academic.GetWebhookSubscription;
-using Syki.Front.Features.Academic.AssignClassToClassroom;
-using Syki.Front.Features.Academic.GetCoursesWithCurriculums;
-using Syki.Front.Features.Academic.GetCoursesWithDisciplines;
-using Syki.Front.Features.Academic.CreateWebhookSubscription;
-using Syki.Front.Features.Academic.AddDisciplinePreRequisites;
-using Syki.Front.Features.Academic.AssignDisciplinesToTeacher;
-using Syki.Front.Features.Academic.ReleaseClassesForEnrollment;
+using Syki.Front.Configs;
+using System.Net.Http.Json;
 
 namespace Syki.Tests.Clients;
 
@@ -50,14 +13,14 @@ public class AcademicHttpClient(HttpClient http)
         string city = "Caruaru",
         int capacity = 100
     ) {
-        var client = new CreateCampusClient(Http);
-        return await client.Create(name, state, city, capacity);
+        var data = new CreateCampusIn { Name = name, State = state, City = city, Capacity = capacity };
+        var response = await Http.PostAsJsonAsync("/academic/campi", data);
+        return await response.Resolve<CreateCampusOut>();
     }
 
     public async Task<GetCampiOut> GetCampi()
     {
-        var client = new GetCampiClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<GetCampiOut>("/academic/campi", HttpConfigs.JsonOptions) ?? new();
     }
 
     public async Task<OneOf<UpdateCampusOut, ErrorOut>> UpdateCampus(
@@ -67,44 +30,35 @@ public class AcademicHttpClient(HttpClient http)
         string city = "Caruaru",
         int capacity = 100
     ) {
-        var client = new UpdateCampusClient(Http);
-        return await client.Update(id, name, state, city, capacity);
+        var data = new UpdateCampusIn { Id = id, Name = name, State = state, City = city, Capacity = capacity };
+        var response = await Http.PutAsJsonAsync("/academic/campi", data);
+        return await response.Resolve<UpdateCampusOut>();
     }
 
     public async Task<OneOf<CreateCourseOut, ErrorOut>> CreateCourse(
-        string name, 
-        CourseType? type, 
+        string name,
+        CourseType? type,
         List<string> disciplines
     ) {
-        var client = new CreateCourseClient(Http);
-        return await client.Create(name, type, disciplines);
+        var data = new CreateCourseIn { Name = name, Type = type, Disciplines = disciplines };
+        var response = await Http.PostAsJsonAsync("/academic/courses", data);
+        return await response.Resolve<CreateCourseOut>();
     }
 
     public async Task<GetCoursesOut> GetCourses()
     {
-        var client = new GetCoursesClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<GetCoursesOut>("/academic/courses", HttpConfigs.JsonOptions) ?? new();
     }
 
     public async Task<GetCoursesWithCurriculumsOut> GetCoursesWithCurriculums()
     {
-        var client = new GetCoursesWithCurriculumsClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<GetCoursesWithCurriculumsOut>("/academic/courses/with-curriculums", HttpConfigs.JsonOptions) ?? new();
     }
 
     public async Task<GetCoursesWithDisciplinesOut> GetCoursesWithDisciplines()
     {
-        var client = new GetCoursesWithDisciplinesClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<GetCoursesWithDisciplinesOut>("/academic/courses/with-disciplines", HttpConfigs.JsonOptions) ?? new();
     }
-
-
-
-
-
-
-
-
 
     public async Task<NotificationOut> CreateNotification(
         string title,
@@ -112,59 +66,53 @@ public class AcademicHttpClient(HttpClient http)
         UsersGroup targetUsers,
         bool timeless
     ) {
-        var client = new CreateNotificationClient(Http);
-        var response = await client.Create(title, description, targetUsers, timeless);
+        var data = new CreateNotificationIn(title, description, targetUsers, timeless);
+        var response = await Http.PostAsJsonAsync("/academic/notifications", data);
         return await response.DeserializeTo<NotificationOut>();
     }
 
     public async Task<List<NotificationOut>> GetNotifications()
     {
-        var client = new GetNotificationsClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<NotificationOut>>("/academic/notifications", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<DisciplineOut> CreateDiscipline(
         string name = "Banco de Dados",
         List<Guid> courses = null
     ) {
-        var client = new CreateDisciplineClient(Http);
-        var response = await client.Create(name, courses ?? []);
+        var data = new CreateDisciplineIn { Name = name, Courses = courses ?? [] };
+        var response = await Http.PostAsJsonAsync("/academic/disciplines", data);
         return await response.DeserializeTo<DisciplineOut>();
     }
 
     public async Task<List<DisciplineOut>> GetDisciplines()
     {
-        var client = new GetDisciplinesClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<DisciplineOut>>("/academic/disciplines", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<List<CourseDisciplineOut>> GetCourseDisciplines(Guid courseId)
     {
-        var client = new GetCourseDisciplinesClient(Http);
-        return await client.Get(courseId);
+        return await Http.GetFromJsonAsync<List<CourseDisciplineOut>>($"/academic/courses/{courseId}/disciplines", HttpConfigs.JsonOptions) ?? [];
     }
-
-
-
-
-
-
-
-
 
     public async Task<OneOf<CourseCurriculumOut, ErrorOut>> CreateCourseCurriculum(
         string name,
         Guid courseId,
         List<CreateCourseCurriculumDisciplineIn> disciplines = null
     ) {
-        var client = new CreateCourseCurriculumClient(Http);
-        return await client.Create(name, courseId, disciplines ?? []);
+        var data = new CreateCourseCurriculumIn
+        {
+            Name = name,
+            CourseId = courseId,
+            Disciplines = disciplines ?? [],
+        };
+        var response = await Http.PostAsJsonAsync("/academic/course-curriculums", data);
+        return await response.Resolve<CourseCurriculumOut>();
     }
 
     public async Task<List<CourseCurriculumOut>> GetCourseCurriculums()
     {
-        var client = new GetCourseCurriculumsClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<CourseCurriculumOut>>("/academic/course-curriculums", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<OneOf<CourseOfferingOut, ErrorOut>> CreateCourseOffering(
@@ -174,20 +122,26 @@ public class AcademicHttpClient(HttpClient http)
         string? period,
         Shift? shift
     ) {
-        var client = new CreateCourseOfferingClient(Http);
-        return await client.Create(campusId, courseId, courseCurriculumId, period, shift);
+        var data = new CreateCourseOfferingIn
+        {
+            CampusId = campusId,
+            CourseId = courseId,
+            CourseCurriculumId = courseCurriculumId,
+            Period = period,
+            Shift = shift,
+        };
+        var response = await Http.PostAsJsonAsync("/academic/course-offerings", data);
+        return await response.Resolve<CourseOfferingOut>();
     }
 
     public async Task<List<CourseOfferingOut>> GetCourseOfferings()
     {
-        var client = new GetCourseOfferingsClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<CourseOfferingOut>>("/academic/course-offerings", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<AcademicInsightsOut> GetAcademicInsights()
     {
-        var client = new GetAcademicInsightsClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<AcademicInsightsOut>("/academic/insights", HttpConfigs.JsonOptions) ?? new();
     }
 
     public async Task<OneOf<TeacherOut, ErrorOut>> CreateTeacher(
@@ -195,24 +149,23 @@ public class AcademicHttpClient(HttpClient http)
         string email = null
     ) {
         email ??= TestData.Email;
-        var client = new CreateTeacherClient(Http);
+        var data = new CreateTeacherIn { Name = name, Email = email };
+        var response = await Http.PostAsJsonAsync("/academic/teachers", data);
+        var result = await response.Resolve<TeacherOut>();
 
-        var response = await client.Create(name, email);
-
-        if (response.IsSuccess)
+        if (result.IsSuccess)
         {
-            var teacher = response.Success;
+            var teacher = result.Success;
             teacher.Email = email;
             return teacher;
         }
 
-        return response.Error;
+        return result.Error;
     }
 
     public async Task<List<TeacherOut>> GetTeachers()
     {
-        var client = new GetTeachersClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<TeacherOut>>("/academic/teachers", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<OneOf<ClassOut, ErrorOut>> CreateClass(
@@ -223,8 +176,9 @@ public class AcademicHttpClient(HttpClient http)
         int vacancies,
         List<ScheduleIn> schedules
     ) {
-        var client = new CreateClassClient(Http);
-        return await client.Create(disciplineId, campusId, teacherId, period, vacancies, schedules);
+        var data = new CreateClassIn(disciplineId, campusId, teacherId, period, vacancies, schedules);
+        var response = await Http.PostAsJsonAsync("/academic/classes", data);
+        return await response.Resolve<ClassOut>();
     }
 
     public async Task<OneOf<CreateClassroomOut, ErrorOut>> CreateClassroom(
@@ -232,26 +186,28 @@ public class AcademicHttpClient(HttpClient http)
         string name,
         int capacity
     ) {
-        var client = new CreateClassroomClient(Http);
-        return await client.Create(campusId, name, capacity);
+        var data = new CreateClassroomIn { CampusId = campusId, Name = name, Capacity = capacity };
+        var response = await Http.PostAsJsonAsync("/academic/classrooms", data);
+        return await response.Resolve<CreateClassroomOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> ReleaseClassesForEnrollment(List<Guid> classes)
     {
-        var client = new ReleaseClassesForEnrollmentClient(Http);
-        return await client.Release(classes);
+        var data = new ReleaseClassesForEnrollmentIn { Classes = classes };
+        var response = await Http.PutAsJsonAsync("/academic/classes/release-for-enrollment", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<List<ClassOut>> GetAcademicClasses(GetAcademicClassesIn query = null)
     {
-        var client = new GetAcademicClassesClient(Http);
-        return await client.Get(query);
+        var queryString = query?.Status != null ? $"?status={query.Status}" : "";
+        return await Http.GetFromJsonAsync<List<ClassOut>>($"/academic/classes{queryString}", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<OneOf<GetAcademicClassOut, ErrorOut>> GetAcademicClass(Guid id)
     {
-        var client = new GetAcademicClassClient(Http);
-        return await client.Get(id);
+        var response = await Http.GetAsync($"/academic/classes/{id}");
+        return await response.Resolve<GetAcademicClassOut>();
     }
 
     public async Task<OneOf<StudentOut, ErrorOut>> CreateStudent(
@@ -261,24 +217,29 @@ public class AcademicHttpClient(HttpClient http)
         string? phoneNumber = null
     ) {
         email ??= TestData.Email;
-
-        var client = new CreateStudentClient(Http);
-        var response = await client.Create(name, email, courseOfferingId, phoneNumber);
-
-        if (response.IsSuccess)
+        var data = new CreateStudentIn
         {
-            var student = response.Success;
+            Name = name,
+            Email = email,
+            PhoneNumber = phoneNumber,
+            CourseOfferingId = courseOfferingId,
+        };
+        var response = await Http.PostAsJsonAsync("/academic/students", data);
+        var result = await response.Resolve<StudentOut>();
+
+        if (result.IsSuccess)
+        {
+            var student = result.Success;
             student.Email = email;
             return student;
         }
 
-        return response.Error;
+        return result.Error;
     }
 
     public async Task<List<StudentOut>> GetStudents()
     {
-        var client = new GetStudentsClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<StudentOut>>("/academic/students", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<OneOf<AcademicPeriodOut, ErrorOut>> CreateAcademicPeriod(
@@ -286,8 +247,6 @@ public class AcademicHttpClient(HttpClient http)
         DateOnly? startAt = null,
         DateOnly? endAt = null
     ) {
-        var client = new CreateAcademicPeriodClient(Http);
-
         if (startAt == null || endAt == null)
         {
             var periodIn = new CreateAcademicPeriodIn(id);
@@ -295,47 +254,51 @@ public class AcademicHttpClient(HttpClient http)
             endAt = periodIn.EndAt;
         }
 
-        return await client.Create(id, startAt.Value, endAt.Value);
+        var data = new CreateAcademicPeriodIn { Id = id, StartAt = startAt.Value, EndAt = endAt.Value };
+        var response = await Http.PostAsJsonAsync("/academic/academic-periods", data);
+        return await response.Resolve<AcademicPeriodOut>();
     }
 
     public async Task<List<AcademicPeriodOut>> GetAcademicPeriods()
     {
-        var client = new GetAcademicPeriodsClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<AcademicPeriodOut>>("/academic/academic-periods", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<OneOf<EnrollmentPeriodOut, ErrorOut>> CreateEnrollmentPeriod(string id, int start = -2, int end = 2)
     {
-        var client = new CreateEnrollmentPeriodClient(Http);
         var startDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(start));
         var endDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(end));
-        return await client.Create(id, startDate, endDate);
+        var data = new CreateEnrollmentPeriodIn { Id = id, StartAt = startDate, EndAt = endDate };
+        var response = await Http.PostAsJsonAsync("/academic/enrollment-periods", data);
+        return await response.Resolve<EnrollmentPeriodOut>();
     }
 
     public async Task<OneOf<EnrollmentPeriodOut, ErrorOut>> UpdateEnrollmentPeriod(string id, int start = -4, int end = 4)
     {
-        var client = new UpdateEnrollmentPeriodClient(Http);
         var startDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(start));
         var endDate = DateOnly.FromDateTime(DateTime.UtcNow.AddDays(end));
-        return await client.Update(id, startDate, endDate);
+        var data = new UpdateEnrollmentPeriodIn { StartAt = startDate, EndAt = endDate };
+        var response = await Http.PutAsJsonAsync($"/academic/enrollment-periods/{id}", data);
+        return await response.Resolve<EnrollmentPeriodOut>();
     }
-    
+
     public async Task<List<EnrollmentPeriodOut>> GetEnrollmentPeriods()
     {
-        var client = new GetEnrollmentPeriodsClient(Http);
-        return await client.Get();
+        return await Http.GetFromJsonAsync<List<EnrollmentPeriodOut>>("/academic/enrollment-periods", HttpConfigs.JsonOptions) ?? [];
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> StartClasses(List<Guid> classes)
     {
-        var client = new StartClassesClient(Http);
-        return await client.Start(classes);
+        var data = new StartClassesIn { Classes = classes };
+        var response = await Http.PutAsJsonAsync("/academic/classes/start", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> FinalizeClasses(List<Guid> classes)
     {
-        var client = new FinalizeClassesClient(Http);
-        return await client.Finalize(classes);
+        var data = new FinalizeClassesIn { Classes = classes };
+        var response = await Http.PutAsJsonAsync("/academic/classes/finalize", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<OneOf<CreateWebhookSubscriptionOut, ErrorOut>> CreateWebhookSubscription(
@@ -346,14 +309,21 @@ public class AcademicHttpClient(HttpClient http)
         string? apiKey = "z3Q6uDUJYTDCIo16myBKZrlCS63IvpCUOAE5X"
     ) {
         events ??= [WebhookEventType.StudentCreated];
-        var client = new CreateWebhookSubscriptionClient(Http);
-        return await client.Create(name, url, events, authenticationType, apiKey);
+        var data = new CreateWebhookSubscriptionIn
+        {
+            Name = name,
+            Url = url,
+            Events = events,
+            AuthenticationType = authenticationType,
+            ApiKey = apiKey,
+        };
+        var response = await Http.PostAsJsonAsync("/academic/webhooks", data);
+        return await response.Resolve<CreateWebhookSubscriptionOut>();
     }
 
     public async Task<OneOf<GetWebhookSubscriptionOut, SykiError>> GetWebhookSubscription(Guid id)
     {
-        var client = new GetWebhookSubscriptionClient(Http);
-        return await client.Get(id);
+        return await Http.GetFromJsonAsync<GetWebhookSubscriptionOut>($"/academic/webhooks/{id}", HttpConfigs.JsonOptions) ?? new();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> AddDisciplinePreRequisites(
@@ -361,27 +331,30 @@ public class AcademicHttpClient(HttpClient http)
         Guid disciplineId,
         List<Guid> preRequisites
     ) {
-        var client = new AddDisciplinePreRequisitesClient(Http);
-
-        return await client.Add(courseCurriculumId, disciplineId, preRequisites);
+        var data = new AddDisciplinePreRequisitesIn { DisciplineId = disciplineId, PreRequisites = preRequisites };
+        var response = await Http.PostAsJsonAsync($"/academic/course-curriculums/{courseCurriculumId}/pre-requisites", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> AssignDisciplinesToTeacher(Guid teacherId, List<Guid> classes)
     {
-        var client = new AssignDisciplinesToTeacherClient(Http);
-        return await client.Assign(teacherId, classes);
+        var data = new AssignDisciplinesToTeacherIn { Disciplines = classes };
+        var response = await Http.PutAsJsonAsync($"/academic/teachers/{teacherId}/assign-disciplines", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> AssignCampiToTeacher(Guid teacherId, List<Guid> campi)
     {
-        var client = new AssignCampiToTeacherClient(Http);
-        return await client.Assign(teacherId, campi);
+        var data = new AssignCampiToTeacherIn { Campi = campi };
+        var response = await Http.PutAsJsonAsync($"/academic/teachers/{teacherId}/assign-campi", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> AssignClassToClassroom(Guid classroomId, Guid classId, List<ScheduleIn> schedules)
     {
-        var client = new AssignClassToClassroomClient(Http);
-        return await client.Assign(classroomId, classId, schedules);
+        var data = new AssignClassToClassroomIn { ClassId = classId, Schedules = schedules };
+        var response = await Http.PutAsJsonAsync($"/academic/classrooms/{classroomId}/assign-class", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<AcademicPeriodOut> CreateCurrentAcademicPeriod()

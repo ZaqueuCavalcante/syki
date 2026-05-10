@@ -1,0 +1,230 @@
+using OtpNet;
+using QRCoder;
+using System.Text;
+using Newtonsoft.Json;
+using System.Reflection;
+using System.Globalization;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Converters;
+using System.Text.RegularExpressions;
+using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.WebUtilities;
+
+namespace Syki.Back.Shared;
+
+public static class StringExtensions
+{
+    public static bool IsEmpty(this string? text)
+    {
+        return string.IsNullOrEmpty(text) || string.IsNullOrWhiteSpace(text);
+    }
+
+    public static bool IsIn(this string? text, params string[] others)
+    {
+        if (text.IsEmpty())
+            return true;
+
+        foreach (var other in others)
+        {
+            if (other.Contains(text!, StringComparison.OrdinalIgnoreCase))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static bool HasValue(this string? text)
+    {
+        return !string.IsNullOrEmpty(text);
+    }
+
+    public static bool HasValue(this StringValues text)
+    {
+        return !string.IsNullOrEmpty(text);
+    }
+
+    public static string OnlyNumbers(this string text)
+    {
+        if (text.HasValue())
+        {
+            return new string(text.Where(char.IsDigit).ToArray());
+        }
+
+        return "";
+    }
+
+    public static string ToSnakeCase(this string input)
+    {
+        if (input.IsEmpty()) { return ""; }
+
+        var startUnderscores = Regex.Match(input, @"^_+");
+        return startUnderscores + Regex.Replace(input, @"([a-z0-9])([A-Z])", "$1_$2").ToLower();
+    }
+
+    public static string GenerateTOTP(this string key)
+    {
+        var totp = new Totp(Base32Encoding.ToBytes(key));
+        return totp.ComputeTotp();
+    }
+
+    public static string ToBase64(this string value)
+    {
+        var bytes = System.Text.Encoding.UTF8.GetBytes(value);
+        return Convert.ToBase64String(bytes);
+    }
+
+    public static string Format(this decimal value)
+    {
+        return value.ToString("0.00", CultureInfo.InvariantCulture);
+    }
+
+    public static string Format(this int value)
+    {
+        return value.ToString("N0", CultureInfo.CreateSpecificCulture("pt-BR"));
+    }
+
+    public static bool IsValidEmail(this string email)
+    {
+        if (email.IsEmpty()) return false;
+        return Regex.IsMatch(email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
+    }
+
+    private static JsonSerializerSettings _settings = new()
+    {
+        Converters = [new StringEnumConverter()],
+    };
+
+    public static string Serialize(this object obj)
+    {
+        return JsonConvert.SerializeObject(obj, _settings);
+    }
+
+    public static string GenerateQrCodeBase64(this string key, string email)
+    {
+        const string provider = "Syki";
+
+        using var qrGenerator = new QRCodeGenerator();
+        using var qrCodeData = qrGenerator.CreateQrCode(
+            $"otpauth://totp/{provider}:{email}?secret={key}&issuer={provider}",
+            QRCodeGenerator.ECCLevel.Q
+        );
+
+        var qrCode = new PngByteQRCode(qrCodeData);
+
+        var bytes = qrCode.GetGraphic(20);
+
+        return string.Format("data:image/png;base64,{0}", Convert.ToBase64String(bytes));
+    }
+
+    public static string MinutesToString(this int value)
+    {
+        var hours = value / 60;
+        var minutes = value % 60;
+
+        if (hours == 0 && minutes == 0) return "0";
+        if (hours == 0) return $"{minutes}min";
+        if (minutes == 0) return $"{hours}h";
+
+        return $"{hours}h e {minutes}min";
+    }
+
+    public static string ToThousandSeparated(this int value)
+    {
+        return value.ToString("N0", CultureInfo.CreateSpecificCulture("pt-BR"));
+    }
+
+    public static string ToTwo(this int value)
+    {
+        return value < 10 ? $"0{value}" : value.ToString();
+    }
+
+    public static string ToMinuteString(this DateTime date)
+    {
+        if (date == DateTime.MinValue)
+            return "-";
+
+        return date.ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss");
+    }
+
+    public static string ToMinuteString(this DateTime? date)
+    {
+        if (date == null)
+            return "-";
+
+        return date.Value.ToMinuteString();
+    }
+
+    public static string AddQueryString(this string path, object obj)
+    {
+        return QueryHelpers.AddQueryString(path, ConvertObjectToDictionary(obj));
+    }
+
+    private static Dictionary<string, string?> ConvertObjectToDictionary(object obj)
+    {
+        if (obj == null) return [];
+
+        Dictionary<string, string?> dictionary = [];
+        PropertyInfo[] properties = obj.GetType().GetProperties();
+
+        foreach (PropertyInfo property in properties)
+        {
+            string propertyName = property.Name;
+            object propertyValue = property.GetValue(obj)!;
+
+            if (propertyValue != null)
+            {
+                var valueAsString = propertyValue.ToString();
+
+                if (property.PropertyType == typeof(DateTime))
+                    valueAsString = ((DateTime)propertyValue).ToString("yyyy-MM-ddTHH:mm:sszzz");
+
+                if (property.PropertyType == typeof(DateOnly))
+                    valueAsString = ((DateOnly)propertyValue).ToString("yyyy-MM-dd");
+
+                dictionary.Add(propertyName, valueAsString);
+            }
+        }
+
+        return dictionary;
+    }
+
+    public static string ParseJsonString(this string input)
+    {
+        if (input.IsEmpty()) return "";
+
+        try
+        {
+            return JToken
+                .Parse(input)
+                .ToString(Formatting.Indented);
+        }
+        catch
+        {
+            return input;
+        }
+    }
+
+    public static string GetSqlSpanName(this string sql)
+    {
+        var comparer = StringComparison.InvariantCultureIgnoreCase;
+        var insert = sql.Contains("INSERT", comparer);
+        var update = sql.Contains("UPDATE", comparer);
+        var delete = sql.Contains("DELETE", comparer);
+        var select = sql.Contains("SELECT", comparer);
+
+        var builder = new StringBuilder();
+
+        if (insert) builder.Append("INSERT ");
+        if (update) builder.Append("UPDATE ");
+        if (delete) builder.Append("DELETE");
+
+        if (!insert && !update && !delete && select) builder.Append("SELECT");
+
+        return builder.ToString().Trim();
+    }
+
+    public static int ToInt(this string value)
+    {
+        return int.TryParse(value, out int integer) ? integer : 0;
+    }
+}

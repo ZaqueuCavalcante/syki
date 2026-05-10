@@ -1,6 +1,6 @@
 global using OneOf;
 global using Serilog;
-global using Syki.Shared;
+global using Syki.Back.Shared;
 global using Syki.Back.Auth;
 global using FluentValidation;
 global using Syki.Back.Errors;

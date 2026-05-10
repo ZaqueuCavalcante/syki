@@ -18,6 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="OneOf" Version="3.0.271" />
+    <PackageReference Include="QRCoder" Version="1.6.0" />
+    <PackageReference Include="Otp.NET" Version="1.4.0" />
+    <PackageReference Include="BrazilHolidays.Net" Version="1.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
     <PackageReference Include="Audit.EntityFramework.Core" Version="30.0.2" />
@@ -69,7 +76,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\api-intro.md" />
-    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
 	<ItemGroup>

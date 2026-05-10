@@ -1,5 +1,5 @@
 using System.Net.Http.Json;
-using static Syki.Shared.CourseType;
+using static Syki.Back.Shared.CourseType;
 
 namespace Syki.Tests.Integration;
 

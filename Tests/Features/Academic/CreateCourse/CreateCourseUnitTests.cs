@@ -1,4 +1,4 @@
-using static Syki.Shared.CourseType;
+using static Syki.Back.Shared.CourseType;
 using Syki.Back.Features.Academic.CreateCourse;
 
 namespace Syki.Tests.Features.Academic.CreateCourse;

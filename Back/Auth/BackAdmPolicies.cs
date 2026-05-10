@@ -1,4 +1,4 @@
-﻿using Syki.Shared.Auth;
+﻿using Syki.Back.Shared.Auth;
 using Syki.Back.Auth.Schemes;
 
 namespace Syki.Back.Auth;

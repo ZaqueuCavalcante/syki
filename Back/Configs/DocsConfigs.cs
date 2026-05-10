@@ -1,6 +1,7 @@
 using System.Reflection;
 using Scalar.AspNetCore;
 using Microsoft.OpenApi.Any;
+using Syki.Back.Auth.Schemes;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Interfaces;
 
@@ -46,23 +47,20 @@ public static class DocsConfigs
 
             options.ExampleFilters();
 
-            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                In = ParameterLocation.Header,
-                Description = "Please enter a valid token",
-                Name = "Authorization",
-                Type = SecuritySchemeType.Http,
-                BearerFormat = "JWT",
-                Scheme = "bearer",
-            });
+            options.AddSecurityDefinition(
+                JwtBearerScheme.Name,
+                new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Cookie,
+                    Name = JwtBearerScheme.Cookie,
+                    Type = SecuritySchemeType.ApiKey,
+                    Description = "JWT enviado no cookie http only",
+                });
 
             options.DescribeAllParametersInCamelCase();
 
             var xmlPath = Path.Combine(AppContext.BaseDirectory, "Back.xml");
             options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
-
-            var xmlPath2 = Path.Combine(AppContext.BaseDirectory, "Shared.xml");
-            options.IncludeXmlComments(xmlPath2, includeControllerXmlComments: true);
         });
 
         builder.Services.AddSwaggerExamplesFromAssemblyOf(typeof(Program));

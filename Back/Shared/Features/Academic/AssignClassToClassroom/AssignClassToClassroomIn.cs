@@ -1,0 +1,12 @@
+namespace Syki.Back.Shared;
+
+public class AssignClassToClassroomIn : IApiDto<AssignClassToClassroomIn>
+{
+    public Guid ClassId { get; set; }
+    public List<ScheduleIn> Schedules { get; set; }
+
+    public static IEnumerable<(string, AssignClassToClassroomIn)> GetExamples() =>
+    [
+        ("Exemplo", new() { ClassId = Guid.CreateVersion7() }),
+    ];
+}

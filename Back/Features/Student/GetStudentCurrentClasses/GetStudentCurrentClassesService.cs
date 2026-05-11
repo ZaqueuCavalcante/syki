@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.GetStudentCurrentClasses;
 
-public class GetStudentCurrentClassesService(SykiDbContext ctx) : IStudentService
+public class GetStudentCurrentClassesService(SykiDbContext ctx) : ISykiService
 {
     public async Task<List<StudentCurrentClassOut>> Get(Guid institutionId, Guid userId)
     {

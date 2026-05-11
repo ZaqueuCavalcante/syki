@@ -2,7 +2,7 @@ using Syki.Back.Features.Cross.SignIn;
 
 namespace Syki.Back.Features.Academic.CrossLogin;
 
-public class CrossLoginService(SykiDbContext ctx, SignInService service) : IAcademicService
+public class CrossLoginService(SykiDbContext ctx, SignInService service) : ISykiService
 {
     public async Task<OneOf<CrossLoginOut, SykiError>> Login(Guid institutionId, CrossLoginIn data)
     {

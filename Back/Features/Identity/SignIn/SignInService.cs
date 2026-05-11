@@ -11,7 +11,7 @@ public class SignInService(
     SykiDbContext ctx,
     AuthSettings settings,
     IHttpContextAccessor httpCtx,
-    UserManager<SykiUser> userManager) : ICrossService
+    UserManager<SykiUser> userManager) : ISykiService
 {
     public async Task<SignInOut> SignIn(string email)
     {

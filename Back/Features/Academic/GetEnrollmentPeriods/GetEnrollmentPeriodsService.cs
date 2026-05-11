@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetEnrollmentPeriods;
 
-public class GetEnrollmentPeriodsService(SykiDbContext ctx, HybridCache cache) : IAcademicService
+public class GetEnrollmentPeriodsService(SykiDbContext ctx, HybridCache cache) : ISykiService
 {
     public async Task<List<EnrollmentPeriodOut>> Get(Guid institutionId)
     {

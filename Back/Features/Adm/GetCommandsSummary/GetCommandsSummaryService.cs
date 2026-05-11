@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetCommandsSummary;
 
-public class GetCommandsSummaryService(NpgsqlDataSource dataSource) : IAdmService
+public class GetCommandsSummaryService(NpgsqlDataSource dataSource) : ISykiService
 {
     public async Task<GetCommandsSummaryOut> Get()
     {

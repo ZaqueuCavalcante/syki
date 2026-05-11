@@ -8,11 +8,7 @@ public static class ServicesConfigs
 {
     public static void AddServicesConfigs(this WebApplicationBuilder builder)
     {
-        builder.Services.AddServices(typeof(IAdmService));
-        builder.Services.AddServices(typeof(ICrossService));
-        builder.Services.AddServices(typeof(IStudentService));
-        builder.Services.AddServices(typeof(ITeacherService));
-        builder.Services.AddServices(typeof(IAcademicService));
+        builder.Services.AddServices(typeof(ISykiService));
 
         builder.Services.AddScoped<IEmailsService, EmailsService>();
         builder.Services.AddScoped<IStorageService, AzureBlobStorageService>();

@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Cross.CreatePendingUserRegister;
 
-public class CreatePendingUserRegisterService(SykiDbContext ctx) : ICrossService
+public class CreatePendingUserRegisterService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Create(CreatePendingUserRegisterIn data)
     {

@@ -2,6 +2,7 @@ using Npgsql;
 using Syki.Back.Audit;
 using Syki.Back.Auth.Users;
 using Audit.EntityFramework;
+using Syki.Back.Domain.Identity;
 using Syki.Back.Commands.Domain.Commands;
 using Syki.Back.Features.Cross.CreateUser;
 using Syki.Back.Features.Academic.CreateClass;
@@ -28,12 +29,15 @@ using Syki.Back.Features.Student.CreateStudentEnrollment;
 using Syki.Back.Features.Student.CreateClassActivityWork;
 using Syki.Back.Features.Academic.AssignClassToClassroom;
 using Syki.Back.Features.Academic.CreateWebhookSubscription;
-using Syki.Back.Domain.Identity;
 
 namespace Syki.Back.Database;
 
 public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSource npgsqlDataSource) : IdentityDbContext<SykiUser, SykiRole, Guid>(options)
 {
+    public Guid UserId { get; set; }
+    public Guid InstitutionId { get; set; }
+    public RequestUser RequestUser { get; set; } = new();
+
     public string ActivityId { get; set; }
     public string Operation { get; set; }
 
@@ -80,10 +84,6 @@ public class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSo
     public DbSet<Command> Commands { get; set; }
 
     public DbSet<MagicLink> WebMagicLinks { get; set; }
-
-    public Guid UserId { get; set; }
-    public Guid InstitutionId { get; set; }
-    public RequestUser RequestUser { get; set; } = new();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetNotifications;
 
-public class GetNotificationsService(SykiDbContext ctx) : IAcademicService
+public class GetNotificationsService(SykiDbContext ctx) : ISykiService
 {
     public async Task<List<NotificationOut>> Get(Guid institutionId)
     {

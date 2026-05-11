@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateNotification;
 
-public class CreateNotificationService(SykiDbContext ctx) : IAcademicService
+public class CreateNotificationService(SykiDbContext ctx) : ISykiService
 {
     public async Task<NotificationOut> Create(Guid institutionId, CreateNotificationIn data)
     {

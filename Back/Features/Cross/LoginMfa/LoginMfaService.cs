@@ -3,7 +3,7 @@ using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Cross.LoginMfa;
 
-public class LoginMfaService(SignInService service, SignInManager<SykiUser> signInManager) : ICrossService
+public class LoginMfaService(SignInService service, SignInManager<SykiUser> signInManager) : ISykiService
 {
     public async Task<OneOf<LoginMfaOut, SykiError>> LoginMfa(LoginMfaIn data)
     {

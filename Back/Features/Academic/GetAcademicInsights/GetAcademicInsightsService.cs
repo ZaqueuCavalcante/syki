@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Academic.GetAcademicInsights;
 
-public class GetAcademicInsightsService(NpgsqlDataSource dataSource) : IAcademicService
+public class GetAcademicInsightsService(NpgsqlDataSource dataSource) : ISykiService
 {
     public async Task<AcademicInsightsOut> Get(Guid institutionId)
     {

@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetCurrentAcademicPeriod;
 
-public class GetCurrentAcademicPeriodService(SykiDbContext ctx) : IAcademicService
+public class GetCurrentAcademicPeriodService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<AcademicPeriodOut, SykiError>> Get(Guid institutionId)
     {

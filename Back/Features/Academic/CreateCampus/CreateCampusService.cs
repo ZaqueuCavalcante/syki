@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateCampus;
 
-public class CreateCampusService(SykiDbContext ctx) : IAcademicService
+public class CreateCampusService(SykiDbContext ctx) : ISykiService
 {
     private class Validator : AbstractValidator<CreateCampusIn>
     {

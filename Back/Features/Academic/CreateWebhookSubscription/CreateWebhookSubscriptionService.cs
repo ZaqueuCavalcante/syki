@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateWebhookSubscription;
 
-public class CreateWebhookSubscriptionService(SykiDbContext ctx) : IAcademicService
+public class CreateWebhookSubscriptionService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<CreateWebhookSubscriptionOut, SykiError>> Create(Guid institutionId, CreateWebhookSubscriptionIn data)
     {

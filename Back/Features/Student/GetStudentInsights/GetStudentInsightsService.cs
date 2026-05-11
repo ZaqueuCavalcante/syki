@@ -3,7 +3,7 @@ using Syki.Back.Features.Student.GetStudentAverageNote;
 
 namespace Syki.Back.Features.Student.GetStudentInsights;
 
-public class GetStudentInsightsService(SykiDbContext ctx, GetStudentFrequencyService frequencyService, GetStudentAverageNoteService averageNoteService) : IStudentService
+public class GetStudentInsightsService(SykiDbContext ctx, GetStudentFrequencyService frequencyService, GetStudentAverageNoteService averageNoteService) : ISykiService
 {
     public async Task<StudentInsightsOut> Get(Guid userId, Guid courseCurriculumId)
     {

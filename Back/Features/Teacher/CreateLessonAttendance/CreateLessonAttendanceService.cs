@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Teacher.CreateLessonAttendance;
 
-public class CreateLessonAttendanceService(SykiDbContext ctx) : ITeacherService
+public class CreateLessonAttendanceService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Create(Guid teacherId, Guid lessonId, CreateLessonAttendanceIn data)
     {

@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetAdmInsights;
 
-public class GetAdmInsightsService(NpgsqlDataSource dataSource) : IAdmService
+public class GetAdmInsightsService(NpgsqlDataSource dataSource) : ISykiService
 {
     public async Task<AdmInsightsOut> Get()
     {

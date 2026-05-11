@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.GetStudentClassActivities;
 
-public class GetStudentClassActivitiesService(SykiDbContext ctx) : IStudentService
+public class GetStudentClassActivitiesService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<List<StudentClassActivityOut>, SykiError>> Get(Guid userId, Guid classId)
     {

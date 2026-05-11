@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.AssignDisciplinesToTeacher;
 
-public class AssignDisciplinesToTeacherService(SykiDbContext ctx) : IAcademicService
+public class AssignDisciplinesToTeacherService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Assign(Guid institutionId, Guid teacherId, AssignDisciplinesToTeacherIn data)
     {

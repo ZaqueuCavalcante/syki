@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Adm.GetInstitutions;
 
-public class GetInstitutionsService(SykiDbContext ctx, HybridCache cache) : IAdmService
+public class GetInstitutionsService(SykiDbContext ctx, HybridCache cache) : ISykiService
 {
     public async Task<List<InstitutionOut>> Get()
     {

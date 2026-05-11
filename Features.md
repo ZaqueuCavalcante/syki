@@ -1,5 +1,28 @@
 # Features — Agrupamento por Contexto
 
+- SSO Multi-Tenant
+- Database Modeling + Indexing
+- Software Architecture
+- Caching (Fusion Cache + Redis)
+- RBAC (Role-Based Access Control)
+- API Design + Docs
+- Software Testing
+- Load Balancing
+- CAP Theorem
+- Message Queues
+- Rate Limiting
+- WebSockets & SSE
+- Fault Tolerance
+- Monitoring
+- Authentication & Authorization
+- Data Structures + Algorithms
+- Blob Storage
+- Webhooks
+
+
+
+
+
 ## Academic (51 features → 13 grupos)
 
 ```

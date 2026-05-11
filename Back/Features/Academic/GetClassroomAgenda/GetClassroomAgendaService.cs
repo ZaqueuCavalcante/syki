@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetClassroomAgenda;
 
-public class GetClassroomAgendaService(SykiDbContext ctx) : ITeacherService
+public class GetClassroomAgendaService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<List<AgendaDayOut>, SykiError>> Get(Guid institution, Guid classroomId)
     {

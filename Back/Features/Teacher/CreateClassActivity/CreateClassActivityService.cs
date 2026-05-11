@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Teacher.CreateClassActivity;
 
-public class CreateClassActivityService(SykiDbContext ctx) : ITeacherService
+public class CreateClassActivityService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<CreateClassActivityOut, SykiError>> Create(Guid teacherId, Guid classId, CreateClassActivityIn data)
     {

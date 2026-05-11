@@ -2,7 +2,7 @@ using Syki.Back.Features.Cross.SignIn;
 
 namespace Syki.Back.Features.Identity.MagicLinkLogin;
 
-public class MagicLinkLoginService(SykiDbContext ctx, SignInService signInService) : IAcademicService
+public class MagicLinkLoginService(SykiDbContext ctx, SignInService signInService) : ISykiService
 {
     private class Validator : AbstractValidator<MagicLinkLoginIn>
     {

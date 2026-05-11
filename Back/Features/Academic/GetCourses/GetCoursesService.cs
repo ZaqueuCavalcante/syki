@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetCourses;
 
-public class GetCoursesService(SykiDbContext ctx, HybridCache cache) : IAcademicService
+public class GetCoursesService(SykiDbContext ctx, HybridCache cache) : ISykiService
 {
     public async Task<GetCoursesOut> Get()
     {

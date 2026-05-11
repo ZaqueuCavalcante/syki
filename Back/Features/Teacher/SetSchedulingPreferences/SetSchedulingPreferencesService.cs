@@ -2,7 +2,7 @@ using Syki.Back.Features.Academic.CreateClass;
 
 namespace Syki.Back.Features.Teacher.SetSchedulingPreferences;
 
-public class SetSchedulingPreferencesService(SykiDbContext ctx) : IAcademicService
+public class SetSchedulingPreferencesService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Set(Guid institutionId, Guid teacherId, SetSchedulingPreferencesIn data)
     {

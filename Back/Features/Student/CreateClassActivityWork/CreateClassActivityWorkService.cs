@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.CreateClassActivityWork;
 
-public class CreateClassActivityWorkService(SykiDbContext ctx) : IStudentService
+public class CreateClassActivityWorkService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<ClassActivityWorkOut, SykiError>> Create(Guid classActivityId, Guid userId, CreateClassActivityWorkIn data)
     {

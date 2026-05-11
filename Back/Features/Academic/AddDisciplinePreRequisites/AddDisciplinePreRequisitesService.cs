@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.AddDisciplinePreRequisites;
 
-public class AddDisciplinePreRequisitesService(SykiDbContext ctx) : IAcademicService
+public class AddDisciplinePreRequisitesService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Add(Guid institutionId, Guid courseCurriculumId, AddDisciplinePreRequisitesIn data)
     {

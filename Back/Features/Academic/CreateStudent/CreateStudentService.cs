@@ -2,7 +2,7 @@ using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Academic.CreateStudent;
 
-public class CreateStudentService(SykiDbContext ctx, CreateUserService createService, HybridCache cache) : IAcademicService
+public class CreateStudentService(SykiDbContext ctx, CreateUserService createService, HybridCache cache) : ISykiService
 {
     public async Task<OneOf<StudentOut, SykiError>> Create(Guid institutionId, CreateStudentIn data)
     {

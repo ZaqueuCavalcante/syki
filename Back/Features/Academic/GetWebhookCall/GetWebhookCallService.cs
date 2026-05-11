@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetWebhookCall;
 
-public class GetWebhookCallService(SykiDbContext ctx) : IAcademicService
+public class GetWebhookCallService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<GetWebhookCallFullOut, SykiError>> Get(Guid institutionId, Guid id)
     {

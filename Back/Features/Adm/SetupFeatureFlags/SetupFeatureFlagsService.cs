@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Adm.SetupFeatureFlags;
 
-public class SetupFeatureFlagsService(SykiDbContext ctx, FeaturesSettings settings) : IAdmService
+public class SetupFeatureFlagsService(SykiDbContext ctx, FeaturesSettings settings) : ISykiService
 {
     public async Task Setup(SetupFeatureFlagsIn data)
     {

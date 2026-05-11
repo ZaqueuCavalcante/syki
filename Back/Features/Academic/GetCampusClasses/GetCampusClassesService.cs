@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Academic.GetCampusClasses;
 
-public class GetCampusClassesService(SykiDbContext ctx, NpgsqlDataSource dataSource) : IAcademicService
+public class GetCampusClassesService(SykiDbContext ctx, NpgsqlDataSource dataSource) : ISykiService
 {
     public async Task<List<GetCampusClassesOut>> Get(Guid institutionId, Guid campusId)
     {

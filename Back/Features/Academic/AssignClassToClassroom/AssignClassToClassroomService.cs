@@ -2,7 +2,7 @@ using Syki.Back.Features.Academic.CreateClass;
 
 namespace Syki.Back.Features.Academic.AssignClassToClassroom;
 
-public class AssignClassToClassroomService(SykiDbContext ctx) : IAcademicService
+public class AssignClassToClassroomService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Assign(Guid institutionId, Guid classroomId, AssignClassToClassroomIn data)
     {

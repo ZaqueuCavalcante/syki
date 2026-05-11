@@ -3,7 +3,7 @@ using Syki.Back.Features.Cross.CreateInstitution;
 
 namespace Syki.Back.Features.Users.RegisterUser;
 
-public class RegisterUserService(SykiDbContext ctx, UserManager<SykiUser> userManager) : ICrossService
+public class RegisterUserService(SykiDbContext ctx, UserManager<SykiUser> userManager) : ISykiService
 {
     private class Validator : AbstractValidator<RegisterUserIn>
     {

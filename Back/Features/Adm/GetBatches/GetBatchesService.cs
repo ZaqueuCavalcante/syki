@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetBatches;
 
-public class GetBatchesService(NpgsqlDataSource dataSource) : IAdmService
+public class GetBatchesService(NpgsqlDataSource dataSource) : ISykiService
 {
     public async Task<List<CommandBatchTableOut>> Get(CommandBatchTableFilterIn filters)
     {

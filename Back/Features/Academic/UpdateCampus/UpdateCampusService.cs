@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.UpdateCampus;
 
-public class UpdateCampusService(SykiDbContext ctx) : IAcademicService
+public class UpdateCampusService(SykiDbContext ctx) : ISykiService
 {
     private class Validator : AbstractValidator<UpdateCampusIn>
     {

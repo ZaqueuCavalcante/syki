@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetBatchesSummary;
 
-public class GetBatchesSummaryService(NpgsqlDataSource dataSource) : IAdmService
+public class GetBatchesSummaryService(NpgsqlDataSource dataSource) : ISykiService
 {
     public async Task<GetBatchesSummaryOut> Get()
     {

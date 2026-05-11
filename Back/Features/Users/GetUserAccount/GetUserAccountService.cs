@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Users.GetUserAccount;
 
-public class GetUserAccountService(NpgsqlDataSource dataSource) : ICrossService
+public class GetUserAccountService(NpgsqlDataSource dataSource) : ISykiService
 {
     public async Task<GetUserAccountOut> Get(Guid userId)
     {

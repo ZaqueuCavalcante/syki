@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.ReleaseClassesForEnrollment;
 
-public class ReleaseClassesForEnrollmentService(SykiDbContext ctx) : IAcademicService
+public class ReleaseClassesForEnrollmentService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Release(Guid institutionId, ReleaseClassesForEnrollmentIn data)
     {

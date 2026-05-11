@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.GetStudentClass;
 
-public class GetStudentClassService(SykiDbContext ctx) : IStudentService
+public class GetStudentClassService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<StudentClassOut, SykiError>> Get(Guid userId, Guid classId)
     {

@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetCourseDisciplines;
 
-public class GetCourseDisciplinesService(SykiDbContext ctx) : IAcademicService
+public class GetCourseDisciplinesService(SykiDbContext ctx) : ISykiService
 {
     public async Task<List<CourseDisciplineOut>> Get(Guid id, Guid institutionId)
     {

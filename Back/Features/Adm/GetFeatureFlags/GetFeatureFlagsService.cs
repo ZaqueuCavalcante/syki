@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Adm.GetFeatureFlags;
 
-public class GetFeatureFlagsService(SykiDbContext ctx, FeaturesSettings settings) : IAdmService
+public class GetFeatureFlagsService(SykiDbContext ctx, FeaturesSettings settings) : ISykiService
 {
     public async Task<GetFeatureFlagsOut> Get()
     {

@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Identity.EmailPasswordLogin;
 public class EmailPasswordLoginService(
     SignInService service,
     IHttpContextAccessor httpCtx,
-    UserManager<SykiUser> userManager) : ICrossService
+    UserManager<SykiUser> userManager) : ISykiService
 {
     public async Task<OneOf<EmailPasswordLoginOut, SykiError>> Login(EmailPasswordLoginIn data)
     {

@@ -3,7 +3,7 @@ using Syki.Back.Commands.Domain.Commands;
 
 namespace Syki.Back.Features.Adm.ReprocessCommand;
 
-public class ReprocessCommandService(SykiDbContext ctx) : IAdmService
+public class ReprocessCommandService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Reprocess(Guid id)
     {

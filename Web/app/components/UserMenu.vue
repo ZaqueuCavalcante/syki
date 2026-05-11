@@ -6,14 +6,15 @@ defineProps<{
 }>()
 
 const colorMode = useColorMode()
+const { account } = useUserAccount()
 
-const user = ref({
-    name: 'Benjamin Canac',
+const user = computed(() => ({
+    name: account.value?.name ?? '',
     avatar: {
-        src: 'https://github.com/benjamincanac.png',
-        alt: 'Benjamin Canac'
+        src: account.value?.profilePhoto ?? undefined,
+        alt: account.value?.name ?? ''
     }
-})
+}))
 
 const items = computed<DropdownMenuItem[][]>(() => ([[{
     type: 'label',

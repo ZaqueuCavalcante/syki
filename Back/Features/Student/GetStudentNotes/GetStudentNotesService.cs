@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.GetStudentNotes;
 
-public class GetStudentNotesService(SykiDbContext ctx) : IStudentService
+public class GetStudentNotesService(SykiDbContext ctx) : ISykiService
 {
     public async Task<List<StudentNoteOut>> Get(Guid userId)
     {

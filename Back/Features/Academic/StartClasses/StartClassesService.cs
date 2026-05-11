@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.StartClasses;
 
-public class StartClassesService(SykiDbContext ctx) : IAcademicService
+public class StartClassesService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Start(Guid institutionId, StartClassesIn data)
     {

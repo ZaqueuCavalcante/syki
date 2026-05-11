@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Teacher.GetClassNotesRemainingWeights;
 
-public class GetClassNotesRemainingWeightsService(SykiDbContext ctx) : ITeacherService
+public class GetClassNotesRemainingWeightsService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<List<ClassNoteRemainingWeightsOut>, SykiError>> Get(Guid institutionId, Guid userId, Guid id)
     {

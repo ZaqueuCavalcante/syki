@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.CreateCourseOffering;
 
-public class CreateCourseOfferingService(SykiDbContext ctx, HybridCache cache) : IAcademicService
+public class CreateCourseOfferingService(SykiDbContext ctx, HybridCache cache) : ISykiService
 {
     private class Validator : AbstractValidator<CreateCourseOfferingIn>
     {

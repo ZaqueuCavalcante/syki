@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.GetWebhookSubscription;
 
-public class GetWebhookSubscriptionService(SykiDbContext ctx) : IAcademicService
+public class GetWebhookSubscriptionService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<GetWebhookSubscriptionOut, SykiError>> Get(Guid institutionId, Guid id)
     {

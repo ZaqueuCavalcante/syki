@@ -4,7 +4,7 @@ using Syki.Back.Hubs;
 
 namespace Syki.Back.Features.Adm.GetUsers;
 
-public class GetUsersService(DatabaseSettings dbSettings, HybridCache cache) : IAdmService
+public class GetUsersService(DatabaseSettings dbSettings, HybridCache cache) : ISykiService
 {
     public async Task<List<UserOut>> Get()
     {

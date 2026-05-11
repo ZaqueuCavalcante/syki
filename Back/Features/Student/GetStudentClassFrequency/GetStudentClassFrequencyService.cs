@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.GetStudentClassFrequency;
 
-public class GetStudentClassFrequencyService(SykiDbContext ctx) : IStudentService
+public class GetStudentClassFrequencyService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<GetStudentClassFrequencyOut, SykiError>> Get(Guid studentId, Guid classId)
     {

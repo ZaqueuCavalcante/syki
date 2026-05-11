@@ -2,7 +2,7 @@ using Syki.Back.Features.Teacher.GetTeacherClassStudents;
 
 namespace Syki.Back.Features.Academic.GetAcademicClass;
 
-public class GetAcademicClassService(SykiDbContext ctx, GetTeacherClassStudentsService service) : IAcademicService
+public class GetAcademicClassService(SykiDbContext ctx, GetTeacherClassStudentsService service) : ISykiService
 {
     public async Task<OneOf<GetAcademicClassOut, SykiError>> Get(Guid institutionId, Guid id)
     {

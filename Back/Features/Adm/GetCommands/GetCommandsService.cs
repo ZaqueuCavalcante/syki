@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetCommands;
 
-public class GetCommandsService(NpgsqlDataSource dataSource) : IAdmService
+public class GetCommandsService(NpgsqlDataSource dataSource) : ISykiService
 {
     public async Task<List<CommandTableOut>> Get(CommandTableFilterIn filters)
     {

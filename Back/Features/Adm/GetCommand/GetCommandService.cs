@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Syki.Back.Features.Adm.GetCommand;
 
-public class GetCommandService(NpgsqlDataSource dataSource) : IAdmService
+public class GetCommandService(NpgsqlDataSource dataSource) : ISykiService
 {
     public async Task<CommandOut> Get(Guid id)
     {

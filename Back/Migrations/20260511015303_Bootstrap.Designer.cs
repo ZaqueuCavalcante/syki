@@ -14,7 +14,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20260510232629_Bootstrap")]
+    [Migration("20260511015303_Bootstrap")]
     partial class Bootstrap
     {
         /// <inheritdoc />

@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Teacher.AddStudentClassActivityNote;
 
-public class AddStudentClassActivityNoteService(SykiDbContext ctx) : ITeacherService
+public class AddStudentClassActivityNoteService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Add(Guid teacherId, Guid classActivityId, AddStudentClassActivityNoteIn data)
     {

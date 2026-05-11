@@ -2,7 +2,7 @@ using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Cross.SetupMfa;
 
-public class SetupMfaService(UserManager<SykiUser> userManager) : ICrossService
+public class SetupMfaService(UserManager<SykiUser> userManager) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Setup(Guid userId, string token)
     {

@@ -4,7 +4,7 @@ using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Identity.CreateRole;
 
-public class CreateRoleService(SykiDbContext ctx) : ICrossService
+public class CreateRoleService(SykiDbContext ctx) : ISykiService
 {
     private class Validator : AbstractValidator<CreateRoleIn>
     {

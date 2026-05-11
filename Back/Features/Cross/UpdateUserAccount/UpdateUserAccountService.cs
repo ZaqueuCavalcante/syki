@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Cross.UpdateUserAccount;
 
-public class UpdateUserAccountService(SykiDbContext ctx) : ICrossService
+public class UpdateUserAccountService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Update(Guid userId, UpdateUserAccountIn data)
     {

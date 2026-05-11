@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Academic.FinalizeClasses;
 
-public class FinalizeClassesService(SykiDbContext ctx) : IAcademicService
+public class FinalizeClassesService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Finalize(Guid institutionId, FinalizeClassesIn data)
     {

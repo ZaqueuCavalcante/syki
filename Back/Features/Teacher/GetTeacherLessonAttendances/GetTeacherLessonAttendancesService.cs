@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Teacher.GetTeacherLessonAttendances;
 
-public class GetTeacherLessonAttendancesService(SykiDbContext ctx) : ITeacherService
+public class GetTeacherLessonAttendancesService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<List<GetTeacherLessonAttendanceOut>, SykiError>> Get(Guid institutionId, Guid userId, Guid lessonId)
     {

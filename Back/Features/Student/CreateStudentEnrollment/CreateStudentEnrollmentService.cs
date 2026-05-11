@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 
-public class CreateStudentEnrollmentService(SykiDbContext ctx) : IStudentService
+public class CreateStudentEnrollmentService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Create(Guid institutionId, Guid userId, Guid courseCurriculumId, CreateStudentEnrollmentIn data)
     {

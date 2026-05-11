@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Student.GetStudentAverageNote;
 
-public class GetStudentAverageNoteService(SykiDbContext ctx) : IStudentService
+public class GetStudentAverageNoteService(SykiDbContext ctx) : ISykiService
 {
     public async Task<decimal> Get(Guid userId)
     {

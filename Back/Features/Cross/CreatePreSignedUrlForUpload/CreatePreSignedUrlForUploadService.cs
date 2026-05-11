@@ -2,7 +2,7 @@ using Syki.Back.Storage;
 
 namespace Syki.Back.Features.Cross.CreatePreSignedUrlForUpload;
 
-public class CreatePreSignedUrlForUploadService(IStorageService service) : ICrossService
+public class CreatePreSignedUrlForUploadService(IStorageService service) : ISykiService
 {
     public async Task<OneOf<CreatePreSignedUrlForUploadOut, SykiError>> Create(Guid institutionId, Guid userId, CreatePreSignedUrlForUploadIn data)
     {

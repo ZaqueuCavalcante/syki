@@ -2,7 +2,7 @@ using Syki.Back.Features.Academic.CallWebhooks;
 
 namespace Syki.Back.Features.Academic.ReprocessWebhookCall;
 
-public class ReprocessWebhookCallService(SykiDbContext ctx) : IAcademicService
+public class ReprocessWebhookCallService(SykiDbContext ctx) : ISykiService
 {
     public async Task<OneOf<SykiSuccess, SykiError>> Reprocess(Guid institutionId, Guid id)
     {

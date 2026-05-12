@@ -9,7 +9,7 @@ public class SendFirstAccessMagicLinkEmailCommandHandler(
     SykiDbContext ctx,
     IEmailsService emailService) : ICommandHandler<SendFirstAccessMagicLinkEmailCommand>
 {
-    public async Task Handle(Guid commandId, SendFirstAccessMagicLinkEmailCommand command)
+    public async Task Handle(int commandId, SendFirstAccessMagicLinkEmailCommand command)
     {
         var user = await ctx.Users.Where(x => x.Email == command.Email).Select(x => new { x.Id, x.Email }).FirstAsync();
 

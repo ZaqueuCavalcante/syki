@@ -1,0 +1,20 @@
+namespace Syki.Back.Features.Student.GetStudentFrequency;
+
+[ApiController, Authorize]
+[EnableRateLimiting("Medium")]
+public class GetStudentFrequencyController(GetStudentFrequencyService service) : ControllerBase
+{
+    /// <summary>
+    /// Frequência total
+    /// </summary>
+    /// <remarks>
+    /// Retorna a frequência total do aluno no curso.
+    /// </remarks>
+    [HttpGet("student/frequency")]
+    public async Task<IActionResult> Get()
+    {
+        var frequency = await service.Get(User.Id);
+
+        return Ok(frequency);
+    }
+}

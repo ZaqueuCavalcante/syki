@@ -1,13 +1,12 @@
 using Dapper;
-using Npgsql;
 
 namespace Syki.Back.Features.Users.GetUserAccount;
 
-public class GetUserAccountService(NpgsqlDataSource dataSource) : ISykiService
+public class GetUserAccountService(SykiDbContext ctx) : ISykiService
 {
-    public async Task<GetUserAccountOut> Get(Guid userId)
+    public async Task<GetUserAccountOut> Get()
     {
-        await using var connection = await dataSource.OpenConnectionAsync();
+        await using var connection = await ctx.GetOpenConnectionAsync();
 
         const string sql = @"
             SELECT
@@ -30,6 +29,6 @@ public class GetUserAccountService(NpgsqlDataSource dataSource) : ISykiService
             LIMIT 1
         ";
 
-        return await connection.QueryFirstAsync<GetUserAccountOut>(sql, new { userId });
+        return await connection.QueryFirstAsync<GetUserAccountOut>(sql, new { ctx.RequestUser.Id });
     }
 }

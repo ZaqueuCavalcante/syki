@@ -8,7 +8,7 @@ public record TestRetryCommand(int FailUntilAttempt) : ICommand;
 
 public class TestRetryCommandHandler(SykiDbContext ctx) : ICommandHandler<TestRetryCommand>
 {
-    public async Task Handle(Guid commandId, TestRetryCommand command)
+    public async Task Handle(int commandId, TestRetryCommand command)
     {
         var currentCommand = await ctx.Commands.AsNoTracking().FirstAsync(x => x.Id == commandId);
 

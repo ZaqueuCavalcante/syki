@@ -1,14 +1,13 @@
 using System.Text;
 using System.Security.Claims;
+using Syki.Back.Domain.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Syki.Back.Features.Identity.SignIn;
-using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Cross.SignIn;
 
 public class SignInService(
-    SykiDbContext ctx,
     AuthSettings settings,
     IHttpContextAccessor httpCtx,
     UserManager<SykiUser> userManager) : ISykiService
@@ -54,20 +53,5 @@ public class SignInService(
             Permissions = [],
             InstitutionId = user.InstitutionId,
         };
-    }
-
-    private async Task<List<Claim>> GetDbClaims(Guid userId, string role)
-    {
-        if (role.ToEnum<UserRole>() is UserRole.Student)
-        {
-            var courseOfferingId = await ctx.Students.Where(a => a.Id == userId)
-                .Select(a => a.CourseOfferingId).FirstAsync();
-            var courseCurriculumId = await ctx.CourseOfferings.Where(o => o.Id == courseOfferingId)
-                .Select(o => o.CourseCurriculumId).FirstAsync();
-
-            return [ new(Claims.CourseCurriculumId, courseCurriculumId.ToString()) ];
-        }
-
-        return [];
     }
 }

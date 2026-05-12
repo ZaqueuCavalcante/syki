@@ -1,10 +1,12 @@
 using System.Security.Claims;
 using Syki.Back.Auth.Schemes;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using System.Text.RegularExpressions;
 
 namespace Syki.Back.Extensions;
 
-public static class HttpExtensions
+public static partial class HttpExtensions
 {
     extension(HttpResponse response)
     {
@@ -53,9 +55,28 @@ public static class HttpExtensions
         }
     }
 
+    [GeneratedRegex(@"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", RegexOptions.IgnoreCase)]
+    private static partial Regex GuidPattern();
+
+    private static string NormalizePath(string path) => GuidPattern().Replace(path, "{id}");
+
     extension(HttpContext context)
     {
-        public async Task SignInTwoFactorUserIdSchemeAsync(Guid userId)
+        public string GetTargetControllerName()
+        {
+            var endpoint = context.GetEndpoint();
+            if (endpoint == null) return NormalizePath(context.Request.Path.ToString());
+
+            var action = endpoint.Metadata.GetMetadata<ControllerActionDescriptor>();
+            if (action != null) return $"{action.ControllerName}Controller";
+
+            if (endpoint is RouteEndpoint routeEndpoint)
+                return routeEndpoint.RoutePattern.RawText ?? endpoint.DisplayName ?? NormalizePath(context.Request.Path.ToString());
+
+            return endpoint.DisplayName ?? NormalizePath(context.Request.Path.ToString());
+        }
+
+        public async Task SignInTwoFactorUserIdSchemeAsync(int userId)
         {
             // Store user ID in Identity cookie for 2FA verification step
             var identity = new ClaimsIdentity(IdentityConstants.TwoFactorUserIdScheme);

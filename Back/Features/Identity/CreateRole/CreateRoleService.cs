@@ -1,6 +1,5 @@
 using Syki.Back.Domain.Identity;
 using Syki.Back.Auth.Permissions;
-using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Identity.CreateRole;
 

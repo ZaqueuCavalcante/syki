@@ -4,7 +4,6 @@ builder.AddSettingsConfigs();
 builder.AddServicesConfigs();
 builder.AddQuartzConfigs();
 builder.AddCommandConfigs();
-builder.AddHostedServicesConfigs();
 
 builder.AddIdentityConfigs();
 builder.AddAuthenticationConfigs();
@@ -26,9 +25,6 @@ builder.AddOpenTelemetryConfigs();
 
 var app = builder.Build();
 
-app.RunDevelopmentConfigs();
-app.UseTestingMetrics();
-
 app.UseLogs();
 app.UseCors();
 
@@ -39,9 +35,8 @@ app.UseCustomHeaders();
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseUserData();
+app.UseEnrichDbContext();
 
-app.UseAudit();
 app.UseDocs();
 
 app.UseCommandsProcessorTrigger();

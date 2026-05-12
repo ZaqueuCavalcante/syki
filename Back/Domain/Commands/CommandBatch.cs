@@ -2,8 +2,8 @@ namespace Syki.Back.Commands.Domain.Commands;
 
 public class CommandBatch
 {
-    public Guid Id { get; set; }
-    public Guid InstitutionId { get; set; }
+    public int Id { get; set; }
+    public int InstitutionId { get; set; }
     public CommandBatchType Type { get; set; }
     public CommandBatchStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
@@ -12,26 +12,25 @@ public class CommandBatch
     /// <summary>
     /// Id do comando que gerou o lote
     /// </summary>
-    public Guid? SourceCommandId { get; set; }
+    public int? SourceCommandId { get; set; }
 
     /// <summary>
     /// Id do comando que será executado quando o lote for processado com sucesso
     /// </summary>
-    public Guid? NextCommandId { get; set; }
+    public int? NextCommandId { get; set; }
 
     public int Size { get; set; }
 
     private CommandBatch() { }
 
     public static CommandBatch New(
-        Guid institutionId,
+        int institutionId,
         CommandBatchType type,
-        Guid? sourceCommandId = null)
+        int? sourceCommandId = null)
     {
         return new()
         {
             Type = type,
-            Id = Guid.CreateVersion7(),
             CreatedAt = DateTime.UtcNow,
             InstitutionId = institutionId,
             Status = CommandBatchStatus.Pending,

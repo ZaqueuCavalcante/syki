@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Users.GetUserAccount;
 
-[ApiController, AuthBearer]
+[ApiController, Authorize]
 [EnableRateLimiting("Medium")]
 public class GetUserAccountController(GetUserAccountService service) : ControllerBase
 {
@@ -14,7 +14,7 @@ public class GetUserAccountController(GetUserAccountService service) : Controlle
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {
-        var account = await service.Get(User.Id);
+        var account = await service.Get();
         return Ok(account);
     }
 }

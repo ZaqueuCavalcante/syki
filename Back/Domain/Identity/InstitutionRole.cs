@@ -1,5 +1,3 @@
-using Syki.Back.Features.Cross.CreateUser;
-
 namespace Syki.Back.Domain.Identity;
 
 /// <summary>
@@ -7,14 +5,14 @@ namespace Syki.Back.Domain.Identity;
 /// </summary>
 public class InstitutionRole
 {
-    public Guid InstitutionId { get; set; }
-    public Guid RoleId { get; set; }
+    public int InstitutionId { get; set; }
+    public int RoleId { get; set; }
 
     public SykiRole Role { get; set; }
 
     public InstitutionRole() {}
 
-    public InstitutionRole(Guid institutionId, SykiRole role)
+    public InstitutionRole(int institutionId, SykiRole role)
     {
         InstitutionId = institutionId;
         Role = role;

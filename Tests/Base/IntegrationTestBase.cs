@@ -34,7 +34,7 @@ public abstract class IntegrationTestBase
         var dataSource = new NpgsqlDataSourceBuilder(connectionString).Build();
         var options = new DbContextOptionsBuilder<SykiDbContext>().Options;
 
-        using var ctx = new SykiDbContext(options, dataSource);
+        using var ctx = new SykiDbContext(options, dataSource, null);
 
         if (ctx.HasMissingMigration()) throw new AssertionException("SykiDbContext Has Missing Migration!");
 

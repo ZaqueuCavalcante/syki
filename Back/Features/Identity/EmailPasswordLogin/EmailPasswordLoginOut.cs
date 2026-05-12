@@ -2,8 +2,8 @@ namespace Syki.Back.Features.Identity.EmailPasswordLogin;
 
 public class EmailPasswordLoginOut : IApiDto<EmailPasswordLoginOut>
 {
-    public Guid UserId { get; set; }
-    public Guid InstitutionId { get; set; }
+    public int UserId { get; set; }
+    public int InstitutionId { get; set; }
     public List<int> Permissions { get; set; } = [];
 
     public static IEnumerable<(string, EmailPasswordLoginOut)> GetExamples() =>
@@ -11,8 +11,8 @@ public class EmailPasswordLoginOut : IApiDto<EmailPasswordLoginOut>
         ("Exemplo",
         new EmailPasswordLoginOut
         {
-            UserId = Guid.NewGuid(),
-            InstitutionId = Guid.NewGuid(),
+            UserId = 1,
+            InstitutionId = 1,
             Permissions = [1, 2, 3],
         }),
     ];

@@ -18,3 +18,13 @@
 - EnableRateLimiting com constantes e não strings soltas
 - Eliminar todos os usos do DbContextTransactionFilter
 - https://github.com/ZaqueuCavalcante/syki/issues/81
+
+
+
+- DbContext
+- Audit
+- Commands
+- Identity (users, roles, permissions)
+
+
+

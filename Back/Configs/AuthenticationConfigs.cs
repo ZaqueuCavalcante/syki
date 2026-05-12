@@ -12,9 +12,4 @@ public static class AuthenticationConfigs
             .AddAuthentication(options => options.DefaultChallengeScheme = JwtBearerScheme.Name)
             .AddJwtBearerScheme(builder.Configuration);
     }
-
-    public static void UseUserData(this IApplicationBuilder app)
-    {
-        app.UseMiddleware<UserDataMiddleware>();
-    }
 }

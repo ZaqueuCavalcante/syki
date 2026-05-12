@@ -1,6 +1,3 @@
-using Syki.Back.Features.Academic.CreateClass;
-using Syki.Back.Features.Academic.CreateAcademicPeriod;
-
 namespace Syki.Tests.Base;
 
 public static class TestData
@@ -499,34 +496,5 @@ public static class TestData
         yield return new[] { 90, 5, 6 };
         yield return new[] { 90, 5, 5, 1 };
         yield return new[] { 0, 50, 45, 6 };
-    }
-
-    public static Class GetClass()
-    {
-        var institutionId = Guid.CreateVersion7();
-        var disciplineId = Guid.CreateVersion7();
-        var campusId = Guid.CreateVersion7();
-        var teacherId = Guid.CreateVersion7();
-        const string period = "2024.2";
-        const int vacancies = 40;
-
-        var @class = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, []).Success;
-
-        return @class;
-    }
-
-    public static Class GetClass(string start, string end, List<Schedule> schedules)
-    {
-        var institutionId = Guid.CreateVersion7();
-        var disciplineId = Guid.CreateVersion7();
-        var campusId = Guid.CreateVersion7();
-        var teacherId = Guid.CreateVersion7();
-        const string period = "2024.2";
-        const int vacancies = 40;
-
-        var @class = Class.New(institutionId, campusId, disciplineId, teacherId, period, vacancies, schedules).Success;
-        @class.Period = AcademicPeriod.New(period, institutionId, start.ToDateOnly(), end.ToDateOnly());
-
-        return @class;
     }
 }

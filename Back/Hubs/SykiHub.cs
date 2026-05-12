@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Syki.Back.Hubs;
 
-[AuthBearer]
+[Authorize]
 public class SykiHub : Hub
 {
     public override Task OnConnectedAsync()

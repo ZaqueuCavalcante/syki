@@ -1,0 +1,20 @@
+namespace Syki.Back.Features.Teacher.GetTeacherAgenda;
+
+[ApiController, Authorize]
+[EnableRateLimiting("Medium")]
+public class GetTeacherAgendaController(GetTeacherAgendaService service) : ControllerBase
+{
+    /// <summary>
+    /// Agenda
+    /// </summary>
+    /// <remarks>
+    /// Retorna a agenda do professor.
+    /// </remarks>
+    [HttpGet("teacher/agenda")]
+    public async Task<IActionResult> Get()
+    {
+        var data = await service.Get(User.InstitutionId, User.Id);
+        
+        return Ok(data);
+    }
+}

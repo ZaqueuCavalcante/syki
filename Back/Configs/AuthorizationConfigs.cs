@@ -1,9 +1,15 @@
+using Syki.Back.Auth.Policies;
+
 namespace Syki.Back.Configs;
 
 public static class AuthorizationConfigs
 {
     public static void AddAuthorizationConfigs(this WebApplicationBuilder builder)
     {
+        builder.Services.AddAuthorizationBuilder()
+            .AddIdentityPolicies()
+            .AddUsersPolicies();
+
         builder.Services.ConfigureApplicationCookie(options =>
         {
             options.Events.OnRedirectToLogin = context =>
@@ -12,11 +18,5 @@ public static class AuthorizationConfigs
                 return Task.CompletedTask;
             };
         });
-
-        builder.Services.AddSingleton<IAuthorizationHandler, CrossLoginAuthReqHandler>();
-
-        builder.Services.AddAuthorizationBuilder()
-            .AddAdmPolicies()
-            .AddPolicy(BackPolicies.CrossLogin, p => p.Requirements.Add(new CrossLoginAuthRequirement()));
     }
 }

@@ -4,11 +4,10 @@ namespace Syki.Back.Database.Commands;
 
 public class CommandBatchDbConfig : IEntityTypeConfiguration<CommandBatch>
 {
-    public void Configure(EntityTypeBuilder<CommandBatch> commandBatch)
+    public void Configure(EntityTypeBuilder<CommandBatch> entity)
     {
-        commandBatch.ToTable("command_batches");
+        entity.ToTable("command_batches", DbSchemas.Syki);
 
-        commandBatch.HasKey(c => c.Id);
-        commandBatch.Property(c => c.Id).ValueGeneratedNever();
+        entity.HasKey(e => e.Id);
     }
 }

@@ -1,6 +1,8 @@
 using Audit.Core;
 using Syki.Back.Audit;
-using Syki.Back.Features.Academic.CreateCampus;
+using Audit.EntityFramework;
+using Syki.Back.Domain.Identity;
+using AuditConfig = Audit.Core.Configuration;
 
 namespace Syki.Back.Configs;
 
@@ -8,30 +10,20 @@ public static class AuditConfigs
 {
     public static void AddAuditConfigs(this WebApplicationBuilder _)
     {
-        Configuration.Setup().UseEntityFramework(_ => _
+        AuditConfig.Setup().UseEntityFramework(_ => _
             .AuditTypeExplicitMapper(_ => _
-                .Map<Campus, AuditLog>()
-                .AuditEntityAction<AuditLog>((evt, entry, log) => log.Fill(evt, entry)))
+                .Map<SykiUser, AuditTrail>()
+                .AuditEntityAction<AuditTrail>((evt, entry, log) => log.Fill(evt, entry)))
             .IgnoreMatchedProperties(true));
-    }
 
-    public static void UseAudit(this IApplicationBuilder app)
-    {
-        var contextAccessor = app.ApplicationServices.GetService<IHttpContextAccessor>()!;
-
-        Configuration.AddCustomAction(ActionType.OnScopeCreated, scope =>
+        AuditConfig.AddCustomAction(ActionType.OnScopeCreated, scope =>
         {
-            var httpContext = contextAccessor.HttpContext;
-            if (httpContext == null) return;
+            var dbContext = scope.GetEntityFrameworkEvent().GetDbContext() as SykiDbContext;
 
-            if (!httpContext.User.IsAuthenticated)
-            {
-                scope.Event.CustomFields["Skip"] = true;
-                return;
-            }
-
-            scope.Event.CustomFields["UserId"] = httpContext.User.Id;
-            scope.Event.CustomFields["InstitutionId"] = httpContext.User.InstitutionId;
+            scope.SetUserId(dbContext.RequestUser.Id);
+            scope.SetInstitutionId(dbContext.RequestUser.InstitutionId);
+            scope.SetActivityId(dbContext.ActivityId);
+            scope.SetOperation(dbContext.Operation);
         });
     }
 }

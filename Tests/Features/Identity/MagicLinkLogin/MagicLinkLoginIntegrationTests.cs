@@ -109,8 +109,8 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         result.ShouldBeSuccess();
-        result.Success.UserId.Should().NotBeEmpty();
-        result.Success.InstitutionId.Should().NotBeEmpty();
+        result.Success.UserId.Should().NotBe(0);
+        result.Success.InstitutionId.Should().NotBe(0);
     }
 
     [Test]

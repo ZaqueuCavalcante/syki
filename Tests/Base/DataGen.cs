@@ -1,22 +1,15 @@
 using Bogus;
 using OtpNet;
-using Bogus.Extensions.Brazil;
 
 namespace Syki.Tests.Integration.Base;
 
 public static class DataGen
 {
-    public static string Email => $"{Guid.NewGuid().ToString().OnlyNumbers()}.test@syki.com.br";
-
     public static string Numbers => $"{Guid.NewGuid().ToString().OnlyNumbers()}";
 
-    public static string Cpf => new Faker("pt_BR").Person.Cpf();
+    public static string Email => $"{Numbers}.test@syki.com.br";
+
     public static string UserName => new Faker("pt_BR").Person.FullName;
-
-    public static string Cnpj => new Faker("pt_BR").Company.Cnpj();
-    public static string OrgName => new Faker("pt_BR").Company.CompanyName();
-
-    public static string Phone => "9" + new Faker("pt_BR").Person.Phone.OnlyNumbers()[^8..];
 
     public static string GenerateTOTP(this string key)
     {

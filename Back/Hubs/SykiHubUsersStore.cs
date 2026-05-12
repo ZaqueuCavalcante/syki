@@ -4,5 +4,5 @@ namespace Syki.Back.Hubs;
 
 public static class SykiHubUsersStore
 {
-    public static ConcurrentDictionary<Guid, List<string>> Users = new();
+    public static ConcurrentDictionary<int, List<string>> Users = new();
 }

@@ -1,5 +1,5 @@
+using Syki.Back.Domain.Identity;
 using Syki.Back.Features.Cross.SignIn;
-using Syki.Back.Features.Cross.CreateUser;
 
 namespace Syki.Back.Features.Identity.EmailPasswordLogin;
 

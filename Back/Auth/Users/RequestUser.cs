@@ -2,8 +2,8 @@
 
 public class RequestUser
 {
-    public Guid Id { get; set; }
-    public Guid RoleId { get; set; }
-    public Guid InstitutionId { get; set; }
+    public int Id { get; set; }
+    public int RoleId { get; set; }
+    public int InstitutionId { get; set; }
     public List<int> Permissions { get; set; }
 }

@@ -5,8 +5,8 @@ namespace Syki.Back.Commands.Domain.Commands;
 
 public class Command
 {
-    public Guid Id { get; set; }
-    public Guid InstitutionId { get; set; }
+    public int Id { get; set; }
+    public int InstitutionId { get; set; }
     public string Type { get; set; }
     public string Data { get; set; }
     public CommandStatus Status { get; set; }
@@ -20,19 +20,19 @@ public class Command
     /// Id do comando que gerou o comando
     /// Utilizado quando um comando gera outro em seu handler
     /// </summary>
-    public Guid? ParentId { get; set; }
+    public int? ParentId { get; set; }
 
     /// <summary>
     /// Id do comando com erro que gerou o comando atual
     /// Utilizado quando o comando original está com erro e é reprocessado
     /// O comando atual é uma cópia do original (imutabilidade)
     /// </summary>
-    public Guid? OriginalId { get; set; }
+    public int? OriginalId { get; set; }
 
     /// <summary>
     /// Id do lote que contém o comando
     /// </summary>
-    public Guid? BatchId { get; set; }
+    public int? BatchId { get; set; }
 
     public DateTime? NotBefore { get; set; }
 
@@ -65,18 +65,17 @@ public class Command
     public Command() { }
 
     public Command(
-        Guid institutionId,
+        int institutionId,
         object data,
-        Guid? parentId = null,
-        Guid? originalId = null,
-        Guid? batchId = null,
+        int? parentId = null,
+        int? originalId = null,
+        int? batchId = null,
         int? delaySeconds = null,
         string? activityId = null,
         int maxRetries = 0,
         BackoffStrategy backoffStrategy = BackoffStrategy.None,
         int baseDelaySeconds = 5
     ) {
-        Id = Guid.CreateVersion7();
         InstitutionId = institutionId;
         Type = data.GetType().Name;
         Data = data.Serialize();

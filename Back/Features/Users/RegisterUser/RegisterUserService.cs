@@ -1,5 +1,5 @@
-using Syki.Back.Features.Cross.CreateUser;
-using Syki.Back.Features.Cross.CreateInstitution;
+using Syki.Back.Domain.Identity;
+using Syki.Back.Domain.Institutions;
 
 namespace Syki.Back.Features.Users.RegisterUser;
 

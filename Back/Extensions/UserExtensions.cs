@@ -1,0 +1,17 @@
+using System.Text.Json;
+using System.Security.Claims;
+using Syki.Back.Auth.Claims;
+
+namespace Syki.Back.Extensions;
+
+public static class UserExtensions
+{
+    extension(ClaimsPrincipal user)
+    {
+        public int RoleId => int.Parse(user.FindFirst(SykiClaims.UserRole)?.Value ?? "0");
+        public int Id => int.Parse(user.FindFirst(SykiClaims.UserId)?.Value ?? "0");
+        public int InstitutionId => int.Parse(user.FindFirst(SykiClaims.InstitutionId)?.Value ?? "0");
+        public bool IsAuthenticated => (user.Identity?.IsAuthenticated ?? false) && user.FindFirst(SykiClaims.UserId)?.Value != null;
+        public List<int> Permissions => JsonSerializer.Deserialize<List<int>>(user.FindFirst(SykiClaims.UserPermissions)?.Value ?? "[]") ?? [];
+    }
+}

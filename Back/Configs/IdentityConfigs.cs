@@ -1,4 +1,4 @@
-using Syki.Back.Features.Cross.CreateUser;
+using Syki.Back.Domain.Identity;
 
 namespace Syki.Back.Configs;
 

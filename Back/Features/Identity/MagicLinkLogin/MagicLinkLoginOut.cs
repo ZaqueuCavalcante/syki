@@ -2,8 +2,8 @@ namespace Syki.Back.Features.Identity.MagicLinkLogin;
 
 public class MagicLinkLoginOut : IApiDto<MagicLinkLoginOut>
 {
-    public Guid UserId { get; set; }
-    public Guid InstitutionId { get; set; }
+    public int UserId { get; set; }
+    public int InstitutionId { get; set; }
     public List<int> Permissions { get; set; } = [];
 
     public static IEnumerable<(string, MagicLinkLoginOut)> GetExamples() =>
@@ -11,9 +11,9 @@ public class MagicLinkLoginOut : IApiDto<MagicLinkLoginOut>
         ("Exemplo",
         new MagicLinkLoginOut
         {
-            UserId = Guid.NewGuid(),
+            UserId = 1,
+            InstitutionId = 1,
             Permissions = [1, 2, 3, 4],
-            InstitutionId = Guid.NewGuid(),
         }),
     ];
 }

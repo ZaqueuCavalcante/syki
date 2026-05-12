@@ -24,6 +24,11 @@ public static class EfCoreConfigs
         builder.Services.AddDbContext<SykiDbContext>();
     }
 
+    public static void UseEnrichDbContext(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<EnrichBackDbContextMiddleware>();
+    }
+
     public static void UseCommandsProcessorTrigger(this IApplicationBuilder app)
     {
         app.UseMiddleware<CommandsProcessorTriggerMiddleware>();

@@ -4,11 +4,10 @@ namespace Syki.Back.Database.Commands;
 
 public class CommandDbConfig : IEntityTypeConfiguration<Command>
 {
-    public void Configure(EntityTypeBuilder<Command> command)
+    public void Configure(EntityTypeBuilder<Command> entity)
     {
-        command.ToTable("commands");
+        entity.ToTable("commands", DbSchemas.Syki);
 
-        command.HasKey(c => c.Id);
-        command.Property(c => c.Id).ValueGeneratedNever();
+        entity.HasKey(e => e.Id);
     }
 }

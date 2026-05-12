@@ -1,12 +1,11 @@
 global using OneOf;
 global using System.Net;
-global using Syki.Back.Shared;
-global using Syki.Back.Commands;
 global using Syki.Tests.Base;
 global using NUnit.Framework;
 global using Syki.Back.Errors;
 global using FluentAssertions;
-global using Syki.Tests.Clients;
+global using Syki.Back.Shared;
+global using Syki.Back.Commands;
 global using Syki.Back.Database;
 global using Syki.Back.Extensions;
 global using Microsoft.EntityFrameworkCore;

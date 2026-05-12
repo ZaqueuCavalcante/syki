@@ -1,5 +1,5 @@
 using Syki.Back.Domain.Identity;
-using Syki.Back.Features.Cross.CreateInstitution;
+using Syki.Back.Domain.Institutions;
 
 namespace Syki.Back.Database.Identity;
 
@@ -7,7 +7,7 @@ public class InstitutionRoleDbConfig : IEntityTypeConfiguration<InstitutionRole>
 {
     public void Configure(EntityTypeBuilder<InstitutionRole> entity)
     {
-        entity.ToTable("institution_roles");
+        entity.ToTable("institution_roles", DbSchemas.Syki);
 
         entity.HasKey(e => new { e.InstitutionId, e.RoleId });
 

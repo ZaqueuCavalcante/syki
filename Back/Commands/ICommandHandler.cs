@@ -5,12 +5,12 @@ namespace Syki.Back.Commands;
 
 public interface ICommandHandler<T> where T : ICommand
 {
-    Task Handle(Guid commandId, T command);
+    Task Handle(int commandId, T command);
 }
 
 public interface ICommandInvoker
 {
-    Task Invoke(IServiceProvider sp, Guid commandId, string json);
+    Task Invoke(IServiceProvider sp, int commandId, string json);
     object Deserialize(string json);
 }
 
@@ -22,7 +22,7 @@ public class CommandInvoker<T> : ICommandInvoker where T : ICommand
         Converters = { new SykiStringEnumConverter() },
     };
 
-    public async Task Invoke(IServiceProvider sp, Guid commandId, string json)
+    public async Task Invoke(IServiceProvider sp, int commandId, string json)
     {
         var data = JsonSerializer.Deserialize<T>(json, _options)!;
         var handler = sp.GetRequiredService<ICommandHandler<T>>();

@@ -1,7 +1,6 @@
 namespace Syki.Back.Features.Identity.EmailPasswordLogin;
 
-[ApiController]
-[EnableRateLimiting("Small")]
+[ApiController, EnableRateLimiting(RateLimitingConfigs.SensitivePolicy)]
 public class EmailPasswordLoginController(EmailPasswordLoginService service) : ControllerBase
 {
     /// <summary>

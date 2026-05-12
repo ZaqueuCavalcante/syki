@@ -1,7 +1,8 @@
+using Syki.Back.Auth.Policies;
+
 namespace Syki.Back.Features.Users.GetUserAccount;
 
-[ApiController, Authorize]
-[EnableRateLimiting("Medium")]
+[ApiController, Authorize(Policies.GetUserAccount)]
 public class GetUserAccountController(GetUserAccountService service) : ControllerBase
 {
     /// <summary>

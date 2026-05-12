@@ -10,7 +10,6 @@
 - Sistema de tranking de eventos relevantes
 - Domínio estud.com.br na Hostinger
 - Suporte para Ensino Fundamental e Médio (pais dos alunos)
-- EnableRateLimiting com constantes e não strings soltas
 - https://github.com/ZaqueuCavalcante/syki/issues/81
 
 

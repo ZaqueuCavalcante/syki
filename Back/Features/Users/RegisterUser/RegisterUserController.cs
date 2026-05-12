@@ -1,7 +1,6 @@
 namespace Syki.Back.Features.Users.RegisterUser;
 
-[ApiController]
-[EnableRateLimiting("Small")]
+[ApiController, EnableRateLimiting(RateLimitingConfigs.SensitivePolicy)]
 public class RegisterUserController(RegisterUserService service) : ControllerBase
 {
     /// <summary>

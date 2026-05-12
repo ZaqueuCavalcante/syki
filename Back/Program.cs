@@ -11,7 +11,7 @@ builder.AddAuthorizationConfigs();
 
 builder.AddHttpConfigs();
 builder.AddCacheConfigs();
-builder.AddRateLimiterConfigs();
+builder.AddRateLimitingConfigs();
 
 builder.AddAuditConfigs();
 builder.AddDapperConfigs();
@@ -29,10 +29,10 @@ app.UseLogs();
 app.UseCors();
 
 app.UseRouting();
-app.UseRateLimiter();
 app.UseExceptions();
 
 app.UseAuthentication();
+app.UseRateLimiting();
 app.UseAuthorization();
 app.UseEnrichDbContext();
 

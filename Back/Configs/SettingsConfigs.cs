@@ -6,6 +6,6 @@ public static class SettingsConfigs
     {
         builder.Services.AddSingleton<AuthSettings>();
         builder.Services.AddSingleton<EmailSettings>();
-        builder.Services.AddSingleton<RateLimiterSettings>();
+        builder.Services.AddSingleton<RateLimitingSettings>();
     }
 }

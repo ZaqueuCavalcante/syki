@@ -59,6 +59,21 @@ namespace Back.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "institutions",
+                schema: "syki",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_institutions", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "commands",
                 schema: "syki",
                 columns: table => new
@@ -88,21 +103,13 @@ namespace Back.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_commands", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "institutions",
-                schema: "syki",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_institutions", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_commands_institutions_institution_id",
+                        column: x => x.institution_id,
+                        principalSchema: "syki",
+                        principalTable: "institutions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -315,6 +322,12 @@ namespace Back.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_commands_institution_id",
+                schema: "syki",
+                table: "commands",
+                column: "institution_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_magic_links_user_id",

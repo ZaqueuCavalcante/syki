@@ -11,7 +11,6 @@ public class SendResetPasswordTokenController(SendResetPasswordTokenService serv
     /// Envia um link de redefinição de senha para o email informado.
     /// </remarks>
     [HttpPost("reset-password-token")]
-    [DbContextTransactionFilter]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Send([FromBody] SendResetPasswordTokenIn data)

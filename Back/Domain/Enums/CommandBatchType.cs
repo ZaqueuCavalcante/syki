@@ -1,10 +1,5 @@
-using System.ComponentModel;
+namespace Syki.Back.Commands.Domain.Enums;
 
-namespace Syki.Back.Shared;
-
-/// <summary>
-/// Tipo de um Lote de comandos
-/// </summary>
 public enum CommandBatchType
 {
     [Description("Envio de emails de nova atividade")]

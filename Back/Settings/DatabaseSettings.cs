@@ -1,8 +1,7 @@
 namespace Syki.Back.Settings;
 
-public class DatabaseSettings
+public class DatabaseSettings : SettingsBase
 {
-    public bool Reset { get; set; }
     public string ConnectionString { get; set; }
 
     public DatabaseSettings() { }
@@ -10,10 +9,15 @@ public class DatabaseSettings
     public DatabaseSettings(IConfiguration configuration)
     {
         configuration.GetSection("Database").Bind(this);
+
+        RequireNonEmpty(ConnectionString);
     }
 }
 
 public static class DatabaseSettingsExtensions
 {
-    public static DatabaseSettings Database(this IConfiguration configuration) => new(configuration);
+    extension(IConfiguration configuration)
+    {
+        public DatabaseSettings Database => new(configuration);
+    }
 }

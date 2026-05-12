@@ -11,12 +11,11 @@ public static class ServicesConfigs
         builder.Services.AddServices(typeof(ISykiService));
 
         builder.Services.AddScoped<IEmailsService, EmailsService>();
-        builder.Services.AddScoped<IStorageService, AzureBlobStorageService>();
+        builder.Services.AddScoped<IStorageService, FakeStorageService>();
 
-        if (EnvironmentExtensions.IsDevelopment() || EnvironmentExtensions.IsTesting())
+        if (EnvironmentExtensions.IsDevelopmentOrTesting())
         {
             builder.Services.Replace(ServiceDescriptor.Singleton<IEmailsService, FakeEmailsService>());
-            builder.Services.Replace(ServiceDescriptor.Singleton<IStorageService, FakeStorageService>());
         }
     }
 

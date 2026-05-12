@@ -1,9 +1,6 @@
 namespace Syki.Back.Commands;
 
-/// <summary>
-/// Comando de teste que falha nas primeiras N execuções e depois tem sucesso.
-/// Usado para testar a lógica de retry do CommandsProcessor.
-/// </summary>
+[CommandDescription("Comando de teste que falha nas primeiras N execuções e depois tem sucesso.")]
 public record TestRetryCommand(int FailUntilAttempt) : ICommand;
 
 public class TestRetryCommandHandler(SykiDbContext ctx) : ICommandHandler<TestRetryCommand>

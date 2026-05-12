@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(xargs cat)",
-      "Bash(pnpm nuxt *)"
+      "Bash(pnpm nuxt *)",
+      "Bash(xargs ls -la)"
     ]
   }
 }

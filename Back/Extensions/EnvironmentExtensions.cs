@@ -20,9 +20,9 @@ public static class EnvironmentExtensions
         return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Development;
     }
 
-    public static string GetEnvironment()
+    public static bool IsDevelopmentOrTesting()
     {
-        return Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "NOT_FOUND";
+        return IsDevelopment() || IsTesting();
     }
 
     public static string DeployHash = Guid.NewGuid().ToString()[^8..];

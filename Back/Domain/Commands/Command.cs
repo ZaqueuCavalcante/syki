@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Syki.Back.Commands.Domain.Enums;
+using Syki.Back.Domain.Institutions;
 
 namespace Syki.Back.Commands.Domain.Commands;
 
@@ -62,7 +63,35 @@ public class Command
 
     public List<string> Logs { get; set; } = [];
 
+    public Institution? Institution { get; set; }
+
     public Command() { }
+
+    public Command(
+        Institution institution,
+        object data,
+        int? parentId = null,
+        int? originalId = null,
+        int? batchId = null,
+        int? delaySeconds = null,
+        string? activityId = null,
+        int maxRetries = 0,
+        BackoffStrategy backoffStrategy = BackoffStrategy.None,
+        int baseDelaySeconds = 5
+    ) {
+        Institution = institution;
+        Type = data.GetType().Name;
+        Data = data.Serialize();
+        CreatedAt = DateTime.UtcNow;
+        ParentId = parentId;
+        OriginalId = originalId;
+        BatchId = batchId;
+        ActivityId = activityId;
+        NotBefore = delaySeconds != null ? DateTime.UtcNow.AddSeconds(delaySeconds.Value) : null;
+        MaxRetries = maxRetries;
+        BackoffStrategy = backoffStrategy;
+        BaseDelaySeconds = baseDelaySeconds;
+    }
 
     public Command(
         int institutionId,

@@ -11,7 +11,6 @@ public class FinishUserRegisterController(FinishUserRegisterService service) : C
     /// Finaliza o registro do usuário no sistema.
     /// </remarks>
     [HttpPut("users")]
-    [DbContextTransactionFilter]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Finish([FromBody] FinishUserRegisterIn data)

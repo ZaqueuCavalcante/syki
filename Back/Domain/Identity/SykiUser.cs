@@ -1,3 +1,5 @@
+using Syki.Back.Domain.Institutions;
+
 namespace Syki.Back.Domain.Identity;
 
 public class SykiUser : IdentityUser<int>
@@ -7,18 +9,24 @@ public class SykiUser : IdentityUser<int>
     public DateTime CreatedAt { get; set; }
     public string? ProfilePhoto { get; set; }
 
+    public Institution? Institution { get; set; }
+
+    public SykiUser() { }
+
     public SykiUser(
-        int institutionId,
+        Institution institution,
         string name,
         string email,
         string? phoneNumber = null
     ) {
-        InstitutionId = institutionId;
+        Id = 0;
+        InstitutionId = 0;
         Name = name;
         UserName = email;
         Email = email;
         PhoneNumber = phoneNumber;
         CreatedAt = DateTime.UtcNow;
+        Institution = institution;
     }
 
     public void Update(string name, string profilePhoto)

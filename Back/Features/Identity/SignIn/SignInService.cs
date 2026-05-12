@@ -1,4 +1,5 @@
 using System.Text;
+using Syki.Back.Auth.Claims;
 using System.Security.Claims;
 using Syki.Back.Domain.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -18,9 +19,9 @@ public class SignInService(
 
         var claims = new List<Claim>
         {
-            new(Claims.Jti, Guid.NewGuid().ToString()),
-            new(Claims.UserId, user.Id.ToString()),
-            new(Claims.InstitutionId, user.InstitutionId.ToString()),
+            new(SykiClaims.Jti, Guid.NewGuid().ToString()),
+            new(SykiClaims.UserId, user.Id.ToString()),
+            new(SykiClaims.InstitutionId, user.InstitutionId.ToString()),
         };
 
         var identityClaims = new ClaimsIdentity();

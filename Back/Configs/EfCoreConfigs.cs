@@ -8,7 +8,7 @@ public static class EfCoreConfigs
     {
         builder.Services.AddSingleton(sp =>
         {
-            var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.Database().ConnectionString);
+            var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.Database.ConnectionString);
 
             dataSourceBuilder.ConfigureTracing(x =>
             {

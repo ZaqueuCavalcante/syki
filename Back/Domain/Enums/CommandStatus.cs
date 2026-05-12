@@ -1,10 +1,5 @@
-using System.ComponentModel;
+namespace Syki.Back.Commands.Domain.Enums;
 
-namespace Syki.Back.Shared;
-
-/// <summary>
-/// Status de um Comando
-/// </summary>
 public enum CommandStatus
 {
     [Description("Pendente")]

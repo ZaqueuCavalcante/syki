@@ -18,7 +18,7 @@ public sealed class SykiStringEnumConverter : JsonConverterFactory
         var underlying = Nullable.GetUnderlyingType(typeToConvert);
         var enumType = underlying ?? typeToConvert;
 
-        var convType = underlying is null
+        var convType = underlying == null
             ? typeof(EnumConverter<>).MakeGenericType(enumType)
             : typeof(NullableEnumConverter<>).MakeGenericType(enumType);
 
@@ -50,7 +50,7 @@ public sealed class SykiStringEnumConverter : JsonConverterFactory
                 return (TEnum)Enum.ToObject(typeof(TEnum), value);
             }
 
-            throw new JsonException($"The JSON value could not be converted to {typeof(TEnum).FullName}.");
+            return (TEnum)Enum.ToObject(typeof(TEnum), int.MaxValue);
         }
 
         public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
@@ -94,7 +94,7 @@ public sealed class SykiStringEnumConverter : JsonConverterFactory
 
         public override void Write(Utf8JsonWriter writer, TEnum? value, JsonSerializerOptions options)
         {
-            if (value is null)
+            if (value == null)
             {
                 writer.WriteNullValue();
                 return;

@@ -1,3 +1,5 @@
+using Syki.Back.Commands.Domain.Enums;
+
 namespace Syki.Back.Shared;
 
 public class CommandBatchTableOut

@@ -2,8 +2,8 @@ namespace Syki.Tests.Commands;
 
 public class CommandsUnitTests
 {
-    // [Test]
-    public void All_commands_should_have_description_attribute()
+    [Test]
+    public void Commands_All_commands_should_have_description_attribute()
     {
         // Arrange
         var types = AppDomain.CurrentDomain.GetAssemblies()

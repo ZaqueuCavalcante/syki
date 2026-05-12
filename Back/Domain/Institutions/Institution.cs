@@ -26,7 +26,7 @@ public class Institution
     public Institution(string name)
     {
         Name = name;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
     }
 
     public static Institution NewForUserRegister()

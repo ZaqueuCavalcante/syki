@@ -172,6 +172,9 @@ namespace Back.Migrations
                     b.HasKey("Id")
                         .HasName("pk_commands");
 
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_commands_institution_id");
+
                     b.ToTable("commands", "syki");
                 });
 
@@ -572,6 +575,18 @@ namespace Back.Migrations
                         .HasName("pk_institutions");
 
                     b.ToTable("institutions", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Commands.Domain.Commands.Command", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", "Institution")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_commands_institutions_institution_id");
+
+                    b.Navigation("Institution");
                 });
 
             modelBuilder.Entity("Syki.Back.Domain.Identity.MagicLink", b =>

@@ -4,8 +4,6 @@ namespace Syki.Back.Configs;
 
 public static class AuthenticationConfigs
 {
-    public const string BearerScheme = "Bearer";
-
     public static void AddAuthenticationConfigs(this WebApplicationBuilder builder)
     {
         builder.Services

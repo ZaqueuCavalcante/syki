@@ -1,5 +1,4 @@
 using Syki.Back.Domain.Identity;
-using Syki.Back.Domain.Institutions;
 
 namespace Syki.Back.Database.Identity;
 
@@ -11,9 +10,9 @@ public class SykiUserDbConfig : IEntityTypeConfiguration<SykiUser>
 
         entity.HasKey(e => e.Id);
 
-        entity.HasOne<Institution>()
+        entity.HasOne(e => e.Institution)
             .WithMany()
-            .HasPrincipalKey(u => u.Id)
+            .HasPrincipalKey(i => i.Id)
             .HasForeignKey(e => e.InstitutionId);
     }
 }

@@ -13,6 +13,7 @@ public static class AuditConfigs
         AuditConfig.Setup().UseEntityFramework(_ => _
             .AuditTypeExplicitMapper(_ => _
                 .Map<SykiUser, AuditTrail>()
+                .Map<MagicLink, AuditTrail>()
                 .AuditEntityAction<AuditTrail>((evt, entry, log) => log.Fill(evt, entry)))
             .IgnoreMatchedProperties(true));
 

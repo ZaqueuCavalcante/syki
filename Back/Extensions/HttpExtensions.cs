@@ -1,8 +1,8 @@
-using System.Security.Claims;
 using Syki.Back.Auth.Schemes;
+using System.Security.Claims;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using System.Text.RegularExpressions;
 
 namespace Syki.Back.Extensions;
 

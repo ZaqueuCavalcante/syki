@@ -9,5 +9,10 @@ public class CommandDbConfig : IEntityTypeConfiguration<Command>
         entity.ToTable("commands", DbSchemas.Syki);
 
         entity.HasKey(e => e.Id);
+
+        entity.HasOne(e => e.Institution)
+            .WithMany()
+            .HasPrincipalKey(i => i.Id)
+            .HasForeignKey(e => e.InstitutionId);
     }
 }

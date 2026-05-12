@@ -1,6 +1,6 @@
 namespace Syki.Back.Settings;
 
-public class AuthSettings
+public class AuthSettings : SettingsBase
 {
     public string Issuer { get; set; }
     public string Audience { get; set; }
@@ -13,6 +13,11 @@ public class AuthSettings
     public AuthSettings(IConfiguration configuration)
     {
         configuration.GetSection("Auth").Bind(this);
+
+        RequireNonEmpty(Issuer);
+        RequireNonEmpty(Audience);
+        RequireNonEmpty(SecurityKey);
+        RequirePositive(ExpirationTimeInMinutes);
     }
 }
 

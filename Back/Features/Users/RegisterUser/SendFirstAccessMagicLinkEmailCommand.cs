@@ -3,6 +3,7 @@ using Syki.Back.Domain.Identity;
 
 namespace Syki.Back.Features.Users.RegisterUser;
 
+[CommandDescription("Envia link de acesso inicial por e-mail.")]
 public record SendFirstAccessMagicLinkEmailCommand(string Email) : ICommand;
 
 public class SendFirstAccessMagicLinkEmailCommandHandler(

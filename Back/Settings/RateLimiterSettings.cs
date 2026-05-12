@@ -1,6 +1,6 @@
 namespace Syki.Back.Settings;
 
-public class RateLimiterSettings
+public class RateLimiterSettings : SettingsBase
 {
     public int SuperVerySmall { get; set; }
     public int VerySmall { get; set; }
@@ -10,5 +10,10 @@ public class RateLimiterSettings
     public RateLimiterSettings(IConfiguration configuration)
     {
         configuration.GetSection("RateLimiter").Bind(this);
+
+        RequirePositive(SuperVerySmall);
+        RequirePositive(VerySmall);
+        RequirePositive(Small);
+        RequirePositive(Medium);
     }
 }

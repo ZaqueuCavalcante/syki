@@ -1,6 +1,6 @@
 using System.Text.Json;
-using System.Security.Claims;
 using Syki.Back.Auth.Claims;
+using System.Security.Claims;
 
 namespace Syki.Back.Extensions;
 

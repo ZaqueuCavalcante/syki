@@ -1,5 +1,3 @@
-using Syki.Back.Auth.Policies;
-
 namespace Syki.Back.Features.Identity.CreateRole;
 
 [ApiController, Authorize(Policies.CreateRole)]

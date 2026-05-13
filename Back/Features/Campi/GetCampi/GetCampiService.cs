@@ -1,11 +1,13 @@
-namespace Syki.Back.Features.Academic.GetCampi;
+namespace Syki.Back.Features.Campi.GetCampi;
 
 public class GetCampiService(SykiDbContext ctx) : ISykiService
 {
     public async Task<GetCampiOut> Get()
     {
+        var institutionId = ctx.RequestUser.InstitutionId;
+
         var campi = await ctx.Campi.AsNoTracking()
-            .Where(c => c.InstitutionId == ctx.InstitutionId)
+            .Where(c => c.InstitutionId == institutionId)
             .OrderBy(c => c.Name)
             .ToListAsync();
 
@@ -23,7 +25,7 @@ public class GetCampiService(SykiDbContext ctx) : ISykiService
             LEFT JOIN
                 syki.students s ON s.course_offering_id = co.id
             WHERE
-                c.institution_id = {ctx.InstitutionId}
+                c.institution_id = {institutionId}
             GROUP BY
                 c.id
         ";
@@ -37,12 +39,5 @@ public class GetCampiService(SykiDbContext ctx) : ISykiService
         });
 
         return new GetCampiOut() { Total = items.Count, Items = items };
-    }
-
-    private class CampusEnrollmentDto
-    {
-        public Guid Id { get; set; }
-        public int Students { get; set; }
-        public int Teachers { get; set; }
     }
 }

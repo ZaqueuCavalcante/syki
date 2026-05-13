@@ -2,7 +2,7 @@
 
 ## Criar uma nova migration
 
-dotnet ef migrations add AddInstitutionRole
+dotnet ef migrations add AddCampus
 
 ## Generate SQL script for migrations
 

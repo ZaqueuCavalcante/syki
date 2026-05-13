@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Syki.Back.Features.Campi.GetCampi;
 
 public class GetCampiOut : IApiDto<GetCampiOut>
 {
@@ -15,7 +15,6 @@ public class GetCampiOut : IApiDto<GetCampiOut>
             [
                 new GetCampiItemOut
                 {
-                    Id = Guid.NewGuid(),
                     Name = "Agreste",
                     State = BrazilState.PE,
                     City = "Caruaru",
@@ -25,7 +24,6 @@ public class GetCampiOut : IApiDto<GetCampiOut>
                 },
                 new GetCampiItemOut
                 {
-                    Id = Guid.NewGuid(),
                     Name = "Suassuna",
                     State = BrazilState.PE,
                     City = "Recife",
@@ -40,7 +38,7 @@ public class GetCampiOut : IApiDto<GetCampiOut>
 
 public class GetCampiItemOut
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Nome
@@ -73,14 +71,4 @@ public class GetCampiItemOut
     /// Taxa de ocupação
     /// </summary>
     public decimal FillRate { get; set; }
-
-    public string GetFillRate()
-    {
-        return $"{FillRate.Format()}%";
-    }
-
-    public override string ToString()
-    {
-        return Name;
-    }
 }

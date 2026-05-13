@@ -24,7 +24,7 @@ public class SykiUserRoleDbConfig : IEntityTypeConfiguration<SykiUserRole>
             .HasPrincipalKey(c => c.Id)
             .HasForeignKey(e => e.UserId);
 
-        entity.HasOne<SykiRole>()
+        entity.HasOne(e => e.Role)
             .WithMany()
             .HasPrincipalKey(u => u.Id)
             .HasForeignKey(e => e.RoleId);

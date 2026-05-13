@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.GetCampi;
+namespace Syki.Back.Features.Campi.GetCampi;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]
@@ -10,7 +10,7 @@ public class GetCampiController(GetCampiService service) : ControllerBase
     /// <remarks>
     /// Retorna todos os campus da insitituição.
     /// </remarks>
-    [HttpGet("academic/campi")]
+    [HttpGet("campi")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {

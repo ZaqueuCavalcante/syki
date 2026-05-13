@@ -26,6 +26,14 @@ public static class SykiPermissions
         "Criar, editar e deletar usuários."
     );
 
+    // Campi
+    public static readonly SykiPermission ManageCampi = new(
+        PermissionGroup.Campi,
+        200,
+        "Gerenciar campus.",
+        "Criar e editar campus."
+    );
+
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<SykiPermission> Permissions = [];
     static SykiPermissions()

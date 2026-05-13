@@ -30,6 +30,7 @@ public partial class SykiDbContext(DbContextOptions<SykiDbContext> options, Npgs
         base.OnModelCreating(modelBuilder);
 
         ConfigureAudit(modelBuilder);
+        ConfigureCampi(modelBuilder);
         ConfigureCommands(modelBuilder);
         ConfigureIdentity(modelBuilder);
         ConfigureInstitutions(modelBuilder);

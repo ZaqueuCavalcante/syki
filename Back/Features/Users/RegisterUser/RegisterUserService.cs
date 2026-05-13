@@ -28,6 +28,6 @@ public class RegisterUserService(SykiDbContext ctx, UserManager<SykiUser> userMa
         var user = new SykiUser(institution, email, email);
         await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");
 
-        return new RegisterUserOut { Id = user.Id };
+        return new RegisterUserOut { Id = user.Id, InstitutionId = institution.Id };
     }
 }

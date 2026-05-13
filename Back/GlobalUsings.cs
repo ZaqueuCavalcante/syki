@@ -1,7 +1,6 @@
 global using OneOf;
 global using Serilog;
 global using Syki.Back.Shared;
-global using Syki.Back.Auth;
 global using FluentValidation;
 global using Syki.Back.Errors;
 global using Syki.Back.Filters;
@@ -13,6 +12,7 @@ global using Syki.Back.Settings;
 global using Syki.Back.Extensions;
 global using System.ComponentModel;
 global using Syki.Back.Middlewares;
+global using Syki.Back.Auth.Policies;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Identity;

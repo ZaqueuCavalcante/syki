@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.CreateCampus;
+namespace Syki.Back.Features.Campi.UpdateCampus;
 
-public class CreateCampusService(SykiDbContext ctx) : ISykiService
+public class UpdateCampusService(SykiDbContext ctx) : ISykiService
 {
-    private class Validator : AbstractValidator<CreateCampusIn>
+    private class Validator : AbstractValidator<UpdateCampusIn>
     {
         public Validator()
         {
@@ -20,13 +20,17 @@ public class CreateCampusService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CreateCampusOut, SykiError>> Create(CreateCampusIn data)
+    public async Task<OneOf<UpdateCampusOut, SykiError>> Update(UpdateCampusIn data)
     {
         if (V.Run(data, out var error)) return error;
 
-        var campus = new Campus(ctx.InstitutionId, data.Name, data.State!.Value, data.City, data.Capacity);
-        await ctx.SaveChangesAsync(campus);
+        var campus = await ctx.Campi.FirstOrDefaultAsync(x => x.InstitutionId == ctx.RequestUser.InstitutionId && x.Id == data.Id);
+        if (campus == null) return CampusNotFound.I;
 
-        return campus.ToCreateCampusOut();
+        campus.Update(data.Name, data.State!.Value, data.City, data.Capacity);
+
+        await ctx.SaveChangesAsync();
+
+        return campus.ToUpdateCampusOut();
     }
 }

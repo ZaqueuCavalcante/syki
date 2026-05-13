@@ -1,13 +1,15 @@
-namespace Syki.Back.Shared;
+namespace Syki.Back.Features.Campi.UpdateCampus;
 
-public class CreateCampusIn : IApiDto<CreateCampusIn>
+public class UpdateCampusOut : IApiDto<UpdateCampusOut>
 {
+    public int Id { get; set; }
+
     /// <summary>
     /// Nome
     /// </summary>
     public string Name { get; set; }
 
-    public BrazilState? State { get; set; }
+    public BrazilState State { get; set; }
 
     /// <summary>
     /// Cidade
@@ -19,24 +21,23 @@ public class CreateCampusIn : IApiDto<CreateCampusIn>
     /// </summary>
     public int Capacity { get; set; }
 
-    public static IEnumerable<(string, CreateCampusIn)> GetExamples() =>
+    public static IEnumerable<(string, UpdateCampusOut)> GetExamples() =>
     [
         ("Agreste",
-        new CreateCampusIn
+        new UpdateCampusOut
         {
             Name = "Agreste",
             State = BrazilState.PE,
             City = "Caruaru",
-            Capacity = 150,
+            Capacity = 220,
         }),
-
         ("Suassuna",
-        new CreateCampusIn
+        new UpdateCampusOut
         {
             Name = "Suassuna",
             State = BrazilState.PE,
             City = "Recife",
-            Capacity = 500,
+            Capacity = 600,
         }),
     ];
 }

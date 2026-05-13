@@ -12,6 +12,7 @@ public class SykiUserRole : IdentityUserRole<int>
 
     public Institution? Institution { get; set; }
     public SykiUser? User { get; set; }
+    public SykiRole? Role { get; set; }
 
     public SykiUserRole() {}
 

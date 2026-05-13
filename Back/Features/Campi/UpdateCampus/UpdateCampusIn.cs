@@ -1,8 +1,8 @@
-namespace Syki.Back.Shared;
+namespace Syki.Back.Features.Campi.UpdateCampus;
 
 public class UpdateCampusIn : IApiDto<UpdateCampusIn>
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public BrazilState? State { get; set; }
     public string City { get; set; }
@@ -13,7 +13,6 @@ public class UpdateCampusIn : IApiDto<UpdateCampusIn>
         ("Agreste",
         new UpdateCampusIn
         {
-            Id = Guid.CreateVersion7(),
             Name = "Agreste",
             State = BrazilState.PE,
             City = "Caruaru",
@@ -22,7 +21,6 @@ public class UpdateCampusIn : IApiDto<UpdateCampusIn>
         ("Suassuna",
         new UpdateCampusIn
         {
-            Id = Guid.CreateVersion7(),
             Name = "Suassuna",
             State = BrazilState.PE,
             City = "Recife",

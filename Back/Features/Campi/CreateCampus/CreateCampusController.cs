@@ -1,7 +1,6 @@
-namespace Syki.Back.Features.Academic.CreateCampus;
+namespace Syki.Back.Features.Campi.CreateCampus;
 
-[ApiController, Authorize]
-[EnableRateLimiting("Medium")]
+[ApiController, Authorize(Policies.CreateRole)]
 public class CreateCampusController(CreateCampusService service) : ControllerBase
 {
     /// <summary>
@@ -10,7 +9,7 @@ public class CreateCampusController(CreateCampusService service) : ControllerBas
     /// <remarks>
     /// Cria um novo campus.
     /// </remarks>
-    [HttpPost("academic/campi")]
+    [HttpPost("campi")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateCampusIn data)
@@ -26,4 +25,5 @@ internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidCampusName,
     InvalidBrazilState,
     InvalidCampusCity,
-    InvalidCampusCapacity>;
+    InvalidCampusCapacity
+>;

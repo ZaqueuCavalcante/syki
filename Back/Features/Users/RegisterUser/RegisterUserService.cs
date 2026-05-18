@@ -22,10 +22,13 @@ public class RegisterUserService(SykiDbContext ctx, UserManager<SykiUser> userMa
         var emailUsed = await ctx.Users.AnyAsync(u => u.Email == email);
         if (emailUsed) return EmailAlreadyUsed.I;
 
-        var institution = ctx.Add(Institution.NewForUserRegister()).Entity;
-        var command = ctx.AddCommand(institution, new SendFirstAccessMagicLinkEmailCommand(email), maxRetries: 1);
-
+        var institution = Institution.NewForUserRegister();
         var user = new SykiUser(institution, email, email);
+        var magicLink = new MagicLink(user);
+
+        ctx.AddRange(institution, magicLink);
+        var command = ctx.AddCommand(institution, new SendFirstAccessMagicLinkEmailCommand(email, magicLink.Id), maxRetries: 1);
+
         await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");
 
         return new RegisterUserOut { Id = user.Id, InstitutionId = institution.Id };

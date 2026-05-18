@@ -1,3 +1,5 @@
+using Syki.Tests.Integration.Base;
+
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
@@ -7,7 +9,7 @@ public partial class IntegrationTests
     public async Task Campi_CreateCampus_Should_not_create_campus_with_invalid_name(string name)
     {
         // Arrange
-        var client = await _back.LoggedAs("CreateCampus_01", [SykiPermissions.ManageCampi]);
+        var client = await _back.LoggedAs($"CreateCampus_{DataGen.Numbers}", [SykiPermissions.ManageCampi]);
 
         // Act
         var response = await client.CreateCampus(name, BrazilState.PE, "Caruaru", 123);
@@ -22,7 +24,7 @@ public partial class IntegrationTests
     public async Task Campi_CreateCampus_Should_not_create_campus_with_invalid_brazil_state(BrazilState? state)
     {
         // Arrange
-        var client = await _back.LoggedAs("CreateCampus_02", [SykiPermissions.ManageCampi]);
+        var client = await _back.LoggedAs($"CreateCampus_{DataGen.Numbers}", [SykiPermissions.ManageCampi]);
 
         // Act
         var response = await client.CreateCampus("Agreste", state, "Caruaru", 123);
@@ -36,7 +38,7 @@ public partial class IntegrationTests
     public async Task Campi_CreateCampus_Should_not_create_campus_with_invalid_city(string city)
     {
         // Arrange
-        var client = await _back.LoggedAs("CreateCampus_03", [SykiPermissions.ManageCampi]);
+        var client = await _back.LoggedAs($"CreateCampus_{DataGen.Numbers}", [SykiPermissions.ManageCampi]);
 
         // Act
         var response = await client.CreateCampus("Agreste", BrazilState.PE, city, 123);
@@ -51,7 +53,7 @@ public partial class IntegrationTests
     public async Task Campi_CreateCampus_Should_not_create_campus_with_invalid_capacity(int capacity)
     {
         // Arrange
-        var client = await _back.LoggedAs("CreateCampus_04", [SykiPermissions.ManageCampi]);
+        var client = await _back.LoggedAs($"CreateCampus_{DataGen.Numbers}", [SykiPermissions.ManageCampi]);
 
         // Act
         var response = await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", capacity);
@@ -64,7 +66,7 @@ public partial class IntegrationTests
     public async Task Campi_CreateCampus_Should_create_campus()
     {
         // Arrange
-        var client = await _back.LoggedAs("CreateCampus_99", [SykiPermissions.ManageCampi]);
+        var client = await _back.LoggedAs($"CreateCampus_{DataGen.Numbers}", [SykiPermissions.ManageCampi]);
 
         // Act
         var result = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru", 123);

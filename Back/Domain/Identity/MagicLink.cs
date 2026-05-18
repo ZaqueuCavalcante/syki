@@ -8,12 +8,14 @@ public class MagicLink
     public DateTime ExpiresAt { get; set; }
     public DateTime? UsedAt { get; set; }
 
+    public SykiUser? User { get; set; }
+
     public MagicLink() {}
 
-    public MagicLink(int userId)
+    public MagicLink(SykiUser user)
     {
         Id = Guid.NewGuid();
-        UserId = userId;
+        User = user;
         CreatedAt = DateTime.UtcNow;
         ExpiresAt = DateTime.UtcNow.Add(TimeSpan.FromHours(24));
     }

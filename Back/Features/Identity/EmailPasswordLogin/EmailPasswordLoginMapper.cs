@@ -11,7 +11,6 @@ public static class EmailPasswordLoginMapper
             return new()
             {
                 UserId = token.UserId,
-                Permissions = token.Permissions,
                 InstitutionId = token.InstitutionId,
             };
         }

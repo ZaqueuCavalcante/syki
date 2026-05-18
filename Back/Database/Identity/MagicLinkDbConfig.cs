@@ -11,7 +11,7 @@ public class MagicLinkDbConfig : IEntityTypeConfiguration<MagicLink>
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Id).ValueGeneratedNever();
 
-        entity.HasOne<SykiUser>()
+        entity.HasOne(e => e.User)
             .WithMany()
             .HasPrincipalKey(u => u.Id)
             .HasForeignKey(e => e.UserId);

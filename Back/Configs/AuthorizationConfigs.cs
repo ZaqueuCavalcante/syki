@@ -1,5 +1,3 @@
-using Syki.Back.Auth.Policies;
-
 namespace Syki.Back.Configs;
 
 public static class AuthorizationConfigs
@@ -8,7 +6,8 @@ public static class AuthorizationConfigs
     {
         builder.Services.AddAuthorizationBuilder()
             .AddIdentityPolicies()
-            .AddUsersPolicies();
+            .AddUsersPolicies()
+            .AddCampiPolicies();
 
         builder.Services.ConfigureApplicationCookie(options =>
         {

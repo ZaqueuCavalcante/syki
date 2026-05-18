@@ -19,4 +19,13 @@ public partial class SykiDbContext
         modelBuilder.ApplyConfiguration(new SykiUserTokenDbConfig());
         modelBuilder.ApplyConfiguration(new SykiUserLoginDbConfig());
     }
+
+    public async Task<SykiRole?> GetUserRole(int userId, int institutionId)
+    {
+        var userRole = await UserRoles.Where(x => x.UserId == userId && x.InstitutionId == institutionId).FirstOrDefaultAsync();
+
+        if (userRole == null) return null;
+
+        return await Roles.Where(x => x.Id == userRole.RoleId).FirstOrDefaultAsync();
+    }
 }

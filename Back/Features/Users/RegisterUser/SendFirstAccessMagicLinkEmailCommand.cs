@@ -1,22 +1,14 @@
 using Syki.Back.Emails;
-using Syki.Back.Domain.Identity;
 
 namespace Syki.Back.Features.Users.RegisterUser;
 
 [CommandDescription("Envia link de acesso inicial por e-mail.")]
-public record SendFirstAccessMagicLinkEmailCommand(string Email) : ICommand;
+public record SendFirstAccessMagicLinkEmailCommand(string Email, Guid MagicLinkId) : ICommand;
 
-public class SendFirstAccessMagicLinkEmailCommandHandler(
-    SykiDbContext ctx,
-    IEmailsService emailService) : ICommandHandler<SendFirstAccessMagicLinkEmailCommand>
+public class SendFirstAccessMagicLinkEmailCommandHandler(IEmailsService emailService) : ICommandHandler<SendFirstAccessMagicLinkEmailCommand>
 {
     public async Task Handle(int commandId, SendFirstAccessMagicLinkEmailCommand command)
     {
-        var user = await ctx.Users.Where(x => x.Email == command.Email).Select(x => new { x.Id, x.Email }).FirstAsync();
-
-        var magicLink = new MagicLink(user.Id);
-        ctx.Add(magicLink);
-
-        await emailService.SendFirstAccessMagicLinkEmail(user.Email!, magicLink.Id.ToString());
+        await emailService.SendFirstAccessMagicLinkEmail(command.Email, command.MagicLinkId.ToString());
     }
 }

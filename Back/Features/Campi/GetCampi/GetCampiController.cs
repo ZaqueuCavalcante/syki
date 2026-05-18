@@ -1,7 +1,6 @@
 namespace Syki.Back.Features.Campi.GetCampi;
 
-[ApiController, Authorize]
-[EnableRateLimiting("Medium")]
+[ApiController, Authorize(Policies.GetCampi)]
 public class GetCampiController(GetCampiService service) : ControllerBase
 {
     /// <summary>

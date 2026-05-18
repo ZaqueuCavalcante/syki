@@ -45,8 +45,7 @@ public static class BackFactoryExtensions
         await using var ctx = factory.GetDbContext();
 
         var user = await ctx.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
-        if (user == null)
-            return null;
+        if (user == null) return null;
 
         var id = await ctx.WebMagicLinks
             .Where(t => t.UserId == user.Id && t.UsedAt == null)
@@ -71,7 +70,6 @@ public static class BackFactoryExtensions
     public static async Task<TestsHttpClient> LoggedAs(this BackFactory factory, string roleName, List<SykiPermission> permissions)
     {
         await using var ctx = factory.GetDbContext();
-
         var client = factory.GetTestsClient();
 
         var email = DataGen.Email;
@@ -84,6 +82,9 @@ public static class BackFactoryExtensions
 
         ctx.AddRange(role, userRole);
         await ctx.SaveChangesAsync();
+
+        var token = await factory.GetMagicLink(email);
+        await client.MagicLinkLogin(token!);
 
         client.User = user;
 

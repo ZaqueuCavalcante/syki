@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.6283174439577428" branch-rate="0.271505376344086" lines-covered="4877" lines-valid="7762" branches-covered="202" branches-valid="744" complexity="2234" version="0" timestamp="1779248076">
+<coverage line-rate="0.6261324486410617" branch-rate="0.2707774798927614" lines-covered="4907" lines-valid="7837" branches-covered="202" branches-valid="746" complexity="2268" version="0" timestamp="1779314807">
   <sources>
     <source>/</source>
   </sources>
   <packages>
-    <package name="Back" line-rate="0.6283174439577428" branch-rate="0.271505376344086" complexity="2234">
+    <package name="Back" line-rate="0.6261324486410617" branch-rate="0.2707774798927614" complexity="2268">
       <classes>
-        <class name="Back.Migrations.Bootstrap" filename="/home/runner/work/syki/syki/Back/Migrations/20260520032614_Bootstrap.cs" line-rate="0.915929203539823" branch-rate="1" complexity="2">
+        <class name="Back.Migrations.Bootstrap" filename="/home/runner/work/syki/syki/Back/Migrations/20260520104750_Bootstrap.cs" line-rate="0.915929203539823" branch-rate="1" complexity="2">
           <methods>
             <method name="Up" signature="(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
@@ -1829,7 +1829,7 @@
             <line number="1003" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Back.Migrations.Bootstrap" filename="/home/runner/work/syki/syki/Back/Migrations/20260520032614_Bootstrap.Designer.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="Back.Migrations.Bootstrap" filename="/home/runner/work/syki/syki/Back/Migrations/20260520104750_Bootstrap.Designer.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="BuildTargetModel" signature="(Microsoft.EntityFrameworkCore.ModelBuilder)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
@@ -7425,22 +7425,22 @@
           <methods>
             <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="70" branch="false" />
+                <line number="8" hits="102" branch="false" />
               </lines>
             </method>
             <method name="get_Name" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="16" branch="false" />
+                <line number="9" hits="24" branch="false" />
               </lines>
             </method>
             <method name="get_Description" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="8" branch="false" />
+                <line number="10" hits="12" branch="false" />
               </lines>
             </method>
             <method name="get_Group" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="16" branch="false" />
+                <line number="11" hits="24" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -7450,35 +7450,35 @@
             </method>
             <method name=".ctor" signature="(Syki.Back.Auth.Permissions.PermissionGroup,System.Int32,System.String,System.String)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="15" hits="8" branch="false" />
-                <line number="16" hits="8" branch="false" />
-                <line number="17" hits="8" branch="false" />
-                <line number="18" hits="8" branch="false" />
-                <line number="19" hits="8" branch="false" />
-                <line number="21" hits="8" branch="false" />
-                <line number="22" hits="8" branch="false" />
-                <line number="23" hits="8" branch="false" />
-                <line number="24" hits="8" branch="false" />
-                <line number="25" hits="8" branch="false" />
+                <line number="15" hits="12" branch="false" />
+                <line number="16" hits="12" branch="false" />
+                <line number="17" hits="12" branch="false" />
+                <line number="18" hits="12" branch="false" />
+                <line number="19" hits="12" branch="false" />
+                <line number="21" hits="12" branch="false" />
+                <line number="22" hits="12" branch="false" />
+                <line number="23" hits="12" branch="false" />
+                <line number="24" hits="12" branch="false" />
+                <line number="25" hits="12" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="8" hits="70" branch="false" />
-            <line number="9" hits="16" branch="false" />
-            <line number="10" hits="8" branch="false" />
-            <line number="11" hits="16" branch="false" />
+            <line number="8" hits="102" branch="false" />
+            <line number="9" hits="24" branch="false" />
+            <line number="10" hits="12" branch="false" />
+            <line number="11" hits="24" branch="false" />
             <line number="13" hits="0" branch="false" />
-            <line number="15" hits="8" branch="false" />
-            <line number="16" hits="8" branch="false" />
-            <line number="17" hits="8" branch="false" />
-            <line number="18" hits="8" branch="false" />
-            <line number="19" hits="8" branch="false" />
-            <line number="21" hits="8" branch="false" />
-            <line number="22" hits="8" branch="false" />
-            <line number="23" hits="8" branch="false" />
-            <line number="24" hits="8" branch="false" />
-            <line number="25" hits="8" branch="false" />
+            <line number="15" hits="12" branch="false" />
+            <line number="16" hits="12" branch="false" />
+            <line number="17" hits="12" branch="false" />
+            <line number="18" hits="12" branch="false" />
+            <line number="19" hits="12" branch="false" />
+            <line number="21" hits="12" branch="false" />
+            <line number="22" hits="12" branch="false" />
+            <line number="23" hits="12" branch="false" />
+            <line number="24" hits="12" branch="false" />
+            <line number="25" hits="12" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Auth.Permissions.SykiPermissions" filename="/home/runner/work/syki/syki/Back/Auth/Permissions/SykiPermissions.cs" line-rate="1" branch-rate="0.5" complexity="4">
@@ -7509,19 +7509,31 @@
                 <line number="33" hits="2" branch="false" />
                 <line number="34" hits="2" branch="false" />
                 <line number="35" hits="2" branch="false" />
-                <line number="37" hits="2" branch="false" />
                 <line number="38" hits="2" branch="false" />
+                <line number="39" hits="2" branch="false" />
+                <line number="40" hits="2" branch="false" />
                 <line number="41" hits="2" branch="false" />
+                <line number="42" hits="2" branch="false" />
                 <line number="43" hits="2" branch="false" />
-                <line number="44" hits="2" branch="false" />
-                <line number="45" hits="12" branch="false" />
-                <line number="46" hits="8" branch="false" />
-                <line number="47" hits="8" branch="false" />
-                <line number="48" hits="8" branch="false" />
+                <line number="46" hits="2" branch="false" />
+                <line number="47" hits="2" branch="false" />
+                <line number="48" hits="2" branch="false" />
                 <line number="49" hits="2" branch="false" />
-                <line number="51" hits="10" branch="true" condition-coverage="50% (1/2)" />
-                <line number="53" hits="10" branch="true" condition-coverage="50% (1/2)" />
+                <line number="50" hits="2" branch="false" />
+                <line number="51" hits="2" branch="false" />
+                <line number="53" hits="2" branch="false" />
                 <line number="54" hits="2" branch="false" />
+                <line number="57" hits="2" branch="false" />
+                <line number="59" hits="2" branch="false" />
+                <line number="60" hits="2" branch="false" />
+                <line number="61" hits="16" branch="false" />
+                <line number="62" hits="12" branch="false" />
+                <line number="63" hits="12" branch="false" />
+                <line number="64" hits="12" branch="false" />
+                <line number="65" hits="2" branch="false" />
+                <line number="67" hits="14" branch="true" condition-coverage="50% (1/2)" />
+                <line number="69" hits="14" branch="true" condition-coverage="50% (1/2)" />
+                <line number="70" hits="2" branch="false" />
               </lines>
             </method>
           </methods>
@@ -7550,19 +7562,31 @@
             <line number="33" hits="2" branch="false" />
             <line number="34" hits="2" branch="false" />
             <line number="35" hits="2" branch="false" />
-            <line number="37" hits="2" branch="false" />
             <line number="38" hits="2" branch="false" />
+            <line number="39" hits="2" branch="false" />
+            <line number="40" hits="2" branch="false" />
             <line number="41" hits="2" branch="false" />
+            <line number="42" hits="2" branch="false" />
             <line number="43" hits="2" branch="false" />
-            <line number="44" hits="2" branch="false" />
-            <line number="45" hits="12" branch="false" />
-            <line number="46" hits="8" branch="false" />
-            <line number="47" hits="8" branch="false" />
-            <line number="48" hits="8" branch="false" />
+            <line number="46" hits="2" branch="false" />
+            <line number="47" hits="2" branch="false" />
+            <line number="48" hits="2" branch="false" />
             <line number="49" hits="2" branch="false" />
-            <line number="51" hits="10" branch="true" condition-coverage="50% (1/2)" />
-            <line number="53" hits="10" branch="true" condition-coverage="50% (1/2)" />
+            <line number="50" hits="2" branch="false" />
+            <line number="51" hits="2" branch="false" />
+            <line number="53" hits="2" branch="false" />
             <line number="54" hits="2" branch="false" />
+            <line number="57" hits="2" branch="false" />
+            <line number="59" hits="2" branch="false" />
+            <line number="60" hits="2" branch="false" />
+            <line number="61" hits="16" branch="false" />
+            <line number="62" hits="12" branch="false" />
+            <line number="63" hits="12" branch="false" />
+            <line number="64" hits="12" branch="false" />
+            <line number="65" hits="2" branch="false" />
+            <line number="67" hits="14" branch="true" condition-coverage="50% (1/2)" />
+            <line number="69" hits="14" branch="true" condition-coverage="50% (1/2)" />
+            <line number="70" hits="2" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Auth.Policies.Policies" filename="/home/runner/work/syki/syki/Back/Auth/Policies/Policies.Campi.cs" line-rate="1" branch-rate="1" complexity="1">
@@ -7587,6 +7611,24 @@
             <line number="20" hits="2" branch="false" />
           </lines>
         </class>
+        <class name="Syki.Back.Auth.Policies.Policies" filename="/home/runner/work/syki/syki/Back/Auth/Policies/Policies.Courses.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="AddCoursesPolicies" signature="(Microsoft.AspNetCore.Authorization.AuthorizationBuilder)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="2" branch="false" />
+                <line number="13" hits="2" branch="false" />
+                <line number="14" hits="2" branch="false" />
+                <line number="16" hits="2" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="2" branch="false" />
+            <line number="13" hits="2" branch="false" />
+            <line number="14" hits="2" branch="false" />
+            <line number="16" hits="2" branch="false" />
+          </lines>
+        </class>
         <class name="Syki.Back.Auth.Policies.Policies" filename="/home/runner/work/syki/syki/Back/Auth/Policies/Policies.cs" line-rate="1" branch-rate="1" complexity="6">
           <methods>
             <method name="AddSykiPolicy" signature="(Microsoft.AspNetCore.Authorization.AuthorizationBuilder,System.String)" line-rate="1" branch-rate="1" complexity="1">
@@ -7599,12 +7641,12 @@
             </method>
             <method name="AddSykiPolicy" signature="(Microsoft.AspNetCore.Authorization.AuthorizationBuilder,System.String,Syki.Back.Auth.Permissions.SykiPermission[])" line-rate="1" branch-rate="1" complexity="4">
               <lines>
-                <line number="27" hits="28" branch="false" />
-                <line number="29" hits="56" branch="false" />
-                <line number="31" hits="56" branch="true" condition-coverage="100% (2/2)" />
-                <line number="32" hits="56" branch="false" />
+                <line number="27" hits="36" branch="false" />
+                <line number="29" hits="72" branch="false" />
+                <line number="31" hits="72" branch="true" condition-coverage="100% (2/2)" />
+                <line number="32" hits="72" branch="false" />
                 <line number="33" hits="28" branch="true" condition-coverage="100% (2/2)" />
-                <line number="34" hits="56" branch="false" />
+                <line number="34" hits="72" branch="false" />
               </lines>
             </method>
             <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -7619,12 +7661,30 @@
             <line number="17" hits="32" branch="false" />
             <line number="18" hits="32" branch="false" />
             <line number="19" hits="32" branch="false" />
-            <line number="27" hits="28" branch="false" />
-            <line number="29" hits="56" branch="false" />
-            <line number="31" hits="56" branch="true" condition-coverage="100% (2/2)" />
-            <line number="32" hits="56" branch="false" />
+            <line number="27" hits="36" branch="false" />
+            <line number="29" hits="72" branch="false" />
+            <line number="31" hits="72" branch="true" condition-coverage="100% (2/2)" />
+            <line number="32" hits="72" branch="false" />
             <line number="33" hits="28" branch="true" condition-coverage="100% (2/2)" />
-            <line number="34" hits="56" branch="false" />
+            <line number="34" hits="72" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Auth.Policies.Policies" filename="/home/runner/work/syki/syki/Back/Auth/Policies/Policies.Disciplines.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="AddDisciplinesPolicies" signature="(Microsoft.AspNetCore.Authorization.AuthorizationBuilder)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="2" branch="false" />
+                <line number="13" hits="2" branch="false" />
+                <line number="14" hits="2" branch="false" />
+                <line number="16" hits="2" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="2" branch="false" />
+            <line number="13" hits="2" branch="false" />
+            <line number="14" hits="2" branch="false" />
+            <line number="16" hits="2" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Auth.Policies.Policies" filename="/home/runner/work/syki/syki/Back/Auth/Policies/Policies.Identity.cs" line-rate="1" branch-rate="1" complexity="1">
@@ -7703,18 +7763,18 @@
           <methods>
             <method name="get_Name" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="44" branch="false" />
+                <line number="7" hits="52" branch="false" />
               </lines>
             </method>
             <method name="get_Permissions" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="88" branch="false" />
+                <line number="8" hits="104" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="7" hits="44" branch="false" />
-            <line number="8" hits="88" branch="false" />
+            <line number="7" hits="52" branch="false" />
+            <line number="8" hits="104" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Auth.Roles.SykiDefaultRoles" filename="/home/runner/work/syki/syki/Back/Auth/Roles/SykiDefaultRoles.cs" line-rate="1" branch-rate="1" complexity="2">
@@ -7738,6 +7798,8 @@
                 <line number="19" hits="6" branch="false" />
                 <line number="20" hits="6" branch="false" />
                 <line number="21" hits="6" branch="false" />
+                <line number="22" hits="6" branch="false" />
+                <line number="23" hits="6" branch="false" />
               </lines>
             </method>
           </methods>
@@ -7755,6 +7817,8 @@
             <line number="19" hits="6" branch="false" />
             <line number="20" hits="6" branch="false" />
             <line number="21" hits="6" branch="false" />
+            <line number="22" hits="6" branch="false" />
+            <line number="23" hits="6" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Auth.Schemes.JwtBearerScheme" filename="/home/runner/work/syki/syki/Back/Auth/Schemes/JwtBearerScheme.cs" line-rate="0.9761904761904762" branch-rate="0.5" complexity="2">
@@ -8766,23 +8830,25 @@
             <line number="12" hits="2" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Configs.AuthorizationConfigs" filename="/home/runner/work/syki/syki/Back/Configs/AuthorizationConfigs.cs" line-rate="0.8461538461538461" branch-rate="1" complexity="1">
+        <class name="Syki.Back.Configs.AuthorizationConfigs" filename="/home/runner/work/syki/syki/Back/Configs/AuthorizationConfigs.cs" line-rate="0.8666666666666667" branch-rate="1" complexity="1">
           <methods>
-            <method name="AddAuthorizationConfigs" signature="(Microsoft.AspNetCore.Builder.WebApplicationBuilder)" line-rate="0.8461538461538461" branch-rate="1" complexity="1">
+            <method name="AddAuthorizationConfigs" signature="(Microsoft.AspNetCore.Builder.WebApplicationBuilder)" line-rate="0.8666666666666667" branch-rate="1" complexity="1">
               <lines>
                 <line number="7" hits="2" branch="false" />
                 <line number="8" hits="2" branch="false" />
                 <line number="9" hits="2" branch="false" />
                 <line number="10" hits="2" branch="false" />
+                <line number="11" hits="2" branch="false" />
                 <line number="12" hits="2" branch="false" />
-                <line number="13" hits="2" branch="false" />
                 <line number="14" hits="2" branch="false" />
                 <line number="15" hits="2" branch="false" />
-                <line number="16" hits="0" branch="false" />
-                <line number="17" hits="0" branch="false" />
-                <line number="18" hits="2" branch="false" />
-                <line number="19" hits="4" branch="false" />
+                <line number="16" hits="2" branch="false" />
+                <line number="17" hits="2" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
                 <line number="20" hits="2" branch="false" />
+                <line number="21" hits="4" branch="false" />
+                <line number="22" hits="2" branch="false" />
               </lines>
             </method>
           </methods>
@@ -8791,15 +8857,17 @@
             <line number="8" hits="2" branch="false" />
             <line number="9" hits="2" branch="false" />
             <line number="10" hits="2" branch="false" />
+            <line number="11" hits="2" branch="false" />
             <line number="12" hits="2" branch="false" />
-            <line number="13" hits="2" branch="false" />
             <line number="14" hits="2" branch="false" />
             <line number="15" hits="2" branch="false" />
-            <line number="16" hits="0" branch="false" />
-            <line number="17" hits="0" branch="false" />
-            <line number="18" hits="2" branch="false" />
-            <line number="19" hits="4" branch="false" />
+            <line number="16" hits="2" branch="false" />
+            <line number="17" hits="2" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
             <line number="20" hits="2" branch="false" />
+            <line number="21" hits="4" branch="false" />
+            <line number="22" hits="2" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Configs.CacheConfigs" filename="/home/runner/work/syki/syki/Back/Configs/CacheConfigs.cs" line-rate="1" branch-rate="1" complexity="1">
@@ -8844,12 +8912,12 @@
                 <line number="10" hits="324" branch="false" />
                 <line number="11" hits="2" branch="false" />
                 <line number="13" hits="4" branch="false" />
-                <line number="14" hits="1434" branch="true" condition-coverage="100% (2/2)" />
+                <line number="14" hits="1562" branch="true" condition-coverage="100% (2/2)" />
                 <line number="15" hits="2" branch="false" />
                 <line number="17" hits="12" branch="true" condition-coverage="100% (2/2)" />
                 <line number="19" hits="4" branch="false" />
                 <line number="22" hits="4" branch="false" />
-                <line number="23" hits="2152" branch="true" condition-coverage="100% (2/2)" />
+                <line number="23" hits="2358" branch="true" condition-coverage="100% (2/2)" />
                 <line number="24" hits="2" branch="false" />
                 <line number="26" hits="2" branch="false" />
                 <line number="28" hits="12" branch="true" condition-coverage="100% (2/2)" />
@@ -8882,12 +8950,12 @@
             <line number="10" hits="324" branch="false" />
             <line number="11" hits="2" branch="false" />
             <line number="13" hits="4" branch="false" />
-            <line number="14" hits="1434" branch="true" condition-coverage="100% (2/2)" />
+            <line number="14" hits="1562" branch="true" condition-coverage="100% (2/2)" />
             <line number="15" hits="2" branch="false" />
             <line number="17" hits="12" branch="true" condition-coverage="100% (2/2)" />
             <line number="19" hits="4" branch="false" />
             <line number="22" hits="4" branch="false" />
-            <line number="23" hits="2152" branch="true" condition-coverage="100% (2/2)" />
+            <line number="23" hits="2358" branch="true" condition-coverage="100% (2/2)" />
             <line number="24" hits="2" branch="false" />
             <line number="26" hits="2" branch="false" />
             <line number="28" hits="12" branch="true" condition-coverage="100% (2/2)" />
@@ -9581,10 +9649,10 @@
                 <line number="24" hits="2" branch="false" />
                 <line number="25" hits="318" branch="false" />
                 <line number="26" hits="2" branch="false" />
-                <line number="27" hits="1434" branch="true" condition-coverage="100% (2/2)" />
+                <line number="27" hits="1562" branch="true" condition-coverage="100% (2/2)" />
                 <line number="28" hits="2" branch="false" />
-                <line number="30" hits="40" branch="true" condition-coverage="100% (2/2)" />
-                <line number="32" hits="18" branch="false" />
+                <line number="30" hits="60" branch="true" condition-coverage="100% (2/2)" />
+                <line number="32" hits="28" branch="false" />
                 <line number="34" hits="2" branch="false" />
               </lines>
             </method>
@@ -9599,10 +9667,10 @@
             <line number="24" hits="2" branch="false" />
             <line number="25" hits="318" branch="false" />
             <line number="26" hits="2" branch="false" />
-            <line number="27" hits="1434" branch="true" condition-coverage="100% (2/2)" />
+            <line number="27" hits="1562" branch="true" condition-coverage="100% (2/2)" />
             <line number="28" hits="2" branch="false" />
-            <line number="30" hits="40" branch="true" condition-coverage="100% (2/2)" />
-            <line number="32" hits="18" branch="false" />
+            <line number="30" hits="60" branch="true" condition-coverage="100% (2/2)" />
+            <line number="32" hits="28" branch="false" />
             <line number="34" hits="2" branch="false" />
           </lines>
         </class>
@@ -9822,67 +9890,15 @@
           <methods>
             <method name="Configure" signature="(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1&lt;Syki.Back.Domain.Courses.CourseCurriculum&gt;)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="4" branch="false" />
-                <line number="11" hits="4" branch="false" />
-                <line number="13" hits="4" branch="false" />
-                <line number="14" hits="4" branch="false" />
-                <line number="15" hits="4" branch="false" />
-                <line number="16" hits="4" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="9" hits="4" branch="false" />
-            <line number="11" hits="4" branch="false" />
-            <line number="13" hits="4" branch="false" />
-            <line number="14" hits="4" branch="false" />
-            <line number="15" hits="4" branch="false" />
-            <line number="16" hits="4" branch="false" />
-          </lines>
-        </class>
-        <class name="Syki.Back.Database.Courses.CourseDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Courses/CourseDbConfig.cs" line-rate="1" branch-rate="1" complexity="1">
-          <methods>
-            <method name="Configure" signature="(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1&lt;Syki.Back.Domain.Courses.Course&gt;)" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="4" branch="false" />
-                <line number="11" hits="4" branch="false" />
-                <line number="13" hits="4" branch="false" />
-                <line number="14" hits="4" branch="false" />
-                <line number="15" hits="4" branch="false" />
-                <line number="17" hits="4" branch="false" />
-                <line number="18" hits="4" branch="false" />
-                <line number="19" hits="4" branch="false" />
-                <line number="20" hits="4" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="9" hits="4" branch="false" />
-            <line number="11" hits="4" branch="false" />
-            <line number="13" hits="4" branch="false" />
-            <line number="14" hits="4" branch="false" />
-            <line number="15" hits="4" branch="false" />
-            <line number="17" hits="4" branch="false" />
-            <line number="18" hits="4" branch="false" />
-            <line number="19" hits="4" branch="false" />
-            <line number="20" hits="4" branch="false" />
-          </lines>
-        </class>
-        <class name="Syki.Back.Database.Courses.CourseDisciplineDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Courses/CourseDisciplineDbConfig.cs" line-rate="1" branch-rate="1" complexity="1">
-          <methods>
-            <method name="Configure" signature="(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1&lt;Syki.Back.Domain.Courses.CourseDiscipline&gt;)" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
                 <line number="10" hits="4" branch="false" />
                 <line number="12" hits="4" branch="false" />
                 <line number="14" hits="4" branch="false" />
                 <line number="15" hits="4" branch="false" />
                 <line number="16" hits="4" branch="false" />
                 <line number="17" hits="4" branch="false" />
+                <line number="18" hits="4" branch="false" />
                 <line number="19" hits="4" branch="false" />
                 <line number="20" hits="4" branch="false" />
-                <line number="21" hits="4" branch="false" />
-                <line number="22" hits="4" branch="false" />
-                <line number="23" hits="4" branch="false" />
               </lines>
             </method>
           </methods>
@@ -9893,11 +9909,75 @@
             <line number="15" hits="4" branch="false" />
             <line number="16" hits="4" branch="false" />
             <line number="17" hits="4" branch="false" />
+            <line number="18" hits="4" branch="false" />
+            <line number="19" hits="4" branch="false" />
+            <line number="20" hits="4" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Database.Courses.CourseCurriculumDisciplineDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Courses/CourseCurriculumDisciplineDbConfig.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="Configure" signature="(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1&lt;Syki.Back.Domain.Courses.CourseCurriculumDiscipline&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="4" branch="false" />
+                <line number="11" hits="4" branch="false" />
+                <line number="12" hits="4" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="9" hits="4" branch="false" />
+            <line number="11" hits="4" branch="false" />
+            <line number="12" hits="4" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Database.Courses.CourseDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Courses/CourseDbConfig.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="Configure" signature="(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1&lt;Syki.Back.Domain.Courses.Course&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="10" hits="4" branch="false" />
+                <line number="12" hits="4" branch="false" />
+                <line number="14" hits="4" branch="false" />
+                <line number="15" hits="4" branch="false" />
+                <line number="16" hits="4" branch="false" />
+                <line number="18" hits="4" branch="false" />
+                <line number="19" hits="4" branch="false" />
+                <line number="20" hits="4" branch="false" />
+                <line number="21" hits="4" branch="false" />
+                <line number="22" hits="4" branch="false" />
+                <line number="23" hits="4" branch="false" />
+                <line number="24" hits="4" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="10" hits="4" branch="false" />
+            <line number="12" hits="4" branch="false" />
+            <line number="14" hits="4" branch="false" />
+            <line number="15" hits="4" branch="false" />
+            <line number="16" hits="4" branch="false" />
+            <line number="18" hits="4" branch="false" />
             <line number="19" hits="4" branch="false" />
             <line number="20" hits="4" branch="false" />
             <line number="21" hits="4" branch="false" />
             <line number="22" hits="4" branch="false" />
             <line number="23" hits="4" branch="false" />
+            <line number="24" hits="4" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Database.Courses.CourseDisciplineDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Courses/CourseDisciplineDbConfig.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="Configure" signature="(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1&lt;Syki.Back.Domain.Courses.CourseDiscipline&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="4" branch="false" />
+                <line number="11" hits="4" branch="false" />
+                <line number="12" hits="4" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="9" hits="4" branch="false" />
+            <line number="11" hits="4" branch="false" />
+            <line number="12" hits="4" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Database.Courses.CourseOfferingDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Courses/CourseOfferingDbConfig.cs" line-rate="1" branch-rate="1" complexity="1">
@@ -10516,24 +10596,38 @@
             <line number="81" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.Courses.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.Courses.cs" line-rate="1" branch-rate="1" complexity="3">
           <methods>
+            <method name="get_Courses" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="190" branch="false" />
+              </lines>
+            </method>
+            <method name="get_CoursesDisciplines" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="190" branch="false" />
+              </lines>
+            </method>
             <method name="ConfigureCourses" signature="(Microsoft.EntityFrameworkCore.ModelBuilder)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="4" branch="false" />
-                <line number="10" hits="4" branch="false" />
-                <line number="11" hits="4" branch="false" />
-                <line number="12" hits="4" branch="false" />
                 <line number="13" hits="4" branch="false" />
+                <line number="14" hits="4" branch="false" />
+                <line number="15" hits="4" branch="false" />
+                <line number="16" hits="4" branch="false" />
+                <line number="17" hits="4" branch="false" />
+                <line number="18" hits="4" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="9" hits="4" branch="false" />
-            <line number="10" hits="4" branch="false" />
-            <line number="11" hits="4" branch="false" />
-            <line number="12" hits="4" branch="false" />
+            <line number="8" hits="190" branch="false" />
+            <line number="9" hits="190" branch="false" />
             <line number="13" hits="4" branch="false" />
+            <line number="14" hits="4" branch="false" />
+            <line number="15" hits="4" branch="false" />
+            <line number="16" hits="4" branch="false" />
+            <line number="17" hits="4" branch="false" />
+            <line number="18" hits="4" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.cs" line-rate="0.918918918918919" branch-rate="0.9166666666666666" complexity="21">
@@ -10656,18 +10750,24 @@
             <line number="79" hits="2" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.Disciplines.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.Disciplines.cs" line-rate="1" branch-rate="1" complexity="2">
           <methods>
+            <method name="get_Disciplines" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="190" branch="false" />
+              </lines>
+            </method>
             <method name="ConfigureDisciplines" signature="(Microsoft.EntityFrameworkCore.ModelBuilder)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="4" branch="false" />
-                <line number="10" hits="4" branch="false" />
+                <line number="12" hits="4" branch="false" />
+                <line number="13" hits="4" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="9" hits="4" branch="false" />
-            <line number="10" hits="4" branch="false" />
+            <line number="8" hits="190" branch="false" />
+            <line number="12" hits="4" branch="false" />
+            <line number="13" hits="4" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.Identity.cs" line-rate="1" branch-rate="1" complexity="5">
@@ -10800,22 +10900,28 @@
             <line number="10" hits="4" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.Teachers.cs" line-rate="1" branch-rate="1" complexity="1">
+        <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.Teachers.cs" line-rate="1" branch-rate="1" complexity="2">
           <methods>
+            <method name="get_TeachersDisciplines" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="190" branch="false" />
+              </lines>
+            </method>
             <method name="ConfigureTeachers" signature="(Microsoft.EntityFrameworkCore.ModelBuilder)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="4" branch="false" />
-                <line number="10" hits="4" branch="false" />
-                <line number="11" hits="4" branch="false" />
                 <line number="12" hits="4" branch="false" />
+                <line number="13" hits="4" branch="false" />
+                <line number="14" hits="4" branch="false" />
+                <line number="15" hits="4" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="9" hits="4" branch="false" />
-            <line number="10" hits="4" branch="false" />
-            <line number="11" hits="4" branch="false" />
+            <line number="8" hits="190" branch="false" />
             <line number="12" hits="4" branch="false" />
+            <line number="13" hits="4" branch="false" />
+            <line number="14" hits="4" branch="false" />
+            <line number="15" hits="4" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Database.Teachers.SykiTeacherDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Teachers/SykiTeacherDbConfig.cs" line-rate="1" branch-rate="1" complexity="1">
@@ -11097,12 +11203,10 @@
                 <line number="18" hits="0" branch="false" />
               </lines>
             </method>
-            <method name="AddDisciplines" signature="(System.Collections.Generic.List`1&lt;Syki.Back.Shared.CreateCourseCurriculumDisciplineIn&gt;)" line-rate="0" branch-rate="1" complexity="1">
+            <method name="AddDisciplines" signature="(System.Collections.Generic.List`1&lt;Syki.Back.Domain.Courses.CourseCurriculumDiscipline&gt;)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
                 <line number="34" hits="0" branch="false" />
                 <line number="35" hits="0" branch="false" />
-                <line number="36" hits="0" branch="false" />
-                <line number="37" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.Int32,System.Int32,System.String)" line-rate="0" branch-rate="1" complexity="1">
@@ -11142,8 +11246,6 @@
             <line number="30" hits="0" branch="false" />
             <line number="34" hits="0" branch="false" />
             <line number="35" hits="0" branch="false" />
-            <line number="36" hits="0" branch="false" />
-            <line number="37" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Domain.Courses.CourseCurriculumDiscipline" filename="/home/runner/work/syki/syki/Back/Domain/Courses/CourseCurriculumDiscipline.cs" line-rate="0" branch-rate="1" complexity="6">
@@ -11763,72 +11865,72 @@
             </method>
             <method name="get_Campi" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="17" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Courses" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="18" hits="0" branch="false" />
+                <line number="17" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Users" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="19" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Students" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="20" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Teachers" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="21" hits="0" branch="false" />
+                <line number="20" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Disciplines" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="22" hits="0" branch="false" />
+                <line number="21" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_CourseOfferings" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="23" hits="0" branch="false" />
+                <line number="22" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_AcademicPeriods" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="24" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_EnrollmentPeriods" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="25" hits="0" branch="false" />
+                <line number="24" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_CourseCurriculums" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="26" hits="0" branch="false" />
+                <line number="25" hits="0" branch="false" />
               </lines>
             </method>
             <method name="NewForUserRegister" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
+                <line number="43" hits="30" branch="false" />
                 <line number="44" hits="30" branch="false" />
                 <line number="45" hits="30" branch="false" />
-                <line number="46" hits="30" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="34" hits="0" branch="false" />
+                <line number="33" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="36" hits="30" branch="false" />
+                <line number="35" hits="30" branch="false" />
+                <line number="37" hits="30" branch="false" />
                 <line number="38" hits="30" branch="false" />
                 <line number="39" hits="30" branch="false" />
-                <line number="40" hits="30" branch="false" />
               </lines>
             </method>
           </methods>
@@ -11836,6 +11938,7 @@
             <line number="13" hits="30" branch="false" />
             <line number="14" hits="30" branch="false" />
             <line number="15" hits="30" branch="false" />
+            <line number="16" hits="0" branch="false" />
             <line number="17" hits="0" branch="false" />
             <line number="18" hits="0" branch="false" />
             <line number="19" hits="0" branch="false" />
@@ -11845,15 +11948,14 @@
             <line number="23" hits="0" branch="false" />
             <line number="24" hits="0" branch="false" />
             <line number="25" hits="0" branch="false" />
-            <line number="26" hits="0" branch="false" />
-            <line number="34" hits="0" branch="false" />
-            <line number="36" hits="30" branch="false" />
+            <line number="33" hits="0" branch="false" />
+            <line number="35" hits="30" branch="false" />
+            <line number="37" hits="30" branch="false" />
             <line number="38" hits="30" branch="false" />
             <line number="39" hits="30" branch="false" />
-            <line number="40" hits="30" branch="false" />
+            <line number="43" hits="30" branch="false" />
             <line number="44" hits="30" branch="false" />
             <line number="45" hits="30" branch="false" />
-            <line number="46" hits="30" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Domain.Periods.AcademicPeriod" filename="/home/runner/work/syki/syki/Back/Domain/Periods/AcademicPeriod.cs" line-rate="0" branch-rate="0" complexity="25">
@@ -12428,7 +12530,7 @@
             <line number="7" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.AccessTokenNotFound" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.AccessTokenNotFound" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -12794,7 +12896,7 @@
             <line number="47" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.DuplicateIpAccessRule" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.DuplicateIpAccessRule" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -12818,7 +12920,7 @@
             <line number="182" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.DuplicateTwoFactorAccessRule" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.DuplicateTwoFactorAccessRule" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13374,6 +13476,30 @@
             <line number="144" hits="0" branch="false" />
           </lines>
         </class>
+        <class name="Syki.Back.Errors.InvalidCourseCurriculumName" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Courses.cs" line-rate="0" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Message" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="6" hits="0" branch="false" />
+            <line number="7" hits="0" branch="false" />
+          </lines>
+        </class>
         <class name="Syki.Back.Errors.InvalidCourseName" filename="/home/runner/work/syki/syki/Back/Errors/SykiInvalidErrors.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -13444,6 +13570,30 @@
             <line number="106" hits="0" branch="false" />
             <line number="107" hits="0" branch="false" />
             <line number="108" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Errors.InvalidDisciplineName" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Disciplines.cs" line-rate="0" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Message" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="6" hits="0" branch="false" />
+            <line number="7" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Errors.InvalidDisciplinesList" filename="/home/runner/work/syki/syki/Back/Errors/SykiInvalidErrors.cs" line-rate="0" branch-rate="1" complexity="3">
@@ -13542,7 +13692,7 @@
             <line number="114" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidIpAddress" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidIpAddress" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13590,7 +13740,7 @@
             <line number="126" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidPermissionsList" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidPermissionsList" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13662,7 +13812,7 @@
             <line number="96" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidRole" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidRole" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13686,7 +13836,7 @@
             <line number="189" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidRoleDescription" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidRoleDescription" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13710,7 +13860,7 @@
             <line number="21" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidRoleName" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidRoleName" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13734,7 +13884,7 @@
             <line number="14" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidRolePermissions" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidRolePermissions" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13824,7 +13974,7 @@
             <line number="32" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidSsoAuthority" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidSsoAuthority" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13848,7 +13998,7 @@
             <line number="42" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidSsoClientId" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidSsoClientId" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13872,7 +14022,7 @@
             <line number="49" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidSsoClientSecret" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidSsoClientSecret" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13896,7 +14046,7 @@
             <line number="56" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidSsoProviderType" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidSsoProviderType" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -13992,7 +14142,7 @@
             <line number="138" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.InvalidTwoFactorToken" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.InvalidTwoFactorToken" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14082,7 +14232,7 @@
             <line number="75" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.LoginIpNotAllowed" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.LoginIpNotAllowed" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14178,7 +14328,7 @@
             <line number="88" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.RoleNameAlreadyExists" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.RoleNameAlreadyExists" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14202,7 +14352,7 @@
             <line number="175" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.RoleNotFound" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.RoleNotFound" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14226,7 +14376,7 @@
             <line number="203" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SocialLoginEmailNotVerified" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SocialLoginEmailNotVerified" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14250,7 +14400,7 @@
             <line number="140" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SocialLoginFailed" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SocialLoginFailed" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14274,7 +14424,7 @@
             <line number="133" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SocialLoginSsoRequired" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SocialLoginSsoRequired" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14298,7 +14448,7 @@
             <line number="147" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SsoAuthenticationFailed" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SsoAuthenticationFailed" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14322,7 +14472,7 @@
             <line number="112" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SsoAuthorityHasUserInfo" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SsoAuthorityHasUserInfo" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14346,7 +14496,7 @@
             <line number="84" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SsoAuthorityLinkLocalNotAllowed" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SsoAuthorityLinkLocalNotAllowed" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14370,7 +14520,7 @@
             <line number="91" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SsoAuthorityLocalhostNotAllowed" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SsoAuthorityLocalhostNotAllowed" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14394,7 +14544,7 @@
             <line number="70" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SsoAuthorityLoopbackNotAllowed" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SsoAuthorityLoopbackNotAllowed" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14418,7 +14568,7 @@
             <line number="98" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SsoAuthorityMustBeHttps" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SsoAuthorityMustBeHttps" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14442,7 +14592,7 @@
             <line number="63" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SsoAuthorityPrivateIpNotAllowed" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SsoAuthorityPrivateIpNotAllowed" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14466,7 +14616,7 @@
             <line number="77" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SsoEmailNotVerified" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SsoEmailNotVerified" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14490,7 +14640,7 @@
             <line number="119" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SsoLoginUserNotFound" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SsoLoginUserNotFound" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14514,7 +14664,7 @@
             <line number="126" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SsoNotConfiguredForDomain" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SsoNotConfiguredForDomain" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14556,7 +14706,7 @@
             <line number="14" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SykiWebInvalidJwt" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SykiWebInvalidJwt" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14580,7 +14730,7 @@
             <line number="161" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Errors.SykiWebJwtExpired" filename="/home/runner/work/syki/syki/Back/Errors/IdentityErrors.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Syki.Back.Errors.SykiWebJwtExpired" filename="/home/runner/work/syki/syki/Back/Errors/SykiErrors.Identity.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14770,6 +14920,28 @@
           <lines>
             <line number="99" hits="0" branch="false" />
             <line number="100" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Extensions.AppVersion" filename="/home/runner/work/syki/syki/Back/Extensions/AppVersion.cs" line-rate="0" branch-rate="1" complexity="7">
+          <methods>
+            <method name="get_Value" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="6">
+              <lines>
+                <line number="8" hits="0" branch="false" />
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="7" hits="0" branch="false" />
+            <line number="8" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Extensions.AuditExtensions" filename="/home/runner/work/syki/syki/Back/Extensions/AuditExtensions.cs" line-rate="1" branch-rate="0.8333333333333334" complexity="16">
@@ -15819,6 +15991,516 @@
             <line number="35" hits="0" branch="false" />
           </lines>
         </class>
+        <class name="Syki.Back.Features.Courses.CreateCourse.CreateCourseController" filename="/home/runner/work/syki/syki/Back/Features/Courses/CreateCourse/CreateCourseController.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(Syki.Back.Features.Courses.CreateCourse.CreateCourseService)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="4" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Create" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="4" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.CreateCourse.CreateCourseIn" filename="/home/runner/work/syki/syki/Back/Features/Courses/CreateCourse/CreateCourseIn.cs" line-rate="0" branch-rate="1" complexity="4">
+          <methods>
+            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Type" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Disciplines" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="10" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="6" hits="0" branch="false" />
+            <line number="7" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.CreateCourse.CreateCourseOut" filename="/home/runner/work/syki/syki/Back/Features/Courses/CreateCourse/CreateCourseOut.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="0" branch="false" />
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="8" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.CreateCourse.CreateCourseService" filename="/home/runner/work/syki/syki/Back/Features/Courses/CreateCourse/CreateCourseService.cs" line-rate="0" branch-rate="0" complexity="7">
+          <methods>
+            <method name=".ctor" signature="(Syki.Back.Database.SykiDbContext)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="18" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="14" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Create" signature="()" line-rate="0" branch-rate="0" complexity="4">
+              <lines>
+                <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="24" hits="0" branch="false" />
+                <line number="25" hits="0" branch="false" />
+                <line number="26" hits="0" branch="false" />
+                <line number="28" hits="0" branch="false" />
+                <line number="30" hits="0" branch="false" />
+                <line number="31" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="14" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="24" hits="0" branch="false" />
+            <line number="25" hits="0" branch="false" />
+            <line number="26" hits="0" branch="false" />
+            <line number="28" hits="0" branch="false" />
+            <line number="30" hits="0" branch="false" />
+            <line number="31" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.CreateCourseCurriculum.CreateCourseCurriculumController" filename="/home/runner/work/syki/syki/Back/Features/Courses/CreateCourseCurriculum/CreateCourseCurriculumController.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(Syki.Back.Features.Courses.CreateCourseCurriculum.CreateCourseCurriculumService)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="4" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Create" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="4" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.CreateCourseCurriculum.CreateCourseCurriculumDisciplineIn" filename="/home/runner/work/syki/syki/Back/Features/Courses/CreateCourseCurriculum/CreateCourseCurriculumIn.cs" line-rate="0" branch-rate="1" complexity="6">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="25" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Period" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="26" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Credits" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="27" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Workload" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="28" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="30" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(System.Int32,System.Byte,System.Byte,System.UInt16)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="32" hits="0" branch="false" />
+                <line number="33" hits="0" branch="false" />
+                <line number="34" hits="0" branch="false" />
+                <line number="35" hits="0" branch="false" />
+                <line number="36" hits="0" branch="false" />
+                <line number="37" hits="0" branch="false" />
+                <line number="38" hits="0" branch="false" />
+                <line number="39" hits="0" branch="false" />
+                <line number="40" hits="0" branch="false" />
+                <line number="41" hits="0" branch="false" />
+                <line number="42" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="25" hits="0" branch="false" />
+            <line number="26" hits="0" branch="false" />
+            <line number="27" hits="0" branch="false" />
+            <line number="28" hits="0" branch="false" />
+            <line number="30" hits="0" branch="false" />
+            <line number="32" hits="0" branch="false" />
+            <line number="33" hits="0" branch="false" />
+            <line number="34" hits="0" branch="false" />
+            <line number="35" hits="0" branch="false" />
+            <line number="36" hits="0" branch="false" />
+            <line number="37" hits="0" branch="false" />
+            <line number="38" hits="0" branch="false" />
+            <line number="39" hits="0" branch="false" />
+            <line number="40" hits="0" branch="false" />
+            <line number="41" hits="0" branch="false" />
+            <line number="42" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.CreateCourseCurriculum.CreateCourseCurriculumIn" filename="/home/runner/work/syki/syki/Back/Features/Courses/CreateCourseCurriculum/CreateCourseCurriculumIn.cs" line-rate="0" branch-rate="1" complexity="4">
+          <methods>
+            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_CourseId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Disciplines" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="10" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="13" hits="0" branch="false" />
+                <line number="14" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+                <line number="20" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="6" hits="0" branch="false" />
+            <line number="7" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="14" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+            <line number="20" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.CreateCourseCurriculum.CreateCourseCurriculumOut" filename="/home/runner/work/syki/syki/Back/Features/Courses/CreateCourseCurriculum/CreateCourseCurriculumOut.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="0" branch="false" />
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="8" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.CreateCourseCurriculum.CreateCourseCurriculumService" filename="/home/runner/work/syki/syki/Back/Features/Courses/CreateCourseCurriculum/CreateCourseCurriculumService.cs" line-rate="0" branch-rate="0" complexity="9">
+          <methods>
+            <method name=".ctor" signature="(Syki.Back.Database.SykiDbContext)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="13" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Create" signature="()" line-rate="0" branch-rate="0" complexity="6">
+              <lines>
+                <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="21" hits="0" branch="false" />
+                <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="24" hits="0" branch="false" />
+                <line number="25" hits="0" branch="false" />
+                <line number="26" hits="0" branch="false" />
+                <line number="27" hits="0" branch="false" />
+                <line number="29" hits="0" branch="false" />
+                <line number="30" hits="0" branch="false" />
+                <line number="32" hits="0" branch="false" />
+                <line number="33" hits="0" branch="false" />
+                <line number="34" hits="0" branch="false" />
+                <line number="36" hits="0" branch="false" />
+                <line number="37" hits="0" branch="false" />
+                <line number="39" hits="0" branch="false" />
+                <line number="40" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="21" hits="0" branch="false" />
+            <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="24" hits="0" branch="false" />
+            <line number="25" hits="0" branch="false" />
+            <line number="26" hits="0" branch="false" />
+            <line number="27" hits="0" branch="false" />
+            <line number="29" hits="0" branch="false" />
+            <line number="30" hits="0" branch="false" />
+            <line number="32" hits="0" branch="false" />
+            <line number="33" hits="0" branch="false" />
+            <line number="34" hits="0" branch="false" />
+            <line number="36" hits="0" branch="false" />
+            <line number="37" hits="0" branch="false" />
+            <line number="39" hits="0" branch="false" />
+            <line number="40" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.GetCourses.GetCoursesController" filename="/home/runner/work/syki/syki/Back/Features/Courses/GetCourses/GetCoursesController.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(Syki.Back.Features.Courses.GetCourses.GetCoursesService)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="4" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Get" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="16" hits="0" branch="false" />
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="4" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.GetCourses.GetCoursesItemOut" filename="/home/runner/work/syki/syki/Back/Features/Courses/GetCourses/GetCoursesOut.cs" line-rate="0" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="16" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Type" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="18" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="16" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.GetCourses.GetCoursesMapper" filename="/home/runner/work/syki/syki/Back/Features/Courses/GetCourses/GetCoursesMapper.cs" line-rate="0" branch-rate="1" complexity="1">
+          <methods>
+            <method name="ToGetCoursesItemOut" signature="(Syki.Back.Domain.Courses.Course)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="13" hits="0" branch="false" />
+                <line number="14" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="14" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.GetCourses.GetCoursesOut" filename="/home/runner/work/syki/syki/Back/Features/Courses/GetCourses/GetCoursesOut.cs" line-rate="0" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Total" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Items" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="6" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Courses.GetCourses.GetCoursesService" filename="/home/runner/work/syki/syki/Back/Features/Courses/GetCourses/GetCoursesService.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(Syki.Back.Database.SykiDbContext)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="3" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Get" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="14" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="3" hits="0" branch="false" />
+            <line number="7" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="14" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Cross.Health.HealthController" filename="/home/runner/work/syki/syki/Back/Features/Cross/Health/HealthController.cs" line-rate="0" branch-rate="1" complexity="1">
+          <methods>
+            <method name="Get" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="13" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Cross.Home.HomeController" filename="/home/runner/work/syki/syki/Back/Features/Cross/Home/HomeController.cs" line-rate="0" branch-rate="1" complexity="1">
+          <methods>
+            <method name="Get" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="13" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="0" branch="false" />
+          </lines>
+        </class>
         <class name="Syki.Back.Features.Cross.SignIn.SignInService" filename="/home/runner/work/syki/syki/Back/Features/Identity/SignIn/SignInService.cs" line-rate="1" branch-rate="1" complexity="2">
           <methods>
             <method name=".ctor" signature="(Syki.Back.Database.SykiDbContext,Syki.Back.Settings.AuthSettings,Microsoft.AspNetCore.Http.IHttpContextAccessor)" line-rate="1" branch-rate="1" complexity="1">
@@ -15909,6 +16591,288 @@
             <line number="56" hits="20" branch="false" />
             <line number="57" hits="20" branch="false" />
             <line number="58" hits="20" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Cross.Version.VersionController" filename="/home/runner/work/syki/syki/Back/Features/Cross/Version/VersionController.cs" line-rate="0" branch-rate="1" complexity="1">
+          <methods>
+            <method name="Get" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="13" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="13" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Disciplines.CreateDiscipline.CreateDisciplineController" filename="/home/runner/work/syki/syki/Back/Features/Disciplines/CreateDiscipline/CreateDisciplineController.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(Syki.Back.Features.Disciplines.CreateDiscipline.CreateDisciplineService)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="4" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Create" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="4" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Disciplines.CreateDiscipline.CreateDisciplineIn" filename="/home/runner/work/syki/syki/Back/Features/Disciplines/CreateDiscipline/CreateDisciplineIn.cs" line-rate="0" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Courses" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="6" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Disciplines.CreateDiscipline.CreateDisciplineOut" filename="/home/runner/work/syki/syki/Back/Features/Disciplines/CreateDiscipline/CreateDisciplineOut.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="0" branch="false" />
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="8" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Disciplines.CreateDiscipline.CreateDisciplineService" filename="/home/runner/work/syki/syki/Back/Features/Disciplines/CreateDiscipline/CreateDisciplineService.cs" line-rate="0" branch-rate="0" complexity="5">
+          <methods>
+            <method name=".ctor" signature="(Syki.Back.Database.SykiDbContext)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="13" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Create" signature="()" line-rate="0" branch-rate="0" complexity="2">
+              <lines>
+                <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="21" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="false" />
+                <line number="25" hits="0" branch="false" />
+                <line number="26" hits="0" branch="false" />
+                <line number="28" hits="0" branch="false" />
+                <line number="30" hits="0" branch="false" />
+                <line number="31" hits="0" branch="false" />
+                <line number="33" hits="0" branch="false" />
+                <line number="34" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="21" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="false" />
+            <line number="25" hits="0" branch="false" />
+            <line number="26" hits="0" branch="false" />
+            <line number="28" hits="0" branch="false" />
+            <line number="30" hits="0" branch="false" />
+            <line number="31" hits="0" branch="false" />
+            <line number="33" hits="0" branch="false" />
+            <line number="34" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Disciplines.GetDisciplines.GetDisciplinesController" filename="/home/runner/work/syki/syki/Back/Features/Disciplines/GetDisciplines/GetDisciplinesController.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(Syki.Back.Features.Disciplines.GetDisciplines.GetDisciplinesService)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="4" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Get" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
+                <line number="17" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="4" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Disciplines.GetDisciplines.GetDisciplinesItemOut" filename="/home/runner/work/syki/syki/Back/Features/Disciplines/GetDisciplines/GetDisciplinesOut.cs" line-rate="0" branch-rate="1" complexity="4">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="16" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="18" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Teachers" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="19" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="16" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Disciplines.GetDisciplines.GetDisciplinesMapper" filename="/home/runner/work/syki/syki/Back/Features/Disciplines/GetDisciplines/GetDisciplinesMapper.cs" line-rate="0" branch-rate="1" complexity="1">
+          <methods>
+            <method name="ToGetDisciplinesItemOut" signature="(Syki.Back.Domain.Disciplines.Discipline)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="13" hits="0" branch="false" />
+                <line number="14" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="14" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Disciplines.GetDisciplines.GetDisciplinesOut" filename="/home/runner/work/syki/syki/Back/Features/Disciplines/GetDisciplines/GetDisciplinesOut.cs" line-rate="0" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Total" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Items" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="6" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Features.Disciplines.GetDisciplines.GetDisciplinesService" filename="/home/runner/work/syki/syki/Back/Features/Disciplines/GetDisciplines/GetDisciplinesService.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(Syki.Back.Database.SykiDbContext)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="3" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Get" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+                <line number="8" hits="0" branch="false" />
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="14" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+                <line number="21" hits="0" branch="false" />
+                <line number="22" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="3" hits="0" branch="false" />
+            <line number="7" hits="0" branch="false" />
+            <line number="8" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="14" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+            <line number="21" hits="0" branch="false" />
+            <line number="22" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Features.Identity.CreateRole.CreateRoleController" filename="/home/runner/work/syki/syki/Back/Features/Identity/CreateRole/CreateRoleController.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -18663,58 +19627,6 @@
             <line number="6" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Shared.CourseCurriculumOut" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateCourseCurriculum/CourseCurriculumOut.cs" line-rate="0" branch-rate="1" complexity="7">
-          <methods>
-            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_CourseId" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="6" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_CourseName" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="8" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Disciplines" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="12" hits="0" branch="false" />
-                <line number="13" hits="0" branch="false" />
-                <line number="14" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="op_Implicit" signature="(OneOf.OneOf`2&lt;Syki.Back.Shared.CourseCurriculumOut,Syki.Back.Shared.ErrorOut&gt;)" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="18" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="0" branch="false" />
-            <line number="6" hits="0" branch="false" />
-            <line number="7" hits="0" branch="false" />
-            <line number="8" hits="0" branch="false" />
-            <line number="9" hits="0" branch="false" />
-            <line number="12" hits="0" branch="false" />
-            <line number="13" hits="0" branch="false" />
-            <line number="14" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
-          </lines>
-        </class>
         <class name="Syki.Back.Shared.CourseDisciplineOut" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateCourse/CourseDisciplineOut.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -19237,202 +20149,6 @@
             <line number="26" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Shared.CreateCourseCurriculumDisciplineIn" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateCourseCurriculum/CreateCourseCurriculumDisciplineIn.cs" line-rate="0" branch-rate="1" complexity="6">
-          <methods>
-            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Period" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="6" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Credits" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Workload" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="8" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="10" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name=".ctor" signature="(System.Int32,System.Byte,System.Byte,System.UInt16)" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="12" hits="0" branch="false" />
-                <line number="13" hits="0" branch="false" />
-                <line number="14" hits="0" branch="false" />
-                <line number="15" hits="0" branch="false" />
-                <line number="16" hits="0" branch="false" />
-                <line number="17" hits="0" branch="false" />
-                <line number="18" hits="0" branch="false" />
-                <line number="19" hits="0" branch="false" />
-                <line number="20" hits="0" branch="false" />
-                <line number="21" hits="0" branch="false" />
-                <line number="22" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="0" branch="false" />
-            <line number="6" hits="0" branch="false" />
-            <line number="7" hits="0" branch="false" />
-            <line number="8" hits="0" branch="false" />
-            <line number="10" hits="0" branch="false" />
-            <line number="12" hits="0" branch="false" />
-            <line number="13" hits="0" branch="false" />
-            <line number="14" hits="0" branch="false" />
-            <line number="15" hits="0" branch="false" />
-            <line number="16" hits="0" branch="false" />
-            <line number="17" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
-            <line number="19" hits="0" branch="false" />
-            <line number="20" hits="0" branch="false" />
-            <line number="21" hits="0" branch="false" />
-            <line number="22" hits="0" branch="false" />
-          </lines>
-        </class>
-        <class name="Syki.Back.Shared.CreateCourseCurriculumIn" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateCourseCurriculum/CreateCourseCurriculumIn.cs" line-rate="0" branch-rate="1" complexity="4">
-          <methods>
-            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_CourseId" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="6" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Disciplines" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="10" hits="0" branch="false" />
-                <line number="11" hits="0" branch="false" />
-                <line number="12" hits="0" branch="false" />
-                <line number="13" hits="0" branch="false" />
-                <line number="14" hits="0" branch="false" />
-                <line number="15" hits="0" branch="false" />
-                <line number="16" hits="0" branch="false" />
-                <line number="17" hits="0" branch="false" />
-                <line number="18" hits="0" branch="false" />
-                <line number="19" hits="0" branch="false" />
-                <line number="20" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="0" branch="false" />
-            <line number="6" hits="0" branch="false" />
-            <line number="7" hits="0" branch="false" />
-            <line number="10" hits="0" branch="false" />
-            <line number="11" hits="0" branch="false" />
-            <line number="12" hits="0" branch="false" />
-            <line number="13" hits="0" branch="false" />
-            <line number="14" hits="0" branch="false" />
-            <line number="15" hits="0" branch="false" />
-            <line number="16" hits="0" branch="false" />
-            <line number="17" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
-            <line number="19" hits="0" branch="false" />
-            <line number="20" hits="0" branch="false" />
-          </lines>
-        </class>
-        <class name="Syki.Back.Shared.CreateCourseDisciplineOut" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateCourse/CreateCourseOut.cs" line-rate="0" branch-rate="1" complexity="3">
-          <methods>
-            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="54" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="55" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="56" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="54" hits="0" branch="false" />
-            <line number="55" hits="0" branch="false" />
-            <line number="56" hits="0" branch="false" />
-          </lines>
-        </class>
-        <class name="Syki.Back.Shared.CreateCourseIn" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateCourse/CreateCourseIn.cs" line-rate="0" branch-rate="1" complexity="4">
-          <methods>
-            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="8" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Type" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="13" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Disciplines" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="18" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="21" hits="0" branch="false" />
-                <line number="22" hits="0" branch="false" />
-                <line number="23" hits="0" branch="false" />
-                <line number="24" hits="0" branch="false" />
-                <line number="25" hits="0" branch="false" />
-                <line number="26" hits="0" branch="false" />
-                <line number="27" hits="0" branch="false" />
-                <line number="28" hits="0" branch="false" />
-                <line number="29" hits="0" branch="false" />
-                <line number="30" hits="0" branch="false" />
-                <line number="31" hits="0" branch="false" />
-                <line number="32" hits="0" branch="false" />
-                <line number="33" hits="0" branch="false" />
-                <line number="34" hits="0" branch="false" />
-                <line number="35" hits="0" branch="false" />
-                <line number="36" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="8" hits="0" branch="false" />
-            <line number="13" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
-            <line number="21" hits="0" branch="false" />
-            <line number="22" hits="0" branch="false" />
-            <line number="23" hits="0" branch="false" />
-            <line number="24" hits="0" branch="false" />
-            <line number="25" hits="0" branch="false" />
-            <line number="26" hits="0" branch="false" />
-            <line number="27" hits="0" branch="false" />
-            <line number="28" hits="0" branch="false" />
-            <line number="29" hits="0" branch="false" />
-            <line number="30" hits="0" branch="false" />
-            <line number="31" hits="0" branch="false" />
-            <line number="32" hits="0" branch="false" />
-            <line number="33" hits="0" branch="false" />
-            <line number="34" hits="0" branch="false" />
-            <line number="35" hits="0" branch="false" />
-            <line number="36" hits="0" branch="false" />
-          </lines>
-        </class>
         <class name="Syki.Back.Shared.CreateCourseOfferingIn" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateCourseOffering/CreateCourseOfferingIn.cs" line-rate="0" branch-rate="1" complexity="6">
           <methods>
             <method name="get_CampusId" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -19477,130 +20193,6 @@
             <line number="14" hits="0" branch="false" />
             <line number="15" hits="0" branch="false" />
             <line number="16" hits="0" branch="false" />
-          </lines>
-        </class>
-        <class name="Syki.Back.Shared.CreateCourseOut" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateCourse/CreateCourseOut.cs" line-rate="0" branch-rate="0" complexity="10">
-          <methods>
-            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="6" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Type" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Disciplines" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="8" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="Equals" signature="(System.Object)" line-rate="0" branch-rate="0" complexity="2">
-              <lines>
-                <line number="12" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="13" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="GetHashCode" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="18" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="ToString" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="23" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="27" hits="0" branch="false" />
-                <line number="28" hits="0" branch="false" />
-                <line number="29" hits="0" branch="false" />
-                <line number="30" hits="0" branch="false" />
-                <line number="31" hits="0" branch="false" />
-                <line number="32" hits="0" branch="false" />
-                <line number="33" hits="0" branch="false" />
-                <line number="34" hits="0" branch="false" />
-                <line number="35" hits="0" branch="false" />
-                <line number="36" hits="0" branch="false" />
-                <line number="37" hits="0" branch="false" />
-                <line number="38" hits="0" branch="false" />
-                <line number="39" hits="0" branch="false" />
-                <line number="40" hits="0" branch="false" />
-                <line number="41" hits="0" branch="false" />
-                <line number="42" hits="0" branch="false" />
-                <line number="43" hits="0" branch="false" />
-                <line number="44" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="op_Implicit" signature="(OneOf.OneOf`2&lt;Syki.Back.Shared.CreateCourseOut,Syki.Back.Shared.ErrorOut&gt;)" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="48" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="0" branch="false" />
-            <line number="6" hits="0" branch="false" />
-            <line number="7" hits="0" branch="false" />
-            <line number="8" hits="0" branch="false" />
-            <line number="12" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="13" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
-            <line number="23" hits="0" branch="false" />
-            <line number="27" hits="0" branch="false" />
-            <line number="28" hits="0" branch="false" />
-            <line number="29" hits="0" branch="false" />
-            <line number="30" hits="0" branch="false" />
-            <line number="31" hits="0" branch="false" />
-            <line number="32" hits="0" branch="false" />
-            <line number="33" hits="0" branch="false" />
-            <line number="34" hits="0" branch="false" />
-            <line number="35" hits="0" branch="false" />
-            <line number="36" hits="0" branch="false" />
-            <line number="37" hits="0" branch="false" />
-            <line number="38" hits="0" branch="false" />
-            <line number="39" hits="0" branch="false" />
-            <line number="40" hits="0" branch="false" />
-            <line number="41" hits="0" branch="false" />
-            <line number="42" hits="0" branch="false" />
-            <line number="43" hits="0" branch="false" />
-            <line number="44" hits="0" branch="false" />
-            <line number="48" hits="0" branch="false" />
-          </lines>
-        </class>
-        <class name="Syki.Back.Shared.CreateDisciplineIn" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateDiscipline/CreateDisciplineIn.cs" line-rate="0" branch-rate="1" complexity="3">
-          <methods>
-            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Courses" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="6" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="0" branch="false" />
-                <line number="10" hits="0" branch="false" />
-                <line number="11" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="0" branch="false" />
-            <line number="6" hits="0" branch="false" />
-            <line number="9" hits="0" branch="false" />
-            <line number="10" hits="0" branch="false" />
-            <line number="11" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Shared.CreateEnrollmentPeriodIn" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateEnrollmentPeriod/CreateEnrollmentPeriodIn.cs" line-rate="0" branch-rate="1" complexity="4">
@@ -20199,102 +20791,6 @@
           <lines>
             <line number="7" hits="0" branch="false" />
             <line number="12" hits="0" branch="false" />
-          </lines>
-        </class>
-        <class name="Syki.Back.Shared.DisciplineOut" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/CreateDiscipline/DisciplineOut.cs" line-rate="0" branch-rate="0" complexity="15">
-          <methods>
-            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="6" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="7" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Period" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="8" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Credits" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Workload" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="10" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Teachers" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="11" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_PreRequisites" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="12" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_StudentDisciplineStatus" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="13" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Courses" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="14" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="17" hits="0" branch="false" />
-                <line number="18" hits="0" branch="false" />
-                <line number="19" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="Equals" signature="(System.Object)" line-rate="0" branch-rate="0" complexity="2">
-              <lines>
-                <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="24" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="GetHashCode" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="29" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="ToString" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="34" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="0" branch="false" />
-            <line number="6" hits="0" branch="false" />
-            <line number="7" hits="0" branch="false" />
-            <line number="8" hits="0" branch="false" />
-            <line number="9" hits="0" branch="false" />
-            <line number="10" hits="0" branch="false" />
-            <line number="11" hits="0" branch="false" />
-            <line number="12" hits="0" branch="false" />
-            <line number="13" hits="0" branch="false" />
-            <line number="14" hits="0" branch="false" />
-            <line number="17" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
-            <line number="19" hits="0" branch="false" />
-            <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="24" hits="0" branch="false" />
-            <line number="29" hits="0" branch="false" />
-            <line number="34" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Shared.EnrollmentClassOut" filename="/home/runner/work/syki/syki/Back/Shared/Features/Student/CreateStudentEnrollment/EnrollmentClassOut.cs" line-rate="0" branch-rate="1" complexity="10">
@@ -21115,128 +21611,6 @@
             <line number="5" hits="0" branch="false" />
             <line number="7" hits="0" branch="false" />
             <line number="9" hits="0" branch="false" />
-          </lines>
-        </class>
-        <class name="Syki.Back.Shared.GetCoursesItemOut" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/GetCourses/GetCoursesOut.cs" line-rate="0" branch-rate="0" complexity="7">
-          <methods>
-            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="41" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="42" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Type" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="43" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="Equals" signature="(System.Object)" line-rate="0" branch-rate="0" complexity="2">
-              <lines>
-                <line number="47" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="48" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="GetHashCode" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="53" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="ToString" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="58" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="41" hits="0" branch="false" />
-            <line number="42" hits="0" branch="false" />
-            <line number="43" hits="0" branch="false" />
-            <line number="47" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="48" hits="0" branch="false" />
-            <line number="53" hits="0" branch="false" />
-            <line number="58" hits="0" branch="false" />
-          </lines>
-        </class>
-        <class name="Syki.Back.Shared.GetCoursesOut" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/GetCourses/GetCoursesOut.cs" line-rate="0" branch-rate="1" complexity="3">
-          <methods>
-            <method name="get_Total" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="5" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Items" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="6" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="0" branch="false" />
-                <line number="10" hits="0" branch="false" />
-                <line number="11" hits="0" branch="false" />
-                <line number="12" hits="0" branch="false" />
-                <line number="13" hits="0" branch="false" />
-                <line number="14" hits="0" branch="false" />
-                <line number="15" hits="0" branch="false" />
-                <line number="16" hits="0" branch="false" />
-                <line number="17" hits="0" branch="false" />
-                <line number="18" hits="0" branch="false" />
-                <line number="19" hits="0" branch="false" />
-                <line number="20" hits="0" branch="false" />
-                <line number="21" hits="0" branch="false" />
-                <line number="22" hits="0" branch="false" />
-                <line number="23" hits="0" branch="false" />
-                <line number="24" hits="0" branch="false" />
-                <line number="25" hits="0" branch="false" />
-                <line number="26" hits="0" branch="false" />
-                <line number="27" hits="0" branch="false" />
-                <line number="28" hits="0" branch="false" />
-                <line number="29" hits="0" branch="false" />
-                <line number="30" hits="0" branch="false" />
-                <line number="31" hits="0" branch="false" />
-                <line number="32" hits="0" branch="false" />
-                <line number="33" hits="0" branch="false" />
-                <line number="34" hits="0" branch="false" />
-                <line number="35" hits="0" branch="false" />
-                <line number="36" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="5" hits="0" branch="false" />
-            <line number="6" hits="0" branch="false" />
-            <line number="9" hits="0" branch="false" />
-            <line number="10" hits="0" branch="false" />
-            <line number="11" hits="0" branch="false" />
-            <line number="12" hits="0" branch="false" />
-            <line number="13" hits="0" branch="false" />
-            <line number="14" hits="0" branch="false" />
-            <line number="15" hits="0" branch="false" />
-            <line number="16" hits="0" branch="false" />
-            <line number="17" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
-            <line number="19" hits="0" branch="false" />
-            <line number="20" hits="0" branch="false" />
-            <line number="21" hits="0" branch="false" />
-            <line number="22" hits="0" branch="false" />
-            <line number="23" hits="0" branch="false" />
-            <line number="24" hits="0" branch="false" />
-            <line number="25" hits="0" branch="false" />
-            <line number="26" hits="0" branch="false" />
-            <line number="27" hits="0" branch="false" />
-            <line number="28" hits="0" branch="false" />
-            <line number="29" hits="0" branch="false" />
-            <line number="30" hits="0" branch="false" />
-            <line number="31" hits="0" branch="false" />
-            <line number="32" hits="0" branch="false" />
-            <line number="33" hits="0" branch="false" />
-            <line number="34" hits="0" branch="false" />
-            <line number="35" hits="0" branch="false" />
-            <line number="36" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Shared.GetCoursesWithCurriculumsItemOut" filename="/home/runner/work/syki/syki/Back/Shared/Features/Academic/GetCoursesWithCurriculums/GetCoursesWithCurriculumsOut.cs" line-rate="0" branch-rate="0" complexity="7">
@@ -22333,8 +22707,8 @@
               <lines>
                 <line number="40" hits="2" branch="true" condition-coverage="50% (1/2)" />
                 <line number="42" hits="2" branch="false" />
-                <line number="43" hits="20" branch="true" condition-coverage="100% (2/2)" />
-                <line number="45" hits="8" branch="true" condition-coverage="50% (1/2)" />
+                <line number="43" hits="28" branch="true" condition-coverage="100% (2/2)" />
+                <line number="45" hits="12" branch="true" condition-coverage="50% (1/2)" />
                 <line number="48" hits="2" branch="false" />
                 <line number="49" hits="0" branch="false" />
               </lines>
@@ -22343,8 +22717,8 @@
               <lines>
                 <line number="53" hits="2" branch="true" condition-coverage="50% (1/2)" />
                 <line number="55" hits="2" branch="false" />
-                <line number="56" hits="20" branch="true" condition-coverage="100% (2/2)" />
-                <line number="58" hits="8" branch="true" condition-coverage="50% (1/2)" />
+                <line number="56" hits="28" branch="true" condition-coverage="100% (2/2)" />
+                <line number="58" hits="12" branch="true" condition-coverage="50% (1/2)" />
                 <line number="61" hits="2" branch="false" />
                 <line number="62" hits="0" branch="false" />
               </lines>
@@ -22401,14 +22775,14 @@
             <line number="35" hits="0" branch="false" />
             <line number="40" hits="2" branch="true" condition-coverage="50% (1/2)" />
             <line number="42" hits="2" branch="false" />
-            <line number="43" hits="20" branch="true" condition-coverage="100% (2/2)" />
-            <line number="45" hits="8" branch="true" condition-coverage="50% (1/2)" />
+            <line number="43" hits="28" branch="true" condition-coverage="100% (2/2)" />
+            <line number="45" hits="12" branch="true" condition-coverage="50% (1/2)" />
             <line number="48" hits="2" branch="false" />
             <line number="49" hits="0" branch="false" />
             <line number="53" hits="2" branch="true" condition-coverage="50% (1/2)" />
             <line number="55" hits="2" branch="false" />
-            <line number="56" hits="20" branch="true" condition-coverage="100% (2/2)" />
-            <line number="58" hits="8" branch="true" condition-coverage="50% (1/2)" />
+            <line number="56" hits="28" branch="true" condition-coverage="100% (2/2)" />
+            <line number="58" hits="12" branch="true" condition-coverage="50% (1/2)" />
             <line number="61" hits="2" branch="false" />
             <line number="62" hits="0" branch="false" />
             <line number="66" hits="0" branch="false" />

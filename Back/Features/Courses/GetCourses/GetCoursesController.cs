@@ -1,7 +1,6 @@
-namespace Syki.Back.Features.Academic.GetCourses;
+namespace Syki.Back.Features.Courses.GetCourses;
 
-[ApiController, Authorize]
-[EnableRateLimiting("Medium")]
+[ApiController, Authorize(Policies.GetCourses)]
 public class GetCoursesController(GetCoursesService service) : ControllerBase
 {
     /// <summary>
@@ -10,7 +9,7 @@ public class GetCoursesController(GetCoursesService service) : ControllerBase
     /// <remarks>
     /// Retorna todos os cursos.
     /// </remarks>
-    [HttpGet("academic/courses")]
+    [HttpGet("courses")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     public async Task<IActionResult> Get()
     {

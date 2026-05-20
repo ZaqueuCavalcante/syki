@@ -1,7 +1,6 @@
-namespace Syki.Back.Features.Academic.CreateCourse;
+namespace Syki.Back.Features.Courses.CreateCourse;
 
-[ApiController, Authorize]
-[EnableRateLimiting("Medium")]
+[ApiController, Authorize(Policies.CreateCourse)]
 public class CreateCourseController(CreateCourseService service) : ControllerBase
 {
     /// <summary>
@@ -10,7 +9,7 @@ public class CreateCourseController(CreateCourseService service) : ControllerBas
     /// <remarks>
     /// Cria um novo curso.
     /// </remarks>
-    [HttpPost("academic/courses")]
+    [HttpPost("courses")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateCourseIn data)
@@ -24,4 +23,5 @@ internal class RequestExamples : ExamplesProvider<CreateCourseIn>;
 internal class ResponseExamples : ExamplesProvider<CreateCourseOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidCourseName,
-    InvalidCourseType>;
+    InvalidCourseType
+>;

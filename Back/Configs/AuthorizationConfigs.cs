@@ -7,6 +7,7 @@ public static class AuthorizationConfigs
         builder.Services.AddAuthorizationBuilder()
             .AddUsersPolicies()
             .AddCampiPolicies()
+            .AddCoursesPolicies()
             .AddIdentityPolicies()
             .AddDisciplinesPolicies();
 

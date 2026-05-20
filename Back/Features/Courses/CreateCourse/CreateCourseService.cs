@@ -1,6 +1,8 @@
-namespace Syki.Back.Features.Academic.CreateCourse;
+using Syki.Back.Domain.Courses;
 
-public class CreateCourseService(SykiDbContext ctx, HybridCache cache) : ISykiService
+namespace Syki.Back.Features.Courses.CreateCourse;
+
+public class CreateCourseService(SykiDbContext ctx) : ISykiService
 {
     private class Validator : AbstractValidator<CreateCourseIn>
     {
@@ -19,13 +21,12 @@ public class CreateCourseService(SykiDbContext ctx, HybridCache cache) : ISykiSe
     {
         if (V.Run(data, out var error)) return error;
 
-        var course = new Course(ctx.InstitutionId, data.Name, data.Type!.Value);
-        data.Disciplines?.ForEach(d => course.Disciplines.Add(new(ctx.InstitutionId, d)));
+        var institutionId = ctx.RequestUser.InstitutionId;
+        var course = new Course(institutionId, data.Name, data.Type!.Value);
+        data.Disciplines?.ForEach(d => course.Disciplines.Add(new(institutionId, d)));
 
         await ctx.SaveChangesAsync(course);
 
-        await cache.RemoveAsync($"courses:{ctx.InstitutionId}");
-
-        return course.ToCreateCourseOut();
+        return new CreateCourseOut { Id = course.Id };
     }
 }

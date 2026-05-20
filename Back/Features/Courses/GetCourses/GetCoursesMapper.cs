@@ -1,6 +1,6 @@
-using Syki.Back.Features.Academic.CreateCourse;
+using Syki.Back.Domain.Courses;
 
-namespace Syki.Back.Features.Academic.GetCourses;
+namespace Syki.Back.Features.Courses.GetCourses;
 
 public static class GetCoursesMapper
 {
@@ -12,7 +12,7 @@ public static class GetCoursesMapper
             {
                 Id = course.Id,
                 Name = course.Name,
-                Type = course.Type,
+                Type = course.CourseType,
             };
         }
     }

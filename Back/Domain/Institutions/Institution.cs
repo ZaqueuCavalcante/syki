@@ -13,7 +13,6 @@ public class Institution
     public int Id { get; set; }
     public string Name { get; set; }
     public DateTime CreatedAt { get; set; }
-
     public List<Campus> Campi { get; set; }
     public List<Course> Courses { get; set; }
     public List<SykiUser> Users { get; set; }

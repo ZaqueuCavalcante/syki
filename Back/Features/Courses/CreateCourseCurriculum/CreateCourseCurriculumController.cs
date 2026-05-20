@@ -1,7 +1,6 @@
-namespace Syki.Back.Features.Academic.CreateCourseCurriculum;
+namespace Syki.Back.Features.Courses.CreateCourseCurriculum;
 
 [ApiController, Authorize]
-[EnableRateLimiting("Medium")]
 public class CreateCourseCurriculumController(CreateCourseCurriculumService service) : ControllerBase
 {
     /// <summary>
@@ -10,18 +9,20 @@ public class CreateCourseCurriculumController(CreateCourseCurriculumService serv
     /// <remarks>
     /// Cria uma nova grade curricular.
     /// </remarks>
-    [HttpPost("academic/course-curriculums")]
+    [HttpPost("courses/course-curriculums")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateCourseCurriculumIn data)
     {
-        var result = await service.Create(User.InstitutionId, data);
+        var result = await service.Create(data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
 internal class RequestExamples : ExamplesProvider<CreateCourseCurriculumIn>;
-internal class ResponseExamples : ExamplesProvider<CourseCurriculumOut>;
+internal class ResponseExamples : ExamplesProvider<CreateCourseCurriculumOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     CourseNotFound,
-    InvalidDisciplinesList>;
+    InvalidDisciplinesList,
+    InvalidCourseCurriculumName
+>;

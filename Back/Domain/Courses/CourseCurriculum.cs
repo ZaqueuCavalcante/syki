@@ -29,10 +29,8 @@ public class CourseCurriculum
         Links = [];
     }
 
-    public void AddDisciplines(List<CreateCourseCurriculumDisciplineIn> disciplines)
+    public void AddDisciplines(List<CourseCurriculumDiscipline> disciplines)
     {
-        disciplines.ForEach(d =>
-            Links.Add(new(d.Id, d.Period, d.Credits, d.Workload))
-        );
+        disciplines.ForEach(d => Links.Add(d));
     }
 }

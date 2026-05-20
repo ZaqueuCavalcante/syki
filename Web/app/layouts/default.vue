@@ -40,6 +40,13 @@ const links = [[{
     open.value = false
   }
 }, {
+  label: 'Cursos',
+  icon: 'i-lucide-graduation-cap',
+  to: '/courses',
+  onSelect: () => {
+    open.value = false
+  }
+}, {
   label: 'Settings',
   to: '/settings',
   icon: 'i-lucide-settings',

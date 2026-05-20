@@ -42,6 +42,14 @@ public static class SykiPermissions
         "Criar e editar disciplinas."
     );
 
+    // Courses
+    public static readonly SykiPermission ManageCourses = new(
+        PermissionGroup.Courses,
+        400,
+        "Gerenciar cursos.",
+        "Criar e editar cursos."
+    );
+
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<SykiPermission> Permissions = [];
     static SykiPermissions()

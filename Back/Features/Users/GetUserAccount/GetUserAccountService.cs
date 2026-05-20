@@ -29,6 +29,6 @@ public class GetUserAccountService(SykiDbContext ctx) : ISykiService
             LIMIT 1
         ";
 
-        return await connection.QueryFirstAsync<GetUserAccountOut>(sql, new { ctx.RequestUser.Id });
+        return await connection.QueryFirstAsync<GetUserAccountOut>(sql, new { UserId = ctx.RequestUser.Id });
     }
 }

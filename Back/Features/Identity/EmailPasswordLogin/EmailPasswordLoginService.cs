@@ -11,15 +11,9 @@ public class EmailPasswordLoginService(
     public async Task<OneOf<EmailPasswordLoginOut, SykiError>> Login(EmailPasswordLoginIn data)
     {
         var user = await userManager.FindByEmailAsync(data.Email);
-        if (user == null)
-        {
-            return new LoginWrongEmailOrPassword();
-        }
+        if (user == null) return new LoginWrongEmailOrPassword();
 
-        if (await userManager.IsLockedOutAsync(user))
-        {
-            return new LoginWrongEmailOrPassword();
-        }
+        if (await userManager.IsLockedOutAsync(user)) return new LoginWrongEmailOrPassword();
 
         var isValidPassword = await userManager.CheckPasswordAsync(user, data.Password);
         if (!isValidPassword)

@@ -1,7 +1,6 @@
 using Quartz;
 using Syki.Back.Emails;
 using Syki.Back.Domain.Identity;
-using Syki.Back.Auth.Permissions;
 using Syki.Tests.Integration.Base;
 using Syki.Tests.Integration.Clients;
 using Microsoft.Extensions.DependencyInjection;
@@ -65,6 +64,22 @@ public static class BackFactoryExtensions
     {
         var scope = factory.Services.CreateScope();
         return scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+    }
+
+    public static async Task<TestsHttpClient> LoggedAsDirectot(this BackFactory factory)
+    {
+        await using var ctx = factory.GetDbContext();
+        var client = factory.GetTestsClient();
+
+        var email = DataGen.Email;
+        var user = (await client.RegisterUser(email)).Success;
+
+        var token = await factory.GetMagicLink(email);
+        await client.MagicLinkLogin(token!);
+
+        client.User = user;
+
+        return client;
     }
 
     public static async Task<TestsHttpClient> LoggedAs(this BackFactory factory, string roleName, List<SykiPermission> permissions)

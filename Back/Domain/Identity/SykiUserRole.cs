@@ -16,6 +16,13 @@ public class SykiUserRole : IdentityUserRole<int>
 
     public SykiUserRole() {}
 
+    public SykiUserRole(Institution institution, SykiUser user, int roleId)
+    {
+        Institution = institution;
+        User = user;
+        RoleId = roleId;
+    }
+
     public SykiUserRole(int institutionId, int userId, int roleId)
     {
         InstitutionId = institutionId;

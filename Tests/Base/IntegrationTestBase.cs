@@ -1,4 +1,5 @@
 using Npgsql;
+using Syki.Tests.Seed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +17,10 @@ public abstract class IntegrationTestBase
         await ResetSykiDb();
 
         _back = new BackFactory();
-        using var _ = _back.Services.CreateScope();
+        using var scope = _back.Services.CreateScope();
+        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+
+        await new DataSeeder(ctx).Run();
     }
 
     [OneTimeTearDown]

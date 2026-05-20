@@ -31,10 +31,9 @@ public static class DocsConfigs
             options.TagActionsBy(api =>
             {
                 var group = api.RelativePath.Split("/")[0];
-                if (group == "academic") return ["🏫 Academic"];
-                if (group == "student") return ["👩🏻‍🎓 Student"];
-                if (group == "teacher") return ["👨🏻‍🏫 Teacher"];
-                if (group == "adm") return ["🛡️ Adm"];
+                if (group == "campi") return ["🏫 Campi"];
+                if (group == "identity") return ["🛡️ Identity"];
+                if (group == "users") return ["👩🏻‍🎓 Users"];
                 return ["🧱 Cross"];
             });
             options.DocInclusionPredicate((name, api) => true);

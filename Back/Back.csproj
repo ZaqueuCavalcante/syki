@@ -9,8 +9,10 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <NoWarn>CS1591;CS8618;CS8602;CS8604;EXTEXP0018;</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <UserSecretsId>73852cbc-85df-4a66-b30c-e60af7d726c0</UserSecretsId>
   </PropertyGroup>
 

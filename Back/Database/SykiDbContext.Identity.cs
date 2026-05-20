@@ -1,3 +1,5 @@
+using Syki.Back.Cache;
+using Syki.Back.Auth.Roles;
 using Syki.Back.Domain.Identity;
 using Syki.Back.Database.Identity;
 
@@ -20,12 +22,25 @@ public partial class SykiDbContext
         modelBuilder.ApplyConfiguration(new SykiUserLoginDbConfig());
     }
 
-    public async Task<SykiRole?> GetUserRole(int userId, int institutionId)
+    public async Task<SykiRole> GetUserRole(int userId, int institutionId)
     {
-        var userRole = await UserRoles.Where(x => x.UserId == userId && x.InstitutionId == institutionId).FirstOrDefaultAsync();
+        var userRole = await UserRoles.Where(x => x.UserId == userId && x.InstitutionId == institutionId).FirstAsync();
 
-        if (userRole == null) return null;
+        return await Roles.Where(x => x.Id == userRole.RoleId).FirstAsync();
+    }
 
-        return await Roles.Where(x => x.Id == userRole.RoleId).FirstOrDefaultAsync();
+    public async Task<SykiRole> GetDirectorRole()
+    {
+        return await Cache.GetOrCreateAsync(
+            key: $"{CacheKeys.GetDirectorRole}",
+            state: this,
+            options: new() { Expiration = TimeSpan.FromDays(100) },
+            factory: async (state, ct) =>
+            {
+                return await state.Roles.AsNoTracking()
+                    .Where(x => x.OwnerId == null && x.NormalizedName == SykiDefaultRoles.Director.NormalizedName)
+                    .FirstAsync(ct);
+            }
+        );
     }
 }

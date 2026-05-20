@@ -3,7 +3,8 @@
     "allow": [
       "Bash(xargs cat)",
       "Bash(pnpm nuxt *)",
-      "Bash(xargs ls -la)"
+      "Bash(xargs ls -la)",
+      "Bash(xargs ls)"
     ]
   }
 }

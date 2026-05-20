@@ -5,7 +5,7 @@ public class GetUserAccountOut : IApiDto<GetUserAccountOut>
     /// <summary>
     /// Id do usuário.
     /// </summary>
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Nome do usuário.
@@ -25,7 +25,7 @@ public class GetUserAccountOut : IApiDto<GetUserAccountOut>
     /// <summary>
     /// Role do usuário.
     /// </summary>
-    public UserRole Role { get; set; }
+    public string Role { get; set; }
 
     /// <summary>
     /// Url da foto de perfil do usuário.
@@ -42,20 +42,18 @@ public class GetUserAccountOut : IApiDto<GetUserAccountOut>
         ("Edson Gomes",
         new GetUserAccountOut()
         {
-            Id = Guid.CreateVersion7(),
+            Id = 1,
             Name = "Edson Gomes",
             Email = "edson.gomes@syki.com.br",
             Institution = "UFPE",
-            Role = UserRole.Student,
         }),
         ("Maria Júlia",
         new GetUserAccountOut()
         {
-            Id = Guid.CreateVersion7(),
+            Id = 2,
             Name = "Maria Júlia",
             Email = "maria.julia@syki.com.br",
             Institution = "Faculdade Nova Roma",
-            Role = UserRole.Teacher,
         }),
     ];
 }

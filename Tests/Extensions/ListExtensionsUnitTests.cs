@@ -2,8 +2,8 @@ namespace Syki.Tests.Extensions;
 
 public class ListExtensionsUnitTests
 {
-    // [Test]
-    public void Should_return_true_when_empty_list()
+    [Test]
+    public void ListExtensions_Should_return_true_when_empty_list()
     {
         // Arrange
         var guids = new List<Guid>();
@@ -14,8 +14,8 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    // [Test]
-    public void Should_return_true_when_one_item_list()
+    [Test]
+    public void ListExtensions_Should_return_true_when_one_item_list()
     {
         // Arrange
         List<Guid> guids = 
@@ -29,8 +29,8 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    // [Test]
-    public void Should_return_true_when_two_item_list()
+    [Test]
+    public void ListExtensions_Should_return_true_when_two_item_list()
     {
         // Arrange
         List<Guid> guids = 
@@ -45,8 +45,8 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    // [Test]
-    public void Should_return_true_when_all_items_list()
+    [Test]
+    public void ListExtensions_Should_return_true_when_all_items_list()
     {
         // Arrange
         List<Guid> guids = 
@@ -64,9 +64,9 @@ public class ListExtensionsUnitTests
         result.Should().BeTrue();
     }
 
-    // [Test]
+    [Test]
     [Repeat(100)]
-    public void Should_return_false_when_random_guid()
+    public void ListExtensions_Should_return_false_when_random_guid()
     {
         // Arrange
         List<Guid> guids = 
@@ -80,8 +80,8 @@ public class ListExtensionsUnitTests
         result.Should().BeFalse();
     }
 
-    // [Test]
-    public void Should_return_false_when_duplicated()
+    [Test]
+    public void ListExtensions_Should_return_false_when_duplicated()
     {
         // Arrange
         List<Guid> guids = 
@@ -96,8 +96,8 @@ public class ListExtensionsUnitTests
         result.Should().BeFalse();
     }
 
-    // [Test]
-    public void Should_return_false_when_triplicated()
+    [Test]
+    public void ListExtensions_Should_return_false_when_triplicated()
     {
         // Arrange
         List<Guid> guids = 
@@ -113,9 +113,9 @@ public class ListExtensionsUnitTests
         result.Should().BeFalse();
     }
 
-    // [Test]
+    [Test]
     [Repeat(100)]
-    public void Should_return_false_when_has_one_out()
+    public void ListExtensions_Should_return_false_when_has_one_out()
     {
         // Arrange
         List<Guid> guids = 

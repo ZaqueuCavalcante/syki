@@ -1,9 +1,9 @@
 namespace Syki.Tests.Extensions;
 
-public class EnvExtensionsUnitTests
+public class EnvironmentExtensionsUnitTests
 {
-    // [Test]
-    public void Should_get_deploy_hash()
+    [Test]
+    public void EnvironmentExtensions_Should_get_deploy_hash()
     {
         // Arrange / Act
         var hash = EnvironmentExtensions.DeployHash;
@@ -12,8 +12,8 @@ public class EnvExtensionsUnitTests
         hash.Should().HaveLength(8);
     }
 
-    // [Test]
-    public void Should_get_env_as_testing()
+    [Test]
+    public void EnvironmentExtensions_Should_get_env_as_testing()
     {
         // Arrange
         EnvironmentExtensions.SetAsTesting();

@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Syki.Back.Database.Commands;
+using Syki.Back.Domain.Institutions;
 using Syki.Back.Commands.Domain.Enums;
 using Syki.Back.Commands.Domain.Commands;
-using Syki.Back.Domain.Institutions;
 
 namespace Syki.Back.Database;
 

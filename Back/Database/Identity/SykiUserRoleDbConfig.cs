@@ -29,7 +29,7 @@ public class SykiUserRoleDbConfig : IEntityTypeConfiguration<SykiUserRole>
             .HasPrincipalKey(u => u.Id)
             .HasForeignKey(e => e.RoleId);
 
-        // Garante que cada usuário vai ter apenas uma role em cada org
+        // Garante que cada usuário vai ter apenas uma role em cada instituição
         entity.HasIndex(e => new { e.InstitutionId, e.UserId })
             .IsUnique();
     }

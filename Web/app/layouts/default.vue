@@ -26,6 +26,13 @@ const links = [[{
     open.value = false
   }
 }, {
+  label: 'Campi',
+  icon: 'i-lucide-map-pin',
+  to: '/campi',
+  onSelect: () => {
+    open.value = false
+  }
+}, {
   label: 'Settings',
   to: '/settings',
   icon: 'i-lucide-settings',

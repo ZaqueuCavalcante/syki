@@ -5,8 +5,18 @@ defineProps<{
     collapsed?: boolean
 }>()
 
+const config = useRuntimeConfig()
 const colorMode = useColorMode()
 const { account } = useUserAccount()
+
+async function logout() {
+    await $fetch(`${config.public.backendUrl}/identity/logout`, {
+        method: 'POST',
+        credentials: 'include',
+    })
+    account.value = null
+    await navigateTo('/')
+}
 
 const user = computed(() => ({
     name: account.value?.name ?? '',
@@ -37,8 +47,9 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
     }
 },
 {
-    label: 'Log out',
-    icon: 'i-lucide-log-out'
+    label: 'Sair',
+    icon: 'i-lucide-log-out',
+    onSelect: logout,
 }]]))
 </script>
 

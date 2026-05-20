@@ -16,7 +16,7 @@ public class SignInService(
     {
         var user = await ctx.Users.Where(u => u.Email == email).Select(x => new { x.Id, x.InstitutionId }).FirstAsync();
         var role = await ctx.GetUserRole(user.Id, user.InstitutionId);
-        var permissions = role?.Permissions.Serialize() ?? "[]";
+        var permissions = role.Permissions.Serialize();
 
         var claims = new List<Claim>
         {

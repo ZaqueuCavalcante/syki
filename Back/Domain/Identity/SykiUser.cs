@@ -15,16 +15,13 @@ public class SykiUser : IdentityUser<int>
 
     public SykiUser(
         Institution institution,
-        string name,
-        string email,
-        string? phoneNumber = null
+        string email
     ) {
         Id = 0;
         InstitutionId = 0;
-        Name = name;
+        Name = email;
         UserName = email;
         Email = email;
-        PhoneNumber = phoneNumber;
         CreatedAt = DateTime.UtcNow;
         Institution = institution;
     }

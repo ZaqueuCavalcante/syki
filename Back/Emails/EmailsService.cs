@@ -18,12 +18,10 @@ public class EmailsService : IEmailsService
 
     public async Task SendFirstAccessMagicLinkEmail(string to, string token)
     {
-        if (to.Contains("@syki")) return;
-
         var link = $"{_settings.FrontUrl}/magic-link?token={token}";
 
         var body = new BrevoEmailMessage(
-            sender: "syki@zaqbit.com",
+            sender: "suporte@syki.com",
             to: to,
             subject: "Syki - Acesse sua conta",
             content: LoadTemplate("FirstAccessMagicLink.html", link)

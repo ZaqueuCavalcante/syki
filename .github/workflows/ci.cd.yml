@@ -64,14 +64,6 @@ jobs:
           --collect:"XPlat Code Coverage" \
           --results-directory ./TestResults
 
-      - name: Create Migrations Bundle
-        run: |
-          dotnet tool install --global dotnet-ef
-          dotnet ef migrations bundle --project Back/Back.csproj --output efbundle
-
-      - name: Run Migrations
-        run: ./efbundle --connection "${{ secrets.MIGRATIONS_DB_CONNECTION_STRING }}"
-
       - name: Generate coverage HTML report
         uses: danielpalme/ReportGenerator-GitHub-Action@v5.4.10
         with:

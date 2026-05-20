@@ -6,7 +6,7 @@ public class SykiRole : IdentityRole<int>
     public string Description { get; set; }
     public List<int> Permissions { get; set; }
 
-    private SykiRole() {}
+    public SykiRole() {}
 
     public SykiRole(
         int id,

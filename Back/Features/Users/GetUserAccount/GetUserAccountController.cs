@@ -1,12 +1,10 @@
-using Syki.Back.Auth.Policies;
-
 namespace Syki.Back.Features.Users.GetUserAccount;
 
 [ApiController, Authorize(Policies.GetUserAccount)]
 public class GetUserAccountController(GetUserAccountService service) : ControllerBase
 {
     /// <summary>
-    /// Conta
+    /// Conta do Usuário
     /// </summary>
     /// <remarks>
     /// Retorna dados da conta do usuário.

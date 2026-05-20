@@ -26,16 +26,16 @@ public class CreateRoleService(SykiDbContext ctx) : ISykiService
     {
         if (V.Run(data, out var error)) return error;
 
-        var orgId = ctx.RequestUser.InstitutionId;
+        var institutionId = ctx.RequestUser.InstitutionId;
         var upperCaseName = data.Name.Normalize().ToUpperInvariant();
-        var roleAlreadyExists = await ctx.Roles.AnyAsync(x => x.OwnerId == orgId && x.NormalizedName == upperCaseName);
+        var roleAlreadyExists = await ctx.Roles.AnyAsync(x => x.OwnerId == institutionId && x.NormalizedName == upperCaseName);
         if (roleAlreadyExists) return RoleNameAlreadyExists.I;
 
-        var role = new SykiRole(orgId, data.Name, data.Description, data.Permissions);
+        var role = new SykiRole(institutionId, data.Name, data.Description, data.Permissions);
         var rolePermissionsOk = role.IsSubsetOf(ctx.RequestUser.Permissions);
         if (!rolePermissionsOk) return InvalidRolePermissions.I;
 
-        var orgRole = new InstitutionRole(orgId, role);
+        var orgRole = new InstitutionRole(institutionId, role);
         ctx.AddRange(role, orgRole);
         await ctx.SaveChangesAsync();
 

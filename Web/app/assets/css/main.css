@@ -1,6 +1,15 @@
 @import "@nuxt/ui";
 @import "tailwindcss" theme(static);
 
+input[type=number].no-spinners::-webkit-outer-spin-button,
+input[type=number].no-spinners::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+input[type=number].no-spinners {
+  -moz-appearance: textfield;
+}
+
 @theme static {
   --font-sans: 'Public Sans', sans-serif;
 

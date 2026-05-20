@@ -4,7 +4,7 @@ namespace Syki.Back.Features.Identity.EmailPasswordLogin;
 public class EmailPasswordLoginController(EmailPasswordLoginService service) : ControllerBase
 {
     /// <summary>
-    /// Login 🔓
+    /// Email + Password Login 🔓
     /// </summary>
     /// <remarks>
     /// Realiza login no sistema.

@@ -1,3 +1,5 @@
+using Syki.Back.Domain.Enums;
+
 namespace Syki.Tests.Extensions;
 
 public class EnumExtensionsUnitTests
@@ -126,7 +128,7 @@ public class EnumExtensionsUnitTests
             (CourseType.Bacharelado, true),
             (StudentDisciplineStatus.Matriculado, false),
             (CourseType.Tecnologo, true),
-            (Shift.Vespertino, false),
+            (CourseSession.Afternoon, false),
         })
         {
             yield return [value, isIn];

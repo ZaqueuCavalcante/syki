@@ -1,4 +1,4 @@
-namespace Syki.Back.Commands.Domain.Enums;
+namespace Syki.Back.Domain.Enums;
 
 /// <summary>
 /// Estratégia de backoff para retentativas de comandos

@@ -259,7 +259,215 @@ namespace Back.Migrations
                     b.HasKey("Id")
                         .HasName("pk_campi");
 
-                    b.ToTable("campi", (string)null);
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_campi_institution_id");
+
+                    b.ToTable("campi", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.Course", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseType")
+                        .HasColumnType("integer")
+                        .HasColumnName("course_type");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("institution_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_courses");
+
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_courses_institution_id");
+
+                    b.ToTable("courses", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.CourseCurriculum", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("integer")
+                        .HasColumnName("course_id");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("institution_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_course_curriculums");
+
+                    b.HasIndex("CourseId")
+                        .HasDatabaseName("ix_course_curriculums_course_id");
+
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_course_curriculums_institution_id");
+
+                    b.ToTable("course_curriculums", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.CourseCurriculumDiscipline", b =>
+                {
+                    b.Property<int>("CourseCurriculumId")
+                        .HasColumnType("integer")
+                        .HasColumnName("course_curriculum_id");
+
+                    b.Property<int>("DisciplineId")
+                        .HasColumnType("integer")
+                        .HasColumnName("discipline_id");
+
+                    b.Property<byte>("Credits")
+                        .HasColumnType("smallint")
+                        .HasColumnName("credits");
+
+                    b.Property<byte>("Period")
+                        .HasColumnType("smallint")
+                        .HasColumnName("period");
+
+                    b.Property<int>("Workload")
+                        .HasColumnType("integer")
+                        .HasColumnName("workload");
+
+                    b.HasKey("CourseCurriculumId", "DisciplineId")
+                        .HasName("pk_course_curriculum_discipline");
+
+                    b.HasIndex("DisciplineId")
+                        .HasDatabaseName("ix_course_curriculum_discipline_discipline_id");
+
+                    b.ToTable("course_curriculum_discipline", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.CourseDiscipline", b =>
+                {
+                    b.Property<int>("CourseId")
+                        .HasColumnType("integer")
+                        .HasColumnName("course_id");
+
+                    b.Property<int>("DisciplineId")
+                        .HasColumnType("integer")
+                        .HasColumnName("discipline_id");
+
+                    b.HasKey("CourseId", "DisciplineId")
+                        .HasName("pk_courses_disciplines");
+
+                    b.HasIndex("DisciplineId")
+                        .HasDatabaseName("ix_courses_disciplines_discipline_id");
+
+                    b.ToTable("courses_disciplines", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.CourseOffering", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AcademicPeriodId")
+                        .HasColumnType("integer")
+                        .HasColumnName("academic_period_id");
+
+                    b.Property<int>("CampusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("campus_id");
+
+                    b.Property<int>("CourseCurriculumId")
+                        .HasColumnType("integer")
+                        .HasColumnName("course_curriculum_id");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("integer")
+                        .HasColumnName("course_id");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("institution_id");
+
+                    b.Property<int>("Session")
+                        .HasColumnType("integer")
+                        .HasColumnName("session");
+
+                    b.HasKey("Id")
+                        .HasName("pk_course_offerings");
+
+                    b.HasIndex("AcademicPeriodId")
+                        .HasDatabaseName("ix_course_offerings_academic_period_id");
+
+                    b.HasIndex("CampusId")
+                        .HasDatabaseName("ix_course_offerings_campus_id");
+
+                    b.HasIndex("CourseCurriculumId")
+                        .HasDatabaseName("ix_course_offerings_course_curriculum_id");
+
+                    b.HasIndex("CourseId")
+                        .HasDatabaseName("ix_course_offerings_course_id");
+
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_course_offerings_institution_id");
+
+                    b.ToTable("course_offerings", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Disciplines.Discipline", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("code");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("institution_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_disciplines");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasDatabaseName("ix_disciplines_code");
+
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_disciplines_institution_id");
+
+                    b.ToTable("disciplines", "syki");
                 });
 
             modelBuilder.Entity("Syki.Back.Domain.Identity.MagicLink", b =>
@@ -466,8 +674,8 @@ namespace Back.Migrations
                     b.HasKey("Id")
                         .HasName("pk_users");
 
-                    b.HasIndex("InstitutionId")
-                        .HasDatabaseName("ix_users_institution_id");
+                    b.HasAlternateKey("InstitutionId", "Id")
+                        .HasName("ak_asp_net_users_institution_id_id");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("email_index");
@@ -614,6 +822,182 @@ namespace Back.Migrations
                     b.ToTable("institutions", "syki");
                 });
 
+            modelBuilder.Entity("Syki.Back.Domain.Periods.AcademicPeriod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("EndAt")
+                        .HasColumnType("date")
+                        .HasColumnName("end_at");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("institution_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<DateOnly>("StartAt")
+                        .HasColumnType("date")
+                        .HasColumnName("start_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_academic_periods");
+
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_academic_periods_institution_id");
+
+                    b.ToTable("academic_periods", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Periods.EnrollmentPeriod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("EndAt")
+                        .HasColumnType("date")
+                        .HasColumnName("end_at");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("institution_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<DateOnly>("StartAt")
+                        .HasColumnType("date")
+                        .HasColumnName("start_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_enrollment_periods");
+
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_enrollment_periods_institution_id");
+
+                    b.ToTable("enrollment_periods", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Students.SykiStudent", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    b.Property<string>("EnrollmentCode")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("enrollment_code");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("institution_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<decimal>("YieldCoefficient")
+                        .HasPrecision(4, 2)
+                        .HasColumnType("numeric(4,2)")
+                        .HasColumnName("yield_coefficient");
+
+                    b.HasKey("Id")
+                        .HasName("pk_students");
+
+                    b.HasIndex("EnrollmentCode")
+                        .IsUnique()
+                        .HasDatabaseName("ix_students_enrollment_code");
+
+                    b.HasIndex("InstitutionId", "Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_students_institution_id_id");
+
+                    b.ToTable("students", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Teachers.SykiTeacher", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("institution_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_teachers");
+
+                    b.HasIndex("InstitutionId", "Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_teachers_institution_id_id");
+
+                    b.ToTable("teachers", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Teachers.TeacherCampus", b =>
+                {
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("integer")
+                        .HasColumnName("teacher_id");
+
+                    b.Property<int>("CampusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("campus_id");
+
+                    b.HasKey("TeacherId", "CampusId")
+                        .HasName("pk_teachers_campi");
+
+                    b.HasIndex("CampusId")
+                        .HasDatabaseName("ix_teachers_campi_campus_id");
+
+                    b.ToTable("teachers_campi", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Teachers.TeacherDiscipline", b =>
+                {
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("integer")
+                        .HasColumnName("teacher_id");
+
+                    b.Property<int>("DisciplineId")
+                        .HasColumnType("integer")
+                        .HasColumnName("discipline_id");
+
+                    b.HasKey("TeacherId", "DisciplineId")
+                        .HasName("pk_teachers_disciplines");
+
+                    b.HasIndex("DisciplineId")
+                        .HasDatabaseName("ix_teachers_disciplines_discipline_id");
+
+                    b.ToTable("teachers_disciplines", "syki");
+                });
+
             modelBuilder.Entity("Syki.Back.Commands.Domain.Commands.Command", b =>
                 {
                     b.HasOne("Syki.Back.Domain.Institutions.Institution", "Institution")
@@ -626,14 +1010,145 @@ namespace Back.Migrations
                     b.Navigation("Institution");
                 });
 
+            modelBuilder.Entity("Syki.Back.Domain.Campi.Campus", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
+                        .WithMany("Campi")
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_campi_institutions_institution_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.Course", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_courses_institutions_institution_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.CourseCurriculum", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Courses.Course", "Course")
+                        .WithMany("CourseCurriculums")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_course_curriculums_courses_course_id");
+
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
+                        .WithMany("CourseCurriculums")
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_course_curriculums_institutions_institution_id");
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.CourseCurriculumDiscipline", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Courses.CourseCurriculum", null)
+                        .WithMany("Links")
+                        .HasForeignKey("CourseCurriculumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_course_curriculum_discipline_course_curriculum_course_curri");
+
+                    b.HasOne("Syki.Back.Domain.Disciplines.Discipline", null)
+                        .WithMany()
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_course_curriculum_discipline_discipline_discipline_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.CourseDiscipline", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Courses.Course", null)
+                        .WithMany("Links")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_courses_disciplines_courses_course_id");
+
+                    b.HasOne("Syki.Back.Domain.Disciplines.Discipline", null)
+                        .WithMany("Links")
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_courses_disciplines_discipline_discipline_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.CourseOffering", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Periods.AcademicPeriod", "AcademicPeriod")
+                        .WithMany()
+                        .HasForeignKey("AcademicPeriodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_course_offerings_academic_period_academic_period_id");
+
+                    b.HasOne("Syki.Back.Domain.Campi.Campus", "Campus")
+                        .WithMany()
+                        .HasForeignKey("CampusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_course_offerings_campi_campus_id");
+
+                    b.HasOne("Syki.Back.Domain.Courses.CourseCurriculum", "CourseCurriculum")
+                        .WithMany()
+                        .HasForeignKey("CourseCurriculumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_course_offerings_course_curriculum_course_curriculum_id");
+
+                    b.HasOne("Syki.Back.Domain.Courses.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_course_offerings_courses_course_id");
+
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
+                        .WithMany("CourseOfferings")
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_course_offerings_institutions_institution_id");
+
+                    b.Navigation("AcademicPeriod");
+
+                    b.Navigation("Campus");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("CourseCurriculum");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Disciplines.Discipline", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
+                        .WithMany("Disciplines")
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_disciplines_institutions_institution_id");
+                });
+
             modelBuilder.Entity("Syki.Back.Domain.Identity.MagicLink", b =>
                 {
-                    b.HasOne("Syki.Back.Domain.Identity.SykiUser", null)
+                    b.HasOne("Syki.Back.Domain.Identity.SykiUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_magic_links_asp_net_users_user_id");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Syki.Back.Domain.Identity.SykiRole", b =>
@@ -657,7 +1172,7 @@ namespace Back.Migrations
             modelBuilder.Entity("Syki.Back.Domain.Identity.SykiUser", b =>
                 {
                     b.HasOne("Syki.Back.Domain.Institutions.Institution", "Institution")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("InstitutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -724,6 +1239,138 @@ namespace Back.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_user_tokens_users_user_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Periods.AcademicPeriod", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
+                        .WithMany("AcademicPeriods")
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_academic_periods_institutions_institution_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Periods.EnrollmentPeriod", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
+                        .WithMany("EnrollmentPeriods")
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_enrollment_periods_institutions_institution_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Students.SykiStudent", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
+                        .WithMany("Students")
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_students_institutions_institution_id");
+
+                    b.HasOne("Syki.Back.Domain.Identity.SykiUser", "User")
+                        .WithOne()
+                        .HasForeignKey("Syki.Back.Domain.Students.SykiStudent", "InstitutionId", "Id")
+                        .HasPrincipalKey("Syki.Back.Domain.Identity.SykiUser", "InstitutionId", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_students_asp_net_users_institution_id_id");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Teachers.SykiTeacher", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
+                        .WithMany("Teachers")
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_teachers_institutions_institution_id");
+
+                    b.HasOne("Syki.Back.Domain.Identity.SykiUser", null)
+                        .WithOne()
+                        .HasForeignKey("Syki.Back.Domain.Teachers.SykiTeacher", "InstitutionId", "Id")
+                        .HasPrincipalKey("Syki.Back.Domain.Identity.SykiUser", "InstitutionId", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_teachers_asp_net_users_institution_id_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Teachers.TeacherCampus", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Campi.Campus", null)
+                        .WithMany()
+                        .HasForeignKey("CampusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_teachers_campi_campi_campus_id");
+
+                    b.HasOne("Syki.Back.Domain.Teachers.SykiTeacher", null)
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_teachers_campi_teachers_teacher_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Teachers.TeacherDiscipline", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Disciplines.Discipline", null)
+                        .WithMany()
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_teachers_disciplines_discipline_discipline_id");
+
+                    b.HasOne("Syki.Back.Domain.Teachers.SykiTeacher", null)
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_teachers_disciplines_teachers_teacher_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.Course", b =>
+                {
+                    b.Navigation("CourseCurriculums");
+
+                    b.Navigation("Links");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Courses.CourseCurriculum", b =>
+                {
+                    b.Navigation("Links");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Disciplines.Discipline", b =>
+                {
+                    b.Navigation("Links");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Institutions.Institution", b =>
+                {
+                    b.Navigation("AcademicPeriods");
+
+                    b.Navigation("Campi");
+
+                    b.Navigation("CourseCurriculums");
+
+                    b.Navigation("CourseOfferings");
+
+                    b.Navigation("Courses");
+
+                    b.Navigation("Disciplines");
+
+                    b.Navigation("EnrollmentPeriods");
+
+                    b.Navigation("Students");
+
+                    b.Navigation("Teachers");
+
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

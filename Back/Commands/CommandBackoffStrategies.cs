@@ -1,4 +1,4 @@
-using Syki.Back.Commands.Domain.Enums;
+using Syki.Back.Domain.Enums;
 
 namespace Syki.Back.Commands;
 

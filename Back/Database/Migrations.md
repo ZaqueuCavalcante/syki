@@ -2,7 +2,7 @@
 
 ## Criar uma nova migration
 
-dotnet ef migrations add AddCampus
+dotnet ef migrations add Bootstrap
 
 ## Generate SQL script for migrations
 

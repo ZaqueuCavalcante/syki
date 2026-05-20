@@ -1,3 +1,5 @@
+using Syki.Back.Domain.Enums;
+
 namespace Syki.Back.Shared;
 
 public class CourseOfferingOut : IApiDto<CourseOfferingOut>
@@ -8,7 +10,7 @@ public class CourseOfferingOut : IApiDto<CourseOfferingOut>
     public Guid CourseCurriculumId { get; set; }
     public string CourseCurriculum { get; set; }
     public string Period { get; set; }
-    public Shift Shift { get; set; }
+    public CourseSession CourseSession { get; set; }
 
     public static IEnumerable<(string, CourseOfferingOut)> GetExamples() =>
     [
@@ -17,7 +19,7 @@ public class CourseOfferingOut : IApiDto<CourseOfferingOut>
 
     public override string ToString()
     {
-        return $"{CourseCurriculum} | {Campus} | {Period} | {Shift.GetDescription()}";
+        return $"{CourseCurriculum} | {Campus} | {Period} | {CourseSession.GetDescription()}";
     }
 
     public static implicit operator CourseOfferingOut(OneOf<CourseOfferingOut, ErrorOut> value)

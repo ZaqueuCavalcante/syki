@@ -3,7 +3,7 @@ namespace Syki.Back.Shared;
 public class CreateCourseCurriculumIn : IApiDto<CreateCourseCurriculumIn>
 {
     public string Name { get; set; }
-    public Guid CourseId { get; set; }
+    public int CourseId { get; set; }
     public List<CreateCourseCurriculumDisciplineIn> Disciplines { get; set; } = [];
 
     public static IEnumerable<(string, CreateCourseCurriculumIn)> GetExamples() =>
@@ -13,8 +13,8 @@ public class CreateCourseCurriculumIn : IApiDto<CreateCourseCurriculumIn>
             new()
             {
                 Name = "Grade ADS",
-                CourseId = Guid.CreateVersion7(),
-                Disciplines = [new(Guid.CreateVersion7(), 1, 55, 70)]
+                CourseId = 1,
+                Disciplines = [new(1, 1, 55, 70)]
             }
         ),
     ];

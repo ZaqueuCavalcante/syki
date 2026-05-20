@@ -1,4 +1,4 @@
-namespace Syki.Back.Commands.Domain.Enums;
+namespace Syki.Back.Domain.Enums;
 
 public enum CommandStatus
 {

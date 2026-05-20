@@ -31,8 +31,13 @@ public partial class SykiDbContext(DbContextOptions<SykiDbContext> options, Npgs
 
         ConfigureAudit(modelBuilder);
         ConfigureCampi(modelBuilder);
+        ConfigureCourses(modelBuilder);
+        ConfigurePeriods(modelBuilder);
+        ConfigureTeachers(modelBuilder);
+        ConfigureStudents(modelBuilder);
         ConfigureCommands(modelBuilder);
         ConfigureIdentity(modelBuilder);
+        ConfigureDisciplines(modelBuilder);
         ConfigureInstitutions(modelBuilder);
 
         ConfigureDatabaseNames(modelBuilder);

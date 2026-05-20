@@ -2,7 +2,7 @@ namespace Syki.Back.Shared;
 
 public class CreateCourseCurriculumDisciplineIn
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public byte Period { get; set; }
     public byte Credits { get; set; }
     public ushort Workload { get; set; }
@@ -10,7 +10,7 @@ public class CreateCourseCurriculumDisciplineIn
     public CreateCourseCurriculumDisciplineIn() { }
 
     public CreateCourseCurriculumDisciplineIn(
-        Guid disciplineId,
+        int disciplineId,
         byte period,
         byte credits,
         ushort cargaHoraria

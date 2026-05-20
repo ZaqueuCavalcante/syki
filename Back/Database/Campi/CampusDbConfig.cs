@@ -6,7 +6,7 @@ public class CampusDbConfig : IEntityTypeConfiguration<Campus>
 {
     public void Configure(EntityTypeBuilder<Campus> entity)
     {
-        entity.ToTable("campi");
+        entity.ToTable("campi", DbSchemas.Syki);
 
         entity.HasKey(e => e.Id);
     }

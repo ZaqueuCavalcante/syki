@@ -1,4 +1,5 @@
 using Syki.Back.Audit;
+
 namespace Syki.Back.Database;
 
 public partial class SykiDbContext

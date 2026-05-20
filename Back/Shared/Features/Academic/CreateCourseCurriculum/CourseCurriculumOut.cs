@@ -6,7 +6,7 @@ public class CourseCurriculumOut : IApiDto<CourseCurriculumOut>
     public Guid CourseId { get; set; }
     public string CourseName { get; set; }
     public string Name { get; set; }
-    public List<DisciplineOut> Disciplines { get; set; }
+    public List<int> Disciplines { get; set; }
 
     public static IEnumerable<(string, CourseCurriculumOut)> GetExamples() =>
     [

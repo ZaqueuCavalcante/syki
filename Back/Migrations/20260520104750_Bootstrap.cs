@@ -344,7 +344,7 @@ namespace Back.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_courses_disciplines_discipline_discipline_id",
+                        name: "fk_courses_disciplines_disciplines_discipline_id",
                         column: x => x.discipline_id,
                         principalSchema: "syki",
                         principalTable: "disciplines",
@@ -581,7 +581,7 @@ namespace Back.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_course_curriculums_disciplines_discipline_discipline_id",
+                        name: "fk_course_curriculums_disciplines_disciplines_discipline_id",
                         column: x => x.discipline_id,
                         principalSchema: "syki",
                         principalTable: "disciplines",
@@ -682,7 +682,7 @@ namespace Back.Migrations
                 {
                     table.PrimaryKey("pk_teachers_disciplines", x => new { x.teacher_id, x.discipline_id });
                     table.ForeignKey(
-                        name: "fk_teachers_disciplines_discipline_discipline_id",
+                        name: "fk_teachers_disciplines_disciplines_discipline_id",
                         column: x => x.discipline_id,
                         principalSchema: "syki",
                         principalTable: "disciplines",

@@ -10,4 +10,7 @@ public enum PermissionGroup
 
     [Description("Campi")]
     Campi = 2,
+
+    [Description("Disciplines")]
+    Disciplines = 3,
 }

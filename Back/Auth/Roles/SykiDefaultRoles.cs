@@ -12,11 +12,12 @@ public static class SykiDefaultRoles
 		OwnerId = null,
 		Name = "Diretor",
 		NormalizedName = "DIRETOR",
-		Description = "Gerencia campi, usuários e perfis de acesso.",
+		Description = "Gerencia campi, usuários, perfis de acesso e disciplinas.",
 		Permissions = [
 			SykiPermissions.ManageCampi.Id,
 			SykiPermissions.ManageUsers.Id,
 			SykiPermissions.ManageRoles.Id,
+			SykiPermissions.ManageDisciplines.Id,
 		],
 	};
 }

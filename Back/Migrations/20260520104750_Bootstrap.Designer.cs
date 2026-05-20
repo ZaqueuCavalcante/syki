@@ -14,7 +14,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20260520100153_Bootstrap")]
+    [Migration("20260520104750_Bootstrap")]
     partial class Bootstrap
     {
         /// <inheritdoc />
@@ -1066,7 +1066,7 @@ namespace Back.Migrations
                         .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_course_curriculums_disciplines_discipline_discipline_id");
+                        .HasConstraintName("fk_course_curriculums_disciplines_disciplines_discipline_id");
                 });
 
             modelBuilder.Entity("Syki.Back.Domain.Courses.CourseDiscipline", b =>
@@ -1083,7 +1083,7 @@ namespace Back.Migrations
                         .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_courses_disciplines_discipline_discipline_id");
+                        .HasConstraintName("fk_courses_disciplines_disciplines_discipline_id");
                 });
 
             modelBuilder.Entity("Syki.Back.Domain.Courses.CourseOffering", b =>
@@ -1326,7 +1326,7 @@ namespace Back.Migrations
                         .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_teachers_disciplines_discipline_discipline_id");
+                        .HasConstraintName("fk_teachers_disciplines_disciplines_discipline_id");
 
                     b.HasOne("Syki.Back.Domain.Teachers.SykiTeacher", null)
                         .WithMany()

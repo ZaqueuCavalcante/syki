@@ -1,9 +1,12 @@
+using Syki.Back.Domain.Courses;
 using Syki.Back.Database.Courses;
 
 namespace Syki.Back.Database;
 
 public partial class SykiDbContext
 {
+    public DbSet<Course> Courses { get; set; }
+
     private static void ConfigureCourses(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CourseDbConfig());

@@ -77,6 +77,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             type="email"
             placeholder="seu@email.com"
             class="w-full"
+            autocomplete="email"
             autofocus
           />
         </UFormField>

@@ -33,6 +33,13 @@ const links = [[{
     open.value = false
   }
 }, {
+  label: 'Disciplinas',
+  icon: 'i-lucide-book-open',
+  to: '/disciplines',
+  onSelect: () => {
+    open.value = false
+  }
+}, {
   label: 'Settings',
   to: '/settings',
   icon: 'i-lucide-settings',

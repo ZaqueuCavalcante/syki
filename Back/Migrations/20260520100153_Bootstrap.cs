@@ -560,7 +560,7 @@ namespace Back.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "course_curriculum_discipline",
+                name: "course_curriculums_disciplines",
                 schema: "syki",
                 columns: table => new
                 {
@@ -572,16 +572,16 @@ namespace Back.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_course_curriculum_discipline", x => new { x.course_curriculum_id, x.discipline_id });
+                    table.PrimaryKey("pk_course_curriculums_disciplines", x => new { x.course_curriculum_id, x.discipline_id });
                     table.ForeignKey(
-                        name: "fk_course_curriculum_discipline_course_curriculum_course_curri",
+                        name: "fk_course_curriculums_disciplines_course_curriculums_course_cu",
                         column: x => x.course_curriculum_id,
                         principalSchema: "syki",
                         principalTable: "course_curriculums",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_course_curriculum_discipline_discipline_discipline_id",
+                        name: "fk_course_curriculums_disciplines_discipline_discipline_id",
                         column: x => x.discipline_id,
                         principalSchema: "syki",
                         principalTable: "disciplines",
@@ -716,12 +716,6 @@ namespace Back.Migrations
                 column: "institution_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_course_curriculum_discipline_discipline_id",
-                schema: "syki",
-                table: "course_curriculum_discipline",
-                column: "discipline_id");
-
-            migrationBuilder.CreateIndex(
                 name: "ix_course_curriculums_course_id",
                 schema: "syki",
                 table: "course_curriculums",
@@ -732,6 +726,12 @@ namespace Back.Migrations
                 schema: "syki",
                 table: "course_curriculums",
                 column: "institution_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_course_curriculums_disciplines_discipline_id",
+                schema: "syki",
+                table: "course_curriculums_disciplines",
+                column: "discipline_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_course_offerings_academic_period_id",
@@ -914,7 +914,7 @@ namespace Back.Migrations
                 schema: "syki");
 
             migrationBuilder.DropTable(
-                name: "course_curriculum_discipline",
+                name: "course_curriculums_disciplines",
                 schema: "syki");
 
             migrationBuilder.DropTable(

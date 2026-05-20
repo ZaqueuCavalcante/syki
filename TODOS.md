@@ -13,3 +13,4 @@
 - https://github.com/ZaqueuCavalcante/syki/issues/81
 
 
+- PADRAO DE NOMEMCLATURA DAS TABELAS DEVE SER CONSISTENTE

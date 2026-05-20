@@ -6,7 +6,6 @@
 - Caching (Fusion Cache + Redis)
 - RBAC (Role-Based Access Control)
 - API Design + Docs
-- Software Testing
 - Load Balancing
 - CAP Theorem
 - Message Queues
@@ -16,10 +15,11 @@
 - Monitoring
 - Authentication & Authorization
 - Data Structures + Algorithms
-- Blob Storage
+- Blob Storage (S3, Azure)
 - Webhooks
-
-
+- Testing (Unit, Integration, E2E, Mutation)
+- Docs integradas com o Back + Web
+- Async/Background Processing
 
 
 

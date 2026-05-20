@@ -10,5 +10,6 @@ public partial class SykiDbContext
         modelBuilder.ApplyConfiguration(new CourseOfferingDbConfig());
         modelBuilder.ApplyConfiguration(new CourseCurriculumDbConfig());
         modelBuilder.ApplyConfiguration(new CourseDisciplineDbConfig());
+        modelBuilder.ApplyConfiguration(new CourseCurriculumDisciplineDbConfig());
     }
 }

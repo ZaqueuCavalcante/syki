@@ -1,4 +1,5 @@
 using Syki.Back.Domain.Courses;
+using Syki.Back.Domain.Disciplines;
 
 namespace Syki.Back.Database.Courses;
 
@@ -12,6 +13,9 @@ public class CourseCurriculumDbConfig : IEntityTypeConfiguration<CourseCurriculu
 
         entity.HasMany(e => e.Disciplines)
             .WithMany()
-            .UsingEntity<CourseCurriculumDiscipline>();
+            .UsingEntity<CourseCurriculumDiscipline>(
+                right => right.HasOne<Discipline>().WithMany().HasForeignKey(ccd => ccd.DisciplineId),
+                left => left.HasOne<CourseCurriculum>().WithMany(cc => cc.Links).HasForeignKey(ccd => ccd.CourseCurriculumId)
+            );
     }
 }

@@ -1,4 +1,4 @@
-namespace Syki.Back.Home;
+namespace Syki.Back.Features.Cross.Home;
 
 [ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]

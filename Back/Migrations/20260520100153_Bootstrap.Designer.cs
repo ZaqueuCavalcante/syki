@@ -14,7 +14,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20260520032614_Bootstrap")]
+    [Migration("20260520100153_Bootstrap")]
     partial class Bootstrap
     {
         /// <inheritdoc />
@@ -356,12 +356,12 @@ namespace Back.Migrations
                         .HasColumnName("workload");
 
                     b.HasKey("CourseCurriculumId", "DisciplineId")
-                        .HasName("pk_course_curriculum_discipline");
+                        .HasName("pk_course_curriculums_disciplines");
 
                     b.HasIndex("DisciplineId")
-                        .HasDatabaseName("ix_course_curriculum_discipline_discipline_id");
+                        .HasDatabaseName("ix_course_curriculums_disciplines_discipline_id");
 
-                    b.ToTable("course_curriculum_discipline", "syki");
+                    b.ToTable("course_curriculums_disciplines", "syki");
                 });
 
             modelBuilder.Entity("Syki.Back.Domain.Courses.CourseDiscipline", b =>
@@ -1059,14 +1059,14 @@ namespace Back.Migrations
                         .HasForeignKey("CourseCurriculumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_course_curriculum_discipline_course_curriculum_course_curri");
+                        .HasConstraintName("fk_course_curriculums_disciplines_course_curriculums_course_cu");
 
                     b.HasOne("Syki.Back.Domain.Disciplines.Discipline", null)
                         .WithMany()
                         .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_course_curriculum_discipline_discipline_discipline_id");
+                        .HasConstraintName("fk_course_curriculums_disciplines_discipline_discipline_id");
                 });
 
             modelBuilder.Entity("Syki.Back.Domain.Courses.CourseDiscipline", b =>

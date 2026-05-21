@@ -16,4 +16,7 @@ public enum PermissionGroup
 
     [Description("Courses")]
     Courses = 4,
+
+    [Description("Teachers")]
+    Teachers = 5,
 }

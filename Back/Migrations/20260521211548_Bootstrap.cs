@@ -399,51 +399,22 @@ namespace Back.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "students",
-                schema: "syki",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false),
-                    institution_id = table.Column<int>(type: "integer", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    enrollment_code = table.Column<string>(type: "text", nullable: false),
-                    status = table.Column<int>(type: "integer", nullable: false),
-                    yield_coefficient = table.Column<decimal>(type: "numeric(4,2)", precision: 4, scale: 2, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_students", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_students_asp_net_users_institution_id_id",
-                        columns: x => new { x.institution_id, x.id },
-                        principalSchema: "syki",
-                        principalTable: "users",
-                        principalColumns: new[] { "institution_id", "id" },
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_students_institutions_institution_id",
-                        column: x => x.institution_id,
-                        principalSchema: "syki",
-                        principalTable: "institutions",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "teachers",
                 schema: "syki",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     institution_id = table.Column<int>(type: "integer", nullable: false),
+                    user_id = table.Column<int>(type: "integer", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_teachers", x => x.id);
                     table.ForeignKey(
-                        name: "fk_teachers_asp_net_users_institution_id_id",
-                        columns: x => new { x.institution_id, x.id },
+                        name: "fk_teachers_asp_net_users_institution_id_user_id",
+                        columns: x => new { x.institution_id, x.user_id },
                         principalSchema: "syki",
                         principalTable: "users",
                         principalColumns: new[] { "institution_id", "id" },
@@ -606,6 +577,7 @@ namespace Back.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_course_offerings", x => x.id);
+                    table.UniqueConstraint("ak_course_offerings_institution_id_id", x => new { x.institution_id, x.id });
                     table.ForeignKey(
                         name: "fk_course_offerings_academic_period_academic_period_id",
                         column: x => x.academic_period_id,
@@ -697,6 +669,47 @@ namespace Back.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "students",
+                schema: "syki",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    institution_id = table.Column<int>(type: "integer", nullable: false),
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    course_offering_id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    enrollment_code = table.Column<string>(type: "text", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
+                    yield_coefficient = table.Column<decimal>(type: "numeric(4,2)", precision: 4, scale: 2, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_students", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_students_asp_net_users_institution_id_user_id",
+                        columns: x => new { x.institution_id, x.user_id },
+                        principalSchema: "syki",
+                        principalTable: "users",
+                        principalColumns: new[] { "institution_id", "id" },
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_students_course_offerings_institution_id_course_offering_id",
+                        columns: x => new { x.institution_id, x.course_offering_id },
+                        principalSchema: "syki",
+                        principalTable: "course_offerings",
+                        principalColumns: new[] { "institution_id", "id" },
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_students_institutions_institution_id",
+                        column: x => x.institution_id,
+                        principalSchema: "syki",
+                        principalTable: "institutions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "ix_academic_periods_institution_id",
                 schema: "syki",
@@ -756,12 +769,6 @@ namespace Back.Migrations
                 schema: "syki",
                 table: "course_offerings",
                 column: "course_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_course_offerings_institution_id",
-                schema: "syki",
-                table: "course_offerings",
-                column: "institution_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_courses_institution_id",
@@ -828,17 +835,23 @@ namespace Back.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_students_institution_id_id",
+                name: "ix_students_institution_id_course_offering_id",
                 schema: "syki",
                 table: "students",
-                columns: new[] { "institution_id", "id" },
+                columns: new[] { "institution_id", "course_offering_id" });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_students_institution_id_user_id",
+                schema: "syki",
+                table: "students",
+                columns: new[] { "institution_id", "user_id" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_teachers_institution_id_id",
+                name: "ix_teachers_institution_id_user_id",
                 schema: "syki",
                 table: "teachers",
-                columns: new[] { "institution_id", "id" },
+                columns: new[] { "institution_id", "user_id" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -918,10 +931,6 @@ namespace Back.Migrations
                 schema: "syki");
 
             migrationBuilder.DropTable(
-                name: "course_offerings",
-                schema: "syki");
-
-            migrationBuilder.DropTable(
                 name: "courses_disciplines",
                 schema: "syki");
 
@@ -966,15 +975,7 @@ namespace Back.Migrations
                 schema: "syki");
 
             migrationBuilder.DropTable(
-                name: "academic_periods",
-                schema: "syki");
-
-            migrationBuilder.DropTable(
-                name: "course_curriculums",
-                schema: "syki");
-
-            migrationBuilder.DropTable(
-                name: "campi",
+                name: "course_offerings",
                 schema: "syki");
 
             migrationBuilder.DropTable(
@@ -990,11 +991,23 @@ namespace Back.Migrations
                 schema: "syki");
 
             migrationBuilder.DropTable(
-                name: "courses",
+                name: "academic_periods",
+                schema: "syki");
+
+            migrationBuilder.DropTable(
+                name: "campi",
+                schema: "syki");
+
+            migrationBuilder.DropTable(
+                name: "course_curriculums",
                 schema: "syki");
 
             migrationBuilder.DropTable(
                 name: "users",
+                schema: "syki");
+
+            migrationBuilder.DropTable(
+                name: "courses",
                 schema: "syki");
 
             migrationBuilder.DropTable(

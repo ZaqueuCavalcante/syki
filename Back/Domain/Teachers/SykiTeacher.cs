@@ -1,4 +1,5 @@
 using Syki.Back.Domain.Campi;
+using Syki.Back.Domain.Identity;
 using Syki.Back.Domain.Disciplines;
 
 namespace Syki.Back.Domain.Teachers;
@@ -10,6 +11,7 @@ public class SykiTeacher
 {
     public int Id { get; set; }
     public int InstitutionId { get; set; }
+    public int UserId { get; set; }
     public string Name { get; set; }
 
     /// <summary>
@@ -22,14 +24,16 @@ public class SykiTeacher
     /// </summary>
     public List<Campus> Campi { get; set; }
 
+    public SykiUser? User { get; set; }
+
     private SykiTeacher() { }
 
     public SykiTeacher(
-        int userId,
+        SykiUser user,
         int institutionId,
         string name
     ) {
-        Id = userId;
+        User = user;
         InstitutionId = institutionId;
         Name = name;
     }

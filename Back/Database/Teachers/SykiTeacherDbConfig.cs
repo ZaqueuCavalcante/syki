@@ -13,23 +13,23 @@ public class SykiTeacherDbConfig : IEntityTypeConfiguration<SykiTeacher>
 
         entity.HasKey(e => e.Id);
 
-        entity.HasOne<SykiUser>()
+        entity.HasOne(e => e.User)
             .WithOne()
             .HasPrincipalKey<SykiUser>(u => new { u.InstitutionId, u.Id })
-            .HasForeignKey<SykiTeacher>(e => new { e.InstitutionId, e.Id });
-
-        entity.HasMany(e => e.Disciplines)
-            .WithMany()
-            .UsingEntity<TeacherDiscipline>(
-                right => right.HasOne<Discipline>().WithMany().HasForeignKey(td => td.DisciplineId),
-                left => left.HasOne<SykiTeacher>().WithMany().HasForeignKey(td => td.TeacherId)
-            );
+            .HasForeignKey<SykiTeacher>(e => new { e.InstitutionId, e.UserId });
 
         entity.HasMany(c => c.Campi)
             .WithMany()
             .UsingEntity<TeacherCampus>(
                 right => right.HasOne<Campus>().WithMany().HasForeignKey(tc => tc.CampusId),
                 left => left.HasOne<SykiTeacher>().WithMany().HasForeignKey(tc => tc.TeacherId)
+            );
+
+        entity.HasMany(e => e.Disciplines)
+            .WithMany()
+            .UsingEntity<TeacherDiscipline>(
+                right => right.HasOne<Discipline>().WithMany().HasForeignKey(td => td.DisciplineId),
+                left => left.HasOne<SykiTeacher>().WithMany().HasForeignKey(td => td.TeacherId)
             );
     }
 }

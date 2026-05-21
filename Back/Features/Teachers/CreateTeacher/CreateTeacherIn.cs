@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Syki.Back.Features.Teachers.CreateTeacher;
 
 public class CreateTeacherIn : IApiDto<CreateTeacherIn>
 {

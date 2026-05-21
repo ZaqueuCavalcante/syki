@@ -1,7 +1,6 @@
-namespace Syki.Back.Features.Academic.CreateStudent;
+namespace Syki.Back.Features.Students.CreateStudent;
 
 [ApiController, Authorize]
-[EnableRateLimiting("Medium")]
 public class CreateStudentController(CreateStudentService service) : ControllerBase
 {
     /// <summary>
@@ -11,12 +10,12 @@ public class CreateStudentController(CreateStudentService service) : ControllerB
     /// Cria um novo aluno.
     /// Um link para redefinição de senha será enviado pro email informado.
     /// </remarks>
-    [HttpPost("academic/students")]
+    [HttpPost("students")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateStudentIn data)
     {
-        var result = await service.Create(User.InstitutionId, data);
+        var result = await service.Create(data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
@@ -27,4 +26,5 @@ internal class ErrorsExamples : ErrorExamplesProvider<
     CourseOfferingNotFound,
     InvalidEmail,
     EmailAlreadyUsed,
-    WeakPassword>;
+    WeakPassword
+>;

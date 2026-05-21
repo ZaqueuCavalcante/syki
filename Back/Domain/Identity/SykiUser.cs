@@ -17,13 +17,23 @@ public class SykiUser : IdentityUser<int>
         Institution institution,
         string email
     ) {
-        Id = 0;
-        InstitutionId = 0;
         Name = email;
         UserName = email;
         Email = email;
         CreatedAt = DateTime.UtcNow;
         Institution = institution;
+    }
+
+    public SykiUser(
+        int institutionId,
+        string name,
+        string email
+    ) {
+        Name = name;
+        UserName = email;
+        Email = email;
+        CreatedAt = DateTime.UtcNow;
+        InstitutionId = institutionId;
     }
 
     public void Update(string name, string profilePhoto)

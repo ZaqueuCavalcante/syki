@@ -1,7 +1,6 @@
-namespace Syki.Back.Features.Academic.CreateTeacher;
+namespace Syki.Back.Features.Teachers.CreateTeacher;
 
-[ApiController, Authorize]
-[EnableRateLimiting("Medium")]
+[ApiController, Authorize(Policies.CreateTeacher)]
 public class CreateTeacherController(CreateTeacherService service) : ControllerBase
 {
     /// <summary>
@@ -11,12 +10,12 @@ public class CreateTeacherController(CreateTeacherService service) : ControllerB
     /// Cria um novo professor.
     /// Um link para redefinição de senha será enviado pro email informado.
     /// </remarks>
-    [HttpPost("academic/teachers")]
+    [HttpPost("teachers")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateTeacherIn data)
     {
-        var result = await service.Create(User.InstitutionId, data);
+        var result = await service.Create(data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
@@ -26,4 +25,5 @@ internal class ResponseExamples : ExamplesProvider<TeacherOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidEmail,
     EmailAlreadyUsed,
-    WeakPassword>;
+    WeakPassword
+>;

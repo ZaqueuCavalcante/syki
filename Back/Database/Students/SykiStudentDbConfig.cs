@@ -1,4 +1,3 @@
-using Syki.Back.Domain.Courses;
 using Syki.Back.Domain.Identity;
 using Syki.Back.Domain.Students;
 
@@ -16,11 +15,6 @@ public class SykiStudentDbConfig : IEntityTypeConfiguration<SykiStudent>
             .WithOne()
             .HasPrincipalKey<SykiUser>(u => new { u.InstitutionId, u.Id })
             .HasForeignKey<SykiStudent>(e => new { e.InstitutionId, e.UserId });
-
-        entity.HasOne<CourseOffering>()
-            .WithMany()
-            .HasPrincipalKey(o => new { o.InstitutionId, o.Id })
-            .HasForeignKey(s => new { s.InstitutionId, s.CourseOfferingId });
 
         entity.Property(x => x.YieldCoefficient).HasPrecision(4, 2);
 

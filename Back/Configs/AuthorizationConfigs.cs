@@ -10,6 +10,7 @@ public static class AuthorizationConfigs
             .AddCoursesPolicies()
             .AddIdentityPolicies()
             .AddTeachersPolicies()
+            .AddStudentsPolicies()
             .AddDisciplinesPolicies();
 
         builder.Services.ConfigureApplicationCookie(options =>

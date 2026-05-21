@@ -1,7 +1,6 @@
 using Quartz;
 using Syki.Back.Emails;
 using Syki.Back.Domain.Identity;
-using Syki.Tests.Integration.Base;
 using Syki.Tests.Integration.Clients;
 using Microsoft.Extensions.DependencyInjection;
 

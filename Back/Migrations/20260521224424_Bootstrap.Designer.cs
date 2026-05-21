@@ -14,7 +14,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20260521211548_Bootstrap")]
+    [Migration("20260521224424_Bootstrap")]
     partial class Bootstrap
     {
         /// <inheritdoc />
@@ -419,9 +419,6 @@ namespace Back.Migrations
                     b.HasKey("Id")
                         .HasName("pk_course_offerings");
 
-                    b.HasAlternateKey("InstitutionId", "Id")
-                        .HasName("ak_course_offerings_institution_id_id");
-
                     b.HasIndex("AcademicPeriodId")
                         .HasDatabaseName("ix_course_offerings_academic_period_id");
 
@@ -433,6 +430,9 @@ namespace Back.Migrations
 
                     b.HasIndex("CourseId")
                         .HasDatabaseName("ix_course_offerings_course_id");
+
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_course_offerings_institution_id");
 
                     b.ToTable("course_offerings", "syki");
                 });
@@ -895,7 +895,7 @@ namespace Back.Migrations
                     b.ToTable("enrollment_periods", "syki");
                 });
 
-            modelBuilder.Entity("Syki.Back.Domain.Students.SykiStudent", b =>
+            modelBuilder.Entity("Syki.Back.Domain.Students.StudentCourseEnrollment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -907,6 +907,39 @@ namespace Back.Migrations
                     b.Property<int>("CourseOfferingId")
                         .HasColumnType("integer")
                         .HasColumnName("course_offering_id");
+
+                    b.Property<DateTime>("EnrolledAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("enrolled_at");
+
+                    b.Property<DateTime?>("LeftAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("left_at");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer")
+                        .HasColumnName("student_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_student_course_enrollments");
+
+                    b.HasIndex("CourseOfferingId")
+                        .HasDatabaseName("ix_student_course_enrollments_course_offering_id");
+
+                    b.HasIndex("StudentId")
+                        .HasDatabaseName("ix_student_course_enrollments_student_id");
+
+                    b.ToTable("student_course_enrollments", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Students.SykiStudent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("EnrollmentCode")
                         .IsRequired()
@@ -941,9 +974,6 @@ namespace Back.Migrations
                     b.HasIndex("EnrollmentCode")
                         .IsUnique()
                         .HasDatabaseName("ix_students_enrollment_code");
-
-                    b.HasIndex("InstitutionId", "CourseOfferingId")
-                        .HasDatabaseName("ix_students_institution_id_course_offering_id");
 
                     b.HasIndex("InstitutionId", "UserId")
                         .IsUnique()
@@ -1285,6 +1315,23 @@ namespace Back.Migrations
                         .HasConstraintName("fk_enrollment_periods_institutions_institution_id");
                 });
 
+            modelBuilder.Entity("Syki.Back.Domain.Students.StudentCourseEnrollment", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Courses.CourseOffering", null)
+                        .WithMany()
+                        .HasForeignKey("CourseOfferingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_student_course_enrollments_course_offerings_course_offering");
+
+                    b.HasOne("Syki.Back.Domain.Students.SykiStudent", null)
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_student_course_enrollments_students_student_id");
+                });
+
             modelBuilder.Entity("Syki.Back.Domain.Students.SykiStudent", b =>
                 {
                     b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
@@ -1293,14 +1340,6 @@ namespace Back.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_students_institutions_institution_id");
-
-                    b.HasOne("Syki.Back.Domain.Courses.CourseOffering", null)
-                        .WithMany()
-                        .HasForeignKey("InstitutionId", "CourseOfferingId")
-                        .HasPrincipalKey("InstitutionId", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_students_course_offerings_institution_id_course_offering_id");
 
                     b.HasOne("Syki.Back.Domain.Identity.SykiUser", "User")
                         .WithOne()

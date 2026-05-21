@@ -6,8 +6,8 @@ namespace Syki.Tests.Integration.Clients;
 public partial class TestsHttpClient
 {
     public async Task<OneOf<CreateTeacherOut, ErrorOut>> CreateTeacher(
-        string name = "Richard Feynman",
-        string email = "richard.feynman@example.com"
+        string name,
+        string email
     ) {
         var data = new CreateTeacherIn { Name = name, Email = email };
         var response = await http.PostAsJsonAsync("/teachers", data);

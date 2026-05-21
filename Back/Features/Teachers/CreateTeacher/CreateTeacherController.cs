@@ -24,6 +24,5 @@ internal class RequestExamples : ExamplesProvider<CreateTeacherIn>;
 internal class ResponseExamples : ExamplesProvider<TeacherOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidEmail,
-    EmailAlreadyUsed,
-    WeakPassword
+    EmailAlreadyUsed
 >;

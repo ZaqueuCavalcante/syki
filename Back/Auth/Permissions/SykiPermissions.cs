@@ -58,6 +58,14 @@ public static class SykiPermissions
         "Criar e editar professores."
     );
 
+    // Students
+    public static readonly SykiPermission ManageStudents = new(
+        PermissionGroup.Students,
+        600,
+        "Gerenciar alunos.",
+        "Criar e editar alunos."
+    );
+
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<SykiPermission> Permissions = [];
     static SykiPermissions()

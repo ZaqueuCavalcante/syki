@@ -10,7 +10,6 @@ public class SykiStudent
     public int Id { get; set; }
     public int InstitutionId { get; set; }
     public int UserId { get; set; }
-    public int CourseOfferingId { get; set; }
     public string Name { get; set; }
     public string EnrollmentCode { get; set; }
     public StudentStatus Status { get; set; }
@@ -23,13 +22,11 @@ public class SykiStudent
     public SykiStudent(
         SykiUser user,
         int institutionId,
-        string name,
-        int courseOfferingId
+        string name
     ) {
         User = user;
         Name = name;
         InstitutionId = institutionId;
-        CourseOfferingId = courseOfferingId;
         Status = StudentStatus.Enrolled;
         EnrollmentCode = $"{DateTime.UtcNow.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
     }

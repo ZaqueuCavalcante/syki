@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Students.CreateStudent;
 
-[ApiController, Authorize]
+[ApiController, Authorize(Policies.CreateStudent)]
 public class CreateStudentController(CreateStudentService service) : ControllerBase
 {
     /// <summary>
@@ -23,8 +23,6 @@ public class CreateStudentController(CreateStudentService service) : ControllerB
 internal class RequestExamples : ExamplesProvider<CreateStudentIn>;
 internal class ResponseExamples : ExamplesProvider<StudentOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
-    CourseOfferingNotFound,
     InvalidEmail,
-    EmailAlreadyUsed,
-    WeakPassword
+    EmailAlreadyUsed
 >;

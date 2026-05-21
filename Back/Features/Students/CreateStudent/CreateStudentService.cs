@@ -7,14 +7,8 @@ public class CreateStudentService(SykiDbContext ctx, UserManager<SykiUser> userM
 {
     public async Task<OneOf<CreateStudentOut, SykiError>> Create(CreateStudentIn data)
     {
-        var institutionId = ctx.RequestUser.InstitutionId;
-
-        var courseOfferingExists = await ctx.CourseOfferings
-            .AnyAsync(o => o.InstitutionId == institutionId && o.Id == data.CourseOfferingId);
-        if (!courseOfferingExists) return new CourseOfferingNotFound();
-
-        var user = new SykiUser(institutionId, data.Name, data.Email);
-        var student = new SykiStudent(user, institutionId, data.Name, data.CourseOfferingId);
+        var user = new SykiUser(ctx.RequestUser.InstitutionId, data.Name, data.Email);
+        var student = new SykiStudent(user, ctx.RequestUser.InstitutionId, data.Name);
         ctx.Add(student);
 
         await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");

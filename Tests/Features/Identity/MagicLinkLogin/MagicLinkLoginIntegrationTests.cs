@@ -1,4 +1,3 @@
-using Syki.Tests.Integration.Base;
 using Syki.Back.Features.Users.RegisterUser;
 using Syki.Back.Features.Identity.MagicLinkLogin;
 

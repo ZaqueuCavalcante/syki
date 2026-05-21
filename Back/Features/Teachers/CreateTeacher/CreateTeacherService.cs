@@ -7,10 +7,8 @@ public class CreateTeacherService(SykiDbContext ctx, UserManager<SykiUser> userM
 {
     public async Task<OneOf<CreateTeacherOut, SykiError>> Create(CreateTeacherIn data)
     {
-        var institutionId = ctx.RequestUser.InstitutionId;
-
-        var user = new SykiUser(institutionId, data.Name, data.Email);
-        var teacher = new SykiTeacher(user, institutionId, data.Name);
+        var user = new SykiUser(ctx.RequestUser.InstitutionId, data.Name, data.Email);
+        var teacher = new SykiTeacher(user, ctx.RequestUser.InstitutionId, data.Name);
         ctx.Add(teacher);
 
         await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");

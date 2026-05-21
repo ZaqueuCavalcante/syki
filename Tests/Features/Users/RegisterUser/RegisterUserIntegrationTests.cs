@@ -1,5 +1,3 @@
-using Syki.Tests.Integration.Base;
-
 namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase

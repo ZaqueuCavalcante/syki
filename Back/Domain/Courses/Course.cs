@@ -1,4 +1,5 @@
 using Syki.Back.Domain.Disciplines;
+using Syki.Back.Domain.CourseCurriculums;
 
 namespace Syki.Back.Domain.Courses;
 

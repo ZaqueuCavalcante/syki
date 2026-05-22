@@ -4,11 +4,12 @@ using Syki.Back.Auth.Users;
 using Audit.EntityFramework;
 using Syki.Back.Domain.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 
 namespace Syki.Back.Database;
 
 public partial class SykiDbContext(DbContextOptions<SykiDbContext> options, NpgsqlDataSource npgsqlDataSource, HybridCache cache)
-    : IdentityDbContext<SykiUser, SykiRole, int, SykiUserClaim, SykiUserRole, SykiUserLogin, SykiRoleClaim, SykiUserToken>(options)
+    : IdentityDbContext<SykiUser, SykiRole, int, SykiUserClaim, SykiUserRole, SykiUserLogin, SykiRoleClaim, SykiUserToken>(options), IDataProtectionKeyContext
 {
     public HybridCache Cache { get; set; } = cache;
 
@@ -16,6 +17,8 @@ public partial class SykiDbContext(DbContextOptions<SykiDbContext> options, Npgs
 
     public string ActivityId { get; set; }
     public string Operation { get; set; }
+
+    public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -32,6 +35,8 @@ public partial class SykiDbContext(DbContextOptions<SykiDbContext> options, Npgs
         ConfigureAudit(modelBuilder);
         ConfigureCampi(modelBuilder);
         ConfigureCourses(modelBuilder);
+        ConfigureCourseCurriculums(modelBuilder);
+        ConfigureCourseOfferings(modelBuilder);
         ConfigurePeriods(modelBuilder);
         ConfigureTeachers(modelBuilder);
         ConfigureStudents(modelBuilder);

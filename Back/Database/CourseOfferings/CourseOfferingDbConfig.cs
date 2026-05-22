@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Courses;
+using Syki.Back.Domain.CourseOfferings;
 
-namespace Syki.Back.Database.Courses;
+namespace Syki.Back.Database.CourseOfferings;
 
 public class CourseOfferingDbConfig : IEntityTypeConfiguration<CourseOffering>
 {

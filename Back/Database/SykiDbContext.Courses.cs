@@ -6,16 +6,11 @@ namespace Syki.Back.Database;
 public partial class SykiDbContext
 {
     public DbSet<Course> Courses { get; set; }
-    public DbSet<CourseOffering> CourseOfferings { get; set; }
-    public DbSet<CourseCurriculum> CourseCurriculums { get; set; }
     public DbSet<CourseDiscipline> CoursesDisciplines { get; set; }
 
     private static void ConfigureCourses(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CourseDbConfig());
-        modelBuilder.ApplyConfiguration(new CourseOfferingDbConfig());
-        modelBuilder.ApplyConfiguration(new CourseCurriculumDbConfig());
         modelBuilder.ApplyConfiguration(new CourseDisciplineDbConfig());
-        modelBuilder.ApplyConfiguration(new CourseCurriculumDisciplineDbConfig());
     }
 }

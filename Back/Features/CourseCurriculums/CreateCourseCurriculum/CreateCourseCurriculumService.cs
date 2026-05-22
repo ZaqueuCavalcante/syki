@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Courses;
+using Syki.Back.Domain.CourseCurriculums;
 
-namespace Syki.Back.Features.Courses.CreateCourseCurriculum;
+namespace Syki.Back.Features.CourseCurriculums.CreateCourseCurriculum;
 
 public class CreateCourseCurriculumService(SykiDbContext ctx) : ISykiService
 {

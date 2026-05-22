@@ -59,6 +59,20 @@ namespace Back.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "data_protection_keys",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    friendly_name = table.Column<string>(type: "text", nullable: true),
+                    xml = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_data_protection_keys", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "institutions",
                 schema: "syki",
                 columns: table => new
@@ -1036,6 +1050,9 @@ namespace Back.Migrations
             migrationBuilder.DropTable(
                 name: "courses_disciplines",
                 schema: "syki");
+
+            migrationBuilder.DropTable(
+                name: "data_protection_keys");
 
             migrationBuilder.DropTable(
                 name: "enrollment_periods",

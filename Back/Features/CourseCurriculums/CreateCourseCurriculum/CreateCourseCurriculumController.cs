@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Courses.CreateCourseCurriculum;
+namespace Syki.Back.Features.CourseCurriculums.CreateCourseCurriculum;
 
-[ApiController, Authorize(Policies.CreateCourseOffering)]
+[ApiController, Authorize(Policies.CreateCourseCurriculum)]
 public class CreateCourseCurriculumController(CreateCourseCurriculumService service) : ControllerBase
 {
     /// <summary>
@@ -9,7 +9,7 @@ public class CreateCourseCurriculumController(CreateCourseCurriculumService serv
     /// <remarks>
     /// Cria uma nova grade curricular.
     /// </remarks>
-    [HttpPost("courses/course-curriculums")]
+    [HttpPost("course-curriculums")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateCourseCurriculumIn data)

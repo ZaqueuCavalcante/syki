@@ -1,7 +1,7 @@
-using Syki.Back.Domain.Courses;
 using Syki.Back.Domain.Disciplines;
+using Syki.Back.Domain.CourseCurriculums;
 
-namespace Syki.Back.Database.Courses;
+namespace Syki.Back.Database.CourseCurriculums;
 
 public class CourseCurriculumDbConfig : IEntityTypeConfiguration<CourseCurriculum>
 {

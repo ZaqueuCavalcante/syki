@@ -25,4 +25,10 @@ public enum PermissionGroup
 
     [Description("Periods")]
     Periods = 7,
+
+    [Description("CourseCurriculums")]
+    CourseCurriculums = 8,
+
+    [Description("CourseOfferings")]
+    CourseOfferings = 9,
 }

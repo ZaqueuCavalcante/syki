@@ -1,6 +1,7 @@
+using Syki.Back.Domain.Courses;
 using Syki.Back.Domain.Disciplines;
 
-namespace Syki.Back.Domain.Courses;
+namespace Syki.Back.Domain.CourseCurriculums;
 
 /// <summary>
 /// Grade Curricular de um Curso.

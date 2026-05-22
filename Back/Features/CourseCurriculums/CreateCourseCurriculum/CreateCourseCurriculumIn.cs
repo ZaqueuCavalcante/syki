@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Courses.CreateCourseCurriculum;
+namespace Syki.Back.Features.CourseCurriculums.CreateCourseCurriculum;
 
 public class CreateCourseCurriculumIn : IApiDto<CreateCourseCurriculumIn>
 {

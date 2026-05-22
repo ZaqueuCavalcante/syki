@@ -73,7 +73,7 @@ const columns: TableColumn<PeriodItem>[] = [
       >
         <template #empty>
           <div v-if="status !== 'pending'" class="flex flex-col items-center gap-4 py-12">
-            <UIcon name="i-lucide-calendar-off" class="size-16 text-muted" />
+            <UIcon name="i-lucide-calendar" class="size-16 text-muted" />
             <p class="text-muted text-sm">
               Nenhum período cadastrado
             </p>

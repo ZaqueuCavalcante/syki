@@ -250,8 +250,6 @@ public partial class IntegrationTests : IntegrationTestBase
 }
 ```
 
-Role-specific HTTP clients (`AcademicHttpClient`, `TeacherHttpClient`, etc.) wrap all API calls and live in `Tests/Clients/`. Integration tests run in parallel (`[Parallelizable(ParallelScope.All)]`).
-
 For tests that trigger async command processing use:
 
 ```csharp

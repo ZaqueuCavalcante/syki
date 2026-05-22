@@ -1,5 +1,5 @@
-using Syki.Back.Domain.Courses;
 using Syki.Back.Domain.Students;
+using Syki.Back.Domain.CourseOfferings;
 
 namespace Syki.Back.Database.Students;
 

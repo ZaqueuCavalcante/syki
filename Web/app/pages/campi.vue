@@ -107,7 +107,7 @@ const columns: TableColumn<CampusItem>[] = [
       >
         <template #empty>
           <div v-if="status !== 'pending'" class="flex flex-col items-center gap-4 py-12">
-            <UIcon name="i-lucide-map-pin-off" class="size-16 text-muted" />
+            <UIcon name="i-lucide-map-pin" class="size-16 text-muted" />
             <p class="text-muted text-sm">
               Nenhum campus cadastrado
             </p>

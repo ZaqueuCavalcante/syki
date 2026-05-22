@@ -5,6 +5,8 @@ using Syki.Back.Domain.Identity;
 using Syki.Back.Domain.Students;
 using Syki.Back.Domain.Teachers;
 using Syki.Back.Domain.Disciplines;
+using Syki.Back.Domain.CourseOfferings;
+using Syki.Back.Domain.CourseCurriculums;
 
 namespace Syki.Back.Domain.Institutions;
 

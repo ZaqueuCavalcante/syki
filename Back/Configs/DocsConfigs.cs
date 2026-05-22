@@ -32,6 +32,13 @@ public static class DocsConfigs
             {
                 var group = api.RelativePath.Split("/")[0];
                 if (group == "campi") return ["🏫 Campi"];
+                if (group == "courses") return ["📚 Courses"];
+                if (group == "course-curriculums") return ["📋 Course Curriculums"];
+                if (group == "course-offerings") return ["🗓️ Course Offerings"];
+                if (group == "disciplines") return ["📖 Disciplines"];
+                if (group == "periods") return ["📅 Periods"];
+                if (group == "students") return ["🎓 Students"];
+                if (group == "teachers") return ["👨‍🏫 Teachers"];
                 if (group == "identity") return ["🛡️ Identity"];
                 if (group == "users") return ["👩🏻‍🎓 Users"];
                 return ["🧱 Cross"];

@@ -6,6 +6,7 @@ builder.AddQuartzConfigs();
 builder.AddCommandConfigs();
 
 builder.AddIdentityConfigs();
+builder.AddDataProtectionConfigs();
 builder.AddAuthenticationConfigs();
 builder.AddAuthorizationConfigs();
 

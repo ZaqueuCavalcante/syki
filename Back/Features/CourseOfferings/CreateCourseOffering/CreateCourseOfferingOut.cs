@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Courses.CreateCourseOffering;
+namespace Syki.Back.Features.CourseOfferings.CreateCourseOffering;
 
 public class CreateCourseOfferingOut : IApiDto<CreateCourseOfferingOut>
 {

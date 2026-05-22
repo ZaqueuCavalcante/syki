@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Courses;
+using Syki.Back.Domain.CourseOfferings;
 
-namespace Syki.Back.Features.Courses.CreateCourseOffering;
+namespace Syki.Back.Features.CourseOfferings.CreateCourseOffering;
 
 public class CreateCourseOfferingService(SykiDbContext ctx) : ISykiService
 {

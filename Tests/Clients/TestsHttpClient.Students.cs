@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using Syki.Back.Features.Students.CreateStudent;
+using Syki.Back.Features.Students.GetStudents;
 
 namespace Syki.Tests.Integration.Clients;
 
@@ -12,5 +13,10 @@ public partial class TestsHttpClient
         var data = new CreateStudentIn { Name = name, Email = email };
         var response = await http.PostAsJsonAsync("/students", data);
         return await response.Resolve<CreateStudentOut>();
+    }
+
+    public async Task<GetStudentsOut> GetStudents()
+    {
+        return await http.GetFromJsonAsync<GetStudentsOut>("/students", HttpConfigs.JsonOptions) ?? new();
     }
 }

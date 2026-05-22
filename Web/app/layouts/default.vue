@@ -47,6 +47,20 @@ const links = [[{
     open.value = false
   }
 }, {
+  label: 'Professores',
+  icon: 'i-lucide-user-pen',
+  to: '/teachers',
+  onSelect: () => {
+    open.value = false
+  }
+}, {
+  label: 'Alunos',
+  icon: 'i-lucide-user-round',
+  to: '/students',
+  onSelect: () => {
+    open.value = false
+  }
+}, {
   label: 'Settings',
   to: '/settings',
   icon: 'i-lucide-settings',

@@ -5,6 +5,7 @@ namespace Syki.Back.Database;
 
 public partial class SykiDbContext
 {
+    public DbSet<SykiStudent> Students { get; set; }
     public DbSet<StudentCourseEnrollment> StudentCourseEnrollments { get; set; }
 
     private static void ConfigureStudents(ModelBuilder modelBuilder)

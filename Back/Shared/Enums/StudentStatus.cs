@@ -6,14 +6,14 @@ namespace Syki.Back.Shared;
 public enum StudentStatus
 {
     [Description("Matriculado")]
-    Enrolled,
+    Enrolled = 0,
 
     [Description("Transferido")]
-    Transferred,
+    Transferred = 1,
 
     [Description("Trancado")]
-    Deferred,
+    Deferred = 2,
 
     [Description("Concluído")]
-    Completed,
+    Completed = 3,
 }

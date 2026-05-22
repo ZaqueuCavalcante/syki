@@ -257,6 +257,36 @@ namespace Back.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "sso_configurations",
+                schema: "syki",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    public_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    institution_id = table.Column<int>(type: "integer", nullable: false),
+                    provider_type = table.Column<int>(type: "integer", nullable: false),
+                    authority = table.Column<string>(type: "text", nullable: false),
+                    client_id = table.Column<string>(type: "text", nullable: false),
+                    client_secret = table.Column<string>(type: "text", nullable: false),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false),
+                    require_sso = table.Column<bool>(type: "boolean", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_sso_configurations", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_sso_configurations_institutions_institution_id",
+                        column: x => x.institution_id,
+                        principalSchema: "syki",
+                        principalTable: "institutions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "users",
                 schema: "syki",
                 columns: table => new
@@ -371,6 +401,26 @@ namespace Back.Migrations
                         column: x => x.role_id,
                         principalSchema: "syki",
                         principalTable: "roles",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "sso_allowed_domains",
+                schema: "syki",
+                columns: table => new
+                {
+                    domain = table.Column<string>(type: "text", nullable: false),
+                    sso_configuration_id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_sso_allowed_domains", x => x.domain);
+                    table.ForeignKey(
+                        name: "fk_sso_allowed_domains_sso_configurations_sso_configuration_id",
+                        column: x => x.sso_configuration_id,
+                        principalSchema: "syki",
+                        principalTable: "sso_configurations",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -856,6 +906,25 @@ namespace Back.Migrations
                 column: "normalized_name");
 
             migrationBuilder.CreateIndex(
+                name: "ix_sso_allowed_domains_sso_configuration_id",
+                schema: "syki",
+                table: "sso_allowed_domains",
+                column: "sso_configuration_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_sso_configurations_institution_id",
+                schema: "syki",
+                table: "sso_configurations",
+                column: "institution_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_sso_configurations_public_id",
+                schema: "syki",
+                table: "sso_configurations",
+                column: "public_id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "ix_student_course_enrollments_course_offering_id",
                 schema: "syki",
                 table: "student_course_enrollments",
@@ -981,6 +1050,10 @@ namespace Back.Migrations
                 schema: "syki");
 
             migrationBuilder.DropTable(
+                name: "sso_allowed_domains",
+                schema: "syki");
+
+            migrationBuilder.DropTable(
                 name: "student_course_enrollments",
                 schema: "syki");
 
@@ -1006,6 +1079,10 @@ namespace Back.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_tokens",
+                schema: "syki");
+
+            migrationBuilder.DropTable(
+                name: "sso_configurations",
                 schema: "syki");
 
             migrationBuilder.DropTable(

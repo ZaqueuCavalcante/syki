@@ -14,7 +14,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20260522030521_Bootstrap")]
+    [Migration("20260522225636_Bootstrap")]
     partial class Bootstrap
     {
         /// <inheritdoc />
@@ -502,6 +502,90 @@ namespace Back.Migrations
                         .HasDatabaseName("ix_magic_links_user_id");
 
                     b.ToTable("magic_links", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Identity.SsoAllowedDomain", b =>
+                {
+                    b.Property<string>("Domain")
+                        .HasColumnType("text")
+                        .HasColumnName("domain");
+
+                    b.Property<int>("SsoConfigurationId")
+                        .HasColumnType("integer")
+                        .HasColumnName("sso_configuration_id");
+
+                    b.HasKey("Domain")
+                        .HasName("pk_sso_allowed_domains");
+
+                    b.HasIndex("SsoConfigurationId")
+                        .HasDatabaseName("ix_sso_allowed_domains_sso_configuration_id");
+
+                    b.ToTable("sso_allowed_domains", "syki");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Identity.SsoConfiguration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Authority")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("authority");
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("client_id");
+
+                    b.Property<string>("ClientSecret")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("client_secret");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("institution_id");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active");
+
+                    b.Property<int>("ProviderType")
+                        .HasColumnType("integer")
+                        .HasColumnName("provider_type");
+
+                    b.Property<Guid>("PublicId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("public_id");
+
+                    b.Property<bool>("RequireSso")
+                        .HasColumnType("boolean")
+                        .HasColumnName("require_sso");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_sso_configurations");
+
+                    b.HasIndex("InstitutionId")
+                        .HasDatabaseName("ix_sso_configurations_institution_id");
+
+                    b.HasIndex("PublicId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_sso_configurations_public_id");
+
+                    b.ToTable("sso_configurations", "syki");
                 });
 
             modelBuilder.Entity("Syki.Back.Domain.Identity.SykiRole", b =>
@@ -1205,6 +1289,26 @@ namespace Back.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Syki.Back.Domain.Identity.SsoAllowedDomain", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Identity.SsoConfiguration", null)
+                        .WithMany("AllowedDomains")
+                        .HasForeignKey("SsoConfigurationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_sso_allowed_domains_sso_configurations_sso_configuration_id");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Identity.SsoConfiguration", b =>
+                {
+                    b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_sso_configurations_institutions_institution_id");
+                });
+
             modelBuilder.Entity("Syki.Back.Domain.Identity.SykiRole", b =>
                 {
                     b.HasOne("Syki.Back.Domain.Institutions.Institution", null)
@@ -1421,6 +1525,11 @@ namespace Back.Migrations
             modelBuilder.Entity("Syki.Back.Domain.Disciplines.Discipline", b =>
                 {
                     b.Navigation("Links");
+                });
+
+            modelBuilder.Entity("Syki.Back.Domain.Identity.SsoConfiguration", b =>
+                {
+                    b.Navigation("AllowedDomains");
                 });
 
             modelBuilder.Entity("Syki.Back.Domain.Institutions.Institution", b =>

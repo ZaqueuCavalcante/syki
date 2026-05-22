@@ -3,14 +3,14 @@ namespace Syki.Back.Domain.Enums;
 public enum CommandBatchStatus
 {
     [Description("Pendente")]
-    Pending,
+    Pending = 0,
 
     [Description("Processando")]
-    Processing,
+    Processing = 1,
 
     [Description("Sucesso")]
-    Success,
+    Success = 2,
 
     [Description("Erro")]
-    Error,
+    Error = 3,
 }

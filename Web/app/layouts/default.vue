@@ -47,6 +47,20 @@ const links = [[{
     open.value = false
   }
 }, {
+  label: 'Ofertas',
+  icon: 'i-lucide-library',
+  to: '/course-offerings',
+  onSelect: () => {
+    open.value = false
+  }
+}, {
+  label: 'Grades',
+  icon: 'i-lucide-layout-list',
+  to: '/course-curriculums',
+  onSelect: () => {
+    open.value = false
+  }
+}, {
   label: 'Períodos',
   icon: 'i-lucide-calendar',
   to: '/periods',
@@ -64,6 +78,13 @@ const links = [[{
   label: 'Alunos',
   icon: 'i-lucide-user-round',
   to: '/students',
+  onSelect: () => {
+    open.value = false
+  }
+}, {
+  label: 'Segurança',
+  icon: 'i-lucide-shield',
+  to: '/security',
   onSelect: () => {
     open.value = false
   }

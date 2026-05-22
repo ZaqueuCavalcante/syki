@@ -4,6 +4,7 @@ namespace Syki.Back.Auth.Policies;
 
 public static partial class Policies
 {
+    public const string GetRoles = nameof(GetRoles);
     public const string CreateRole = nameof(CreateRole);
     public const string UpdateRole = nameof(UpdateRole);
     public const string GetDefaultRoles = nameof(GetDefaultRoles);
@@ -25,6 +26,7 @@ public static partial class Policies
     public static AuthorizationBuilder AddIdentityPolicies(this AuthorizationBuilder builder)
     {
         builder
+            .AddSykiPolicy(GetRoles, SykiPermissions.ManageRoles)
             .AddSykiPolicy(CreateRole, SykiPermissions.ManageRoles)
             .AddSykiPolicy(UpdateRole, SykiPermissions.ManageRoles)
             .AddSykiPolicy(GetDefaultRoles, SykiPermissions.ManageRoles)

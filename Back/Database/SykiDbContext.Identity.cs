@@ -1,3 +1,4 @@
+using Dapper;
 using Syki.Back.Cache;
 using Syki.Back.Auth.Roles;
 using Syki.Back.Domain.Identity;
@@ -8,6 +9,8 @@ namespace Syki.Back.Database;
 public partial class SykiDbContext
 {
     public DbSet<MagicLink> WebMagicLinks { get; set; }
+    public DbSet<SsoConfiguration> WebSsoConfigurations { get; set; }
+    public DbSet<SsoAllowedDomain> WebSsoAllowedDomains { get; set; }
 
     private static void ConfigureIdentity(ModelBuilder modelBuilder)
     {
@@ -20,6 +23,9 @@ public partial class SykiDbContext
         modelBuilder.ApplyConfiguration(new SykiUserClaimDbConfig());
         modelBuilder.ApplyConfiguration(new SykiUserTokenDbConfig());
         modelBuilder.ApplyConfiguration(new SykiUserLoginDbConfig());
+
+        modelBuilder.ApplyConfiguration(new SsoConfigurationDbConfig());
+        modelBuilder.ApplyConfiguration(new SsoAllowedDomainDbConfig());
     }
 
     public async Task<SykiRole> GetUserRole(int userId, int institutionId)
@@ -42,5 +48,25 @@ public partial class SykiDbContext
                     .FirstAsync(ct);
             }
         );
+    }
+
+    public async Task<SsoConfiguration?> GetActiveSsoConfigForSchemeAsync(Guid publicId)
+    {
+        const string sql = @"
+            SELECT
+                id,
+                external_id,
+                authority,
+                client_id,
+                client_secret,
+                updated_at
+            FROM
+                syki.sso_configurations
+            WHERE
+                public_id = @PublicId AND is_active = true
+            LIMIT 1
+        ";
+
+        return await Database.GetDbConnection().QueryFirstOrDefaultAsync<SsoConfiguration?>(sql, new { PublicId = publicId });
     }
 }

@@ -22,4 +22,7 @@ public enum PermissionGroup
 
     [Description("Students")]
     Students = 6,
+
+    [Description("Periods")]
+    Periods = 7,
 }

@@ -66,6 +66,14 @@ public static class SykiPermissions
         "Criar e editar alunos."
     );
 
+    // Periods
+    public static readonly SykiPermission ManagePeriods = new(
+        PermissionGroup.Periods,
+        700,
+        "Gerenciar períodos acadêmicos.",
+        "Criar e editar períodos acadêmicos."
+    );
+
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<SykiPermission> Permissions = [];
     static SykiPermissions()

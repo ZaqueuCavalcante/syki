@@ -47,6 +47,13 @@ const links = [[{
     open.value = false
   }
 }, {
+  label: 'Períodos',
+  icon: 'i-lucide-calendar',
+  to: '/periods',
+  onSelect: () => {
+    open.value = false
+  }
+}, {
   label: 'Professores',
   icon: 'i-lucide-user-pen',
   to: '/teachers',

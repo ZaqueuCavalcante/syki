@@ -1,13 +1,13 @@
 using Syki.Back.Domain.Enums;
 
-namespace Syki.Back.Shared;
+namespace Syki.Back.Features.Courses.CreateCourseOffering;
 
 public class CreateCourseOfferingIn : IApiDto<CreateCourseOfferingIn>
 {
-    public Guid CampusId { get; set; }
-    public Guid CourseId { get; set; }
-    public Guid CourseCurriculumId { get; set; }
-    public string? Period { get; set; }
+    public int CampusId { get; set; }
+    public int CourseId { get; set; }
+    public int CourseCurriculumId { get; set; }
+    public int AcademicPeriodId { get; set; }
     public CourseSession? CourseSession { get; set; }
 
     public static IEnumerable<(string, CreateCourseOfferingIn)> GetExamples() =>

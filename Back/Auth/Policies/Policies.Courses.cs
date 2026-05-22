@@ -7,11 +7,23 @@ public static partial class Policies
     public const string GetCourses = nameof(GetCourses);
     public const string CreateCourse = nameof(CreateCourse);
 
+    public const string GetCourseOfferings = nameof(GetCourseOfferings);
+    public const string CreateCourseOffering = nameof(CreateCourseOffering);
+
+    public const string CreateCourseCurriculum = nameof(CreateCourseCurriculum);
+
     public static AuthorizationBuilder AddCoursesPolicies(this AuthorizationBuilder builder)
     {
         builder
             .AddSykiPolicy(GetCourses, SykiPermissions.ManageCourses)
             .AddSykiPolicy(CreateCourse, SykiPermissions.ManageCourses);
+
+        builder
+            .AddSykiPolicy(GetCourseOfferings, SykiPermissions.ManageCourses)
+            .AddSykiPolicy(CreateCourseOffering, SykiPermissions.ManageCourses);
+
+        builder
+            .AddSykiPolicy(CreateCourseCurriculum, SykiPermissions.ManageCourses);
 
         return builder;
     }

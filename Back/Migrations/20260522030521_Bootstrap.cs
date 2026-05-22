@@ -611,7 +611,7 @@ namespace Back.Migrations
                 {
                     table.PrimaryKey("pk_course_offerings", x => x.id);
                     table.ForeignKey(
-                        name: "fk_course_offerings_academic_period_academic_period_id",
+                        name: "fk_course_offerings_academic_periods_academic_period_id",
                         column: x => x.academic_period_id,
                         principalSchema: "syki",
                         principalTable: "academic_periods",
@@ -625,7 +625,7 @@ namespace Back.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_course_offerings_course_curriculum_course_curriculum_id",
+                        name: "fk_course_offerings_course_curriculums_course_curriculum_id",
                         column: x => x.course_curriculum_id,
                         principalSchema: "syki",
                         principalTable: "course_curriculums",

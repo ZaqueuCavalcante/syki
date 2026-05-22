@@ -1,6 +1,6 @@
 namespace Syki.Back.Features.Courses.CreateCourseCurriculum;
 
-[ApiController, Authorize]
+[ApiController, Authorize(Policies.CreateCourseOffering)]
 public class CreateCourseCurriculumController(CreateCourseCurriculumService service) : ControllerBase
 {
     /// <summary>

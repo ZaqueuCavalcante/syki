@@ -14,7 +14,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20260521224424_Bootstrap")]
+    [Migration("20260522030521_Bootstrap")]
     partial class Bootstrap
     {
         /// <inheritdoc />
@@ -1144,7 +1144,7 @@ namespace Back.Migrations
                         .HasForeignKey("AcademicPeriodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_course_offerings_academic_period_academic_period_id");
+                        .HasConstraintName("fk_course_offerings_academic_periods_academic_period_id");
 
                     b.HasOne("Syki.Back.Domain.Campi.Campus", "Campus")
                         .WithMany()
@@ -1158,7 +1158,7 @@ namespace Back.Migrations
                         .HasForeignKey("CourseCurriculumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_course_offerings_course_curriculum_course_curriculum_id");
+                        .HasConstraintName("fk_course_offerings_course_curriculums_course_curriculum_id");
 
                     b.HasOne("Syki.Back.Domain.Courses.Course", "Course")
                         .WithMany()

@@ -1,7 +1,6 @@
-namespace Syki.Back.Features.Academic.GetAcademicPeriods;
+namespace Syki.Back.Features.Periods.GetAcademicPeriods;
 
-[ApiController, Authorize]
-[EnableRateLimiting("Medium")]
+[ApiController, Authorize(Policies.GetAcademicPeriods)]
 public class GetAcademicPeriods(GetAcademicPeriodsService service) : ControllerBase
 {
     /// <summary>
@@ -10,10 +9,10 @@ public class GetAcademicPeriods(GetAcademicPeriodsService service) : ControllerB
     /// <remarks>
     /// Retorna todos os períodos acadêmicos.
     /// </remarks>
-    [HttpGet("academic/academic-periods")]
+    [HttpGet("periods/academic")]
     public async Task<IActionResult> Get()
     {
-        var periods = await service.Get(User.InstitutionId);
+        var periods = await service.Get();
         return Ok(periods);
     }
 }

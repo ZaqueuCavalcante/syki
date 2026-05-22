@@ -25,10 +25,10 @@ public class InvalidCampusCapacity : SykiError
     public override string Message { get; set; } = "Capacidade inválida (deve ser maior que zero).";
 }
 
-public class InvalidShift : SykiError
+public class InvalidCourseSession : SykiError
 {
-    public static readonly InvalidShift I = new();
-    public override string Code { get; set; } = nameof(InvalidShift);
+    public static readonly InvalidCourseSession I = new();
+    public override string Code { get; set; } = nameof(InvalidCourseSession);
     public override string Message { get; set; } = "Turno inválido.";
 }
 

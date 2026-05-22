@@ -33,8 +33,7 @@ public class CreateCourseCurriculumService(SykiDbContext ctx) : ISykiService
         var disciplines = data.Disciplines.ConvertAll(d => new CourseCurriculumDiscipline(d.Id, d.Period, d.Credits, d.Workload));
         courseCurriculum.AddDisciplines(disciplines);
 
-        ctx.Add(courseCurriculum);
-        await ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync(courseCurriculum);
 
         return new CreateCourseCurriculumOut { Id = courseCurriculum.Id };
     }

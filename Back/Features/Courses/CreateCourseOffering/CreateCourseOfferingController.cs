@@ -1,7 +1,6 @@
-namespace Syki.Back.Features.Academic.CreateCourseOffering;
+namespace Syki.Back.Features.Courses.CreateCourseOffering;
 
-[ApiController, Authorize]
-[EnableRateLimiting("Medium")]
+[ApiController, Authorize(Policies.CreateCourseOffering)]
 public class CreateCourseOfferingController(CreateCourseOfferingService service) : ControllerBase
 {
     /// <summary>
@@ -10,7 +9,7 @@ public class CreateCourseOfferingController(CreateCourseOfferingService service)
     /// <remarks>
     /// Cria uma nova oferta de curso.
     /// </remarks>
-    [HttpPost("academic/course-offerings")]
+    [HttpPost("courses/course-offerings")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
     public async Task<IActionResult> Create([FromBody] CreateCourseOfferingIn data)
@@ -23,8 +22,9 @@ public class CreateCourseOfferingController(CreateCourseOfferingService service)
 internal class RequestExamples : ExamplesProvider<CreateCourseOfferingIn>;
 internal class ResponseExamples : ExamplesProvider<CourseOfferingOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
-    InvalidShift,
+    InvalidCourseSession,
     CampusNotFound,
     CourseNotFound,
     CourseCurriculumNotFound,
-    AcademicPeriodNotFound>;
+    AcademicPeriodNotFound
+>;

@@ -1,8 +1,8 @@
-namespace Syki.Back.Shared;
+namespace Syki.Back.Features.Periods.CreateAcademicPeriod;
 
 public class CreateAcademicPeriodIn : IApiDto<CreateAcademicPeriodIn>
 {
-    public string? Id { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// Data de início
@@ -16,10 +16,10 @@ public class CreateAcademicPeriodIn : IApiDto<CreateAcademicPeriodIn>
 
     public CreateAcademicPeriodIn() { }
 
-    public CreateAcademicPeriodIn(string id)
+    public CreateAcademicPeriodIn(string name)
     {
-        Id = id;
-        var numbers = id.OnlyNumbers();
+        Name = name;
+        var numbers = name.OnlyNumbers();
         if (numbers.Length != 5) return;
         var year = int.Parse(numbers.Substring(0, 4));
         var digit = int.Parse(numbers.Substring(4, 1));
@@ -29,7 +29,7 @@ public class CreateAcademicPeriodIn : IApiDto<CreateAcademicPeriodIn>
 
     public static IEnumerable<(string, CreateAcademicPeriodIn)> GetExamples() =>
     [
-        ("2024.1", new() { Id = "2024.1", StartAt = new(2024, 02, 01), EndAt = new(2024, 06, 05) }),
-        ("2024.2", new() { Id = "2024.2", StartAt = new(2024, 07, 08), EndAt = new(2024, 12, 10) }),
+        ("2024.1", new() { Name = "2024.1", StartAt = new(2024, 02, 01), EndAt = new(2024, 06, 05) }),
+        ("2024.2", new() { Name = "2024.2", StartAt = new(2024, 07, 08), EndAt = new(2024, 12, 10) }),
     ];
 }

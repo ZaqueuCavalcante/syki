@@ -5,6 +5,7 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 const open = defineModel<boolean>('open', { default: false })
 const emit = defineEmits<{ created: [] }>()
 
+const isMobile = useIsMobile()
 const config = useRuntimeConfig()
 const toast = useToast()
 const loading = ref(false)
@@ -117,6 +118,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   <UModal
     v-model:open="open"
     title="Novo campus"
+    :fullscreen="isMobile"
     description="Preencha os dados para cadastrar um novo campus."
   >
     <template #body>

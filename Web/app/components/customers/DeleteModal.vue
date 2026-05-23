@@ -6,6 +6,7 @@ withDefaults(defineProps<{
 })
 
 const open = ref(false)
+const isMobile = useIsMobile()
 
 async function onSubmit() {
   await new Promise(resolve => setTimeout(resolve, 1000))
@@ -17,6 +18,7 @@ async function onSubmit() {
   <UModal
     v-model:open="open"
     :title="`Delete ${count} customer${count > 1 ? 's' : ''}`"
+    :fullscreen="isMobile"
     :description="`Are you sure, this action cannot be undone.`"
   >
     <slot />

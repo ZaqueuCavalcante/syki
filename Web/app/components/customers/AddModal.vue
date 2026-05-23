@@ -7,6 +7,7 @@ const schema = z.object({
   email: z.string().email('Invalid email')
 })
 const open = ref(false)
+const isMobile = useIsMobile()
 
 type Schema = z.output<typeof schema>
 
@@ -23,7 +24,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UModal v-model:open="open" title="New customer" description="Add a new customer to the database">
+  <UModal v-model:open="open" title="New customer" :fullscreen="isMobile" description="Add a new customer to the database">
     <UButton label="New customer" icon="i-lucide-plus" />
 
     <template #body>

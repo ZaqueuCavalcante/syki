@@ -14,6 +14,7 @@ const open = defineModel<boolean>('open', { default: false })
 const props = defineProps<{ campus: CampusItem | null }>()
 const emit = defineEmits<{ updated: [] }>()
 
+const isMobile = useIsMobile()
 const config = useRuntimeConfig()
 const toast = useToast()
 const loading = ref(false)
@@ -124,6 +125,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   <UModal
     v-model:open="open"
     title="Editar campus"
+    :fullscreen="isMobile"
     description="Atualize os dados do campus."
   >
     <template #body>

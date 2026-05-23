@@ -2,9 +2,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // Validation
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #region Validation errors
 
     [Test]
     [TestCase("")]
@@ -24,12 +22,6 @@ public partial class IntegrationTests : IntegrationTestBase
         // Assert
         response.ShouldBeError(InvalidEmail.I);
     }
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // Business logic errors
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    #region Business logic errors
 
     [Test]
     public async Task Users_RegisterUser_Should_not_create_user_with_already_used_email()
@@ -64,10 +56,6 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     #endregion
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // Happy path
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     #region Happy path
 

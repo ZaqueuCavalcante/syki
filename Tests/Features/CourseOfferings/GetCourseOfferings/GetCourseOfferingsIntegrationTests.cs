@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task CourseOfferings_GetCourseOfferings_Should_return_empty_list()
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
         // Act
         var result = await client.GetCourseOfferings();
@@ -20,7 +20,7 @@ public partial class IntegrationTests
     public async Task CourseOfferings_GetCourseOfferings_Should_return_offerings()
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
         var campus = (await client.CreateCampus()).Success;
         var course = (await client.CreateCourse()).Success;
         var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;

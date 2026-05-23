@@ -66,7 +66,7 @@ public static class BackFactoryExtensions
         return scope.ServiceProvider.GetRequiredService<SykiDbContext>();
     }
 
-    public static async Task<TestsHttpClient> LoggedAsDirectot(this BackFactory factory)
+    public static async Task<TestsHttpClient> LoggedAsDirector(this BackFactory factory)
     {
         await using var ctx = factory.GetDbContext();
         var client = factory.GetTestsClient();
@@ -84,7 +84,7 @@ public static class BackFactoryExtensions
 
     public static async Task<TestsHttpClient> LoggedAsTeacher(this BackFactory factory)
     {
-        var directorClient = await factory.LoggedAsDirectot();
+        var directorClient = await factory.LoggedAsDirector();
 
         var email = DataGen.Email;
         var result = await directorClient.CreateTeacher(DataGen.UserName, email);

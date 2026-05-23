@@ -21,4 +21,9 @@ public class Discipline
         Code = $"{Guid.NewGuid().ToString()[..8].ToUpper()}";
         Links = [];
     }
+
+    public void Update(string name)
+    {
+        Name = name;
+    }
 }

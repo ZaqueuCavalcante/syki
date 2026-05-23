@@ -28,13 +28,7 @@ public static class TestData
         }
     }
 
-    public static IEnumerable<object[]> InvalidPeriods()
-    {
-        foreach (var id in new List<string>() { null, "", "   ", "lalala", "1969.1", "1970.3", "1970.0", "1971.90", "2001", "202", "2023.9", "2070.0", })
-        {
-            yield return [id];
-        }
-    }
+
 
     public static IEnumerable<object[]> ValidPeriods()
     {

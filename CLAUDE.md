@@ -2,6 +2,27 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Important constraints
+
+- **Never run `dotnet build`** — the user builds itself.
+
+## Frontend conventions
+
+### Zod validation — campos opcionais/undefined
+
+Campos de formulário que podem ficar `undefined` (ex: selects não preenchidos) exigem `required_error` em português. Usar apenas `.min(1, '...')` não cobre o caso `undefined` e resulta na mensagem padrão do Zod em inglês ("Invalid input: expected string, received undefined").
+
+**Correto (Zod v4):**
+```ts
+z.string({ error: 'Campo obrigatório' }).min(1, 'Campo obrigatório')
+```
+
+**Errado:**
+```ts
+z.string().min(1, 'Campo obrigatório')          // não cobre undefined
+z.string({ required_error: '...' })             // API do Zod v3, não funciona no v4
+```
+
 ## Project Overview
 
 **Syki** is an open-source academic management system (SGA) for educational institutions.

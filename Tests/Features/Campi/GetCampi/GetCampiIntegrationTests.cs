@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Campi_GetCampi_Should_get_campi()
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
         await client.CreateCampus("Suassuna", BrazilState.PE, "Recife", 150);
         await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", 120);

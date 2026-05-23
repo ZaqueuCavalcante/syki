@@ -12,7 +12,8 @@ public static class GetCoursesMapper
             {
                 Id = course.Id,
                 Name = course.Name,
-                Type = course.CourseType,
+                Type = course.CourseType.GetDescription(),
+                TypeValue = course.CourseType,
             };
         }
     }

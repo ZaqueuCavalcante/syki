@@ -23,6 +23,7 @@ public class UserAlreadyRegistered : SykiError
 }
 public class AcademicPeriodAlreadyExists : SykiError
 {
+    public static readonly AcademicPeriodAlreadyExists I = new();
     public override string Code { get; set; } = nameof(AcademicPeriodAlreadyExists);
     public override string Message { get; set; } = "Já existe um período acadêmico com esse id.";
 }

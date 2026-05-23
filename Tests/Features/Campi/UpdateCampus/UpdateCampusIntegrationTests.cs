@@ -22,7 +22,7 @@ public partial class IntegrationTests
     #region Authorization
 
     [Test]
-    public async Task Campi_UpdateCampus_Should_not_update_campus_when_analyst_has_no_permission()
+    public async Task Campi_UpdateCampus_Should_not_update_campus_when_user_has_no_permission()
     {
         // Arrange
         var client = await _back.LoggedAsTeacher();
@@ -43,7 +43,7 @@ public partial class IntegrationTests
     public async Task Campi_UpdateCampus_Should_not_update_campus_with_invalid_name(string name)
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
         var campus = await client.CreateCampus();
 
         // Act
@@ -59,7 +59,7 @@ public partial class IntegrationTests
     public async Task Campi_UpdateCampus_Should_not_update_campus_with_invalid_brazil_state(BrazilState? state)
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
         var campus = await client.CreateCampus();
 
         // Act
@@ -74,7 +74,7 @@ public partial class IntegrationTests
     public async Task Campi_UpdateCampus_Should_not_update_campus_with_invalid_city(string city)
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
         var campus = await client.CreateCampus();
 
         // Act
@@ -90,7 +90,7 @@ public partial class IntegrationTests
     public async Task Campi_UpdateCampus_Should_not_update_campus_with_invalid_capacity(int capacity)
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
         var campus = await client.CreateCampus();
 
         // Act
@@ -104,7 +104,7 @@ public partial class IntegrationTests
     public async Task Campi_UpdateCampus_Should_not_update_campus_not_found()
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
         // Act
         var response = await client.UpdateCampus(99999);
@@ -117,9 +117,9 @@ public partial class IntegrationTests
     public async Task Campi_UpdateCampus_Should_not_update_other_institution_campus()
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
-        var otherClient = await _back.LoggedAsDirectot();
+        var otherClient = await _back.LoggedAsDirector();
         var otherCampus = await otherClient.CreateCampus();
 
         // Act
@@ -137,7 +137,7 @@ public partial class IntegrationTests
     public async Task Campi_UpdateCampus_Should_update_campus()
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
         var campus = await client.CreateCampus();
 
         // Act

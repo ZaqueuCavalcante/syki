@@ -22,7 +22,7 @@ const courseTypes = [
 
 const schema = z.object({
   name: z.string().min(1, 'Nome obrigatório').max(100, 'Máximo 100 caracteres'),
-  type: z.string().min(1, 'Tipo obrigatório'),
+  type: z.string({ error: 'Tipo obrigatório' }).min(1, 'Tipo obrigatório'),
 })
 
 type Schema = z.output<typeof schema>

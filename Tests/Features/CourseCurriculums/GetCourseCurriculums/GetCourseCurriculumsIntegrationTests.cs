@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task CourseCurriculums_GetCourseCurriculums_Should_return_empty_list()
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
         // Act
         var result = await client.GetCourseCurriculums();
@@ -20,7 +20,7 @@ public partial class IntegrationTests
     public async Task CourseCurriculums_GetCourseCurriculums_Should_return_curriculums()
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
         var course = (await client.CreateCourse()).Success;
         await client.CreateCourseCurriculum(course.Id, "Grade 2024");
 

@@ -22,7 +22,7 @@ public partial class IntegrationTests
     #region Authorization
 
     [Test]
-    public async Task Campi_CreateCampus_Should_not_create_campus_when_analyst_has_no_permission()
+    public async Task Campi_CreateCampus_Should_not_create_campus_when_user_has_no_permission()
     {
         // Arrange
         var client = await _back.LoggedAsTeacher();
@@ -43,7 +43,7 @@ public partial class IntegrationTests
     public async Task Campi_CreateCampus_Should_not_create_campus_with_invalid_name(string name)
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
         // Act
         var response = await client.CreateCampus(name, BrazilState.PE, "Caruaru", 123);
@@ -58,7 +58,7 @@ public partial class IntegrationTests
     public async Task Campi_CreateCampus_Should_not_create_campus_with_invalid_brazil_state(BrazilState? state)
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
         // Act
         var response = await client.CreateCampus("Agreste", state, "Caruaru", 123);
@@ -72,7 +72,7 @@ public partial class IntegrationTests
     public async Task Campi_CreateCampus_Should_not_create_campus_with_invalid_city(string city)
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
         // Act
         var response = await client.CreateCampus("Agreste", BrazilState.PE, city, 123);
@@ -87,7 +87,7 @@ public partial class IntegrationTests
     public async Task Campi_CreateCampus_Should_not_create_campus_with_invalid_capacity(int capacity)
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
         // Act
         var response = await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", capacity);
@@ -104,7 +104,7 @@ public partial class IntegrationTests
     public async Task Campi_CreateCampus_Should_create_campus()
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
         // Act
         var result = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru", 123);

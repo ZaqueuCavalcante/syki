@@ -5,6 +5,7 @@ interface CourseItem {
   id: number
   name: string
   type: string
+  typeValue: string
 }
 
 interface GetCoursesOut {
@@ -12,8 +13,17 @@ interface GetCoursesOut {
   items: CourseItem[]
 }
 
+const UButton = resolveComponent('UButton')
+
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
+const editModalOpen = ref(false)
+const selectedCourse = ref<CourseItem | null>(null)
+
+function openEdit(course: CourseItem) {
+  selectedCourse.value = course
+  editModalOpen.value = true
+}
 
 const { data, status, refresh } = await useFetch<GetCoursesOut>(`${config.public.backendUrl}/courses`, {
   credentials: 'include',
@@ -28,6 +38,16 @@ const columns: TableColumn<CourseItem>[] = [
   {
     accessorKey: 'type',
     header: 'Tipo',
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => h(UButton, {
+      icon: 'i-lucide-pencil',
+      color: 'neutral',
+      variant: 'ghost',
+      size: 'sm',
+      onClick: () => openEdit(row.original),
+    }),
   },
 ]
 </script>
@@ -73,4 +93,5 @@ const columns: TableColumn<CourseItem>[] = [
   </UDashboardPanel>
 
   <CoursesCreateModal v-model:open="createModalOpen" @created="refresh()" />
+  <CoursesEditModal v-model:open="editModalOpen" :course="selectedCourse" @updated="refresh()" />
 </template>

@@ -43,6 +43,7 @@ public class CourseOfferingNotFound : SykiError
 
 public class DisciplineNotFound : SykiError
 {
+    public static readonly DisciplineNotFound I = new();
     public override string Code { get; set; } = nameof(DisciplineNotFound);
     public override string Message { get; set; } = "Disciplina não encontrada.";
 }

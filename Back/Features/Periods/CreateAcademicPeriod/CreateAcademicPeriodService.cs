@@ -14,7 +14,7 @@ public class CreateAcademicPeriodService(SykiDbContext ctx) : ISykiService
         var period = result.Success;
 
         var periodExists = await ctx.AcademicPeriods.AnyAsync(p => p.InstitutionId == institutionId && p.Name == period.Name);
-        if (periodExists) return new AcademicPeriodAlreadyExists();
+        if (periodExists) return AcademicPeriodAlreadyExists.I;
 
         await ctx.SaveChangesAsync(period);
 

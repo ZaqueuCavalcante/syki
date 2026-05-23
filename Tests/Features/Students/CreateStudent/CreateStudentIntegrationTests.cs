@@ -6,7 +6,7 @@ public partial class IntegrationTests
     public async Task Students_CreateStudent_Should_create_student()
     {
         // Arrange
-        var client = await _back.LoggedAsDirectot();
+        var client = await _back.LoggedAsDirector();
 
         // Act
         var result = await client.CreateStudent(DataGen.UserName, DataGen.Email);

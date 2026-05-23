@@ -30,4 +30,10 @@ public class Course
         Disciplines = [];
         CourseCurriculums = [];
     }
+
+    public void Update(string name, CourseType courseType)
+    {
+        Name = name;
+        CourseType = courseType;
+    }
 }

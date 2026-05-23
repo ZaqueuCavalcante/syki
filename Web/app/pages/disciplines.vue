@@ -16,8 +16,17 @@ interface GetDisciplinesOut {
   items: DisciplineItem[]
 }
 
+const UButton = resolveComponent('UButton')
+
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
+const editModalOpen = ref(false)
+const selectedDiscipline = ref<DisciplineItem | null>(null)
+
+function openEdit(discipline: DisciplineItem) {
+  selectedDiscipline.value = discipline
+  editModalOpen.value = true
+}
 
 const { data, status, refresh } = await useFetch<GetDisciplinesOut>(`${config.public.backendUrl}/disciplines`, {
   credentials: 'include',
@@ -36,6 +45,16 @@ const columns: TableColumn<DisciplineItem>[] = [
   {
     accessorKey: 'teachers',
     header: 'Professores',
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => h(UButton, {
+      icon: 'i-lucide-pencil',
+      color: 'neutral',
+      variant: 'ghost',
+      size: 'sm',
+      onClick: () => openEdit(row.original),
+    }),
   },
 ]
 </script>
@@ -81,4 +100,5 @@ const columns: TableColumn<DisciplineItem>[] = [
   </UDashboardPanel>
 
   <DisciplinesCreateModal v-model:open="createModalOpen" @created="refresh()" />
+  <DisciplinesEditModal v-model:open="editModalOpen" :discipline="selectedDiscipline" @updated="refresh()" />
 </template>

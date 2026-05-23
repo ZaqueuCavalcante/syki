@@ -50,22 +50,6 @@ public static class SykiPermissions
         "Criar e editar cursos."
     );
 
-    // CourseCurriculums
-    public static readonly SykiPermission ManageCourseCurriculums = new(
-        PermissionGroup.CourseCurriculums,
-        800,
-        "Gerenciar grades curriculares.",
-        "Criar e editar grades curriculares."
-    );
-
-    // CourseOfferings
-    public static readonly SykiPermission ManageCourseOfferings = new(
-        PermissionGroup.CourseOfferings,
-        900,
-        "Gerenciar ofertas de curso.",
-        "Criar e editar ofertas de curso."
-    );
-
     // Teachers
     public static readonly SykiPermission ManageTeachers = new(
         PermissionGroup.Teachers,
@@ -88,6 +72,22 @@ public static class SykiPermissions
         700,
         "Gerenciar períodos acadêmicos.",
         "Criar e editar períodos acadêmicos."
+    );
+
+    // CourseCurriculums
+    public static readonly SykiPermission ManageCourseCurriculums = new(
+        PermissionGroup.CourseCurriculums,
+        800,
+        "Gerenciar grades curriculares.",
+        "Criar e editar grades curriculares."
+    );
+
+    // CourseOfferings
+    public static readonly SykiPermission ManageCourseOfferings = new(
+        PermissionGroup.CourseOfferings,
+        900,
+        "Gerenciar ofertas de curso.",
+        "Criar e editar ofertas de curso."
     );
 
     public static readonly List<PermissionGroup> Groups = [];

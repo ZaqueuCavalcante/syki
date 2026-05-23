@@ -13,4 +13,9 @@ public partial class TestsHttpClient
 
         return await response.Resolve<MagicLinkLoginOut>();
     }
+
+    public async Task<HttpResponseMessage> Logout()
+    {
+        return await http.PostAsJsonAsync("identity/logout", new {});
+    }
 }

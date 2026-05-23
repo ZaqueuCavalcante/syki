@@ -100,10 +100,6 @@ public partial class IntegrationTests
         response.ShouldBeError(InvalidCampusCapacity.I);
     }
 
-    #endregion
-
-    #region Domain errors
-
     [Test]
     public async Task Campi_UpdateCampus_Should_not_update_campus_not_found()
     {

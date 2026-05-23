@@ -5,9 +5,7 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // Validation errors
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #region Validation errors
 
     [Test]
     public async Task Identity_MagicLinkLogin_Should_return_error_when_token_is_empty()
@@ -22,9 +20,9 @@ public partial class IntegrationTests : IntegrationTestBase
         result.ShouldBeError(InvalidMagicLink.I);
     }
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // Business logic errors
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #endregion
+
+    #region Validation errors
 
     [Test]
     public async Task Identity_MagicLinkLogin_Should_return_error_when_token_does_not_exist()
@@ -87,9 +85,9 @@ public partial class IntegrationTests : IntegrationTestBase
         result.ShouldBeError(InvalidMagicLink.I);
     }
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // Happy path
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #endregion
+
+    #region Happy path
 
     [Test]
     public async Task Identity_MagicLinkLogin_Should_login_successfully_with_valid_token()
@@ -167,4 +165,6 @@ public partial class IntegrationTests : IntegrationTestBase
         emailEntry.Should().NotBeNull();
         emailEntry.Should().Contain("/magic-link?token=");
     }
+
+    #endregion
 }

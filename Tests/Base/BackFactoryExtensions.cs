@@ -2,6 +2,7 @@ using Quartz;
 using Syki.Back.Emails;
 using Syki.Back.Domain.Identity;
 using Syki.Tests.Integration.Clients;
+using Syki.Back.Features.Users.RegisterUser;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
@@ -77,6 +78,28 @@ public static class BackFactoryExtensions
         await client.MagicLinkLogin(token!);
 
         client.User = user;
+
+        return client;
+    }
+
+    public static async Task<TestsHttpClient> LoggedAsTeacher(this BackFactory factory)
+    {
+        var directorClient = await factory.LoggedAsDirectot();
+
+        var email = DataGen.Email;
+        var result = await directorClient.CreateTeacher(DataGen.UserName, email);
+
+        await using var ctx = factory.GetDbContext();
+        var user = await ctx.Users.Where(u => u.Email == email).FirstAsync();
+        var magicLink = new MagicLink(user);
+        await ctx.SaveChangesAsync(magicLink);
+
+        var client = factory.GetTestsClient();
+
+        var token = await factory.GetMagicLink(email);
+        await client.MagicLinkLogin(token!);
+
+        client.User = new RegisterUserOut { Id = user.Id, InstitutionId = user.InstitutionId };
 
         return client;
     }

@@ -52,4 +52,28 @@ public static class JsonExtensions
         oneOf.Error.Code.Should().Be(expected.Code);
         oneOf.Error.Message.Should().Be(expected.Message);
     }
+
+    public static void ShouldBeError<S>(this OneOf<S, ErrorOut> oneOf, HttpStatusCode statusCode)
+    {
+        if (oneOf.IsSuccess)
+        {
+            throw new InvalidOperationException($"Expected HTTP status code '{statusCode}' but got success");
+        }
+        oneOf.IsError.Should().BeTrue();
+
+        if (statusCode == HttpStatusCode.Unauthorized)
+        {
+            oneOf.Error.Code.Should().Be("401");
+            oneOf.Error.Message.Should().Be("Unauthorized");
+        }
+        else if (statusCode == HttpStatusCode.Forbidden)
+        {
+            oneOf.Error.Code.Should().Be("403");
+            oneOf.Error.Message.Should().Be("Forbidden");
+        }
+        else
+        {
+            oneOf.Error.Code.Should().Be(((int)statusCode).ToString());
+        }
+    }
 }

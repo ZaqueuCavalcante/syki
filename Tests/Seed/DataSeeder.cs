@@ -11,9 +11,7 @@ public class DataSeeder(SykiDbContext ctx)
 
     private async Task SeedDefaultRoles()
     {
-        ctx.AddRange(SykiDefaultRoles.Director);
+        ctx.AddRange(SykiDefaultRoles.Director, SykiDefaultRoles.Teacher);
         await ctx.SaveChangesAsync();
-        var defaultRoles = await ctx.Roles.Where(x => x.OwnerId == null).ToListAsync();
-        SykiDefaultRoles.DirectorId = defaultRoles.First(x => x.NormalizedName == SykiDefaultRoles.Director.NormalizedName).Id;
     }
 }

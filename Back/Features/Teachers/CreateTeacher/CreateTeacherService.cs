@@ -9,7 +9,11 @@ public class CreateTeacherService(SykiDbContext ctx, UserManager<SykiUser> userM
     {
         var user = new SykiUser(ctx.RequestUser.InstitutionId, data.Name, data.Email);
         var teacher = new SykiTeacher(user, ctx.RequestUser.InstitutionId, data.Name);
-        ctx.Add(teacher);
+
+        var institution = await ctx.Institutions.FindAsync(ctx.RequestUser.InstitutionId);
+        var teacherRole = await ctx.GetTeacherRole();
+        var userRole = new SykiUserRole(institution, user, teacherRole.Id);
+        ctx.AddRange(teacher, userRole);
 
         await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");
 

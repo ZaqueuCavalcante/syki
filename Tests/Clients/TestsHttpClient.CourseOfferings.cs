@@ -1,7 +1,7 @@
 using System.Net.Http.Json;
 using Syki.Back.Domain.Enums;
-using Syki.Back.Features.CourseOfferings.CreateCourseOffering;
 using Syki.Back.Features.CourseOfferings.GetCourseOfferings;
+using Syki.Back.Features.CourseOfferings.CreateCourseOffering;
 
 namespace Syki.Tests.Integration.Clients;
 

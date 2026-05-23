@@ -22,8 +22,11 @@ public static class HttpExtensions
         if (httpResponse.IsSuccessStatusCode)
             return await httpResponse.DeserializeTo<T>();
 
+        if (httpResponse.StatusCode == HttpStatusCode.Unauthorized)
+            return UnauthorizedErrorOut.I;
+
         if (httpResponse.StatusCode == HttpStatusCode.Forbidden)
-            return new ForbiddenErrorOut();
+            return ForbiddenErrorOut.I;
 
         return await httpResponse.ToError();
     }

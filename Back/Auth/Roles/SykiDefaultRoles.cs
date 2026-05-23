@@ -5,22 +5,32 @@ namespace Syki.Back.Auth.Roles;
 
 public static class SykiDefaultRoles
 {
-	public static int DirectorId { get; set; }
-
 	public static SykiRole Director => new()
     {
 		OwnerId = null,
 		Name = "Diretor",
 		NormalizedName = "DIRETOR",
-		Description = "Gerencia campi, usuários, perfis de acesso, cursos, professores, alunos e disciplinas.",
+		Description = "Gerencia campi, usuários, perfis, períodos, cursos, professores, alunos, disciplinas, ofertas e grades.",
 		Permissions = [
 			SykiPermissions.ManageCampi.Id,
 			SykiPermissions.ManageUsers.Id,
 			SykiPermissions.ManageRoles.Id,
+            SykiPermissions.ManagePeriods.Id,
 			SykiPermissions.ManageCourses.Id,
 			SykiPermissions.ManageTeachers.Id,
             SykiPermissions.ManageStudents.Id,
 			SykiPermissions.ManageDisciplines.Id,
+            SykiPermissions.ManageCourseOfferings.Id,
+            SykiPermissions.ManageCourseCurriculums.Id,
 		],
+	};
+
+	public static SykiRole Teacher => new()
+    {
+		OwnerId = null,
+		Name = "Professor",
+		NormalizedName = "PROFESSOR",
+		Description = "Ministra aulas e avalia os alunos.",
+		Permissions = [],
 	};
 }

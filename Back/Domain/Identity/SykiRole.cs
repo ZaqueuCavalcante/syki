@@ -9,17 +9,17 @@ public class SykiRole : IdentityRole<int>
     public SykiRole() {}
 
     public SykiRole(
-        int id,
+        int ownerId,
         string name,
         string description,
         List<int> permissions)
     {
-        Id = id;
+        OwnerId = ownerId;
         Name = name;
         NormalizedName = name.ToUpper();
         Description = description;
         Permissions = permissions;
-        ConcurrencyStamp = id.ToString();
+        ConcurrencyStamp = Guid.NewGuid().ToString();
     }
 
     public bool IsSubsetOf(List<int> permissions)

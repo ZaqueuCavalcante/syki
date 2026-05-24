@@ -16,5 +16,6 @@ public class GetDisciplinesItemOut
     public int Id { get; set; }
     public string Name { get; set; }
     public string Code { get; set; }
+    public int Courses { get; set; }
     public int Teachers { get; set; }
 }

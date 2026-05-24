@@ -8,6 +8,7 @@ interface DisciplineItem {
   period: number
   credits: number
   workload: number
+  courses: number
   teachers: number
 }
 
@@ -21,11 +22,17 @@ const UButton = resolveComponent('UButton')
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
 const editModalOpen = ref(false)
+const coursesModalOpen = ref(false)
 const selectedDiscipline = ref<DisciplineItem | null>(null)
 
 function openEdit(discipline: DisciplineItem) {
   selectedDiscipline.value = discipline
   editModalOpen.value = true
+}
+
+function openCourses(discipline: DisciplineItem) {
+  selectedDiscipline.value = discipline
+  coursesModalOpen.value = true
 }
 
 const { data, status, refresh } = await useFetch<GetDisciplinesOut>(`${config.public.backendUrl}/disciplines`, {
@@ -43,18 +50,31 @@ const columns: TableColumn<DisciplineItem>[] = [
     header: 'Código',
   },
   {
+    accessorKey: 'courses',
+    header: 'Cursos',
+  },
+  {
     accessorKey: 'teachers',
     header: 'Professores',
   },
   {
     id: 'actions',
-    cell: ({ row }) => h(UButton, {
-      icon: 'i-lucide-pencil',
-      color: 'neutral',
-      variant: 'ghost',
-      size: 'sm',
-      onClick: () => openEdit(row.original),
-    }),
+    cell: ({ row }) => h('div', { class: 'flex gap-1' }, [
+        h(UButton, {
+          icon: 'i-lucide-pencil',
+          color: 'neutral',
+          variant: 'ghost',
+          size: 'sm',
+          onClick: () => openEdit(row.original),
+        }),
+      h(UButton, {
+        icon: 'i-lucide-graduation-cap',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: () => openCourses(row.original),
+      }),
+    ]),
   },
 ]
 </script>
@@ -101,4 +121,5 @@ const columns: TableColumn<DisciplineItem>[] = [
 
   <DisciplinesCreateModal v-model:open="createModalOpen" @created="refresh()" />
   <DisciplinesEditModal v-model:open="editModalOpen" :discipline="selectedDiscipline" @updated="refresh()" />
+  <DisciplinesCoursesModal v-model:open="coursesModalOpen" :discipline="selectedDiscipline" />
 </template>

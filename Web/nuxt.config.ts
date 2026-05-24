@@ -24,6 +24,16 @@ export default defineNuxtConfig({
     }
   },
 
+  vite: {
+    optimizeDeps: {
+      include: [
+        'date-fns',
+        '@unovis/vue',
+        '@internationalized/date',
+      ]
+    }
+  },
+
   compatibilityDate: '2024-07-11',
 
   eslint: {

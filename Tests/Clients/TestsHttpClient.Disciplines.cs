@@ -2,6 +2,8 @@ using System.Net.Http.Json;
 using Syki.Back.Features.Disciplines.GetDisciplines;
 using Syki.Back.Features.Disciplines.CreateDiscipline;
 using Syki.Back.Features.Disciplines.UpdateDiscipline;
+using Syki.Back.Features.Disciplines.GetDiscipline;
+using Syki.Back.Features.Disciplines.AddDisciplineCourses;
 
 namespace Syki.Tests.Integration.Clients;
 
@@ -22,6 +24,21 @@ public partial class TestsHttpClient
         var data = new UpdateDisciplineIn { Id = id, Name = name };
         var response = await http.PutAsJsonAsync("/disciplines", data);
         return await response.Resolve<UpdateDisciplineOut>();
+    }
+
+    public async Task<OneOf<GetDisciplineOut, ErrorOut>> GetDiscipline(int id)
+    {
+        var response = await http.GetAsync($"/disciplines/{id}");
+        return await response.Resolve<GetDisciplineOut>();
+    }
+
+    public async Task<OneOf<AddDisciplineCoursesOut, ErrorOut>> AddDisciplineCourses(
+        int disciplineId,
+        List<int> courses
+    ) {
+        var data = new AddDisciplineCoursesIn { DisciplineId = disciplineId, Courses = courses };
+        var response = await http.PostAsJsonAsync("/disciplines/courses", data);
+        return await response.Resolve<AddDisciplineCoursesOut>();
     }
 
     public async Task<GetDisciplinesOut> GetDisciplines()

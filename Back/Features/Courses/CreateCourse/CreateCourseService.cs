@@ -23,7 +23,6 @@ public class CreateCourseService(SykiDbContext ctx) : ISykiService
 
         var institutionId = ctx.RequestUser.InstitutionId;
         var course = new Course(institutionId, data.Name, data.Type!.Value);
-        data.Disciplines?.ForEach(d => course.Disciplines.Add(new(institutionId, d)));
 
         await ctx.SaveChangesAsync(course);
 

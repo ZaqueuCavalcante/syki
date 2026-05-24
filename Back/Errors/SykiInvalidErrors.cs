@@ -179,3 +179,9 @@ public class InvalidCampusList : SykiError
     public override string Code { get; set; } = nameof(InvalidCampusList);
     public override string Message { get; set; } = "Lista de campus inválida.";
 }
+public class InvalidCoursesList : SykiError
+{
+    public static readonly InvalidCoursesList I = new();
+    public override string Code { get; set; } = nameof(InvalidCoursesList);
+    public override string Message { get; set; } = "Lista de cursos inválida.";
+}

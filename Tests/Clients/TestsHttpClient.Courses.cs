@@ -9,10 +9,9 @@ public partial class TestsHttpClient
 {
     public async Task<OneOf<CreateCourseOut, ErrorOut>> CreateCourse(
         string name = "Análise e Desenvolvimento de Sistemas",
-        CourseType? type = CourseType.Tecnologo,
-        List<string>? disciplines = null
+        CourseType? type = CourseType.Tecnologo
     ) {
-        var data = new CreateCourseIn { Name = name, Type = type, Disciplines = disciplines ?? [] };
+        var data = new CreateCourseIn { Name = name, Type = type };
         var response = await http.PostAsJsonAsync("/courses", data);
         return await response.Resolve<CreateCourseOut>();
     }

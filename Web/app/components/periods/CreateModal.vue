@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as z from 'zod'
+import { DateFormatter, getLocalTimeZone, type CalendarDate } from '@internationalized/date'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
 const open = defineModel<boolean>('open', { default: false })
@@ -9,6 +10,14 @@ const isMobile = useIsMobile()
 const config = useRuntimeConfig()
 const toast = useToast()
 const loading = ref(false)
+
+const df = new DateFormatter('pt-BR', { dateStyle: 'medium' })
+
+const toDateString = (d: CalendarDate) =>
+  `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}`
+
+const startDate = ref<CalendarDate | undefined>()
+const endDate = ref<CalendarDate | undefined>()
 
 const schema = z.object({
   name: z.string().min(1, 'Nome obrigatório').max(20, 'Máximo 20 caracteres'),
@@ -27,10 +36,15 @@ const formState = reactive<Partial<Schema>>({
   endAt: '',
 })
 
+watch(startDate, (val) => { formState.startAt = val ? toDateString(val) : '' })
+watch(endDate, (val) => { formState.endAt = val ? toDateString(val) : '' })
+
 function resetForm() {
   formState.name = ''
   formState.startAt = ''
   formState.endAt = ''
+  startDate.value = undefined
+  endDate.value = undefined
 }
 
 watch(open, (val) => {
@@ -77,11 +91,41 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
         <div class="grid grid-cols-2 gap-4">
           <UFormField label="Início" name="startAt">
-            <UInput v-model="formState.startAt" type="date" class="w-full" />
+            <UPopover :content="{ align: 'start' }" :modal="true">
+              <UButton
+                color="neutral"
+                variant="ghost"
+                icon="i-lucide-calendar"
+                class="data-[state=open]:bg-elevated group"
+              >
+                <span class="truncate">{{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : 'Selecionar' }}</span>
+                <template #trailing>
+                  <UIcon name="i-lucide-chevron-down" class="shrink-0 text-dimmed size-5 group-data-[state=open]:rotate-180 transition-transform duration-200" />
+                </template>
+              </UButton>
+              <template #content>
+                <UCalendar v-model="startDate" class="p-2" />
+              </template>
+            </UPopover>
           </UFormField>
 
-          <UFormField label="Término" name="endAt">
-            <UInput v-model="formState.endAt" type="date" class="w-full" />
+          <UFormField label="Fim" name="endAt">
+            <UPopover :content="{ align: 'start' }" :modal="true">
+              <UButton
+                color="neutral"
+                variant="ghost"
+                icon="i-lucide-calendar"
+                class="data-[state=open]:bg-elevated group"
+              >
+                <span class="truncate">{{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : 'Selecionar' }}</span>
+                <template #trailing>
+                  <UIcon name="i-lucide-chevron-down" class="shrink-0 text-dimmed size-5 group-data-[state=open]:rotate-180 transition-transform duration-200" />
+                </template>
+              </UButton>
+              <template #content>
+                <UCalendar v-model="endDate" class="p-2" />
+              </template>
+            </UPopover>
           </UFormField>
         </div>
 

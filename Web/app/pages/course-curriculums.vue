@@ -16,7 +16,7 @@ interface GetCourseCurriculumsOut {
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
 
-const { data, status, refresh } = await useFetch<GetCourseCurriculumsOut>(`${config.public.backendUrl}/courses/course-curriculums`, {
+const { data, status, refresh } = await useFetch<GetCourseCurriculumsOut>(`${config.public.backendUrl}/course-curriculums`, {
   credentials: 'include',
   lazy: true
 })
@@ -76,4 +76,6 @@ const columns: TableColumn<CourseCurriculumItem>[] = [
       </UTable>
     </template>
   </UDashboardPanel>
+
+  <CourseCurriculumsCreateModal v-model:open="createModalOpen" @created="refresh()" />
 </template>

@@ -11,3 +11,7 @@
 - Domínio estud.com.br na Hostinger
 - Suporte para Ensino Fundamental e Médio (pais dos alunos)
 - https://github.com/ZaqueuCavalcante/syki/issues/81
+
+
+
+

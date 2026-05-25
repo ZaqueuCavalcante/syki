@@ -10,10 +10,14 @@ public class GetCourseCurriculumsService(SykiDbContext ctx) : ISykiService
             .OrderBy(c => c.Name)
             .ToListAsync();
 
-        return new GetCourseCurriculumsOut
-        {
-            Total = curriculums.Count,
-            Items = curriculums.ConvertAll(c => c.ToGetCourseCurriculumsItemOut()),
-        };
+        var ids = curriculums.Select(d => d.Id).ToHashSet();
+        var result = curriculums.ConvertAll(d => d.ToGetCourseCurriculumsItemOut());
+
+        var disciplines = await ctx.CourseCurriculumDisciplines.AsNoTracking()
+            .Where(c => ids.Count == 0 || ids.Contains(c.CourseCurriculumId))
+            .ToListAsync();
+        result.ForEach(x => x.Disciplines = disciplines.Count(c => c.CourseCurriculumId == x.Id));
+
+        return new GetCourseCurriculumsOut { Total = result.Count, Items = result };
     }
 }

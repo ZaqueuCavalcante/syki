@@ -1,7 +1,6 @@
-namespace Syki.Back.Features.Academic.GetCourseDisciplines;
+namespace Syki.Back.Features.Courses.GetCourseDisciplines;
 
-[ApiController, Authorize]
-[EnableRateLimiting("Medium")]
+[ApiController, Authorize(Policies.GetCourseDisciplines)]
 public class GetCourseDisciplinesController(GetCourseDisciplinesService service) : ControllerBase
 {
     /// <summary>
@@ -10,10 +9,10 @@ public class GetCourseDisciplinesController(GetCourseDisciplinesService service)
     /// <remarks>
     /// Retorna todas as disciplinas do curso informado.
     /// </remarks>
-    [HttpGet("academic/courses/{id}/disciplines")]
-    public async Task<IActionResult> Get([FromRoute] Guid id)
+    [HttpGet("courses/{id}/disciplines")]
+    public async Task<IActionResult> Get([FromRoute] int id)
     {
-        var disciplines = await service.Get(id, User.InstitutionId);
+        var disciplines = await service.Get(id);
         return Ok(disciplines);
     }
 }

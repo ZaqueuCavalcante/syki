@@ -47,13 +47,6 @@ const links = [[{
     open.value = false
   }
 }, {
-  label: 'Ofertas',
-  icon: 'i-lucide-library',
-  to: '/course-offerings',
-  onSelect: () => {
-    open.value = false
-  }
-}, {
   label: 'Grades',
   icon: 'i-lucide-layout-list',
   to: '/course-curriculums',
@@ -64,6 +57,13 @@ const links = [[{
   label: 'Períodos',
   icon: 'i-lucide-calendar',
   to: '/periods',
+  onSelect: () => {
+    open.value = false
+  }
+}, {
+  label: 'Ofertas',
+  icon: 'i-lucide-library',
+  to: '/course-offerings',
   onSelect: () => {
     open.value = false
   }

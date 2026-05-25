@@ -17,4 +17,5 @@ public class GetCourseCurriculumsItemOut
     public string Name { get; set; }
     public int CourseId { get; set; }
     public string Course { get; set; }
+    public int Disciplines { get; set; }
 }

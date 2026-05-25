@@ -3,10 +3,11 @@ import type { TableColumn } from '@nuxt/ui'
 
 interface CourseOfferingItem {
   id: number
+  campus: string
   course: string
-  curriculum: string
+  courseCurriculum: string
   period: string
-  shift: string
+  session: string
 }
 
 interface GetCourseOfferingsOut {
@@ -14,21 +15,31 @@ interface GetCourseOfferingsOut {
   items: CourseOfferingItem[]
 }
 
+const sessionLabels: Record<string, string> = {
+  Morning: 'Matutino',
+  Afternoon: 'Vespertino',
+  Evening: 'Noturno',
+}
+
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
 
-const { data, status, refresh } = await useFetch<GetCourseOfferingsOut>(`${config.public.backendUrl}/courses/course-offerings`, {
+const { data, status, refresh } = await useFetch<GetCourseOfferingsOut>(`${config.public.backendUrl}/course-offerings`, {
   credentials: 'include',
   lazy: true
 })
 
 const columns: TableColumn<CourseOfferingItem>[] = [
   {
+    accessorKey: 'campus',
+    header: 'Campus',
+  },
+  {
     accessorKey: 'course',
     header: 'Curso',
   },
   {
-    accessorKey: 'curriculum',
+    accessorKey: 'courseCurriculum',
     header: 'Grade',
   },
   {
@@ -36,8 +47,9 @@ const columns: TableColumn<CourseOfferingItem>[] = [
     header: 'Período',
   },
   {
-    accessorKey: 'shift',
+    accessorKey: 'session',
     header: 'Turno',
+    cell: ({ row }) => sessionLabels[row.original.session] ?? row.original.session,
   },
 ]
 </script>
@@ -81,4 +93,6 @@ const columns: TableColumn<CourseOfferingItem>[] = [
       </UTable>
     </template>
   </UDashboardPanel>
+
+  <CourseOfferingsCreateModal v-model:open="createModalOpen" @created="refresh()" />
 </template>

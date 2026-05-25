@@ -7,7 +7,11 @@ public class CreateTeacherService(SykiDbContext ctx, UserManager<SykiUser> userM
 {
     public async Task<OneOf<CreateTeacherOut, SykiError>> Create(CreateTeacherIn data)
     {
-        var user = new SykiUser(ctx.RequestUser.InstitutionId, data.Name, data.Email);
+        var email = data.Email.ToLowerInvariant();
+        var emailUsed = await ctx.Users.AnyAsync(u => u.Email == email);
+        if (emailUsed) return EmailAlreadyUsed.I;
+
+        var user = new SykiUser(ctx.RequestUser.InstitutionId, data.Name, email);
         var teacher = new SykiTeacher(user, ctx.RequestUser.InstitutionId, data.Name);
 
         var institution = await ctx.Institutions.FindAsync(ctx.RequestUser.InstitutionId);

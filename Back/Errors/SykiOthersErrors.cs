@@ -1,10 +1,5 @@
 namespace Syki.Back.Errors;
 
-public class WeakPassword : SykiError
-{
-    public override string Code { get; set; } = nameof(WeakPassword);
-    public override string Message { get; set; } = "Senha fraca.";
-}
 public class EmailAlreadyUsed : SykiError
 {
     public static readonly EmailAlreadyUsed I = new();
@@ -66,17 +61,6 @@ public class ClassMustHaveStartedStatus : SykiError
 {
     public override string Code { get; set; } = nameof(ClassMustHaveStartedStatus);
     public override string Message { get; set; } = "A turma precisa ter o status de Iniciada para ser finalizada.";
-}
-
-public class LoginWrongEmailOrPassword : SykiError
-{
-    public override string Code { get; set; } = nameof(LoginWrongEmailOrPassword);
-    public override string Message { get; set; } = "Email ou senha incorretos.";
-}
-public class LoginRequiresTwoFactor : SykiError
-{
-    public override string Code { get; set; } = nameof(LoginRequiresTwoFactor);
-    public override string Message { get; set; } = "Utilize o segundo fator de autenticação para realizar login.";
 }
 public class LoginWrongMfaToken : SykiError
 {

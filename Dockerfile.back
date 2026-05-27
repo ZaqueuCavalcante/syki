@@ -8,6 +8,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview
 WORKDIR /app
 COPY --from=build /app ./
 
-EXPOSE 5001
+EXPOSE 5000
 
 ENTRYPOINT [ "dotnet", "Back.dll" ]

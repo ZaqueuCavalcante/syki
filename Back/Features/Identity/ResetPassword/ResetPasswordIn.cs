@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Syki.Back.Features.Identity.ResetPassword;
 
 public class ResetPasswordIn : IApiDto<ResetPasswordIn>
 {
@@ -10,7 +10,7 @@ public class ResetPasswordIn : IApiDto<ResetPasswordIn>
         ("Exemplo",
         new ResetPasswordIn
         {
-            Token = Guid.CreateVersion7().ToString(),
+            Token = Guid.NewGuid().ToString(),
             Password = "M1@Str0ngP4ssword#"
         })
     ];

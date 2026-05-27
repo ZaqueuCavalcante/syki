@@ -658,7 +658,7 @@ Para rodar o sistema na sua máquina, siga os passos abaixo:
 - Clone o projeto pra sua máquina
 - Para subir banco + back + front, rode o comando: `docker-compose up`
 - Para rebuildar caso tenha alguma alteração no código: `docker-compose build --no-cache`
-- O back vai subir na porta 5001 e o front na 5002
+- O back vai subir na porta 5000 e o front na 3000
 
 Para rodar os testes automatizados:
 

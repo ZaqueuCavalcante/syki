@@ -1,6 +1,9 @@
 namespace Syki.Back.Errors;
 
-public class SykiSuccess { }
+public class SykiSuccess
+{
+    public static readonly SykiSuccess I = new();
+}
 
 public abstract class SykiError
 {

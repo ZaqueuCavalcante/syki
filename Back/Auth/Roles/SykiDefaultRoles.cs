@@ -33,4 +33,13 @@ public static class SykiDefaultRoles
 		Description = "Ministra aulas e avalia os alunos.",
 		Permissions = [],
 	};
+
+	public static SykiRole Student => new()
+    {
+		OwnerId = null,
+		Name = "Aluno",
+		NormalizedName = "ALUNO",
+		Description = "Participa das aulas e é avaliado.",
+		Permissions = [],
+	};
 }

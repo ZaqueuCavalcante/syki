@@ -1,8 +1,8 @@
 using Quartz;
 using Syki.Back.Emails;
 using Syki.Back.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
 using Syki.Tests.Integration.Clients;
-using Syki.Back.Features.Users.RegisterUser;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
@@ -77,9 +77,20 @@ public static class BackFactoryExtensions
         var token = await factory.GetMagicLink(email);
         await client.MagicLinkLogin(token!);
 
+        await factory.SetPassword(email, "My@nEw@strong@P4ssword");
+
         client.User = user;
 
         return client;
+    }
+
+    public static async Task SetPassword(this BackFactory factory, string email, string password)
+    {
+        var scope = factory.Services.CreateScope();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
+        var user = await userManager.FindByEmailAsync(email);
+        var resetToken = await userManager.GeneratePasswordResetTokenAsync(user!);
+        await userManager.ResetPasswordAsync(user!, resetToken, password);
     }
 
     public static async Task<TestsHttpClient> LoggedAsTeacher(this BackFactory factory)
@@ -99,7 +110,7 @@ public static class BackFactoryExtensions
         var token = await factory.GetMagicLink(email);
         await client.MagicLinkLogin(token!);
 
-        client.User = new RegisterUserOut { Id = user.Id, InstitutionId = user.InstitutionId };
+        client.User = new TestsUserDto  { Id = user.Id, InstitutionId = user.InstitutionId, Email = user.Email! };
 
         return client;
     }
@@ -126,5 +137,22 @@ public static class BackFactoryExtensions
         client.User = user;
 
         return client;
+    }
+
+    public static async Task<string?> GetResetPasswordToken(this BackFactory factory, string email)
+    {
+        await using var ctx = factory.GetDbContext();
+
+        var user = await ctx.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
+        if (user == null)
+            return null;
+
+        var id = await ctx.ResetPasswordTokens
+            .Where(r => r.UserId == user.Id && r.UsedAt == null)
+            .OrderByDescending(r => r.CreatedAt)
+            .Select(r => r.Id)
+            .FirstOrDefaultAsync();
+
+        return id == Guid.Empty ? null : id.ToString();
     }
 }

@@ -1,4 +1,3 @@
-using OtpNet;
 using QRCoder;
 using System.Text;
 using Newtonsoft.Json;
@@ -59,12 +58,6 @@ public static class StringExtensions
 
         var startUnderscores = Regex.Match(input, @"^_+");
         return startUnderscores + Regex.Replace(input, @"([a-z0-9])([A-Z])", "$1_$2").ToLower();
-    }
-
-    public static string GenerateTOTP(this string key)
-    {
-        var totp = new Totp(Base32Encoding.ToBytes(key));
-        return totp.ComputeTotp();
     }
 
     public static string ToBase64(this string value)

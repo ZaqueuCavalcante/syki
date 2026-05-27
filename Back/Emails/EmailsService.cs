@@ -16,6 +16,20 @@ public class EmailsService : IEmailsService
         _client.DefaultRequestHeaders.Add("api-key", _settings.ApiKey);
     }
 
+    public async Task SendResetPasswordEmail(string to, string token)
+    {
+        var link = $"{_settings.FrontUrl}/reset-password?token={token}";
+
+        var body = new BrevoEmailMessage(
+            sender: "suporte@syki.com",
+            to: to,
+            subject: "Syki - Redefinição de senha",
+            content: LoadTemplate("ResetPassword.html", link)
+        );
+
+        await _client.PostAsJsonAsync("", body);
+    }
+
     public async Task SendFirstAccessMagicLinkEmail(string to, string token)
     {
         var link = $"{_settings.FrontUrl}/magic-link?token={token}";

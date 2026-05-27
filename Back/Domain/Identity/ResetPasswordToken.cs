@@ -1,22 +1,27 @@
-namespace Syki.Back.Features.Cross.SendResetPasswordToken;
+namespace Syki.Back.Domain.Identity;
 
 public class ResetPasswordToken
 {
     public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public Guid InstitutionId { get; set; }
+    public int UserId { get; set; }
+    public int InstitutionId { get; set; }
     public string Token { get; set; }
     public DateTime CreatedAt { get; set; }
+    public DateTime ExpiresAt { get; set; }
     public DateTime? UsedAt { get; set; }
 
-    public ResetPasswordToken(Guid userId, Guid institutionId, string token)
+    public ResetPasswordToken(int userId, int institutionId, string token)
     {
         Id = Guid.CreateVersion7();
         UserId = userId;
         InstitutionId = institutionId;
         Token = token;
         CreatedAt = DateTime.UtcNow;
+        ExpiresAt = DateTime.Now.Add(TimeSpan.FromMinutes(30));
     }
+
+    public bool IsUsed() => UsedAt != null;
+    public bool IsExpired() => DateTime.Now > ExpiresAt;
 
     public void Use()
     {

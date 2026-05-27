@@ -11,7 +11,7 @@ public class DataSeeder(SykiDbContext ctx)
 
     private async Task SeedDefaultRoles()
     {
-        ctx.AddRange(SykiDefaultRoles.Director, SykiDefaultRoles.Teacher);
+        ctx.AddRange(SykiDefaultRoles.Director, SykiDefaultRoles.Teacher, SykiDefaultRoles.Student);
         await ctx.SaveChangesAsync();
     }
 }

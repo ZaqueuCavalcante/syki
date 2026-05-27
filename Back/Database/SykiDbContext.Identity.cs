@@ -9,12 +9,15 @@ namespace Syki.Back.Database;
 public partial class SykiDbContext
 {
     public DbSet<MagicLink> WebMagicLinks { get; set; }
+    public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }
+
     public DbSet<SsoConfiguration> WebSsoConfigurations { get; set; }
     public DbSet<SsoAllowedDomain> WebSsoAllowedDomains { get; set; }
 
     private static void ConfigureIdentity(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new MagicLinkDbConfig());
+        modelBuilder.ApplyConfiguration(new ResetPasswordTokenDbConfig());
 
         modelBuilder.ApplyConfiguration(new SykiRoleDbConfig());
         modelBuilder.ApplyConfiguration(new SykiUserDbConfig());
@@ -23,6 +26,8 @@ public partial class SykiDbContext
         modelBuilder.ApplyConfiguration(new SykiUserClaimDbConfig());
         modelBuilder.ApplyConfiguration(new SykiUserTokenDbConfig());
         modelBuilder.ApplyConfiguration(new SykiUserLoginDbConfig());
+
+        modelBuilder.ApplyConfiguration(new InstitutionRoleDbConfig());
 
         modelBuilder.ApplyConfiguration(new SsoConfigurationDbConfig());
         modelBuilder.ApplyConfiguration(new SsoAllowedDomainDbConfig());

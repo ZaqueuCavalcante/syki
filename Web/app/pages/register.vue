@@ -5,7 +5,7 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 definePageMeta({ layout: 'landing' })
 
 useSeoMeta({
-  title: 'Criar conta — Estud',
+  title: 'Criar conta - Estud',
   description: 'Crie sua conta gratuitamente e comece a usar o Estud.',
 })
 

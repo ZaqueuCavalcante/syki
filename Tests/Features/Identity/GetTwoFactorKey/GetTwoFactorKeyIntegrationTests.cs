@@ -2,6 +2,25 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
+    #region Authentication
+
+    [Test]
+    public async Task Identity_GetTwoFactorKey_Should_not_get_2fa_key_when_not_authenticated()
+    {
+        // Arrange
+        var client = _back.GetTestsClient();
+
+        // Act
+        var response = await client.GetTwoFactorKey();
+
+        // Assert
+        response.ShouldBeError(HttpStatusCode.Unauthorized);
+    }
+
+    #endregion
+
+    #region Happy path
+
     [Test]
     public async Task GetTwoFactorKey_Should_get_2fa_key()
     {
@@ -33,4 +52,6 @@ public partial class IntegrationTests : IntegrationTestBase
         response00.Success.Key.Should().Be(response01.Success.Key);
         response00.Success.Key.Should().Be(response02.Success.Key);
     }
+
+    #endregion
 }

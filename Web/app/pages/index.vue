@@ -123,7 +123,7 @@ const features = [
       <UPageHero
         headline="Plataforma educacional"
         title="Gestão acadêmica para quem leva a educação a sério"
-        description="Do cadastro de alunos aos relatórios de desempenho — tudo em uma plataforma moderna, segura e fácil de usar."
+        description="Do cadastro de alunos aos relatórios de desempenho - tudo em uma plataforma moderna, segura e fácil de usar."
         :links="[
           { label: 'Começar grátis', to: '/register', size: 'xl' },
           { label: 'Ver demonstração', to: '#features', size: 'xl', color: 'neutral', variant: 'outline' },

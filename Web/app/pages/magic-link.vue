@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'landing' })
 
-useSeoMeta({ title: 'Entrando — Estud' })
+useSeoMeta({ title: 'Entrando - Estud' })
 
 const config = useRuntimeConfig()
 const route = useRoute()

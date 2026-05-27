@@ -2,6 +2,7 @@ using Syki.Back.Emails;
 
 namespace Syki.Back.Features.Identity.SendResetPasswordToken;
 
+[CommandDescription("Envia link de redefinição de senha por e-mail.")]
 public record SendResetPasswordTokenEmailCommand(string Email, Guid ResetId) : ICommand;
 
 public class SendResetPasswordTokenEmailCommandHandler(IEmailsService emailService) : ICommandHandler<SendResetPasswordTokenEmailCommand>

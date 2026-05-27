@@ -17,11 +17,11 @@ public class ResetPasswordToken
         InstitutionId = institutionId;
         Token = token;
         CreatedAt = DateTime.UtcNow;
-        ExpiresAt = DateTime.Now.Add(TimeSpan.FromMinutes(30));
+        ExpiresAt = DateTime.UtcNow.Add(TimeSpan.FromMinutes(30));
     }
 
     public bool IsUsed() => UsedAt != null;
-    public bool IsExpired() => DateTime.Now > ExpiresAt;
+    public bool IsExpired() => DateTime.UtcNow > ExpiresAt;
 
     public void Use()
     {

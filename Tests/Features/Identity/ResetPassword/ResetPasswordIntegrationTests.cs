@@ -108,7 +108,7 @@ public partial class IntegrationTests : IntegrationTestBase
         // Force token expiration via DbContext
         await using var ctx = _back.GetDbContext();
         var resetToken = await ctx.ResetPasswordTokens.FirstAsync(r => r.Id == Guid.Parse(tokenId!));
-        resetToken.ExpiresAt = DateTime.Now.AddMinutes(-1);
+        resetToken.ExpiresAt = DateTime.UtcNow.AddMinutes(-1);
         await ctx.SaveChangesAsync();
 
         // Act

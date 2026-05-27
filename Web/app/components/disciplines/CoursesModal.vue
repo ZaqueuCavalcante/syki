@@ -95,7 +95,7 @@ watch(open, (val) => {
 <template>
   <UModal
     v-model:open="open"
-    :title="`Cursos — ${props.discipline?.name ?? ''}`"
+    :title="`Cursos - ${props.discipline?.name ?? ''}`"
     :fullscreen="isMobile"
     description="Cursos vinculados a esta disciplina."
   >

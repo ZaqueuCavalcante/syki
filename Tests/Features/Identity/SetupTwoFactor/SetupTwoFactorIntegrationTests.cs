@@ -2,6 +2,25 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
+    #region Authentication
+
+    [Test]
+    public async Task Identity_SetupTwoFactor_Should_not_setup_2fa_when_not_authenticated()
+    {
+        // Arrange
+        var client = _back.GetTestsClient();
+
+        // Act
+        var response = await client.SetupTwoFactor("000000");
+
+        // Assert
+        response.ShouldBeError(HttpStatusCode.Unauthorized);
+    }
+
+    #endregion
+
+    #region Validation errors
+
     [Test]
     [TestCaseSource(nameof(Invalid2faTokens))]
     public async Task SetupTwoFactor_Should_not_setup_2fa_when_token_is_wrong(string token)
@@ -13,9 +32,7 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.SetupTwoFactor(token);
 
         // Assert
-        response.Should().BeFalse();
-        var key = await client.GetTwoFactorKey();
-        key.Success.TwoFactorEnabled.Should().BeFalse();
+        response.ShouldBeError(InvalidTwoFactorToken.I);
     }
 
     private static IEnumerable<object[]> Invalid2faTokens()
@@ -35,18 +52,9 @@ public partial class IntegrationTests : IntegrationTestBase
         }
     }
 
-    [Test]
-    public async Task SetupTwoFactor_Should_record_activity_when_2fa_setup_token_is_invalid()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
+    #endregion
 
-        // Act
-        var response = await client.SetupTwoFactor("000000");
-
-        // Assert
-        response.Should().BeFalse();
-    }
+    #region Happy path
 
     [Test]
     public async Task SetupTwoFactor_Should_setup_2fa()
@@ -61,24 +69,10 @@ public partial class IntegrationTests : IntegrationTestBase
         var response = await client.SetupTwoFactor(token);
 
         // Assert
-        response.Should().BeTrue();
+        response.ShouldBeSuccess();
         var key = await client.GetTwoFactorKey();
         key.Success.TwoFactorEnabled.Should().BeTrue();
     }
 
-    [Test]
-    public async Task SetupTwoFactor_Should_record_activity_log_on_setup_2fa()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-
-        var keyResponse = await client.GetTwoFactorKey();
-        var totpToken = keyResponse.Success.Key.GenerateTOTP();
-
-        // Act
-        var success = await client.SetupTwoFactor(totpToken);
-
-        // Assert
-        success.Should().BeTrue();
-    }
+    #endregion
 }

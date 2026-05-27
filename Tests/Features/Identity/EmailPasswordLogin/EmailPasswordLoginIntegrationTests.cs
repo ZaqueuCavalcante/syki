@@ -4,17 +4,16 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {
-    #region Validation Errors
+    #region Validation errors
 
     [Test]
     public async Task EmailPasswordLogin_Should_not_login_random_user()
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var email = "user@notfound.com";
 
         // Act
-        var result = await client.EmailPasswordLogin(email, "User@123");
+        var result = await client.EmailPasswordLogin("user@notfound.com", "User@123");
 
         // Assert
         result.ShouldBeError(LoginWrongEmailOrPassword.I);
@@ -59,15 +58,11 @@ public partial class IntegrationTests : IntegrationTestBase
 
         var wrongPassword = "WrongPassword123!";
 
-        // Act - 3 failed attempts
+        // Act
         var attempt1 = await client.EmailPasswordLogin(user.Email, wrongPassword);
         var attempt2 = await client.EmailPasswordLogin(user.Email, wrongPassword);
         var attempt3 = await client.EmailPasswordLogin(user.Email, wrongPassword);
-
-        // 4th attempt should be locked out
         var attempt4 = await client.EmailPasswordLogin(user.Email, wrongPassword);
-
-        // Even with correct password, should be locked out
         var attempt5 = await client.EmailPasswordLogin(user.Email, "My@nEw@strong@P4ssword");
 
         // Assert
@@ -78,36 +73,15 @@ public partial class IntegrationTests : IntegrationTestBase
         attempt5.ShouldBeError(LoginUserLockedOut.I);
     }
 
-
     [Test]
-    public async Task EmailPasswordLogin_Should_record_activity_when_login_requires_two_factor()
+    public async Task EmailPasswordLogin_Should_require_two_factor_when_2fa_is_enabled()
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var user = client.User;
 
         var keyResponse = await client.GetTwoFactorKey();
         var token = keyResponse.Success.Key.GenerateTOTP();
         await client.SetupTwoFactor(token);
-
-        await client.Logout();
-
-        // Act
-        var result = await client.EmailPasswordLogin(user.Email, "My@nEw@strong@P4ssword");
-
-        // Assert
-        result.ShouldBeError(LoginRequiresTwoFactor.I);
-    }
-
-    [Test]
-    public async Task EmailPasswordLogin_Should_require_two_factor_authentication_when_2fa_is_enabled()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-
-        var keyResponse = await client.GetTwoFactorKey();
-        var totpToken = keyResponse.Success.Key.GenerateTOTP();
-        await client.SetupTwoFactor(totpToken);
 
         await client.Logout();
 
@@ -120,7 +94,7 @@ public partial class IntegrationTests : IntegrationTestBase
 
     #endregion
 
-    #region Happy Path
+    #region Happy path
 
     [Test]
     public async Task EmailPasswordLogin_Should_login_user_with_correct_email_and_password()
@@ -155,19 +129,17 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.EmailPasswordLogin(user.Email, wrongPassword);
         await client.EmailPasswordLogin(user.Email, wrongPassword);
 
-        // Successful login should reset counter
         var successLogin = await client.EmailPasswordLogin(user.Email, "My@nEw@strong@P4ssword");
 
-        // 2 more failed attempts should not trigger lockout
+        // 2 more failed attempts after reset should not trigger lockout
         await client.EmailPasswordLogin(user.Email, wrongPassword);
         await client.EmailPasswordLogin(user.Email, wrongPassword);
 
-        // 3rd failed attempt after reset should still work (not locked)
         var attempt3 = await client.EmailPasswordLogin(user.Email, wrongPassword);
 
         // Assert
         successLogin.ShouldBeSuccess();
-        attempt3.ShouldBeError(LoginWrongEmailOrPassword.I); // Not locked yet
+        attempt3.ShouldBeError(LoginWrongEmailOrPassword.I);
     }
 
     #endregion

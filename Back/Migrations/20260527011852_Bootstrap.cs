@@ -397,6 +397,33 @@ namespace Back.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "institution_roles",
+                schema: "syki",
+                columns: table => new
+                {
+                    institution_id = table.Column<int>(type: "integer", nullable: false),
+                    role_id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_institution_roles", x => new { x.institution_id, x.role_id });
+                    table.ForeignKey(
+                        name: "fk_institution_roles_institutions_institution_id",
+                        column: x => x.institution_id,
+                        principalSchema: "syki",
+                        principalTable: "institutions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_institution_roles_roles_role_id",
+                        column: x => x.role_id,
+                        principalSchema: "syki",
+                        principalTable: "roles",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "role_claims",
                 schema: "syki",
                 columns: table => new
@@ -458,6 +485,37 @@ namespace Back.Migrations
                         column: x => x.user_id,
                         principalSchema: "syki",
                         principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "reset_password_tokens",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    institution_id = table.Column<int>(type: "integer", nullable: false),
+                    token = table.Column<string>(type: "text", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    expires_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    used_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_reset_password_tokens", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_reset_password_tokens_asp_net_users_user_id",
+                        column: x => x.user_id,
+                        principalSchema: "syki",
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_reset_password_tokens_institutions_institution_id",
+                        column: x => x.institution_id,
+                        principalSchema: "syki",
+                        principalTable: "institutions",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -894,9 +952,31 @@ namespace Back.Migrations
                 column: "institution_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_institution_roles_role_id",
+                schema: "syki",
+                table: "institution_roles",
+                column: "role_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_magic_links_user_id",
                 schema: "syki",
                 table: "magic_links",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_reset_password_tokens_institution_id",
+                table: "reset_password_tokens",
+                column: "institution_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_reset_password_tokens_token",
+                table: "reset_password_tokens",
+                column: "token",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_reset_password_tokens_user_id",
+                table: "reset_password_tokens",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
@@ -1059,8 +1139,15 @@ namespace Back.Migrations
                 schema: "syki");
 
             migrationBuilder.DropTable(
+                name: "institution_roles",
+                schema: "syki");
+
+            migrationBuilder.DropTable(
                 name: "magic_links",
                 schema: "syki");
+
+            migrationBuilder.DropTable(
+                name: "reset_password_tokens");
 
             migrationBuilder.DropTable(
                 name: "role_claims",

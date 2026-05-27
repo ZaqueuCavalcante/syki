@@ -5,6 +5,7 @@ using Syki.Back.Features.Identity.SetupTwoFactor;
 using Syki.Back.Features.Identity.TwoFactorLogin;
 using Syki.Back.Features.Identity.GetTwoFactorKey;
 using Syki.Back.Features.Identity.EmailPasswordLogin;
+using Syki.Back.Features.Identity.SendResetPasswordToken;
 
 namespace Syki.Tests.Integration.Clients;
 
@@ -28,18 +29,6 @@ public partial class TestsHttpClient
         return await response.Resolve<EmailPasswordLoginOut>();
     }
 
-    public async Task<HttpResponseMessage> SendResetPasswordToken(string email)
-    {
-        var data = new SendResetPasswordTokenIn { Email = email };
-        return await http.PostAsJsonAsync("identity/reset-password-token", data);
-    }
-
-    public async Task<HttpResponseMessage> ResetPassword(string token, string password)
-    {
-        var data = new ResetPasswordIn { Token = token, Password = password };
-        return await http.PostAsJsonAsync("identity/reset-password", data);
-    }
-
     public async Task<HttpResponseMessage> Logout()
     {
         return await http.PostAsJsonAsync("identity/logout", new {});
@@ -51,11 +40,11 @@ public partial class TestsHttpClient
         return await response.Resolve<GetTwoFactorKeyOut>();
     }
 
-    public async Task<bool> SetupTwoFactor(string token)
+    public async Task<OneOf<SuccessOut, ErrorOut>> SetupTwoFactor(string token)
     {
         var data = new SetupTwoFactorIn { Token = token };
         var response = await http.PostAsJsonAsync("identity/2fa-setup", data);
-        return response.IsSuccessStatusCode;
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<OneOf<TwoFactorLoginOut, ErrorOut>> TwoFactorLogin(string? token)
@@ -65,5 +54,17 @@ public partial class TestsHttpClient
         var response = await http.PostAsJsonAsync("identity/2fa-login", body);
 
         return await response.Resolve<TwoFactorLoginOut>();
+    }
+
+    public async Task<HttpResponseMessage> SendResetPasswordToken(string email)
+    {
+        var data = new SendResetPasswordTokenIn { Email = email };
+        return await http.PostAsJsonAsync("identity/reset-password-token", data);
+    }
+
+    public async Task<HttpResponseMessage> ResetPassword(string token, string password)
+    {
+        var data = new ResetPasswordIn { Token = token, Password = password };
+        return await http.PostAsJsonAsync("identity/reset-password", data);
     }
 }

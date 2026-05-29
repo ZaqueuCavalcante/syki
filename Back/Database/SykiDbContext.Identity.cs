@@ -70,6 +70,21 @@ public partial class SykiDbContext
         );
     }
 
+    public async Task<SykiRole> GetStudentRole()
+    {
+        return await Cache.GetOrCreateAsync(
+            key: $"{CacheKeys.GetStudentRole}",
+            state: this,
+            options: new() { Expiration = TimeSpan.FromDays(100) },
+            factory: async (state, ct) =>
+            {
+                return await state.Roles.AsNoTracking()
+                    .Where(x => x.OwnerId == null && x.NormalizedName == SykiDefaultRoles.Student.NormalizedName)
+                    .FirstAsync(ct);
+            }
+        );
+    }
+
     public async Task<SsoConfiguration?> GetActiveSsoConfigForSchemeAsync(Guid publicId)
     {
         const string sql = @"

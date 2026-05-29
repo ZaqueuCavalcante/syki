@@ -15,6 +15,7 @@ public class GetUserAccountService(SykiDbContext ctx) : ISykiService
                 u.email,
                 u.profile_photo,
                 r.name AS role,
+                r.base_type AS user_type,
                 i.name AS institution
             FROM
                 syki.users u

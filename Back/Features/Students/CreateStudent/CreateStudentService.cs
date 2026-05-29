@@ -11,9 +11,13 @@ public class CreateStudentService(SykiDbContext ctx, UserManager<SykiUser> userM
         var emailUsed = await ctx.Users.AnyAsync(u => u.Email == email);
         if (emailUsed) return EmailAlreadyUsed.I;
 
-        var user = new SykiUser(ctx.RequestUser.InstitutionId, data.Name, email);
-        var student = new SykiStudent(user, ctx.RequestUser.InstitutionId, data.Name);
-        ctx.Add(student);
+        var studentRole = await ctx.GetStudentRole();
+        var institutionId = ctx.RequestUser.InstitutionId;
+
+        var user = new SykiUser(institutionId, data.Name, email);
+        var student = new SykiStudent(user, institutionId, data.Name);
+        var userRole = new SykiUserRole(institutionId, user, studentRole.Id);
+        ctx.AddRange(student, userRole);
 
         await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");
 

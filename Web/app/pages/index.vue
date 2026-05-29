@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { sub } from 'date-fns'
-import type { DropdownMenuItem } from '@nuxt/ui'
-import type { Period, Range } from '~/types'
-
 definePageMeta({ layout: false })
 
 const { account, fetchAccount } = useUserAccount()
@@ -15,26 +11,8 @@ onMounted(async () => {
   checking.value = false
 })
 
-// Dashboard
 const { isNotificationsSlideoverOpen } = useDashboard()
 
-const dashboardItems = [[{
-  label: 'New mail',
-  icon: 'i-lucide-send',
-  to: '/inbox'
-}, {
-  label: 'New customer',
-  icon: 'i-lucide-user-plus',
-  to: '/customers'
-}]] satisfies DropdownMenuItem[][]
-
-const range = shallowRef<Range>({
-  start: sub(new Date(), { days: 14 }),
-  end: new Date()
-})
-const period = ref<Period>('daily')
-
-// Landing
 const features = [
   {
     icon: 'i-lucide-graduation-cap',
@@ -96,25 +74,14 @@ const features = [
                 </UChip>
               </UButton>
             </UTooltip>
-
-            <UDropdownMenu :items="dashboardItems">
-              <UButton icon="i-lucide-plus" size="md" class="rounded-full" />
-            </UDropdownMenu>
           </template>
         </UDashboardNavbar>
-
-        <UDashboardToolbar>
-          <template #left>
-            <HomeDateRangePicker v-model="range" class="-ms-1" />
-            <HomePeriodSelect v-model="period" :range="range" />
-          </template>
-        </UDashboardToolbar>
       </template>
 
       <template #body>
-        <HomeStats :period="period" :range="range" />
-        <HomeChart :period="period" :range="range" />
-        <HomeSales :period="period" :range="range" />
+        <HomeManager v-if="account?.userType === 'Manager'" />
+        <HomeTeacher v-else-if="account?.userType === 'Teacher'" />
+        <HomeStudent v-else-if="account?.userType === 'Student'" />
       </template>
     </UDashboardPanel>
 

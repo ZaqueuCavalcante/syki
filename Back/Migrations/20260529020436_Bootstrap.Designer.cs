@@ -14,7 +14,7 @@ using Syki.Back.Database;
 namespace Back.Migrations
 {
     [DbContext(typeof(SykiDbContext))]
-    [Migration("20260527011852_Bootstrap")]
+    [Migration("20260529020436_Bootstrap")]
     partial class Bootstrap
     {
         /// <inheritdoc />
@@ -685,6 +685,10 @@ namespace Back.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BaseType")
+                        .HasColumnType("integer")
+                        .HasColumnName("base_type");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()

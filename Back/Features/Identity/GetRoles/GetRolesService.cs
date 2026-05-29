@@ -16,6 +16,7 @@ public class GetRolesService(SykiDbContext ctx) : ISykiService
             {
                 Id = r.Id,
                 Name = r.Name!,
+                BaseType = r.BaseType,
                 Description = r.Description,
                 Permissions = r.Permissions.Count,
             }),

@@ -24,6 +24,7 @@ internal class ResponseExamples : ExamplesProvider<CreateRoleOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidRoleName,
     InvalidRoleDescription,
+    InvalidRoleBaseType,
     InvalidPermissionsList,
     RoleNameAlreadyExists,
     InvalidRolePermissions

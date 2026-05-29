@@ -1,4 +1,5 @@
-﻿using Syki.Back.Domain.Identity;
+﻿using Syki.Back.Domain.Enums;
+using Syki.Back.Domain.Identity;
 using Syki.Back.Auth.Permissions;
 
 namespace Syki.Back.Auth.Roles;
@@ -11,6 +12,7 @@ public static class SykiDefaultRoles
 		Name = "Diretor",
 		NormalizedName = "DIRETOR",
 		Description = "Gerencia campi, usuários, perfis, períodos, cursos, professores, alunos, disciplinas, ofertas e grades.",
+		BaseType = UserType.Manager,
 		Permissions = [
 			SykiPermissions.ManageCampi.Id,
 			SykiPermissions.ManageUsers.Id,
@@ -31,6 +33,7 @@ public static class SykiDefaultRoles
 		Name = "Professor",
 		NormalizedName = "PROFESSOR",
 		Description = "Ministra aulas e avalia os alunos.",
+		BaseType = UserType.Teacher,
 		Permissions = [],
 	};
 
@@ -40,6 +43,7 @@ public static class SykiDefaultRoles
 		Name = "Aluno",
 		NormalizedName = "ALUNO",
 		Description = "Participa das aulas e é avaliado.",
+		BaseType = UserType.Student,
 		Permissions = [],
 	};
 }

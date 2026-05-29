@@ -254,6 +254,7 @@ namespace Back.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     owner_id = table.Column<int>(type: "integer", nullable: true),
                     description = table.Column<string>(type: "text", nullable: false),
+                    base_type = table.Column<int>(type: "integer", nullable: false),
                     permissions = table.Column<List<int>>(type: "integer[]", nullable: false),
                     name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     normalized_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),

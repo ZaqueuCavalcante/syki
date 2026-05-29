@@ -15,6 +15,8 @@ public class CreateRoleService(SykiDbContext ctx) : ISykiService
             RuleFor(x => x.Description).NotEmpty().WithError(InvalidRoleDescription.I);
             RuleFor(x => x.Description).MaximumLength(200).WithError(InvalidRoleDescription.I);
 
+            RuleFor(x => x.BaseType).IsInEnum().WithError(InvalidRoleBaseType.I);
+
             RuleFor(x => x.Permissions)
                 .Must(x => x != null && x.IsAllDistinct() && x.IsSubsetOf(SykiPermissions.Permissions.ConvertAll(p => p.Id)))
                 .WithError(InvalidPermissionsList.I);
@@ -31,7 +33,7 @@ public class CreateRoleService(SykiDbContext ctx) : ISykiService
         var roleAlreadyExists = await ctx.Roles.AnyAsync(x => x.OwnerId == institutionId && x.NormalizedName == upperCaseName);
         if (roleAlreadyExists) return RoleNameAlreadyExists.I;
 
-        var role = new SykiRole(institutionId, data.Name, data.Description, data.Permissions);
+        var role = new SykiRole(institutionId, data.Name, data.Description, data.BaseType, data.Permissions);
         var rolePermissionsOk = role.IsSubsetOf(ctx.RequestUser.Permissions);
         if (!rolePermissionsOk) return InvalidRolePermissions.I;
 

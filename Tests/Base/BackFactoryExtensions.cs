@@ -1,5 +1,6 @@
 using Quartz;
 using Syki.Back.Emails;
+using Syki.Back.Domain.Enums;
 using Syki.Back.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Syki.Tests.Integration.Clients;
@@ -115,7 +116,7 @@ public static class BackFactoryExtensions
         return client;
     }
 
-    public static async Task<TestsHttpClient> LoggedAs(this BackFactory factory, string roleName, List<SykiPermission> permissions)
+    public static async Task<TestsHttpClient> LoggedAs(this BackFactory factory, string roleName, List<SykiPermission> permissions, UserType baseType = UserType.Manager)
     {
         await using var ctx = factory.GetDbContext();
         var client = factory.GetTestsClient();
@@ -125,7 +126,7 @@ public static class BackFactoryExtensions
 
         // Create custom role with specified permissions (bypassing validation)
         var permissionIds = permissions.Select(p => p.Id).ToList();
-        var role = new SykiRole(user.InstitutionId, roleName, roleName, permissionIds);
+        var role = new SykiRole(user.InstitutionId, roleName, roleName, baseType, permissionIds);
         var userRole = new SykiUserRole(user.InstitutionId, user.Id, role.Id) { Role = role };
 
         ctx.AddRange(role, userRole);

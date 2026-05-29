@@ -10,6 +10,12 @@ const config = useRuntimeConfig()
 const toast = useToast()
 const loading = ref(false)
 
+const baseTypeOptions = [
+  { label: 'Gestor', value: 0 },
+  { label: 'Professor', value: 1 },
+  { label: 'Aluno', value: 2 },
+]
+
 const availablePermissions = [
   { id: 0,   label: 'Gerenciar perfis de acesso' },
   { id: 1,   label: 'Gerenciar SSO' },
@@ -25,26 +31,29 @@ const availablePermissions = [
 const schema = z.object({
   name: z.string().min(1, 'Nome obrigatório').max(50, 'Máximo 50 caracteres'),
   description: z.string().min(1, 'Descrição obrigatória').max(200, 'Máximo 200 caracteres'),
+  baseType: z.number({ error: 'Tipo base obrigatório' }),
   permissions: z.array(z.number()),
 })
 
 type Schema = z.output<typeof schema>
 
-const formState = reactive<Schema>({
+const formState = reactive<Partial<Schema>>({
   name: '',
   description: '',
+  baseType: undefined,
   permissions: [],
 })
 
 function togglePermission(id: number) {
-  const idx = formState.permissions.indexOf(id)
-  if (idx === -1) formState.permissions.push(id)
-  else formState.permissions.splice(idx, 1)
+  const idx = formState.permissions!.indexOf(id)
+  if (idx === -1) formState.permissions!.push(id)
+  else formState.permissions!.splice(idx, 1)
 }
 
 function resetForm() {
   formState.name = ''
   formState.description = ''
+  formState.baseType = undefined
   formState.permissions = []
 }
 
@@ -94,13 +103,23 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           <UTextarea v-model="formState.description" class="w-full" placeholder="Ex: Perfil com acesso a cursos e disciplinas" :rows="3" />
         </UFormField>
 
+        <UFormField label="Tipo base" name="baseType">
+          <USelect
+            v-model="formState.baseType"
+            :items="baseTypeOptions"
+            value-key="value"
+            class="w-full"
+            placeholder="Selecione"
+          />
+        </UFormField>
+
         <UFormField label="Permissões" name="permissions">
           <div class="flex flex-col gap-2 w-full">
             <UCheckbox
               v-for="perm in availablePermissions"
               :key="perm.id"
               :label="perm.label"
-              :checked="formState.permissions.includes(perm.id)"
+              :checked="formState.permissions!.includes(perm.id)"
               @update:checked="togglePermission(perm.id)"
             />
           </div>

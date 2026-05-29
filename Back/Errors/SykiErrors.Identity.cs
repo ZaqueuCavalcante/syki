@@ -189,6 +189,13 @@ public class InvalidRole : SykiError
     public override string Message { get; set; } = "Perfil de acesso inválido.";
 }
 
+public class InvalidRoleBaseType : SykiError
+{
+    public static readonly InvalidRoleBaseType I = new();
+    public override string Code { get; set; } = nameof(InvalidRoleBaseType);
+    public override string Message { get; set; } = "Tipo base do perfil de acesso inválido.";
+}
+
 public class InvalidRolePermissions : SykiError
 {
     public static readonly InvalidRolePermissions I = new();

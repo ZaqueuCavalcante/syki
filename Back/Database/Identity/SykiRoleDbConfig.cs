@@ -11,9 +11,6 @@ public class SykiRoleDbConfig : IEntityTypeConfiguration<SykiRole>
 
         entity.HasKey(e => e.Id);
 
-        entity.Property(e => e.Description)
-            .IsRequired();
-
         entity.Property(e => e.Permissions)
             .HasColumnType("integer[]")
             .IsRequired();

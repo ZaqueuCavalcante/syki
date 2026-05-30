@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using Syki.Back.Features.Users.RegisterUser;
+using Syki.Back.Features.Users.GetUserAccount;
 
 namespace Syki.Tests.Integration.Clients;
 
@@ -18,5 +19,11 @@ public partial class TestsHttpClient
         user.Email = email;
 
         return user;
+    }
+
+    public async Task<OneOf<GetUserAccountOut, ErrorOut>> GetUserAccount()
+    {
+        var response = await http.GetAsync("users/account");
+        return await response.Resolve<GetUserAccountOut>();
     }
 }

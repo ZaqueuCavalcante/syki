@@ -4,13 +4,14 @@ export type UserType = 'Manager' | 'Teacher' | 'Student'
 
 interface UserAccount {
   id: string
+  role: number
   name: string
   email: string
-  institution: string
-  role: number
   userType: UserType
-  profilePhoto: string | null
+  institution: string
+  permissions: number[]
   course: string | null
+  profilePhoto: string | null
 }
 
 const _useUserAccount = () => {

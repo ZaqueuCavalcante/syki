@@ -1,0 +1,239 @@
+import type {
+  PolicyName,
+  PermissionId,
+  UserTypeValue,
+  PolicyRequirement,
+  PolicyDefinition,
+} from "./types";
+import { Permissions, UserTypes } from "./types";
+
+function hasPermission(permissionId: PermissionId): PolicyRequirement {
+  return { type: "hasPermission", permissionId };
+}
+
+function hasAnyPermission(...permissionIds: PermissionId[]): PolicyRequirement {
+  return { type: "hasAnyPermission", permissionIds };
+}
+
+function hasUserType(value: UserTypeValue): PolicyRequirement {
+  return { type: "hasUserType", value };
+}
+
+/**
+ * Central policy store - mirrors backend policies with UI-specific additions
+ */
+export const Policies: Record<PolicyName, PolicyDefinition> = {
+  // Home
+  AccessHomePage: {
+    description: "Acessar a página inicial",
+    requirements: [],
+  },
+
+  // Campi
+  AccessCampiPage: {
+    description: "Acessar a página de campi",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCampi),
+    ],
+  },
+  CreateCampus: {
+    description: "Criar novos campi",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCampi),
+    ],
+  },
+  UpdateCampus: {
+    description: "Editar campi",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCampi),
+    ],
+  },
+
+  // Disciplines
+  AccessDisciplinesPage: {
+    description: "Acessar a página de disciplinas",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageDisciplines),
+    ],
+  },
+  CreateDiscipline: {
+    description: "Criar novas disciplinas",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageDisciplines),
+    ],
+  },
+  UpdateDiscipline: {
+    description: "Editar disciplinas",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageDisciplines),
+    ],
+  },
+
+  // Courses
+  AccessCoursesPage: {
+    description: "Acessar a página de cursos",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCourses),
+    ],
+  },
+  CreateCourse: {
+    description: "Criar novos cursos",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCourses),
+    ],
+  },
+  UpdateCourse: {
+    description: "Editar cursos",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCourses),
+    ],
+  },
+
+  // CourseCurriculums
+  AccessCourseCurriculumsPage: {
+    description: "Acessar a página de grades curriculares",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCourseCurriculums),
+    ],
+  },
+  CreateCourseCurriculum: {
+    description: "Criar novas grades curriculares",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCourseCurriculums),
+    ],
+  },
+
+  // Periods
+  AccessPeriodsPage: {
+    description: "Acessar a página de períodos acadêmicos",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManagePeriods),
+    ],
+  },
+  CreateAcademicPeriod: {
+    description: "Criar novos períodos acadêmicos",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManagePeriods),
+    ],
+  },
+
+  // CourseOfferings
+  AccessCourseOfferingsPage: {
+    description: "Acessar a página de ofertas de curso",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCourseOfferings),
+    ],
+  },
+  CreateCourseOffering: {
+    description: "Criar novas ofertas de curso",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCourseOfferings),
+    ],
+  },
+
+  // Teachers
+  AccessTeachersPage: {
+    description: "Acessar a página de professores",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageTeachers),
+    ],
+  },
+  CreateTeacher: {
+    description: "Cadastrar novos professores",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageTeachers),
+    ],
+  },
+
+  // Students
+  AccessStudentsPage: {
+    description: "Acessar a página de alunos",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageStudents),
+    ],
+  },
+  CreateStudent: {
+    description: "Cadastrar novos alunos",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageStudents),
+    ],
+  },
+
+  // Security
+  AccessSecurityPage: {
+    description: "Acessar a página de segurança",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasAnyPermission(Permissions.ManageRoles, Permissions.ManageSso),
+    ],
+  },
+  AccessRolesPage: {
+    description: "Acessar a aba de perfis de acesso",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageRoles),
+    ],
+  },
+  CreateRole: {
+    description: "Criar novos perfis de acesso",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageRoles),
+    ],
+  },
+  UpdateRole: {
+    description: "Editar perfis de acesso",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageRoles),
+    ],
+  },
+  AccessSsoPage: {
+    description: "Acessar a aba de configurações SSO",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageSso),
+    ],
+  },
+  CreateSsoConfiguration: {
+    description: "Criar configurações SSO",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageSso),
+    ],
+  },
+  UpdateSsoConfiguration: {
+    description: "Editar configurações SSO",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageSso),
+    ],
+  },
+};
+
+export function getPolicy(name: PolicyName): PolicyDefinition {
+  return Policies[name];
+}
+
+export function getPolicyNames(): PolicyName[] {
+  return Object.keys(Policies) as PolicyName[];
+}

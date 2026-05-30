@@ -1,6 +1,5 @@
 using Quartz;
 using Syki.Back.Emails;
-using Syki.Back.Domain.Enums;
 using Syki.Back.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Syki.Tests.Integration.Clients;

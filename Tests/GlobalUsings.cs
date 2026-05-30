@@ -8,6 +8,7 @@ global using Syki.Back.Shared;
 global using Syki.Back.Commands;
 global using Syki.Back.Database;
 global using Syki.Back.Extensions;
+global using Syki.Back.Domain.Enums;
 global using Syki.Back.Auth.Permissions;
 global using Syki.Tests.Integration.Base;
 global using Microsoft.EntityFrameworkCore;

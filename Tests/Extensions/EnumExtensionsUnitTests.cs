@@ -1,5 +1,3 @@
-using Syki.Back.Domain.Enums;
-
 namespace Syki.Tests.Extensions;
 
 public class EnumExtensionsUnitTests

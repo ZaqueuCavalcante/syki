@@ -1,5 +1,4 @@
-﻿using Syki.Back.Domain.Enums;
-using Syki.Back.Domain.Identity;
+﻿using Syki.Back.Domain.Identity;
 using Syki.Back.Auth.Permissions;
 
 namespace Syki.Back.Auth.Roles;

@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Syki.Back.Extensions;
 
 public static class EnumExtensions
 {
@@ -36,9 +36,29 @@ public static class EnumExtensions
         return (T)Enum.Parse(typeof(T), value, true);
     }
 
+    public static T ToEnum<T>(this short value)
+    {
+        return (T)Enum.Parse(typeof(T), value.ToString(), true);
+    }
+
+    public static T IntToEnum<T>(this int value)
+    {
+        return (T)Enum.Parse(typeof(T), value.ToString(), true);
+    }
+
     public static bool IsValid(this Enum value)
     {
         return Enum.IsDefined(value.GetType(), value);
+    }
+
+    public static int ToInt<TEnum>(this TEnum enumValue) where TEnum : Enum
+    {
+        return Convert.ToInt32(enumValue);
+    }
+
+    public static short ToShort<TEnum>(this TEnum enumValue) where TEnum : Enum
+    {
+        return (short) enumValue.ToInt();
     }
 
     public static bool Is(this DayOfWeek dayOfWeek, Day day)

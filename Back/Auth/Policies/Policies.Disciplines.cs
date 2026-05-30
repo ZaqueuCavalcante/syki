@@ -15,14 +15,14 @@ public static partial class Policies
     public static AuthorizationBuilder AddDisciplinesPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetDiscipline, SykiPermissions.ManageDisciplines)
-            .AddSykiPolicy(GetDisciplines, SykiPermissions.ManageDisciplines)
-            .AddSykiPolicy(CreateDiscipline, SykiPermissions.ManageDisciplines)
-            .AddSykiPolicy(UpdateDiscipline, SykiPermissions.ManageDisciplines);
+            .AddSykiPolicy(GetDiscipline, UserType.Manager, SykiPermissions.ManageDisciplines)
+            .AddSykiPolicy(GetDisciplines, UserType.Manager, SykiPermissions.ManageDisciplines)
+            .AddSykiPolicy(CreateDiscipline, UserType.Manager, SykiPermissions.ManageDisciplines)
+            .AddSykiPolicy(UpdateDiscipline, UserType.Manager, SykiPermissions.ManageDisciplines);
 
         builder
-            .AddSykiPolicy(AddDisciplineCourses, SykiPermissions.ManageDisciplines)
-            .AddSykiPolicy(GetDisciplinePotentialCourses, SykiPermissions.ManageDisciplines);
+            .AddSykiPolicy(AddDisciplineCourses, UserType.Manager, SykiPermissions.ManageDisciplines)
+            .AddSykiPolicy(GetDisciplinePotentialCourses, UserType.Manager, SykiPermissions.ManageDisciplines);
 
         return builder;
     }

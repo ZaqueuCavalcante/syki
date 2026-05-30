@@ -10,8 +10,8 @@ public static partial class Policies
     public static AuthorizationBuilder AddAcademicPeriodsPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetAcademicPeriods, SykiPermissions.ManagePeriods)
-            .AddSykiPolicy(CreateAcademicPeriod, SykiPermissions.ManagePeriods);
+            .AddSykiPolicy(GetAcademicPeriods, UserType.Manager, SykiPermissions.ManagePeriods)
+            .AddSykiPolicy(CreateAcademicPeriod, UserType.Manager, SykiPermissions.ManagePeriods);
 
         return builder;
     }

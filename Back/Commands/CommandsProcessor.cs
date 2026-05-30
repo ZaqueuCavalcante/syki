@@ -1,6 +1,5 @@
 using Quartz;
 using System.Diagnostics;
-using Syki.Back.Domain.Enums;
 using System.Collections.Concurrent;
 using Syki.Back.Commands.Domain.Commands;
 

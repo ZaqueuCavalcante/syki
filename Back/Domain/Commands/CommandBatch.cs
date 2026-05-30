@@ -1,5 +1,3 @@
-using Syki.Back.Domain.Enums;
-
 namespace Syki.Back.Commands.Domain.Commands;
 
 public class CommandBatch

@@ -1,5 +1,3 @@
-using Syki.Back.Domain.Enums;
-
 namespace Syki.Back.Shared;
 
 public class CommandBatchTableFilterIn

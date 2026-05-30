@@ -12,10 +12,10 @@ public static partial class Policies
     public static AuthorizationBuilder AddCampiPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetCampi, SykiPermissions.ManageCampi)
-            .AddSykiPolicy(GetCampus, SykiPermissions.ManageCampi)
-            .AddSykiPolicy(CreateCampus, SykiPermissions.ManageCampi)
-            .AddSykiPolicy(UpdateCampus, SykiPermissions.ManageCampi);
+            .AddSykiPolicy(GetCampi, UserType.Manager, SykiPermissions.ManageCampi)
+            .AddSykiPolicy(GetCampus, UserType.Manager, SykiPermissions.ManageCampi)
+            .AddSykiPolicy(CreateCampus, UserType.Manager, SykiPermissions.ManageCampi)
+            .AddSykiPolicy(UpdateCampus, UserType.Manager, SykiPermissions.ManageCampi);
 
         return builder;
     }

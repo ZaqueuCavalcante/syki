@@ -12,6 +12,7 @@ global using Syki.Back.Settings;
 global using Syki.Back.Extensions;
 global using System.ComponentModel;
 global using Syki.Back.Middlewares;
+global using Syki.Back.Domain.Enums;
 global using Syki.Back.Auth.Policies;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;

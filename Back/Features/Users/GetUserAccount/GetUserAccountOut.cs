@@ -1,5 +1,3 @@
-using Syki.Back.Domain.Enums;
-
 namespace Syki.Back.Features.Users.GetUserAccount;
 
 public class GetUserAccountOut : IApiDto<GetUserAccountOut>
@@ -33,6 +31,11 @@ public class GetUserAccountOut : IApiDto<GetUserAccountOut>
     /// Tipo do usuário.
     /// </summary>
     public UserType UserType { get; set; }
+
+    /// <summary>
+    /// Permissões do usuário.
+    /// </summary>
+    public List<int> Permissions { get; set; } = [];
 
     /// <summary>
     /// Url da foto de perfil do usuário.

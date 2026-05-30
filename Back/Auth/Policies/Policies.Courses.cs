@@ -13,12 +13,12 @@ public static partial class Policies
     public static AuthorizationBuilder AddCoursesPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetCourses, SykiPermissions.ManageCourses)
-            .AddSykiPolicy(CreateCourse, SykiPermissions.ManageCourses)
-            .AddSykiPolicy(UpdateCourse, SykiPermissions.ManageCourses);
+            .AddSykiPolicy(GetCourses, UserType.Manager, SykiPermissions.ManageCourses)
+            .AddSykiPolicy(CreateCourse, UserType.Manager, SykiPermissions.ManageCourses)
+            .AddSykiPolicy(UpdateCourse, UserType.Manager, SykiPermissions.ManageCourses);
 
         builder
-            .AddSykiPolicy(GetCourseDisciplines, SykiPermissions.ManageCourses);
+            .AddSykiPolicy(GetCourseDisciplines, UserType.Manager, SykiPermissions.ManageCourses);
 
         return builder;
     }

@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using Syki.Back.Domain.Enums;
 using Syki.Back.Database.Commands;
 using Syki.Back.Domain.Institutions;
 using Syki.Back.Commands.Domain.Commands;

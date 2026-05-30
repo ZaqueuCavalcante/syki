@@ -23,7 +23,8 @@ public class SignInService(
             new(SykiClaims.UserId, user.Id.ToString()),
             new(SykiClaims.UserPermissions, permissions),
             new(SykiClaims.Jti, Guid.NewGuid().ToString()),
-            new(SykiClaims.InstitutionId, user.InstitutionId.ToString()),
+            new(SykiClaims.UserType, role.BaseType.ToInt().ToString()),
+            new(SykiClaims.UserInstitutionId, user.InstitutionId.ToString()),
         };
 
         var identityClaims = new ClaimsIdentity();

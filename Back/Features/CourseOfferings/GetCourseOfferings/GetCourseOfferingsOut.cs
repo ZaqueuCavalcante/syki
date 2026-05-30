@@ -1,5 +1,3 @@
-using Syki.Back.Domain.Enums;
-
 namespace Syki.Back.Features.CourseOfferings.GetCourseOfferings;
 
 public class GetCourseOfferingsOut : IApiDto<GetCourseOfferingsOut>

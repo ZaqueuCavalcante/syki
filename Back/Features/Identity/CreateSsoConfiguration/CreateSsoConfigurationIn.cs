@@ -1,5 +1,3 @@
-using Syki.Back.Domain.Enums;
-
 namespace Syki.Back.Features.Identity.CreateSsoConfiguration;
 
 public class CreateSsoConfigurationIn : IApiDto<CreateSsoConfigurationIn>

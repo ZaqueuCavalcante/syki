@@ -26,19 +26,19 @@ public static partial class Policies
     public static AuthorizationBuilder AddIdentityPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetRoles, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(CreateRole, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(UpdateRole, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(GetDefaultRoles, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(GetInstitutionRoles, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(GetInstitutionRole, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(FilterInstitutionRoles, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(GetAvailableInstitutionRoles, SykiPermissions.ManageRoles);
+            .AddSykiPolicy(GetRoles, UserType.Manager, SykiPermissions.ManageRoles)
+            .AddSykiPolicy(CreateRole, UserType.Manager, SykiPermissions.ManageRoles)
+            .AddSykiPolicy(UpdateRole, UserType.Manager, SykiPermissions.ManageRoles)
+            .AddSykiPolicy(GetDefaultRoles, UserType.Manager, SykiPermissions.ManageRoles)
+            .AddSykiPolicy(GetInstitutionRoles, UserType.Manager, SykiPermissions.ManageRoles)
+            .AddSykiPolicy(GetInstitutionRole, UserType.Manager, SykiPermissions.ManageRoles)
+            .AddSykiPolicy(FilterInstitutionRoles, UserType.Manager, SykiPermissions.ManageRoles)
+            .AddSykiPolicy(GetAvailableInstitutionRoles, UserType.Manager, SykiPermissions.ManageRoles);
 
         builder
-            .AddSykiPolicy(CreateSsoConfiguration, SykiPermissions.ManageSso)
-            .AddSykiPolicy(UpdateSsoConfiguration, SykiPermissions.ManageSso)
-            .AddSykiPolicy(GetSsoConfigurations, SykiPermissions.ManageSso);
+            .AddSykiPolicy(CreateSsoConfiguration, UserType.Manager, SykiPermissions.ManageSso)
+            .AddSykiPolicy(UpdateSsoConfiguration, UserType.Manager, SykiPermissions.ManageSso)
+            .AddSykiPolicy(GetSsoConfigurations, UserType.Manager, SykiPermissions.ManageSso);
 
         builder
             .AddSykiPolicy(SetupTwoFactor)

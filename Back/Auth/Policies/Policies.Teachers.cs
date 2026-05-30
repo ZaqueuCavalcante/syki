@@ -10,8 +10,8 @@ public static partial class Policies
     public static AuthorizationBuilder AddTeachersPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetTeachers, SykiPermissions.ManageTeachers)
-            .AddSykiPolicy(CreateTeacher, SykiPermissions.ManageTeachers);
+            .AddSykiPolicy(GetTeachers, UserType.Manager, SykiPermissions.ManageTeachers)
+            .AddSykiPolicy(CreateTeacher, UserType.Manager, SykiPermissions.ManageTeachers);
 
         return builder;
     }

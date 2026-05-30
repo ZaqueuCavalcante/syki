@@ -1,5 +1,3 @@
-using Syki.Back.Domain.Enums;
-
 namespace Syki.Back.Features.CourseOfferings.CreateCourseOffering;
 
 public class CreateCourseOfferingIn : IApiDto<CreateCourseOfferingIn>

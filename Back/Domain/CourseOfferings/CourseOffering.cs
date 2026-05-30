@@ -1,6 +1,5 @@
 using Syki.Back.Domain.Campi;
 using Syki.Back.Domain.Courses;
-using Syki.Back.Domain.Enums;
 using Syki.Back.Domain.Periods;
 using Syki.Back.Domain.CourseCurriculums;
 

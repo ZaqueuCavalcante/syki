@@ -1,5 +1,3 @@
-using Syki.Back.Domain.Enums;
-
 namespace Syki.Back.Features.Identity.CreateRole;
 
 public class CreateRoleIn : IApiDto<CreateRoleIn>

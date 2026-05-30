@@ -1,5 +1,3 @@
-using Syki.Back.Domain.Enums;
-
 namespace Syki.Back.Domain.Identity;
 
 public class SykiRole : IdentityRole<int>

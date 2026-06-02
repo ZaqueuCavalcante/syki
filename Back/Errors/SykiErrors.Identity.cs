@@ -112,13 +112,6 @@ public class SsoAuthenticationFailed : SykiError
     public override string Message { get; set; } = "Falha na autenticação SSO.";
 }
 
-public class SsoEmailNotVerified : SykiError
-{
-    public static readonly SsoEmailNotVerified I = new();
-    public override string Code { get; set; } = nameof(SsoEmailNotVerified);
-    public override string Message { get; set; } = "Email não verificado pelo provedor de identidade.";
-}
-
 public class SsoLoginUserNotFound : SykiError
 {
     public static readonly SsoLoginUserNotFound I = new();
@@ -126,67 +119,11 @@ public class SsoLoginUserNotFound : SykiError
     public override string Message { get; set; } = "Usuário não pertence à organização.";
 }
 
-public class SocialLoginFailed : SykiError
-{
-    public static readonly SocialLoginFailed I = new();
-    public override string Code { get; set; } = nameof(SocialLoginFailed);
-    public override string Message { get; set; } = "Falha na autenticação social. Tente novamente.";
-}
-
-public class SocialLoginEmailNotVerified : SykiError
-{
-    public static readonly SocialLoginEmailNotVerified I = new();
-    public override string Code { get; set; } = nameof(SocialLoginEmailNotVerified);
-    public override string Message { get; set; } = "Email não verificado pelo provedor.";
-}
-
-public class SocialLoginSsoRequired : SykiError
-{
-    public static readonly SocialLoginSsoRequired I = new();
-    public override string Code { get; set; } = nameof(SocialLoginSsoRequired);
-    public override string Message { get; set; } = "Sua organização requer login via SSO corporativo.";
-}
-
-public class InvalidIpAddress : SykiError
-{
-    public static readonly InvalidIpAddress I = new();
-    public override string Code { get; set; } = nameof(InvalidIpAddress);
-    public override string Message { get; set; } = "Endereço IP ou CIDR inválido.";
-}
-
-public class SykiWebInvalidJwt : SykiError
-{
-    public static readonly SykiWebInvalidJwt I = new();
-    public override string Code { get; set; } = nameof(SykiWebInvalidJwt);
-    public override string Message { get; set; } = "Token do SykiWeb inválido.";
-}
-
-public class SykiWebJwtExpired : SykiError
-{
-    public static readonly SykiWebJwtExpired I = new();
-    public override string Code { get; set; } = nameof(SykiWebJwtExpired);
-    public override string Message { get; set; } = "Token do SykiWeb expirado.";
-}
-
 public class RoleNameAlreadyExists : SykiError
 {
     public static readonly RoleNameAlreadyExists I = new();
     public override string Code { get; set; } = nameof(RoleNameAlreadyExists);
     public override string Message { get; set; } = "Já existe uma role com esse nome.";
-}
-
-public class DuplicateIpAccessRule : SykiError
-{
-    public static readonly DuplicateIpAccessRule I = new();
-    public override string Code { get; set; } = nameof(DuplicateIpAccessRule);
-    public override string Message { get; set; } = "Regra de acesso IP duplicada.";
-}
-
-public class InvalidRole : SykiError
-{
-    public static readonly InvalidRole I = new();
-    public override string Code { get; set; } = nameof(InvalidRole);
-    public override string Message { get; set; } = "Perfil de acesso inválido.";
 }
 
 public class InvalidRoleBaseType : SykiError
@@ -201,32 +138,4 @@ public class InvalidRolePermissions : SykiError
     public static readonly InvalidRolePermissions I = new();
     public override string Code { get; set; } = nameof(InvalidRolePermissions);
     public override string Message { get; set; } = "Permissões do perfil de acesso inválidas.";
-}
-
-public class RoleNotFound : SykiError
-{
-    public static readonly RoleNotFound I = new();
-    public override string Code { get; set; } = nameof(RoleNotFound);
-    public override string Message { get; set; } = "Role não encontrada.";
-}
-
-public class AccessTokenNotFound : SykiError
-{
-    public static readonly AccessTokenNotFound I = new();
-    public override string Code { get; set; } = nameof(AccessTokenNotFound);
-    public override string Message { get; set; } = "Token de acesso não encontrado.";
-}
-
-public class LoginIpNotAllowed : SykiError
-{
-    public static readonly LoginIpNotAllowed I = new();
-    public override string Code { get; set; } = nameof(LoginIpNotAllowed);
-    public override string Message { get; set; } = "Acesso não permitido a partir deste endereço IP.";
-}
-
-public class DuplicateTwoFactorAccessRule : SykiError
-{
-    public static readonly DuplicateTwoFactorAccessRule I = new();
-    public override string Code { get; set; } = nameof(DuplicateTwoFactorAccessRule);
-    public override string Message { get; set; } = "Já existe uma regra de 2FA para este escopo.";
 }

@@ -1,10 +1,5 @@
 namespace Syki.Back.Errors;
 
-public class SykiSuccess
-{
-    public static readonly SykiSuccess I = new();
-}
-
 public abstract class SykiError
 {
     public abstract string Code { get; set; }
@@ -16,4 +11,9 @@ public abstract class SykiError
     {
         return SwaggerExample.Create(Message, new ErrorOut { Code = Code, Message = Message });
     }
+}
+
+public class SykiSuccess
+{
+    public static readonly SykiSuccess I = new();
 }

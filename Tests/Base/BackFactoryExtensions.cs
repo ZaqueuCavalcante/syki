@@ -3,6 +3,7 @@ using Syki.Back.Emails;
 using Syki.Back.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Syki.Tests.Integration.Clients;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
@@ -72,6 +73,15 @@ public static class BackFactoryExtensions
         return scope.ServiceProvider.GetRequiredService<SykiDbContext>();
     }
 
+    public static async Task SetPassword(this BackFactory factory, string email, string password)
+    {
+        var scope = factory.Services.CreateScope();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
+        var user = await userManager.FindByEmailAsync(email);
+        var resetToken = await userManager.GeneratePasswordResetTokenAsync(user!);
+        await userManager.ResetPasswordAsync(user!, resetToken, password);
+    }
+
     public static async Task<TestsHttpClient> LoggedAsDirector(this BackFactory factory)
     {
         await using var ctx = factory.GetDbContext();
@@ -88,15 +98,6 @@ public static class BackFactoryExtensions
         client.User = user;
 
         return client;
-    }
-
-    public static async Task SetPassword(this BackFactory factory, string email, string password)
-    {
-        var scope = factory.Services.CreateScope();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
-        var user = await userManager.FindByEmailAsync(email);
-        var resetToken = await userManager.GeneratePasswordResetTokenAsync(user!);
-        await userManager.ResetPasswordAsync(user!, resetToken, password);
     }
 
     public static async Task<TestsHttpClient> LoggedAsTeacher(this BackFactory factory)

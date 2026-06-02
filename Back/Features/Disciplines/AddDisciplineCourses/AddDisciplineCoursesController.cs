@@ -20,7 +20,7 @@ public class AddDisciplineCoursesController(AddDisciplineCoursesService service)
 }
 
 internal class RequestExamples : ExamplesProvider<AddDisciplineCoursesIn>;
-internal class ResponseExamples : ExamplesProvider<AddDisciplineCoursesOut>;
+internal class ResponseExamples : ExamplesProvider<SuccessOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     DisciplineNotFound,
     InvalidCoursesList

@@ -117,8 +117,7 @@ public partial class IntegrationTests
         var result = await client.AddDisciplineCourses(discipline.Success.Id, [course.Success.Id]);
 
         // Assert
-        var output = result.Success;
-        output.Id.Should().Be(discipline.Success.Id);
+        result.ShouldBeSuccess();
     }
 
     #endregion

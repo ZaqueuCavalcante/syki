@@ -14,7 +14,7 @@ public class AddDisciplineCoursesService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<AddDisciplineCoursesOut, SykiError>> Add(AddDisciplineCoursesIn data)
+    public async Task<OneOf<SykiSuccess, SykiError>> Add(AddDisciplineCoursesIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -35,6 +35,6 @@ public class AddDisciplineCoursesService(SykiDbContext ctx) : ISykiService
 
         await ctx.SaveChangesAsync();
 
-        return new AddDisciplineCoursesOut { Id = discipline.Id };
+        return SykiSuccess.I;
     }
 }

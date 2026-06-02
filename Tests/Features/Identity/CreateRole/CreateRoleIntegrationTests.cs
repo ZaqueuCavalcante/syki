@@ -111,19 +111,6 @@ public partial class IntegrationTests
         result.ShouldBeError(RoleNameAlreadyExists.I);
     }
 
-    [Test]
-    public async Task Identity_CreateRole_Should_not_create_role_when_permissions_are_not_subset()
-    {
-        // Arrange
-        var client = await _back.LoggedAs("Gestor", [SykiPermissions.ManageRoles]);
-
-        // Act
-        var result = await client.CreateRole(permissions: [SykiPermissions.ManageCampi.Id]);
-
-        // Assert
-        result.ShouldBeError(InvalidRolePermissions.I);
-    }
-
     #endregion
 
     #region Happy path

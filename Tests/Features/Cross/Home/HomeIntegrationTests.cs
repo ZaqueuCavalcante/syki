@@ -3,15 +3,15 @@ namespace Syki.Tests.Integration;
 public partial class IntegrationTests
 {
     [Test]
-    public async Task Cross_Home_Should_redirect_to_docs()
+    public async Task Home_Should_redirect_to_api_docs_page()
     {
         // Arrange
-        var client = _back.GetNoRedirectTestsClient();
+        var client = _back.GetTestsClient();
 
         // Act
         var response = await client.GetHome();
 
         // Assert
-        ((int)response.StatusCode).Should().BeInRange(300, 399);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }

@@ -32,13 +32,13 @@ public partial class TestsHttpClient
         return await response.Resolve<GetDisciplineOut>();
     }
 
-    public async Task<OneOf<AddDisciplineCoursesOut, ErrorOut>> AddDisciplineCourses(
+    public async Task<OneOf<SuccessOut, ErrorOut>> AddDisciplineCourses(
         int disciplineId,
         List<int> courses
     ) {
         var data = new AddDisciplineCoursesIn { DisciplineId = disciplineId, Courses = courses };
         var response = await http.PostAsJsonAsync("/disciplines/courses", data);
-        return await response.Resolve<AddDisciplineCoursesOut>();
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<GetDisciplinesOut> GetDisciplines()

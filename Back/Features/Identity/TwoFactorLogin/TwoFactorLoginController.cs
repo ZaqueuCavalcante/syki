@@ -22,6 +22,5 @@ public class TwoFactorLoginController(TwoFactorLoginService service) : Controlle
 internal class RequestExamples : ExamplesProvider<TwoFactorLoginIn>;
 internal class ResponseExamples : ExamplesProvider<TwoFactorLoginOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
-    InvalidTwoFactorToken,
-    LoginIpNotAllowed
+    InvalidTwoFactorToken
 >;

@@ -42,7 +42,7 @@ const brazilStates = [
 
 const schema = z.object({
   name: z.string().min(1, 'Nome obrigatório').max(50, 'Máximo 50 caracteres'),
-  state: z.string().min(1, 'Estado obrigatório'),
+  state: z.string({ error: 'Estado obrigatório' }).min(1, 'Estado obrigatório'),
   city: z.string().min(1, 'Cidade obrigatória').max(50, 'Máximo 50 caracteres'),
   capacity: z.coerce.number({ error: 'Capacidade obrigatória' }).int().gt(0, 'Deve ser maior que 0').max(999999, 'Máximo 999.999'),
 })

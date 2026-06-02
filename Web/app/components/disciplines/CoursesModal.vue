@@ -31,6 +31,7 @@ const potentialCourses = ref<CourseItem[]>([])
 const searchTerm = ref('')
 const selectedCourseIds = ref<number[]>([])
 const saving = ref(false)
+const removingCourseId = ref<number | null>(null)
 
 async function fetchDiscipline() {
   if (!props.discipline) return
@@ -78,6 +79,26 @@ async function save() {
     toast.add({ title: 'Erro', description: msg, color: 'error' })
   } finally {
     saving.value = false
+  }
+}
+
+async function removeCourse(courseId: number) {
+  if (!props.discipline) return
+  removingCourseId.value = courseId
+  try {
+    await $fetch(`${config.public.backendUrl}/disciplines/courses`, {
+      method: 'DELETE',
+      body: { disciplineId: props.discipline.id, courseId },
+      credentials: 'include',
+    })
+    toast.add({ title: 'Vínculo removido com sucesso', color: 'success' })
+    await Promise.all([fetchDiscipline(), fetchPotentialCourses(searchTerm.value)])
+    emit('updated')
+  } catch (err: unknown) {
+    const msg = (err as { data?: { message?: string } })?.data?.message ?? 'Erro ao remover vínculo.'
+    toast.add({ title: 'Erro', description: msg, color: 'error' })
+  } finally {
+    removingCourseId.value = null
   }
 }
 
@@ -141,7 +162,15 @@ watch(open, (val) => {
             class="flex items-center gap-3 py-3"
           >
             <UIcon name="i-lucide-graduation-cap" class="size-4 shrink-0 text-muted" />
-            <span class="text-sm">{{ course.name }}</span>
+            <span class="flex-1 text-sm">{{ course.name }}</span>
+            <UButton
+              icon="i-lucide-trash-2"
+              color="neutral"
+              variant="ghost"
+              size="xs"
+              :loading="removingCourseId === course.id"
+              @click="removeCourse(course.id)"
+            />
           </li>
         </ul>
       </div>

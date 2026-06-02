@@ -1,4 +1,17 @@
 <script setup lang="ts">
+import { extendLocale } from '@nuxt/ui/composables'
+import { pt_br as ptBR } from '@nuxt/ui/locale'
+
+const locale = extendLocale(ptBR, {
+  messages: {
+    selectMenu: { noData: 'Nenhum dado encontrado' },
+    inputMenu: { noData: 'Nenhum dado encontrado' },
+    listbox: { noData: 'Nenhum dado encontrado' },
+    commandPalette: { noData: 'Nenhum dado encontrado' },
+    table: { noData: 'Nenhum dado encontrado' },
+  },
+})
+
 const colorMode = useColorMode()
 
 const color = computed(() => colorMode.value === 'dark' ? '#1b1718' : 'white')
@@ -31,7 +44,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <UApp>
+  <UApp :locale="locale">
     <NuxtLoadingIndicator color="var(--ui-primary)" />
     <NuxtLayout>
       <NuxtPage />

@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxt/ui", "@nuxt/fonts", "@nuxt/eslint", "@vueuse/nuxt"],
+  modules: ["@nuxt/ui", "@nuxt/eslint", "@vueuse/nuxt", "@nuxt/fonts"],
 
   devtools: {
     enabled: true,
@@ -46,11 +46,7 @@ export default defineNuxtConfig({
   fonts: {
     families: [
       { name: "Saira", provider: "google", weights: [300, 400, 500, 600, 700] },
-      {
-        name: "Saira Condensed",
-        provider: "google",
-        weights: [300, 400, 500, 700],
-      },
+      { name: "Saira Condensed", provider: "google", weights: [300, 400, 500, 700] },
     ],
   },
 });

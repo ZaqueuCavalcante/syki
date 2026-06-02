@@ -10,6 +10,7 @@ public static partial class Policies
     public const string UpdateDiscipline = nameof(UpdateDiscipline);
 
     public const string AddDisciplineCourses = nameof(AddDisciplineCourses);
+    public const string RemoveDisciplineCourse = nameof(RemoveDisciplineCourse);
     public const string GetDisciplinePotentialCourses = nameof(GetDisciplinePotentialCourses);
 
     public static AuthorizationBuilder AddDisciplinesPolicies(this AuthorizationBuilder builder)
@@ -22,6 +23,7 @@ public static partial class Policies
 
         builder
             .AddSykiPolicy(AddDisciplineCourses, UserType.Manager, SykiPermissions.ManageDisciplines)
+            .AddSykiPolicy(RemoveDisciplineCourse, UserType.Manager, SykiPermissions.ManageDisciplines)
             .AddSykiPolicy(GetDisciplinePotentialCourses, UserType.Manager, SykiPermissions.ManageDisciplines);
 
         return builder;

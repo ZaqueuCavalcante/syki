@@ -1,147 +1,39 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
+import type { PolicyName } from '~/policies'
 
 const open = ref(false)
+const { can } = usePolicy()
 
-const links = [[{
-  label: 'Home',
-  icon: 'i-lucide-house',
-  to: '/',
-  onSelect: () => {
-    open.value = false
-  }
-},
-// {
-//   label: 'Inbox',
-//   icon: 'i-lucide-inbox',
-//   to: '/inbox',
-//   badge: '4',
-//   onSelect: () => {
-//     open.value = false
-//   }
-// },
-// {
-//   label: 'Customers',
-//   icon: 'i-lucide-users',
-//   to: '/customers',
-//   onSelect: () => {
-//     open.value = false
-//   }
-// },
-{
-  label: 'Campi',
-  icon: 'i-lucide-map-pin',
-  to: '/campi',
-  onSelect: () => {
-    open.value = false
-  }
-}, {
-  label: 'Disciplinas',
-  icon: 'i-lucide-book-open',
-  to: '/disciplines',
-  onSelect: () => {
-    open.value = false
-  }
-}, {
-  label: 'Cursos',
-  icon: 'i-lucide-graduation-cap',
-  to: '/courses',
-  onSelect: () => {
-    open.value = false
-  }
-}, {
-  label: 'Grades',
-  icon: 'i-lucide-layout-list',
-  to: '/course-curriculums',
-  onSelect: () => {
-    open.value = false
-  }
-}, {
-  label: 'Períodos',
-  icon: 'i-lucide-calendar',
-  to: '/periods',
-  onSelect: () => {
-    open.value = false
-  }
-}, {
-  label: 'Ofertas',
-  icon: 'i-lucide-library',
-  to: '/course-offerings',
-  onSelect: () => {
-    open.value = false
-  }
-}, {
-  label: 'Professores',
-  icon: 'i-lucide-user-pen',
-  to: '/teachers',
-  onSelect: () => {
-    open.value = false
-  }
-}, {
-  label: 'Alunos',
-  icon: 'i-lucide-user-round',
-  to: '/students',
-  onSelect: () => {
-    open.value = false
-  }
-}, {
-  label: 'Segurança',
-  icon: 'i-lucide-shield',
-  to: '/security',
-  onSelect: () => {
-    open.value = false
-  }
-}],
-// {
-//   label: 'Settings',
-//   to: '/settings',
-//   icon: 'i-lucide-settings',
-//   defaultOpen: true,
-//   type: 'trigger',
-//   children: [{
-//     label: 'General',
-//     to: '/settings',
-//     exact: true,
-//     onSelect: () => {
-//       open.value = false
-//     }
-//   }, {
-//     label: 'Members',
-//     to: '/settings/members',
-//     onSelect: () => {
-//       open.value = false
-//     }
-//   }, {
-//     label: 'Notifications',
-//     to: '/settings/notifications',
-//     onSelect: () => {
-//       open.value = false
-//     }
-//   }, {
-//     label: 'Security',
-//     to: '/settings/security',
-//     onSelect: () => {
-//       open.value = false
-//     }
-//   }]
-// }],
-// [{
-//   label: 'Feedback',
-//   icon: 'i-lucide-message-circle',
-//   to: 'https://github.com/nuxt-ui-templates/dashboard',
-//   target: '_blank'
-// }, {
-//   label: 'Help & Support',
-//   icon: 'i-lucide-info',
-//   to: 'https://github.com/nuxt-ui-templates/dashboard',
-//   target: '_blank'
-// }]
-] satisfies NavigationMenuItem[][]
+const allLinks = [
+  { label: 'Home',        icon: 'i-lucide-house',          to: '/',                   policy: 'AccessHomePage'              as PolicyName },
+  // { label: 'Inbox',    icon: 'i-lucide-inbox',          to: '/inbox',    badge: '4', policy: 'AccessHomePage'             as PolicyName },
+  // { label: 'Customers', icon: 'i-lucide-users',         to: '/customers',           policy: 'AccessHomePage'             as PolicyName },
+  { label: 'Campi',       icon: 'i-lucide-map-pin',         to: '/campi',              policy: 'AccessCampiPage'             as PolicyName },
+  { label: 'Disciplinas', icon: 'i-lucide-book-open',       to: '/disciplines',        policy: 'AccessDisciplinesPage'       as PolicyName },
+  { label: 'Cursos',      icon: 'i-lucide-graduation-cap',  to: '/courses',            policy: 'AccessCoursesPage'           as PolicyName },
+  { label: 'Grades',      icon: 'i-lucide-layout-list',     to: '/course-curriculums', policy: 'AccessCourseCurriculumsPage' as PolicyName },
+  { label: 'Períodos',    icon: 'i-lucide-calendar',        to: '/periods',            policy: 'AccessPeriodsPage'           as PolicyName },
+  { label: 'Ofertas',     icon: 'i-lucide-library',         to: '/course-offerings',   policy: 'AccessCourseOfferingsPage'   as PolicyName },
+  { label: 'Professores', icon: 'i-lucide-user-pen',        to: '/teachers',           policy: 'AccessTeachersPage'          as PolicyName },
+  { label: 'Alunos',      icon: 'i-lucide-user-round',      to: '/students',           policy: 'AccessStudentsPage'          as PolicyName },
+  { label: 'Segurança',   icon: 'i-lucide-shield',          to: '/security',           policy: 'AccessSecurityPage'          as PolicyName },
+]
+
+const links = computed(() =>
+  allLinks
+    .filter(({ policy }) => can(policy).value)
+    .map(({ label, icon, to }) => ({
+      label,
+      icon,
+      to,
+      onSelect: () => { open.value = false },
+    }))
+)
 
 const groups = computed(() => [{
   id: 'links',
   label: 'Go to',
-  items: links.flat()
+  items: links.value,
 }])
 </script>
 
@@ -164,19 +56,19 @@ const groups = computed(() => [{
 
         <UNavigationMenu
           :collapsed="collapsed"
-          :items="links[0]"
+          :items="links"
           orientation="vertical"
           tooltip
           popover
         />
 
-        <UNavigationMenu
+        <!-- <UNavigationMenu
           :collapsed="collapsed"
           :items="links[1]"
           orientation="vertical"
           tooltip
           class="mt-auto"
-        />
+        /> -->
       </template>
 
       <template #footer="{ collapsed }">
@@ -187,7 +79,5 @@ const groups = computed(() => [{
     <UDashboardSearch :groups="groups" />
 
     <slot />
-
-    <NotificationsSlideover />
   </UDashboardGroup>
 </template>

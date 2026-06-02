@@ -2,46 +2,55 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      backendUrl: process.env.NUXT_PUBLIC_BACKEND_URL,
-    }
+      backendUrl: "",
+    },
   },
 
-  modules: [
-    '@nuxt/ui',
-    '@nuxt/eslint',
-    '@vueuse/nuxt',
-  ],
+  modules: ["@nuxt/ui", "@nuxt/fonts", "@nuxt/eslint", "@vueuse/nuxt"],
 
   devtools: {
-    enabled: true
+    enabled: true,
   },
 
-  css: ['~/assets/css/main.css'],
+  css: ["~/assets/css/main.css"],
 
   routeRules: {
-    '/api/**': {
-      cors: true
-    }
+    "/api/**": {
+      cors: true,
+    },
   },
 
   vite: {
     optimizeDeps: {
       include: [
-        'date-fns',
-        '@unovis/vue',
-        '@internationalized/date',
-      ]
-    }
+        "zod",
+        "date-fns",
+        "@unovis/vue",
+        "@tanstack/vue-table",
+        "@internationalized/date",
+      ],
+    },
   },
 
-  compatibilityDate: '2024-07-11',
+  compatibilityDate: "2024-07-11",
 
   eslint: {
     config: {
       stylistic: {
-        braceStyle: '1tbs',
-        commaDangle: 'never',
-      }
-    }
-  }
-})
+        braceStyle: "1tbs",
+        commaDangle: "never",
+      },
+    },
+  },
+
+  fonts: {
+    families: [
+      { name: "Saira", provider: "google", weights: [300, 400, 500, 600, 700] },
+      {
+        name: "Saira Condensed",
+        provider: "google",
+        weights: [300, 400, 500, 700],
+      },
+    ],
+  },
+});

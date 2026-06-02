@@ -1,4 +1,6 @@
 using System.Net.Http.Json;
+using Syki.Back.Features.Identity.GetRoles;
+using Syki.Back.Features.Identity.CreateRole;
 using Syki.Back.Features.Identity.ResetPassword;
 using Syki.Back.Features.Identity.MagicLinkLogin;
 using Syki.Back.Features.Identity.SetupTwoFactor;
@@ -66,5 +68,22 @@ public partial class TestsHttpClient
     {
         var data = new ResetPasswordIn { Token = token, Password = password };
         return await http.PostAsJsonAsync("identity/reset-password", data);
+    }
+
+    public async Task<OneOf<CreateRoleOut, ErrorOut>> CreateRole(
+        string name = "Admin",
+        string description = "Administrador com acesso total",
+        UserType baseType = UserType.Manager,
+        List<int>? permissions = null
+    ) {
+        var data = new CreateRoleIn { Name = name, Description = description, BaseType = baseType, Permissions = permissions ?? [] };
+        var response = await http.PostAsJsonAsync("identity/roles", data);
+        return await response.Resolve<CreateRoleOut>();
+    }
+
+    public async Task<OneOf<GetRolesOut, ErrorOut>> GetRoles()
+    {
+        var response = await http.GetAsync("identity/roles");
+        return await response.Resolve<GetRolesOut>();
     }
 }

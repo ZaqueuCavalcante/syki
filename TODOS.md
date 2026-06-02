@@ -15,29 +15,4 @@
 
 
 
-analise todas as policies do backend (procura pelo metodo AddSykiPolicy)
-elas protegem os endpoints, cada policy define regras de acesso com base no tipo e nas permissoes do usuario logado
-
-quero levar essa exata mesma ideia pro frontend
-no front deve existir alguma estrutura que pega os dados do usuario logado (UserType e lista Permissions, obtidos via endpoint no objeto GetUserAccountOut)
-e aplicar determinada logica pra definir se um card, botao, tabela, item da sidebar, pagina ou qualquer outro recurso do frontend deve ser acessivel/visivel pro usuario
-
-vamos utiliza isso primeiro na sidebar
-
-qualquer usuario logado podera ver o item Home (mas o conteudo da home deve ser exibido conforme o UserType)
-
-os seguintes items (e suas respectivas paginas, caso acesso direto via url) so devem aparecer para usuarios com UserType=Manager + permission especifica
-'Campi' -> ManageCampi
-'Disciplinas' -> ManageDisciplines
-'Cursos' -> ManageCourses
-'Grades' -> ManageCourseCurriculums
-'Períodos' -> ManagePeriods
-'Ofertas' -> ManageCourseOfferings
-'Professores' -> ManageTeachers
-'Alunos' -> ManageStudents
-'Segurança' -> ManageRoles OR ManageSso (criar politicas pra cada tab tbm)
-
-
-
-
 

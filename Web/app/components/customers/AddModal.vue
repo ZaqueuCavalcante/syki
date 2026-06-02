@@ -4,7 +4,7 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 
 const schema = z.object({
   name: z.string().min(2, 'Too short'),
-  email: z.string().email('Invalid email')
+  email: z.email('Invalid email')
 })
 const open = ref(false)
 const isMobile = useIsMobile()

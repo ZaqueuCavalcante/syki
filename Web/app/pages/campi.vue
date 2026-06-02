@@ -93,28 +93,17 @@ const columns: TableColumn<CampusItem>[] = [
     </template>
 
     <template #body>
-      <UTable
-        :data="data?.items"
-        :columns="columns"
-        :loading="status === 'pending'"
-        :ui="{
-          base: 'table-fixed border-separate border-spacing-0',
-          thead: '[&>tr]:bg-elevated/50 [&>tr]:after:content-none',
-          tbody: '[&>tr]:last:[&>td]:border-b-0',
-          th: 'py-2 first:rounded-l-lg last:rounded-r-lg border-y border-default first:border-l last:border-r',
-          td: 'border-b border-default',
-        }"
-      >
+      <DataTable :data="data?.items ?? []" :columns="columns" :loading="status === 'pending'">
         <template #empty>
-          <div v-if="status !== 'pending'" class="flex flex-col items-center gap-4 py-12">
-            <UIcon name="i-lucide-map-pin" class="size-16 text-muted" />
-            <p class="text-muted text-sm">
-              Nenhum campus cadastrado
-            </p>
-            <UButton icon="i-lucide-plus" label="Campus" @click="createModalOpen = true" />
-          </div>
+          <TableEmptyState
+            :loading="status === 'pending'"
+            icon="i-lucide-map-pin"
+            message="Nenhum campus cadastrado"
+            button-label="Campus"
+            @create="createModalOpen = true"
+          />
         </template>
-      </UTable>
+      </DataTable>
     </template>
   </UDashboardPanel>
 

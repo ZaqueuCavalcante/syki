@@ -18,6 +18,7 @@ interface GetDisciplineOut {
 
 const open = defineModel<boolean>('open', { default: false })
 const props = defineProps<{ discipline: DisciplineItem | null }>()
+const emit = defineEmits<{ updated: [] }>()
 
 const isMobile = useIsMobile()
 const config = useRuntimeConfig()
@@ -71,6 +72,7 @@ async function save() {
     selectedCourseIds.value = []
     searchTerm.value = ''
     await Promise.all([fetchDiscipline(), fetchPotentialCourses('')])
+    emit('updated')
   } catch (err: unknown) {
     const msg = (err as { data?: { message?: string } })?.data?.message ?? 'Erro ao vincular cursos.'
     toast.add({ title: 'Erro', description: msg, color: 'error' })
@@ -112,6 +114,8 @@ watch(open, (val) => {
             ignore-filter
             placeholder="Pesquisar cursos para vincular..."
             class="flex-1"
+            searchable
+            :search-input="{ placeholder: 'Buscar por nome...' }"
           />
           <UButton
             label="Vincular"

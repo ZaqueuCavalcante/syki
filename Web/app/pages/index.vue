@@ -6,12 +6,10 @@ const checking = ref(true)
 
 onMounted(async () => {
   try {
-    await fetchAccount()
+    if (!account.value) await fetchAccount()
   } catch { /* not logged in */ }
   checking.value = false
 })
-
-const { isNotificationsSlideoverOpen } = useDashboard()
 
 const features = [
   {
@@ -61,20 +59,6 @@ const features = [
             <UDashboardSidebarCollapse />
           </template>
 
-          <template #right>
-            <UTooltip text="Notifications" :shortcuts="['N']">
-              <UButton
-                color="neutral"
-                variant="ghost"
-                square
-                @click="isNotificationsSlideoverOpen = true"
-              >
-                <UChip color="error" inset>
-                  <UIcon name="i-lucide-bell" class="size-5 shrink-0" />
-                </UChip>
-              </UButton>
-            </UTooltip>
-          </template>
         </UDashboardNavbar>
       </template>
 

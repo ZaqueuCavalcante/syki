@@ -14,6 +14,12 @@ public static class BackFactoryExtensions
         return new TestsHttpClient(factory.CreateClient());
     }
 
+    public static TestsHttpClient GetNoRedirectTestsClient(this BackFactory factory)
+    {
+        var options = new WebApplicationFactoryClientOptions { AllowAutoRedirect = false };
+        return new TestsHttpClient(factory.CreateClient(options));
+    }
+
     public static ISchedulerFactory GetSchedulerFactory(this BackFactory factory)
     {
         var scope = factory.Services.CreateScope();

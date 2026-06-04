@@ -3,6 +3,8 @@ import type { PolicyName } from '~/policies'
 
 const open = ref(false)
 const { can } = usePolicy()
+const { isNotificationsSlideoverOpen } = useDashboard()
+const { unreadCount } = useNotifications()
 
 const allLinks = [
   { label: 'Home',        icon: 'i-lucide-house',          to: '/',                   policy: 'AccessHomePage'              as PolicyName },
@@ -77,6 +79,27 @@ const groups = computed(() => [{
     </UDashboardSidebar>
 
     <UDashboardSearch :groups="groups" />
+
+    <NotificationsSlideover />
+
+    <div class="fixed top-2.5 right-4 z-50">
+      <UChip
+        :text="unreadCount > 99 ? '99+' : unreadCount"
+        :show="unreadCount > 0"
+        color="error"
+        size="sm"
+        inset
+      >
+        <UButton
+          icon="i-lucide-bell"
+          color="neutral"
+          variant="ghost"
+          :square="true"
+          title="Notificações"
+          @click="isNotificationsSlideoverOpen = true"
+        />
+      </UChip>
+    </div>
 
     <slot />
   </UDashboardGroup>

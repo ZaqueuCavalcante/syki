@@ -21,13 +21,6 @@ export interface Mail {
   date: string
 }
 
-export interface Member {
-  name: string
-  username: string
-  role: 'member' | 'owner'
-  avatar: AvatarProps
-}
-
 export interface Stat {
   title: string
   icon: string

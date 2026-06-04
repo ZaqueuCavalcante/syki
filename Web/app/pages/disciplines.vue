@@ -37,7 +37,7 @@ function openCourses(discipline: DisciplineItem) {
 
 const { data, status, refresh } = await useFetch<GetDisciplinesOut>(`${config.public.backendUrl}/disciplines`, {
   credentials: 'include',
-  lazy: true
+  server: false
 })
 
 const columns: TableColumn<DisciplineItem>[] = [

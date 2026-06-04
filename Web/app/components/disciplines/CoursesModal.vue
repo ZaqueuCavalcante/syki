@@ -159,9 +159,8 @@ watch(open, (val) => {
           <li
             v-for="course in discipline?.courses"
             :key="course.id"
-            class="flex items-center gap-3 py-3"
+            class="flex items-center py-3"
           >
-            <UIcon name="i-lucide-graduation-cap" class="size-4 shrink-0 text-muted" />
             <span class="flex-1 text-sm">{{ course.name }}</span>
             <UButton
               icon="i-lucide-trash-2"

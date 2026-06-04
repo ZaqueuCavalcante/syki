@@ -2,11 +2,12 @@
 import type { TableColumn } from '@nuxt/ui'
 
 interface StudentItem {
-  id: string
+  id: number
   name: string
   email: string
   enrollmentCode: string
-  courseOffering: string
+  activeEnrollments: number
+  currentCourseOfferingId: number | null
 }
 
 interface GetStudentsOut {
@@ -14,12 +15,21 @@ interface GetStudentsOut {
   items: StudentItem[]
 }
 
+const UButton = resolveComponent('UButton')
+
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
+const courseOfferingModalOpen = ref(false)
+const selectedStudent = ref<StudentItem | null>(null)
+
+function openCourseOffering(student: StudentItem) {
+  selectedStudent.value = student
+  courseOfferingModalOpen.value = true
+}
 
 const { data, status, refresh } = await useFetch<GetStudentsOut>(`${config.public.backendUrl}/students`, {
   credentials: 'include',
-  lazy: true
+  server: false
 })
 
 const columns: TableColumn<StudentItem>[] = [
@@ -36,8 +46,18 @@ const columns: TableColumn<StudentItem>[] = [
     header: 'Matrícula',
   },
   {
-    accessorKey: 'courseOffering',
-    header: 'Oferta de Curso',
+    accessorKey: 'course',
+    header: 'Curso',
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => h(UButton, {
+      icon: 'i-lucide-library',
+      color: 'neutral',
+      variant: 'ghost',
+      size: 'sm',
+      onClick: () => openCourseOffering(row.original),
+    }),
   },
 ]
 </script>
@@ -72,4 +92,5 @@ const columns: TableColumn<StudentItem>[] = [
   </UDashboardPanel>
 
   <StudentsCreateModal v-model:open="createModalOpen" @created="refresh()" />
+  <StudentsCourseOfferingModal v-model:open="courseOfferingModalOpen" :student="selectedStudent" @enrolled="refresh()" />
 </template>

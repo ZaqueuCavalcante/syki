@@ -18,7 +18,7 @@ const createModalOpen = ref(false)
 
 const { data, status, refresh } = await useFetch<GetRolesOut>(`${config.public.backendUrl}/identity/roles`, {
   credentials: 'include',
-  lazy: true
+  server: false
 })
 
 const columns: TableColumn<RoleItem>[] = [

@@ -6,6 +6,7 @@ interface CourseItem {
   name: string
   type: string
   typeValue: string
+  disciplines: number
 }
 
 interface GetCoursesOut {
@@ -18,6 +19,7 @@ const UButton = resolveComponent('UButton')
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
 const editModalOpen = ref(false)
+const disciplinesModalOpen = ref(false)
 const selectedCourse = ref<CourseItem | null>(null)
 
 function openEdit(course: CourseItem) {
@@ -25,9 +27,14 @@ function openEdit(course: CourseItem) {
   editModalOpen.value = true
 }
 
+function openDisciplines(course: CourseItem) {
+  selectedCourse.value = course
+  disciplinesModalOpen.value = true
+}
+
 const { data, status, refresh } = await useFetch<GetCoursesOut>(`${config.public.backendUrl}/courses`, {
   credentials: 'include',
-  lazy: true
+  server: false
 })
 
 const columns: TableColumn<CourseItem>[] = [
@@ -40,14 +47,27 @@ const columns: TableColumn<CourseItem>[] = [
     header: 'Tipo',
   },
   {
+    accessorKey: 'disciplines',
+    header: 'Disciplinas',
+  },
+  {
     id: 'actions',
-    cell: ({ row }) => h(UButton, {
-      icon: 'i-lucide-pencil',
-      color: 'neutral',
-      variant: 'ghost',
-      size: 'sm',
-      onClick: () => openEdit(row.original),
-    }),
+    cell: ({ row }) => h('div', { class: 'flex gap-1' }, [
+      h(UButton, {
+        icon: 'i-lucide-pencil',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: () => openEdit(row.original),
+      }),
+      h(UButton, {
+        icon: 'i-lucide-book-open',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: () => openDisciplines(row.original),
+      }),
+    ]),
   },
 ]
 </script>
@@ -83,4 +103,5 @@ const columns: TableColumn<CourseItem>[] = [
 
   <CoursesCreateModal v-model:open="createModalOpen" @created="refresh()" />
   <CoursesEditModal v-model:open="editModalOpen" :course="selectedCourse" @updated="refresh()" />
+  <CoursesDisciplinesModal v-model:open="disciplinesModalOpen" :course="selectedCourse" @updated="refresh()" />
 </template>

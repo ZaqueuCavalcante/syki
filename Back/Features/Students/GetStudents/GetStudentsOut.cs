@@ -7,7 +7,7 @@ public class GetStudentsOut : IApiDto<GetStudentsOut>
 
     public static IEnumerable<(string, GetStudentsOut)> GetExamples() =>
     [
-        ("Exemplo", new() { Total = 1, Items = [new() { Id = 1, Name = "Maria Souza", Email = "maria@ufal.edu.br", EnrollmentCode = "20251A2B3C4D", Status = StudentStatus.Enrolled, ActiveEnrollments = 1 }] }),
+        ("Exemplo", new() { Total = 1, Items = [new() { Id = 1, Name = "Maria Souza", Email = "maria@ufal.edu.br", EnrollmentCode = "20251A2B3C4D", Status = StudentStatus.Enrolled }] }),
     ];
 }
 
@@ -18,5 +18,5 @@ public class GetStudentsItemOut
     public string Email { get; set; }
     public string EnrollmentCode { get; set; }
     public StudentStatus Status { get; set; }
-    public int ActiveEnrollments { get; set; }
+    public string Course { get; set; }
 }

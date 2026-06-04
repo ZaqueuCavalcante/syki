@@ -10,23 +10,28 @@ const config = useRuntimeConfig()
 const toast = useToast()
 const loading = ref(false)
 
+interface PermissionItem {
+  id: number
+  name: string
+  allowedTypes: string[]
+}
+
+interface GetPermissionsOut {
+  items: PermissionItem[]
+}
+
+const { data: permissionsData } = await useFetch<GetPermissionsOut>(
+  `${config.public.backendUrl}/identity/permissions`,
+  { credentials: 'include', server: false }
+)
+
 const baseTypeOptions = [
   { label: 'Gestor', value: 0 },
   { label: 'Professor', value: 1 },
   { label: 'Aluno', value: 2 },
 ]
 
-const availablePermissions = [
-  { id: 0,   label: 'Gerenciar perfis de acesso' },
-  { id: 1,   label: 'Gerenciar SSO' },
-  { id: 100, label: 'Gerenciar usuários' },
-  { id: 200, label: 'Gerenciar campus' },
-  { id: 300, label: 'Gerenciar disciplinas' },
-  { id: 400, label: 'Gerenciar cursos' },
-  { id: 500, label: 'Gerenciar professores' },
-  { id: 600, label: 'Gerenciar alunos' },
-  { id: 700, label: 'Gerenciar períodos acadêmicos' },
-]
+const userTypeNames: Record<number, string> = { 0: 'Manager', 1: 'Teacher', 2: 'Student' }
 
 const schema = z.object({
   name: z.string().min(1, 'Nome obrigatório').max(50, 'Máximo 50 caracteres'),
@@ -42,6 +47,18 @@ const formState = reactive<Partial<Schema>>({
   description: '',
   baseType: undefined,
   permissions: [],
+})
+
+const filteredPermissions = computed(() => {
+  if (formState.baseType === undefined) return []
+  const typeName = userTypeNames[formState.baseType]
+  return (permissionsData.value?.items ?? []).filter(p =>
+    p.allowedTypes.includes(typeName)
+  )
+})
+
+watch(() => formState.baseType, () => {
+  formState.permissions = []
 })
 
 function togglePermission(id: number) {
@@ -113,14 +130,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           />
         </UFormField>
 
-        <UFormField label="Permissões" name="permissions">
+        <UFormField v-if="formState.baseType !== undefined" label="Permissões" name="permissions">
           <div class="flex flex-col gap-2 w-full">
             <UCheckbox
-              v-for="perm in availablePermissions"
+              v-for="perm in filteredPermissions"
               :key="perm.id"
-              :label="perm.label"
-              :checked="formState.permissions!.includes(perm.id)"
-              @update:checked="togglePermission(perm.id)"
+              :label="perm.name"
+              :model-value="formState.permissions!.includes(perm.id)"
+              @update:model-value="togglePermission(perm.id)"
             />
           </div>
         </UFormField>

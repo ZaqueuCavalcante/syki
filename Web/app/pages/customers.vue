@@ -22,7 +22,7 @@ const columnVisibility = ref()
 const rowSelection = ref({ 1: true })
 
 const { data, status } = await useFetch<User[]>('/api/customers', {
-  lazy: true
+  server: false
 })
 
 function getRowItems(row: Row<User>) {

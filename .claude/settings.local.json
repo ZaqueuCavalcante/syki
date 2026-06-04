@@ -7,7 +7,8 @@
       "Bash(xargs ls)",
       "Bash(grep -E '\\\\.\\(cs|ts|tsx\\)$')",
       "Bash(grep -E '\\\\.\\(cs|json\\)$')",
-      "Bash(grep -E '\\\\.cs$')"
+      "Bash(grep -E '\\\\.cs$')",
+      "Bash(grep *)"
     ]
   }
 }

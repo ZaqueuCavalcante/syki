@@ -34,3 +34,10 @@ public class InvalidCampusCapacity : SykiError
     public override string Code { get; set; } = nameof(InvalidCampusCapacity);
     public override string Message { get; set; } = "Capacidade inválida (deve ser maior que zero).";
 }
+
+public class InvalidCampusList : SykiError
+{
+    public static readonly InvalidCampusList I = new();
+    public override string Code { get; set; } = nameof(InvalidCampusList);
+    public override string Message { get; set; } = "Lista de campus inválida.";
+}

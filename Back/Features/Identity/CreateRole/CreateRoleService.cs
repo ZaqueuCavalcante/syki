@@ -20,6 +20,10 @@ public class CreateRoleService(SykiDbContext ctx) : ISykiService
             RuleFor(x => x.Permissions)
                 .Must(x => x != null && x.IsAllDistinct() && x.IsSubsetOf(SykiPermissions.Permissions.ConvertAll(p => p.Id)))
                 .WithError(InvalidPermissionsList.I);
+
+            RuleFor(x => x)
+                .Must(x => x.Permissions.All(id => SykiPermissions.IsAllowedFor(id, x.BaseType)))
+                .WithError(InvalidPermissionsForUserType.I);
         }
     }
     private static readonly Validator V = new();

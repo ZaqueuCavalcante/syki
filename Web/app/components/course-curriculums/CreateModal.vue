@@ -23,9 +23,9 @@ interface DisciplineItem {
 
 interface DisciplineRow {
   disciplineId: number | undefined
-  period: string
-  credits: string
-  workload: string
+  period: number
+  credits: number
+  workload: number
 }
 
 const courses = ref<CourseItem[]>([])
@@ -78,7 +78,7 @@ const canAddDiscipline = computed(() => {
 })
 
 function addRow() {
-  disciplineRows.value.push({ disciplineId: undefined, period: '1', credits: '0', workload: '0' })
+  disciplineRows.value.push({ disciplineId: undefined, period: 1, credits: 0, workload: 0 })
 }
 
 function removeRow(index: number) {
@@ -116,9 +116,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           .filter(r => r.disciplineId !== undefined)
           .map(r => ({
             id: r.disciplineId,
-            period: Number(r.period),
-            credits: Number(r.credits),
-            workload: Number(r.workload),
+            period: r.period,
+            credits: r.credits,
+            workload: r.workload,
           })),
       },
       credentials: 'include',
@@ -218,25 +218,28 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
                   value-key="id"
                   placeholder="Selecionar..."
                 />
-                <UInput
+                <UInputNumber
                   v-model="row.period"
-                  type="number"
-                  min="1"
-                  max="10"
+                  :min="1"
+                  :max="10"
+                  :increment="false"
+                  :decrement="false"
                   class="text-center"
                 />
-                <UInput
+                <UInputNumber
                   v-model="row.credits"
-                  type="number"
-                  min="0"
-                  max="100"
+                  :min="0"
+                  :max="100"
+                  :increment="false"
+                  :decrement="false"
                   class="text-center"
                 />
-                <UInput
+                <UInputNumber
                   v-model="row.workload"
-                  type="number"
-                  min="0"
-                  max="500"
+                  :min="0"
+                  :max="500"
+                  :increment="false"
+                  :decrement="false"
                   class="text-center"
                 />
                 <UButton

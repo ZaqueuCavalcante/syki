@@ -4,6 +4,7 @@ namespace Syki.Back.Auth.Policies;
 
 public static partial class Policies
 {
+    public const string GetRole = nameof(GetRole);
     public const string GetRoles = nameof(GetRoles);
     public const string CreateRole = nameof(CreateRole);
     public const string UpdateRole = nameof(UpdateRole);
@@ -26,9 +27,11 @@ public static partial class Policies
     public static AuthorizationBuilder AddIdentityPolicies(this AuthorizationBuilder builder)
     {
         builder
+            .AddSykiPolicy(GetRole, UserType.Manager, SykiPermissions.ManageRoles)
             .AddSykiPolicy(GetRoles, UserType.Manager, SykiPermissions.ManageRoles)
             .AddSykiPolicy(CreateRole, UserType.Manager, SykiPermissions.ManageRoles)
             .AddSykiPolicy(UpdateRole, UserType.Manager, SykiPermissions.ManageRoles)
+            .AddSykiPolicy(GetPermissions, UserType.Manager, SykiPermissions.ManageRoles)
             .AddSykiPolicy(GetDefaultRoles, UserType.Manager, SykiPermissions.ManageRoles)
             .AddSykiPolicy(GetInstitutionRoles, UserType.Manager, SykiPermissions.ManageRoles)
             .AddSykiPolicy(GetInstitutionRole, UserType.Manager, SykiPermissions.ManageRoles)
@@ -41,12 +44,9 @@ public static partial class Policies
             .AddSykiPolicy(GetSsoConfigurations, UserType.Manager, SykiPermissions.ManageSso);
 
         builder
+            .AddSykiPolicy(Logout)
             .AddSykiPolicy(SetupTwoFactor)
             .AddSykiPolicy(GetTwoFactorKey);
-
-        builder
-            .AddSykiPolicy(Logout)
-            .AddSykiPolicy(GetPermissions);
 
         return builder;
     }

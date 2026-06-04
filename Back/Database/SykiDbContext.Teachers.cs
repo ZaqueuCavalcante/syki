@@ -6,6 +6,7 @@ namespace Syki.Back.Database;
 public partial class SykiDbContext
 {
     public DbSet<SykiTeacher> Teachers { get; set; }
+    public DbSet<TeacherCampus> TeachersCampi { get; set; }
     public DbSet<TeacherDiscipline> TeachersDisciplines { get; set; }
 
     private static void ConfigureTeachers(ModelBuilder modelBuilder)

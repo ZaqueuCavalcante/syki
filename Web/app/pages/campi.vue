@@ -31,7 +31,7 @@ function openEdit(campus: CampusItem) {
 
 const { data, status, refresh } = await useFetch<GetCampiOut>(`${config.public.backendUrl}/campi`, {
   credentials: 'include',
-  lazy: true
+  server: false
 })
 
 const columns: TableColumn<CampusItem>[] = [

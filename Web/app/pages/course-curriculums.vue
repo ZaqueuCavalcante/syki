@@ -13,12 +13,21 @@ interface GetCourseCurriculumsOut {
   items: CourseCurriculumItem[]
 }
 
+const UButton = resolveComponent('UButton')
+
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
+const editModalOpen = ref(false)
+const selectedCurriculum = ref<CourseCurriculumItem | null>(null)
+
+function openEdit(curriculum: CourseCurriculumItem) {
+  selectedCurriculum.value = curriculum
+  editModalOpen.value = true
+}
 
 const { data, status, refresh } = await useFetch<GetCourseCurriculumsOut>(`${config.public.backendUrl}/course-curriculums`, {
   credentials: 'include',
-  lazy: true
+  server: false
 })
 
 const columns: TableColumn<CourseCurriculumItem>[] = [
@@ -33,6 +42,16 @@ const columns: TableColumn<CourseCurriculumItem>[] = [
   {
     accessorKey: 'disciplines',
     header: 'Disciplinas',
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => h(UButton, {
+      icon: 'i-lucide-pencil',
+      color: 'neutral',
+      variant: 'ghost',
+      size: 'sm',
+      onClick: () => openEdit(row.original),
+    }),
   },
 ]
 </script>
@@ -67,4 +86,5 @@ const columns: TableColumn<CourseCurriculumItem>[] = [
   </UDashboardPanel>
 
   <CourseCurriculumsCreateModal v-model:open="createModalOpen" @created="refresh()" />
+  <CourseCurriculumsEditModal v-model:open="editModalOpen" :curriculum="selectedCurriculum" @updated="refresh()" />
 </template>

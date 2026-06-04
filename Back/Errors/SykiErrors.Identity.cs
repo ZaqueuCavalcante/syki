@@ -119,6 +119,13 @@ public class SsoLoginUserNotFound : SykiError
     public override string Message { get; set; } = "Usuário não pertence à organização.";
 }
 
+public class RoleNotFound : SykiError
+{
+    public static readonly RoleNotFound I = new();
+    public override string Code { get; set; } = nameof(RoleNotFound);
+    public override string Message { get; set; } = "Role não encontrada.";
+}
+
 public class RoleNameAlreadyExists : SykiError
 {
     public static readonly RoleNameAlreadyExists I = new();
@@ -138,4 +145,11 @@ public class InvalidRolePermissions : SykiError
     public static readonly InvalidRolePermissions I = new();
     public override string Code { get; set; } = nameof(InvalidRolePermissions);
     public override string Message { get; set; } = "Permissões do perfil de acesso inválidas.";
+}
+
+public class InvalidPermissionsForUserType : SykiError
+{
+    public static readonly InvalidPermissionsForUserType I = new();
+    public override string Code { get; set; } = nameof(InvalidPermissionsForUserType);
+    public override string Message { get; set; } = "Uma ou mais permissões não são permitidas para o tipo de usuário selecionado.";
 }

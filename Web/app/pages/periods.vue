@@ -18,7 +18,7 @@ const createModalOpen = ref(false)
 
 const { data, status, refresh } = await useFetch<GetPeriodsOut>(`${config.public.backendUrl}/periods/academic`, {
   credentials: 'include',
-  lazy: true
+  server: false
 })
 
 function formatDate(value: string) {

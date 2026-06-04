@@ -11,10 +11,15 @@ public class GetCoursesService(SykiDbContext ctx) : ISykiService
             .OrderBy(c => c.Name)
             .ToListAsync();
 
-        return new GetCoursesOut
-        {
-            Total = courses.Count,
-            Items = courses.ConvertAll(c => c.ToGetCoursesItemOut())
-        };
+        var ids = courses.Select(c => c.Id).ToHashSet();
+
+        var result = courses.ConvertAll(c => c.ToGetCoursesItemOut());
+
+        var disciplines = await ctx.CoursesDisciplines.AsNoTracking()
+            .Where(x => ids.Count == 0 || ids.Contains(x.CourseId))
+            .ToListAsync();
+        result.ForEach(x => x.Disciplines = disciplines.Count(d => d.CourseId == x.Id));
+
+        return new GetCoursesOut { Total = result.Count, Items = result };
     }
 }

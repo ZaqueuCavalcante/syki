@@ -9,13 +9,15 @@ public static class SykiPermissions
         PermissionGroup.Identity,
         000,
         "Gerenciar perfis de acesso.",
-        "Criar, editar e deletar perfis de acesso."
+        "Criar, editar e deletar perfis de acesso.",
+        [UserType.Manager]
     );
     public static readonly SykiPermission ManageSso = new(
         PermissionGroup.Identity,
         001,
         "Gerenciar SSO.",
-        "Configurar Single Sign-On (SSO) para a instituição."
+        "Configurar Single Sign-On (SSO) para a instituição.",
+        [UserType.Manager]
     );
 
     // Users
@@ -23,7 +25,8 @@ public static class SykiPermissions
         PermissionGroup.Users,
         100,
         "Gerenciar usuários.",
-        "Criar, editar e deletar usuários."
+        "Criar, editar e deletar usuários.",
+        [UserType.Manager]
     );
 
     // Campi
@@ -31,7 +34,8 @@ public static class SykiPermissions
         PermissionGroup.Campi,
         200,
         "Gerenciar campus.",
-        "Criar e editar campus."
+        "Criar e editar campus.",
+        [UserType.Manager]
     );
 
     // Disciplines
@@ -39,7 +43,8 @@ public static class SykiPermissions
         PermissionGroup.Disciplines,
         300,
         "Gerenciar disciplinas.",
-        "Criar e editar disciplinas."
+        "Criar e editar disciplinas.",
+        [UserType.Manager]
     );
 
     // Courses
@@ -47,7 +52,8 @@ public static class SykiPermissions
         PermissionGroup.Courses,
         400,
         "Gerenciar cursos.",
-        "Criar e editar cursos."
+        "Criar e editar cursos.",
+        [UserType.Manager]
     );
 
     // Teachers
@@ -55,7 +61,8 @@ public static class SykiPermissions
         PermissionGroup.Teachers,
         500,
         "Gerenciar professores.",
-        "Criar e editar professores."
+        "Criar e editar professores.",
+        [UserType.Manager]
     );
 
     // Students
@@ -63,7 +70,8 @@ public static class SykiPermissions
         PermissionGroup.Students,
         600,
         "Gerenciar alunos.",
-        "Criar e editar alunos."
+        "Criar e editar alunos.",
+        [UserType.Manager]
     );
 
     // Periods
@@ -71,7 +79,8 @@ public static class SykiPermissions
         PermissionGroup.Periods,
         700,
         "Gerenciar períodos acadêmicos.",
-        "Criar e editar períodos acadêmicos."
+        "Criar e editar períodos acadêmicos.",
+        [UserType.Manager]
     );
 
     // CourseCurriculums
@@ -79,7 +88,8 @@ public static class SykiPermissions
         PermissionGroup.CourseCurriculums,
         800,
         "Gerenciar grades curriculares.",
-        "Criar e editar grades curriculares."
+        "Criar e editar grades curriculares.",
+        [UserType.Manager]
     );
 
     // CourseOfferings
@@ -87,11 +97,13 @@ public static class SykiPermissions
         PermissionGroup.CourseOfferings,
         900,
         "Gerenciar ofertas de curso.",
-        "Criar e editar ofertas de curso."
+        "Criar e editar ofertas de curso.",
+        [UserType.Manager]
     );
 
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<SykiPermission> Permissions = [];
+    private static readonly Dictionary<int, SykiPermission> ById = [];
     static SykiPermissions()
     {
         Groups = Enum.GetValues<PermissionGroup>().ToList();
@@ -107,5 +119,14 @@ public static class SykiPermissions
         if (!Permissions.Select(x => x.Id).IsAllDistinct()) throw new Exception("Duplicated permission ids!");
 
         if (!Permissions.Select(x => x.Name).IsAllDistinct()) throw new Exception("Duplicated permission names!");
+
+        if (Permissions.Any(x => x.AllowedTypes == null || x.AllowedTypes.Count == 0)) throw new Exception("All permissions must declare AllowedTypes!");
+
+        ById = Permissions.ToDictionary(x => x.Id);
+    }
+
+    public static bool IsAllowedFor(int permissionId, UserType userType)
+    {
+        return ById.TryGetValue(permissionId, out var p) && p.AllowedTypes.Contains(userType);
     }
 }

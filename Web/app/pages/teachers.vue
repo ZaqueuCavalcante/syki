@@ -2,7 +2,7 @@
 import type { TableColumn } from '@nuxt/ui'
 
 interface TeacherItem {
-  id: string
+  id: number
   name: string
   email: string
   campi: number
@@ -14,12 +14,33 @@ interface GetTeachersOut {
   items: TeacherItem[]
 }
 
+const UButton = resolveComponent('UButton')
+
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
+const editModalOpen = ref(false)
+const campiModalOpen = ref(false)
+const disciplinesModalOpen = ref(false)
+const selectedTeacher = ref<TeacherItem | null>(null)
+
+function openEdit(teacher: TeacherItem) {
+  selectedTeacher.value = teacher
+  editModalOpen.value = true
+}
+
+function openCampi(teacher: TeacherItem) {
+  selectedTeacher.value = teacher
+  campiModalOpen.value = true
+}
+
+function openDisciplines(teacher: TeacherItem) {
+  selectedTeacher.value = teacher
+  disciplinesModalOpen.value = true
+}
 
 const { data, status, refresh } = await useFetch<GetTeachersOut>(`${config.public.backendUrl}/teachers`, {
   credentials: 'include',
-  lazy: true
+  server: false
 })
 
 const columns: TableColumn<TeacherItem>[] = [
@@ -38,6 +59,32 @@ const columns: TableColumn<TeacherItem>[] = [
   {
     accessorKey: 'disciplines',
     header: 'Disciplinas',
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => h('div', { class: 'flex gap-1' }, [
+      h(UButton, {
+        icon: 'i-lucide-pencil',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: () => openEdit(row.original),
+      }),
+      h(UButton, {
+        icon: 'i-lucide-map-pin',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: () => openCampi(row.original),
+      }),
+      h(UButton, {
+        icon: 'i-lucide-book-open',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: () => openDisciplines(row.original),
+      }),
+    ]),
   },
 ]
 </script>
@@ -72,4 +119,7 @@ const columns: TableColumn<TeacherItem>[] = [
   </UDashboardPanel>
 
   <TeachersCreateModal v-model:open="createModalOpen" @created="refresh()" />
+  <TeachersEditModal v-model:open="editModalOpen" :teacher="selectedTeacher" @updated="refresh()" />
+  <TeachersCampiModal v-model:open="campiModalOpen" :teacher="selectedTeacher" @updated="refresh()" />
+  <TeachersDisciplinesModal v-model:open="disciplinesModalOpen" :teacher="selectedTeacher" @updated="refresh()" />
 </template>

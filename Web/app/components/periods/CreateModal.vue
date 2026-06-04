@@ -18,6 +18,8 @@ const toDateString = (d: CalendarDate) =>
 
 const startDate = ref<CalendarDate | undefined>()
 const endDate = ref<CalendarDate | undefined>()
+const startOpen = ref(false)
+const endOpen = ref(false)
 
 const schema = z.object({
   name: z.string().min(1, 'Nome obrigatório').max(20, 'Máximo 20 caracteres'),
@@ -36,8 +38,8 @@ const formState = reactive<Partial<Schema>>({
   endAt: '',
 })
 
-watch(startDate, (val) => { formState.startAt = val ? toDateString(val) : '' })
-watch(endDate, (val) => { formState.endAt = val ? toDateString(val) : '' })
+watch(startDate, (val) => { formState.startAt = val ? toDateString(val) : ''; if (val) startOpen.value = false })
+watch(endDate, (val) => { formState.endAt = val ? toDateString(val) : ''; if (val) endOpen.value = false })
 
 function resetForm() {
   formState.name = ''
@@ -89,19 +91,15 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           <UInput v-model="formState.name" class="w-full" placeholder="Ex: 2024.1" />
         </UFormField>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <UFormField label="Início" name="startAt">
-            <UPopover :content="{ align: 'start' }" :modal="true">
-              <UButton
-                color="neutral"
-                variant="ghost"
-                icon="i-lucide-calendar"
-                class="data-[state=open]:bg-elevated group"
-              >
-                <span class="truncate">{{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : 'Selecionar' }}</span>
-                <template #trailing>
-                  <UIcon name="i-lucide-chevron-down" class="shrink-0 text-dimmed size-5 group-data-[state=open]:rotate-180 transition-transform duration-200" />
-                </template>
+            <UPopover v-model:open="startOpen" :content="{ align: 'start' }" :modal="true" class="w-full">
+              <UButton color="neutral" variant="outline" class="w-full">
+                <div class="flex items-center w-full gap-2">
+                  <UIcon name="i-lucide-calendar" class="size-4 shrink-0" />
+                  <span class="flex-1 text-left truncate">{{ startDate ? df.format(startDate.toDate(getLocalTimeZone())) : 'Selecionar' }}</span>
+                  <UIcon :name="startOpen ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" class="size-4 shrink-0" />
+                </div>
               </UButton>
               <template #content>
                 <UCalendar v-model="startDate" class="p-2" />
@@ -110,17 +108,13 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           </UFormField>
 
           <UFormField label="Fim" name="endAt">
-            <UPopover :content="{ align: 'start' }" :modal="true">
-              <UButton
-                color="neutral"
-                variant="ghost"
-                icon="i-lucide-calendar"
-                class="data-[state=open]:bg-elevated group"
-              >
-                <span class="truncate">{{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : 'Selecionar' }}</span>
-                <template #trailing>
-                  <UIcon name="i-lucide-chevron-down" class="shrink-0 text-dimmed size-5 group-data-[state=open]:rotate-180 transition-transform duration-200" />
-                </template>
+            <UPopover v-model:open="endOpen" :content="{ align: 'start' }" :modal="true" class="w-full">
+              <UButton color="neutral" variant="outline" class="w-full">
+                <div class="flex items-center w-full gap-2">
+                  <UIcon name="i-lucide-calendar" class="size-4 shrink-0" />
+                  <span class="flex-1 text-left truncate">{{ endDate ? df.format(endDate.toDate(getLocalTimeZone())) : 'Selecionar' }}</span>
+                  <UIcon :name="endOpen ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" class="size-4 shrink-0" />
+                </div>
               </UButton>
               <template #content>
                 <UCalendar v-model="endDate" class="p-2" />

@@ -26,7 +26,7 @@ const createModalOpen = ref(false)
 
 const { data, status, refresh } = await useFetch<GetCourseOfferingsOut>(`${config.public.backendUrl}/course-offerings`, {
   credentials: 'include',
-  lazy: true
+  server: false
 })
 
 const columns: TableColumn<CourseOfferingItem>[] = [

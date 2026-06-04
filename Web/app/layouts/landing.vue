@@ -4,6 +4,7 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const links: NavigationMenuItem[] = [
   { label: 'Funcionalidades', to: '/landing#features' },
   { label: 'Preços', to: '/landing#pricing' },
+  { label: 'Docs', to: '/docs' },
 ]
 </script>
 

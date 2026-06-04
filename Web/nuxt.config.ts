@@ -6,7 +6,15 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxt/ui", "@nuxt/eslint", "@vueuse/nuxt", "@nuxt/fonts"],
+  modules: ["@nuxt/content", "@nuxt/ui", "@nuxt/eslint", "@vueuse/nuxt", "@nuxt/fonts"],
+
+  content: {
+    build: {
+      markdown: {
+        toc: { depth: 3, searchDepth: 3 },
+      },
+    },
+  },
 
   devtools: {
     enabled: true,
@@ -26,6 +34,8 @@ export default defineNuxtConfig({
         "zod",
         "date-fns",
         "@unovis/vue",
+        '@vue/devtools-kit',
+        '@vue/devtools-core',
         "@tanstack/vue-table",
         "@internationalized/date",
       ],

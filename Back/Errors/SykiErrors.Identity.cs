@@ -98,6 +98,13 @@ public class SsoAuthorityLoopbackNotAllowed : SykiError
     public override string Message { get; set; } = "IP de loopback não é permitido em produção.";
 }
 
+public class SsoConfigurationNotFound : SykiError
+{
+    public static readonly SsoConfigurationNotFound I = new();
+    public override string Code { get; set; } = nameof(SsoConfigurationNotFound);
+    public override string Message { get; set; } = "Configuração SSO não encontrada.";
+}
+
 public class SsoNotConfiguredForDomain : SykiError
 {
     public static readonly SsoNotConfiguredForDomain I = new();

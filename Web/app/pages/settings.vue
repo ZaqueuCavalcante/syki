@@ -18,18 +18,14 @@ const links = [[{
   label: 'Security',
   icon: 'i-lucide-shield',
   to: '/settings/security'
-}], [{
-  label: 'Documentation',
-  icon: 'i-lucide-book-open',
-  to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-  target: '_blank'
-}]] satisfies NavigationMenuItem[][]
+}]
+] satisfies NavigationMenuItem[][]
 </script>
 
 <template>
   <UDashboardPanel id="settings" :ui="{ body: 'lg:py-12' }">
     <template #header>
-      <UDashboardNavbar title="Settings">
+      <UDashboardNavbar title="Configurações">
         <template #leading>
           <UDashboardSidebarCollapse />
         </template>

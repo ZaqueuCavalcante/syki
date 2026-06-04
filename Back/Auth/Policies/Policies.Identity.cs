@@ -14,9 +14,10 @@ public static partial class Policies
     public const string FilterInstitutionRoles = nameof(FilterInstitutionRoles);
     public const string GetAvailableInstitutionRoles = nameof(GetAvailableInstitutionRoles);
 
+    public const string GetSsoConfiguration = nameof(GetSsoConfiguration);
+    public const string GetSsoConfigurations = nameof(GetSsoConfigurations);
     public const string CreateSsoConfiguration = nameof(CreateSsoConfiguration);
     public const string UpdateSsoConfiguration = nameof(UpdateSsoConfiguration);
-    public const string GetSsoConfigurations = nameof(GetSsoConfigurations);
 
     public const string SetupTwoFactor = nameof(SetupTwoFactor);
     public const string GetTwoFactorKey = nameof(GetTwoFactorKey);
@@ -39,9 +40,10 @@ public static partial class Policies
             .AddSykiPolicy(GetAvailableInstitutionRoles, UserType.Manager, SykiPermissions.ManageRoles);
 
         builder
+            .AddSykiPolicy(GetSsoConfiguration, UserType.Manager, SykiPermissions.ManageSso)
+            .AddSykiPolicy(GetSsoConfigurations, UserType.Manager, SykiPermissions.ManageSso)
             .AddSykiPolicy(CreateSsoConfiguration, UserType.Manager, SykiPermissions.ManageSso)
-            .AddSykiPolicy(UpdateSsoConfiguration, UserType.Manager, SykiPermissions.ManageSso)
-            .AddSykiPolicy(GetSsoConfigurations, UserType.Manager, SykiPermissions.ManageSso);
+            .AddSykiPolicy(UpdateSsoConfiguration, UserType.Manager, SykiPermissions.ManageSso);
 
         builder
             .AddSykiPolicy(Logout)

@@ -4,7 +4,7 @@ export type UserType = 'Manager' | 'Teacher' | 'Student'
 
 interface UserAccount {
   id: string
-  role: number
+  role: string
   name: string
   email: string
   userType: UserType

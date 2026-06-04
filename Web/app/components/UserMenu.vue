@@ -18,23 +18,14 @@ async function logout() {
     await navigateTo('/')
 }
 
-const user = computed(() => ({
-    name: account.value?.name ?? '',
-    avatar: {
-        src: account.value?.profilePhoto ?? undefined,
-        alt: account.value?.name ?? ''
-    }
-}))
+const initials = computed(() => {
+    const name = account.value?.name ?? ''
+    return name.split(' ').map((w: string) => w[0]).slice(0, 2).join('').toUpperCase()
+})
 
-const items = computed<DropdownMenuItem[][]>(() => ([[{
-    type: 'label',
-    label: user.value.name,
-    avatar: user.value.avatar
-}], [{
-    label: 'Profile',
-    icon: 'i-lucide-user'
-}, {
-    label: 'Settings',
+const items = computed<DropdownMenuItem[][]>(() => ([[
+{
+    label: 'Configurações',
     icon: 'i-lucide-settings',
     to: '/settings'
 },
@@ -54,15 +45,31 @@ const items = computed<DropdownMenuItem[][]>(() => ([[{
 </script>
 
 <template>
-    <UDropdownMenu :items="items" :content="{ align: 'center', collisionPadding: 12 }"
-        :ui="{ content: collapsed ? 'w-48' : 'w-(--reka-dropdown-menu-trigger-width)' }">
-        <UButton v-bind="{
-            ...user,
-            label: collapsed ? undefined : user?.name,
-            trailingIcon: collapsed ? undefined : 'i-lucide-chevrons-up-down'
-        }" color="neutral" variant="ghost" block :square="collapsed" class="data-[state=open]:bg-elevated" :ui="{
-            trailingIcon: 'text-dimmed'
-        }" />
-
+    <UDropdownMenu
+        :items="items"
+        :content="{ align: 'center', collisionPadding: 12 }"
+        :ui="{ content: collapsed ? 'w-48' : 'w-(--reka-dropdown-menu-trigger-width)' }"
+    >
+        <UButton
+            v-if="collapsed"
+            color="neutral"
+            variant="ghost"
+            square
+            class="data-[state=open]:bg-elevated"
+        >
+            {{ initials }}
+        </UButton>
+        <UButton
+            v-else
+            color="neutral"
+            variant="ghost"
+            block
+            class="data-[state=open]:bg-elevated justify-start"
+        >
+            <div class="flex flex-col items-start min-w-0 w-full overflow-hidden text-left">
+                <span class="truncate w-full text-sm font-medium">{{ account?.name }}</span>
+                <span class="truncate w-full text-xs text-muted">{{ account?.role }}</span>
+            </div>
+        </UButton>
     </UDropdownMenu>
 </template>

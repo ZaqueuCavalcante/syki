@@ -43,6 +43,7 @@ public partial class SykiDbContext(DbContextOptions<SykiDbContext> options, Npgs
         ConfigureIdentity(modelBuilder);
         ConfigureDisciplines(modelBuilder);
         ConfigureInstitutions(modelBuilder);
+        ConfigureNotifications(modelBuilder);
         ConfigureCourseOfferings(modelBuilder);
         ConfigureCourseCurriculums(modelBuilder);
     }

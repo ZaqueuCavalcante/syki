@@ -1,7 +1,8 @@
 ignoredBuiltDependencies:
-  - esbuild
-  - vue-demi
-  - maplibre-gl
-  - unrs-resolver
   - '@parcel/watcher'
   - '@tailwindcss/oxide'
+  - better-sqlite3
+  - esbuild
+  - maplibre-gl
+  - unrs-resolver
+  - vue-demi

@@ -14,6 +14,7 @@ const allLinks = [
   { label: 'Grades',      icon: 'i-lucide-layout-list',     to: '/course-curriculums', policy: 'AccessCourseCurriculumsPage' as PolicyName },
   { label: 'Períodos',    icon: 'i-lucide-calendar',        to: '/periods',            policy: 'AccessPeriodsPage'           as PolicyName },
   { label: 'Ofertas',     icon: 'i-lucide-library',         to: '/course-offerings',   policy: 'AccessCourseOfferingsPage'   as PolicyName },
+  { label: 'Turmas',      icon: 'i-lucide-users',            to: '/classes',            policy: 'AccessClassesPage'           as PolicyName },
   { label: 'Professores', icon: 'i-lucide-user-pen',        to: '/teachers',           policy: 'AccessTeachersPage'          as PolicyName },
   { label: 'Alunos',      icon: 'i-lucide-user-round',      to: '/students',           policy: 'AccessStudentsPage'          as PolicyName },
   { label: 'Segurança',   icon: 'i-lucide-shield',          to: '/security',           policy: 'AccessSecurityPage'          as PolicyName },

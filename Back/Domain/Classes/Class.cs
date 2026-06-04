@@ -14,7 +14,7 @@ public class Class
     public int InstitutionId { get; set; }
     public int DisciplineId { get; set; }
     public Discipline Discipline { get; set; }
-    public string PeriodId { get; set; }
+    public int PeriodId { get; set; }
     public AcademicPeriod Period { get; set; }
     public int Vacancies { get; set; }
     public ClassStatus Status { get; set; }
@@ -28,8 +28,6 @@ public class Class
     public List<ClassLesson> Lessons { get; set; }
     public List<SykiStudent> Students { get; set; }
 
-    public string FillRatio { get; set; }
-
     private Class() {}
 
     public Class(
@@ -37,7 +35,7 @@ public class Class
         int disciplineId,
         int? campusId,
         int? teacherId,
-        string period,
+        AcademicPeriod period,
         int vacancies,
         List<Schedule> schedules
     ) {
@@ -45,7 +43,7 @@ public class Class
         DisciplineId = disciplineId;
         CampusId = campusId;
         TeacherId = teacherId;
-        PeriodId = period;
+        Period = period;
         Vacancies = vacancies;
         Status = ClassStatus.OnPreEnrollment;
         Schedules = schedules;
@@ -65,7 +63,7 @@ public class Class
             {
                 if (current.DayOfWeek.Is(schedule.Day))
                 {
-                    Lessons.Add(new(Id, number, current, schedule.Start, schedule.End));
+                    Lessons.Add(new(this, number, current, schedule.Start, schedule.End));
                     Workload += schedule.GetDiff();
                     number++;
                 }

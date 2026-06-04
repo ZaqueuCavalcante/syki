@@ -34,9 +34,8 @@ public partial class SykiDbContext(DbContextOptions<SykiDbContext> options, Npgs
 
         ConfigureAudit(modelBuilder);
         ConfigureCampi(modelBuilder);
+        ConfigureClasses(modelBuilder);
         ConfigureCourses(modelBuilder);
-        ConfigureCourseCurriculums(modelBuilder);
-        ConfigureCourseOfferings(modelBuilder);
         ConfigurePeriods(modelBuilder);
         ConfigureTeachers(modelBuilder);
         ConfigureStudents(modelBuilder);
@@ -44,31 +43,8 @@ public partial class SykiDbContext(DbContextOptions<SykiDbContext> options, Npgs
         ConfigureIdentity(modelBuilder);
         ConfigureDisciplines(modelBuilder);
         ConfigureInstitutions(modelBuilder);
-
-        ConfigureDatabaseNames(modelBuilder);
-    }
-
-    private static void ConfigureDatabaseNames(ModelBuilder modelBuilder)
-    {
-        foreach (var entity in modelBuilder.Model.GetEntityTypes())
-        {
-            if (entity.GetTableName().IsEmpty()) continue;
-
-            entity.SetTableName(entity.GetTableName().ToSnakeCase().Replace("asp_net_", ""));
-
-            foreach (var fk in entity.GetForeignKeys())
-            {
-                if (fk.GetConstraintName().HasValue())
-                {
-                    fk.SetConstraintName(fk.GetConstraintName()!.Replace("~", "").Replace("1", ""));
-                }
-            }
-
-            foreach (var index in entity.GetIndexes())
-            {
-                index.SetDatabaseName(index.GetDatabaseName()?.ToSnakeCase());
-            }
-        }
+        ConfigureCourseOfferings(modelBuilder);
+        ConfigureCourseCurriculums(modelBuilder);
     }
 
     public async Task<DbConnection> GetOpenConnectionAsync(CancellationToken ct = default)

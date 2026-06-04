@@ -29,6 +29,9 @@ export const Permissions = {
 
   // CourseOfferings
   ManageCourseOfferings: 900,
+
+  // Classes
+  ManageClasses: 1000,
 } as const
 
 export type PermissionId = typeof Permissions[keyof typeof Permissions]
@@ -114,6 +117,9 @@ export type PolicyName
   // Students
     | 'AccessStudentsPage'
     | 'CreateStudent'
+  // Classes
+    | 'AccessClassesPage'
+    | 'CreateClass'
   // Security
     | 'AccessSecurityPage'
     | 'AccessRolesPage'

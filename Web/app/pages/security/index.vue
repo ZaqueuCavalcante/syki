@@ -13,8 +13,17 @@ interface GetRolesOut {
   items: RoleItem[]
 }
 
+const UButton = resolveComponent('UButton')
+
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
+const editModalOpen = ref(false)
+const selectedRoleId = ref<number | null>(null)
+
+function openEdit(role: RoleItem) {
+  selectedRoleId.value = role.id
+  editModalOpen.value = true
+}
 
 const { data, status, refresh } = await useFetch<GetRolesOut>(`${config.public.backendUrl}/identity/roles`, {
   credentials: 'include',
@@ -33,6 +42,16 @@ const columns: TableColumn<RoleItem>[] = [
   {
     accessorKey: 'permissions',
     header: 'Permissões',
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => h(UButton, {
+      icon: 'i-lucide-pencil',
+      color: 'neutral',
+      variant: 'ghost',
+      size: 'sm',
+      onClick: () => openEdit(row.original),
+    }),
   },
 ]
 </script>
@@ -57,4 +76,5 @@ const columns: TableColumn<RoleItem>[] = [
   </div>
 
   <SecurityRolesCreateModal v-model:open="createModalOpen" @created="refresh()" />
+  <SecurityRolesEditModal v-model:open="editModalOpen" :role-id="selectedRoleId" @updated="refresh()" />
 </template>

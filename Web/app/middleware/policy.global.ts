@@ -1,6 +1,7 @@
 import type { PolicyName } from '~/policies'
 
 const routePolicies: Record<string, PolicyName> = {
+  '/classes': 'AccessClassesPage',
   '/campi': 'AccessCampiPage',
   '/courses': 'AccessCoursesPage',
   '/periods': 'AccessPeriodsPage',

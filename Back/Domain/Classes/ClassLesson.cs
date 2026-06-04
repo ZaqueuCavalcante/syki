@@ -14,16 +14,18 @@ public class ClassLesson
     public ClassLessonStatus Status { get; set; }
     public List<ClassLessonAttendance> Attendances { get; set; }
 
+    public Class Class { get; set; }
+
     private ClassLesson() {}
 
     public ClassLesson(
-        int classId,
+        Class @class,
         int number,
         DateOnly date,
         Hour startAt,
         Hour endAt
     ) {
-        ClassId = classId;
+        Class = @class;
         Number = number;
         Date = date;
         StartAt = startAt;

@@ -101,6 +101,15 @@ public static class SykiPermissions
         [UserType.Manager]
     );
 
+    // Classes
+    public static readonly SykiPermission ManageClasses = new(
+        PermissionGroup.Classes,
+        1000,
+        "Gerenciar turmas.",
+        "Criar e editar turmas.",
+        [UserType.Manager]
+    );
+
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<SykiPermission> Permissions = [];
     private static readonly Dictionary<int, SykiPermission> ById = [];

@@ -146,6 +146,22 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
     ],
   },
 
+  // Classes
+  AccessClassesPage: {
+    description: "Acessar a página de turmas",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageClasses),
+    ],
+  },
+  CreateClass: {
+    description: "Criar novas turmas",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageClasses),
+    ],
+  },
+
   // Teachers
   AccessTeachersPage: {
     description: "Acessar a página de professores",

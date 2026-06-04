@@ -20,3 +20,10 @@ public class InvalidSchedule : SykiError
     public override string Code { get; set; } = nameof(InvalidSchedule);
     public override string Message { get; set; } = "Horário inválido.";
 }
+
+public class ConflictingSchedules : SykiError
+{
+    public static readonly ConflictingSchedules I = new();
+    public override string Code { get; set; } = nameof(ConflictingSchedules);
+    public override string Message { get; set; } = "Horários conflitantes.";
+}

@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Syki.Back.Features.Classes.GetClasses;
 
 public class GetAcademicClassesIn : IApiDto<GetAcademicClassesIn>
 {

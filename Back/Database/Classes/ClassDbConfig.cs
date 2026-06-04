@@ -3,7 +3,7 @@ using Syki.Back.Commands.Domain.Classes;
 
 namespace Syki.Back.Database.Classes;
 
-public class ClassConfig : IEntityTypeConfiguration<Class>
+public class ClassDbConfig : IEntityTypeConfiguration<Class>
 {
     public void Configure(EntityTypeBuilder<Class> entity)
     {
@@ -28,13 +28,12 @@ public class ClassConfig : IEntityTypeConfiguration<Class>
             .HasForeignKey(s => s.ClassId);
 
         entity.HasMany(e => e.Lessons)
-            .WithOne()
+            .WithOne(l => l.Class)
             .HasForeignKey(l => l.ClassId);
 
         entity.HasOne(e => e.Period)
             .WithMany()
+            .HasPrincipalKey(p => new { p.Id, p.InstitutionId })
             .HasForeignKey(e => new { e.PeriodId, e.InstitutionId });
-
-        entity.Ignore(e => e.FillRatio);
     }
 }

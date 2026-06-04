@@ -3,7 +3,7 @@ using Syki.Back.Commands.Domain.Classes;
 
 namespace Syki.Back.Database.Classes;
 
-public class ClassLessonAttendanceConfig : IEntityTypeConfiguration<ClassLessonAttendance>
+public class ClassLessonAttendanceDbConfig : IEntityTypeConfiguration<ClassLessonAttendance>
 {
     public void Configure(EntityTypeBuilder<ClassLessonAttendance> entity)
     {

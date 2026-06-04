@@ -38,6 +38,14 @@ public class InstitutionDbConfig : IEntityTypeConfiguration<Institution>
             .WithOne()
             .HasForeignKey(co => co.InstitutionId);
 
+        entity.HasMany(e => e.Webhooks)
+            .WithOne()
+            .HasForeignKey(w => w.InstitutionId);
+
+        entity.HasMany(e => e.WebhookCalls)
+            .WithOne()
+            .HasForeignKey(w => w.InstitutionId);
+
         entity.HasMany(e => e.AcademicPeriods)
             .WithOne()
             .HasForeignKey(ap => ap.InstitutionId);

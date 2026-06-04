@@ -13,3 +13,10 @@ public class EmailAlreadyUsed : SykiError
     public override string Code { get; set; } = nameof(EmailAlreadyUsed);
     public override string Message { get; set; } = "Email já utilizado.";
 }
+
+public class InvalidUserName : SykiError
+{
+    public static readonly InvalidUserName I = new();
+    public override string Code { get; set; } = nameof(InvalidUserName);
+    public override string Message { get; set; } = "Nome de usuário inválido.";
+}

@@ -32,6 +32,9 @@ export const Permissions = {
 
   // Classes
   ManageClasses: 1000,
+
+  // Webhooks
+  ManageWebhooks: 1100,
 } as const
 
 export type PermissionId = typeof Permissions[keyof typeof Permissions]
@@ -128,3 +131,9 @@ export type PolicyName
     | 'AccessSsoPage'
     | 'CreateSsoConfiguration'
     | 'UpdateSsoConfiguration'
+  // Integrations
+    | 'AccessIntegrationsPage'
+    | 'GetWebhookSubscription'
+    | 'GetWebhookSubscriptions'
+    | 'CreateWebhookSubscription'
+    | 'UpdateWebhookSubscription'

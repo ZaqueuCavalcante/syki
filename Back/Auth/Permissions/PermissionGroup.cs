@@ -34,4 +34,7 @@ public enum PermissionGroup
 
     [Description("Classes")]
     Classes = 10,
+
+    [Description("Webhooks")]
+    Webhooks = 11,
 }

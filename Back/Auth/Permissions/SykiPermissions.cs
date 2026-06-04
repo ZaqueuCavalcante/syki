@@ -110,6 +110,15 @@ public static class SykiPermissions
         [UserType.Manager]
     );
 
+    // Webhooks
+    public static readonly SykiPermission ManageWebhooks = new(
+        PermissionGroup.Webhooks,
+        1100,
+        "Gerenciar webhooks.",
+        "Criar e visualizar inscrições de webhook.",
+        [UserType.Manager]
+    );
+
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<SykiPermission> Permissions = [];
     private static readonly Dictionary<int, SykiPermission> ById = [];

@@ -55,10 +55,9 @@ const items = computed<DropdownMenuItem[][]>(() => ([[
             color="neutral"
             variant="ghost"
             square
+            icon="i-lucide-user"
             class="data-[state=open]:bg-elevated"
-        >
-            {{ initials }}
-        </UButton>
+        />
         <UButton
             v-else
             color="neutral"

@@ -16,6 +16,12 @@ const colorMode = useColorMode()
 
 const color = computed(() => colorMode.value === 'dark' ? '#1b1718' : 'white')
 
+useEventListener('keydown', (e: KeyboardEvent) => {
+  if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+  }
+})
+
 useHead({
   meta: [
     { charset: 'utf-8' },

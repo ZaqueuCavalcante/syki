@@ -17,7 +17,8 @@ const allLinks = [
   { label: 'Turmas',      icon: 'i-lucide-users',          to: '/classes',            policy: 'AccessClassesPage'           as PolicyName },
   { label: 'Professores', icon: 'i-lucide-user-pen',       to: '/teachers',           policy: 'AccessTeachersPage'          as PolicyName },
   { label: 'Alunos',      icon: 'i-lucide-user-round',     to: '/students',           policy: 'AccessStudentsPage'          as PolicyName },
-  { label: 'Segurança',   icon: 'i-lucide-shield',         to: '/security',           policy: 'AccessSecurityPage'          as PolicyName },
+  { label: 'Segurança',    icon: 'i-lucide-shield',         to: '/security',           policy: 'AccessSecurityPage'          as PolicyName },
+  { label: 'Integrações', icon: 'i-lucide-webhook',        to: '/integrations',       policy: 'AccessIntegrationsPage'      as PolicyName },
 ]
 
 const links = computed(() =>

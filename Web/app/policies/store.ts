@@ -244,6 +244,43 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
       hasPermission(Permissions.ManageSso),
     ],
   },
+
+  // Integrations
+  AccessIntegrationsPage: {
+    description: "Acessar a página de integrações",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageWebhooks),
+    ],
+  },
+  GetWebhookSubscription: {
+    description: "Ver inscrição de webhook",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageWebhooks),
+    ],
+  },
+  GetWebhookSubscriptions: {
+    description: "Listar inscrições de webhook",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageWebhooks),
+    ],
+  },
+  CreateWebhookSubscription: {
+    description: "Criar inscrições de webhook",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageWebhooks),
+    ],
+  },
+  UpdateWebhookSubscription: {
+    description: "Editar inscrições de webhook",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageWebhooks),
+    ],
+  },
 };
 
 export function getPolicy(name: PolicyName): PolicyDefinition {

@@ -4,6 +4,7 @@ using Syki.Back.Domain.Periods;
 using Syki.Back.Domain.Identity;
 using Syki.Back.Domain.Students;
 using Syki.Back.Domain.Teachers;
+using Syki.Back.Domain.Webhooks;
 using Syki.Back.Domain.Disciplines;
 using Syki.Back.Domain.CourseOfferings;
 using Syki.Back.Domain.CourseCurriculums;
@@ -21,6 +22,8 @@ public class Institution
     public List<SykiStudent> Students { get; set; }
     public List<SykiTeacher> Teachers { get; set; }
     public List<Discipline> Disciplines { get; set; }
+    public List<WebhookCall> WebhookCalls { get; set; }
+    public List<WebhookSubscription> Webhooks { get; set; }
     public List<CourseOffering> CourseOfferings { get; set; }
     public List<AcademicPeriod> AcademicPeriods { get; set; }
     public List<EnrollmentPeriod> EnrollmentPeriods { get; set; }
@@ -28,9 +31,6 @@ public class Institution
 
     // public List<Classroom> Classrooms { get; set; }
     // public InstitutionSettings Settings { get; set; }
-    // public List<WebhookCall> WebhookCalls { get; set; }
-    // public List<Notification> Notifications { get; set; }
-    // public List<WebhookSubscription> Webhooks { get; set; }
 
     public Institution() { }
 

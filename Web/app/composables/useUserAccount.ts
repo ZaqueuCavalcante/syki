@@ -24,7 +24,16 @@ const _useUserAccount = () => {
     })
   }
 
-  return { account, fetchAccount }
+  async function updateAccount(name: string) {
+    await $fetch(`${config.public.backendUrl}/users/account`, {
+      method: 'PUT',
+      credentials: 'include',
+      body: { name }
+    })
+    if (account.value) account.value.name = name
+  }
+
+  return { account, fetchAccount, updateAccount }
 }
 
 export const useUserAccount = createSharedComposable(_useUserAccount)

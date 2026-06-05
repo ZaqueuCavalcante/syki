@@ -19,7 +19,7 @@ ENV NUXT_PUBLIC_COMMIT_SHA=$NUXT_PUBLIC_COMMIT_SHA
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN pnpm build
 
-FROM node:22-alpine
+FROM node:24-alpine
 
 RUN apk update && apk upgrade --no-cache
 

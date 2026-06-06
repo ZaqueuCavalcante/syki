@@ -1,6 +1,4 @@
-FROM node:26-alpine AS build
-
-RUN apk add --no-cache python3 make g++
+FROM node:26-slim AS build
 
 RUN npm install -g pnpm@10.33.4
 
@@ -8,7 +6,7 @@ WORKDIR /app
 
 COPY Web/package.json Web/pnpm-lock.yaml Web/pnpm-workspace.yaml ./
 
-RUN pnpm install --frozen-lockfile && pnpm rebuild better-sqlite3
+RUN pnpm install --frozen-lockfile
 
 COPY Web/ .
 
@@ -21,9 +19,9 @@ ENV NUXT_PUBLIC_COMMIT_SHA=$NUXT_PUBLIC_COMMIT_SHA
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN pnpm build
 
-FROM node:26-alpine
+FROM node:26-slim
 
-RUN apk update && apk upgrade --no-cache
+RUN apt-get update && apt-get upgrade -y --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

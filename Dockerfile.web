@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY Web/package.json Web/pnpm-lock.yaml Web/pnpm-workspace.yaml ./
 
-RUN npm_config_build_from_source=true pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
 COPY Web/ .
 

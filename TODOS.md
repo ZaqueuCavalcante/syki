@@ -12,4 +12,5 @@
 - Suporte para Ensino Fundamental e Médio (pais dos alunos)
 - https://github.com/ZaqueuCavalcante/syki/issues/81
 
-
+- https://vueflow.dev/
+- https://mermaid.js.org/

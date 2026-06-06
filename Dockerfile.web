@@ -1,6 +1,6 @@
-FROM node:26-slim AS build
+FROM node:26-alpine AS build
 
-RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache python3 make g++
 
 RUN npm install -g pnpm@10.33.4
 
@@ -21,9 +21,9 @@ ENV NUXT_PUBLIC_COMMIT_SHA=$NUXT_PUBLIC_COMMIT_SHA
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN pnpm build
 
-FROM node:26-slim
+FROM node:26-alpine
 
-RUN apt-get update && apt-get upgrade -y --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk upgrade --no-cache
 
 WORKDIR /app
 

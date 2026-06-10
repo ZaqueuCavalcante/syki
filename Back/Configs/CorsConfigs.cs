@@ -11,7 +11,8 @@ public static class CorsConfigs
                 .AllowCredentials()
                 .WithOrigins(
                     "http://localhost:3000",
-                    "https://app.syki.com.br"
+                    "https://app.syki.com.br",
+                    "https://estud.up.railway.app"
                 )
             )
         );

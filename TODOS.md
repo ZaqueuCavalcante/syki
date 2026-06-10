@@ -25,7 +25,3 @@ Crie um teste de integracao com
 - Crie ofertas de curso
 
 - Ver SeedInstitutionBasicDataCommand e SeedInstitutionUsersCommand pro resto
-
-postgresql://postgres:iqgRcanfhjTISQNpOtNLBDLZeloyVPMu@acela.proxy.rlwy.net:11038/railway
-
-"Host=acela.proxy.rlwy.net;Username=postgres;Password=iqgRcanfhjTISQNpOtNLBDLZeloyVPMu;Port=11038;Database=railway;"

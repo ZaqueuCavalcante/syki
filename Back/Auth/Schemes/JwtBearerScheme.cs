@@ -10,7 +10,7 @@ namespace Syki.Back.Auth.Schemes;
 public static class JwtBearerScheme
 {
     public const string Name = "Bearer";
-    public const string Cookie = "X-Syki-BearerCookie";
+    public const string Cookie = "X-Estud-BearerCookie";
 
     public static AuthenticationBuilder AddJwtBearerScheme(this AuthenticationBuilder builder, IConfiguration configuration)
     {

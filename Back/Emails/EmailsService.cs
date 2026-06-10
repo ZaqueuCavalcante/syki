@@ -9,10 +9,11 @@ public class EmailsService : IEmailsService
     private readonly EmailSettings _settings;
     private static readonly ConcurrentDictionary<string, string> Templates = new();
 
-    public EmailsService(EmailSettings settings)
+    public EmailsService(EmailSettings settings, IHttpClientFactory httpClientFactory)
     {
         _settings = settings;
-        _client = new HttpClient { BaseAddress = new Uri(_settings.ApiUrl) };
+        _client = httpClientFactory.CreateClient();
+        _client.BaseAddress = new Uri(_settings.ApiUrl);
         _client.DefaultRequestHeaders.Add("api-key", _settings.ApiKey);
     }
 

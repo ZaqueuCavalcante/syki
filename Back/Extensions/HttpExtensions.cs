@@ -10,21 +10,6 @@ public static partial class HttpExtensions
 {
     extension(HttpResponse response)
     {
-        public void AppendSykiJwtCookie(string token, AuthSettings settings)
-        {
-            response.Cookies.Append(
-                "syki_jwt",
-                token,
-                new CookieOptions
-                {
-                    HttpOnly = true,
-                    SameSite = SameSiteMode.Lax,
-                    Secure = settings.CookieSecure,
-                    Domain = settings.CookieDomain
-                }
-            );
-        }
-
         public void AppendJWTCookie(string token, AuthSettings settings)
         {
             response.Cookies.Append(

@@ -43,6 +43,7 @@ public class CreateRoleService(SykiDbContext ctx) : ISykiService
 
         var orgRole = new InstitutionRole(institutionId, role);
         ctx.AddRange(role, orgRole);
+        ctx.RecordSuccess(UserActivityType.CreateRole_Success, metadata: new { role.Id });
         await ctx.SaveChangesAsync();
 
         return new CreateRoleOut { Id = role.Id };

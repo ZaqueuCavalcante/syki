@@ -22,7 +22,7 @@ public class EmailsService : IEmailsService
         var link = $"{_settings.FrontUrl}/reset-password?token={token}";
 
         var body = new BrevoEmailMessage(
-            sender: "suporte@syki.com",
+            sender: "syki@zaqbit.com",
             to: to,
             subject: "Syki - Redefinição de senha",
             content: LoadTemplate("ResetPassword.html", link)
@@ -36,7 +36,7 @@ public class EmailsService : IEmailsService
         var link = $"{_settings.FrontUrl}/magic-link?token={token}";
 
         var body = new BrevoEmailMessage(
-            sender: "suporte@syki.com",
+            sender: "syki@zaqbit.com",
             to: to,
             subject: "Syki - Acesse sua conta",
             content: LoadTemplate("FirstAccessMagicLink.html", link)

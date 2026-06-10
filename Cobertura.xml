@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.42240325865580447" branch-rate="0.24342105263157895" lines-covered="3111" lines-valid="7365" branches-covered="333" branches-valid="1368" complexity="3545" version="0" timestamp="1780765229">
+<coverage line-rate="0.42608812828459774" branch-rate="0.24528301886792453" lines-covered="3162" lines-valid="7421" branches-covered="338" branches-valid="1378" complexity="3570" version="0" timestamp="1781051042">
   <sources>
     <source>/</source>
   </sources>
   <packages>
-    <package name="Back" line-rate="0.42240325865580447" branch-rate="0.24342105263157895" complexity="3545">
+    <package name="Back" line-rate="0.42608812828459774" branch-rate="0.24528301886792453" complexity="3570">
       <classes>
         <class name="Program" filename="/home/runner/work/syki/syki/Back/Program.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
@@ -1569,7 +1569,7 @@
           <methods>
             <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="5" hits="2866" branch="false" />
+                <line number="5" hits="2882" branch="false" />
               </lines>
             </method>
             <method name="get_RoleId" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -1579,7 +1579,7 @@
             </method>
             <method name="get_InstitutionId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="7" hits="3118" branch="false" />
+                <line number="7" hits="3134" branch="false" />
               </lines>
             </method>
             <method name="get_Permissions" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -1589,9 +1589,9 @@
             </method>
           </methods>
           <lines>
-            <line number="5" hits="2866" branch="false" />
+            <line number="5" hits="2882" branch="false" />
             <line number="6" hits="376" branch="false" />
-            <line number="7" hits="3118" branch="false" />
+            <line number="7" hits="3134" branch="false" />
             <line number="8" hits="384" branch="false" />
           </lines>
         </class>
@@ -3094,12 +3094,12 @@
                 <line number="10" hits="328" branch="false" />
                 <line number="11" hits="2" branch="false" />
                 <line number="13" hits="4" branch="false" />
-                <line number="14" hits="2724" branch="true" condition-coverage="100% (2/2)" />
+                <line number="14" hits="2738" branch="true" condition-coverage="100% (2/2)" />
                 <line number="15" hits="2" branch="false" />
                 <line number="17" hits="16" branch="true" condition-coverage="100% (2/2)" />
                 <line number="19" hits="6" branch="false" />
                 <line number="22" hits="4" branch="false" />
-                <line number="23" hits="4394" branch="true" condition-coverage="100% (2/2)" />
+                <line number="23" hits="4434" branch="true" condition-coverage="100% (2/2)" />
                 <line number="24" hits="2" branch="false" />
                 <line number="26" hits="2" branch="false" />
                 <line number="28" hits="16" branch="true" condition-coverage="100% (2/2)" />
@@ -3132,12 +3132,12 @@
             <line number="10" hits="328" branch="false" />
             <line number="11" hits="2" branch="false" />
             <line number="13" hits="4" branch="false" />
-            <line number="14" hits="2724" branch="true" condition-coverage="100% (2/2)" />
+            <line number="14" hits="2738" branch="true" condition-coverage="100% (2/2)" />
             <line number="15" hits="2" branch="false" />
             <line number="17" hits="16" branch="true" condition-coverage="100% (2/2)" />
             <line number="19" hits="6" branch="false" />
             <line number="22" hits="4" branch="false" />
-            <line number="23" hits="4394" branch="true" condition-coverage="100% (2/2)" />
+            <line number="23" hits="4434" branch="true" condition-coverage="100% (2/2)" />
             <line number="24" hits="2" branch="false" />
             <line number="26" hits="2" branch="false" />
             <line number="28" hits="16" branch="true" condition-coverage="100% (2/2)" />
@@ -3865,7 +3865,7 @@
                 <line number="24" hits="2" branch="false" />
                 <line number="25" hits="306" branch="false" />
                 <line number="26" hits="2" branch="false" />
-                <line number="27" hits="2724" branch="true" condition-coverage="100% (2/2)" />
+                <line number="27" hits="2738" branch="true" condition-coverage="100% (2/2)" />
                 <line number="28" hits="2" branch="false" />
                 <line number="30" hits="268" branch="true" condition-coverage="100% (2/2)" />
                 <line number="32" hits="132" branch="false" />
@@ -3883,7 +3883,7 @@
             <line number="24" hits="2" branch="false" />
             <line number="25" hits="306" branch="false" />
             <line number="26" hits="2" branch="false" />
-            <line number="27" hits="2724" branch="true" condition-coverage="100% (2/2)" />
+            <line number="27" hits="2738" branch="true" condition-coverage="100% (2/2)" />
             <line number="28" hits="2" branch="false" />
             <line number="30" hits="268" branch="true" condition-coverage="100% (2/2)" />
             <line number="32" hits="132" branch="false" />
@@ -4118,6 +4118,42 @@
             <line number="100" hits="0" branch="false" />
             <line number="103" hits="0" branch="false" />
             <line number="104" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Database.Activities.UserActivityDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Activities/UserActivityDbConfig.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="Configure" signature="(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1&lt;Syki.Back.Domain.Activities.UserActivity&gt;)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="4" branch="false" />
+                <line number="13" hits="4" branch="false" />
+                <line number="15" hits="4" branch="false" />
+                <line number="16" hits="4" branch="false" />
+                <line number="18" hits="4" branch="false" />
+                <line number="19" hits="4" branch="false" />
+                <line number="20" hits="4" branch="false" />
+                <line number="21" hits="4" branch="false" />
+                <line number="23" hits="4" branch="false" />
+                <line number="24" hits="4" branch="false" />
+                <line number="25" hits="4" branch="false" />
+                <line number="26" hits="4" branch="false" />
+                <line number="27" hits="4" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="11" hits="4" branch="false" />
+            <line number="13" hits="4" branch="false" />
+            <line number="15" hits="4" branch="false" />
+            <line number="16" hits="4" branch="false" />
+            <line number="18" hits="4" branch="false" />
+            <line number="19" hits="4" branch="false" />
+            <line number="20" hits="4" branch="false" />
+            <line number="21" hits="4" branch="false" />
+            <line number="23" hits="4" branch="false" />
+            <line number="24" hits="4" branch="false" />
+            <line number="25" hits="4" branch="false" />
+            <line number="26" hits="4" branch="false" />
+            <line number="27" hits="4" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Database.Campi.CampusDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Campi/CampusDbConfig.cs" line-rate="1" branch-rate="1" complexity="1">
@@ -5052,6 +5088,72 @@
             <line number="22" hits="4" branch="false" />
           </lines>
         </class>
+        <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.Activities.cs" line-rate="0.7777777777777778" branch-rate="0.5" complexity="13">
+          <methods>
+            <method name="get_UserActivities" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="2320" branch="false" />
+              </lines>
+            </method>
+            <method name="ConfigureActivities" signature="(Microsoft.EntityFrameworkCore.ModelBuilder)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="4" branch="false" />
+                <line number="13" hits="4" branch="false" />
+              </lines>
+            </method>
+            <method name="RecordSuccess" signature="(Syki.Back.Domain.Enums.UserActivityType,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Object)" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="8" branch="false" />
+                <line number="18" hits="8" branch="false" />
+              </lines>
+            </method>
+            <method name="RecordInfo" signature="(Syki.Back.Domain.Enums.UserActivityType,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Object)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="22" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="RecordError" signature="(Syki.Back.Domain.Enums.UserActivityType,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Object)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="27" hits="0" branch="false" />
+                <line number="28" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Record" signature="(Syki.Back.Domain.Enums.UserActivitySeverity,Syki.Back.Domain.Enums.UserActivityType,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Object)" line-rate="1" branch-rate="0.5" complexity="8">
+              <lines>
+                <line number="32" hits="8" branch="true" condition-coverage="50% (4/8)" />
+                <line number="33" hits="8" branch="false" />
+                <line number="34" hits="8" branch="false" />
+                <line number="35" hits="8" branch="false" />
+                <line number="36" hits="8" branch="false" />
+                <line number="37" hits="8" branch="false" />
+                <line number="38" hits="8" branch="false" />
+                <line number="39" hits="8" branch="false" />
+                <line number="40" hits="8" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="8" hits="2320" branch="false" />
+            <line number="12" hits="4" branch="false" />
+            <line number="13" hits="4" branch="false" />
+            <line number="17" hits="8" branch="false" />
+            <line number="18" hits="8" branch="false" />
+            <line number="22" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="27" hits="0" branch="false" />
+            <line number="28" hits="0" branch="false" />
+            <line number="32" hits="8" branch="true" condition-coverage="50% (4/8)" />
+            <line number="33" hits="8" branch="false" />
+            <line number="34" hits="8" branch="false" />
+            <line number="35" hits="8" branch="false" />
+            <line number="36" hits="8" branch="false" />
+            <line number="37" hits="8" branch="false" />
+            <line number="38" hits="8" branch="false" />
+            <line number="39" hits="8" branch="false" />
+            <line number="40" hits="8" branch="false" />
+          </lines>
+        </class>
         <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.Audit.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
             <method name="ConfigureAudit" signature="(Microsoft.EntityFrameworkCore.ModelBuilder)" line-rate="1" branch-rate="1" complexity="1">
@@ -5321,7 +5423,7 @@
             </method>
             <method name="get_RequestUser" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="16" hits="9056" branch="false" />
+                <line number="16" hits="9088" branch="false" />
               </lines>
             </method>
             <method name="get_ActivityId" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -5366,6 +5468,7 @@
                 <line number="48" hits="4" branch="false" />
                 <line number="49" hits="4" branch="false" />
                 <line number="50" hits="4" branch="false" />
+                <line number="51" hits="4" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="(Microsoft.EntityFrameworkCore.DbContextOptions`1&lt;Syki.Back.Database.SykiDbContext&gt;,Npgsql.NpgsqlDataSource,Microsoft.Extensions.Caching.Hybrid.HybridCache)" line-rate="1" branch-rate="1" complexity="1">
@@ -5375,23 +5478,23 @@
             </method>
             <method name="GetOpenConnectionAsync" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="54" hits="4" branch="false" />
                 <line number="55" hits="4" branch="false" />
                 <line number="56" hits="4" branch="false" />
+                <line number="57" hits="4" branch="false" />
               </lines>
             </method>
             <method name="SaveChangesAsync" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="60" hits="130" branch="false" />
                 <line number="61" hits="130" branch="false" />
                 <line number="62" hits="130" branch="false" />
+                <line number="63" hits="130" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
             <line number="12" hits="2312" branch="false" />
             <line number="14" hits="2638" branch="false" />
-            <line number="16" hits="9056" branch="false" />
+            <line number="16" hits="9088" branch="false" />
             <line number="18" hits="3878" branch="false" />
             <line number="19" hits="3878" branch="false" />
             <line number="21" hits="2318" branch="false" />
@@ -5416,12 +5519,13 @@
             <line number="48" hits="4" branch="false" />
             <line number="49" hits="4" branch="false" />
             <line number="50" hits="4" branch="false" />
-            <line number="54" hits="4" branch="false" />
+            <line number="51" hits="4" branch="false" />
             <line number="55" hits="4" branch="false" />
             <line number="56" hits="4" branch="false" />
-            <line number="60" hits="130" branch="false" />
+            <line number="57" hits="4" branch="false" />
             <line number="61" hits="130" branch="false" />
             <line number="62" hits="130" branch="false" />
+            <line number="63" hits="130" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Database.SykiDbContext" filename="/home/runner/work/syki/syki/Back/Database/SykiDbContext.Disciplines.cs" line-rate="1" branch-rate="1" complexity="2">
@@ -5994,6 +6098,98 @@
             <line number="18" hits="4" branch="false" />
             <line number="19" hits="4" branch="false" />
             <line number="20" hits="4" branch="false" />
+          </lines>
+        </class>
+        <class name="Syki.Back.Domain.Activities.UserActivity" filename="/home/runner/work/syki/syki/Back/Domain/Activities/UserActivity.cs" line-rate="0.9130434782608695" branch-rate="0.5" complexity="11">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_UserId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="8" branch="false" />
+              </lines>
+            </method>
+            <method name="get_InstitutionId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="8" branch="false" />
+              </lines>
+            </method>
+            <method name="get_FeatureGroup" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="10" hits="8" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Severity" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="8" branch="false" />
+              </lines>
+            </method>
+            <method name="get_ActivityType" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="8" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Metadata" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="13" hits="8" branch="false" />
+              </lines>
+            </method>
+            <method name="get_CreatedAt" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="8" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="16" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="(Syki.Back.Domain.Enums.UserActivitySeverity,Syki.Back.Domain.Enums.UserActivityType,System.Nullable`1&lt;System.Int32&gt;,System.Nullable`1&lt;System.Int32&gt;,System.Object)" line-rate="1" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="18" hits="8" branch="false" />
+                <line number="19" hits="8" branch="false" />
+                <line number="20" hits="8" branch="false" />
+                <line number="21" hits="8" branch="false" />
+                <line number="22" hits="8" branch="false" />
+                <line number="23" hits="8" branch="false" />
+                <line number="25" hits="8" branch="false" />
+                <line number="26" hits="8" branch="false" />
+                <line number="27" hits="8" branch="false" />
+                <line number="28" hits="8" branch="false" />
+                <line number="29" hits="8" branch="false" />
+                <line number="30" hits="8" branch="false" />
+                <line number="31" hits="8" branch="true" condition-coverage="50% (1/2)" />
+                <line number="32" hits="8" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="7" hits="0" branch="false" />
+            <line number="8" hits="8" branch="false" />
+            <line number="9" hits="8" branch="false" />
+            <line number="10" hits="8" branch="false" />
+            <line number="11" hits="8" branch="false" />
+            <line number="12" hits="8" branch="false" />
+            <line number="13" hits="8" branch="false" />
+            <line number="14" hits="8" branch="false" />
+            <line number="16" hits="0" branch="false" />
+            <line number="18" hits="8" branch="false" />
+            <line number="19" hits="8" branch="false" />
+            <line number="20" hits="8" branch="false" />
+            <line number="21" hits="8" branch="false" />
+            <line number="22" hits="8" branch="false" />
+            <line number="23" hits="8" branch="false" />
+            <line number="25" hits="8" branch="false" />
+            <line number="26" hits="8" branch="false" />
+            <line number="27" hits="8" branch="false" />
+            <line number="28" hits="8" branch="false" />
+            <line number="29" hits="8" branch="false" />
+            <line number="30" hits="8" branch="false" />
+            <line number="31" hits="8" branch="true" condition-coverage="50% (1/2)" />
+            <line number="32" hits="8" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Domain.Campi.Campus" filename="/home/runner/work/syki/syki/Back/Domain/Campi/Campus.cs" line-rate="1" branch-rate="1" complexity="9">
@@ -10316,7 +10512,7 @@
             <line number="12" hits="336" branch="false" />
           </lines>
         </class>
-        <class name="Syki.Back.Extensions.EnumExtensions" filename="/home/runner/work/syki/syki/Back/Extensions/EnumExtensions.cs" line-rate="0.8148148148148148" branch-rate="1" complexity="19">
+        <class name="Syki.Back.Extensions.EnumExtensions" filename="/home/runner/work/syki/syki/Back/Extensions/EnumExtensions.cs" line-rate="0.8518518518518519" branch-rate="1" complexity="19">
           <methods>
             <method name="GetDescription" signature="(System.Enum)" line-rate="1" branch-rate="1" complexity="6">
               <lines>
@@ -10347,9 +10543,9 @@
                 <line number="41" hits="0" branch="false" />
               </lines>
             </method>
-            <method name="IntToEnum" signature="(System.Int32)" line-rate="0" branch-rate="1" complexity="1">
+            <method name="IntToEnum" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="46" hits="0" branch="false" />
+                <line number="46" hits="8" branch="false" />
               </lines>
             </method>
             <method name="IsValid" signature="(System.Enum)" line-rate="1" branch-rate="1" complexity="1">
@@ -10359,7 +10555,7 @@
             </method>
             <method name="ToInt" signature="(TEnum)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="56" hits="280" branch="false" />
+                <line number="56" hits="288" branch="false" />
               </lines>
             </method>
             <method name="ToShort" signature="(TEnum)" line-rate="0" branch-rate="1" complexity="1">
@@ -10400,9 +10596,9 @@
             <line number="31" hits="20" branch="false" />
             <line number="36" hits="0" branch="false" />
             <line number="41" hits="0" branch="false" />
-            <line number="46" hits="0" branch="false" />
+            <line number="46" hits="8" branch="false" />
             <line number="51" hits="12" branch="false" />
-            <line number="56" hits="280" branch="false" />
+            <line number="56" hits="288" branch="false" />
             <line number="61" hits="0" branch="false" />
             <line number="66" hits="0" branch="false" />
             <line number="71" hits="32" branch="true" condition-coverage="100% (2/2)" />
@@ -15159,8 +15355,9 @@
                 <line number="44" hits="8" branch="false" />
                 <line number="45" hits="8" branch="false" />
                 <line number="46" hits="8" branch="false" />
-                <line number="48" hits="8" branch="false" />
-                <line number="49" hits="18" branch="false" />
+                <line number="47" hits="8" branch="false" />
+                <line number="49" hits="8" branch="false" />
+                <line number="50" hits="18" branch="false" />
               </lines>
             </method>
           </methods>
@@ -15191,8 +15388,9 @@
             <line number="44" hits="8" branch="false" />
             <line number="45" hits="8" branch="false" />
             <line number="46" hits="8" branch="false" />
-            <line number="48" hits="8" branch="false" />
-            <line number="49" hits="18" branch="false" />
+            <line number="47" hits="8" branch="false" />
+            <line number="49" hits="8" branch="false" />
+            <line number="50" hits="18" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Features.Identity.CreateSsoConfiguration.CreateSsoConfigurationController" filename="/home/runner/work/syki/syki/Back/Features/Identity/CreateSsoConfiguration/CreateSsoConfigurationController.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -25888,7 +26086,7 @@
             </method>
             <method name="Serialize" signature="(System.Object)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="92" hits="2126" branch="false" />
+                <line number="92" hits="2134" branch="false" />
               </lines>
             </method>
             <method name="GenerateQrCodeBase64" signature="(System.String,System.String)" line-rate="0" branch-rate="1" complexity="1">
@@ -26027,7 +26225,7 @@
             <line number="86" hits="2" branch="false" />
             <line number="87" hits="2" branch="false" />
             <line number="88" hits="2" branch="false" />
-            <line number="92" hits="2126" branch="false" />
+            <line number="92" hits="2134" branch="false" />
             <line number="99" hits="0" branch="false" />
             <line number="100" hits="0" branch="false" />
             <line number="101" hits="0" branch="false" />

@@ -7,7 +7,7 @@ public class ResetPasswordTokenDbConfig : IEntityTypeConfiguration<ResetPassword
 {
     public void Configure(EntityTypeBuilder<ResetPasswordToken> entity)
     {
-        entity.ToTable("reset_password_tokens");
+        entity.ToTable("reset_password_tokens", DbSchemas.Syki);
 
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Id).ValueGeneratedNever();

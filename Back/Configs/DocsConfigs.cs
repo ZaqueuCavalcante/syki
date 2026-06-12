@@ -41,6 +41,9 @@ public static class DocsConfigs
                 if (group == "teachers") return ["👨‍🏫 Teachers"];
                 if (group == "identity") return ["🛡️ Identity"];
                 if (group == "users") return ["👩🏻‍🎓 Users"];
+                if (group == "webhooks") return ["🪝 Webhooks"];
+                if (group == "classes") return ["👩🏻‍🏫 Classes"];
+                if (group == "notifications") return ["🔔 Notifications"];
                 return ["🧱 Cross"];
             });
             options.DocInclusionPredicate((name, api) => true);

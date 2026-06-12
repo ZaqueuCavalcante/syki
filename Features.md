@@ -32,6 +32,16 @@
 
 
 
+## Feature Shape
+
+- UI
+- Endpoints
+- Domain
+- Database
+- Tests
+- Docs
+- Monitoring
+
 
 ## Academic (51 features → 13 grupos)
 

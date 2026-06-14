@@ -2,10 +2,10 @@
 const { account } = useUserAccount()
 
 const stats = [
-  { label: 'Alunos matriculados', value: '1.240', icon: 'i-lucide-graduation-cap' },
-  { label: 'Professores ativos', value: '87', icon: 'i-lucide-users' },
-  { label: 'Cursos ofertados', value: '14', icon: 'i-lucide-book-open' },
-  { label: 'Disciplinas cadastradas', value: '132', icon: 'i-lucide-library' },
+  { label: 'Alunos matriculados',    value: '1.240', icon: 'i-lucide-graduation-cap' },
+  { label: 'Professores ativos',     value: '87',    icon: 'i-lucide-user-pen'       },
+  { label: 'Cursos ofertados',       value: '14',    icon: 'i-lucide-notebook'       },
+  { label: 'Disciplinas cadastradas', value: '132',  icon: 'i-lucide-library'        },
 ]
 </script>
 

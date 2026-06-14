@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { TableColumn } from '@nuxt/ui'
-
 interface CampusItem {
   id: number
   name: string
@@ -17,8 +15,6 @@ interface GetCampiOut {
   items: CampusItem[]
 }
 
-const UButton = resolveComponent('UButton')
-
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
 const editModalOpen = ref(false)
@@ -34,48 +30,11 @@ const { data, status, refresh } = await useFetch<GetCampiOut>(`${config.public.b
   server: false
 })
 
-const columns: TableColumn<CampusItem>[] = [
-  {
-    accessorKey: 'name',
-    header: 'Nome',
-  },
-  {
-    accessorKey: 'city',
-    header: 'Cidade',
-  },
-  {
-    accessorKey: 'state',
-    header: 'Estado',
-  },
-  {
-    accessorKey: 'capacity',
-    header: 'Capacidade',
-    cell: ({ row }) => row.original.capacity.toLocaleString('pt-BR'),
-  },
-  {
-    accessorKey: 'students',
-    header: 'Alunos',
-  },
-  {
-    accessorKey: 'teachers',
-    header: 'Professores',
-  },
-  {
-    accessorKey: 'fillRate',
-    header: 'Ocupação',
-    cell: ({ row }) => `${row.original.fillRate}%`,
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => h(UButton, {
-      icon: 'i-lucide-pencil',
-      color: 'neutral',
-      variant: 'ghost',
-      size: 'sm',
-      onClick: () => openEdit(row.original),
-    }),
-  },
-]
+function fillRateColor(rate: number): string {
+  if (rate < 50) return 'var(--ui-error)'
+  if (rate < 80) return 'var(--ui-warning)'
+  return 'var(--ui-success)'
+}
 </script>
 
 <template>
@@ -85,25 +44,74 @@ const columns: TableColumn<CampusItem>[] = [
         <template #leading>
           <UDashboardSidebarCollapse />
         </template>
-
-        <template #right>
-          <UButton icon="i-lucide-plus" label="Campus" @click="createModalOpen = true" />
-        </template>
       </UDashboardNavbar>
     </template>
 
     <template #body>
-      <DataTable :data="data?.items ?? []" :columns="columns" :loading="status === 'pending'">
-        <template #empty>
-          <TableEmptyState
-            :loading="status === 'pending'"
-            icon="i-lucide-map-pin"
-            message="Nenhum campus cadastrado"
-            button-label="Campus"
-            @create="createModalOpen = true"
-          />
-        </template>
-      </DataTable>
+      <div v-if="status === 'pending'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+        <USkeleton v-for="i in 3" :key="i" class="h-44 rounded-xl" />
+      </div>
+
+      <TableEmptyState
+        v-else-if="!data?.items?.length"
+        :loading="false"
+        icon="i-lucide-map-pin"
+        message="Nenhum campus cadastrado"
+        button-label="Campus"
+        @create="createModalOpen = true"
+      />
+
+      <div v-else class="p-4 space-y-4">
+        <div class="flex justify-end">
+          <UButton icon="i-lucide-plus" label="Campus" @click="createModalOpen = true" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div
+            v-for="campus in data.items"
+            :key="campus.id"
+            class="rounded-xl border border-default bg-elevated p-4 flex flex-col gap-4"
+          >
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <p class="font-semibold text-base text-highlighted">{{ campus.name }}</p>
+                <p class="text-sm text-muted">{{ campus.city }} - {{ campus.state }}</p>
+              </div>
+              <UButton
+                icon="i-lucide-pencil"
+                color="neutral"
+                variant="ghost"
+                size="sm"
+                @click="openEdit(campus)"
+              />
+            </div>
+
+            <div class="flex flex-col gap-2 text-sm">
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-user-pen" class="size-4 text-muted shrink-0" />
+                <span>{{ campus.teachers }} Professores</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <UIcon name="i-lucide-graduation-cap" class="size-4 text-muted shrink-0" />
+                <span>{{ campus.students }}/{{ campus.capacity.toLocaleString('pt-BR') }} Alunos</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <div class="h-1.5 w-full rounded-full bg-accented overflow-hidden">
+                <div
+                  class="h-full rounded-full"
+                  :style="{
+                    width: `${campus.fillRate}%`,
+                    backgroundColor: fillRateColor(campus.fillRate),
+                  }"
+                />
+              </div>
+              <p class="text-xs text-muted text-right">{{ campus.fillRate }}% de ocupação</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </template>
   </UDashboardPanel>
 

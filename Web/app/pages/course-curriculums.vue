@@ -64,13 +64,13 @@ const columns: TableColumn<CourseCurriculumItem>[] = [
           <UDashboardSidebarCollapse />
         </template>
 
-        <template #right>
-          <UButton icon="i-lucide-plus" label="Grade" @click="createModalOpen = true" />
-        </template>
       </UDashboardNavbar>
     </template>
 
     <template #body>
+      <div v-if="data?.items?.length" class="flex justify-end pt-4">
+        <UButton icon="i-lucide-plus" label="Grade" @click="createModalOpen = true" />
+      </div>
       <DataTable :data="data?.items ?? []" :columns="columns" :loading="status === 'pending'">
         <template #empty>
           <TableEmptyState

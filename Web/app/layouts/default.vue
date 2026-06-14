@@ -10,14 +10,14 @@ const allLinks = [
   { label: 'Home',        icon: 'i-lucide-house',          to: '/',                   policy: 'AccessHomePage'              as PolicyName },
   { label: 'Campi',       icon: 'i-lucide-map-pin',        to: '/campi',              policy: 'AccessCampiPage'             as PolicyName },
   { label: 'Disciplinas', icon: 'i-lucide-book-open',      to: '/disciplines',        policy: 'AccessDisciplinesPage'       as PolicyName },
-  { label: 'Cursos',      icon: 'i-lucide-graduation-cap', to: '/courses',            policy: 'AccessCoursesPage'           as PolicyName },
+  { label: 'Cursos',      icon: 'i-lucide-notebook',       to: '/courses',            policy: 'AccessCoursesPage'           as PolicyName },
   { label: 'Grades',      icon: 'i-lucide-layout-list',    to: '/course-curriculums', policy: 'AccessCourseCurriculumsPage' as PolicyName },
   { label: 'Períodos',    icon: 'i-lucide-calendar',       to: '/periods',            policy: 'AccessPeriodsPage'           as PolicyName },
   { label: 'Ofertas',     icon: 'i-lucide-library',        to: '/course-offerings',   policy: 'AccessCourseOfferingsPage'   as PolicyName },
-  { label: 'Turmas',      icon: 'i-lucide-users',          to: '/classes',            policy: 'AccessClassesPage'           as PolicyName },
+  { label: 'Turmas',      icon: 'i-lucide-door-open',      to: '/classes',            policy: 'AccessClassesPage'           as PolicyName },
   { label: 'Professores', icon: 'i-lucide-user-pen',       to: '/teachers',           policy: 'AccessTeachersPage'          as PolicyName },
-  { label: 'Alunos',      icon: 'i-lucide-user-round',     to: '/students',           policy: 'AccessStudentsPage'          as PolicyName },
-  { label: 'Segurança',    icon: 'i-lucide-shield',         to: '/security',           policy: 'AccessSecurityPage'          as PolicyName },
+  { label: 'Alunos',      icon: 'i-lucide-graduation-cap', to: '/students',           policy: 'AccessStudentsPage'          as PolicyName },
+  { label: 'Segurança',   icon: 'i-lucide-shield',         to: '/security',           policy: 'AccessSecurityPage'          as PolicyName },
   { label: 'Integrações', icon: 'i-lucide-webhook',        to: '/integrations',       policy: 'AccessIntegrationsPage'      as PolicyName },
 ]
 
@@ -83,7 +83,7 @@ const groups = computed(() => [{
 
     <NotificationsSlideover />
 
-    <div class="fixed top-2.5 right-4 z-50">
+    <div class="fixed top-4 right-6 z-50">
       <UChip
         :text="unreadCount > 99 ? '99+' : unreadCount"
         :show="unreadCount > 0"

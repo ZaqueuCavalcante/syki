@@ -8,8 +8,8 @@ const turmas = [
 ]
 
 const stats = [
-  { label: 'Turmas ativas', value: '3', icon: 'i-lucide-layout-list' },
-  { label: 'Total de alunos', value: '111', icon: 'i-lucide-users' },
+  { label: 'Turmas ativas', value: '3', icon: 'i-lucide-door-open' },
+  { label: 'Total de alunos', value: '111', icon: 'i-lucide-graduation-cap' },
   { label: 'Disciplinas', value: '3', icon: 'i-lucide-book-open' },
   { label: 'Aulas esta semana', value: '6', icon: 'i-lucide-calendar-check' },
 ]

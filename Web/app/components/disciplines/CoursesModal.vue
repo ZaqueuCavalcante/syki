@@ -151,7 +151,7 @@ watch(open, (val) => {
         </div>
 
         <div v-else-if="!discipline?.courses.length" class="flex flex-col items-center gap-3 py-8 text-muted">
-          <UIcon name="i-lucide-graduation-cap" class="size-10" />
+          <UIcon name="i-lucide-notebook" class="size-10" />
           <p class="text-sm">Nenhum curso vinculado</p>
         </div>
 

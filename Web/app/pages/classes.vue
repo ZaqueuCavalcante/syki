@@ -81,18 +81,18 @@ const columns: TableColumn<ClassItem>[] = [
           <UDashboardSidebarCollapse />
         </template>
 
-        <template #right>
-          <UButton icon="i-lucide-plus" label="Turma" @click="createModalOpen = true" />
-        </template>
       </UDashboardNavbar>
     </template>
 
     <template #body>
+      <div v-if="data?.items?.length" class="flex justify-end pt-4">
+        <UButton icon="i-lucide-plus" label="Turma" @click="createModalOpen = true" />
+      </div>
       <DataTable :data="data?.items ?? []" :columns="columns" :loading="status === 'pending'">
         <template #empty>
           <TableEmptyState
             :loading="status === 'pending'"
-            icon="i-lucide-users"
+            icon="i-lucide-door-open"
             message="Nenhuma turma cadastrada"
             button-label="Turma"
             @create="createModalOpen = true"

@@ -46,7 +46,7 @@ public class EmailsService : IEmailsService
         try
         {
             var content = LoadTemplate(templateName, link);
-            var body = new BrevoEmailMessage(sender: "syki@zaqbit.com", to: to, subject: subject, content: content);
+            var body = new BrevoEmailMessage(sender: "suporte@estud.com.br", to: to, subject: subject, content: content);
 
             var bodyJson = JsonSerializer.Serialize(new { body.Sender, body.To, body.Subject }, _logOptions);
             _logger.LogInformation("[EmailsService] {Method} - request body (sem htmlContent): {Body}", method, bodyJson);

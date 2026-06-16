@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.4338809587934285" branch-rate="0.2460431654676259" lines-covered="3222" lines-valid="7426" branches-covered="342" branches-valid="1390" complexity="3579" version="0" timestamp="1781642567">
+<coverage line-rate="0.4338809587934285" branch-rate="0.2460431654676259" lines-covered="3222" lines-valid="7426" branches-covered="342" branches-valid="1390" complexity="3579" version="0" timestamp="1781645867">
   <sources>
     <source>/</source>
   </sources>
@@ -3322,7 +3322,7 @@
             <method name="ReadResource" signature="(System.String)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
                 <line number="107" hits="2" branch="false" />
-                <line number="108" hits="4" branch="false" />
+                <line number="108" hits="10" branch="false" />
                 <line number="110" hits="2" branch="false" />
                 <line number="111" hits="2" branch="false" />
                 <line number="113" hits="2" branch="false" />
@@ -3415,7 +3415,7 @@
             <line number="102" hits="2" branch="false" />
             <line number="103" hits="2" branch="false" />
             <line number="107" hits="2" branch="false" />
-            <line number="108" hits="4" branch="false" />
+            <line number="108" hits="10" branch="false" />
             <line number="110" hits="2" branch="false" />
             <line number="111" hits="2" branch="false" />
             <line number="113" hits="2" branch="false" />

@@ -30,13 +30,13 @@ public class EmailsService : IEmailsService
     public async Task SendResetPasswordEmail(string to, string token)
     {
         var link = $"{_settings.FrontUrl}/reset-password?token={token}";
-        await SendEmail("SendResetPasswordEmail", to, "Syki - Redefinição de senha", "ResetPassword.html", link);
+        await SendEmail("SendResetPasswordEmail", to, "Estud - Redefinição de senha", "ResetPassword.html", link);
     }
 
     public async Task SendFirstAccessMagicLinkEmail(string to, string token)
     {
         var link = $"{_settings.FrontUrl}/magic-link?token={token}";
-        await SendEmail("SendFirstAccessMagicLinkEmail", to, "Syki - Acesse sua conta", "FirstAccessMagicLink.html", link);
+        await SendEmail("SendFirstAccessMagicLinkEmail", to, "Estud - Acesse sua conta", "FirstAccessMagicLink.html", link);
     }
 
     private async Task SendEmail(string method, string to, string subject, string templateName, string link)

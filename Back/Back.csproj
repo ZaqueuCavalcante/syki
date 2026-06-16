@@ -81,6 +81,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\api-intro.md" />
+    <EmbeddedResource Include="Emails\Templates\*.html" />
   </ItemGroup>
 
 </Project>

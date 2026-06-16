@@ -1,14 +1,14 @@
 {
   "permissions": {
     "allow": [
+      "Bash(grep *)",
+      "Bash(xargs ls)",
       "Bash(xargs cat)",
       "Bash(pnpm nuxt *)",
       "Bash(xargs ls -la)",
-      "Bash(xargs ls)",
-      "Bash(grep -E '\\\\.\\(cs|ts|tsx\\)$')",
-      "Bash(grep -E '\\\\.\\(cs|json\\)$')",
       "Bash(grep -E '\\\\.cs$')",
-      "Bash(grep *)"
+      "Bash(grep -E '\\\\.\\(cs|json\\)$')",
+      "Bash(grep -E '\\\\.\\(cs|ts|tsx\\)$')"
     ]
   }
 }

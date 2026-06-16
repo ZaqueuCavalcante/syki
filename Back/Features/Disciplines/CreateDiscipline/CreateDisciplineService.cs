@@ -9,7 +9,7 @@ public class CreateDisciplineService(SykiDbContext ctx) : ISykiService
         public Validator()
         {
             RuleFor(x => x.Name).NotEmpty().WithError(InvalidDisciplineName.I);
-            RuleFor(x => x.Name).MaximumLength(50).WithError(InvalidDisciplineName.I);
+            RuleFor(x => x.Name).MaximumLength(100).WithError(InvalidDisciplineName.I);
         }
     }
     private static readonly Validator V = new();

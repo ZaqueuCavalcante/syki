@@ -82,12 +82,12 @@ public static class BackFactoryExtensions
         await userManager.ResetPasswordAsync(user!, resetToken, password);
     }
 
-    public static async Task<TestsHttpClient> LoggedAsDirector(this BackFactory factory)
+    public static async Task<TestsHttpClient> LoggedAsDirector(this BackFactory factory, string? email = null)
     {
         await using var ctx = factory.GetDbContext();
         var client = factory.GetTestsClient();
 
-        var email = DataGen.Email;
+        email ??= DataGen.Email;
         var user = (await client.RegisterUser(email)).Success;
 
         var token = await factory.GetMagicLink(email);

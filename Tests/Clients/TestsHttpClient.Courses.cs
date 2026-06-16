@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using Syki.Back.Features.Courses.GetCourses;
 using Syki.Back.Features.Courses.CreateCourse;
 using Syki.Back.Features.Courses.UpdateCourse;
+using Syki.Back.Features.Courses.AddCourseDisciplines;
 
 namespace Syki.Tests.Integration.Clients;
 
@@ -30,5 +31,13 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync("/courses");
         return await response.DeserializeTo<GetCoursesOut>();
+    }
+
+    // AddCourseDisciplines
+    public async Task<OneOf<SuccessOut, ErrorOut>> AddCourseDisciplines(int courseId, List<int> disciplines)
+    {
+        var data = new AddCourseDisciplinesIn { CourseId = courseId, Disciplines = disciplines };
+        var response = await http.PostAsJsonAsync("/courses/disciplines", data);
+        return await response.Resolve<SuccessOut>();
     }
 }

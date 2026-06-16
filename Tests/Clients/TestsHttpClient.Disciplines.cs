@@ -1,8 +1,8 @@
 using System.Net.Http.Json;
+using Syki.Back.Features.Disciplines.GetDiscipline;
 using Syki.Back.Features.Disciplines.GetDisciplines;
 using Syki.Back.Features.Disciplines.CreateDiscipline;
 using Syki.Back.Features.Disciplines.UpdateDiscipline;
-using Syki.Back.Features.Disciplines.GetDiscipline;
 using Syki.Back.Features.Disciplines.AddDisciplineCourses;
 
 namespace Syki.Tests.Integration.Clients;

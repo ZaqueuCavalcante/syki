@@ -16,12 +16,6 @@
 - https://mermaid.js.org/
 
 
-Crie um teste de integracao com
-- Usuario com nome = Zaqueu Cavalcante e email = zaqueu.cavalcante@gmail.com e role = SykiDefaultRoles.Director
-- Crie campus
-- Crie disciplinas
-- Crie cursos
-- Crie grades curriculares
-- Crie ofertas de curso
 
 - Ver SeedInstitutionBasicDataCommand e SeedInstitutionUsersCommand pro resto
+

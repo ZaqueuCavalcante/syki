@@ -19,47 +19,31 @@ public class EmailsService : IEmailsService
         _client = httpClientFactory.CreateClient();
         _client.BaseAddress = new Uri(_settings.ApiUrl);
         _client.DefaultRequestHeaders.Add("api-key", _settings.ApiKey);
-
-        var keyPreview = _settings.ApiKey.Length > 8
-            ? _settings.ApiKey[..4] + "..." + _settings.ApiKey[^4..]
-            : "***";
-        _logger.LogInformation("[EmailsService] initialized - ApiUrl: {ApiUrl} | FrontUrl: {FrontUrl} | ApiKey: {KeyPreview}",
-            _settings.ApiUrl, _settings.FrontUrl, keyPreview);
     }
 
     public async Task SendResetPasswordEmail(string to, string token)
     {
         var link = $"{_settings.FrontUrl}/reset-password?token={token}";
-        await SendEmail("SendResetPasswordEmail", to, "Estud - Redefinição de senha", "ResetPassword.html", link);
+        await SendEmail("SendResetPasswordEmail", to, "Redefinição de senha", "ResetPassword.html", link);
     }
 
     public async Task SendFirstAccessMagicLinkEmail(string to, string token)
     {
         var link = $"{_settings.FrontUrl}/magic-link?token={token}";
-        await SendEmail("SendFirstAccessMagicLinkEmail", to, "Estud - Acesse sua conta", "FirstAccessMagicLink.html", link);
+        await SendEmail("SendFirstAccessMagicLinkEmail", to, "Acesse sua conta", "FirstAccessMagicLink.html", link);
     }
 
     private async Task SendEmail(string method, string to, string subject, string templateName, string link)
     {
-        _logger.LogInformation("[EmailsService] {Method} - to: {To} | subject: {Subject} | link: {Link}",
-            method, to, subject, link);
         try
         {
             var content = LoadTemplate(templateName, link);
             var body = new BrevoEmailMessage(sender: "suporte@estud.com.br", to: to, subject: subject, content: content);
 
             var bodyJson = JsonSerializer.Serialize(new { body.Sender, body.To, body.Subject }, _logOptions);
-            _logger.LogInformation("[EmailsService] {Method} - request body (sem htmlContent): {Body}", method, bodyJson);
 
             var response = await _client.PostAsJsonAsync("", body);
             var responseBody = await response.Content.ReadAsStringAsync();
-
-            if (response.IsSuccessStatusCode)
-                _logger.LogInformation("[EmailsService] {Method} - success ({StatusCode}): {Response}",
-                    method, (int)response.StatusCode, responseBody);
-            else
-                _logger.LogError("[EmailsService] {Method} - failed ({StatusCode}): {Response}",
-                    method, (int)response.StatusCode, responseBody);
         }
         catch (Exception ex)
         {
@@ -73,8 +57,7 @@ public class EmailsService : IEmailsService
         {
             var assembly = Assembly.GetExecutingAssembly();
             var resourceNames = assembly.GetManifestResourceNames();
-            var resourcePath = resourceNames.SingleOrDefault(str => str.EndsWith(n))
-                ?? throw new InvalidOperationException($"Email template '{n}' not found. Available: {string.Join(", ", resourceNames)}");
+            var resourcePath = resourceNames.SingleOrDefault(str => str.EndsWith(n));
 
             using var stream = assembly.GetManifestResourceStream(resourcePath)!;
             using var reader = new StreamReader(stream);

@@ -61,6 +61,16 @@ public static partial class HttpExtensions
             return endpoint.DisplayName ?? NormalizePath(context.Request.Path.ToString());
         }
 
+        public string GetIpAddress()
+        {
+            return context.Connection.RemoteIpAddress?.ToString() ?? "-";
+        }
+
+        public string GetUserAgent()
+        {
+            return context.Request.Headers.UserAgent.FirstOrDefault() ?? "-";
+        }
+
         public async Task SignInTwoFactorUserIdSchemeAsync(int userId)
         {
             // Store user ID in Identity cookie for 2FA verification step

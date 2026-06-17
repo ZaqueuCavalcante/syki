@@ -18,6 +18,9 @@
             "requireExactSource": false,
             "cwd": "${workspaceFolder}/Back",
             "program": "${workspaceFolder}/Back/bin/Debug/net10.0/Back.dll",
+            "sourceFileMap": {
+                "/_/": "${workspaceFolder}/"
+            }
         }
     ]
 }

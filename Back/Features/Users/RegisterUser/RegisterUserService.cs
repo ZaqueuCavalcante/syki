@@ -23,7 +23,7 @@ public class RegisterUserService(SykiDbContext ctx, UserManager<SykiUser> userMa
         if (emailUsed) return EmailAlreadyUsed.I;
 
         var institution = Institution.NewForUserRegister();
-        var user = new SykiUser(institution, email);
+        var user = new SykiUser(institution, "Seu Nome", email);
         var magicLink = new MagicLink(user);
 
         var directorRole = await ctx.GetDirectorRole();

@@ -15,9 +15,10 @@ public class SykiUser : IdentityUser<int>
 
     public SykiUser(
         Institution institution,
+        string name,
         string email
     ) {
-        Name = email;
+        Name = name;
         UserName = email;
         Email = email;
         CreatedAt = DateTime.UtcNow;

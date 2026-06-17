@@ -14,6 +14,8 @@ public partial class SykiDbContext
     public DbSet<SsoConfiguration> WebSsoConfigurations { get; set; }
     public DbSet<SsoAllowedDomain> WebSsoAllowedDomains { get; set; }
 
+    public DbSet<UserSocialLogin> UserSocialLogins { get; set; }
+
     private static void ConfigureIdentity(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new MagicLinkDbConfig());
@@ -31,6 +33,8 @@ public partial class SykiDbContext
 
         modelBuilder.ApplyConfiguration(new SsoConfigurationDbConfig());
         modelBuilder.ApplyConfiguration(new SsoAllowedDomainDbConfig());
+
+        modelBuilder.ApplyConfiguration(new UserSocialLoginDbConfig());
     }
 
     public async Task<SykiRole> GetUserRole(int userId, int institutionId)
@@ -103,5 +107,26 @@ public partial class SykiDbContext
         ";
 
         return await Database.GetDbConnection().QueryFirstOrDefaultAsync<SsoConfiguration?>(sql, new { PublicId = publicId });
+    }
+
+    public async Task<bool> EmailRequiresSsoAsync(string email)
+    {
+        const string sql = @"
+            SELECT
+                count(1) > 0
+            FROM
+                syki.sso_allowed_domains d
+            INNER JOIN
+                syki.sso_configurations c ON c.id = d.sso_configuration_id
+            WHERE
+                d.domain = @Domain
+                    AND
+                c.is_active = true
+                    AND
+                c.require_sso = true
+        ";
+
+        var domain = email.Split('@').Last().ToLowerInvariant();
+        return await Database.GetDbConnection().QuerySingleAsync<bool>(sql, new { domain });
     }
 }

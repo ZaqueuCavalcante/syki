@@ -160,3 +160,24 @@ public class InvalidPermissionsForUserType : SykiError
     public override string Code { get; set; } = nameof(InvalidPermissionsForUserType);
     public override string Message { get; set; } = "Uma ou mais permissões não são permitidas para o tipo de usuário selecionado.";
 }
+
+public class SocialLoginFailed : SykiError
+{
+    public static readonly SocialLoginFailed I = new();
+    public override string Code { get; set; } = nameof(SocialLoginFailed);
+    public override string Message { get; set; } = "Falha na autenticação social. Tente novamente.";
+}
+
+public class SocialLoginEmailNotVerified : SykiError
+{
+    public static readonly SocialLoginEmailNotVerified I = new();
+    public override string Code { get; set; } = nameof(SocialLoginEmailNotVerified);
+    public override string Message { get; set; } = "Email não verificado pelo provedor.";
+}
+
+public class SocialLoginSsoRequired : SykiError
+{
+    public static readonly SocialLoginSsoRequired I = new();
+    public override string Code { get; set; } = nameof(SocialLoginSsoRequired);
+    public override string Message { get; set; } = "Sua organização requer login via SSO corporativo.";
+}

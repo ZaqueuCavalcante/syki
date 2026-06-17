@@ -2,12 +2,12 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace Syki.Back.Auth.Schemes;
 
-public static class SsoTempScheme
+public static class SocialTempScheme
 {
-    public const string Name = "SsoTemp";
-    public const string Cookie = "X-Estud-SsoTempCookie";
+    public const string Name = "SocialTemp";
+    public const string Cookie = "X-Estud-SocialTempCookie";
 
-    public static AuthenticationBuilder AddSsoTempCookieScheme(this AuthenticationBuilder builder)
+    public static AuthenticationBuilder AddSocialTempCookieScheme(this AuthenticationBuilder builder)
     {
         return builder.AddCookie(Name, options =>
         {

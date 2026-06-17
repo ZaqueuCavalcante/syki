@@ -1,5 +1,5 @@
 /**
- * Permission IDs aligned with backend SykiPermissions
+ * Permission IDs aligned with backend EstudPermissions
  */
 export const Permissions = {
   // Identity

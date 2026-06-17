@@ -1,4 +1,5 @@
 using Syki.Back.Emails;
+using Syki.Back.Google;
 using Syki.Back.Storage;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -11,10 +12,12 @@ public static class ServicesConfigs
         builder.Services.AddServices(typeof(ISykiService));
 
         builder.Services.AddScoped<IEmailsService, EmailsService>();
+        builder.Services.AddScoped<IGoogleService, GoogleService>();
         builder.Services.AddScoped<IStorageService, FakeStorageService>();
 
-        if (EnvironmentExtensions.IsDevelopmentOrTesting())
+        if (EnvironmentExtensions.IsTesting())
         {
+            builder.Services.Replace(ServiceDescriptor.Singleton<IGoogleService, FakeGoogleService>());
             builder.Services.Replace(ServiceDescriptor.Singleton<IEmailsService, FakeEmailsService>());
         }
     }

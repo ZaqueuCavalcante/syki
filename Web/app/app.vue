@@ -36,6 +36,8 @@ useHead({
   }
 })
 
+const loggingOut = useState('loggingOut', () => false)
+
 const title = 'Estud'
 const description = 'A professional education platform.'
 
@@ -49,11 +51,33 @@ useSeoMeta({
 })
 </script>
 
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
+
 <template>
   <UApp :locale="locale">
     <NuxtLoadingIndicator color="var(--ui-primary)" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+    <Transition name="fade">
+      <div
+        v-if="loggingOut"
+        class="fixed inset-0 z-9999 flex flex-col items-center justify-center gap-4 bg-white dark:bg-gray-900"
+      >
+        <UIcon name="i-lucide-loader-2" class="size-10 animate-spin text-primary" />
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Saindo...
+        </p>
+      </div>
+    </Transition>
   </UApp>
 </template>

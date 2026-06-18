@@ -1,6 +1,10 @@
 @import "@nuxt/ui";
 @import "tailwindcss" theme(static);
 
+button:not(:disabled) {
+  cursor: pointer;
+}
+
 input[type=number].no-spinners::-webkit-outer-spin-button,
 input[type=number].no-spinners::-webkit-inner-spin-button {
   margin: 0;
@@ -8,6 +12,13 @@ input[type=number].no-spinners::-webkit-inner-spin-button {
 }
 input[type=number].no-spinners {
   -moz-appearance: textfield;
+}
+
+/* Google One Tap: the browser applies an opaque white canvas to iframes
+   whose color-scheme differs from the parent. Setting color-scheme: light
+   on the container matches the Google iframe's scheme, rendering it transparent. */
+.dark #credential_picker_container {
+  color-scheme: light;
 }
 
 @theme static {

@@ -28,6 +28,10 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
     description: "Acessar a página inicial",
     requirements: [],
   },
+  GetHomeStats: {
+    description: "Ver estatísticas da home",
+    requirements: [],
+  },
 
   // Campi
   AccessCampiPage: {

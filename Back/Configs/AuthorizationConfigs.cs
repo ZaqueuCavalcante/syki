@@ -5,6 +5,7 @@ public static class AuthorizationConfigs
     public static void AddAuthorizationConfigs(this WebApplicationBuilder builder)
     {
         builder.Services.AddAuthorizationBuilder()
+            .AddCrossPolicies()
             .AddUsersPolicies()
             .AddCampiPolicies()
             .AddCoursesPolicies()

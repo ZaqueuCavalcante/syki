@@ -8,6 +8,10 @@ onMounted(async () => {
   try {
     if (!account.value) await fetchAccount()
   } catch { /* not logged in */ }
+  if (account.value) {
+    await navigateTo('/home', { replace: true })
+    return
+  }
   checking.value = false
 })
 
@@ -50,27 +54,8 @@ const features = [
     <UIcon name="i-lucide-loader-circle" class="size-10 animate-spin text-muted" />
   </div>
 
-  <NuxtLayout v-else :name="account ? 'default' : 'landing'">
-    <!-- Dashboard (logged in) -->
-    <UDashboardPanel v-if="account" id="home">
-      <template #header>
-        <UDashboardNavbar title="Home" :ui="{ right: 'gap-3' }">
-          <template #leading>
-            <UDashboardSidebarCollapse />
-          </template>
-
-        </UDashboardNavbar>
-      </template>
-
-      <template #body>
-        <HomeManager v-if="account?.userType === 'Manager'" />
-        <HomeTeacher v-else-if="account?.userType === 'Teacher'" />
-        <HomeStudent v-else-if="account?.userType === 'Student'" />
-      </template>
-    </UDashboardPanel>
-
-    <!-- Landing (not logged in) -->
-    <div v-else>
+  <NuxtLayout v-else name="landing">
+    <div>
       <UPageHero
         headline="Plataforma educacional"
         title="Gestão acadêmica para quem leva a educação a sério"

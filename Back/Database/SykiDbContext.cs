@@ -48,6 +48,31 @@ public partial class SykiDbContext(DbContextOptions<SykiDbContext> options, Npgs
         ConfigureNotifications(modelBuilder);
         ConfigureCourseOfferings(modelBuilder);
         ConfigureCourseCurriculums(modelBuilder);
+
+        ConfigureDatabaseNames(modelBuilder);
+    }
+
+    private static void ConfigureDatabaseNames(ModelBuilder modelBuilder)
+    {
+        foreach (var entity in modelBuilder.Model.GetEntityTypes())
+        {
+            if (entity.GetTableName().IsEmpty()) continue;
+
+            entity.SetTableName(entity.GetTableName().ToSnakeCase().Replace("asp_net_", ""));
+
+            foreach (var fk in entity.GetForeignKeys())
+            {
+                if (fk.GetConstraintName().HasValue())
+                {
+                    fk.SetConstraintName(fk.GetConstraintName()!.Replace("~", "").Replace("1", ""));
+                }
+            }
+
+            foreach (var index in entity.GetIndexes())
+            {
+                index.SetDatabaseName(index.GetDatabaseName()?.ToSnakeCase());
+            }
+        }
     }
 
     public async Task<DbConnection> GetOpenConnectionAsync(CancellationToken ct = default)

@@ -93,6 +93,7 @@ export interface PolicyDefinition {
 export type PolicyName
   // Home
   = | 'AccessHomePage'
+    | 'GetHomeStats'
   // Campi
     | 'AccessCampiPage'
     | 'CreateCampus'

@@ -34,7 +34,7 @@ public partial class IntegrationTests
         var account = result.Success;
         account.Id.Should().Be(client.User.Id);
         account.Email.Should().Be(client.User.Email);
-        account.Name.Should().Be(client.User.Email);
+        account.Name.Should().Be("Seu Nome");
         account.Role.Should().Be("Diretor");
         account.UserType.Should().Be(UserType.Manager);
         account.Institution.Should().NotBeNullOrEmpty();

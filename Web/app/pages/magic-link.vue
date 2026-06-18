@@ -24,7 +24,7 @@ onMounted(async () => {
       credentials: 'include'
     })
     await fetchAccount()
-    await navigateTo('/')
+    await navigateTo('/home')
   } catch {
     error.value = true
   }

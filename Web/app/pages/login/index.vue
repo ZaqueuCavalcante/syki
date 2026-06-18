@@ -20,7 +20,9 @@ const { data: socialLogin } = await useFetch<SocialLoginAvailability>(
   { default: () => ({ googleEnabled: false, googleClientId: null }) }
 )
 
-const { loggingIn: googleLoading, initOneTap } = useGoogleOneTap()
+const { loggingIn: oneTapLoading, initOneTap } = useGoogleOneTap()
+const googleRedirectLoading = ref(false)
+const googleLoading = computed(() => oneTapLoading.value || googleRedirectLoading.value)
 
 const schema = z.object({
   email: z.string({ error: 'Informe o email' }).min(1, 'Informe o email').email('Email inválido'),
@@ -37,7 +39,11 @@ onMounted(async () => {
 })
 
 function loginWithGoogle() {
-  window.google?.accounts?.id?.prompt()
+  googleRedirectLoading.value = true
+  const email = state.email?.trim()
+  const params = email ? `?email=${encodeURIComponent(email)}` : ''
+  const url = `${config.public.backendUrl}/identity/social-login/challenge/Google${params}`
+  requestAnimationFrame(() => { window.location.href = url })
 }
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
@@ -54,7 +60,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     })
 
     await fetchUser()
-    await navigateTo('/')
+    await navigateTo('/home')
   } catch (error: any) {
     const errorData = typeof error?.data === 'string' ? JSON.parse(error.data) : error?.data
 
@@ -81,6 +87,18 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <Transition name="fade">
+      <div
+        v-if="oneTapLoading"
+        class="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-4 bg-white dark:bg-gray-900"
+      >
+        <UIcon name="i-lucide-loader-2" class="size-10 animate-spin text-primary" />
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Entrando com Google...
+        </p>
+      </div>
+    </Transition>
+
     <AuthHeader />
 
     <div class="flex items-start justify-center px-4 pt-4 md:pt-[20vh]">
@@ -138,6 +156,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
                   autocomplete="username"
                   size="lg"
                   class="w-full"
+                  :disabled="googleRedirectLoading"
                 />
               </UFormField>
 
@@ -151,6 +170,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
                   autocomplete="current-password"
                   size="lg"
                   class="w-full"
+                  :disabled="googleRedirectLoading"
                 />
               </UFormField>
 
@@ -170,6 +190,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
                 size="lg"
                 block
                 :loading="loading"
+                :disabled="googleRedirectLoading"
               />
             </UForm>
           </div>
@@ -178,3 +199,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

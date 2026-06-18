@@ -7,7 +7,7 @@ const { isNotificationsSlideoverOpen } = useDashboard()
 const { unreadCount } = useNotifications()
 
 const allLinks = [
-  { label: 'Home',        icon: 'i-lucide-house',          to: '/',                   policy: 'AccessHomePage'              as PolicyName },
+  { label: 'Home',        icon: 'i-lucide-house',          to: '/home',               policy: 'AccessHomePage'              as PolicyName },
   { label: 'Campi',       icon: 'i-lucide-map-pin',        to: '/campi',              policy: 'AccessCampiPage'             as PolicyName },
   { label: 'Disciplinas', icon: 'i-lucide-book-open',      to: '/disciplines',        policy: 'AccessDisciplinesPage'       as PolicyName },
   { label: 'Cursos',      icon: 'i-lucide-notebook',       to: '/courses',            policy: 'AccessCoursesPage'           as PolicyName },
@@ -54,8 +54,6 @@ const groups = computed(() => [{
       </template>
 
       <template #default="{ collapsed }">
-        <UDashboardSearchButton :collapsed="collapsed" class="bg-transparent ring-default" />
-
         <UNavigationMenu
           :collapsed="collapsed"
           :items="links"

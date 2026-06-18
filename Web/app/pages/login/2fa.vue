@@ -31,7 +31,7 @@ async function onSubmit() {
   if (success) {
     loginSuccess.value = true
     await fetchUser()
-    router.push('/')
+    router.push('/home')
   } else {
     loading.value = false
     toast.add({ title: 'Código inválido', description: 'O código inserido está incorreto. Tente novamente.', color: 'error' })

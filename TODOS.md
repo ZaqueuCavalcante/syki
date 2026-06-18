@@ -17,5 +17,4 @@
 
 
 
-- Ver SeedInstitutionBasicDataCommand e SeedInstitutionUsersCommand pro resto
 

@@ -9,13 +9,20 @@ const config = useRuntimeConfig()
 const colorMode = useColorMode()
 const { account } = useUserAccount()
 
+const loggingOut = useState('loggingOut', () => false)
+
 async function logout() {
-    await $fetch(`${config.public.backendUrl}/identity/logout`, {
-        method: 'POST',
-        credentials: 'include',
-    })
-    account.value = null
-    await navigateTo('/')
+    loggingOut.value = true
+    try {
+        await $fetch(`${config.public.backendUrl}/identity/logout`, {
+            method: 'POST',
+            credentials: 'include',
+        })
+        account.value = null
+        await navigateTo('/')
+    } finally {
+        loggingOut.value = false
+    }
 }
 
 const initials = computed(() => {

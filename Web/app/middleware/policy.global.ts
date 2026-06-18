@@ -32,6 +32,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const { can } = usePolicy()
   if (!can(policyName).value) {
-    return navigateTo('/')
+    return navigateTo('/home')
   }
 })

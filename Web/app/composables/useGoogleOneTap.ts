@@ -72,7 +72,7 @@ export function useGoogleOneTap() {
       )
 
       await fetchUser()
-      router.push('/')
+      router.push('/home')
     } catch (error: any) {
       loggingIn.value = false
 

@@ -34,6 +34,9 @@ public static class HttpConfigs
             ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedFor,
         };
 
+        fwd.KnownProxies.Clear();
+        fwd.KnownIPNetworks.Clear();
+
         app.UseForwardedHeaders(fwd);
     }
 

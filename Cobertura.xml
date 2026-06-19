@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.42356687898089174" branch-rate="0.23970783532536521" lines-covered="3325" lines-valid="7850" branches-covered="361" branches-valid="1506" complexity="3789" version="0" timestamp="1781832265">
+<coverage line-rate="0.423713703515028" branch-rate="0.23970783532536521" lines-covered="3327" lines-valid="7852" branches-covered="361" branches-valid="1506" complexity="3789" version="0" timestamp="1781832599">
   <sources>
     <source>/</source>
   </sources>
   <packages>
-    <package name="Back" line-rate="0.42356687898089174" branch-rate="0.23970783532536521" complexity="3789">
+    <package name="Back" line-rate="0.423713703515028" branch-rate="0.23970783532536521" complexity="3789">
       <classes>
         <class name="Program" filename="/home/runner/work/syki/syki/Back/Program.cs" line-rate="1" branch-rate="1" complexity="1">
           <methods>
@@ -3790,39 +3790,41 @@
                 <line number="35" hits="2" branch="false" />
                 <line number="37" hits="2" branch="false" />
                 <line number="38" hits="2" branch="false" />
+                <line number="40" hits="2" branch="false" />
+                <line number="41" hits="2" branch="false" />
               </lines>
             </method>
             <method name="UseHttpsConfigs" signature="(Microsoft.AspNetCore.Builder.WebApplication)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="42" hits="2" branch="false" />
-                <line number="43" hits="2" branch="false" />
-                <line number="44" hits="2" branch="false" />
+                <line number="45" hits="2" branch="false" />
+                <line number="46" hits="2" branch="false" />
+                <line number="47" hits="2" branch="false" />
               </lines>
             </method>
             <method name="UseExceptions" signature="(Microsoft.AspNetCore.Builder.IApplicationBuilder)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="48" hits="2" branch="false" />
-                <line number="49" hits="2" branch="false" />
+                <line number="51" hits="2" branch="false" />
+                <line number="52" hits="2" branch="false" />
               </lines>
             </method>
             <method name="UseControllers" signature="(Microsoft.AspNetCore.Builder.IApplicationBuilder)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="53" hits="2" branch="false" />
-                <line number="54" hits="2" branch="false" />
-                <line number="55" hits="2" branch="false" />
                 <line number="56" hits="2" branch="false" />
                 <line number="57" hits="2" branch="false" />
                 <line number="58" hits="2" branch="false" />
                 <line number="59" hits="2" branch="false" />
                 <line number="60" hits="2" branch="false" />
-                <line number="61" hits="4" branch="false" />
+                <line number="61" hits="2" branch="false" />
                 <line number="62" hits="2" branch="false" />
+                <line number="63" hits="2" branch="false" />
+                <line number="64" hits="4" branch="false" />
+                <line number="65" hits="2" branch="false" />
               </lines>
             </method>
             <method name="UseLogs" signature="(Microsoft.AspNetCore.Builder.IApplicationBuilder)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="66" hits="2" branch="false" />
-                <line number="67" hits="2" branch="false" />
+                <line number="69" hits="2" branch="false" />
+                <line number="70" hits="2" branch="false" />
               </lines>
             </method>
           </methods>
@@ -3847,23 +3849,25 @@
             <line number="35" hits="2" branch="false" />
             <line number="37" hits="2" branch="false" />
             <line number="38" hits="2" branch="false" />
-            <line number="42" hits="2" branch="false" />
-            <line number="43" hits="2" branch="false" />
-            <line number="44" hits="2" branch="false" />
-            <line number="48" hits="2" branch="false" />
-            <line number="49" hits="2" branch="false" />
-            <line number="53" hits="2" branch="false" />
-            <line number="54" hits="2" branch="false" />
-            <line number="55" hits="2" branch="false" />
+            <line number="40" hits="2" branch="false" />
+            <line number="41" hits="2" branch="false" />
+            <line number="45" hits="2" branch="false" />
+            <line number="46" hits="2" branch="false" />
+            <line number="47" hits="2" branch="false" />
+            <line number="51" hits="2" branch="false" />
+            <line number="52" hits="2" branch="false" />
             <line number="56" hits="2" branch="false" />
             <line number="57" hits="2" branch="false" />
             <line number="58" hits="2" branch="false" />
             <line number="59" hits="2" branch="false" />
             <line number="60" hits="2" branch="false" />
-            <line number="61" hits="4" branch="false" />
+            <line number="61" hits="2" branch="false" />
             <line number="62" hits="2" branch="false" />
-            <line number="66" hits="2" branch="false" />
-            <line number="67" hits="2" branch="false" />
+            <line number="63" hits="2" branch="false" />
+            <line number="64" hits="4" branch="false" />
+            <line number="65" hits="2" branch="false" />
+            <line number="69" hits="2" branch="false" />
+            <line number="70" hits="2" branch="false" />
           </lines>
         </class>
         <class name="Syki.Back.Configs.IdentityConfigs" filename="/home/runner/work/syki/syki/Back/Configs/IdentityConfigs.cs" line-rate="1" branch-rate="1" complexity="1">

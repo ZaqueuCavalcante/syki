@@ -37,6 +37,12 @@ public static class HttpConfigs
         app.UseForwardedHeaders(fwd);
     }
 
+    public static void UseHttpsConfigs(this WebApplication app)
+    {
+        app.UseHsts();
+        app.UseHttpsRedirection();
+    }
+
     public static void UseExceptions(this IApplicationBuilder app)
     {
         app.UseMiddleware<ExceptionsMiddleware>();

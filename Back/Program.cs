@@ -27,6 +27,7 @@ builder.AddOpenTelemetryConfigs();
 var app = builder.Build();
 
 app.UseForwardedHeaders();
+app.UseHttpsConfigs();
 
 app.UseLogs();
 app.UseCors();

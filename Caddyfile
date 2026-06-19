@@ -1,6 +1,6 @@
 :{$PORT:80} {
     handle /api/_* {
-        reverse_proxy web.railway.internal:3000
+        reverse_proxy web.railway.internal:80
     }
 
     handle /api/* {
@@ -9,6 +9,6 @@
     }
 
     handle {
-        reverse_proxy web.railway.internal:3000
+        reverse_proxy web.railway.internal:80
     }
 }

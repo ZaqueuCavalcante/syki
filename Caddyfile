@@ -1,0 +1,14 @@
+:{$PORT:80} {
+    handle /api/_* {
+        reverse_proxy web.railway.internal:3000
+    }
+
+    handle /api/* {
+        uri strip_prefix /api
+        reverse_proxy back.railway.internal:5000
+    }
+
+    handle {
+        reverse_proxy web.railway.internal:3000
+    }
+}

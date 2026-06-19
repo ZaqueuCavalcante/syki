@@ -1,5 +1,6 @@
 using Syki.Back.Hubs;
 using Syki.Back.Converters;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Syki.Back.Configs;
 
@@ -22,6 +23,18 @@ public static class HttpConfigs
         builder.Services.AddSignalR();
         
         builder.Services.AddHttpClient();
+    }
+
+    public static void UseForwardedHeaders(this WebApplication app)
+    {
+        var fwd = new ForwardedHeadersOptions
+        {
+            ForwardLimit = null,
+            RequireHeaderSymmetry = false,
+            ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedFor,
+        };
+
+        app.UseForwardedHeaders(fwd);
     }
 
     public static void UseExceptions(this IApplicationBuilder app)

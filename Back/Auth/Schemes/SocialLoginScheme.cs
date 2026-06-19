@@ -24,7 +24,7 @@ public static class SocialLoginScheme
             options.SignInScheme = SocialTempScheme.Name;
             options.CallbackPath = "/identity/social-login/callback/google";
             options.SaveTokens = false;
-            options.CorrelationCookie.SameSite = SameSiteMode.None;
+            options.CorrelationCookie.SameSite = SameSiteMode.Lax;
             options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
 
             options.Scope.Clear();

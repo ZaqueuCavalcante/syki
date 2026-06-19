@@ -49,7 +49,7 @@ public class ReceivedWebhookEventsProcessor(IServiceScopeFactory serviceScopeFac
                     else
                     {
                         evt.Status = ReceivedWebhookEventStatus.Ignored;
-                        evt.ProcessedAt = DateTime.Now;
+                        evt.ProcessedAt = DateTime.UtcNow;
                     }
 
                     await ctx.SaveChangesAsync();
@@ -64,7 +64,7 @@ public class ReceivedWebhookEventsProcessor(IServiceScopeFactory serviceScopeFac
                     ctx.Attach(evt);
                     evt.Status = ReceivedWebhookEventStatus.Error;
                     evt.Error = ex.Message + ex.InnerException?.Message;
-                    evt.ProcessedAt = DateTime.Now;
+                    evt.ProcessedAt = DateTime.UtcNow;
                     await ctx.SaveChangesAsync();
 
                     activity?.SetStatus(ActivityStatusCode.Error, ex.Message);

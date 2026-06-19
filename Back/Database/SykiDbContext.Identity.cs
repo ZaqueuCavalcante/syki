@@ -35,6 +35,8 @@ public partial class SykiDbContext
         modelBuilder.ApplyConfiguration(new SsoAllowedDomainDbConfig());
 
         modelBuilder.ApplyConfiguration(new UserSocialLoginDbConfig());
+
+        modelBuilder.ApplyConfiguration(new DataProtectionKeyDbConfig());
     }
 
     public async Task<SykiRole> GetUserRole(int userId, int institutionId)

@@ -22,7 +22,7 @@ public class Notification
         NotificationType = notificationType;
         Title = title;
         Description = description;
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
         Metadata = metadata != null ? JsonDocument.Parse(metadata.Serialize()) : null;
     }
 }

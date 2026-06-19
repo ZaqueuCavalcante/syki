@@ -28,6 +28,6 @@ public class UserSocialLogin
         Provider = provider;
         ProviderKey = providerKey;
         Email = email.ToLowerInvariant();
-        CreatedAt = DateTime.Now;
+        CreatedAt = DateTime.UtcNow;
     }
 }

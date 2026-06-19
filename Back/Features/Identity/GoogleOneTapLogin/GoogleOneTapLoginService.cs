@@ -47,11 +47,12 @@ public class GoogleOneTapLoginService(
         }
 
         // 2. Look up existing user by email
-        var existingWebUser = await ctx.Users.FirstOrDefaultAsync(u => u.Email == email);
-        if (existingWebUser != null)
+        var existingUser = await ctx.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (existingUser != null)
         {
-            ctx.Add(new UserSocialLogin(existingWebUser.Id, provider, providerKey, email));
-            existingWebUser.EmailConfirmed = true;
+            existingUser.ConfirmEmail();
+            ctx.Add(new UserSocialLogin(existingUser.Id, provider, providerKey, email));
+            await ctx.SaveChangesAsync();
             var jwt = await signInService.SignIn(email);
             return jwt.ToGoogleOneTapLoginOut();
         }
@@ -60,13 +61,14 @@ public class GoogleOneTapLoginService(
         var name = payload.Name;
         if (name.IsEmpty()) name = email;
 
+        var directorRole = await ctx.GetDirectorRole();
+
         var institution = Institution.NewForUserRegister();
         var user = new SykiUser(institution, name, email);
-
-        var directorRole = await ctx.GetDirectorRole();
         var userRole = new SykiUserRole(institution, user, directorRole.Id);
+        var socialLogin = new UserSocialLogin(user.Id, provider, providerKey, email) { User = user };
 
-        ctx.AddRange(institution, userRole);
+        ctx.AddRange(institution, userRole, socialLogin);
         await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");
 
         var jwtResult = await signInService.SignIn(email);

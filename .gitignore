@@ -9,6 +9,8 @@ node_modules/
 # Rider
 .idea
 
+appsettings.Development.json
+
 # User-specific files
 *.suo
 *.user

@@ -103,9 +103,6 @@ public static class SocialLoginScheme
         var provider = SocialLoginProvider.Google;
         var providerKey = context.Principal?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? context.Principal?.FindFirst("sub")?.Value ?? "";
 
-        var ipAddress = context.HttpContext.GetIpAddress();
-        var userAgent = context.HttpContext.GetUserAgent();
-
         // 5. Look up existing social login link by (provider, providerKey)
         var existingLink = await ctx.UserSocialLogins.FirstOrDefaultAsync(x => x.Provider == provider && x.ProviderKey == providerKey);
         if (existingLink != null)
@@ -123,8 +120,9 @@ public static class SocialLoginScheme
         if (existingUser != null)
         {
             // Link social account to existing user
-            ctx.Add(new UserSocialLogin(existingUser.Id, provider, providerKey, email));
             existingUser.EmailConfirmed = true;
+            ctx.Add(new UserSocialLogin(existingUser.Id, provider, providerKey, email));
+            await ctx.SaveChangesAsync();
 
             await signInService.SignIn(email);
 
@@ -137,16 +135,16 @@ public static class SocialLoginScheme
         var name = ExtractName(context.Principal);
         if (name.IsEmpty()) name = email;
 
+        var directorRole = await ctx.GetDirectorRole();
+
         var institution = Institution.NewForUserRegister();
         var user = new SykiUser(institution, name, email);
-
-        var directorRole = await ctx.GetDirectorRole();
         var userRole = new SykiUserRole(institution, user, directorRole.Id);
+        var socialLogin = new UserSocialLogin(user.Id, provider, providerKey, email) { User = user };
 
-        ctx.AddRange(institution, userRole);
+        ctx.AddRange(institution, userRole, socialLogin);
         await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");
 
-        // Now user exists in DB, generate JWT
         await signInService.SignIn(email);
 
         context.Response.Redirect(frontendSettings.BuildUrl("/home"));

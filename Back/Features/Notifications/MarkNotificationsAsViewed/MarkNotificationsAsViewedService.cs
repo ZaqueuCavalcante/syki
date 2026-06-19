@@ -24,7 +24,7 @@ public class MarkNotificationsAsViewedService(SykiDbContext ctx) : ISykiService
         var notifications = await query.ToListAsync();
         foreach (var notification in notifications)
         {
-            notification.ViewedAt = DateTime.Now;
+            notification.ViewedAt = DateTime.UtcNow;
         }
 
         await ctx.SaveChangesAsync();

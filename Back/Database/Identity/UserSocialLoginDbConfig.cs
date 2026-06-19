@@ -12,6 +12,7 @@ public class UserSocialLoginDbConfig : IEntityTypeConfiguration<UserSocialLogin>
 
         entity.HasOne(e => e.User)
             .WithMany()
+            .HasPrincipalKey(u => u.Id)
             .HasForeignKey(e => e.UserId);
 
         entity.HasIndex(e => new { e.Provider, e.ProviderKey })

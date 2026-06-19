@@ -1,26 +1,18 @@
 {
     "version": "0.2.0",
-    "compounds": [
-        {
-            "name": "BACK",
-            "configurations": [
-                "BACK"
-            ],
-            "preLaunchTask": "build",
-            "stopAll": true
-        }
-    ],
     "configurations": [
         {
             "name": "BACK",
             "type": "coreclr",
             "request": "launch",
+            "preLaunchTask": "build",
             "requireExactSource": false,
             "cwd": "${workspaceFolder}/Back",
-            "program": "${workspaceFolder}/Back/bin/Debug/net10.0/Back.dll",
             "sourceFileMap": {
-                "/_/": "${workspaceFolder}/"
-            }
+                "/_/": "${workspaceFolder}",
+                "/_/Back": "${workspaceFolder}/Back",
+            },
+            "program": "${workspaceFolder}/Back/bin/Debug/net10.0/Back.dll",
         }
     ]
 }

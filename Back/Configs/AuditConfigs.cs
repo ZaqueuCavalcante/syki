@@ -14,7 +14,11 @@ public static class AuditConfigs
             .AuditTypeExplicitMapper(_ => _
                 .Map<SykiUser, AuditTrail>()
                 .Map<MagicLink, AuditTrail>()
-                .AuditEntityAction<AuditTrail>((evt, entry, log) => log.Fill(evt, entry)))
+                .AuditEntityAction<AuditTrail>((evt, entry, trail) =>
+                {
+                    if (evt.Environment.Exception != null) return false;
+                    return trail.Fill(evt, entry);
+                }))
             .IgnoreMatchedProperties(true));
 
         AuditConfig.AddCustomAction(ActionType.OnScopeCreated, scope =>

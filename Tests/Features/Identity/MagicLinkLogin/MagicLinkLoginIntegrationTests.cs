@@ -20,10 +20,6 @@ public partial class IntegrationTests : IntegrationTestBase
         result.ShouldBeError(InvalidMagicLink.I);
     }
 
-    #endregion
-
-    #region Validation errors
-
     [Test]
     public async Task Identity_MagicLinkLogin_Should_return_error_when_token_does_not_exist()
     {
@@ -46,15 +42,12 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterUser(email);
         await _back.AwaitCommandsProcessing();
 
-        var token = await _back.GetMagicLink(email);
-        token.Should().NotBeNull();
-
-        // Use the token once
-        var firstResult = await client.MagicLinkLogin(token!);
+        var token = await _back.GetMagicLinkToken(email);
+        var firstResult = await client.MagicLinkLogin(token);
         firstResult.ShouldBeSuccess();
 
-        // Act - try to use it again
-        var result = await client.MagicLinkLogin(token!);
+        // Act
+        var result = await client.MagicLinkLogin(token);
 
         // Assert
         result.ShouldBeError(InvalidMagicLink.I);
@@ -69,17 +62,17 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterUser(email);
         await _back.AwaitCommandsProcessing();
 
-        var token = await _back.GetMagicLink(email);
+        var token = await _back.GetMagicLinkToken(email);
         token.Should().NotBeNull();
 
         // Expire the token manually
         await using var ctx = _back.GetDbContext();
-        var magicLink = await ctx.WebMagicLinks.FirstAsync(t => t.Id == Guid.Parse(token!));
+        var magicLink = await ctx.WebMagicLinks.FirstAsync(t => t.Id == Guid.Parse(token));
         magicLink.ExpiresAt = DateTime.UtcNow.AddHours(-1);
         await ctx.SaveChangesAsync();
 
         // Act
-        var result = await client.MagicLinkLogin(token!);
+        var result = await client.MagicLinkLogin(token);
 
         // Assert
         result.ShouldBeError(InvalidMagicLink.I);
@@ -98,7 +91,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterUser(email);
         await _back.AwaitCommandsProcessing();
 
-        var token = await _back.GetMagicLink(email);
+        var token = await _back.GetMagicLinkToken(email);
         token.Should().NotBeNull();
 
         // Act
@@ -119,7 +112,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.RegisterUser(email);
         await _back.AwaitCommandsProcessing();
 
-        var token = await _back.GetMagicLink(email);
+        var token = await _back.GetMagicLinkToken(email);
         token.Should().NotBeNull();
 
         // Verify EmailConfirmed is false before magic link login

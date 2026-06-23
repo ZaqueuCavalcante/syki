@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Syki.Mocks.Turnstile;
 
 [ApiController]
-[Route("turnstile")]
 public class TurnstileController : ControllerBase
 {
-    [HttpPost("siteverify")]
+    [HttpPost("turnstile/siteverify")]
     public IActionResult SiteVerify([FromForm] string secret, [FromForm] string response)
     {
         var success = response != "INVALID";

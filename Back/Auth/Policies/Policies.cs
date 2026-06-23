@@ -37,7 +37,7 @@ public static partial class Policies
 
         return builder.AddPolicy(name, policy => policy
             .RequireAuthenticatedUser()
-            .RequireAssertion(x => x.User.Type == userType && x.User.Permissions.Any(p => ids.Contains(p)))
+            .RequireAssertion(x => x.User.Type == userType && (ids.Count == 0 || x.User.Permissions.Any(p => ids.Contains(p))))
             .AddAuthenticationSchemes(JwtBearerScheme.Name));
     }
 }

@@ -13,7 +13,7 @@ namespace Syki.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {
-    public async Task<OneOf<MagicLinkLoginOut, ErrorOut>> MagicLinkLogin(string token)
+    public async Task<OneOf<MagicLinkLoginOut, ErrorOut>> MagicLinkLogin(string? token)
     {
         var data = new MagicLinkLoginIn { Token = token };
 

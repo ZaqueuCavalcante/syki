@@ -3,7 +3,6 @@ using Syki.Back.Emails;
 using Syki.Back.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Syki.Tests.Integration.Clients;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Syki.Tests.Base;
@@ -13,12 +12,6 @@ public static class BackFactoryExtensions
     public static TestsHttpClient GetTestsClient(this BackFactory factory)
     {
         return new TestsHttpClient(factory.CreateClient());
-    }
-
-    public static TestsHttpClient GetNoRedirectTestsClient(this BackFactory factory)
-    {
-        var options = new WebApplicationFactoryClientOptions { AllowAutoRedirect = false };
-        return new TestsHttpClient(factory.CreateClient(options));
     }
 
     public static ISchedulerFactory GetSchedulerFactory(this BackFactory factory)
@@ -46,7 +39,7 @@ public static class BackFactoryExtensions
         }
     }
 
-    public static async Task<string?> GetMagicLink(this BackFactory factory, string email)
+    public static async Task<string?> GetMagicLinkToken(this BackFactory factory, string email)
     {
         await using var ctx = factory.GetDbContext();
 
@@ -90,7 +83,7 @@ public static class BackFactoryExtensions
         email ??= DataGen.Email;
         var user = (await client.RegisterUser(email)).Success;
 
-        var token = await factory.GetMagicLink(email);
+        var token = await factory.GetMagicLinkToken(email);
         await client.MagicLinkLogin(token!);
 
         await factory.SetPassword(email, "My@nEw@strong@P4ssword");
@@ -114,7 +107,7 @@ public static class BackFactoryExtensions
 
         var client = factory.GetTestsClient();
 
-        var token = await factory.GetMagicLink(email);
+        var token = await factory.GetMagicLinkToken(email);
         await client.MagicLinkLogin(token!);
 
         client.User = new TestsUserDto  { Id = user.Id, InstitutionId = user.InstitutionId, Email = user.Email! };
@@ -138,7 +131,7 @@ public static class BackFactoryExtensions
         ctx.AddRange(role, userRole);
         await ctx.SaveChangesAsync();
 
-        var token = await factory.GetMagicLink(email);
+        var token = await factory.GetMagicLinkToken(email);
         await client.MagicLinkLogin(token!);
 
         client.User = user;

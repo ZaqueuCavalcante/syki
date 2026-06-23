@@ -49,9 +49,9 @@ const links: NavigationMenuItem[] = [
 
       <template #right>
         <div class="flex items-center gap-4 text-sm text-muted">
-          <NuxtLink to="#" class="hover:text-default transition-colors">Termos</NuxtLink>
-          <NuxtLink to="/privacy" class="hover:text-default transition-colors">Privacidade</NuxtLink>
-          <NuxtLink to="#" class="hover:text-default transition-colors">Contato</NuxtLink>
+          <NuxtLink to="/terms-of-service" class="hover:text-default transition-colors">Termos</NuxtLink>
+          <NuxtLink to="/privacy-policy" class="hover:text-default transition-colors">Privacidade</NuxtLink>
+          <NuxtLink to="/contact" class="hover:text-default transition-colors">Contato</NuxtLink>
         </div>
       </template>
     </UFooter>

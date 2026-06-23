@@ -14,7 +14,12 @@
     }
 
     handle /api/* {
-        reverse_proxy back.railway.internal:5000
+        reverse_proxy back.railway.internal:5000 {
+            # Last hop before the backend: pin the public host deterministically so the
+            # OAuth redirect_uri is built with estud.com.br, regardless of any upstream
+            # (Cloudflare worker / Railway edge) rewriting the host to the railway domain.
+            header_up X-Forwarded-Host {$PUBLIC_HOST:estud.com.br}
+        }
     }
 
     handle {

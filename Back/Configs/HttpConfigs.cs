@@ -46,6 +46,11 @@ public static class HttpConfigs
         app.UseHttpsRedirection();
     }
 
+    public static void UseApiPrefix(this IApplicationBuilder app)
+    {
+        app.UsePathBase("/api");
+    }
+
     public static void UseExceptions(this IApplicationBuilder app)
     {
         app.UseMiddleware<ExceptionsMiddleware>();

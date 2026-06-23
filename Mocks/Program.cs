@@ -3,7 +3,7 @@ using Syki.Mocks.Configs;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddHttpConfigs();
-builder.AddEfCoreConfigs();
+builder.AddEntityFrameworkConfigs();
 
 var app = builder.Build();
 

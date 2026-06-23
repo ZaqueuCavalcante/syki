@@ -16,7 +16,7 @@ builder.AddRateLimitingConfigs();
 
 builder.AddAuditConfigs();
 builder.AddDapperConfigs();
-builder.AddEfCoreConfigs();
+builder.AddEntityFrameworkConfigs();
 
 builder.AddDocsConfigs();
 builder.AddCorsConfigs();
@@ -32,6 +32,7 @@ app.UseHttpsConfigs();
 app.UseLogs();
 app.UseCors();
 
+app.UseApiPrefix();
 app.UseRouting();
 app.UseExceptions();
 

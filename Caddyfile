@@ -1,10 +1,19 @@
+{
+    servers {
+        # The container is only reachable through Railway's edge proxy, so trust it and
+        # preserve inbound X-Forwarded-* (notably X-Forwarded-Proto: https) instead of
+        # overwriting them with the internal http hop. Railway's edge uses the CGNAT range
+        # (100.64.0.0/10), which is not covered by Caddy's default private_ranges.
+        trusted_proxies static 0.0.0.0/0 ::/0
+    }
+}
+
 :{$PORT:80} {
     handle /api/_* {
         reverse_proxy web.railway.internal:80
     }
 
     handle /api/* {
-        uri strip_prefix /api
         reverse_proxy back.railway.internal:5000
     }
 

@@ -2,9 +2,9 @@ using Npgsql;
 
 namespace Syki.Back.Configs;
 
-public static class EfCoreConfigs
+public static class EntityFrameworkConfigs
 {
-    public static void AddEfCoreConfigs(this WebApplicationBuilder builder)
+    public static void AddEntityFrameworkConfigs(this WebApplicationBuilder builder)
     {
         builder.Services.AddSingleton(sp =>
         {

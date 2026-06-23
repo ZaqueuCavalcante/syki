@@ -18,9 +18,9 @@ public partial class TestsHttpClient
         return await response.Resolve<CreateAcademicPeriodOut>();
     }
 
-    public async Task<GetAcademicPeriodsOut> GetAcademicPeriods()
+    public async Task<OneOf<GetAcademicPeriodsOut, ErrorOut>> GetAcademicPeriods()
     {
         var response = await http.GetAsync("/periods/academic");
-        return await response.DeserializeTo<GetAcademicPeriodsOut>();
+        return await response.Resolve<GetAcademicPeriodsOut>();
     }
 }

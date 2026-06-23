@@ -69,10 +69,6 @@ public partial class IntegrationTests
         response.ShouldBeError(InvalidCourseType.I);
     }
 
-    #endregion
-
-    #region Domain errors
-
     [Test]
     public async Task Courses_UpdateCourse_Should_not_update_course_not_found()
     {

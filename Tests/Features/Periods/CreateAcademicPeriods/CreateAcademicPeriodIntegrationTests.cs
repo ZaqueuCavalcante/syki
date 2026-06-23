@@ -101,10 +101,6 @@ public partial class IntegrationTests
         response.ShouldBeError(InvalidAcademicPeriodDates.I);
     }
 
-    #endregion
-
-    #region Domain errors
-
     [Test]
     public async Task Periods_CreateAcademicPeriod_Should_not_create_duplicated_academic_period()
     {

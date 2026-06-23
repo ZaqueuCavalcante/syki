@@ -276,3 +276,33 @@ For tests that trigger async command processing use:
 ```csharp
 await _back.AwaitCommandsProcessing();
 ```
+
+### Test file structure — `#region` grouping
+
+Each feature's integration test file groups its tests into `#region` blocks, in this fixed order:
+
+```csharp
+public partial class IntegrationTests
+{
+    #region Authentication
+    // unauthenticated request → 401 Unauthorized
+    #endregion
+
+    #region Authorization
+    // authenticated but missing permission → 403 Forbidden
+    #endregion
+
+    #region Validation errors
+    // invalid input or domain errors → ShouldBeError(SomeError.I)
+    #endregion
+
+    #region Happy path
+    // valid request → asserts on result.Success
+    #endregion
+}
+```
+
+- **Not every feature needs every region.** Only include the regions that apply to the feature. For example, a `GET` endpoint with no input parameters (e.g. `GetRoles`, `GetDisciplines`) has nothing to validate, so it omits the **Validation errors** region entirely.
+- Keep the regions that are present in the order above.
+- Test method names follow `{Feature}_{Endpoint}_Should_{...}` (e.g. `Disciplines_GetDisciplines_Should_not_get_disciplines_when_not_authenticated`).
+- Auth/authorization/error assertions use `result.ShouldBeError(...)`; happy-path assertions read the value via `result.Success`. This requires the corresponding `TestsHttpClient` method to return `OneOf<TOut, ErrorOut>` (via `response.Resolve<TOut>()`), not the raw DTO.

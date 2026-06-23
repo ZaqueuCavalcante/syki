@@ -36,7 +36,7 @@ public partial class IntegrationTests
 
     #endregion
 
-    #region Domain errors
+    #region Validation errors
 
     [Test]
     public async Task Disciplines_GetDiscipline_Should_not_get_discipline_not_found()

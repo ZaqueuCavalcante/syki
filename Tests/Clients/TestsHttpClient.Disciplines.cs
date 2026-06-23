@@ -41,9 +41,9 @@ public partial class TestsHttpClient
         return await response.Resolve<SuccessOut>();
     }
 
-    public async Task<GetDisciplinesOut> GetDisciplines()
+    public async Task<OneOf<GetDisciplinesOut, ErrorOut>> GetDisciplines()
     {
         var response = await http.GetAsync("/disciplines");
-        return await response.DeserializeTo<GetDisciplinesOut>();
+        return await response.Resolve<GetDisciplinesOut>();
     }
 }

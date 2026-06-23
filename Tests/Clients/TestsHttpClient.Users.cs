@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using Syki.Back.Features.Users.RegisterUser;
 using Syki.Back.Features.Users.GetUserAccount;
+using Syki.Back.Features.Users.UpdateUserAccount;
 
 namespace Syki.Tests.Integration.Clients;
 
@@ -25,5 +26,12 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync("users/account");
         return await response.Resolve<GetUserAccountOut>();
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> UpdateUserAccount(string name = "Edson Gomes")
+    {
+        var data = new UpdateUserAccountIn { Name = name };
+        var response = await http.PutAsJsonAsync("users/account", data);
+        return await response.Resolve<SuccessOut>();
     }
 }

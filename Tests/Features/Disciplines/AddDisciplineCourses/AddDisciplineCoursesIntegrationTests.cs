@@ -66,10 +66,6 @@ public partial class IntegrationTests
         response.ShouldBeError(InvalidCoursesList.I);
     }
 
-    #endregion
-
-    #region Domain errors
-
     [Test]
     public async Task Disciplines_AddDisciplineCourses_Should_not_add_courses_to_discipline_not_found()
     {

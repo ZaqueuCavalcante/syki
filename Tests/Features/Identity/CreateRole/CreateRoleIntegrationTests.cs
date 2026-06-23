@@ -93,10 +93,6 @@ public partial class IntegrationTests
         result.ShouldBeError(InvalidPermissionsList.I);
     }
 
-    #endregion
-
-    #region Domain errors
-
     [Test]
     public async Task Identity_CreateRole_Should_not_create_role_when_name_already_exists()
     {

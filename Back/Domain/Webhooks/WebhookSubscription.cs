@@ -15,23 +15,30 @@ public class WebhookSubscription
     public List<WebhookEventType> Events { get; set; }
     public List<WebhookCall> Calls { get; set; }
 
+    /// <summary>
+    /// Headers customizados enviados em todas as chamadas feitas para a Url do Webhook.
+    /// </summary>
+    public Dictionary<string, string> CustomHeaders { get; set; } = [];
+
     private WebhookSubscription() { }
 
-    public WebhookSubscription(int institutionId, string name, string url, List<WebhookEventType> events)
+    public WebhookSubscription(int institutionId, string name, string url, List<WebhookEventType> events, Dictionary<string, string> customHeaders)
     {
         InstitutionId = institutionId;
         Name = name;
         Url = url;
         Events = events;
+        CustomHeaders = customHeaders ?? [];
         IsActive = true;
         CreatedAt = DateTime.UtcNow;
     }
 
-    public void Update(string name, string url, List<WebhookEventType> events, bool isActive)
+    public void Update(string name, string url, List<WebhookEventType> events, Dictionary<string, string> customHeaders, bool isActive)
     {
         Name = name;
         Url = url;
         Events = events;
+        CustomHeaders = customHeaders ?? [];
         IsActive = isActive;
     }
 }

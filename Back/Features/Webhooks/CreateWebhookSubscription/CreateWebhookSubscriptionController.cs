@@ -24,5 +24,6 @@ internal class ResponseExamples : ExamplesProvider<CreateWebhookSubscriptionOut>
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidWebhookName,
     InvalidWebhookUrl,
-    InvalidWebhookEvents
+    InvalidWebhookEvents,
+    InvalidWebhookCustomHeaders
 >;

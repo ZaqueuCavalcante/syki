@@ -1,46 +1,5 @@
 # Endpoints
 
-## classes
-
-| Método | Rota |
-|---|---|
-| GET | `/classes` |
-| POST | `/classes` |
-
-## course-curriculums
-
-| Método | Rota |
-|---|---|
-| GET | `/course-curriculums` |
-| GET | `/course-curriculums/{id}` |
-| POST | `/course-curriculums` |
-| PUT | `/course-curriculums` |
-
-## course-offerings
-
-| Método | Rota |
-|---|---|
-| GET | `/course-offerings` |
-| POST | `/course-offerings` |
-
-## courses
-
-| Método | Rota |
-|---|---|
-| GET | `/courses` |
-| GET | `/courses/{id}` |
-| GET | `/courses/{id}/disciplines` |
-| GET | `/courses/{id}/potential-disciplines` |
-| POST | `/courses/disciplines` |
-| DELETE | `/courses/disciplines` |
-
-## disciplines
-
-| Método | Rota |
-|---|---|
-| GET | `/disciplines/{id}/potential-courses` |
-| DELETE | `/disciplines/courses` |
-
 ## home
 
 | Método | Rota |
@@ -76,7 +35,6 @@
 |---|---|
 | GET | `/students` |
 | GET | `/students/{studentId:int}` |
-| POST | `/students` |
 | POST | `/students/{studentId:int}/course-offerings` |
 
 ## teachers
@@ -87,7 +45,6 @@
 | GET | `/teachers/{id}` |
 | GET | `/teachers/{id}/potential-campi` |
 | GET | `/teachers/{id}/potential-disciplines` |
-| POST | `/teachers` |
 | PUT | `/teachers/{id}` |
 | PUT | `/teachers/{id}/assign-campi` |
 | PUT | `/teachers/{id}/assign-disciplines` |

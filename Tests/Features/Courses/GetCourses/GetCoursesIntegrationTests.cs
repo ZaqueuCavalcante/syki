@@ -2,6 +2,42 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
+    #region Authentication
+
+    [Test]
+    public async Task Courses_GetCourses_Should_not_get_courses_when_not_authenticated()
+    {
+        // Arrange
+        var client = _back.GetTestsClient();
+
+        // Act
+        var result = await client.GetCourses();
+
+        // Assert
+        result.ShouldBeError(HttpStatusCode.Unauthorized);
+    }
+
+    #endregion
+
+    #region Authorization
+
+    [Test]
+    public async Task Courses_GetCourses_Should_not_get_courses_when_user_has_no_permission()
+    {
+        // Arrange
+        var client = await _back.LoggedAsTeacher();
+
+        // Act
+        var result = await client.GetCourses();
+
+        // Assert
+        result.ShouldBeError(HttpStatusCode.Forbidden);
+    }
+
+    #endregion
+
+    #region Happy path
+
     [Test]
     public async Task Courses_GetCourses_Should_get_courses()
     {
@@ -15,8 +51,10 @@ public partial class IntegrationTests
         var result = await client.GetCourses();
 
         // Assert
-        result.Total.Should().Be(2);
-        result.Items.First().Name.Should().Be("Direito");
-        result.Items.Last().Name.Should().Be("Pedagogia");
+        result.Success.Total.Should().Be(2);
+        result.Success.Items.First().Name.Should().Be("Direito");
+        result.Success.Items.Last().Name.Should().Be("Pedagogia");
     }
+
+    #endregion
 }

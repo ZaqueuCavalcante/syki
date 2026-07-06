@@ -15,6 +15,7 @@ public static class GetWebhookSubscriptionMapper
                 Url = subscription.Url,
                 IsActive = subscription.IsActive,
                 Events = subscription.Events,
+                CustomHeaders = subscription.CustomHeaders,
                 CreatedAt = subscription.CreatedAt,
             };
         }

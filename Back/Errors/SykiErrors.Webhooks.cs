@@ -7,7 +7,6 @@ public class WebhookSubscriptionNotFound : SykiError
     public override string Message { get; set; } = "Inscrição de webhook não encontrada.";
 }
 
-
 public class InvalidWebhookName : SykiError
 {
     public static readonly InvalidWebhookName I = new();
@@ -27,4 +26,11 @@ public class InvalidWebhookEvents : SykiError
     public static readonly InvalidWebhookEvents I = new();
     public override string Code { get; set; } = nameof(InvalidWebhookEvents);
     public override string Message { get; set; } = "Lista de eventos de webhook inválida.";
+}
+
+public class InvalidWebhookCustomHeaders : SykiError
+{
+    public static readonly InvalidWebhookCustomHeaders I = new();
+    public override string Code { get; set; } = nameof(InvalidWebhookCustomHeaders);
+    public override string Message { get; set; } = "Headers customizados de webhook inválidos.";
 }

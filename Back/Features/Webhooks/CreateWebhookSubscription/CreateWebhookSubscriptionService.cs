@@ -15,6 +15,8 @@ public class CreateWebhookSubscriptionService(SykiDbContext ctx) : ISykiService
             RuleFor(x => x.Url).Must(x => Uri.TryCreate(x, UriKind.Absolute, out _)).WithError(InvalidWebhookUrl.I);
 
             RuleFor(x => x.Events).Must(x => x != null && x.Count > 0).WithError(InvalidWebhookEvents.I);
+
+            RuleFor(x => x.CustomHeaders).Must(WebhookCustomHeaders.IsValid).WithError(InvalidWebhookCustomHeaders.I);
         }
     }
     private static readonly Validator V = new();
@@ -23,7 +25,7 @@ public class CreateWebhookSubscriptionService(SykiDbContext ctx) : ISykiService
     {
         if (V.Run(data, out var error)) return error;
 
-        var subscription = new WebhookSubscription(ctx.RequestUser.InstitutionId, data.Name, data.Url, data.Events);
+        var subscription = new WebhookSubscription(ctx.RequestUser.InstitutionId, data.Name, data.Url, data.Events, data.CustomHeaders);
         await ctx.SaveChangesAsync(subscription);
 
         return new CreateWebhookSubscriptionOut { Id = subscription.Id };

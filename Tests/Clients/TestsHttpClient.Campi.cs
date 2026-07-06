@@ -30,9 +30,9 @@ public partial class TestsHttpClient
         return await response.Resolve<UpdateCampusOut>();
     }
 
-    public async Task<GetCampiOut> GetCampi()
+    public async Task<OneOf<GetCampiOut, ErrorOut>> GetCampi()
     {
         var response = await http.GetAsync("/campi");
-        return await response.DeserializeTo<GetCampiOut>();
+        return await response.Resolve<GetCampiOut>();
     }
 }

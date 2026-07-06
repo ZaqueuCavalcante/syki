@@ -1,6 +1,8 @@
 using System.Net.Http.Json;
 using Syki.Back.Features.Teachers.GetTeachers;
 using Syki.Back.Features.Teachers.CreateTeacher;
+using Syki.Back.Features.Teachers.AssignCampiToTeacher;
+using Syki.Back.Features.Teachers.AssignDisciplinesToTeacher;
 
 namespace Syki.Tests.Integration.Clients;
 
@@ -13,6 +15,24 @@ public partial class TestsHttpClient
         var data = new CreateTeacherIn { Name = name, Email = email };
         var response = await http.PostAsJsonAsync("/teachers", data);
         return await response.Resolve<CreateTeacherOut>();
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> AssignCampiToTeacher(
+        int teacherId,
+        List<int> campi
+    ) {
+        var data = new AssignCampiToTeacherIn { Campi = campi };
+        var response = await http.PutAsJsonAsync($"/teachers/{teacherId}/assign-campi", data);
+        return await response.Resolve<SuccessOut>();
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> AssignDisciplinesToTeacher(
+        int teacherId,
+        List<int> disciplines
+    ) {
+        var data = new AssignDisciplinesToTeacherIn { Disciplines = disciplines };
+        var response = await http.PutAsJsonAsync($"/teachers/{teacherId}/assign-disciplines", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<GetTeachersOut> GetTeachers()

@@ -8,6 +8,7 @@ interface WebhookSubscriptionItem {
   isActive: boolean
   events: string[]
   createdAt: string
+  customHeaders: Record<string, string>
 }
 
 interface GetWebhookSubscriptionsOut {

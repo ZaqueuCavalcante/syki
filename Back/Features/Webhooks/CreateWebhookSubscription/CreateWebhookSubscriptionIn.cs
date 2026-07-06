@@ -17,6 +17,12 @@ public class CreateWebhookSubscriptionIn : IApiDto<CreateWebhookSubscriptionIn>
     /// </summary>
     public List<WebhookEventType> Events { get; set; }
 
+    /// <summary>
+    /// Headers customizados (pares chave-valor) enviados em todas as chamadas feitas para a Url do Webhook.
+    /// Útil, por exemplo, para autenticação via header.
+    /// </summary>
+    public Dictionary<string, string> CustomHeaders { get; set; } = [];
+
     public static IEnumerable<(string, CreateWebhookSubscriptionIn)> GetExamples() =>
     [
         ("Aluno criado",
@@ -24,14 +30,16 @@ public class CreateWebhookSubscriptionIn : IApiDto<CreateWebhookSubscriptionIn>
         {
             Name = "Aluno criado",
             Url = "https://webhook.site/my-webhook",
-            Events = [WebhookEventType.StudentCreated]
+            Events = [WebhookEventType.StudentCreated],
+            CustomHeaders = new() { ["Exato-AuthToken"] = "6r4g654rs6g4we6f4qw684f68qwf4" }
         }),
         ("Atividade publicada",
         new CreateWebhookSubscriptionIn
         {
             Name = "Atividade publicada",
             Url = "https://webhook.site/my-other-webhook",
-            Events = [WebhookEventType.ClassActivityCreated]
+            Events = [WebhookEventType.ClassActivityCreated],
+            CustomHeaders = []
         }),
     ];
 }

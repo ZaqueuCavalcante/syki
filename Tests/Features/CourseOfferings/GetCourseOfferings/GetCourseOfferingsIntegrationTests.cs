@@ -2,6 +2,42 @@ namespace Syki.Tests.Integration;
 
 public partial class IntegrationTests
 {
+    #region Authentication
+
+    [Test]
+    public async Task CourseOfferings_GetCourseOfferings_Should_not_get_offerings_when_not_authenticated()
+    {
+        // Arrange
+        var client = _back.GetTestsClient();
+
+        // Act
+        var result = await client.GetCourseOfferings();
+
+        // Assert
+        result.ShouldBeError(HttpStatusCode.Unauthorized);
+    }
+
+    #endregion
+
+    #region Authorization
+
+    [Test]
+    public async Task CourseOfferings_GetCourseOfferings_Should_not_get_offerings_when_user_has_no_permission()
+    {
+        // Arrange
+        var client = await _back.LoggedAsTeacher();
+
+        // Act
+        var result = await client.GetCourseOfferings();
+
+        // Assert
+        result.ShouldBeError(HttpStatusCode.Forbidden);
+    }
+
+    #endregion
+
+    #region Happy path
+
     [Test]
     public async Task CourseOfferings_GetCourseOfferings_Should_return_empty_list()
     {
@@ -12,8 +48,9 @@ public partial class IntegrationTests
         var result = await client.GetCourseOfferings();
 
         // Assert
-        result.Total.Should().Be(0);
-        result.Items.Should().BeEmpty();
+        var offerings = result.Success;
+        offerings.Total.Should().Be(0);
+        offerings.Items.Should().BeEmpty();
     }
 
     [Test]
@@ -31,7 +68,10 @@ public partial class IntegrationTests
         var result = await client.GetCourseOfferings();
 
         // Assert
-        result.Total.Should().Be(1);
-        result.Items[0].Period.Should().Be("2024.1");
+        var offerings = result.Success;
+        offerings.Total.Should().Be(1);
+        offerings.Items[0].Period.Should().Be("2024.1");
     }
+
+    #endregion
 }

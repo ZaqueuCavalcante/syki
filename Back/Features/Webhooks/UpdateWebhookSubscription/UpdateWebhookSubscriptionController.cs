@@ -25,5 +25,6 @@ internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidWebhookName,
     InvalidWebhookUrl,
     InvalidWebhookEvents,
+    InvalidWebhookCustomHeaders,
     WebhookSubscriptionNotFound
 >;

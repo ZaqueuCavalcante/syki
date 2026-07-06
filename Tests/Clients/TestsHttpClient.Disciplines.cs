@@ -4,6 +4,8 @@ using Syki.Back.Features.Disciplines.GetDisciplines;
 using Syki.Back.Features.Disciplines.CreateDiscipline;
 using Syki.Back.Features.Disciplines.UpdateDiscipline;
 using Syki.Back.Features.Disciplines.AddDisciplineCourses;
+using Syki.Back.Features.Disciplines.RemoveDisciplineCourse;
+using Syki.Back.Features.Disciplines.GetDisciplinePotentialCourses;
 
 namespace Syki.Tests.Integration.Clients;
 
@@ -41,9 +43,31 @@ public partial class TestsHttpClient
         return await response.Resolve<SuccessOut>();
     }
 
+    public async Task<OneOf<SuccessOut, ErrorOut>> RemoveDisciplineCourse(
+        int disciplineId,
+        int courseId
+    ) {
+        var data = new RemoveDisciplineCourseIn { DisciplineId = disciplineId, CourseId = courseId };
+        var request = new HttpRequestMessage(HttpMethod.Delete, "/disciplines/courses")
+        {
+            Content = JsonContent.Create(data)
+        };
+        var response = await http.SendAsync(request);
+        return await response.Resolve<SuccessOut>();
+    }
+
     public async Task<OneOf<GetDisciplinesOut, ErrorOut>> GetDisciplines()
     {
         var response = await http.GetAsync("/disciplines");
         return await response.Resolve<GetDisciplinesOut>();
+    }
+
+    public async Task<OneOf<GetDisciplinePotentialCoursesOut, ErrorOut>> GetDisciplinePotentialCourses(
+        int id,
+        string? name = null
+    ) {
+        var url = $"/disciplines/{id}/potential-courses?name={name}";
+        var response = await http.GetAsync(url);
+        return await response.Resolve<GetDisciplinePotentialCoursesOut>();
     }
 }

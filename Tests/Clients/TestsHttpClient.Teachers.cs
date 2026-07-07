@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using Syki.Back.Features.Teachers.GetTeacher;
 using Syki.Back.Features.Teachers.GetTeachers;
 using Syki.Back.Features.Teachers.CreateTeacher;
 using Syki.Back.Features.Teachers.AssignCampiToTeacher;
@@ -35,8 +36,15 @@ public partial class TestsHttpClient
         return await response.Resolve<SuccessOut>();
     }
 
-    public async Task<GetTeachersOut> GetTeachers()
+    public async Task<OneOf<GetTeachersOut, ErrorOut>> GetTeachers()
     {
-        return await http.GetFromJsonAsync<GetTeachersOut>("/teachers", JsonOptions) ?? new();
+        var response = await http.GetAsync("/teachers");
+        return await response.Resolve<GetTeachersOut>();
+    }
+
+    public async Task<OneOf<GetTeacherOut, ErrorOut>> GetTeacher(int id)
+    {
+        var response = await http.GetAsync($"/teachers/{id}");
+        return await response.Resolve<GetTeacherOut>();
     }
 }

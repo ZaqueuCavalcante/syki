@@ -67,14 +67,13 @@ public partial class IntegrationTests
     }
 
     [Test]
-    [TestCase((UserType)99)]
-    public async Task Identity_CreateRole_Should_not_create_role_with_invalid_base_type(UserType baseType)
+    public async Task Identity_CreateRole_Should_not_create_role_with_invalid_base_type()
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var result = await client.CreateRole(baseType: baseType);
+        var result = await client.CreateRole(baseType: (UserType)99);
 
         // Assert
         result.ShouldBeError(InvalidRoleBaseType.I);

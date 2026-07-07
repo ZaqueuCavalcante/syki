@@ -1,4 +1,4 @@
-namespace Syki.Back.Commands.Domain.Classes;
+namespace Syki.Back.Domain.Classes;
 
 public class Schedule
 {

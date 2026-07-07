@@ -53,7 +53,7 @@ public partial class TestsHttpClient
         int id,
         string? name = null
     ) {
-        var url = name == null ? $"/courses/{id}/potential-disciplines" : $"/courses/{id}/potential-disciplines?name={name}";
+        var url = $"/courses/{id}/potential-disciplines" + (name.IsEmpty() ? "" : $"?name={name}");
         var response = await http.GetAsync(url);
         return await response.Resolve<GetCoursePotentialDisciplinesOut>();
     }

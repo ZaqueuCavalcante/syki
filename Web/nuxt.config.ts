@@ -6,7 +6,13 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@nuxt/content", "@nuxt/ui", "@nuxt/eslint", "@vueuse/nuxt", "@nuxt/fonts"],
+  modules: [
+    "@nuxt/ui",
+    "@nuxt/fonts",
+    "@nuxt/eslint",
+    "@vueuse/nuxt",
+    "@nuxt/content",
+],
 
   content: {
     build: {

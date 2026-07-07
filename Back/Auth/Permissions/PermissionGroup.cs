@@ -37,4 +37,10 @@ public enum PermissionGroup
 
     [Description("Webhooks")]
     Webhooks = 11,
+
+    [Description("Notifications")]
+    Notifications = 12,
+
+    [Description("Classrooms")]
+    Classrooms = 13,
 }

@@ -1,4 +1,4 @@
-using Syki.Back.Commands.Domain.Classes;
+using Syki.Back.Domain.Classes;
 
 namespace Syki.Back.Database.Classes;
 

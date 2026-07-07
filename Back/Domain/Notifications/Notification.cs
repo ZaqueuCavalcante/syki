@@ -5,6 +5,7 @@ namespace Syki.Back.Domain.Notifications;
 public class Notification
 {
     public int Id { get; set; }
+    public int InstitutionId { get; set; }
     public NotificationType NotificationType { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
@@ -14,11 +15,13 @@ public class Notification
     public Notification() { }
 
     public Notification(
+        int institutionId,
         NotificationType notificationType,
         string title,
         string description,
         object? metadata = null)
     {
+        InstitutionId = institutionId;
         NotificationType = notificationType;
         Title = title;
         Description = description;

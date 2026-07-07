@@ -119,6 +119,24 @@ public static class SykiPermissions
         [UserType.Manager]
     );
 
+    // Notifications
+    public static readonly SykiPermission ManageNotifications = new(
+        PermissionGroup.Notifications,
+        1200,
+        "Gerenciar notificações.",
+        "Criar e visualizar notificações.",
+        [UserType.Manager]
+    );
+
+    // Classrooms
+    public static readonly SykiPermission ManageClassrooms = new(
+        PermissionGroup.Classrooms,
+        1300,
+        "Gerenciar salas de aula.",
+        "Criar e editar salas de aula.",
+        [UserType.Manager]
+    );
+
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<SykiPermission> Permissions = [];
     private static readonly Dictionary<int, SykiPermission> ById = [];

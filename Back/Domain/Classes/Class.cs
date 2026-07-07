@@ -3,7 +3,7 @@ using Syki.Back.Domain.Teachers;
 using Syki.Back.Domain.Students;
 using Syki.Back.Domain.Disciplines;
 
-namespace Syki.Back.Commands.Domain.Classes;
+namespace Syki.Back.Domain.Classes;
 
 /// <summary>
 /// Turma
@@ -12,15 +12,19 @@ public class Class
 {
     public int Id { get; set; }
     public int InstitutionId { get; set; }
+
     public int DisciplineId { get; set; }
     public Discipline Discipline { get; set; }
+
     public int PeriodId { get; set; }
     public AcademicPeriod Period { get; set; }
+
     public int Vacancies { get; set; }
     public ClassStatus Status { get; set; }
     public int Workload { get; set; }
 
     public int? CampusId { get; set; }
+
     public int? TeacherId { get; set; }
     public SykiTeacher Teacher { get; set; }
 

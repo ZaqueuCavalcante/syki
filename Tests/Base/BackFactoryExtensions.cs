@@ -115,26 +115,19 @@ public static class BackFactoryExtensions
         return client;
     }
 
-    public static async Task<TestsHttpClient> LoggedAs(this BackFactory factory, string roleName, List<SykiPermission> permissions, UserType baseType = UserType.Manager)
+    public static async Task<TestsHttpClient> LoginAs(this BackFactory factory, string email)
     {
         await using var ctx = factory.GetDbContext();
+        var user = await ctx.Users.Where(u => u.Email == email).FirstAsync();
+        var magicLink = new MagicLink(user);
+        await ctx.SaveChangesAsync(magicLink);
+
         var client = factory.GetTestsClient();
-
-        var email = DataGen.Email;
-        var user = (await client.RegisterUser(email)).Success;
-
-        // Create custom role with specified permissions (bypassing validation)
-        var permissionIds = permissions.Select(p => p.Id).ToList();
-        var role = new SykiRole(user.InstitutionId, roleName, roleName, baseType, permissionIds);
-        var userRole = new SykiUserRole(user.InstitutionId, user.Id, role.Id) { Role = role };
-
-        ctx.AddRange(role, userRole);
-        await ctx.SaveChangesAsync();
 
         var token = await factory.GetMagicLinkToken(email);
         await client.MagicLinkLogin(token!);
 
-        client.User = user;
+        client.User = new TestsUserDto { Id = user.Id, InstitutionId = user.InstitutionId, Email = user.Email! };
 
         return client;
     }

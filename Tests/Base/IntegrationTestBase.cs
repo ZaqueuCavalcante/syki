@@ -1,5 +1,6 @@
 using Npgsql;
 using Syki.Tests.Seed;
+using Syki.Back.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -33,17 +34,15 @@ public abstract class IntegrationTestBase
     {
         var configPath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.Testing.json");
         var configuration = new ConfigurationBuilder().AddJsonFile(configPath).Build();
-        var connectionString = configuration["Database:ConnectionString"];
+        var connectionString = configuration.Database.ConnectionString;
 
         var dataSource = new NpgsqlDataSourceBuilder(connectionString).Build();
         var options = new DbContextOptionsBuilder<SykiDbContext>().Options;
 
         using var ctx = new SykiDbContext(options, dataSource, null);
-
         // if (ctx.HasMissingMigration()) throw new AssertionException("SykiDbContext Has Missing Migration!");
 
         var cnn = ctx.Database.GetDbConnection().ConnectionString;
-
         // if (!cnn.Contains("Host=localhost;")) throw new Exception("WRONG TESTS DB");
 
         await ctx.Database.EnsureDeletedAsync();

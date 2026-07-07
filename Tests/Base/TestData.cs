@@ -2,42 +2,6 @@ namespace Syki.Tests.Base;
 
 public static class TestData
 {
-    public static IEnumerable<object[]> ValidNames()
-    {
-        foreach (var name in new List<string>() { "Keu", "Maju", "Maria", "Naldinho Silva", })
-        {
-            yield return [name];
-        }
-    }
-
-    public static IEnumerable<object[]> InvalidNames()
-    {
-        foreach (var name in new List<string>() { null, "", "a", "42", " ", "  ", "     ", "JP", })
-        {
-            yield return [name];
-        }
-    }
-
-    public static IEnumerable<object[]> InvalidUserRegisterTokens()
-    {
-        var empty = Guid.Empty.ToString();
-        var random = Guid.CreateVersion7().ToString();
-        foreach (var name in new List<string>() { null, "", "a", "42", "qwerty123", " ", "  ", "     ", "JP", empty, random, })
-        {
-            yield return [name];
-        }
-    }
-
-
-
-    public static IEnumerable<object[]> ValidPeriods()
-    {
-        foreach (var id in new List<string>() { "1970.1", "1970.2", "2023.1", "2023.2", "2070.1", "2070.2", })
-        {
-            yield return [id];
-        }
-    }
-
     public static IEnumerable<object[]> InvalidPasswords()
     {
         foreach (var role in new List<string>()

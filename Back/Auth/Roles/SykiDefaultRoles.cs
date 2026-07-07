@@ -10,7 +10,7 @@ public static class SykiDefaultRoles
 		OwnerId = null,
 		Name = "Diretor",
 		NormalizedName = "DIRETOR",
-		Description = "Gerencia campi, usuários, perfis, SSO, períodos, turmas, cursos, professores, webhooks, alunos, disciplinas, ofertas e grades.",
+		Description = "Gerencia campi, usuários, perfis, SSO, períodos, turmas, cursos, professores, webhooks, alunos, salas, disciplinas, notificações, ofertas e grades.",
 		BaseType = UserType.Manager,
 		Permissions = [
 			SykiPermissions.ManageSso.Id,
@@ -23,7 +23,9 @@ public static class SykiDefaultRoles
 			SykiPermissions.ManageTeachers.Id,
             SykiPermissions.ManageWebhooks.Id,
             SykiPermissions.ManageStudents.Id,
+            SykiPermissions.ManageClassrooms.Id,
 			SykiPermissions.ManageDisciplines.Id,
+            SykiPermissions.ManageNotifications.Id,
             SykiPermissions.ManageCourseOfferings.Id,
             SykiPermissions.ManageCourseCurriculums.Id,
 		],

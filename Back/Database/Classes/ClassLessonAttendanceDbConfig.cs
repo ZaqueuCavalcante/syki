@@ -1,5 +1,5 @@
+using Syki.Back.Domain.Classes;
 using Syki.Back.Domain.Students;
-using Syki.Back.Commands.Domain.Classes;
 
 namespace Syki.Back.Database.Classes;
 

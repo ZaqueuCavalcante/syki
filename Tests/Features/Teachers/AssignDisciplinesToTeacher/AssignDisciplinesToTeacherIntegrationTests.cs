@@ -1,0 +1,94 @@
+namespace Syki.Tests.Integration;
+
+public partial class IntegrationTests
+{
+    #region Authentication
+
+    [Test]
+    public async Task Teachers_AssignDisciplinesToTeacher_Should_not_assign_disciplines_when_not_authenticated()
+    {
+        // Arrange
+        var client = _back.GetTestsClient();
+
+        // Act
+        var result = await client.AssignDisciplinesToTeacher(1, []);
+
+        // Assert
+        result.ShouldBeError(HttpStatusCode.Unauthorized);
+    }
+
+    #endregion
+
+    #region Authorization
+
+    [Test]
+    public async Task Teachers_AssignDisciplinesToTeacher_Should_not_assign_disciplines_when_user_has_no_permission()
+    {
+        // Arrange
+        var client = await _back.LoggedAsTeacher();
+
+        // Act
+        var result = await client.AssignDisciplinesToTeacher(1, []);
+
+        // Assert
+        result.ShouldBeError(HttpStatusCode.Forbidden);
+    }
+
+    #endregion
+
+    #region Validation errors
+
+    [Test]
+    public async Task Teachers_AssignDisciplinesToTeacher_Should_not_assign_disciplines_when_teacher_does_not_exist()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+
+        // Act
+        var result = await client.AssignDisciplinesToTeacher(999999, []);
+
+        // Assert
+        result.ShouldBeError(TeacherNotFound.I);
+    }
+
+    [Test]
+    public async Task Teachers_AssignDisciplinesToTeacher_Should_not_assign_disciplines_when_a_discipline_does_not_exist()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+
+        // Act
+        var result = await client.AssignDisciplinesToTeacher(teacher.Id, [999999]);
+
+        // Assert
+        result.ShouldBeError(InvalidDisciplinesList.I);
+    }
+
+    #endregion
+
+    #region Happy path
+
+    [Test]
+    public async Task Teachers_AssignDisciplinesToTeacher_Should_assign_disciplines_to_the_teacher()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var calculo = (await client.CreateDiscipline("Calculo")).Success;
+        var fisica = (await client.CreateDiscipline("Fisica")).Success;
+        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+
+        // Act
+        var result = await client.AssignDisciplinesToTeacher(teacher.Id, [calculo.Id, fisica.Id]);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+
+        var updated = (await client.GetTeacher(teacher.Id)).Success;
+        updated.Disciplines.Should().HaveCount(2);
+        updated.Disciplines.Should().Contain(x => x.Id == calculo.Id);
+        updated.Disciplines.Should().Contain(x => x.Id == fisica.Id);
+    }
+
+    #endregion
+}

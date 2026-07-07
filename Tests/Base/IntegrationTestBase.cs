@@ -9,6 +9,7 @@ namespace Syki.Tests.Base;
 public abstract class IntegrationTestBase
 {
     protected BackFactory _back = null!;
+    protected MocksFactory _mocks = null!;
 
     [OneTimeSetUp]
     public async Task OneTimeSetUp()
@@ -16,6 +17,9 @@ public abstract class IntegrationTestBase
         EnvironmentExtensions.SetAsTesting();
 
         await ResetSykiDb();
+
+        _mocks = new MocksFactory();
+        _mocks.StartServer();
 
         _back = new BackFactory();
         using var scope = _back.Services.CreateScope();
@@ -28,6 +32,7 @@ public abstract class IntegrationTestBase
     public async Task OneTimeTearDown()
     {
         await _back.DisposeAsync();
+        await _mocks.DisposeAsync();
     }
 
     private static async Task ResetSykiDb()

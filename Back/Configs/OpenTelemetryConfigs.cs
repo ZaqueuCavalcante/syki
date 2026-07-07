@@ -8,6 +8,7 @@ namespace Syki.Back.Configs;
 public static class OpenTelemetryConfigs
 {
     public const string CommandsProcessing = nameof(CommandsProcessing);
+    public const string WebhookCallsProcessing = nameof(WebhookCallsProcessing);
     public const string WebhookEventsProcessing = nameof(WebhookEventsProcessing);
 
     public static void AddOpenTelemetryConfigs(this WebApplicationBuilder builder)

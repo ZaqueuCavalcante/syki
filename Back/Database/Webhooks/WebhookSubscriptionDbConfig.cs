@@ -26,5 +26,10 @@ public class WebhookSubscriptionDbConfig : IEntityTypeConfiguration<WebhookSubsc
             )
             .HasColumnType("jsonb")
             .IsRequired();
+
+        entity.HasMany(e => e.Calls)
+            .WithOne()
+            .HasPrincipalKey(e => e.Id)
+            .HasForeignKey(x => x.WebhookSubscriptionId);
     }
 }

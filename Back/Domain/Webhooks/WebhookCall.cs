@@ -7,7 +7,7 @@ public class WebhookCall
 {
     public int Id { get; set; }
     public int InstitutionId { get; set; }
-    public int WebhookId { get; set; }
+    public int WebhookSubscriptionId { get; set; }
     public string Payload { get; set; }
     public WebhookEventType EventType { get; set; }
     public WebhookCallStatus Status { get; set; }
@@ -19,15 +19,16 @@ public class WebhookCall
 
     public WebhookCall(
         int institutionId,
-        int webhookId,
+        int webhookSubscriptionId,
         object data,
         WebhookEventType eventType)
     {
         InstitutionId = institutionId;
-        WebhookId = webhookId;
+        WebhookSubscriptionId = webhookSubscriptionId;
         Payload = (new { EventType = eventType, Data = data }).Serialize();
         EventType = eventType;
         CreatedAt = DateTime.UtcNow;
+        Status = WebhookCallStatus.Pending;
     }
 
     public void Success(int statusCode, string response)

@@ -1,27 +1,29 @@
 using System.Text;
 
-namespace Syki.Back.Features.Academic.CallWebhooks;
+namespace Syki.Back.Features.Webhooks.CallWebhooks;
 
 [CommandDescription("Chama um webhook")]
-public record CallWebhookCommand(Guid WebhookCallId) : ICommand;
+public record CallWebhookCommand(int WebhookCallId) : ICommand;
 
 public class CallWebhookCommandHandler(SykiDbContext ctx, IHttpClientFactory factory) : ICommandHandler<CallWebhookCommand>
 {
-    public async Task Handle(Guid commandId, CallWebhookCommand command)
+    public async Task Handle(int commandId, CallWebhookCommand command)
     {
         var call = await ctx.WebhookCalls
             .Include(x => x.Attempts)
             .FirstOrDefaultAsync(x => x.Id == command.WebhookCallId);
 
-        var webhook = await ctx.Webhooks.AsNoTracking()
-            .Include(x => x.Authentication)
-            .Where(x => x.Id == call.WebhookId)
-            .Select(x => new { x.Url, x.Authentication.ApiKey })
+        var webhook = await ctx.WebhookSubscriptions.AsNoTracking()
+            .Where(x => x.Id == call.WebhookSubscriptionId)
+            .Select(x => new { x.Url, x.CustomHeaders })
             .FirstAsync();
 
         var client = factory.CreateClient();
         client.BaseAddress = new Uri(webhook.Url);
-        client.DefaultRequestHeaders.Add("Syki-Webhook-ApiKey", webhook.ApiKey);
+        foreach (var header in webhook.CustomHeaders)
+        {
+            client.DefaultRequestHeaders.Add(header.Key, header.Value);
+        }
 
         try
         {

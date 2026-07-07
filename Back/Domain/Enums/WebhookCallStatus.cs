@@ -2,9 +2,15 @@
 
 public enum WebhookCallStatus
 {
+    [Description("Pendente")]
+    Pending = 0,
+
+    [Description("Processando")]
+    Processing = 1,
+
     [Description("Sucesso")]
-    Success = 0,
+    Success = 2,
 
     [Description("Erro")]
-    Error = 1,
+    Error = 3,
 }

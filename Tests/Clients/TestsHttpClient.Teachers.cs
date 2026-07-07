@@ -2,8 +2,11 @@ using System.Net.Http.Json;
 using Syki.Back.Features.Teachers.GetTeacher;
 using Syki.Back.Features.Teachers.GetTeachers;
 using Syki.Back.Features.Teachers.CreateTeacher;
+using Syki.Back.Features.Teachers.UpdateTeacher;
 using Syki.Back.Features.Teachers.AssignCampiToTeacher;
+using Syki.Back.Features.Teachers.GetTeacherPotentialCampi;
 using Syki.Back.Features.Teachers.AssignDisciplinesToTeacher;
+using Syki.Back.Features.Teachers.GetTeacherPotentialDisciplines;
 
 namespace Syki.Tests.Integration.Clients;
 
@@ -46,5 +49,31 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync($"/teachers/{id}");
         return await response.Resolve<GetTeacherOut>();
+    }
+
+    public async Task<OneOf<GetTeacherPotentialCampiOut, ErrorOut>> GetTeacherPotentialCampi(int id, string? name = null)
+    {
+        var url = $"/teachers/{id}/potential-campi";
+        if (name != null) url += $"?name={name}";
+        var response = await http.GetAsync(url);
+        return await response.Resolve<GetTeacherPotentialCampiOut>();
+    }
+
+    public async Task<OneOf<GetTeacherPotentialDisciplinesOut, ErrorOut>> GetTeacherPotentialDisciplines(int id, string? name = null)
+    {
+        var url = $"/teachers/{id}/potential-disciplines";
+        if (name != null) url += $"?name={name}";
+        var response = await http.GetAsync(url);
+        return await response.Resolve<GetTeacherPotentialDisciplinesOut>();
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> UpdateTeacher(
+        int id,
+        string name = "Richard Feynman",
+        string email = "feynman@syki.com"
+    ) {
+        var data = new UpdateTeacherIn { Name = name, Email = email };
+        var response = await http.PutAsJsonAsync($"/teachers/{id}", data);
+        return await response.Resolve<SuccessOut>();
     }
 }

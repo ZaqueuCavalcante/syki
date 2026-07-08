@@ -43,6 +43,7 @@ public static class DocsConfigs
                 if (group == "users") return ["👩🏻‍🎓 Users"];
                 if (group == "webhooks") return ["🪝 Webhooks"];
                 if (group == "classes") return ["👩🏻‍🏫 Classes"];
+                if (group == "classrooms") return ["📈 Classrooms"];
                 if (group == "notifications") return ["🔔 Notifications"];
                 return ["🧱 Cross"];
             });

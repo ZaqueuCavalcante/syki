@@ -6,6 +6,11 @@ const links = [[{
   icon: 'i-lucide-webhook',
   to: '/integrations',
   exact: true,
+}, {
+  label: 'Chamadas',
+  icon: 'i-lucide-radio',
+  to: '/integrations/calls',
+  exact: true,
 }]] satisfies NavigationMenuItem[][]
 </script>
 

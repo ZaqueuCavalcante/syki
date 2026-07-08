@@ -280,7 +280,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         </div>
 
         <div class="flex justify-end gap-2 pt-2">
-          <UButton label="Cancelar" color="neutral" variant="subtle" :disabled="loading" @click="open = false" />
+          <UButton label="Cancelar" color="neutral" variant="subtle" :disabled="loading" @click="() => { open = false }" />
           <UButton label="Salvar" type="submit" :loading="loading" />
         </div>
 

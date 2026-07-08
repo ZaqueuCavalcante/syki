@@ -48,7 +48,7 @@ public abstract class IntegrationTestBase
         // if (ctx.HasMissingMigration()) throw new AssertionException("SykiDbContext Has Missing Migration!");
 
         var cnn = ctx.Database.GetDbConnection().ConnectionString;
-        // if (!cnn.Contains("Host=localhost;")) throw new Exception("WRONG TESTS DB");
+        if (!cnn.Contains("Host=localhost;")) throw new Exception("WRONG TESTS DB");
 
         await ctx.Database.EnsureDeletedAsync();
         await ctx.Database.EnsureCreatedAsync();

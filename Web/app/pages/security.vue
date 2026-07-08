@@ -28,7 +28,7 @@ const links = [[{
     </template>
 
     <template #body>
-      <div class="flex flex-col gap-4 sm:gap-6 w-full">
+      <div class="flex flex-col gap-4 sm:gap-6 w-full min-w-0">
         <NuxtPage />
       </div>
     </template>

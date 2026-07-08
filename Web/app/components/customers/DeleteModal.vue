@@ -29,7 +29,7 @@ async function onSubmit() {
           label="Cancel"
           color="neutral"
           variant="subtle"
-          @click="open = false"
+          @click="() => { open = false }"
         />
         <UButton
           label="Delete"

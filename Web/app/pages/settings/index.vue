@@ -39,13 +39,17 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UPageCard
-    title="Geral"
-    description="Informações da sua conta."
-    variant="subtle"
-  >
+  <div>
+    <UPageCard
+      title="Geral"
+      description="Informações da sua conta."
+      variant="naked"
+      class="mb-4"
+    />
+
+    <UPageCard variant="subtle">
     <div class="flex flex-col divide-y divide-default">
-      <div class="flex max-sm:flex-col justify-between items-center gap-4 py-4 first:pt-0 last:pb-0">
+      <div class="flex max-sm:flex-col justify-between items-start gap-4 py-4 first:pt-0 last:pb-0">
         <div>
           <p class="text-sm font-medium text-highlighted">Nome</p>
         </div>
@@ -90,7 +94,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         <p class="text-sm text-muted">{{ account?.course }}</p>
       </div>
     </div>
-  </UPageCard>
+    </UPageCard>
+  </div>
 
   <UModal
     v-model:open="editNameOpen"

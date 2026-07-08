@@ -35,6 +35,9 @@ export const Permissions = {
 
   // Webhooks
   ManageWebhooks: 1100,
+
+  // Notifications
+  ManageNotifications: 1200,
 } as const
 
 export type PermissionId = typeof Permissions[keyof typeof Permissions]
@@ -138,3 +141,6 @@ export type PolicyName
     | 'GetWebhookSubscriptions'
     | 'CreateWebhookSubscription'
     | 'UpdateWebhookSubscription'
+  // Notifications
+    | 'AccessNotificationsPage'
+    | 'GetInstitutionNotifications'

@@ -60,11 +60,15 @@ function copyKey() {
 </script>
 
 <template>
-  <UPageCard
-    title="Autenticação de Dois Fatores (2FA)"
-    description="Um segundo fator de autenticação aumenta a segurança da sua conta."
-    variant="subtle"
-  >
+  <div>
+    <UPageCard
+      title="Autenticação de Dois Fatores (2FA)"
+      description="Um segundo fator de autenticação aumenta a segurança da sua conta."
+      variant="naked"
+      class="mb-4"
+    />
+
+    <UPageCard variant="subtle">
     <div v-if="isLoading" class="flex items-center justify-center py-8">
       <UIcon name="i-lucide-loader-2" class="animate-spin text-2xl" />
     </div>
@@ -92,7 +96,8 @@ function copyKey() {
         @click="openSetupModal"
       />
     </div>
-  </UPageCard>
+    </UPageCard>
+  </div>
 
   <UModal
     v-model:open="isModalOpen"

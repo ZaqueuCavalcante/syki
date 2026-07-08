@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
+const isMobile = useIsMobile()
 const tocLinks = useState<any[]>('docs-toc', () => [])
 const mobileNavOpen = ref(false)
 
@@ -18,7 +19,7 @@ watch(() => route.path, () => {
 
 <template>
   <div>
-    <UHeader>
+    <UHeader :toggle="false">
       <template #left>
         <NuxtLink to="/" class="flex items-center gap-2 font-semibold text-default">
           Estud
@@ -82,6 +83,7 @@ watch(() => route.path, () => {
       v-if="searchFiles"
       :files="searchFiles"
       :navigation="navigation ?? []"
+      :fullscreen="isMobile"
       shortcut="meta_k"
     />
   </div>

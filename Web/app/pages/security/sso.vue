@@ -20,20 +20,20 @@ const providerLabels: Record<string, string> = {
 </script>
 
 <template>
-  <div class="w-full lg:max-w-2xl mx-auto">
+  <div class="w-full lg:max-w-2xl mx-auto min-w-0">
     <div class="flex justify-end mb-4">
       <UButton
         v-if="!ssoConfig"
         icon="i-lucide-plus"
         label="Configuração"
-        @click="createModalOpen = true"
+        @click="() => { createModalOpen = true }"
       />
     </div>
 
     <template v-if="ssoConfig">
       <UPageCard
-        title="Configuração SSO"
-        description="Provedor de Single Sign-On configurado para esta organização."
+        title="Configuração Single Sign-On"
+        description="Provedor configurado para sua instituição."
         variant="naked"
         orientation="horizontal"
         class="mb-4"
@@ -49,33 +49,35 @@ const providerLabels: Record<string, string> = {
       </UPageCard>
 
       <UPageCard variant="subtle">
-        <div class="flex justify-between items-center py-1">
-          <span class="text-sm font-medium">Provedor</span>
-          <span class="text-sm text-muted">{{ providerLabels[ssoConfig.providerType] }}</span>
+        <div class="flex flex-col gap-1 sm:flex-row sm:justify-between sm:items-center sm:gap-3 py-1">
+          <span class="text-sm font-medium shrink-0">Provedor</span>
+          <span class="text-sm text-muted break-words sm:text-right">{{ providerLabels[ssoConfig.providerType] }}</span>
         </div>
         <USeparator />
-        <div class="flex justify-between items-center py-1">
-          <span class="text-sm font-medium">Authority URL</span>
-          <span class="text-sm text-muted truncate max-w-xs">{{ ssoConfig.authority }}</span>
+        <div class="flex flex-col gap-1 sm:flex-row sm:justify-between sm:items-center sm:gap-3 py-1">
+          <span class="text-sm font-medium shrink-0">Authority URL</span>
+          <span class="text-sm text-muted break-all min-w-0 sm:text-right">{{ ssoConfig.authority }}</span>
         </div>
         <USeparator />
-        <div class="flex justify-between items-center py-1">
-          <span class="text-sm font-medium">Client ID</span>
-          <span class="text-sm text-muted font-mono">{{ ssoConfig.clientId }}</span>
+        <div class="flex flex-col gap-1 sm:flex-row sm:justify-between sm:items-center sm:gap-3 py-1">
+          <span class="text-sm font-medium shrink-0">Client ID</span>
+          <span class="text-sm text-muted font-mono break-all min-w-0 sm:text-right">{{ ssoConfig.clientId }}</span>
         </div>
         <USeparator />
-        <div class="flex justify-between items-center py-1">
-          <span class="text-sm font-medium">SSO Obrigatório</span>
+        <div class="flex flex-col gap-1 sm:flex-row sm:justify-between sm:items-center sm:gap-3 py-1">
+          <span class="text-sm font-medium shrink-0">SSO Obrigatório</span>
           <UBadge
+            class="w-fit"
             :label="ssoConfig.requireSso ? 'Sim' : 'Não'"
             :color="ssoConfig.requireSso ? 'success' : 'neutral'"
             variant="subtle"
           />
         </div>
         <USeparator />
-        <div class="flex justify-between items-center py-1">
-          <span class="text-sm font-medium">Configuração Ativa</span>
+        <div class="flex flex-col gap-1 sm:flex-row sm:justify-between sm:items-center sm:gap-3 py-1">
+          <span class="text-sm font-medium shrink-0">Configuração Ativa</span>
           <UBadge
+            class="w-fit"
             :label="ssoConfig.isActive ? 'Sim' : 'Não'"
             :color="ssoConfig.isActive ? 'success' : 'neutral'"
             variant="subtle"

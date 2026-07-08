@@ -17,7 +17,7 @@ const stats = [
 </script>
 
 <template>
-  <div class="p-6 space-y-6">
+  <div class="space-y-6">
     <div>
       <h2 class="text-2xl font-semibold text-highlighted">Bem-vindo, {{ account?.name }}</h2>
       <p class="text-muted text-sm mt-1">{{ account?.course ?? account?.institution }}</p>

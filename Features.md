@@ -27,6 +27,8 @@
 - Geração de horários usando backtracking
 - Prerequisite chain validation usando DFS/topological sort em CourseCurriculum
 
+- Subir app completa pra ambiente de Admin (deploy separado)
+
 ## Feature Shape
 
 - UI

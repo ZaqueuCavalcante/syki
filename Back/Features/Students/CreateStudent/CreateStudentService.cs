@@ -25,7 +25,7 @@ public class CreateStudentService(SykiDbContext ctx, UserManager<SykiUser> userM
             .Select(x => new { x.Id, x.Events }).ToListAsync() ?? [];
         foreach (var webhookSubscription in webhookSubscriptions.Where(x => x.Events.Contains(WebhookEventType.StudentCreated)))
         {
-            var webhookCall = new WebhookCall(institutionId, webhookSubscription.Id, new { student.Id, student.Name, user.Email }, WebhookEventType.StudentCreated);
+            var webhookCall = new WebhookCall(institutionId, webhookSubscription.Id, new { student.Name, user.Email }, WebhookEventType.StudentCreated);
             ctx.Add(webhookCall);
         }
 

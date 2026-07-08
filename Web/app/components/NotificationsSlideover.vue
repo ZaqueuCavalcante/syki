@@ -21,25 +21,34 @@ async function markAll() {
     title="Notificações"
   >
     <template #header>
-      <div class="flex items-center justify-between w-full gap-3">
-        <p class="text-base font-semibold text-highlighted">Notificações</p>
-        <div class="flex items-center gap-2">
-          <USwitch
-            v-model="onlyUnread"
-            size="xs"
-            label="Não lidas"
-          />
-          <UButton
-            v-if="unreadNotifications.length > 0"
-            variant="ghost"
-            color="neutral"
-            size="xs"
-            icon="i-lucide-check-check"
-            @click="markAll"
-          >
-            Marcar todas
-          </UButton>
+      <div class="flex flex-col gap-2 w-full">
+        <div class="flex items-center justify-between w-full gap-3">
+          <p class="text-base font-semibold text-highlighted">Notificações</p>
+          <div class="flex items-center gap-2">
+            <UButton
+              v-if="unreadNotifications.length > 0"
+              variant="ghost"
+              color="neutral"
+              size="xs"
+              icon="i-lucide-check-check"
+              @click="markAll"
+            >
+              Marcar todas
+            </UButton>
+            <UButton
+              variant="ghost"
+              color="neutral"
+              size="md"
+              icon="i-lucide-x"
+              @click="() => { isNotificationsSlideoverOpen = false }"
+            />
+          </div>
         </div>
+        <USwitch
+          v-model="onlyUnread"
+          size="xs"
+          label="Não lidas"
+        />
       </div>
     </template>
 

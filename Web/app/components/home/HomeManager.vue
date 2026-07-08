@@ -23,7 +23,7 @@ const cards = computed(() => [
 </script>
 
 <template>
-  <div class="p-6 space-y-6">
+  <div class="space-y-6">
     <div>
       <h2 class="text-2xl font-semibold text-highlighted">Bem-vindo, {{ account?.name }}</h2>
       <p class="text-muted text-sm mt-1">{{ account?.institution }}</p>
@@ -41,29 +41,5 @@ const cards = computed(() => [
         <span class="text-3xl font-bold text-highlighted">{{ card.value ?? '-' }}</span>
       </UPageCard>
     </UPageGrid>
-
-    <UCard>
-      <template #header>
-        <span class="font-semibold text-highlighted">Visão geral da instituição</span>
-      </template>
-      <div class="grid grid-cols-2 gap-4 text-sm">
-        <div class="space-y-1">
-          <p class="text-muted">Período letivo atual</p>
-          <p class="font-medium text-highlighted">2025.1</p>
-        </div>
-        <div class="space-y-1">
-          <p class="text-muted">Taxa de aprovação</p>
-          <p class="font-medium text-highlighted">91%</p>
-        </div>
-        <div class="space-y-1">
-          <p class="text-muted">Turmas em andamento</p>
-          <p class="font-medium text-highlighted">58</p>
-        </div>
-        <div class="space-y-1">
-          <p class="text-muted">Evasão no semestre</p>
-          <p class="font-medium text-highlighted">3,2%</p>
-        </div>
-      </div>
-    </UCard>
   </div>
 </template>

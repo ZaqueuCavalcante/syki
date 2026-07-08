@@ -35,7 +35,7 @@ const sections = [
 </script>
 
 <template>
-  <div class="py-8 px-4 lg:px-8 max-w-3xl">
+  <div class="py-8 max-w-3xl">
     <div class="mb-12">
       <h1 class="text-4xl font-bold text-default mb-4">
         Documentação

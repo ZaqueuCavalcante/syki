@@ -72,7 +72,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             color="neutral"
             variant="subtle"
             :disabled="loading"
-            @click="open = false"
+            @click="() => { open = false }"
           />
           <UButton
             label="Criar disciplina"

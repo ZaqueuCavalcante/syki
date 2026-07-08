@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using Syki.Back.Features.Webhooks.GetWebhookCalls;
 using Syki.Back.Features.Webhooks.GetWebhookSubscription;
 using Syki.Back.Features.Webhooks.GetWebhookSubscriptions;
 using Syki.Back.Features.Webhooks.CreateWebhookSubscription;
@@ -35,6 +36,12 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync($"webhooks/subscriptions/{id}");
         return await response.Resolve<GetWebhookSubscriptionOut>();
+    }
+
+    public async Task<OneOf<GetWebhookCallsOut, ErrorOut>> GetWebhookCalls(int page = 1, int pageSize = 20)
+    {
+        var response = await http.GetAsync($"webhooks/calls?page={page}&pageSize={pageSize}");
+        return await response.Resolve<GetWebhookCallsOut>();
     }
 
     public async Task<OneOf<UpdateWebhookSubscriptionOut, ErrorOut>> UpdateWebhookSubscription(

@@ -54,7 +54,7 @@ function fillRateBadgeColor(rate: number): 'error' | 'warning' | 'success' {
     </template>
 
     <template #body>
-      <div v-if="status === 'pending'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
+      <div v-if="status === 'pending'" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <USkeleton v-for="i in 3" :key="i" class="h-44 rounded-xl" />
       </div>
 
@@ -67,7 +67,7 @@ function fillRateBadgeColor(rate: number): 'error' | 'warning' | 'success' {
         @create="createModalOpen = true"
       />
 
-      <div v-else class="p-4 space-y-4">
+      <div v-else class="space-y-4">
         <div class="flex items-start justify-between gap-4">
           <div>
             <p class="text-sm text-muted mt-0.5">Visualize e gerencie os campus da sua instituição.</p>

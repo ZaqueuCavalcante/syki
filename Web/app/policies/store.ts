@@ -285,6 +285,22 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
       hasPermission(Permissions.ManageWebhooks),
     ],
   },
+
+  // Notifications
+  AccessNotificationsPage: {
+    description: "Acessar a página de notificações",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageNotifications),
+    ],
+  },
+  GetInstitutionNotifications: {
+    description: "Listar notificações da instituição",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageNotifications),
+    ],
+  },
 };
 
 export function getPolicy(name: PolicyName): PolicyDefinition {

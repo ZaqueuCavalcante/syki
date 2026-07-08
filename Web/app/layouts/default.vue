@@ -87,7 +87,7 @@ const groups = computed(() => [{
         :text="unreadCount > 99 ? '99+' : unreadCount"
         :show="unreadCount > 0"
         color="error"
-        size="sm"
+        size="2xl"
         inset
       >
         <UTooltip text="Notificações">

@@ -162,14 +162,16 @@ watch(open, (val) => {
             class="flex items-center py-3"
           >
             <span class="flex-1 text-sm">{{ course.name }}</span>
-            <UButton
-              icon="i-lucide-trash-2"
-              color="neutral"
-              variant="ghost"
-              size="xs"
-              :loading="removingCourseId === course.id"
-              @click="removeCourse(course.id)"
-            />
+            <UTooltip text="Remover">
+              <UButton
+                icon="i-lucide-trash-2"
+                color="neutral"
+                variant="ghost"
+                size="xs"
+                :loading="removingCourseId === course.id"
+                @click="removeCourse(course.id)"
+              />
+            </UTooltip>
           </li>
         </ul>
       </div>

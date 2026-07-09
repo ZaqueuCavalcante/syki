@@ -137,7 +137,7 @@ public partial class IntegrationTests
             url: "https://webhook.site/my-other-webhook",
             isActive: false,
             events: [WebhookEventType.ClassActivityCreated],
-            customHeaders: new() { ["Exato-AuthToken"] = "new-token-value" });
+            customHeaders: new() { ["Estud-AuthToken"] = "new-token-value" });
 
         // Assert
         var updated = result.Success;
@@ -148,7 +148,7 @@ public partial class IntegrationTests
         subscription.Url.Should().Be("https://webhook.site/my-other-webhook");
         subscription.IsActive.Should().BeFalse();
         subscription.Events.Should().BeEquivalentTo([WebhookEventType.ClassActivityCreated]);
-        subscription.CustomHeaders.Should().ContainKey("Exato-AuthToken").WhoseValue.Should().Be("new-token-value");
+        subscription.CustomHeaders.Should().ContainKey("Estud-AuthToken").WhoseValue.Should().Be("new-token-value");
     }
 
     #endregion

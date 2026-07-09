@@ -9,6 +9,6 @@ public partial class SykiDbContext
 
     private static void ConfigureClassrooms(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new ClassroomConfig());
+        modelBuilder.ApplyConfiguration(new ClassroomDbConfig());
     }
 }

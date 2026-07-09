@@ -100,16 +100,17 @@ async function markAll() {
             </p>
           </div>
 
-          <UButton
-            v-if="!notification.viewedAt"
-            icon="i-lucide-check"
-            variant="ghost"
-            color="neutral"
-            size="xs"
-            class="shrink-0 mt-0.5"
-            title="Marcar como lida"
-            @click="markOne(notification.id)"
-          />
+          <UTooltip text="Marcar como lida">
+            <UButton
+              v-if="!notification.viewedAt"
+              icon="i-lucide-check"
+              variant="ghost"
+              color="neutral"
+              size="xs"
+              class="shrink-0 mt-0.5"
+              @click="markOne(notification.id)"
+            />
+          </UTooltip>
         </div>
       </div>
     </template>

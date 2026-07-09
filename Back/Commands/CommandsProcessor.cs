@@ -1,7 +1,7 @@
 using Quartz;
 using System.Diagnostics;
+using Syki.Back.Domain.Commands;
 using System.Collections.Concurrent;
-using Syki.Back.Commands.Domain.Commands;
 
 namespace Syki.Back.Commands;
 

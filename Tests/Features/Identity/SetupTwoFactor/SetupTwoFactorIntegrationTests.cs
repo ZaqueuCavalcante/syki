@@ -42,7 +42,7 @@ public partial class IntegrationTests : IntegrationTestBase
             "",
             " ",
             "5464",
-            "exato",
+            "estud",
             "123456",
             "lalal.com",
             "5816811681816",

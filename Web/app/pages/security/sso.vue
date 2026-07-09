@@ -21,15 +21,6 @@ const providerLabels: Record<string, string> = {
 
 <template>
   <div class="w-full lg:max-w-2xl mx-auto min-w-0">
-    <div class="flex justify-end mb-4">
-      <UButton
-        v-if="!ssoConfig"
-        icon="i-lucide-plus"
-        label="Configuração"
-        @click="() => { createModalOpen = true }"
-      />
-    </div>
-
     <template v-if="ssoConfig">
       <UPageCard
         title="Configuração Single Sign-On"

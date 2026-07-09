@@ -14,6 +14,7 @@ interface GetRolesOut {
 }
 
 const UButton = resolveComponent('UButton')
+const UTooltip = resolveComponent('UTooltip')
 
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
@@ -45,13 +46,13 @@ const columns: TableColumn<RoleItem>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => h(UButton, {
+    cell: ({ row }) => h(UTooltip, { text: 'Editar' }, () => h(UButton, {
       icon: 'i-lucide-pencil',
       color: 'neutral',
       variant: 'ghost',
       size: 'sm',
-      onClick: () => openEdit(row.original),
-    }),
+      onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openEdit(row.original) },
+    })),
   },
 ]
 </script>

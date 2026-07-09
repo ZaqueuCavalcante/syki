@@ -1,4 +1,4 @@
-using Syki.Back.Commands.Domain.Commands;
+using Syki.Back.Domain.Commands;
 
 namespace Syki.Back.Database.Commands;
 
@@ -9,10 +9,5 @@ public class CommandDbConfig : IEntityTypeConfiguration<Command>
         entity.ToTable("commands", DbSchemas.Syki);
 
         entity.HasKey(e => e.Id);
-
-        entity.HasOne(e => e.Institution)
-            .WithMany()
-            .HasPrincipalKey(i => i.Id)
-            .HasForeignKey(e => e.InstitutionId);
     }
 }

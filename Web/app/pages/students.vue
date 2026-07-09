@@ -16,6 +16,7 @@ interface GetStudentsOut {
 }
 
 const UButton = resolveComponent('UButton')
+const UTooltip = resolveComponent('UTooltip')
 
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
@@ -51,13 +52,13 @@ const columns: TableColumn<StudentItem>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => h(UButton, {
+    cell: ({ row }) => h(UTooltip, { text: 'Oferta de curso' }, () => h(UButton, {
       icon: 'i-lucide-library',
       color: 'neutral',
       variant: 'ghost',
       size: 'sm',
-      onClick: () => openCourseOffering(row.original),
-    }),
+      onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openCourseOffering(row.original) },
+    })),
   },
 ]
 </script>

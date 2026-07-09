@@ -21,15 +21,19 @@ watch(() => route.path, () => {
   <div>
     <UHeader :toggle="false">
       <template #left>
-        <NuxtLink to="/" class="flex items-center gap-2 font-semibold text-default">
+        <NuxtLink to="/docs" class="flex items-center gap-2 text-xl font-bold text-default">
           Estud
           <UBadge label="Docs" variant="subtle" size="sm" />
         </NuxtLink>
       </template>
 
       <template #right>
-        <UContentSearchButton />
-        <UColorModeButton />
+        <UTooltip text="Buscar">
+          <UContentSearchButton @click="($event.currentTarget as HTMLElement).blur()" />
+        </UTooltip>
+        <UTooltip text="Alternar tema">
+          <UColorModeButton />
+        </UTooltip>
         <UButton
           icon="i-lucide-align-left"
           color="neutral"
@@ -66,13 +70,15 @@ watch(() => route.path, () => {
         <div class="flex flex-col gap-4 p-4 overflow-y-auto">
           <div class="flex items-center justify-between">
             <span class="font-semibold text-default">Documentação</span>
-            <UButton
-              icon="i-lucide-x"
-              color="neutral"
-              variant="ghost"
-              size="sm"
-              @click="mobileNavOpen = false"
-            />
+            <UTooltip text="Fechar">
+              <UButton
+                icon="i-lucide-x"
+                color="neutral"
+                variant="ghost"
+                size="sm"
+                @click="mobileNavOpen = false"
+              />
+            </UTooltip>
           </div>
           <UContentNavigation :navigation="navigation?.[0]?.children" highlight />
         </div>
@@ -84,6 +90,8 @@ watch(() => route.path, () => {
       :files="searchFiles"
       :navigation="navigation ?? []"
       :fullscreen="isMobile"
+      :color-mode="false"
+      placeholder="Pesquisar na documentação"
       shortcut="meta_k"
     />
   </div>

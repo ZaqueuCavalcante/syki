@@ -1,36 +1,25 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
-
-const links: NavigationMenuItem[] = [
-  { label: 'Funcionalidades', to: '/landing#features' },
-  { label: 'Preços', to: '/landing#pricing' },
-  { label: 'Docs', to: '/docs' },
-]
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col">
     <UHeader title="Estud">
-      <UNavigationMenu :items="links" />
-
       <template #right>
-        <UColorModeButton />
-        <UButton color="neutral" variant="ghost" to="/login" class="hidden sm:flex">
+        <UTooltip text="Documentação">
+          <UButton icon="i-lucide-book-open" color="neutral" variant="ghost" to="/docs" aria-label="Documentação" />
+        </UTooltip>
+        <UTooltip text="Alternar tema">
+          <UColorModeButton />
+        </UTooltip>
+        <UButton to="/login">
           Entrar
-        </UButton>
-        <UButton to="/register">
-          Começar grátis
         </UButton>
       </template>
 
       <template #body>
-        <UNavigationMenu :items="links" orientation="vertical" class="justify-start" />
         <div class="flex flex-col gap-2 mt-4">
-          <UButton color="neutral" variant="ghost" to="/login" block>
+          <UButton to="/login" block>
             Entrar
-          </UButton>
-          <UButton to="/register" block>
-            Começar grátis
           </UButton>
         </div>
       </template>

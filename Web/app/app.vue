@@ -63,7 +63,7 @@ useSeoMeta({
 </style>
 
 <template>
-  <UApp :locale="locale">
+  <UApp :locale="locale" :tooltip="{ delayDuration: 0 }">
     <NuxtLoadingIndicator color="var(--ui-primary)" />
     <NuxtLayout>
       <NuxtPage />

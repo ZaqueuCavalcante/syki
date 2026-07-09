@@ -15,8 +15,8 @@ public class EnrichBackDbContextMiddleware(RequestDelegate next)
             ctx.RequestUser.InstitutionId = request.User.InstitutionId;
         }
 
-        ctx.ActivityId = Activity.Current?.Id ?? Guid.CreateVersion7().ToString();
         ctx.Operation = request.GetTargetControllerName();
+        ctx.ActivityId = Activity.Current?.Id ?? Guid.CreateVersion7().ToString();
 
         await next(request);
     }

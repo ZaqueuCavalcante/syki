@@ -60,7 +60,7 @@ public enum UserActivityType
 
     RegisterUser_Success = 10_000,
     RegisterUser_EmailAlreadyUsed = 10_001,
-    RegisterUser_ExatoUserProvisioned = 10_002,
+    RegisterUser_EstudUserProvisioned = 10_002,
 
     #endregion
 }

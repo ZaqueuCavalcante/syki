@@ -121,7 +121,7 @@ public partial class IntegrationTests
             name: "Aluno criado",
             url: "https://webhook.site/my-webhook",
             events: [WebhookEventType.StudentCreated, WebhookEventType.ClassActivityCreated],
-            customHeaders: new() { ["Exato-AuthToken"] = "6r4g654rs6g4we6f4qw684f68qwf4" });
+            customHeaders: new() { ["Estud-AuthToken"] = "6r4g654rs6g4we6f4qw684f68qwf4" });
 
         // Assert
         var subscription = result.Success;

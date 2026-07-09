@@ -8,6 +8,6 @@ public class SendResetPasswordTokenIn : IApiDto<SendResetPasswordTokenIn>
 
     public static IEnumerable<(string, SendResetPasswordTokenIn)> GetExamples() =>
     [
-        ("Exemplo", new() { Email = "user@exato.com" }),
+        ("Exemplo", new() { Email = "user.example@estud.com.br" }),
     ];
 }

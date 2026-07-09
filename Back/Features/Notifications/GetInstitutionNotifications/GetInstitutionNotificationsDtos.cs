@@ -1,0 +1,12 @@
+namespace Syki.Back.Features.Notifications.GetInstitutionNotifications;
+
+public class InstitutionNotificationRow
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public int Recipients { get; set; }
+    public int Viewed { get; set; }
+    public int TotalRows { get; set; }
+}

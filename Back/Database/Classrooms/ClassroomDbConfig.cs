@@ -2,7 +2,7 @@ using Syki.Back.Domain.Classrooms;
 
 namespace Syki.Back.Database.Classrooms;
 
-public class ClassroomConfig : IEntityTypeConfiguration<Classroom>
+public class ClassroomDbConfig : IEntityTypeConfiguration<Classroom>
 {
     public void Configure(EntityTypeBuilder<Classroom> entity)
     {

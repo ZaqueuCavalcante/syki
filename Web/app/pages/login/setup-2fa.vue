@@ -148,12 +148,14 @@ function goBack() {
                   <code class="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded font-mono">
                     {{ secretKey }}
                   </code>
-                  <UButton
-                    icon="i-lucide-copy"
-                    variant="ghost"
-                    size="xs"
-                    @click="copyKey"
-                  />
+                  <UTooltip text="Copiar">
+                    <UButton
+                      icon="i-lucide-copy"
+                      variant="ghost"
+                      size="xs"
+                      @click="copyKey"
+                    />
+                  </UTooltip>
                 </div>
               </div>
 

@@ -61,8 +61,7 @@ const features = [
         title="Gestão acadêmica para quem leva a educação a sério"
         description="Do cadastro de alunos aos relatórios de desempenho - tudo em uma plataforma moderna, segura e fácil de usar."
         :links="[
-          { label: 'Começar grátis', to: '/register', size: 'xl' },
-          { label: 'Ver demonstração', to: '#features', size: 'xl', color: 'neutral', variant: 'outline' },
+          { label: 'Entrar', to: '/login', size: 'xl' },
         ]"
       />
 
@@ -104,11 +103,10 @@ const features = [
 
       <UPageCTA
         title="Pronto para transformar sua instituição?"
-        description="Junte-se a centenas de instituições que já usam o Estud. Grátis para começar, sem cartão de crédito."
+        description="Junte-se a centenas de instituições que já usam o Estud."
         variant="subtle"
         :links="[
-          { label: 'Criar conta grátis', to: '/register', size: 'xl' },
-          { label: 'Falar com a equipe', to: 'mailto:contato@estud.com.br', size: 'xl', color: 'neutral', variant: 'ghost' },
+          { label: 'Entrar', to: '/login', size: 'xl' },
         ]"
       />
     </div>

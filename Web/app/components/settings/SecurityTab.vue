@@ -125,7 +125,9 @@ function copyKey() {
           <p class="text-xs text-muted text-center">Ou insira a chave manualmente:</p>
           <div class="flex items-center gap-2 justify-center">
             <code class="text-xs bg-elevated px-2 py-1 rounded font-mono">{{ secretKey }}</code>
-            <UButton icon="i-lucide-copy" variant="ghost" size="xs" @click="copyKey" />
+            <UTooltip text="Copiar">
+              <UButton icon="i-lucide-copy" variant="ghost" size="xs" @click="copyKey" />
+            </UTooltip>
           </div>
         </div>
 

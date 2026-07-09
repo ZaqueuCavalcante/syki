@@ -1,5 +1,4 @@
 using Syki.Back.Domain.Identity;
-using Syki.Back.Domain.Institutions;
 
 namespace Syki.Back.Database.Identity;
 
@@ -10,11 +9,6 @@ public class SsoConfigurationDbConfig : IEntityTypeConfiguration<SsoConfiguratio
         entity.ToTable("sso_configurations", DbSchemas.Syki);
 
         entity.HasKey(e => e.Id);
-
-        entity.HasOne<Institution>()
-            .WithMany()
-            .HasPrincipalKey(i => i.Id)
-            .HasForeignKey(e => e.InstitutionId);
 
         entity.HasMany(e => e.AllowedDomains)
             .WithOne()

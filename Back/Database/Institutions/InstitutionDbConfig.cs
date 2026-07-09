@@ -14,37 +14,53 @@ public class InstitutionDbConfig : IEntityTypeConfiguration<Institution>
             .WithOne()
             .HasForeignKey(c => c.InstitutionId);
 
-        entity.HasMany(e => e.Courses)
+        entity.HasMany(e => e.Classes)
             .WithOne()
             .HasForeignKey(c => c.InstitutionId);
 
-        entity.HasMany(e => e.Users)
-            .WithOne(u => u.Institution)
-            .HasForeignKey(u => u.InstitutionId);
-
-        entity.HasMany(e => e.Students)
+        entity.HasMany(e => e.Classrooms)
             .WithOne()
-            .HasForeignKey(s => s.InstitutionId);
+            .HasForeignKey(c => c.InstitutionId);
 
-        entity.HasMany(e => e.Teachers)
-            .WithOne()
-            .HasForeignKey(t => t.InstitutionId);
+        entity.HasMany(e => e.Commands)
+            .WithOne(c => c.Institution)
+            .HasForeignKey(c => c.InstitutionId);
 
-        entity.HasMany(e => e.Disciplines)
+        entity.HasMany(e => e.CommandBatches)
             .WithOne()
-            .HasForeignKey(d => d.InstitutionId);
+            .HasForeignKey(cb => cb.InstitutionId);
+
+        entity.HasMany(e => e.CourseCurriculums)
+            .WithOne()
+            .HasForeignKey(cc => cc.InstitutionId);
 
         entity.HasMany(e => e.CourseOfferings)
             .WithOne()
             .HasForeignKey(co => co.InstitutionId);
 
-        entity.HasMany(e => e.Webhooks)
+        entity.HasMany(e => e.Courses)
             .WithOne()
-            .HasForeignKey(w => w.InstitutionId);
+            .HasForeignKey(c => c.InstitutionId);
 
-        entity.HasMany(e => e.WebhookCalls)
+        entity.HasMany(e => e.Disciplines)
             .WithOne()
-            .HasForeignKey(w => w.InstitutionId);
+            .HasForeignKey(d => d.InstitutionId);
+
+        entity.HasMany(e => e.ResetPasswordTokens)
+            .WithOne()
+            .HasForeignKey(rpt => rpt.InstitutionId);
+
+        entity.HasMany(e => e.SsoConfigurations)
+            .WithOne()
+            .HasForeignKey(sc => sc.InstitutionId);
+
+        entity.HasMany(e => e.Users)
+            .WithOne(u => u.Institution)
+            .HasForeignKey(u => u.InstitutionId);
+
+        entity.HasMany(e => e.Notifications)
+            .WithOne()
+            .HasForeignKey(n => n.InstitutionId);
 
         entity.HasMany(e => e.AcademicPeriods)
             .WithOne()
@@ -54,8 +70,20 @@ public class InstitutionDbConfig : IEntityTypeConfiguration<Institution>
             .WithOne()
             .HasForeignKey(ep => ep.InstitutionId);
 
-        entity.HasMany(e => e.CourseCurriculums)
+        entity.HasMany(e => e.Students)
             .WithOne()
-            .HasForeignKey(cc => cc.InstitutionId);
+            .HasForeignKey(s => s.InstitutionId);
+
+        entity.HasMany(e => e.Teachers)
+            .WithOne()
+            .HasForeignKey(t => t.InstitutionId);
+
+        entity.HasMany(e => e.WebhookSubscriptions)
+            .WithOne()
+            .HasForeignKey(w => w.InstitutionId);
+
+        entity.HasMany(e => e.WebhookCalls)
+            .WithOne()
+            .HasForeignKey(w => w.InstitutionId);
     }
 }

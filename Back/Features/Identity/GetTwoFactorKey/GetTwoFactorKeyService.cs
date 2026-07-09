@@ -27,7 +27,7 @@ public class GetTwoFactorKeyService(SykiDbContext ctx, UserManager<SykiUser> use
 
     private static string GenerateQrCodeBase64(string key, string email)
     {
-        const string provider = "Exato";
+        const string provider = "Estud";
 
         using var qrGenerator = new QRCodeGenerator();
         using var qrCodeData = qrGenerator.CreateQrCode(

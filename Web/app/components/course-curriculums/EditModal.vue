@@ -256,13 +256,15 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
                 :decrement="false"
                 class="text-center"
               />
-              <UButton
-                icon="i-lucide-x"
-                color="neutral"
-                variant="ghost"
-                size="xs"
-                @click="removeRow(index)"
-              />
+              <UTooltip text="Remover">
+                <UButton
+                  icon="i-lucide-x"
+                  color="neutral"
+                  variant="ghost"
+                  size="xs"
+                  @click="removeRow(index)"
+                />
+              </UTooltip>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 using System.Diagnostics;
+using Syki.Back.Domain.Commands;
 using Syki.Back.Database.Commands;
 using Syki.Back.Domain.Institutions;
-using Syki.Back.Commands.Domain.Commands;
 
 namespace Syki.Back.Database;
 

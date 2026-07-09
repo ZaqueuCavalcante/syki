@@ -12,20 +12,20 @@ do Railway. O banco é **PostgreSQL**.
 
 ```
 ┌──────────┐   HTTPS    ┌────────────┐   HTTPS   ┌──────────────────────── Railway (rede privada) ────────────────────────┐
-│  Cliente │ ─────────► │ Cloudflare │ ────────► │                                                                          │
-│ (browser)│            │  (proxy +  │           │   ┌─────────┐                                                            │
-└──────────┘            │   WAF/CDN) │           │   │  Caddy  │  :$PORT (80)  ── reverse proxy / gateway público          │
-                        └────────────┘           │   └────┬────┘                                                            │
-                                                 │        │                                                                 │
-                                                 │        ├── /api/_*  ─────────► web.railway.internal:80   (Nuxt SSR)      │
-                                                 │        ├── /api/*    (strip /api) ─► back.railway.internal:5000 (API)    │
-                                                 │        └── /*        ─────────► web.railway.internal:80   (Nuxt SSR)     │
-                                                 │                                          │                              │
-                                                 │                                          ▼                              │
-                                                 │                                   ┌─────────────┐                       │
-                                                 │                                   │ PostgreSQL  │ ◄── Back (EF + Dapper)│
-                                                 │                                   └─────────────┘                       │
-                                                 └──────────────────────────────────────────────────────────────────────┘
+│  Cliente │ ─────────► │ Cloudflare │ ────────► │                                                                        │
+│ (browser)│            │  (proxy +  │           │   ┌─────────┐                                                          │
+└──────────┘            │   WAF/CDN) │           │   │  Caddy  │  :$PORT (80)  ── reverse proxy / gateway público         │
+                        └────────────┘           │   └────┬────┘                                                          │
+                                                 │        │                                                               │
+                                                 │        ├── /api/_*  ─────────► web.railway.internal:80   (Nuxt SSR)    │
+                                                 │        ├── /api/*    (strip /api) ─► back.railway.internal:5000 (API)  │
+                                                 │        └── /*        ─────────► web.railway.internal:80   (Nuxt SSR)   │
+                                                 │                                        │                               │
+                                                 │                                        ▼                               │
+                                                 │                                 ┌─────────────┐                        │
+                                                 │                                 │ PostgreSQL  │ ◄── Back (EF + Dapper) │
+                                                 │                                 └─────────────┘                        │
+                                                 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Camadas

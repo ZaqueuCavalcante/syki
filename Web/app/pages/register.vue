@@ -48,7 +48,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             Criar conta
           </h1>
           <p class="text-muted text-sm">
-            Comece gratuitamente, sem cartão de crédito.
+            Preencha seus dados para criar sua conta.
           </p>
         </div>
       </template>

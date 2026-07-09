@@ -260,13 +260,15 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
               placeholder="Fim"
               @update:model-value="syncSchedules"
             />
-            <UButton
-              icon="i-lucide-trash-2"
-              color="neutral"
-              variant="ghost"
-              :disabled="schedules.length === 1"
-              @click="removeSchedule(index)"
-            />
+            <UTooltip text="Remover">
+              <UButton
+                icon="i-lucide-trash-2"
+                color="neutral"
+                variant="ghost"
+                :disabled="schedules.length === 1"
+                @click="removeSchedule(index)"
+              />
+            </UTooltip>
           </div>
 
           <button

@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore.Design;
 using Npgsql;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Syki.Back.Database;
 

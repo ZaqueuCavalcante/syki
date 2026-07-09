@@ -15,6 +15,7 @@ interface GetTeachersOut {
 }
 
 const UButton = resolveComponent('UButton')
+const UTooltip = resolveComponent('UTooltip')
 
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
@@ -63,27 +64,27 @@ const columns: TableColumn<TeacherItem>[] = [
   {
     id: 'actions',
     cell: ({ row }) => h('div', { class: 'flex gap-1' }, [
-      h(UButton, {
+      h(UTooltip, { text: 'Editar' }, () => h(UButton, {
         icon: 'i-lucide-pencil',
         color: 'neutral',
         variant: 'ghost',
         size: 'sm',
-        onClick: () => openEdit(row.original),
-      }),
-      h(UButton, {
+        onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openEdit(row.original) },
+      })),
+      h(UTooltip, { text: 'Campi' }, () => h(UButton, {
         icon: 'i-lucide-map-pin',
         color: 'neutral',
         variant: 'ghost',
         size: 'sm',
-        onClick: () => openCampi(row.original),
-      }),
-      h(UButton, {
+        onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openCampi(row.original) },
+      })),
+      h(UTooltip, { text: 'Disciplinas' }, () => h(UButton, {
         icon: 'i-lucide-book-open',
         color: 'neutral',
         variant: 'ghost',
         size: 'sm',
-        onClick: () => openDisciplines(row.original),
-      }),
+        onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openDisciplines(row.original) },
+      })),
     ]),
   },
 ]

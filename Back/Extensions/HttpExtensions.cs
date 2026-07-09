@@ -21,6 +21,7 @@ public static partial class HttpExtensions
                     HttpOnly = true,
                     Secure = settings.CookieSecure,
                     SameSite = settings.CookieSameSite,
+                    MaxAge = TimeSpan.FromMinutes(settings.ExpirationTimeInMinutes),
                 }
             );
         }

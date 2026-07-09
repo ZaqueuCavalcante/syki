@@ -1,5 +1,5 @@
+using Syki.Back.Domain.Commands;
 using Syki.Back.Domain.Webhooks;
-using Syki.Back.Commands.Domain.Commands;
 
 namespace Syki.Back.Database.Webhooks;
 

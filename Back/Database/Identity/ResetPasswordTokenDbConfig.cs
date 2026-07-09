@@ -1,5 +1,4 @@
 using Syki.Back.Domain.Identity;
-using Syki.Back.Domain.Institutions;
 
 namespace Syki.Back.Database.Identity;
 
@@ -16,11 +15,6 @@ public class ResetPasswordTokenDbConfig : IEntityTypeConfiguration<ResetPassword
             .WithMany()
             .HasPrincipalKey(u => u.Id)
             .HasForeignKey(e => e.UserId);
-
-        entity.HasOne<Institution>()
-            .WithMany()
-            .HasPrincipalKey(u => u.Id)
-            .HasForeignKey(e => e.InstitutionId);
 
         entity.HasIndex(e => e.Token).IsUnique();
     }

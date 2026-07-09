@@ -23,6 +23,16 @@ z.string().min(1, 'Campo obrigatório')          // não cobre undefined
 z.string({ required_error: '...' })             // API do Zod v3, não funciona no v4
 ```
 
+### Tooltip em botão que abre modal/slideover
+
+Botão com `UTooltip` que abre um modal/slideover ao clicar mantém o foco depois que o overlay fecha, deixando o tooltip preso na tela. Sempre dar `blur()` no elemento no `@click`:
+
+```vue
+<UTooltip text="Notificações">
+  <UButton @click="($event.currentTarget as HTMLElement).blur(); isOpen = true" />
+</UTooltip>
+```
+
 ## Project Overview
 
 **Syki** is an open-source academic management system (SGA) for educational institutions.

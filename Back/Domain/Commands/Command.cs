@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Syki.Back.Domain.Institutions;
 
-namespace Syki.Back.Commands.Domain.Commands;
+namespace Syki.Back.Domain.Commands;
 
 public class Command
 {

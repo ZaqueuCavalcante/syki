@@ -31,7 +31,7 @@ public class CreateWebhookSubscriptionIn : IApiDto<CreateWebhookSubscriptionIn>
             Name = "Aluno criado",
             Url = "https://webhook.site/my-webhook",
             Events = [WebhookEventType.StudentCreated],
-            CustomHeaders = new() { ["Exato-AuthToken"] = "6r4g654rs6g4we6f4qw684f68qwf4" }
+            CustomHeaders = new() { ["Estud-AuthToken"] = "6r4g654rs6g4we6f4qw684f68qwf4" }
         }),
         ("Atividade publicada",
         new CreateWebhookSubscriptionIn

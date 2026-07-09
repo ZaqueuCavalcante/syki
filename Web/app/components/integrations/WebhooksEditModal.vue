@@ -149,17 +149,19 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
               class="flex items-start gap-2"
             >
               <UFormField :name="`customHeaders.${idx}.key`" class="flex-1">
-                <UInput v-model="header.key" class="w-full" placeholder="Ex: Exato-AuthToken" />
+                <UInput v-model="header.key" class="w-full" placeholder="Ex: Estud-AuthToken" />
               </UFormField>
               <UFormField :name="`customHeaders.${idx}.value`" class="flex-1">
                 <UInput v-model="header.value" class="w-full" placeholder="Ex: 6r4g654rs6g4we6f4qw684f68qwf4" />
               </UFormField>
-              <UButton
-                icon="i-lucide-trash-2"
-                color="error"
-                variant="ghost"
-                @click="removeHeader(idx)"
-              />
+              <UTooltip text="Remover">
+                <UButton
+                  icon="i-lucide-trash-2"
+                  color="error"
+                  variant="ghost"
+                  @click="removeHeader(idx)"
+                />
+              </UTooltip>
             </div>
             <UButton
               label="Adicionar header"
@@ -173,7 +175,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         </UFormField>
 
         <UFormField label="Ativo" name="isActive">
-          <UToggle v-model="formState.isActive" />
+          <USwitch v-model="formState.isActive" />
         </UFormField>
 
         <div class="flex justify-end gap-2 pt-2">

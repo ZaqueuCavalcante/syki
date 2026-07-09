@@ -1,4 +1,4 @@
-using Syki.Back.Commands.Domain.Commands;
+using Syki.Back.Domain.Commands;
 
 namespace Syki.Back.Domain.Webhooks;
 

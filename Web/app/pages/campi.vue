@@ -91,7 +91,9 @@ function fillRateBadgeColor(rate: number): 'error' | 'warning' | 'success' {
                 </div>
               </div>
               <div class="flex items-center gap-1.5 shrink-0">
-                <UButton icon="i-lucide-pencil" color="neutral" variant="ghost" size="xs" @click="openEdit(campus)" />
+                <UTooltip text="Editar">
+                  <UButton icon="i-lucide-pencil" color="neutral" variant="ghost" size="xs" @click="($event.currentTarget as HTMLElement).blur(); openEdit(campus)" />
+                </UTooltip>
               </div>
             </div>
 

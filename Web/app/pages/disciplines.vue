@@ -18,6 +18,7 @@ interface GetDisciplinesOut {
 }
 
 const UButton = resolveComponent('UButton')
+const UTooltip = resolveComponent('UTooltip')
 
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
@@ -60,20 +61,20 @@ const columns: TableColumn<DisciplineItem>[] = [
   {
     id: 'actions',
     cell: ({ row }) => h('div', { class: 'flex gap-1' }, [
-        h(UButton, {
-          icon: 'i-lucide-pencil',
-          color: 'neutral',
-          variant: 'ghost',
-          size: 'sm',
-          onClick: () => openEdit(row.original),
-        }),
-      h(UButton, {
+      h(UTooltip, { text: 'Editar' }, () => h(UButton, {
+        icon: 'i-lucide-pencil',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openEdit(row.original) },
+      })),
+      h(UTooltip, { text: 'Cursos' }, () => h(UButton, {
         icon: 'i-lucide-notebook',
         color: 'neutral',
         variant: 'ghost',
         size: 'sm',
-        onClick: () => openCourses(row.original),
-      }),
+        onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openCourses(row.original) },
+      })),
     ]),
   },
 ]

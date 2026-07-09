@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using Syki.Back.Commands.Domain.Commands;
+using Syki.Back.Domain.Commands;
 
 namespace Syki.Back.Features.Adm.ReprocessCommand;
 

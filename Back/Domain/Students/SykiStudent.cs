@@ -28,6 +28,6 @@ public class SykiStudent
         Name = name;
         InstitutionId = institutionId;
         Status = StudentStatus.Enrolled;
-        EnrollmentCode = $"{DateTime.UtcNow.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
+        EnrollmentCode = $"{DateTime.Now.Year}{Guid.NewGuid().ToString()[..8].ToUpper()}";
     }
 }

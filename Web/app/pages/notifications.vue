@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { formatTimeAgo } from '@vueuse/core'
-
 interface NotificationItem {
   id: number
   title: string
   description: string
   createdAt: string
+  recipients: number
+  viewed: number
+  viewRate: number
 }
 
 interface GetInstitutionNotificationsOut {
@@ -17,6 +18,28 @@ interface GetInstitutionNotificationsOut {
 
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
+
+function formatDateTime(value: string) {
+  return new Date(value).toLocaleString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
+function viewRateColor(rate: number): string {
+  if (rate < 50) return 'var(--ui-error)'
+  if (rate < 80) return 'var(--ui-warning)'
+  return 'var(--ui-success)'
+}
+
+function viewRateBadgeColor(rate: number): 'error' | 'warning' | 'success' {
+  if (rate < 50) return 'error'
+  if (rate < 80) return 'warning'
+  return 'success'
+}
 
 const { data, status, refresh } = await useFetch<GetInstitutionNotificationsOut>(
   `${config.public.backendUrl}/notifications/institution`,
@@ -60,25 +83,38 @@ const { data, status, refresh } = await useFetch<GetInstitutionNotificationsOut>
           <div
             v-for="notification in data.items"
             :key="notification.id"
-            class="rounded-xl border border-default bg-elevated flex flex-col overflow-hidden hover:shadow-md transition-shadow duration-200"
+            class="group relative rounded-xl border border-default bg-elevated/50 p-4 flex flex-col gap-3 hover:border-primary/50 hover:bg-elevated transition-colors duration-200"
           >
-            <div class="px-4 pt-3 pb-3 flex items-start justify-between gap-2">
-              <p class="flex-1 min-w-0 font-bold text-base text-highlighted truncate">
+            <div class="flex items-start justify-between gap-2">
+              <p class="flex-1 min-w-0 font-semibold text-sm text-highlighted truncate">
                 {{ notification.title }}
               </p>
               <time
                 :datetime="notification.createdAt"
                 class="shrink-0 text-xs text-muted whitespace-nowrap"
               >
-                {{ formatTimeAgo(new Date(notification.createdAt)) }}
+                {{ formatDateTime(notification.createdAt) }}
               </time>
             </div>
 
-            <div class="border-t border-default mx-4" />
-
-            <p class="px-4 py-3 text-sm text-muted line-clamp-3">
+            <p class="text-sm text-muted line-clamp-3">
               {{ notification.description }}
             </p>
+
+            <div class="mt-auto pt-1">
+              <div class="h-1.5 w-full rounded-full bg-accented overflow-hidden">
+                <div
+                  class="h-full rounded-full"
+                  :style="{ width: `${notification.viewRate}%`, backgroundColor: viewRateColor(notification.viewRate) }"
+                />
+              </div>
+              <div class="flex items-center justify-between mt-1">
+                <p class="text-xs text-muted">
+                  {{ notification.viewed }} de {{ notification.recipients }} visualizaram
+                </p>
+                <UBadge :color="viewRateBadgeColor(notification.viewRate)" variant="subtle" size="sm" :label="`${notification.viewRate}%`" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

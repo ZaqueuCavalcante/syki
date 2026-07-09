@@ -49,13 +49,15 @@ function onSubmit() {
   <UDashboardPanel id="inbox-2">
     <UDashboardNavbar :title="mail.subject" :toggle="false">
       <template #leading>
-        <UButton
-          icon="i-lucide-x"
-          color="neutral"
-          variant="ghost"
-          class="-ms-1.5"
-          @click="emits('close')"
-        />
+        <UTooltip text="Fechar">
+          <UButton
+            icon="i-lucide-x"
+            color="neutral"
+            variant="ghost"
+            class="-ms-1.5"
+            @click="emits('close')"
+          />
+        </UTooltip>
       </template>
 
       <template #right>

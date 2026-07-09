@@ -1,5 +1,19 @@
 namespace Estud.Back.Errors;
 
+public class ClassNotFound : EstudError
+{
+    public static readonly ClassNotFound I = new();
+    public override string Code { get; set; } = nameof(ClassNotFound);
+    public override string Message { get; set; } = "Turma não encontrada.";
+}
+
+public class ClassMustBeOnPreEnrollment : EstudError
+{
+    public static readonly ClassMustBeOnPreEnrollment I = new();
+    public override string Code { get; set; } = nameof(ClassMustBeOnPreEnrollment);
+    public override string Message { get; set; } = "A turma deve estar em pré-matrícula.";
+}
+
 public class InvalidDay : EstudError
 {
     public static readonly InvalidDay I = new();

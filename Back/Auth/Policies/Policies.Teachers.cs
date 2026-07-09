@@ -13,6 +13,8 @@ public static partial class Policies
     public const string AssignCampiToTeacher = nameof(AssignCampiToTeacher);
     public const string AssignDisciplinesToTeacher = nameof(AssignDisciplinesToTeacher);
 
+    public const string GetTeacherAgenda = nameof(GetTeacherAgenda);
+
     public static AuthorizationBuilder AddTeachersPolicies(this AuthorizationBuilder builder)
     {
         builder
@@ -24,6 +26,9 @@ public static partial class Policies
             .AddEstudPolicy(GetTeacherPotentialDisciplines, UserType.Manager, EstudPermissions.ManageTeachers)
             .AddEstudPolicy(AssignCampiToTeacher, UserType.Manager, EstudPermissions.ManageTeachers)
             .AddEstudPolicy(AssignDisciplinesToTeacher, UserType.Manager, EstudPermissions.ManageTeachers);
+
+        builder
+            .AddEstudPolicy(GetTeacherAgenda, UserType.Teacher);
 
         return builder;
     }

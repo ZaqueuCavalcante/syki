@@ -103,7 +103,7 @@ const columns: TableColumn<TeacherItem>[] = [
 
     <template #body>
       <div v-if="data?.items?.length" class="flex justify-end pt-4">
-        <UButton icon="i-lucide-plus" label="Professor" @click="createModalOpen = true" />
+        <UButton icon="i-lucide-plus" label="Professor" @click="() => { createModalOpen = true }" />
       </div>
       <DataTable :data="data?.items ?? []" :columns="columns" :loading="status === 'pending'">
         <template #empty>

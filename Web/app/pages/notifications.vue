@@ -71,12 +71,12 @@ const { data, status, refresh } = await useFetch<GetInstitutionNotificationsOut>
       >
         <UIcon name="i-lucide-bell-off" class="size-8 text-muted" />
         <p class="text-sm text-muted">Nenhuma notificação cadastrada</p>
-        <UButton icon="i-lucide-plus" label="Notificação" @click="createModalOpen = true" />
+        <UButton icon="i-lucide-plus" label="Notificação" @click="() => { createModalOpen = true }" />
       </div>
 
       <div v-else class="space-y-4">
         <div class="flex justify-end">
-          <UButton icon="i-lucide-plus" label="Notificação" class="shrink-0" @click="createModalOpen = true" />
+          <UButton icon="i-lucide-plus" label="Notificação" class="shrink-0" @click="() => { createModalOpen = true }" />
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

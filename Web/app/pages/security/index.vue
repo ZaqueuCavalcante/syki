@@ -60,7 +60,7 @@ const columns: TableColumn<RoleItem>[] = [
 <template>
   <div>
     <div class="flex justify-end mb-4">
-      <UButton icon="i-lucide-plus" label="Perfil" @click="createModalOpen = true" />
+      <UButton icon="i-lucide-plus" label="Perfil" @click="() => { createModalOpen = true }" />
     </div>
 
     <DataTable :data="data?.items ?? []" :columns="columns" :loading="status === 'pending'">

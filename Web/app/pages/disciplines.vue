@@ -118,7 +118,7 @@ const columns: TableColumn<DisciplineItem>[] = [
           v-if="data?.items?.length || filter"
           icon="i-lucide-plus"
           label="Disciplina"
-          @click="createModalOpen = true"
+          @click="() => { createModalOpen = true }"
         />
       </div>
       <DataTable :data="data?.items ?? []" :columns="columns" :loading="status === 'pending'">

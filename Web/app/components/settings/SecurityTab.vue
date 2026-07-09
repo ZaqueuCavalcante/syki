@@ -149,7 +149,7 @@ function copyKey() {
             color="neutral"
             variant="subtle"
             :disabled="isSettingUp"
-            @click="isModalOpen = false"
+            @click="() => { isModalOpen = false }"
           />
           <UButton label="Ativar 2FA" :loading="isSettingUp" @click="onSetup" />
         </div>

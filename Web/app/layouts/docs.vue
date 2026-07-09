@@ -40,7 +40,7 @@ watch(() => route.path, () => {
           variant="ghost"
           size="sm"
           class="lg:hidden"
-          @click="mobileNavOpen = true"
+          @click="() => { mobileNavOpen = true }"
         />
       </template>
     </UHeader>
@@ -76,7 +76,7 @@ watch(() => route.path, () => {
                 color="neutral"
                 variant="ghost"
                 size="sm"
-                @click="mobileNavOpen = false"
+                @click="() => { mobileNavOpen = false }"
               />
             </UTooltip>
           </div>

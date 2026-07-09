@@ -72,7 +72,7 @@ function fillRateBadgeColor(rate: number): 'error' | 'warning' | 'success' {
           <div>
             <p class="text-sm text-muted mt-0.5">Visualize e gerencie os campus da sua instituição.</p>
           </div>
-          <UButton icon="i-lucide-plus" label="Campus" class="shrink-0" @click="createModalOpen = true" />
+          <UButton icon="i-lucide-plus" label="Campus" class="shrink-0" @click="() => { createModalOpen = true }" />
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

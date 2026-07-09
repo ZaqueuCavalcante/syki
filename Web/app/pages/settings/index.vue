@@ -61,7 +61,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             color="neutral"
             variant="ghost"
             aria-label="Editar nome"
-            @click="editNameOpen = true"
+            @click="() => { editNameOpen = true }"
           />
         </div>
       </div>
@@ -120,7 +120,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             color="neutral"
             variant="subtle"
             :disabled="loading"
-            @click="editNameOpen = false"
+            @click="() => { editNameOpen = false }"
           />
           <UButton
             label="Salvar"

@@ -7,21 +7,22 @@ public class GetTwoFactorKeyService(EstudDbContext ctx, UserManager<EstudUser> u
 {
     public async Task<GetTwoFactorKeyOut> Get()
     {
-        var webUser = await userManager.Users.FirstAsync(u => u.Id == ctx.RequestUser.Id);
-
-        var key = await userManager.GetAuthenticatorKeyAsync(webUser);
+        var userId = ctx.RequestUser.Id;
+        var key = await ctx.GetUserTwoFactorKeyAsync(userId);
+        var user = await ctx.Users.Where(u => u.Id == userId).Select(x => new { x.Email, x.TwoFactorEnabled }).FirstOrDefaultAsync();
 
         if (key == null)
         {
-            await userManager.ResetAuthenticatorKeyAsync(webUser);
-            key = await userManager.GetAuthenticatorKeyAsync(webUser);
+            var estudUser = await userManager.Users.FirstAsync(u => u.Id == ctx.RequestUser.Id);
+            await userManager.ResetAuthenticatorKeyAsync(estudUser);
+            key = await userManager.GetAuthenticatorKeyAsync(estudUser);
         }
 
         return new()
         {
             Key = key!,
-            TwoFactorEnabled = webUser.TwoFactorEnabled,
-            QrCodeBase64 = GenerateQrCodeBase64(key, webUser.Email)
+            TwoFactorEnabled = user.TwoFactorEnabled,
+            QrCodeBase64 = GenerateQrCodeBase64(key, user.Email)
         };
     }
 

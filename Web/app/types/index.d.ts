@@ -1,5 +1,7 @@
 import type { AvatarProps } from '@nuxt/ui'
 
+export * from './identity'
+
 export type UserStatus = 'subscribed' | 'unsubscribed' | 'bounced'
 export type SaleStatus = 'paid' | 'failed' | 'refunded'
 

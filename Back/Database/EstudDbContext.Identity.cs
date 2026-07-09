@@ -131,4 +131,11 @@ public partial class EstudDbContext
         var domain = email.Split('@').Last().ToLowerInvariant();
         return await Database.GetDbConnection().QuerySingleAsync<bool>(sql, new { domain });
     }
+
+    public async Task<string?> GetUserTwoFactorKeyAsync(int userId)
+    {
+        return await UserTokens.Where(x => x.UserId == userId && x.LoginProvider == "[AspNetUserStore]" && x.Name == "AuthenticatorKey")
+            .Select(x => x.Value)
+            .FirstOrDefaultAsync();
+    }
 }

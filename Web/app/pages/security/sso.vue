@@ -35,14 +35,14 @@ const providerLabels: Record<string, string> = {
           color="neutral"
           variant="subtle"
           class="w-fit lg:ms-auto"
-          @click="editModalOpen = true"
+          @click="() => { editModalOpen = true }"
         />
       </UPageCard>
 
       <UPageCard variant="subtle">
         <div class="flex flex-col gap-1 sm:flex-row sm:justify-between sm:items-center sm:gap-3 py-1">
           <span class="text-sm font-medium shrink-0">Provedor</span>
-          <span class="text-sm text-muted break-words sm:text-right">{{ providerLabels[ssoConfig.providerType] }}</span>
+          <span class="text-sm text-muted wrap-break-word sm:text-right">{{ providerLabels[ssoConfig.providerType] }}</span>
         </div>
         <USeparator />
         <div class="flex flex-col gap-1 sm:flex-row sm:justify-between sm:items-center sm:gap-3 py-1">

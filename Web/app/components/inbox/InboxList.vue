@@ -57,7 +57,7 @@ defineShortcuts({
             ? 'border-primary bg-primary/10'
             : 'border-bg hover:border-primary hover:bg-primary/5'
         ]"
-        @click="selectedMail = mail"
+        @click="() => { selectedMail = mail }"
       >
         <div class="flex items-center justify-between" :class="[mail.unread && 'font-semibold']">
           <div class="flex items-center gap-3">

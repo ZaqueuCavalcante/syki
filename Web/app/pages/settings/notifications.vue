@@ -1,10 +1,7 @@
 <script setup lang="ts">
 const state = reactive<{ [key: string]: boolean }>({
   email: true,
-  desktop: false,
-  product_updates: true,
-  weekly_digest: false,
-  important_updates: true
+  desktop: false
 })
 
 const sections = [{
@@ -18,22 +15,6 @@ const sections = [{
     name: 'desktop',
     label: 'Desktop',
     description: 'Receive desktop notifications.'
-  }]
-}, {
-  title: 'Account updates',
-  description: 'Receive updates about Nuxt UI.',
-  fields: [{
-    name: 'weekly_digest',
-    label: 'Weekly digest',
-    description: 'Receive a weekly digest of news.'
-  }, {
-    name: 'product_updates',
-    label: 'Product updates',
-    description: 'Receive a monthly email with all new features and updates.'
-  }, {
-    name: 'important_updates',
-    label: 'Important updates',
-    description: 'Receive emails about important updates like security fixes, maintenance, etc.'
   }]
 }]
 

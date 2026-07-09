@@ -129,7 +129,7 @@ watch(open, (val) => {
         </div>
 
         <div v-if="loadingTeacher" class="flex justify-center py-8">
-          <UIcon name="i-lucide-loader-circle" class="size-6 animate-spin text-muted" />
+          <UIcon name="i-lucide-loader" class="size-6 animate-spin text-muted" />
         </div>
 
         <div v-else-if="!teacher?.campi.length" class="flex flex-col items-center gap-3 py-8 text-muted">

@@ -106,7 +106,7 @@ function goBack() {
         <UCard>
           <Transition name="setup-transition" mode="out-in">
             <div v-if="setupSuccess" key="success" class="flex flex-col items-center justify-center py-12 gap-4">
-              <UIcon name="i-lucide-loader-circle" class="text-primary size-10 animate-spin" />
+              <UIcon name="i-lucide-loader" class="text-primary size-10 animate-spin" />
               <p class="text-lg font-medium text-gray-900 dark:text-white">
                 Redirecionando...
               </p>

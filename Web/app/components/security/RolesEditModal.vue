@@ -135,7 +135,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   >
     <template #body>
       <div v-if="fetching" class="flex justify-center py-8">
-        <UIcon name="i-lucide-loader-circle" class="animate-spin text-2xl" />
+        <UIcon name="i-lucide-loader" class="animate-spin text-2xl" />
       </div>
 
       <UForm

@@ -54,7 +54,7 @@ async function markAll() {
 
     <template #body>
       <div v-if="loading" class="flex items-center justify-center py-12">
-        <UIcon name="i-lucide-loader-circle" class="size-6 animate-spin text-muted" />
+        <UIcon name="i-lucide-loader" class="size-6 animate-spin text-muted" />
       </div>
 
       <div

@@ -4,13 +4,13 @@ public class GetStudentFrequenciesOut
 {
     public string Name { get; set; }
     public string Period { get; set; }
-    public StudentDisciplineStatus Status { get; set; }
+    public StudentClassStatus Status { get; set; }
     public int Lessons { get; set; }
     public int Presences { get; set; }
 
     public GetStudentFrequenciesOut() {}
 
-    public GetStudentFrequenciesOut(string name, string period, int lessons, int presences, StudentDisciplineStatus status)
+    public GetStudentFrequenciesOut(string name, string period, int lessons, int presences, StudentClassStatus status)
     {
         Name = name;
         Period = period;

@@ -124,7 +124,7 @@ public class EnumExtensionsUnitTests
         foreach (var (value, isIn) in new List<(Enum, bool)>()
         {
             (CourseType.Bacharelado, true),
-            (StudentDisciplineStatus.Matriculado, false),
+            (StudentClassStatus.Matriculado, false),
             (CourseType.Tecnologo, true),
             (CourseSession.Afternoon, false),
         })
@@ -142,7 +142,7 @@ public class EnumExtensionsUnitTests
             (UserRole)69,
             (CourseType)69,
             (ClassStatus)69,
-            (StudentDisciplineStatus)(-69),
+            (StudentClassStatus)(-69),
         })
         {
             yield return [value];

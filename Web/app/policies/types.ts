@@ -115,6 +115,9 @@ export type PolicyName
   // Periods
     | 'AccessPeriodsPage'
     | 'CreateAcademicPeriod'
+  // Enrollments
+    | 'AccessEnrollmentsPage'
+    | 'CreateEnrollmentPeriod'
   // CourseOfferings
     | 'AccessCourseOfferingsPage'
     | 'CreateCourseOffering'

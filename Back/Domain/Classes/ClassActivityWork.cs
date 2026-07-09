@@ -1,16 +1,16 @@
-using Estud.Back.Features.Academic.CreateStudent;
+using Estud.Back.Domain.Students;
 
-namespace Estud.Back.Features.Student.CreateClassActivityWork;
+namespace Estud.Back.Domain.Classes;
 
 /// <summary>
 /// Entrega de uma atividade feita por um aluno
 /// </summary>
 public class ClassActivityWork
 {
-    public Guid Id { get; set; }
-    public Guid ClassActivityId { get; set; }
-    public Guid EstudStudentId { get; set; }
-    public EstudStudent EstudStudent { get; set; }
+    public int Id { get; set; }
+    public int ClassActivityId { get; set; }
+    public int StudentId { get; set; }
+    public EstudStudent Student { get; set; }
     public string? Link { get; set; }
     public decimal Note { get; set; }
     public ClassActivityWorkStatus Status { get; set; }
@@ -18,12 +18,11 @@ public class ClassActivityWork
     private ClassActivityWork() { }
 
     public ClassActivityWork(
-        Guid classActivityId,
-        Guid studentId
+        int classActivityId,
+        int studentId
     ) {
-        Id = Guid.CreateVersion7();
         ClassActivityId = classActivityId;
-        EstudStudentId = studentId;
+        StudentId = studentId;
         Note = 0;
         Status = ClassActivityWorkStatus.Pending;
     }
@@ -42,18 +41,5 @@ public class ClassActivityWork
         Status = ClassActivityWorkStatus.Finalized;
 
         return new EstudSuccess();
-    }
-
-    public ClassActivityWorkOut ToOut()
-    {
-        return new()
-        {
-            Id = Id,
-            StudentId = EstudStudentId,
-            StudentName = EstudStudent != null ? EstudStudent.Name : "",
-            Status = Status,
-            Note = Note,
-            Link = Link,
-        };
     }
 }

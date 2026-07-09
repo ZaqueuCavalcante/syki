@@ -15,6 +15,9 @@ public partial class EstudDbContext
         modelBuilder.ApplyConfiguration(new ClassDbConfig());
         modelBuilder.ApplyConfiguration(new ScheduleDbConfig());
         modelBuilder.ApplyConfiguration(new ClassLessonDbConfig());
+        modelBuilder.ApplyConfiguration(new ClassStudentDbConfig());
+        modelBuilder.ApplyConfiguration(new ClassActivityDbConfig());
+        modelBuilder.ApplyConfiguration(new ClassActivityWorkDbConfig());
         modelBuilder.ApplyConfiguration(new ClassLessonAttendanceDbConfig());
     }
 }

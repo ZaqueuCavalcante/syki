@@ -134,6 +134,22 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
     ],
   },
 
+  // Enrollments
+  AccessEnrollmentsPage: {
+    description: "Acessar a página de matrículas",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManagePeriods),
+    ],
+  },
+  CreateEnrollmentPeriod: {
+    description: "Criar novos períodos de matrícula",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManagePeriods),
+    ],
+  },
+
   // CourseOfferings
   AccessCourseOfferingsPage: {
     description: "Acessar a página de ofertas de curso",

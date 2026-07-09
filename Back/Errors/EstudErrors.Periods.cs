@@ -48,3 +48,10 @@ public class AcademicPeriodAlreadyExists : EstudError
     public override string Code { get; set; } = nameof(AcademicPeriodAlreadyExists);
     public override string Message { get; set; } = "Já existe um período acadêmico com esse id.";
 }
+
+public class EnrollmentPeriodAlreadyExists : EstudError
+{
+    public static readonly EnrollmentPeriodAlreadyExists I = new();
+    public override string Code { get; set; } = nameof(EnrollmentPeriodAlreadyExists);
+    public override string Message { get; set; } = "Já existe um período de matrícula com esse nome.";
+}

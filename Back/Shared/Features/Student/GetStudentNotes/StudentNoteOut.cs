@@ -5,7 +5,7 @@ public class StudentNoteOut
     public Guid ClassId { get; set; }
     public byte Period { get; set; }
     public string Discipline { get; set; }
-    public StudentDisciplineStatus StudentDisciplineStatus { get; set; }
+    public StudentClassStatus StudentDisciplineStatus { get; set; }
     public decimal AverageNote { get; set; }
     public List<StudentClassNoteOut> Notes { get; set; }
 

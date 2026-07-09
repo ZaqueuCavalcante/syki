@@ -1,9 +1,9 @@
 namespace Estud.Back.Shared;
 
 /// <summary>
-/// Status do Aluno em uma Disciplina
+/// Status do Aluno em uma Turma
 /// </summary>
-public enum StudentDisciplineStatus
+public enum StudentClassStatus
 {
     [Description("Pendente")]
     Pendente,

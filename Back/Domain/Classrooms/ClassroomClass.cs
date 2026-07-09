@@ -1,19 +1,19 @@
-namespace Estud.Back.Features.Academic.AssignClassToClassroom;
+namespace Estud.Back.Domain.Classrooms;
 
 /// <summary>
 /// Vínculo entre Sala de Aula e Turma
 /// </summary>
 public class ClassroomClass
 {
-    public Guid ClassroomId { get; set; }
-    public Guid ClassId { get; set; }
+    public int ClassroomId { get; set; }
+    public int ClassId { get; set; }
     public bool IsActive { get; set; }
 
     private ClassroomClass() {}
 
     public ClassroomClass(
-        Guid classroomId,
-        Guid classId
+        int classroomId,
+        int classId
     ) {
         ClassroomId = classroomId;
         ClassId = classId;

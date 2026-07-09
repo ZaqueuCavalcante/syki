@@ -27,3 +27,17 @@ public class ConflictingSchedules : EstudError
     public override string Code { get; set; } = nameof(ConflictingSchedules);
     public override string Message { get; set; } = "Horários conflitantes.";
 }
+
+public class InvalidClassActivityWeight : EstudError
+{
+    public static readonly InvalidClassActivityWeight I = new();
+    public override string Code { get; set; } = nameof(InvalidClassActivityWeight);
+    public override string Message { get; set; } = "Peso da atividade inválido.";
+}
+
+public class InvalidStudentClassNote : EstudError
+{
+    public static readonly InvalidStudentClassNote I = new();
+    public override string Code { get; set; } = nameof(InvalidStudentClassNote);
+    public override string Message { get; set; } = "Nota da atividade inválida.";
+}

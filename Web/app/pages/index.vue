@@ -51,7 +51,7 @@ const features = [
 
 <template>
   <div v-if="checking" class="min-h-screen flex items-center justify-center">
-    <UIcon name="i-lucide-loader" class="size-10 animate-spin text-muted" />
+    <AppSpinner class="size-10 text-muted" />
   </div>
 
   <NuxtLayout v-else name="landing">

@@ -13,8 +13,7 @@ public class GetCoursePotentialDisciplinesService(SykiDbContext ctx) : ISykiServ
         var query = ctx.Disciplines.AsNoTracking()
             .Where(d => d.InstitutionId == ctx.RequestUser.InstitutionId && !linkedDisciplineIds.Contains(d.Id));
 
-        if (!string.IsNullOrWhiteSpace(name))
-            query = query.Where(d => d.Name.ToLower().Contains(name.ToLower()));
+        if (name.HasValue()) query = query.Where(d => d.Name.ToLower().Contains(name.ToLower()));
 
         var items = await query
             .OrderBy(d => d.Name)

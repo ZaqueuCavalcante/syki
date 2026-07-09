@@ -45,6 +45,7 @@ const groups = computed(() => [{
     <UDashboardSidebar
       id="default"
       v-model:open="open"
+      toggle-side="right"
       collapsible
       resizable
       class="bg-elevated/25"

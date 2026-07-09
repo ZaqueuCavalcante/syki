@@ -18,6 +18,11 @@ public static class StringExtensions
         return string.IsNullOrEmpty(text) || string.IsNullOrWhiteSpace(text);
     }
 
+    public static bool HasValue(this string? text)
+    {
+        return !string.IsNullOrEmpty(text);
+    }
+
     public static bool IsIn(this string? text, params string[] others)
     {
         if (text.IsEmpty())
@@ -30,11 +35,6 @@ public static class StringExtensions
         }
 
         return false;
-    }
-
-    public static bool HasValue(this string? text)
-    {
-        return !string.IsNullOrEmpty(text);
     }
 
     public static bool HasValue(this StringValues text)

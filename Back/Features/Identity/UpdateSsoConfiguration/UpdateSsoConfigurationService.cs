@@ -29,7 +29,7 @@ public class UpdateSsoConfigurationService(SykiDbContext ctx, SsoEncryptionManag
 
         if (config == null) return SsoConfigurationNotFound.I;
 
-        var clientSecret = string.IsNullOrEmpty(data.ClientSecret)
+        var clientSecret = data.ClientSecret.IsEmpty()
             ? config.ClientSecret
             : encryption.Encrypt(data.ClientSecret);
 

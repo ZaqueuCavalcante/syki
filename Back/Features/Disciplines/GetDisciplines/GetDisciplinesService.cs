@@ -2,10 +2,18 @@ namespace Syki.Back.Features.Disciplines.GetDisciplines;
 
 public class GetDisciplinesService(SykiDbContext ctx) : ISykiService
 {
-    public async Task<GetDisciplinesOut> Get()
+    public async Task<GetDisciplinesOut> Get(GetDisciplinesIn query)
     {
-        var disciplines = await ctx.Disciplines.AsNoTracking()
-            .Where(d => d.InstitutionId == ctx.RequestUser.InstitutionId)
+        var disciplinesQuery = ctx.Disciplines.AsNoTracking()
+            .Where(d => d.InstitutionId == ctx.RequestUser.InstitutionId);
+
+        var filter = query?.Filter;
+        if (filter.HasValue())
+            disciplinesQuery = disciplinesQuery.Where(d => 
+                d.Name.ToLower().Contains(filter.ToLower()) ||
+                d.Code.ToLower().Contains(filter.ToLower()));
+
+        var disciplines = await disciplinesQuery
             .OrderBy(d => d.Name)
             .ToListAsync();
 

@@ -13,8 +13,7 @@ public class GetTeacherPotentialCampiService(SykiDbContext ctx) : ISykiService
         var query = ctx.Campi.AsNoTracking()
             .Where(c => c.InstitutionId == ctx.RequestUser.InstitutionId && !assignedCampusIds.Contains(c.Id));
 
-        if (!string.IsNullOrWhiteSpace(name))
-            query = query.Where(c => c.Name.ToLower().Contains(name.ToLower()));
+        if (name.HasValue()) query = query.Where(c => c.Name.ToLower().Contains(name.ToLower()));
 
         var items = await query
             .OrderBy(c => c.Name)

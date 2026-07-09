@@ -106,14 +106,14 @@ function goBack() {
         <UCard>
           <Transition name="setup-transition" mode="out-in">
             <div v-if="setupSuccess" key="success" class="flex flex-col items-center justify-center py-12 gap-4">
-              <UIcon name="i-lucide-loader" class="text-primary size-10 animate-spin" />
+              <AppSpinner class="text-primary size-10" />
               <p class="text-lg font-medium text-gray-900 dark:text-white">
                 Redirecionando...
               </p>
             </div>
 
             <div v-else-if="isLoading" key="loading" class="flex items-center justify-center py-12">
-              <UIcon name="i-lucide-loader-2" class="animate-spin text-2xl" />
+              <AppSpinner class="size-6" />
             </div>
 
             <div v-else key="setup" class="flex flex-col gap-6">

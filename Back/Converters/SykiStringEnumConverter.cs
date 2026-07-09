@@ -34,7 +34,7 @@ public sealed class SykiStringEnumConverter : JsonConverterFactory
             if (reader.TokenType == JsonTokenType.String)
             {
                 var s = reader.GetString();
-                if (!string.IsNullOrWhiteSpace(s) &&
+                if (s.HasValue() &&
                     Enum.TryParse<TEnum>(s, ignoreCase: true, out var parsed) &&
                     Enum.IsDefined(parsed))
                     return parsed;

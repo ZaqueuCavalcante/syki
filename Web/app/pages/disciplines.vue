@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
+import { refDebounced } from '@vueuse/core'
 
 interface DisciplineItem {
   id: number
@@ -36,9 +37,13 @@ function openCourses(discipline: DisciplineItem) {
   coursesModalOpen.value = true
 }
 
+const filter = ref('')
+const debouncedFilter = refDebounced(filter, 300)
+
 const { data, status, refresh } = await useFetch<GetDisciplinesOut>(`${config.public.backendUrl}/disciplines`, {
   credentials: 'include',
-  server: false
+  server: false,
+  query: { filter: debouncedFilter }
 })
 
 const columns: TableColumn<DisciplineItem>[] = [
@@ -87,13 +92,24 @@ const columns: TableColumn<DisciplineItem>[] = [
         <template #leading>
           <UDashboardSidebarCollapse />
         </template>
-
       </UDashboardNavbar>
     </template>
 
     <template #body>
-      <div v-if="data?.items?.length" class="flex justify-end pt-4">
-        <UButton icon="i-lucide-plus" label="Disciplina" @click="createModalOpen = true" />
+      <div class="flex items-center justify-between gap-2 pt-4">
+        <UInput
+          v-model="filter"
+          class="max-w-sm"
+          icon="i-lucide-search"
+          placeholder="Buscar por nome ou código..."
+          :loading="status === 'pending'"
+        />
+        <UButton
+          v-if="data?.items?.length || filter"
+          icon="i-lucide-plus"
+          label="Disciplina"
+          @click="createModalOpen = true"
+        />
       </div>
       <DataTable :data="data?.items ?? []" :columns="columns" :loading="status === 'pending'">
         <template #empty>

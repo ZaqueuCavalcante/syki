@@ -70,7 +70,7 @@ function copyKey() {
 
     <UPageCard variant="subtle">
     <div v-if="isLoading" class="flex items-center justify-center py-8">
-      <UIcon name="i-lucide-loader-2" class="animate-spin text-2xl" />
+      <AppSpinner class="size-6" />
     </div>
 
     <div v-else class="flex flex-col gap-4">

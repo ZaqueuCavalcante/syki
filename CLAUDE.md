@@ -6,6 +6,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **Never run `dotnet build`** — the user builds itself.
 
+## Backend conventions
+
+### Checagem de strings — usar `HasValue()` / `IsEmpty()`
+
+Em `if`s que checam strings, **sempre** usar as extensions `HasValue()` e `IsEmpty()` (definidas em `Back/Shared/Extensions/StringExtensions.cs`). **Nunca** usar `string.IsNullOrEmpty`, `string.IsNullOrWhiteSpace` nem suas negações.
+
+**Correto:**
+```csharp
+if (name.HasValue()) { ... }
+if (name.IsEmpty()) { ... }
+```
+
+**Errado:**
+```csharp
+if (!string.IsNullOrEmpty(name)) { ... }
+if (string.IsNullOrWhiteSpace(name)) { ... }
+```
+
 ## Frontend conventions
 
 ### Zod validation — campos opcionais/undefined

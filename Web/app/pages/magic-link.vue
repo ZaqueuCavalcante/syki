@@ -35,7 +35,7 @@ onMounted(async () => {
   <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4">
     <UCard class="w-full max-w-sm text-center">
       <div v-if="!error" class="py-6 space-y-4">
-        <UIcon name="i-lucide-loader" class="size-10 text-primary mx-auto animate-spin" />
+        <AppSpinner class="size-10 text-primary mx-auto" />
         <p class="text-muted text-sm">
           Autenticando, aguarde...
         </p>

@@ -57,5 +57,23 @@ public partial class IntegrationTests
         disciplines.Items.Last().Name.Should().Be("Química I");
     }
 
+    [Test]
+    public async Task Disciplines_GetDisciplines_Should_get_disciplines_filtered_by_text()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+
+        await client.CreateDiscipline("Química I");
+        await client.CreateDiscipline("Física I");
+
+        // Act
+        var result = await client.GetDisciplines("quím");
+
+        // Assert
+        var disciplines = result.Success;
+        disciplines.Total.Should().Be(1);
+        disciplines.Items.Single().Name.Should().Be("Química I");
+    }
+
     #endregion
 }

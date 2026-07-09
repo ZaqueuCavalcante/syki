@@ -179,7 +179,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           </div>
 
           <div v-if="loadingDisciplines" class="flex justify-center py-6">
-            <UIcon name="i-lucide-loader" class="size-5 animate-spin text-muted" />
+            <AppSpinner class="size-5 text-muted" />
           </div>
 
           <template v-else>

@@ -92,7 +92,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         v-if="oneTapLoading"
         class="fixed inset-0 z-[9999] flex flex-col items-center justify-center gap-4 bg-white dark:bg-gray-900"
       >
-        <UIcon name="i-lucide-loader-2" class="size-10 animate-spin text-primary" />
+        <AppSpinner class="size-10 text-primary" />
         <p class="text-sm text-gray-600 dark:text-gray-400">
           Entrando com Google...
         </p>

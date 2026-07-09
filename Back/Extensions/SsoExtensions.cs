@@ -44,8 +44,7 @@ public static partial class SsoExtensions
 
         public string? NormalizeSsoDomain()
         {
-            if (string.IsNullOrWhiteSpace(value))
-                return null;
+            if (value.IsEmpty()) return null;
 
             var normalized = value.Trim().ToLowerInvariant();
 

@@ -1,11 +1,11 @@
-namespace Syki.Back.Features.Student.GetStudentAgenda;
+namespace Estud.Back.Features.Student.GetStudentAgenda;
 
-public class GetStudentAgendaService(SykiDbContext ctx) : ISykiService
+public class GetStudentAgendaService(EstudDbContext ctx) : IEstudService
 {
     public async Task<List<AgendaDayOut>> Get(Guid institution, Guid userId)
     {
         var ids = await ctx.ClassesStudents.AsNoTracking()
-            .Where(x => x.SykiStudentId == userId && x.StudentDisciplineStatus == StudentDisciplineStatus.Matriculado)
+            .Where(x => x.EstudStudentId == userId && x.StudentDisciplineStatus == StudentDisciplineStatus.Matriculado)
             .Select(x => x.ClassId)
             .ToListAsync();
 

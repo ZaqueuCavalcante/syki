@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.UpdateTeacher;
+namespace Estud.Back.Features.Teachers.UpdateTeacher;
 
 public class UpdateTeacherIn : IApiDto<UpdateTeacherIn>
 {
@@ -7,6 +7,6 @@ public class UpdateTeacherIn : IApiDto<UpdateTeacherIn>
 
     public static IEnumerable<(string, UpdateTeacherIn)> GetExamples() =>
     [
-        ("Exemplo", new() { Name = "Richard Feynman", Email = "feynman@syki.com" }),
+        ("Exemplo", new() { Name = "Richard Feynman", Email = "feynman@estud.com" }),
     ];
 }

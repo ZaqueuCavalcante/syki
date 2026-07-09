@@ -1,6 +1,6 @@
 using Google.Apis.Auth;
 
-namespace Syki.Back.Google;
+namespace Estud.Back.Google;
 
 public class GoogleService : IGoogleService
 {

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Student.CreateStudentEnrollment;
+namespace Estud.Back.Features.Student.CreateStudentEnrollment;
 
 /// <summary>
 /// Vínculo entre Aluno e Turma
@@ -6,7 +6,7 @@ namespace Syki.Back.Features.Student.CreateStudentEnrollment;
 public class ClassStudent
 {
     public Guid ClassId { get; set; }
-    public Guid SykiStudentId { get; set; }
+    public Guid EstudStudentId { get; set; }
     public StudentDisciplineStatus StudentDisciplineStatus { get; set; }
 
     private ClassStudent() { }
@@ -16,7 +16,7 @@ public class ClassStudent
         Guid studentId
     ) {
         ClassId = classId;
-        SykiStudentId = studentId;
+        EstudStudentId = studentId;
         StudentDisciplineStatus = StudentDisciplineStatus.Matriculado;
     }
 }

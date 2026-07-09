@@ -1,7 +1,7 @@
 {
     "stryker-config":
     {
-        "solution": "../Syki.slnx",
+        "solution": "../Estud.slnx",
         "project": "Back.csproj",
         "mutation-level": "Complete",
         "reporters": [ "html" ],

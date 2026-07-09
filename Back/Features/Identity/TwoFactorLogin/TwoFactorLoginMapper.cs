@@ -1,6 +1,6 @@
-using Syki.Back.Features.Identity.SignIn;
+using Estud.Back.Features.Identity.SignIn;
 
-namespace Syki.Back.Features.Identity.TwoFactorLogin;
+namespace Estud.Back.Features.Identity.TwoFactorLogin;
 
 public static class TwoFactorLoginMapper
 {

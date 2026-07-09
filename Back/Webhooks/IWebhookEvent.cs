@@ -1,8 +1,8 @@
 using System.Text.Json;
-using Syki.Back.Converters;
-using Syki.Back.Domain.Webhooks;
+using Estud.Back.Converters;
+using Estud.Back.Domain.Webhooks;
 
-namespace Syki.Back.Webhooks;
+namespace Estud.Back.Webhooks;
 
 public interface IWebhookEvent;
 
@@ -21,7 +21,7 @@ public class WebhookEventInvoker<T> : IWebhookEventInvoker where T : IWebhookEve
     private static readonly JsonSerializerOptions _options = new()
     {
         PropertyNameCaseInsensitive = true,
-        Converters = { new SykiStringEnumConverter() },
+        Converters = { new EstudStringEnumConverter() },
     };
 
     public async Task Invoke(IServiceProvider sp, ReceivedWebhookEvent evt)

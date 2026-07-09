@@ -1,6 +1,6 @@
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Auth.Policies;
+namespace Estud.Back.Auth.Policies;
 
 public static partial class Policies
 {
@@ -10,8 +10,8 @@ public static partial class Policies
     public static AuthorizationBuilder AddClassesPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetClasses, UserType.Manager, SykiPermissions.ManageClasses)
-            .AddSykiPolicy(CreateClass, UserType.Manager, SykiPermissions.ManageClasses);
+            .AddEstudPolicy(GetClasses, UserType.Manager, EstudPermissions.ManageClasses)
+            .AddEstudPolicy(CreateClass, UserType.Manager, EstudPermissions.ManageClasses);
 
         return builder;
     }

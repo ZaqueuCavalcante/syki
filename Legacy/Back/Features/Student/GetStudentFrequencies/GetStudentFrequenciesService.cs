@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Student.GetStudentFrequencies;
+namespace Estud.Back.Features.Student.GetStudentFrequencies;
 
-public class GetStudentFrequenciesService(SykiDbContext ctx) : ISykiService
+public class GetStudentFrequenciesService(EstudDbContext ctx) : IEstudService
 {
     public async Task<OneOf<List<GetStudentFrequenciesOut>, ErrorOut>> Get(Guid userId, Guid courseCurriculumId)
     {
@@ -18,7 +18,7 @@ public class GetStudentFrequenciesService(SykiDbContext ctx) : ISykiService
             .ToListAsync();
 
         var classesStudents = await ctx.ClassesStudents.AsNoTracking()
-            .Where(x => x.SykiStudentId == userId).ToListAsync();
+            .Where(x => x.EstudStudentId == userId).ToListAsync();
 
         var result = new List<GetStudentFrequenciesOut>();
         foreach (var item in classes)

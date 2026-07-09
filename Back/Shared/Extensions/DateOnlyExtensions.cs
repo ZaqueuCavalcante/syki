@@ -1,7 +1,7 @@
 using BrazilHolidays.Net;
 using System.Globalization;
 
-namespace Syki.Back.Shared;
+namespace Estud.Back.Shared;
 
 public static class DateOnlyExtensions
 {

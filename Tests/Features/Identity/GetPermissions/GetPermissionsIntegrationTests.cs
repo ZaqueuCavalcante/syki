@@ -1,4 +1,4 @@
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {
@@ -49,8 +49,8 @@ public partial class IntegrationTests
 
         // Assert
         var permissions = result.Success;
-        permissions.Items.Should().HaveCount(SykiPermissions.Permissions.Count);
-        permissions.Items.Should().Contain(x => x.Id == SykiPermissions.ManageRoles.Id);
+        permissions.Items.Should().HaveCount(EstudPermissions.Permissions.Count);
+        permissions.Items.Should().Contain(x => x.Id == EstudPermissions.ManageRoles.Id);
         permissions.Items.Should().OnlyContain(x => x.AllowedTypes.Count > 0);
     }
 

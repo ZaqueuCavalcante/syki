@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.TwoFactorLogin;
+namespace Estud.Back.Features.Identity.TwoFactorLogin;
 
 public class TwoFactorLoginIn : IApiDto<TwoFactorLoginIn>
 {

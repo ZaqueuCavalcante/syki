@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Classrooms;
+using Estud.Back.Domain.Classrooms;
 
-namespace Syki.Back.Database.Classrooms;
+namespace Estud.Back.Database.Classrooms;
 
 public class ClassroomDbConfig : IEntityTypeConfiguration<Classroom>
 {
     public void Configure(EntityTypeBuilder<Classroom> entity)
     {
-        entity.ToTable("classrooms", DbSchemas.Syki);
+        entity.ToTable("classrooms", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
 

@@ -1,10 +1,10 @@
-using Syki.Back.Features.Academic.CreateClass;
+using Estud.Back.Features.Academic.CreateClass;
 
-namespace Syki.Back.Features.Teacher.SetSchedulingPreferences;
+namespace Estud.Back.Features.Teacher.SetSchedulingPreferences;
 
-public class SetSchedulingPreferencesService(SykiDbContext ctx) : ISykiService
+public class SetSchedulingPreferencesService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Set(Guid institutionId, Guid teacherId, SetSchedulingPreferencesIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Set(Guid institutionId, Guid teacherId, SetSchedulingPreferencesIn data)
     {
         var teacher = await ctx.Teachers.Include(x => x.SchedulingPreferences).FirstAsync(p => p.InstitutionId == institutionId && p.Id == teacherId);
 
@@ -18,6 +18,6 @@ public class SetSchedulingPreferencesService(SykiDbContext ctx) : ISykiService
 
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 }

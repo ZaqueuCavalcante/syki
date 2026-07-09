@@ -1,11 +1,11 @@
 using Dapper;
 using System.Text.Json;
 
-namespace Syki.Back.Features.Notifications.GetNotifications;
+namespace Estud.Back.Features.Notifications.GetNotifications;
 
-public class GetNotificationsService(SykiDbContext ctx) : ISykiService
+public class GetNotificationsService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetNotificationsOut, SykiError>> Get(GetNotificationsIn data)
+    public async Task<OneOf<GetNotificationsOut, EstudError>> Get(GetNotificationsIn data)
     {
         var connection = await ctx.GetOpenConnectionAsync();
 
@@ -22,9 +22,9 @@ public class GetNotificationsService(SykiDbContext ctx) : ISykiService
                 n.metadata::text AS metadata,
                 COUNT(*) OVER() AS total_rows
             FROM
-                syki.user_notifications un
+                estud.user_notifications un
             JOIN
-                syki.notifications n ON n.id = un.notification_id
+                estud.notifications n ON n.id = un.notification_id
             WHERE
                 un.user_id = @UserId
                 {unreadFilter}

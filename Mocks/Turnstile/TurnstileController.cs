@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Syki.Mocks.Turnstile;
+namespace Estud.Mocks.Turnstile;
 
 [ApiController]
 public class TurnstileController : ControllerBase

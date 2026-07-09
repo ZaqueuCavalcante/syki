@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.UpdateEnrollmentPeriod;
+namespace Estud.Back.Features.Academic.UpdateEnrollmentPeriod;
 
-public class UpdateEnrollmentPeriodService(SykiDbContext ctx, HybridCache cache) : ISykiService
+public class UpdateEnrollmentPeriodService(EstudDbContext ctx, HybridCache cache) : IEstudService
 {
-    public async Task<OneOf<EnrollmentPeriodOut, SykiError>> Update(Guid institutionId, string id, UpdateEnrollmentPeriodIn data)
+    public async Task<OneOf<EnrollmentPeriodOut, EstudError>> Update(Guid institutionId, string id, UpdateEnrollmentPeriodIn data)
     {
         if (await ctx.AcademicPeriodNotFound(id)) return AcademicPeriodNotFound.I;
 

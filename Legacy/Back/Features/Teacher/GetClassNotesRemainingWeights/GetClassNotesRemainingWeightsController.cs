@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teacher.GetClassNotesRemainingWeights;
+namespace Estud.Back.Features.Teacher.GetClassNotesRemainingWeights;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

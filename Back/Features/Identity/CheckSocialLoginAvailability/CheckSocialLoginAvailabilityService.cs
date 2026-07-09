@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Identity.CheckSocialLoginAvailability;
+namespace Estud.Back.Features.Identity.CheckSocialLoginAvailability;
 
-public class CheckSocialLoginAvailabilityService(SocialLoginSettings settings) : ISykiService
+public class CheckSocialLoginAvailabilityService(SocialLoginSettings settings) : IEstudService
 {
     public CheckSocialLoginAvailabilityOut Get()
     {

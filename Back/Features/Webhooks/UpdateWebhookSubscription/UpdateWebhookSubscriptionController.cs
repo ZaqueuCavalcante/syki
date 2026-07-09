@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Webhooks.UpdateWebhookSubscription;
+namespace Estud.Back.Features.Webhooks.UpdateWebhookSubscription;
 
 [ApiController, Authorize(Policies.UpdateWebhookSubscription)]
 public class UpdateWebhookSubscriptionController(UpdateWebhookSubscriptionService service) : ControllerBase

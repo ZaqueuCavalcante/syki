@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.GetTeachers;
+namespace Estud.Back.Features.Teachers.GetTeachers;
 
 [ApiController, Authorize(Policies.GetTeachers)]
 public class GetTeachersController(GetTeachersService service) : ControllerBase

@@ -1,9 +1,9 @@
-using Syki.Back.Domain.Identity;
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Domain.Identity;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Features.Identity.CreateRole;
+namespace Estud.Back.Features.Identity.CreateRole;
 
-public class CreateRoleService(SykiDbContext ctx) : ISykiService
+public class CreateRoleService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<CreateRoleIn>
     {
@@ -18,17 +18,17 @@ public class CreateRoleService(SykiDbContext ctx) : ISykiService
             RuleFor(x => x.BaseType).IsInEnum().WithError(InvalidRoleBaseType.I);
 
             RuleFor(x => x.Permissions)
-                .Must(x => x != null && x.IsAllDistinct() && x.IsSubsetOf(SykiPermissions.Permissions.ConvertAll(p => p.Id)))
+                .Must(x => x != null && x.IsAllDistinct() && x.IsSubsetOf(EstudPermissions.Permissions.ConvertAll(p => p.Id)))
                 .WithError(InvalidPermissionsList.I);
 
             RuleFor(x => x)
-                .Must(x => x.Permissions.All(id => SykiPermissions.IsAllowedFor(id, x.BaseType)))
+                .Must(x => x.Permissions.All(id => EstudPermissions.IsAllowedFor(id, x.BaseType)))
                 .WithError(InvalidPermissionsForUserType.I);
         }
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CreateRoleOut, SykiError>> Create(CreateRoleIn data)
+    public async Task<OneOf<CreateRoleOut, EstudError>> Create(CreateRoleIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -37,7 +37,7 @@ public class CreateRoleService(SykiDbContext ctx) : ISykiService
         var roleAlreadyExists = await ctx.Roles.AnyAsync(x => x.OwnerId == institutionId && x.NormalizedName == upperCaseName);
         if (roleAlreadyExists) return RoleNameAlreadyExists.I;
 
-        var role = new SykiRole(institutionId, data.Name, data.Description, data.BaseType, data.Permissions);
+        var role = new EstudRole(institutionId, data.Name, data.Description, data.BaseType, data.Permissions);
         var rolePermissionsOk = role.IsSubsetOf(ctx.RequestUser.Permissions);
         if (!rolePermissionsOk) return InvalidRolePermissions.I;
 

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Students.CreateStudent;
+namespace Estud.Back.Features.Students.CreateStudent;
 
 [ApiController, Authorize(Policies.CreateStudent)]
 public class CreateStudentController(CreateStudentService service) : ControllerBase

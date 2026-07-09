@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.SignIn;
+namespace Estud.Back.Features.Identity.SignIn;
 
 public class SignInOut
 {

@@ -1,8 +1,8 @@
 using System.Net.Http.Json;
-using Syki.Back.Features.CourseOfferings.GetCourseOfferings;
-using Syki.Back.Features.CourseOfferings.CreateCourseOffering;
+using Estud.Back.Features.CourseOfferings.GetCourseOfferings;
+using Estud.Back.Features.CourseOfferings.CreateCourseOffering;
 
-namespace Syki.Tests.Integration.Clients;
+namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {

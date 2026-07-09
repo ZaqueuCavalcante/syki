@@ -1,6 +1,6 @@
 using Npgsql;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class EntityFrameworkConfigs
 {
@@ -21,7 +21,7 @@ public static class EntityFrameworkConfigs
             return dataSourceBuilder.Build();
         });
 
-        builder.Services.AddDbContext<SykiDbContext>();
+        builder.Services.AddDbContext<EstudDbContext>();
     }
 
     public static void UseEnrichDbContext(this IApplicationBuilder app)

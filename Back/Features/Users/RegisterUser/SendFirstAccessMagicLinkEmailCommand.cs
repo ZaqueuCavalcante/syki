@@ -1,6 +1,6 @@
-using Syki.Back.Emails;
+using Estud.Back.Emails;
 
-namespace Syki.Back.Features.Users.RegisterUser;
+namespace Estud.Back.Features.Users.RegisterUser;
 
 [CommandDescription("Envia link de acesso inicial por e-mail.")]
 public record SendFirstAccessMagicLinkEmailCommand(string Email, Guid MagicLinkId) : ICommand;

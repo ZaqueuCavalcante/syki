@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.MagicLinkLogin;
+namespace Estud.Back.Features.Identity.MagicLinkLogin;
 
 public class MagicLinkLoginIn : IApiDto<MagicLinkLoginIn>
 {

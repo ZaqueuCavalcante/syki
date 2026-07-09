@@ -1,4 +1,4 @@
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {

@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Courses.RemoveCourseDiscipline;
+namespace Estud.Back.Features.Courses.RemoveCourseDiscipline;
 
-public class RemoveCourseDisciplineService(SykiDbContext ctx) : ISykiService
+public class RemoveCourseDisciplineService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Remove(RemoveCourseDisciplineIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Remove(RemoveCourseDisciplineIn data)
     {
         var courseOk = await ctx.Courses.AnyAsync(x => x.InstitutionId == ctx.RequestUser.InstitutionId && x.Id == data.CourseId);
         if (!courseOk) return CourseNotFound.I;
@@ -13,6 +13,6 @@ public class RemoveCourseDisciplineService(SykiDbContext ctx) : ISykiService
         ctx.Remove(link);
         await ctx.SaveChangesAsync();
 
-        return SykiSuccess.I;
+        return EstudSuccess.I;
     }
 }

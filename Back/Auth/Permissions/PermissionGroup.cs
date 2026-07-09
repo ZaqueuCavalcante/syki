@@ -1,4 +1,4 @@
-namespace Syki.Back.Auth.Permissions;
+namespace Estud.Back.Auth.Permissions;
 
 public enum PermissionGroup
 {

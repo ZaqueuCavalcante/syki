@@ -1,9 +1,9 @@
 using System.Net.Http.Json;
-using Syki.Back.Features.Campi.GetCampi;
-using Syki.Back.Features.Campi.CreateCampus;
-using Syki.Back.Features.Campi.UpdateCampus;
+using Estud.Back.Features.Campi.GetCampi;
+using Estud.Back.Features.Campi.CreateCampus;
+using Estud.Back.Features.Campi.UpdateCampus;
 
-namespace Syki.Tests.Integration.Clients;
+namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {

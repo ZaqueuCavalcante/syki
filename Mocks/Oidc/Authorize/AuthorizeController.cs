@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Syki.Mocks.Oidc.Authorize;
+namespace Estud.Mocks.Oidc.Authorize;
 
 /// <summary>
 /// Authorization endpoint - initiates the login flow.

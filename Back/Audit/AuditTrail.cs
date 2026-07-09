@@ -2,7 +2,7 @@ using Audit.Core;
 using System.Text.Json;
 using Audit.EntityFramework;
 
-namespace Syki.Back.Audit;
+namespace Estud.Back.Audit;
 
 /// <summary>
 /// Guarda os dados de auditoria de uma entidade.

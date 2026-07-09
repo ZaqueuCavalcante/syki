@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Webhooks.CreateWebhookSubscription;
+namespace Estud.Back.Features.Webhooks.CreateWebhookSubscription;
 
 public class CreateWebhookSubscriptionOut : IApiDto<CreateWebhookSubscriptionOut>
 {

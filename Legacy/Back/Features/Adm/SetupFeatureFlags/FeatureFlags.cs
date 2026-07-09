@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Cross.SetupFeatureFlags;
+namespace Estud.Back.Features.Cross.SetupFeatureFlags;
 
 public class FeatureFlags
 {

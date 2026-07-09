@@ -1,6 +1,6 @@
-using Syki.Back.Domain.CourseCurriculums;
+using Estud.Back.Domain.CourseCurriculums;
 
-namespace Syki.Back.Features.CourseCurriculums.GetCourseCurriculums;
+namespace Estud.Back.Features.CourseCurriculums.GetCourseCurriculums;
 
 public static class GetCourseCurriculumsMapper
 {

@@ -3,7 +3,7 @@ using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class OpenTelemetryConfigs
 {

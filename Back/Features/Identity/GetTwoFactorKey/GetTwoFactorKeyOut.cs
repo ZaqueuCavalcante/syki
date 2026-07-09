@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.GetTwoFactorKey;
+namespace Estud.Back.Features.Identity.GetTwoFactorKey;
 
 public class GetTwoFactorKeyOut : IApiDto<GetTwoFactorKeyOut>
 {

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.CheckSocialLoginAvailability;
+namespace Estud.Back.Features.Identity.CheckSocialLoginAvailability;
 
 [ApiController]
 public class CheckSocialLoginAvailabilityController(CheckSocialLoginAvailabilityService service) : ControllerBase

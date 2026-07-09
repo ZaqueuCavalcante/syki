@@ -1,4 +1,4 @@
-namespace Syki.Back.Errors;
+namespace Estud.Back.Errors;
 
 public class UnauthorizedErrorOut : ErrorOut
 {

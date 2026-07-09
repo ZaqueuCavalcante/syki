@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Adm.GetInstitutions;
+namespace Estud.Back.Features.Adm.GetInstitutions;
 
 [ApiController, Authorize]
 public class GetInstitutionsController(GetInstitutionsService service) : ControllerBase

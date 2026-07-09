@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Campi.GetCampi;
+namespace Estud.Back.Features.Campi.GetCampi;
 
 [ApiController, Authorize(Policies.GetCampi)]
 public class GetCampiController(GetCampiService service) : ControllerBase

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.CourseCurriculums.EditCourseCurriculum;
+namespace Estud.Back.Features.CourseCurriculums.EditCourseCurriculum;
 
 public class EditCourseCurriculumIn : IApiDto<EditCourseCurriculumIn>
 {

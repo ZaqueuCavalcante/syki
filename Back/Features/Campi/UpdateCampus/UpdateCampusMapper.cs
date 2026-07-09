@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Campi;
+using Estud.Back.Domain.Campi;
 
-namespace Syki.Back.Features.Campi.UpdateCampus;
+namespace Estud.Back.Features.Campi.UpdateCampus;
 
 public static class UpdateCampusMapper
 {

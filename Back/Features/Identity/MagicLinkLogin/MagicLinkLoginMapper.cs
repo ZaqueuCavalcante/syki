@@ -1,6 +1,6 @@
-using Syki.Back.Features.Identity.SignIn;
+using Estud.Back.Features.Identity.SignIn;
 
-namespace Syki.Back.Features.Identity.MagicLinkLogin;
+namespace Estud.Back.Features.Identity.MagicLinkLogin;
 
 public static class MagicLinkLoginMapper
 {

@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Disciplines.GetDisciplinePotentialCourses;
+namespace Estud.Back.Features.Disciplines.GetDisciplinePotentialCourses;
 
-public class GetDisciplinePotentialCoursesService(SykiDbContext ctx) : ISykiService
+public class GetDisciplinePotentialCoursesService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetDisciplinePotentialCoursesOut, SykiError>> Get(int id, string? name)
+    public async Task<OneOf<GetDisciplinePotentialCoursesOut, EstudError>> Get(int id, string? name)
     {
         var discipline = await ctx.Disciplines.AsNoTracking().Include(d => d.Links)
             .FirstOrDefaultAsync(d => d.InstitutionId == ctx.RequestUser.InstitutionId && d.Id == id);

@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Periods;
+namespace Estud.Back.Domain.Periods;
 
 public class EnrollmentPeriod
 {
@@ -20,7 +20,7 @@ public class EnrollmentPeriod
         EndAt = endAt;
     }
 
-    public static OneOf<EnrollmentPeriod, SykiError> New(
+    public static OneOf<EnrollmentPeriod, EstudError> New(
         int institutionId,
         string name,
         DateOnly startAt,

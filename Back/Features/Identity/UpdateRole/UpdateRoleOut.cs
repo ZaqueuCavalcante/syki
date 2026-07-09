@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.UpdateRole;
+namespace Estud.Back.Features.Identity.UpdateRole;
 
 public class UpdateRoleOut : IApiDto<UpdateRoleOut>
 {

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Users.UpdateUserAccount;
+namespace Estud.Back.Features.Users.UpdateUserAccount;
 
 [ApiController, Authorize(Policies.UpdateUserAccount)]
 public class UpdateUserAccountController(UpdateUserAccountService service) : ControllerBase

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.AssignDisciplinesToTeacher;
+namespace Estud.Back.Features.Teachers.AssignDisciplinesToTeacher;
 
 public class AssignDisciplinesToTeacherIn : IApiDto<AssignDisciplinesToTeacherIn>
 {

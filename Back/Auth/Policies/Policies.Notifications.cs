@@ -1,6 +1,6 @@
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Auth.Policies;
+namespace Estud.Back.Auth.Policies;
 
 public static partial class Policies
 {
@@ -15,13 +15,13 @@ public static partial class Policies
     public static AuthorizationBuilder AddNotificationsPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(CreateNotification, UserType.Manager, SykiPermissions.ManageNotifications)
-            .AddSykiPolicy(GetInstitutionNotifications, UserType.Manager, SykiPermissions.ManageNotifications);
+            .AddEstudPolicy(CreateNotification, UserType.Manager, EstudPermissions.ManageNotifications)
+            .AddEstudPolicy(GetInstitutionNotifications, UserType.Manager, EstudPermissions.ManageNotifications);
 
         builder
-            .AddSykiPolicy(GetNotifications)
-            .AddSykiPolicy(MarkNotificationsAsViewed)
-            .AddSykiPolicy(GetUnreadNotificationsCount);
+            .AddEstudPolicy(GetNotifications)
+            .AddEstudPolicy(MarkNotificationsAsViewed)
+            .AddEstudPolicy(GetUnreadNotificationsCount);
 
         return builder;
     }

@@ -1,16 +1,16 @@
 using System.Text;
-using Syki.Back.Auth.Claims;
+using Estud.Back.Auth.Claims;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Syki.Back.Features.Identity.SignIn;
+using Estud.Back.Features.Identity.SignIn;
 
-namespace Syki.Back.Features.Cross.SignIn;
+namespace Estud.Back.Features.Cross.SignIn;
 
 public class SignInService(
-    SykiDbContext ctx,
+    EstudDbContext ctx,
     AuthSettings settings,
-    IHttpContextAccessor httpCtx) : ISykiService
+    IHttpContextAccessor httpCtx) : IEstudService
 {
     public async Task<SignInOut> SignIn(string email)
     {
@@ -20,11 +20,11 @@ public class SignInService(
 
         var claims = new List<Claim>
         {
-            new(SykiClaims.UserId, user.Id.ToString()),
-            new(SykiClaims.UserPermissions, permissions),
-            new(SykiClaims.Jti, Guid.NewGuid().ToString()),
-            new(SykiClaims.UserType, role.BaseType.ToInt().ToString()),
-            new(SykiClaims.UserInstitutionId, user.InstitutionId.ToString()),
+            new(EstudClaims.UserId, user.Id.ToString()),
+            new(EstudClaims.UserPermissions, permissions),
+            new(EstudClaims.Jti, Guid.NewGuid().ToString()),
+            new(EstudClaims.UserType, role.BaseType.ToInt().ToString()),
+            new(EstudClaims.UserInstitutionId, user.InstitutionId.ToString()),
         };
 
         var identityClaims = new ClaimsIdentity();

@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Teachers.GetTeacherPotentialCampi;
+namespace Estud.Back.Features.Teachers.GetTeacherPotentialCampi;
 
-public class GetTeacherPotentialCampiService(SykiDbContext ctx) : ISykiService
+public class GetTeacherPotentialCampiService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetTeacherPotentialCampiOut, SykiError>> Get(int id, string? name)
+    public async Task<OneOf<GetTeacherPotentialCampiOut, EstudError>> Get(int id, string? name)
     {
         var teacher = await ctx.Teachers.AsNoTracking().Include(t => t.Campi)
             .FirstOrDefaultAsync(t => t.InstitutionId == ctx.RequestUser.InstitutionId && t.Id == id);

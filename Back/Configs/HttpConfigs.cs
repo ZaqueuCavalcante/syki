@@ -1,15 +1,15 @@
-using Syki.Back.Hubs;
-using Syki.Back.Converters;
+using Estud.Back.Hubs;
+using Estud.Back.Converters;
 using Microsoft.AspNetCore.HttpOverrides;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class HttpConfigs
 {
     public static void AddHttpConfigs(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers().AddJsonOptions(options =>
-            options.JsonSerializerOptions.Converters.Add(new SykiStringEnumConverter()));
+            options.JsonSerializerOptions.Converters.Add(new EstudStringEnumConverter()));
 
         builder.Services.Configure<MvcOptions>(options =>
         {
@@ -62,7 +62,7 @@ public static class HttpConfigs
         {
             options.MapControllers();
 
-            options.MapHub<SykiHub>("/syki-hub");
+            options.MapHub<EstudHub>("/estud-hub");
 
             options.MapOpenApi();
             options.MapScalarDocs();

@@ -1,6 +1,6 @@
-using Syki.Back.Features.Academic.CreateNotification;
+using Estud.Back.Features.Academic.CreateNotification;
 
-namespace Syki.Tests.Features.Academic.CreateNotification;
+namespace Estud.Tests.Features.Academic.CreateNotification;
 
 public class CreateUserNotificationUnitTests
 {

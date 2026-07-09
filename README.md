@@ -1,10 +1,10 @@
-# SYKI - Sistema de Gerenciamento Acadêmico
+# Estud - Sistema de Gerenciamento Acadêmico
 
 [![CI/CD](https://github.com/ZaqueuCavalcante/syki/actions/workflows/ci.cd.yml/badge.svg)](https://github.com/ZaqueuCavalcante/syki/actions/workflows/ci.cd.yml) [![Coverage Report](https://img.shields.io/badge/Coverage-Report-blue)](https://ZaqueuCavalcante.github.io/syki) ![Line Coverage](https://ZaqueuCavalcante.github.io/syki/badge_linecoverage.svg) ![Branch Coverage](https://ZaqueuCavalcante.github.io/syki/badge_branchcoverage.svg)
 
-**Syki** é um sistema open-source para gerenciamento educacional, que pode ser usado por gestores, professores e alunos.
+**Estud** é um sistema open-source para gerenciamento educacional, que pode ser usado por gestores, professores e alunos.
 
-Se cadastre em https://app.syki.com.br e teste o sistema em produção!
+Se cadastre em https://estud.com.br e teste o sistema em produção!
 
 <img src="./Docs/Readme/0_Overview.gif" style="border-radius: 6px">
 
@@ -31,7 +31,7 @@ Se cadastre em https://app.syki.com.br e teste o sistema em produção!
 
 ## 1 - Funcionalidades <a name="features"></a>
 
-O **Syki** possui diversas funcionalidades, que podem ser categorizadas com base em cada perfil de usuário do sistema:
+O **Estud** possui diversas funcionalidades, que podem ser categorizadas com base em cada perfil de usuário do sistema:
 
 - **Acadêmico**: usuário em cargo de gestão dentro da instituição de ensino
 - **Professor**: usuário que leciona nas turmas da instituição
@@ -461,7 +461,7 @@ Já os testes de integração são mais robustos, pois validam que os fluxos de 
 
 ## 4 - CI/CD <a name="ci-cd"></a>
 
-O Syki conta com um pipeline de CI/CD, que roda no GitHub Actions toda vez que um novo commit é feito na branch master.
+O Estud conta com um pipeline de CI/CD, que roda no GitHub Actions toda vez que um novo commit é feito na branch master.
 
 Esse pipeline é responsável por buildar toda a solução, rodar os testes automatizados e executar eventuais migrações contra o banco de dados.
 
@@ -495,7 +495,7 @@ O frontend do projeto conta com modos claro e escuro.
 
 Todas as telas são responsivas, funcionando bem tanto no desktop quanto no mobile.
 
-Pretendo criar um app usando Flutter (Android/IOS) para que o aluno possa acessar o Syki.
+Pretendo criar um app usando Flutter (Android/IOS) para que o aluno possa acessar o Estud.
 
 <p align="center">
   <img src="./Docs/Readme/6_Mobile.gif" style="display: block; margin: 0 auto" />
@@ -503,7 +503,7 @@ Pretendo criar um app usando Flutter (Android/IOS) para que o aluno possa acessa
 
 ## 7 - Processamento Assíncrono <a name="async-processing"></a>
 
-O Syki possui diversos fluxos de negócio naturalmente assíncronos, como o envio de notificações pros usuários via email.
+O Estud possui diversos fluxos de negócio naturalmente assíncronos, como o envio de notificações pros usuários via email.
 
 Ele possui um sistema robusto de eventos, comandos e lotes para a realização dessas tarefas.
 
@@ -576,7 +576,7 @@ A CreateCourseController possui:
 O CreateCourseService possui:
 - Validação do input usando FluentValidation
 - Uso de Result Pattern para retornar sucesso ou erro
-- SykiDbContext para operações no banco de dados
+- EstudDbContext para operações no banco de dados
 - Mapper para converter a entidade de domínio em DTO de resposta
 
 <p align="center">
@@ -628,11 +628,11 @@ Ele é capaz de emitir eventos quando certas ações são executadas pelos usuá
   - Um novo aluno é cadastrado no sistema
   - Uma nova atividade é publicada pelo professor de uma turma
 
-Digamos que seja preciso integrar o Syki à outro serviço XYZ, que vai executar um determinado processamento toda vez que um desses eventos ocorrer.
+Digamos que seja preciso integrar o Estud à outro serviço XYZ, que vai executar um determinado processamento toda vez que um desses eventos ocorrer.
 
-Talvez a maneira mais simples de realizar essa integração seja através de pooling: a aplicação XYZ fica, periodicamente, chamando a Api do Syki para buscar novos eventos. Isso é simples de implementar, mas também é custoso e ineficiente, pois a maioria das chamadas não vai encontrar dados novos para serem processados, sobrecarregando a Api do Syki desnecessariamente.
+Talvez a maneira mais simples de realizar essa integração seja através de pooling: a aplicação XYZ fica, periodicamente, chamando a Api do Estud para buscar novos eventos. Isso é simples de implementar, mas também é custoso e ineficiente, pois a maioria das chamadas não vai encontrar dados novos para serem processados, sobrecarregando a Api do Estud desnecessariamente.
 
-Um outro jeito de abordar esse problema é através do uso de 𝘄𝗲𝗯𝗵𝗼𝗼𝗸𝘀: o serviço XYZ cadastra uma url (+ ApiKey) no Syki e escolhe quais eventos quer receber através dela. Dessa forma, toda vez que um dos eventos escolhidos ocorrer, o Syki monta um payload e chama a aplicação XYZ com os dados, em uma integração rápida e eficiente.
+Um outro jeito de abordar esse problema é através do uso de 𝘄𝗲𝗯𝗵𝗼𝗼𝗸𝘀: o serviço XYZ cadastra uma url (+ ApiKey) no Estud e escolhe quais eventos quer receber através dela. Dessa forma, toda vez que um dos eventos escolhidos ocorrer, o Estud monta um payload e chama a aplicação XYZ com os dados, em uma integração rápida e eficiente.
 
 <p align="center">
   <img src="./Docs/Readme/16.1_WebhookSubscription.gif" style="display: block; margin: 0 auto" />
@@ -644,7 +644,7 @@ O GIF abaixo mostra essa integração acontecendo quando um novo aluno é cadast
   <img src="./Docs/Readme/16.2_WebhookCall.gif" style="display: block; margin: 0 auto" />
 </p>
 
-Obviamente essa chamada para o endpoint na aplicação XYZ pode falhar, por isso implementei também uma política de retry exponencial: caso a primeira chamada falhe, o Syki vai tentar novamente após 1 min. Caso falhe, tenta novamente após 5 min. Caso falhe novamente, tenta pela última vez após 30 min.
+Obviamente essa chamada para o endpoint na aplicação XYZ pode falhar, por isso implementei também uma política de retry exponencial: caso a primeira chamada falhe, o Estud vai tentar novamente após 1 min. Caso falhe, tenta novamente após 5 min. Caso falhe novamente, tenta pela última vez após 30 min.
 
 Ainda é possível reprocessar uma chamada manualmente via tela, para o caso onde todas as retentativas automáticas falharam ou mesmo em caso de reconciliação de dados, por exemplo.
 

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Student.GetStudentFrequency;
+namespace Estud.Back.Features.Student.GetStudentFrequency;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

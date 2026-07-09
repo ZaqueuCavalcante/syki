@@ -1,8 +1,8 @@
-namespace Syki.Back.Domain.Classes;
+namespace Estud.Back.Domain.Classes;
 
 public static class ScheduleExtensions
 {
-    public static OneOf<List<Schedule>, SykiError> ToSchedules(this List<(Day Day, Hour Start, Hour End)> items)
+    public static OneOf<List<Schedule>, EstudError> ToSchedules(this List<(Day Day, Hour Start, Hour End)> items)
     {
         var result = items.ConvertAll(x => Schedule.New(x.Day, x.Start, x.End));
         foreach (var r in result)

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.AssignDisciplinesToTeacher;
+namespace Estud.Back.Features.Teachers.AssignDisciplinesToTeacher;
 
 [ApiController, Authorize(Policies.AssignDisciplinesToTeacher)]
 public class AssignDisciplinesToTeacherController(AssignDisciplinesToTeacherService service) : ControllerBase

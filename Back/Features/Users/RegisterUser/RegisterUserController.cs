@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Users.RegisterUser;
+namespace Estud.Back.Features.Users.RegisterUser;
 
 [ApiController, EnableRateLimiting(RateLimitingConfigs.SensitivePolicy)]
 public class RegisterUserController(RegisterUserService service) : ControllerBase

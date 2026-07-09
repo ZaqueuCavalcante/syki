@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Enums;
+namespace Estud.Back.Domain.Enums;
 
 /// <summary>
 /// Eventos que podem ser enviados via Webhook

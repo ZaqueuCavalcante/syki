@@ -1,7 +1,7 @@
-using Syki.Back.Domain.Disciplines;
-using Syki.Back.Domain.CourseCurriculums;
+using Estud.Back.Domain.Disciplines;
+using Estud.Back.Domain.CourseCurriculums;
 
-namespace Syki.Back.Domain.Courses;
+namespace Estud.Back.Domain.Courses;
 
 /// <summary>
 /// Curso

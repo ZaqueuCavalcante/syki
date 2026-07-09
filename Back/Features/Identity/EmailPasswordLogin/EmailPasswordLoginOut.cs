@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.EmailPasswordLogin;
+namespace Estud.Back.Features.Identity.EmailPasswordLogin;
 
 public class EmailPasswordLoginOut : IApiDto<EmailPasswordLoginOut>
 {

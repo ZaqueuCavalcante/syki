@@ -1,11 +1,11 @@
-namespace Syki.Back.Features.Student.GetStudentAverageNote;
+namespace Estud.Back.Features.Student.GetStudentAverageNote;
 
-public class GetStudentAverageNoteService(SykiDbContext ctx) : ISykiService
+public class GetStudentAverageNoteService(EstudDbContext ctx) : IEstudService
 {
     public async Task<decimal> Get(Guid userId)
     {
         var classesStudents = await ctx.ClassesStudents.AsNoTracking()
-            .Where(x => x.SykiStudentId == userId)
+            .Where(x => x.EstudStudentId == userId)
             .ToListAsync();
 
         var classesIds = classesStudents.ConvertAll(x => x.ClassId);
@@ -16,7 +16,7 @@ public class GetStudentAverageNoteService(SykiDbContext ctx) : ISykiService
 
         var works = await ctx.ClassActivityWorks
             .AsNoTrackingWithIdentityResolution()
-            .Where(x => x.SykiStudentId == userId)
+            .Where(x => x.EstudStudentId == userId)
             .ToListAsync();
 
         var notes = new List<ClassAverageDto>();

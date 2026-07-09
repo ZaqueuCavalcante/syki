@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.CreateTeacher;
+namespace Estud.Back.Features.Teachers.CreateTeacher;
 
 public class CreateTeacherOut
 {

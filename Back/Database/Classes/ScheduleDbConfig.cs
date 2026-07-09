@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Classes;
+using Estud.Back.Domain.Classes;
 
-namespace Syki.Back.Database.Classes;
+namespace Estud.Back.Database.Classes;
 
 public class ScheduleDbConfig : IEntityTypeConfiguration<Schedule>
 {
     public void Configure(EntityTypeBuilder<Schedule> entity)
     {
-        entity.ToTable("schedules", DbSchemas.Syki);
+        entity.ToTable("schedules", DbSchemas.Estud);
 
         entity.HasKey(s => s.Id);
     }

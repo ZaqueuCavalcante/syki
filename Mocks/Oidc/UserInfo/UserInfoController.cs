@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Syki.Mocks.Oidc.UserInfo;
+namespace Estud.Mocks.Oidc.UserInfo;
 
 /// <summary>
 /// UserInfo endpoint - returns authenticated user claims.

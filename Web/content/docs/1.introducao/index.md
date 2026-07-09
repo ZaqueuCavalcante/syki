@@ -18,5 +18,5 @@ Esta documentação cobre tudo que você precisa para configurar e usar a plataf
 
 Escolha por onde começar:
 
-- **Novo por aqui?** Veja [O que é o Estud](/docs/introducao/o-que-e-syki) para entender os conceitos fundamentais.
+- **Novo por aqui?** Veja [O que é o Estud](/docs/introducao/o-que-e-estud) para entender os conceitos fundamentais.
 - **Pronto para começar?** Siga o guia de [Como Começar](/docs/como-comecar) para criar sua conta.

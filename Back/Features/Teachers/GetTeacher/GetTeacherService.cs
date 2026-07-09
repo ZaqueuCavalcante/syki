@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Teachers.GetTeacher;
+namespace Estud.Back.Features.Teachers.GetTeacher;
 
-public class GetTeacherService(SykiDbContext ctx) : ISykiService
+public class GetTeacherService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetTeacherOut, SykiError>> Get(int id)
+    public async Task<OneOf<GetTeacherOut, EstudError>> Get(int id)
     {
         var teacher = await ctx.Teachers.AsNoTracking()
             .Include(t => t.User)

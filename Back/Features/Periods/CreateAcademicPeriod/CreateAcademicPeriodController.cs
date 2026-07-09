@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Periods.CreateAcademicPeriod;
+namespace Estud.Back.Features.Periods.CreateAcademicPeriod;
 
 [ApiController, Authorize(Policies.CreateAcademicPeriod)]
 public class CreateAcademicPeriodController(CreateAcademicPeriodService service) : ControllerBase

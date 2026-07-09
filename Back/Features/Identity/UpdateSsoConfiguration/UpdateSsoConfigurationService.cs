@@ -1,8 +1,8 @@
-using Syki.Back.Auth.Managers;
+using Estud.Back.Auth.Managers;
 
-namespace Syki.Back.Features.Identity.UpdateSsoConfiguration;
+namespace Estud.Back.Features.Identity.UpdateSsoConfiguration;
 
-public class UpdateSsoConfigurationService(SykiDbContext ctx, SsoEncryptionManager encryption, SsoSchemeManager ssoSchemeManager) : ISykiService
+public class UpdateSsoConfigurationService(EstudDbContext ctx, SsoEncryptionManager encryption, SsoSchemeManager ssoSchemeManager) : IEstudService
 {
     private class Validator : AbstractValidator<UpdateSsoConfigurationIn>
     {
@@ -16,7 +16,7 @@ public class UpdateSsoConfigurationService(SykiDbContext ctx, SsoEncryptionManag
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<UpdateSsoConfigurationOut, SykiError>> Update(Guid id, UpdateSsoConfigurationIn data)
+    public async Task<OneOf<UpdateSsoConfigurationOut, EstudError>> Update(Guid id, UpdateSsoConfigurationIn data)
     {
         if (V.Run(data, out var error)) return error;
 

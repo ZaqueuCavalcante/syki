@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.UpdateEnrollmentPeriod;
+namespace Estud.Back.Features.Academic.UpdateEnrollmentPeriod;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Identity;
+namespace Estud.Back.Domain.Identity;
 
 /// <summary>
 /// SSO configuration for an institution.

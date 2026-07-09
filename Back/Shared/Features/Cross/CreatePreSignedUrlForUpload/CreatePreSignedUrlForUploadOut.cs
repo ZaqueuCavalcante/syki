@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Estud.Back.Shared;
 
 public class CreatePreSignedUrlForUploadOut : IApiDto<CreatePreSignedUrlForUploadOut>
 {
@@ -6,6 +6,6 @@ public class CreatePreSignedUrlForUploadOut : IApiDto<CreatePreSignedUrlForUploa
 
     public static IEnumerable<(string, CreatePreSignedUrlForUploadOut)> GetExamples() =>
     [
-        ("Exemplo", new() { Url = $"https://syki.storage.com/{StorageContainer.ProfilePhotos.GetDescription()}/Profile.png" }),
+        ("Exemplo", new() { Url = $"https://estud.storage.com/{StorageContainer.ProfilePhotos.GetDescription()}/Profile.png" }),
     ];
 }

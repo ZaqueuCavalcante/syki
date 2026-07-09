@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Campi.UpdateCampus;
+namespace Estud.Back.Features.Campi.UpdateCampus;
 
 [ApiController, Authorize(Policies.UpdateCampus)]
 public class UpdateCampusController(UpdateCampusService service) : ControllerBase

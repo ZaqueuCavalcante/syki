@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Disciplines;
+using Estud.Back.Domain.Disciplines;
 
-namespace Syki.Back.Features.Disciplines.GetDisciplines;
+namespace Estud.Back.Features.Disciplines.GetDisciplines;
 
 public static class GetDisciplinesMapper
 {

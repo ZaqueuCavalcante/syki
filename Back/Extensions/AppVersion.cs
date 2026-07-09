@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Syki.Back.Extensions;
+namespace Estud.Back.Extensions;
 
 public static class AppVersion
 {

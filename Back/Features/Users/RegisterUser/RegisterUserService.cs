@@ -1,9 +1,9 @@
-using Syki.Back.Domain.Identity;
-using Syki.Back.Domain.Institutions;
+using Estud.Back.Domain.Identity;
+using Estud.Back.Domain.Institutions;
 
-namespace Syki.Back.Features.Users.RegisterUser;
+namespace Estud.Back.Features.Users.RegisterUser;
 
-public class RegisterUserService(SykiDbContext ctx, UserManager<SykiUser> userManager) : ISykiService
+public class RegisterUserService(EstudDbContext ctx, UserManager<EstudUser> userManager) : IEstudService
 {
     private class Validator : AbstractValidator<RegisterUserIn>
     {
@@ -14,7 +14,7 @@ public class RegisterUserService(SykiDbContext ctx, UserManager<SykiUser> userMa
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<RegisterUserOut, SykiError>> Register(RegisterUserIn data)
+    public async Task<OneOf<RegisterUserOut, EstudError>> Register(RegisterUserIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -23,16 +23,16 @@ public class RegisterUserService(SykiDbContext ctx, UserManager<SykiUser> userMa
         if (emailUsed) return EmailAlreadyUsed.I;
 
         var institution = Institution.NewForUserRegister();
-        var user = new SykiUser(institution, "Seu Nome", email);
+        var user = new EstudUser(institution, "Seu Nome", email);
         var magicLink = new MagicLink(user);
 
         var directorRole = await ctx.GetDirectorRole();
-        var userRole = new SykiUserRole(institution, user, directorRole.Id);
+        var userRole = new EstudUserRole(institution, user, directorRole.Id);
 
         ctx.AddRange(institution, magicLink, userRole);
         ctx.AddCommand(institution, new SendFirstAccessMagicLinkEmailCommand(email, magicLink.Id), maxRetries: 1);
 
-        await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");
+        await userManager.CreateAsync(user, $"Estud@{Guid.NewGuid()}");
 
         return new RegisterUserOut { Id = user.Id, InstitutionId = institution.Id };
     }

@@ -1,8 +1,8 @@
-using Syki.Back.Domain.Campi;
+using Estud.Back.Domain.Campi;
 
-namespace Syki.Back.Features.Campi.CreateCampus;
+namespace Estud.Back.Features.Campi.CreateCampus;
 
-public class CreateCampusService(SykiDbContext ctx) : ISykiService
+public class CreateCampusService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<CreateCampusIn>
     {
@@ -22,7 +22,7 @@ public class CreateCampusService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CreateCampusOut, SykiError>> Create(CreateCampusIn data)
+    public async Task<OneOf<CreateCampusOut, EstudError>> Create(CreateCampusIn data)
     {
         if (V.Run(data, out var error)) return error;
 

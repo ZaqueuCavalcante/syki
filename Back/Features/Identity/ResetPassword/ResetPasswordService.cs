@@ -1,10 +1,10 @@
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Features.Identity.ResetPassword;
+namespace Estud.Back.Features.Identity.ResetPassword;
 
-public class ResetPasswordService(SykiDbContext ctx, UserManager<SykiUser> userManager) : ISykiService
+public class ResetPasswordService(EstudDbContext ctx, UserManager<EstudUser> userManager) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Reset(ResetPasswordIn body)
+    public async Task<OneOf<EstudSuccess, EstudError>> Reset(ResetPasswordIn body)
     {
         _ = Guid.TryParse(body.Token, out var id);
         var reset = await ctx.ResetPasswordTokens.FirstOrDefaultAsync(r => r.Id == id);
@@ -26,6 +26,6 @@ public class ResetPasswordService(SykiDbContext ctx, UserManager<SykiUser> userM
         user!.EmailConfirmed = true;
         await ctx.SaveChangesAsync();
 
-        return SykiSuccess.I;
+        return EstudSuccess.I;
     }
 }

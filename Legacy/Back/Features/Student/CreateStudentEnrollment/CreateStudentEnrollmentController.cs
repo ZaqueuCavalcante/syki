@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Student.CreateStudentEnrollment;
+namespace Estud.Back.Features.Student.CreateStudentEnrollment;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]
@@ -12,7 +12,7 @@ public class CreateStudentEnrollmentController(CreateStudentEnrollmentService se
     /// </remarks>
     [HttpPost("student/enrollments")]
     [ProducesResponseType<EnrollmentClassOut>(200)]
-    [ProducesResponseType<SykiError>(400)]
+    [ProducesResponseType<EstudError>(400)]
     public async Task<IActionResult> Create([FromBody] CreateStudentEnrollmentIn data)
     {
         var result = await service.Create(User.InstitutionId, User.Id, User.CourseCurriculumId, data);

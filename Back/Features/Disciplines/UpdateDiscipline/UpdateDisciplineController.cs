@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Disciplines.UpdateDiscipline;
+namespace Estud.Back.Features.Disciplines.UpdateDiscipline;
 
 [ApiController, Authorize(Policies.UpdateDiscipline)]
 public class UpdateDisciplineController(UpdateDisciplineService service) : ControllerBase

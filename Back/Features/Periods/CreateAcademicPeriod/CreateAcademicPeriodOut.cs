@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Periods.CreateAcademicPeriod;
+namespace Estud.Back.Features.Periods.CreateAcademicPeriod;
 
 public class CreateAcademicPeriodOut : IApiDto<CreateAcademicPeriodOut>
 {

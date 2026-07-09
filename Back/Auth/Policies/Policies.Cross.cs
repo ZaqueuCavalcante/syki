@@ -1,4 +1,4 @@
-namespace Syki.Back.Auth.Policies;
+namespace Estud.Back.Auth.Policies;
 
 public static partial class Policies
 {
@@ -7,7 +7,7 @@ public static partial class Policies
     public static AuthorizationBuilder AddCrossPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetHomeStats, UserType.Manager);
+            .AddEstudPolicy(GetHomeStats, UserType.Manager);
 
         return builder;
     }

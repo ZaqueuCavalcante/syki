@@ -1,10 +1,10 @@
-using Syki.Back.Domain.Teachers;
+using Estud.Back.Domain.Teachers;
 
-namespace Syki.Back.Features.Teachers.GetTeachers;
+namespace Estud.Back.Features.Teachers.GetTeachers;
 
 public static class GetTeachersMapper
 {
-    extension(SykiTeacher teacher)
+    extension(EstudTeacher teacher)
     {
         public GetTeachersItemOut ToGetTeachersItemOut()
         {

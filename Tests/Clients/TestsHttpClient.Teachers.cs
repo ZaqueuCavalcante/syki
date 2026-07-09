@@ -1,14 +1,14 @@
 using System.Net.Http.Json;
-using Syki.Back.Features.Teachers.GetTeacher;
-using Syki.Back.Features.Teachers.GetTeachers;
-using Syki.Back.Features.Teachers.CreateTeacher;
-using Syki.Back.Features.Teachers.UpdateTeacher;
-using Syki.Back.Features.Teachers.AssignCampiToTeacher;
-using Syki.Back.Features.Teachers.GetTeacherPotentialCampi;
-using Syki.Back.Features.Teachers.AssignDisciplinesToTeacher;
-using Syki.Back.Features.Teachers.GetTeacherPotentialDisciplines;
+using Estud.Back.Features.Teachers.GetTeacher;
+using Estud.Back.Features.Teachers.GetTeachers;
+using Estud.Back.Features.Teachers.CreateTeacher;
+using Estud.Back.Features.Teachers.UpdateTeacher;
+using Estud.Back.Features.Teachers.AssignCampiToTeacher;
+using Estud.Back.Features.Teachers.GetTeacherPotentialCampi;
+using Estud.Back.Features.Teachers.AssignDisciplinesToTeacher;
+using Estud.Back.Features.Teachers.GetTeacherPotentialDisciplines;
 
-namespace Syki.Tests.Integration.Clients;
+namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {
@@ -70,7 +70,7 @@ public partial class TestsHttpClient
     public async Task<OneOf<SuccessOut, ErrorOut>> UpdateTeacher(
         int id,
         string name = "Richard Feynman",
-        string email = "feynman@syki.com"
+        string email = "feynman@estud.com"
     ) {
         var data = new UpdateTeacherIn { Name = name, Email = email };
         var response = await http.PutAsJsonAsync($"/teachers/{id}", data);

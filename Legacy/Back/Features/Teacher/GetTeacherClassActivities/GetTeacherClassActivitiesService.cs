@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Teacher.GetTeacherClassActivities;
+namespace Estud.Back.Features.Teacher.GetTeacherClassActivities;
 
-public class GetTeacherClassActivitiesService(SykiDbContext ctx) : ISykiService
+public class GetTeacherClassActivitiesService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<List<TeacherClassActivityOut>, SykiError>> Get(Guid teacherId, Guid classId)
+    public async Task<OneOf<List<TeacherClassActivityOut>, EstudError>> Get(Guid teacherId, Guid classId)
     {
         var classOk = await ctx.Classes.AnyAsync(x => x.Id == classId && x.TeacherId == teacherId);
         if (!classOk) return new ClassNotFound();

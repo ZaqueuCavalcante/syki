@@ -1,14 +1,14 @@
-using Syki.Back.Auth.Schemes;
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Auth.Schemes;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Auth.Policies;
+namespace Estud.Back.Auth.Policies;
 
 public static partial class Policies
 {
     /// <summary>
     /// Basta que o usuário esteja logado.
     /// </summary>
-    public static AuthorizationBuilder AddSykiPolicy(this AuthorizationBuilder builder, string name)
+    public static AuthorizationBuilder AddEstudPolicy(this AuthorizationBuilder builder, string name)
     {
         return builder.AddPolicy(name, policy => policy
             .RequireAuthenticatedUser()
@@ -18,7 +18,7 @@ public static partial class Policies
     /// <summary>
     /// O usuário precisa estar logado e seu perfil de acesso deve possuir as permissões especificadas.
     /// </summary>
-    public static AuthorizationBuilder AddSykiPolicy(this AuthorizationBuilder builder, string name, params SykiPermission[] permissions)
+    public static AuthorizationBuilder AddEstudPolicy(this AuthorizationBuilder builder, string name, params EstudPermission[] permissions)
     {
         var ids = permissions.Select(x => x.Id).ToList();
 
@@ -31,7 +31,7 @@ public static partial class Policies
     /// <summary>
     /// O usuário precisa estar logado e seu perfil de acesso deve possuir o tipo base e as permissões especificadas.
     /// </summary>
-    public static AuthorizationBuilder AddSykiPolicy(this AuthorizationBuilder builder, string name, UserType userType, params SykiPermission[] permissions)
+    public static AuthorizationBuilder AddEstudPolicy(this AuthorizationBuilder builder, string name, UserType userType, params EstudPermission[] permissions)
     {
         var ids = permissions.Select(x => x.Id).ToList();
 

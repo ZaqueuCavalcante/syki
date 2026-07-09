@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.CourseCurriculums.EditCourseCurriculum;
+namespace Estud.Back.Features.CourseCurriculums.EditCourseCurriculum;
 
 [ApiController, Authorize(Policies.EditCourseCurriculum)]
 public class EditCourseCurriculumController(EditCourseCurriculumService service) : ControllerBase

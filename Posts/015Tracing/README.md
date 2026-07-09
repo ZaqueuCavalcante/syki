@@ -12,7 +12,7 @@ O **Jaeger** é uma ferramenta open-source para pesquisa, análise e visualizaç
 
 Na prática, como tudo isso funciona?
 
-A imagem abaixo mostra o trace de um fluxo de negócio pertencente ao Syki (github.com/ZaqueuCavalcante/syki), um projeto para gerenciamento educacional que estou desenvolvendo.
+A imagem abaixo mostra o trace de um fluxo de negócio pertencente ao Estud (github.com/ZaqueuCavalcante/estud), um projeto para gerenciamento educacional que estou desenvolvendo.
 
 Trata-se da criação de uma atividade pelo professor, decomposta em detalhes a seguir:
 

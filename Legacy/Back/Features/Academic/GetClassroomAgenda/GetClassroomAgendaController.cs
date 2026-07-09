@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.GetClassroomAgenda;
+namespace Estud.Back.Features.Academic.GetClassroomAgenda;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

@@ -1,10 +1,10 @@
-using Syki.Back.Domain.Periods;
+using Estud.Back.Domain.Periods;
 
-namespace Syki.Back.Features.Periods.CreateAcademicPeriod;
+namespace Estud.Back.Features.Periods.CreateAcademicPeriod;
 
-public class CreateAcademicPeriodService(SykiDbContext ctx) : ISykiService
+public class CreateAcademicPeriodService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<CreateAcademicPeriodOut, SykiError>> Create(CreateAcademicPeriodIn data)
+    public async Task<OneOf<CreateAcademicPeriodOut, EstudError>> Create(CreateAcademicPeriodIn data)
     {
         var institutionId = ctx.RequestUser.InstitutionId;
 

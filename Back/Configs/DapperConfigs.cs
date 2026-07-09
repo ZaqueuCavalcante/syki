@@ -1,7 +1,7 @@
 using Dapper;
-using Syki.Back.Database.Mappers;
+using Estud.Back.Database.Mappers;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class DapperConfigs
 {

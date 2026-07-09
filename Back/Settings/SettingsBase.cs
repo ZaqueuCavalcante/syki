@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Syki.Back.Settings;
+namespace Estud.Back.Settings;
 
 public abstract class SettingsBase
 {

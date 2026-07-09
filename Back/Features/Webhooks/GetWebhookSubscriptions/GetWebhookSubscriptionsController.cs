@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Webhooks.GetWebhookSubscriptions;
+namespace Estud.Back.Features.Webhooks.GetWebhookSubscriptions;
 
 [ApiController, Authorize(Policies.GetWebhookSubscriptions)]
 public class GetWebhookSubscriptionsController(GetWebhookSubscriptionsService service) : ControllerBase

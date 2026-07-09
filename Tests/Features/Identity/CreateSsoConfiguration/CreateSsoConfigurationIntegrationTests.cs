@@ -1,6 +1,6 @@
-using Syki.Back.Features.Identity.CreateSsoConfiguration;
+using Estud.Back.Features.Identity.CreateSsoConfiguration;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {

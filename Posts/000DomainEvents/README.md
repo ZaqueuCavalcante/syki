@@ -36,7 +36,7 @@ Visando facilitar minha vida e trazer agilidade pro desenvolvimento, criei um ú
 
 Acompanhe abaixo como resolvi esses problemas e comente como você os resolveria também!
 
-> Você pode ver o código aqui (https://github.com/ZaqueuCavalcante/syki) e a aplicação rodando aqui (https://app.syki.com.br). Venho postando no LinkedIn todas as atualizações de desenvolvimento do projeto (https://www.linkedin.com/in/zaqueu-cavalcante).
+> Você pode ver o código aqui (https://github.com/ZaqueuCavalcante/estud) e a aplicação rodando aqui (https://app.estud.com.br). Venho postando no LinkedIn todas as atualizações de desenvolvimento do projeto (https://www.linkedin.com/in/zaqueu-cavalcante).
 
 ## Sumário
 - 0️⃣ - Arquitetura do sistema
@@ -58,7 +58,7 @@ Os sistema é basicamente composto por 4 componentes:
 Acompanhe no diagrama abaixo todos os conceitos que fazem parte da solução final:
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/clean_async_processing.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/000DomainEvents/clean_async_processing.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 - **Entidade**: uma classe do sistema capaz de emitir um evento de domínio.
@@ -90,7 +90,7 @@ Acompanhe no diagrama abaixo todos os conceitos que fazem parte da solução fin
 Vamos alterar um pouco o diagrama anterior e usá-lo para entender como todo o fluxo de criação de nova atividade foi implementado. Agrupei os passos relacionados em cores específicas para facilitar o entendimento.
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/steps_async_processing.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/000DomainEvents/steps_async_processing.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 - **(0)** - Professor preenche os dados da nova atividade no Client, que envia essas informações para a API no endpoint POST /activities
@@ -128,7 +128,7 @@ Perceba que todo esse aparato de eventos, comandos e lotes pode ser utilizado em
 O seed de dados foi dividido em uma sequência de passos menores, onde cada um executa ao final do outro de maneira atômica (worflow). Dessa forma, quando uma nova instituição é criada, emitimos um evento de domínio que enfilera o primeiro comando no seu handler. A partir daí, cada comando enfilera o próximo a ser executado, formando toda cadeia de processamento.
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/event_commands.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/000DomainEvents/event_commands.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 - **InstitutionCreatedDomainEvent**: Instituição Criada
@@ -150,7 +150,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Filtros por status, tipo, instituição e status dos comandos enfileirados pelo evento
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/events_page.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/000DomainEvents/events_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ### Detalhes de um evento
@@ -160,7 +160,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Listagem com os comandos enfileirados pelo evento (+ acesso aos detalhes de cada comando)
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/event_details_page.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/000DomainEvents/event_details_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ### Listagem de comandos
@@ -169,7 +169,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Acesso aos detalhes de cada comando
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/commands_page.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/000DomainEvents/commands_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ### Detalhes de um comando
@@ -187,7 +187,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Listagem com os lotes criados pelo comando, caso exista algum
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/command_details_page.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/000DomainEvents/command_details_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ### Listagem de lotes
@@ -196,7 +196,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
 - Acesso aos detalhes de cada lote
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/batches_page.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/000DomainEvents/batches_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ### Detalhes de um lote
@@ -207,7 +207,7 @@ Perceba que é possível navegar tanto no sentido cronológico de processamento 
     - Um comando
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/000DomainEvents/batch_details_page.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/000DomainEvents/batch_details_page.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
 ## 5️⃣ - Pontos de melhoria

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Students.EnrollStudentInCourseOffering;
+namespace Estud.Back.Features.Students.EnrollStudentInCourseOffering;
 
 public class EnrollStudentInCourseOfferingOut : IApiDto<EnrollStudentInCourseOfferingOut>
 {

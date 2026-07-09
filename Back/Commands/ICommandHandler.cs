@@ -1,7 +1,7 @@
 using System.Text.Json;
-using Syki.Back.Converters;
+using Estud.Back.Converters;
 
-namespace Syki.Back.Commands;
+namespace Estud.Back.Commands;
 
 public interface ICommandHandler<T> where T : ICommand
 {
@@ -19,7 +19,7 @@ public class CommandInvoker<T> : ICommandInvoker where T : ICommand
     private static readonly JsonSerializerOptions _options = new()
     {
         PropertyNameCaseInsensitive = true,
-        Converters = { new SykiStringEnumConverter() },
+        Converters = { new EstudStringEnumConverter() },
     };
 
     public async Task Invoke(IServiceProvider sp, int commandId, string json)

@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Teachers.AssignDisciplinesToTeacher;
+namespace Estud.Back.Features.Teachers.AssignDisciplinesToTeacher;
 
-public class AssignDisciplinesToTeacherService(SykiDbContext ctx) : ISykiService
+public class AssignDisciplinesToTeacherService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Assign(int id, AssignDisciplinesToTeacherIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Assign(int id, AssignDisciplinesToTeacherIn data)
     {
         var teacher = await ctx.Teachers.Include(t => t.Disciplines)
             .FirstOrDefaultAsync(t => t.InstitutionId == ctx.RequestUser.InstitutionId && t.Id == id);
@@ -17,6 +17,6 @@ public class AssignDisciplinesToTeacherService(SykiDbContext ctx) : ISykiService
         teacher.Disciplines = disciplines;
         await ctx.SaveChangesAsync();
 
-        return SykiSuccess.I;
+        return EstudSuccess.I;
     }
 }

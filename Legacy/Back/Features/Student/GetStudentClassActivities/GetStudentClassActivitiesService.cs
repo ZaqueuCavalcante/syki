@@ -1,10 +1,10 @@
-namespace Syki.Back.Features.Student.GetStudentClassActivities;
+namespace Estud.Back.Features.Student.GetStudentClassActivities;
 
-public class GetStudentClassActivitiesService(SykiDbContext ctx) : ISykiService
+public class GetStudentClassActivitiesService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<List<StudentClassActivityOut>, SykiError>> Get(Guid userId, Guid classId)
+    public async Task<OneOf<List<StudentClassActivityOut>, EstudError>> Get(Guid userId, Guid classId)
     {
-        var classOk = await ctx.ClassesStudents.AnyAsync(x => x.ClassId == classId && x.SykiStudentId == userId);
+        var classOk = await ctx.ClassesStudents.AnyAsync(x => x.ClassId == classId && x.EstudStudentId == userId);
         if (!classOk) return new ClassNotFound();
 
         var activities = await ctx.ClassActivities.AsNoTracking()
@@ -14,7 +14,7 @@ public class GetStudentClassActivitiesService(SykiDbContext ctx) : ISykiService
             .ToListAsync();
         var ids = activities.ConvertAll(x => x.Id);
         var works = await ctx.ClassActivityWorks.AsNoTracking()
-            .Where(x => ids.Contains(x.ClassActivityId) && x.SykiStudentId == userId).ToListAsync();
+            .Where(x => ids.Contains(x.ClassActivityId) && x.EstudStudentId == userId).ToListAsync();
 
         var result = new List<StudentClassActivityOut>();
         foreach (var activity in activities)

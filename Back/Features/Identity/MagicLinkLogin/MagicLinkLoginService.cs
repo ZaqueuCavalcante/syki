@@ -1,8 +1,8 @@
-using Syki.Back.Features.Cross.SignIn;
+using Estud.Back.Features.Cross.SignIn;
 
-namespace Syki.Back.Features.Identity.MagicLinkLogin;
+namespace Estud.Back.Features.Identity.MagicLinkLogin;
 
-public class MagicLinkLoginService(SykiDbContext ctx, SignInService signInService) : ISykiService
+public class MagicLinkLoginService(EstudDbContext ctx, SignInService signInService) : IEstudService
 {
     private class Validator : AbstractValidator<MagicLinkLoginIn>
     {
@@ -13,7 +13,7 @@ public class MagicLinkLoginService(SykiDbContext ctx, SignInService signInServic
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<MagicLinkLoginOut, SykiError>> Login(MagicLinkLoginIn data)
+    public async Task<OneOf<MagicLinkLoginOut, EstudError>> Login(MagicLinkLoginIn data)
     {
         if (V.Run(data, out var error)) return error;
 

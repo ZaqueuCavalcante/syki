@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.GetPermissions;
+namespace Estud.Back.Features.Identity.GetPermissions;
 
 [ApiController, Authorize(Policies.GetPermissions)]
 public class GetPermissionsController(GetPermissionsService service) : ControllerBase

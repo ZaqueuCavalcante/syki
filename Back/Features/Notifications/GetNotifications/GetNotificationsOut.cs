@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Syki.Back.Features.Notifications.GetNotifications;
+namespace Estud.Back.Features.Notifications.GetNotifications;
 
 public class GetNotificationsOut : IApiDto<GetNotificationsOut>
 {

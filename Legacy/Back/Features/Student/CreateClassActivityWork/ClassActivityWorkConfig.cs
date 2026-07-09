@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Student.CreateClassActivityWork;
+namespace Estud.Back.Features.Student.CreateClassActivityWork;
 
 public class ClassActivityWorkConfig : IEntityTypeConfiguration<ClassActivityWork>
 {
@@ -9,9 +9,9 @@ public class ClassActivityWorkConfig : IEntityTypeConfiguration<ClassActivityWor
         classActivityWork.HasKey(x => x.Id);
         classActivityWork.Property(x => x.Id).ValueGeneratedNever();
 
-        classActivityWork.HasOne(x => x.SykiStudent)
+        classActivityWork.HasOne(x => x.EstudStudent)
             .WithMany()
             .HasPrincipalKey(x => x.Id)
-            .HasForeignKey(x => x.SykiStudentId);
+            .HasForeignKey(x => x.EstudStudentId);
     }
 }

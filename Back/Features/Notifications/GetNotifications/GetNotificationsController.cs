@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Notifications.GetNotifications;
+namespace Estud.Back.Features.Notifications.GetNotifications;
 
 [ApiController, Authorize(Policies.GetNotifications)]
 public class GetNotificationsController(GetNotificationsService service) : ControllerBase

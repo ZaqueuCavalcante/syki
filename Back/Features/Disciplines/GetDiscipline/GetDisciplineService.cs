@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Disciplines.GetDiscipline;
+namespace Estud.Back.Features.Disciplines.GetDiscipline;
 
-public class GetDisciplineService(SykiDbContext ctx) : ISykiService
+public class GetDisciplineService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetDisciplineOut, SykiError>> Get(int id)
+    public async Task<OneOf<GetDisciplineOut, EstudError>> Get(int id)
     {
         var discipline = await ctx.Disciplines.AsNoTracking().Include(d => d.Links)
             .FirstOrDefaultAsync(d => d.InstitutionId == ctx.RequestUser.InstitutionId && d.Id == id);

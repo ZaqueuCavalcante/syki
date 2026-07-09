@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Cross.GetHomeStats;
+namespace Estud.Back.Features.Cross.GetHomeStats;
 
 public class GetHomeStatsOut : IApiDto<GetHomeStatsOut>
 {

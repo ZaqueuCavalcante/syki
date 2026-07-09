@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Courses;
+namespace Estud.Back.Domain.Courses;
 
 /// <summary>
 /// Vínculo entre curso e disciplina

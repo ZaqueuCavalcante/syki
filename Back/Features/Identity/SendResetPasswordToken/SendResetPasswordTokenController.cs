@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.SendResetPasswordToken;
+namespace Estud.Back.Features.Identity.SendResetPasswordToken;
 
 [ApiController, EnableRateLimiting(RateLimitingConfigs.SensitivePolicy)]
 public class SendResetPasswordTokenController(SendResetPasswordTokenService service) : ControllerBase

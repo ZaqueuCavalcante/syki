@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Periods.GetAcademicPeriods;
+namespace Estud.Back.Features.Periods.GetAcademicPeriods;
 
-public class GetAcademicPeriodsService(SykiDbContext ctx) : ISykiService
+public class GetAcademicPeriodsService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetAcademicPeriodsOut> Get()
     {

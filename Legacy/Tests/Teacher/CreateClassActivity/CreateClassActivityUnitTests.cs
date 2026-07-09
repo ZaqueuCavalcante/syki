@@ -1,6 +1,6 @@
-using Syki.Back.Features.Teacher.CreateClassActivity;
+using Estud.Back.Features.Teacher.CreateClassActivity;
 
-namespace Syki.Tests.Features.Teacher.CreateClassActivity;
+namespace Estud.Tests.Features.Teacher.CreateClassActivity;
 
 public class CreateClassActivityUnitTests
 {
@@ -81,7 +81,7 @@ public class CreateClassActivityUnitTests
     {
         // Arrange
         var @class = TestData.GetClass();
-        OneOf<SykiSuccess, SykiError> result = new SykiSuccess();
+        OneOf<EstudSuccess, EstudError> result = new EstudSuccess();
 
         foreach (var weight in weights)
         {

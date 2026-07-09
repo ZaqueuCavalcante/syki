@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Identity;
-using Syki.Back.Domain.Students;
-using Syki.Back.Domain.Webhooks;
+using Estud.Back.Domain.Identity;
+using Estud.Back.Domain.Students;
+using Estud.Back.Domain.Webhooks;
 
-namespace Syki.Back.Features.Students.CreateStudent;
+namespace Estud.Back.Features.Students.CreateStudent;
 
-public class CreateStudentService(SykiDbContext ctx, UserManager<SykiUser> userManager) : ISykiService
+public class CreateStudentService(EstudDbContext ctx, UserManager<EstudUser> userManager) : IEstudService
 {
-    public async Task<OneOf<CreateStudentOut, SykiError>> Create(CreateStudentIn data)
+    public async Task<OneOf<CreateStudentOut, EstudError>> Create(CreateStudentIn data)
     {
         var email = data.Email.ToLowerInvariant();
         var emailUsed = await ctx.Users.AnyAsync(u => u.Email == email);
@@ -15,9 +15,9 @@ public class CreateStudentService(SykiDbContext ctx, UserManager<SykiUser> userM
         var studentRole = await ctx.GetStudentRole();
         var institutionId = ctx.RequestUser.InstitutionId;
 
-        var user = new SykiUser(institutionId, data.Name, email);
-        var student = new SykiStudent(user, institutionId, data.Name);
-        var userRole = new SykiUserRole(institutionId, user, studentRole.Id);
+        var user = new EstudUser(institutionId, data.Name, email);
+        var student = new EstudStudent(user, institutionId, data.Name);
+        var userRole = new EstudUserRole(institutionId, user, studentRole.Id);
         ctx.AddRange(student, userRole);
 
         // TODO: Refactor to use Domain Events Pattern
@@ -29,7 +29,7 @@ public class CreateStudentService(SykiDbContext ctx, UserManager<SykiUser> userM
             ctx.Add(webhookCall);
         }
 
-        await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");
+        await userManager.CreateAsync(user, $"Estud@{Guid.NewGuid()}");
 
         return new CreateStudentOut { Id = student.Id };
     }

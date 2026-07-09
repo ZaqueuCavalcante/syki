@@ -1,4 +1,4 @@
-namespace Syki.Tests.Base;
+namespace Estud.Tests.Base;
 
 public static class TestData
 {
@@ -8,9 +8,9 @@ public static class TestData
         {
             "",
             " ",
-            "syki",
-            "syki123",
-            "Syki123",
+            "estud",
+            "estud123",
+            "Estud123",
             "lalal.com",
             "12@3lalala",
             "5816811681816",
@@ -26,7 +26,7 @@ public static class TestData
         {
             "",
             " ",
-            "syki",
+            "estud",
             "5464",
             "123456",
             "lalal.com",

@@ -1,7 +1,7 @@
-using Syki.Back.Features.Academic.CreateClass;
-using Syki.Back.Features.Academic.CreateStudent;
+using Estud.Back.Features.Academic.CreateClass;
+using Estud.Back.Features.Academic.CreateStudent;
 
-namespace Syki.Back.Features.Student.CreateStudentEnrollment;
+namespace Estud.Back.Features.Student.CreateStudentEnrollment;
 
 public class ClassStudentConfig : IEntityTypeConfiguration<ClassStudent>
 {
@@ -9,16 +9,16 @@ public class ClassStudentConfig : IEntityTypeConfiguration<ClassStudent>
     {
         classStudent.ToTable("classes__students");
 
-        classStudent.HasKey(t => new { t.ClassId, t.SykiStudentId });
+        classStudent.HasKey(t => new { t.ClassId, t.EstudStudentId });
 
         classStudent.HasOne<Class>()
             .WithMany()
             .HasPrincipalKey(x => x.Id)
             .HasForeignKey(x => x.ClassId);
 
-        classStudent.HasOne<SykiStudent>()
+        classStudent.HasOne<EstudStudent>()
             .WithMany()
             .HasPrincipalKey(x => x.Id)
-            .HasForeignKey(x => x.SykiStudentId);
+            .HasForeignKey(x => x.EstudStudentId);
     }
 }

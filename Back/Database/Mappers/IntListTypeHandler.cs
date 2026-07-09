@@ -1,7 +1,7 @@
 using Dapper;
 using System.Data;
 
-namespace Syki.Back.Database.Mappers;
+namespace Estud.Back.Database.Mappers;
 
 public class IntListTypeHandler : SqlMapper.TypeHandler<List<int>>
 {

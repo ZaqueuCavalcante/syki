@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Disciplines.GetDiscipline;
+namespace Estud.Back.Features.Disciplines.GetDiscipline;
 
 public class GetDisciplineOut : IApiDto<GetDisciplineOut>
 {

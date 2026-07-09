@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Periods;
+using Estud.Back.Domain.Periods;
 
-namespace Syki.Back.Features.Periods.GetAcademicPeriods;
+namespace Estud.Back.Features.Periods.GetAcademicPeriods;
 
 public static class GetAcademicPeriodsMapper
 {

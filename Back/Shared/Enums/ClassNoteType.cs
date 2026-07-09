@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Estud.Back.Shared;
 
 /// <summary>
 /// Tipo de Nota de um Aluno dentro de uma Turma

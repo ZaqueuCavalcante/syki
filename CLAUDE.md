@@ -53,7 +53,7 @@ Botão com `UTooltip` que abre um modal/slideover ao clicar mantém o foco depoi
 
 ## Project Overview
 
-**Syki** is an open-source academic management system (SGA) for educational institutions.
+**Estud** is an open-source academic management system (SGA) for educational institutions.
 
 ## Tech Stack
 
@@ -130,17 +130,17 @@ Test files mirror the same folder structure under `Tests/Features/`.
 
 ### Result Pattern
 
-Services return `OneOf<TOut, SykiError>`. Controllers use:
+Services return `OneOf<TOut, EstudError>`. Controllers use:
 
 ```csharp
 var result = await service.Create(data);
 return result.Match<IActionResult>(Ok, BadRequest);
 ```
 
-Errors are singletons defined in `Back/Errors/SykiInvalidErrors.cs` and `SykiNotFoundErrors.cs`:
+Errors are singletons defined in `Back/Errors/EstudInvalidErrors.cs` and `EstudNotFoundErrors.cs`:
 
 ```csharp
-public class InvalidCourseName : SykiError
+public class InvalidCourseName : EstudError
 {
     public static readonly InvalidCourseName I = new();
     public override string Code { get; set; } = nameof(InvalidCourseName);
@@ -152,9 +152,9 @@ Validators are nested private classes inside the Service and run via `V.Run(data
 
 ### DbContext Conventions
 
-`SykiDbContext` carries the current `InstitutionId` and `UserId` populated per-request (via middleware). Use these directly in services for multi-tenant scoping — never pass institution/user IDs manually through the call chain.
+`EstudDbContext` carries the current `InstitutionId` and `UserId` populated per-request (via middleware). Use these directly in services for multi-tenant scoping — never pass institution/user IDs manually through the call chain.
 
-EF is configured with snake_case naming (`UseSnakeCaseNamingConvention`) and the `syki` schema.
+EF is configured with snake_case naming (`UseSnakeCaseNamingConvention`) and the `estud` schema.
 
 ### Async Command Processing
 
@@ -210,7 +210,7 @@ internal class ErrorsExamples : ErrorExamplesProvider<
 #### `CreateRoleService.cs` — business logic
 
 ```csharp
-public class CreateRoleService(SykiDbContext ctx) : ISykiService
+public class CreateRoleService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<CreateRoleIn>
     {
@@ -223,7 +223,7 @@ public class CreateRoleService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CreateRoleOut, SykiError>> Create(CreateRoleIn data)
+    public async Task<OneOf<CreateRoleOut, EstudError>> Create(CreateRoleIn data)
     {
         if (V.Run(data, out var error)) return error;   // validation first
 
@@ -231,7 +231,7 @@ public class CreateRoleService(SykiDbContext ctx) : ISykiService
         var exists = await ctx.Roles.AnyAsync(x => x.OwnerId == orgId && x.NormalizedName == ...);
         if (exists) return RoleNameAlreadyExists.I;     // domain checks after validation
 
-        var role = new SykiRole(orgId, data.Name, data.Description, data.Permissions);
+        var role = new EstudRole(orgId, data.Name, data.Description, data.Permissions);
         ctx.Add(role);
         await ctx.SaveChangesAsync();
 
@@ -240,11 +240,11 @@ public class CreateRoleService(SykiDbContext ctx) : ISykiService
 }
 ```
 
-- `ISykiService` marker interface on every service.
+- `IEstudService` marker interface on every service.
 - `Validator` is always a **private nested class**; static singleton `V`.
 - Validation runs first via `V.Run(data, out var error)`.
 - Institution/user context always comes from `ctx.RequestUser` — never from method parameters.
-- Return `OneOf<TOut, SykiError>`; early-return errors as singletons (`.I`).
+- Return `OneOf<TOut, EstudError>`; early-return errors as singletons (`.I`).
 
 #### `CreateRoleIn.cs` — input DTO
 

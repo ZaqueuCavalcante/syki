@@ -4,7 +4,7 @@ Primitive Obsession é um anti-pattern dentro do Domain Driven Design, sendo car
 
 Isso deixa o domínio menos expressivo, dificultando seu entendimento.
 
-Vamos para um caso de uso mais completo, retirado do Syki (https://github.com/ZaqueuCavalcante/syki), um sistema de gerenciamento de instituições de ensino open-source.
+Vamos para um caso de uso mais completo, retirado do Estud (https://github.com/ZaqueuCavalcante/estud), um sistema de gerenciamento de instituições de ensino open-source.
 
 Na imagem do post temos o conceito de Comando, que se relaciona com outras entidades do sistema:
 

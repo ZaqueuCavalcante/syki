@@ -1,9 +1,9 @@
-namespace Syki.Back.Commands;
+namespace Estud.Back.Commands;
 
 [CommandDescription("Comando de teste que falha nas primeiras N execuções e depois tem sucesso.")]
 public record TestRetryCommand(int FailUntilAttempt) : ICommand;
 
-public class TestRetryCommandHandler(SykiDbContext ctx) : ICommandHandler<TestRetryCommand>
+public class TestRetryCommandHandler(EstudDbContext ctx) : ICommandHandler<TestRetryCommand>
 {
     public async Task Handle(int commandId, TestRetryCommand command)
     {

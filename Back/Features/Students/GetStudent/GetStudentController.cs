@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Students.GetStudent;
+namespace Estud.Back.Features.Students.GetStudent;
 
 [ApiController, Authorize(Policies.GetStudent)]
 public class GetStudentController(GetStudentService service) : ControllerBase

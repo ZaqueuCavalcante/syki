@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 
-namespace Syki.Tests.Base;
+namespace Estud.Tests.Base;
 
 extern alias Back;
 

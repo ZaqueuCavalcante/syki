@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.GetTeacherPotentialCampi;
+namespace Estud.Back.Features.Teachers.GetTeacherPotentialCampi;
 
 [ApiController, Authorize(Policies.GetTeacherPotentialCampi)]
 public class GetTeacherPotentialCampiController(GetTeacherPotentialCampiService service) : ControllerBase

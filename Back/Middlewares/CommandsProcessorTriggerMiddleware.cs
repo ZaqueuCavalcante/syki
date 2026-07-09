@@ -1,10 +1,10 @@
 using Quartz;
 
-namespace Syki.Back.Middlewares;
+namespace Estud.Back.Middlewares;
 
 public class CommandsProcessorTriggerMiddleware(RequestDelegate next)
 {
-    public async Task InvokeAsync(HttpContext context, SykiDbContext ctx, ISchedulerFactory factory)
+    public async Task InvokeAsync(HttpContext context, EstudDbContext ctx, ISchedulerFactory factory)
     {
         await next(context);
 

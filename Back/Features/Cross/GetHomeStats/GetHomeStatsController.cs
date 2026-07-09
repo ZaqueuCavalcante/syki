@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Cross.GetHomeStats;
+namespace Estud.Back.Features.Cross.GetHomeStats;
 
 [ApiController, Authorize(Policies.GetHomeStats)]
 public class GetHomeStatsController(GetHomeStatsService service) : ControllerBase

@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Students;
+namespace Estud.Back.Domain.Students;
 
 /// <summary>
 /// Vínculo entre um Aluno e uma Oferta de Curso.

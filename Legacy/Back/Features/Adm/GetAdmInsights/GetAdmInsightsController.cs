@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Adm.GetAdmInsights;
+namespace Estud.Back.Features.Adm.GetAdmInsights;
 
 [ApiController, Authorize]
 public class GetAdmInsightsController(GetAdmInsightsService service) : ControllerBase

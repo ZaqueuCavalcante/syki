@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Teacher.GetTeacherClassStudents;
+namespace Estud.Back.Features.Teacher.GetTeacherClassStudents;
 
-public class GetTeacherClassStudentsService(SykiDbContext ctx) : ISykiService
+public class GetTeacherClassStudentsService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<List<TeacherClassStudentOut>, SykiError>> Get(Guid teacherId, Guid classId)
+    public async Task<OneOf<List<TeacherClassStudentOut>, EstudError>> Get(Guid teacherId, Guid classId)
     {
         var @class = await ctx.Classes.AsNoTracking()
             .Include(x => x.Students)
@@ -29,7 +29,7 @@ public class GetTeacherClassStudentsService(SykiDbContext ctx) : ISykiService
             var presences = classAttendances.Count(x => x.StudentId == student.Id && x.Present);
             student.Frequency = attendances > 0 ? Math.Round(100M*(1M * presences / (1M * attendances)), 2) : 0;
   
-            var works = classActivities.SelectMany(x => x.Works.Where(w => w.SykiStudentId == student.Id))
+            var works = classActivities.SelectMany(x => x.Works.Where(w => w.EstudStudentId == student.Id))
                 .Select(x => new ClassActivityWorkDto(x.ClassActivityId, x.Note))
                 .ToList();
 

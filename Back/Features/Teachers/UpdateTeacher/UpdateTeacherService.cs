@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Teachers.UpdateTeacher;
+namespace Estud.Back.Features.Teachers.UpdateTeacher;
 
-public class UpdateTeacherService(SykiDbContext ctx) : ISykiService
+public class UpdateTeacherService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<UpdateTeacherIn>
     {
@@ -13,7 +13,7 @@ public class UpdateTeacherService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<SykiSuccess, SykiError>> Update(int id, UpdateTeacherIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Update(int id, UpdateTeacherIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -34,6 +34,6 @@ public class UpdateTeacherService(SykiDbContext ctx) : ISykiService
 
         await ctx.SaveChangesAsync();
 
-        return SykiSuccess.I;
+        return EstudSuccess.I;
     }
 }

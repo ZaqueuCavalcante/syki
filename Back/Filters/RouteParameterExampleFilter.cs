@@ -2,7 +2,7 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Syki.Back.Filters;
+namespace Estud.Back.Filters;
 
 public class IdParameterExamplesFilter : IOperationFilter
 {

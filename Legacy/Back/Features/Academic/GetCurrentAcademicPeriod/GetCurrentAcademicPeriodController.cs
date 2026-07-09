@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.GetCurrentAcademicPeriod;
+namespace Estud.Back.Features.Academic.GetCurrentAcademicPeriod;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

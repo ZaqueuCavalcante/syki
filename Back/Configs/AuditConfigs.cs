@@ -1,10 +1,10 @@
 using Audit.Core;
-using Syki.Back.Audit;
+using Estud.Back.Audit;
 using Audit.EntityFramework;
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 using AuditConfig = Audit.Core.Configuration;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class AuditConfigs
 {
@@ -12,7 +12,7 @@ public static class AuditConfigs
     {
         AuditConfig.Setup().UseEntityFramework(_ => _
             .AuditTypeExplicitMapper(_ => _
-                .Map<SykiUser, AuditTrail>()
+                .Map<EstudUser, AuditTrail>()
                 .Map<MagicLink, AuditTrail>()
                 .AuditEntityAction<AuditTrail>((evt, entry, trail) =>
                 {
@@ -23,7 +23,7 @@ public static class AuditConfigs
 
         AuditConfig.AddCustomAction(ActionType.OnScopeCreated, scope =>
         {
-            var dbContext = scope.GetEntityFrameworkEvent().GetDbContext() as SykiDbContext;
+            var dbContext = scope.GetEntityFrameworkEvent().GetDbContext() as EstudDbContext;
 
             scope.SetUserId(dbContext.RequestUser.Id);
             scope.SetInstitutionId(dbContext.RequestUser.InstitutionId);

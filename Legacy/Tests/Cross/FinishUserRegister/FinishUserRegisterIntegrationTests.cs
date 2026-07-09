@@ -1,6 +1,6 @@
-using Syki.Back.Features.Cross.CreateInstitution;
+using Estud.Back.Features.Cross.CreateInstitution;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {

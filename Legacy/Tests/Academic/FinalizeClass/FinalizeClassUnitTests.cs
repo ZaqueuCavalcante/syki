@@ -1,4 +1,4 @@
-namespace Syki.Tests.Features.Academic.FinalizeClass;
+namespace Estud.Tests.Features.Academic.FinalizeClass;
 
 public class FinalizeClassUnitTests
 {

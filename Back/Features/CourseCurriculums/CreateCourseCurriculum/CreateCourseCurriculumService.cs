@@ -1,8 +1,8 @@
-using Syki.Back.Domain.CourseCurriculums;
+using Estud.Back.Domain.CourseCurriculums;
 
-namespace Syki.Back.Features.CourseCurriculums.CreateCourseCurriculum;
+namespace Estud.Back.Features.CourseCurriculums.CreateCourseCurriculum;
 
-public class CreateCourseCurriculumService(SykiDbContext ctx) : ISykiService
+public class CreateCourseCurriculumService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<CreateCourseCurriculumIn>
     {
@@ -14,7 +14,7 @@ public class CreateCourseCurriculumService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CreateCourseCurriculumOut, SykiError>> Create(CreateCourseCurriculumIn data)
+    public async Task<OneOf<CreateCourseCurriculumOut, EstudError>> Create(CreateCourseCurriculumIn data)
     {
         if (V.Run(data, out var error)) return error;
 

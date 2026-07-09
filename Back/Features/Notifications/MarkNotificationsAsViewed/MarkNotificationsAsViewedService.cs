@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Notifications.MarkNotificationsAsViewed;
+namespace Estud.Back.Features.Notifications.MarkNotificationsAsViewed;
 
-public class MarkNotificationsAsViewedService(SykiDbContext ctx) : ISykiService
+public class MarkNotificationsAsViewedService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<MarkNotificationsAsViewedIn>
     {
@@ -14,7 +14,7 @@ public class MarkNotificationsAsViewedService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<SykiSuccess, SykiError>> MarkAsViewed(MarkNotificationsAsViewedIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> MarkAsViewed(MarkNotificationsAsViewedIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -29,6 +29,6 @@ public class MarkNotificationsAsViewedService(SykiDbContext ctx) : ISykiService
 
         await ctx.SaveChangesAsync();
 
-        return SykiSuccess.I;
+        return EstudSuccess.I;
     }
 }

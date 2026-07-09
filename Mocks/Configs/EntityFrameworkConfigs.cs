@@ -1,11 +1,11 @@
-using Syki.Back.Database;
+using Estud.Back.Database;
 
-namespace Syki.Mocks.Configs;
+namespace Estud.Mocks.Configs;
 
 public static class EntityFrameworkConfigs
 {
     public static void AddEntityFrameworkConfigs(this WebApplicationBuilder builder)
     {
-        builder.Services.AddDbContext<SykiDbContext>();
+        builder.Services.AddDbContext<EstudDbContext>();
     }
 }

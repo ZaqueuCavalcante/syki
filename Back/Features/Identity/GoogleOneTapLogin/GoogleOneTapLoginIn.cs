@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.GoogleOneTapLogin;
+namespace Estud.Back.Features.Identity.GoogleOneTapLogin;
 
 public class GoogleOneTapLoginIn : IApiDto<GoogleOneTapLoginIn>
 {

@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Estud.Back.Shared;
 
 /// <summary>
 /// Dia da semana

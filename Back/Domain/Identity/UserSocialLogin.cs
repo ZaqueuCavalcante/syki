@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Identity;
+namespace Estud.Back.Domain.Identity;
 
 /// <summary>
 /// Links a user to a social login provider (Google, Microsoft, etc.).
@@ -14,7 +14,7 @@ public class UserSocialLogin
 
     public DateTime CreatedAt { get; set; }
 
-    public SykiUser? User { get; set; }
+    public EstudUser? User { get; set; }
 
     public UserSocialLogin() { }
 

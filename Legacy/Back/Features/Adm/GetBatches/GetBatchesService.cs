@@ -1,9 +1,9 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Adm.GetBatches;
+namespace Estud.Back.Features.Adm.GetBatches;
 
-public class GetBatchesService(NpgsqlDataSource dataSource) : ISykiService
+public class GetBatchesService(NpgsqlDataSource dataSource) : IEstudService
 {
     public async Task<List<CommandBatchTableOut>> Get(CommandBatchTableFilterIn filters)
     {
@@ -18,7 +18,7 @@ public class GetBatchesService(NpgsqlDataSource dataSource) : ISykiService
                 created_at,
                 processed_at
             FROM
-                syki.command_batches
+                estud.command_batches
             WHERE
                 (@Type IS NULL OR type = @Type)
                     AND

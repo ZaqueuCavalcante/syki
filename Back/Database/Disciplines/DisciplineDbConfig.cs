@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Disciplines;
+using Estud.Back.Domain.Disciplines;
 
-namespace Syki.Back.Database.Disciplines;
+namespace Estud.Back.Database.Disciplines;
 
 public class DisciplineDbConfig : IEntityTypeConfiguration<Discipline>
 {
     public void Configure(EntityTypeBuilder<Discipline> entity)
     {
-        entity.ToTable("disciplines", DbSchemas.Syki);
+        entity.ToTable("disciplines", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
 

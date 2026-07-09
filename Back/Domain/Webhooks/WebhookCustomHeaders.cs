@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Webhooks;
+namespace Estud.Back.Domain.Webhooks;
 
 public static class WebhookCustomHeaders
 {

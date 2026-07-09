@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.GetWebhookCall;
+namespace Estud.Back.Features.Academic.GetWebhookCall;
 
-public class GetWebhookCallService(SykiDbContext ctx) : ISykiService
+public class GetWebhookCallService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetWebhookCallFullOut, SykiError>> Get(Guid institutionId, Guid id)
+    public async Task<OneOf<GetWebhookCallFullOut, EstudError>> Get(Guid institutionId, Guid id)
     {
         var webhookCall = await ctx.WebhookCalls.AsNoTracking()
             .Include(w => w.Attempts)

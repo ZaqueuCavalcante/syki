@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Users.GetUserAccount;
+namespace Estud.Back.Features.Users.GetUserAccount;
 
 public class GetUserAccountOut : IApiDto<GetUserAccountOut>
 {
@@ -54,7 +54,7 @@ public class GetUserAccountOut : IApiDto<GetUserAccountOut>
         {
             Id = 1,
             Name = "Edson Gomes",
-            Email = "edson.gomes@syki.com.br",
+            Email = "edson.gomes@estud.com.br",
             Institution = "UFPE",
         }),
         ("Maria Júlia",
@@ -62,7 +62,7 @@ public class GetUserAccountOut : IApiDto<GetUserAccountOut>
         {
             Id = 2,
             Name = "Maria Júlia",
-            Email = "maria.julia@syki.com.br",
+            Email = "maria.julia@estud.com.br",
             Institution = "Faculdade Nova Roma",
         }),
     ];

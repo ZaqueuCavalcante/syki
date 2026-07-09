@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.SetupTwoFactor;
+namespace Estud.Back.Features.Identity.SetupTwoFactor;
 
 [ApiController, Authorize(Policies.SetupTwoFactor)]
 public class SetupTwoFactorController(SetupTwoFactorService service) : ControllerBase

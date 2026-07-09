@@ -1,4 +1,4 @@
-namespace Syki.Tests.Commands;
+namespace Estud.Tests.Commands;
 
 public class CommandsUnitTests
 {

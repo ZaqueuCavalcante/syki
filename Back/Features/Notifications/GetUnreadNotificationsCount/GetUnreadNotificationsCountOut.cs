@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Notifications.GetUnreadNotificationsCount;
+namespace Estud.Back.Features.Notifications.GetUnreadNotificationsCount;
 
 public class GetUnreadNotificationsCountOut : IApiDto<GetUnreadNotificationsCountOut>
 {

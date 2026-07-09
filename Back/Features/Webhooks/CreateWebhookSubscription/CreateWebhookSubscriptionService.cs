@@ -1,8 +1,8 @@
-using Syki.Back.Domain.Webhooks;
+using Estud.Back.Domain.Webhooks;
 
-namespace Syki.Back.Features.Webhooks.CreateWebhookSubscription;
+namespace Estud.Back.Features.Webhooks.CreateWebhookSubscription;
 
-public class CreateWebhookSubscriptionService(SykiDbContext ctx) : ISykiService
+public class CreateWebhookSubscriptionService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<CreateWebhookSubscriptionIn>
     {
@@ -21,7 +21,7 @@ public class CreateWebhookSubscriptionService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CreateWebhookSubscriptionOut, SykiError>> Create(CreateWebhookSubscriptionIn data)
+    public async Task<OneOf<CreateWebhookSubscriptionOut, EstudError>> Create(CreateWebhookSubscriptionIn data)
     {
         if (V.Run(data, out var error)) return error;
 

@@ -1,4 +1,4 @@
-namespace Syki.Back.Google;
+namespace Estud.Back.Google;
 
 public class GoogleIdTokenPayload
 {

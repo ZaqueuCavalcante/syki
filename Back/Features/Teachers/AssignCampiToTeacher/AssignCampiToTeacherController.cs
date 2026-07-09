@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.AssignCampiToTeacher;
+namespace Estud.Back.Features.Teachers.AssignCampiToTeacher;
 
 [ApiController, Authorize(Policies.AssignCampiToTeacher)]
 public class AssignCampiToTeacherController(AssignCampiToTeacherService service) : ControllerBase

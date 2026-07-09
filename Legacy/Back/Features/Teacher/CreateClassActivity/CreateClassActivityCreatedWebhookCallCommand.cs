@@ -1,11 +1,11 @@
-using Syki.Back.Features.Academic.CallWebhooks;
+using Estud.Back.Features.Academic.CallWebhooks;
 
-namespace Syki.Back.Features.Teacher.CreateClassActivity;
+namespace Estud.Back.Features.Teacher.CreateClassActivity;
 
 [CommandDescription("Criar chamada de webhook para o evento 'Atividade publicada'")]
 public record CreateClassActivityCreatedWebhookCallCommand(Guid WebhookId, Guid ClassActivityId) : ICommand;
 
-public class CreateClassActivityCreatedWebhookCallCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateClassActivityCreatedWebhookCallCommand>
+public class CreateClassActivityCreatedWebhookCallCommandHandler(EstudDbContext ctx) : ICommandHandler<CreateClassActivityCreatedWebhookCallCommand>
 {
     public async Task Handle(Guid commandId, CreateClassActivityCreatedWebhookCallCommand command)
     {

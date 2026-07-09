@@ -1,6 +1,6 @@
-using Syki.Back.Features.Classes.CreateClass;
+using Estud.Back.Features.Classes.CreateClass;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {

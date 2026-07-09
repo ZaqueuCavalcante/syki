@@ -1,11 +1,11 @@
 using System.Net.Http.Json;
-using Syki.Back.Features.Webhooks.GetWebhookCalls;
-using Syki.Back.Features.Webhooks.GetWebhookSubscription;
-using Syki.Back.Features.Webhooks.GetWebhookSubscriptions;
-using Syki.Back.Features.Webhooks.CreateWebhookSubscription;
-using Syki.Back.Features.Webhooks.UpdateWebhookSubscription;
+using Estud.Back.Features.Webhooks.GetWebhookCalls;
+using Estud.Back.Features.Webhooks.GetWebhookSubscription;
+using Estud.Back.Features.Webhooks.GetWebhookSubscriptions;
+using Estud.Back.Features.Webhooks.CreateWebhookSubscription;
+using Estud.Back.Features.Webhooks.UpdateWebhookSubscription;
 
-namespace Syki.Tests.Integration.Clients;
+namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {

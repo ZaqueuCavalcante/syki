@@ -1,8 +1,8 @@
 using System.Net.Http.Json;
-using Syki.Back.Features.Periods.GetAcademicPeriods;
-using Syki.Back.Features.Periods.CreateAcademicPeriod;
+using Estud.Back.Features.Periods.GetAcademicPeriods;
+using Estud.Back.Features.Periods.CreateAcademicPeriod;
 
-namespace Syki.Tests.Integration.Clients;
+namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {

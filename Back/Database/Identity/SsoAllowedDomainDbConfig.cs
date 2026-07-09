@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Database.Identity;
+namespace Estud.Back.Database.Identity;
 
 public class SsoAllowedDomainDbConfig : IEntityTypeConfiguration<SsoAllowedDomain>
 {
     public void Configure(EntityTypeBuilder<SsoAllowedDomain> entity)
     {
-        entity.ToTable("sso_allowed_domains", DbSchemas.Syki);
+        entity.ToTable("sso_allowed_domains", DbSchemas.Estud);
 
         entity.HasKey(e => e.Domain);
         entity.Property(e => e.Domain).ValueGeneratedNever();

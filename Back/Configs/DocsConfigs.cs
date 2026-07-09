@@ -1,11 +1,11 @@
 using System.Reflection;
 using Scalar.AspNetCore;
 using Microsoft.OpenApi.Any;
-using Syki.Back.Auth.Schemes;
+using Estud.Back.Auth.Schemes;
 using Microsoft.OpenApi.Models;
 using Microsoft.OpenApi.Interfaces;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class DocsConfigs
 {
@@ -15,13 +15,13 @@ public static class DocsConfigs
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Syki API Docs",
+                Title = "Estud API Docs",
                 Description = ReadResource("api-intro.md"),
                 Extensions = new Dictionary<string, IOpenApiExtension>
                 {
                     { "x-logo", new OpenApiObject
                     {
-                        { "url", new OpenApiString("/syki-logo.png") },
+                        { "url", new OpenApiString("/estud-logo.png") },
                     }}
                 },
             });
@@ -82,7 +82,7 @@ public static class DocsConfigs
         options.MapScalarApiReference("/docs", options =>
         {
             options.WithModels(false);
-            options.WithTitle("Syki API Docs");
+            options.WithTitle("Estud API Docs");
             options.WithDocumentDownloadType(DocumentDownloadType.Json);
             options.WithOpenApiRoutePattern("/swagger/{documentName}/swagger.json");
             options

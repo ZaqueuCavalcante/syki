@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Identity;
+namespace Estud.Back.Domain.Identity;
 
 public class MagicLink
 {
@@ -8,11 +8,11 @@ public class MagicLink
     public DateTime ExpiresAt { get; set; }
     public DateTime? UsedAt { get; set; }
 
-    public SykiUser? User { get; set; }
+    public EstudUser? User { get; set; }
 
     public MagicLink() {}
 
-    public MagicLink(SykiUser user)
+    public MagicLink(EstudUser user)
     {
         Id = Guid.NewGuid();
         User = user;

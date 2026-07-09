@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Disciplines;
+using Estud.Back.Domain.Disciplines;
 
-namespace Syki.Back.Features.Disciplines.UpdateDiscipline;
+namespace Estud.Back.Features.Disciplines.UpdateDiscipline;
 
 public static class UpdateDisciplineMapper
 {

@@ -1,9 +1,9 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Adm.GetAdmInsights;
+namespace Estud.Back.Features.Adm.GetAdmInsights;
 
-public class GetAdmInsightsService(NpgsqlDataSource dataSource) : ISykiService
+public class GetAdmInsightsService(NpgsqlDataSource dataSource) : IEstudService
 {
     public async Task<AdmInsightsOut> Get()
     {
@@ -12,16 +12,16 @@ public class GetAdmInsightsService(NpgsqlDataSource dataSource) : ISykiService
         const string sql = @"
             SELECT
                 COUNT(1)-1                                     AS institutions,
-                (SELECT COUNT(1)-1 FROM syki.users)            AS users,
-                (SELECT COUNT(1) FROM syki.campi)              AS campi,
-                (SELECT COUNT(1) FROM syki.courses)            AS courses,
-                (SELECT COUNT(1) FROM syki.disciplines)        AS disciplines,
-                (SELECT COUNT(1) FROM syki.course_curriculums) AS course_curriculums,
-                (SELECT COUNT(1) FROM syki.course_offerings)   AS course_offerings,
-                (SELECT COUNT(1) FROM syki.teachers)           AS teachers,
-                (SELECT COUNT(1) FROM syki.students)           AS students
+                (SELECT COUNT(1)-1 FROM estud.users)            AS users,
+                (SELECT COUNT(1) FROM estud.campi)              AS campi,
+                (SELECT COUNT(1) FROM estud.courses)            AS courses,
+                (SELECT COUNT(1) FROM estud.disciplines)        AS disciplines,
+                (SELECT COUNT(1) FROM estud.course_curriculums) AS course_curriculums,
+                (SELECT COUNT(1) FROM estud.course_offerings)   AS course_offerings,
+                (SELECT COUNT(1) FROM estud.teachers)           AS teachers,
+                (SELECT COUNT(1) FROM estud.students)           AS students
             FROM
-            	syki.institutions
+            	estud.institutions
         ";
 
         return await connection.QueryFirstAsync<AdmInsightsOut>(sql);

@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Reflection;
 using System.Collections.Concurrent;
 
-namespace Syki.Back.Emails;
+namespace Estud.Back.Emails;
 
 public class EmailsService : IEmailsService
 {

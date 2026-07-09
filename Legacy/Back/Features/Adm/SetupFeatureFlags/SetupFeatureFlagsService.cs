@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Adm.SetupFeatureFlags;
+namespace Estud.Back.Features.Adm.SetupFeatureFlags;
 
-public class SetupFeatureFlagsService(SykiDbContext ctx, FeaturesSettings settings) : ISykiService
+public class SetupFeatureFlagsService(EstudDbContext ctx, FeaturesSettings settings) : IEstudService
 {
     public async Task Setup(SetupFeatureFlagsIn data)
     {

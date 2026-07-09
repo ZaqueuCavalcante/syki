@@ -1,9 +1,9 @@
 using QRCoder;
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Features.Identity.GetTwoFactorKey;
+namespace Estud.Back.Features.Identity.GetTwoFactorKey;
 
-public class GetTwoFactorKeyService(SykiDbContext ctx, UserManager<SykiUser> userManager) : ISykiService
+public class GetTwoFactorKeyService(EstudDbContext ctx, UserManager<EstudUser> userManager) : IEstudService
 {
     public async Task<GetTwoFactorKeyOut> Get()
     {

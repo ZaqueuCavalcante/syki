@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Syki.Mocks.Oidc.Discovery;
+namespace Estud.Mocks.Oidc.Discovery;
 
 /// <summary>
 /// OpenID Connect Discovery Document.

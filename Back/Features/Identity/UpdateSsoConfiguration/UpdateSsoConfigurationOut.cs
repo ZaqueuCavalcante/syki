@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.UpdateSsoConfiguration;
+namespace Estud.Back.Features.Identity.UpdateSsoConfiguration;
 
 public class UpdateSsoConfigurationOut : IApiDto<UpdateSsoConfigurationOut>
 {

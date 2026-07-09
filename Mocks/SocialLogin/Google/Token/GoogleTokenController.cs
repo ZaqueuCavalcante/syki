@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Syki.Mocks.SocialLogin.Google.Token;
+namespace Estud.Mocks.SocialLogin.Google.Token;
 
 /// <summary>
 /// Mock Google OAuth token endpoint.

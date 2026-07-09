@@ -6,8 +6,8 @@
 
 ## Objetivo
 
-Um curso no Moodle vai virar uma atividade no Syki.
-Ao finalizar o curso no Moodle, deve chamar um WebHook no Syki para atribuir a nota.
-O progresso no Moodle deve ser refletido no Syki?
+Um curso no Moodle vai virar uma atividade no Estud.
+Ao finalizar o curso no Moodle, deve chamar um WebHook no Estud para atribuir a nota.
+O progresso no Moodle deve ser refletido no Estud?
 
 

@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Campi.GetCampi;
+namespace Estud.Back.Features.Campi.GetCampi;
 
-public class GetCampiService(SykiDbContext ctx) : ISykiService
+public class GetCampiService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetCampiOut> Get()
     {

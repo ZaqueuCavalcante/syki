@@ -2,7 +2,7 @@ using System.Reflection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Syki.Back.Filters;
+namespace Estud.Back.Filters;
 
 public class ExamplesOperationsFilterFilter : IOperationFilter
 {

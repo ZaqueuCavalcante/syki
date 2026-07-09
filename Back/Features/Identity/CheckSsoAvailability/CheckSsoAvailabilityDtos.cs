@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.CheckSsoAvailability;
+namespace Estud.Back.Features.Identity.CheckSsoAvailability;
 
 public class SsoConfigDto
 {

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teacher.AddStudentClassActivityNote;
+namespace Estud.Back.Features.Teacher.AddStudentClassActivityNote;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

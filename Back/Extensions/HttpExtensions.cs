@@ -1,10 +1,10 @@
-using Syki.Back.Auth.Schemes;
+using Estud.Back.Auth.Schemes;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Controllers;
 
-namespace Syki.Back.Extensions;
+namespace Estud.Back.Extensions;
 
 public static partial class HttpExtensions
 {

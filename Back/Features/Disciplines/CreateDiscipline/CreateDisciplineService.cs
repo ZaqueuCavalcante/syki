@@ -1,8 +1,8 @@
-using Syki.Back.Domain.Disciplines;
+using Estud.Back.Domain.Disciplines;
 
-namespace Syki.Back.Features.Disciplines.CreateDiscipline;
+namespace Estud.Back.Features.Disciplines.CreateDiscipline;
 
-public class CreateDisciplineService(SykiDbContext ctx) : ISykiService
+public class CreateDisciplineService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<CreateDisciplineIn>
     {
@@ -14,7 +14,7 @@ public class CreateDisciplineService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CreateDisciplineOut, SykiError>> Create(CreateDisciplineIn data)
+    public async Task<OneOf<CreateDisciplineOut, EstudError>> Create(CreateDisciplineIn data)
     {
         if (V.Run(data, out var error)) return error;
 

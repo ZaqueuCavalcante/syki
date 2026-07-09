@@ -1,14 +1,14 @@
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Features.Identity.GetPermissions;
+namespace Estud.Back.Features.Identity.GetPermissions;
 
-public class GetPermissionsService : ISykiService
+public class GetPermissionsService : IEstudService
 {
     public GetPermissionsOut Get()
     {
         return new GetPermissionsOut
         {
-            Items = SykiPermissions.Permissions.ConvertAll(p => new GetPermissionsItemOut
+            Items = EstudPermissions.Permissions.ConvertAll(p => new GetPermissionsItemOut
             {
                 Id = p.Id,
                 Name = p.Name,

@@ -1,8 +1,8 @@
 using Dapper;
 
-namespace Syki.Back.Features.Users.GetUserAccount;
+namespace Estud.Back.Features.Users.GetUserAccount;
 
-public class GetUserAccountService(SykiDbContext ctx) : ISykiService
+public class GetUserAccountService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetUserAccountOut> Get()
     {
@@ -19,13 +19,13 @@ public class GetUserAccountService(SykiDbContext ctx) : ISykiService
                 r.permissions,
                 i.name AS institution
             FROM
-                syki.users u
+                estud.users u
             INNER JOIN
-                syki.user_roles ur ON ur.user_id = u.id
+                estud.user_roles ur ON ur.user_id = u.id
             INNER JOIN
-                syki.roles r ON r.id = ur.role_id
+                estud.roles r ON r.id = ur.role_id
             INNER JOIN
-                syki.institutions i ON i.id = u.institution_id
+                estud.institutions i ON i.id = u.institution_id
             WHERE
                 u.id = @UserId
             LIMIT 1

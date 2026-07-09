@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Campi;
+using Estud.Back.Domain.Campi;
 
-namespace Syki.Back.Database.Campi;
+namespace Estud.Back.Database.Campi;
 
 public class CampusDbConfig : IEntityTypeConfiguration<Campus>
 {
     public void Configure(EntityTypeBuilder<Campus> entity)
     {
-        entity.ToTable("campi", DbSchemas.Syki);
+        entity.ToTable("campi", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
     }

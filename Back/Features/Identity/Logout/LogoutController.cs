@@ -1,9 +1,9 @@
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Features.Identity.Logout;
+namespace Estud.Back.Features.Identity.Logout;
 
 [ApiController, Authorize(Policies.Logout)]
-public class LogoutController(SignInManager<SykiUser> signInManager, AuthSettings settings) : ControllerBase
+public class LogoutController(SignInManager<EstudUser> signInManager, AuthSettings settings) : ControllerBase
 {
     /// <summary>
     /// Logout

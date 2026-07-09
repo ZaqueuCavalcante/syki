@@ -1,6 +1,6 @@
-using Syki.Back.Auth.Schemes;
+using Estud.Back.Auth.Schemes;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class AuthenticationConfigs
 {

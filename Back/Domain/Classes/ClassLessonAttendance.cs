@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Classes;
+namespace Estud.Back.Domain.Classes;
 
 /// <summary>
 /// Representa se um Aluno estava presente ou não em uma Aula

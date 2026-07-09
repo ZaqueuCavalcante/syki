@@ -1,17 +1,17 @@
-using Syki.Back.Domain.Students;
-using Syki.Back.Domain.CourseOfferings;
+using Estud.Back.Domain.Students;
+using Estud.Back.Domain.CourseOfferings;
 
-namespace Syki.Back.Database.Students;
+namespace Estud.Back.Database.Students;
 
 public class StudentCourseEnrollmentDbConfig : IEntityTypeConfiguration<StudentCourseEnrollment>
 {
     public void Configure(EntityTypeBuilder<StudentCourseEnrollment> entity)
     {
-        entity.ToTable("student_course_enrollments", DbSchemas.Syki);
+        entity.ToTable("student_course_enrollments", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
 
-        entity.HasOne<SykiStudent>()
+        entity.HasOne<EstudStudent>()
             .WithMany()
             .HasForeignKey(e => e.StudentId);
 

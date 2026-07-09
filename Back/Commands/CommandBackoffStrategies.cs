@@ -1,4 +1,4 @@
-namespace Syki.Back.Commands;
+namespace Estud.Back.Commands;
 
 public static class CommandBackoffStrategies
 {

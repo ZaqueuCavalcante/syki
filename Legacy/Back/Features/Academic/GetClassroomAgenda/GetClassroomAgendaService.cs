@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.GetClassroomAgenda;
+namespace Estud.Back.Features.Academic.GetClassroomAgenda;
 
-public class GetClassroomAgendaService(SykiDbContext ctx) : ISykiService
+public class GetClassroomAgendaService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<List<AgendaDayOut>, SykiError>> Get(Guid institution, Guid classroomId)
+    public async Task<OneOf<List<AgendaDayOut>, EstudError>> Get(Guid institution, Guid classroomId)
     {
         var classroom = await ctx.Classrooms.AsNoTracking().FirstOrDefaultAsync(x => x.InstitutionId == institution && x.Id == classroomId);
         if (classroom == null) return new ClassroomNotFound();

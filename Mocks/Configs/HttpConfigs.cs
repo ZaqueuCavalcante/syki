@@ -1,8 +1,8 @@
 using System.Text.Json;
-using Syki.Mocks.Providers;
+using Estud.Mocks.Providers;
 using System.Text.Json.Serialization;
 
-namespace Syki.Mocks.Configs;
+namespace Estud.Mocks.Configs;
 
 public static class HttpConfigs
 {

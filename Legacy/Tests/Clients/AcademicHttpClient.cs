@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
 
-namespace Syki.Tests.Clients;
+namespace Estud.Tests.Clients;
 
 public class AcademicHttpClient(HttpClient http)
 {
@@ -320,7 +320,7 @@ public class AcademicHttpClient(HttpClient http)
         return await response.Resolve<CreateWebhookSubscriptionOut>();
     }
 
-    public async Task<OneOf<GetWebhookSubscriptionOut, SykiError>> GetWebhookSubscription(Guid id)
+    public async Task<OneOf<GetWebhookSubscriptionOut, EstudError>> GetWebhookSubscription(Guid id)
     {
         return await Http.GetFromJsonAsync<GetWebhookSubscriptionOut>($"/academic/webhooks/{id}", HttpConfigs.JsonOptions) ?? new();
     }

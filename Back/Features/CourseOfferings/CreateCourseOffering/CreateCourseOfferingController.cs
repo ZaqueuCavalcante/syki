@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.CourseOfferings.CreateCourseOffering;
+namespace Estud.Back.Features.CourseOfferings.CreateCourseOffering;
 
 [ApiController, Authorize(Policies.CreateCourseOffering)]
 public class CreateCourseOfferingController(CreateCourseOfferingService service) : ControllerBase

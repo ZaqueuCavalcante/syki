@@ -1,6 +1,6 @@
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Auth.Policies;
+namespace Estud.Back.Auth.Policies;
 
 public static partial class Policies
 {
@@ -13,11 +13,11 @@ public static partial class Policies
     public static AuthorizationBuilder AddWebhooksPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetWebhookCalls, UserType.Manager, SykiPermissions.ManageWebhooks)
-            .AddSykiPolicy(GetWebhookSubscription, UserType.Manager, SykiPermissions.ManageWebhooks)
-            .AddSykiPolicy(GetWebhookSubscriptions, UserType.Manager, SykiPermissions.ManageWebhooks)
-            .AddSykiPolicy(CreateWebhookSubscription, UserType.Manager, SykiPermissions.ManageWebhooks)
-            .AddSykiPolicy(UpdateWebhookSubscription, UserType.Manager, SykiPermissions.ManageWebhooks);
+            .AddEstudPolicy(GetWebhookCalls, UserType.Manager, EstudPermissions.ManageWebhooks)
+            .AddEstudPolicy(GetWebhookSubscription, UserType.Manager, EstudPermissions.ManageWebhooks)
+            .AddEstudPolicy(GetWebhookSubscriptions, UserType.Manager, EstudPermissions.ManageWebhooks)
+            .AddEstudPolicy(CreateWebhookSubscription, UserType.Manager, EstudPermissions.ManageWebhooks)
+            .AddEstudPolicy(UpdateWebhookSubscription, UserType.Manager, EstudPermissions.ManageWebhooks);
 
         return builder;
     }

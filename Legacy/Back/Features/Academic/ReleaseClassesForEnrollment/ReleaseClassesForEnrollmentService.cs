@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.ReleaseClassesForEnrollment;
+namespace Estud.Back.Features.Academic.ReleaseClassesForEnrollment;
 
-public class ReleaseClassesForEnrollmentService(SykiDbContext ctx) : ISykiService
+public class ReleaseClassesForEnrollmentService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Release(Guid institutionId, ReleaseClassesForEnrollmentIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Release(Guid institutionId, ReleaseClassesForEnrollmentIn data)
     {
         var classes = await ctx.Classes
             .Where(c => c.InstitutionId == institutionId && data.Classes.Contains(c.Id))
@@ -25,6 +25,6 @@ public class ReleaseClassesForEnrollmentService(SykiDbContext ctx) : ISykiServic
 
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 }

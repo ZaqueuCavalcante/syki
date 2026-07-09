@@ -1,4 +1,4 @@
-namespace Syki.Tests.Domain;
+namespace Estud.Tests.Domain;
 
 public class EnumUniqueValuesUnitTests
 {

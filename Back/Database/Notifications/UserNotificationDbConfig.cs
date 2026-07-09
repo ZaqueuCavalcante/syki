@@ -1,17 +1,17 @@
-using Syki.Back.Domain.Identity;
-using Syki.Back.Domain.Notifications;
+using Estud.Back.Domain.Identity;
+using Estud.Back.Domain.Notifications;
 
-namespace Syki.Back.Database.Notifications;
+namespace Estud.Back.Database.Notifications;
 
 public class UserNotificationDbConfig : IEntityTypeConfiguration<UserNotification>
 {
     public void Configure(EntityTypeBuilder<UserNotification> entity)
     {
-        entity.ToTable("user_notifications", DbSchemas.Syki);
+        entity.ToTable("user_notifications", DbSchemas.Estud);
 
         entity.HasKey(e => new { e.UserId, e.NotificationId });
 
-        entity.HasOne<SykiUser>()
+        entity.HasOne<EstudUser>()
             .WithMany()
             .HasPrincipalKey(u => u.Id)
             .HasForeignKey(e => e.UserId);

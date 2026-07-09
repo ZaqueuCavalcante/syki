@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.CreateSsoConfiguration;
+namespace Estud.Back.Features.Identity.CreateSsoConfiguration;
 
 public class CreateSsoConfigurationIn : IApiDto<CreateSsoConfigurationIn>
 {

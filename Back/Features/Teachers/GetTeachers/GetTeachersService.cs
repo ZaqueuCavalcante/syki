@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Teachers.GetTeachers;
+namespace Estud.Back.Features.Teachers.GetTeachers;
 
-public class GetTeachersService(SykiDbContext ctx) : ISykiService
+public class GetTeachersService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetTeachersOut> Get()
     {

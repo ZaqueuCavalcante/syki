@@ -1,23 +1,23 @@
 using System.Net.Http.Json;
-using Syki.Back.Features.Identity.GetRole;
-using Syki.Back.Features.Identity.GetRoles;
-using Syki.Back.Features.Identity.CreateRole;
-using Syki.Back.Features.Identity.UpdateRole;
-using Syki.Back.Features.Identity.GetPermissions;
-using Syki.Back.Features.Identity.ResetPassword;
-using Syki.Back.Features.Identity.MagicLinkLogin;
-using Syki.Back.Features.Identity.SetupTwoFactor;
-using Syki.Back.Features.Identity.TwoFactorLogin;
-using Syki.Back.Features.Identity.GetTwoFactorKey;
-using Syki.Back.Features.Identity.EmailPasswordLogin;
-using Syki.Back.Features.Identity.GetSsoConfiguration;
-using Syki.Back.Features.Identity.CheckSsoAvailability;
-using Syki.Back.Features.Identity.CheckSocialLoginAvailability;
-using Syki.Back.Features.Identity.CreateSsoConfiguration;
-using Syki.Back.Features.Identity.UpdateSsoConfiguration;
-using Syki.Back.Features.Identity.SendResetPasswordToken;
+using Estud.Back.Features.Identity.GetRole;
+using Estud.Back.Features.Identity.GetRoles;
+using Estud.Back.Features.Identity.CreateRole;
+using Estud.Back.Features.Identity.UpdateRole;
+using Estud.Back.Features.Identity.GetPermissions;
+using Estud.Back.Features.Identity.ResetPassword;
+using Estud.Back.Features.Identity.MagicLinkLogin;
+using Estud.Back.Features.Identity.SetupTwoFactor;
+using Estud.Back.Features.Identity.TwoFactorLogin;
+using Estud.Back.Features.Identity.GetTwoFactorKey;
+using Estud.Back.Features.Identity.EmailPasswordLogin;
+using Estud.Back.Features.Identity.GetSsoConfiguration;
+using Estud.Back.Features.Identity.CheckSsoAvailability;
+using Estud.Back.Features.Identity.CheckSocialLoginAvailability;
+using Estud.Back.Features.Identity.CreateSsoConfiguration;
+using Estud.Back.Features.Identity.UpdateSsoConfiguration;
+using Estud.Back.Features.Identity.SendResetPasswordToken;
 
-namespace Syki.Tests.Integration.Clients;
+namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {

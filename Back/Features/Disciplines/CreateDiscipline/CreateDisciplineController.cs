@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Disciplines.CreateDiscipline;
+namespace Estud.Back.Features.Disciplines.CreateDiscipline;
 
 [ApiController, Authorize(Policies.CreateDiscipline)]
 public class CreateDisciplineController(CreateDisciplineService service) : ControllerBase

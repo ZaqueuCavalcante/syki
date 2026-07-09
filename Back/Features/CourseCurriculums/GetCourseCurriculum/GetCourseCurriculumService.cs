@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.CourseCurriculums.GetCourseCurriculum;
+namespace Estud.Back.Features.CourseCurriculums.GetCourseCurriculum;
 
-public class GetCourseCurriculumService(SykiDbContext ctx) : ISykiService
+public class GetCourseCurriculumService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetCourseCurriculumOut, SykiError>> Get(int id)
+    public async Task<OneOf<GetCourseCurriculumOut, EstudError>> Get(int id)
     {
         var curriculum = await ctx.CourseCurriculums.AsNoTracking()
             .Include(c => c.Course)

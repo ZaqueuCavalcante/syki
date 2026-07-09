@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.CourseCurriculums;
+namespace Estud.Back.Domain.CourseCurriculums;
 
 public class CourseCurriculumDiscipline
 {

@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Notifications.GetUnreadNotificationsCount;
+namespace Estud.Back.Features.Notifications.GetUnreadNotificationsCount;
 
-public class GetUnreadNotificationsCountService(SykiDbContext ctx) : ISykiService
+public class GetUnreadNotificationsCountService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetUnreadNotificationsCountOut> Get()
     {

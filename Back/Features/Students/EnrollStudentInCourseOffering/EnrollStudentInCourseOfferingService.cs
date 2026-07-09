@@ -1,10 +1,10 @@
-using Syki.Back.Domain.Students;
+using Estud.Back.Domain.Students;
 
-namespace Syki.Back.Features.Students.EnrollStudentInCourseOffering;
+namespace Estud.Back.Features.Students.EnrollStudentInCourseOffering;
 
-public class EnrollStudentInCourseOfferingService(SykiDbContext ctx) : ISykiService
+public class EnrollStudentInCourseOfferingService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<EnrollStudentInCourseOfferingOut, SykiError>> Enroll(int studentId, EnrollStudentInCourseOfferingIn data)
+    public async Task<OneOf<EnrollStudentInCourseOfferingOut, EstudError>> Enroll(int studentId, EnrollStudentInCourseOfferingIn data)
     {
         var institutionId = ctx.RequestUser.InstitutionId;
 

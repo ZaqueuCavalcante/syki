@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Google;
 
-namespace Syki.Back.Settings;
+namespace Estud.Back.Settings;
 
 public class SocialLoginSettings : SettingsBase
 {

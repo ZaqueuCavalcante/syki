@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Cross.Version;
+namespace Estud.Back.Features.Cross.Version;
 
 [ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]

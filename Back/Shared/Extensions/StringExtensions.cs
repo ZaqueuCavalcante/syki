@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace Syki.Back.Shared;
+namespace Estud.Back.Shared;
 
 public static class StringExtensions
 {
@@ -94,7 +94,7 @@ public static class StringExtensions
 
     public static string GenerateQrCodeBase64(this string key, string email)
     {
-        const string provider = "Syki";
+        const string provider = "Estud";
 
         using var qrGenerator = new QRCodeGenerator();
         using var qrCodeData = qrGenerator.CreateQrCode(

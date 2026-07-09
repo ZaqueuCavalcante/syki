@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Disciplines.UpdateDiscipline;
+namespace Estud.Back.Features.Disciplines.UpdateDiscipline;
 
 public class UpdateDisciplineIn : IApiDto<UpdateDisciplineIn>
 {

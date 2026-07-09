@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Estud.Back.Shared;
 
 public class CreatePendingUserRegisterIn : IApiDto<CreatePendingUserRegisterIn>
 {
@@ -11,8 +11,8 @@ public class CreatePendingUserRegisterIn : IApiDto<CreatePendingUserRegisterIn>
 
     public static IEnumerable<(string, CreatePendingUserRegisterIn)> GetExamples() =>
     [
-        ("Acadêmico", new("academico@syki.com")),
-        ("Professor", new("professor@syki.com")),
-        ("Aluno", new("aluno@syki.com")),
+        ("Acadêmico", new("academico@estud.com")),
+        ("Professor", new("professor@estud.com")),
+        ("Aluno", new("aluno@estud.com")),
     ];
 }

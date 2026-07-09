@@ -1,6 +1,6 @@
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Auth.Policies;
+namespace Estud.Back.Auth.Policies;
 
 public static partial class Policies
 {
@@ -17,16 +17,16 @@ public static partial class Policies
     public static AuthorizationBuilder AddCoursesPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetCourse, UserType.Manager, SykiPermissions.ManageCourses)
-            .AddSykiPolicy(GetCourses, UserType.Manager, SykiPermissions.ManageCourses)
-            .AddSykiPolicy(CreateCourse, UserType.Manager, SykiPermissions.ManageCourses)
-            .AddSykiPolicy(UpdateCourse, UserType.Manager, SykiPermissions.ManageCourses);
+            .AddEstudPolicy(GetCourse, UserType.Manager, EstudPermissions.ManageCourses)
+            .AddEstudPolicy(GetCourses, UserType.Manager, EstudPermissions.ManageCourses)
+            .AddEstudPolicy(CreateCourse, UserType.Manager, EstudPermissions.ManageCourses)
+            .AddEstudPolicy(UpdateCourse, UserType.Manager, EstudPermissions.ManageCourses);
 
         builder
-            .AddSykiPolicy(GetCourseDisciplines, UserType.Manager, SykiPermissions.ManageCourses)
-            .AddSykiPolicy(AddCourseDisciplines, UserType.Manager, SykiPermissions.ManageCourses)
-            .AddSykiPolicy(RemoveCourseDiscipline, UserType.Manager, SykiPermissions.ManageCourses)
-            .AddSykiPolicy(GetCoursePotentialDisciplines, UserType.Manager, SykiPermissions.ManageCourses);
+            .AddEstudPolicy(GetCourseDisciplines, UserType.Manager, EstudPermissions.ManageCourses)
+            .AddEstudPolicy(AddCourseDisciplines, UserType.Manager, EstudPermissions.ManageCourses)
+            .AddEstudPolicy(RemoveCourseDiscipline, UserType.Manager, EstudPermissions.ManageCourses)
+            .AddEstudPolicy(GetCoursePotentialDisciplines, UserType.Manager, EstudPermissions.ManageCourses);
 
         return builder;
     }

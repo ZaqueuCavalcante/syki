@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Courses.UpdateCourse;
+namespace Estud.Back.Features.Courses.UpdateCourse;
 
 public class UpdateCourseIn : IApiDto<UpdateCourseIn>
 {

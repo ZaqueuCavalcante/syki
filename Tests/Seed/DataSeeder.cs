@@ -1,8 +1,8 @@
-using Syki.Back.Auth.Roles;
+using Estud.Back.Auth.Roles;
 
-namespace Syki.Tests.Seed;
+namespace Estud.Tests.Seed;
 
-public class DataSeeder(SykiDbContext ctx)
+public class DataSeeder(EstudDbContext ctx)
 {
     public async Task Run()
     {
@@ -11,7 +11,7 @@ public class DataSeeder(SykiDbContext ctx)
 
     private async Task SeedDefaultRoles()
     {
-        ctx.AddRange(SykiDefaultRoles.Director, SykiDefaultRoles.Teacher, SykiDefaultRoles.Student);
+        ctx.AddRange(EstudDefaultRoles.Director, EstudDefaultRoles.Teacher, EstudDefaultRoles.Student);
         await ctx.SaveChangesAsync();
     }
 }

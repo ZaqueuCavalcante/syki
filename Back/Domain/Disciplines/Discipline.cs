@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Courses;
+using Estud.Back.Domain.Courses;
 
-namespace Syki.Back.Domain.Disciplines;
+namespace Estud.Back.Domain.Disciplines;
 
 public class Discipline
 {

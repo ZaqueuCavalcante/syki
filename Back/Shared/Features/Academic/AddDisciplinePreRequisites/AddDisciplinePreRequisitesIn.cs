@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Estud.Back.Shared;
 
 public class AddDisciplinePreRequisitesIn : IApiDto<AddDisciplinePreRequisitesIn>
 {

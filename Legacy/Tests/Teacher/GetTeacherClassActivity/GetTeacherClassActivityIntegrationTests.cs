@@ -1,4 +1,4 @@
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {
@@ -15,13 +15,13 @@ public partial class IntegrationTests
         await teacherClient.CreateClassActivity(data.AdsClasses.IntroToWebDev.Id, ClassNoteType.N2, type: ClassActivityType.Presentation, weight: 80);
 
         var studentClient = await _back.LoggedAsStudent(data.Student.Email);
-        await studentClient.CreateClassActivityWork(work.Id, "https://github.com/ZaqueuCavalcante/syki");
+        await studentClient.CreateClassActivityWork(work.Id, "https://github.com/ZaqueuCavalcante/estud");
 
         // Act
         var activity = (await teacherClient.GetTeacherClassActivity(data.AdsClasses.DiscreteMath.Id, work.Id)).Success;
 
         // Assert
         activity.DeliveredWorks.Should().Be(1);
-        activity.Works[0].Link.Should().Be("https://github.com/ZaqueuCavalcante/syki");
+        activity.Works[0].Link.Should().Be("https://github.com/ZaqueuCavalcante/estud");
     }
 }

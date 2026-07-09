@@ -1,9 +1,9 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Adm.GetCommand;
+namespace Estud.Back.Features.Adm.GetCommand;
 
-public class GetCommandService(NpgsqlDataSource dataSource) : ISykiService
+public class GetCommandService(NpgsqlDataSource dataSource) : IEstudService
 {
     public async Task<CommandOut> Get(Guid id)
     {
@@ -11,7 +11,7 @@ public class GetCommandService(NpgsqlDataSource dataSource) : ISykiService
 
         const string sql = @"
             SELECT *
-            FROM syki.commands
+            FROM estud.commands
             WHERE id = @Id
         ";
         var command = await connection.QueryFirstOrDefaultAsync<CommandOut>(sql, new { id }) ?? new();
@@ -19,14 +19,14 @@ public class GetCommandService(NpgsqlDataSource dataSource) : ISykiService
 
         const string sourceBatchSql = @"
             SELECT id
-            FROM syki.command_batches
+            FROM estud.command_batches
             WHERE next_command_id = @Id
         ";
         command.SourceBatchId = await connection.QueryFirstOrDefaultAsync<Guid?>(sourceBatchSql, new { id });
 
         const string retriesSql = @"
             SELECT *
-            FROM syki.commands
+            FROM estud.commands
             WHERE original_id = @Id
         ";
         command.Retries = (await connection.QueryAsync<CommandOut>(retriesSql, new { id })).ToList();
@@ -34,7 +34,7 @@ public class GetCommandService(NpgsqlDataSource dataSource) : ISykiService
 
         const string subcommandsSql = @"
             SELECT *
-            FROM syki.commands
+            FROM estud.commands
             WHERE parent_id = @Id
         ";
         command.Subcommands = (await connection.QueryAsync<CommandOut>(subcommandsSql, new { id })).ToList();
@@ -42,7 +42,7 @@ public class GetCommandService(NpgsqlDataSource dataSource) : ISykiService
 
         const string bacthesSql = @"
             SELECT *
-            FROM syki.command_batches
+            FROM estud.command_batches
             WHERE source_command_id = @Id
         ";
         command.Batches = (await connection.QueryAsync<BatchOut>(bacthesSql, new { id })).ToList();

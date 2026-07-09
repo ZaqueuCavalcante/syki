@@ -1,6 +1,6 @@
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Auth.Policies;
+namespace Estud.Back.Auth.Policies;
 
 public static partial class Policies
 {
@@ -16,14 +16,14 @@ public static partial class Policies
     public static AuthorizationBuilder AddTeachersPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetTeacher, UserType.Manager, SykiPermissions.ManageTeachers)
-            .AddSykiPolicy(GetTeachers, UserType.Manager, SykiPermissions.ManageTeachers)
-            .AddSykiPolicy(CreateTeacher, UserType.Manager, SykiPermissions.ManageTeachers)
-            .AddSykiPolicy(UpdateTeacher, UserType.Manager, SykiPermissions.ManageTeachers)
-            .AddSykiPolicy(GetTeacherPotentialCampi, UserType.Manager, SykiPermissions.ManageTeachers)
-            .AddSykiPolicy(GetTeacherPotentialDisciplines, UserType.Manager, SykiPermissions.ManageTeachers)
-            .AddSykiPolicy(AssignCampiToTeacher, UserType.Manager, SykiPermissions.ManageTeachers)
-            .AddSykiPolicy(AssignDisciplinesToTeacher, UserType.Manager, SykiPermissions.ManageTeachers);
+            .AddEstudPolicy(GetTeacher, UserType.Manager, EstudPermissions.ManageTeachers)
+            .AddEstudPolicy(GetTeachers, UserType.Manager, EstudPermissions.ManageTeachers)
+            .AddEstudPolicy(CreateTeacher, UserType.Manager, EstudPermissions.ManageTeachers)
+            .AddEstudPolicy(UpdateTeacher, UserType.Manager, EstudPermissions.ManageTeachers)
+            .AddEstudPolicy(GetTeacherPotentialCampi, UserType.Manager, EstudPermissions.ManageTeachers)
+            .AddEstudPolicy(GetTeacherPotentialDisciplines, UserType.Manager, EstudPermissions.ManageTeachers)
+            .AddEstudPolicy(AssignCampiToTeacher, UserType.Manager, EstudPermissions.ManageTeachers)
+            .AddEstudPolicy(AssignDisciplinesToTeacher, UserType.Manager, EstudPermissions.ManageTeachers);
 
         return builder;
     }

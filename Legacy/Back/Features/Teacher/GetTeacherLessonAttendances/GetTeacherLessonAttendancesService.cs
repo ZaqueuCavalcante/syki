@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Teacher.GetTeacherLessonAttendances;
+namespace Estud.Back.Features.Teacher.GetTeacherLessonAttendances;
 
-public class GetTeacherLessonAttendancesService(SykiDbContext ctx) : ISykiService
+public class GetTeacherLessonAttendancesService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<List<GetTeacherLessonAttendanceOut>, SykiError>> Get(Guid institutionId, Guid userId, Guid lessonId)
+    public async Task<OneOf<List<GetTeacherLessonAttendanceOut>, EstudError>> Get(Guid institutionId, Guid userId, Guid lessonId)
     {
         var lesson = await ctx.Lessons.FirstOrDefaultAsync(x => x.Id == lessonId);
         if (lesson == null) return new LessonNotFound();

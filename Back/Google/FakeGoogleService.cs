@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace Syki.Back.Google;
+namespace Estud.Back.Google;
 
 public class FakeGoogleService : IGoogleService
 {

@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Courses;
+using Estud.Back.Domain.Courses;
 
-namespace Syki.Back.Features.Courses.UpdateCourse;
+namespace Estud.Back.Features.Courses.UpdateCourse;
 
 public static class UpdateCourseMapper
 {

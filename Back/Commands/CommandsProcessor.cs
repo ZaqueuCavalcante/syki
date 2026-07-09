@@ -1,9 +1,9 @@
 using Quartz;
 using System.Diagnostics;
-using Syki.Back.Domain.Commands;
+using Estud.Back.Domain.Commands;
 using System.Collections.Concurrent;
 
-namespace Syki.Back.Commands;
+namespace Estud.Back.Commands;
 
 public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory) : IJob
 {
@@ -12,12 +12,12 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory) : IJob
     public async Task Execute(IJobExecutionContext context)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        var ctx = scope.ServiceProvider.GetRequiredService<EstudDbContext>();
 
         await Process(scope, ctx);
     }
 
-    private static async Task Process(IServiceScope scope, SykiDbContext ctx)
+    private static async Task Process(IServiceScope scope, EstudDbContext ctx)
     {
         var processorId = Guid.NewGuid();
         var sw = Stopwatch.StartNew();
@@ -130,11 +130,11 @@ public class CommandsProcessor(IServiceScopeFactory serviceScopeFactory) : IJob
     /// See <see cref="CommandStatus"/> for status mapping
     /// </summary>
     private static readonly string Sql = @"
-        UPDATE syki.commands
+        UPDATE estud.commands
         SET processor_id = {0}, status = 2
         WHERE ctid IN (
             SELECT ctid
-            FROM syki.commands
+            FROM estud.commands
             WHERE processor_id IS NULL AND status = 0 AND (not_before IS NULL OR not_before < NOW())
             ORDER BY created_at
             FOR UPDATE SKIP LOCKED

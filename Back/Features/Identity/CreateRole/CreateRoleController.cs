@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.CreateRole;
+namespace Estud.Back.Features.Identity.CreateRole;
 
 [ApiController, Authorize(Policies.CreateRole)]
 public class CreateRoleController(CreateRoleService service) : ControllerBase

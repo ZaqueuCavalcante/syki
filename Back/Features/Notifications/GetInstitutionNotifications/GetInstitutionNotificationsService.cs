@@ -1,10 +1,10 @@
 using Dapper;
 
-namespace Syki.Back.Features.Notifications.GetInstitutionNotifications;
+namespace Estud.Back.Features.Notifications.GetInstitutionNotifications;
 
-public class GetInstitutionNotificationsService(SykiDbContext ctx) : ISykiService
+public class GetInstitutionNotificationsService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetInstitutionNotificationsOut, SykiError>> Get(GetInstitutionNotificationsIn data)
+    public async Task<OneOf<GetInstitutionNotificationsOut, EstudError>> Get(GetInstitutionNotificationsIn data)
     {
         var connection = await ctx.GetOpenConnectionAsync();
 
@@ -18,9 +18,9 @@ public class GetInstitutionNotificationsService(SykiDbContext ctx) : ISykiServic
                 COUNT(un.viewed_at) AS viewed,
                 COUNT(*) OVER() AS total_rows
             FROM
-                syki.notifications n
+                estud.notifications n
             LEFT JOIN
-                syki.user_notifications un ON un.notification_id = n.id
+                estud.user_notifications un ON un.notification_id = n.id
             WHERE
                 n.institution_id = @InstitutionId
                 AND n.notification_type = @NotificationType

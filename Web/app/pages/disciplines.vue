@@ -37,8 +37,18 @@ function openCourses(discipline: DisciplineItem) {
   coursesModalOpen.value = true
 }
 
-const filter = ref('')
+const route = useRoute()
+const router = useRouter()
+
+const filter = ref((route.query.filter as string) || '')
 const debouncedFilter = refDebounced(filter, 300)
+
+// Sync filter to URL
+watch(filter, () => {
+  const query: Record<string, string> = {}
+  if (filter.value) query.filter = filter.value
+  router.replace({ query })
+}, { flush: 'post' })
 
 const { data, status, refresh } = await useFetch<GetDisciplinesOut>(`${config.public.backendUrl}/disciplines`, {
   credentials: 'include',

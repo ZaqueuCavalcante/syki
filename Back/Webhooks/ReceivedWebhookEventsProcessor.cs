@@ -2,7 +2,7 @@ using Quartz;
 using System.Diagnostics;
 using System.Collections.Concurrent;
 
-namespace Syki.Back.Webhooks;
+namespace Estud.Back.Webhooks;
 
 public class ReceivedWebhookEventsProcessor(IServiceScopeFactory serviceScopeFactory) : IJob
 {
@@ -11,12 +11,12 @@ public class ReceivedWebhookEventsProcessor(IServiceScopeFactory serviceScopeFac
     public async Task Execute(IJobExecutionContext context)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        var ctx = scope.ServiceProvider.GetRequiredService<EstudDbContext>();
 
         await Process(scope, ctx);
     }
 
-    private static async Task Process(IServiceScope scope, SykiDbContext ctx)
+    private static async Task Process(IServiceScope scope, EstudDbContext ctx)
     {
         var processorId = Guid.NewGuid();
         var commandsCreated = false;

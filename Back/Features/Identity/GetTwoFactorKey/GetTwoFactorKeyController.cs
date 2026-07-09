@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.GetTwoFactorKey;
+namespace Estud.Back.Features.Identity.GetTwoFactorKey;
 
 [ApiController, Authorize(Policies.GetTwoFactorKey)]
 public class GetTwoFactorKeyController(GetTwoFactorKeyService service) : ControllerBase

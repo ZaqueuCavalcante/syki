@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Courses.RemoveCourseDiscipline;
+namespace Estud.Back.Features.Courses.RemoveCourseDiscipline;
 
 [ApiController, Authorize(Policies.RemoveCourseDiscipline)]
 public class RemoveCourseDisciplineController(RemoveCourseDisciplineService service) : ControllerBase

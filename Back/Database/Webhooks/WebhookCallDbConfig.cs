@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Webhooks;
+using Estud.Back.Domain.Webhooks;
 
-namespace Syki.Back.Database.Webhooks;
+namespace Estud.Back.Database.Webhooks;
 
 public class WebhookCallDbConfig : IEntityTypeConfiguration<WebhookCall>
 {
     public void Configure(EntityTypeBuilder<WebhookCall> entity)
     {
-        entity.ToTable("webhook_calls", DbSchemas.Syki);
+        entity.ToTable("webhook_calls", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
 

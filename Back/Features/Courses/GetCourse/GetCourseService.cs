@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Courses.GetCourse;
+namespace Estud.Back.Features.Courses.GetCourse;
 
-public class GetCourseService(SykiDbContext ctx) : ISykiService
+public class GetCourseService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetCourseOut, SykiError>> Get(int id)
+    public async Task<OneOf<GetCourseOut, EstudError>> Get(int id)
     {
         var course = await ctx.Courses.AsNoTracking().Include(c => c.Links)
             .FirstOrDefaultAsync(c => c.InstitutionId == ctx.RequestUser.InstitutionId && c.Id == id);

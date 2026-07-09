@@ -1,8 +1,8 @@
 using Dapper;
 
-namespace Syki.Back.Features.Identity.CheckSsoAvailability;
+namespace Estud.Back.Features.Identity.CheckSsoAvailability;
 
-public class CheckSsoAvailabilityService(SykiDbContext ctx) : ISykiService
+public class CheckSsoAvailabilityService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<CheckSsoAvailabilityIn>
     {
@@ -14,7 +14,7 @@ public class CheckSsoAvailabilityService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CheckSsoAvailabilityOut, SykiError>> Check(CheckSsoAvailabilityIn data)
+    public async Task<OneOf<CheckSsoAvailabilityOut, EstudError>> Check(CheckSsoAvailabilityIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -26,9 +26,9 @@ public class CheckSsoAvailabilityService(SykiDbContext ctx) : ISykiService
                 c.require_sso,
                 c.provider_type
             FROM
-                syki.sso_allowed_domains d
+                estud.sso_allowed_domains d
             INNER JOIN
-                syki.sso_configurations c ON c.id = d.sso_configuration_id
+                estud.sso_configurations c ON c.id = d.sso_configuration_id
             WHERE
                 d.domain = @Domain
                     AND

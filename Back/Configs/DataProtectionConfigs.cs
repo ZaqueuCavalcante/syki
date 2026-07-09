@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.DataProtection;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class DataProtectionConfigs
 {
@@ -8,7 +8,7 @@ public static class DataProtectionConfigs
     {
         builder.Services
             .AddDataProtection()
-            .SetApplicationName("Syki")
-            .PersistKeysToDbContext<SykiDbContext>();
+            .SetApplicationName("Estud")
+            .PersistKeysToDbContext<EstudDbContext>();
     }
 }

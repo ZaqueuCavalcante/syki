@@ -1,11 +1,11 @@
-using Syki.Back.Features.Academic.CreateNotification;
+using Estud.Back.Features.Academic.CreateNotification;
 
-namespace Syki.Back.Features.Teacher.CreateClassActivity;
+namespace Estud.Back.Features.Teacher.CreateClassActivity;
 
 [CommandDescription("Notificar professor (emails da nova atividade)")]
 public record NotifyTeacherNewClassActivityEmailsSendedCommand(Guid InstitutionId, Guid TeacherId, Guid ClassActivityId) : ICommand;
 
-public class NotifyTeacherNewClassActivityEmailsSendedCommandHandler(SykiDbContext ctx) : ICommandHandler<NotifyTeacherNewClassActivityEmailsSendedCommand>
+public class NotifyTeacherNewClassActivityEmailsSendedCommandHandler(EstudDbContext ctx) : ICommandHandler<NotifyTeacherNewClassActivityEmailsSendedCommand>
 {
     public async Task Handle(Guid commandId, NotifyTeacherNewClassActivityEmailsSendedCommand command)
     {

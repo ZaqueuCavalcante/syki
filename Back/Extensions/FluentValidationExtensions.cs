@@ -1,10 +1,10 @@
-namespace Syki.Back.Extensions;
+namespace Estud.Back.Extensions;
 
 public static class FluentValidationExtensions
 {
     extension<T>(AbstractValidator<T> validator)
     {
-        public bool Run(T data, out SykiError error)
+        public bool Run(T data, out EstudError error)
         {
             var result = validator.Validate(data);
 
@@ -14,14 +14,14 @@ public static class FluentValidationExtensions
                 return false;
             }
 
-            error = (result.Errors.First().CustomState as SykiError)!;
+            error = (result.Errors.First().CustomState as EstudError)!;
             return true;
         }
     }
 
     extension<T, TProperty>(IRuleBuilderOptions<T, TProperty> ruleBuilder)
     {
-        public IRuleBuilderOptions<T, TProperty> WithError(SykiError error)
+        public IRuleBuilderOptions<T, TProperty> WithError(EstudError error)
         {
             return ruleBuilder
                 .WithErrorCode(error.Code)

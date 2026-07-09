@@ -1,6 +1,6 @@
 ﻿using Audit.EntityFramework;
 
-namespace Syki.Back.Audit;
+namespace Estud.Back.Audit;
 
 /// <summary>
 /// Representa uma mudança de valor em uma coluna qualquer.

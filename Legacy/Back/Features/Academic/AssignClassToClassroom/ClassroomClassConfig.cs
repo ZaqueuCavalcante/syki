@@ -1,7 +1,7 @@
-using Syki.Back.Features.Academic.CreateClass;
-using Syki.Back.Features.Academic.CreateClassroom;
+using Estud.Back.Features.Academic.CreateClass;
+using Estud.Back.Features.Academic.CreateClassroom;
 
-namespace Syki.Back.Features.Academic.AssignClassToClassroom;
+namespace Estud.Back.Features.Academic.AssignClassToClassroom;
 
 public class ClassroomClassConfig : IEntityTypeConfiguration<ClassroomClass>
 {

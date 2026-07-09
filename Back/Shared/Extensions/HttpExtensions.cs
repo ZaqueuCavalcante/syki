@@ -1,7 +1,7 @@
 using System.Net;
 using Newtonsoft.Json;
 
-namespace Syki.Back.Shared;
+namespace Estud.Back.Shared;
 
 public static class HttpExtensions
 {

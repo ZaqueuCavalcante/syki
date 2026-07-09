@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Timetabling;
+namespace Estud.Back.Domain.Timetabling;
 
 public static class TimetablingSolver
 {

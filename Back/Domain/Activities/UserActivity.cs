@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Syki.Back.Domain.Activities;
+namespace Estud.Back.Domain.Activities;
 
 public class UserActivity
 {

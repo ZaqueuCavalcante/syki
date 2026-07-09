@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Academic.GetCampusStudents;
+namespace Estud.Back.Features.Academic.GetCampusStudents;
 
-public class GetCampusStudentsService(SykiDbContext ctx) : ISykiService
+public class GetCampusStudentsService(EstudDbContext ctx) : IEstudService
 {
     public async Task<List<GetCampusStudentsOut>> Get(Guid campusId)
     {
@@ -10,9 +10,9 @@ public class GetCampusStudentsService(SykiDbContext ctx) : ISykiService
                 s.name,
                 s.course_offering_id
             FROM
-                syki.students s
+                estud.students s
             INNER JOIN
-                syki.course_offerings co ON co.id = s.course_offering_id
+                estud.course_offerings co ON co.id = s.course_offering_id
             WHERE
                 s.institution_id = {ctx.InstitutionId}
                     AND

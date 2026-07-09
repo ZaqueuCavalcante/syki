@@ -1,11 +1,11 @@
 using System.Text;
-using Syki.Back.Auth.Claims;
+using Estud.Back.Auth.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace Syki.Back.Auth.Schemes;
+namespace Estud.Back.Auth.Schemes;
 
 public static class JwtBearerScheme
 {
@@ -37,7 +37,7 @@ public static class JwtBearerScheme
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero,
 
-            RoleClaimType = SykiClaims.UserRole,
+            RoleClaimType = EstudClaims.UserRole,
         };
 
         return builder.AddJwtBearer(Name, options =>

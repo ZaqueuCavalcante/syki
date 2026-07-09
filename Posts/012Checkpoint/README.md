@@ -2,7 +2,7 @@
 
 👨🏻‍💻 +1.000 Commits Depois: Checkpoint do Meu Projeto Open-Source
 
-Venho desenvolvendo um projeto open-source há cerca de 2 anos: O ([Syki](https://github.com/ZaqueuCavalcante/syki)) é um sistema de gerenciamento de instituições de ensino que pode ser usado por gestores, professores e alunos.
+Venho desenvolvendo um projeto open-source há cerca de 2 anos: O ([Estud](https://github.com/ZaqueuCavalcante/estud)) é um sistema de gerenciamento de instituições de ensino que pode ser usado por gestores, professores e alunos.
 
 Esse post é um checkpoint do projeto, onde trago alguns números atingidos até agora:
 

@@ -1,6 +1,6 @@
-using Syki.Back.Features.Identity.ResetPassword;
+using Estud.Back.Features.Identity.ResetPassword;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {

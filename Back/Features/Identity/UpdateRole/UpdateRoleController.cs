@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.UpdateRole;
+namespace Estud.Back.Features.Identity.UpdateRole;
 
 [ApiController, Authorize(Policies.UpdateRole)]
 public class UpdateRoleController(UpdateRoleService service) : ControllerBase

@@ -1,6 +1,6 @@
-using static Syki.Back.Shared.CourseType;
+using static Estud.Back.Shared.CourseType;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {

@@ -1,10 +1,10 @@
-using Syki.Back.Features.Academic.CreateClass;
+using Estud.Back.Features.Academic.CreateClass;
 
-namespace Syki.Back.Features.Academic.AssignClassToClassroom;
+namespace Estud.Back.Features.Academic.AssignClassToClassroom;
 
-public class AssignClassToClassroomService(SykiDbContext ctx) : ISykiService
+public class AssignClassToClassroomService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Assign(Guid institutionId, Guid classroomId, AssignClassToClassroomIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Assign(Guid institutionId, Guid classroomId, AssignClassToClassroomIn data)
     {
         var classroom = await ctx.Classrooms.FirstOrDefaultAsync(c => c.InstitutionId == institutionId && c.Id == classroomId);
         if (classroom == null) return new ClassroomNotFound();
@@ -45,6 +45,6 @@ public class AssignClassToClassroomService(SykiDbContext ctx) : ISykiService
 
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 }

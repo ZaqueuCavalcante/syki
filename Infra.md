@@ -1,6 +1,6 @@
 # Infra.md
 
-Documentação da infraestrutura e rede do **Syki**.
+Documentação da infraestrutura e rede do **Estud**.
 
 ## Visão geral
 
@@ -95,7 +95,7 @@ padrão do Caddy).
 ### 5. PostgreSQL
 
 - Banco relacional acessado pelo Back via **EF Core** + **Dapper**.
-- Schema `syki`, convenção `snake_case`.
+- Schema `estud`, convenção `snake_case`.
 - Também guarda as **chaves de Data Protection** (ver abaixo).
 
 ## Forwarded Headers / HTTPS
@@ -150,8 +150,8 @@ Depois disso: `UseHsts()` + `UseHttpsRedirection()`.
 
 ```csharp
 AddDataProtection()
-    .SetApplicationName("Syki")
-    .PersistKeysToDbContext<SykiDbContext>();
+    .SetApplicationName("Estud")
+    .PersistKeysToDbContext<EstudDbContext>();
 ```
 
 > Chaves persistidas no banco (não no disco). Necessário porque o Back pode rodar em

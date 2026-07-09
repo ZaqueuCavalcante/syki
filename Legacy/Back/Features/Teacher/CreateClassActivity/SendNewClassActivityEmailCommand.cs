@@ -1,11 +1,11 @@
-using Syki.Back.Emails;
+using Estud.Back.Emails;
 
-namespace Syki.Back.Features.Teacher.CreateClassActivity;
+namespace Estud.Back.Features.Teacher.CreateClassActivity;
 
 [CommandDescription("Enviar email de nova atividade")]
 public record SendNewClassActivityEmailCommand(Guid UserId, Guid NotificationId) : ICommand;
 
-public class SendNewClassActivityEmailCommandHandler(SykiDbContext ctx, IEmailsService emailsService) : ICommandHandler<SendNewClassActivityEmailCommand>
+public class SendNewClassActivityEmailCommandHandler(EstudDbContext ctx, IEmailsService emailsService) : ICommandHandler<SendNewClassActivityEmailCommand>
 {
     public async Task Handle(Guid commandId, SendNewClassActivityEmailCommand command)
     {

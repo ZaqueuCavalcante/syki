@@ -2,7 +2,7 @@
 
 Adicionei métricas de cobertura de código ao projeto open-source que estou desenvolvendo.
 
-Agora, toda vez que um PR é aberto no Syki, um workflow roda no GitHub Actions para buildar e testar o código enviado.
+Agora, toda vez que um PR é aberto no Estud, um workflow roda no GitHub Actions para buildar e testar o código enviado.
 
 Ao final, 3 comentários são automaticamente adicionados ao PR:
 

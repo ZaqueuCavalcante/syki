@@ -1,4 +1,4 @@
-using Syki.Mocks.Configs;
+using Estud.Mocks.Configs;
 
 var builder = WebApplication.CreateBuilder(args);
 

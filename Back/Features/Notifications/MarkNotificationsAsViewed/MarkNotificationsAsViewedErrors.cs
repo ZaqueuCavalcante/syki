@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Notifications.MarkNotificationsAsViewed;
+namespace Estud.Back.Features.Notifications.MarkNotificationsAsViewed;
 
-public class InvalidNotificationId : SykiError
+public class InvalidNotificationId : EstudError
 {
     public static readonly InvalidNotificationId I = new();
     public override string Code { get; set; } = nameof(InvalidNotificationId);

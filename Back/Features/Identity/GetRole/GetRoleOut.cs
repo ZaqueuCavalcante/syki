@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.GetRole;
+namespace Estud.Back.Features.Identity.GetRole;
 
 public class GetRoleOut : IApiDto<GetRoleOut>
 {

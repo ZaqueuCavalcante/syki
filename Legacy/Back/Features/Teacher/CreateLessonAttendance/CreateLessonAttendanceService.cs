@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Teacher.CreateLessonAttendance;
+namespace Estud.Back.Features.Teacher.CreateLessonAttendance;
 
-public class CreateLessonAttendanceService(SykiDbContext ctx) : ISykiService
+public class CreateLessonAttendanceService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Create(Guid teacherId, Guid lessonId, CreateLessonAttendanceIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Create(Guid teacherId, Guid lessonId, CreateLessonAttendanceIn data)
     {
         var lesson = await ctx.Lessons.Include(l => l.Attendances).FirstOrDefaultAsync(x => x.Id == lessonId);
         if (lesson == null) return new LessonNotFound();
@@ -36,6 +36,6 @@ public class CreateLessonAttendanceService(SykiDbContext ctx) : ISykiService
 
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 }

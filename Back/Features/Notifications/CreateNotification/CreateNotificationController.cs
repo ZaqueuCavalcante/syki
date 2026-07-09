@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Notifications.CreateNotification;
+namespace Estud.Back.Features.Notifications.CreateNotification;
 
 [ApiController, Authorize(Policies.CreateNotification)]
 public class CreateNotificationController(CreateNotificationService service) : ControllerBase

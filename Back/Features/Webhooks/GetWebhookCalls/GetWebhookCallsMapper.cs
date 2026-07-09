@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Webhooks;
+using Estud.Back.Domain.Webhooks;
 
-namespace Syki.Back.Features.Webhooks.GetWebhookCalls;
+namespace Estud.Back.Features.Webhooks.GetWebhookCalls;
 
 public static class GetWebhookCallsMapper
 {

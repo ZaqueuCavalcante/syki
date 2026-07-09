@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Periods.GetAcademicPeriods;
+namespace Estud.Back.Features.Periods.GetAcademicPeriods;
 
 [ApiController, Authorize(Policies.GetAcademicPeriods)]
 public class GetAcademicPeriods(GetAcademicPeriodsService service) : ControllerBase

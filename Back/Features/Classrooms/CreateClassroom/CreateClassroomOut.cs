@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Classrooms.CreateClassroom;
+namespace Estud.Back.Features.Classrooms.CreateClassroom;
 
 public class CreateClassroomOut : IApiDto<CreateClassroomOut>
 {

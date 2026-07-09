@@ -1,4 +1,4 @@
-namespace Syki.Back.Settings;
+namespace Estud.Back.Settings;
 
 public class EmailSettings : SettingsBase
 {

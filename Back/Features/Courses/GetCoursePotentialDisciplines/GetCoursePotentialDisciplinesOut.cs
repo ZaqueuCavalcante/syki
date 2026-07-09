@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Courses.GetCoursePotentialDisciplines;
+namespace Estud.Back.Features.Courses.GetCoursePotentialDisciplines;
 
 public class GetCoursePotentialDisciplinesOut : IApiDto<GetCoursePotentialDisciplinesOut>
 {

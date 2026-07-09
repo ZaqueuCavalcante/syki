@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Teacher.CreateClassActivity;
+namespace Estud.Back.Features.Teacher.CreateClassActivity;
 
-public class CreateClassActivityService(SykiDbContext ctx) : ISykiService
+public class CreateClassActivityService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<CreateClassActivityOut, SykiError>> Create(Guid teacherId, Guid classId, CreateClassActivityIn data)
+    public async Task<OneOf<CreateClassActivityOut, EstudError>> Create(Guid teacherId, Guid classId, CreateClassActivityIn data)
     {
         var @class = await ctx.Classes
             .Include(x => x.Activities)
@@ -10,7 +10,7 @@ public class CreateClassActivityService(SykiDbContext ctx) : ISykiService
         if (@class == null) return new ClassNotFound();
 
         var students = await ctx.ClassesStudents.Where(x => x.ClassId == classId)
-            .Select(x => x.SykiStudentId).ToListAsync();
+            .Select(x => x.EstudStudentId).ToListAsync();
 
         var activity = ClassActivity.New(
             classId,

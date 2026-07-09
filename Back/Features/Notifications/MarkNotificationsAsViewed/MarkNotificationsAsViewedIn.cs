@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Notifications.MarkNotificationsAsViewed;
+namespace Estud.Back.Features.Notifications.MarkNotificationsAsViewed;
 
 public class MarkNotificationsAsViewedIn : IApiDto<MarkNotificationsAsViewedIn>
 {

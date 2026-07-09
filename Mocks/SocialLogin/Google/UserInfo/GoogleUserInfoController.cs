@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Syki.Mocks.SocialLogin.Google.UserInfo;
+namespace Estud.Mocks.SocialLogin.Google.UserInfo;
 
 /// <summary>
 /// Mock Google OAuth UserInfo endpoint.

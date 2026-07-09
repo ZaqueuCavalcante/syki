@@ -1,11 +1,11 @@
-using Syki.Back.Features.Academic.CreateNotification;
+using Estud.Back.Features.Academic.CreateNotification;
 
-namespace Syki.Back.Features.Teacher.CreateClassActivity;
+namespace Estud.Back.Features.Teacher.CreateClassActivity;
 
 [CommandDescription("Criar notificação de nova atividade")]
 public record CreateNewClassActivityNotificationCommand(Guid ClassActivityId) : ICommand;
 
-public class CreateNewClassActivityNotificationCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateNewClassActivityNotificationCommand>
+public class CreateNewClassActivityNotificationCommandHandler(EstudDbContext ctx) : ICommandHandler<CreateNewClassActivityNotificationCommand>
 {
     public async Task Handle(Guid commandId, CreateNewClassActivityNotificationCommand command)
     {
@@ -18,7 +18,7 @@ public class CreateNewClassActivityNotificationCommandHandler(SykiDbContext ctx)
 
         var students = await ctx.ClassesStudents
             .Where(x => x.ClassId == @class.Id)
-            .Select(x => new { Id = x.SykiStudentId })
+            .Select(x => new { Id = x.EstudStudentId })
             .ToListAsync();
 
         var notification = new Notification(

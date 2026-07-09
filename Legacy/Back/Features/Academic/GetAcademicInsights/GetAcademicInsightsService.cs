@@ -1,9 +1,9 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Academic.GetAcademicInsights;
+namespace Estud.Back.Features.Academic.GetAcademicInsights;
 
-public class GetAcademicInsightsService(NpgsqlDataSource dataSource) : ISykiService
+public class GetAcademicInsightsService(NpgsqlDataSource dataSource) : IEstudService
 {
     public async Task<AcademicInsightsOut> Get(Guid institutionId)
     {
@@ -11,18 +11,18 @@ public class GetAcademicInsightsService(NpgsqlDataSource dataSource) : ISykiServ
 
         const string sql = @"
             SELECT
-                (SELECT COUNT(1) FROM syki.campi WHERE institution_id = i.id)                 AS campus,
-                (SELECT COUNT(1) FROM syki.courses WHERE institution_id = i.id)               AS courses,
-                (SELECT COUNT(1) FROM syki.disciplines WHERE institution_id = i.id)           AS disciplines,
-                (SELECT COUNT(1) FROM syki.course_curriculums WHERE institution_id = i.id)    AS course_curriculums,
-                (SELECT COUNT(1) FROM syki.course_offerings WHERE institution_id = i.id)      AS course_offerings,
-                (SELECT COUNT(1) FROM syki.classes WHERE institution_id = i.id)               AS classes,
-                (SELECT COUNT(1) FROM syki.teachers WHERE institution_id = i.id)              AS teachers,
-                (SELECT COUNT(1) FROM syki.students WHERE institution_id = i.id)              AS students,
-                (SELECT COUNT(1) FROM syki.notifications WHERE institution_id = i.id)         AS notifications,
-                (SELECT COUNT(1) FROM syki.webhook_subscriptions WHERE institution_id = i.id) AS webhooks
+                (SELECT COUNT(1) FROM estud.campi WHERE institution_id = i.id)                 AS campus,
+                (SELECT COUNT(1) FROM estud.courses WHERE institution_id = i.id)               AS courses,
+                (SELECT COUNT(1) FROM estud.disciplines WHERE institution_id = i.id)           AS disciplines,
+                (SELECT COUNT(1) FROM estud.course_curriculums WHERE institution_id = i.id)    AS course_curriculums,
+                (SELECT COUNT(1) FROM estud.course_offerings WHERE institution_id = i.id)      AS course_offerings,
+                (SELECT COUNT(1) FROM estud.classes WHERE institution_id = i.id)               AS classes,
+                (SELECT COUNT(1) FROM estud.teachers WHERE institution_id = i.id)              AS teachers,
+                (SELECT COUNT(1) FROM estud.students WHERE institution_id = i.id)              AS students,
+                (SELECT COUNT(1) FROM estud.notifications WHERE institution_id = i.id)         AS notifications,
+                (SELECT COUNT(1) FROM estud.webhook_subscriptions WHERE institution_id = i.id) AS webhooks
             FROM
-            	syki.institutions i
+            	estud.institutions i
             WHERE
             	i.id = @Id
         ";

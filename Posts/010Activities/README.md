@@ -1,6 +1,6 @@
 # 📝 Atividades, notas e frequências 📈
 
-Adicionei mais uma feature ao projeto open-source de gerenciamento de instituições de ensino que estou desenvolvendo ([Syki](https://github.com/ZaqueuCavalcante/syki)).
+Adicionei mais uma feature ao projeto open-source de gerenciamento de instituições de ensino que estou desenvolvendo ([Estud](https://github.com/ZaqueuCavalcante/estud)).
 
 Agora, os professores podem criar atividades (apresentações, trabalhos, projetos e provas) dentro da turma. Cada atividade possui um peso (0 a 100%), compondo uma das 3 notas do período (N1, N2 ou N3).
 
@@ -25,9 +25,9 @@ Essas informações de notas e frequências são essenciais para um sistema de g
 Acompanhe abaixo como o aluno pode ter acesso a esses dados, bastando selecionar a turma e alternar entre a aba de atividades e a de frequências.
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/010Activities/student_class.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/010Activities/student_class.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
-> Você pode ver o código aqui (https://github.com/ZaqueuCavalcante/syki) e a aplicação rodando aqui (https://app.syki.com.br). Venho postando no LinkedIn todas as atualizações de desenvolvimento do projeto (https://www.linkedin.com/in/zaqueu-cavalcante).
+> Você pode ver o código aqui (https://github.com/ZaqueuCavalcante/estud) e a aplicação rodando aqui (https://app.estud.com.br). Venho postando no LinkedIn todas as atualizações de desenvolvimento do projeto (https://www.linkedin.com/in/zaqueu-cavalcante).
 
 > O que achou dessa nova funcionalidade? Faria diferente? Acha que faltou algo ou possui ideias para melhorar o projeto? Me deixe saber nos comentários abaixo, valeu!

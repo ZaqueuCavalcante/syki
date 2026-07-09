@@ -1,13 +1,13 @@
 using Newtonsoft.Json;
-using Syki.Back.Domain.Webhooks;
+using Estud.Back.Domain.Webhooks;
 
-namespace Syki.Back.Database.Webhooks;
+namespace Estud.Back.Database.Webhooks;
 
 public class WebhookSubscriptionDbConfig : IEntityTypeConfiguration<WebhookSubscription>
 {
     public void Configure(EntityTypeBuilder<WebhookSubscription> entity)
     {
-        entity.ToTable("webhook_subscriptions", DbSchemas.Syki);
+        entity.ToTable("webhook_subscriptions", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
 

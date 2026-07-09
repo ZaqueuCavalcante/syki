@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Threading.RateLimiting;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class RateLimitingConfigs
 {

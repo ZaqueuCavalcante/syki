@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Campi.CreateCampus;
+namespace Estud.Back.Features.Campi.CreateCampus;
 
 [ApiController, Authorize(Policies.CreateCampus)]
 public class CreateCampusController(CreateCampusService service) : ControllerBase

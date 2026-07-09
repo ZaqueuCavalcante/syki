@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Notifications.MarkNotificationsAsViewed;
+namespace Estud.Back.Features.Notifications.MarkNotificationsAsViewed;
 
 [ApiController, Authorize(Policies.MarkNotificationsAsViewed)]
 public class MarkNotificationsAsViewedController(MarkNotificationsAsViewedService service) : ControllerBase

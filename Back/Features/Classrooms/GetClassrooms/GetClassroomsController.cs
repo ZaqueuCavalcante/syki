@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Classrooms.GetClassrooms;
+namespace Estud.Back.Features.Classrooms.GetClassrooms;
 
 [ApiController, Authorize(Policies.GetClassrooms)]
 public class GetClassroomsController(GetClassroomsService service) : ControllerBase

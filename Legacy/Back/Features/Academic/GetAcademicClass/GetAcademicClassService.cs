@@ -1,10 +1,10 @@
-using Syki.Back.Features.Teacher.GetTeacherClassStudents;
+using Estud.Back.Features.Teacher.GetTeacherClassStudents;
 
-namespace Syki.Back.Features.Academic.GetAcademicClass;
+namespace Estud.Back.Features.Academic.GetAcademicClass;
 
-public class GetAcademicClassService(SykiDbContext ctx, GetTeacherClassStudentsService service) : ISykiService
+public class GetAcademicClassService(EstudDbContext ctx, GetTeacherClassStudentsService service) : IEstudService
 {
-    public async Task<OneOf<GetAcademicClassOut, SykiError>> Get(Guid institutionId, Guid id)
+    public async Task<OneOf<GetAcademicClassOut, EstudError>> Get(Guid institutionId, Guid id)
     {
         var @class = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)

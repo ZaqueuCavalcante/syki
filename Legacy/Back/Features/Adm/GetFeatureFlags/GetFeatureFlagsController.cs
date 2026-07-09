@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Adm.GetFeatureFlags;
+namespace Estud.Back.Features.Adm.GetFeatureFlags;
 
 [ApiController, Authorize]
 public class GetFeatureFlagsController(GetFeatureFlagsService service) : ControllerBase

@@ -1,6 +1,6 @@
-using Syki.Back.Features.Identity.EmailPasswordLogin;
+using Estud.Back.Features.Identity.EmailPasswordLogin;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {

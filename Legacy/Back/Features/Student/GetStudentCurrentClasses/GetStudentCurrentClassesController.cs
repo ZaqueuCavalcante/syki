@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Student.GetStudentCurrentClasses;
+namespace Estud.Back.Features.Student.GetStudentCurrentClasses;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

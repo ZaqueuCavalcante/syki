@@ -1,4 +1,4 @@
-namespace Syki.Back.Storage;
+namespace Estud.Back.Storage;
 
 public interface IStorageService
 {

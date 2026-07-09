@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Adm.GetBatches;
+namespace Estud.Back.Features.Adm.GetBatches;
 
 [ApiController, Authorize]
 public class GetBatchesController(GetBatchesService service) : ControllerBase

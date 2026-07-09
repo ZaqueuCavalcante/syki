@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.EmailPasswordLogin;
+namespace Estud.Back.Features.Identity.EmailPasswordLogin;
 
 [ApiController, EnableRateLimiting(RateLimitingConfigs.SensitivePolicy)]
 public class EmailPasswordLoginController(EmailPasswordLoginService service) : ControllerBase

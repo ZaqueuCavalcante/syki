@@ -1,12 +1,12 @@
 using Quartz;
-using Syki.Back.Emails;
-using Syki.Back.Webhooks;
-using Syki.Back.Domain.Identity;
+using Estud.Back.Emails;
+using Estud.Back.Webhooks;
+using Estud.Back.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
-using Syki.Tests.Integration.Clients;
+using Estud.Tests.Integration.Clients;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Syki.Tests.Base;
+namespace Estud.Tests.Base;
 
 public static class BackFactoryExtensions
 {
@@ -82,16 +82,16 @@ public static class BackFactoryExtensions
         return (FakeEmailsService)factory.Services.GetRequiredService<IEmailsService>();
     }
 
-    public static SykiDbContext GetDbContext(this BackFactory factory)
+    public static EstudDbContext GetDbContext(this BackFactory factory)
     {
         var scope = factory.Services.CreateScope();
-        return scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        return scope.ServiceProvider.GetRequiredService<EstudDbContext>();
     }
 
     public static async Task SetPassword(this BackFactory factory, string email, string password)
     {
         var scope = factory.Services.CreateScope();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<SykiUser>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<EstudUser>>();
         var user = await userManager.FindByEmailAsync(email);
         var resetToken = await userManager.GeneratePasswordResetTokenAsync(user!);
         await userManager.ResetPasswordAsync(user!, resetToken, password);

@@ -1,6 +1,6 @@
-using Syki.Back.Domain.CourseOfferings;
+using Estud.Back.Domain.CourseOfferings;
 
-namespace Syki.Back.Features.CourseOfferings.GetCourseOfferings;
+namespace Estud.Back.Features.CourseOfferings.GetCourseOfferings;
 
 public static class GetCourseOfferingsMapper
 {

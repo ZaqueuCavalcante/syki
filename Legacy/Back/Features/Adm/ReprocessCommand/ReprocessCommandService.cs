@@ -1,11 +1,11 @@
 using Newtonsoft.Json;
-using Syki.Back.Domain.Commands;
+using Estud.Back.Domain.Commands;
 
-namespace Syki.Back.Features.Adm.ReprocessCommand;
+namespace Estud.Back.Features.Adm.ReprocessCommand;
 
-public class ReprocessCommandService(SykiDbContext ctx) : ISykiService
+public class ReprocessCommandService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Reprocess(Guid id)
+    public async Task<OneOf<EstudSuccess, EstudError>> Reprocess(Guid id)
     {
         var command = await ctx.Commands.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
@@ -24,6 +24,6 @@ public class ReprocessCommandService(SykiDbContext ctx) : ISykiService
         ctx.Commands.Add(newCommand);
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 }

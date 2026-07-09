@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Commands;
+namespace Estud.Back.Domain.Commands;
 
 public class CommandBatch
 {

@@ -1,16 +1,16 @@
-namespace Syki.Tests.Base;
+namespace Estud.Tests.Base;
 
 public static class JsonExtensions
 {
-    public static async Task AssertBadRequest(this HttpResponseMessage httpResponse, SykiError sykiError)
+    public static async Task AssertBadRequest(this HttpResponseMessage httpResponse, EstudError estudError)
     {
         var error = await httpResponse.DeserializeTo<ErrorOut>();
         httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.Message.Should().Be(sykiError.Message);
-        error.Code.Should().Be(sykiError.Code);
+        error.Message.Should().Be(estudError.Message);
+        error.Code.Should().Be(estudError.Code);
     }
 
-    public static void ShouldBeError<S>(this OneOf<S, ErrorOut> oneOf, SykiError expected)
+    public static void ShouldBeError<S>(this OneOf<S, ErrorOut> oneOf, EstudError expected)
     {
         if (oneOf.IsSuccess)
         {
@@ -30,7 +30,7 @@ public static class JsonExtensions
         oneOf.IsSuccess.Should().BeTrue();
     }
 
-    public static void ShouldBeError<S>(this OneOf<S, SykiError> oneOf, SykiError expected)
+    public static void ShouldBeError<S>(this OneOf<S, EstudError> oneOf, EstudError expected)
     {
         if (oneOf.IsSuccess)
         {

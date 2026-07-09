@@ -1,6 +1,6 @@
-using Syki.Back.Domain.Webhooks;
+using Estud.Back.Domain.Webhooks;
 
-namespace Syki.Back.Features.Webhooks.GetWebhookSubscriptions;
+namespace Estud.Back.Features.Webhooks.GetWebhookSubscriptions;
 
 public static class GetWebhookSubscriptionsMapper
 {

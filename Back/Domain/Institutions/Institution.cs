@@ -1,19 +1,19 @@
-using Syki.Back.Domain.Campi;
-using Syki.Back.Domain.Classes;
-using Syki.Back.Domain.Courses;
-using Syki.Back.Domain.Periods;
-using Syki.Back.Domain.Identity;
-using Syki.Back.Domain.Students;
-using Syki.Back.Domain.Teachers;
-using Syki.Back.Domain.Webhooks;
-using Syki.Back.Domain.Commands;
-using Syki.Back.Domain.Classrooms;
-using Syki.Back.Domain.Disciplines;
-using Syki.Back.Domain.Notifications;
-using Syki.Back.Domain.CourseOfferings;
-using Syki.Back.Domain.CourseCurriculums;
+using Estud.Back.Domain.Campi;
+using Estud.Back.Domain.Classes;
+using Estud.Back.Domain.Courses;
+using Estud.Back.Domain.Periods;
+using Estud.Back.Domain.Identity;
+using Estud.Back.Domain.Students;
+using Estud.Back.Domain.Teachers;
+using Estud.Back.Domain.Webhooks;
+using Estud.Back.Domain.Commands;
+using Estud.Back.Domain.Classrooms;
+using Estud.Back.Domain.Disciplines;
+using Estud.Back.Domain.Notifications;
+using Estud.Back.Domain.CourseOfferings;
+using Estud.Back.Domain.CourseCurriculums;
 
-namespace Syki.Back.Domain.Institutions;
+namespace Estud.Back.Domain.Institutions;
 
 public class Institution
 {
@@ -23,11 +23,11 @@ public class Institution
     public List<Campus> Campi { get; set; }
     public List<Class> Classes { get; set; }
     public List<Course> Courses { get; set; }
-    public List<SykiUser> Users { get; set; }
+    public List<EstudUser> Users { get; set; }
     public List<Command> Commands { get; set; }
     public List<Classroom> Classrooms { get; set; }
-    public List<SykiStudent> Students { get; set; }
-    public List<SykiTeacher> Teachers { get; set; }
+    public List<EstudStudent> Students { get; set; }
+    public List<EstudTeacher> Teachers { get; set; }
     public List<Discipline> Disciplines { get; set; }
     public List<WebhookCall> WebhookCalls { get; set; }
     public List<Notification> Notifications { get; set; }

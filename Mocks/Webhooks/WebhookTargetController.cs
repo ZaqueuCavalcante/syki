@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Syki.Mocks.Webhooks;
+namespace Estud.Mocks.Webhooks;
 
 /// <summary>
-/// Simula o sistema target de um cliente que configurou um webhook no Syki.
+/// Simula o sistema target de um cliente que configurou um webhook no Estud.
 /// Ecoa de volta os headers e o corpo recebidos para que os testes possam
 /// validar a entrega ponta a ponta, incluindo os custom headers configurados
 /// na assinatura do webhook.

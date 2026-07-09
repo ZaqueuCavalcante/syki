@@ -1,6 +1,6 @@
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Auth.Policies;
+namespace Estud.Back.Auth.Policies;
 
 public static partial class Policies
 {
@@ -28,27 +28,27 @@ public static partial class Policies
     public static AuthorizationBuilder AddIdentityPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetRole, UserType.Manager, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(GetRoles, UserType.Manager, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(CreateRole, UserType.Manager, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(UpdateRole, UserType.Manager, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(GetPermissions, UserType.Manager, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(GetDefaultRoles, UserType.Manager, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(GetInstitutionRoles, UserType.Manager, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(GetInstitutionRole, UserType.Manager, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(FilterInstitutionRoles, UserType.Manager, SykiPermissions.ManageRoles)
-            .AddSykiPolicy(GetAvailableInstitutionRoles, UserType.Manager, SykiPermissions.ManageRoles);
+            .AddEstudPolicy(GetRole, UserType.Manager, EstudPermissions.ManageRoles)
+            .AddEstudPolicy(GetRoles, UserType.Manager, EstudPermissions.ManageRoles)
+            .AddEstudPolicy(CreateRole, UserType.Manager, EstudPermissions.ManageRoles)
+            .AddEstudPolicy(UpdateRole, UserType.Manager, EstudPermissions.ManageRoles)
+            .AddEstudPolicy(GetPermissions, UserType.Manager, EstudPermissions.ManageRoles)
+            .AddEstudPolicy(GetDefaultRoles, UserType.Manager, EstudPermissions.ManageRoles)
+            .AddEstudPolicy(GetInstitutionRoles, UserType.Manager, EstudPermissions.ManageRoles)
+            .AddEstudPolicy(GetInstitutionRole, UserType.Manager, EstudPermissions.ManageRoles)
+            .AddEstudPolicy(FilterInstitutionRoles, UserType.Manager, EstudPermissions.ManageRoles)
+            .AddEstudPolicy(GetAvailableInstitutionRoles, UserType.Manager, EstudPermissions.ManageRoles);
 
         builder
-            .AddSykiPolicy(GetSsoConfiguration, UserType.Manager, SykiPermissions.ManageSso)
-            .AddSykiPolicy(GetSsoConfigurations, UserType.Manager, SykiPermissions.ManageSso)
-            .AddSykiPolicy(CreateSsoConfiguration, UserType.Manager, SykiPermissions.ManageSso)
-            .AddSykiPolicy(UpdateSsoConfiguration, UserType.Manager, SykiPermissions.ManageSso);
+            .AddEstudPolicy(GetSsoConfiguration, UserType.Manager, EstudPermissions.ManageSso)
+            .AddEstudPolicy(GetSsoConfigurations, UserType.Manager, EstudPermissions.ManageSso)
+            .AddEstudPolicy(CreateSsoConfiguration, UserType.Manager, EstudPermissions.ManageSso)
+            .AddEstudPolicy(UpdateSsoConfiguration, UserType.Manager, EstudPermissions.ManageSso);
 
         builder
-            .AddSykiPolicy(Logout)
-            .AddSykiPolicy(SetupTwoFactor)
-            .AddSykiPolicy(GetTwoFactorKey);
+            .AddEstudPolicy(Logout)
+            .AddEstudPolicy(SetupTwoFactor)
+            .AddEstudPolicy(GetTwoFactorKey);
 
         return builder;
     }

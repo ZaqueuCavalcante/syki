@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.ReprocessWebhookCall;
+namespace Estud.Back.Features.Academic.ReprocessWebhookCall;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

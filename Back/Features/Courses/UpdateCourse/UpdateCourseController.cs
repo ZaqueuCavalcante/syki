@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Courses.UpdateCourse;
+namespace Estud.Back.Features.Courses.UpdateCourse;
 
 [ApiController, Authorize(Policies.UpdateCourse)]
 public class UpdateCourseController(UpdateCourseService service) : ControllerBase

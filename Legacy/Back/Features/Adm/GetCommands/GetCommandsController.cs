@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Adm.GetCommands;
+namespace Estud.Back.Features.Adm.GetCommands;
 
 [ApiController, Authorize]
 public class GetCommandsController(GetCommandsService service) : ControllerBase

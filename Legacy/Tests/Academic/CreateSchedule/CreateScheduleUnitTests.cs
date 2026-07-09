@@ -1,6 +1,6 @@
-using Syki.Back.Features.Academic.CreateClass;
+using Estud.Back.Features.Academic.CreateClass;
 
-namespace Syki.Tests.Features.Academic.CreateSchedule;
+namespace Estud.Tests.Features.Academic.CreateSchedule;
 
 public class CreateScheduleUnitTests
 {

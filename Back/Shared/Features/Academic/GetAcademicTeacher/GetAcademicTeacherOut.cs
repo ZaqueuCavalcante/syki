@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Estud.Back.Shared;
 
 public class GetAcademicTeacherOut : IApiDto<GetAcademicTeacherOut>
 {
@@ -13,7 +13,7 @@ public class GetAcademicTeacherOut : IApiDto<GetAcademicTeacherOut>
         ("Exemplo", new() {
             Id = Guid.CreateVersion7(),
             Name = "Davi Pessoa da Silva",
-            Email = "davi.pessoa@syki.com.br",
+            Email = "davi.pessoa@estud.com.br",
             Disciplines = [
                 new() { Id = Guid.CreateVersion7(), Name = "Banco de Dados" },
                 new() { Id = Guid.CreateVersion7(), Name = "Programação Orientada a Objetos" },

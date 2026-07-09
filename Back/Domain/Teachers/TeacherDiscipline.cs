@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Teachers;
+namespace Estud.Back.Domain.Teachers;
 
 /// <summary>
 /// Vínculo entre professor e disciplina

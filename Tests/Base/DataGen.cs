@@ -1,13 +1,13 @@
 using Bogus;
 using OtpNet;
 
-namespace Syki.Tests.Integration.Base;
+namespace Estud.Tests.Integration.Base;
 
 public static class DataGen
 {
     public static string Numbers => $"{Guid.NewGuid().ToString().OnlyNumbers()}";
 
-    public static string Email => $"{Numbers}.test@syki.com.br";
+    public static string Email => $"{Numbers}.test@estud.com.br";
 
     public static string UserName => new Faker("pt_BR").Person.FullName;
 

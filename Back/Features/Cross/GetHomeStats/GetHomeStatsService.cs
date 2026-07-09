@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Cross.GetHomeStats;
+namespace Estud.Back.Features.Cross.GetHomeStats;
 
-public class GetHomeStatsService(SykiDbContext ctx) : ISykiService
+public class GetHomeStatsService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetHomeStatsOut> Get()
     {

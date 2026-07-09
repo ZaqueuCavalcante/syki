@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Adm.GetFeatureFlags;
+namespace Estud.Back.Features.Adm.GetFeatureFlags;
 
-public class GetFeatureFlagsService(SykiDbContext ctx, FeaturesSettings settings) : ISykiService
+public class GetFeatureFlagsService(EstudDbContext ctx, FeaturesSettings settings) : IEstudService
 {
     public async Task<GetFeatureFlagsOut> Get()
     {

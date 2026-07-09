@@ -1,10 +1,10 @@
-using Syki.Back.Features.Academic.CallWebhooks;
+using Estud.Back.Features.Academic.CallWebhooks;
 
-namespace Syki.Back.Features.Academic.ReprocessWebhookCall;
+namespace Estud.Back.Features.Academic.ReprocessWebhookCall;
 
-public class ReprocessWebhookCallService(SykiDbContext ctx) : ISykiService
+public class ReprocessWebhookCallService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Reprocess(Guid institutionId, Guid id)
+    public async Task<OneOf<EstudSuccess, EstudError>> Reprocess(Guid institutionId, Guid id)
     {
         var call = await ctx.WebhookCalls.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         if (call is null) return new WebhookCallNotFound();
@@ -12,6 +12,6 @@ public class ReprocessWebhookCallService(SykiDbContext ctx) : ISykiService
         ctx.AddCommand(institutionId, new CallWebhookCommand(call.Id));
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 }

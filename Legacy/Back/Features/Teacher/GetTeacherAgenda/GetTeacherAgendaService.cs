@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Teacher.GetTeacherAgenda;
+namespace Estud.Back.Features.Teacher.GetTeacherAgenda;
 
-public class GetTeacherAgendaService(SykiDbContext ctx) : ISykiService
+public class GetTeacherAgendaService(EstudDbContext ctx) : IEstudService
 {
     public async Task<List<AgendaDayOut>> Get(Guid institution, Guid userId)
     {

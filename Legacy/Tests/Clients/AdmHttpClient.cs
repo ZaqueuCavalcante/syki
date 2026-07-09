@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
 
-namespace Syki.Tests.Clients;
+namespace Estud.Tests.Clients;
 
 public class AdmHttpClient(HttpClient http)
 {

@@ -1,11 +1,11 @@
-using Syki.Back.Features.Academic.CreateNotification;
+using Estud.Back.Features.Academic.CreateNotification;
 
-namespace Syki.Back.Features.Student.CreateClassActivityWork;
+namespace Estud.Back.Features.Student.CreateClassActivityWork;
 
 [CommandDescription("Criar notificação de nota adicionada")]
 public record CreateNewStudentClassNoteNotificationCommand(Guid ClassActivityId, Guid UserId) : ICommand;
 
-public class CreateNewStudentClassNoteNotificationCommandHandler(SykiDbContext ctx) : ICommandHandler<CreateNewStudentClassNoteNotificationCommand>
+public class CreateNewStudentClassNoteNotificationCommandHandler(EstudDbContext ctx) : ICommandHandler<CreateNewStudentClassNoteNotificationCommand>
 {
     public async Task Handle(Guid commandId, CreateNewStudentClassNoteNotificationCommand command)
     {

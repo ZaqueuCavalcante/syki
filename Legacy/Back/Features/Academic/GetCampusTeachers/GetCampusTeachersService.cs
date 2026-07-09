@@ -1,13 +1,13 @@
-namespace Syki.Back.Features.Academic.GetCampusTeachers;
+namespace Estud.Back.Features.Academic.GetCampusTeachers;
 
-public class GetCampusTeachersService(SykiDbContext ctx) : ISykiService
+public class GetCampusTeachersService(EstudDbContext ctx) : IEstudService
 {
     public async Task<List<GetCampusTeachersOut>> Get(Guid campusId)
     {
         var links = await ctx.TeachersCampi.AsNoTracking()
             .Where(x => x.CampusId == campusId).ToListAsync();
 
-        var ids = links.ConvertAll(x => x.SykiTeacherId);
+        var ids = links.ConvertAll(x => x.EstudTeacherId);
         var teachers = await ctx.Teachers.AsNoTracking()
             .Where(x => x.InstitutionId == ctx.InstitutionId && ids.Contains(x.Id))
             .Include(x => x.Disciplines)

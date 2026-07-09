@@ -1,4 +1,4 @@
-namespace Syki.Back.Cache;
+namespace Estud.Back.Cache;
 
 public class CacheKeys
 {

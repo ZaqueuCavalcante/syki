@@ -1,9 +1,9 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Academic.GetCampusClasses;
+namespace Estud.Back.Features.Academic.GetCampusClasses;
 
-public class GetCampusClassesService(SykiDbContext ctx, NpgsqlDataSource dataSource) : ISykiService
+public class GetCampusClassesService(EstudDbContext ctx, NpgsqlDataSource dataSource) : IEstudService
 {
     public async Task<List<GetCampusClassesOut>> Get(Guid institutionId, Guid campusId)
     {
@@ -22,11 +22,11 @@ public class GetCampusClassesService(SykiDbContext ctx, NpgsqlDataSource dataSou
                 c.teacher_id,
                 t.name AS teacher
             FROM
-                syki.classes c
+                estud.classes c
             INNER JOIN
-                syki.disciplines d ON d.id = c.discipline_id
+                estud.disciplines d ON d.id = c.discipline_id
             LEFT JOIN
-            	syki.teachers t ON t.id = c.teacher_id
+            	estud.teachers t ON t.id = c.teacher_id
             WHERE
                 c.institution_id = @InstitutionId
                     AND

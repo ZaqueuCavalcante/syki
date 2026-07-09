@@ -1,7 +1,7 @@
-using Syki.Back.Features.Users.RegisterUser;
-using Syki.Back.Features.Identity.MagicLinkLogin;
+using Estud.Back.Features.Users.RegisterUser;
+using Estud.Back.Features.Identity.MagicLinkLogin;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
 {

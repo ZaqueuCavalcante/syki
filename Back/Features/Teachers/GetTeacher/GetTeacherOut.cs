@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.GetTeacher;
+namespace Estud.Back.Features.Teachers.GetTeacher;
 
 public class GetTeacherOut : IApiDto<GetTeacherOut>
 {

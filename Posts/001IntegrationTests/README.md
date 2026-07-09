@@ -10,7 +10,7 @@ Testes de integração:
 - Possibilitam a reprodução de bugs difíceis e garantem que eles não voltem após serem corrigidos
 - São fundamentais para a manutenção de um ritmo sustentável de desenvolvimento
 
-Vou utilizar o Syki como projeto de exemplo:
+Vou utilizar o Estud como projeto de exemplo:
 - Ele possui 538 testes, sendo 282 de unidade e 256 de integração
 - O setup dos testes de integração é feito apenas uma vez, ou seja, a API + PostgreSQL são os mesmos para todos os testes
 - Não fico limpando o banco antes de cada teste, isso permite rodá-los em paralelo e deixa o cenário mais próximo do que ocorre em produção

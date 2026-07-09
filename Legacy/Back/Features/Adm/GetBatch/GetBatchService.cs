@@ -1,9 +1,9 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Adm.GetBatch;
+namespace Estud.Back.Features.Adm.GetBatch;
 
-public class GetBatchService(NpgsqlDataSource dataSource) : ISykiService
+public class GetBatchService(NpgsqlDataSource dataSource) : IEstudService
 {
     public async Task<BatchOut> Get(Guid id)
     {
@@ -19,7 +19,7 @@ public class GetBatchService(NpgsqlDataSource dataSource) : ISykiService
                 source_command_id,
                 next_command_id
             FROM
-                syki.command_batches
+                estud.command_batches
             WHERE
                 id = @Id
         ";
@@ -29,7 +29,7 @@ public class GetBatchService(NpgsqlDataSource dataSource) : ISykiService
 
         const string commandsSql = @"
             SELECT *
-            FROM syki.commands
+            FROM estud.commands
             WHERE batch_id = @Id
         ";
         batch.Commands = (await connection.QueryAsync<CommandOut>(commandsSql, parameters)).ToList();

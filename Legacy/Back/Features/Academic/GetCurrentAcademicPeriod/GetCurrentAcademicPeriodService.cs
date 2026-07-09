@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.GetCurrentAcademicPeriod;
+namespace Estud.Back.Features.Academic.GetCurrentAcademicPeriod;
 
-public class GetCurrentAcademicPeriodService(SykiDbContext ctx) : ISykiService
+public class GetCurrentAcademicPeriodService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<AcademicPeriodOut, SykiError>> Get(Guid institutionId)
+    public async Task<OneOf<AcademicPeriodOut, EstudError>> Get(Guid institutionId)
     {
         var period = await ctx.GetCurrentAcademicPeriod(institutionId);
 

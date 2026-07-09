@@ -1,11 +1,11 @@
 using System.Text;
 
-namespace Syki.Back.Features.Webhooks.CallWebhooks;
+namespace Estud.Back.Features.Webhooks.CallWebhooks;
 
 [CommandDescription("Chama um webhook")]
 public record CallWebhookCommand(int WebhookCallId) : ICommand;
 
-public class CallWebhookCommandHandler(SykiDbContext ctx, IHttpClientFactory factory) : ICommandHandler<CallWebhookCommand>
+public class CallWebhookCommandHandler(EstudDbContext ctx, IHttpClientFactory factory) : ICommandHandler<CallWebhookCommand>
 {
     public async Task Handle(int commandId, CallWebhookCommand command)
     {

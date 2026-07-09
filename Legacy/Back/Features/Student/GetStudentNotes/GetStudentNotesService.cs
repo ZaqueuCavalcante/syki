@@ -1,11 +1,11 @@
-namespace Syki.Back.Features.Student.GetStudentNotes;
+namespace Estud.Back.Features.Student.GetStudentNotes;
 
-public class GetStudentNotesService(SykiDbContext ctx) : ISykiService
+public class GetStudentNotesService(EstudDbContext ctx) : IEstudService
 {
     public async Task<List<StudentNoteOut>> Get(Guid userId)
     {
         var classesStudents = await ctx.ClassesStudents.AsNoTracking()
-            .Where(x => x.SykiStudentId == userId).ToListAsync();
+            .Where(x => x.EstudStudentId == userId).ToListAsync();
 
         var classesIds = classesStudents.ConvertAll(x => x.ClassId);
         var classes = await ctx.Classes.AsNoTracking()
@@ -21,7 +21,7 @@ public class GetStudentNotesService(SykiDbContext ctx) : ISykiService
 
         var works = await ctx.ClassActivityWorks
             .AsNoTrackingWithIdentityResolution()
-            .Where(x => x.SykiStudentId == userId)
+            .Where(x => x.EstudStudentId == userId)
             .ToListAsync();
 
         var disciplinesIds = classes.ConvertAll(x => x.DisciplineId);

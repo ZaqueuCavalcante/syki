@@ -1,6 +1,6 @@
-using Syki.Back.Features.Academic.CreateStudent;
+using Estud.Back.Features.Academic.CreateStudent;
 
-namespace Syki.Back.Features.Teacher.AddClassActivityNote;
+namespace Estud.Back.Features.Teacher.AddClassActivityNote;
 
 public class StudentClassNoteConfig : IEntityTypeConfiguration<StudentClassNote>
 {
@@ -14,7 +14,7 @@ public class StudentClassNoteConfig : IEntityTypeConfiguration<StudentClassNote>
         note.HasIndex(t => new { t.ClassId, t.StudentId, t.Type })
             .IsUnique();
 
-        note.HasOne<SykiStudent>()
+        note.HasOne<EstudStudent>()
             .WithMany()
             .HasForeignKey(t => t.StudentId);
 

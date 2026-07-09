@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.GetAcademicInsights;
+namespace Estud.Back.Features.Academic.GetAcademicInsights;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

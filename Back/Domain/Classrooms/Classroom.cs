@@ -1,7 +1,7 @@
-using Syki.Back.Domain.Campi;
-using Syki.Back.Domain.Classes;
+using Estud.Back.Domain.Campi;
+using Estud.Back.Domain.Classes;
 
-namespace Syki.Back.Domain.Classrooms;
+namespace Estud.Back.Domain.Classrooms;
 
 /// <summary>
 /// Sala de Aula

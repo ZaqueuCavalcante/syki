@@ -1,8 +1,8 @@
-# Implementação DevOps para o Projeto SYKI
+# Implementação DevOps para o Projeto Estud
 
 ## Visão Geral
 
-Esta análise apresenta as decisões técnicas tomadas para a implementação da infraestrutura DevOps do projeto SYKI, detalhando a arquitetura escolhida, justificativas técnicas para cada componente e considerações sobre ferramentas adotadas ou descartadas.
+Esta análise apresenta as decisões técnicas tomadas para a implementação da infraestrutura DevOps do projeto Estud, detalhando a arquitetura escolhida, justificativas técnicas para cada componente e considerações sobre ferramentas adotadas ou descartadas.
 
 ## Arquitetura Implementada
 
@@ -93,7 +93,7 @@ Foram implementadas práticas de segurança básicas:
 
 ## Conclusão e Próximos Passos
 
-A implementação atual representa uma base sólida de infraestrutura DevOps para o projeto SYKI, com ênfase em:
+A implementação atual representa uma base sólida de infraestrutura DevOps para o projeto Estud, com ênfase em:
 
 - Automação: Toda a infraestrutura pode ser recriada com um único comando terraform apply.
 

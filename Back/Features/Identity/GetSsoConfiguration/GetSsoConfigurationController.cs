@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.GetSsoConfiguration;
+namespace Estud.Back.Features.Identity.GetSsoConfiguration;
 
 [ApiController, Authorize(Policies.GetSsoConfiguration)]
 public class GetSsoConfigurationController(GetSsoConfigurationService service) : ControllerBase

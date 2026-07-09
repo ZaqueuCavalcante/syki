@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 
-namespace Syki.Back.Auth.Schemes;
+namespace Estud.Back.Auth.Schemes;
 
 public static class SsoTempScheme
 {

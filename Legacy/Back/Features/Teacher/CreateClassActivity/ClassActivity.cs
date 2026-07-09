@@ -1,6 +1,6 @@
-using Syki.Back.Features.Student.CreateClassActivityWork;
+using Estud.Back.Features.Student.CreateClassActivityWork;
 
-namespace Syki.Back.Features.Teacher.CreateClassActivity;
+namespace Estud.Back.Features.Teacher.CreateClassActivity;
 
 /// <summary>
 /// Atividade vinculada à uma Turma
@@ -54,7 +54,7 @@ public class ClassActivity
         Works = students.ConvertAll(x => new ClassActivityWork(Id, x));
     }
 
-    public static OneOf<ClassActivity, SykiError> New(
+    public static OneOf<ClassActivity, EstudError> New(
         Guid classId,
         ClassNoteType note,
         string title,

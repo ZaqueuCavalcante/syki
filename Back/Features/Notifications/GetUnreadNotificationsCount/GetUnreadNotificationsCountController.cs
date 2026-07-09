@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Notifications.GetUnreadNotificationsCount;
+namespace Estud.Back.Features.Notifications.GetUnreadNotificationsCount;
 
 [ApiController, Authorize(Policies.GetUnreadNotificationsCount)]
 public class GetUnreadNotificationsCountController(GetUnreadNotificationsCountService service) : ControllerBase

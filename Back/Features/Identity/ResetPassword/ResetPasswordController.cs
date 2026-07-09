@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.ResetPassword;
+namespace Estud.Back.Features.Identity.ResetPassword;
 
 [ApiController, EnableRateLimiting(RateLimitingConfigs.SensitivePolicy)]
 public class ResetPasswordController(ResetPasswordService service) : ControllerBase

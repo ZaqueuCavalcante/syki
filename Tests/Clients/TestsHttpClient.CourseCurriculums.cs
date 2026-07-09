@@ -1,10 +1,10 @@
 using System.Net.Http.Json;
-using Syki.Back.Features.CourseCurriculums.GetCourseCurriculum;
-using Syki.Back.Features.CourseCurriculums.EditCourseCurriculum;
-using Syki.Back.Features.CourseCurriculums.GetCourseCurriculums;
-using Syki.Back.Features.CourseCurriculums.CreateCourseCurriculum;
+using Estud.Back.Features.CourseCurriculums.GetCourseCurriculum;
+using Estud.Back.Features.CourseCurriculums.EditCourseCurriculum;
+using Estud.Back.Features.CourseCurriculums.GetCourseCurriculums;
+using Estud.Back.Features.CourseCurriculums.CreateCourseCurriculum;
 
-namespace Syki.Tests.Integration.Clients;
+namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {

@@ -1,11 +1,11 @@
-namespace Syki.Back.Features.Student.GetStudentCurrentClasses;
+namespace Estud.Back.Features.Student.GetStudentCurrentClasses;
 
-public class GetStudentCurrentClassesService(SykiDbContext ctx) : ISykiService
+public class GetStudentCurrentClassesService(EstudDbContext ctx) : IEstudService
 {
     public async Task<List<StudentCurrentClassOut>> Get(Guid institutionId, Guid userId)
     {
         var classesIds = await ctx.ClassesStudents
-            .Where(x => x.SykiStudentId == userId)
+            .Where(x => x.EstudStudentId == userId)
             .Select(x => x.ClassId).ToListAsync();
 
         var classes = await ctx.Classes.AsNoTracking()

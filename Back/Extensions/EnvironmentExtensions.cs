@@ -1,4 +1,4 @@
-namespace Syki.Back.Extensions;
+namespace Estud.Back.Extensions;
 
 public static class EnvironmentExtensions
 {

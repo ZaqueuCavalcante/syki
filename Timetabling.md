@@ -46,7 +46,7 @@ Ordenar os eventos do mais restrito para o menos restrito antes de alocar (*most
 
 ---
 
-# Modelo de Input/Output no Syki (validado contra as entidades reais)
+# Modelo de Input/Output no Estud (validado contra as entidades reais)
 
 ## Escopo de execução
 
@@ -58,7 +58,7 @@ O timetabling roda por **`(InstitutionId, CampusId, AcademicPeriodId)`**. Só fa
 |---|---|---|
 | Cursos | `Course` | — |
 | Disciplinas | `Discipline` | — |
-| Professores | `SykiTeacher` + `TeachersDisciplines` + `TeachersCampi` | Vínculos professor↔disciplina e professor↔campus são **restrições duras** |
+| Professores | `EstudTeacher` + `TeachersDisciplines` + `TeachersCampi` | Vínculos professor↔disciplina e professor↔campus são **restrições duras** |
 | Ofertas de curso | `CourseOffering` | `(Institution, Campus, Course, Curriculum, AcademicPeriod, Session/Turno)` |
 | Grades curriculares | `CourseCurriculum` + `CourseCurriculumDiscipline` | Liga disciplina → semestre (`Period`), créditos e carga horária |
 | Salas de aula | ⚠️ **entidade `Classroom` não existe ainda** | Só há FK órfão `Schedule.ClassroomId`. Precisa criar `Classroom` (campus, capacidade, tipo) antes de alocar salas |

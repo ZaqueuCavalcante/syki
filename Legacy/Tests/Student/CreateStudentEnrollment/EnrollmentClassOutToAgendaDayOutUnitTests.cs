@@ -1,4 +1,4 @@
-namespace Syki.Tests.Features.Student.CreateStudentEnrollment;
+namespace Estud.Tests.Features.Student.CreateStudentEnrollment;
 
 public class EnrollmentClassOutToAgendaDayOutUnitTests
 {

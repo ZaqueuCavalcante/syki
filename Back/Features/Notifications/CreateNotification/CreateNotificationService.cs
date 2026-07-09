@@ -1,8 +1,8 @@
-using Syki.Back.Domain.Notifications;
+using Estud.Back.Domain.Notifications;
 
-namespace Syki.Back.Features.Notifications.CreateNotification;
+namespace Estud.Back.Features.Notifications.CreateNotification;
 
-public class CreateNotificationService(SykiDbContext ctx) : ISykiService
+public class CreateNotificationService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<CreateNotificationIn>
     {
@@ -14,7 +14,7 @@ public class CreateNotificationService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CreateNotificationOut, SykiError>> Create(CreateNotificationIn data)
+    public async Task<OneOf<CreateNotificationOut, EstudError>> Create(CreateNotificationIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -42,11 +42,11 @@ public class CreateNotificationService(SykiDbContext ctx) : ISykiService
             SELECT
                 u.id
             FROM
-                syki.users u
+                estud.users u
             INNER JOIN
-                syki.roles r ON r.base_type = {userType}
+                estud.roles r ON r.base_type = {userType}
             INNER JOIN
-                syki.user_roles ur ON ur.user_id = u.id AND ur.role_id = r.id
+                estud.user_roles ur ON ur.user_id = u.id AND ur.role_id = r.id
             WHERE
                 u.institution_id = {institutionId}
         ";

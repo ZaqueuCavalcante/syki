@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.AssignCampiToTeacher;
+namespace Estud.Back.Features.Teachers.AssignCampiToTeacher;
 
 public class AssignCampiToTeacherIn : IApiDto<AssignCampiToTeacherIn>
 {

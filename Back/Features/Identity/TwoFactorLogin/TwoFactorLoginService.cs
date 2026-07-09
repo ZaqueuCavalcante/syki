@@ -1,16 +1,16 @@
 using System.Security.Claims;
-using Syki.Back.Domain.Identity;
-using Syki.Back.Features.Cross.SignIn;
+using Estud.Back.Domain.Identity;
+using Estud.Back.Features.Cross.SignIn;
 using Microsoft.AspNetCore.Authentication;
 
-namespace Syki.Back.Features.Identity.TwoFactorLogin;
+namespace Estud.Back.Features.Identity.TwoFactorLogin;
 
 public class TwoFactorLoginService(
     SignInService service,
     IHttpContextAccessor httpCtx,
-    UserManager<SykiUser> userManager) : ISykiService
+    UserManager<EstudUser> userManager) : IEstudService
 {
-    public async Task<OneOf<TwoFactorLoginOut, SykiError>> Login(TwoFactorLoginIn data)
+    public async Task<OneOf<TwoFactorLoginOut, EstudError>> Login(TwoFactorLoginIn data)
     {
         var authResult = await httpCtx.HttpContext.AuthenticateAsync(IdentityConstants.TwoFactorUserIdScheme);
         var userId = authResult.Principal?.FindFirstValue(ClaimTypes.Name);

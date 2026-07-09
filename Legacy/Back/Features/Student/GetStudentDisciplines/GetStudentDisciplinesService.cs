@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Student.GetStudentDisciplines;
+namespace Estud.Back.Features.Student.GetStudentDisciplines;
 
-public class GetStudentDisciplinesService(SykiDbContext ctx) : ISykiService
+public class GetStudentDisciplinesService(EstudDbContext ctx) : IEstudService
 {
     public async Task<List<DisciplineOut>> Get(Guid userId, Guid courseCurriculumId)
     {
@@ -13,7 +13,7 @@ public class GetStudentDisciplinesService(SykiDbContext ctx) : ISykiService
         var response = courseCurriculum.ToOut().Disciplines.OrderBy(d => d.Period).ToList();
 
         var studentClassesStatus = await ctx.ClassesStudents.AsNoTracking()
-            .Where(x => x.SykiStudentId == userId)
+            .Where(x => x.EstudStudentId == userId)
             .ToListAsync();
 
         var ids = courseCurriculum.Disciplines.ConvertAll(d => d.Id);

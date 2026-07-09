@@ -1,8 +1,8 @@
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Features.Identity.UpdateRole;
+namespace Estud.Back.Features.Identity.UpdateRole;
 
-public class UpdateRoleService(SykiDbContext ctx) : ISykiService
+public class UpdateRoleService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<UpdateRoleIn>
     {
@@ -17,17 +17,17 @@ public class UpdateRoleService(SykiDbContext ctx) : ISykiService
             RuleFor(x => x.BaseType).IsInEnum().WithError(InvalidRoleBaseType.I);
 
             RuleFor(x => x.Permissions)
-                .Must(x => x != null && x.IsAllDistinct() && x.IsSubsetOf(SykiPermissions.Permissions.ConvertAll(p => p.Id)))
+                .Must(x => x != null && x.IsAllDistinct() && x.IsSubsetOf(EstudPermissions.Permissions.ConvertAll(p => p.Id)))
                 .WithError(InvalidPermissionsList.I);
 
             RuleFor(x => x)
-                .Must(x => x.Permissions.All(id => SykiPermissions.IsAllowedFor(id, x.BaseType)))
+                .Must(x => x.Permissions.All(id => EstudPermissions.IsAllowedFor(id, x.BaseType)))
                 .WithError(InvalidPermissionsForUserType.I);
         }
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<UpdateRoleOut, SykiError>> Update(UpdateRoleIn data)
+    public async Task<OneOf<UpdateRoleOut, EstudError>> Update(UpdateRoleIn data)
     {
         if (V.Run(data, out var error)) return error;
 

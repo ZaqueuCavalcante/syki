@@ -1,13 +1,13 @@
-namespace Syki.Back.Features.Identity.GoogleOneTapLogin;
+namespace Estud.Back.Features.Identity.GoogleOneTapLogin;
 
-public class GoogleOneTapLoginInvalidToken : SykiError
+public class GoogleOneTapLoginInvalidToken : EstudError
 {
     public static readonly GoogleOneTapLoginInvalidToken I = new();
     public override string Code { get; set; } = nameof(GoogleOneTapLoginInvalidToken);
     public override string Message { get; set; } = "Token do Google inválido.";
 }
 
-public class GoogleOneTapLoginDisabled : SykiError
+public class GoogleOneTapLoginDisabled : EstudError
 {
     public static readonly GoogleOneTapLoginDisabled I = new();
     public override string Code { get; set; } = nameof(GoogleOneTapLoginDisabled);

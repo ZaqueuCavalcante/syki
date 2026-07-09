@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Campi;
+namespace Estud.Back.Domain.Campi;
 
 public class Campus
 {

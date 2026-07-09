@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Webhooks.GetWebhookCalls;
+namespace Estud.Back.Features.Webhooks.GetWebhookCalls;
 
 public class GetWebhookCallsOut : IApiDto<GetWebhookCallsOut>
 {

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.GetPermissions;
+namespace Estud.Back.Features.Identity.GetPermissions;
 
 public class GetPermissionsOut : IApiDto<GetPermissionsOut>
 {

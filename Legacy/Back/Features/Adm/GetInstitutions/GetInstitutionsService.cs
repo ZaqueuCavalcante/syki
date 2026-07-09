@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Adm.GetInstitutions;
+namespace Estud.Back.Features.Adm.GetInstitutions;
 
-public class GetInstitutionsService(SykiDbContext ctx, HybridCache cache) : ISykiService
+public class GetInstitutionsService(EstudDbContext ctx, HybridCache cache) : IEstudService
 {
     public async Task<List<InstitutionOut>> Get()
     {

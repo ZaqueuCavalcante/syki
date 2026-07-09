@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Notifications.GetInstitutionNotifications;
+namespace Estud.Back.Features.Notifications.GetInstitutionNotifications;
 
 public class GetInstitutionNotificationsOut : IApiDto<GetInstitutionNotificationsOut>
 {

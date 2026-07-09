@@ -1,9 +1,9 @@
-using Syki.Back.Domain.Campi;
-using Syki.Back.Domain.Courses;
-using Syki.Back.Domain.Periods;
-using Syki.Back.Domain.CourseCurriculums;
+using Estud.Back.Domain.Campi;
+using Estud.Back.Domain.Courses;
+using Estud.Back.Domain.Periods;
+using Estud.Back.Domain.CourseCurriculums;
 
-namespace Syki.Back.Domain.CourseOfferings;
+namespace Estud.Back.Domain.CourseOfferings;
 
 /// <summary>
 /// Oferta de Curso

@@ -1,6 +1,6 @@
-using Syki.Back.Features.Notifications.MarkNotificationsAsViewed;
+using Estud.Back.Features.Notifications.MarkNotificationsAsViewed;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {

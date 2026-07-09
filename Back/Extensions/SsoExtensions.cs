@@ -2,13 +2,13 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 
-namespace Syki.Back.Extensions;
+namespace Estud.Back.Extensions;
 
 public static partial class SsoExtensions
 {
     extension(string value)
     {
-        public SykiError? ValidateSsoAuthority()
+        public EstudError? ValidateSsoAuthority()
         {
             // Must be valid URI
             if (!Uri.TryCreate(value, UriKind.Absolute, out var uri))
@@ -26,7 +26,7 @@ public static partial class SsoExtensions
             return uri.Host.ValidateSsoHost();
         }
 
-        public SykiError? ValidateSsoHost()
+        public EstudError? ValidateSsoHost()
         {
             // Try to parse as IP address
             if (IPAddress.TryParse(value, out var ip))
@@ -62,7 +62,7 @@ public static partial class SsoExtensions
 
     extension(IPAddress ip)
     {
-        public SykiError? ValidateSsoIpAddress()
+        public EstudError? ValidateSsoIpAddress()
         {
             var resolved = ip;
             var isDevOrTest = EnvironmentExtensions.IsDevelopmentOrTesting();

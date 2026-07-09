@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Adm.ReprocessCommand;
+namespace Estud.Back.Features.Adm.ReprocessCommand;
 
 [ApiController, Authorize]
 public class ReprocessCommandController(ReprocessCommandService service) : ControllerBase

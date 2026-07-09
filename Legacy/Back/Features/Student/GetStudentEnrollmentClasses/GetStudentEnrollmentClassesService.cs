@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Student.GetStudentEnrollmentClasses;
+namespace Estud.Back.Features.Student.GetStudentEnrollmentClasses;
 
-public class GetStudentEnrollmentClassesService(SykiDbContext ctx) : ISykiService
+public class GetStudentEnrollmentClassesService(EstudDbContext ctx) : IEstudService
 {
     public async Task<List<EnrollmentClassOut>> Get(Guid institutionId, Guid userId, Guid courseCurriculumId)
     {
@@ -24,7 +24,7 @@ public class GetStudentEnrollmentClassesService(SykiDbContext ctx) : ISykiServic
             .Where(t => t.InstitutionId == institutionId && t.PeriodId == enrollmentPeriod.Id && t.Status == ClassStatus.OnEnrollment && ids.Contains(t.DisciplineId))
             .ToListAsync();
 
-        var selecteds = await ctx.ClassesStudents.Where(x => x.SykiStudentId == userId).Select(x => x.ClassId).ToListAsync();
+        var selecteds = await ctx.ClassesStudents.Where(x => x.EstudStudentId == userId).Select(x => x.ClassId).ToListAsync();
 
         var response = classes.ConvertAll(t =>
         {

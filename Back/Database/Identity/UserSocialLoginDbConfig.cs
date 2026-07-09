@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Database.Identity;
+namespace Estud.Back.Database.Identity;
 
 public class UserSocialLoginDbConfig : IEntityTypeConfiguration<UserSocialLogin>
 {
     public void Configure(EntityTypeBuilder<UserSocialLogin> entity)
     {
-        entity.ToTable("user_social_logins", DbSchemas.Syki);
+        entity.ToTable("user_social_logins", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
 

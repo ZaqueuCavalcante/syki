@@ -1,14 +1,14 @@
-using Syki.Back.Domain.Identity;
-using Syki.Back.Features.Cross.SignIn;
+using Estud.Back.Domain.Identity;
+using Estud.Back.Features.Cross.SignIn;
 
-namespace Syki.Back.Features.Identity.EmailPasswordLogin;
+namespace Estud.Back.Features.Identity.EmailPasswordLogin;
 
 public class EmailPasswordLoginService(
     SignInService service,
     IHttpContextAccessor httpCtx,
-    UserManager<SykiUser> userManager) : ISykiService
+    UserManager<EstudUser> userManager) : IEstudService
 {
-    public async Task<OneOf<EmailPasswordLoginOut, SykiError>> Login(EmailPasswordLoginIn data)
+    public async Task<OneOf<EmailPasswordLoginOut, EstudError>> Login(EmailPasswordLoginIn data)
     {
         var user = await userManager.FindByEmailAsync(data.Email);
         if (user == null) return new LoginWrongEmailOrPassword();

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Notifications.GetNotifications;
+namespace Estud.Back.Features.Notifications.GetNotifications;
 
 public class GetNotificationsIn : IApiDto<GetNotificationsIn>
 {

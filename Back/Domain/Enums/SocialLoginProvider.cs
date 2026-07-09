@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Enums;
+namespace Estud.Back.Domain.Enums;
 
 /// <summary>
 /// Social login providers supported for user authentication.

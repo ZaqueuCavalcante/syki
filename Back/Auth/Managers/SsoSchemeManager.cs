@@ -1,11 +1,11 @@
-using Syki.Back.Auth.Schemes;
-using Syki.Back.Domain.Identity;
+using Estud.Back.Auth.Schemes;
+using Estud.Back.Domain.Identity;
 using Microsoft.Extensions.Options;
 using System.Collections.Concurrent;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
-namespace Syki.Back.Auth.Managers;
+namespace Estud.Back.Auth.Managers;
 
 public class SsoSchemeManager(
     SsoEncryptionManager encryption,

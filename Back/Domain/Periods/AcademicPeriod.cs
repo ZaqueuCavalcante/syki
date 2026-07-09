@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Periods;
+namespace Estud.Back.Domain.Periods;
 
 public class AcademicPeriod
 {
@@ -22,7 +22,7 @@ public class AcademicPeriod
         EndAt = endAt;
     }
 
-    public static OneOf<AcademicPeriod, SykiError> New(
+    public static OneOf<AcademicPeriod, EstudError> New(
         int institutionId,
         string name,
         DateOnly startAt,
@@ -35,7 +35,7 @@ public class AcademicPeriod
         return new AcademicPeriod(institutionId, result.Success, startAt, endAt);
     }
 
-    private static OneOf<string, SykiError> Validate(
+    private static OneOf<string, EstudError> Validate(
         string name,
         DateOnly startAt,
         DateOnly endAt

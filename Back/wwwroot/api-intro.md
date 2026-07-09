@@ -1,8 +1,8 @@
 ## ▶️ Introdução
 
-Essa é a documentação oficial da API do Syki!
+Essa é a documentação oficial da API do Estud!
 
-Repositório: [Syki ↗️](https://github.com/ZaqueuCavalcante/syki)
+Repositório: [Estud ↗️](https://github.com/ZaqueuCavalcante/estud)
 
 ## 🔑 Autenticação
 

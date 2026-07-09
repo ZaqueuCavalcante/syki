@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Database.Identity;
+namespace Estud.Back.Database.Identity;
 
 public class SsoConfigurationDbConfig : IEntityTypeConfiguration<SsoConfiguration>
 {
     public void Configure(EntityTypeBuilder<SsoConfiguration> entity)
     {
-        entity.ToTable("sso_configurations", DbSchemas.Syki);
+        entity.ToTable("sso_configurations", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
 

@@ -1,4 +1,4 @@
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class CacheConfigs
 {

@@ -2,7 +2,7 @@
 
 Adicionei 𝐜𝐚𝐜𝐡𝐞 no projeto open-source que estou desenvolvendo!
 
-O 𝐒𝐲𝐤𝐢 (https://github.com/ZaqueuCavalcante/syki) é um sistema de gerenciamento de instituições de ensino que pode ser usado por gestores, professores e alunos.
+O 𝐒𝐲𝐤𝐢 (https://github.com/ZaqueuCavalcante/estud) é um sistema de gerenciamento de instituições de ensino que pode ser usado por gestores, professores e alunos.
 
 Ele possui alguns dados que mudam pouco, como cadastros de campus, cursos e disciplinas. Logo, faz muito sentido guardá-los em cache para economizar recursos e aumentar a performance da aplicação como um todo.
 

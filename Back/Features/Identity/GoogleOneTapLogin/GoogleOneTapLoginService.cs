@@ -1,16 +1,16 @@
-using Syki.Back.Google;
-using Syki.Back.Domain.Identity;
-using Syki.Back.Domain.Institutions;
-using Syki.Back.Features.Cross.SignIn;
+using Estud.Back.Google;
+using Estud.Back.Domain.Identity;
+using Estud.Back.Domain.Institutions;
+using Estud.Back.Features.Cross.SignIn;
 
-namespace Syki.Back.Features.Identity.GoogleOneTapLogin;
+namespace Estud.Back.Features.Identity.GoogleOneTapLogin;
 
 public class GoogleOneTapLoginService(
-    SykiDbContext ctx,
+    EstudDbContext ctx,
     SignInService signInService,
     IGoogleService googleService,
-    UserManager<SykiUser> userManager,
-    SocialLoginSettings socialLoginSettings) : ISykiService
+    UserManager<EstudUser> userManager,
+    SocialLoginSettings socialLoginSettings) : IEstudService
 {
     private class Validator : AbstractValidator<GoogleOneTapLoginIn>
     {
@@ -21,7 +21,7 @@ public class GoogleOneTapLoginService(
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<GoogleOneTapLoginOut, SykiError>> Login(GoogleOneTapLoginIn data)
+    public async Task<OneOf<GoogleOneTapLoginOut, EstudError>> Login(GoogleOneTapLoginIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -64,12 +64,12 @@ public class GoogleOneTapLoginService(
         var directorRole = await ctx.GetDirectorRole();
 
         var institution = Institution.NewForUserRegister();
-        var user = new SykiUser(institution, name, email);
-        var userRole = new SykiUserRole(institution, user, directorRole.Id);
+        var user = new EstudUser(institution, name, email);
+        var userRole = new EstudUserRole(institution, user, directorRole.Id);
         var socialLogin = new UserSocialLogin(user.Id, provider, providerKey, email) { User = user };
 
         ctx.AddRange(institution, userRole, socialLogin);
-        await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");
+        await userManager.CreateAsync(user, $"Estud@{Guid.NewGuid()}");
 
         var jwtResult = await signInService.SignIn(email);
         return jwtResult.ToGoogleOneTapLoginOut();

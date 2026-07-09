@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.StartClasses;
+namespace Estud.Back.Features.Academic.StartClasses;
 
-public class StartClassesService(SykiDbContext ctx) : ISykiService
+public class StartClassesService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Start(Guid institutionId, StartClassesIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Start(Guid institutionId, StartClassesIn data)
     {
         var classes = await ctx.Classes
             .Include(x => x.Students)
@@ -27,6 +27,6 @@ public class StartClassesService(SykiDbContext ctx) : ISykiService
 
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 }

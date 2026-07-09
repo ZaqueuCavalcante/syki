@@ -1,11 +1,11 @@
 using System.Security.Claims;
-using Syki.Back.Domain.Identity;
-using Syki.Back.Domain.Institutions;
-using Syki.Back.Features.Cross.SignIn;
+using Estud.Back.Domain.Identity;
+using Estud.Back.Domain.Institutions;
+using Estud.Back.Features.Cross.SignIn;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
 
-namespace Syki.Back.Auth.Schemes;
+namespace Estud.Back.Auth.Schemes;
 
 public static class SocialLoginScheme
 {
@@ -67,10 +67,10 @@ public static class SocialLoginScheme
     private static async Task HandleTicketReceived(TicketReceivedContext context)
     {
         var services = context.HttpContext.RequestServices;
-        var ctx = services.GetRequiredService<SykiDbContext>();
+        var ctx = services.GetRequiredService<EstudDbContext>();
         var signInService = services.GetRequiredService<SignInService>();
         var frontendSettings = services.GetRequiredService<FrontendSettings>();
-        var userManager = services.GetRequiredService<UserManager<SykiUser>>();
+        var userManager = services.GetRequiredService<UserManager<EstudUser>>();
 
         // 1. Extract email from OAuth claims
         var email = context.Principal?.FindFirst(ClaimTypes.Email)?.Value ?? context.Principal?.FindFirst("email")?.Value;
@@ -140,12 +140,12 @@ public static class SocialLoginScheme
         var directorRole = await ctx.GetDirectorRole();
 
         var institution = Institution.NewForUserRegister();
-        var user = new SykiUser(institution, name, email);
-        var userRole = new SykiUserRole(institution, user, directorRole.Id);
+        var user = new EstudUser(institution, name, email);
+        var userRole = new EstudUserRole(institution, user, directorRole.Id);
         var socialLogin = new UserSocialLogin(user.Id, provider, providerKey, email) { User = user };
 
         ctx.AddRange(institution, userRole, socialLogin);
-        await userManager.CreateAsync(user, $"Syki@{Guid.NewGuid()}");
+        await userManager.CreateAsync(user, $"Estud@{Guid.NewGuid()}");
 
         await signInService.SignIn(email);
 

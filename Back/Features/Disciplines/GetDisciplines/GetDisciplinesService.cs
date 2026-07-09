@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Disciplines.GetDisciplines;
+namespace Estud.Back.Features.Disciplines.GetDisciplines;
 
-public class GetDisciplinesService(SykiDbContext ctx) : ISykiService
+public class GetDisciplinesService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetDisciplinesOut> Get(GetDisciplinesIn query)
     {

@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Disciplines.UpdateDiscipline;
+namespace Estud.Back.Features.Disciplines.UpdateDiscipline;
 
-public class UpdateDisciplineService(SykiDbContext ctx) : ISykiService
+public class UpdateDisciplineService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<UpdateDisciplineIn>
     {
@@ -12,7 +12,7 @@ public class UpdateDisciplineService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<UpdateDisciplineOut, SykiError>> Update(UpdateDisciplineIn data)
+    public async Task<OneOf<UpdateDisciplineOut, EstudError>> Update(UpdateDisciplineIn data)
     {
         if (V.Run(data, out var error)) return error;
 

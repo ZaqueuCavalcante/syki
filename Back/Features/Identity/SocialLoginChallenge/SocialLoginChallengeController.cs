@@ -1,7 +1,7 @@
-using Syki.Back.Auth.Schemes;
+using Estud.Back.Auth.Schemes;
 using Microsoft.AspNetCore.Authentication;
 
-namespace Syki.Back.Features.Identity.SocialLoginChallenge;
+namespace Estud.Back.Features.Identity.SocialLoginChallenge;
 
 [ApiController, EnableRateLimiting(RateLimitingConfigs.SensitivePolicy)]
 public class SocialLoginChallengeController(FrontendSettings frontendSettings) : ControllerBase

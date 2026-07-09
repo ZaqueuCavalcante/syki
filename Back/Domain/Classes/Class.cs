@@ -1,9 +1,9 @@
-using Syki.Back.Domain.Periods;
-using Syki.Back.Domain.Teachers;
-using Syki.Back.Domain.Students;
-using Syki.Back.Domain.Disciplines;
+using Estud.Back.Domain.Periods;
+using Estud.Back.Domain.Teachers;
+using Estud.Back.Domain.Students;
+using Estud.Back.Domain.Disciplines;
 
-namespace Syki.Back.Domain.Classes;
+namespace Estud.Back.Domain.Classes;
 
 /// <summary>
 /// Turma
@@ -26,11 +26,11 @@ public class Class
     public int? CampusId { get; set; }
 
     public int? TeacherId { get; set; }
-    public SykiTeacher Teacher { get; set; }
+    public EstudTeacher Teacher { get; set; }
 
     public List<Schedule> Schedules { get; set; }
     public List<ClassLesson> Lessons { get; set; }
-    public List<SykiStudent> Students { get; set; }
+    public List<EstudStudent> Students { get; set; }
 
     private Class() {}
 

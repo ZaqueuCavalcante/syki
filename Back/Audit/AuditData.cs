@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using Audit.EntityFramework;
 
-namespace Syki.Back.Audit;
+namespace Estud.Back.Audit;
 
 /// <summary>
 /// Guarda as informações da autoria de mudança de uma entidade.

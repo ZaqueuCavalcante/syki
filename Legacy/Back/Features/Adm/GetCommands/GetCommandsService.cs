@@ -1,9 +1,9 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Adm.GetCommands;
+namespace Estud.Back.Features.Adm.GetCommands;
 
-public class GetCommandsService(NpgsqlDataSource dataSource) : ISykiService
+public class GetCommandsService(NpgsqlDataSource dataSource) : IEstudService
 {
     public async Task<List<CommandTableOut>> Get(CommandTableFilterIn filters)
     {
@@ -18,7 +18,7 @@ public class GetCommandsService(NpgsqlDataSource dataSource) : ISykiService
                 processed_at,
                 duration
             FROM
-                syki.commands
+                estud.commands
             WHERE
                 (@Type IS NULL OR type = @Type)
                     AND

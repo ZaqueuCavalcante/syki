@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Disciplines.RemoveDisciplineCourse;
+namespace Estud.Back.Features.Disciplines.RemoveDisciplineCourse;
 
 public class RemoveDisciplineCourseIn : IApiDto<RemoveDisciplineCourseIn>
 {

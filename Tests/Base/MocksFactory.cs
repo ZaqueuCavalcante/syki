@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace Syki.Tests.Base;
+namespace Estud.Tests.Base;
 
 extern alias Mocks;
 

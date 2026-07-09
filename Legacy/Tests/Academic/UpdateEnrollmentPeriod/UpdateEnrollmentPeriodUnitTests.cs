@@ -1,6 +1,6 @@
-using Syki.Back.Features.Academic.CreateEnrollmentPeriod;
+using Estud.Back.Features.Academic.CreateEnrollmentPeriod;
 
-namespace Syki.Tests.Features.Academic.UpdateEnrollmentPeriod;
+namespace Estud.Tests.Features.Academic.UpdateEnrollmentPeriod;
 
 public class CreateEnrollmentPeriodUnitTests
 {

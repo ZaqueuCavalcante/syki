@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Webhooks.GetWebhookSubscriptions;
+namespace Estud.Back.Features.Webhooks.GetWebhookSubscriptions;
 
-public class GetWebhookSubscriptionsService(SykiDbContext ctx) : ISykiService
+public class GetWebhookSubscriptionsService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetWebhookSubscriptionsOut> Get()
     {

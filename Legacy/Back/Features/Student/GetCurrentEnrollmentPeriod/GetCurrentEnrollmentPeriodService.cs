@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Student.GetCurrentEnrollmentPeriod;
+namespace Estud.Back.Features.Student.GetCurrentEnrollmentPeriod;
 
-public class GetCurrentEnrollmentPeriodService(SykiDbContext ctx) : ISykiService
+public class GetCurrentEnrollmentPeriodService(EstudDbContext ctx) : IEstudService
 {
     public async Task<EnrollmentPeriodOut> Get(Guid institutionId)
     {

@@ -1,9 +1,9 @@
-using Syki.Back.Auth.Managers;
-using Syki.Back.Domain.Identity;
+using Estud.Back.Auth.Managers;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Features.Identity.CreateSsoConfiguration;
+namespace Estud.Back.Features.Identity.CreateSsoConfiguration;
 
-public class CreateSsoConfigurationService(SykiDbContext ctx, SsoEncryptionManager encryption, SsoSchemeManager ssoSchemeManager) : ISykiService
+public class CreateSsoConfigurationService(EstudDbContext ctx, SsoEncryptionManager encryption, SsoSchemeManager ssoSchemeManager) : IEstudService
 {
     private class Validator : AbstractValidator<CreateSsoConfigurationIn>
     {
@@ -22,7 +22,7 @@ public class CreateSsoConfigurationService(SykiDbContext ctx, SsoEncryptionManag
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<CreateSsoConfigurationOut, SykiError>> Create(CreateSsoConfigurationIn data)
+    public async Task<OneOf<CreateSsoConfigurationOut, EstudError>> Create(CreateSsoConfigurationIn data)
     {
         if (V.Run(data, out var error)) return error;
 

@@ -1,10 +1,10 @@
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Features.Identity.SetupTwoFactor;
+namespace Estud.Back.Features.Identity.SetupTwoFactor;
 
-public class SetupTwoFactorService(SykiDbContext ctx, UserManager<SykiUser> userManager) : ISykiService
+public class SetupTwoFactorService(EstudDbContext ctx, UserManager<EstudUser> userManager) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Setup(string token)
+    public async Task<OneOf<EstudSuccess, EstudError>> Setup(string token)
     {
         var webUser = await userManager.Users.FirstAsync(u => u.Id == ctx.RequestUser.Id);
 
@@ -14,6 +14,6 @@ public class SetupTwoFactorService(SykiDbContext ctx, UserManager<SykiUser> user
 
         await userManager.SetTwoFactorEnabledAsync(webUser, true);
 
-        return SykiSuccess.I;
+        return EstudSuccess.I;
     }
 }

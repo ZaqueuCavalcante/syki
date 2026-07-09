@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Notifications;
+namespace Estud.Back.Domain.Notifications;
 
 public class UserNotification
 {

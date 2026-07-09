@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
-namespace Syki.Mocks.Providers;
+namespace Estud.Mocks.Providers;
 
 public sealed class RegisterOnlyMocksControllersFeatureProvider : IApplicationFeatureProvider<ControllerFeature>
 {
@@ -11,7 +11,7 @@ public sealed class RegisterOnlyMocksControllersFeatureProvider : IApplicationFe
         {
             var ctrl = feature.Controllers[i];
 
-            if (!ctrl.AssemblyQualifiedName.StartsWith("Syki.Mocks"))
+            if (!ctrl.AssemblyQualifiedName.StartsWith("Estud.Mocks"))
                 feature.Controllers.RemoveAt(i);
         }
     }

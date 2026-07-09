@@ -1,4 +1,4 @@
-namespace Syki.Back.Emails;
+namespace Estud.Back.Emails;
 
 public class FakeEmailsService : IEmailsService
 {

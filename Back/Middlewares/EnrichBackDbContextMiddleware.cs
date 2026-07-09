@@ -1,10 +1,10 @@
 using System.Diagnostics;
 
-namespace Syki.Back.Middlewares;
+namespace Estud.Back.Middlewares;
 
 public class EnrichBackDbContextMiddleware(RequestDelegate next)
 {
-    public async Task InvokeAsync(HttpContext request, SykiDbContext ctx)
+    public async Task InvokeAsync(HttpContext request, EstudDbContext ctx)
     {
         if (request.User.IsAuthenticated)
         {

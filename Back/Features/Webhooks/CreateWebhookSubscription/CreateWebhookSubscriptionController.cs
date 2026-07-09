@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Webhooks.CreateWebhookSubscription;
+namespace Estud.Back.Features.Webhooks.CreateWebhookSubscription;
 
 [ApiController, Authorize(Policies.CreateWebhookSubscription)]
 public class CreateWebhookSubscriptionController(CreateWebhookSubscriptionService service) : ControllerBase

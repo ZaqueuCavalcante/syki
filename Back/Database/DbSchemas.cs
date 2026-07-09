@@ -1,6 +1,6 @@
-namespace Syki.Back.Database;
+namespace Estud.Back.Database;
 
 public class DbSchemas
 {
-    public const string Syki = "syki";
+    public const string Estud = "estud";
 }

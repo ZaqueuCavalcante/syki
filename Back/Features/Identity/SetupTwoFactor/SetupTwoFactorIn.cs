@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.SetupTwoFactor;
+namespace Estud.Back.Features.Identity.SetupTwoFactor;
 
 public class SetupTwoFactorIn : IApiDto<SetupTwoFactorIn>
 {

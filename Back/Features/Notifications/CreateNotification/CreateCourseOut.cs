@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Notifications.CreateNotification;
+namespace Estud.Back.Features.Notifications.CreateNotification;
 
 public class CreateNotificationOut : IApiDto<CreateNotificationOut>
 {

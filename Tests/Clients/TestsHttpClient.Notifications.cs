@@ -1,10 +1,10 @@
 using System.Net.Http.Json;
-using Syki.Back.Features.Notifications.GetNotifications;
-using Syki.Back.Features.Notifications.CreateNotification;
-using Syki.Back.Features.Notifications.MarkNotificationsAsViewed;
-using Syki.Back.Features.Notifications.GetUnreadNotificationsCount;
+using Estud.Back.Features.Notifications.GetNotifications;
+using Estud.Back.Features.Notifications.CreateNotification;
+using Estud.Back.Features.Notifications.MarkNotificationsAsViewed;
+using Estud.Back.Features.Notifications.GetUnreadNotificationsCount;
 
-namespace Syki.Tests.Integration.Clients;
+namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {

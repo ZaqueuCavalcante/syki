@@ -1,4 +1,4 @@
-namespace Syki.Back.Errors;
+namespace Estud.Back.Errors;
 
 public abstract class ExamplesProvider<T> : IMultipleExamplesProvider<T> where T : IApiDto<T>
 {

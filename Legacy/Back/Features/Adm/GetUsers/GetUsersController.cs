@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Adm.GetUsers;
+namespace Estud.Back.Features.Adm.GetUsers;
 
 [ApiController, Authorize]
 public class GetUsersController(GetUsersService service) : ControllerBase

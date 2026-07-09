@@ -1,4 +1,4 @@
-namespace Syki.Tests.Extensions;
+namespace Estud.Tests.Extensions;
 
 public class ListExtensionsUnitTests
 {

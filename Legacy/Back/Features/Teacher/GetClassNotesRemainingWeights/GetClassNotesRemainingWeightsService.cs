@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Teacher.GetClassNotesRemainingWeights;
+namespace Estud.Back.Features.Teacher.GetClassNotesRemainingWeights;
 
-public class GetClassNotesRemainingWeightsService(SykiDbContext ctx) : ISykiService
+public class GetClassNotesRemainingWeightsService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<List<ClassNoteRemainingWeightsOut>, SykiError>> Get(Guid institutionId, Guid userId, Guid id)
+    public async Task<OneOf<List<ClassNoteRemainingWeightsOut>, EstudError>> Get(Guid institutionId, Guid userId, Guid id)
     {
         var @class = await ctx.Classes.AsNoTracking()
             .Include(t => t.Activities)

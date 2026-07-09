@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teacher.SetSchedulingPreferences;
+namespace Estud.Back.Features.Teacher.SetSchedulingPreferences;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

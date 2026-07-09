@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Campi.UpdateCampus;
+namespace Estud.Back.Features.Campi.UpdateCampus;
 
 public class UpdateCampusIn : IApiDto<UpdateCampusIn>
 {

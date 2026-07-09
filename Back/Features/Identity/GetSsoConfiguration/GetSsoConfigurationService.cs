@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Identity.GetSsoConfiguration;
+namespace Estud.Back.Features.Identity.GetSsoConfiguration;
 
-public class GetSsoConfigurationService(SykiDbContext ctx) : ISykiService
+public class GetSsoConfigurationService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetSsoConfigurationOut?> Get()
     {

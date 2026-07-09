@@ -1,17 +1,17 @@
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Database.Identity;
+namespace Estud.Back.Database.Identity;
 
 public class ResetPasswordTokenDbConfig : IEntityTypeConfiguration<ResetPasswordToken>
 {
     public void Configure(EntityTypeBuilder<ResetPasswordToken> entity)
     {
-        entity.ToTable("reset_password_tokens", DbSchemas.Syki);
+        entity.ToTable("reset_password_tokens", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Id).ValueGeneratedNever();
 
-        entity.HasOne<SykiUser>()
+        entity.HasOne<EstudUser>()
             .WithMany()
             .HasPrincipalKey(u => u.Id)
             .HasForeignKey(e => e.UserId);

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.CreateTeacher;
+namespace Estud.Back.Features.Teachers.CreateTeacher;
 
 [ApiController, Authorize(Policies.CreateTeacher)]
 public class CreateTeacherController(CreateTeacherService service) : ControllerBase

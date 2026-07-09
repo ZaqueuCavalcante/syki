@@ -24,9 +24,9 @@ Dessa forma consigo:
 Abaixo mostro como ficou o teste do fluxo normal.
 
 <p align="center">
-  <img src="https://github.com/ZaqueuCavalcante/syki/blob/master/Posts/011MfaTests/test.gif?raw=true" style="display: block; margin: 0 auto" />
+  <img src="https://github.com/ZaqueuCavalcante/estud/blob/master/Posts/011MfaTests/test.gif?raw=true" style="display: block; margin: 0 auto" />
 </p>
 
-> Você pode ver o código aqui (https://github.com/ZaqueuCavalcante/syki) e a aplicação rodando aqui (https://app.syki.com.br). Venho postando no LinkedIn todas as atualizações de desenvolvimento do projeto (https://www.linkedin.com/in/zaqueu-cavalcante).
+> Você pode ver o código aqui (https://github.com/ZaqueuCavalcante/estud) e a aplicação rodando aqui (https://app.estud.com.br). Venho postando no LinkedIn todas as atualizações de desenvolvimento do projeto (https://www.linkedin.com/in/zaqueu-cavalcante).
 
 > O que achou dessa nova funcionalidade? Faria diferente? Acha que faltou algo ou possui ideias para melhorar o projeto? Me deixe saber nos comentários abaixo, valeu!

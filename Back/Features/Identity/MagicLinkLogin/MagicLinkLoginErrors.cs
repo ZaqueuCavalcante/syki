@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Identity.MagicLinkLogin;
+namespace Estud.Back.Features.Identity.MagicLinkLogin;
 
-public class InvalidMagicLink : SykiError
+public class InvalidMagicLink : EstudError
 {
     public static readonly InvalidMagicLink I = new();
     public override string Code { get; set; } = nameof(InvalidMagicLink);

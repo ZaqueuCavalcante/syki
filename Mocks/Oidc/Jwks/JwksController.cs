@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Syki.Mocks.Oidc.Jwks;
+namespace Estud.Mocks.Oidc.Jwks;
 
 /// <summary>
 /// JSON Web Key Set - public keys for token signature validation.

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.GetTeacherPotentialCampi;
+namespace Estud.Back.Features.Teachers.GetTeacherPotentialCampi;
 
 public class GetTeacherPotentialCampiOut : IApiDto<GetTeacherPotentialCampiOut>
 {

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Student.CreateClassActivityWork;
+namespace Estud.Back.Features.Student.CreateClassActivityWork;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]
@@ -12,7 +12,7 @@ public class CreateClassActivityWorkController(CreateClassActivityWorkService se
     /// </remarks>
     [HttpPost("student/activities/{id}/works")]
     [ProducesResponseType<ClassActivityWorkOut>(200)]
-    [ProducesResponseType<SykiError>(400)]
+    [ProducesResponseType<EstudError>(400)]
     public async Task<IActionResult> Create([FromRoute] Guid id, [FromBody] CreateClassActivityWorkIn data)
     {
         var result = await service.Create(id, User.Id, data);

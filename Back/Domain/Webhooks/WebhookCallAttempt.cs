@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Webhooks;
+namespace Estud.Back.Domain.Webhooks;
 
 /// <summary>
 /// Tentativa de chamada de Webhook

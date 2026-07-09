@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Disciplines.AddDisciplineCourses;
+namespace Estud.Back.Features.Disciplines.AddDisciplineCourses;
 
 public class AddDisciplineCoursesIn : IApiDto<AddDisciplineCoursesIn>
 {

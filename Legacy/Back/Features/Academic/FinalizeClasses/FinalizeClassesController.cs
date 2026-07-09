@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.FinalizeClasses;
+namespace Estud.Back.Features.Academic.FinalizeClasses;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

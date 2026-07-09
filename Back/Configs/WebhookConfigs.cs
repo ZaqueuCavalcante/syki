@@ -1,6 +1,6 @@
-using Syki.Back.Webhooks;
+using Estud.Back.Webhooks;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class WebhookConfigs
 {

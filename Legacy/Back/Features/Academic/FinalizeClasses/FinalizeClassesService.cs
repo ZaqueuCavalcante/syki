@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.FinalizeClasses;
+namespace Estud.Back.Features.Academic.FinalizeClasses;
 
-public class FinalizeClassesService(SykiDbContext ctx) : ISykiService
+public class FinalizeClassesService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Finalize(Guid institutionId, FinalizeClassesIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Finalize(Guid institutionId, FinalizeClassesIn data)
     {
         var classes = await ctx.Classes
             .Include(x => x.Lessons)
@@ -38,7 +38,7 @@ public class FinalizeClassesService(SykiDbContext ctx) : ISykiService
                 var averageNote = studentNotes.GetAverageNote();
                 var presences = @class.Lessons.Count(x => x.Attendances.Exists(a => a.StudentId == student.Id && a.Present));
                 var frequency = lessons == 0 ? 0.00M : 100M * (1M * presences / (1M * lessons));
-                var link = classesStudents.First(x => x.ClassId == @class.Id && x.SykiStudentId == student.Id);
+                var link = classesStudents.First(x => x.ClassId == @class.Id && x.EstudStudentId == student.Id);
 
                 link.StudentDisciplineStatus = StudentDisciplineStatus.Aprovado;
                 if (averageNote < configs.NoteLimit)
@@ -54,6 +54,6 @@ public class FinalizeClassesService(SykiDbContext ctx) : ISykiService
 
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 }

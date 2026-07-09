@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Campi.UpdateCampus;
+namespace Estud.Back.Features.Campi.UpdateCampus;
 
-public class UpdateCampusService(SykiDbContext ctx) : ISykiService
+public class UpdateCampusService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<UpdateCampusIn>
     {
@@ -20,7 +20,7 @@ public class UpdateCampusService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<UpdateCampusOut, SykiError>> Update(UpdateCampusIn data)
+    public async Task<OneOf<UpdateCampusOut, EstudError>> Update(UpdateCampusIn data)
     {
         if (V.Run(data, out var error)) return error;
 

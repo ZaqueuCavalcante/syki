@@ -2,7 +2,7 @@
 
 Adicionei integração com o 𝐀𝐳𝐮𝐫𝐞 𝐁𝐥𝐨𝐛 𝐒𝐭𝐨𝐫𝐚𝐠𝐞 no projeto open-source que estou desenvolvendo!
 
-O 𝐒𝐲𝐤𝐢 (https://github.com/ZaqueuCavalcante/syki) é um sistema de gerenciamento de instituições de ensino que pode ser usado por gestores, professores e alunos.
+O 𝐒𝐲𝐤𝐢 (https://github.com/ZaqueuCavalcante/estud) é um sistema de gerenciamento de instituições de ensino que pode ser usado por gestores, professores e alunos.
 
 Aplicações desse tipo precisam lidar com 𝐚𝐫𝐪𝐮𝐢𝐯𝐨𝐬 frequentemente:
 

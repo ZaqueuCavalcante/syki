@@ -1,9 +1,9 @@
 using System.Net.Http.Json;
-using Syki.Back.Features.Users.RegisterUser;
-using Syki.Back.Features.Users.GetUserAccount;
-using Syki.Back.Features.Users.UpdateUserAccount;
+using Estud.Back.Features.Users.RegisterUser;
+using Estud.Back.Features.Users.GetUserAccount;
+using Estud.Back.Features.Users.UpdateUserAccount;
 
-namespace Syki.Tests.Integration.Clients;
+namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {

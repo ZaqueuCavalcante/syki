@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Teacher.AddStudentClassActivityNote;
+namespace Estud.Back.Features.Teacher.AddStudentClassActivityNote;
 
-public class AddStudentClassActivityNoteService(SykiDbContext ctx) : ISykiService
+public class AddStudentClassActivityNoteService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Add(Guid teacherId, Guid classActivityId, AddStudentClassActivityNoteIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Add(Guid teacherId, Guid classActivityId, AddStudentClassActivityNoteIn data)
     {
         var activity = await ctx.ClassActivities.Where(x => x.Id == classActivityId).FirstOrDefaultAsync();
         if (activity == null) return new ClassActivityNotFound();
@@ -11,7 +11,7 @@ public class AddStudentClassActivityNoteService(SykiDbContext ctx) : ISykiServic
         if (!classOk) return new ClassNotFound();
 
         var work = await ctx.ClassActivityWorks
-            .Where(x => x.ClassActivityId == classActivityId && x.SykiStudentId == data.StudentId)
+            .Where(x => x.ClassActivityId == classActivityId && x.EstudStudentId == data.StudentId)
             .FirstOrDefaultAsync();
         if (work == null) return new ClassActivityNotFound();
 
@@ -20,6 +20,6 @@ public class AddStudentClassActivityNoteService(SykiDbContext ctx) : ISykiServic
 
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 }

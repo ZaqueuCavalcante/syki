@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Syki.Mocks.Oidc.Token;
+namespace Estud.Mocks.Oidc.Token;
 
 /// <summary>
 /// Token endpoint - exchanges authorization code for tokens.

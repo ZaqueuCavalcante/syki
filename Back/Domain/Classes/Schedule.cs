@@ -1,4 +1,4 @@
-namespace Syki.Back.Domain.Classes;
+namespace Estud.Back.Domain.Classes;
 
 public class Schedule
 {
@@ -22,7 +22,7 @@ public class Schedule
         End = endAt;
     }
 
-    public static OneOf<Schedule, SykiError> New(
+    public static OneOf<Schedule, EstudError> New(
         Day day,
         Hour startAt,
         Hour endAt

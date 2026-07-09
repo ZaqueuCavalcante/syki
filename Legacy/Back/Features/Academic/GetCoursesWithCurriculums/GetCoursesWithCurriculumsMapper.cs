@@ -1,6 +1,6 @@
-using Syki.Back.Features.Academic.CreateCourse;
+using Estud.Back.Features.Academic.CreateCourse;
 
-namespace Syki.Back.Features.Academic.GetCoursesWithCurriculums;
+namespace Estud.Back.Features.Academic.GetCoursesWithCurriculums;
 
 public static class GetCoursesWithCurriculumsMapper
 {

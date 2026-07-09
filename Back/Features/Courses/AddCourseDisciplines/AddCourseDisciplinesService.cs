@@ -1,8 +1,8 @@
-using Syki.Back.Domain.Courses;
+using Estud.Back.Domain.Courses;
 
-namespace Syki.Back.Features.Courses.AddCourseDisciplines;
+namespace Estud.Back.Features.Courses.AddCourseDisciplines;
 
-public class AddCourseDisciplinesService(SykiDbContext ctx) : ISykiService
+public class AddCourseDisciplinesService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<AddCourseDisciplinesIn>
     {
@@ -14,7 +14,7 @@ public class AddCourseDisciplinesService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<SykiSuccess, SykiError>> Add(AddCourseDisciplinesIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Add(AddCourseDisciplinesIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -35,6 +35,6 @@ public class AddCourseDisciplinesService(SykiDbContext ctx) : ISykiService
 
         await ctx.SaveChangesAsync();
 
-        return SykiSuccess.I;
+        return EstudSuccess.I;
     }
 }

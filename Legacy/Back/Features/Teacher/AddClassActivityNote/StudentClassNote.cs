@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teacher.AddClassActivityNote;
+namespace Estud.Back.Features.Teacher.AddClassActivityNote;
 
 /// <summary>
 /// Representa uma nota de um aluno em uma turma.

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Courses.AddCourseDisciplines;
+namespace Estud.Back.Features.Courses.AddCourseDisciplines;
 
 [ApiController, Authorize(Policies.AddCourseDisciplines)]
 public class AddCourseDisciplinesController(AddCourseDisciplinesService service) : ControllerBase

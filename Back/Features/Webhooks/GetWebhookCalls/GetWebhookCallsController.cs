@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Webhooks.GetWebhookCalls;
+namespace Estud.Back.Features.Webhooks.GetWebhookCalls;
 
 [ApiController, Authorize(Policies.GetWebhookCalls)]
 public class GetWebhookCallsController(GetWebhookCallsService service) : ControllerBase

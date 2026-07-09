@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.GetRoles;
+namespace Estud.Back.Features.Identity.GetRoles;
 
 [ApiController, Authorize(Policies.GetRoles)]
 public class GetRolesController(GetRolesService service) : ControllerBase

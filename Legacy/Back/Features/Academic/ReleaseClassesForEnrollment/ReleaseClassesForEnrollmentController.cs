@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.ReleaseClassesForEnrollment;
+namespace Estud.Back.Features.Academic.ReleaseClassesForEnrollment;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

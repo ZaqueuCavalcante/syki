@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Teacher.GetTeacherClasses;
+namespace Estud.Back.Features.Teacher.GetTeacherClasses;
 
-public class GetTeacherClassesService(SykiDbContext ctx) : ISykiService
+public class GetTeacherClassesService(EstudDbContext ctx) : IEstudService
 {
     public async Task<List<TeacherClassesOut>> Get(Guid institutionId, Guid userId)
     {

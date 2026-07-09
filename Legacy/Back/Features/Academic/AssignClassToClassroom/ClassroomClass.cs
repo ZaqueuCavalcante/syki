@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Academic.AssignClassToClassroom;
+namespace Estud.Back.Features.Academic.AssignClassToClassroom;
 
 /// <summary>
 /// Vínculo entre Sala de Aula e Turma

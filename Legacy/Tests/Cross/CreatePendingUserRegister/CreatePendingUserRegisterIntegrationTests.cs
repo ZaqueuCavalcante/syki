@@ -1,6 +1,6 @@
-using Syki.Back.Features.Cross.CreatePendingUserRegister;
+using Estud.Back.Features.Cross.CreatePendingUserRegister;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {

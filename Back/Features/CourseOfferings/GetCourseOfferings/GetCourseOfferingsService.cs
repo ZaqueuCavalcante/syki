@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.CourseOfferings.GetCourseOfferings;
+namespace Estud.Back.Features.CourseOfferings.GetCourseOfferings;
 
-public class GetCourseOfferingsService(SykiDbContext ctx) : ISykiService
+public class GetCourseOfferingsService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetCourseOfferingsOut> Get()
     {

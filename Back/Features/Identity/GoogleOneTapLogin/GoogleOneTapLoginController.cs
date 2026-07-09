@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.GoogleOneTapLogin;
+namespace Estud.Back.Features.Identity.GoogleOneTapLogin;
 
 [ApiController, EnableRateLimiting(RateLimitingConfigs.SensitivePolicy)]
 public class GoogleOneTapLoginController(GoogleOneTapLoginService service) : ControllerBase

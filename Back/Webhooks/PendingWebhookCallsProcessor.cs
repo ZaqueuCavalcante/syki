@@ -1,8 +1,8 @@
 using Quartz;
 using System.Diagnostics;
-using Syki.Back.Features.Webhooks.CallWebhooks;
+using Estud.Back.Features.Webhooks.CallWebhooks;
 
-namespace Syki.Back.Webhooks;
+namespace Estud.Back.Webhooks;
 
 public class PendingWebhookCallsProcessor(IServiceScopeFactory serviceScopeFactory) : IJob
 {
@@ -11,12 +11,12 @@ public class PendingWebhookCallsProcessor(IServiceScopeFactory serviceScopeFacto
     public async Task Execute(IJobExecutionContext context)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var ctx = scope.ServiceProvider.GetRequiredService<SykiDbContext>();
+        var ctx = scope.ServiceProvider.GetRequiredService<EstudDbContext>();
 
         await Process(scope, ctx);
     }
 
-    private static async Task Process(IServiceScope scope, SykiDbContext ctx)
+    private static async Task Process(IServiceScope scope, EstudDbContext ctx)
     {
         while (true)
         {
@@ -50,11 +50,11 @@ public class PendingWebhookCallsProcessor(IServiceScopeFactory serviceScopeFacto
     /// See <see cref="WebhookCallStatus"/> for status mapping
     /// </summary>
     private static readonly string Sql = @"
-        UPDATE syki.webhook_calls
+        UPDATE estud.webhook_calls
         SET status = 1
         WHERE ctid IN (
             SELECT ctid
-            FROM syki.webhook_calls
+            FROM estud.webhook_calls
             WHERE status = 0
             ORDER BY created_at
             FOR UPDATE SKIP LOCKED

@@ -1,6 +1,6 @@
-namespace Syki.Back.Features.Identity.GetRoles;
+namespace Estud.Back.Features.Identity.GetRoles;
 
-public class GetRolesService(SykiDbContext ctx) : ISykiService
+public class GetRolesService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetRolesOut> Get()
     {

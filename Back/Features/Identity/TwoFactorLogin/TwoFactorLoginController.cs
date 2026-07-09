@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.TwoFactorLogin;
+namespace Estud.Back.Features.Identity.TwoFactorLogin;
 
 [ApiController, EnableRateLimiting(RateLimitingConfigs.SensitivePolicy)]
 public class TwoFactorLoginController(TwoFactorLoginService service) : ControllerBase

@@ -1,4 +1,4 @@
-namespace Syki.Back.Storage;
+namespace Estud.Back.Storage;
 
 public class FakeStorageService : IStorageService
 {
@@ -6,7 +6,7 @@ public class FakeStorageService : IStorageService
 
     public async Task<string> CreatePreSignedUrlForUpload(StorageContainer container, string path)
     {
-        var url = $"https://syki.storage.com/{container.GetDescription()}/{path}";
+        var url = $"https://estud.storage.com/{container.GetDescription()}/{path}";
         await Task.Delay(0);
         Files.Add(url);
         return url;

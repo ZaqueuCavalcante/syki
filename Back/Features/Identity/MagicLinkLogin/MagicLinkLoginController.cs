@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.MagicLinkLogin;
+namespace Estud.Back.Features.Identity.MagicLinkLogin;
 
 [ApiController, EnableRateLimiting(RateLimitingConfigs.SensitivePolicy)]
 public class MagicLinkLoginController(MagicLinkLoginService service) : ControllerBase

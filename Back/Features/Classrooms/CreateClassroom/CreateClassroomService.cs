@@ -1,10 +1,10 @@
-using Syki.Back.Domain.Classrooms;
+using Estud.Back.Domain.Classrooms;
 
-namespace Syki.Back.Features.Classrooms.CreateClassroom;
+namespace Estud.Back.Features.Classrooms.CreateClassroom;
 
-public class CreateClassroomService(SykiDbContext ctx) : ISykiService
+public class CreateClassroomService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<CreateClassroomOut, SykiError>> Create(CreateClassroomIn data)
+    public async Task<OneOf<CreateClassroomOut, EstudError>> Create(CreateClassroomIn data)
     {
         var institutionId = ctx.RequestUser.InstitutionId;
 

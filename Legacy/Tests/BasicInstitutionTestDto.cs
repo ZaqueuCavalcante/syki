@@ -1,4 +1,4 @@
-namespace Syki.Tests.Base;
+namespace Estud.Tests.Base;
 
 public class BasicInstitutionTestDto
 {

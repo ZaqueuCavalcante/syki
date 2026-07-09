@@ -1,3 +1,3 @@
-namespace Syki.Back.Commands;
+namespace Estud.Back.Commands;
 
 public interface ICommand;

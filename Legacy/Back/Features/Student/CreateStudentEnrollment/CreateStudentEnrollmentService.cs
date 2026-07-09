@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Student.CreateStudentEnrollment;
+namespace Estud.Back.Features.Student.CreateStudentEnrollment;
 
-public class CreateStudentEnrollmentService(SykiDbContext ctx) : ISykiService
+public class CreateStudentEnrollmentService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<SykiSuccess, SykiError>> Create(Guid institutionId, Guid userId, Guid courseCurriculumId, CreateStudentEnrollmentIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Create(Guid institutionId, Guid userId, Guid courseCurriculumId, CreateStudentEnrollmentIn data)
     {
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         var enrollmentPeriod = await ctx.EnrollmentPeriods.AsNoTracking()
@@ -19,12 +19,12 @@ public class CreateStudentEnrollmentService(SykiDbContext ctx) : ISykiService
             .ToListAsync();
         var ids = classes.Where(t => data.Classes.Contains(t.Id)).Select(t => t.Id).ToList();
 
-        var classesStudents = await ctx.ClassesStudents.Where(x => x.SykiStudentId == userId && x.StudentDisciplineStatus == StudentDisciplineStatus.Matriculado).ToListAsync();
+        var classesStudents = await ctx.ClassesStudents.Where(x => x.EstudStudentId == userId && x.StudentDisciplineStatus == StudentDisciplineStatus.Matriculado).ToListAsync();
         ctx.RemoveRange(classesStudents);
         ids.ForEach(id => ctx.Add(new ClassStudent(id, userId)));
 
         await ctx.SaveChangesAsync();
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 }

@@ -1,9 +1,9 @@
 using Dapper;
 using Npgsql;
 
-namespace Syki.Back.Features.Adm.GetCommandsSummary;
+namespace Estud.Back.Features.Adm.GetCommandsSummary;
 
-public class GetCommandsSummaryService(NpgsqlDataSource dataSource) : ISykiService
+public class GetCommandsSummaryService(NpgsqlDataSource dataSource) : IEstudService
 {
     public async Task<GetCommandsSummaryOut> Get()
     {
@@ -18,19 +18,19 @@ public class GetCommandsSummaryService(NpgsqlDataSource dataSource) : ISykiServi
                 count(1) FILTER (WHERE status = 'Processing') AS processing,
                 count(1) FILTER (WHERE status = 'Success') AS success,
                 count(1) FILTER (WHERE status = 'Error') AS error
-            FROM syki.commands
+            FROM estud.commands
         ";
 
         const string typesSql = @"
             SELECT type, count(1) AS total
-            FROM syki.commands
+            FROM estud.commands
             GROUP BY TYPE
             ORDER BY total DESC
         ";
 
         const string institutionsSql = @"
             SELECT id, name
-            FROM syki.institutions
+            FROM estud.institutions
             WHERE id <> '00000000-0000-0000-0000-000000000000'
             ORDER BY name
         ";

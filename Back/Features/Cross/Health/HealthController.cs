@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Cross.Health;
+namespace Estud.Back.Features.Cross.Health;
 
 [ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]

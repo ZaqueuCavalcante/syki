@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Syki.Mocks.SocialLogin.Google.Authorize;
+namespace Estud.Mocks.SocialLogin.Google.Authorize;
 
 /// <summary>
 /// Mock Google OAuth authorization endpoint.

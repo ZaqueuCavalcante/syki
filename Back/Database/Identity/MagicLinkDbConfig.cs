@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Database.Identity;
+namespace Estud.Back.Database.Identity;
 
 public class MagicLinkDbConfig : IEntityTypeConfiguration<MagicLink>
 {
     public void Configure(EntityTypeBuilder<MagicLink> entity)
     {
-        entity.ToTable("magic_links", DbSchemas.Syki);
+        entity.ToTable("magic_links", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
         entity.Property(e => e.Id).ValueGeneratedNever();

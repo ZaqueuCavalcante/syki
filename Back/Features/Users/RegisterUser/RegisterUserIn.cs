@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Users.RegisterUser;
+namespace Estud.Back.Features.Users.RegisterUser;
 
 public class RegisterUserIn : IApiDto<RegisterUserIn>
 {

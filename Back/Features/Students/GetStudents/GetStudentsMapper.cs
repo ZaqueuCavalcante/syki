@@ -1,10 +1,10 @@
-using Syki.Back.Domain.Students;
+using Estud.Back.Domain.Students;
 
-namespace Syki.Back.Features.Students.GetStudents;
+namespace Estud.Back.Features.Students.GetStudents;
 
 public static class GetStudentsMapper
 {
-    extension(SykiStudent student)
+    extension(EstudStudent student)
     {
         public GetStudentsItemOut ToGetStudentsItemOut()
         {

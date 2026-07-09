@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.DataProtection;
 
-namespace Syki.Back.Auth.Managers;
+namespace Estud.Back.Auth.Managers;
 
 public class SsoEncryptionManager(IDataProtectionProvider provider)
 {

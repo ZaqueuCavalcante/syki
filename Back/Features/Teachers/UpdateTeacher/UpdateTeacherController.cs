@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.UpdateTeacher;
+namespace Estud.Back.Features.Teachers.UpdateTeacher;
 
 [ApiController, Authorize(Policies.UpdateTeacher)]
 public class UpdateTeacherController(UpdateTeacherService service) : ControllerBase

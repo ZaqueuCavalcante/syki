@@ -1,6 +1,6 @@
-using Syki.Back.Features.Student.CreateStudentEnrollment;
+using Estud.Back.Features.Student.CreateStudentEnrollment;
 
-namespace Syki.Tests.Features.Student.CreateStudentEnrollment;
+namespace Estud.Tests.Features.Student.CreateStudentEnrollment;
 
 public class CreateClassStudentUnitTests
 {
@@ -17,7 +17,7 @@ public class CreateClassStudentUnitTests
 
         // Assert
         student.ClassId.Should().Be(classId);
-        student.SykiStudentId.Should().Be(studentId);
+        student.EstudStudentId.Should().Be(studentId);
         student.StudentDisciplineStatus.Should().Be(status);
     }
 }

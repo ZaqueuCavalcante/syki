@@ -1,6 +1,6 @@
-using Syki.Back.Auth.Permissions;
+using Estud.Back.Auth.Permissions;
 
-namespace Syki.Back.Auth.Policies;
+namespace Estud.Back.Auth.Policies;
 
 public static partial class Policies
 {
@@ -12,10 +12,10 @@ public static partial class Policies
     public static AuthorizationBuilder AddCampiPolicies(this AuthorizationBuilder builder)
     {
         builder
-            .AddSykiPolicy(GetCampi, UserType.Manager, SykiPermissions.ManageCampi)
-            .AddSykiPolicy(GetCampus, UserType.Manager, SykiPermissions.ManageCampi)
-            .AddSykiPolicy(CreateCampus, UserType.Manager, SykiPermissions.ManageCampi)
-            .AddSykiPolicy(UpdateCampus, UserType.Manager, SykiPermissions.ManageCampi);
+            .AddEstudPolicy(GetCampi, UserType.Manager, EstudPermissions.ManageCampi)
+            .AddEstudPolicy(GetCampus, UserType.Manager, EstudPermissions.ManageCampi)
+            .AddEstudPolicy(CreateCampus, UserType.Manager, EstudPermissions.ManageCampi)
+            .AddEstudPolicy(UpdateCampus, UserType.Manager, EstudPermissions.ManageCampi);
 
         return builder;
     }

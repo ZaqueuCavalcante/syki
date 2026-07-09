@@ -1,15 +1,15 @@
-using Syki.Back.Emails;
-using Syki.Back.Google;
-using Syki.Back.Storage;
+using Estud.Back.Emails;
+using Estud.Back.Google;
+using Estud.Back.Storage;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class ServicesConfigs
 {
     public static void AddServicesConfigs(this WebApplicationBuilder builder)
     {
-        builder.Services.AddServices(typeof(ISykiService));
+        builder.Services.AddServices(typeof(IEstudService));
 
         builder.Services.AddScoped<IEmailsService, EmailsService>();
         builder.Services.AddScoped<IGoogleService, GoogleService>();

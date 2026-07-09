@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teacher.GetTeacherClasses;
+namespace Estud.Back.Features.Teacher.GetTeacherClasses;
 
 [ApiController, Authorize]
 [EnableRateLimiting("Medium")]

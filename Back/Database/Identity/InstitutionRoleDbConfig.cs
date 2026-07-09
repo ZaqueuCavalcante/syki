@@ -1,13 +1,13 @@
-using Syki.Back.Domain.Identity;
-using Syki.Back.Domain.Institutions;
+using Estud.Back.Domain.Identity;
+using Estud.Back.Domain.Institutions;
 
-namespace Syki.Back.Database.Identity;
+namespace Estud.Back.Database.Identity;
 
 public class InstitutionRoleDbConfig : IEntityTypeConfiguration<InstitutionRole>
 {
     public void Configure(EntityTypeBuilder<InstitutionRole> entity)
     {
-        entity.ToTable("institution_roles", DbSchemas.Syki);
+        entity.ToTable("institution_roles", DbSchemas.Estud);
 
         entity.HasKey(e => new { e.InstitutionId, e.RoleId });
 

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Teachers.CreateTeacher;
+namespace Estud.Back.Features.Teachers.CreateTeacher;
 
 public class CreateTeacherIn : IApiDto<CreateTeacherIn>
 {
@@ -7,11 +7,11 @@ public class CreateTeacherIn : IApiDto<CreateTeacherIn>
 
     public static IEnumerable<(string, CreateTeacherIn)> GetExamples() =>
     [
-        ("Exemplo", new() { Name = "Richard Feynman", Email = "feynman@syki.com" }),
+        ("Exemplo", new() { Name = "Richard Feynman", Email = "feynman@estud.com" }),
     ];
 
     public static CreateTeacherIn Seed(string name)
     {
-        return new CreateTeacherIn { Name = name, Email = $"professor.{Guid.NewGuid().ToString().OnlyNumbers()[..8]}@syki.seed.com" };
+        return new CreateTeacherIn { Name = name, Email = $"professor.{Guid.NewGuid().ToString().OnlyNumbers()[..8]}@estud.seed.com" };
     }
 }

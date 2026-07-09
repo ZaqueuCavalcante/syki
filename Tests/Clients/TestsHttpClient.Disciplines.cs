@@ -1,13 +1,13 @@
 using System.Net.Http.Json;
-using Syki.Back.Features.Disciplines.GetDiscipline;
-using Syki.Back.Features.Disciplines.GetDisciplines;
-using Syki.Back.Features.Disciplines.CreateDiscipline;
-using Syki.Back.Features.Disciplines.UpdateDiscipline;
-using Syki.Back.Features.Disciplines.AddDisciplineCourses;
-using Syki.Back.Features.Disciplines.RemoveDisciplineCourse;
-using Syki.Back.Features.Disciplines.GetDisciplinePotentialCourses;
+using Estud.Back.Features.Disciplines.GetDiscipline;
+using Estud.Back.Features.Disciplines.GetDisciplines;
+using Estud.Back.Features.Disciplines.CreateDiscipline;
+using Estud.Back.Features.Disciplines.UpdateDiscipline;
+using Estud.Back.Features.Disciplines.AddDisciplineCourses;
+using Estud.Back.Features.Disciplines.RemoveDisciplineCourse;
+using Estud.Back.Features.Disciplines.GetDisciplinePotentialCourses;
 
-namespace Syki.Tests.Integration.Clients;
+namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {

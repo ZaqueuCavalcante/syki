@@ -1,15 +1,15 @@
 using Dapper;
 using Npgsql;
 using System.Security.Claims;
-using Syki.Back.Auth.Managers;
-using Syki.Back.Domain.Identity;
+using Estud.Back.Auth.Managers;
+using Estud.Back.Domain.Identity;
 using Microsoft.Extensions.Options;
-using Syki.Back.Features.Cross.SignIn;
+using Estud.Back.Features.Cross.SignIn;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Syki.Back.Auth.Schemes;
+namespace Estud.Back.Auth.Schemes;
 
 public static class SsoOidcScheme
 {
@@ -41,7 +41,7 @@ public static class SsoOidcScheme
                 client_secret,
                 updated_at
             FROM
-                syki.sso_configurations
+                estud.sso_configurations
             WHERE
                 is_active = true
         ";
@@ -84,7 +84,7 @@ public static class SsoOidcScheme
     private static async Task HandleRemoteFailure(RemoteFailureContext context)
     {
         var frontendSettings = context.HttpContext.RequestServices.GetRequiredService<FrontendSettings>();
-        var ctx = context.HttpContext.RequestServices.GetRequiredService<SykiDbContext>();
+        var ctx = context.HttpContext.RequestServices.GetRequiredService<EstudDbContext>();
 
         context.Response.Redirect($"{frontendSettings.Url}?sso_error={nameof(SsoAuthenticationFailed)}");
         context.HandleResponse();
@@ -93,7 +93,7 @@ public static class SsoOidcScheme
     private static async Task HandleTicketReceived(TicketReceivedContext context)
     {
         var services = context.HttpContext.RequestServices;
-        var ctx = services.GetRequiredService<SykiDbContext>();
+        var ctx = services.GetRequiredService<EstudDbContext>();
         var authSettings = services.GetRequiredService<AuthSettings>();
         var signInService = services.GetRequiredService<SignInService>();
         var frontendSettings = services.GetRequiredService<FrontendSettings>();
@@ -153,7 +153,7 @@ public static class SsoOidcScheme
         var publicId = Guid.Parse(schemeName[Prefix.Length..]);
 
         var services = context.HttpContext.RequestServices;
-        var ctx = services.GetRequiredService<SykiDbContext>();
+        var ctx = services.GetRequiredService<EstudDbContext>();
         var ssoSchemeManager = services.GetRequiredService<SsoSchemeManager>();
 
         var config = await ctx.GetActiveSsoConfigForSchemeAsync(publicId);

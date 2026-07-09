@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Students.GetStudent;
+namespace Estud.Back.Features.Students.GetStudent;
 
-public class GetStudentService(SykiDbContext ctx) : ISykiService
+public class GetStudentService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetStudentOut, SykiError>> Get(int studentId)
+    public async Task<OneOf<GetStudentOut, EstudError>> Get(int studentId)
     {
         var institutionId = ctx.RequestUser.InstitutionId;
 

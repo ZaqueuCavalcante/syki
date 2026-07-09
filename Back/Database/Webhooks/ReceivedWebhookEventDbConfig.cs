@@ -1,13 +1,13 @@
-using Syki.Back.Domain.Commands;
-using Syki.Back.Domain.Webhooks;
+using Estud.Back.Domain.Commands;
+using Estud.Back.Domain.Webhooks;
 
-namespace Syki.Back.Database.Webhooks;
+namespace Estud.Back.Database.Webhooks;
 
 public class ReceivedWebhookEventDbConfig : IEntityTypeConfiguration<ReceivedWebhookEvent>
 {
     public void Configure(EntityTypeBuilder<ReceivedWebhookEvent> entity)
     {
-        entity.ToTable("received_webhook_events", DbSchemas.Syki);
+        entity.ToTable("received_webhook_events", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
 

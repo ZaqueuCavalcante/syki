@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Adm.SetupFeatureFlags;
+namespace Estud.Back.Features.Adm.SetupFeatureFlags;
 
 [ApiController, Authorize]
 public class SetupFeatureFlagsController(SetupFeatureFlagsService service) : ControllerBase

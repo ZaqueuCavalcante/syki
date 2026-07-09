@@ -1,8 +1,8 @@
-using Syki.Back.Domain.CourseCurriculums;
+using Estud.Back.Domain.CourseCurriculums;
 
-namespace Syki.Back.Features.CourseCurriculums.EditCourseCurriculum;
+namespace Estud.Back.Features.CourseCurriculums.EditCourseCurriculum;
 
-public class EditCourseCurriculumService(SykiDbContext ctx) : ISykiService
+public class EditCourseCurriculumService(EstudDbContext ctx) : IEstudService
 {
     private class Validator : AbstractValidator<EditCourseCurriculumIn>
     {
@@ -14,7 +14,7 @@ public class EditCourseCurriculumService(SykiDbContext ctx) : ISykiService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<SykiSuccess, SykiError>> Edit(EditCourseCurriculumIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Edit(EditCourseCurriculumIn data)
     {
         if (V.Run(data, out var error)) return error;
 
@@ -39,6 +39,6 @@ public class EditCourseCurriculumService(SykiDbContext ctx) : ISykiService
 
         await ctx.SaveChangesAsync();
 
-        return SykiSuccess.I;
+        return EstudSuccess.I;
     }
 }

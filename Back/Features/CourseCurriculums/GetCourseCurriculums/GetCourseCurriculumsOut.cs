@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.CourseCurriculums.GetCourseCurriculums;
+namespace Estud.Back.Features.CourseCurriculums.GetCourseCurriculums;
 
 public class GetCourseCurriculumsOut : IApiDto<GetCourseCurriculumsOut>
 {

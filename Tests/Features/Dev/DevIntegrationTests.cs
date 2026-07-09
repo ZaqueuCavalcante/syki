@@ -1,7 +1,7 @@
-using Syki.Tests.Integration.Clients;
-using Syki.Back.Features.CourseCurriculums.CreateCourseCurriculum;
+using Estud.Tests.Integration.Clients;
+using Estud.Back.Features.CourseCurriculums.CreateCourseCurriculum;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {

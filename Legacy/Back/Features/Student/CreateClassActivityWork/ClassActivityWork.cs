@@ -1,6 +1,6 @@
-using Syki.Back.Features.Academic.CreateStudent;
+using Estud.Back.Features.Academic.CreateStudent;
 
-namespace Syki.Back.Features.Student.CreateClassActivityWork;
+namespace Estud.Back.Features.Student.CreateClassActivityWork;
 
 /// <summary>
 /// Entrega de uma atividade feita por um aluno
@@ -9,8 +9,8 @@ public class ClassActivityWork
 {
     public Guid Id { get; set; }
     public Guid ClassActivityId { get; set; }
-    public Guid SykiStudentId { get; set; }
-    public SykiStudent SykiStudent { get; set; }
+    public Guid EstudStudentId { get; set; }
+    public EstudStudent EstudStudent { get; set; }
     public string? Link { get; set; }
     public decimal Note { get; set; }
     public ClassActivityWorkStatus Status { get; set; }
@@ -23,7 +23,7 @@ public class ClassActivityWork
     ) {
         Id = Guid.CreateVersion7();
         ClassActivityId = classActivityId;
-        SykiStudentId = studentId;
+        EstudStudentId = studentId;
         Note = 0;
         Status = ClassActivityWorkStatus.Pending;
     }
@@ -34,14 +34,14 @@ public class ClassActivityWork
         Status = ClassActivityWorkStatus.Delivered;
     }
 
-    public OneOf<SykiSuccess, SykiError> AddNote(decimal note)
+    public OneOf<EstudSuccess, EstudError> AddNote(decimal note)
     {
         if (note < 0 || note > 10) return new InvalidStudentClassNote();
 
         Note = note;
         Status = ClassActivityWorkStatus.Finalized;
 
-        return new SykiSuccess();
+        return new EstudSuccess();
     }
 
     public ClassActivityWorkOut ToOut()
@@ -49,8 +49,8 @@ public class ClassActivityWork
         return new()
         {
             Id = Id,
-            StudentId = SykiStudentId,
-            StudentName = SykiStudent != null ? SykiStudent.Name : "",
+            StudentId = EstudStudentId,
+            StudentName = EstudStudent != null ? EstudStudent.Name : "",
             Status = Status,
             Note = Note,
             Link = Link,

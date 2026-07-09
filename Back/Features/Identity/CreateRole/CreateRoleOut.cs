@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.CreateRole;
+namespace Estud.Back.Features.Identity.CreateRole;
 
 public class CreateRoleOut : IApiDto<CreateRoleOut>
 {

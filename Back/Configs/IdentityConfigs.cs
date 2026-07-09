@@ -1,13 +1,13 @@
-using Syki.Back.Domain.Identity;
+using Estud.Back.Domain.Identity;
 
-namespace Syki.Back.Configs;
+namespace Estud.Back.Configs;
 
 public static class IdentityConfigs
 {
     public static void AddIdentityConfigs(this WebApplicationBuilder builder)
     {
-        builder.Services.AddIdentity<SykiUser, SykiRole>()
-            .AddEntityFrameworkStores<SykiDbContext>()
+        builder.Services.AddIdentity<EstudUser, EstudRole>()
+            .AddEntityFrameworkStores<EstudDbContext>()
             .AddDefaultTokenProviders();
 
         builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>

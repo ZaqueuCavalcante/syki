@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Identity.ResetPassword;
+namespace Estud.Back.Features.Identity.ResetPassword;
 
 public class ResetPasswordIn : IApiDto<ResetPasswordIn>
 {

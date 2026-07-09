@@ -1,12 +1,12 @@
-using Syki.Back.Domain.Commands;
+using Estud.Back.Domain.Commands;
 
-namespace Syki.Back.Database.Commands;
+namespace Estud.Back.Database.Commands;
 
 public class CommandDbConfig : IEntityTypeConfiguration<Command>
 {
     public void Configure(EntityTypeBuilder<Command> entity)
     {
-        entity.ToTable("commands", DbSchemas.Syki);
+        entity.ToTable("commands", DbSchemas.Estud);
 
         entity.HasKey(e => e.Id);
     }

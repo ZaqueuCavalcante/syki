@@ -1,4 +1,4 @@
-namespace Syki.Back.Commands;
+namespace Estud.Back.Commands;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class CommandDescriptionAttribute(string description) : Attribute

@@ -1,6 +1,6 @@
-using Syki.Back.Features.CourseCurriculums.EditCourseCurriculum;
+using Estud.Back.Features.CourseCurriculums.EditCourseCurriculum;
 
-namespace Syki.Tests.Integration;
+namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {

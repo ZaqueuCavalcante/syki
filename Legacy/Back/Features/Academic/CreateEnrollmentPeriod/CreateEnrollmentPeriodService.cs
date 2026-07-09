@@ -1,8 +1,8 @@
-namespace Syki.Back.Features.Academic.CreateEnrollmentPeriod;
+namespace Estud.Back.Features.Academic.CreateEnrollmentPeriod;
 
-public class CreateEnrollmentPeriodService(SykiDbContext ctx, HybridCache cache) : ISykiService
+public class CreateEnrollmentPeriodService(EstudDbContext ctx, HybridCache cache) : IEstudService
 {
-    public async Task<OneOf<EnrollmentPeriodOut, SykiError>> Create(Guid institutionId, CreateEnrollmentPeriodIn data)
+    public async Task<OneOf<EnrollmentPeriodOut, EstudError>> Create(Guid institutionId, CreateEnrollmentPeriodIn data)
     {
         if (await ctx.AcademicPeriodNotFound(data.Id)) return AcademicPeriodNotFound.I;
 

@@ -1,4 +1,4 @@
-namespace Syki.Back.Features.Campi.CreateCampus;
+namespace Estud.Back.Features.Campi.CreateCampus;
 
 public class CreateCampusOut : IApiDto<CreateCampusOut>
 {

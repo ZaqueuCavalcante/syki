@@ -1,4 +1,4 @@
-namespace Syki.Back.Shared;
+namespace Estud.Back.Shared;
 
 public interface IApiDto<TSelf> where TSelf : IApiDto<TSelf>
 {

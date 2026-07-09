@@ -1,10 +1,10 @@
-namespace Syki.Back.Features.Student.GetStudentClassFrequency;
+namespace Estud.Back.Features.Student.GetStudentClassFrequency;
 
-public class GetStudentClassFrequencyService(SykiDbContext ctx) : ISykiService
+public class GetStudentClassFrequencyService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetStudentClassFrequencyOut, SykiError>> Get(Guid studentId, Guid classId)
+    public async Task<OneOf<GetStudentClassFrequencyOut, EstudError>> Get(Guid studentId, Guid classId)
     {
-        var classOk = await ctx.ClassesStudents.AnyAsync(x => x.ClassId == classId && x.SykiStudentId == studentId);
+        var classOk = await ctx.ClassesStudents.AnyAsync(x => x.ClassId == classId && x.EstudStudentId == studentId);
         if (!classOk) return new ClassNotFound();
 
         var lessons = await ctx.Lessons.AsNoTracking()

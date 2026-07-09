@@ -1,4 +1,4 @@
-﻿namespace Syki.Back.Auth.Users;
+﻿namespace Estud.Back.Auth.Users;
 
 public class RequestUser
 {

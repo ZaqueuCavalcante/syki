@@ -2,6 +2,8 @@
 import type { TableColumn } from '@nuxt/ui'
 
 const UBadge = resolveComponent('UBadge')
+const UButton = resolveComponent('UButton')
+const UTooltip = resolveComponent('UTooltip')
 
 interface ClassItem {
   id: number
@@ -69,6 +71,17 @@ const columns: TableColumn<ClassItem>[] = [
         variant: 'subtle',
       })
     },
+  },
+  {
+    id: 'actions',
+    header: '',
+    cell: ({ row }) => h('div', { class: 'flex justify-end' }, h(UTooltip, { text: 'Ver detalhes' }, () => h(UButton, {
+      icon: 'i-lucide-arrow-right',
+      color: 'neutral',
+      variant: 'ghost',
+      to: `/classes/${row.original.id}`,
+      'aria-label': 'Ver detalhes',
+    }))),
   },
 ]
 </script>

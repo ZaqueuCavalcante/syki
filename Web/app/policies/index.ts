@@ -6,6 +6,7 @@ export type {
   PolicyDefinition,
   PolicyRequirement,
   HasUserTypeRequirement as UserTypeRequirement,
+  HasAnyUserTypeRequirement as AnyUserTypeRequirement,
   HasAnyPermissionRequirement as AnyRequirement,
   HasPermissionRequirement as PermissionRequirement,
 } from './types'

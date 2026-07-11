@@ -19,6 +19,10 @@ function hasUserType(value: UserTypeValue): PolicyRequirement {
   return { type: "hasUserType", value };
 }
 
+function hasAnyUserType(...values: UserTypeValue[]): PolicyRequirement {
+  return { type: "hasAnyUserType", values };
+}
+
 /**
  * Central policy store - mirrors backend policies with UI-specific additions
  */
@@ -315,6 +319,14 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
     requirements: [
       hasUserType(UserTypes.Manager),
       hasPermission(Permissions.ManageNotifications),
+    ],
+  },
+
+  // Agenda
+  AccessAgendaPage: {
+    description: "Acessar a página de agenda",
+    requirements: [
+      hasAnyUserType(UserTypes.Teacher, UserTypes.Student),
     ],
   },
 };

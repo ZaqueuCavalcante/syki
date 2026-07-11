@@ -63,7 +63,7 @@ const columns: TableColumn<EnrollmentPeriodItem>[] = [
         <template #empty>
           <TableEmptyState
             :loading="status === 'pending'"
-            icon="i-lucide-user-check"
+            icon="i-lucide-clipboard-list"
             message="Nenhum período de matrícula cadastrado"
             button-label="Período de matrícula"
             @create="createModalOpen = true"

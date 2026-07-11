@@ -2,6 +2,8 @@ using System.Net.Http.Json;
 using Estud.Back.Features.Students.GetStudent;
 using Estud.Back.Features.Students.GetStudents;
 using Estud.Back.Features.Students.CreateStudent;
+using Estud.Back.Features.Students.AssignStudentToClass;
+using Estud.Back.Features.Students.EnrollStudentInCourseOffering;
 
 namespace Estud.Tests.Integration.Clients;
 
@@ -26,5 +28,19 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync($"/students/{id}");
         return await response.Resolve<GetStudentOut>();
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> AssignStudentToClass(int studentId, int classId)
+    {
+        var data = new AssignStudentToClassIn { ClassId = classId };
+        var response = await http.PostAsJsonAsync($"/students/{studentId}/classes", data);
+        return await response.Resolve<SuccessOut>();
+    }
+
+    public async Task<OneOf<EnrollStudentInCourseOfferingOut, ErrorOut>> EnrollStudentInCourseOffering(int studentId, int courseOfferingId)
+    {
+        var data = new EnrollStudentInCourseOfferingIn { CourseOfferingId = courseOfferingId };
+        var response = await http.PostAsJsonAsync($"/students/{studentId}/course-offerings", data);
+        return await response.Resolve<EnrollStudentInCourseOfferingOut>();
     }
 }

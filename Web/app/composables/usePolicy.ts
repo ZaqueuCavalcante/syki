@@ -15,6 +15,8 @@ const _usePolicy = () => {
         switch (req.type) {
           case 'hasUserType':
             return account.value!.userType === req.value
+          case 'hasAnyUserType':
+            return req.values.includes(account.value!.userType)
           case 'hasPermission':
             return account.value!.permissions.includes(req.permissionId)
           case 'hasAnyPermission':

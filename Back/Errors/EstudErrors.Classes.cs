@@ -14,6 +14,20 @@ public class ClassMustBeOnPreEnrollment : EstudError
     public override string Message { get; set; } = "A turma deve estar em pré-matrícula.";
 }
 
+public class ClassMustBeOnEnrollment : EstudError
+{
+    public static readonly ClassMustBeOnEnrollment I = new();
+    public override string Code { get; set; } = nameof(ClassMustBeOnEnrollment);
+    public override string Message { get; set; } = "A turma deve estar em matrícula.";
+}
+
+public class NoVacanciesInClass : EstudError
+{
+    public static readonly NoVacanciesInClass I = new();
+    public override string Code { get; set; } = nameof(NoVacanciesInClass);
+    public override string Message { get; set; } = "A turma não possui vagas disponíveis.";
+}
+
 public class InvalidDay : EstudError
 {
     public static readonly InvalidDay I = new();

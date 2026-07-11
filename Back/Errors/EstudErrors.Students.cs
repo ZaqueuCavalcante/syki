@@ -20,3 +20,10 @@ public class StudentAlreadyEnrolledInCourseOffering : EstudError
     public override string Code { get; set; } = nameof(StudentAlreadyEnrolledInCourseOffering);
     public override string Message { get; set; } = "Aluno já matriculado nesta oferta de curso.";
 }
+
+public class StudentAlreadyEnrolledInClass : EstudError
+{
+    public static readonly StudentAlreadyEnrolledInClass I = new();
+    public override string Code { get; set; } = nameof(StudentAlreadyEnrolledInClass);
+    public override string Message { get; set; } = "Aluno já matriculado nesta turma.";
+}

@@ -15,12 +15,14 @@ const routePolicies: Record<string, PolicyName> = {
   '/course-offerings': 'AccessCourseOfferingsPage',
   '/course-curriculums': 'AccessCourseCurriculumsPage',
   '/notifications': 'AccessNotificationsPage',
+  '/agenda': 'AccessAgendaPage',
 }
 
 export default defineNuxtRouteMiddleware(async (to) => {
   if (import.meta.server) return
 
   const policyName = routePolicies[to.path]
+    ?? (to.path.startsWith('/classes/') ? 'AccessClassesPage' : undefined)
   if (!policyName) return
 
   const { account, fetchAccount } = useUserAccount()

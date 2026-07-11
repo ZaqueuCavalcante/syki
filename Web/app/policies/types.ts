@@ -77,10 +77,19 @@ export interface HasUserTypeRequirement {
   value: UserTypeValue
 }
 
+/**
+ * Requires any of the specified user types (OR)
+ */
+export interface HasAnyUserTypeRequirement {
+  type: 'hasAnyUserType'
+  values: UserTypeValue[]
+}
+
 export type PolicyRequirement
   = | HasPermissionRequirement
     | HasAnyPermissionRequirement
     | HasUserTypeRequirement
+    | HasAnyUserTypeRequirement
 
 /**
  * Definition of a policy
@@ -147,3 +156,5 @@ export type PolicyName
   // Notifications
     | 'AccessNotificationsPage'
     | 'GetInstitutionNotifications'
+  // Agenda
+    | 'AccessAgendaPage'

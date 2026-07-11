@@ -13,7 +13,7 @@ const allLinks = [
   { label: 'Cursos',      icon: 'i-lucide-notebook',       to: '/courses',            policy: 'AccessCoursesPage'           as PolicyName },
   { label: 'Grades',      icon: 'i-lucide-layout-list',    to: '/course-curriculums', policy: 'AccessCourseCurriculumsPage' as PolicyName },
   { label: 'Períodos',    icon: 'i-lucide-calendar',       to: '/periods',            policy: 'AccessPeriodsPage'           as PolicyName },
-  { label: 'Matrículas',  icon: 'i-lucide-user-check',     to: '/enrollments',        policy: 'AccessEnrollmentsPage'       as PolicyName },
+  { label: 'Matrículas',  icon: 'i-lucide-clipboard-list', to: '/enrollments',        policy: 'AccessEnrollmentsPage'       as PolicyName },
   { label: 'Ofertas',     icon: 'i-lucide-library',        to: '/course-offerings',   policy: 'AccessCourseOfferingsPage'   as PolicyName },
   { label: 'Turmas',      icon: 'i-lucide-door-open',      to: '/classes',            policy: 'AccessClassesPage'           as PolicyName },
   { label: 'Professores', icon: 'i-lucide-user-pen',       to: '/teachers',           policy: 'AccessTeachersPage'          as PolicyName },
@@ -21,7 +21,10 @@ const allLinks = [
   { label: 'Segurança',    icon: 'i-lucide-shield',        to: '/security',           policy: 'AccessSecurityPage'          as PolicyName },
   { label: 'Integrações',  icon: 'i-lucide-webhook',       to: '/integrations',       policy: 'AccessIntegrationsPage'      as PolicyName },
   { label: 'Notificações', icon: 'i-lucide-bell',          to: '/notifications',      policy: 'AccessNotificationsPage'     as PolicyName },
+  { label: 'Agenda',       icon: 'i-lucide-calendar-days', to: '/agenda',             policy: 'AccessAgendaPage'            as PolicyName },
 ]
+
+const route = useRoute()
 
 const links = computed(() =>
   allLinks
@@ -30,6 +33,7 @@ const links = computed(() =>
       label,
       icon,
       to,
+      active: route.path === to || route.path.startsWith(`${to}/`),
       onSelect: () => { open.value = false },
     }))
 )

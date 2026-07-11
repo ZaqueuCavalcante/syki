@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using Estud.Back.Features.Classes.GetClass;
 using Estud.Back.Features.Classes.GetClasses;
 using Estud.Back.Features.Classes.CreateClass;
 
@@ -32,5 +33,23 @@ public partial class TestsHttpClient
         var url = status == null ? "/classes" : $"/classes?status={status}";
         var response = await http.GetAsync(url);
         return await response.Resolve<GetClassesOut>();
+    }
+
+    public async Task<OneOf<GetClassOut, ErrorOut>> GetClass(int id)
+    {
+        var response = await http.GetAsync($"/classes/{id}");
+        return await response.Resolve<GetClassOut>();
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> ReleaseClassForEnrollment(int id)
+    {
+        var response = await http.PutAsync($"/classes/{id}/release-for-enrollment", null);
+        return await response.Resolve<SuccessOut>();
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> StartClass(int id)
+    {
+        var response = await http.PutAsync($"/classes/{id}/start", null);
+        return await response.Resolve<SuccessOut>();
     }
 }

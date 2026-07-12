@@ -13,4 +13,7 @@ public enum DayType
 
     [Description("Feriado")]
     Holiday = 3,
+
+    [Description("Fim de semana")]
+    Weekend = 4,
 }

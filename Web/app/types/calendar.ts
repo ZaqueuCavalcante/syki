@@ -1,4 +1,4 @@
-export type DayType = 'Default' | 'Vacation' | 'Recess' | 'Holiday'
+export type DayType = 'Default' | 'Vacation' | 'Recess' | 'Holiday' | 'Weekend'
 
 export interface CalendarItem {
   id: number | null // nulo quando o dia ainda não foi customizado pela instituição

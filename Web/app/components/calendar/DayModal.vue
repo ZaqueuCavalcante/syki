@@ -15,13 +15,14 @@ const loading = ref(false)
 
 const dayTypeOptions: { label: string, value: DayType }[] = [
   { label: 'Dia letivo', value: 'Default' },
+  { label: 'Fim de semana', value: 'Weekend' },
   { label: 'Férias', value: 'Vacation' },
   { label: 'Recesso', value: 'Recess' },
   { label: 'Feriado', value: 'Holiday' },
 ]
 
 const schema = z.object({
-  dayType: z.enum(['Default', 'Vacation', 'Recess', 'Holiday'], { error: 'Tipo obrigatório' }),
+  dayType: z.enum(['Default', 'Weekend', 'Vacation', 'Recess', 'Holiday'], { error: 'Tipo obrigatório' }),
   description: z.string().max(100, 'Máximo 100 caracteres').optional(),
 })
 

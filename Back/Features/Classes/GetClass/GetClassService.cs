@@ -12,12 +12,7 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
             .Include(c => c.Period)
             .Include(c => c.Schedules)
             .FirstOrDefaultAsync(c => c.Id == id && c.InstitutionId == institutionId);
-
         if (@class == null) return ClassNotFound.I;
-
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        if (@class.Status == ClassStatus.OnEnrollment && @class.Period?.EndAt < today)
-            @class.Status = ClassStatus.AwaitingStart;
 
         var students = await (
             from cs in ctx.ClassStudents.AsNoTracking()

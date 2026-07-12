@@ -335,24 +335,28 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
     description: "Acessar a página de calendário acadêmico",
     requirements: [
       hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCalendar),
     ],
   },
   GetInstitutionCalendar: {
     description: "Ver o calendário acadêmico da instituição",
     requirements: [
       hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCalendar),
     ],
   },
   CreateCalendarDay: {
     description: "Customizar dias do calendário acadêmico",
     requirements: [
       hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCalendar),
     ],
   },
   UpdateCalendarDay: {
     description: "Editar dias customizados do calendário acadêmico",
     requirements: [
       hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageCalendar),
     ],
   },
 };

@@ -29,10 +29,12 @@ public class GetInstitutionCalendarService(EstudDbContext ctx) : IEstudService
 
             var isHoliday = holidays.TryGetValue(date, out var holiday);
 
+            var isWeekend = date.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday;
+
             items.Add(new GetInstitutionCalendarItemOut
             {
                 Date = date.ToDateTime(TimeOnly.MinValue),
-                DayType = isHoliday ? DayType.Holiday : DayType.Default,
+                DayType = isHoliday ? DayType.Holiday : isWeekend ? DayType.Weekend : DayType.Default,
                 Description = holiday,
             });
         }

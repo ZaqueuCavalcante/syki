@@ -18,11 +18,11 @@ const allLinks = [
   { label: 'Turmas',       icon: 'i-lucide-door-open',      to: '/classes',            policy: 'AccessClassesPage'           as PolicyName },
   { label: 'Professores',  icon: 'i-lucide-user-pen',       to: '/teachers',           policy: 'AccessTeachersPage'          as PolicyName },
   { label: 'Alunos',       icon: 'i-lucide-graduation-cap', to: '/students',           policy: 'AccessStudentsPage'          as PolicyName },
+  { label: 'Agenda',       icon: 'i-lucide-calendar-days',  to: '/agenda',             policy: 'AccessAgendaPage'            as PolicyName },
+  { label: 'Calendário',   icon: 'i-lucide-calendar-range', to: '/calendar',           policy: 'AccessCalendarPage'          as PolicyName },
   { label: 'Segurança',    icon: 'i-lucide-shield',         to: '/security',           policy: 'AccessSecurityPage'          as PolicyName },
   { label: 'Integrações',  icon: 'i-lucide-webhook',        to: '/integrations',       policy: 'AccessIntegrationsPage'      as PolicyName },
   { label: 'Notificações', icon: 'i-lucide-bell',           to: '/notifications',      policy: 'AccessNotificationsPage'     as PolicyName },
-  { label: 'Agenda',       icon: 'i-lucide-calendar-days',  to: '/agenda',             policy: 'AccessAgendaPage'            as PolicyName },
-  { label: 'Calendário',   icon: 'i-lucide-calendar-range', to: '/calendar',           policy: 'AccessCalendarPage'          as PolicyName },
 ]
 
 const route = useRoute()

@@ -38,6 +38,9 @@ export const Permissions = {
 
   // Notifications
   ManageNotifications: 1200,
+
+  // Calendar
+  ManageCalendar: 1400,
 } as const
 
 export type PermissionId = typeof Permissions[keyof typeof Permissions]

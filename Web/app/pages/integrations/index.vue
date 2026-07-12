@@ -67,7 +67,7 @@ const columns: TableColumn<WebhookSubscriptionItem>[] = [
 
 <template>
   <div>
-    <div class="flex justify-end mb-4">
+    <div v-if="data?.items?.length" class="flex justify-end mb-4">
       <UButton icon="i-lucide-plus" label="Webhook" @click="() => { createModalOpen = true }" />
     </div>
 

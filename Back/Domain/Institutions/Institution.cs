@@ -7,6 +7,7 @@ using Estud.Back.Domain.Students;
 using Estud.Back.Domain.Teachers;
 using Estud.Back.Domain.Webhooks;
 using Estud.Back.Domain.Commands;
+using Estud.Back.Domain.Calendar;
 using Estud.Back.Domain.Classrooms;
 using Estud.Back.Domain.Disciplines;
 using Estud.Back.Domain.Notifications;
@@ -29,6 +30,7 @@ public class Institution
     public List<EstudStudent> Students { get; set; }
     public List<EstudTeacher> Teachers { get; set; }
     public List<Discipline> Disciplines { get; set; }
+    public List<CalendarDay> CalendarDays { get; set; }
     public List<WebhookCall> WebhookCalls { get; set; }
     public List<Notification> Notifications { get; set; }
     public List<CommandBatch> CommandBatches { get; set; }

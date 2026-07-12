@@ -29,7 +29,7 @@ const cards = computed(() => [
       <p class="text-muted text-sm mt-1">{{ account?.institution }}</p>
     </div>
 
-    <UPageGrid class="lg:grid-cols-4">
+    <UPageGrid class="lg:grid-cols-2 xl:grid-cols-4">
       <UPageCard
         v-for="card in cards"
         :key="card.label"

@@ -329,6 +329,32 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
       hasAnyUserType(UserTypes.Teacher, UserTypes.Student),
     ],
   },
+
+  // Calendar
+  AccessCalendarPage: {
+    description: "Acessar a página de calendário acadêmico",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+    ],
+  },
+  GetInstitutionCalendar: {
+    description: "Ver o calendário acadêmico da instituição",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+    ],
+  },
+  CreateCalendarDay: {
+    description: "Customizar dias do calendário acadêmico",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+    ],
+  },
+  UpdateCalendarDay: {
+    description: "Editar dias customizados do calendário acadêmico",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+    ],
+  },
 };
 
 export function getPolicy(name: PolicyName): PolicyDefinition {

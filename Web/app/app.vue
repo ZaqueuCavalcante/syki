@@ -30,25 +30,10 @@ useHead({
   ],
   link: [
     { rel: 'icon', href: '/favicon.ico' }
-  ],
-  htmlAttrs: {
-    lang: 'en'
-  }
+  ]
 })
 
 const loggingOut = useState('loggingOut', () => false)
-
-const title = 'Estud'
-const description = 'A professional education platform.'
-
-useSeoMeta({
-  title,
-  description,
-  ogTitle: title,
-  ogDescription: description,
-  twitterCard: 'summary_large_image',
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/dashboard-light.png',
-})
 </script>
 
 <style>

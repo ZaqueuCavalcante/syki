@@ -137,6 +137,15 @@ public static class EstudPermissions
         [UserType.Manager]
     );
 
+    // Calendar
+    public static readonly EstudPermission ManageCalendar = new(
+        PermissionGroup.Calendar,
+        1400,
+        "Gerenciar calendário acadêmico.",
+        "Criar e editar calendário acadêmico.",
+        [UserType.Manager]
+    );
+
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<EstudPermission> Permissions = [];
     private static readonly Dictionary<int, EstudPermission> ById = [];

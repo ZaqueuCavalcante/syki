@@ -158,3 +158,8 @@ export type PolicyName
     | 'GetInstitutionNotifications'
   // Agenda
     | 'AccessAgendaPage'
+  // Calendar
+    | 'AccessCalendarPage'
+    | 'GetInstitutionCalendar'
+    | 'CreateCalendarDay'
+    | 'UpdateCalendarDay'

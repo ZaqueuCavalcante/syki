@@ -43,4 +43,7 @@ public enum PermissionGroup
 
     [Description("Classrooms")]
     Classrooms = 13,
+
+    [Description("Calendar")]
+    Calendar = 14,
 }

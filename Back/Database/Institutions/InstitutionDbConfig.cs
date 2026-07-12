@@ -42,6 +42,10 @@ public class InstitutionDbConfig : IEntityTypeConfiguration<Institution>
             .WithOne()
             .HasForeignKey(c => c.InstitutionId);
 
+        entity.HasMany(e => e.CalendarDays)
+            .WithOne()
+            .HasForeignKey(cd => cd.InstitutionId);
+
         entity.HasMany(e => e.Disciplines)
             .WithOne()
             .HasForeignKey(d => d.InstitutionId);

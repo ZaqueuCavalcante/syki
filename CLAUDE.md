@@ -61,13 +61,35 @@ z.string().min(1, 'Campo obrigatório')          // não cobre undefined
 z.string({ required_error: '...' })             // API do Zod v3, não funciona no v4
 ```
 
+### Event handlers (`@click` e similares) — sempre arrow function
+
+Handlers de evento no template **sempre** usam arrow function com corpo em bloco. **Nunca** usar inline statement (a expressão solta, direto no atributo).
+
+Vale para todos os handlers (`@click`, `@change`, `@submit`, `@keydown`, ...), inclusive quando o corpo é uma única atribuição.
+
+**Correto:**
+```vue
+<UButton @click="() => { open = false }" />
+<UButton @click="() => { open = false; selected = null }" />
+<UInput @change="(e) => { search = e.target.value }" />
+```
+
+**Errado:**
+```vue
+<UButton @click="open = false" />
+<UButton @click="open = false; selected = null" />
+<UInput @change="search = $event.target.value" />
+```
+
+Chamada direta de um método já existente continua permitida: `@click="close"` ou `@click="() => { close() }"`.
+
 ### Tooltip em botão que abre modal/slideover
 
 Botão com `UTooltip` que abre um modal/slideover ao clicar mantém o foco depois que o overlay fecha, deixando o tooltip preso na tela. Sempre dar `blur()` no elemento no `@click`:
 
 ```vue
 <UTooltip text="Notificações">
-  <UButton @click="($event.currentTarget as HTMLElement).blur(); isOpen = true" />
+  <UButton @click="(e) => { (e.currentTarget as HTMLElement).blur(); isOpen = true }" />
 </UTooltip>
 ```
 

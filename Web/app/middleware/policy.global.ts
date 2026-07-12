@@ -16,6 +16,7 @@ const routePolicies: Record<string, PolicyName> = {
   '/course-curriculums': 'AccessCourseCurriculumsPage',
   '/notifications': 'AccessNotificationsPage',
   '/agenda': 'AccessAgendaPage',
+  '/calendar': 'AccessCalendarPage',
 }
 
 export default defineNuxtRouteMiddleware(async (to) => {

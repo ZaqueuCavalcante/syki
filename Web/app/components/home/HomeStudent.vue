@@ -23,7 +23,7 @@ const stats = [
       <p class="text-muted text-sm mt-1">{{ account?.course ?? account?.institution }}</p>
     </div>
 
-    <UPageGrid class="lg:grid-cols-4">
+    <UPageGrid class="lg:grid-cols-2 xl:grid-cols-4">
       <UPageCard
         v-for="stat in stats"
         :key="stat.label"

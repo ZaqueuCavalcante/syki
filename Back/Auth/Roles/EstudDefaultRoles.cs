@@ -10,7 +10,7 @@ public static class EstudDefaultRoles
 		OwnerId = null,
 		Name = "Diretor",
 		NormalizedName = "DIRETOR",
-		Description = "Gerencia campi, usuários, perfis, SSO, períodos, turmas, cursos, professores, webhooks, alunos, salas, disciplinas, notificações, ofertas e grades.",
+		Description = "Gerencia campi, usuários, perfis, SSO, períodos, turmas, cursos, professores, webhooks, alunos, calendário, salas, disciplinas, notificações, ofertas e grades.",
 		BaseType = UserType.Manager,
 		Permissions = [
 			EstudPermissions.ManageSso.Id,
@@ -23,6 +23,7 @@ public static class EstudDefaultRoles
 			EstudPermissions.ManageTeachers.Id,
             EstudPermissions.ManageWebhooks.Id,
             EstudPermissions.ManageStudents.Id,
+            EstudPermissions.ManageCalendar.Id,
             EstudPermissions.ManageClassrooms.Id,
 			EstudPermissions.ManageDisciplines.Id,
             EstudPermissions.ManageNotifications.Id,

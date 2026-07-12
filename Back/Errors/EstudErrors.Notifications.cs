@@ -1,5 +1,12 @@
 namespace Estud.Back.Errors;
 
+public class NotificationNotFound : EstudError
+{
+    public static readonly NotificationNotFound I = new();
+    public override string Code { get; set; } = nameof(NotificationNotFound);
+    public override string Message { get; set; } = "Notificação não encontrada.";
+}
+
 public class InvalidNotificationTitle : EstudError
 {
     public static readonly InvalidNotificationTitle I = new();

@@ -7,6 +7,7 @@ public static partial class Policies
     public const string CreateNotification = nameof(CreateNotification);
 
     public const string GetInstitutionNotifications = nameof(GetInstitutionNotifications);
+    public const string GetInstitutionNotification = nameof(GetInstitutionNotification);
 
     public const string GetNotifications = nameof(GetNotifications);
     public const string MarkNotificationsAsViewed = nameof(MarkNotificationsAsViewed);
@@ -16,7 +17,8 @@ public static partial class Policies
     {
         builder
             .AddEstudPolicy(CreateNotification, UserType.Manager, EstudPermissions.ManageNotifications)
-            .AddEstudPolicy(GetInstitutionNotifications, UserType.Manager, EstudPermissions.ManageNotifications);
+            .AddEstudPolicy(GetInstitutionNotifications, UserType.Manager, EstudPermissions.ManageNotifications)
+            .AddEstudPolicy(GetInstitutionNotification, UserType.Manager, EstudPermissions.ManageNotifications);
 
         builder
             .AddEstudPolicy(GetNotifications)

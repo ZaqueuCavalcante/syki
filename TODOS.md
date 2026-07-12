@@ -17,12 +17,18 @@
 
 
 
-na tela de Notificacoes, cada card deve ser clicavel
-ao clicar numa notificacao, deve rotear pra uma pagina nova /notifications/{id}
 
-deve chamar um endpoint GetNotification
-que vai retornar os mesmos dados do GetNotificationsService, so que pra uma unica notificacao
-ele tbm deve retornar uma lista com a quantidade de visualizacoes da notificacao agrupadas por dia 
+crie um novo item na sidebar que so deve aparecer pra quem tem UserType=Manager
+vai ser o Calendário
+crie uma pagina pra isso tbm
 
-use o unovis pra mostrar um grafico com a quantidade de visualizacoes da notificacao agrupadas por dia 
+no backend cria uma pasta Features/Calendar
+cria um endpoint GetInstitutionCalendar, que deve retornar um GetInstitutionCalendarOut
+o GetInstitutionCalendarOut vai ter uma lista com GetInstitutionCalendarItemOut
+cada GetInstitutionCalendarItemOut tera o DateTime Data e DayType
+DayType pode ser Default | Halyday | Recesso | Feriado (coloque nomes em ingles)
+
+
+o objetivo é que o gestor consiga ver e customizar o calendario academico da instituicao
+deve ser possivel adicionar dias de ferias, semanas de provas, eventos, feriados nacionais e regionais...
 

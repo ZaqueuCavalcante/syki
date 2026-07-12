@@ -64,9 +64,6 @@ function colorFor(name: string): string {
 
 // ── Dia atual (indicador tipo Google Calendar) ────────────────
 const todayKey = computed(() => {
-  // MOCK (remover) — forçando quinta pra preview
-  return 'Thursday'
-  // eslint-disable-next-line no-unreachable
   const keys = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   return keys[new Date().getDay()] ?? null
 })
@@ -141,7 +138,7 @@ function blockStyle(item: AgendaDiscipline) {
 
 <template>
   <div v-if="hasAny" class="overflow-x-auto overflow-y-hidden">
-    <div class="min-w-[720px] pb-3">
+    <div class="min-w-180 pb-3">
       <!-- Cabeçalho: dias da semana -->
       <div class="grid" :style="{ gridTemplateColumns: gridColumns }">
         <div />
@@ -213,10 +210,8 @@ function blockStyle(item: AgendaDiscipline) {
     </div>
   </div>
 
-  <!-- MOCK (remover) — empty state comentado temporariamente
   <div v-else class="flex flex-col items-center justify-center py-16 text-center">
     <UIcon name="i-lucide-calendar-x" class="size-10 text-muted mb-3" />
     <p class="text-muted">Nenhuma aula na sua agenda.</p>
   </div>
-  -->
 </template>

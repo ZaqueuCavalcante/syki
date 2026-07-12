@@ -24,6 +24,26 @@ if (!string.IsNullOrEmpty(name)) { ... }
 if (string.IsNullOrWhiteSpace(name)) { ... }
 ```
 
+### Comentários XML (`<summary>` / `<remarks>`) — sempre multi-linha
+
+Nos comentários XML dos controllers, **sempre** colocar as tags de abertura e fechamento em linhas próprias, com o conteúdo numa linha separada. **Nunca** colocar o conteúdo na mesma linha da tag.
+
+**Correto:**
+```csharp
+/// <summary>
+/// Matricular aluno em oferta de curso
+/// </summary>
+/// <remarks>
+/// Vincula um aluno a uma oferta de curso, criando uma matrícula.
+/// </remarks>
+```
+
+**Errado:**
+```csharp
+/// <summary>Matricular aluno em oferta de curso</summary>
+/// <remarks>Vincula um aluno a uma oferta de curso, criando uma matrícula.</remarks>
+```
+
 ## Frontend conventions
 
 ### Zod validation — campos opcionais/undefined

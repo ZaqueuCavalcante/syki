@@ -3,8 +3,12 @@ namespace Estud.Back.Features.Students.GetStudent;
 [ApiController, Authorize(Policies.GetStudent)]
 public class GetStudentController(GetStudentService service) : ControllerBase
 {
-    /// <summary>Buscar aluno</summary>
-    /// <remarks>Retorna os dados de um aluno, incluindo a oferta de curso atual.</remarks>
+    /// <summary>
+    /// Buscar aluno
+    /// </summary>
+    /// <remarks>
+    /// Retorna os dados de um aluno, incluindo a oferta de curso atual.
+    /// </remarks>
     [HttpGet("students/{studentId:int}")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]

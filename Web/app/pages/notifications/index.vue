@@ -80,9 +80,10 @@ const { data, status, refresh } = await useFetch<GetInstitutionNotificationsOut>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          <div
+          <NuxtLink
             v-for="notification in data.items"
             :key="notification.id"
+            :to="`/notifications/${notification.id}`"
             class="group relative rounded-xl border border-default bg-elevated/50 p-4 flex flex-col gap-3 hover:border-primary/50 hover:bg-elevated transition-colors duration-200"
           >
             <div class="flex items-start justify-between gap-2">
@@ -115,7 +116,7 @@ const { data, status, refresh } = await useFetch<GetInstitutionNotificationsOut>
                 <UBadge :color="viewRateBadgeColor(notification.viewRate)" variant="subtle" size="sm" :label="`${notification.viewRate}%`" />
               </div>
             </div>
-          </div>
+          </NuxtLink>
         </div>
       </div>
     </template>

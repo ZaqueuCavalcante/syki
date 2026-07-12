@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using Estud.Back.Features.Notifications.GetNotifications;
 using Estud.Back.Features.Notifications.CreateNotification;
 using Estud.Back.Features.Notifications.MarkNotificationsAsViewed;
+using Estud.Back.Features.Notifications.GetInstitutionNotification;
 using Estud.Back.Features.Notifications.GetUnreadNotificationsCount;
 
 namespace Estud.Tests.Integration.Clients;
@@ -31,6 +32,12 @@ public partial class TestsHttpClient
     ) {
         var response = await http.GetAsync($"notifications?page={page}&pageSize={pageSize}&unreadOnly={unreadOnly}");
         return await response.Resolve<GetNotificationsOut>();
+    }
+
+    public async Task<OneOf<GetInstitutionNotificationOut, ErrorOut>> GetInstitutionNotification(int id)
+    {
+        var response = await http.GetAsync($"notifications/institution/{id}");
+        return await response.Resolve<GetInstitutionNotificationOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> MarkNotificationsAsViewed(

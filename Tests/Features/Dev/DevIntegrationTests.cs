@@ -13,22 +13,27 @@ public partial class IntegrationTests
 
         var data = new DevInstitutionData();
 
-        await DevCreateCampi(client);
+        await DevCreateCampi(client, data);
         await DevCreateCourses(client, data);
         await DevCreateAdsDisciplines(client, data);
         await DevCreateDireitoDisciplines(client, data);
         await DevCreateAdsCourseCurriculum(client, data);
         await DevCreateDireitoCourseCurriculum(client, data);
+        await DevCreateAdsTeachers(client, data);
+        await DevCreateDireitoTeachers(client, data);
 
-        await DevCreateAcademicPeriods(client);
+        await DevCreateAcademicPeriods(client, data);
+
+        await DevCreateCourseOfferings(client, data);
+        await DevCreateStudents(client, data);
     }
 
-    private static async Task DevCreateCampi(TestsHttpClient client)
+    private static async Task DevCreateCampi(TestsHttpClient client, DevInstitutionData data)
     {
-        await client.CreateCampus("Garoa", BrazilState.PE, "Garanhuns", 150);
-        await client.CreateCampus("Sertão", BrazilState.PE, "Petrolina", 500);
-        await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", 750);
-        await client.CreateCampus("Suassuna", BrazilState.PE, "Recife", 1200);
+        data.CampiIds.Add((await client.CreateCampus("Garoa", BrazilState.PE, "Garanhuns", 150)).Success.Id);
+        data.CampiIds.Add((await client.CreateCampus("Sertão", BrazilState.PE, "Petrolina", 500)).Success.Id);
+        data.CampiIds.Add((await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", 750)).Success.Id);
+        data.CampiIds.Add((await client.CreateCampus("Suassuna", BrazilState.PE, "Recife", 1200)).Success.Id);
     }
 
     private static async Task DevCreateCourses(TestsHttpClient client, DevInstitutionData data)
@@ -204,7 +209,8 @@ public partial class IntegrationTests
             new(d[30], 5, 4, 72),
         ];
 
-        await client.CreateCourseCurriculum(data.AdsCourseId, "Grade ADS 1.0", links);
+        var result = await client.CreateCourseCurriculum(data.AdsCourseId, "Grade ADS 1.0", links);
+        data.AdsCourseCurriculumId = result.Success.Id;
     }
 
     private static async Task DevCreateDireitoCourseCurriculum(TestsHttpClient client, DevInstitutionData data)
@@ -246,21 +252,132 @@ public partial class IntegrationTests
             new(d[60], 10, 4, 36),
         ];
 
-        await client.CreateCourseCurriculum(data.DireitoCourseId, "Grade Direito 1.0", links);
+        var result = await client.CreateCourseCurriculum(data.DireitoCourseId, "Grade Direito 1.0", links);
+        data.DireitoCourseCurriculumId = result.Success.Id;
     }
 
-    private static async Task DevCreateAcademicPeriods(TestsHttpClient client)
+    private static async Task DevCreateAdsTeachers(TestsHttpClient client, DevInstitutionData data)
+    {
+        // Professores das disciplinas do período 1 de ADS
+        (string Name, string Email, int DisciplineIndex)[] teachers =
+        [
+            ("Alan Turing", "alan.turing@estud.com", 0),
+            ("Ada Lovelace", "ada.lovelace@estud.com", 1),
+            ("Grace Hopper", "grace.hopper@estud.com", 2),
+            ("Vinton Cerf", "vinton.cerf@estud.com", 3),
+            ("Tim Berners-Lee", "tim.berners.lee@estud.com", 4),
+            ("Barbara Liskov", "barbara.liskov@estud.com", 5),
+        ];
+
+        foreach (var teacher in teachers)
+        {
+            var result = await client.CreateTeacher(teacher.Name, teacher.Email);
+            var teacherId = result.Success.Id;
+
+            await client.AssignCampiToTeacher(teacherId, data.CampiIds);
+            await client.AssignDisciplinesToTeacher(teacherId, [data.AdsDisciplinesIds[teacher.DisciplineIndex]]);
+        }
+    }
+
+    private static async Task DevCreateDireitoTeachers(TestsHttpClient client, DevInstitutionData data)
+    {
+        // Professores das disciplinas do período 1 de Direito
+        (string Name, string Email, int DisciplineIndex)[] teachers =
+        [
+            ("Hans Kelsen", "hans.kelsen@estud.com", 0),
+            ("Rui Barbosa", "rui.barbosa@estud.com", 1),
+            ("Nelson Mandela", "nelson.mandela@estud.com", 2),
+            ("Ruth Ginsburg", "ruth.ginsburg@estud.com", 3),
+            ("Miguel Reale", "miguel.reale@estud.com", 4),
+        ];
+
+        foreach (var teacher in teachers)
+        {
+            var result = await client.CreateTeacher(teacher.Name, teacher.Email);
+            var teacherId = result.Success.Id;
+
+            await client.AssignCampiToTeacher(teacherId, data.CampiIds);
+            await client.AssignDisciplinesToTeacher(teacherId, [data.DireitoDisciplinesIds[teacher.DisciplineIndex]]);
+        }
+    }
+
+    private static async Task DevCreateAcademicPeriods(TestsHttpClient client, DevInstitutionData data)
     {
         var year = DateTime.Now.Year;
-        await client.CreateAcademicPeriod($"{year}.1", new DateOnly(year, 01, 02), new DateOnly(year, 06, 01));
-        await client.CreateAcademicPeriod($"{year}.2", new DateOnly(year, 06, 03), new DateOnly(year, 12, 20));
+
+        var firstStartAt = new DateOnly(year, 01, 02);
+        var secondStartAt = new DateOnly(year, 06, 03);
+
+        await client.CreateAcademicPeriod($"{year}.1", firstStartAt, new DateOnly(year, 06, 01));
+        var second = await client.CreateAcademicPeriod($"{year}.2", secondStartAt, new DateOnly(year, 12, 20));
+        data.AcademicPeriodId = second.Success.Id;
+
+        // Matrículas abrem 2 semanas antes de cada período acadêmico e ficam abertas por 2 semanas
+        await client.CreateEnrollmentPeriod($"Matrículas {year}.1", firstStartAt.AddDays(-14), firstStartAt);
+        await client.CreateEnrollmentPeriod($"Matrículas {year}.2", secondStartAt.AddDays(-14), secondStartAt);
+    }
+
+    private static async Task DevCreateCourseOfferings(TestsHttpClient client, DevInstitutionData data)
+    {
+        var ads = await client.CreateCourseOffering(
+            data.CampiIds[0],
+            data.AdsCourseId,
+            data.AdsCourseCurriculumId,
+            data.AcademicPeriodId,
+            CourseSession.Evening
+        );
+        data.AdsCourseOfferingId = ads.Success.Id;
+
+        var direito = await client.CreateCourseOffering(
+            data.CampiIds[0],
+            data.DireitoCourseId,
+            data.DireitoCourseCurriculumId,
+            data.AcademicPeriodId,
+            CourseSession.Morning
+        );
+        data.DireitoCourseOfferingId = direito.Success.Id;
+    }
+
+    private static async Task DevCreateStudents(TestsHttpClient client, DevInstitutionData data)
+    {
+        (string Name, string Email)[] adsStudents =
+        [
+            ("Linus Torvalds", "linus.torvalds@estud.com"),
+            ("Margaret Hamilton", "margaret.hamilton@estud.com"),
+            ("Dennis Ritchie", "dennis.ritchie@estud.com"),
+        ];
+
+        foreach (var student in adsStudents)
+        {
+            var result = await client.CreateStudent(student.Name, student.Email);
+            await client.EnrollStudentInCourseOffering(result.Success.Id, data.AdsCourseOfferingId);
+        }
+
+        (string Name, string Email)[] direitoStudents =
+        [
+            ("Clarice Lispector", "clarice.lispector@estud.com"),
+            ("Machado de Assis", "machado.assis@estud.com"),
+            ("Cecília Meireles", "cecilia.meireles@estud.com"),
+        ];
+
+        foreach (var student in direitoStudents)
+        {
+            var result = await client.CreateStudent(student.Name, student.Email);
+            await client.EnrollStudentInCourseOffering(result.Success.Id, data.DireitoCourseOfferingId);
+        }
     }
 }
 
 internal class DevInstitutionData
 {
+    public List<int> CampiIds { get; set; } = [];
     public int AdsCourseId { get; set; }
     public int DireitoCourseId { get; set; }
     public List<int> AdsDisciplinesIds { get; set; } = [];
     public List<int> DireitoDisciplinesIds { get; set; } = [];
+    public int AdsCourseCurriculumId { get; set; }
+    public int DireitoCourseCurriculumId { get; set; }
+    public int AcademicPeriodId { get; set; }
+    public int AdsCourseOfferingId { get; set; }
+    public int DireitoCourseOfferingId { get; set; }
 }

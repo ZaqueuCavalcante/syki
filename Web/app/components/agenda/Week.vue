@@ -131,7 +131,7 @@ function blockStyle(item: AgendaDiscipline) {
   const height = Math.max(((endMin - startMin) / 60) * HOUR_HEIGHT, 24)
   return {
     top: `${top + BLOCK_GAP}px`,
-    height: `${height - BLOCK_GAP * 2}px`,
+    minHeight: `${height - BLOCK_GAP * 2}px`,
   }
 }
 </script>
@@ -195,11 +195,11 @@ function blockStyle(item: AgendaDiscipline) {
           <div
             v-for="(item, idx) in (disciplinesByDay.get(day.key) ?? [])"
             :key="`${item.classId}-${idx}`"
-            class="absolute inset-x-1 rounded-md border-l-4 px-2 py-1 overflow-hidden shadow-sm"
+            class="absolute inset-x-1 rounded-md border-l-4 px-2 py-1 shadow-sm"
             :class="colorFor(item.name)"
             :style="blockStyle(item)"
           >
-            <div class="text-xs font-semibold leading-tight truncate">{{ item.name }}</div>
+            <div class="text-xs font-semibold leading-tight break-words">{{ item.name }}</div>
             <div class="text-[11px] opacity-80 tabular-nums">
               {{ formatHour(item.start) }} – {{ formatHour(item.end) }}
             </div>

@@ -162,6 +162,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     title="Editar grade curricular"
     :fullscreen="isMobile"
     description="Atualize os dados da grade curricular."
+    :ui="{ content: 'max-w-3xl' }"
   >
     <template #body>
       <div v-if="loadingData" class="flex justify-center py-12">

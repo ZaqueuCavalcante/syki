@@ -4,8 +4,10 @@ public class GetTeacherAgendaService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetTeacherAgendaOut> Get()
     {
-        var teacherId = ctx.RequestUser.Id;
+        var userId = ctx.RequestUser.Id;
         var institutionId = ctx.RequestUser.InstitutionId;
+        var teacherId = await ctx.Teachers.Where(x => x.UserId == userId && x.InstitutionId == institutionId)
+            .Select(x => x.Id).FirstOrDefaultAsync();
 
         var classes = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)

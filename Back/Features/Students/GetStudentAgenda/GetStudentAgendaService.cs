@@ -4,13 +4,13 @@ public class GetStudentAgendaService(EstudDbContext ctx) : IEstudService
 {
     public async Task<GetStudentAgendaOut> Get()
     {
-        var studentId = ctx.RequestUser.Id;
+        var userId = ctx.RequestUser.Id;
         var institutionId = ctx.RequestUser.InstitutionId;
+        var studentId = await ctx.Students.Where(x => x.UserId == userId && x.InstitutionId == institutionId)
+            .Select(x => x.Id).FirstOrDefaultAsync();
 
-        var ids = await ctx.ClassStudents.AsNoTracking()
-            .Where(x => x.StudentId == studentId && x.Status == StudentClassStatus.Matriculado)
-            .Select(x => x.ClassId)
-            .ToListAsync();
+        var ids = await ctx.ClassStudents.Where(x => x.StudentId == studentId && x.Status == StudentClassStatus.Matriculado)
+            .Select(x => x.ClassId).ToListAsync();
 
         var classes = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)

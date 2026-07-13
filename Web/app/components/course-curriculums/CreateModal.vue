@@ -141,6 +141,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     title="Nova grade curricular"
     :fullscreen="isMobile"
     description="Preencha os dados para cadastrar uma nova grade curricular."
+    :ui="{ content: 'max-w-3xl' }"
   >
     <template #body>
       <UForm

@@ -27,10 +27,12 @@ const route = useRoute()
 const config = useRuntimeConfig()
 const classId = route.params.classId
 
-const { data, status, error } = await useFetch<GetClassOut>(
+const { data, status, error, refresh } = await useFetch<GetClassOut>(
   `${config.public.backendUrl}/classes/${classId}`,
   { credentials: 'include', server: false },
 )
+
+const assignStudentModalOpen = ref(false)
 
 const statusLabels: Record<string, string> = {
   OnPreEnrollment: 'Pré-matrícula',
@@ -177,10 +179,25 @@ const details = computed(() => {
               />
             </div>
           </div>
-          <p v-else class="text-sm text-muted">
-            Nenhum aluno matriculado
-          </p>
+          <div v-else class="flex flex-col items-center gap-3 py-6">
+            <UIcon name="i-lucide-users" class="size-10 text-muted" />
+            <p class="text-sm text-muted">
+              Nenhum aluno matriculado
+            </p>
+            <UButton
+              icon="i-lucide-plus"
+              label="Aluno"
+              @click="() => { assignStudentModalOpen = true }"
+            />
+          </div>
         </UPageCard>
+
+        <ClassesAssignStudentModal
+          v-model:open="assignStudentModalOpen"
+          :class-id="data.id"
+          :enrolled-ids="data.students.map(s => s.id)"
+          @assigned="refresh()"
+        />
       </div>
     </template>
   </UDashboardPanel>

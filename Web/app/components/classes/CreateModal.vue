@@ -186,22 +186,24 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <UForm :schema="schema" :state="formState" class="space-y-4" @submit="onSubmit">
 
         <UFormField label="Disciplina" name="disciplineId" required>
-          <USelect
+          <USelectMenu
             v-model="formState.disciplineId"
             :items="disciplineOptions"
             value-key="value"
             class="w-full"
             placeholder="Selecione a disciplina"
+            :search-input="{ placeholder: 'Buscar por nome...' }"
           />
         </UFormField>
 
         <UFormField label="Professor" name="teacherId">
-          <USelect
+          <USelectMenu
             v-model="formState.teacherId"
             :items="teacherOptions"
             value-key="value"
             class="w-full"
             placeholder="Selecione o professor"
+            :search-input="{ placeholder: 'Buscar por nome...' }"
           />
         </UFormField>
 

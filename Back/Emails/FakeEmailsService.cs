@@ -15,7 +15,7 @@ public class FakeEmailsService : IEmailsService
     {
         await Task.Yield();
         var link = $"{_settings.FrontUrl}/reset-password?token={token}";
-        Console.WriteLine($"[{to} -> {link}]");
+        Console.WriteLine($"SendResetPasswordEmail [{to} -> {link}]");
         ResetPasswordEmails.Add($"[{to} -> {link}]");
     }
 
@@ -23,7 +23,7 @@ public class FakeEmailsService : IEmailsService
     {
         await Task.Yield();
         var link = $"{_settings.FrontUrl}/magic-link?token={token}";
-        Console.WriteLine($"[{to} -> {link}]");
+        Console.WriteLine($"SendFirstAccessMagicLinkEmail [{to} -> {link}]");
         FirstAccessMagicLinkEmails.Add($"[{to} -> {link}]");
     }
 }

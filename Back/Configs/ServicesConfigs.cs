@@ -20,6 +20,10 @@ public static class ServicesConfigs
             builder.Services.Replace(ServiceDescriptor.Singleton<IGoogleService, FakeGoogleService>());
             builder.Services.Replace(ServiceDescriptor.Singleton<IEmailsService, FakeEmailsService>());
         }
+        if (EnvironmentExtensions.IsDevelopment())
+        {
+            builder.Services.Replace(ServiceDescriptor.Singleton<IEmailsService, FakeEmailsService>());
+        }
     }
 
     private static void AddServices(this IServiceCollection services, Type marker)

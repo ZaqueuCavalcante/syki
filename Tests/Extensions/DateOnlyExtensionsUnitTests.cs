@@ -24,6 +24,63 @@ public class DateOnlyExtensionsUnitTests
         result.Should().BeFalse();
     }
 
+    [Test]
+    [TestCaseSource(nameof(ValidBirthdates))]
+    public void DateOnlyExtensions_Should_return_true_when_birthdate_is_valid(DateOnly date)
+    {
+        // Arrange / Act
+        var result = date.IsValidBirthdate();
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    [TestCaseSource(nameof(InvalidBirthdates))]
+    public void DateOnlyExtensions_Should_return_false_when_birthdate_is_invalid(DateOnly date)
+    {
+        // Arrange / Act
+        var result = date.IsValidBirthdate();
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    private static IEnumerable<object[]> ValidBirthdates()
+    {
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+
+        foreach (var day in new List<DateOnly>()
+        {
+            new(1900, 01, 01), // limite inferior
+            new(1950, 06, 15),
+            new(1995, 01, 20),
+            new(2000, 05, 10),
+            today,             // limite superior
+            today.AddDays(-1),
+        })
+        {
+            yield return [day];
+        }
+    }
+
+    private static IEnumerable<object[]> InvalidBirthdates()
+    {
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+
+        foreach (var day in new List<DateOnly>()
+        {
+            DateOnly.MinValue,
+            new(1899, 12, 31), // antes do limite inferior
+            today.AddDays(1),  // no futuro
+            today.AddYears(1),
+            DateOnly.MaxValue,
+        })
+        {
+            yield return [day];
+        }
+    }
+
     private static IEnumerable<object[]> Holidays()
     {
         foreach (var day in new List<DateOnly>()

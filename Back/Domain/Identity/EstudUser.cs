@@ -8,6 +8,7 @@ public class EstudUser : IdentityUser<int>
     public string Name { get; set; }
     public DateTime CreatedAt { get; set; }
     public string? ProfilePhoto { get; set; }
+    public DateOnly? Birthdate { get; set; }
 
     public Institution? Institution { get; set; }
 

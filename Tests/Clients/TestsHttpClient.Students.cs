@@ -11,9 +11,11 @@ public partial class TestsHttpClient
 {
     public async Task<OneOf<CreateStudentOut, ErrorOut>> CreateStudent(
         string name,
-        string email
+        string email,
+        string? phoneNumber = null,
+        DateOnly? birthdate = null
     ) {
-        var data = new CreateStudentIn { Name = name, Email = email };
+        var data = new CreateStudentIn { Name = name, Email = email, PhoneNumber = phoneNumber, Birthdate = birthdate };
         var response = await http.PostAsJsonAsync("/students", data);
         return await response.Resolve<CreateStudentOut>();
     }

@@ -85,6 +85,28 @@ public class StringExtensionsUnitTests
     }
 
     [Test]
+    [TestCaseSource(nameof(ValidPhoneNumbers))]
+    public void StringExtensions_Should_return_true_when_phone_number_is_valid(string phoneNumber)
+    {
+        // Arrange / Act
+        var result = phoneNumber.IsValidPhoneNumber();
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    [TestCaseSource(nameof(InvalidPhoneNumbers))]
+    public void StringExtensions_Should_return_false_when_phone_number_is_invalid(string phoneNumber)
+    {
+        // Arrange / Act
+        var result = phoneNumber.IsValidPhoneNumber();
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    [Test]
     [TestCaseSource(nameof(MinutesForFormat))]
     public void StringExtensions_Should_format_minutes_as_string(int minutes, string text)
     {
@@ -223,6 +245,40 @@ public class StringExtensionsUnitTests
         foreach (var email in emails)
         {
             yield return [email];
+        }
+    }
+
+    private static IEnumerable<object[]> ValidPhoneNumbers()
+    {
+        List<string> phoneNumbers = [
+            "8233334444",
+            "82988887777",
+            "1198578952",
+            "11985789526",
+        ];
+        foreach (var phoneNumber in phoneNumbers)
+        {
+            yield return [phoneNumber];
+        }
+    }
+
+    private static IEnumerable<object[]> InvalidPhoneNumbers()
+    {
+        List<string> phoneNumbers = [
+            null!,
+            "",
+            " ",
+            "123456789",            // menos de 10 dígitos
+            "123456789012",         // mais de 11 dígitos
+            "(82) 98888-7777",      // com máscara
+            "82 98888 7777",        // com espaços
+            "+5582988887777",       // com código do país
+            "8298888777a",
+            "abcdefghijk",
+        ];
+        foreach (var phoneNumber in phoneNumbers)
+        {
+            yield return [phoneNumber];
         }
     }
 

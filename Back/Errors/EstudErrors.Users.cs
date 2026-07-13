@@ -20,3 +20,17 @@ public class InvalidUserName : EstudError
     public override string Code { get; set; } = nameof(InvalidUserName);
     public override string Message { get; set; } = "Nome de usuário inválido.";
 }
+
+public class InvalidPhoneNumber : EstudError
+{
+    public static readonly InvalidPhoneNumber I = new();
+    public override string Code { get; set; } = nameof(InvalidPhoneNumber);
+    public override string Message { get; set; } = "Número de telefone inválido.";
+}
+
+public class InvalidBirthdate : EstudError
+{
+    public static readonly InvalidBirthdate I = new();
+    public override string Code { get; set; } = nameof(InvalidBirthdate);
+    public override string Message { get; set; } = "Data de nascimento inválida.";
+}

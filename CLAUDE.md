@@ -376,3 +376,22 @@ public partial class IntegrationTests
 - Keep the regions that are present in the order above.
 - Test method names follow `{Feature}_{Endpoint}_Should_{...}` (e.g. `Disciplines_GetDisciplines_Should_not_get_disciplines_when_not_authenticated`).
 - Auth/authorization/error assertions use `result.ShouldBeError(...)`; happy-path assertions read the value via `result.Success`. This requires the corresponding `TestsHttpClient` method to return `OneOf<TOut, ErrorOut>` (via `response.Resolve<TOut>()`), not the raw DTO.
+
+### `result.Success` / `.Error` nunca dentro de query LINQ
+
+`Success`, `Error`, `IsSuccess` e `IsError` (definidos em `Back/Shared/Extensions/ResultExtensions.cs`) são **extension properties** (C# 14). Elas não podem aparecer dentro de lambdas que viram árvore de expressão — ou seja, dentro de `Where`/`Select`/`Any`/`First` de um `IQueryable` (EF Core). O compilador falha com *"An expression tree may not contain an extension property access"*.
+
+Sempre extrair o valor para uma variável local antes da query.
+
+**Correto:**
+```csharp
+var studentId = result.Success.Id;
+var user = await ctx.Students.Where(s => s.Id == studentId).Select(s => s.User!).FirstAsync();
+```
+
+**Errado:**
+```csharp
+var user = await ctx.Students.Where(s => s.Id == result.Success.Id).Select(s => s.User!).FirstAsync();
+```
+
+Fora de query (asserts, ifs, atribuições) o uso normal continua valendo.

@@ -6,8 +6,27 @@ namespace Estud.Back.Features.Students.CreateStudent;
 
 public class CreateStudentService(EstudDbContext ctx, UserManager<EstudUser> userManager) : IEstudService
 {
+    private class Validator : AbstractValidator<CreateStudentIn>
+    {
+        public Validator()
+        {
+            When(x => x.PhoneNumber.HasValue(), () =>
+            {
+                RuleFor(x => x.PhoneNumber).Must(x => x.IsValidPhoneNumber()).WithError(InvalidPhoneNumber.I);
+            });
+
+            When(x => x.Birthdate.HasValue, () =>
+            {
+                RuleFor(x => x.Birthdate!.Value).Must(x => x.IsValidBirthdate()).WithError(InvalidBirthdate.I);
+            });
+        }
+    }
+    private static readonly Validator V = new();
+
     public async Task<OneOf<CreateStudentOut, EstudError>> Create(CreateStudentIn data)
     {
+        if (V.Run(data, out var error)) return error;
+
         var email = data.Email.ToLowerInvariant();
         var emailUsed = await ctx.Users.AnyAsync(u => u.Email == email);
         if (emailUsed) return EmailAlreadyUsed.I;
@@ -15,7 +34,11 @@ public class CreateStudentService(EstudDbContext ctx, UserManager<EstudUser> use
         var studentRole = await ctx.GetStudentRole();
         var institutionId = ctx.RequestUser.InstitutionId;
 
-        var user = new EstudUser(institutionId, data.Name, email);
+        var user = new EstudUser(institutionId, data.Name, email)
+        {
+            PhoneNumber = data.PhoneNumber.HasValue() ? data.PhoneNumber : null,
+            Birthdate = data.Birthdate,
+        };
         var student = new EstudStudent(user, institutionId, data.Name);
         var userRole = new EstudUserRole(institutionId, user, studentRole.Id);
         ctx.AddRange(student, userRole);

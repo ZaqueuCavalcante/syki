@@ -199,7 +199,7 @@ function blockStyle(item: AgendaDiscipline) {
             :class="colorFor(item.name)"
             :style="blockStyle(item)"
           >
-            <div class="text-xs font-semibold leading-tight break-words">{{ item.name }}</div>
+            <div class="text-xs font-semibold leading-tight wrap-break-word">{{ item.name }}</div>
             <div class="text-[11px] opacity-80 tabular-nums">
               {{ formatHour(item.start) }} – {{ formatHour(item.end) }}
             </div>

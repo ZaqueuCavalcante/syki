@@ -24,5 +24,7 @@ internal class RequestExamples : ExamplesProvider<CreateStudentIn>;
 internal class ResponseExamples : ExamplesProvider<StudentOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidEmail,
-    EmailAlreadyUsed
+    InvalidBirthdate,
+    EmailAlreadyUsed,
+    InvalidPhoneNumber
 >;

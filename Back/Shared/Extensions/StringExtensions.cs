@@ -62,7 +62,7 @@ public static class StringExtensions
 
     public static string ToBase64(this string value)
     {
-        var bytes = System.Text.Encoding.UTF8.GetBytes(value);
+        var bytes = Encoding.UTF8.GetBytes(value);
         return Convert.ToBase64String(bytes);
     }
 
@@ -80,6 +80,12 @@ public static class StringExtensions
     {
         if (email.IsEmpty()) return false;
         return Regex.IsMatch(email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
+    }
+
+    public static bool IsValidPhoneNumber(this string? phoneNumber)
+    {
+        if (phoneNumber.IsEmpty()) return false;
+        return Regex.IsMatch(phoneNumber!, @"^\d{10,11}$");
     }
 
     private static JsonSerializerSettings _settings = new()

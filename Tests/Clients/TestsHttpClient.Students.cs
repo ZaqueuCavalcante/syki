@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using Estud.Back.Features.Students.GetStudent;
 using Estud.Back.Features.Students.GetStudents;
 using Estud.Back.Features.Students.CreateStudent;
+using Estud.Back.Features.Students.GetStudentClass;
 using Estud.Back.Features.Students.AssignStudentToClass;
 using Estud.Back.Features.Students.EnrollStudentInCourseOffering;
 
@@ -30,6 +31,12 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync($"/students/{id}");
         return await response.Resolve<GetStudentOut>();
+    }
+
+    public async Task<OneOf<GetStudentClassOut, ErrorOut>> GetStudentClass(int id)
+    {
+        var response = await http.GetAsync($"/students/classes/{id}");
+        return await response.Resolve<GetStudentClassOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> AssignStudentToClass(int studentId, int classId)

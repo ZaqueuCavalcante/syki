@@ -36,7 +36,7 @@ watch(account, () => { fetchTeacherClasses() }, { immediate: true })
 
 const teacherClassesLinks = computed<NavigationMenuItem[]>(() =>
   teacherClasses.value.map(({ id, name }) => {
-    const to = `/teacher/classes/${id}`
+    const to = `/classes/${id}`
     return {
       label: name,
       to,

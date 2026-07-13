@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NuxtLink } from '#components'
 import type { AgendaDiscipline, AgendaDay } from '~/types/agenda'
 
 const props = defineProps<{
@@ -191,19 +192,26 @@ function blockStyle(item: AgendaDiscipline) {
             :style="{ top: `${i * HOUR_HEIGHT}px` }"
           />
 
-          <!-- Blocos de aula -->
-          <div
+          <!-- Blocos de aula (viram link quando a aula tem turma) -->
+          <component
+            :is="item.classId ? NuxtLink : 'div'"
             v-for="(item, idx) in (disciplinesByDay.get(day.key) ?? [])"
             :key="`${item.classId}-${idx}`"
-            class="absolute inset-x-1 rounded-md border-l-4 px-2 py-1 shadow-sm"
-            :class="colorFor(item.name)"
+            :to="item.classId ? `/classes/${item.classId}` : undefined"
+            class="absolute inset-x-1 block rounded-md border-l-4 px-2 py-1 shadow-sm"
+            :class="[
+              colorFor(item.name),
+              item.classId
+                ? 'transition-shadow hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current'
+                : '',
+            ]"
             :style="blockStyle(item)"
           >
             <div class="text-xs font-semibold leading-tight wrap-break-word">{{ item.name }}</div>
             <div class="text-[11px] opacity-80 tabular-nums">
               {{ formatHour(item.start) }} – {{ formatHour(item.end) }}
             </div>
-          </div>
+          </component>
         </div>
         </div>
       </div>

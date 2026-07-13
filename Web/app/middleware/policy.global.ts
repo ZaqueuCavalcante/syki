@@ -1,4 +1,5 @@
 import type { PolicyName } from '~/policies'
+import type { UserType } from '~/composables/useUserAccount'
 
 const routePolicies: Record<string, PolicyName> = {
   '/home': 'AccessHomePage',
@@ -19,12 +20,20 @@ const routePolicies: Record<string, PolicyName> = {
   '/calendar': 'AccessCalendarPage',
 }
 
+// A página de detalhe da turma é a mesma rota para os 3 perfis, mas cada um
+// consome um endpoint próprio — a policy exigida depende do UserType.
+const classDetailPolicies: Record<UserType, PolicyName> = {
+  Manager: 'AccessClassesPage',
+  Teacher: 'GetTeacherClass',
+  Student: 'GetStudentClass',
+}
+
 export default defineNuxtRouteMiddleware(async (to) => {
   if (import.meta.server) return
 
-  const policyName = routePolicies[to.path]
-    ?? (to.path.startsWith('/classes/') ? 'AccessClassesPage' : undefined)
-  if (!policyName) return
+  const routePolicy = routePolicies[to.path]
+  const isClassDetail = to.path.startsWith('/classes/')
+  if (!routePolicy && !isClassDetail) return
 
   const { account, fetchAccount } = useUserAccount()
 
@@ -35,6 +44,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
       return navigateTo('/')
     }
   }
+
+  const policyName = routePolicy ?? classDetailPolicies[account.value!.userType]
+  if (!policyName) return
 
   const { can } = usePolicy()
   if (!can(policyName).value) {

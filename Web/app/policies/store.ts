@@ -199,6 +199,18 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
       hasPermission(Permissions.ManageClasses),
     ],
   },
+  GetTeacherClass: {
+    description: "Ver os detalhes de uma turma que leciona",
+    requirements: [
+      hasUserType(UserTypes.Teacher),
+    ],
+  },
+  GetStudentClass: {
+    description: "Ver os detalhes de uma turma em que está matriculado",
+    requirements: [
+      hasUserType(UserTypes.Student),
+    ],
+  },
 
   // Teachers
   AccessTeachersPage: {

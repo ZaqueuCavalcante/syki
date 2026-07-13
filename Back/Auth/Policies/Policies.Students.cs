@@ -10,6 +10,7 @@ public static partial class Policies
     public const string AssignStudentToClass = nameof(AssignStudentToClass);
     public const string EnrollStudentInCourseOffering = nameof(EnrollStudentInCourseOffering);
 
+    public const string GetStudentClass = nameof(GetStudentClass);
     public const string GetStudentAgenda = nameof(GetStudentAgenda);
 
     public static AuthorizationBuilder AddStudentsPolicies(this AuthorizationBuilder builder)
@@ -22,6 +23,7 @@ public static partial class Policies
             .AddEstudPolicy(EnrollStudentInCourseOffering, UserType.Manager, EstudPermissions.ManageStudents);
 
         builder
+            .AddEstudPolicy(GetStudentClass, UserType.Student)
             .AddEstudPolicy(GetStudentAgenda, UserType.Student);
 
         return builder;

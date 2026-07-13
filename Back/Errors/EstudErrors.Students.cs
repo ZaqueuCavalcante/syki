@@ -27,3 +27,10 @@ public class StudentAlreadyEnrolledInClass : EstudError
     public override string Code { get; set; } = nameof(StudentAlreadyEnrolledInClass);
     public override string Message { get; set; } = "Aluno já matriculado nesta turma.";
 }
+
+public class StudentNotEnrolledInClass : EstudError
+{
+    public static readonly StudentNotEnrolledInClass I = new();
+    public override string Code { get; set; } = nameof(StudentNotEnrolledInClass);
+    public override string Message { get; set; } = "Aluno não matriculado nesta turma.";
+}

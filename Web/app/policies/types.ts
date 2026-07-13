@@ -144,6 +144,8 @@ export type PolicyName
     | 'CreateClass'
     | 'ReleaseClassForEnrollment'
     | 'StartClass'
+    | 'GetTeacherClass'
+    | 'GetStudentClass'
   // Security
     | 'AccessSecurityPage'
     | 'AccessRolesPage'

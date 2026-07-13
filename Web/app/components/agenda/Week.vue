@@ -137,7 +137,7 @@ function blockStyle(item: AgendaDiscipline) {
 </script>
 
 <template>
-  <div v-if="hasAny" class="overflow-x-auto overflow-y-hidden">
+  <div v-if="hasAny" class="shrink-0 overflow-x-auto">
     <div class="min-w-180 pb-3">
       <!-- Cabeçalho: dias da semana -->
       <div class="grid" :style="{ gridTemplateColumns: gridColumns }">

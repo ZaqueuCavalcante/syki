@@ -15,10 +15,16 @@ public class GetClassesService(EstudDbContext ctx) : IEstudService
             .ToListAsync();
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        foreach (var @class in classes)
+        var hasCurrentEnrollmentPeriod = await ctx.EnrollmentPeriods.AsNoTracking()
+            .AnyAsync(p => p.InstitutionId == institutionId && p.StartAt <= today && today <= p.EndAt);
+
+        if (!hasCurrentEnrollmentPeriod)
         {
-            if (@class.Status == ClassStatus.OnEnrollment && @class.Period?.EndAt < today)
-                @class.Status = ClassStatus.AwaitingStart;
+            foreach (var @class in classes)
+            {
+                if (@class.Status == ClassStatus.OnEnrollment)
+                    @class.Status = ClassStatus.AwaitingStart;
+            }
         }
 
         var statusFilter = query?.Status;

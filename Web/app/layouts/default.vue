@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import type { PolicyName } from '~/policies'
+import type { NavigationMenuItem } from '@nuxt/ui'
 
 const open = ref(false)
 const { can } = usePolicy()
+const { account } = useUserAccount()
 const { unreadCount } = useNotifications()
 const { isNotificationsSlideoverOpen } = useDashboard()
+const { classes: teacherClasses, fetchClasses: fetchTeacherClasses } = useTeacherClasses()
 
 const allLinks = [
   { label: 'Home',         icon: 'i-lucide-house',          to: '/home',               policy: 'AccessHomePage'              as PolicyName },
@@ -27,8 +30,24 @@ const allLinks = [
 
 const route = useRoute()
 
-const links = computed(() =>
-  allLinks
+const canSeeTeacherClasses = can('GetTeacherCurrentClasses')
+
+watch(account, () => { fetchTeacherClasses() }, { immediate: true })
+
+const teacherClassesLinks = computed<NavigationMenuItem[]>(() =>
+  teacherClasses.value.map(({ id, name }) => {
+    const to = `/teacher/classes/${id}`
+    return {
+      label: name,
+      to,
+      active: route.path === to,
+      onSelect: () => { open.value = false },
+    }
+  })
+)
+
+const links = computed<NavigationMenuItem[]>(() => {
+  const items: NavigationMenuItem[] = allLinks
     .filter(({ policy }) => can(policy).value)
     .map(({ label, icon, to }) => ({
       label,
@@ -37,12 +56,33 @@ const links = computed(() =>
       active: route.path === to || route.path.startsWith(`${to}/`),
       onSelect: () => { open.value = false },
     }))
-)
+
+  if (canSeeTeacherClasses.value) {
+    items.push({
+      label: 'Turmas',
+      icon: 'i-lucide-door-open',
+      defaultOpen: true,
+      children: teacherClassesLinks.value,
+    })
+  }
+
+  return items
+})
 
 const groups = computed(() => [{
   id: 'links',
   label: 'Go to',
-  items: links.value,
+  items: [
+    ...allLinks
+      .filter(({ policy }) => can(policy).value)
+      .map(({ label, icon, to }) => ({
+        label,
+        icon,
+        to,
+        onSelect: () => { open.value = false },
+      })),
+    ...teacherClassesLinks.value.map(item => ({ ...item, icon: 'i-lucide-door-open' })),
+  ],
 }])
 </script>
 

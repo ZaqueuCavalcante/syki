@@ -10,12 +10,25 @@ public partial class IntegrationTests
         var period = (await client.CreateAcademicPeriod()).Success;
         var @class = (await client.CreateClass(discipline.Id, period.Id, vacancies: vacancies)).Success;
 
-        await using var ctx = _back.GetDbContext();
-        var entity = await ctx.Classes.FirstAsync(c => c.Id == @class.Id);
-        entity.Status = ClassStatus.OnEnrollment;
-        await ctx.SaveChangesAsync();
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
+        await client.ReleaseClassForEnrollment(@class.Id);
 
         return @class.Id;
+    }
+
+    private async Task FinalizeEnrollmentPeriodOf(int classId)
+    {
+        await using var ctx = _back.GetDbContext();
+
+        var institutionId = await ctx.Classes
+            .Where(c => c.Id == classId)
+            .Select(c => c.InstitutionId)
+            .FirstAsync();
+
+        var enrollmentPeriod = await ctx.EnrollmentPeriods.FirstAsync(p => p.InstitutionId == institutionId);
+        enrollmentPeriod.EndAt = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(-1);
+        await ctx.SaveChangesAsync();
     }
 
     #region Authentication

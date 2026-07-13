@@ -116,10 +116,18 @@ watch(open, (val) => {
             multiple
             ignore-filter
             placeholder="Pesquisar disciplinas para vincular..."
-            class="flex-1"
+            class="flex-1 min-w-0"
             searchable
             :search-input="{ placeholder: 'Buscar por nome...' }"
-          />
+          >
+            <template #default>
+              <span v-if="selectedDisciplineIds.length" class="truncate">
+                {{ selectedDisciplineIds.length }}
+                {{ selectedDisciplineIds.length === 1 ? 'disciplina selecionada' : 'disciplinas selecionadas' }}
+              </span>
+              <span v-else class="truncate text-dimmed">Pesquisar disciplinas para vincular...</span>
+            </template>
+          </USelectMenu>
           <UButton
             label="Vincular"
             :disabled="!selectedDisciplineIds.length"

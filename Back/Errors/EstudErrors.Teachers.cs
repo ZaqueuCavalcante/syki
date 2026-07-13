@@ -27,3 +27,10 @@ public class TeacherNotAssignedToDiscipline : EstudError
     public override string Code { get; set; } = nameof(TeacherNotAssignedToDiscipline);
     public override string Message { get; set; } = "Professor não está vinculado à disciplina.";
 }
+
+public class TeacherNotAssignedToClass : EstudError
+{
+    public static readonly TeacherNotAssignedToClass I = new();
+    public override string Code { get; set; } = nameof(TeacherNotAssignedToClass);
+    public override string Message { get; set; } = "Professor não está vinculado à turma.";
+}

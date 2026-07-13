@@ -1,33 +1,30 @@
-namespace Estud.Back.Features.Classes.GetClass;
+namespace Estud.Back.Features.Teachers.GetTeacherClass;
 
-public class GetClassService(EstudDbContext ctx) : IEstudService
+public class GetTeacherClassService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<OneOf<GetClassOut, EstudError>> Get(int id)
+    public async Task<OneOf<GetTeacherClassOut, EstudError>> Get(int id)
     {
+        var userId = ctx.RequestUser.Id;
         var institutionId = ctx.RequestUser.InstitutionId;
 
         var @class = await ctx.Classes.AsNoTracking()
             .Include(c => c.Discipline)
-            .Include(c => c.Teacher)
             .Include(c => c.Period)
             .Include(c => c.Schedules)
             .FirstOrDefaultAsync(c => c.Id == id && c.InstitutionId == institutionId);
         if (@class == null) return ClassNotFound.I;
 
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        if (@class.Status == ClassStatus.OnEnrollment)
-        {
-            var hasCurrentEnrollmentPeriod = await ctx.EnrollmentPeriods.AsNoTracking()
-                .AnyAsync(p => p.InstitutionId == institutionId && p.StartAt <= today && today <= p.EndAt);
-            if (!hasCurrentEnrollmentPeriod) @class.Status = ClassStatus.AwaitingStart;
-        }
+        var teacherId = await ctx.Teachers.AsNoTracking()
+            .Where(x => x.UserId == userId && x.InstitutionId == institutionId)
+            .Select(x => x.Id).FirstOrDefaultAsync();
+        if (@class.TeacherId != teacherId) return TeacherNotAssignedToClass.I;
 
         var students = await (
             from cs in ctx.ClassStudents.AsNoTracking()
             join s in ctx.Students.AsNoTracking() on cs.StudentId equals s.Id
             where cs.ClassId == id
             orderby s.Name
-            select new GetClassStudentOut
+            select new GetTeacherClassStudentOut
             {
                 Id = s.Id,
                 Name = s.Name,
@@ -35,11 +32,10 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
             }
         ).ToListAsync();
 
-        return new GetClassOut
+        return new GetTeacherClassOut
         {
             Id = @class.Id,
             Discipline = @class.Discipline?.Name ?? "",
-            Teacher = @class.Teacher?.Name ?? "",
             Period = @class.Period?.Name ?? "",
             Vacancies = @class.Vacancies,
             Workload = @class.Workload,

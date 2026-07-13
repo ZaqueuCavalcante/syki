@@ -23,7 +23,9 @@ interface GetClassOut {
   students: ClassStudentItem[]
 }
 
+const toast = useToast()
 const route = useRoute()
+const { can } = usePolicy()
 const config = useRuntimeConfig()
 const classId = route.params.classId
 
@@ -33,6 +35,41 @@ const { data, status, error, refresh } = await useFetch<GetClassOut>(
 )
 
 const assignStudentModalOpen = ref(false)
+
+const canStart = can('StartClass')
+const canRelease = can('ReleaseClassForEnrollment')
+
+const actionLoading = ref(false)
+
+const showReleaseButton = computed(() => canRelease.value && data.value?.status === 'OnPreEnrollment')
+const showStartButton = computed(() =>
+  canStart.value && (data.value?.status === 'OnEnrollment' || data.value?.status === 'AwaitingStart'),
+)
+
+async function runAction(path: string, successTitle: string, errorTitle: string) {
+  actionLoading.value = true
+  try {
+    await $fetch(`${config.public.backendUrl}/classes/${classId}/${path}`, {
+      method: 'PUT',
+      credentials: 'include',
+    })
+    toast.add({ title: successTitle, color: 'success' })
+    await refresh()
+  } catch (err: unknown) {
+    const msg = (err as { data?: { message?: string } })?.data?.message ?? errorTitle
+    toast.add({ title: 'Erro', description: msg, color: 'error' })
+  } finally {
+    actionLoading.value = false
+  }
+}
+
+async function release() {
+  await runAction('release-for-enrollment', 'Turma liberada para matrícula', 'Erro ao liberar a turma para matrícula.')
+}
+
+async function start() {
+  await runAction('start', 'Turma iniciada com sucesso', 'Erro ao iniciar a turma.')
+}
 
 const statusLabels: Record<string, string> = {
   OnPreEnrollment: 'Pré-matrícula',
@@ -128,6 +165,23 @@ const details = computed(() => {
       </div>
 
       <div v-else class="flex flex-col gap-6 py-4">
+        <div v-if="showReleaseButton || showStartButton" class="flex justify-end gap-2">
+          <UButton
+            v-if="showReleaseButton"
+            icon="i-lucide-door-open"
+            label="Liberar para matrícula"
+            :loading="actionLoading"
+            @click="() => { release() }"
+          />
+          <UButton
+            v-if="showStartButton"
+            icon="i-lucide-play"
+            label="Iniciar turma"
+            :loading="actionLoading"
+            @click="() => { start() }"
+          />
+        </div>
+
         <UPageCard title="Dados da turma">
           <dl class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
             <div v-for="item in details" :key="item.label" class="flex flex-col gap-1">

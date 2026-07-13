@@ -185,6 +185,20 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
       hasPermission(Permissions.ManageClasses),
     ],
   },
+  ReleaseClassForEnrollment: {
+    description: "Liberar turmas para matrícula",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageClasses),
+    ],
+  },
+  StartClass: {
+    description: "Iniciar turmas",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageClasses),
+    ],
+  },
 
   // Teachers
   AccessTeachersPage: {
@@ -327,6 +341,14 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
     description: "Acessar a página de agenda",
     requirements: [
       hasAnyUserType(UserTypes.Teacher, UserTypes.Student),
+    ],
+  },
+
+  // TeacherClasses
+  GetTeacherCurrentClasses: {
+    description: "Ver as turmas atuais do professor",
+    requirements: [
+      hasUserType(UserTypes.Teacher),
     ],
   },
 

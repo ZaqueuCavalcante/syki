@@ -97,5 +97,21 @@ public partial class IntegrationTests
         details.Students[0].Status.Should().Be(StudentClassStatus.Matriculado);
     }
 
+    [Test]
+    public async Task Classes_GetClass_Should_get_class_as_awaiting_start_when_enrollment_period_is_finalized()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var classId = await CreateOnEnrollmentClass(client);
+
+        await FinalizeEnrollmentPeriodOf(classId);
+
+        // Act
+        var result = await client.GetClass(classId);
+
+        // Assert
+        result.Success.Status.Should().Be(ClassStatus.AwaitingStart);
+    }
+
     #endregion
 }

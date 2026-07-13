@@ -75,6 +75,42 @@ public partial class IntegrationTests
     }
 
     [Test]
+    public async Task Classes_GetClasses_Should_return_class_as_on_enrollment_when_enrollment_period_is_open()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        await CreateOnEnrollmentClass(client);
+
+        // Act
+        var result = await client.GetClasses();
+
+        // Assert
+        result.Success.Items[0].Status.Should().Be(ClassStatus.OnEnrollment);
+    }
+
+    [Test]
+    public async Task Classes_GetClasses_Should_return_class_as_awaiting_start_when_enrollment_period_is_finalized()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var classId = await CreateOnEnrollmentClass(client);
+
+        await FinalizeEnrollmentPeriodOf(classId);
+
+        // Act
+        var result = await client.GetClasses();
+
+        // Assert
+        var item = result.Success.Items.First(x => x.Id == classId);
+        item.Status.Should().Be(ClassStatus.AwaitingStart);
+
+        // And the persisted status is still OnEnrollment
+        await using var db = _back.GetDbContext();
+        var entity = await db.Classes.FirstAsync(c => c.Id == classId);
+        entity.Status.Should().Be(ClassStatus.OnEnrollment);
+    }
+
+    [Test]
     public async Task Classes_GetClasses_Should_return_classes_filtered_by_status()
     {
         // Arrange

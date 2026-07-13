@@ -142,6 +142,8 @@ export type PolicyName
   // Classes
     | 'AccessClassesPage'
     | 'CreateClass'
+    | 'ReleaseClassForEnrollment'
+    | 'StartClass'
   // Security
     | 'AccessSecurityPage'
     | 'AccessRolesPage'
@@ -161,6 +163,8 @@ export type PolicyName
     | 'GetInstitutionNotifications'
   // Agenda
     | 'AccessAgendaPage'
+  // TeacherClasses
+    | 'GetTeacherCurrentClasses'
   // Calendar
     | 'AccessCalendarPage'
     | 'GetInstitutionCalendar'

@@ -3,7 +3,9 @@ using Estud.Back.Features.Teachers.GetTeacher;
 using Estud.Back.Features.Teachers.GetTeachers;
 using Estud.Back.Features.Teachers.CreateTeacher;
 using Estud.Back.Features.Teachers.UpdateTeacher;
+using Estud.Back.Features.Teachers.GetTeacherClass;
 using Estud.Back.Features.Teachers.AssignCampiToTeacher;
+using Estud.Back.Features.Teachers.GetTeacherCurrentClasses;
 using Estud.Back.Features.Teachers.GetTeacherPotentialCampi;
 using Estud.Back.Features.Teachers.AssignDisciplinesToTeacher;
 using Estud.Back.Features.Teachers.GetTeacherPotentialDisciplines;
@@ -65,6 +67,18 @@ public partial class TestsHttpClient
         if (name != null) url += $"?name={name}";
         var response = await http.GetAsync(url);
         return await response.Resolve<GetTeacherPotentialDisciplinesOut>();
+    }
+
+    public async Task<OneOf<GetTeacherCurrentClassesOut, ErrorOut>> GetTeacherCurrentClasses()
+    {
+        var response = await http.GetAsync("/teachers/current-classes");
+        return await response.Resolve<GetTeacherCurrentClassesOut>();
+    }
+
+    public async Task<OneOf<GetTeacherClassOut, ErrorOut>> GetTeacherClass(int id)
+    {
+        var response = await http.GetAsync($"/teachers/classes/{id}");
+        return await response.Resolve<GetTeacherClassOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> UpdateTeacher(

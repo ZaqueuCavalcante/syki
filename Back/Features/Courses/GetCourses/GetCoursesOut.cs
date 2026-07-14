@@ -3,11 +3,13 @@ namespace Estud.Back.Features.Courses.GetCourses;
 public class GetCoursesOut : IApiDto<GetCoursesOut>
 {
     public int Total { get; set; }
+    public int Page { get; set; }
+    public int PageSize { get; set; }
     public List<GetCoursesItemOut> Items { get; set; } = [];
 
     public static IEnumerable<(string, GetCoursesOut)> GetExamples() =>
     [
-        ("Exemplo", new() { Total = 1, Items = [new() { Id = 1, Name = "Análise e Desenvolvimento de Sistemas", Type = "Tecnólogo" }] }),
+        ("Exemplo", new() { Total = 1, Page = 1, PageSize = 10, Items = [new() { Id = 1, Name = "Análise e Desenvolvimento de Sistemas", Type = "Tecnólogo" }] }),
     ];
 }
 

@@ -7,16 +7,16 @@ public class GetClassesController(GetClassesService service) : ControllerBase
     /// Turmas
     /// </summary>
     /// <remarks>
-    /// Retorna todas as turmas da instituição do usuário logado.
+    /// Retorna a lista paginada de turmas da instituição do usuário logado.
     /// </remarks>
     [HttpGet("classes")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
-    public async Task<IActionResult> Get([FromQuery] GetAcademicClassesIn query)
+    public async Task<IActionResult> Get([FromQuery] GetClassesIn query)
     {
         var classes = await service.Get(query);
         return Ok(classes);
     }
 }
 
-internal class RequestExamples : ExamplesProvider<GetAcademicClassesIn>;
+internal class RequestExamples : ExamplesProvider<GetClassesIn>;
 internal class ResponseExamples : ExamplesProvider<GetClassesOut>;

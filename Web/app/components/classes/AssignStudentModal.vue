@@ -16,7 +16,7 @@ const loading = ref(false)
 
 const { data: studentsData } = await useFetch<GetStudentsOut>(
   `${config.public.backendUrl}/students`,
-  { credentials: 'include', server: false },
+  { credentials: 'include', server: false, query: { pageSize: 100 } },
 )
 
 const studentOptions = computed(() =>

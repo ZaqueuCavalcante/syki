@@ -53,8 +53,53 @@ public partial class IntegrationTests
         // Assert
         var disciplines = result.Success;
         disciplines.Total.Should().Be(2);
+        disciplines.Page.Should().Be(1);
+        disciplines.PageSize.Should().Be(10);
         disciplines.Items.First().Name.Should().Be("Física I");
         disciplines.Items.Last().Name.Should().Be("Química I");
+    }
+
+    [Test]
+    public async Task Disciplines_GetDisciplines_Should_get_only_the_first_10_disciplines_by_default()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+
+        for (var i = 1; i <= 12; i++)
+            await client.CreateDiscipline($"Disciplina {i:00}");
+
+        // Act
+        var result = await client.GetDisciplines();
+
+        // Assert
+        var disciplines = result.Success;
+        disciplines.Total.Should().Be(12);
+        disciplines.Page.Should().Be(1);
+        disciplines.PageSize.Should().Be(10);
+        disciplines.Items.Should().HaveCount(10);
+        disciplines.Items.First().Name.Should().Be("Disciplina 01");
+        disciplines.Items.Last().Name.Should().Be("Disciplina 10");
+    }
+
+    [Test]
+    public async Task Disciplines_GetDisciplines_Should_get_disciplines_from_the_second_page()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+
+        for (var i = 1; i <= 12; i++)
+            await client.CreateDiscipline($"Disciplina {i:00}");
+
+        // Act
+        var result = await client.GetDisciplines(page: 2);
+
+        // Assert
+        var disciplines = result.Success;
+        disciplines.Total.Should().Be(12);
+        disciplines.Page.Should().Be(2);
+        disciplines.Items.Should().HaveCount(2);
+        disciplines.Items.First().Name.Should().Be("Disciplina 11");
+        disciplines.Items.Last().Name.Should().Be("Disciplina 12");
     }
 
     [Test]

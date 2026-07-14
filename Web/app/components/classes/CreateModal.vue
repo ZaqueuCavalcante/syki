@@ -21,8 +21,8 @@ interface PeriodItem { id: number; name: string }
 interface GetPeriodsOut { total: number; items: PeriodItem[] }
 
 const [{ data: disciplinesData }, { data: teachersData }, { data: periodsData }] = await Promise.all([
-  useFetch<GetDisciplinesOut>(`${config.public.backendUrl}/disciplines`, { credentials: 'include', server: false }),
-  useFetch<GetTeachersOut>(`${config.public.backendUrl}/teachers`, { credentials: 'include', server: false }),
+  useFetch<GetDisciplinesOut>(`${config.public.backendUrl}/disciplines`, { credentials: 'include', server: false, query: { pageSize: 100 } }),
+  useFetch<GetTeachersOut>(`${config.public.backendUrl}/teachers`, { credentials: 'include', server: false, query: { pageSize: 100 } }),
   useFetch<GetPeriodsOut>(`${config.public.backendUrl}/periods/academic`, { credentials: 'include', server: false }),
 ])
 

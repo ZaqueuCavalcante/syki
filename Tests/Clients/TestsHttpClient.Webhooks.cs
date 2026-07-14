@@ -40,7 +40,13 @@ public partial class TestsHttpClient
 
     public async Task<OneOf<GetWebhookCallsOut, ErrorOut>> GetWebhookCalls(int page = 1, int pageSize = 20)
     {
-        var response = await http.GetAsync($"webhooks/calls?page={page}&pageSize={pageSize}");
+        var data = new GetWebhookCallsIn
+        {
+            Page = page,
+            PageSize = pageSize,
+        };
+
+        var response = await http.GetAsync("webhooks/calls".AddQueryString(data));
         return await response.Resolve<GetWebhookCallsOut>();
     }
 

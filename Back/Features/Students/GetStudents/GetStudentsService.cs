@@ -2,14 +2,33 @@ namespace Estud.Back.Features.Students.GetStudents;
 
 public class GetStudentsService(EstudDbContext ctx) : IEstudService
 {
-    public async Task<GetStudentsOut> Get()
+    private const int MaxPageSize = 100;
+
+    public async Task<GetStudentsOut> Get(GetStudentsIn query)
     {
+        var page = Math.Max(query.Page, 1);
+        var pageSize = Math.Clamp(query.PageSize, 1, MaxPageSize);
+
         var institutionId = ctx.RequestUser.InstitutionId;
 
-        var students = await ctx.Students.AsNoTracking()
+        var studentsQuery = ctx.Students.AsNoTracking()
             .Include(s => s.User)
-            .Where(s => s.InstitutionId == institutionId)
+            .Where(s => s.InstitutionId == institutionId);
+
+        var filter = query.Filter;
+        if (filter.HasValue())
+            studentsQuery = studentsQuery.Where(s =>
+                s.Name.ToLower().Contains(filter.ToLower()) ||
+                s.User!.Email!.ToLower().Contains(filter.ToLower()) ||
+                s.EnrollmentCode.ToLower().Contains(filter.ToLower()));
+
+        var total = await studentsQuery.CountAsync();
+
+        var students = await studentsQuery
             .OrderBy(s => s.Name)
+            .ThenBy(s => s.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
         var studentIds = students.Select(s => s.Id).ToHashSet();
 
@@ -42,6 +61,12 @@ public class GetStudentsService(EstudDbContext ctx) : IEstudService
             item.Course = course?.Name ?? "-";
         }
 
-        return new GetStudentsOut { Total = result.Count, Items = result };
+        return new GetStudentsOut
+        {
+            Total = total,
+            Page = page,
+            PageSize = pageSize,
+            Items = result,
+        };
     }
 }

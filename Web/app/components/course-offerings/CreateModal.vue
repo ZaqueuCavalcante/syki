@@ -47,8 +47,8 @@ const formState = reactive<Partial<Schema>>({
 async function fetchAll() {
   const [campiRes, coursesRes, curriculumsRes, periodsRes] = await Promise.all([
     $fetch<{ items: CampusItem[] }>(`${config.public.backendUrl}/campi`, { credentials: 'include' }),
-    $fetch<{ items: CourseItem[] }>(`${config.public.backendUrl}/courses`, { credentials: 'include' }),
-    $fetch<{ items: CurriculumItem[] }>(`${config.public.backendUrl}/course-curriculums`, { credentials: 'include' }),
+    $fetch<{ items: CourseItem[] }>(`${config.public.backendUrl}/courses`, { credentials: 'include', query: { pageSize: 100 } }),
+    $fetch<{ items: CurriculumItem[] }>(`${config.public.backendUrl}/course-curriculums`, { credentials: 'include', query: { pageSize: 100 } }),
     $fetch<{ items: PeriodItem[] }>(`${config.public.backendUrl}/periods/academic`, { credentials: 'include' }),
   ])
   campi.value = campiRes.items

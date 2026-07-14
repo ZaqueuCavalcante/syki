@@ -3,6 +3,8 @@ namespace Estud.Back.Features.Classes.GetClasses;
 public class GetClassesOut : IApiDto<GetClassesOut>
 {
     public int Total { get; set; }
+    public int Page { get; set; }
+    public int PageSize { get; set; }
     public List<GetClassesItemOut> Items { get; set; } = [];
 
     public static IEnumerable<(string, GetClassesOut)> GetExamples() =>
@@ -10,6 +12,8 @@ public class GetClassesOut : IApiDto<GetClassesOut>
         ("Exemplo", new GetClassesOut
         {
             Total = 1,
+            Page = 1,
+            PageSize = 10,
             Items = [new GetClassesItemOut { Id = 1, Discipline = "Banco de Dados", Period = "2026.1", Vacancies = 40, Status = ClassStatus.OnEnrollment }]
         })
     ];

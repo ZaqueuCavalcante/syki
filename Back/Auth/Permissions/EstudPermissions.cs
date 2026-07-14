@@ -146,6 +146,15 @@ public static class EstudPermissions
         [UserType.Manager]
     );
 
+    // Institutions
+    public static readonly EstudPermission ManageInstitutionConfig = new(
+        PermissionGroup.Institutions,
+        1500,
+        "Gerenciar configurações da instituição.",
+        "Configurar nota e frequência mínimas para aprovação.",
+        [UserType.Manager]
+    );
+
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<EstudPermission> Permissions = [];
     private static readonly Dictionary<int, EstudPermission> ById = [];

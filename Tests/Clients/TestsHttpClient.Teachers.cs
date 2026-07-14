@@ -6,6 +6,8 @@ using Estud.Back.Features.Teachers.UpdateTeacher;
 using Estud.Back.Features.Teachers.GetTeacherClass;
 using Estud.Back.Features.Teachers.CreateClassActivity;
 using Estud.Back.Features.Teachers.AssignCampiToTeacher;
+using Estud.Back.Features.Teachers.CreateLessonAttendance;
+using Estud.Back.Features.Teachers.GetTeacherClassLessons;
 using Estud.Back.Features.Teachers.GetTeacherClassActivity;
 using Estud.Back.Features.Teachers.GetTeacherCurrentClasses;
 using Estud.Back.Features.Teachers.GetTeacherPotentialCampi;
@@ -44,9 +46,19 @@ public partial class TestsHttpClient
         return await response.Resolve<SuccessOut>();
     }
 
-    public async Task<OneOf<GetTeachersOut, ErrorOut>> GetTeachers()
-    {
-        var response = await http.GetAsync("/teachers");
+    public async Task<OneOf<GetTeachersOut, ErrorOut>> GetTeachers(
+        string? filter = null,
+        int? page = null,
+        int? pageSize = null
+    ) {
+        var data = new GetTeachersIn
+        {
+            Filter = filter,
+            Page = page ?? 1,
+            PageSize = pageSize ?? 10,
+        };
+
+        var response = await http.GetAsync("/teachers".AddQueryString(data));
         return await response.Resolve<GetTeachersOut>();
     }
 
@@ -118,6 +130,21 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync($"/teachers/classes/{classId}/activities/{activityId}");
         return await response.Resolve<GetTeacherClassActivityOut>();
+    }
+
+    public async Task<OneOf<GetTeacherClassLessonsOut, ErrorOut>> GetTeacherClassLessons(int classId)
+    {
+        var response = await http.GetAsync($"/teachers/classes/{classId}/lessons");
+        return await response.Resolve<GetTeacherClassLessonsOut>();
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> CreateLessonAttendance(
+        int lessonId,
+        List<int> presentStudents
+    ) {
+        var data = new CreateLessonAttendanceIn { PresentStudents = presentStudents };
+        var response = await http.PutAsJsonAsync($"/teachers/lessons/{lessonId}/attendance", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> UpdateTeacher(

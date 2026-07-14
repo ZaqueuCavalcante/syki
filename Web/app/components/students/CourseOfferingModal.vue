@@ -54,7 +54,7 @@ async function fetchData() {
   try {
     const [studentRes, offeringsRes] = await Promise.all([
       $fetch<{ currentCourseOfferingId: number | null }>(`${config.public.backendUrl}/students/${props.student!.id}`, { credentials: 'include' }),
-      $fetch<{ items: CourseOfferingItem[] }>(`${config.public.backendUrl}/course-offerings`, { credentials: 'include' }),
+      $fetch<{ items: CourseOfferingItem[] }>(`${config.public.backendUrl}/course-offerings`, { credentials: 'include', query: { pageSize: 100 } }),
     ])
     offerings.value = offeringsRes.items
     formState.courseOfferingId = studentRes.currentCourseOfferingId ?? undefined

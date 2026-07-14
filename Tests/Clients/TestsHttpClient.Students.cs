@@ -24,9 +24,19 @@ public partial class TestsHttpClient
         return await response.Resolve<CreateStudentOut>();
     }
 
-    public async Task<OneOf<GetStudentsOut, ErrorOut>> GetStudents()
-    {
-        var response = await http.GetAsync("/students");
+    public async Task<OneOf<GetStudentsOut, ErrorOut>> GetStudents(
+        string? filter = null,
+        int? page = null,
+        int? pageSize = null
+    ) {
+        var data = new GetStudentsIn
+        {
+            Filter = filter,
+            Page = page ?? 1,
+            PageSize = pageSize ?? 10,
+        };
+
+        var response = await http.GetAsync("/students".AddQueryString(data));
         return await response.Resolve<GetStudentsOut>();
     }
 

@@ -21,6 +21,7 @@ public class Institution
     public int Id { get; set; }
     public string Name { get; set; }
     public DateTime CreatedAt { get; set; }
+    public InstitutionConfig Config { get; set; }
     public List<Campus> Campi { get; set; }
     public List<Class> Classes { get; set; }
     public List<Course> Courses { get; set; }
@@ -48,6 +49,7 @@ public class Institution
     {
         Name = name;
         CreatedAt = DateTime.UtcNow;
+        Config = new InstitutionConfig();
     }
 
     public static Institution NewForUserRegister()

@@ -28,10 +28,19 @@ public partial class TestsHttpClient
         return await response.Resolve<CreateClassOut>();
     }
 
-    public async Task<OneOf<GetClassesOut, ErrorOut>> GetClasses(ClassStatus? status = null)
-    {
-        var url = status == null ? "/classes" : $"/classes?status={status}";
-        var response = await http.GetAsync(url);
+    public async Task<OneOf<GetClassesOut, ErrorOut>> GetClasses(
+        ClassStatus? status = null,
+        int? page = null,
+        int? pageSize = null
+    ) {
+        var data = new GetClassesIn
+        {
+            Status = status,
+            Page = page ?? 1,
+            PageSize = pageSize ?? 10,
+        };
+
+        var response = await http.GetAsync("/classes".AddQueryString(data));
         return await response.Resolve<GetClassesOut>();
     }
 

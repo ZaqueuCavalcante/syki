@@ -1,4 +1,4 @@
-import type { ClassSchedule } from '~/types/classes'
+import type { ClassLessonItem, ClassSchedule } from '~/types/classes'
 
 type BadgeColor = 'neutral' | 'primary' | 'success' | 'warning' | 'error' | 'info'
 
@@ -88,4 +88,23 @@ export function formatClassSchedule(s: ClassSchedule) {
 export function formatClassActivityDueDate(dueDate: string, dueHour: string) {
   const [year, month, day] = dueDate.split('-')
   return `${day}/${month}/${year} · ${formatClassHour(dueHour)}`
+}
+
+export const classLessonStatusLabels: Record<string, string> = {
+  Pending: 'Pendente',
+  Finalized: 'Concluída',
+}
+
+export const classLessonStatusColors: Record<string, BadgeColor> = {
+  Pending: 'neutral',
+  Finalized: 'success',
+}
+
+export function formatClassLessonDate(date: string) {
+  const [year, month, day] = date.split('-')
+  return `${day}/${month}/${year}`
+}
+
+export function formatClassLesson(lesson: ClassLessonItem) {
+  return `${formatClassLessonDate(lesson.date)} · ${formatClassHour(lesson.startAt)} – ${formatClassHour(lesson.endAt)}`
 }

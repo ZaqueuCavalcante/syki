@@ -9,8 +9,8 @@ public partial class TestsHttpClient
 {
     public async Task<OneOf<GetInstitutionCalendarOut, ErrorOut>> GetInstitutionCalendar(int? year = null)
     {
-        var query = year.HasValue ? $"?year={year}" : "";
-        var response = await http.GetAsync($"calendar/institution{query}");
+        var data = new GetInstitutionCalendarIn { Year = year };
+        var response = await http.GetAsync("calendar/institution".AddQueryString(data));
         return await response.Resolve<GetInstitutionCalendarOut>();
     }
 

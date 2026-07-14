@@ -30,7 +30,14 @@ public partial class TestsHttpClient
         int pageSize = 20,
         bool unreadOnly = false
     ) {
-        var response = await http.GetAsync($"notifications?page={page}&pageSize={pageSize}&unreadOnly={unreadOnly}");
+        var data = new GetNotificationsIn
+        {
+            Page = page,
+            PageSize = pageSize,
+            UnreadOnly = unreadOnly,
+        };
+
+        var response = await http.GetAsync("notifications".AddQueryString(data));
         return await response.Resolve<GetNotificationsOut>();
     }
 

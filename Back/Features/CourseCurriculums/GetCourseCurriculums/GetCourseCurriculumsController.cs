@@ -7,15 +7,16 @@ public class GetCourseCurriculumsController(GetCourseCurriculumsService service)
     /// Grades curriculares
     /// </summary>
     /// <remarks>
-    /// Retorna todas as grades curriculares.
+    /// Retorna a lista paginada de grades curriculares da instituição, ordenadas por nome.
     /// </remarks>
     [HttpGet("course-curriculums")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] GetCourseCurriculumsIn query)
     {
-        var curriculums = await service.Get();
+        var curriculums = await service.Get(query);
         return Ok(curriculums);
     }
 }
 
+internal class RequestExamples : ExamplesProvider<GetCourseCurriculumsIn>;
 internal class ResponseExamples : ExamplesProvider<GetCourseCurriculumsOut>;

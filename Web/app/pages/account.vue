@@ -4,24 +4,24 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const links = [[{
   label: 'Geral',
   icon: 'i-lucide-user',
-  to: '/settings',
+  to: '/account',
   exact: true
 }, {
   label: 'Notificações',
   icon: 'i-lucide-bell',
-  to: '/settings/notifications'
+  to: '/account/notifications'
 }, {
   label: 'Segurança',
   icon: 'i-lucide-shield',
-  to: '/settings/security'
+  to: '/account/security'
 }]
 ] satisfies NavigationMenuItem[][]
 </script>
 
 <template>
-  <UDashboardPanel id="settings" :ui="{ body: 'lg:py-12' }">
+  <UDashboardPanel id="account" :ui="{ body: 'lg:py-12' }">
     <template #header>
-      <UDashboardNavbar title="Configurações">
+      <UDashboardNavbar title="Conta">
         <template #leading>
           <UDashboardSidebarCollapse />
         </template>

@@ -7,15 +7,16 @@ public class GetTeachersController(GetTeachersService service) : ControllerBase
     /// Professores
     /// </summary>
     /// <remarks>
-    /// Retorna todos os professores.
+    /// Retorna a lista paginada de professores da instituição, ordenados por nome.
     /// </remarks>
     [HttpGet("teachers")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] GetTeachersIn query)
     {
-        var teachers = await service.Get();
+        var teachers = await service.Get(query);
         return Ok(teachers);
     }
 }
 
+internal class RequestExamples : ExamplesProvider<GetTeachersIn>;
 internal class ResponseExamples : ExamplesProvider<GetTeachersOut>;

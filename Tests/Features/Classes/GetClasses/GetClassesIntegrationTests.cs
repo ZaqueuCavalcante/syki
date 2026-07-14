@@ -68,6 +68,8 @@ public partial class IntegrationTests
         // Assert
         var classes = result.Success;
         classes.Total.Should().Be(1);
+        classes.Page.Should().Be(1);
+        classes.PageSize.Should().Be(10);
         classes.Items[0].Discipline.Should().Be("Banco de Dados");
         classes.Items[0].Period.Should().Be("2024.1");
         classes.Items[0].Status.Should().Be(ClassStatus.OnPreEnrollment);
@@ -126,6 +128,57 @@ public partial class IntegrationTests
         // Assert
         onPreEnrollment.Total.Should().Be(1);
         finalized.Total.Should().Be(0);
+    }
+
+    [Test]
+    public async Task Classes_GetClasses_Should_return_only_the_first_10_classes_by_default()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var period = (await client.CreateAcademicPeriod("2024.1")).Success;
+
+        for (var i = 1; i <= 12; i++)
+        {
+            var discipline = (await client.CreateDiscipline($"Disciplina {i:00}")).Success;
+            await client.CreateClass(discipline.Id, period.Id);
+        }
+
+        // Act
+        var result = await client.GetClasses();
+
+        // Assert
+        var classes = result.Success;
+        classes.Total.Should().Be(12);
+        classes.Page.Should().Be(1);
+        classes.PageSize.Should().Be(10);
+        classes.Items.Should().HaveCount(10);
+        classes.Items.First().Discipline.Should().Be("Disciplina 01");
+        classes.Items.Last().Discipline.Should().Be("Disciplina 10");
+    }
+
+    [Test]
+    public async Task Classes_GetClasses_Should_return_classes_from_the_second_page()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var period = (await client.CreateAcademicPeriod("2024.1")).Success;
+
+        for (var i = 1; i <= 12; i++)
+        {
+            var discipline = (await client.CreateDiscipline($"Disciplina {i:00}")).Success;
+            await client.CreateClass(discipline.Id, period.Id);
+        }
+
+        // Act
+        var result = await client.GetClasses(page: 2);
+
+        // Assert
+        var classes = result.Success;
+        classes.Total.Should().Be(12);
+        classes.Page.Should().Be(2);
+        classes.Items.Should().HaveCount(2);
+        classes.Items.First().Discipline.Should().Be("Disciplina 11");
+        classes.Items.Last().Discipline.Should().Be("Disciplina 12");
     }
 
     #endregion

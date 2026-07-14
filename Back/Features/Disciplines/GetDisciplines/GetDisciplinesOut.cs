@@ -3,6 +3,8 @@ namespace Estud.Back.Features.Disciplines.GetDisciplines;
 public class GetDisciplinesOut : IApiDto<GetDisciplinesOut>
 {
     public int Total { get; set; }
+    public int Page { get; set; }
+    public int PageSize { get; set; }
     public List<GetDisciplinesItemOut> Items { get; set; } = [];
 
     public static IEnumerable<(string, GetDisciplinesOut)> GetExamples() =>

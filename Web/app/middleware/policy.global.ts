@@ -18,6 +18,7 @@ const routePolicies: Record<string, PolicyName> = {
   '/notifications': 'AccessNotificationsPage',
   '/agenda': 'AccessAgendaPage',
   '/calendar': 'AccessCalendarPage',
+  '/configs': 'AccessConfigsPage',
 }
 
 // A página de detalhe da turma é a mesma rota para os 3 perfis, mas cada um

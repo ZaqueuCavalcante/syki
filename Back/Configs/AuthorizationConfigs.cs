@@ -17,6 +17,7 @@ public static class AuthorizationConfigs
             .AddWebhooksPolicies()
             .AddClassroomsPolicies()
             .AddDisciplinesPolicies()
+            .AddInstitutionsPolicies()
             .AddNotificationsPolicies()
             .AddAcademicPeriodsPolicies()
             .AddCourseOfferingsPolicies()

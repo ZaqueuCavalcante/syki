@@ -56,10 +56,19 @@ public partial class TestsHttpClient
         return await response.Resolve<SuccessOut>();
     }
 
-    public async Task<OneOf<GetDisciplinesOut, ErrorOut>> GetDisciplines(string? filter = null)
-    {
-        var url = filter == null ? "/disciplines" : $"/disciplines?filter={filter}";
-        var response = await http.GetAsync(url);
+    public async Task<OneOf<GetDisciplinesOut, ErrorOut>> GetDisciplines(
+        string? filter = null,
+        int? page = null,
+        int? pageSize = null
+    ) {
+        var data = new GetDisciplinesIn
+        {
+            Filter = filter,
+            Page = page ?? 1,
+            PageSize = pageSize ?? 10,
+        };
+
+        var response = await http.GetAsync("/disciplines".AddQueryString(data));
         return await response.Resolve<GetDisciplinesOut>();
     }
 

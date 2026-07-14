@@ -12,6 +12,8 @@ interface CourseOfferingItem {
 
 interface GetCourseOfferingsOut {
   total: number
+  page: number
+  pageSize: number
   items: CourseOfferingItem[]
 }
 
@@ -24,9 +26,23 @@ const sessionLabels: Record<string, string> = {
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
 
+const route = useRoute()
+const router = useRouter()
+
+const pageSize = 10
+const page = ref(Number(route.query.page) || 1)
+
+// Sync page to URL
+watch(page, () => {
+  const query: Record<string, string> = {}
+  if (page.value > 1) query.page = String(page.value)
+  router.replace({ query })
+}, { flush: 'post' })
+
 const { data, status, refresh } = await useFetch<GetCourseOfferingsOut>(`${config.public.backendUrl}/course-offerings`, {
   credentials: 'include',
-  server: false
+  server: false,
+  query: { page, pageSize }
 })
 
 const columns: TableColumn<CourseOfferingItem>[] = [
@@ -80,6 +96,19 @@ const columns: TableColumn<CourseOfferingItem>[] = [
           />
         </template>
       </DataTable>
+
+      <div v-if="(data?.total ?? 0) > 0" class="flex items-center justify-between gap-2 mt-4">
+        <UBadge color="neutral" variant="subtle" class="h-8 px-3">
+          {{ data?.total }} {{ data?.total === 1 ? 'oferta encontrada' : 'ofertas encontradas' }}
+        </UBadge>
+
+        <UPagination
+          v-if="(data?.total ?? 0) > pageSize"
+          v-model:page="page"
+          :items-per-page="pageSize"
+          :total="data?.total ?? 0"
+        />
+      </div>
     </template>
   </UDashboardPanel>
 

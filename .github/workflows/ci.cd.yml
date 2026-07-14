@@ -55,7 +55,7 @@ jobs:
 
       - name: Integration Tests
         run: |
-          dotnet test --filter "FullyQualifiedName!~UnitTests" \
+          dotnet test --filter "FullyQualifiedName~UnitTests" \
           --configuration Release \
           --no-restore \
           --no-build \

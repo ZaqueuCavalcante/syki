@@ -33,6 +33,20 @@ export interface GetTeacherClassOut {
   students: ClassStudentItem[]
 }
 
+export interface ClassLessonItem {
+  id: number
+  number: number
+  date: string // ex: "2026-07-20"
+  startAt: string // ex: "H19_00"
+  endAt: string // ex: "H22_00"
+  status: string // 'Pending' | 'Finalized'
+  presentStudents: number[]
+}
+
+export interface GetTeacherClassLessonsOut {
+  lessons: ClassLessonItem[]
+}
+
 export interface ClassActivityItem {
   id: number
   classId: number

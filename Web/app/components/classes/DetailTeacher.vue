@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GetTeacherClassActivitiesOut, GetTeacherClassOut } from '~/types/classes'
+import type { ClassLessonItem, GetTeacherClassActivitiesOut, GetTeacherClassLessonsOut, GetTeacherClassOut } from '~/types/classes'
 
 const props = defineProps<{ classId: string }>()
 
@@ -17,7 +17,26 @@ const { data: activitiesData, refresh: refreshActivities } = await useFetch<GetT
 
 const activities = computed(() => activitiesData.value?.activities ?? [])
 
+const { data: lessonsData, refresh: refreshLessons } = await useFetch<GetTeacherClassLessonsOut>(
+  `${config.public.backendUrl}/teachers/classes/${props.classId}/lessons`,
+  { credentials: 'include', server: false },
+)
+
+const lessons = computed(() => lessonsData.value?.lessons ?? [])
+
+const enrolledStudents = computed(() =>
+  (data.value?.students ?? []).filter(s => s.status === 'Matriculado'),
+)
+
 const createActivityModalOpen = ref(false)
+
+const attendanceModalOpen = ref(false)
+const selectedLesson = ref<ClassLessonItem | null>(null)
+
+function openAttendance(lesson: ClassLessonItem) {
+  selectedLesson.value = lesson
+  attendanceModalOpen.value = true
+}
 
 const details = computed(() => {
   if (!data.value) return []
@@ -119,6 +138,50 @@ const details = computed(() => {
           </div>
         </UPageCard>
 
+        <UPageCard :title="`Aulas (${lessons.length})`">
+          <div v-if="lessons.length" class="flex max-h-[32rem] flex-col divide-y divide-default overflow-y-auto">
+            <div
+              v-for="lesson in lessons"
+              :key="lesson.id"
+              class="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-highlighted">Aula {{ lesson.number }}</span>
+                <span class="text-xs text-muted">{{ formatClassLesson(lesson) }}</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <UBadge
+                  v-if="lesson.status === 'Finalized'"
+                  :label="`${lesson.presentStudents.length} / ${enrolledStudents.length} presentes`"
+                  color="neutral"
+                  variant="subtle"
+                  icon="i-lucide-user-check"
+                />
+                <UBadge
+                  :label="classLessonStatusLabels[lesson.status] ?? lesson.status"
+                  :color="classLessonStatusColors[lesson.status] ?? 'neutral'"
+                  variant="subtle"
+                />
+                <UButton
+                  :label="lesson.status === 'Finalized' ? 'Editar chamada' : 'Fazer chamada'"
+                  icon="i-lucide-clipboard-check"
+                  color="neutral"
+                  variant="subtle"
+                  size="sm"
+                  @click="() => { openAttendance(lesson) }"
+                />
+              </div>
+            </div>
+          </div>
+          <div v-else class="flex flex-col items-center gap-3 py-6">
+            <UIcon name="i-lucide-calendar-days" class="size-10 text-muted" />
+            <p class="text-sm text-muted">
+              Nenhuma aula cadastrada
+            </p>
+          </div>
+        </UPageCard>
+
         <UPageCard :ui="{ wrapper: 'w-full', body: 'w-full' }">
           <template #title>
             <div class="flex w-full items-center justify-between gap-2">
@@ -176,6 +239,13 @@ const details = computed(() => {
           v-model:open="createActivityModalOpen"
           :class-id="data.id"
           @created="refreshActivities()"
+        />
+
+        <ClassesLessonAttendanceModal
+          v-model:open="attendanceModalOpen"
+          :lesson="selectedLesson"
+          :students="enrolledStudents"
+          @saved="refreshLessons()"
         />
       </div>
     </template>

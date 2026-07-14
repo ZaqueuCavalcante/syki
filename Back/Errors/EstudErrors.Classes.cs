@@ -90,3 +90,17 @@ public class InvalidClassActivityWorkLink : EstudError
     public override string Code { get; set; } = nameof(InvalidClassActivityWorkLink);
     public override string Message { get; set; } = "Link da entrega inválido.";
 }
+
+public class ClassLessonNotFound : EstudError
+{
+    public static readonly ClassLessonNotFound I = new();
+    public override string Code { get; set; } = nameof(ClassLessonNotFound);
+    public override string Message { get; set; } = "Aula não encontrada.";
+}
+
+public class InvalidStudentsList : EstudError
+{
+    public static readonly InvalidStudentsList I = new();
+    public override string Code { get; set; } = nameof(InvalidStudentsList);
+    public override string Message { get; set; } = "Lista de alunos inválida.";
+}

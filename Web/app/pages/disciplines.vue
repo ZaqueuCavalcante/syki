@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
-import { refDebounced } from '@vueuse/core'
+import { useDebounceFn } from '@vueuse/core'
 
 interface DisciplineItem {
   id: number
@@ -15,6 +15,8 @@ interface DisciplineItem {
 
 interface GetDisciplinesOut {
   total: number
+  page: number
+  pageSize: number
   items: DisciplineItem[]
 }
 
@@ -41,19 +43,39 @@ const route = useRoute()
 const router = useRouter()
 
 const filter = ref((route.query.filter as string) || '')
-const debouncedFilter = refDebounced(filter, 300)
 
-// Sync filter to URL
-watch(filter, () => {
+// The filter actually applied to the fetch. Typing updates it debounced;
+// clearing updates it immediately so the reload feels instant.
+const appliedFilter = ref(filter.value)
+const applyFilter = useDebounceFn((value: string) => { appliedFilter.value = value }, 300)
+watch(filter, (value) => { applyFilter(value) })
+
+const pageSize = 10
+const page = ref(Number(route.query.page) || 1)
+
+// Sync filter and page to URL
+watch([filter, page], () => {
   const query: Record<string, string> = {}
   if (filter.value) query.filter = filter.value
+  if (page.value > 1) query.page = String(page.value)
   router.replace({ query })
 }, { flush: 'post' })
+
+// A new search starts over from the first page
+watch(appliedFilter, () => { page.value = 1 })
+
+// Reflects the filters actually applied to the data being shown
+const hasFilters = computed(() => appliedFilter.value.length > 0)
+
+function clearFilters() {
+  filter.value = ''
+  appliedFilter.value = ''
+}
 
 const { data, status, refresh } = await useFetch<GetDisciplinesOut>(`${config.public.backendUrl}/disciplines`, {
   credentials: 'include',
   server: false,
-  query: { filter: debouncedFilter }
+  query: { filter: appliedFilter, page, pageSize }
 })
 
 const columns: TableColumn<DisciplineItem>[] = [
@@ -113,7 +135,18 @@ const columns: TableColumn<DisciplineItem>[] = [
           icon="i-lucide-search"
           placeholder="Buscar por nome ou código..."
           :loading="status === 'pending'"
-        />
+        >
+          <template v-if="filter" #trailing>
+            <UButton
+              icon="i-lucide-x"
+              color="neutral"
+              variant="link"
+              size="sm"
+              aria-label="Remover filtro"
+              @click="clearFilters"
+            />
+          </template>
+        </UInput>
         <UButton
           v-if="data?.items?.length || filter"
           icon="i-lucide-plus"
@@ -128,10 +161,26 @@ const columns: TableColumn<DisciplineItem>[] = [
             icon="i-lucide-book-open"
             message="Nenhuma disciplina cadastrada"
             button-label="Disciplina"
-            @create="createModalOpen = true"
+            :filtered="hasFilters"
+            not-found-message="Nenhuma disciplina encontrada com os filtros aplicados"
+            @create="() => { createModalOpen = true }"
+            @clear-filters="clearFilters"
           />
         </template>
       </DataTable>
+
+      <div v-if="(data?.total ?? 0) > 0" class="flex items-center justify-between gap-2 mt-4">
+        <UBadge color="neutral" variant="subtle" class="h-8 px-3">
+          {{ data?.total }} {{ data?.total === 1 ? 'disciplina encontrada' : 'disciplinas encontradas' }}
+        </UBadge>
+
+        <UPagination
+          v-if="(data?.total ?? 0) > pageSize"
+          v-model:page="page"
+          :items-per-page="pageSize"
+          :total="data?.total ?? 0"
+        />
+      </div>
     </template>
   </UDashboardPanel>
 

@@ -88,6 +88,7 @@ function removeRow(index: number) {
 async function fetchCourses() {
   const result = await $fetch<{ items: CourseItem[] }>(`${config.public.backendUrl}/courses`, {
     credentials: 'include',
+    query: { pageSize: 100 },
   })
   courses.value = result.items
 }

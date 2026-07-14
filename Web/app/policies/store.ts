@@ -393,6 +393,29 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
       hasPermission(Permissions.ManageCalendar),
     ],
   },
+
+  // Institutions
+  AccessConfigsPage: {
+    description: "Acessar a página de configurações da instituição",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageInstitutionConfig),
+    ],
+  },
+  GetInstitutionConfig: {
+    description: "Ver as configurações da instituição",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageInstitutionConfig),
+    ],
+  },
+  SetupInstitutionConfig: {
+    description: "Editar as configurações da instituição",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageInstitutionConfig),
+    ],
+  },
 };
 
 export function getPolicy(name: PolicyName): PolicyDefinition {

@@ -34,9 +34,17 @@ public partial class TestsHttpClient
         return await response.Resolve<GetCourseCurriculumOut>();
     }
 
-    public async Task<OneOf<GetCourseCurriculumsOut, ErrorOut>> GetCourseCurriculums()
-    {
-        var response = await http.GetAsync("/course-curriculums");
+    public async Task<OneOf<GetCourseCurriculumsOut, ErrorOut>> GetCourseCurriculums(
+        int? page = null,
+        int? pageSize = null
+    ) {
+        var data = new GetCourseCurriculumsIn
+        {
+            Page = page ?? 1,
+            PageSize = pageSize ?? 10,
+        };
+
+        var response = await http.GetAsync("/course-curriculums".AddQueryString(data));
         return await response.Resolve<GetCourseCurriculumsOut>();
     }
 }

@@ -41,6 +41,9 @@ export const Permissions = {
 
   // Calendar
   ManageCalendar: 1400,
+
+  // Institutions
+  ManageInstitutionConfig: 1500,
 } as const
 
 export type PermissionId = typeof Permissions[keyof typeof Permissions]
@@ -172,3 +175,7 @@ export type PolicyName
     | 'GetInstitutionCalendar'
     | 'CreateCalendarDay'
     | 'UpdateCalendarDay'
+  // Institutions
+    | 'AccessConfigsPage'
+    | 'GetInstitutionConfig'
+    | 'SetupInstitutionConfig'

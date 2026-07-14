@@ -10,6 +10,10 @@ public class InstitutionDbConfig : IEntityTypeConfiguration<Institution>
 
         entity.HasKey(e => e.Id);
 
+        entity.HasOne(e => e.Config)
+            .WithOne()
+            .HasForeignKey<InstitutionConfig>(c => c.InstitutionId);
+
         entity.HasMany(e => e.Campi)
             .WithOne()
             .HasForeignKey(c => c.InstitutionId);

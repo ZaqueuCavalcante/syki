@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
+import { useDebounceFn } from '@vueuse/core'
 
 interface StudentItem {
   id: number
   name: string
   email: string
   enrollmentCode: string
-  activeEnrollments: number
-  currentCourseOfferingId: number | null
+  course: string
 }
 
 interface GetStudentsOut {
   total: number
+  page: number
+  pageSize: number
   items: StudentItem[]
 }
 
@@ -28,9 +30,43 @@ function openCourseOffering(student: StudentItem) {
   courseOfferingModalOpen.value = true
 }
 
+const route = useRoute()
+const router = useRouter()
+
+const filter = ref((route.query.filter as string) || '')
+
+// The filter actually applied to the fetch. Typing updates it debounced;
+// clearing updates it immediately so the reload feels instant.
+const appliedFilter = ref(filter.value)
+const applyFilter = useDebounceFn((value: string) => { appliedFilter.value = value }, 300)
+watch(filter, (value) => { applyFilter(value) })
+
+const pageSize = 10
+const page = ref(Number(route.query.page) || 1)
+
+// Sync filter and page to URL
+watch([filter, page], () => {
+  const query: Record<string, string> = {}
+  if (filter.value) query.filter = filter.value
+  if (page.value > 1) query.page = String(page.value)
+  router.replace({ query })
+}, { flush: 'post' })
+
+// A new search starts over from the first page
+watch(appliedFilter, () => { page.value = 1 })
+
+// Reflects the filters actually applied to the data being shown
+const hasFilters = computed(() => appliedFilter.value.length > 0)
+
+function clearFilters() {
+  filter.value = ''
+  appliedFilter.value = ''
+}
+
 const { data, status, refresh } = await useFetch<GetStudentsOut>(`${config.public.backendUrl}/students`, {
   credentials: 'include',
-  server: false
+  server: false,
+  query: { filter: appliedFilter, page, pageSize }
 })
 
 const columns: TableColumn<StudentItem>[] = [
@@ -70,13 +106,35 @@ const columns: TableColumn<StudentItem>[] = [
         <template #leading>
           <UDashboardSidebarCollapse />
         </template>
-
       </UDashboardNavbar>
     </template>
 
     <template #body>
-      <div v-if="data?.items?.length" class="flex justify-end pt-4">
-        <UButton icon="i-lucide-plus" label="Aluno" @click="() => { createModalOpen = true }" />
+      <div class="flex items-center justify-between gap-2 pt-4">
+        <UInput
+          v-model="filter"
+          class="max-w-sm"
+          icon="i-lucide-search"
+          placeholder="Buscar por nome, email ou matrícula..."
+          :loading="status === 'pending'"
+        >
+          <template v-if="filter" #trailing>
+            <UButton
+              icon="i-lucide-x"
+              color="neutral"
+              variant="link"
+              size="sm"
+              aria-label="Remover filtro"
+              @click="clearFilters"
+            />
+          </template>
+        </UInput>
+        <UButton
+          v-if="data?.items?.length || filter"
+          icon="i-lucide-plus"
+          label="Aluno"
+          @click="() => { createModalOpen = true }"
+        />
       </div>
       <DataTable :data="data?.items ?? []" :columns="columns" :loading="status === 'pending'">
         <template #empty>
@@ -85,10 +143,26 @@ const columns: TableColumn<StudentItem>[] = [
             icon="i-lucide-graduation-cap"
             message="Nenhum aluno cadastrado"
             button-label="Aluno"
-            @create="createModalOpen = true"
+            :filtered="hasFilters"
+            not-found-message="Nenhum aluno encontrado com os filtros aplicados"
+            @create="() => { createModalOpen = true }"
+            @clear-filters="clearFilters"
           />
         </template>
       </DataTable>
+
+      <div v-if="(data?.total ?? 0) > 0" class="flex items-center justify-between gap-2 mt-4">
+        <UBadge color="neutral" variant="subtle" class="h-8 px-3">
+          {{ data?.total }} {{ data?.total === 1 ? 'aluno encontrado' : 'alunos encontrados' }}
+        </UBadge>
+
+        <UPagination
+          v-if="(data?.total ?? 0) > pageSize"
+          v-model:page="page"
+          :items-per-page="pageSize"
+          :total="data?.total ?? 0"
+        />
+      </div>
     </template>
   </UDashboardPanel>
 

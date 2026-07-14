@@ -25,9 +25,17 @@ public partial class TestsHttpClient
         return await response.Resolve<CreateCourseOfferingOut>();
     }
 
-    public async Task<OneOf<GetCourseOfferingsOut, ErrorOut>> GetCourseOfferings()
-    {
-        var response = await http.GetAsync("/course-offerings");
+    public async Task<OneOf<GetCourseOfferingsOut, ErrorOut>> GetCourseOfferings(
+        int? page = null,
+        int? pageSize = null
+    ) {
+        var data = new GetCourseOfferingsIn
+        {
+            Page = page ?? 1,
+            PageSize = pageSize ?? 10,
+        };
+
+        var response = await http.GetAsync("/course-offerings".AddQueryString(data));
         return await response.Resolve<GetCourseOfferingsOut>();
     }
 }

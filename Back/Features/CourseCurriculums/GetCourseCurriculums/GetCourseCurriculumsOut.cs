@@ -3,11 +3,13 @@ namespace Estud.Back.Features.CourseCurriculums.GetCourseCurriculums;
 public class GetCourseCurriculumsOut : IApiDto<GetCourseCurriculumsOut>
 {
     public int Total { get; set; }
+    public int Page { get; set; }
+    public int PageSize { get; set; }
     public List<GetCourseCurriculumsItemOut> Items { get; set; } = [];
 
     public static IEnumerable<(string, GetCourseCurriculumsOut)> GetExamples() =>
     [
-        ("Exemplo", new() { Total = 1, Items = [new() { Id = 1, Name = "Grade ADS 2024", CourseId = 1, Course = "Análise e Desenvolvimento de Sistemas" }] }),
+        ("Exemplo", new() { Total = 1, Page = 1, PageSize = 10, Items = [new() { Id = 1, Name = "Grade ADS 2024", CourseId = 1, Course = "Análise e Desenvolvimento de Sistemas" }] }),
     ];
 }
 

@@ -3,11 +3,13 @@ namespace Estud.Back.Features.CourseOfferings.GetCourseOfferings;
 public class GetCourseOfferingsOut : IApiDto<GetCourseOfferingsOut>
 {
     public int Total { get; set; }
+    public int Page { get; set; }
+    public int PageSize { get; set; }
     public List<GetCourseOfferingsItemOut> Items { get; set; } = [];
 
     public static IEnumerable<(string, GetCourseOfferingsOut)> GetExamples() =>
     [
-        ("Exemplo", new() { Total = 1, Items = [new() { Id = 1, Campus = "Agreste I", Course = "ADS", CourseCurriculum = "Grade ADS 2024", Period = "2024.1", Session = CourseSession.Evening }] }),
+        ("Exemplo", new() { Total = 1, Page = 1, PageSize = 10, Items = [new() { Id = 1, Campus = "Agreste I", Course = "ADS", CourseCurriculum = "Grade ADS 2024", Period = "2024.1", Session = CourseSession.Evening }] }),
     ];
 }
 

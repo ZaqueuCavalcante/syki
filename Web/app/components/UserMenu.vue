@@ -32,9 +32,9 @@ const initials = computed(() => {
 
 const items = computed<DropdownMenuItem[][]>(() => ([[
 {
-    label: 'Configurações',
-    icon: 'i-lucide-settings',
-    to: '/settings'
+    label: 'Conta',
+    icon: 'i-lucide-circle-user',
+    to: '/account'
 },
 {
     label: colorMode.value === 'dark' ? 'Light' : 'Dark',

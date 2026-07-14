@@ -9,6 +9,8 @@ public partial class EstudDbContext
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<ClassLesson> ClassLessons { get; set; }
     public DbSet<ClassStudent> ClassStudents { get; set; }
+    public DbSet<ClassActivity> ClassActivities { get; set; }
+    public DbSet<ClassActivityWork> ClassActivityWorks { get; set; }
     public DbSet<ClassLessonAttendance> ClassLessonAttendances { get; set; }
 
     private static void ConfigureClasses(ModelBuilder modelBuilder)

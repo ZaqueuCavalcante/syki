@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GetStudentClassOut } from '~/types/classes'
+import type { GetStudentClassActivitiesOut, GetStudentClassOut } from '~/types/classes'
 
 const props = defineProps<{ classId: string }>()
 
@@ -9,6 +9,13 @@ const { data, status, error } = await useFetch<GetStudentClassOut>(
   `${config.public.backendUrl}/students/classes/${props.classId}`,
   { credentials: 'include', server: false },
 )
+
+const { data: activitiesData } = await useFetch<GetStudentClassActivitiesOut>(
+  `${config.public.backendUrl}/students/classes/${props.classId}/activities`,
+  { credentials: 'include', server: false },
+)
+
+const activities = computed(() => activitiesData.value?.activities ?? [])
 
 const details = computed(() => {
   if (!data.value) return []
@@ -93,6 +100,48 @@ const details = computed(() => {
           <p v-else class="text-sm text-muted">
             Nenhum horário cadastrado
           </p>
+        </UPageCard>
+
+        <UPageCard :title="`Atividades (${activities.length})`">
+          <div v-if="activities.length" class="flex flex-col divide-y divide-default">
+            <NuxtLink
+              v-for="activity in activities"
+              :key="activity.id"
+              :to="`/classes/${props.classId}/activities/${activity.id}`"
+              class="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between hover:bg-elevated/50"
+            >
+              <div class="flex flex-col gap-1">
+                <span class="text-sm text-highlighted">{{ activity.title }}</span>
+                <span class="text-xs text-muted">
+                  {{ classActivityTypeLabels[activity.type] ?? activity.type }}
+                  · {{ activity.note }}
+                  · Peso {{ activity.weight }}
+                  · Entrega até {{ formatClassActivityDueDate(activity.dueDate, activity.dueHour) }}
+                </span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <UBadge
+                  v-if="activity.workStatus === 'Finalized'"
+                  :label="`Nota ${activity.value} · ${activity.ponderedValue} na ${activity.note}`"
+                  color="neutral"
+                  variant="subtle"
+                  icon="i-lucide-award"
+                />
+                <UBadge
+                  :label="classActivityWorkStatusLabels[activity.workStatus] ?? activity.workStatus"
+                  :color="classActivityWorkStatusColors[activity.workStatus] ?? 'neutral'"
+                  variant="subtle"
+                />
+              </div>
+            </NuxtLink>
+          </div>
+          <div v-else class="flex flex-col items-center gap-3 py-6">
+            <UIcon name="i-lucide-clipboard-list" class="size-10 text-muted" />
+            <p class="text-sm text-muted">
+              Nenhuma atividade cadastrada
+            </p>
+          </div>
         </UPageCard>
       </div>
     </template>

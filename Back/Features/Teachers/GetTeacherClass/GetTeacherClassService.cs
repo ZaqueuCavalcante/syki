@@ -6,6 +6,7 @@ public class GetTeacherClassService(EstudDbContext ctx) : IEstudService
     {
         var userId = ctx.RequestUser.Id;
         var institutionId = ctx.RequestUser.InstitutionId;
+        var teacherId = await ctx.GetTeacherId(institutionId, userId);
 
         var @class = await ctx.Classes.AsNoTracking()
             .Include(c => c.Discipline)
@@ -14,9 +15,6 @@ public class GetTeacherClassService(EstudDbContext ctx) : IEstudService
             .FirstOrDefaultAsync(c => c.Id == id && c.InstitutionId == institutionId);
         if (@class == null) return ClassNotFound.I;
 
-        var teacherId = await ctx.Teachers.AsNoTracking()
-            .Where(x => x.UserId == userId && x.InstitutionId == institutionId)
-            .Select(x => x.Id).FirstOrDefaultAsync();
         if (@class.TeacherId != teacherId) return TeacherNotAssignedToClass.I;
 
         var students = await (

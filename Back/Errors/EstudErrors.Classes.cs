@@ -69,3 +69,24 @@ public class InvalidStudentClassNote : EstudError
     public override string Code { get; set; } = nameof(InvalidStudentClassNote);
     public override string Message { get; set; } = "Nota da atividade inválida.";
 }
+
+public class ClassActivityNotFound : EstudError
+{
+    public static readonly ClassActivityNotFound I = new();
+    public override string Code { get; set; } = nameof(ClassActivityNotFound);
+    public override string Message { get; set; } = "Atividade não encontrada.";
+}
+
+public class ClassActivityWorkNotFound : EstudError
+{
+    public static readonly ClassActivityWorkNotFound I = new();
+    public override string Code { get; set; } = nameof(ClassActivityWorkNotFound);
+    public override string Message { get; set; } = "Entrega da atividade não encontrada.";
+}
+
+public class InvalidClassActivityWorkLink : EstudError
+{
+    public static readonly InvalidClassActivityWorkLink I = new();
+    public override string Code { get; set; } = nameof(InvalidClassActivityWorkLink);
+    public override string Message { get; set; } = "Link da entrega inválido.";
+}

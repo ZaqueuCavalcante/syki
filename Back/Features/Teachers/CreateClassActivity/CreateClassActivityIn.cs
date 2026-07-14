@@ -1,4 +1,4 @@
-namespace Estud.Back.Shared;
+namespace Estud.Back.Features.Teachers.CreateClassActivity;
 
 public class CreateClassActivityIn : IApiDto<CreateClassActivityIn>
 {
@@ -39,13 +39,16 @@ public class CreateClassActivityIn : IApiDto<CreateClassActivityIn>
 
     public static IEnumerable<(string, CreateClassActivityIn)> GetExamples() =>
     [
-        ("Atividade",
+        ("Modelagem de Banco de Dados",
         new CreateClassActivityIn
         {
+            Note = ClassNoteType.N1,
             Title = "Modelagem de Banco de Dados",
             Description = "Modele um banco de dados para um sistema de gerenciamento de biblioteca.",
+            Type = ClassActivityType.Work,
+            Weight = 40,
             DueDate = DateTime.UtcNow.AddDays(7).ToDateOnly(),
             DueHour = Hour.H19_00,
-        })
+        }),
     ];
 }

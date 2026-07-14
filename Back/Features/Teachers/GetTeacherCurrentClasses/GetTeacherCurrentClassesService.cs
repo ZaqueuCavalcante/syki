@@ -6,8 +6,7 @@ public class GetTeacherCurrentClassesService(EstudDbContext ctx) : IEstudService
     {
         var userId = ctx.RequestUser.Id;
         var institutionId = ctx.RequestUser.InstitutionId;
-        var teacherId = await ctx.Teachers.Where(x => x.UserId == userId && x.InstitutionId == institutionId)
-            .Select(x => x.Id).FirstOrDefaultAsync();
+        var teacherId = await ctx.GetTeacherId(institutionId, userId);
 
         var classes = await ctx.Classes.AsNoTracking()
             .Where(t => t.InstitutionId == institutionId && t.TeacherId == teacherId && t.Status == ClassStatus.Started)

@@ -6,8 +6,7 @@ public class GetStudentAgendaService(EstudDbContext ctx) : IEstudService
     {
         var userId = ctx.RequestUser.Id;
         var institutionId = ctx.RequestUser.InstitutionId;
-        var studentId = await ctx.Students.Where(x => x.UserId == userId && x.InstitutionId == institutionId)
-            .Select(x => x.Id).FirstOrDefaultAsync();
+        var studentId = await ctx.GetStudentId(institutionId, userId);
 
         var ids = await ctx.ClassStudents.Where(x => x.StudentId == studentId && x.Status == StudentClassStatus.Matriculado)
             .Select(x => x.ClassId).ToListAsync();

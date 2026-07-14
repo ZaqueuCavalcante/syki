@@ -4,9 +4,12 @@ using Estud.Back.Features.Teachers.GetTeachers;
 using Estud.Back.Features.Teachers.CreateTeacher;
 using Estud.Back.Features.Teachers.UpdateTeacher;
 using Estud.Back.Features.Teachers.GetTeacherClass;
+using Estud.Back.Features.Teachers.CreateClassActivity;
 using Estud.Back.Features.Teachers.AssignCampiToTeacher;
+using Estud.Back.Features.Teachers.GetTeacherClassActivity;
 using Estud.Back.Features.Teachers.GetTeacherCurrentClasses;
 using Estud.Back.Features.Teachers.GetTeacherPotentialCampi;
+using Estud.Back.Features.Teachers.GetTeacherClassActivities;
 using Estud.Back.Features.Teachers.AssignDisciplinesToTeacher;
 using Estud.Back.Features.Teachers.GetTeacherPotentialDisciplines;
 
@@ -79,6 +82,42 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync($"/teachers/classes/{id}");
         return await response.Resolve<GetTeacherClassOut>();
+    }
+
+    public async Task<OneOf<CreateClassActivityOut, ErrorOut>> CreateClassActivity(
+        int classId,
+        ClassNoteType note = ClassNoteType.N1,
+        string title = "Modelagem de Banco de Dados",
+        string description = "Modele um banco de dados para um sistema de gerenciamento de biblioteca.",
+        ClassActivityType type = ClassActivityType.Work,
+        int weight = 40,
+        DateOnly? dueDate = null,
+        Hour dueHour = Hour.H19_00
+    ) {
+        var data = new CreateClassActivityIn
+        {
+            Note = note,
+            Title = title,
+            Description = description,
+            Type = type,
+            Weight = weight,
+            DueDate = dueDate ?? DateTime.UtcNow.AddDays(7).ToDateOnly(),
+            DueHour = dueHour,
+        };
+        var response = await http.PostAsJsonAsync($"/teachers/classes/{classId}/activities", data);
+        return await response.Resolve<CreateClassActivityOut>();
+    }
+
+    public async Task<OneOf<GetTeacherClassActivitiesOut, ErrorOut>> GetTeacherClassActivities(int classId)
+    {
+        var response = await http.GetAsync($"/teachers/classes/{classId}/activities");
+        return await response.Resolve<GetTeacherClassActivitiesOut>();
+    }
+
+    public async Task<OneOf<GetTeacherClassActivityOut, ErrorOut>> GetTeacherClassActivity(int classId, int activityId)
+    {
+        var response = await http.GetAsync($"/teachers/classes/{classId}/activities/{activityId}");
+        return await response.Resolve<GetTeacherClassActivityOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> UpdateTeacher(

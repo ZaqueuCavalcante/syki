@@ -4,6 +4,9 @@ using Estud.Back.Features.Students.GetStudents;
 using Estud.Back.Features.Students.CreateStudent;
 using Estud.Back.Features.Students.GetStudentClass;
 using Estud.Back.Features.Students.AssignStudentToClass;
+using Estud.Back.Features.Students.CreateClassActivityWork;
+using Estud.Back.Features.Students.GetStudentClassActivity;
+using Estud.Back.Features.Students.GetStudentClassActivities;
 using Estud.Back.Features.Students.EnrollStudentInCourseOffering;
 
 namespace Estud.Tests.Integration.Clients;
@@ -37,6 +40,27 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync($"/students/classes/{id}");
         return await response.Resolve<GetStudentClassOut>();
+    }
+
+    public async Task<OneOf<GetStudentClassActivitiesOut, ErrorOut>> GetStudentClassActivities(int classId)
+    {
+        var response = await http.GetAsync($"/students/classes/{classId}/activities");
+        return await response.Resolve<GetStudentClassActivitiesOut>();
+    }
+
+    public async Task<OneOf<GetStudentClassActivityOut, ErrorOut>> GetStudentClassActivity(int classId, int activityId)
+    {
+        var response = await http.GetAsync($"/students/classes/{classId}/activities/{activityId}");
+        return await response.Resolve<GetStudentClassActivityOut>();
+    }
+
+    public async Task<OneOf<CreateClassActivityWorkOut, ErrorOut>> CreateClassActivityWork(
+        int activityId,
+        string? link = "https://github.com/ZaqueuCavalcante/estud"
+    ) {
+        var data = new CreateClassActivityWorkIn { Link = link };
+        var response = await http.PostAsJsonAsync($"/students/activities/{activityId}/works", data);
+        return await response.Resolve<CreateClassActivityWorkOut>();
     }
 
     public async Task<OneOf<SuccessOut, ErrorOut>> AssignStudentToClass(int studentId, int classId)

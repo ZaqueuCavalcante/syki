@@ -33,6 +33,92 @@ export interface GetTeacherClassOut {
   students: ClassStudentItem[]
 }
 
+export interface ClassActivityItem {
+  id: number
+  classId: number
+  note: string // 'N1' | 'N2' | 'N3'
+  title: string
+  description: string
+  type: string // 'Exam' | 'Project' | 'Work' | 'Presentation'
+  status: string // 'Pending' | 'Published' | 'Finalized'
+  weight: number
+  createdAt: string
+  dueDate: string // ex: "2026-07-20"
+  dueHour: string // ex: "H19_00"
+  deliveredWorks: number
+  totalWorks: number
+}
+
+export interface GetTeacherClassActivitiesOut {
+  activities: ClassActivityItem[]
+}
+
+export interface StudentClassActivityItem {
+  id: number
+  classId: number
+  note: string // 'N1' | 'N2' | 'N3'
+  title: string
+  description: string
+  type: string // 'Exam' | 'Project' | 'Work' | 'Presentation'
+  status: string // 'Pending' | 'Published' | 'Finalized'
+  weight: number
+  createdAt: string
+  dueDate: string // ex: "2026-07-20"
+  dueHour: string // ex: "H19_00"
+  workStatus: string // 'Pending' | 'Delivered' | 'Finalized'
+  workLink: string | null
+  value: number
+  ponderedValue: number
+}
+
+export interface GetStudentClassActivitiesOut {
+  activities: StudentClassActivityItem[]
+}
+
+export interface TeacherActivityWorkItem {
+  id: number
+  studentId: number
+  student: string
+  status: string // 'Pending' | 'Delivered' | 'Finalized'
+  link: string | null
+  value: number
+}
+
+export interface GetTeacherClassActivityOut {
+  id: number
+  classId: number
+  note: string // 'N1' | 'N2' | 'N3'
+  title: string
+  description: string
+  type: string // 'Exam' | 'Project' | 'Work' | 'Presentation'
+  status: string // 'Pending' | 'Published' | 'Finalized'
+  weight: number
+  createdAt: string
+  dueDate: string // ex: "2026-07-20"
+  dueHour: string // ex: "H19_00"
+  deliveredWorks: number
+  totalWorks: number
+  works: TeacherActivityWorkItem[]
+}
+
+export interface GetStudentClassActivityOut {
+  id: number
+  classId: number
+  note: string // 'N1' | 'N2' | 'N3'
+  title: string
+  description: string
+  type: string // 'Exam' | 'Project' | 'Work' | 'Presentation'
+  status: string // 'Pending' | 'Published' | 'Finalized'
+  weight: number
+  createdAt: string
+  dueDate: string // ex: "2026-07-20"
+  dueHour: string // ex: "H19_00"
+  workStatus: string // 'Pending' | 'Delivered' | 'Finalized'
+  workLink: string | null
+  value: number
+  ponderedValue: number
+}
+
 export interface GetStudentClassOut {
   id: number
   discipline: string

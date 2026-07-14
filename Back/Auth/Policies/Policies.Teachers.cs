@@ -19,6 +19,10 @@ public static partial class Policies
     public const string GetTeacherAgenda = nameof(GetTeacherAgenda);
     public const string GetTeacherCurrentClasses = nameof(GetTeacherCurrentClasses);
 
+    public const string CreateClassActivity = nameof(CreateClassActivity);
+    public const string GetTeacherClassActivity = nameof(GetTeacherClassActivity);
+    public const string GetTeacherClassActivities = nameof(GetTeacherClassActivities);
+
     public static AuthorizationBuilder AddTeachersPolicies(this AuthorizationBuilder builder)
     {
         builder
@@ -39,6 +43,11 @@ public static partial class Policies
             .AddEstudPolicy(GetTeacherClass, UserType.Teacher)
             .AddEstudPolicy(GetTeacherAgenda, UserType.Teacher)
             .AddEstudPolicy(GetTeacherCurrentClasses, UserType.Teacher);
+
+        builder
+            .AddEstudPolicy(CreateClassActivity, UserType.Teacher)
+            .AddEstudPolicy(GetTeacherClassActivity, UserType.Teacher)
+            .AddEstudPolicy(GetTeacherClassActivities, UserType.Teacher);
 
         return builder;
     }

@@ -36,6 +36,37 @@ export const studentClassStatusColors: Record<string, BadgeColor> = {
   ReprovadoPorFalta: 'error',
 }
 
+export const classActivityTypeLabels: Record<string, string> = {
+  Exam: 'Prova',
+  Project: 'Projeto',
+  Work: 'Trabalho',
+  Presentation: 'Apresentação',
+}
+
+export const classActivityStatusLabels: Record<string, string> = {
+  Pending: 'Pendente',
+  Published: 'Publicada',
+  Finalized: 'Finalizada',
+}
+
+export const classActivityStatusColors: Record<string, BadgeColor> = {
+  Pending: 'neutral',
+  Published: 'info',
+  Finalized: 'success',
+}
+
+export const classActivityWorkStatusLabels: Record<string, string> = {
+  Pending: 'Pendente',
+  Delivered: 'Entregue',
+  Finalized: 'Finalizado',
+}
+
+export const classActivityWorkStatusColors: Record<string, BadgeColor> = {
+  Pending: 'neutral',
+  Delivered: 'info',
+  Finalized: 'success',
+}
+
 const dayLabels: Record<string, string> = {
   Sunday: 'Domingo',
   Monday: 'Segunda',
@@ -52,4 +83,9 @@ export function formatClassHour(value: string) {
 
 export function formatClassSchedule(s: ClassSchedule) {
   return `${dayLabels[s.day] ?? s.day} · ${formatClassHour(s.startAt)} – ${formatClassHour(s.endAt)}`
+}
+
+export function formatClassActivityDueDate(dueDate: string, dueHour: string) {
+  const [year, month, day] = dueDate.split('-')
+  return `${day}/${month}/${year} · ${formatClassHour(dueHour)}`
 }

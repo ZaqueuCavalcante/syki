@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.013077767794748927" branch-rate="0.02530933633295838" lines-covered="131" lines-valid="10017" branches-covered="45" branches-valid="1778" complexity="4568" version="0" timestamp="1784072099">
+<coverage line-rate="0.012897509107019789" branch-rate="0.024889380530973452" lines-covered="131" lines-valid="10157" branches-covered="45" branches-valid="1808" complexity="4619" version="0" timestamp="1784086604">
   <sources>
     <source>/</source>
   </sources>
   <packages>
-    <package name="Back" line-rate="0.009882020772411012" branch-rate="0.025395033860045147" complexity="4547">
+    <package name="Back" line-rate="0.00974445659739485" branch-rate="0.024972253052164262" complexity="4598">
       <classes>
         <class name="Estud.Back.Audit.AuditChange" filename="/home/runner/work/syki/syki/Back/Audit/AuditChange.cs" line-rate="0" branch-rate="1" complexity="4">
           <methods>
@@ -749,18 +749,22 @@
           <methods>
             <method name="AddClassroomsPolicies" signature="(Microsoft.AspNetCore.Authorization.AuthorizationBuilder)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="0" branch="false" />
-                <line number="13" hits="0" branch="false" />
                 <line number="14" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
                 <line number="16" hits="0" branch="false" />
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="20" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="12" hits="0" branch="false" />
-            <line number="13" hits="0" branch="false" />
             <line number="14" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
             <line number="16" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="20" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Auth.Policies.Policies" filename="/home/runner/work/syki/syki/Back/Auth/Policies/Policies.CourseCurriculums.cs" line-rate="0" branch-rate="1" complexity="1">
@@ -4725,52 +4729,53 @@
                 <line number="29" hits="0" branch="false" />
                 <line number="30" hits="0" branch="false" />
                 <line number="32" hits="0" branch="false" />
-                <line number="34" hits="0" branch="false" />
+                <line number="33" hits="0" branch="false" />
                 <line number="35" hits="0" branch="false" />
                 <line number="37" hits="0" branch="false" />
-                <line number="39" hits="0" branch="false" />
-                <line number="40" hits="0" branch="false" />
+                <line number="38" hits="0" branch="false" />
               </lines>
             </method>
             <method name="&lt;GetDirectorRole" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="55" hits="0" branch="false" />
+                <line number="56" hits="0" branch="false" />
                 <line number="57" hits="0" branch="false" />
                 <line number="58" hits="0" branch="false" />
-                <line number="59" hits="0" branch="false" />
-                <line number="60" hits="0" branch="false" />
               </lines>
             </method>
             <method name="&lt;GetStudentRole" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="85" hits="0" branch="false" />
+                <line number="86" hits="0" branch="false" />
                 <line number="87" hits="0" branch="false" />
                 <line number="88" hits="0" branch="false" />
-                <line number="89" hits="0" branch="false" />
-                <line number="90" hits="0" branch="false" />
               </lines>
             </method>
             <method name="&lt;GetTeacherRole" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="70" hits="0" branch="false" />
+                <line number="71" hits="0" branch="false" />
                 <line number="72" hits="0" branch="false" />
                 <line number="73" hits="0" branch="false" />
-                <line number="74" hits="0" branch="false" />
-                <line number="75" hits="0" branch="false" />
               </lines>
             </method>
             <method name="EmailRequiresSsoAsync" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="129" hits="0" branch="false" />
+                <line number="130" hits="0" branch="false" />
                 <line number="131" hits="0" branch="false" />
-                <line number="132" hits="0" branch="false" />
-                <line number="133" hits="0" branch="false" />
               </lines>
             </method>
             <method name="GetActiveSsoConfigForSchemeAsync" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="111" hits="0" branch="false" />
-                <line number="112" hits="0" branch="false" />
+                <line number="109" hits="0" branch="false" />
+                <line number="110" hits="0" branch="false" />
               </lines>
             </method>
             <method name="GetDirectorRole" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="49" hits="0" branch="false" />
+                <line number="50" hits="0" branch="false" />
                 <line number="51" hits="0" branch="false" />
                 <line number="52" hits="0" branch="false" />
                 <line number="53" hits="0" branch="false" />
@@ -4781,12 +4786,12 @@
                 <line number="58" hits="0" branch="false" />
                 <line number="59" hits="0" branch="false" />
                 <line number="60" hits="0" branch="false" />
-                <line number="61" hits="0" branch="false" />
-                <line number="62" hits="0" branch="false" />
               </lines>
             </method>
             <method name="GetStudentRole" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="79" hits="0" branch="false" />
+                <line number="80" hits="0" branch="false" />
                 <line number="81" hits="0" branch="false" />
                 <line number="82" hits="0" branch="false" />
                 <line number="83" hits="0" branch="false" />
@@ -4797,12 +4802,12 @@
                 <line number="88" hits="0" branch="false" />
                 <line number="89" hits="0" branch="false" />
                 <line number="90" hits="0" branch="false" />
-                <line number="91" hits="0" branch="false" />
-                <line number="92" hits="0" branch="false" />
               </lines>
             </method>
             <method name="GetTeacherRole" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="64" hits="0" branch="false" />
+                <line number="65" hits="0" branch="false" />
                 <line number="66" hits="0" branch="false" />
                 <line number="67" hits="0" branch="false" />
                 <line number="68" hits="0" branch="false" />
@@ -4813,23 +4818,21 @@
                 <line number="73" hits="0" branch="false" />
                 <line number="74" hits="0" branch="false" />
                 <line number="75" hits="0" branch="false" />
-                <line number="76" hits="0" branch="false" />
-                <line number="77" hits="0" branch="false" />
               </lines>
             </method>
             <method name="GetUserRole" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="42" hits="0" branch="false" />
                 <line number="44" hits="0" branch="false" />
-                <line number="46" hits="0" branch="false" />
-                <line number="47" hits="0" branch="false" />
+                <line number="45" hits="0" branch="false" />
               </lines>
             </method>
             <method name="GetUserTwoFactorKeyAsync" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="135" hits="0" branch="false" />
+                <line number="136" hits="0" branch="false" />
                 <line number="137" hits="0" branch="false" />
                 <line number="138" hits="0" branch="false" />
-                <line number="139" hits="0" branch="false" />
-                <line number="140" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -4849,14 +4852,15 @@
             <line number="29" hits="0" branch="false" />
             <line number="30" hits="0" branch="false" />
             <line number="32" hits="0" branch="false" />
-            <line number="34" hits="0" branch="false" />
+            <line number="33" hits="0" branch="false" />
             <line number="35" hits="0" branch="false" />
             <line number="37" hits="0" branch="false" />
-            <line number="39" hits="0" branch="false" />
-            <line number="40" hits="0" branch="false" />
+            <line number="38" hits="0" branch="false" />
+            <line number="42" hits="0" branch="false" />
             <line number="44" hits="0" branch="false" />
-            <line number="46" hits="0" branch="false" />
-            <line number="47" hits="0" branch="false" />
+            <line number="45" hits="0" branch="false" />
+            <line number="49" hits="0" branch="false" />
+            <line number="50" hits="0" branch="false" />
             <line number="51" hits="0" branch="false" />
             <line number="52" hits="0" branch="false" />
             <line number="53" hits="0" branch="false" />
@@ -4867,8 +4871,8 @@
             <line number="58" hits="0" branch="false" />
             <line number="59" hits="0" branch="false" />
             <line number="60" hits="0" branch="false" />
-            <line number="61" hits="0" branch="false" />
-            <line number="62" hits="0" branch="false" />
+            <line number="64" hits="0" branch="false" />
+            <line number="65" hits="0" branch="false" />
             <line number="66" hits="0" branch="false" />
             <line number="67" hits="0" branch="false" />
             <line number="68" hits="0" branch="false" />
@@ -4879,8 +4883,8 @@
             <line number="73" hits="0" branch="false" />
             <line number="74" hits="0" branch="false" />
             <line number="75" hits="0" branch="false" />
-            <line number="76" hits="0" branch="false" />
-            <line number="77" hits="0" branch="false" />
+            <line number="79" hits="0" branch="false" />
+            <line number="80" hits="0" branch="false" />
             <line number="81" hits="0" branch="false" />
             <line number="82" hits="0" branch="false" />
             <line number="83" hits="0" branch="false" />
@@ -4891,17 +4895,15 @@
             <line number="88" hits="0" branch="false" />
             <line number="89" hits="0" branch="false" />
             <line number="90" hits="0" branch="false" />
-            <line number="91" hits="0" branch="false" />
-            <line number="92" hits="0" branch="false" />
-            <line number="111" hits="0" branch="false" />
-            <line number="112" hits="0" branch="false" />
+            <line number="109" hits="0" branch="false" />
+            <line number="110" hits="0" branch="false" />
+            <line number="129" hits="0" branch="false" />
+            <line number="130" hits="0" branch="false" />
             <line number="131" hits="0" branch="false" />
-            <line number="132" hits="0" branch="false" />
-            <line number="133" hits="0" branch="false" />
+            <line number="135" hits="0" branch="false" />
+            <line number="136" hits="0" branch="false" />
             <line number="137" hits="0" branch="false" />
             <line number="138" hits="0" branch="false" />
-            <line number="139" hits="0" branch="false" />
-            <line number="140" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Database.EstudDbContext" filename="/home/runner/work/syki/syki/Back/Database/EstudDbContext.Institutions.cs" line-rate="0" branch-rate="1" complexity="3">
@@ -5386,46 +5388,6 @@
             <line number="9" hits="0" branch="false" />
             <line number="11" hits="0" branch="false" />
             <line number="12" hits="0" branch="false" />
-          </lines>
-        </class>
-        <class name="Estud.Back.Database.Identity.InstitutionRoleDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Identity/InstitutionRoleDbConfig.cs" line-rate="0" branch-rate="1" complexity="1">
-          <methods>
-            <method name="Configure" signature="(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder`1&lt;Estud.Back.Domain.Identity.InstitutionRole&gt;)" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="10" hits="0" branch="false" />
-                <line number="12" hits="0" branch="false" />
-                <line number="14" hits="0" branch="false" />
-                <line number="15" hits="0" branch="false" />
-                <line number="17" hits="0" branch="false" />
-                <line number="18" hits="0" branch="false" />
-                <line number="20" hits="0" branch="false" />
-                <line number="21" hits="0" branch="false" />
-                <line number="22" hits="0" branch="false" />
-                <line number="23" hits="0" branch="false" />
-                <line number="25" hits="0" branch="false" />
-                <line number="26" hits="0" branch="false" />
-                <line number="27" hits="0" branch="false" />
-                <line number="28" hits="0" branch="false" />
-                <line number="29" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="10" hits="0" branch="false" />
-            <line number="12" hits="0" branch="false" />
-            <line number="14" hits="0" branch="false" />
-            <line number="15" hits="0" branch="false" />
-            <line number="17" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
-            <line number="20" hits="0" branch="false" />
-            <line number="21" hits="0" branch="false" />
-            <line number="22" hits="0" branch="false" />
-            <line number="23" hits="0" branch="false" />
-            <line number="25" hits="0" branch="false" />
-            <line number="26" hits="0" branch="false" />
-            <line number="27" hits="0" branch="false" />
-            <line number="28" hits="0" branch="false" />
-            <line number="29" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Database.Identity.MagicLinkDbConfig" filename="/home/runner/work/syki/syki/Back/Database/Identity/MagicLinkDbConfig.cs" line-rate="0" branch-rate="1" complexity="1">
@@ -7266,7 +7228,7 @@
             <line number="19" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Domain.Classrooms.Classroom" filename="/home/runner/work/syki/syki/Back/Domain/Classrooms/Classroom.cs" line-rate="0" branch-rate="1" complexity="9">
+        <class name="Estud.Back.Domain.Classrooms.Classroom" filename="/home/runner/work/syki/syki/Back/Domain/Classrooms/Classroom.cs" line-rate="0" branch-rate="1" complexity="10">
           <methods>
             <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -7301,6 +7263,14 @@
             <method name="get_Schedules" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
                 <line number="20" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Update" signature="(System.Int32,System.String,System.Int32)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="38" hits="0" branch="false" />
+                <line number="39" hits="0" branch="false" />
+                <line number="40" hits="0" branch="false" />
+                <line number="41" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -7344,6 +7314,10 @@
             <line number="32" hits="0" branch="false" />
             <line number="33" hits="0" branch="false" />
             <line number="34" hits="0" branch="false" />
+            <line number="38" hits="0" branch="false" />
+            <line number="39" hits="0" branch="false" />
+            <line number="40" hits="0" branch="false" />
+            <line number="41" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Domain.Classrooms.ClassroomClass" filename="/home/runner/work/syki/syki/Back/Domain/Classrooms/ClassroomClass.cs" line-rate="0" branch-rate="1" complexity="5">
@@ -8204,7 +8178,7 @@
             <line number="28" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Domain.Identity.EstudRole" filename="/home/runner/work/syki/syki/Back/Domain/Identity/EstudRole.cs" line-rate="0" branch-rate="1" complexity="7">
+        <class name="Estud.Back.Domain.Identity.EstudRole" filename="/home/runner/work/syki/syki/Back/Domain/Identity/EstudRole.cs" line-rate="0" branch-rate="1" complexity="8">
           <methods>
             <method name="get_OwnerId" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -8226,9 +8200,19 @@
                 <line number="8" hits="0" branch="false" />
               </lines>
             </method>
+            <method name="Update" signature="(System.String,System.String,System.String,Estud.Back.Domain.Enums.UserType,System.Collections.Generic.List`1&lt;System.Int32&gt;)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="35" hits="0" branch="false" />
+                <line number="36" hits="0" branch="false" />
+                <line number="37" hits="0" branch="false" />
+                <line number="38" hits="0" branch="false" />
+                <line number="39" hits="0" branch="false" />
+                <line number="40" hits="0" branch="false" />
+              </lines>
+            </method>
             <method name="IsSubsetOf" signature="(System.Collections.Generic.List`1&lt;System.Int32&gt;)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="30" hits="0" branch="false" />
+                <line number="44" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -8275,7 +8259,13 @@
             <line number="24" hits="0" branch="false" />
             <line number="25" hits="0" branch="false" />
             <line number="26" hits="0" branch="false" />
-            <line number="30" hits="0" branch="false" />
+            <line number="35" hits="0" branch="false" />
+            <line number="36" hits="0" branch="false" />
+            <line number="37" hits="0" branch="false" />
+            <line number="38" hits="0" branch="false" />
+            <line number="39" hits="0" branch="false" />
+            <line number="40" hits="0" branch="false" />
+            <line number="44" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Domain.Identity.EstudUser" filename="/home/runner/work/syki/syki/Back/Domain/Identity/EstudUser.cs" line-rate="0" branch-rate="1" complexity="11">
@@ -8472,48 +8462,6 @@
             <line number="32" hits="0" branch="false" />
             <line number="33" hits="0" branch="false" />
             <line number="34" hits="0" branch="false" />
-          </lines>
-        </class>
-        <class name="Estud.Back.Domain.Identity.InstitutionRole" filename="/home/runner/work/syki/syki/Back/Domain/Identity/InstitutionRole.cs" line-rate="0" branch-rate="1" complexity="5">
-          <methods>
-            <method name="get_InstitutionId" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="8" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_RoleId" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Role" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="11" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="13" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name=".ctor" signature="(System.Int32,Estud.Back.Domain.Identity.EstudRole)" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="15" hits="0" branch="false" />
-                <line number="17" hits="0" branch="false" />
-                <line number="18" hits="0" branch="false" />
-                <line number="19" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="8" hits="0" branch="false" />
-            <line number="9" hits="0" branch="false" />
-            <line number="11" hits="0" branch="false" />
-            <line number="13" hits="0" branch="false" />
-            <line number="15" hits="0" branch="false" />
-            <line number="17" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
-            <line number="19" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Domain.Identity.MagicLink" filename="/home/runner/work/syki/syki/Back/Domain/Identity/MagicLink.cs" line-rate="0" branch-rate="1" complexity="11">
@@ -10710,6 +10658,30 @@
             <line number="7" hits="0" branch="false" />
           </lines>
         </class>
+        <class name="Estud.Back.Errors.ClassroomNotFound" filename="/home/runner/work/syki/syki/Back/Errors/EstudErrors.Classrooms.cs" line-rate="0" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Message" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="6" hits="0" branch="false" />
+            <line number="7" hits="0" branch="false" />
+          </lines>
+        </class>
         <class name="Estud.Back.Errors.ConflictingSchedules" filename="/home/runner/work/syki/syki/Back/Errors/EstudErrors.Classes.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -11486,6 +11458,54 @@
             <line number="89" hits="0" branch="false" />
             <line number="90" hits="0" branch="false" />
             <line number="91" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Estud.Back.Errors.InvalidClassroomCapacity" filename="/home/runner/work/syki/syki/Back/Errors/EstudErrors.Classrooms.cs" line-rate="0" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="20" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Message" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="21" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="19" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="19" hits="0" branch="false" />
+            <line number="20" hits="0" branch="false" />
+            <line number="21" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Estud.Back.Errors.InvalidClassroomName" filename="/home/runner/work/syki/syki/Back/Errors/EstudErrors.Classrooms.cs" line-rate="0" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="13" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Message" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="14" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Errors.InvalidCourseCurriculumName" filename="/home/runner/work/syki/syki/Back/Errors/EstudErrors.CourseCurriculums.cs" line-rate="0" branch-rate="1" complexity="3">
@@ -13802,7 +13822,7 @@
             <method name="Create" signature="()" line-rate="0" branch-rate="0" complexity="4">
               <lines>
                 <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="25" hits="0" branch="false" />
+                <line number="24" hits="0" branch="false" />
                 <line number="26" hits="0" branch="false" />
                 <line number="28" hits="0" branch="false" />
                 <line number="29" hits="0" branch="true" condition-coverage="0% (0/2)" />
@@ -13823,7 +13843,7 @@
             <line number="17" hits="0" branch="false" />
             <line number="19" hits="0" branch="false" />
             <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="25" hits="0" branch="false" />
+            <line number="24" hits="0" branch="false" />
             <line number="26" hits="0" branch="false" />
             <line number="28" hits="0" branch="false" />
             <line number="29" hits="0" branch="true" condition-coverage="0% (0/2)" />
@@ -14225,12 +14245,13 @@
             <method name="Update" signature="()" line-rate="0" branch-rate="0" complexity="4">
               <lines>
                 <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="21" hits="0" branch="false" />
-                <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="24" hits="0" branch="false" />
-                <line number="26" hits="0" branch="false" />
-                <line number="28" hits="0" branch="false" />
+                <line number="20" hits="0" branch="false" />
+                <line number="22" hits="0" branch="false" />
+                <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="25" hits="0" branch="false" />
+                <line number="27" hits="0" branch="false" />
                 <line number="29" hits="0" branch="false" />
+                <line number="30" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -14243,12 +14264,13 @@
             <line number="13" hits="0" branch="false" />
             <line number="15" hits="0" branch="false" />
             <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="21" hits="0" branch="false" />
-            <line number="22" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="24" hits="0" branch="false" />
-            <line number="26" hits="0" branch="false" />
-            <line number="28" hits="0" branch="false" />
+            <line number="20" hits="0" branch="false" />
+            <line number="22" hits="0" branch="false" />
+            <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="25" hits="0" branch="false" />
+            <line number="27" hits="0" branch="false" />
             <line number="29" hits="0" branch="false" />
+            <line number="30" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Campi.CreateCampus.CreateCampusController" filename="/home/runner/work/syki/syki/Back/Features/Campi/CreateCampus/CreateCampusController.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -15937,6 +15959,262 @@
             <line number="19" hits="0" branch="false" />
           </lines>
         </class>
+        <class name="Estud.Back.Features.Classrooms.GetClassroom.ClassroomScheduleOut" filename="/home/runner/work/syki/syki/Back/Features/Classrooms/GetClassroom/GetClassroomOut.cs" line-rate="0" branch-rate="1" complexity="6">
+          <methods>
+            <method name="get_ClassId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="43" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Discipline" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="44" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Teacher" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="45" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Day" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="46" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_StartAt" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="47" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_EndAt" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="48" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="43" hits="0" branch="false" />
+            <line number="44" hits="0" branch="false" />
+            <line number="45" hits="0" branch="false" />
+            <line number="46" hits="0" branch="false" />
+            <line number="47" hits="0" branch="false" />
+            <line number="48" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Estud.Back.Features.Classrooms.GetClassroom.GetClassroomController" filename="/home/runner/work/syki/syki/Back/Features/Classrooms/GetClassroom/GetClassroomController.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(Estud.Back.Features.Classrooms.GetClassroom.GetClassroomService)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="4" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Get" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="4" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Estud.Back.Features.Classrooms.GetClassroom.GetClassroomOut" filename="/home/runner/work/syki/syki/Back/Features/Classrooms/GetClassroom/GetClassroomOut.cs" line-rate="0" branch-rate="1" complexity="7">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_CampusId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Campus" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Capacity" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="9" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Schedules" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+                <line number="20" hits="0" branch="false" />
+                <line number="21" hits="0" branch="false" />
+                <line number="22" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="false" />
+                <line number="25" hits="0" branch="false" />
+                <line number="26" hits="0" branch="false" />
+                <line number="27" hits="0" branch="false" />
+                <line number="28" hits="0" branch="false" />
+                <line number="29" hits="0" branch="false" />
+                <line number="30" hits="0" branch="false" />
+                <line number="31" hits="0" branch="false" />
+                <line number="32" hits="0" branch="false" />
+                <line number="33" hits="0" branch="false" />
+                <line number="34" hits="0" branch="false" />
+                <line number="35" hits="0" branch="false" />
+                <line number="36" hits="0" branch="false" />
+                <line number="37" hits="0" branch="false" />
+                <line number="38" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="6" hits="0" branch="false" />
+            <line number="7" hits="0" branch="false" />
+            <line number="8" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="14" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+            <line number="20" hits="0" branch="false" />
+            <line number="21" hits="0" branch="false" />
+            <line number="22" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="false" />
+            <line number="25" hits="0" branch="false" />
+            <line number="26" hits="0" branch="false" />
+            <line number="27" hits="0" branch="false" />
+            <line number="28" hits="0" branch="false" />
+            <line number="29" hits="0" branch="false" />
+            <line number="30" hits="0" branch="false" />
+            <line number="31" hits="0" branch="false" />
+            <line number="32" hits="0" branch="false" />
+            <line number="33" hits="0" branch="false" />
+            <line number="34" hits="0" branch="false" />
+            <line number="35" hits="0" branch="false" />
+            <line number="36" hits="0" branch="false" />
+            <line number="37" hits="0" branch="false" />
+            <line number="38" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Estud.Back.Features.Classrooms.GetClassroom.GetClassroomService" filename="/home/runner/work/syki/syki/Back/Features/Classrooms/GetClassroom/GetClassroomService.cs" line-rate="0" branch-rate="0" complexity="7">
+          <methods>
+            <method name=".ctor" signature="(Estud.Back.Database.EstudDbContext)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Get" signature="()" line-rate="0" branch-rate="0" complexity="6">
+              <lines>
+                <line number="9" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="13" hits="0" branch="false" />
+                <line number="14" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="16" hits="0" branch="false" />
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+                <line number="21" hits="0" branch="false" />
+                <line number="22" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="false" />
+                <line number="25" hits="0" branch="false" />
+                <line number="27" hits="0" branch="false" />
+                <line number="28" hits="0" branch="false" />
+                <line number="29" hits="0" branch="false" />
+                <line number="30" hits="0" branch="false" />
+                <line number="31" hits="0" branch="false" />
+                <line number="32" hits="0" branch="false" />
+                <line number="34" hits="0" branch="false" />
+                <line number="35" hits="0" branch="false" />
+                <line number="36" hits="0" branch="true" condition-coverage="0% (0/4)" />
+                <line number="37" hits="0" branch="true" condition-coverage="0% (0/12)" />
+                <line number="38" hits="0" branch="false" />
+                <line number="39" hits="0" branch="false" />
+                <line number="40" hits="0" branch="false" />
+                <line number="41" hits="0" branch="false" />
+                <line number="42" hits="0" branch="false" />
+                <line number="43" hits="0" branch="false" />
+                <line number="44" hits="0" branch="false" />
+                <line number="45" hits="0" branch="false" />
+                <line number="46" hits="0" branch="false" />
+                <line number="48" hits="0" branch="true" condition-coverage="0% (0/4)" />
+                <line number="49" hits="0" branch="false" />
+                <line number="50" hits="0" branch="false" />
+                <line number="51" hits="0" branch="false" />
+                <line number="52" hits="0" branch="false" />
+                <line number="53" hits="0" branch="false" />
+                <line number="54" hits="0" branch="false" />
+                <line number="55" hits="0" branch="false" />
+                <line number="56" hits="0" branch="false" />
+                <line number="57" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="14" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="16" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+            <line number="21" hits="0" branch="false" />
+            <line number="22" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="false" />
+            <line number="25" hits="0" branch="false" />
+            <line number="27" hits="0" branch="false" />
+            <line number="28" hits="0" branch="false" />
+            <line number="29" hits="0" branch="false" />
+            <line number="30" hits="0" branch="false" />
+            <line number="31" hits="0" branch="false" />
+            <line number="32" hits="0" branch="false" />
+            <line number="34" hits="0" branch="false" />
+            <line number="35" hits="0" branch="false" />
+            <line number="36" hits="0" branch="true" condition-coverage="0% (0/4)" />
+            <line number="37" hits="0" branch="true" condition-coverage="0% (0/12)" />
+            <line number="38" hits="0" branch="false" />
+            <line number="39" hits="0" branch="false" />
+            <line number="40" hits="0" branch="false" />
+            <line number="41" hits="0" branch="false" />
+            <line number="42" hits="0" branch="false" />
+            <line number="43" hits="0" branch="false" />
+            <line number="44" hits="0" branch="false" />
+            <line number="45" hits="0" branch="false" />
+            <line number="46" hits="0" branch="false" />
+            <line number="48" hits="0" branch="true" condition-coverage="0% (0/4)" />
+            <line number="49" hits="0" branch="false" />
+            <line number="50" hits="0" branch="false" />
+            <line number="51" hits="0" branch="false" />
+            <line number="52" hits="0" branch="false" />
+            <line number="53" hits="0" branch="false" />
+            <line number="54" hits="0" branch="false" />
+            <line number="55" hits="0" branch="false" />
+            <line number="56" hits="0" branch="false" />
+            <line number="57" hits="0" branch="false" />
+          </lines>
+        </class>
         <class name="Estud.Back.Features.Classrooms.GetClassrooms.GetClassroomsController" filename="/home/runner/work/syki/syki/Back/Features/Classrooms/GetClassrooms/GetClassroomsController.cs" line-rate="0" branch-rate="1" complexity="2">
           <methods>
             <method name=".ctor" signature="(Estud.Back.Features.Classrooms.GetClassrooms.GetClassroomsService)" line-rate="0" branch-rate="1" complexity="1">
@@ -16035,6 +16313,232 @@
             <line number="19" hits="0" branch="false" />
             <line number="20" hits="0" branch="false" />
             <line number="21" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Estud.Back.Features.Classrooms.UpdateClassroom.UpdateClassroomController" filename="/home/runner/work/syki/syki/Back/Features/Classrooms/UpdateClassroom/UpdateClassroomController.cs" line-rate="0" branch-rate="1" complexity="2">
+          <methods>
+            <method name=".ctor" signature="(Estud.Back.Features.Classrooms.UpdateClassroom.UpdateClassroomService)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="4" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Update" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="4" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Estud.Back.Features.Classrooms.UpdateClassroom.UpdateClassroomIn" filename="/home/runner/work/syki/syki/Back/Features/Classrooms/UpdateClassroom/UpdateClassroomIn.cs" line-rate="0" branch-rate="1" complexity="5">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_CampusId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="6" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Capacity" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="8" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="13" hits="0" branch="false" />
+                <line number="14" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
+                <line number="17" hits="0" branch="false" />
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+                <line number="20" hits="0" branch="false" />
+                <line number="21" hits="0" branch="false" />
+                <line number="22" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="false" />
+                <line number="25" hits="0" branch="false" />
+                <line number="26" hits="0" branch="false" />
+                <line number="27" hits="0" branch="false" />
+                <line number="28" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="6" hits="0" branch="false" />
+            <line number="7" hits="0" branch="false" />
+            <line number="8" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="14" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
+            <line number="20" hits="0" branch="false" />
+            <line number="21" hits="0" branch="false" />
+            <line number="22" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="false" />
+            <line number="25" hits="0" branch="false" />
+            <line number="26" hits="0" branch="false" />
+            <line number="27" hits="0" branch="false" />
+            <line number="28" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Estud.Back.Features.Classrooms.UpdateClassroom.UpdateClassroomMapper" filename="/home/runner/work/syki/syki/Back/Features/Classrooms/UpdateClassroom/UpdateClassroomMapper.cs" line-rate="0" branch-rate="1" complexity="1">
+          <methods>
+            <method name="ToUpdateClassroomOut" signature="(Estud.Back.Domain.Classrooms.Classroom)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="11" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="13" hits="0" branch="false" />
+                <line number="14" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
+                <line number="17" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="11" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="14" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Estud.Back.Features.Classrooms.UpdateClassroom.UpdateClassroomOut" filename="/home/runner/work/syki/syki/Back/Features/Classrooms/UpdateClassroom/UpdateClassroomOut.cs" line-rate="0" branch-rate="1" complexity="5">
+          <methods>
+            <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="5" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="10" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_CampusId" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="get_Capacity" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="17" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="20" hits="0" branch="false" />
+                <line number="21" hits="0" branch="false" />
+                <line number="22" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="false" />
+                <line number="25" hits="0" branch="false" />
+                <line number="26" hits="0" branch="false" />
+                <line number="27" hits="0" branch="false" />
+                <line number="28" hits="0" branch="false" />
+                <line number="29" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="5" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
+            <line number="20" hits="0" branch="false" />
+            <line number="21" hits="0" branch="false" />
+            <line number="22" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="false" />
+            <line number="25" hits="0" branch="false" />
+            <line number="26" hits="0" branch="false" />
+            <line number="27" hits="0" branch="false" />
+            <line number="28" hits="0" branch="false" />
+            <line number="29" hits="0" branch="false" />
+          </lines>
+        </class>
+        <class name="Estud.Back.Features.Classrooms.UpdateClassroom.UpdateClassroomService" filename="/home/runner/work/syki/syki/Back/Features/Classrooms/UpdateClassroom/UpdateClassroomService.cs" line-rate="0" branch-rate="0" complexity="9">
+          <methods>
+            <method name=".ctor" signature="(Estud.Back.Database.EstudDbContext)" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="3" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="15" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
+              <lines>
+                <line number="7" hits="0" branch="false" />
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+                <line number="12" hits="0" branch="false" />
+                <line number="13" hits="0" branch="false" />
+              </lines>
+            </method>
+            <method name="Update" signature="()" line-rate="0" branch-rate="0" complexity="6">
+              <lines>
+                <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="21" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="26" hits="0" branch="false" />
+                <line number="27" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="29" hits="0" branch="false" />
+                <line number="31" hits="0" branch="false" />
+                <line number="33" hits="0" branch="false" />
+                <line number="34" hits="0" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="3" hits="0" branch="false" />
+            <line number="7" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+            <line number="12" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="21" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="26" hits="0" branch="false" />
+            <line number="27" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="29" hits="0" branch="false" />
+            <line number="31" hits="0" branch="false" />
+            <line number="33" hits="0" branch="false" />
+            <line number="34" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.CourseCurriculums.CreateCourseCurriculum.CreateCourseCurriculumController" filename="/home/runner/work/syki/syki/Back/Features/CourseCurriculums/CreateCourseCurriculum/CreateCourseCurriculumController.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -17308,20 +17812,21 @@
             <method name="Add" signature="()" line-rate="0" branch-rate="0" complexity="6">
               <lines>
                 <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="21" hits="0" branch="false" />
+                <line number="20" hits="0" branch="false" />
                 <line number="22" hits="0" branch="false" />
-                <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="25" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="true" condition-coverage="0% (0/2)" />
                 <line number="26" hits="0" branch="false" />
                 <line number="27" hits="0" branch="false" />
                 <line number="28" hits="0" branch="false" />
-                <line number="30" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="32" hits="0" branch="false" />
+                <line number="29" hits="0" branch="false" />
+                <line number="31" hits="0" branch="true" condition-coverage="0% (0/2)" />
                 <line number="33" hits="0" branch="false" />
                 <line number="34" hits="0" branch="false" />
-                <line number="36" hits="0" branch="false" />
-                <line number="38" hits="0" branch="false" />
+                <line number="35" hits="0" branch="false" />
+                <line number="37" hits="0" branch="false" />
                 <line number="39" hits="0" branch="false" />
+                <line number="40" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -17333,20 +17838,21 @@
             <line number="13" hits="0" branch="false" />
             <line number="15" hits="0" branch="false" />
             <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="21" hits="0" branch="false" />
+            <line number="20" hits="0" branch="false" />
             <line number="22" hits="0" branch="false" />
-            <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="25" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="true" condition-coverage="0% (0/2)" />
             <line number="26" hits="0" branch="false" />
             <line number="27" hits="0" branch="false" />
             <line number="28" hits="0" branch="false" />
-            <line number="30" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="32" hits="0" branch="false" />
+            <line number="29" hits="0" branch="false" />
+            <line number="31" hits="0" branch="true" condition-coverage="0% (0/2)" />
             <line number="33" hits="0" branch="false" />
             <line number="34" hits="0" branch="false" />
-            <line number="36" hits="0" branch="false" />
-            <line number="38" hits="0" branch="false" />
+            <line number="35" hits="0" branch="false" />
+            <line number="37" hits="0" branch="false" />
             <line number="39" hits="0" branch="false" />
+            <line number="40" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Courses.CreateCourse.CreateCourseController" filename="/home/runner/work/syki/syki/Back/Features/Courses/CreateCourse/CreateCourseController.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -17775,36 +18281,38 @@
             <method name="Get" signature="()" line-rate="0" branch-rate="0" complexity="4">
               <lines>
                 <line number="7" hits="0" branch="false" />
-                <line number="8" hits="0" branch="false" />
-                <line number="9" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="11" hits="0" branch="false" />
+                <line number="9" hits="0" branch="false" />
+                <line number="10" hits="0" branch="false" />
+                <line number="11" hits="0" branch="true" condition-coverage="0% (0/2)" />
                 <line number="13" hits="0" branch="false" />
-                <line number="14" hits="0" branch="false" />
-                <line number="16" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="18" hits="0" branch="false" />
-                <line number="19" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
+                <line number="16" hits="0" branch="false" />
+                <line number="18" hits="0" branch="true" condition-coverage="0% (0/2)" />
                 <line number="20" hits="0" branch="false" />
                 <line number="21" hits="0" branch="false" />
+                <line number="22" hits="0" branch="false" />
                 <line number="23" hits="0" branch="false" />
-                <line number="24" hits="0" branch="false" />
+                <line number="25" hits="0" branch="false" />
+                <line number="26" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
             <line number="3" hits="0" branch="false" />
             <line number="7" hits="0" branch="false" />
-            <line number="8" hits="0" branch="false" />
-            <line number="9" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="11" hits="0" branch="false" />
+            <line number="9" hits="0" branch="false" />
+            <line number="10" hits="0" branch="false" />
+            <line number="11" hits="0" branch="true" condition-coverage="0% (0/2)" />
             <line number="13" hits="0" branch="false" />
-            <line number="14" hits="0" branch="false" />
-            <line number="16" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="18" hits="0" branch="false" />
-            <line number="19" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
+            <line number="16" hits="0" branch="false" />
+            <line number="18" hits="0" branch="true" condition-coverage="0% (0/2)" />
             <line number="20" hits="0" branch="false" />
             <line number="21" hits="0" branch="false" />
+            <line number="22" hits="0" branch="false" />
             <line number="23" hits="0" branch="false" />
-            <line number="24" hits="0" branch="false" />
+            <line number="25" hits="0" branch="false" />
+            <line number="26" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Courses.GetCourses.GetCoursesController" filename="/home/runner/work/syki/syki/Back/Features/Courses/GetCourses/GetCoursesController.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -18248,12 +18756,13 @@
             <method name="Update" signature="()" line-rate="0" branch-rate="0" complexity="4">
               <lines>
                 <line number="20" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="22" hits="0" branch="false" />
-                <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="25" hits="0" branch="false" />
+                <line number="21" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="true" condition-coverage="0% (0/2)" />
                 <line number="26" hits="0" branch="false" />
-                <line number="28" hits="0" branch="false" />
+                <line number="27" hits="0" branch="false" />
                 <line number="29" hits="0" branch="false" />
+                <line number="30" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -18267,12 +18776,13 @@
             <line number="14" hits="0" branch="false" />
             <line number="16" hits="0" branch="false" />
             <line number="20" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="22" hits="0" branch="false" />
-            <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="25" hits="0" branch="false" />
+            <line number="21" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="true" condition-coverage="0% (0/2)" />
             <line number="26" hits="0" branch="false" />
-            <line number="28" hits="0" branch="false" />
+            <line number="27" hits="0" branch="false" />
             <line number="29" hits="0" branch="false" />
+            <line number="30" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Cross.GetHomeStats.GetHomeStatsController" filename="/home/runner/work/syki/syki/Back/Features/Cross/GetHomeStats/GetHomeStatsController.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -18610,10 +19120,10 @@
             <method name="Add" signature="()" line-rate="0" branch-rate="0" complexity="6">
               <lines>
                 <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="21" hits="0" branch="false" />
+                <line number="20" hits="0" branch="false" />
                 <line number="22" hits="0" branch="false" />
-                <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="25" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="true" condition-coverage="0% (0/2)" />
                 <line number="26" hits="0" branch="false" />
                 <line number="27" hits="0" branch="false" />
                 <line number="28" hits="0" branch="false" />
@@ -18635,10 +19145,10 @@
             <line number="13" hits="0" branch="false" />
             <line number="15" hits="0" branch="false" />
             <line number="19" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="21" hits="0" branch="false" />
+            <line number="20" hits="0" branch="false" />
             <line number="22" hits="0" branch="false" />
-            <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="25" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="true" condition-coverage="0% (0/2)" />
             <line number="26" hits="0" branch="false" />
             <line number="27" hits="0" branch="false" />
             <line number="28" hits="0" branch="false" />
@@ -18750,12 +19260,10 @@
                 <line number="23" hits="0" branch="false" />
                 <line number="24" hits="0" branch="false" />
                 <line number="25" hits="0" branch="false" />
-                <line number="26" hits="0" branch="false" />
-                <line number="28" hits="0" branch="false" />
-                <line number="30" hits="0" branch="false" />
+                <line number="27" hits="0" branch="false" />
+                <line number="29" hits="0" branch="false" />
                 <line number="31" hits="0" branch="false" />
-                <line number="33" hits="0" branch="false" />
-                <line number="34" hits="0" branch="false" />
+                <line number="32" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -18771,12 +19279,10 @@
             <line number="23" hits="0" branch="false" />
             <line number="24" hits="0" branch="false" />
             <line number="25" hits="0" branch="false" />
-            <line number="26" hits="0" branch="false" />
-            <line number="28" hits="0" branch="false" />
-            <line number="30" hits="0" branch="false" />
+            <line number="27" hits="0" branch="false" />
+            <line number="29" hits="0" branch="false" />
             <line number="31" hits="0" branch="false" />
-            <line number="33" hits="0" branch="false" />
-            <line number="34" hits="0" branch="false" />
+            <line number="32" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Disciplines.GetDiscipline.GetDisciplineController" filename="/home/runner/work/syki/syki/Back/Features/Disciplines/GetDiscipline/GetDisciplineController.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -19899,7 +20405,7 @@
             <method name="Create" signature="()" line-rate="0" branch-rate="0" complexity="6">
               <lines>
                 <line number="33" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="35" hits="0" branch="false" />
+                <line number="34" hits="0" branch="false" />
                 <line number="36" hits="0" branch="false" />
                 <line number="37" hits="0" branch="false" />
                 <line number="38" hits="0" branch="true" condition-coverage="0% (0/2)" />
@@ -19909,9 +20415,8 @@
                 <line number="44" hits="0" branch="false" />
                 <line number="45" hits="0" branch="false" />
                 <line number="46" hits="0" branch="false" />
-                <line number="47" hits="0" branch="false" />
+                <line number="48" hits="0" branch="false" />
                 <line number="49" hits="0" branch="false" />
-                <line number="50" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -19932,7 +20437,7 @@
             <line number="27" hits="0" branch="false" />
             <line number="29" hits="0" branch="false" />
             <line number="33" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="35" hits="0" branch="false" />
+            <line number="34" hits="0" branch="false" />
             <line number="36" hits="0" branch="false" />
             <line number="37" hits="0" branch="false" />
             <line number="38" hits="0" branch="true" condition-coverage="0% (0/2)" />
@@ -19942,9 +20447,8 @@
             <line number="44" hits="0" branch="false" />
             <line number="45" hits="0" branch="false" />
             <line number="46" hits="0" branch="false" />
-            <line number="47" hits="0" branch="false" />
+            <line number="48" hits="0" branch="false" />
             <line number="49" hits="0" branch="false" />
-            <line number="50" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Identity.CreateSsoConfiguration.CreateSsoConfigurationController" filename="/home/runner/work/syki/syki/Back/Features/Identity/CreateSsoConfiguration/CreateSsoConfigurationController.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -22229,7 +22733,7 @@
             <line number="10" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Features.Identity.UpdateRole.UpdateRoleService" filename="/home/runner/work/syki/syki/Back/Features/Identity/UpdateRole/UpdateRoleService.cs" line-rate="0" branch-rate="0" complexity="14">
+        <class name="Estud.Back.Features.Identity.UpdateRole.UpdateRoleService" filename="/home/runner/work/syki/syki/Back/Features/Identity/UpdateRole/UpdateRoleService.cs" line-rate="0" branch-rate="0" complexity="16">
           <methods>
             <method name=".ctor" signature="(Estud.Back.Database.EstudDbContext)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -22258,7 +22762,7 @@
                 <line number="26" hits="0" branch="false" />
               </lines>
             </method>
-            <method name="Update" signature="()" line-rate="0" branch-rate="0" complexity="8">
+            <method name="Update" signature="()" line-rate="0" branch-rate="0" complexity="10">
               <lines>
                 <line number="32" hits="0" branch="true" condition-coverage="0% (0/2)" />
                 <line number="34" hits="0" branch="false" />
@@ -22267,16 +22771,12 @@
                 <line number="39" hits="0" branch="false" />
                 <line number="40" hits="0" branch="false" />
                 <line number="41" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="43" hits="0" branch="false" />
-                <line number="44" hits="0" branch="false" />
-                <line number="45" hits="0" branch="false" />
+                <line number="43" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="44" hits="0" branch="true" condition-coverage="0% (0/2)" />
                 <line number="46" hits="0" branch="false" />
-                <line number="47" hits="0" branch="false" />
-                <line number="49" hits="0" branch="false" />
-                <line number="50" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="52" hits="0" branch="false" />
-                <line number="54" hits="0" branch="false" />
-                <line number="55" hits="0" branch="false" />
+                <line number="48" hits="0" branch="false" />
+                <line number="50" hits="0" branch="false" />
+                <line number="51" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -22303,16 +22803,12 @@
             <line number="39" hits="0" branch="false" />
             <line number="40" hits="0" branch="false" />
             <line number="41" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="43" hits="0" branch="false" />
-            <line number="44" hits="0" branch="false" />
-            <line number="45" hits="0" branch="false" />
+            <line number="43" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="44" hits="0" branch="true" condition-coverage="0% (0/2)" />
             <line number="46" hits="0" branch="false" />
-            <line number="47" hits="0" branch="false" />
-            <line number="49" hits="0" branch="false" />
-            <line number="50" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="52" hits="0" branch="false" />
-            <line number="54" hits="0" branch="false" />
-            <line number="55" hits="0" branch="false" />
+            <line number="48" hits="0" branch="false" />
+            <line number="50" hits="0" branch="false" />
+            <line number="51" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Identity.UpdateSsoConfiguration.UpdateSsoConfigurationController" filename="/home/runner/work/syki/syki/Back/Features/Identity/UpdateSsoConfiguration/UpdateSsoConfigurationController.cs" line-rate="0" branch-rate="1" complexity="2">

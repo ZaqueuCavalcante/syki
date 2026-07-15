@@ -212,6 +212,36 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
     ],
   },
 
+  // Classrooms
+  AccessClassroomsPage: {
+    description: "Acessar a página de salas de aula",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageClassrooms),
+    ],
+  },
+  GetClassroom: {
+    description: "Ver os detalhes de uma sala de aula",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageClassrooms),
+    ],
+  },
+  CreateClassroom: {
+    description: "Criar novas salas de aula",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageClassrooms),
+    ],
+  },
+  UpdateClassroom: {
+    description: "Editar salas de aula",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageClassrooms),
+    ],
+  },
+
   // Teachers
   AccessTeachersPage: {
     description: "Acessar a página de professores",

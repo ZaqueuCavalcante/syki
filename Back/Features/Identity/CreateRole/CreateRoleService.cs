@@ -31,8 +31,8 @@ public class CreateRoleService(EstudDbContext ctx) : IEstudService
     public async Task<OneOf<CreateRoleOut, EstudError>> Create(CreateRoleIn data)
     {
         if (V.Run(data, out var error)) return error;
-
         var institutionId = ctx.RequestUser.InstitutionId;
+
         var upperCaseName = data.Name.Normalize().ToUpperInvariant();
         var roleAlreadyExists = await ctx.Roles.AnyAsync(x => x.OwnerId == institutionId && x.NormalizedName == upperCaseName);
         if (roleAlreadyExists) return RoleNameAlreadyExists.I;
@@ -41,8 +41,7 @@ public class CreateRoleService(EstudDbContext ctx) : IEstudService
         var rolePermissionsOk = role.IsSubsetOf(ctx.RequestUser.Permissions);
         if (!rolePermissionsOk) return InvalidRolePermissions.I;
 
-        var orgRole = new InstitutionRole(institutionId, role);
-        ctx.AddRange(role, orgRole);
+        ctx.Add(role);
         ctx.RecordSuccess(UserActivityType.CreateRole_Success, metadata: new { role.Id });
         await ctx.SaveChangesAsync();
 

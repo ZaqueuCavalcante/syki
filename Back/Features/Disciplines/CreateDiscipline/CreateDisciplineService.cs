@@ -22,13 +22,11 @@ public class CreateDisciplineService(EstudDbContext ctx) : IEstudService
 
         var courses = await ctx.Courses
             .Where(c => c.InstitutionId == ctx.RequestUser.InstitutionId && data.Courses.Contains(c.Id))
-            .Select(c => c.Id)
-            .ToListAsync();
+            .Select(c => c.Id).ToListAsync();
 
         courses.ForEach(id => discipline.Links.Add(new() { CourseId = id }));
 
-        ctx.Add(discipline);
-        await ctx.SaveChangesAsync();
+        await ctx.SaveChangesAsync(discipline);
 
         return new CreateDisciplineOut { Id = discipline.Id };
     }

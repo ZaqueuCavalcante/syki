@@ -19,6 +19,7 @@ const allLinks = [
   { label: 'Matrículas',    icon: 'i-lucide-clipboard-list', to: '/enrollments',        policy: 'AccessEnrollmentsPage'       as PolicyName },
   { label: 'Ofertas',       icon: 'i-lucide-library',        to: '/course-offerings',   policy: 'AccessCourseOfferingsPage'   as PolicyName },
   { label: 'Turmas',        icon: 'i-lucide-door-open',      to: '/classes',            policy: 'AccessClassesPage'           as PolicyName },
+  { label: 'Salas',         icon: 'i-lucide-school',         to: '/classrooms',         policy: 'AccessClassroomsPage'        as PolicyName },
   { label: 'Professores',   icon: 'i-lucide-user-pen',       to: '/teachers',           policy: 'AccessTeachersPage'          as PolicyName },
   { label: 'Alunos',        icon: 'i-lucide-graduation-cap', to: '/students',           policy: 'AccessStudentsPage'          as PolicyName },
   { label: 'Agenda',        icon: 'i-lucide-calendar-days',  to: '/agenda',             policy: 'AccessAgendaPage'            as PolicyName },

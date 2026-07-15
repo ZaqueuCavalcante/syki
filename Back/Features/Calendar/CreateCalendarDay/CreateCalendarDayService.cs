@@ -21,8 +21,8 @@ public class CreateCalendarDayService(EstudDbContext ctx) : IEstudService
     public async Task<OneOf<CreateCalendarDayOut, EstudError>> Create(CreateCalendarDayIn data)
     {
         if (V.Run(data, out var error)) return error;
-
         var institutionId = ctx.RequestUser.InstitutionId;
+
         var date = DateOnly.FromDateTime(data.Date);
 
         var exists = await ctx.CalendarDays.AnyAsync(x => x.InstitutionId == institutionId && x.Date == date);

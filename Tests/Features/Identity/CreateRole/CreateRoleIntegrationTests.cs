@@ -1,3 +1,5 @@
+using Estud.Back.Domain.Identity;
+
 namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
@@ -104,6 +106,62 @@ public partial class IntegrationTests
 
         // Assert
         result.ShouldBeError(RoleNameAlreadyExists.I);
+    }
+
+    [Test]
+    public async Task Identity_CreateRole_Should_not_create_role_with_more_permissions_than_the_user_has()
+    {
+        // Arrange
+        var email = DataGen.Email;
+        var director = await _back.LoggedAsDirector(email);
+
+        var limitedRoleResult = await director.CreateRole(name: "Gerente de Perfis", permissions: [EstudPermissions.ManageRoles.Id]);
+        var limitedRoleId = limitedRoleResult.Success.Id;
+        var userId = director.User.Id;
+
+        await using (var ctx = _back.GetDbContext())
+        {
+            var userRole = await ctx.UserRoles.FirstAsync(x => x.UserId == userId);
+            ctx.Remove(userRole);
+            ctx.Add(new EstudUserRole(userRole.InstitutionId, userRole.UserId, limitedRoleId));
+            await ctx.SaveChangesAsync();
+        }
+
+        var client = await _back.LoginAs(email);
+
+        // Act
+        var result = await client.CreateRole(name: "Super Admin", permissions: [EstudPermissions.ManageRoles.Id, EstudPermissions.ManageSso.Id]);
+
+        // Assert
+        result.ShouldBeError(InvalidRolePermissions.I);
+    }
+
+    [Test]
+    public async Task Identity_CreateRole_Should_not_create_role_when_user_has_none_of_the_role_permissions()
+    {
+        // Arrange
+        var email = DataGen.Email;
+        var director = await _back.LoggedAsDirector(email);
+
+        var limitedRoleResult = await director.CreateRole(name: "Gerente de Perfis", permissions: [EstudPermissions.ManageRoles.Id]);
+        var limitedRoleId = limitedRoleResult.Success.Id;
+        var userId = director.User.Id;
+
+        await using (var ctx = _back.GetDbContext())
+        {
+            var userRole = await ctx.UserRoles.FirstAsync(x => x.UserId == userId);
+            ctx.Remove(userRole);
+            ctx.Add(new EstudUserRole(userRole.InstitutionId, userRole.UserId, limitedRoleId));
+            await ctx.SaveChangesAsync();
+        }
+
+        var client = await _back.LoginAs(email);
+
+        // Act
+        var result = await client.CreateRole(name: "Gerente de Usuários", permissions: [EstudPermissions.ManageUsers.Id]);
+
+        // Assert
+        result.ShouldBeError(InvalidRolePermissions.I);
     }
 
     #endregion

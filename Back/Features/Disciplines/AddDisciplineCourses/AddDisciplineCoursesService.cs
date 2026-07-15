@@ -17,15 +17,15 @@ public class AddDisciplineCoursesService(EstudDbContext ctx) : IEstudService
     public async Task<OneOf<EstudSuccess, EstudError>> Add(AddDisciplineCoursesIn data)
     {
         if (V.Run(data, out var error)) return error;
+        var institutionId = ctx.RequestUser.InstitutionId;
 
         var discipline = await ctx.Disciplines.Include(d => d.Links)
-            .FirstOrDefaultAsync(x => x.InstitutionId == ctx.RequestUser.InstitutionId && x.Id == data.DisciplineId);
+            .FirstOrDefaultAsync(x => x.InstitutionId == institutionId && x.Id == data.DisciplineId);
         if (discipline == null) return DisciplineNotFound.I;
 
         var validCourseIds = await ctx.Courses
-            .Where(c => c.InstitutionId == ctx.RequestUser.InstitutionId && data.Courses.Contains(c.Id))
-            .Select(c => c.Id)
-            .ToListAsync();
+            .Where(c => c.InstitutionId == institutionId && data.Courses.Contains(c.Id))
+            .Select(c => c.Id).ToListAsync();
 
         if (validCourseIds.Count != data.Courses.Count) return InvalidCoursesList.I;
 

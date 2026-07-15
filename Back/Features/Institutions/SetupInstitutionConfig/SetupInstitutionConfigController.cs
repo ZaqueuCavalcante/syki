@@ -7,7 +7,7 @@ public class SetupInstitutionConfigController(SetupInstitutionConfigService serv
     /// Configurar instituição
     /// </summary>
     /// <remarks>
-    /// Define a nota e a frequência mínimas para aprovação nas disciplinas da instituição do usuário logado.
+    /// Define a nota e a frequência mínimas para aprovação nas disciplinas da instituição.
     /// </remarks>
     [HttpPost("institutions/config")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]

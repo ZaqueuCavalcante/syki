@@ -40,14 +40,10 @@ public class UpdateRoleService(EstudDbContext ctx) : IEstudService
         var nameConflict = await ctx.Roles.AnyAsync(r => r.OwnerId == institutionId && r.NormalizedName == upperCaseName && r.Id != data.Id);
         if (nameConflict) return RoleNameAlreadyExists.I;
 
-        role.Name = data.Name;
-        role.NormalizedName = upperCaseName;
-        role.Description = data.Description;
-        role.BaseType = data.BaseType;
-        role.Permissions = data.Permissions;
-
-        var rolePermissionsOk = role.IsSubsetOf(ctx.RequestUser.Permissions);
+        var rolePermissionsOk = role.IsSubsetOf(ctx.RequestUser.Permissions) && data.Permissions.IsSubsetOf(ctx.RequestUser.Permissions);
         if (!rolePermissionsOk) return InvalidRolePermissions.I;
+
+        role.Update(data.Name, upperCaseName, data.Description, data.BaseType, data.Permissions);
 
         await ctx.SaveChangesAsync();
 

@@ -1,6 +1,3 @@
-using Quartz;
-using Estud.Back.Emails;
-using Estud.Back.Webhooks;
 using Estud.Back.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Estud.Tests.Integration.Clients;
@@ -8,59 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Estud.Tests.Base;
 
-public static class BackFactoryExtensions
+public static class BackFactoryIdentity
 {
-    public static TestsHttpClient GetTestsClient(this BackFactory factory)
-    {
-        return new TestsHttpClient(factory.CreateClient());
-    }
-
-    public static ISchedulerFactory GetSchedulerFactory(this BackFactory factory)
-    {
-        var scope = factory.Services.CreateScope();
-        return scope.ServiceProvider.GetRequiredService<ISchedulerFactory>();
-    }
-
-    public static async Task AwaitCommandsProcessing(this BackFactory factory)
-    {
-        await using var ctx = factory.GetDbContext();
-
-        var scheduler = await factory.GetSchedulerFactory().GetScheduler();
-        await scheduler.TriggerCommandsProcessorJob();
-
-        var count = 0;
-        while (true)
-        {
-            if (count == 5) break;
-
-            var commands = await ctx.Commands.CountAsync(x => x.ProcessedAt == null);
-            if (commands == 0) break;
-            await Task.Delay(500);
-            count ++;
-        }
-    }
-
-    public static async Task AwaitWebhookCallsProcessing(this BackFactory factory)
-    {
-        await using var ctx = factory.GetDbContext();
-
-        var scheduler = await factory.GetSchedulerFactory().GetScheduler();
-        await scheduler.TriggerJob(new JobKey(nameof(PendingWebhookCallsProcessor)));
-
-        var count = 0;
-        while (true)
-        {
-            if (count == 10) break;
-
-            var pending = await ctx.WebhookCalls.CountAsync(x => x.Status == WebhookCallStatus.Pending);
-            if (pending == 0) break;
-            await Task.Delay(500);
-            count++;
-        }
-
-        await factory.AwaitCommandsProcessing();
-    }
-
     public static async Task<string?> GetMagicLinkToken(this BackFactory factory, string email)
     {
         await using var ctx = factory.GetDbContext();
@@ -77,17 +23,6 @@ public static class BackFactoryExtensions
         return id == Guid.Empty ? null : id.ToString();
     }
 
-    public static FakeEmailsService GetFakeEmailsService(this BackFactory factory)
-    {
-        return (FakeEmailsService)factory.Services.GetRequiredService<IEmailsService>();
-    }
-
-    public static EstudDbContext GetDbContext(this BackFactory factory)
-    {
-        var scope = factory.Services.CreateScope();
-        return scope.ServiceProvider.GetRequiredService<EstudDbContext>();
-    }
-
     public static async Task SetPassword(this BackFactory factory, string email, string password)
     {
         var scope = factory.Services.CreateScope();
@@ -95,6 +30,23 @@ public static class BackFactoryExtensions
         var user = await userManager.FindByEmailAsync(email);
         var resetToken = await userManager.GeneratePasswordResetTokenAsync(user!);
         await userManager.ResetPasswordAsync(user!, resetToken, password);
+    }
+
+    public static async Task<string?> GetResetPasswordToken(this BackFactory factory, string email)
+    {
+        await using var ctx = factory.GetDbContext();
+
+        var user = await ctx.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
+        if (user == null)
+            return null;
+
+        var id = await ctx.ResetPasswordTokens
+            .Where(r => r.UserId == user.Id && r.UsedAt == null)
+            .OrderByDescending(r => r.CreatedAt)
+            .Select(r => r.Id)
+            .FirstOrDefaultAsync();
+
+        return id == Guid.Empty ? null : id.ToString();
     }
 
     public static async Task<TestsHttpClient> LoggedAsDirector(this BackFactory factory, string? email = null)
@@ -132,7 +84,8 @@ public static class BackFactoryExtensions
         var token = await factory.GetMagicLinkToken(email);
         await client.MagicLinkLogin(token!);
 
-        client.User = new TestsUserDto  { Id = user.Id, InstitutionId = user.InstitutionId, Email = user.Email! };
+        var institutionId = await ctx.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.InstitutionId).FirstAsync();
+        client.User = new TestsUserDto { Id = user.Id, InstitutionId = institutionId, Email = user.Email! };
 
         return client;
     }
@@ -149,25 +102,9 @@ public static class BackFactoryExtensions
         var token = await factory.GetMagicLinkToken(email);
         await client.MagicLinkLogin(token!);
 
-        client.User = new TestsUserDto { Id = user.Id, InstitutionId = user.InstitutionId, Email = user.Email! };
+        var institutionId = await ctx.UserRoles.Where(x => x.UserId == user.Id).Select(x => x.InstitutionId).FirstAsync();
+        client.User = new TestsUserDto { Id = user.Id, InstitutionId = institutionId, Email = user.Email! };
 
         return client;
-    }
-
-    public static async Task<string?> GetResetPasswordToken(this BackFactory factory, string email)
-    {
-        await using var ctx = factory.GetDbContext();
-
-        var user = await ctx.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email);
-        if (user == null)
-            return null;
-
-        var id = await ctx.ResetPasswordTokens
-            .Where(r => r.UserId == user.Id && r.UsedAt == null)
-            .OrderByDescending(r => r.CreatedAt)
-            .Select(r => r.Id)
-            .FirstOrDefaultAsync();
-
-        return id == Guid.Empty ? null : id.ToString();
     }
 }

@@ -18,8 +18,9 @@ public class UpdateCourseService(EstudDbContext ctx) : IEstudService
     public async Task<OneOf<UpdateCourseOut, EstudError>> Update(UpdateCourseIn data)
     {
         if (V.Run(data, out var error)) return error;
+        var institutionId = ctx.RequestUser.InstitutionId;
 
-        var course = await ctx.Courses.FirstOrDefaultAsync(x => x.InstitutionId == ctx.RequestUser.InstitutionId && x.Id == data.Id);
+        var course = await ctx.Courses.FirstOrDefaultAsync(x => x.InstitutionId == institutionId && x.Id == data.Id);
         if (course == null) return CourseNotFound.I;
 
         course.Update(data.Name, data.Type!.Value);

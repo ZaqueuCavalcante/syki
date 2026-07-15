@@ -33,6 +33,9 @@ export const Permissions = {
   // Classes
   ManageClasses: 1000,
 
+  // Classrooms
+  ManageClassrooms: 1300,
+
   // Webhooks
   ManageWebhooks: 1100,
 
@@ -149,6 +152,11 @@ export type PolicyName
     | 'StartClass'
     | 'GetTeacherClass'
     | 'GetStudentClass'
+  // Classrooms
+    | 'AccessClassroomsPage'
+    | 'GetClassroom'
+    | 'CreateClassroom'
+    | 'UpdateClassroom'
   // Security
     | 'AccessSecurityPage'
     | 'AccessRolesPage'

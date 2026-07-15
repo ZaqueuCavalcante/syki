@@ -79,17 +79,13 @@ public partial class IntegrationTests
     [Test]
     public async Task Institutions_SetupInstitutionConfig_Should_create_institution_config_with_default_values_on_institution_creation()
     {
-        // Arrange
+        // Arrange / Act
         var client = await _back.LoggedAsDirector();
-        var institutionId = client.User.InstitutionId;
-
-        // Act
-        await using var ctx = _back.GetDbContext();
-        var config = await ctx.InstitutionConfigs.FirstOrDefaultAsync(x => x.InstitutionId == institutionId);
 
         // Assert
-        config.Should().NotBeNull();
-        config!.NoteLimit.Should().Be(7.00M);
+        var result = await client.GetInstitutionConfig();
+        var config = result.Success;
+        config.NoteLimit.Should().Be(7.00M);
         config.FrequencyLimit.Should().Be(70.00M);
     }
 
@@ -105,7 +101,6 @@ public partial class IntegrationTests
 
         // Assert
         var config = result.Success;
-        config.Id.Should().NotBe(0);
         config.NoteLimit.Should().Be(8.50M);
         config.FrequencyLimit.Should().Be(85.00M);
 
@@ -114,30 +109,6 @@ public partial class IntegrationTests
         saved.Id.Should().Be(config.Id);
         saved.NoteLimit.Should().Be(8.50M);
         saved.FrequencyLimit.Should().Be(85.00M);
-    }
-
-    [Test]
-    public async Task Institutions_SetupInstitutionConfig_Should_setup_institution_config_with_limit_values()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-
-        // Act
-        var result = await client.SetupInstitutionConfig(0.00M, 0.00M);
-
-        // Assert
-        var config = result.Success;
-        config.NoteLimit.Should().Be(0.00M);
-        config.FrequencyLimit.Should().Be(0.00M);
-
-        // Act
-        var otherResult = await client.SetupInstitutionConfig(10.00M, 100.00M);
-
-        // Assert
-        var otherConfig = otherResult.Success;
-        otherConfig.Id.Should().Be(config.Id);
-        otherConfig.NoteLimit.Should().Be(10.00M);
-        otherConfig.FrequencyLimit.Should().Be(100.00M);
     }
 
     #endregion

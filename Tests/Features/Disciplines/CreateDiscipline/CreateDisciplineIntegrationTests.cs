@@ -40,7 +40,7 @@ public partial class IntegrationTests
 
     [Test]
     [TestCase("")]
-    public async Task Disciplines_CreateDiscipline_Should_not_create_Discipline_with_invalid_name(string name)
+    public async Task Disciplines_CreateDiscipline_Should_not_create_discipline_with_invalid_name(string name)
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
@@ -57,7 +57,7 @@ public partial class IntegrationTests
     #region Happy path
 
     [Test]
-    public async Task Disciplines_CreateDiscipline_Should_create_Discipline()
+    public async Task Disciplines_CreateDiscipline_Should_create_discipline()
     {
         // Arrange
         var client = await _back.LoggedAsDirector();

@@ -32,4 +32,11 @@ public class Classroom
         Name = name;
         Capacity = capacity;
     }
+
+    public void Update(int campusId, string name, int capacity)
+    {
+        CampusId = campusId;
+        Name = name;
+        Capacity = capacity;
+    }
 }

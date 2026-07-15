@@ -3,8 +3,8 @@ using Estud.Back.Features.Identity.GetRole;
 using Estud.Back.Features.Identity.GetRoles;
 using Estud.Back.Features.Identity.CreateRole;
 using Estud.Back.Features.Identity.UpdateRole;
-using Estud.Back.Features.Identity.GetPermissions;
 using Estud.Back.Features.Identity.ResetPassword;
+using Estud.Back.Features.Identity.GetPermissions;
 using Estud.Back.Features.Identity.MagicLinkLogin;
 using Estud.Back.Features.Identity.SetupTwoFactor;
 using Estud.Back.Features.Identity.TwoFactorLogin;
@@ -12,10 +12,10 @@ using Estud.Back.Features.Identity.GetTwoFactorKey;
 using Estud.Back.Features.Identity.EmailPasswordLogin;
 using Estud.Back.Features.Identity.GetSsoConfiguration;
 using Estud.Back.Features.Identity.CheckSsoAvailability;
-using Estud.Back.Features.Identity.CheckSocialLoginAvailability;
 using Estud.Back.Features.Identity.CreateSsoConfiguration;
 using Estud.Back.Features.Identity.UpdateSsoConfiguration;
 using Estud.Back.Features.Identity.SendResetPasswordToken;
+using Estud.Back.Features.Identity.CheckSocialLoginAvailability;
 
 namespace Estud.Tests.Integration.Clients;
 

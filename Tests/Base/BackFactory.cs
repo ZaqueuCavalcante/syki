@@ -1,7 +1,11 @@
+using Quartz;
+using Estud.Back.Emails;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Estud.Tests.Integration.Clients;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Estud.Tests.Base;
 
@@ -30,5 +34,27 @@ public class BackFactory : WebApplicationFactory<Back::Program>
 
             config.AddConfiguration(configuration);
         });
+    }
+
+    public TestsHttpClient GetTestsClient()
+    {
+        return new TestsHttpClient(CreateClient());
+    }
+
+    public EstudDbContext GetDbContext()
+    {
+        var scope = Services.CreateScope();
+        return scope.ServiceProvider.GetRequiredService<EstudDbContext>();
+    }
+
+    public ISchedulerFactory GetSchedulerFactory()
+    {
+        var scope = Services.CreateScope();
+        return scope.ServiceProvider.GetRequiredService<ISchedulerFactory>();
+    }
+
+    public FakeEmailsService GetFakeEmailsService()
+    {
+        return (FakeEmailsService)Services.GetRequiredService<IEmailsService>();
     }
 }

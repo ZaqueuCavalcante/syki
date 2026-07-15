@@ -17,8 +17,9 @@ public class UpdateCalendarDayService(EstudDbContext ctx) : IEstudService
     public async Task<OneOf<UpdateCalendarDayOut, EstudError>> Update(UpdateCalendarDayIn data)
     {
         if (V.Run(data, out var error)) return error;
+        var institutionId = ctx.RequestUser.InstitutionId;
 
-        var day = await ctx.CalendarDays.FirstOrDefaultAsync(x => x.InstitutionId == ctx.RequestUser.InstitutionId && x.Id == data.Id);
+        var day = await ctx.CalendarDays.FirstOrDefaultAsync(x => x.InstitutionId == institutionId && x.Id == data.Id);
         if (day == null) return CalendarDayNotFound.I;
 
         day.Update(data.DayType!.Value, data.Description);

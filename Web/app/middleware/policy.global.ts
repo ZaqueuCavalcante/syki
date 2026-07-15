@@ -4,6 +4,7 @@ import type { UserType } from '~/composables/useUserAccount'
 const routePolicies: Record<string, PolicyName> = {
   '/home': 'AccessHomePage',
   '/classes': 'AccessClassesPage',
+  '/classrooms': 'AccessClassroomsPage',
   '/campi': 'AccessCampiPage',
   '/courses': 'AccessCoursesPage',
   '/periods': 'AccessPeriodsPage',
@@ -34,7 +35,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const routePolicy = routePolicies[to.path]
   const isClassDetail = to.path.startsWith('/classes/')
-  if (!routePolicy && !isClassDetail) return
+  const isClassroomDetail = to.path.startsWith('/classrooms/')
+  if (!routePolicy && !isClassDetail && !isClassroomDetail) return
 
   const { account, fetchAccount } = useUserAccount()
 
@@ -46,7 +48,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
     }
   }
 
-  const policyName = routePolicy ?? classDetailPolicies[account.value!.userType]
+  const policyName = routePolicy
+    ?? (isClassroomDetail ? 'GetClassroom' as PolicyName : classDetailPolicies[account.value!.userType])
   if (!policyName) return
 
   const { can } = usePolicy()

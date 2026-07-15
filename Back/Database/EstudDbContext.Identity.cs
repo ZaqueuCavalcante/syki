@@ -29,8 +29,6 @@ public partial class EstudDbContext
         modelBuilder.ApplyConfiguration(new EstudUserTokenDbConfig());
         modelBuilder.ApplyConfiguration(new EstudUserLoginDbConfig());
 
-        modelBuilder.ApplyConfiguration(new InstitutionRoleDbConfig());
-
         modelBuilder.ApplyConfiguration(new SsoConfigurationDbConfig());
         modelBuilder.ApplyConfiguration(new SsoAllowedDomainDbConfig());
 

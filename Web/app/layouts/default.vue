@@ -11,6 +11,7 @@ const { classes: teacherClasses, fetchClasses: fetchTeacherClasses } = useTeache
 
 const allLinks = [
   { label: 'Home',          icon: 'i-lucide-house',          to: '/home',               policy: 'AccessHomePage'              as PolicyName },
+  { label: 'Filhos',        icon: 'i-lucide-users-round',    to: '/children',           policy: 'AccessChildrenPage'          as PolicyName },
   { label: 'Campi',         icon: 'i-lucide-map-pin',        to: '/campi',              policy: 'AccessCampiPage'             as PolicyName },
   { label: 'Disciplinas',   icon: 'i-lucide-book-open',      to: '/disciplines',        policy: 'AccessDisciplinesPage'       as PolicyName },
   { label: 'Cursos',        icon: 'i-lucide-notebook',       to: '/courses',            policy: 'AccessCoursesPage'           as PolicyName },
@@ -131,7 +132,8 @@ const groups = computed(() => [{
 
     <NotificationsSlideover />
 
-    <div class="fixed top-4 right-6 z-50">
+    <div class="fixed top-4 right-6 z-50 flex items-center gap-3">
+      <ChildrenSelector />
       <UChip
         :text="unreadCount > 99 ? '99+' : unreadCount"
         :show="unreadCount > 0"

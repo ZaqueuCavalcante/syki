@@ -49,4 +49,7 @@ public enum PermissionGroup
 
     [Description("Institutions")]
     Institutions = 15,
+
+    [Description("Parents")]
+    Parents = 16,
 }

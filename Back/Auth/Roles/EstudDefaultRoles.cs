@@ -10,7 +10,7 @@ public static class EstudDefaultRoles
 		OwnerId = null,
 		Name = "Diretor",
 		NormalizedName = "DIRETOR",
-		Description = "Gerencia campi, usuários, perfis, SSO, períodos, turmas, cursos, professores, webhooks, alunos, calendário, salas, disciplinas, notificações, ofertas, grades e configurações da instituição.",
+		Description = "Gerencia campi, usuários, perfis, SSO, períodos, turmas, cursos, responsáveis, professores, webhooks, alunos, calendário, salas, disciplinas, notificações, ofertas, grades e configurações da instituição.",
 		BaseType = UserType.Manager,
 		Permissions = [
 			EstudPermissions.ManageSso.Id,
@@ -20,6 +20,7 @@ public static class EstudDefaultRoles
 			EstudPermissions.ManageClasses.Id,
             EstudPermissions.ManagePeriods.Id,
 			EstudPermissions.ManageCourses.Id,
+            EstudPermissions.ManageParents.Id,
 			EstudPermissions.ManageTeachers.Id,
             EstudPermissions.ManageWebhooks.Id,
             EstudPermissions.ManageStudents.Id,
@@ -50,6 +51,16 @@ public static class EstudDefaultRoles
 		NormalizedName = "ALUNO",
 		Description = "Participa das aulas e é avaliado.",
 		BaseType = UserType.Student,
+		Permissions = [],
+	};
+
+	public static EstudRole Parent => new()
+    {
+		OwnerId = null,
+		Name = "Responsável",
+		NormalizedName = "RESPONSAVEL",
+		Description = "Acompanha a vida escolar dos alunos vinculados.",
+		BaseType = UserType.Parent,
 		Permissions = [],
 	};
 }

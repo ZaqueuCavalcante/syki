@@ -37,6 +37,7 @@ public partial class EstudDbContext(DbContextOptions<EstudDbContext> options, Np
         ConfigureClasses(modelBuilder);
         ConfigureCourses(modelBuilder);
         ConfigurePeriods(modelBuilder);
+        ConfigureParents(modelBuilder);
         ConfigureTeachers(modelBuilder);
         ConfigureStudents(modelBuilder);
         ConfigureCommands(modelBuilder);

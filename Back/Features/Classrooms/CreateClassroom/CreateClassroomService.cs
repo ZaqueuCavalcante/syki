@@ -12,7 +12,6 @@ public class CreateClassroomService(EstudDbContext ctx) : IEstudService
         if (!campusOk) return CampusNotFound.I;
 
         var classroom = new Classroom(institutionId, data.CampusId, data.Name, data.Capacity);
-
         await ctx.SaveChangesAsync(classroom);
 
         return new CreateClassroomOut { Id = classroom.Id };

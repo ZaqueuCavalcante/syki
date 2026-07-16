@@ -47,6 +47,9 @@ export const Permissions = {
 
   // Institutions
   ManageInstitutionConfig: 1500,
+
+  // Parents
+  ManageParents: 1600,
 } as const
 
 export type PermissionId = typeof Permissions[keyof typeof Permissions]
@@ -58,6 +61,7 @@ export const UserTypes = {
   Manager: 'Manager',
   Teacher: 'Teacher',
   Student: 'Student',
+  Parent: 'Parent',
 } as const
 
 export type UserTypeValue = typeof UserTypes[keyof typeof UserTypes]
@@ -187,3 +191,5 @@ export type PolicyName
     | 'AccessConfigsPage'
     | 'GetInstitutionConfig'
     | 'SetupInstitutionConfig'
+  // Children
+    | 'AccessChildrenPage'

@@ -89,6 +89,21 @@ public partial class EstudDbContext
         );
     }
 
+    public async Task<EstudRole> GetParentRole()
+    {
+        return await Cache.GetOrCreateAsync(
+            key: $"{CacheKeys.GetParentRole}",
+            state: this,
+            options: new() { Expiration = TimeSpan.FromDays(100) },
+            factory: async (state, ct) =>
+            {
+                return await state.Roles.AsNoTracking()
+                    .Where(x => x.OwnerId == null && x.NormalizedName == EstudDefaultRoles.Parent.NormalizedName)
+                    .FirstAsync(ct);
+            }
+        );
+    }
+
     public async Task<SsoConfiguration?> GetActiveSsoConfigForSchemeAsync(Guid publicId)
     {
         const string sql = @"

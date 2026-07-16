@@ -10,6 +10,7 @@ public static class AuthorizationConfigs
             .AddCampiPolicies()
             .AddCoursesPolicies()
             .AddClassesPolicies()
+            .AddParentsPolicies()
             .AddCalendarPolicies()
             .AddIdentityPolicies()
             .AddTeachersPolicies()

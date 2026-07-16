@@ -11,7 +11,12 @@ public class DataSeeder(EstudDbContext ctx)
 
     private async Task SeedDefaultRoles()
     {
-        ctx.AddRange(EstudDefaultRoles.Director, EstudDefaultRoles.Teacher, EstudDefaultRoles.Student);
+        ctx.AddRange(
+            EstudDefaultRoles.Parent,
+            EstudDefaultRoles.Student,
+            EstudDefaultRoles.Teacher,
+            EstudDefaultRoles.Director
+        );
         await ctx.SaveChangesAsync();
     }
 }

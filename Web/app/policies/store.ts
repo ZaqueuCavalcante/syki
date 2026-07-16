@@ -446,6 +446,14 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
       hasPermission(Permissions.ManageInstitutionConfig),
     ],
   },
+
+  // Children
+  AccessChildrenPage: {
+    description: "Acessar a página de filhos",
+    requirements: [
+      hasUserType(UserTypes.Parent),
+    ],
+  },
 };
 
 export function getPolicy(name: PolicyName): PolicyDefinition {

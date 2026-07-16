@@ -155,6 +155,15 @@ public static class EstudPermissions
         [UserType.Manager]
     );
 
+    // Parents
+    public static readonly EstudPermission ManageParents = new(
+        PermissionGroup.Parents,
+        1600,
+        "Gerenciar responsáveis.",
+        "Criar e editar responsáveis de alunos.",
+        [UserType.Manager]
+    );
+
     public static readonly List<PermissionGroup> Groups = [];
     public static readonly List<EstudPermission> Permissions = [];
     private static readonly Dictionary<int, EstudPermission> ById = [];

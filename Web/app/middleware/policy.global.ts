@@ -20,6 +20,7 @@ const routePolicies: Record<string, PolicyName> = {
   '/agenda': 'AccessAgendaPage',
   '/calendar': 'AccessCalendarPage',
   '/configs': 'AccessConfigsPage',
+  '/children': 'AccessChildrenPage',
 }
 
 // A página de detalhe da turma é a mesma rota para os 3 perfis, mas cada um
@@ -28,6 +29,7 @@ const classDetailPolicies: Record<UserType, PolicyName> = {
   Manager: 'AccessClassesPage',
   Teacher: 'GetTeacherClass',
   Student: 'GetStudentClass',
+  Parent: 'GetStudentClass', // responsável ainda não tem detalhe de turma; a policy exige Student e o redireciona pra /home
 }
 
 export default defineNuxtRouteMiddleware(async (to) => {

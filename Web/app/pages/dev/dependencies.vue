@@ -40,7 +40,7 @@ const nodes: EntityNode[] = [
   { id: 'user', label: 'Usuário', entity: 'EstudUser', group: 'pessoas', deps: [{ id: 'institution' }] },
   { id: 'role', label: 'Perfil de Acesso', entity: 'EstudRole', group: 'pessoas', deps: [{ id: 'institution' }] },
   { id: 'teacher', label: 'Professor', entity: 'EstudTeacher', group: 'pessoas', deps: [{ id: 'institution' }, { id: 'user', kind: 'auto' }], note: 'O usuário do professor é criado automaticamente na mesma operação (CreateTeacher).' },
-  { id: 'student', label: 'Estudante', entity: 'EstudStudent', group: 'pessoas', deps: [{ id: 'institution' }, { id: 'user', kind: 'auto' }], note: 'O usuário do estudante é criado automaticamente na mesma operação (CreateStudent).' },
+  { id: 'student', label: 'Aluno', entity: 'EstudStudent', group: 'pessoas', deps: [{ id: 'institution' }, { id: 'user', kind: 'auto' }], note: 'O usuário do aluno é criado automaticamente na mesma operação (CreateStudent).' },
   { id: 'teacherCampus', label: 'Professor ↔ Campus', entity: 'TeacherCampus', group: 'pessoas', deps: [{ id: 'teacher' }, { id: 'campus' }], note: 'Vínculo do professor com os campi onde pode lecionar.' },
   { id: 'teacherDiscipline', label: 'Professor ↔ Disciplina', entity: 'TeacherDiscipline', group: 'pessoas', deps: [{ id: 'teacher' }, { id: 'discipline' }], note: 'Vínculo do professor com as disciplinas que pode lecionar.' },
 
@@ -58,12 +58,12 @@ const nodes: EntityNode[] = [
   { id: 'schedule', label: 'Horário', entity: 'Schedule', group: 'execucao', deps: [{ id: 'class', kind: 'auto' }], note: 'Criado junto com a turma (lista de horários no CreateClass).' },
   { id: 'classLesson', label: 'Aula', entity: 'ClassLesson', group: 'execucao', deps: [{ id: 'class', kind: 'auto' }], note: 'Geradas automaticamente na criação da turma, a partir dos horários e das datas do período acadêmico.' },
   { id: 'classroomClass', label: 'Sala ↔ Turma', entity: 'ClassroomClass', group: 'execucao', deps: [{ id: 'classroom' }, { id: 'class' }], note: 'Alocação da turma numa sala de aula.' },
-  { id: 'studentCourseEnrollment', label: 'Matrícula em Oferta', entity: 'StudentCourseEnrollment', group: 'execucao', deps: [{ id: 'student' }, { id: 'courseOffering' }], note: 'Matrícula do estudante numa oferta de curso.' },
-  { id: 'classStudent', label: 'Estudante da Turma', entity: 'ClassStudent', group: 'execucao', deps: [{ id: 'class' }, { id: 'student' }], note: 'A turma precisa estar com status "Em matrícula" e ter vagas disponíveis.' },
+  { id: 'studentCourseEnrollment', label: 'Matrícula em Oferta', entity: 'StudentCourseEnrollment', group: 'execucao', deps: [{ id: 'student' }, { id: 'courseOffering' }], note: 'Matrícula do aluno numa oferta de curso.' },
+  { id: 'classStudent', label: 'Aluno da Turma', entity: 'ClassStudent', group: 'execucao', deps: [{ id: 'class' }, { id: 'student' }], note: 'A turma precisa estar com status "Em matrícula" e ter vagas disponíveis.' },
   { id: 'classActivity', label: 'Atividade', entity: 'ClassActivity', group: 'execucao', deps: [{ id: 'class' }], note: 'Criada pelo professor vinculado à turma.' },
-  { id: 'classActivityWork', label: 'Trabalho de Atividade', entity: 'ClassActivityWork', group: 'execucao', deps: [{ id: 'classActivity' }, { id: 'classStudent' }], note: 'Entrega do estudante matriculado na turma.' },
-  { id: 'attendance', label: 'Frequência', entity: 'ClassLessonAttendance', group: 'execucao', deps: [{ id: 'classLesson' }, { id: 'classStudent' }], note: 'Presença do estudante numa aula da turma.' },
-  { id: 'studentClassNote', label: 'Nota do Estudante', entity: 'StudentClassNote', group: 'execucao', deps: [{ id: 'classStudent' }], note: 'Nota do estudante numa turma.' },
+  { id: 'classActivityWork', label: 'Trabalho de Atividade', entity: 'ClassActivityWork', group: 'execucao', deps: [{ id: 'classActivity' }, { id: 'classStudent' }], note: 'Entrega do aluno matriculado na turma.' },
+  { id: 'attendance', label: 'Frequência', entity: 'ClassLessonAttendance', group: 'execucao', deps: [{ id: 'classLesson' }, { id: 'classStudent' }], note: 'Presença do aluno numa aula da turma.' },
+  { id: 'studentClassNote', label: 'Nota do Aluno', entity: 'StudentClassNote', group: 'execucao', deps: [{ id: 'classStudent' }], note: 'Nota do aluno numa turma.' },
 ]
 
 const infraEntities: InfraEntity[] = [
@@ -123,7 +123,7 @@ const complexityTiers: ComplexityTier[] = [
     items: [
       { id: 'classroom', reason: 'Precisa de um Campus (que precisa da instituição). Cadeia curta, sem regra extra.' },
       { id: 'student', reason: 'Como pré-requisito só precisa da instituição, mas a criação é composta: o service cria o EstudUser junto, valida e-mail único no sistema inteiro, atribui role e ainda dispara webhooks.' },
-      { id: 'teacher', reason: 'Mesmo caso do estudante: criação composta com o usuário, e-mail único e role — mais "trabalho" que os anteriores, embora a cadeia seja rasa.' },
+      { id: 'teacher', reason: 'Mesmo caso do aluno: criação composta com o usuário, e-mail único e role — mais "trabalho" que os anteriores, embora a cadeia seja rasa.' },
       { id: 'courseDiscipline', reason: 'Só uma junção, mas exige as duas pontas (Curso e Disciplina) criadas antes.' },
       { id: 'teacherCampus', reason: 'Junção Professor + Campus; simples de criar, porém depende do professor já existir.' },
       { id: 'teacherDiscipline', reason: 'Junção Professor + Disciplina; idem.' },
@@ -142,14 +142,14 @@ const complexityTiers: ComplexityTier[] = [
     subtitle: 'Services com checagens cruzadas e cadeias transitivas longas.',
     items: [
       { id: 'class', reason: 'A criação mais "inteligente" do sistema: exige Disciplina e Período; se informar Professor, valida vínculo com a disciplina (e com o campus, se houver); valida horários; e gera automaticamente todas as Aulas cruzando horários com as datas do período.' },
-      { id: 'studentCourseEnrollment', reason: 'A junção em si é simples, mas transitivamente é uma das cadeias mais longas: Estudante + Oferta completa (campus, curso, grade, disciplinas vinculadas, período) — ~9 entidades antes.' },
+      { id: 'studentCourseEnrollment', reason: 'A junção em si é simples, mas transitivamente é uma das cadeias mais longas: Aluno + Oferta completa (campus, curso, grade, disciplinas vinculadas, período) — ~9 entidades antes.' },
     ],
   },
   {
     title: 'Nível 5 — Exigem estado, não só existência',
     subtitle: 'O pré-requisito é uma transição de estado ou identidade específica.',
     items: [
-      { id: 'classStudent', reason: 'Não basta Turma e Estudante existirem: a turma precisa estar "Em matrícula" (ReleaseClassForEnrollment) e ter vagas disponíveis.' },
+      { id: 'classStudent', reason: 'Não basta Turma e Aluno existirem: a turma precisa estar "Em matrícula" (ReleaseClassForEnrollment) e ter vagas disponíveis.' },
       { id: 'classActivity', reason: 'Precisa da Turma com professor atribuído, e só o próprio professor da turma pode criar (validação de identidade, não só de existência).' },
     ],
   },
@@ -157,9 +157,9 @@ const complexityTiers: ComplexityTier[] = [
     title: 'Nível 6 — Fim da cadeia: dependem de tudo acima',
     subtitle: 'Praticamente todas as entidades acadêmicas precisam existir antes.',
     items: [
-      { id: 'studentClassNote', reason: 'Precisa do estudante já matriculado na turma, que arrasta toda a cadeia anterior.' },
-      { id: 'attendance', reason: 'Precisa de uma Aula (gerada na turma) + estudante matriculado. Na prática exige a turma iniciada.' },
-      { id: 'classActivityWork', reason: 'O mais profundo do grafo: Atividade (turma com professor) + estudante matriculado. Instituição → campus/disciplina/curso/período → professor com vínculos → turma liberada → estudante matriculado → atividade → aí sim o trabalho.' },
+      { id: 'studentClassNote', reason: 'Precisa do aluno já matriculado na turma, que arrasta toda a cadeia anterior.' },
+      { id: 'attendance', reason: 'Precisa de uma Aula (gerada na turma) + aluno matriculado. Na prática exige a turma iniciada.' },
+      { id: 'classActivityWork', reason: 'O mais profundo do grafo: Atividade (turma com professor) + aluno matriculado. Instituição → campus/disciplina/curso/período → professor com vínculos → turma liberada → aluno matriculado → atividade → aí sim o trabalho.' },
     ],
   },
 ]

@@ -36,8 +36,8 @@ public class CreateStudentService(EstudDbContext ctx, UserManager<EstudUser> use
 
         var user = new EstudUser(institutionId, data.Name, email)
         {
-            PhoneNumber = data.PhoneNumber.HasValue() ? data.PhoneNumber : null,
             Birthdate = data.Birthdate,
+            PhoneNumber = data.PhoneNumber.HasValue() ? data.PhoneNumber : null,
         };
         var student = new EstudStudent(user, institutionId, data.Name);
         var userRole = new EstudUserRole(institutionId, user, studentRole.Id);

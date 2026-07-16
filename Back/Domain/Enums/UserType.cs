@@ -8,6 +8,9 @@ public enum UserType
     [Description("Professor")]
     Teacher = 1,
 
-    [Description("Estudante")]
+    [Description("Aluno")]
     Student = 2,
+
+    [Description("Responsável")]
+    Parent = 3,
 }

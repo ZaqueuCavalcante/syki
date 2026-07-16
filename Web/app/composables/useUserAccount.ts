@@ -1,6 +1,6 @@
 import { createSharedComposable } from '@vueuse/core'
 
-export type UserType = 'Manager' | 'Teacher' | 'Student'
+export type UserType = 'Manager' | 'Teacher' | 'Student' | 'Parent'
 
 interface UserAccount {
   id: string

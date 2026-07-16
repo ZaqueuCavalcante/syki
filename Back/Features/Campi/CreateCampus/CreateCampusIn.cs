@@ -14,11 +14,6 @@ public class CreateCampusIn : IApiDto<CreateCampusIn>
     /// </summary>
     public string City { get; set; }
 
-    /// <summary>
-    /// Capacidade total de alunos
-    /// </summary>
-    public int Capacity { get; set; }
-
     public static IEnumerable<(string, CreateCampusIn)> GetExamples() =>
     [
         ("Agreste",
@@ -27,7 +22,6 @@ public class CreateCampusIn : IApiDto<CreateCampusIn>
             Name = "Agreste",
             State = BrazilState.PE,
             City = "Caruaru",
-            Capacity = 150,
         }),
 
         ("Suassuna",
@@ -36,7 +30,6 @@ public class CreateCampusIn : IApiDto<CreateCampusIn>
             Name = "Suassuna",
             State = BrazilState.PE,
             City = "Recife",
-            Capacity = 500,
         }),
     ];
 }

@@ -32,10 +32,10 @@ public partial class IntegrationTests
 
     private static async Task DevCreateCampi(TestsHttpClient client, DevInstitutionData data)
     {
-        data.CampiIds.Add((await client.CreateCampus("Garoa", BrazilState.PE, "Garanhuns", 150)).Success.Id);
-        data.CampiIds.Add((await client.CreateCampus("Sertão", BrazilState.PE, "Petrolina", 500)).Success.Id);
-        data.CampiIds.Add((await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", 750)).Success.Id);
-        data.CampiIds.Add((await client.CreateCampus("Suassuna", BrazilState.PE, "Recife", 1200)).Success.Id);
+        data.CampiIds.Add((await client.CreateCampus("Garoa", BrazilState.PE, "Garanhuns")).Success.Id);
+        data.CampiIds.Add((await client.CreateCampus("Sertão", BrazilState.PE, "Petrolina")).Success.Id);
+        data.CampiIds.Add((await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru")).Success.Id);
+        data.CampiIds.Add((await client.CreateCampus("Suassuna", BrazilState.PE, "Recife")).Success.Id);
     }
 
     private static async Task DevCreateCourses(TestsHttpClient client, DevInstitutionData data)

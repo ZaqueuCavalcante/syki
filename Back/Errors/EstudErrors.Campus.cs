@@ -28,13 +28,6 @@ public class InvalidBrazilState : EstudError
     public override string Message { get; set; } = "Estado inválido.";
 }
 
-public class InvalidCampusCapacity : EstudError
-{
-    public static readonly InvalidCampusCapacity I = new();
-    public override string Code { get; set; } = nameof(InvalidCampusCapacity);
-    public override string Message { get; set; } = "Capacidade inválida (deve ser maior que zero).";
-}
-
 public class InvalidCampusList : EstudError
 {
     public static readonly InvalidCampusList I = new();

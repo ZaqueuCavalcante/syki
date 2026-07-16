@@ -24,6 +24,5 @@ internal class ResponseExamples : ExamplesProvider<CreateCampusOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidCampusName,
     InvalidBrazilState,
-    InvalidCampusCity,
-    InvalidCampusCapacity
+    InvalidCampusCity
 >;

@@ -47,7 +47,7 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus();
 
         // Act
-        var response = await client.UpdateCampus(campus.Success.Id, name, BrazilState.PE, "Bonito", 200);
+        var response = await client.UpdateCampus(campus.Success.Id, name, BrazilState.PE, "Bonito");
 
         // Assert
         response.ShouldBeError(InvalidCampusName.I);
@@ -63,7 +63,7 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus();
 
         // Act
-        var response = await client.UpdateCampus(campus.Success.Id, "Agreste II", state, "Bonito", 200);
+        var response = await client.UpdateCampus(campus.Success.Id, "Agreste II", state, "Bonito");
 
         // Assert
         response.ShouldBeError(InvalidBrazilState.I);
@@ -78,26 +78,10 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus();
 
         // Act
-        var response = await client.UpdateCampus(campus.Success.Id, "Agreste II", BrazilState.PE, city, 200);
+        var response = await client.UpdateCampus(campus.Success.Id, "Agreste II", BrazilState.PE, city);
 
         // Assert
         response.ShouldBeError(InvalidCampusCity.I);
-    }
-
-    [Test]
-    [TestCase(0)]
-    [TestCase(-1)]
-    public async Task Campi_UpdateCampus_Should_not_update_campus_with_invalid_capacity(int capacity)
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-        var campus = await client.CreateCampus();
-
-        // Act
-        var response = await client.UpdateCampus(campus.Success.Id, "Agreste II", BrazilState.PE, "Bonito", capacity);
-
-        // Assert
-        response.ShouldBeError(InvalidCampusCapacity.I);
     }
 
     [Test]
@@ -141,7 +125,7 @@ public partial class IntegrationTests
         var campus = await client.CreateCampus();
 
         // Act
-        var result = await client.UpdateCampus(campus.Success.Id, "Agreste II", BrazilState.PE, "Bonito", 789);
+        var result = await client.UpdateCampus(campus.Success.Id, "Agreste II", BrazilState.PE, "Bonito");
 
         // Assert
         var updated = result.Success;
@@ -149,7 +133,6 @@ public partial class IntegrationTests
         updated.Name.Should().Be("Agreste II");
         updated.State.Should().Be(BrazilState.PE);
         updated.City.Should().Be("Bonito");
-        updated.Capacity.Should().Be(789);
     }
 
     #endregion

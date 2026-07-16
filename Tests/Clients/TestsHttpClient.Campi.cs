@@ -10,10 +10,9 @@ public partial class TestsHttpClient
     public async Task<OneOf<CreateCampusOut, ErrorOut>> CreateCampus(
         string name = "Agreste I",
         BrazilState? state = BrazilState.PE,
-        string city = "Caruaru",
-        int capacity = 100
+        string city = "Caruaru"
     ) {
-        var data = new CreateCampusIn { Name = name, State = state, City = city, Capacity = capacity };
+        var data = new CreateCampusIn { Name = name, State = state, City = city };
         var response = await http.PostAsJsonAsync("/campi", data);
         return await response.Resolve<CreateCampusOut>();
     }
@@ -22,10 +21,9 @@ public partial class TestsHttpClient
         int id,
         string name = "Agreste II",
         BrazilState? state = BrazilState.PE,
-        string city = "Bonito",
-        int capacity = 200
+        string city = "Bonito"
     ) {
-        var data = new UpdateCampusIn { Id = id, Name = name, State = state, City = city, Capacity = capacity };
+        var data = new UpdateCampusIn { Id = id, Name = name, State = state, City = city };
         var response = await http.PutAsJsonAsync("/campi", data);
         return await response.Resolve<UpdateCampusOut>();
     }

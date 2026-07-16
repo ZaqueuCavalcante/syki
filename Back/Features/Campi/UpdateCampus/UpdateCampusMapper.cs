@@ -14,7 +14,6 @@ public static class UpdateCampusMapper
                 Name = campus.Name,
                 City = campus.City,
                 State = campus.State,
-                Capacity = campus.Capacity,
             };
         }
     }

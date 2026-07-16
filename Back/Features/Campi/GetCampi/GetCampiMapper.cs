@@ -14,10 +14,8 @@ public static class GetCampiMapper
                 Name = campus.Name,
                 City = campus.City,
                 State = campus.State,
-                Capacity = campus.Capacity,
                 Students = students,
                 Teachers = teachers,
-                FillRate = campus.Capacity > 0 ? Math.Round(100M * (1M * students / (1M * campus.Capacity)), 2) : 0,
             };
         }
     }

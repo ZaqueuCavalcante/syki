@@ -46,7 +46,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var response = await client.CreateCampus(name, BrazilState.PE, "Caruaru", 123);
+        var response = await client.CreateCampus(name, BrazilState.PE, "Caruaru");
 
         // Assert
         response.ShouldBeError(InvalidCampusName.I);
@@ -61,7 +61,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var response = await client.CreateCampus("Agreste", state, "Caruaru", 123);
+        var response = await client.CreateCampus("Agreste", state, "Caruaru");
 
         // Assert
         response.ShouldBeError(InvalidBrazilState.I);
@@ -75,25 +75,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var response = await client.CreateCampus("Agreste", BrazilState.PE, city, 123);
+        var response = await client.CreateCampus("Agreste", BrazilState.PE, city);
 
         // Assert
         response.ShouldBeError(InvalidCampusCity.I);
-    }
-
-    [Test]
-    [TestCase(0)]
-    [TestCase(-1)]
-    public async Task Campi_CreateCampus_Should_not_create_campus_with_invalid_capacity(int capacity)
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-
-        // Act
-        var response = await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", capacity);
-
-        // Assert
-        response.ShouldBeError(InvalidCampusCapacity.I);
     }
 
     #endregion
@@ -107,7 +92,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var result = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru", 123);
+        var result = await client.CreateCampus("Agreste I", BrazilState.PE, "Caruaru");
 
         // Assert
         var campus = result.Success;

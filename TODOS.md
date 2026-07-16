@@ -15,4 +15,16 @@
 - https://mermaid.js.org/
 
 
+- Organizar a documentação por grupo de tópicos/conceitos
+    - Vão ter coisas que são apenas conceitos
+    - Outras serão guias de como usar/configurar o sistema
+
+- Focar em Turma
+    - Aulas
+    - Agenda
+    - Atividades, entregas e notas
+    - Frequências
+
+- Os dados acima servem de input pra diversas queries, análises, insights e dashboards
+
 

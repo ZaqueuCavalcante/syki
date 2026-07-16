@@ -16,8 +16,6 @@ public class CreateCampusService(EstudDbContext ctx) : IEstudService
 
             RuleFor(x => x.City).NotEmpty().WithError(InvalidCampusCity.I);
             RuleFor(x => x.City).MaximumLength(50).WithError(InvalidCampusCity.I);
-
-            RuleFor(x => x.Capacity).GreaterThan(0).WithError(InvalidCampusCapacity.I);
         }
     }
     private static readonly Validator V = new();
@@ -26,7 +24,7 @@ public class CreateCampusService(EstudDbContext ctx) : IEstudService
     {
         if (V.Run(data, out var error)) return error;
 
-        var campus = new Campus(ctx.RequestUser.InstitutionId, data.Name, data.State!.Value, data.City, data.Capacity);
+        var campus = new Campus(ctx.RequestUser.InstitutionId, data.Name, data.State!.Value, data.City);
         await ctx.SaveChangesAsync(campus);
 
         return new CreateCampusOut { Id = campus.Id };

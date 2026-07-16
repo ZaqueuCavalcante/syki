@@ -44,6 +44,31 @@ Nos comentários XML dos controllers, **sempre** colocar as tags de abertura e f
 /// <remarks>Vincula um aluno a uma oferta de curso, criando uma matrícula.</remarks>
 ```
 
+### LINQ — sempre method syntax, nunca query syntax
+
+**Nunca** usar a query syntax do LINQ (`from ... join ... where ... select ...`). **Sempre** usar method syntax com as navigation properties do EF Core, deixando o EF montar os joins.
+
+**Errado:**
+```csharp
+var schedules = await (
+    from s in ctx.Schedules.AsNoTracking()
+    join c in ctx.Classes.AsNoTracking() on s.ClassId equals (int?)c.Id
+    where s.ClassroomId != null && classroomIds.Contains(s.ClassroomId.Value)
+        && c.Id != id && c.Status != ClassStatus.Finalized
+    select s
+).ToListAsync();
+```
+
+**Correto:**
+```csharp
+var schedules = await ctx.Schedules.AsNoTracking()
+    .Where(s => s.ClassroomId != null && classroomIds.Contains(s.ClassroomId.Value)
+        && s.Class!.Id != id && s.Class.Status != ClassStatus.Finalized)
+    .ToListAsync();
+```
+
+Se não existir navigation property para o relacionamento, criar uma no entity/config em vez de recorrer a `join`.
+
 ## Frontend conventions
 
 ### Zod validation — campos opcionais/undefined

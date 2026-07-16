@@ -7,24 +7,21 @@ public class Campus
     public string Name { get; set; }
     public BrazilState State { get; set; }
     public string City { get; set; }
-    public int Capacity { get; set; }
 
     private Campus() { }
 
-    public Campus(int institutionId, string name, BrazilState state, string city, int capacity)
+    public Campus(int institutionId, string name, BrazilState state, string city)
     {
         InstitutionId = institutionId;
         Name = name;
         State = state;
         City = city;
-        Capacity = capacity;
     }
 
-    public void Update(string name, BrazilState state, string city, int capacity)
+    public void Update(string name, BrazilState state, string city)
     {
         Name = name;
         State = state;
         City = city;
-        Capacity = capacity;
     }
 }

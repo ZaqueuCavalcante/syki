@@ -25,6 +25,5 @@ internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidCampusName,
     InvalidBrazilState,
     InvalidCampusCity,
-    InvalidCampusCapacity,
     CampusNotFound
 >;

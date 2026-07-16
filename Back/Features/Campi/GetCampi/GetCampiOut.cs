@@ -18,18 +18,14 @@ public class GetCampiOut : IApiDto<GetCampiOut>
                     Name = "Agreste",
                     State = BrazilState.PE,
                     City = "Caruaru",
-                    Capacity = 150,
                     Students = 120,
-                    FillRate = 80,
                 },
                 new GetCampiItemOut
                 {
                     Name = "Suassuna",
                     State = BrazilState.PE,
                     City = "Recife",
-                    Capacity = 500,
                     Students = 234,
-                    FillRate = 46.80M,
                 },
             ],
         }),
@@ -53,11 +49,6 @@ public class GetCampiItemOut
     public string City { get; set; }
 
     /// <summary>
-    /// Capacidade total de alunos
-    /// </summary>
-    public int Capacity { get; set; }
-
-    /// <summary>
     /// Total de alunos
     /// </summary>
     public int Students { get; set; }
@@ -66,9 +57,4 @@ public class GetCampiItemOut
     /// Total de professores
     /// </summary>
     public int Teachers { get; set; }
-
-    /// <summary>
-    /// Taxa de ocupação
-    /// </summary>
-    public decimal FillRate { get; set; }
 }

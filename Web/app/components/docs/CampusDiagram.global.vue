@@ -3,7 +3,6 @@ type Campus = {
   name: string
   city: string
   state: string
-  capacity: number
 }
 
 const props = withDefaults(defineProps<{
@@ -12,9 +11,9 @@ const props = withDefaults(defineProps<{
 }>(), {
   institution: 'Instituição',
   campi: () => [
-    { name: 'Campus Central', city: 'Recife', state: 'PE', capacity: 1200 },
-    { name: 'Campus Norte', city: 'Olinda', state: 'PE', capacity: 800 },
-    { name: 'Campus Sul', city: 'Jaboatão', state: 'PE', capacity: 450 }
+    { name: 'Campus Central', city: 'Recife', state: 'PE' },
+    { name: 'Campus Norte', city: 'Olinda', state: 'PE' },
+    { name: 'Campus Sul', city: 'Jaboatão', state: 'PE' }
   ]
 })
 </script>
@@ -75,13 +74,6 @@ const props = withDefaults(defineProps<{
               color="neutral"
               variant="subtle"
               size="sm"
-            />
-            <UBadge
-              :label="`${campus.capacity} vagas`"
-              color="neutral"
-              variant="subtle"
-              size="sm"
-              icon="i-lucide-users"
             />
           </div>
         </div>

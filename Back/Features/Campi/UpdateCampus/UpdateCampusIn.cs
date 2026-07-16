@@ -6,7 +6,6 @@ public class UpdateCampusIn : IApiDto<UpdateCampusIn>
     public string Name { get; set; }
     public BrazilState? State { get; set; }
     public string City { get; set; }
-    public int Capacity { get; set; }
 
     public static IEnumerable<(string, UpdateCampusIn)> GetExamples() =>
     [
@@ -16,7 +15,6 @@ public class UpdateCampusIn : IApiDto<UpdateCampusIn>
             Name = "Agreste",
             State = BrazilState.PE,
             City = "Caruaru",
-            Capacity = 300,
         }),
         ("Suassuna",
         new UpdateCampusIn
@@ -24,7 +22,6 @@ public class UpdateCampusIn : IApiDto<UpdateCampusIn>
             Name = "Suassuna",
             State = BrazilState.PE,
             City = "Recife",
-            Capacity = 820,
         }),
     ];
 }

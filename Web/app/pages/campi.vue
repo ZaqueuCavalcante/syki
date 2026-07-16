@@ -4,10 +4,8 @@ interface CampusItem {
   name: string
   state: string
   city: string
-  capacity: number
   students: number
   teachers: number
-  fillRate: number
 }
 
 interface GetCampiOut {
@@ -29,18 +27,6 @@ const { data, status, refresh } = await useFetch<GetCampiOut>(`${config.public.b
   credentials: 'include',
   server: false
 })
-
-function fillRateColor(rate: number): string {
-  if (rate < 50) return 'var(--ui-error)'
-  if (rate < 80) return 'var(--ui-warning)'
-  return 'var(--ui-success)'
-}
-
-function fillRateBadgeColor(rate: number): 'error' | 'warning' | 'success' {
-  if (rate < 50) return 'error'
-  if (rate < 80) return 'warning'
-  return 'success'
-}
 </script>
 
 <template>
@@ -107,25 +93,8 @@ function fillRateBadgeColor(rate: number): 'error' | 'warning' | 'success' {
                 <span class="text-xs text-muted mt-1">Professores</span>
               </div>
               <div class="flex flex-col px-4">
-                <div class="flex items-baseline gap-1">
-                  <span class="text-2xl font-bold text-highlighted leading-none">{{ campus.students }}</span>
-                  <span class="text-xs text-muted">/{{ campus.capacity.toLocaleString('pt-BR') }}</span>
-                </div>
+                <span class="text-2xl font-bold text-highlighted leading-none">{{ campus.students }}</span>
                 <span class="text-xs text-muted mt-1">Alunos</span>
-              </div>
-            </div>
-
-            <!-- Barra de ocupação -->
-            <div class="px-4 pb-4">
-              <div class="h-1.5 w-full rounded-full bg-accented overflow-hidden">
-                <div
-                  class="h-full rounded-full"
-                  :style="{ width: `${campus.fillRate}%`, backgroundColor: fillRateColor(campus.fillRate) }"
-                />
-              </div>
-              <div class="flex items-center justify-between mt-1">
-                <p class="text-xs text-muted">Taxa de ocupação</p>
-                <UBadge :color="fillRateBadgeColor(campus.fillRate)" variant="subtle" size="sm" :label="`${campus.fillRate}%`" />
               </div>
             </div>
           </div>

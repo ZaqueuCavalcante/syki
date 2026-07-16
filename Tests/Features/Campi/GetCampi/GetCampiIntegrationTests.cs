@@ -44,8 +44,8 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
 
-        await client.CreateCampus("Suassuna", BrazilState.PE, "Recife", 150);
-        await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru", 120);
+        await client.CreateCampus("Suassuna", BrazilState.PE, "Recife");
+        await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru");
 
         // Act
         var result = await client.GetCampi();

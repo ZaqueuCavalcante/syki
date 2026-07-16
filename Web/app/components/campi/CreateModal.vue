@@ -44,50 +44,20 @@ const schema = z.object({
   name: z.string().min(1, 'Nome obrigatório').max(50, 'Máximo 50 caracteres'),
   state: z.string({ error: 'Estado obrigatório' }).min(1, 'Estado obrigatório'),
   city: z.string().min(1, 'Cidade obrigatória').max(50, 'Máximo 50 caracteres'),
-  capacity: z.coerce.number({ error: 'Capacidade obrigatória' }).int().gt(0, 'Deve ser maior que 0').max(999999, 'Máximo 999.999'),
 })
 
 type Schema = z.output<typeof schema>
-
-const capacityDisplay = ref('')
 
 const formState = reactive<Partial<Schema>>({
   name: '',
   state: undefined,
   city: '',
-  capacity: undefined,
 })
-
-function formatCapacity(digits: string): string {
-  return digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-}
-
-const ALLOWED_KEYS = new Set(['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End'])
-
-function onCapacityKeydown(e: KeyboardEvent) {
-  if (ALLOWED_KEYS.has(e.key)) return
-  if (!/^\d$/.test(e.key)) { e.preventDefault(); return }
-  const input = e.target as HTMLInputElement
-  const hasSelection = input.selectionStart !== input.selectionEnd
-  const digitCount = input.value.replace(/\D/g, '').length
-  if (!hasSelection && digitCount >= 6) e.preventDefault()
-}
-
-function onCapacityInput(e: Event) {
-  const input = e.target as HTMLInputElement
-  const digits = input.value.replace(/\D/g, '').slice(0, 6)
-  const formatted = digits ? formatCapacity(digits) : ''
-  capacityDisplay.value = formatted
-  input.value = formatted
-  formState.capacity = digits ? Number(digits) : undefined
-}
 
 function resetForm() {
   formState.name = ''
   formState.state = undefined
   formState.city = ''
-  formState.capacity = undefined
-  capacityDisplay.value = ''
 }
 
 watch(open, (val) => {
@@ -147,18 +117,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             <UInput v-model="formState.city" class="w-full" placeholder="Ex: Caruaru" />
           </UFormField>
         </div>
-
-        <UFormField label="Capacidade" name="capacity">
-          <UInput
-            :model-value="capacityDisplay"
-            type="text"
-            inputmode="numeric"
-            class="w-full"
-            placeholder="Ex: 500"
-            @keydown="onCapacityKeydown"
-            @input="onCapacityInput"
-          />
-        </UFormField>
 
         <div class="flex justify-end gap-2 pt-2">
           <UButton

@@ -112,7 +112,7 @@ const complexityTiers: ComplexityTier[] = [
       { id: 'academicPeriod', reason: 'Mesmo caso: nome e datas válidas.' },
       { id: 'discipline', reason: 'Instituição + nome/código. Validação só de formato.' },
       { id: 'course', reason: 'Instituição + nome/tipo. Validação só de formato.' },
-      { id: 'campus', reason: 'Instituição + nome/estado/cidade/capacidade.' },
+      { id: 'campus', reason: 'Instituição + nome/estado/cidade.' },
       { id: 'role', reason: 'Instituição + nome/permissões; valida unicidade do nome e lista de permissões, mas nada estrutural.' },
       { id: 'institutionConfig', reason: '1:1 com a instituição, só setup.' },
     ],

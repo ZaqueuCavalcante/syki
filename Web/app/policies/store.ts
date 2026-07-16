@@ -447,6 +447,22 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
     ],
   },
 
+  // Parents
+  AccessParentsPage: {
+    description: "Acessar a página de responsáveis",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageParents),
+    ],
+  },
+  CreateParent: {
+    description: "Cadastrar novos responsáveis",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageParents),
+    ],
+  },
+
   // Children
   AccessChildrenPage: {
     description: "Acessar a página de filhos",

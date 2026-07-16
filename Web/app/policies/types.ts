@@ -191,5 +191,8 @@ export type PolicyName
     | 'AccessConfigsPage'
     | 'GetInstitutionConfig'
     | 'SetupInstitutionConfig'
+  // Parents
+    | 'AccessParentsPage'
+    | 'CreateParent'
   // Children
     | 'AccessChildrenPage'

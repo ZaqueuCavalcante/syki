@@ -24,6 +24,9 @@ export function relationshipLabel(relationship: ParentRelationship): string {
   return relationshipLabels[relationship] ?? relationship
 }
 
+export const relationshipOptions = Object.entries(relationshipLabels)
+  .map(([value, label]) => ({ label, value: value as ParentRelationship }))
+
 const _useParentChildren = () => {
   const config = useRuntimeConfig()
   const { account } = useUserAccount()

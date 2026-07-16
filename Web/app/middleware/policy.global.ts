@@ -13,6 +13,7 @@ const routePolicies: Record<string, PolicyName> = {
   '/security': 'AccessSecurityPage',
   '/teachers': 'AccessTeachersPage',
   '/students': 'AccessStudentsPage',
+  '/parents': 'AccessParentsPage',
   '/disciplines': 'AccessDisciplinesPage',
   '/course-offerings': 'AccessCourseOfferingsPage',
   '/course-curriculums': 'AccessCourseCurriculumsPage',

@@ -4,6 +4,7 @@ namespace Estud.Back.Auth.Policies;
 
 public static partial class Policies
 {
+    public const string GetParents = nameof(GetParents);
     public const string CreateParent = nameof(CreateParent);
 
     public const string GetParentStudents = nameof(GetParentStudents);
@@ -11,6 +12,7 @@ public static partial class Policies
     public static AuthorizationBuilder AddParentsPolicies(this AuthorizationBuilder builder)
     {
         builder
+            .AddEstudPolicy(GetParents, UserType.Manager, EstudPermissions.ManageParents)
             .AddEstudPolicy(CreateParent, UserType.Manager, EstudPermissions.ManageParents);
 
         builder

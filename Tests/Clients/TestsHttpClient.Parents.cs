@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using Estud.Back.Features.Parents.GetParents;
 using Estud.Back.Features.Parents.CreateParent;
 using Estud.Back.Features.Parents.GetParentStudents;
 
@@ -6,6 +7,16 @@ namespace Estud.Tests.Integration.Clients;
 
 public partial class TestsHttpClient
 {
+    public async Task<OneOf<GetParentsOut, ErrorOut>> GetParents(
+        string? filter = null,
+        int? page = null,
+        int? pageSize = null
+    ) {
+        var data = new GetParentsIn { Filter = filter, Page = page ?? 1, PageSize = pageSize ?? 10 };
+        var response = await http.GetAsync("/parents".AddQueryString(data));
+        return await response.Resolve<GetParentsOut>();
+    }
+
     public async Task<OneOf<CreateParentOut, ErrorOut>> CreateParent(
         string name,
         string email,

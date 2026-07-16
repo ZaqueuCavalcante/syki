@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.012448921410244227" branch-rate="0.024456521739130436" lines-covered="131" lines-valid="10523" branches-covered="45" branches-valid="1840" complexity="4750" version="0" timestamp="1784221030">
+<coverage line-rate="0.012479756120796418" branch-rate="0.024483133841131665" lines-covered="131" lines-valid="10497" branches-covered="45" branches-valid="1838" complexity="4740" version="0" timestamp="1784239878">
   <sources>
     <source>/</source>
   </sources>
   <packages>
-    <package name="Back" line-rate="0.009402283411685695" branch-rate="0.024536532170119956" complexity="4729">
+    <package name="Back" line-rate="0.00942579590266423" branch-rate="0.024563318777292575" complexity="4719">
       <classes>
         <class name="Estud.Back.Audit.AuditChange" filename="/home/runner/work/syki/syki/Back/Audit/AuditChange.cs" line-rate="0" branch-rate="1" complexity="4">
           <methods>
@@ -6574,7 +6574,7 @@
             <line number="51" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Domain.Campi.Campus" filename="/home/runner/work/syki/syki/Back/Domain/Campi/Campus.cs" line-rate="0" branch-rate="1" complexity="9">
+        <class name="Estud.Back.Domain.Campi.Campus" filename="/home/runner/work/syki/syki/Back/Domain/Campi/Campus.cs" line-rate="0" branch-rate="1" complexity="8">
           <methods>
             <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -6601,34 +6601,27 @@
                 <line number="9" hits="0" branch="false" />
               </lines>
             </method>
-            <method name="get_Capacity" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="Update" signature="(System.String,Estud.Back.Shared.BrazilState,System.String)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="Update" signature="(System.String,Estud.Back.Shared.BrazilState,System.String,System.Int32)" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="false" />
                 <line number="25" hits="0" branch="false" />
                 <line number="26" hits="0" branch="false" />
-                <line number="27" hits="0" branch="false" />
-                <line number="28" hits="0" branch="false" />
-                <line number="29" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="0" branch="false" />
+                <line number="11" hits="0" branch="false" />
               </lines>
             </method>
-            <method name=".ctor" signature="(System.Int32,System.String,Estud.Back.Shared.BrazilState,System.String,System.Int32)" line-rate="0" branch-rate="1" complexity="1">
+            <method name=".ctor" signature="(System.Int32,System.String,Estud.Back.Shared.BrazilState,System.String)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="14" hits="0" branch="false" />
+                <line number="13" hits="0" branch="false" />
+                <line number="15" hits="0" branch="false" />
                 <line number="16" hits="0" branch="false" />
                 <line number="17" hits="0" branch="false" />
                 <line number="18" hits="0" branch="false" />
                 <line number="19" hits="0" branch="false" />
-                <line number="20" hits="0" branch="false" />
-                <line number="21" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -6638,20 +6631,17 @@
             <line number="7" hits="0" branch="false" />
             <line number="8" hits="0" branch="false" />
             <line number="9" hits="0" branch="false" />
-            <line number="10" hits="0" branch="false" />
-            <line number="12" hits="0" branch="false" />
-            <line number="14" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
+            <line number="13" hits="0" branch="false" />
+            <line number="15" hits="0" branch="false" />
             <line number="16" hits="0" branch="false" />
             <line number="17" hits="0" branch="false" />
             <line number="18" hits="0" branch="false" />
             <line number="19" hits="0" branch="false" />
-            <line number="20" hits="0" branch="false" />
-            <line number="21" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="false" />
             <line number="25" hits="0" branch="false" />
             <line number="26" hits="0" branch="false" />
-            <line number="27" hits="0" branch="false" />
-            <line number="28" hits="0" branch="false" />
-            <line number="29" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Domain.Classes.Class" filename="/home/runner/work/syki/syki/Back/Domain/Classes/Class.cs" line-rate="0" branch-rate="0" complexity="23">
@@ -11746,30 +11736,6 @@
             <line number="21" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Errors.InvalidCampusCapacity" filename="/home/runner/work/syki/syki/Back/Errors/EstudErrors.Campus.cs" line-rate="0" branch-rate="1" complexity="3">
-          <methods>
-            <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="34" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Message" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="35" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="33" hits="0" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="33" hits="0" branch="false" />
-            <line number="34" hits="0" branch="false" />
-            <line number="35" hits="0" branch="false" />
-          </lines>
-        </class>
         <class name="Estud.Back.Errors.InvalidCampusCity" filename="/home/runner/work/syki/syki/Back/Errors/EstudErrors.Campus.cs" line-rate="0" branch-rate="1" complexity="3">
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -11798,24 +11764,24 @@
           <methods>
             <method name="get_Code" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="41" hits="0" branch="false" />
+                <line number="34" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Message" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="42" hits="0" branch="false" />
+                <line number="35" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="40" hits="0" branch="false" />
+                <line number="33" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="40" hits="0" branch="false" />
-            <line number="41" hits="0" branch="false" />
-            <line number="42" hits="0" branch="false" />
+            <line number="33" hits="0" branch="false" />
+            <line number="34" hits="0" branch="false" />
+            <line number="35" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Errors.InvalidCampusName" filename="/home/runner/work/syki/syki/Back/Errors/EstudErrors.Campus.cs" line-rate="0" branch-rate="1" complexity="3">
@@ -14773,7 +14739,7 @@
             <line number="19" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Features.Campi.CreateCampus.CreateCampusIn" filename="/home/runner/work/syki/syki/Back/Features/Campi/CreateCampus/CreateCampusIn.cs" line-rate="0" branch-rate="1" complexity="5">
+        <class name="Estud.Back.Features.Campi.CreateCampus.CreateCampusIn" filename="/home/runner/work/syki/syki/Back/Features/Campi/CreateCampus/CreateCampusIn.cs" line-rate="0" branch-rate="1" complexity="4">
           <methods>
             <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -14790,13 +14756,13 @@
                 <line number="15" hits="0" branch="false" />
               </lines>
             </method>
-            <method name="get_Capacity" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="20" hits="0" branch="false" />
-              </lines>
-            </method>
             <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="18" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
+                <line number="20" hits="0" branch="false" />
+                <line number="21" hits="0" branch="false" />
+                <line number="22" hits="0" branch="false" />
                 <line number="23" hits="0" branch="false" />
                 <line number="24" hits="0" branch="false" />
                 <line number="25" hits="0" branch="false" />
@@ -14809,13 +14775,6 @@
                 <line number="32" hits="0" branch="false" />
                 <line number="33" hits="0" branch="false" />
                 <line number="34" hits="0" branch="false" />
-                <line number="35" hits="0" branch="false" />
-                <line number="36" hits="0" branch="false" />
-                <line number="37" hits="0" branch="false" />
-                <line number="38" hits="0" branch="false" />
-                <line number="39" hits="0" branch="false" />
-                <line number="40" hits="0" branch="false" />
-                <line number="41" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -14823,7 +14782,11 @@
             <line number="8" hits="0" branch="false" />
             <line number="10" hits="0" branch="false" />
             <line number="15" hits="0" branch="false" />
+            <line number="18" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
             <line number="20" hits="0" branch="false" />
+            <line number="21" hits="0" branch="false" />
+            <line number="22" hits="0" branch="false" />
             <line number="23" hits="0" branch="false" />
             <line number="24" hits="0" branch="false" />
             <line number="25" hits="0" branch="false" />
@@ -14836,13 +14799,6 @@
             <line number="32" hits="0" branch="false" />
             <line number="33" hits="0" branch="false" />
             <line number="34" hits="0" branch="false" />
-            <line number="35" hits="0" branch="false" />
-            <line number="36" hits="0" branch="false" />
-            <line number="37" hits="0" branch="false" />
-            <line number="38" hits="0" branch="false" />
-            <line number="39" hits="0" branch="false" />
-            <line number="40" hits="0" branch="false" />
-            <line number="41" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Campi.CreateCampus.CreateCampusOut" filename="/home/runner/work/syki/syki/Back/Features/Campi/CreateCampus/CreateCampusOut.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -14876,7 +14832,7 @@
             </method>
             <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="23" hits="0" branch="false" />
+                <line number="21" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -14888,17 +14844,16 @@
                 <line number="15" hits="0" branch="false" />
                 <line number="17" hits="0" branch="false" />
                 <line number="18" hits="0" branch="false" />
-                <line number="20" hits="0" branch="false" />
-                <line number="21" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
               </lines>
             </method>
             <method name="Create" signature="()" line-rate="0" branch-rate="0" complexity="2">
               <lines>
-                <line number="27" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="29" hits="0" branch="false" />
+                <line number="25" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="27" hits="0" branch="false" />
+                <line number="28" hits="0" branch="false" />
                 <line number="30" hits="0" branch="false" />
-                <line number="32" hits="0" branch="false" />
-                <line number="33" hits="0" branch="false" />
+                <line number="31" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -14911,14 +14866,13 @@
             <line number="15" hits="0" branch="false" />
             <line number="17" hits="0" branch="false" />
             <line number="18" hits="0" branch="false" />
-            <line number="20" hits="0" branch="false" />
+            <line number="19" hits="0" branch="false" />
             <line number="21" hits="0" branch="false" />
-            <line number="23" hits="0" branch="false" />
-            <line number="27" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="29" hits="0" branch="false" />
+            <line number="25" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="27" hits="0" branch="false" />
+            <line number="28" hits="0" branch="false" />
             <line number="30" hits="0" branch="false" />
-            <line number="32" hits="0" branch="false" />
-            <line number="33" hits="0" branch="false" />
+            <line number="31" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Campi.GetCampi.CampusEnrollmentDto" filename="/home/runner/work/syki/syki/Back/Features/Campi/GetCampi/GetCampiDtos.cs" line-rate="0" branch-rate="1" complexity="3">
@@ -14967,65 +14921,53 @@
             <line number="18" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Features.Campi.GetCampi.GetCampiItemOut" filename="/home/runner/work/syki/syki/Back/Features/Campi/GetCampi/GetCampiOut.cs" line-rate="0" branch-rate="1" complexity="8">
+        <class name="Estud.Back.Features.Campi.GetCampi.GetCampiItemOut" filename="/home/runner/work/syki/syki/Back/Features/Campi/GetCampi/GetCampiOut.cs" line-rate="0" branch-rate="1" complexity="6">
           <methods>
             <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="41" hits="0" branch="false" />
+                <line number="37" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Name" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="46" hits="0" branch="false" />
+                <line number="42" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_State" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="48" hits="0" branch="false" />
+                <line number="44" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_City" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="53" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_Capacity" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="58" hits="0" branch="false" />
+                <line number="49" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Students" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="63" hits="0" branch="false" />
+                <line number="54" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Teachers" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="68" hits="0" branch="false" />
-              </lines>
-            </method>
-            <method name="get_FillRate" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="73" hits="0" branch="false" />
+                <line number="59" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="41" hits="0" branch="false" />
-            <line number="46" hits="0" branch="false" />
-            <line number="48" hits="0" branch="false" />
-            <line number="53" hits="0" branch="false" />
-            <line number="58" hits="0" branch="false" />
-            <line number="63" hits="0" branch="false" />
-            <line number="68" hits="0" branch="false" />
-            <line number="73" hits="0" branch="false" />
+            <line number="37" hits="0" branch="false" />
+            <line number="42" hits="0" branch="false" />
+            <line number="44" hits="0" branch="false" />
+            <line number="49" hits="0" branch="false" />
+            <line number="54" hits="0" branch="false" />
+            <line number="59" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Features.Campi.GetCampi.GetCampiMapper" filename="/home/runner/work/syki/syki/Back/Features/Campi/GetCampi/GetCampiMapper.cs" line-rate="0" branch-rate="0" complexity="2">
+        <class name="Estud.Back.Features.Campi.GetCampi.GetCampiMapper" filename="/home/runner/work/syki/syki/Back/Features/Campi/GetCampi/GetCampiMapper.cs" line-rate="0" branch-rate="1" complexity="1">
           <methods>
-            <method name="ToGetCampiItemOut" signature="(Estud.Back.Domain.Campi.Campus,System.Int32,System.Int32)" line-rate="0" branch-rate="0" complexity="2">
+            <method name="ToGetCampiItemOut" signature="(Estud.Back.Domain.Campi.Campus,System.Int32,System.Int32)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="11" hits="0" branch="false" />
                 <line number="12" hits="0" branch="false" />
                 <line number="13" hits="0" branch="false" />
                 <line number="14" hits="0" branch="false" />
@@ -15034,13 +14976,11 @@
                 <line number="17" hits="0" branch="false" />
                 <line number="18" hits="0" branch="false" />
                 <line number="19" hits="0" branch="false" />
-                <line number="20" hits="0" branch="false" />
-                <line number="21" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="11" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="11" hits="0" branch="false" />
             <line number="12" hits="0" branch="false" />
             <line number="13" hits="0" branch="false" />
             <line number="14" hits="0" branch="false" />
@@ -15049,8 +14989,6 @@
             <line number="17" hits="0" branch="false" />
             <line number="18" hits="0" branch="false" />
             <line number="19" hits="0" branch="false" />
-            <line number="20" hits="0" branch="false" />
-            <line number="21" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Campi.GetCampi.GetCampiOut" filename="/home/runner/work/syki/syki/Back/Features/Campi/GetCampi/GetCampiOut.cs" line-rate="0" branch-rate="1" complexity="3">
@@ -15091,10 +15029,6 @@
                 <line number="30" hits="0" branch="false" />
                 <line number="31" hits="0" branch="false" />
                 <line number="32" hits="0" branch="false" />
-                <line number="33" hits="0" branch="false" />
-                <line number="34" hits="0" branch="false" />
-                <line number="35" hits="0" branch="false" />
-                <line number="36" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -15125,10 +15059,6 @@
             <line number="30" hits="0" branch="false" />
             <line number="31" hits="0" branch="false" />
             <line number="32" hits="0" branch="false" />
-            <line number="33" hits="0" branch="false" />
-            <line number="34" hits="0" branch="false" />
-            <line number="35" hits="0" branch="false" />
-            <line number="36" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Campi.GetCampi.GetCampiService" filename="/home/runner/work/syki/syki/Back/Features/Campi/GetCampi/GetCampiService.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -15219,7 +15149,7 @@
             <line number="19" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Features.Campi.UpdateCampus.UpdateCampusIn" filename="/home/runner/work/syki/syki/Back/Features/Campi/UpdateCampus/UpdateCampusIn.cs" line-rate="0" branch-rate="1" complexity="6">
+        <class name="Estud.Back.Features.Campi.UpdateCampus.UpdateCampusIn" filename="/home/runner/work/syki/syki/Back/Features/Campi/UpdateCampus/UpdateCampusIn.cs" line-rate="0" branch-rate="1" complexity="5">
           <methods>
             <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -15241,13 +15171,9 @@
                 <line number="8" hits="0" branch="false" />
               </lines>
             </method>
-            <method name="get_Capacity" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="0" branch="false" />
-              </lines>
-            </method>
             <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="11" hits="0" branch="false" />
                 <line number="12" hits="0" branch="false" />
                 <line number="13" hits="0" branch="false" />
                 <line number="14" hits="0" branch="false" />
@@ -15263,9 +15189,6 @@
                 <line number="24" hits="0" branch="false" />
                 <line number="25" hits="0" branch="false" />
                 <line number="26" hits="0" branch="false" />
-                <line number="27" hits="0" branch="false" />
-                <line number="28" hits="0" branch="false" />
-                <line number="29" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -15274,7 +15197,7 @@
             <line number="6" hits="0" branch="false" />
             <line number="7" hits="0" branch="false" />
             <line number="8" hits="0" branch="false" />
-            <line number="9" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
             <line number="12" hits="0" branch="false" />
             <line number="13" hits="0" branch="false" />
             <line number="14" hits="0" branch="false" />
@@ -15290,9 +15213,6 @@
             <line number="24" hits="0" branch="false" />
             <line number="25" hits="0" branch="false" />
             <line number="26" hits="0" branch="false" />
-            <line number="27" hits="0" branch="false" />
-            <line number="28" hits="0" branch="false" />
-            <line number="29" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Campi.UpdateCampus.UpdateCampusMapper" filename="/home/runner/work/syki/syki/Back/Features/Campi/UpdateCampus/UpdateCampusMapper.cs" line-rate="0" branch-rate="1" complexity="1">
@@ -15306,7 +15226,6 @@
                 <line number="15" hits="0" branch="false" />
                 <line number="16" hits="0" branch="false" />
                 <line number="17" hits="0" branch="false" />
-                <line number="18" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -15318,10 +15237,9 @@
             <line number="15" hits="0" branch="false" />
             <line number="16" hits="0" branch="false" />
             <line number="17" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Features.Campi.UpdateCampus.UpdateCampusOut" filename="/home/runner/work/syki/syki/Back/Features/Campi/UpdateCampus/UpdateCampusOut.cs" line-rate="0" branch-rate="1" complexity="6">
+        <class name="Estud.Back.Features.Campi.UpdateCampus.UpdateCampusOut" filename="/home/runner/work/syki/syki/Back/Features/Campi/UpdateCampus/UpdateCampusOut.cs" line-rate="0" branch-rate="1" complexity="5">
           <methods>
             <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -15343,13 +15261,13 @@
                 <line number="17" hits="0" branch="false" />
               </lines>
             </method>
-            <method name="get_Capacity" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="22" hits="0" branch="false" />
-              </lines>
-            </method>
             <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="20" hits="0" branch="false" />
+                <line number="21" hits="0" branch="false" />
+                <line number="22" hits="0" branch="false" />
+                <line number="23" hits="0" branch="false" />
+                <line number="24" hits="0" branch="false" />
                 <line number="25" hits="0" branch="false" />
                 <line number="26" hits="0" branch="false" />
                 <line number="27" hits="0" branch="false" />
@@ -15361,13 +15279,6 @@
                 <line number="33" hits="0" branch="false" />
                 <line number="34" hits="0" branch="false" />
                 <line number="35" hits="0" branch="false" />
-                <line number="36" hits="0" branch="false" />
-                <line number="37" hits="0" branch="false" />
-                <line number="38" hits="0" branch="false" />
-                <line number="39" hits="0" branch="false" />
-                <line number="40" hits="0" branch="false" />
-                <line number="41" hits="0" branch="false" />
-                <line number="42" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -15376,7 +15287,11 @@
             <line number="10" hits="0" branch="false" />
             <line number="12" hits="0" branch="false" />
             <line number="17" hits="0" branch="false" />
+            <line number="20" hits="0" branch="false" />
+            <line number="21" hits="0" branch="false" />
             <line number="22" hits="0" branch="false" />
+            <line number="23" hits="0" branch="false" />
+            <line number="24" hits="0" branch="false" />
             <line number="25" hits="0" branch="false" />
             <line number="26" hits="0" branch="false" />
             <line number="27" hits="0" branch="false" />
@@ -15388,13 +15303,6 @@
             <line number="33" hits="0" branch="false" />
             <line number="34" hits="0" branch="false" />
             <line number="35" hits="0" branch="false" />
-            <line number="36" hits="0" branch="false" />
-            <line number="37" hits="0" branch="false" />
-            <line number="38" hits="0" branch="false" />
-            <line number="39" hits="0" branch="false" />
-            <line number="40" hits="0" branch="false" />
-            <line number="41" hits="0" branch="false" />
-            <line number="42" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Campi.UpdateCampus.UpdateCampusService" filename="/home/runner/work/syki/syki/Back/Features/Campi/UpdateCampus/UpdateCampusService.cs" line-rate="0" branch-rate="0" complexity="7">
@@ -15406,7 +15314,7 @@
             </method>
             <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="21" hits="0" branch="false" />
+                <line number="19" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -15418,19 +15326,18 @@
                 <line number="13" hits="0" branch="false" />
                 <line number="15" hits="0" branch="false" />
                 <line number="16" hits="0" branch="false" />
-                <line number="18" hits="0" branch="false" />
-                <line number="19" hits="0" branch="false" />
+                <line number="17" hits="0" branch="false" />
               </lines>
             </method>
             <method name="Update" signature="()" line-rate="0" branch-rate="0" complexity="4">
               <lines>
-                <line number="25" hits="0" branch="true" condition-coverage="0% (0/2)" />
-                <line number="27" hits="0" branch="false" />
-                <line number="28" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="25" hits="0" branch="false" />
+                <line number="26" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="28" hits="0" branch="false" />
                 <line number="30" hits="0" branch="false" />
                 <line number="32" hits="0" branch="false" />
-                <line number="34" hits="0" branch="false" />
-                <line number="35" hits="0" branch="false" />
+                <line number="33" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -15443,16 +15350,15 @@
             <line number="13" hits="0" branch="false" />
             <line number="15" hits="0" branch="false" />
             <line number="16" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
+            <line number="17" hits="0" branch="false" />
             <line number="19" hits="0" branch="false" />
-            <line number="21" hits="0" branch="false" />
-            <line number="25" hits="0" branch="true" condition-coverage="0% (0/2)" />
-            <line number="27" hits="0" branch="false" />
-            <line number="28" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="23" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="25" hits="0" branch="false" />
+            <line number="26" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="28" hits="0" branch="false" />
             <line number="30" hits="0" branch="false" />
             <line number="32" hits="0" branch="false" />
-            <line number="34" hits="0" branch="false" />
-            <line number="35" hits="0" branch="false" />
+            <line number="33" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Classes.CreateClass.CreateClassController" filename="/home/runner/work/syki/syki/Back/Features/Classes/CreateClass/CreateClassController.cs" line-rate="0" branch-rate="1" complexity="2">

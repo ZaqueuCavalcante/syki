@@ -1,8 +1,8 @@
 using System.Net.Http.Json;
 using Estud.Back.Features.CourseCurriculums.GetCourseCurriculum;
-using Estud.Back.Features.CourseCurriculums.EditCourseCurriculum;
 using Estud.Back.Features.CourseCurriculums.GetCourseCurriculums;
 using Estud.Back.Features.CourseCurriculums.CreateCourseCurriculum;
+using Estud.Back.Features.CourseCurriculums.UpdateCourseCurriculum;
 
 namespace Estud.Tests.Integration.Clients;
 
@@ -18,12 +18,12 @@ public partial class TestsHttpClient
         return await response.Resolve<CreateCourseCurriculumOut>();
     }
 
-    public async Task<OneOf<SuccessOut, ErrorOut>> EditCourseCurriculum(
+    public async Task<OneOf<SuccessOut, ErrorOut>> UpdateCourseCurriculum(
         int id,
         string name = "Grade 2024",
-        List<EditCourseCurriculumDisciplineIn>? disciplines = null
+        List<UpdateCourseCurriculumDisciplineIn>? disciplines = null
     ) {
-        var data = new EditCourseCurriculumIn { Id = id, Name = name, Disciplines = disciplines ?? [] };
+        var data = new UpdateCourseCurriculumIn { Id = id, Name = name, Disciplines = disciplines ?? [] };
         var response = await http.PutAsJsonAsync("/course-curriculums", data);
         return await response.Resolve<SuccessOut>();
     }

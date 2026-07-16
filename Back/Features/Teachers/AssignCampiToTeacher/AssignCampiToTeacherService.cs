@@ -4,14 +4,12 @@ public class AssignCampiToTeacherService(EstudDbContext ctx) : IEstudService
 {
     public async Task<OneOf<EstudSuccess, EstudError>> Assign(int id, AssignCampiToTeacherIn data)
     {
-        var teacher = await ctx.Teachers.Include(t => t.Campi)
-            .FirstOrDefaultAsync(t => t.InstitutionId == ctx.RequestUser.InstitutionId && t.Id == id);
+        var institutionId = ctx.RequestUser.InstitutionId;
+
+        var teacher = await ctx.Teachers.Include(t => t.Campi).FirstOrDefaultAsync(t => t.InstitutionId == institutionId && t.Id == id);
         if (teacher == null) return TeacherNotFound.I;
 
-        var campi = await ctx.Campi
-            .Where(c => c.InstitutionId == ctx.RequestUser.InstitutionId && data.Campi.Contains(c.Id))
-            .ToListAsync();
-
+        var campi = await ctx.Campi.Where(c => c.InstitutionId == institutionId && data.Campi.Contains(c.Id)).ToListAsync();
         if (campi.Count != data.Campi.Count) return InvalidCampusList.I;
 
         teacher.Campi = campi;

@@ -1,36 +1,7 @@
-using Estud.Tests.Integration.Clients;
-
 namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    private async Task<int> CreateOnEnrollmentClass(TestsHttpClient client, int vacancies = 40)
-    {
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id, vacancies: vacancies)).Success;
-
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
-        await client.ReleaseClassForEnrollment(@class.Id);
-
-        return @class.Id;
-    }
-
-    private async Task FinalizeEnrollmentPeriodOf(int classId)
-    {
-        await using var ctx = _back.GetDbContext();
-
-        var institutionId = await ctx.Classes
-            .Where(c => c.Id == classId)
-            .Select(c => c.InstitutionId)
-            .FirstAsync();
-
-        var enrollmentPeriod = await ctx.EnrollmentPeriods.FirstAsync(p => p.InstitutionId == institutionId);
-        enrollmentPeriod.EndAt = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(-1);
-        await ctx.SaveChangesAsync();
-    }
-
     #region Authentication
 
     [Test]
@@ -117,11 +88,18 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
-        var classId = await CreateOnEnrollmentClass(client);
-        await client.AssignStudentToClass(student.Id, classId);
+        var discipline = (await client.CreateDiscipline()).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
+        await client.ReleaseClassForEnrollment(@class.Id);
+
+        await client.AssignStudentToClass(student.Id, @class.Id);
 
         // Act
-        var result = await client.AssignStudentToClass(student.Id, classId);
+        var result = await client.AssignStudentToClass(student.Id, @class.Id);
 
         // Assert
         result.ShouldBeError(StudentAlreadyEnrolledInClass.I);
@@ -134,11 +112,18 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
         var studentA = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
         var studentB = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
-        var classId = await CreateOnEnrollmentClass(client, vacancies: 1);
-        await client.AssignStudentToClass(studentA.Id, classId);
+        var discipline = (await client.CreateDiscipline()).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var @class = (await client.CreateClass(discipline.Id, period.Id, vacancies: 1)).Success;
+
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
+        await client.ReleaseClassForEnrollment(@class.Id);
+
+        await client.AssignStudentToClass(studentA.Id, @class.Id);
 
         // Act
-        var result = await client.AssignStudentToClass(studentB.Id, classId);
+        var result = await client.AssignStudentToClass(studentB.Id, @class.Id);
 
         // Assert
         result.ShouldBeError(NoVacanciesInClass.I);
@@ -154,16 +139,22 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
-        var classId = await CreateOnEnrollmentClass(client);
+        var discipline = (await client.CreateDiscipline()).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
+        await client.ReleaseClassForEnrollment(@class.Id);
 
         // Act
-        var result = await client.AssignStudentToClass(student.Id, classId);
+        var result = await client.AssignStudentToClass(student.Id, @class.Id);
 
         // Assert
         result.ShouldBeSuccess();
 
         await using var db = _back.GetDbContext();
-        var link = await db.ClassStudents.FirstAsync(x => x.ClassId == classId && x.StudentId == student.Id);
+        var link = await db.ClassStudents.FirstAsync(x => x.ClassId == @class.Id && x.StudentId == student.Id);
         link.Status.Should().Be(StudentClassStatus.Matriculado);
     }
 

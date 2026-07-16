@@ -49,6 +49,13 @@ public class AcademicPeriodAlreadyExists : EstudError
     public override string Message { get; set; } = "Já existe um período acadêmico com esse id.";
 }
 
+public class EnrollmentPeriodNotFound : EstudError
+{
+    public static readonly EnrollmentPeriodNotFound I = new();
+    public override string Code { get; set; } = nameof(EnrollmentPeriodNotFound);
+    public override string Message { get; set; } = "Período de matrícula não encontrado.";
+}
+
 public class EnrollmentPeriodAlreadyExists : EstudError
 {
     public static readonly EnrollmentPeriodAlreadyExists I = new();

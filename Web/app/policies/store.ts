@@ -382,7 +382,7 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
   AccessAgendaPage: {
     description: "Acessar a página de agenda",
     requirements: [
-      hasAnyUserType(UserTypes.Teacher, UserTypes.Student),
+      hasAnyUserType(UserTypes.Teacher, UserTypes.Student, UserTypes.Parent),
     ],
   },
 

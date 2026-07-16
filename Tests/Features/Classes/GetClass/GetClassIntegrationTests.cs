@@ -83,11 +83,18 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
-        var classId = await CreateOnEnrollmentClass(client);
-        await client.AssignStudentToClass(student.Id, classId);
+        var discipline = (await client.CreateDiscipline()).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
+        await client.ReleaseClassForEnrollment(@class.Id);
+
+        await client.AssignStudentToClass(student.Id, @class.Id);
 
         // Act
-        var result = await client.GetClass(classId);
+        var result = await client.GetClass(@class.Id);
 
         // Assert
         var details = result.Success;
@@ -102,12 +109,18 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var classId = await CreateOnEnrollmentClass(client);
+        var discipline = (await client.CreateDiscipline()).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
 
-        await FinalizeEnrollmentPeriodOf(classId);
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        var enrollmentPeriod = (await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2))).Success;
+        await client.ReleaseClassForEnrollment(@class.Id);
+
+        await client.UpdateEnrollmentPeriod(enrollmentPeriod.Id, startAt: today.AddDays(-2), endAt: today.AddDays(-1));
 
         // Act
-        var result = await client.GetClass(classId);
+        var result = await client.GetClass(@class.Id);
 
         // Assert
         result.Success.Status.Should().Be(ClassStatus.AwaitingStart);

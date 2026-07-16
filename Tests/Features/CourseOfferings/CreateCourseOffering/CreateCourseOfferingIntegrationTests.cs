@@ -65,6 +65,22 @@ public partial class IntegrationTests
     }
 
     [Test]
+    public async Task CourseOfferings_CreateCourseOffering_Should_not_create_course_offering_with_other_institution_campus()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+
+        var otherClient = await _back.LoggedAsDirector();
+        var otherCampus = (await otherClient.CreateCampus()).Success;
+
+        // Act
+        var result = await client.CreateCourseOffering(otherCampus.Id, 1, 1, 1);
+
+        // Assert
+        result.ShouldBeError(CampusNotFound.I);
+    }
+
+    [Test]
     public async Task CourseOfferings_CreateCourseOffering_Should_not_create_course_offering_with_course_not_found()
     {
         // Arrange
@@ -73,6 +89,23 @@ public partial class IntegrationTests
 
         // Act
         var result = await client.CreateCourseOffering(campus.Id, 99999, 1, 1);
+
+        // Assert
+        result.ShouldBeError(CourseNotFound.I);
+    }
+
+    [Test]
+    public async Task CourseOfferings_CreateCourseOffering_Should_not_create_course_offering_with_other_institution_course()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var campus = (await client.CreateCampus()).Success;
+
+        var otherClient = await _back.LoggedAsDirector();
+        var otherCourse = (await otherClient.CreateCourse()).Success;
+
+        // Act
+        var result = await client.CreateCourseOffering(campus.Id, otherCourse.Id, 1, 1);
 
         // Assert
         result.ShouldBeError(CourseNotFound.I);
@@ -94,6 +127,43 @@ public partial class IntegrationTests
     }
 
     [Test]
+    public async Task CourseOfferings_CreateCourseOffering_Should_not_create_course_offering_with_other_institution_course_curriculum()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var campus = (await client.CreateCampus()).Success;
+        var course = (await client.CreateCourse()).Success;
+
+        var otherClient = await _back.LoggedAsDirector();
+        var otherCourse = (await otherClient.CreateCourse()).Success;
+        var otherCurriculum = (await otherClient.CreateCourseCurriculum(otherCourse.Id)).Success;
+
+        // Act
+        var result = await client.CreateCourseOffering(campus.Id, course.Id, otherCurriculum.Id, 1);
+
+        // Assert
+        result.ShouldBeError(CourseCurriculumNotFound.I);
+    }
+
+    [Test]
+    public async Task CourseOfferings_CreateCourseOffering_Should_not_create_course_offering_with_course_curriculum_from_another_course()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var campus = (await client.CreateCampus()).Success;
+        var course = (await client.CreateCourse()).Success;
+
+        var anotherCourse = (await client.CreateCourse("Direito")).Success;
+        var anotherCourseCurriculum = (await client.CreateCourseCurriculum(anotherCourse.Id)).Success;
+
+        // Act
+        var result = await client.CreateCourseOffering(campus.Id, course.Id, anotherCourseCurriculum.Id, 1);
+
+        // Assert
+        result.ShouldBeError(CourseCurriculumNotFound.I);
+    }
+
+    [Test]
     public async Task CourseOfferings_CreateCourseOffering_Should_not_create_course_offering_with_academic_period_not_found()
     {
         // Arrange
@@ -104,6 +174,25 @@ public partial class IntegrationTests
 
         // Act
         var result = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, 99999);
+
+        // Assert
+        result.ShouldBeError(AcademicPeriodNotFound.I);
+    }
+
+    [Test]
+    public async Task CourseOfferings_CreateCourseOffering_Should_not_create_course_offering_with_other_institution_academic_period()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var campus = (await client.CreateCampus()).Success;
+        var course = (await client.CreateCourse()).Success;
+        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
+
+        var otherClient = await _back.LoggedAsDirector();
+        var otherPeriod = (await otherClient.CreateAcademicPeriod("2024.1")).Success;
+
+        // Act
+        var result = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, otherPeriod.Id);
 
         // Assert
         result.ShouldBeError(AcademicPeriodNotFound.I);

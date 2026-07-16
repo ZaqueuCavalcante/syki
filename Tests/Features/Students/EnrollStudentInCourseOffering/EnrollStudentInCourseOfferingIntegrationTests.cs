@@ -1,20 +1,7 @@
-using Estud.Tests.Integration.Clients;
-
 namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
 {
-    private static async Task<int> CreateCourseOfferingFor(TestsHttpClient client)
-    {
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var offering = (await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
-
-        return offering.Id;
-    }
-
     #region Authentication
 
     [Test]
@@ -56,10 +43,14 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var offeringId = await CreateCourseOfferingFor(client);
+        var campus = (await client.CreateCampus()).Success;
+        var course = (await client.CreateCourse()).Success;
+        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var offering = (await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
 
         // Act
-        var result = await client.EnrollStudentInCourseOffering(999999, offeringId);
+        var result = await client.EnrollStudentInCourseOffering(999999, offering.Id);
 
         // Assert
         result.ShouldBeError(StudentNotFound.I);
@@ -85,11 +76,15 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
-        var offeringId = await CreateCourseOfferingFor(client);
-        await client.EnrollStudentInCourseOffering(student.Id, offeringId);
+        var campus = (await client.CreateCampus()).Success;
+        var course = (await client.CreateCourse()).Success;
+        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var offering = (await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
+        await client.EnrollStudentInCourseOffering(student.Id, offering.Id);
 
         // Act
-        var result = await client.EnrollStudentInCourseOffering(student.Id, offeringId);
+        var result = await client.EnrollStudentInCourseOffering(student.Id, offering.Id);
 
         // Assert
         result.ShouldBeError(StudentAlreadyEnrolledInCourseOffering.I);
@@ -103,10 +98,14 @@ public partial class IntegrationTests
         var student = (await otherClient.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
 
         var client = await _back.LoggedAsDirector();
-        var offeringId = await CreateCourseOfferingFor(client);
+        var campus = (await client.CreateCampus()).Success;
+        var course = (await client.CreateCourse()).Success;
+        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var offering = (await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
 
         // Act
-        var result = await client.EnrollStudentInCourseOffering(student.Id, offeringId);
+        var result = await client.EnrollStudentInCourseOffering(student.Id, offering.Id);
 
         // Assert
         result.ShouldBeError(StudentNotFound.I);
@@ -117,13 +116,17 @@ public partial class IntegrationTests
     {
         // Arrange
         var otherClient = await _back.LoggedAsDirector();
-        var offeringId = await CreateCourseOfferingFor(otherClient);
+        var campus = (await otherClient.CreateCampus()).Success;
+        var course = (await otherClient.CreateCourse()).Success;
+        var curriculum = (await otherClient.CreateCourseCurriculum(course.Id)).Success;
+        var period = (await otherClient.CreateAcademicPeriod()).Success;
+        var offering = (await otherClient.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
 
         var client = await _back.LoggedAsDirector();
         var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
 
         // Act
-        var result = await client.EnrollStudentInCourseOffering(student.Id, offeringId);
+        var result = await client.EnrollStudentInCourseOffering(student.Id, offering.Id);
 
         // Assert
         result.ShouldBeError(CourseOfferingNotFound.I);
@@ -139,17 +142,20 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
-        var offeringId = await CreateCourseOfferingFor(client);
+        var campus = (await client.CreateCampus()).Success;
+        var course = (await client.CreateCourse()).Success;
+        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var offering = (await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
 
         // Act
-        var result = await client.EnrollStudentInCourseOffering(student.Id, offeringId);
+        var result = await client.EnrollStudentInCourseOffering(student.Id, offering.Id);
 
         // Assert
         result.Success.Id.Should().BePositive();
 
         await using var db = _back.GetDbContext();
-        var enrollment = await db.StudentCourseEnrollments
-            .FirstAsync(x => x.StudentId == student.Id && x.CourseOfferingId == offeringId);
+        var enrollment = await db.StudentCourseEnrollments.FirstAsync(x => x.StudentId == student.Id && x.CourseOfferingId == offering.Id);
         enrollment.EnrolledAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromMinutes(1));
         enrollment.LeftAt.Should().BeNull();
     }

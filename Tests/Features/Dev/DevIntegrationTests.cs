@@ -1,4 +1,5 @@
 using Estud.Tests.Integration.Clients;
+using Estud.Back.Features.Parents.CreateParent;
 using Estud.Back.Features.CourseCurriculums.CreateCourseCurriculum;
 
 namespace Estud.Tests.Integration;
@@ -26,6 +27,7 @@ public partial class IntegrationTests
 
         await DevCreateCourseOfferings(client, data);
         await DevCreateStudents(client, data);
+        await DevCreateParents(client, data);
     }
 
     private static async Task DevCreateCampi(TestsHttpClient client, DevInstitutionData data)
@@ -351,6 +353,7 @@ public partial class IntegrationTests
         {
             var result = await client.CreateStudent(student.Name, student.Email);
             await client.EnrollStudentInCourseOffering(result.Success.Id, data.AdsCourseOfferingId);
+            data.AdsStudentsIds.Add(result.Success.Id);
         }
 
         (string Name, string Email)[] direitoStudents =
@@ -366,6 +369,16 @@ public partial class IntegrationTests
             await client.EnrollStudentInCourseOffering(result.Success.Id, data.DireitoCourseOfferingId);
         }
     }
+
+    private static async Task DevCreateParents(TestsHttpClient client, DevInstitutionData data)
+    {
+        List<CreateParentStudentIn> students = [
+            new() { StudentId = data.AdsStudentsIds[0], Relationship = ParentRelationship.Mother },
+            new() { StudentId = data.AdsStudentsIds[1], Relationship = ParentRelationship.Mother },
+        ];
+
+        await client.CreateParent("Anna Torvalds", "parent@gmail.com", students, "81988887777");
+    }
 }
 
 internal class DevInstitutionData
@@ -380,4 +393,6 @@ internal class DevInstitutionData
     public int AcademicPeriodId { get; set; }
     public int AdsCourseOfferingId { get; set; }
     public int DireitoCourseOfferingId { get; set; }
+
+    public List<int> AdsStudentsIds { get; set; } = [];
 }

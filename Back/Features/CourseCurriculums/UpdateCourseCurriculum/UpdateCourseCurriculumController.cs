@@ -1,7 +1,7 @@
-namespace Estud.Back.Features.CourseCurriculums.EditCourseCurriculum;
+namespace Estud.Back.Features.CourseCurriculums.UpdateCourseCurriculum;
 
-[ApiController, Authorize(Policies.EditCourseCurriculum)]
-public class EditCourseCurriculumController(EditCourseCurriculumService service) : ControllerBase
+[ApiController, Authorize(Policies.UpdateCourseCurriculum)]
+public class UpdateCourseCurriculumController(UpdateCourseCurriculumService service) : ControllerBase
 {
     /// <summary>
     /// Editar grade curricular
@@ -12,14 +12,14 @@ public class EditCourseCurriculumController(EditCourseCurriculumService service)
     [HttpPut("course-curriculums")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
-    public async Task<IActionResult> Edit([FromBody] EditCourseCurriculumIn data)
+    public async Task<IActionResult> Update([FromBody] UpdateCourseCurriculumIn data)
     {
-        var result = await service.Edit(data);
+        var result = await service.Update(data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
-internal class RequestExamples : ExamplesProvider<EditCourseCurriculumIn>;
+internal class RequestExamples : ExamplesProvider<UpdateCourseCurriculumIn>;
 internal class ResponseExamples : ExamplesProvider<SuccessOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     CourseCurriculumNotFound,

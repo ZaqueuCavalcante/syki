@@ -81,7 +81,13 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        await CreateOnEnrollmentClass(client);
+        var discipline = (await client.CreateDiscipline()).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
+        await client.ReleaseClassForEnrollment(@class.Id);
 
         // Act
         var result = await client.GetClasses();
@@ -95,20 +101,26 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var classId = await CreateOnEnrollmentClass(client);
+        var discipline = (await client.CreateDiscipline()).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
 
-        await FinalizeEnrollmentPeriodOf(classId);
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        var enrollmentPeriod = (await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2))).Success;
+        await client.ReleaseClassForEnrollment(@class.Id);
+
+        await client.UpdateEnrollmentPeriod(enrollmentPeriod.Id, startAt: today.AddDays(-2), endAt: today.AddDays(-1));
 
         // Act
         var result = await client.GetClasses();
 
         // Assert
-        var item = result.Success.Items.First(x => x.Id == classId);
+        var item = result.Success.Items.First(x => x.Id == @class.Id);
         item.Status.Should().Be(ClassStatus.AwaitingStart);
 
         // And the persisted status is still OnEnrollment
         await using var db = _back.GetDbContext();
-        var entity = await db.Classes.FirstAsync(c => c.Id == classId);
+        var entity = await db.Classes.FirstAsync(c => c.Id == @class.Id);
         entity.Status.Should().Be(ClassStatus.OnEnrollment);
     }
 

@@ -1,12 +1,12 @@
-namespace Estud.Back.Features.CourseCurriculums.EditCourseCurriculum;
+namespace Estud.Back.Features.CourseCurriculums.UpdateCourseCurriculum;
 
-public class EditCourseCurriculumIn : IApiDto<EditCourseCurriculumIn>
+public class UpdateCourseCurriculumIn : IApiDto<UpdateCourseCurriculumIn>
 {
     public int Id { get; set; }
     public string Name { get; set; }
-    public List<EditCourseCurriculumDisciplineIn> Disciplines { get; set; } = [];
+    public List<UpdateCourseCurriculumDisciplineIn> Disciplines { get; set; } = [];
 
-    public static IEnumerable<(string, EditCourseCurriculumIn)> GetExamples() =>
+    public static IEnumerable<(string, UpdateCourseCurriculumIn)> GetExamples() =>
     [
         (
             "Exemplo",
@@ -20,7 +20,7 @@ public class EditCourseCurriculumIn : IApiDto<EditCourseCurriculumIn>
     ];
 }
 
-public class EditCourseCurriculumDisciplineIn
+public class UpdateCourseCurriculumDisciplineIn
 {
     public int Id { get; set; }
     public byte Period { get; set; }

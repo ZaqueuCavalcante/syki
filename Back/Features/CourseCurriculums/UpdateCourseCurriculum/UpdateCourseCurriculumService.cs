@@ -1,10 +1,10 @@
 using Estud.Back.Domain.CourseCurriculums;
 
-namespace Estud.Back.Features.CourseCurriculums.EditCourseCurriculum;
+namespace Estud.Back.Features.CourseCurriculums.UpdateCourseCurriculum;
 
-public class EditCourseCurriculumService(EstudDbContext ctx) : IEstudService
+public class UpdateCourseCurriculumService(EstudDbContext ctx) : IEstudService
 {
-    private class Validator : AbstractValidator<EditCourseCurriculumIn>
+    private class Validator : AbstractValidator<UpdateCourseCurriculumIn>
     {
         public Validator()
         {
@@ -14,7 +14,7 @@ public class EditCourseCurriculumService(EstudDbContext ctx) : IEstudService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<EstudSuccess, EstudError>> Edit(EditCourseCurriculumIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Update(UpdateCourseCurriculumIn data)
     {
         if (V.Run(data, out var error)) return error;
 

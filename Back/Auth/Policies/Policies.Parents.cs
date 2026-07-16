@@ -8,6 +8,7 @@ public static partial class Policies
     public const string CreateParent = nameof(CreateParent);
 
     public const string GetParentStudents = nameof(GetParentStudents);
+    public const string GetParentStudentAgenda = nameof(GetParentStudentAgenda);
 
     public static AuthorizationBuilder AddParentsPolicies(this AuthorizationBuilder builder)
     {
@@ -16,7 +17,8 @@ public static partial class Policies
             .AddEstudPolicy(CreateParent, UserType.Manager, EstudPermissions.ManageParents);
 
         builder
-            .AddEstudPolicy(GetParentStudents, UserType.Parent);
+            .AddEstudPolicy(GetParentStudents, UserType.Parent)
+            .AddEstudPolicy(GetParentStudentAgenda, UserType.Parent);
 
         return builder;
     }

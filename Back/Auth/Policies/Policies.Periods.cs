@@ -9,6 +9,7 @@ public static partial class Policies
 
     public const string GetEnrollmentPeriods = nameof(GetEnrollmentPeriods);
     public const string CreateEnrollmentPeriod = nameof(CreateEnrollmentPeriod);
+    public const string UpdateEnrollmentPeriod = nameof(UpdateEnrollmentPeriod);
 
     public static AuthorizationBuilder AddAcademicPeriodsPolicies(this AuthorizationBuilder builder)
     {
@@ -18,7 +19,8 @@ public static partial class Policies
 
         builder
             .AddEstudPolicy(GetEnrollmentPeriods, UserType.Manager, EstudPermissions.ManagePeriods)
-            .AddEstudPolicy(CreateEnrollmentPeriod, UserType.Manager, EstudPermissions.ManagePeriods);
+            .AddEstudPolicy(CreateEnrollmentPeriod, UserType.Manager, EstudPermissions.ManagePeriods)
+            .AddEstudPolicy(UpdateEnrollmentPeriod, UserType.Manager, EstudPermissions.ManagePeriods);
 
         return builder;
     }

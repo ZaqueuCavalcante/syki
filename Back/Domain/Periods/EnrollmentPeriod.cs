@@ -30,4 +30,18 @@ public class EnrollmentPeriod
 
         return new EnrollmentPeriod(institutionId, name, startAt, endAt);
     }
+
+    public OneOf<EstudSuccess, EstudError> Update(
+        string name,
+        DateOnly startAt,
+        DateOnly endAt
+    ) {
+        if (startAt >= endAt) return InvalidEnrollmentPeriodDates.I;
+
+        Name = name;
+        StartAt = startAt;
+        EndAt = endAt;
+
+        return EstudSuccess.I;
+    }
 }

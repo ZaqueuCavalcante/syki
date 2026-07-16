@@ -7,7 +7,7 @@ public static partial class Policies
     public const string GetCourseCurriculum = nameof(GetCourseCurriculum);
     public const string GetCourseCurriculums = nameof(GetCourseCurriculums);
     public const string CreateCourseCurriculum = nameof(CreateCourseCurriculum);
-    public const string EditCourseCurriculum = nameof(EditCourseCurriculum);
+    public const string UpdateCourseCurriculum = nameof(UpdateCourseCurriculum);
 
     public static AuthorizationBuilder AddCourseCurriculumsPolicies(this AuthorizationBuilder builder)
     {
@@ -15,7 +15,7 @@ public static partial class Policies
             .AddEstudPolicy(GetCourseCurriculum, UserType.Manager, EstudPermissions.ManageCourseCurriculums)
             .AddEstudPolicy(GetCourseCurriculums, UserType.Manager, EstudPermissions.ManageCourseCurriculums)
             .AddEstudPolicy(CreateCourseCurriculum, UserType.Manager, EstudPermissions.ManageCourseCurriculums)
-            .AddEstudPolicy(EditCourseCurriculum, UserType.Manager, EstudPermissions.ManageCourseCurriculums);
+            .AddEstudPolicy(UpdateCourseCurriculum, UserType.Manager, EstudPermissions.ManageCourseCurriculums);
 
         return builder;
     }

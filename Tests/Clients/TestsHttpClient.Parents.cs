@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using Estud.Back.Features.Parents.GetParents;
 using Estud.Back.Features.Parents.CreateParent;
 using Estud.Back.Features.Parents.GetParentStudents;
+using Estud.Back.Features.Parents.GetParentStudentAgenda;
 
 namespace Estud.Tests.Integration.Clients;
 
@@ -32,5 +33,11 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync("/parents/students");
         return await response.Resolve<GetParentStudentsOut>();
+    }
+
+    public async Task<OneOf<GetParentStudentAgendaOut, ErrorOut>> GetParentStudentAgenda(int studentId)
+    {
+        var response = await http.GetAsync($"/parents/students/{studentId}/agenda");
+        return await response.Resolve<GetParentStudentAgendaOut>();
     }
 }

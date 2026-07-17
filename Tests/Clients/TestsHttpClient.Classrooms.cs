@@ -26,11 +26,10 @@ public partial class TestsHttpClient
 
     public async Task<OneOf<UpdateClassroomOut, ErrorOut>> UpdateClassroom(
         int id,
-        int campusId,
         string name = "Sala 10",
         int capacity = 50
     ) {
-        var data = new UpdateClassroomIn { Id = id, CampusId = campusId, Name = name, Capacity = capacity };
+        var data = new UpdateClassroomIn { Id = id, Name = name, Capacity = capacity };
         var response = await http.PutAsJsonAsync("classrooms", data);
         return await response.Resolve<UpdateClassroomOut>();
     }

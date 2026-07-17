@@ -11,7 +11,7 @@ public class GetTeacherAgendaService(EstudDbContext ctx) : IEstudService
         var classes = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)
             .Include(t => t.Schedules)
-            .Where(t => t.InstitutionId == institutionId && t.TeacherId == teacherId && t.Status == ClassStatus.Started)
+            .Where(t => t.InstitutionId == institutionId && t.Teachers.Any(x => x.Id == teacherId) && t.Status == ClassStatus.Started)
             .ToListAsync();
 
         // Pra cada dia, pegar as aulas que acontecem nesse dia, ordenadas pelo horário de início

@@ -12,11 +12,11 @@ public class CreateLessonAttendanceService(EstudDbContext ctx) : IEstudService
 
         var lesson = await ctx.ClassLessons
             .Include(l => l.Attendances)
-            .Include(l => l.Class)
             .FirstOrDefaultAsync(l => l.Id == id && l.Class.InstitutionId == institutionId);
         if (lesson == null) return ClassLessonNotFound.I;
 
-        if (lesson.Class.TeacherId != teacherId) return TeacherNotAssignedToClass.I;
+        var assigned = await ctx.ClassTeachers.AnyAsync(ct => ct.ClassId == lesson.ClassId && ct.TeacherId == teacherId);
+        if (!assigned) return TeacherNotAssignedToClass.I;
 
         var students = await ctx.ClassStudents.AsNoTracking()
             .Where(cs => cs.ClassId == lesson.ClassId && cs.Status == StudentClassStatus.Matriculado)

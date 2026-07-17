@@ -18,10 +18,14 @@ public class UpdateCourseCurriculumService(EstudDbContext ctx) : IEstudService
     {
         if (V.Run(data, out var error)) return error;
 
-        var curriculum = await ctx.CourseCurriculums
-            .Include(c => c.Links)
-            .FirstOrDefaultAsync(c => c.InstitutionId == ctx.RequestUser.InstitutionId && c.Id == data.Id);
+        var institutionId = ctx.RequestUser.InstitutionId;
+
+        var curriculum = await ctx.CourseCurriculums.Include(c => c.Links)
+            .FirstOrDefaultAsync(c => c.InstitutionId == institutionId && c.Id == data.Id);
         if (curriculum == null) return CourseCurriculumNotFound.I;
+
+        var hasCourseOffering = await ctx.CourseOfferings.AnyAsync(c => c.CourseCurriculumId == curriculum.Id);
+        if (hasCourseOffering) return CourseCurriculumWithCourseOffering.I;
 
         var courseDisciplines = await ctx.CoursesDisciplines.AsNoTracking()
             .Where(x => x.CourseId == curriculum.CourseId)

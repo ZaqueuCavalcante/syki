@@ -11,7 +11,7 @@ public partial class IntegrationTests
         var client = _back.GetTestsClient();
 
         // Act
-        var result = await client.UpdateClassroom(id: 1, campusId: 1);
+        var result = await client.UpdateClassroom(id: 1);
 
         // Assert
         result.ShouldBeError(HttpStatusCode.Unauthorized);
@@ -28,7 +28,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsTeacher();
 
         // Act
-        var result = await client.UpdateClassroom(id: 1, campusId: 1);
+        var result = await client.UpdateClassroom(id: 1);
 
         // Assert
         result.ShouldBeError(HttpStatusCode.Forbidden);
@@ -48,7 +48,7 @@ public partial class IntegrationTests
         var classroom = (await client.CreateClassroom(campus.Id)).Success;
 
         // Act
-        var result = await client.UpdateClassroom(classroom.Id, campus.Id, name, capacity: 50);
+        var result = await client.UpdateClassroom(classroom.Id, name, capacity: 50);
 
         // Assert
         result.ShouldBeError(InvalidClassroomName.I);
@@ -65,7 +65,7 @@ public partial class IntegrationTests
         var classroom = (await client.CreateClassroom(campus.Id)).Success;
 
         // Act
-        var result = await client.UpdateClassroom(classroom.Id, campus.Id, name: "Sala 10", capacity: capacity);
+        var result = await client.UpdateClassroom(classroom.Id, name: "Sala 10", capacity: capacity);
 
         // Assert
         result.ShouldBeError(InvalidClassroomCapacity.I);
@@ -78,25 +78,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var result = await client.UpdateClassroom(id: 99999, campusId: 1);
+        var result = await client.UpdateClassroom(id: 99999);
 
         // Assert
         result.ShouldBeError(ClassroomNotFound.I);
-    }
-
-    [Test]
-    public async Task Classrooms_UpdateClassroom_Should_not_update_classroom_when_campus_does_not_exist()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var classroom = (await client.CreateClassroom(campus.Id)).Success;
-
-        // Act
-        var result = await client.UpdateClassroom(classroom.Id, campusId: 999999);
-
-        // Assert
-        result.ShouldBeError(CampusNotFound.I);
     }
 
     [Test]
@@ -110,7 +95,7 @@ public partial class IntegrationTests
         var otherClassroom = (await otherClient.CreateClassroom(otherCampus.Id)).Success;
 
         // Act
-        var result = await client.UpdateClassroom(otherClassroom.Id, otherCampus.Id);
+        var result = await client.UpdateClassroom(otherClassroom.Id, name: "Sala 10", capacity: 50);
 
         // Assert
         result.ShouldBeError(ClassroomNotFound.I);
@@ -126,17 +111,16 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         var campus = (await client.CreateCampus()).Success;
-        var newCampus = (await client.CreateCampus(name: "Campus Sede")).Success;
         var classroom = (await client.CreateClassroom(campus.Id, name: "Sala 05", capacity: 40)).Success;
 
         // Act
-        var result = await client.UpdateClassroom(classroom.Id, newCampus.Id, name: "Sala 10", capacity: 50);
+        var result = await client.UpdateClassroom(classroom.Id, name: "Sala 10", capacity: 50);
 
         // Assert
         var updated = result.Success;
         updated.Id.Should().Be(classroom.Id);
         updated.Name.Should().Be("Sala 10");
-        updated.CampusId.Should().Be(newCampus.Id);
+        updated.CampusId.Should().Be(campus.Id);
         updated.Capacity.Should().Be(50);
     }
 

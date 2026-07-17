@@ -9,7 +9,7 @@ public class GetTeacherCurrentClassesService(EstudDbContext ctx) : IEstudService
         var teacherId = await ctx.GetTeacherId(institutionId, userId);
 
         var classes = await ctx.Classes.AsNoTracking()
-            .Where(t => t.InstitutionId == institutionId && t.TeacherId == teacherId && t.Status == ClassStatus.Started)
+            .Where(t => t.InstitutionId == institutionId && t.Teachers.Any(x => x.Id == teacherId) && t.Status == ClassStatus.Started)
             .OrderBy(t => t.Discipline.Name)
             .Select(t => new GetTeacherCurrentClassesItemOut
             {

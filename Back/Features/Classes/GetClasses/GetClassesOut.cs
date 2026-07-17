@@ -23,9 +23,9 @@ public class GetClassesItemOut
 {
     public int Id { get; set; }
     public string Discipline { get; set; }
-    public string Teacher { get; set; }
     public string Period { get; set; }
     public int Vacancies { get; set; }
     public ClassStatus Status { get; set; }
+    public List<string> Teachers { get; set; } = [];
     public List<ScheduleOut> Schedules { get; set; } = [];
 }

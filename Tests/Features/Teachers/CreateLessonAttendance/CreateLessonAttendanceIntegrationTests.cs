@@ -227,7 +227,7 @@ public partial class IntegrationTests
         await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var period = (await director.CreateAcademicPeriod()).Success;
-        var @class = (await director.CreateClass(discipline.Id, period.Id, teacherId: teacher.Id)).Success;
+        var @class = (await director.CreateClass(discipline.Id, period.Id)).Success;
 
         return @class.Id;
     }

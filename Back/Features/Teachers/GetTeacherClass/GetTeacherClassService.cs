@@ -15,7 +15,8 @@ public class GetTeacherClassService(EstudDbContext ctx) : IEstudService
             .FirstOrDefaultAsync(c => c.Id == id && c.InstitutionId == institutionId);
         if (@class == null) return ClassNotFound.I;
 
-        if (@class.TeacherId != teacherId) return TeacherNotAssignedToClass.I;
+        var assigned = await ctx.ClassTeachers.AnyAsync(ct => ct.ClassId == id && ct.TeacherId == teacherId);
+        if (!assigned) return TeacherNotAssignedToClass.I;
 
         var students = await (
             from cs in ctx.ClassStudents.AsNoTracking()

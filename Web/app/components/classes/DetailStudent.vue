@@ -22,7 +22,7 @@ const details = computed(() => {
   return [
     { label: 'Disciplina', value: data.value.discipline },
     { label: 'Status da turma', status: true },
-    { label: 'Professor', value: data.value.teacher || '—' },
+    { label: 'Professores', value: data.value.teachers.join(', ') || '—' },
     { label: 'Período', value: data.value.period },
     { label: 'Carga horária', value: `${data.value.workload}h` },
     { label: 'Minha matrícula', myStatus: true },

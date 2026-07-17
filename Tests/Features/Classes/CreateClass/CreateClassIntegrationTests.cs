@@ -1,5 +1,3 @@
-using Estud.Back.Features.Classes.CreateClass;
-
 namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests
@@ -70,54 +68,6 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Classes_CreateClass_Should_not_create_class_when_teacher_not_found()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-
-        // Act
-        var result = await client.CreateClass(discipline.Id, period.Id, teacherId: 999999);
-
-        // Assert
-        result.ShouldBeError(TeacherNotFound.I);
-    }
-
-    [Test]
-    public async Task Classes_CreateClass_Should_not_create_class_when_teacher_not_assigned_to_campus()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var campus = (await client.CreateCampus()).Success;
-        var teacher = (await client.CreateTeacher(DataGen.UserName, DataGen.Email)).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-
-        // Act
-        var result = await client.CreateClass(discipline.Id, period.Id, campusId: campus.Id, teacherId: teacher.Id);
-
-        // Assert
-        result.ShouldBeError(TeacherNotAssignedToCampus.I);
-    }
-
-    [Test]
-    public async Task Classes_CreateClass_Should_not_create_class_when_teacher_not_assigned_to_discipline()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var teacher = (await client.CreateTeacher(DataGen.UserName, DataGen.Email)).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-
-        // Act
-        var result = await client.CreateClass(discipline.Id, period.Id, teacherId: teacher.Id);
-
-        // Assert
-        result.ShouldBeError(TeacherNotAssignedToDiscipline.I);
-    }
-
-    [Test]
     public async Task Classes_CreateClass_Should_not_create_class_when_academic_period_not_found()
     {
         // Arrange
@@ -129,42 +79,6 @@ public partial class IntegrationTests
 
         // Assert
         result.ShouldBeError(AcademicPeriodNotFound.I);
-    }
-
-    [Test]
-    public async Task Classes_CreateClass_Should_not_create_class_with_invalid_schedule()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        List<CreateClassScheduleIn> schedules = [new() { Day = Day.Monday, Start = Hour.H09_00, End = Hour.H07_00 }];
-
-        // Act
-        var result = await client.CreateClass(discipline.Id, period.Id, schedules: schedules);
-
-        // Assert
-        result.ShouldBeError(InvalidSchedule.I);
-    }
-
-    [Test]
-    public async Task Classes_CreateClass_Should_not_create_class_with_conflicting_schedules()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        List<CreateClassScheduleIn> schedules =
-        [
-            new() { Day = Day.Monday, Start = Hour.H07_00, End = Hour.H09_00 },
-            new() { Day = Day.Monday, Start = Hour.H08_00, End = Hour.H10_00 },
-        ];
-
-        // Act
-        var result = await client.CreateClass(discipline.Id, period.Id, schedules: schedules);
-
-        // Assert
-        result.ShouldBeError(ConflictingSchedules.I);
     }
 
     #endregion
@@ -194,13 +108,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
         var discipline = (await client.CreateDiscipline()).Success;
         var campus = (await client.CreateCampus()).Success;
-        var teacher = (await client.CreateTeacher(DataGen.UserName, DataGen.Email)).Success;
         var period = (await client.CreateAcademicPeriod()).Success;
-        await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
-        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         // Act
-        var result = await client.CreateClass(discipline.Id, period.Id, campusId: campus.Id, teacherId: teacher.Id);
+        var result = await client.CreateClass(discipline.Id, period.Id, campusId: campus.Id);
 
         // Assert
         var @class = result.Success;

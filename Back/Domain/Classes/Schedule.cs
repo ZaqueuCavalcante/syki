@@ -1,5 +1,11 @@
 namespace Estud.Back.Domain.Classes;
 
+/// <summary>
+/// Representa o horário genérico. <br/>
+/// Pode ser o horário das aulas de uma turma presencial (com apenas <see cref="TeacherId"/> nulo). <br/>
+/// Pode ser o horário das aulas de uma turma online (com <see cref="ClassroomId"/> e <see cref="TeacherId"/> nulos). <br/>
+/// Pode ser o horário preferencial de um professor antes do início das aulas (com <see cref="ClassId"/> e <see cref="ClassroomId"/> nulos). <br/>
+/// </summary>
 public class Schedule
 {
     public int Id { get; set; }

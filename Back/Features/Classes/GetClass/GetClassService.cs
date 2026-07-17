@@ -8,7 +8,7 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
 
         var @class = await ctx.Classes.AsNoTracking()
             .Include(c => c.Discipline)
-            .Include(c => c.Teacher)
+            .Include(c => c.Teachers)
             .Include(c => c.Period)
             .Include(c => c.Schedules)
             .FirstOrDefaultAsync(c => c.Id == id && c.InstitutionId == institutionId);
@@ -39,11 +39,11 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
         {
             Id = @class.Id,
             Discipline = @class.Discipline?.Name ?? "",
-            Teacher = @class.Teacher?.Name ?? "",
             Period = @class.Period?.Name ?? "",
             Vacancies = @class.Vacancies,
             Workload = @class.Workload,
             Status = @class.Status,
+            Teachers = @class.Teachers.Select(t => t.Name).Order().ToList(),
             Schedules = @class.Schedules
                 .OrderBy(s => s.Day).ThenBy(s => s.Start)
                 .Select(s => new ScheduleOut(s.Day, s.Start, s.End))

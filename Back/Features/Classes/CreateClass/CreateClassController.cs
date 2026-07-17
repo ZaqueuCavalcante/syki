@@ -24,9 +24,6 @@ internal class ResponseExamples : ExamplesProvider<CreateClassOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     CampusNotFound,
     DisciplineNotFound,
-    TeacherNotFound,
-    TeacherNotAssignedToCampus,
-    TeacherNotAssignedToDiscipline,
     AcademicPeriodNotFound,
     InvalidDay,
     InvalidHour,

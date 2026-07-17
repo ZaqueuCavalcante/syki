@@ -26,7 +26,7 @@ public class GetClassroomService(EstudDbContext ctx) : IEstudService
 
         var classes = await ctx.Classes.AsNoTracking()
             .Include(c => c.Discipline)
-            .Include(c => c.Teacher)
+            .Include(c => c.Teachers)
             .Where(c => classIds.Contains(c.Id))
             .ToListAsync();
         var classById = classes.ToDictionary(c => c.Id);
@@ -38,7 +38,7 @@ public class GetClassroomService(EstudDbContext ctx) : IEstudService
             {
                 ClassId = s.ClassId ?? 0,
                 Discipline = @class?.Discipline?.Name ?? "",
-                Teacher = @class?.Teacher?.Name ?? "",
+                Teachers = @class?.Teachers.Select(t => t.Name).Order().ToList() ?? [],
                 Day = s.Day,
                 StartAt = s.Start,
                 EndAt = s.End,

@@ -23,10 +23,7 @@ public class UpdateClassroomService(EstudDbContext ctx) : IEstudService
         var classroom = await ctx.Classrooms.FirstOrDefaultAsync(x => x.InstitutionId == institutionId && x.Id == data.Id);
         if (classroom == null) return ClassroomNotFound.I;
 
-        var campusOk = await ctx.Campi.AnyAsync(c => c.InstitutionId == institutionId && c.Id == data.CampusId);
-        if (!campusOk) return CampusNotFound.I;
-
-        classroom.Update(data.CampusId, data.Name, data.Capacity);
+        classroom.Update(data.Name, data.Capacity);
 
         await ctx.SaveChangesAsync();
 

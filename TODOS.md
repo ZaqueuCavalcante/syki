@@ -15,6 +15,37 @@
 - https://mermaid.js.org/
 
 
+
+
+
+- Criar turma (frontend + testes)
+- Adicionar professores a uma turma (no máximo 2)
+- Definir horários da turma (aparecem nas agendas dos alunos e professores)
+- Matricular alunos na turma
+- Em que momento criar as aulas da turma?
+    - Ao iniciar a turma?
+    - Sob-demanda na hora da chamada?
+- Vincular opcionalmente salas na turma (validar horários livres da sala)
+- Após iniciada a turma, os professores podem
+    - Fazer chamadas
+    - Criar atividades
+
+- Cada atividade
+    - Pode ter várias entregas
+    - Pode ser individual ou em grupo
+
+- Cada entrega vai ter uma nota
+    - Individual do aluno
+    - Pode ter uma nota em grupo que por baixo vira a nota do aluno
+
+
+
+
+
+
+
+
+
 - Organizar a documentação por grupo de tópicos/conceitos
     - Vão ter coisas que são apenas conceitos
     - Outras serão guias de como usar/configurar o sistema

@@ -2,7 +2,7 @@
 interface ClassroomSchedule {
   classId: number
   discipline: string
-  teacher: string
+  teachers: string[]
   day: string // 'Monday' | 'Tuesday' | ...
   startAt: string // ex: "H07_00"
   endAt: string // ex: "H10_00"
@@ -89,7 +89,7 @@ const details = computed(() => {
             >
               <div class="flex flex-col min-w-0">
                 <span class="text-sm font-medium text-highlighted truncate">{{ s.discipline || 'Turma' }}</span>
-                <span v-if="s.teacher" class="text-xs text-muted truncate">{{ s.teacher }}</span>
+                <span v-if="s.teachers.length" class="text-xs text-muted truncate">{{ s.teachers.join(', ') }}</span>
               </div>
               <UBadge
                 :label="formatClassSchedule(s)"

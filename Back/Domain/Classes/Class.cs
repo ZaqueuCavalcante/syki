@@ -23,10 +23,15 @@ public class Class
     public ClassStatus Status { get; set; }
     public int Workload { get; set; }
 
+    /// <summary>
+    /// Se a turma não for presencial, o campus será nulo
+    /// </summary>
     public int? CampusId { get; set; }
 
-    public int? TeacherId { get; set; }
-    public EstudTeacher Teacher { get; set; }
+    /// <summary>
+    /// Professores que lecionam na turma
+    /// </summary>
+    public List<EstudTeacher> Teachers { get; set; }
 
     public List<Schedule> Schedules { get; set; }
     public List<ClassLesson> Lessons { get; set; }
@@ -37,20 +42,18 @@ public class Class
     public Class(
         int institutionId,
         int disciplineId,
-        int? campusId,
-        int? teacherId,
-        AcademicPeriod period,
+        int periodId,
         int vacancies,
-        List<Schedule> schedules
+        int? campusId
     ) {
         InstitutionId = institutionId;
         DisciplineId = disciplineId;
-        CampusId = campusId;
-        TeacherId = teacherId;
-        Period = period;
+        PeriodId = periodId;
         Vacancies = vacancies;
+        CampusId = campusId;
         Status = ClassStatus.OnPreEnrollment;
-        Schedules = schedules;
+        Teachers = [];
+        Schedules = [];
         Lessons = [];
         Students = [];
     }

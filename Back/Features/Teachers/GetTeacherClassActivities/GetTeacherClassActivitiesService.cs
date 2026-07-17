@@ -12,7 +12,8 @@ public class GetTeacherClassActivitiesService(EstudDbContext ctx) : IEstudServic
             .FirstOrDefaultAsync(c => c.Id == classId && c.InstitutionId == institutionId);
         if (@class == null) return ClassNotFound.I;
 
-        if (@class.TeacherId != teacherId) return TeacherNotAssignedToClass.I;
+        var assigned = await ctx.ClassTeachers.AnyAsync(ct => ct.ClassId == classId && ct.TeacherId == teacherId);
+        if (!assigned) return TeacherNotAssignedToClass.I;
 
         var activities = await ctx.ClassActivities.AsNoTracking()
             .Where(a => a.ClassId == classId)

@@ -13,7 +13,7 @@ export interface ClassStudentItem {
 export interface GetClassOut {
   id: number
   discipline: string
-  teacher: string
+  teachers: string[]
   period: string
   vacancies: number
   workload: number
@@ -136,7 +136,7 @@ export interface GetStudentClassActivityOut {
 export interface GetStudentClassOut {
   id: number
   discipline: string
-  teacher: string
+  teachers: string[]
   period: string
   workload: number
   status: string

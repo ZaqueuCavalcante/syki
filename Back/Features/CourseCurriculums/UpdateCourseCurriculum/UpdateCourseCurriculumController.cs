@@ -22,7 +22,8 @@ public class UpdateCourseCurriculumController(UpdateCourseCurriculumService serv
 internal class RequestExamples : ExamplesProvider<UpdateCourseCurriculumIn>;
 internal class ResponseExamples : ExamplesProvider<SuccessOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
+    InvalidDisciplinesList,
     CourseCurriculumNotFound,
     InvalidCourseCurriculumName,
-    InvalidDisciplinesList
+    CourseCurriculumWithCourseOffering
 >;

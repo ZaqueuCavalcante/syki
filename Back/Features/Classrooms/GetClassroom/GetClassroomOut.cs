@@ -28,10 +28,10 @@ public class GetClassroomOut : IApiDto<GetClassroomOut>
                 {
                     ClassId = 1,
                     Discipline = "Banco de Dados",
-                    Teacher = "Chico Ferreira",
                     Day = Day.Monday,
                     StartAt = Hour.H07_00,
                     EndAt = Hour.H10_00,
+                    Teachers = ["Chico Ferreira", "Ana Lima"],
                 },
             ],
         }),
@@ -42,7 +42,7 @@ public class ClassroomScheduleOut
 {
     public int ClassId { get; set; }
     public string Discipline { get; set; }
-    public string Teacher { get; set; }
+    public List<string> Teachers { get; set; } = [];
     public Day Day { get; set; }
     public Hour StartAt { get; set; }
     public Hour EndAt { get; set; }

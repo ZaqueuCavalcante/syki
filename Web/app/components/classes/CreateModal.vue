@@ -14,23 +14,16 @@ const loading = ref(false)
 interface DisciplineItem { id: number; name: string }
 interface GetDisciplinesOut { total: number; items: DisciplineItem[] }
 
-interface TeacherItem { id: number; name: string }
-interface GetTeachersOut { total: number; items: TeacherItem[] }
-
 interface PeriodItem { id: number; name: string }
 interface GetPeriodsOut { total: number; items: PeriodItem[] }
 
-const [{ data: disciplinesData }, { data: teachersData }, { data: periodsData }] = await Promise.all([
+const [{ data: disciplinesData }, { data: periodsData }] = await Promise.all([
   useFetch<GetDisciplinesOut>(`${config.public.backendUrl}/disciplines`, { credentials: 'include', server: false, query: { pageSize: 100 } }),
-  useFetch<GetTeachersOut>(`${config.public.backendUrl}/teachers`, { credentials: 'include', server: false, query: { pageSize: 100 } }),
   useFetch<GetPeriodsOut>(`${config.public.backendUrl}/periods/academic`, { credentials: 'include', server: false }),
 ])
 
 const disciplineOptions = computed(() =>
   (disciplinesData.value?.items ?? []).map(d => ({ label: d.name, value: d.id }))
-)
-const teacherOptions = computed(() =>
-  (teachersData.value?.items ?? []).map(t => ({ label: t.name, value: t.id }))
 )
 const periodOptions = computed(() =>
   (periodsData.value?.items ?? []).map(p => ({ label: p.name, value: p.id }))
@@ -112,7 +105,6 @@ const scheduleSchema = z.object({
 
 const schema = z.object({
   disciplineId: z.number({ error: 'Campo obrigatório' }),
-  teacherId:    z.number().optional(),
   periodId:     z.number({ error: 'Campo obrigatório' }),
   vacancies:    z.coerce.number({ error: 'Campo obrigatório' }).int().gt(0, 'Deve ser maior que 0').max(999999, 'Máximo 999.999'),
   schedules:    z.array(scheduleSchema).min(1, 'Adicione pelo menos um horário'),
@@ -122,7 +114,6 @@ type Schema = z.output<typeof schema>
 
 const formState = reactive<Partial<Schema>>({
   disciplineId: undefined,
-  teacherId:    undefined,
   periodId:     undefined,
   vacancies:    undefined,
   schedules:    [],
@@ -136,7 +127,6 @@ watch(schedules, syncSchedules, { deep: true })
 
 function resetForm() {
   formState.disciplineId = undefined
-  formState.teacherId    = undefined
   formState.periodId     = undefined
   formState.vacancies    = undefined
   vacanciesDisplay.value = ''
@@ -153,7 +143,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     const body = {
       disciplineId: event.data.disciplineId,
       campusId:     null,
-      teacherId:    event.data.teacherId ?? null,
       periodId:     event.data.periodId,
       vacancies:    event.data.vacancies,
       schedules:    event.data.schedules.map(s => ({ day: s.day, start: s.start, end: s.end })),
@@ -192,17 +181,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             value-key="value"
             class="w-full"
             placeholder="Selecione a disciplina"
-            :search-input="{ placeholder: 'Buscar por nome...' }"
-          />
-        </UFormField>
-
-        <UFormField label="Professor" name="teacherId">
-          <USelectMenu
-            v-model="formState.teacherId"
-            :items="teacherOptions"
-            value-key="value"
-            class="w-full"
-            placeholder="Selecione o professor"
             :search-input="{ placeholder: 'Buscar por nome...' }"
           />
         </UFormField>

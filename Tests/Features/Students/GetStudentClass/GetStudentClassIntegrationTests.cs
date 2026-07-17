@@ -131,7 +131,7 @@ public partial class IntegrationTests
         await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var period = (await director.CreateAcademicPeriod()).Success;
-        var @class = (await director.CreateClass(discipline.Id, period.Id, teacherId: teacher.Id)).Success;
+        var @class = (await director.CreateClass(discipline.Id, period.Id)).Success;
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         await director.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
@@ -152,7 +152,6 @@ public partial class IntegrationTests
         var details = result.Success;
         details.Id.Should().Be(@class.Id);
         details.Discipline.Should().Be("Geometria");
-        details.Teacher.Should().Be(teacherName);
         details.Period.Should().Be("2024.1");
         details.Status.Should().Be(ClassStatus.Started);
         details.MyStatus.Should().Be(StudentClassStatus.Matriculado);

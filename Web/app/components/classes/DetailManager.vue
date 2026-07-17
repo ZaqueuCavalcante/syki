@@ -54,7 +54,7 @@ const details = computed(() => {
   return [
     { label: 'Disciplina', value: data.value.discipline },
     { label: 'Status', status: true },
-    { label: 'Professor', value: data.value.teacher || '—' },
+    { label: 'Professores', value: data.value.teachers.join(', ') || '—' },
     { label: 'Período', value: data.value.period },
     { label: 'Vagas', value: `${data.value.students.length} / ${data.value.vacancies}` },
     { label: 'Carga horária', value: `${data.value.workload}h` },
@@ -144,7 +144,19 @@ const details = computed(() => {
           </p>
         </UPageCard>
 
-        <UPageCard :title="`Alunos matriculados (${data.students.length})`">
+        <UPageCard :ui="{ wrapper: 'w-full', body: 'w-full' }">
+          <template #title>
+            <div class="flex w-full items-center justify-between gap-2">
+              <span>Alunos matriculados ({{ data.students.length }})</span>
+              <UButton
+                icon="i-lucide-plus"
+                label="Aluno"
+                size="sm"
+                @click="() => { assignStudentModalOpen = true }"
+              />
+            </div>
+          </template>
+
           <div v-if="data.students.length" class="flex flex-col divide-y divide-default">
             <div
               v-for="student in data.students"
@@ -164,11 +176,6 @@ const details = computed(() => {
             <p class="text-sm text-muted">
               Nenhum aluno matriculado
             </p>
-            <UButton
-              icon="i-lucide-plus"
-              label="Aluno"
-              @click="() => { assignStudentModalOpen = true }"
-            />
           </div>
         </UPageCard>
 

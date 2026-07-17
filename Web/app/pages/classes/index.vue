@@ -8,7 +8,7 @@ const UTooltip = resolveComponent('UTooltip')
 interface ClassItem {
   id: number
   discipline: string
-  teacher: string
+  teachers: string[]
   period: string
   vacancies: number
   status: string
@@ -65,8 +65,9 @@ const columns: TableColumn<ClassItem>[] = [
     header: 'Disciplina',
   },
   {
-    accessorKey: 'teacher',
-    header: 'Professor',
+    accessorKey: 'teachers',
+    header: 'Professores',
+    cell: ({ row }) => row.original.teachers.join(', ') || '—',
   },
   {
     accessorKey: 'period',

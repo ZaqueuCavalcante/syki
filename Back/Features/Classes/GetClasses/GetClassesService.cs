@@ -36,7 +36,7 @@ public class GetClassesService(EstudDbContext ctx) : IEstudService
 
         var classes = await classesQuery
             .Include(c => c.Discipline)
-            .Include(c => c.Teacher)
+            .Include(c => c.Teachers)
             .Include(c => c.Period)
             .Include(c => c.Schedules)
             .OrderBy(c => c.Id)
@@ -57,7 +57,7 @@ public class GetClassesService(EstudDbContext ctx) : IEstudService
         {
             Id = c.Id,
             Discipline = c.Discipline?.Name ?? "",
-            Teacher = c.Teacher?.Name ?? "",
+            Teachers = c.Teachers.Select(t => t.Name).Order().ToList(),
             Period = c.Period?.Name ?? "",
             Vacancies = c.Vacancies,
             Status = c.Status,

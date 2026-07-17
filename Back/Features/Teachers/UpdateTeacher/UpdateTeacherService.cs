@@ -26,7 +26,7 @@ public class UpdateTeacherService(EstudDbContext ctx) : IEstudService
         if (emailUsed) return EmailAlreadyUsed.I;
 
         teacher.Name = data.Name;
-        teacher.User!.Name = data.Name;
+        teacher.User.Name = data.Name;
         teacher.User.Email = email;
         teacher.User.NormalizedEmail = email.ToUpperInvariant();
         teacher.User.UserName = email;

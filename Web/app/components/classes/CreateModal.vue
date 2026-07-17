@@ -29,46 +29,6 @@ const periodOptions = computed(() =>
   (periodsData.value?.items ?? []).map(p => ({ label: p.name, value: p.id }))
 )
 
-// ── Day / Hour options ────────────────────────────────────────
-const dayOptions = [
-  { label: 'Segunda', value: 'Monday' },
-  { label: 'Terça', value: 'Tuesday' },
-  { label: 'Quarta', value: 'Wednesday' },
-  { label: 'Quinta', value: 'Thursday' },
-  { label: 'Sexta', value: 'Friday' },
-  { label: 'Sábado', value: 'Saturday' },
-]
-
-function buildHourOptions() {
-  const opts = []
-  for (let h = 7; h <= 23; h++) {
-    for (let m = 0; m < 60; m += 15) {
-      const hh = h.toString().padStart(2, '0')
-      const mm = m.toString().padStart(2, '0')
-      opts.push({ label: `${hh}:${mm}`, value: `H${hh}_${mm}` })
-    }
-  }
-  return opts
-}
-const hourOptions = buildHourOptions()
-
-// ── Schedules ─────────────────────────────────────────────────
-interface ScheduleRow {
-  day: string | undefined
-  start: string | undefined
-  end: string | undefined
-}
-
-const schedules = ref<ScheduleRow[]>([{ day: undefined, start: undefined, end: undefined }])
-
-function addSchedule() {
-  if (schedules.value.length < 3) schedules.value.push({ day: undefined, start: undefined, end: undefined })
-}
-
-function removeSchedule(index: number) {
-  schedules.value.splice(index, 1)
-}
-
 // ── Vacancies input ───────────────────────────────────────────
 const vacanciesDisplay = ref('')
 
@@ -97,17 +57,10 @@ function onVacanciesInput(e: Event) {
 }
 
 // ── Form schema ───────────────────────────────────────────────
-const scheduleSchema = z.object({
-  day:   z.string({ error: 'Dia obrigatório' }).min(1, 'Dia obrigatório'),
-  start: z.string({ error: 'Início obrigatório' }).min(1, 'Início obrigatório'),
-  end:   z.string({ error: 'Fim obrigatório' }).min(1, 'Fim obrigatório'),
-})
-
 const schema = z.object({
   disciplineId: z.number({ error: 'Campo obrigatório' }),
   periodId:     z.number({ error: 'Campo obrigatório' }),
   vacancies:    z.coerce.number({ error: 'Campo obrigatório' }).int().gt(0, 'Deve ser maior que 0').max(999999, 'Máximo 999.999'),
-  schedules:    z.array(scheduleSchema).min(1, 'Adicione pelo menos um horário'),
 })
 
 type Schema = z.output<typeof schema>
@@ -116,22 +69,13 @@ const formState = reactive<Partial<Schema>>({
   disciplineId: undefined,
   periodId:     undefined,
   vacancies:    undefined,
-  schedules:    [],
 })
-
-function syncSchedules() {
-  formState.schedules = schedules.value as Schema['schedules']
-}
-
-watch(schedules, syncSchedules, { deep: true })
 
 function resetForm() {
   formState.disciplineId = undefined
   formState.periodId     = undefined
   formState.vacancies    = undefined
   vacanciesDisplay.value = ''
-  formState.schedules    = []
-  schedules.value = [{ day: undefined, start: undefined, end: undefined }]
 }
 
 watch(open, (val) => { if (!val) resetForm() })
@@ -145,7 +89,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       campusId:     null,
       periodId:     event.data.periodId,
       vacancies:    event.data.vacancies,
-      schedules:    event.data.schedules.map(s => ({ day: s.day, start: s.start, end: s.end })),
     }
     await $fetch(`${config.public.backendUrl}/classes`, {
       method: 'POST',
@@ -207,58 +150,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
               placeholder="Selecione"
             />
           </UFormField>
-        </div>
-
-        <!-- Schedules -->
-        <div class="space-y-2">
-          <div
-            v-for="(schedule, index) in schedules"
-            :key="index"
-            class="flex items-center gap-2"
-          >
-            <USelect
-              v-model="schedule.day"
-              :items="dayOptions"
-              value-key="value"
-              class="flex-1"
-              placeholder="Dia"
-              @update:model-value="syncSchedules"
-            />
-            <USelect
-              v-model="schedule.start"
-              :items="hourOptions"
-              value-key="value"
-              class="flex-1"
-              placeholder="Início"
-              @update:model-value="syncSchedules"
-            />
-            <USelect
-              v-model="schedule.end"
-              :items="hourOptions"
-              value-key="value"
-              class="flex-1"
-              placeholder="Fim"
-              @update:model-value="syncSchedules"
-            />
-            <UTooltip text="Remover">
-              <UButton
-                icon="i-lucide-trash-2"
-                color="neutral"
-                variant="ghost"
-                :disabled="schedules.length === 1"
-                @click="removeSchedule(index)"
-              />
-            </UTooltip>
-          </div>
-
-          <button
-            v-if="schedules.length < 3"
-            type="button"
-            class="w-fit border border-dashed border-default rounded-md px-4 py-2 text-sm text-muted hover:text-default hover:border-accented transition-colors"
-            @click="addSchedule"
-          >
-            + NOVO HORÁRIO
-          </button>
         </div>
 
         <div class="flex justify-end gap-2 pt-2">

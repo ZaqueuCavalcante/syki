@@ -13,9 +13,11 @@ const { data, status, error, refresh } = await useFetch<GetClassOut>(
 )
 
 const assignStudentModalOpen = ref(false)
+const teachersModalOpen = ref(false)
 
 const canStart = can('StartClass')
 const canRelease = can('ReleaseClassForEnrollment')
+const canAssignTeachers = can('AssignTeachersToClass')
 
 const actionLoading = ref(false)
 
@@ -54,7 +56,6 @@ const details = computed(() => {
   return [
     { label: 'Disciplina', value: data.value.discipline },
     { label: 'Status', status: true },
-    { label: 'Professores', value: data.value.teachers.join(', ') || '—' },
     { label: 'Período', value: data.value.period },
     { label: 'Vagas', value: `${data.value.students.length} / ${data.value.vacancies}` },
     { label: 'Carga horária', value: `${data.value.workload}h` },
@@ -147,6 +148,37 @@ const details = computed(() => {
         <UPageCard :ui="{ wrapper: 'w-full', body: 'w-full' }">
           <template #title>
             <div class="flex w-full items-center justify-between gap-2">
+              <span>Professores ({{ data.teachers.length }})</span>
+              <UButton
+                v-if="canAssignTeachers"
+                icon="i-lucide-user-pen"
+                label="Definir"
+                size="sm"
+                @click="(e) => { (e.currentTarget as HTMLElement).blur(); teachersModalOpen = true }"
+              />
+            </div>
+          </template>
+
+          <div v-if="data.teachers.length" class="flex flex-col divide-y divide-default">
+            <div
+              v-for="teacher in data.teachers"
+              :key="teacher.id"
+              class="flex items-center py-3"
+            >
+              <span class="text-sm text-highlighted">{{ teacher.name }}</span>
+            </div>
+          </div>
+          <div v-else class="flex flex-col items-center gap-3 py-6">
+            <UIcon name="i-lucide-user-x" class="size-10 text-muted" />
+            <p class="text-sm text-muted">
+              Nenhum professor definido
+            </p>
+          </div>
+        </UPageCard>
+
+        <UPageCard :ui="{ wrapper: 'w-full', body: 'w-full' }">
+          <template #title>
+            <div class="flex w-full items-center justify-between gap-2">
               <span>Alunos matriculados ({{ data.students.length }})</span>
               <UButton
                 icon="i-lucide-plus"
@@ -183,6 +215,14 @@ const details = computed(() => {
           v-model:open="assignStudentModalOpen"
           :class-id="data.id"
           :enrolled-ids="data.students.map(s => s.id)"
+          @assigned="refresh()"
+        />
+
+        <ClassesTeachersModal
+          v-model:open="teachersModalOpen"
+          :class-id="data.id"
+          :discipline-id="data.disciplineId"
+          :teachers="data.teachers"
           @assigned="refresh()"
         />
       </div>

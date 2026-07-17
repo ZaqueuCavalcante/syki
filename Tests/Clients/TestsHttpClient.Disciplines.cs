@@ -4,6 +4,7 @@ using Estud.Back.Features.Disciplines.GetDisciplines;
 using Estud.Back.Features.Disciplines.CreateDiscipline;
 using Estud.Back.Features.Disciplines.UpdateDiscipline;
 using Estud.Back.Features.Disciplines.AddDisciplineCourses;
+using Estud.Back.Features.Disciplines.GetDisciplineTeachers;
 using Estud.Back.Features.Disciplines.RemoveDisciplineCourse;
 using Estud.Back.Features.Disciplines.GetDisciplinePotentialCourses;
 
@@ -17,6 +18,12 @@ public partial class TestsHttpClient
         var data = new CreateDisciplineIn { Name = name };
         var response = await http.PostAsJsonAsync("/disciplines", data);
         return await response.Resolve<CreateDisciplineOut>();
+    }
+
+    public async Task<OneOf<GetDisciplineTeachersOut, ErrorOut>> GetDisciplineTeachers(int id)
+    {
+        var response = await http.GetAsync($"/disciplines/{id}/teachers");
+        return await response.Resolve<GetDisciplineTeachersOut>();
     }
 
     public async Task<OneOf<UpdateDisciplineOut, ErrorOut>> UpdateDiscipline(

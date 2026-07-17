@@ -15,6 +15,18 @@
 - https://mermaid.js.org/
 
 
+crie um endpoint novo para Adicionar professores a uma turma (no máximo 2)
+ou seja, o endpoint recebe uma lista de int com ate dois ids de professores
+valida que os professores existem pra institution atual
+valida que os professores possuem vinculo com a disciplina da turma
+e criar/edita os registros ClassTeacher no banco
+
+crie testes de integracao pra o novo endpoint tbm
+
+ele pode ficar na pasta Features/Classes, um POST em /classes/{classId}/teachers
+{
+    "teachers": [14, 32]
+}
 
 
 

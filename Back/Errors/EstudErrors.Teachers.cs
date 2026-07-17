@@ -14,6 +14,13 @@ public class InvalidTeacherName : EstudError
     public override string Message { get; set; } = "Nome de professor inválido.";
 }
 
+public class InvalidTeachersList : EstudError
+{
+    public static readonly InvalidTeachersList I = new();
+    public override string Code { get; set; } = nameof(InvalidTeachersList);
+    public override string Message { get; set; } = "Lista de professores inválida.";
+}
+
 public class TeacherNotAssignedToCampus : EstudError
 {
     public static readonly TeacherNotAssignedToCampus I = new();

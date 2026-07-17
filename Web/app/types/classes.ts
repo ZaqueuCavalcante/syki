@@ -10,10 +10,16 @@ export interface ClassStudentItem {
   status: string
 }
 
+export interface ClassTeacherItem {
+  id: number
+  name: string
+}
+
 export interface GetClassOut {
   id: number
+  disciplineId: number
   discipline: string
-  teachers: string[]
+  teachers: ClassTeacherItem[]
   period: string
   vacancies: number
   workload: number

@@ -5,8 +5,6 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 interface ClassroomItem {
   id: number
   name: string
-  campusId: number
-  campus: string
   capacity: number
 }
 
@@ -18,19 +16,6 @@ const isMobile = useIsMobile()
 const config = useRuntimeConfig()
 const toast = useToast()
 const loading = ref(false)
-
-// ── Campus options ────────────────────────────────────────────
-interface CampusItem { id: number; name: string }
-interface GetCampiOut { total: number; items: CampusItem[] }
-
-const { data: campiData } = await useFetch<GetCampiOut>(`${config.public.backendUrl}/campi`, {
-  credentials: 'include',
-  server: false,
-})
-
-const campusOptions = computed(() =>
-  (campiData.value?.items ?? []).map(c => ({ label: c.name, value: c.id }))
-)
 
 // ── Capacity input ────────────────────────────────────────────
 const capacityDisplay = ref('')
@@ -62,7 +47,6 @@ function onCapacityInput(e: Event) {
 // ── Form schema ───────────────────────────────────────────────
 const schema = z.object({
   name: z.string().min(1, 'Nome obrigatório').max(50, 'Máximo 50 caracteres'),
-  campusId: z.number({ error: 'Campus obrigatório' }),
   capacity: z.coerce.number({ error: 'Capacidade obrigatória' }).int().gt(0, 'Deve ser maior que 0').max(999999, 'Máximo 999.999'),
 })
 
@@ -70,14 +54,12 @@ type Schema = z.output<typeof schema>
 
 const formState = reactive<Partial<Schema>>({
   name: '',
-  campusId: undefined,
   capacity: undefined,
 })
 
 watch(open, (val) => {
   if (val && props.classroom) {
     formState.name = props.classroom.name
-    formState.campusId = props.classroom.campusId
     formState.capacity = props.classroom.capacity
     capacityDisplay.value = formatCapacity(String(props.classroom.capacity))
   }
@@ -119,17 +101,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       >
         <UFormField label="Nome" name="name">
           <UInput v-model="formState.name" class="w-full" placeholder="Ex: Sala 05" />
-        </UFormField>
-
-        <UFormField label="Campus" name="campusId">
-          <USelectMenu
-            v-model="formState.campusId"
-            :items="campusOptions"
-            value-key="value"
-            class="w-full"
-            placeholder="Selecione o campus"
-            :search-input="{ placeholder: 'Buscar por nome...' }"
-          />
         </UFormField>
 
         <UFormField label="Capacidade" name="capacity">

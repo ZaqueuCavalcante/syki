@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using Estud.Back.Features.Classes.GetClass;
 using Estud.Back.Features.Classes.GetClasses;
 using Estud.Back.Features.Classes.CreateClass;
+using Estud.Back.Features.Classes.AssignTeachersToClass;
 
 namespace Estud.Tests.Integration.Clients;
 
@@ -22,6 +23,15 @@ public partial class TestsHttpClient
         };
         var response = await http.PostAsJsonAsync("/classes", data);
         return await response.Resolve<CreateClassOut>();
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> AssignTeachersToClass(
+        int classId,
+        List<int> teachers
+    ) {
+        var data = new AssignTeachersToClassIn { Teachers = teachers };
+        var response = await http.PostAsJsonAsync($"/classes/{classId}/teachers", data);
+        return await response.Resolve<SuccessOut>();
     }
 
     public async Task<OneOf<GetClassesOut, ErrorOut>> GetClasses(

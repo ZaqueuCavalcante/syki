@@ -38,12 +38,16 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
         return new GetClassOut
         {
             Id = @class.Id,
+            DisciplineId = @class.DisciplineId,
             Discipline = @class.Discipline?.Name ?? "",
             Period = @class.Period?.Name ?? "",
             Vacancies = @class.Vacancies,
             Workload = @class.Workload,
             Status = @class.Status,
-            Teachers = @class.Teachers.Select(t => t.Name).Order().ToList(),
+            Teachers = @class.Teachers
+                .OrderBy(t => t.Name)
+                .Select(t => new GetClassTeacherOut { Id = t.Id, Name = t.Name })
+                .ToList(),
             Schedules = @class.Schedules
                 .OrderBy(s => s.Day).ThenBy(s => s.Start)
                 .Select(s => new ScheduleOut(s.Day, s.Start, s.End))

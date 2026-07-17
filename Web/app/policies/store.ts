@@ -185,6 +185,13 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
       hasPermission(Permissions.ManageClasses),
     ],
   },
+  AssignTeachersToClass: {
+    description: "Definir os professores de uma turma",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageClasses),
+    ],
+  },
   ReleaseClassForEnrollment: {
     description: "Liberar turmas para matrícula",
     requirements: [

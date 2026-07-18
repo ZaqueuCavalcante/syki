@@ -11,4 +11,5 @@ O Estud cobre o ciclo completo da gestão acadêmica, desde a criação de curso
 - [Turmas e Horários](/docs/funcionalidades/turmas-e-horarios) — criação e gestão de turmas
 - [Relatórios](/docs/funcionalidades/relatorios) — desempenho e frequência
 - [Campus](/docs/funcionalidades/campus) — unidades físicas da instituição
+- [Turma](/docs/funcionalidades/turma) — como uma turma nasce e cresce
 - [Configurações da Instituição](/docs/funcionalidades/configuracoes-da-instituicao) — critérios de aprovação

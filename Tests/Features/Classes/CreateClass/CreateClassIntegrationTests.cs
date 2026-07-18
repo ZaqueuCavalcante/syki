@@ -81,6 +81,58 @@ public partial class IntegrationTests
         result.ShouldBeError(AcademicPeriodNotFound.I);
     }
 
+    [Test]
+    public async Task Classes_CreateClass_Should_not_create_class_with_discipline_of_another_institution()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var discipline = (await client.CreateDiscipline()).Success;
+
+        var otherClient = await _back.LoggedAsDirector();
+        var otherPeriod = (await otherClient.CreateAcademicPeriod()).Success;
+
+        // Act
+        var result = await otherClient.CreateClass(discipline.Id, otherPeriod.Id);
+
+        // Assert
+        result.ShouldBeError(DisciplineNotFound.I);
+    }
+
+    [Test]
+    public async Task Classes_CreateClass_Should_not_create_class_with_academic_period_of_another_institution()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var period = (await client.CreateAcademicPeriod()).Success;
+
+        var otherClient = await _back.LoggedAsDirector();
+        var otherDiscipline = (await otherClient.CreateDiscipline()).Success;
+
+        // Act
+        var result = await otherClient.CreateClass(otherDiscipline.Id, period.Id);
+
+        // Assert
+        result.ShouldBeError(AcademicPeriodNotFound.I);
+    }
+
+    [Test]
+    public async Task Classes_CreateClass_Should_not_create_class_with_campus_of_another_institution()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var campus = (await client.CreateCampus()).Success;
+
+        var otherClient = await _back.LoggedAsDirector();
+        var otherDiscipline = (await otherClient.CreateDiscipline()).Success;
+        var otherPeriod = (await otherClient.CreateAcademicPeriod()).Success;
+
+        // Act
+        var result = await otherClient.CreateClass(otherDiscipline.Id, otherPeriod.Id, campusId: campus.Id);
+
+        // Assert
+        result.ShouldBeError(CampusNotFound.I);
+    }
+
     #endregion
 
     #region Happy path
@@ -102,7 +154,7 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Classes_CreateClass_Should_create_class_with_campus_and_teacher()
+    public async Task Classes_CreateClass_Should_create_class_with_campus()
     {
         // Arrange
         var client = await _back.LoggedAsDirector();

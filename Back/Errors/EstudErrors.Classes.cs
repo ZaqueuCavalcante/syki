@@ -21,6 +21,20 @@ public class ClassMustBeOnEnrollment : EstudError
     public override string Message { get; set; } = "A turma deve estar em matrícula.";
 }
 
+public class ClassAlreadyStarted : EstudError
+{
+    public static readonly ClassAlreadyStarted I = new();
+    public override string Code { get; set; } = nameof(ClassAlreadyStarted);
+    public override string Message { get; set; } = "A turma já foi iniciada.";
+}
+
+public class TeacherScheduleConflict : EstudError
+{
+    public static readonly TeacherScheduleConflict I = new();
+    public override string Code { get; set; } = nameof(TeacherScheduleConflict);
+    public override string Message { get; set; } = "Conflito de horário com outra turma do professor.";
+}
+
 public class NoVacanciesInClass : EstudError
 {
     public static readonly NoVacanciesInClass I = new();

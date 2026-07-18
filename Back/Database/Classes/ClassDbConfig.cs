@@ -28,7 +28,7 @@ public class ClassDbConfig : IEntityTypeConfiguration<Class>
             .HasForeignKey(e => e.DisciplineId);
 
         entity.HasMany(e => e.Schedules)
-            .WithOne()
+            .WithOne(s => s.Class)
             .HasForeignKey(s => s.ClassId);
 
         entity.HasMany(e => e.Lessons)

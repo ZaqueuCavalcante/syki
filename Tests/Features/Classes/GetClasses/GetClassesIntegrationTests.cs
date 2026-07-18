@@ -73,7 +73,7 @@ public partial class IntegrationTests
         classes.Items[0].Discipline.Should().Be("Banco de Dados");
         classes.Items[0].Period.Should().Be("2024.1");
         classes.Items[0].Status.Should().Be(ClassStatus.OnPreEnrollment);
-        classes.Items[0].Schedules.Should().HaveCount(1);
+        classes.Items[0].Schedules.Should().BeEmpty();
     }
 
     [Test]

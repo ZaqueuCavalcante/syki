@@ -55,7 +55,11 @@ public partial class IntegrationTests
         var geometriaClass = (await director.CreateClass(geometria.Id, period.Id)).Success;
         var algebraClass = (await director.CreateClass(algebra.Id, period.Id)).Success;
 
-        await StartClasses(geometriaClass.Id, algebraClass.Id);
+        await director.AssignTeachersToClass(geometriaClass.Id, [teacher.Id]);
+        await director.AssignTeachersToClass(algebraClass.Id, [teacher.Id]);
+
+        await director.StartClass(geometriaClass.Id);
+        await director.StartClass(algebraClass.Id);
 
         var client = await _back.LoginAs(email);
 
@@ -111,7 +115,7 @@ public partial class IntegrationTests
         var period = (await director.CreateAcademicPeriod()).Success;
         var otherClass = (await director.CreateClass(discipline.Id, period.Id)).Success;
 
-        await StartClasses(otherClass.Id);
+        await director.StartClass(otherClass.Id);
 
         var client = await _back.LoginAs(email);
 
@@ -120,14 +124,6 @@ public partial class IntegrationTests
 
         // Assert
         result.Success.Classes.Should().BeEmpty();
-    }
-
-    private async Task StartClasses(params int[] ids)
-    {
-        await using var ctx = _back.GetDbContext();
-        var classes = await ctx.Classes.Where(c => ids.Contains(c.Id)).ToListAsync();
-        classes.ForEach(c => c.Status = ClassStatus.Started);
-        await ctx.SaveChangesAsync();
     }
 
     #endregion

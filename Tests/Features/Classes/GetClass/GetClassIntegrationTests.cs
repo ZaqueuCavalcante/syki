@@ -73,7 +73,7 @@ public partial class IntegrationTests
         details.Discipline.Should().Be("Geometria");
         details.Period.Should().Be("2024.1");
         details.Status.Should().Be(ClassStatus.OnPreEnrollment);
-        details.Schedules.Should().NotBeEmpty();
+        details.Schedules.Should().BeEmpty();
         details.Students.Should().BeEmpty();
     }
 

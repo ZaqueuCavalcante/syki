@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GetClassOut } from '~/types/classes'
+import type { ClassStatusTransition, GetClassOut } from '~/types/classes'
 
 const props = defineProps<{ classId: string }>()
 
@@ -14,41 +14,80 @@ const { data, status, error, refresh } = await useFetch<GetClassOut>(
 
 const assignStudentModalOpen = ref(false)
 const teachersModalOpen = ref(false)
+const schedulesModalOpen = ref(false)
 
 const canStart = can('StartClass')
 const canRelease = can('ReleaseClassForEnrollment')
 const canAssignTeachers = can('AssignTeachersToClass')
+const canUpdateSchedules = can('UpdateClassSchedules')
+
+const showEditSchedules = computed(() =>
+  canUpdateSchedules.value && data.value?.status !== 'Started' && data.value?.status !== 'Finalized',
+)
 
 const actionLoading = ref(false)
+const changeStatusModalOpen = ref(false)
+const pendingTransition = ref<ClassStatusTransition | null>(null)
 
 const showReleaseButton = computed(() => canRelease.value && data.value?.status === 'OnPreEnrollment')
 const showStartButton = computed(() =>
   canStart.value && (data.value?.status === 'OnEnrollment' || data.value?.status === 'AwaitingStart'),
 )
 
-async function runAction(path: string, successTitle: string, errorTitle: string) {
+const releaseTransition = computed<ClassStatusTransition>(() => ({
+  path: 'release-for-enrollment',
+  title: 'Liberar turma para matrícula',
+  actionLabel: 'Liberar para matrícula',
+  actionIcon: 'i-lucide-door-open',
+  successTitle: 'Turma liberada para matrícula',
+  errorTitle: 'Erro ao liberar a turma para matrícula.',
+  fromStatus: data.value?.status ?? 'OnPreEnrollment',
+  toStatus: 'OnEnrollment',
+  implications: [
+    { icon: 'i-lucide-clipboard-list', class: 'text-info', text: 'A turma fica aberta para matrícula de alunos, dentro do período de matrícula.' },
+    { icon: 'i-lucide-info', class: 'text-muted', text: 'Ainda é possível ajustar professores e horários enquanto as matrículas acontecem.' },
+  ],
+}))
+
+const startTransition = computed<ClassStatusTransition>(() => ({
+  path: 'start',
+  title: 'Iniciar turma',
+  actionLabel: 'Iniciar turma',
+  actionIcon: 'i-lucide-play',
+  successTitle: 'Turma iniciada com sucesso',
+  errorTitle: 'Erro ao iniciar a turma.',
+  fromStatus: data.value?.status ?? 'OnEnrollment',
+  toStatus: 'Started',
+  implications: [
+    { icon: 'i-lucide-circle-play', class: 'text-primary', text: 'A turma entra em andamento e passa a acontecer normalmente.' },
+    { icon: 'i-lucide-triangle-alert', class: 'text-warning', text: 'Esta ação não pode ser desfeita — não é possível retroceder o status a partir daqui.' },
+  ],
+}))
+
+function askChangeStatus(transition: ClassStatusTransition) {
+  pendingTransition.value = transition
+  changeStatusModalOpen.value = true
+}
+
+async function confirmChangeStatus() {
+  const transition = pendingTransition.value
+  if (!transition) return
+
   actionLoading.value = true
   try {
-    await $fetch(`${config.public.backendUrl}/classes/${props.classId}/${path}`, {
+    await $fetch(`${config.public.backendUrl}/classes/${props.classId}/${transition.path}`, {
       method: 'PUT',
       credentials: 'include',
     })
-    toast.add({ title: successTitle, color: 'success' })
+    toast.add({ title: transition.successTitle, color: 'success' })
+    changeStatusModalOpen.value = false
     await refresh()
   } catch (err: unknown) {
-    const msg = (err as { data?: { message?: string } })?.data?.message ?? errorTitle
+    const msg = (err as { data?: { message?: string } })?.data?.message ?? transition.errorTitle
     toast.add({ title: 'Erro', description: msg, color: 'error' })
   } finally {
     actionLoading.value = false
   }
-}
-
-async function release() {
-  await runAction('release-for-enrollment', 'Turma liberada para matrícula', 'Erro ao liberar a turma para matrícula.')
-}
-
-async function start() {
-  await runAction('start', 'Turma iniciada com sucesso', 'Erro ao iniciar a turma.')
 }
 
 const details = computed(() => {
@@ -92,22 +131,30 @@ const details = computed(() => {
       </div>
 
       <div v-else class="flex flex-col gap-6 py-4">
-        <div v-if="showReleaseButton || showStartButton" class="flex justify-end gap-2">
-          <UButton
-            v-if="showReleaseButton"
-            icon="i-lucide-door-open"
-            label="Liberar para matrícula"
-            :loading="actionLoading"
-            @click="() => { release() }"
-          />
-          <UButton
-            v-if="showStartButton"
-            icon="i-lucide-play"
-            label="Iniciar turma"
-            :loading="actionLoading"
-            @click="() => { start() }"
-          />
-        </div>
+        <UPageCard :ui="{ wrapper: 'w-full', body: 'w-full' }">
+          <template #title>
+            <div class="flex w-full items-center justify-between gap-2">
+              <span>Ciclo de vida</span>
+              <div v-if="showReleaseButton || showStartButton" class="flex gap-2">
+                <UButton
+                  v-if="showReleaseButton"
+                  icon="i-lucide-door-open"
+                  label="Liberar para matrícula"
+                  size="sm"
+                  @click="() => { askChangeStatus(releaseTransition) }"
+                />
+                <UButton
+                  v-if="showStartButton"
+                  icon="i-lucide-play"
+                  label="Iniciar turma"
+                  size="sm"
+                  @click="() => { askChangeStatus(startTransition) }"
+                />
+              </div>
+            </div>
+          </template>
+          <ClassesStatusTimeline :status="data.status" />
+        </UPageCard>
 
         <UPageCard title="Dados da turma">
           <dl class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
@@ -127,22 +174,6 @@ const details = computed(() => {
               </dd>
             </div>
           </dl>
-        </UPageCard>
-
-        <UPageCard title="Horários">
-          <div v-if="data.schedules.length" class="flex flex-wrap gap-2">
-            <UBadge
-              v-for="(s, i) in data.schedules"
-              :key="i"
-              :label="formatClassSchedule(s)"
-              color="neutral"
-              variant="subtle"
-              icon="i-lucide-clock"
-            />
-          </div>
-          <p v-else class="text-sm text-muted">
-            Nenhum horário cadastrado
-          </p>
         </UPageCard>
 
         <UPageCard :ui="{ wrapper: 'w-full', body: 'w-full' }">
@@ -172,6 +203,38 @@ const details = computed(() => {
             <UIcon name="i-lucide-user-x" class="size-10 text-muted" />
             <p class="text-sm text-muted">
               Nenhum professor definido
+            </p>
+          </div>
+        </UPageCard>
+
+        <UPageCard :ui="{ wrapper: 'w-full', body: 'w-full' }">
+          <template #title>
+            <div class="flex w-full items-center justify-between gap-2">
+              <span>Horários</span>
+              <UButton
+                v-if="showEditSchedules"
+                icon="i-lucide-clock"
+                label="Editar"
+                size="sm"
+                @click="(e) => { (e.currentTarget as HTMLElement).blur(); schedulesModalOpen = true }"
+              />
+            </div>
+          </template>
+
+          <div v-if="data.schedules.length" class="flex flex-wrap gap-2">
+            <UBadge
+              v-for="(s, i) in data.schedules"
+              :key="i"
+              :label="formatClassSchedule(s)"
+              color="neutral"
+              variant="subtle"
+              icon="i-lucide-clock"
+            />
+          </div>
+          <div v-else class="flex flex-col items-center gap-3 py-6">
+            <UIcon name="i-lucide-clock" class="size-10 text-muted" />
+            <p class="text-sm text-muted">
+              Nenhum horário cadastrado
             </p>
           </div>
         </UPageCard>
@@ -224,6 +287,20 @@ const details = computed(() => {
           :discipline-id="data.disciplineId"
           :teachers="data.teachers"
           @assigned="refresh()"
+        />
+
+        <ClassesSchedulesModal
+          v-model:open="schedulesModalOpen"
+          :class-id="data.id"
+          :schedules="data.schedules"
+          @saved="refresh()"
+        />
+
+        <ClassesChangeStatusModal
+          v-model:open="changeStatusModalOpen"
+          :transition="pendingTransition"
+          :loading="actionLoading"
+          @confirm="confirmChangeStatus()"
         />
       </div>
     </template>

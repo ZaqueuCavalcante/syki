@@ -28,6 +28,25 @@ export interface GetClassOut {
   students: ClassStudentItem[]
 }
 
+export interface ClassStatusImplication {
+  icon: string
+  class: string
+  text: string
+}
+
+export interface ClassStatusTransition {
+  // caminho do endpoint PUT (ex: 'start', 'release-for-enrollment')
+  path: string
+  title: string
+  actionLabel: string
+  actionIcon: string
+  successTitle: string
+  errorTitle: string
+  fromStatus: string
+  toStatus: string
+  implications: ClassStatusImplication[]
+}
+
 export interface GetTeacherClassOut {
   id: number
   discipline: string

@@ -79,6 +79,10 @@ const details = computed(() => {
       </div>
 
       <div v-else class="flex flex-col gap-6 py-4">
+        <UPageCard title="Ciclo de vida" :ui="{ wrapper: 'w-full', body: 'w-full' }">
+          <ClassesStatusTimeline :status="data.status" />
+        </UPageCard>
+
         <UPageCard title="Dados da turma">
           <dl class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
             <div v-for="item in details" :key="item.label" class="flex flex-col gap-1">

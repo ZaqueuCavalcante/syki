@@ -98,9 +98,10 @@ public partial class IntegrationTests
         var discipline = (await client.CreateDiscipline()).Success;
         var period = (await client.CreateAcademicPeriod()).Success;
         var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var teacher = (await client.CreateTeacher(DataGen.UserName, DataGen.Email)).Success;
 
         // Act
-        var result = await client.AssignTeachersToClass(@class.Id, [999999]);
+        var result = await client.AssignTeachersToClass(@class.Id, [teacher.Id, 999999]);
 
         // Assert
         result.ShouldBeError(TeacherNotFound.I);

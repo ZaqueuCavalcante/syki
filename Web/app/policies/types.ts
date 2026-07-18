@@ -153,6 +153,7 @@ export type PolicyName
     | 'AccessClassesPage'
     | 'CreateClass'
     | 'AssignTeachersToClass'
+    | 'UpdateClassSchedules'
     | 'ReleaseClassForEnrollment'
     | 'StartClass'
     | 'GetTeacherClass'

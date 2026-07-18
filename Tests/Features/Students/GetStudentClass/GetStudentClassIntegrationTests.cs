@@ -141,7 +141,7 @@ public partial class IntegrationTests
         var student = (await director.CreateStudent(DataGen.UserName, email)).Success;
         await director.AssignStudentToClass(student.Id, @class.Id);
 
-        await StartClasses(@class.Id);
+        await director.StartClass(@class.Id);
 
         var client = await _back.LoginAs(email);
 
@@ -155,7 +155,7 @@ public partial class IntegrationTests
         details.Period.Should().Be("2024.1");
         details.Status.Should().Be(ClassStatus.Started);
         details.MyStatus.Should().Be(StudentClassStatus.Matriculado);
-        details.Schedules.Should().NotBeEmpty();
+        details.Schedules.Should().BeEmpty();
     }
 
     #endregion

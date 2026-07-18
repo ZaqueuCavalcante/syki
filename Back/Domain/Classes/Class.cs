@@ -28,13 +28,9 @@ public class Class
     /// </summary>
     public int? CampusId { get; set; }
 
-    /// <summary>
-    /// Professores que lecionam na turma
-    /// </summary>
-    public List<EstudTeacher> Teachers { get; set; }
-
     public List<Schedule> Schedules { get; set; }
     public List<ClassLesson> Lessons { get; set; }
+    public List<EstudTeacher> Teachers { get; set; }
     public List<EstudStudent> Students { get; set; }
 
     private Class() {}

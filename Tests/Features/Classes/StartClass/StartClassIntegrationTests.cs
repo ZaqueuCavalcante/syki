@@ -100,13 +100,6 @@ public partial class IntegrationTests
         var period = (await client.CreateAcademicPeriod()).Success;
         var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
 
-        await using (var ctx = _back.GetDbContext())
-        {
-            var entity = await ctx.Classes.FirstAsync(c => c.Id == @class.Id);
-            entity.Status = ClassStatus.OnEnrollment;
-            await ctx.SaveChangesAsync();
-        }
-
         // Act
         var result = await client.StartClass(@class.Id);
 

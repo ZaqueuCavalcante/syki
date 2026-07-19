@@ -132,10 +132,13 @@ public partial class IntegrationTests
 
         var period = (await director.CreateAcademicPeriod()).Success;
         var @class = (await director.CreateClass(discipline.Id, period.Id)).Success;
+        await director.AssignTeachersToClass(@class.Id, [teacher.Id]);
+        await director.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        await director.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
+        var enrollment = (await director.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2))).Success;
         await director.ReleaseClassForEnrollment(@class.Id);
+        await director.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
 
         var email = DataGen.Email;
         var student = (await director.CreateStudent(DataGen.UserName, email)).Success;
@@ -155,7 +158,7 @@ public partial class IntegrationTests
         details.Period.Should().Be("2024.1");
         details.Status.Should().Be(ClassStatus.Started);
         details.MyStatus.Should().Be(StudentClassStatus.Matriculado);
-        details.Schedules.Should().BeEmpty();
+        details.Schedules.Should().ContainSingle();
     }
 
     #endregion

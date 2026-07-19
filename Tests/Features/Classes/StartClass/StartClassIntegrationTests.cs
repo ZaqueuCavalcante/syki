@@ -87,18 +87,76 @@ public partial class IntegrationTests
         result.ShouldBeError(EnrollmentPeriodMustBeFinalized.I);
     }
 
-    #endregion
-
-    #region Happy path
-
     [Test]
-    public async Task Classes_StartClass_Should_start_class()
+    public async Task Classes_StartClass_Should_not_start_class_when_class_has_no_teachers()
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
         var discipline = (await client.CreateDiscipline()).Success;
         var period = (await client.CreateAcademicPeriod()).Success;
         var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        var enrollment = (await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2))).Success;
+        await client.ReleaseClassForEnrollment(@class.Id);
+        await client.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
+
+        // Act
+        var result = await client.StartClass(@class.Id);
+
+        // Assert
+        result.ShouldBeError(ClassWithoutTeachers.I);
+    }
+
+    [Test]
+    public async Task Classes_StartClass_Should_not_start_class_when_class_has_no_schedules()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var discipline = (await client.CreateDiscipline()).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+
+        var teacher = (await client.CreateTeacher("Chico Ferreira", DataGen.Email)).Success;
+        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
+
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        var enrollment = (await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2))).Success;
+        await client.ReleaseClassForEnrollment(@class.Id);
+        await client.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
+
+        // Act
+        var result = await client.StartClass(@class.Id);
+
+        // Assert
+        result.ShouldBeError(ClassWithoutSchedules.I);
+    }
+
+    #endregion
+
+    #region Happy path
+
+    [Test]
+    public async Task Classes_StartClass_Should_start_class_and_generate_lessons()
+    {
+        // Arrange — período 2024.1 (01/02 a 01/07), turma com professor e horário na segunda.
+        var client = await _back.LoggedAsDirector();
+        var discipline = (await client.CreateDiscipline()).Success;
+        var period = (await client.CreateAcademicPeriod()).Success;
+
+        var teacher = (await client.CreateTeacher("Chico Ferreira", DataGen.Email)).Success;
+        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
+        await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
+
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        var enrollment = (await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2))).Success;
+        await client.ReleaseClassForEnrollment(@class.Id);
+        await client.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
 
         // Act
         var result = await client.StartClass(@class.Id);
@@ -109,6 +167,12 @@ public partial class IntegrationTests
         await using var db = _back.GetDbContext();
         var started = await db.Classes.FirstAsync(c => c.Id == @class.Id);
         started.Status.Should().Be(ClassStatus.Started);
+        started.Workload.Should().BeGreaterThan(0);
+
+        var lessons = await db.ClassLessons.Where(l => l.ClassId == @class.Id).ToListAsync();
+        lessons.Should().NotBeEmpty();
+        lessons.Should().OnlyContain(l => l.Date.DayOfWeek == DayOfWeek.Monday);
+        lessons.Should().OnlyContain(l => l.Status == ClassLessonStatus.Pending);
     }
 
     #endregion

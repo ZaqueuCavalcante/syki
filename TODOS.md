@@ -59,3 +59,26 @@
 - Os dados acima servem de input pra diversas queries, análises, insights e dashboards
 
 
+
+
+
+
+Sidebar do aluno
+
+- Curso (vai trazer dados sobre o curso atual dele, a grade de disciplinas, quais ele ja pagou...)
+
+- Notas (traz as notas do aluno das disciplinas do curso, a sua nota media, graficos de notas)
+
+- Frequência (traz as frequencias do aluno das disciplinas do curso, a sua frequencia media, graficos de frequencias)
+
+
+
+
+se baseie na tela de detalhes de uma turma do manager
+
+crie uma tela de detalhes de um professor pra um manager
+
+crie endpoint que retorna os detalhes de um professor, apenas manager tem q acessar
+
+
+

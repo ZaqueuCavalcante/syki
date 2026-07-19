@@ -63,10 +63,22 @@ function colorFor(name: string): string {
   return colorByName.value.get(name) ?? palette[0]!
 }
 
+// ── Relógio reativo (atualiza o indicador de "agora" a cada minuto) ──
+const now = ref(new Date())
+let timer: ReturnType<typeof setInterval> | undefined
+onMounted(() => {
+  timer = setInterval(() => { now.value = new Date() }, 60_000)
+})
+onBeforeUnmount(() => {
+  if (timer) clearInterval(timer)
+})
+
+const nowMinutes = computed(() => now.value.getHours() * 60 + now.value.getMinutes())
+
 // ── Dia atual (indicador tipo Google Calendar) ────────────────
 const todayKey = computed(() => {
   const keys = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-  return keys[new Date().getDay()] ?? null
+  return keys[now.value.getDay()] ?? null
 })
 
 // ── Layout do grid ────────────────────────────────────────────
@@ -135,6 +147,27 @@ function blockStyle(item: AgendaDiscipline) {
     minHeight: `${height - BLOCK_GAP * 2}px`,
   }
 }
+
+// ── Indicador de "agora" (linha da hora atual sobre a coluna de hoje) ──
+const todayIndex = computed(() => visibleDays.value.findIndex(d => d.key === todayKey.value))
+
+const nowLine = computed(() => {
+  if (todayIndex.value < 0) return null
+  const startMin = range.value.startHour * 60
+  const endMin = range.value.endHour * 60
+  if (nowMinutes.value < startMin || nowMinutes.value > endMin) return null
+  const top = ((nowMinutes.value - startMin) / 60) * HOUR_HEIGHT
+  const n = visibleDays.value.length
+  // Borda direita da coluna de hoje (acompanha o dia atual conforme a semana avança).
+  const frac = (todayIndex.value + 1) / n
+  return {
+    top,
+    // Posição no grid externo (eixo de 56px + grade dos dias). Ancora a borda direita
+    // do relógio na linha vertical direita da coluna de hoje, com 4px de folga, pra ele
+    // ficar totalmente contido dentro do dia atual (ver -translate-x-full no template).
+    iconLeft: `calc(56px + (100% - 56px) * ${frac} - 8px)`,
+  }
+})
 </script>
 
 <template>
@@ -158,7 +191,7 @@ function blockStyle(item: AgendaDiscipline) {
       </div>
 
       <!-- Corpo: eixo de horas + grade dos dias -->
-      <div class="grid" :style="{ gridTemplateColumns: '56px 1fr' }">
+      <div class="relative grid" :style="{ gridTemplateColumns: '56px 1fr' }">
         <!-- Eixo de horas -->
         <div class="relative" :style="{ height: `${gridHeight}px` }">
           <div
@@ -173,7 +206,7 @@ function blockStyle(item: AgendaDiscipline) {
 
         <!-- Grade dos dias (moldura com quinas arredondadas) -->
         <div
-          class="grid border border-default rounded-lg overflow-hidden"
+          class="relative grid border border-default rounded-lg overflow-hidden"
           :style="{ gridTemplateColumns: dayColumns }"
         >
         <!-- Colunas dos dias -->
@@ -213,7 +246,18 @@ function blockStyle(item: AgendaDiscipline) {
             </div>
           </component>
         </div>
+
         </div>
+
+        <!-- Indicador de "agora": relógio marcando o horário atual, centrado sobre a
+             linha vertical direita da coluna de hoje. Fica fora do container com
+             overflow-hidden pra não ser cortado. -->
+        <UIcon
+          v-if="nowLine"
+          name="i-lucide-clock"
+          class="pointer-events-none absolute z-10 size-5 -translate-x-full -translate-y-1/2 text-primary"
+          :style="{ top: `${nowLine.top}px`, left: nowLine.iconLeft }"
+        />
       </div>
     </div>
   </div>

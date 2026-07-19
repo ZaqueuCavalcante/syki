@@ -28,6 +28,20 @@ public class ClassAlreadyStarted : EstudError
     public override string Message { get; set; } = "A turma já foi iniciada.";
 }
 
+public class ClassWithoutTeachers : EstudError
+{
+    public static readonly ClassWithoutTeachers I = new();
+    public override string Code { get; set; } = nameof(ClassWithoutTeachers);
+    public override string Message { get; set; } = "A turma não possui professores atribuídos.";
+}
+
+public class ClassWithoutSchedules : EstudError
+{
+    public static readonly ClassWithoutSchedules I = new();
+    public override string Code { get; set; } = nameof(ClassWithoutSchedules);
+    public override string Message { get; set; } = "A turma não possui horários definidos.";
+}
+
 public class TeacherScheduleConflict : EstudError
 {
     public static readonly TeacherScheduleConflict I = new();

@@ -5,6 +5,11 @@ const props = defineProps<{ classId: string }>()
 
 const config = useRuntimeConfig()
 
+const breadcrumb = [
+  { label: 'Agenda', to: '/agenda', icon: 'i-lucide-calendar' },
+  { label: 'Detalhes da turma' },
+]
+
 const { data, status, error } = await useFetch<GetStudentClassOut>(
   `${config.public.backendUrl}/students/classes/${props.classId}`,
   { credentials: 'include', server: false },
@@ -16,31 +21,14 @@ const { data: activitiesData } = await useFetch<GetStudentClassActivitiesOut>(
 )
 
 const activities = computed(() => activitiesData.value?.activities ?? [])
-
-const details = computed(() => {
-  if (!data.value) return []
-  return [
-    { label: 'Disciplina', value: data.value.discipline },
-    { label: 'Status da turma', status: true },
-    { label: 'Professores', value: data.value.teachers.join(', ') || '—' },
-    { label: 'Período', value: data.value.period },
-    { label: 'Carga horária', value: `${data.value.workload}h` },
-    { label: 'Minha matrícula', myStatus: true },
-  ]
-})
 </script>
 
 <template>
   <UDashboardPanel id="class-details">
     <template #header>
-      <UDashboardNavbar :title="data?.discipline ?? 'Turma'">
-        <template #leading>
-          <UButton
-            icon="i-lucide-arrow-left"
-            color="neutral"
-            variant="ghost"
-            to="/agenda"
-          />
+      <UDashboardNavbar>
+        <template #title>
+          <UBreadcrumb :items="breadcrumb" />
         </template>
       </UDashboardNavbar>
     </template>
@@ -58,55 +46,83 @@ const details = computed(() => {
         <UButton icon="i-lucide-arrow-left" label="Voltar" to="/agenda" />
       </div>
 
-      <div v-else class="flex flex-col gap-6 py-4">
-        <UPageCard title="Ciclo de vida" :ui="{ wrapper: 'w-full', body: 'w-full' }">
-          <ClassesStatusTimeline :status="data.status" />
-        </UPageCard>
-
-        <UPageCard title="Dados da turma">
-          <dl class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
-            <div v-for="item in details" :key="item.label" class="flex flex-col gap-1">
-              <dt class="text-xs text-muted">
-                {{ item.label }}
-              </dt>
-              <dd v-if="item.status">
-                <UBadge
-                  :label="classStatusLabels[data.status] ?? data.status"
-                  :color="classStatusColors[data.status] ?? 'neutral'"
-                  variant="subtle"
-                />
-              </dd>
-              <dd v-else-if="item.myStatus">
-                <UBadge
-                  :label="studentClassStatusLabels[data.myStatus] ?? data.myStatus"
-                  :color="studentClassStatusColors[data.myStatus] ?? 'neutral'"
-                  variant="subtle"
-                />
-              </dd>
-              <dd v-else class="text-sm text-highlighted">
-                {{ item.value }}
-              </dd>
-            </div>
-          </dl>
-        </UPageCard>
-
-        <UPageCard title="Horários">
-          <div v-if="data.schedules.length" class="flex flex-wrap gap-2">
+      <div v-else class="flex flex-col gap-10 py-2">
+        <div class="grid grid-cols-1 items-start gap-x-4 gap-y-1 sm:grid-cols-[1fr_auto]">
+          <h1 class="order-1 text-2xl font-semibold tracking-tight text-highlighted sm:col-start-1 sm:row-start-1">
+            {{ data.discipline }}
+          </h1>
+          <div class="order-2 flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-muted sm:col-start-1 sm:row-start-2">
+            <span class="flex items-center gap-1.5">
+              <UIcon name="i-lucide-calendar" class="size-4" />
+              {{ data.period }}
+            </span>
+            <span class="flex items-center gap-1.5">
+              <UIcon name="i-lucide-clock" class="size-4" />
+              {{ data.workload }}h
+            </span>
             <UBadge
-              v-for="(s, i) in data.schedules"
-              :key="i"
-              :label="formatClassSchedule(s)"
-              color="neutral"
+              :label="studentClassStatusLabels[data.myStatus] ?? data.myStatus"
+              :color="studentClassStatusColors[data.myStatus] ?? 'neutral'"
               variant="subtle"
-              icon="i-lucide-clock"
             />
           </div>
-          <p v-else class="text-sm text-muted">
-            Nenhum horário cadastrado
-          </p>
-        </UPageCard>
+        </div>
 
-        <UPageCard :title="`Atividades (${activities.length})`">
+        <section class="flex flex-col gap-3">
+          <h2 class="font-semibold text-highlighted">
+            Professores
+          </h2>
+
+          <div v-if="data.teachers.length" class="flex flex-wrap gap-2">
+            <div
+              v-for="teacher in data.teachers"
+              :key="teacher"
+              class="flex items-center gap-2 rounded-full border border-default bg-elevated/40 py-1 pl-1 pr-3"
+            >
+              <UAvatar :alt="teacher" size="2xs" />
+              <span class="text-sm text-highlighted">{{ teacher }}</span>
+            </div>
+          </div>
+          <div v-else class="flex items-center gap-2 text-sm text-muted">
+            <UIcon name="i-lucide-user-x" class="size-4" />
+            Nenhum professor definido
+          </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+          <h2 class="font-semibold text-highlighted">
+            Horários
+          </h2>
+
+          <div v-if="data.schedules.length" class="flex flex-wrap gap-2">
+            <div
+              v-for="(s, i) in data.schedules"
+              :key="i"
+              class="flex flex-col gap-0.5 rounded-lg border border-default bg-elevated/40 px-3 py-2"
+            >
+              <span
+                class="text-sm font-medium"
+                :class="s.teacher ? 'text-highlighted' : 'text-muted'"
+              >
+                {{ s.teacher ?? 'Sem professor' }}
+              </span>
+              <span class="flex items-center gap-1 text-xs text-muted">
+                <UIcon name="i-lucide-clock" class="size-3.5" />
+                {{ formatClassSchedule(s) }}
+              </span>
+            </div>
+          </div>
+          <div v-else class="flex items-center gap-2 text-sm text-muted">
+            <UIcon name="i-lucide-clock" class="size-4" />
+            Nenhum horário cadastrado
+          </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+          <h2 class="font-semibold text-highlighted">
+            Atividades ({{ activities.length }})
+          </h2>
+
           <div v-if="activities.length" class="flex flex-col divide-y divide-default">
             <NuxtLink
               v-for="activity in activities"
@@ -146,7 +162,7 @@ const details = computed(() => {
               Nenhuma atividade cadastrada
             </p>
           </div>
-        </UPageCard>
+        </section>
       </div>
     </template>
   </UDashboardPanel>

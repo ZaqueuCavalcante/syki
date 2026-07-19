@@ -35,6 +35,20 @@ public class TeacherScheduleConflict : EstudError
     public override string Message { get; set; } = "Conflito de horário com outra turma do professor.";
 }
 
+public class ScheduleTeacherRequired : EstudError
+{
+    public static readonly ScheduleTeacherRequired I = new();
+    public override string Code { get; set; } = nameof(ScheduleTeacherRequired);
+    public override string Message { get; set; } = "Cada horário deve ter um professor definido.";
+}
+
+public class InvalidScheduleTeacher : EstudError
+{
+    public static readonly InvalidScheduleTeacher I = new();
+    public override string Code { get; set; } = nameof(InvalidScheduleTeacher);
+    public override string Message { get; set; } = "Professor do horário não pertence à turma.";
+}
+
 public class NoVacanciesInClass : EstudError
 {
     public static readonly NoVacanciesInClass I = new();

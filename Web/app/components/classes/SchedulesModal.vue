@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { ClassSchedule } from '~/types/classes'
+import type { ClassSchedule, ClassTeacherItem } from '~/types/classes'
 
 const open = defineModel<boolean>('open', { default: false })
 const props = defineProps<{
   classId: number
   schedules: ClassSchedule[]
+  teachers: ClassTeacherItem[]
 }>()
 const emit = defineEmits<{ saved: [] }>()
 
@@ -12,6 +13,10 @@ const isMobile = useIsMobile()
 const config = useRuntimeConfig()
 const toast = useToast()
 const saving = ref(false)
+
+// Só faz sentido escolher o professor do horário quando a turma tem mais de um.
+// Com 0 ou 1 professor, o backend resolve sozinho (nulo ou o único professor).
+const pickTeacher = computed(() => props.teachers.length >= 2)
 
 const dayOptions = [
   { label: 'Segunda', value: 'Monday' },
@@ -21,6 +26,10 @@ const dayOptions = [
   { label: 'Sexta', value: 'Friday' },
   { label: 'Sábado', value: 'Saturday' },
 ]
+
+const teacherOptions = computed(() =>
+  props.teachers.map(t => ({ label: t.name, value: t.id })),
+)
 
 function buildHourOptions() {
   const opts = []
@@ -40,13 +49,14 @@ interface Row {
   day: string | undefined
   start: string | undefined
   end: string | undefined
+  teacherId: number | undefined
 }
 
 let nextKey = 0
 const rows = ref<Row[]>([])
 
 function addRow() {
-  rows.value = [...rows.value, { key: nextKey++, day: undefined, start: undefined, end: undefined }]
+  rows.value = [...rows.value, { key: nextKey++, day: undefined, start: undefined, end: undefined, teacherId: undefined }]
 }
 
 function removeRow(key: number) {
@@ -58,7 +68,7 @@ function hourValue(h: string) {
 }
 
 function rowIncomplete(r: Row) {
-  return !r.day || !r.start || !r.end
+  return !r.day || !r.start || !r.end || (pickTeacher.value && !r.teacherId)
 }
 
 function rowBadRange(r: Row) {
@@ -73,7 +83,14 @@ async function save() {
   try {
     await $fetch(`${config.public.backendUrl}/classes/${props.classId}/schedules`, {
       method: 'PUT',
-      body: { schedules: rows.value.map(r => ({ day: r.day, start: r.start, end: r.end })) },
+      body: {
+        schedules: rows.value.map(r => ({
+          day: r.day,
+          start: r.start,
+          end: r.end,
+          teacherId: pickTeacher.value ? r.teacherId : null,
+        })),
+      },
       credentials: 'include',
     })
     toast.add({ title: 'Horários atualizados com sucesso', color: 'success' })
@@ -89,7 +106,13 @@ async function save() {
 
 watch(open, (val) => {
   if (val) {
-    rows.value = props.schedules.map(s => ({ key: nextKey++, day: s.day, start: s.startAt, end: s.endAt }))
+    rows.value = props.schedules.map(s => ({
+      key: nextKey++,
+      day: s.day,
+      start: s.startAt,
+      end: s.endAt,
+      teacherId: s.teacherId ?? undefined,
+    }))
   } else {
     rows.value = []
   }
@@ -114,28 +137,44 @@ watch(open, (val) => {
 
         <div v-else class="flex flex-col gap-3">
           <div v-for="row in rows" :key="row.key" class="flex flex-col gap-1">
-            <div class="flex items-end gap-2">
-              <USelect
-                v-model="row.day"
-                :items="dayOptions"
-                value-key="value"
-                class="flex-1"
-                placeholder="Dia"
-              />
-              <USelect
-                v-model="row.start"
-                :items="hourOptions"
-                value-key="value"
-                class="w-24"
-                placeholder="Início"
-              />
-              <USelect
-                v-model="row.end"
-                :items="hourOptions"
-                value-key="value"
-                class="w-24"
-                placeholder="Fim"
-              />
+            <div class="flex items-center gap-2">
+              <div
+                class="flex flex-1 flex-col gap-2"
+                :class="pickTeacher ? 'rounded-lg border border-default p-3' : ''"
+              >
+                <USelect
+                  v-if="pickTeacher"
+                  v-model="row.teacherId"
+                  :items="teacherOptions"
+                  value-key="value"
+                  class="w-full"
+                  placeholder="Professor"
+                  icon="i-lucide-user"
+                />
+                <div class="flex gap-2">
+                  <USelect
+                    v-model="row.day"
+                    :items="dayOptions"
+                    value-key="value"
+                    class="flex-1"
+                    placeholder="Dia"
+                  />
+                  <USelect
+                    v-model="row.start"
+                    :items="hourOptions"
+                    value-key="value"
+                    class="flex-1"
+                    placeholder="Início"
+                  />
+                  <USelect
+                    v-model="row.end"
+                    :items="hourOptions"
+                    value-key="value"
+                    class="flex-1"
+                    placeholder="Fim"
+                  />
+                </div>
+              </div>
               <UButton
                 icon="i-lucide-trash-2"
                 color="error"

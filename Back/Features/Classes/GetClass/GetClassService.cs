@@ -22,18 +22,33 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
             if (!hasCurrentEnrollmentPeriod) @class.Status = ClassStatus.AwaitingStart;
         }
 
-        var students = await (
-            from cs in ctx.ClassStudents.AsNoTracking()
-            join s in ctx.Students.AsNoTracking() on cs.StudentId equals s.Id
-            where cs.ClassId == id
-            orderby s.Name
-            select new GetClassStudentOut
+        var classStudents = await ctx.ClassStudents.AsNoTracking()
+            .Where(cs => cs.ClassId == id)
+            .OrderBy(cs => cs.Student!.Name)
+            .Select(cs => new
             {
-                Id = s.Id,
-                Name = s.Name,
-                Status = cs.Status,
-            }
-        ).ToListAsync();
+                cs.Student!.Id,
+                cs.Student.Name,
+                cs.Status,
+            })
+            .ToListAsync();
+
+        // Mock: nota e frequência médias aleatórias, porém estáveis por aluno (seed = Id).
+        // TODO: calcular a partir das notas e presenças reais do aluno na turma.
+        var students = classStudents
+            .Select(s =>
+            {
+                var random = new Random(s.Id);
+                return new GetClassStudentOut
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Status = s.Status,
+                    AverageGrade = Math.Round((decimal)(random.NextDouble() * 10), 1),
+                    AverageAttendance = Math.Round((decimal)(random.NextDouble() * 100), 1),
+                };
+            })
+            .ToList();
 
         return new GetClassOut
         {
@@ -50,7 +65,11 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
                 .ToList(),
             Schedules = @class.Schedules
                 .OrderBy(s => s.Day).ThenBy(s => s.Start)
-                .Select(s => new ScheduleOut(s.Day, s.Start, s.End))
+                .Select(s => new ScheduleOut(s.Day, s.Start, s.End)
+                {
+                    TeacherId = s.TeacherId,
+                    Teacher = s.TeacherId == null ? null : @class.Teachers.FirstOrDefault(t => t.Id == s.TeacherId)?.Name,
+                })
                 .ToList(),
             Students = students,
         };

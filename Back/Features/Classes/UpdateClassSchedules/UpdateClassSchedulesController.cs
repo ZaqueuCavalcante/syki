@@ -8,8 +8,8 @@ public class UpdateClassSchedulesController(UpdateClassSchedulesService service)
     /// </summary>
     /// <remarks>
     /// Define os horários semanais da turma. Substitui a lista atual (replace-all).
-    /// Só é possível antes de a turma ser iniciada. Valida horários bem formados, sem choque entre si
-    /// e sem conflito com outras turmas dos professores já atribuídos.
+    /// Só é possível antes de a turma ser iniciada. Valida horários bem formados, sem
+    /// choque entre si e sem conflito com outras turmas dos professores já atribuídos.
     /// </remarks>
     [HttpPut("classes/{classId}/schedules")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
@@ -30,5 +30,7 @@ internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidHour,
     InvalidSchedule,
     ConflictingSchedules,
+    ScheduleTeacherRequired,
+    InvalidScheduleTeacher,
     TeacherScheduleConflict
 >;

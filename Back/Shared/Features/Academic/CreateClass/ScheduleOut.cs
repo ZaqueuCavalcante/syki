@@ -6,6 +6,13 @@ public class ScheduleOut
     public Hour StartAt { get; set; }
     public Hour EndAt { get; set; }
 
+    /// <summary>
+    /// Professor que cobre este horário.
+    /// Pode ser nulo quando a turma ainda não tem professor definido.
+    /// </summary>
+    public int? TeacherId { get; set; }
+    public string? Teacher { get; set; }
+
     public ScheduleOut() { }
 
     public ScheduleOut(

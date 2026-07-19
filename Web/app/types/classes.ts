@@ -2,12 +2,16 @@ export interface ClassSchedule {
   day: string // 'Monday' | 'Tuesday' | ...
   startAt: string // ex: "H07_00"
   endAt: string // ex: "H10_00"
+  teacherId: number | null
+  teacher: string | null
 }
 
 export interface ClassStudentItem {
   id: number
   name: string
   status: string
+  averageGrade?: number // nota média do aluno na turma (de 0 a 10) — ainda não retornada pelo endpoint
+  averageAttendance?: number // frequência média do aluno na turma (de 0% a 100%) — ainda não retornada pelo endpoint
 }
 
 export interface ClassTeacherItem {

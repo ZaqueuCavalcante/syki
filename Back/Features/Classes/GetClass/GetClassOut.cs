@@ -29,10 +29,10 @@ public class GetClassOut : IApiDto<GetClassOut>
                 new GetClassTeacherOut { Id = 14, Name = "Ana Lima" },
                 new GetClassTeacherOut { Id = 32, Name = "Chico Ferreira" },
             ],
-            Schedules = [new ScheduleOut(Day.Monday, Hour.H07_00, Hour.H10_00)],
+            Schedules = [new ScheduleOut(Day.Monday, Hour.H07_00, Hour.H10_00) { TeacherId = 14, Teacher = "Ana Lima" }],
             Students =
             [
-                new GetClassStudentOut { Id = 1, Name = "Maria Souza", Status = StudentClassStatus.Matriculado },
+                new GetClassStudentOut { Id = 1, Name = "Maria Souza", Status = StudentClassStatus.Matriculado, AverageGrade = 8.5M, AverageAttendance = 92.0M },
             ],
         }),
     ];
@@ -49,4 +49,14 @@ public class GetClassStudentOut
     public int Id { get; set; }
     public string Name { get; set; }
     public StudentClassStatus Status { get; set; }
+
+    /// <summary>
+    /// Nota média do aluno na turma (de 0 a 10)
+    /// </summary>
+    public decimal AverageGrade { get; set; }
+
+    /// <summary>
+    /// Frequência média do aluno na turma (de 0% a 100%)
+    /// </summary>
+    public decimal AverageAttendance { get; set; }
 }

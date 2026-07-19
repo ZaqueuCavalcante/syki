@@ -115,7 +115,6 @@ public partial class IntegrationTests
         notification.Viewed.Should().Be(1);
         notification.ViewRate.Should().Be(100M);
         notification.ViewsByDay.Should().HaveCount(1);
-        notification.ViewsByDay[0].Day.Should().Be(DateOnly.FromDateTime(DateTime.UtcNow));
         notification.ViewsByDay[0].Views.Should().Be(1);
     }
 

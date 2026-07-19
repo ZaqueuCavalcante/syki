@@ -21,7 +21,9 @@ public class AssignTeachersToClassService(EstudDbContext ctx) : IEstudService
 
         var institutionId = ctx.RequestUser.InstitutionId;
 
-        var @class = await ctx.Classes.Include(c => c.Teachers)
+        var @class = await ctx.Classes
+            .Include(c => c.Teachers)
+            .Include(c => c.Schedules)
             .FirstOrDefaultAsync(c => c.Id == classId && c.InstitutionId == institutionId);
         if (@class == null) return ClassNotFound.I;
 
@@ -35,6 +37,22 @@ public class AssignTeachersToClassService(EstudDbContext ctx) : IEstudService
         if (teachersInDiscipline != data.Teachers.Count) return TeacherNotAssignedToDiscipline.I;
 
         @class.Teachers = teachers;
+
+        // Mantém a alocação de professor por horário coerente com a nova lista:
+        // - 0 ou 1 professor → todos os horários apontam para ele (ou nulo);
+        // - 2 professores → limpa apenas os horários que apontavam para um professor que saiu (o gestor redefine depois).
+        if (data.Teachers.Count <= 1)
+        {
+            var only = data.Teachers.Count == 1 ? data.Teachers[0] : (int?)null;
+            foreach (var schedule in @class.Schedules)
+                schedule.TeacherId = only;
+        }
+        else
+        {
+            foreach (var schedule in @class.Schedules.Where(s => s.TeacherId == null || !data.Teachers.Contains(s.TeacherId.Value)))
+                schedule.TeacherId = null;
+        }
+
         await ctx.SaveChangesAsync();
 
         return EstudSuccess.I;

@@ -1,5 +1,4 @@
 using Estud.Back.Domain.Classes;
-using Estud.Back.Domain.Students;
 
 namespace Estud.Back.Database.Classes;
 
@@ -16,7 +15,7 @@ public class ClassStudentDbConfig : IEntityTypeConfiguration<ClassStudent>
             .HasPrincipalKey(x => x.Id)
             .HasForeignKey(x => x.ClassId);
 
-        entity.HasOne<EstudStudent>()
+        entity.HasOne(x => x.Student)
             .WithMany()
             .HasPrincipalKey(x => x.Id)
             .HasForeignKey(x => x.StudentId);

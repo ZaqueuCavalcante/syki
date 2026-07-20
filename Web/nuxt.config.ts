@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   runtimeConfig: {
+    // Server-only. Usada nas chamadas SSR ao backend (ex.: checagem de auth da landing).
+    // Se vazia, cai no backendUrl público. Aponte para a URL interna (ex.: rede privada
+    // da Railway) para reduzir a latência da checagem no caminho do usuário logado.
+    internalBackendUrl: "",
     public: {
       backendUrl: "",
     },

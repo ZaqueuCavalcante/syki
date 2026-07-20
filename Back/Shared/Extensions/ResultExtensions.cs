@@ -14,4 +14,10 @@ public static class ResultExtensions
             ? value.AsT1
             : throw new InvalidOperationException($"{value.Success}");
     }
+
+    extension<S, E>(Task<OneOf<S, E>> task)
+    {
+        public async Task<S> Success() => (await task).Success;
+        public async Task<E> Error() => (await task).Error;
+    }
 }

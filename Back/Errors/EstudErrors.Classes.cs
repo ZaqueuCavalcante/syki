@@ -63,6 +63,13 @@ public class InvalidScheduleTeacher : EstudError
     public override string Message { get; set; } = "Professor do horário não pertence à turma.";
 }
 
+public class InvalidClassVacancies : EstudError
+{
+    public static readonly InvalidClassVacancies I = new();
+    public override string Code { get; set; } = nameof(InvalidClassVacancies);
+    public override string Message { get; set; } = "Número de vagas inválido.";
+}
+
 public class NoVacanciesInClass : EstudError
 {
     public static readonly NoVacanciesInClass I = new();

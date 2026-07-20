@@ -4,8 +4,20 @@ namespace Estud.Back.Features.Classes.CreateClass;
 
 public class CreateClassService(EstudDbContext ctx) : IEstudService
 {
+    private class Validator : AbstractValidator<CreateClassIn>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.Vacancies).GreaterThanOrEqualTo(0).WithError(InvalidClassVacancies.I);
+            RuleFor(x => x.Vacancies).LessThanOrEqualTo(100).WithError(InvalidClassVacancies.I);
+        }
+    }
+    private static readonly Validator V = new();
+
     public async Task<OneOf<CreateClassOut, EstudError>> Create(CreateClassIn data)
     {
+        if (V.Run(data, out var error)) return error;
+
         var institutionId = ctx.RequestUser.InstitutionId;
 
         var disciplineOk = await ctx.Disciplines.AnyAsync(x => x.Id == data.DisciplineId && x.InstitutionId == institutionId);

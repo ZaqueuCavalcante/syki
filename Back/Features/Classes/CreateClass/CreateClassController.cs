@@ -25,6 +25,7 @@ internal class ErrorsExamples : ErrorExamplesProvider<
     CampusNotFound,
     DisciplineNotFound,
     AcademicPeriodNotFound,
+    InvalidClassVacancies,
     InvalidDay,
     InvalidHour,
     InvalidSchedule,

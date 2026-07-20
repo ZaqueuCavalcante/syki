@@ -1,19 +1,7 @@
 <script setup lang="ts">
-definePageMeta({ layout: false })
-
-const { account, fetchAccount } = useUserAccount()
-const checking = ref(true)
-
-onMounted(async () => {
-  try {
-    if (!account.value) await fetchAccount()
-  } catch { /* not logged in */ }
-  if (account.value) {
-    await navigateTo('/home', { replace: true })
-    return
-  }
-  checking.value = false
-})
+// Renderiza a landing direto no SSR. O redirect de usuário logado para /home é feito no
+// servidor pelo middleware redirect-if-logged (sem gate/spinner no caminho do não logado).
+definePageMeta({ layout: false, middleware: 'redirect-if-logged' })
 
 const features = [
   {
@@ -50,11 +38,7 @@ const features = [
 </script>
 
 <template>
-  <div v-if="checking" class="min-h-screen flex items-center justify-center">
-    <AppSpinner class="size-10 text-muted" />
-  </div>
-
-  <NuxtLayout v-else name="landing">
+  <NuxtLayout name="landing">
     <div>
       <UPageHero
         headline="Plataforma educacional"

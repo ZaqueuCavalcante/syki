@@ -48,10 +48,10 @@ public class Class
         Vacancies = vacancies;
         CampusId = campusId;
         Status = ClassStatus.OnPreEnrollment;
-        Teachers = [];
-        Schedules = [];
         Lessons = [];
+        Teachers = [];
         Students = [];
+        Schedules = [];
     }
 
     public void CreateLessons()

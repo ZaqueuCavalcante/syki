@@ -22,6 +22,12 @@ public partial class TestsHttpClient
         return user;
     }
 
+    public async Task<OneOf<SuccessOut, ErrorOut>> GetAuthStatus()
+    {
+        var response = await http.GetAsync("users/logged");
+        return await response.Resolve<SuccessOut>();
+    }
+
     public async Task<OneOf<GetUserAccountOut, ErrorOut>> GetUserAccount()
     {
         var response = await http.GetAsync("users/account");

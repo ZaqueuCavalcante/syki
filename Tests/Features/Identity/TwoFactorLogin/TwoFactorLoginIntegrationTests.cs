@@ -12,8 +12,8 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _back.LoggedAsDirector();
 
-        var keyResponse = await client.GetTwoFactorKey();
-        var totp = keyResponse.Success.Key.GenerateTOTP();
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var totp = keyResponse.Key.GenerateTOTP();
         await client.SetupTwoFactor(totp);
 
         // Act - tries 2FA login without email+password initiation
@@ -69,8 +69,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _back.LoggedAsDirector();
         var user = client.User;
 
-        var keyResponse = await client.GetTwoFactorKey();
-        var token = keyResponse.Success.Key.GenerateTOTP();
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var token = keyResponse.Key.GenerateTOTP();
         await client.SetupTwoFactor(token);
 
         await client.Logout();
@@ -90,8 +90,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _back.LoggedAsDirector();
         var user = client.User;
 
-        var keyResponse = await client.GetTwoFactorKey();
-        var token = keyResponse.Success.Key.GenerateTOTP();
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var token = keyResponse.Key.GenerateTOTP();
         await client.SetupTwoFactor(token);
 
         await client.Logout();
@@ -111,8 +111,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _back.LoggedAsDirector();
         var user = client.User;
 
-        var keyResponse = await client.GetTwoFactorKey();
-        var validToken = keyResponse.Success.Key.GenerateTOTP();
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var validToken = keyResponse.Key.GenerateTOTP();
         await client.SetupTwoFactor(validToken);
 
         await client.Logout();
@@ -143,8 +143,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _back.LoggedAsDirector();
         var user = client.User;
 
-        var keyResponse = await client.GetTwoFactorKey();
-        var validToken = keyResponse.Success.Key.GenerateTOTP();
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var validToken = keyResponse.Key.GenerateTOTP();
         await client.SetupTwoFactor(validToken);
 
         await client.Logout();
@@ -156,7 +156,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.TwoFactorLogin(wrongToken);
 
         // Act - attempt with correct TOTP while locked out
-        var correctToken = keyResponse.Success.Key.GenerateTOTP();
+        var correctToken = keyResponse.Key.GenerateTOTP();
         var result = await client.TwoFactorLogin(correctToken);
 
         // Assert
@@ -176,8 +176,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _back.LoggedAsDirector();
         var user = client.User;
 
-        var keyResponse = await client.GetTwoFactorKey();
-        var token = keyResponse.Success.Key.GenerateTOTP();
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var token = keyResponse.Key.GenerateTOTP();
         await client.SetupTwoFactor(token);
 
         await client.Logout();
@@ -198,8 +198,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _back.LoggedAsDirector();
         var user = client.User;
 
-        var keyResponse = await client.GetTwoFactorKey();
-        var token = keyResponse.Success.Key.GenerateTOTP();
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var token = keyResponse.Key.GenerateTOTP();
         await client.SetupTwoFactor(token);
 
         await client.Logout();
@@ -221,8 +221,8 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _back.LoggedAsDirector();
         var user = client.User;
 
-        var keyResponse = await client.GetTwoFactorKey();
-        var validToken = keyResponse.Success.Key.GenerateTOTP();
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var validToken = keyResponse.Key.GenerateTOTP();
         await client.SetupTwoFactor(validToken);
 
         await client.Logout();
@@ -233,7 +233,7 @@ public partial class IntegrationTests : IntegrationTestBase
         await client.TwoFactorLogin(wrongToken);
 
         // Successful login resets failed attempt counter
-        var successResult = await client.TwoFactorLogin(keyResponse.Success.Key.GenerateTOTP());
+        var successResult = await client.TwoFactorLogin(keyResponse.Key.GenerateTOTP());
         successResult.ShouldBeSuccess();
 
         // Start new 2FA flow

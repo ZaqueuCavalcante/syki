@@ -44,10 +44,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
+        var course = await client.CreateCourse().Success();
 
         // Act
-        var response = await client.UpdateCourse(course.Success.Id, name, CourseType.Bacharelado);
+        var response = await client.UpdateCourse(course.Id, name, CourseType.Bacharelado);
 
         // Assert
         response.ShouldBeError(InvalidCourseName.I);
@@ -60,10 +60,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
+        var course = await client.CreateCourse().Success();
 
         // Act
-        var response = await client.UpdateCourse(course.Success.Id, "Direito", type);
+        var response = await client.UpdateCourse(course.Id, "Direito", type);
 
         // Assert
         response.ShouldBeError(InvalidCourseType.I);
@@ -89,10 +89,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCourse = await otherClient.CreateCourse();
+        var otherCourse = await otherClient.CreateCourse().Success();
 
         // Act
-        var response = await client.UpdateCourse(otherCourse.Success.Id);
+        var response = await client.UpdateCourse(otherCourse.Id);
 
         // Assert
         response.ShouldBeError(CourseNotFound.I);
@@ -107,14 +107,14 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo);
+        var course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo).Success();
 
         // Act
-        var result = await client.UpdateCourse(course.Success.Id, "Direito", CourseType.Bacharelado);
+        var result = await client.UpdateCourse(course.Id, "Direito", CourseType.Bacharelado);
 
         // Assert
         var updated = result.Success;
-        updated.Id.Should().Be(course.Success.Id);
+        updated.Id.Should().Be(course.Id);
         updated.Name.Should().Be("Direito");
         updated.Type.Should().Be(CourseType.Bacharelado);
     }

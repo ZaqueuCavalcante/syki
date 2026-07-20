@@ -120,7 +120,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         var enrollment = await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2)).Success();
@@ -150,7 +150,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(@class.Id, [teacher.Id]);
         await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);

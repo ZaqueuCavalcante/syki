@@ -58,10 +58,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCourse = await otherClient.CreateCourse();
+        var otherCourse = await otherClient.CreateCourse().Success();
 
         // Act
-        var result = await client.GetCoursePotentialDisciplines(otherCourse.Success.Id);
+        var result = await client.GetCoursePotentialDisciplines(otherCourse.Id);
 
         // Assert
         result.ShouldBeError(CourseNotFound.I);
@@ -76,12 +76,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
+        var course = await client.CreateCourse().Success();
         await client.CreateDiscipline("Geometria");
         await client.CreateDiscipline("Álgebra");
 
         // Act
-        var result = await client.GetCoursePotentialDisciplines(course.Success.Id);
+        var result = await client.GetCoursePotentialDisciplines(course.Id);
 
         // Assert
         var output = result.Success;
@@ -95,18 +95,18 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
-        var linkedDiscipline = await client.CreateDiscipline("Geometria");
-        var potentialDiscipline = await client.CreateDiscipline("Álgebra");
-        await client.AddCourseDisciplines(course.Success.Id, [linkedDiscipline.Success.Id]);
+        var course = await client.CreateCourse().Success();
+        var linkedDiscipline = await client.CreateDiscipline("Geometria").Success();
+        var potentialDiscipline = await client.CreateDiscipline("Álgebra").Success();
+        await client.AddCourseDisciplines(course.Id, [linkedDiscipline.Id]);
 
         // Act
-        var result = await client.GetCoursePotentialDisciplines(course.Success.Id);
+        var result = await client.GetCoursePotentialDisciplines(course.Id);
 
         // Assert
         var output = result.Success;
         output.Items.Should().ContainSingle();
-        output.Items.First().Id.Should().Be(potentialDiscipline.Success.Id);
+        output.Items.First().Id.Should().Be(potentialDiscipline.Id);
         output.Items.First().Name.Should().Be("Álgebra");
     }
 
@@ -115,12 +115,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
+        var course = await client.CreateCourse().Success();
         await client.CreateDiscipline("Geometria");
         await client.CreateDiscipline("Álgebra");
 
         // Act
-        var result = await client.GetCoursePotentialDisciplines(course.Success.Id, "geo");
+        var result = await client.GetCoursePotentialDisciplines(course.Id, "geo");
 
         // Assert
         var output = result.Success;

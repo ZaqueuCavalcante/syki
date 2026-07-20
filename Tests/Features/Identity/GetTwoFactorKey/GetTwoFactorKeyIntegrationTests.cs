@@ -43,14 +43,14 @@ public partial class IntegrationTests : IntegrationTestBase
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var response00 = await client.GetTwoFactorKey();
-        var response01 = await client.GetTwoFactorKey();
-        var response02 = await client.GetTwoFactorKey();
+        var response00 = await client.GetTwoFactorKey().Success();
+        var response01 = await client.GetTwoFactorKey().Success();
+        var response02 = await client.GetTwoFactorKey().Success();
 
         // Assert
-        response00.Success.Key.Should().HaveLength(32);
-        response00.Success.Key.Should().Be(response01.Success.Key);
-        response00.Success.Key.Should().Be(response02.Success.Key);
+        response00.Key.Should().HaveLength(32);
+        response00.Key.Should().Be(response01.Key);
+        response00.Key.Should().Be(response02.Key);
     }
 
     #endregion

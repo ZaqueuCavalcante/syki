@@ -44,10 +44,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
+        var discipline = await client.CreateDiscipline().Success();
 
         // Act
-        var response = await client.UpdateDiscipline(discipline.Success.Id, name);
+        var response = await client.UpdateDiscipline(discipline.Id, name);
 
         // Assert
         response.ShouldBeError(InvalidDisciplineName.I);
@@ -73,10 +73,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherDiscipline = await otherClient.CreateDiscipline();
+        var otherDiscipline = await otherClient.CreateDiscipline().Success();
 
         // Act
-        var response = await client.UpdateDiscipline(otherDiscipline.Success.Id);
+        var response = await client.UpdateDiscipline(otherDiscipline.Id);
 
         // Assert
         response.ShouldBeError(DisciplineNotFound.I);
@@ -91,14 +91,14 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline("Física I");
+        var discipline = await client.CreateDiscipline("Física I").Success();
 
         // Act
-        var result = await client.UpdateDiscipline(discipline.Success.Id, "Física II");
+        var result = await client.UpdateDiscipline(discipline.Id, "Física II");
 
         // Assert
         var updated = result.Success;
-        updated.Id.Should().Be(discipline.Success.Id);
+        updated.Id.Should().Be(discipline.Id);
         updated.Name.Should().Be("Física II");
     }
 

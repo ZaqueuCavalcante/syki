@@ -115,8 +115,8 @@ public partial class IntegrationTests
         var email = DataGen.Email;
         var director = await _back.LoggedAsDirector(email);
 
-        var limitedRoleResult = await director.CreateRole(name: "Gerente de Perfis", permissions: [EstudPermissions.ManageRoles.Id]);
-        var limitedRoleId = limitedRoleResult.Success.Id;
+        var limitedRoleResult = await director.CreateRole(name: "Gerente de Perfis", permissions: [EstudPermissions.ManageRoles.Id]).Success();
+        var limitedRoleId = limitedRoleResult.Id;
         var userId = director.User.Id;
 
         await using (var ctx = _back.GetDbContext())
@@ -143,8 +143,8 @@ public partial class IntegrationTests
         var email = DataGen.Email;
         var director = await _back.LoggedAsDirector(email);
 
-        var limitedRoleResult = await director.CreateRole(name: "Gerente de Perfis", permissions: [EstudPermissions.ManageRoles.Id]);
-        var limitedRoleId = limitedRoleResult.Success.Id;
+        var limitedRoleResult = await director.CreateRole(name: "Gerente de Perfis", permissions: [EstudPermissions.ManageRoles.Id]).Success();
+        var limitedRoleId = limitedRoleResult.Id;
         var userId = director.User.Id;
 
         await using (var ctx = _back.GetDbContext())

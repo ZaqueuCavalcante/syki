@@ -43,10 +43,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
+        var discipline = await client.CreateDiscipline().Success();
 
         // Act
-        var result = await client.RemoveCourseDiscipline(99999, discipline.Success.Id);
+        var result = await client.RemoveCourseDiscipline(99999, discipline.Id);
 
         // Assert
         result.ShouldBeError(CourseNotFound.I);
@@ -59,10 +59,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCourse = await otherClient.CreateCourse();
+        var otherCourse = await otherClient.CreateCourse().Success();
 
         // Act
-        var result = await client.RemoveCourseDiscipline(otherCourse.Success.Id, 1);
+        var result = await client.RemoveCourseDiscipline(otherCourse.Id, 1);
 
         // Assert
         result.ShouldBeError(CourseNotFound.I);
@@ -73,11 +73,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
-        var discipline = await client.CreateDiscipline();
+        var course = await client.CreateCourse().Success();
+        var discipline = await client.CreateDiscipline().Success();
 
         // Act
-        var result = await client.RemoveCourseDiscipline(course.Success.Id, discipline.Success.Id);
+        var result = await client.RemoveCourseDiscipline(course.Id, discipline.Id);
 
         // Assert
         result.ShouldBeError(CourseDisciplineNotFound.I);
@@ -92,12 +92,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
-        var discipline = await client.CreateDiscipline();
-        await client.AddCourseDisciplines(course.Success.Id, [discipline.Success.Id]);
+        var course = await client.CreateCourse().Success();
+        var discipline = await client.CreateDiscipline().Success();
+        await client.AddCourseDisciplines(course.Id, [discipline.Id]);
 
         // Act
-        var result = await client.RemoveCourseDiscipline(course.Success.Id, discipline.Success.Id);
+        var result = await client.RemoveCourseDiscipline(course.Id, discipline.Id);
 
         // Assert
         result.ShouldBeSuccess();

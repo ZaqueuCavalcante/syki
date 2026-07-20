@@ -108,7 +108,7 @@ public partial class IntegrationTests
 
         var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
-        await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         await client.UpdateClassSchedules(@class.Id,
         [
@@ -145,7 +145,7 @@ public partial class IntegrationTests
         var ana = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
         var chico = await client.CreateTeacher("Chico Ferreira", DataGen.Email).Success();
         await client.AssignDisciplinesToTeacher(ana.Id, [discipline.Id]);
-        await client.AssignTeachersToClass(@class.Id, [ana.Id]);
+        await client.UpdateClassTeachers(@class.Id, [ana.Id]);
 
         // Act
         var result = await client.GetTeacherDetails(chico.Id);

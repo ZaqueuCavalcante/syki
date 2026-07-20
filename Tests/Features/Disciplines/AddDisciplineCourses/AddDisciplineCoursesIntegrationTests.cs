@@ -43,10 +43,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
+        var discipline = await client.CreateDiscipline().Success();
 
         // Act
-        var response = await client.AddDisciplineCourses(discipline.Success.Id, []);
+        var response = await client.AddDisciplineCourses(discipline.Id, []);
 
         // Assert
         response.ShouldBeError(InvalidCoursesList.I);
@@ -57,10 +57,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
+        var discipline = await client.CreateDiscipline().Success();
 
         // Act
-        var response = await client.AddDisciplineCourses(discipline.Success.Id, [1, 1]);
+        var response = await client.AddDisciplineCourses(discipline.Id, [1, 1]);
 
         // Assert
         response.ShouldBeError(InvalidCoursesList.I);
@@ -71,10 +71,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
+        var course = await client.CreateCourse().Success();
 
         // Act
-        var response = await client.AddDisciplineCourses(99999, [course.Success.Id]);
+        var response = await client.AddDisciplineCourses(99999, [course.Id]);
 
         // Assert
         response.ShouldBeError(DisciplineNotFound.I);
@@ -85,13 +85,13 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
+        var discipline = await client.CreateDiscipline().Success();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCourse = await otherClient.CreateCourse();
+        var otherCourse = await otherClient.CreateCourse().Success();
 
         // Act
-        var response = await client.AddDisciplineCourses(discipline.Success.Id, [otherCourse.Success.Id]);
+        var response = await client.AddDisciplineCourses(discipline.Id, [otherCourse.Id]);
 
         // Assert
         response.ShouldBeError(InvalidCoursesList.I);
@@ -106,11 +106,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
-        var course = await client.CreateCourse();
+        var discipline = await client.CreateDiscipline().Success();
+        var course = await client.CreateCourse().Success();
 
         // Act
-        var result = await client.AddDisciplineCourses(discipline.Success.Id, [course.Success.Id]);
+        var result = await client.AddDisciplineCourses(discipline.Id, [course.Id]);
 
         // Assert
         result.ShouldBeSuccess();

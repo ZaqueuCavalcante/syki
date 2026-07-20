@@ -82,7 +82,7 @@ public partial class IntegrationTests
         var result = await client.AssignCampiToTeacher(teacher.Id, [alpha.Id, beta.Id]);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.ShouldBeSuccess();
 
         var updated = await client.GetTeacher(teacher.Id).Success();
         updated.Campi.Should().HaveCount(2);

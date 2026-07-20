@@ -311,8 +311,8 @@ public partial class IntegrationTests
         var secondStartAt = new DateOnly(year, 06, 03);
 
         await client.CreateAcademicPeriod($"{year}.1", firstStartAt, new DateOnly(year, 06, 01));
-        var second = await client.CreateAcademicPeriod($"{year}.2", secondStartAt, new DateOnly(year, 12, 20));
-        data.AcademicPeriodId = second.Success.Id;
+        var second = await client.CreateAcademicPeriod($"{year}.2", secondStartAt, new DateOnly(year, 12, 20)).Success();
+        data.AcademicPeriodId = second.Id;
 
         // Matrículas abrem 2 semanas antes de cada período acadêmico e ficam abertas por 2 semanas
         await client.CreateEnrollmentPeriod($"Matrículas {year}.1", firstStartAt.AddDays(-14), firstStartAt);
@@ -327,8 +327,8 @@ public partial class IntegrationTests
             data.AdsCourseCurriculumId,
             data.AcademicPeriodId,
             CourseSession.Evening
-        );
-        data.AdsCourseOfferingId = ads.Success.Id;
+        ).Success();
+        data.AdsCourseOfferingId = ads.Id;
 
         var direito = await client.CreateCourseOffering(
             data.CampiIds[0],
@@ -336,8 +336,8 @@ public partial class IntegrationTests
             data.DireitoCourseCurriculumId,
             data.AcademicPeriodId,
             CourseSession.Morning
-        );
-        data.DireitoCourseOfferingId = direito.Success.Id;
+        ).Success();
+        data.DireitoCourseOfferingId = direito.Id;
     }
 
     private static async Task DevCreateStudents(TestsHttpClient client, DevInstitutionData data)

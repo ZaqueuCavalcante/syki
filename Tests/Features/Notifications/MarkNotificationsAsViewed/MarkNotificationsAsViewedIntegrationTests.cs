@@ -55,7 +55,7 @@ public partial class IntegrationTests
         var result = await teacher.MarkNotificationsAsViewed(notificationId: notification.Id);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.ShouldBeSuccess();
         var unreadCount = await teacher.GetUnreadNotificationsCount().Success();
         unreadCount.Count.Should().Be(0);
     }
@@ -76,7 +76,7 @@ public partial class IntegrationTests
         var result = await teacher.MarkNotificationsAsViewed(markAll: true);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.ShouldBeSuccess();
         var unreadCount = await teacher.GetUnreadNotificationsCount().Success();
         unreadCount.Count.Should().Be(0);
     }

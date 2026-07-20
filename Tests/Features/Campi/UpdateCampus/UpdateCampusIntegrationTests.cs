@@ -44,10 +44,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = await client.CreateCampus();
+        var campus = await client.CreateCampus().Success();
 
         // Act
-        var response = await client.UpdateCampus(campus.Success.Id, name, BrazilState.PE, "Bonito");
+        var response = await client.UpdateCampus(campus.Id, name, BrazilState.PE, "Bonito");
 
         // Assert
         response.ShouldBeError(InvalidCampusName.I);
@@ -60,10 +60,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = await client.CreateCampus();
+        var campus = await client.CreateCampus().Success();
 
         // Act
-        var response = await client.UpdateCampus(campus.Success.Id, "Agreste II", state, "Bonito");
+        var response = await client.UpdateCampus(campus.Id, "Agreste II", state, "Bonito");
 
         // Assert
         response.ShouldBeError(InvalidBrazilState.I);
@@ -75,10 +75,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = await client.CreateCampus();
+        var campus = await client.CreateCampus().Success();
 
         // Act
-        var response = await client.UpdateCampus(campus.Success.Id, "Agreste II", BrazilState.PE, city);
+        var response = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, city);
 
         // Assert
         response.ShouldBeError(InvalidCampusCity.I);
@@ -104,10 +104,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCampus = await otherClient.CreateCampus();
+        var otherCampus = await otherClient.CreateCampus().Success();
 
         // Act
-        var response = await client.UpdateCampus(otherCampus.Success.Id);
+        var response = await client.UpdateCampus(otherCampus.Id);
 
         // Assert
         response.ShouldBeError(CampusNotFound.I);
@@ -122,14 +122,14 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = await client.CreateCampus();
+        var campus = await client.CreateCampus().Success();
 
         // Act
-        var result = await client.UpdateCampus(campus.Success.Id, "Agreste II", BrazilState.PE, "Bonito");
+        var result = await client.UpdateCampus(campus.Id, "Agreste II", BrazilState.PE, "Bonito");
 
         // Assert
         var updated = result.Success;
-        updated.Id.Should().Be(campus.Success.Id);
+        updated.Id.Should().Be(campus.Id);
         updated.Name.Should().Be("Agreste II");
         updated.State.Should().Be(BrazilState.PE);
         updated.City.Should().Be("Bonito");

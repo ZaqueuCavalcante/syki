@@ -31,7 +31,7 @@ public partial class IntegrationTests
         var result = await client.GetAuthStatus();
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.ShouldBeSuccess();
     }
 
     #endregion

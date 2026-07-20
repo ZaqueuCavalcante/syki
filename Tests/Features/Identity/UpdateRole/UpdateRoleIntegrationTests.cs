@@ -130,10 +130,10 @@ public partial class IntegrationTests
         var email = DataGen.Email;
         var director = await _back.LoggedAsDirector(email);
 
-        var limitedRoleResult = await director.CreateRole(name: "Gerente de Perfis", permissions: [EstudPermissions.ManageRoles.Id]);
-        var limitedRoleId = limitedRoleResult.Success.Id;
-        var powerfulRoleResult = await director.CreateRole(name: "Poderosa", permissions: [EstudPermissions.ManageRoles.Id, EstudPermissions.ManageSso.Id]);
-        var powerfulRoleId = powerfulRoleResult.Success.Id;
+        var limitedRoleResult = await director.CreateRole(name: "Gerente de Perfis", permissions: [EstudPermissions.ManageRoles.Id]).Success();
+        var limitedRoleId = limitedRoleResult.Id;
+        var powerfulRoleResult = await director.CreateRole(name: "Poderosa", permissions: [EstudPermissions.ManageRoles.Id, EstudPermissions.ManageSso.Id]).Success();
+        var powerfulRoleId = powerfulRoleResult.Id;
         var userId = director.User.Id;
 
         await using (var ctx = _back.GetDbContext())
@@ -160,10 +160,10 @@ public partial class IntegrationTests
         var email = DataGen.Email;
         var director = await _back.LoggedAsDirector(email);
 
-        var limitedRoleResult = await director.CreateRole(name: "Gerente de Perfis", permissions: [EstudPermissions.ManageRoles.Id]);
-        var limitedRoleId = limitedRoleResult.Success.Id;
-        var editableRoleResult = await director.CreateRole(name: "Editável", permissions: [EstudPermissions.ManageRoles.Id]);
-        var editableRoleId = editableRoleResult.Success.Id;
+        var limitedRoleResult = await director.CreateRole(name: "Gerente de Perfis", permissions: [EstudPermissions.ManageRoles.Id]).Success();
+        var limitedRoleId = limitedRoleResult.Id;
+        var editableRoleResult = await director.CreateRole(name: "Editável", permissions: [EstudPermissions.ManageRoles.Id]).Success();
+        var editableRoleId = editableRoleResult.Id;
         var userId = director.User.Id;
 
         await using (var ctx = _back.GetDbContext())

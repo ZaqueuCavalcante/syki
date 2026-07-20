@@ -1,10 +1,10 @@
-namespace Estud.Back.Features.Classes.AssignTeachersToClass;
+namespace Estud.Back.Features.Classes.UpdateClassTeachers;
 
-public class AssignTeachersToClassService(EstudDbContext ctx) : IEstudService
+public class UpdateClassTeachersService(EstudDbContext ctx) : IEstudService
 {
     private const int MaxTeachers = 2;
 
-    private class Validator : AbstractValidator<AssignTeachersToClassIn>
+    private class Validator : AbstractValidator<UpdateClassTeachersIn>
     {
         public Validator()
         {
@@ -15,7 +15,7 @@ public class AssignTeachersToClassService(EstudDbContext ctx) : IEstudService
     }
     private static readonly Validator V = new();
 
-    public async Task<OneOf<EstudSuccess, EstudError>> Assign(int classId, AssignTeachersToClassIn data)
+    public async Task<OneOf<EstudSuccess, EstudError>> Update(int classId, UpdateClassTeachersIn data)
     {
         if (V.Run(data, out var error)) return error;
 

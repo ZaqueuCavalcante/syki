@@ -60,11 +60,11 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCourse = await otherClient.CreateCourse();
-        var otherCurriculum = await otherClient.CreateCourseCurriculum(otherCourse.Success.Id);
+        var otherCourse = await otherClient.CreateCourse().Success();
+        var otherCurriculum = await otherClient.CreateCourseCurriculum(otherCourse.Id).Success();
 
         // Act
-        var result = await client.GetCourseCurriculum(otherCurriculum.Success.Id);
+        var result = await client.GetCourseCurriculum(otherCurriculum.Id);
 
         // Assert
         result.ShouldBeError(CourseCurriculumNotFound.I);
@@ -79,17 +79,17 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse("ADS", CourseType.Tecnologo);
-        var curriculum = await client.CreateCourseCurriculum(course.Success.Id, "Grade 2024");
+        var course = await client.CreateCourse("ADS", CourseType.Tecnologo).Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id, "Grade 2024").Success();
 
         // Act
-        var result = await client.GetCourseCurriculum(curriculum.Success.Id);
+        var result = await client.GetCourseCurriculum(curriculum.Id);
 
         // Assert
         var output = result.Success;
-        output.Id.Should().Be(curriculum.Success.Id);
+        output.Id.Should().Be(curriculum.Id);
         output.Name.Should().Be("Grade 2024");
-        output.CourseId.Should().Be(course.Success.Id);
+        output.CourseId.Should().Be(course.Id);
         output.Course.Should().Be("ADS");
         output.Disciplines.Should().BeEmpty();
     }
@@ -99,20 +99,20 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse("ADS", CourseType.Tecnologo);
-        var discipline1 = await client.CreateDiscipline("Cálculo I");
-        var discipline2 = await client.CreateDiscipline("Álgebra");
-        await client.AddCourseDisciplines(course.Success.Id, [discipline1.Success.Id, discipline2.Success.Id]);
+        var course = await client.CreateCourse("ADS", CourseType.Tecnologo).Success();
+        var discipline1 = await client.CreateDiscipline("Cálculo I").Success();
+        var discipline2 = await client.CreateDiscipline("Álgebra").Success();
+        await client.AddCourseDisciplines(course.Id, [discipline1.Id, discipline2.Id]);
 
         List<CreateCourseCurriculumDisciplineIn> disciplines =
         [
-            new(discipline1.Success.Id, 2, 4, 72),
-            new(discipline2.Success.Id, 1, 4, 60),
+            new(discipline1.Id, 2, 4, 72),
+            new(discipline2.Id, 1, 4, 60),
         ];
-        var curriculum = await client.CreateCourseCurriculum(course.Success.Id, "Grade 2024", disciplines);
+        var curriculum = await client.CreateCourseCurriculum(course.Id, "Grade 2024", disciplines).Success();
 
         // Act
-        var result = await client.GetCourseCurriculum(curriculum.Success.Id);
+        var result = await client.GetCourseCurriculum(curriculum.Id);
 
         // Assert
         var output = result.Success;

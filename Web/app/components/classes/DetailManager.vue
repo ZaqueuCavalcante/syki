@@ -33,7 +33,7 @@ const schedulesModalOpen = ref(false)
 
 const canStart = can('StartClass')
 const canRelease = can('ReleaseClassForEnrollment')
-const canAssignTeachers = can('AssignTeachersToClass')
+const canUpdateTeachers = can('UpdateClassTeachers')
 const canUpdateSchedules = can('UpdateClassSchedules')
 
 const showEditSchedules = computed(() =>
@@ -247,7 +247,7 @@ const studentColumns: TableColumn<ClassStudentItem>[] = [
             <h2 class="font-semibold text-highlighted">
               Professores
             </h2>
-            <UTooltip v-if="canAssignTeachers" text="Editar">
+            <UTooltip v-if="canUpdateTeachers" text="Editar">
               <UButton
                 icon="i-lucide-pencil"
                 color="neutral"

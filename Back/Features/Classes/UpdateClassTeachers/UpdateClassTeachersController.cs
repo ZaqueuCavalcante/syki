@@ -1,7 +1,7 @@
-namespace Estud.Back.Features.Classes.AssignTeachersToClass;
+namespace Estud.Back.Features.Classes.UpdateClassTeachers;
 
-[ApiController, Authorize(Policies.AssignTeachersToClass)]
-public class AssignTeachersToClassController(AssignTeachersToClassService service) : ControllerBase
+[ApiController, Authorize(Policies.UpdateClassTeachers)]
+public class UpdateClassTeachersController(UpdateClassTeachersService service) : ControllerBase
 {
     /// <summary>
     /// Vincular professores à turma
@@ -9,17 +9,17 @@ public class AssignTeachersToClassController(AssignTeachersToClassService servic
     /// <remarks>
     /// Define os professores que lecionam na turma, no máximo 2. Substitui a lista atual.
     /// </remarks>
-    [HttpPost("classes/{classId}/teachers")]
+    [HttpPut("classes/{classId}/teachers")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
     [SwaggerResponseExample(400, typeof(ErrorsExamples))]
-    public async Task<IActionResult> Assign(int classId, [FromBody] AssignTeachersToClassIn data)
+    public async Task<IActionResult> Update(int classId, [FromBody] UpdateClassTeachersIn data)
     {
-        var result = await service.Assign(classId, data);
+        var result = await service.Update(classId, data);
         return result.Match<IActionResult>(Ok, BadRequest);
     }
 }
 
-internal class RequestExamples : ExamplesProvider<AssignTeachersToClassIn>;
+internal class RequestExamples : ExamplesProvider<UpdateClassTeachersIn>;
 internal class ResponseExamples : ExamplesProvider<SuccessOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     ClassNotFound,

@@ -58,10 +58,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCourse = await otherClient.CreateCourse();
+        var otherCourse = await otherClient.CreateCourse().Success();
 
         // Act
-        var result = await client.GetCourse(otherCourse.Success.Id);
+        var result = await client.GetCourse(otherCourse.Id);
 
         // Assert
         result.ShouldBeError(CourseNotFound.I);
@@ -76,13 +76,13 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo);
+        var course = await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Tecnologo).Success();
 
         // Act
-        var result = await client.GetCourse(course.Success.Id);
+        var result = await client.GetCourse(course.Id);
 
         // Assert
-        result.Success.Id.Should().Be(course.Success.Id);
+        result.Success.Id.Should().Be(course.Id);
         result.Success.Name.Should().Be("Análise e Desenvolvimento de Sistemas");
         result.Success.Type.Should().Be("Tecnólogo");
         result.Success.Disciplines.Should().BeEmpty();
@@ -93,13 +93,13 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
-        var calculo = await client.CreateDiscipline("Cálculo I");
-        var geometria = await client.CreateDiscipline("Geometria");
-        await client.AddCourseDisciplines(course.Success.Id, [calculo.Success.Id, geometria.Success.Id]);
+        var course = await client.CreateCourse().Success();
+        var calculo = await client.CreateDiscipline("Cálculo I").Success();
+        var geometria = await client.CreateDiscipline("Geometria").Success();
+        await client.AddCourseDisciplines(course.Id, [calculo.Id, geometria.Id]);
 
         // Act
-        var result = await client.GetCourse(course.Success.Id);
+        var result = await client.GetCourse(course.Id);
 
         // Assert
         result.Success.Disciplines.Should().HaveCount(2);

@@ -3,7 +3,7 @@ using Estud.Back.Features.Classes.GetClass;
 using Estud.Back.Features.Classes.GetClasses;
 using Estud.Back.Features.Classes.CreateClass;
 using Estud.Back.Features.Classes.UpdateClassSchedules;
-using Estud.Back.Features.Classes.AssignTeachersToClass;
+using Estud.Back.Features.Classes.UpdateClassTeachers;
 
 namespace Estud.Tests.Integration.Clients;
 
@@ -26,12 +26,12 @@ public partial class TestsHttpClient
         return await response.Resolve<CreateClassOut>();
     }
 
-    public async Task<OneOf<SuccessOut, ErrorOut>> AssignTeachersToClass(
+    public async Task<OneOf<SuccessOut, ErrorOut>> UpdateClassTeachers(
         int classId,
         List<int> teachers
     ) {
-        var data = new AssignTeachersToClassIn { Teachers = teachers };
-        var response = await http.PostAsJsonAsync($"/classes/{classId}/teachers", data);
+        var data = new UpdateClassTeachersIn { Teachers = teachers };
+        var response = await http.PutAsJsonAsync($"/classes/{classId}/teachers", data);
         return await response.Resolve<SuccessOut>();
     }
 

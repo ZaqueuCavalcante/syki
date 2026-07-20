@@ -43,10 +43,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
+        var course = await client.CreateCourse().Success();
 
         // Act
-        var result = await client.RemoveDisciplineCourse(99999, course.Success.Id);
+        var result = await client.RemoveDisciplineCourse(99999, course.Id);
 
         // Assert
         result.ShouldBeError(DisciplineNotFound.I);
@@ -57,11 +57,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
-        var course = await client.CreateCourse();
+        var discipline = await client.CreateDiscipline().Success();
+        var course = await client.CreateCourse().Success();
 
         // Act
-        var result = await client.RemoveDisciplineCourse(discipline.Success.Id, course.Success.Id);
+        var result = await client.RemoveDisciplineCourse(discipline.Id, course.Id);
 
         // Assert
         result.ShouldBeError(CourseDisciplineNotFound.I);
@@ -76,12 +76,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
-        var course = await client.CreateCourse();
-        await client.AddDisciplineCourses(discipline.Success.Id, [course.Success.Id]);
+        var discipline = await client.CreateDiscipline().Success();
+        var course = await client.CreateCourse().Success();
+        await client.AddDisciplineCourses(discipline.Id, [course.Id]);
 
         // Act
-        var result = await client.RemoveDisciplineCourse(discipline.Success.Id, course.Success.Id);
+        var result = await client.RemoveDisciplineCourse(discipline.Id, course.Id);
 
         // Assert
         result.ShouldBeSuccess();

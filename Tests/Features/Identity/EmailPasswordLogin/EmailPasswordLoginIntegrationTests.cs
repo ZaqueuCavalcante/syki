@@ -79,8 +79,8 @@ public partial class IntegrationTests : IntegrationTestBase
         // Arrange
         var client = await _back.LoggedAsDirector();
 
-        var keyResponse = await client.GetTwoFactorKey();
-        var token = keyResponse.Success.Key.GenerateTOTP();
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var token = keyResponse.Key.GenerateTOTP();
         await client.SetupTwoFactor(token);
 
         await client.Logout();

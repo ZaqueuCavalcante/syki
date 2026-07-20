@@ -43,10 +43,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
+        var course = await client.CreateCourse().Success();
 
         // Act
-        var result = await client.GetCourseDisciplines(course.Success.Id);
+        var result = await client.GetCourseDisciplines(course.Id);
 
         // Assert
         result.Success.Total.Should().Be(0);
@@ -58,13 +58,13 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = await client.CreateCourse();
-        var discipline1 = await client.CreateDiscipline("Geometria");
-        var discipline2 = await client.CreateDiscipline("Álgebra");
-        await client.AddCourseDisciplines(course.Success.Id, [discipline1.Success.Id, discipline2.Success.Id]);
+        var course = await client.CreateCourse().Success();
+        var discipline1 = await client.CreateDiscipline("Geometria").Success();
+        var discipline2 = await client.CreateDiscipline("Álgebra").Success();
+        await client.AddCourseDisciplines(course.Id, [discipline1.Id, discipline2.Id]);
 
         // Act
-        var result = await client.GetCourseDisciplines(course.Success.Id);
+        var result = await client.GetCourseDisciplines(course.Id);
 
         // Assert
         result.Success.Total.Should().Be(2);

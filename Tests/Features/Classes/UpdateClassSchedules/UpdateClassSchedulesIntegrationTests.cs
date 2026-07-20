@@ -200,7 +200,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(ana.Id, [discipline.Id]);
 
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(@class.Id, [chico.Id, ana.Id]);
+        await client.UpdateClassTeachers(@class.Id, [chico.Id, ana.Id]);
 
         // Act
         var result = await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
@@ -225,7 +225,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(ana.Id, [discipline.Id]);
 
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(@class.Id, [chico.Id, ana.Id]);
+        await client.UpdateClassTeachers(@class.Id, [chico.Id, ana.Id]);
 
         // Act
         var result = await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, outsider.Id)]);
@@ -247,11 +247,11 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var classA = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(classA.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(classA.Id, [teacher.Id]);
         await client.UpdateClassSchedules(classA.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
 
         var classB = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(classB.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(classB.Id, [teacher.Id]);
 
         // Act
         var result = await client.UpdateClassSchedules(classB.Id, [(Day.Monday, Hour.H08_00, Hour.H09_00, null)]);
@@ -372,7 +372,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         // Act — sem informar professor no slot
         var result = await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
@@ -400,7 +400,7 @@ public partial class IntegrationTests
         var outsider = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
 
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         // Act — informa um professor que nem é da turma; deve ser ignorado
         var result = await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, outsider.Id)]);
@@ -426,7 +426,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         // Act
         var result = await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, teacher.Id)]);
@@ -454,7 +454,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(ana.Id, [discipline.Id]);
 
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(@class.Id, [chico.Id, ana.Id]);
+        await client.UpdateClassTeachers(@class.Id, [chico.Id, ana.Id]);
 
         // Act
         var result = await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, chico.Id)]);
@@ -482,7 +482,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(ana.Id, [discipline.Id]);
 
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(@class.Id, [chico.Id, ana.Id]);
+        await client.UpdateClassTeachers(@class.Id, [chico.Id, ana.Id]);
 
         // Act
         var result = await client.UpdateClassSchedules(@class.Id,
@@ -513,11 +513,11 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var classA = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(classA.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(classA.Id, [teacher.Id]);
         await client.UpdateClassSchedules(classA.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
 
         var classB = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(classB.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(classB.Id, [teacher.Id]);
 
         // Act — mesmo professor, mas na quarta (livre)
         var result = await client.UpdateClassSchedules(classB.Id, [(Day.Wednesday, Hour.H07_00, Hour.H10_00, null)]);
@@ -541,7 +541,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(ana.Id, [discipline.Id]);
 
         var classA = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(classA.Id, [chico.Id, ana.Id]);
+        await client.UpdateClassTeachers(classA.Id, [chico.Id, ana.Id]);
         await client.UpdateClassSchedules(classA.Id,
         [
             (Day.Monday, Hour.H07_00, Hour.H10_00, chico.Id),
@@ -550,7 +550,7 @@ public partial class IntegrationTests
 
         // Outra turma só com o Chico, no mesmo horário da QUARTA (dia da Ana em classA).
         var classB = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(classB.Id, [chico.Id]);
+        await client.UpdateClassTeachers(classB.Id, [chico.Id]);
 
         // Act — Chico está livre na quarta, então não deve haver conflito.
         var result = await client.UpdateClassSchedules(classB.Id, [(Day.Wednesday, Hour.H07_00, Hour.H10_00, null)]);
@@ -572,7 +572,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         var classA = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(classA.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(classA.Id, [teacher.Id]);
         await client.UpdateClassSchedules(classA.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
 
         await using (var ctx = _back.GetDbContext())
@@ -583,7 +583,7 @@ public partial class IntegrationTests
         }
 
         var classB = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(classB.Id, [teacher.Id]);
+        await client.UpdateClassTeachers(classB.Id, [teacher.Id]);
 
         // Act — mesmo horário da turma finalizada
         var result = await client.UpdateClassSchedules(classB.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
@@ -607,11 +607,11 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(ana.Id, [discipline.Id]);
 
         var classA = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(classA.Id, [chico.Id]);
+        await client.UpdateClassTeachers(classA.Id, [chico.Id]);
         await client.UpdateClassSchedules(classA.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
 
         var classB = await client.CreateClass(discipline.Id, period.Id).Success();
-        await client.AssignTeachersToClass(classB.Id, [ana.Id]);
+        await client.UpdateClassTeachers(classB.Id, [ana.Id]);
 
         // Act
         var result = await client.UpdateClassSchedules(classB.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);

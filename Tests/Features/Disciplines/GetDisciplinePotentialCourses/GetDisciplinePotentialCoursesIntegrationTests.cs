@@ -58,10 +58,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherDiscipline = await otherClient.CreateDiscipline();
+        var otherDiscipline = await otherClient.CreateDiscipline().Success();
 
         // Act
-        var result = await client.GetDisciplinePotentialCourses(otherDiscipline.Success.Id);
+        var result = await client.GetDisciplinePotentialCourses(otherDiscipline.Id);
 
         // Assert
         result.ShouldBeError(DisciplineNotFound.I);
@@ -76,12 +76,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
+        var discipline = await client.CreateDiscipline().Success();
         await client.CreateCourse("ADS", CourseType.Tecnologo);
         await client.CreateCourse("Engenharia", CourseType.Bacharelado);
 
         // Act
-        var result = await client.GetDisciplinePotentialCourses(discipline.Success.Id);
+        var result = await client.GetDisciplinePotentialCourses(discipline.Id);
 
         // Assert
         var output = result.Success;
@@ -95,18 +95,18 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
-        var linkedCourse = await client.CreateCourse("ADS", CourseType.Tecnologo);
-        var potentialCourse = await client.CreateCourse("Engenharia", CourseType.Bacharelado);
-        await client.AddDisciplineCourses(discipline.Success.Id, [linkedCourse.Success.Id]);
+        var discipline = await client.CreateDiscipline().Success();
+        var linkedCourse = await client.CreateCourse("ADS", CourseType.Tecnologo).Success();
+        var potentialCourse = await client.CreateCourse("Engenharia", CourseType.Bacharelado).Success();
+        await client.AddDisciplineCourses(discipline.Id, [linkedCourse.Id]);
 
         // Act
-        var result = await client.GetDisciplinePotentialCourses(discipline.Success.Id);
+        var result = await client.GetDisciplinePotentialCourses(discipline.Id);
 
         // Assert
         var output = result.Success;
         output.Items.Should().ContainSingle();
-        output.Items.First().Id.Should().Be(potentialCourse.Success.Id);
+        output.Items.First().Id.Should().Be(potentialCourse.Id);
         output.Items.First().Name.Should().Be("Engenharia");
     }
 
@@ -115,12 +115,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline();
+        var discipline = await client.CreateDiscipline().Success();
         await client.CreateCourse("ADS", CourseType.Tecnologo);
         await client.CreateCourse("Engenharia", CourseType.Bacharelado);
 
         // Act
-        var result = await client.GetDisciplinePotentialCourses(discipline.Success.Id, "eng");
+        var result = await client.GetDisciplinePotentialCourses(discipline.Id, "eng");
 
         // Assert
         var output = result.Success;

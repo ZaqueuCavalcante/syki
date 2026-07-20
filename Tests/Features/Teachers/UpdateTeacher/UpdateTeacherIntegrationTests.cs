@@ -112,7 +112,7 @@ public partial class IntegrationTests
         var result = await client.UpdateTeacher(teacher.Id, name: "Ana Paula Lima", email: newEmail);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.ShouldBeSuccess();
 
         var updated = await client.GetTeacher(teacher.Id).Success();
         updated.Name.Should().Be("Ana Paula Lima");

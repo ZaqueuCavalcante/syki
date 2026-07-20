@@ -90,11 +90,11 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCourse = await otherClient.CreateCourse();
-        var otherCurriculum = await otherClient.CreateCourseCurriculum(otherCourse.Success.Id);
+        var otherCourse = await otherClient.CreateCourse().Success();
+        var otherCurriculum = await otherClient.CreateCourseCurriculum(otherCourse.Id).Success();
 
         // Act
-        var result = await client.UpdateCourseCurriculum(otherCurriculum.Success.Id);
+        var result = await client.UpdateCourseCurriculum(otherCurriculum.Id);
 
         // Assert
         result.ShouldBeError(CourseCurriculumNotFound.I);
@@ -125,10 +125,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
         var course = await client.CreateCourse();
         var curriculum = await client.CreateCourseCurriculum(course.Success.Id);
-        var discipline = await client.CreateDiscipline();
+        var discipline = await client.CreateDiscipline().Success();
 
         List<UpdateCourseCurriculumDisciplineIn> disciplines =
-            [new() { Id = discipline.Success.Id, Period = 1, Credits = 4, Workload = 72 }];
+            [new() { Id = discipline.Id, Period = 1, Credits = 4, Workload = 72 }];
 
         // Act
         var result = await client.UpdateCourseCurriculum(curriculum.Success.Id, "Grade 2024", disciplines);
@@ -163,11 +163,11 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
         var course = await client.CreateCourse();
         var curriculum = await client.CreateCourseCurriculum(course.Success.Id);
-        var discipline = await client.CreateDiscipline();
-        await client.AddCourseDisciplines(course.Success.Id, [discipline.Success.Id]);
+        var discipline = await client.CreateDiscipline().Success();
+        await client.AddCourseDisciplines(course.Success.Id, [discipline.Id]);
 
         List<UpdateCourseCurriculumDisciplineIn> disciplines =
-            [new() { Id = discipline.Success.Id, Period = 1, Credits = 4, Workload = 72 }];
+            [new() { Id = discipline.Id, Period = 1, Credits = 4, Workload = 72 }];
 
         // Act
         var result = await client.UpdateCourseCurriculum(curriculum.Success.Id, "Grade 2025", disciplines);

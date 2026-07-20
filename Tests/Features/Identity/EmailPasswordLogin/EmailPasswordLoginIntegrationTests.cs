@@ -24,7 +24,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         // Act
         var result = await client.EmailPasswordLogin(user.Email + "1", "Password");
@@ -38,7 +38,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         // Act
         var result = await client.EmailPasswordLogin(user.Email, "lalala");
@@ -52,7 +52,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         await _back.SetPassword(user.Email, "My@nEw@strong@P4ssword");
 
@@ -101,7 +101,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         await _back.SetPassword(user.Email, "My@nEw@strong@P4ssword");
 
@@ -119,7 +119,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         await _back.SetPassword(user.Email, "My@nEw@strong@P4ssword");
 

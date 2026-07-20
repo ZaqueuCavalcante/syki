@@ -43,8 +43,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus(name: "Agreste I")).Success;
-        var classroom = (await client.CreateClassroom(campus.Id, name: "Sala 05", capacity: 40)).Success;
+        var campus = await client.CreateCampus(name: "Agreste I").Success();
+        var classroom = await client.CreateClassroom(campus.Id, name: "Sala 05", capacity: 40).Success();
 
         // Act
         var result = await client.GetClassrooms();

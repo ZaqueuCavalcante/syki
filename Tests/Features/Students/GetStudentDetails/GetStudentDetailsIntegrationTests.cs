@@ -40,7 +40,7 @@ public partial class IntegrationTests
         // Arrange
         var directorClient = await _back.LoggedAsDirector();
         var email = DataGen.Email;
-        var student = (await directorClient.CreateStudent(DataGen.UserName, email)).Success;
+        var student = await directorClient.CreateStudent(DataGen.UserName, email).Success();
         var client = await _back.LoginAs(email);
 
         // Act
@@ -72,7 +72,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var otherClient = await _back.LoggedAsDirector();
-        var student = (await otherClient.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
+        var student = await otherClient.CreateStudent(DataGen.UserName, DataGen.Email).Success();
 
         var client = await _back.LoggedAsDirector();
 
@@ -93,7 +93,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         var email = DataGen.Email;
-        var student = (await client.CreateStudent("Ana Lima", email)).Success;
+        var student = await client.CreateStudent("Ana Lima", email).Success();
 
         // Act
         var result = await client.GetStudentDetails(student.Id);
@@ -114,12 +114,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var offering = (await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
+        var student = await client.CreateStudent(DataGen.UserName, DataGen.Email).Success();
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var offering = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id).Success();
         await client.EnrollStudentInCourseOffering(student.Id, offering.Id);
 
         // Act
@@ -137,10 +137,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var student = await client.CreateStudent(DataGen.UserName, DataGen.Email).Success();
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));

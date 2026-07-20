@@ -55,7 +55,7 @@ public static class BackFactoryIdentity
         var client = factory.GetTestsClient();
 
         email ??= DataGen.Email;
-        var user = (await client.RegisterUser(email)).Success;
+        var user = await client.RegisterUser(email).Success();
 
         var token = await factory.GetMagicLinkToken(email);
         await client.MagicLinkLogin(token!);

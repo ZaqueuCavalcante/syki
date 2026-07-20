@@ -58,8 +58,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline("Banco de Dados")).Success;
-        var period = (await client.CreateAcademicPeriod("2024.1")).Success;
+        var discipline = await client.CreateDiscipline("Banco de Dados").Success();
+        var period = await client.CreateAcademicPeriod("2024.1").Success();
         await client.CreateClass(discipline.Id, period.Id);
 
         // Act
@@ -81,9 +81,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
@@ -101,12 +101,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var enrollmentPeriod = (await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2))).Success;
+        var enrollmentPeriod = await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2)).Success();
         await client.ReleaseClassForEnrollment(@class.Id);
 
         await client.UpdateEnrollmentPeriod(enrollmentPeriod.Id, startAt: today.AddDays(-2), endAt: today.AddDays(-1));
@@ -129,13 +129,13 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod("2024.1")).Success;
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod("2024.1").Success();
         await client.CreateClass(discipline.Id, period.Id);
 
         // Act
-        var onPreEnrollment = (await client.GetClasses(ClassStatus.OnPreEnrollment)).Success;
-        var finalized = (await client.GetClasses(ClassStatus.Finalized)).Success;
+        var onPreEnrollment = await client.GetClasses(ClassStatus.OnPreEnrollment).Success();
+        var finalized = await client.GetClasses(ClassStatus.Finalized).Success();
 
         // Assert
         onPreEnrollment.Total.Should().Be(1);
@@ -147,11 +147,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var period = (await client.CreateAcademicPeriod("2024.1")).Success;
+        var period = await client.CreateAcademicPeriod("2024.1").Success();
 
         for (var i = 1; i <= 12; i++)
         {
-            var discipline = (await client.CreateDiscipline($"Disciplina {i:00}")).Success;
+            var discipline = await client.CreateDiscipline($"Disciplina {i:00}").Success();
             await client.CreateClass(discipline.Id, period.Id);
         }
 
@@ -173,11 +173,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var period = (await client.CreateAcademicPeriod("2024.1")).Success;
+        var period = await client.CreateAcademicPeriod("2024.1").Success();
 
         for (var i = 1; i <= 12; i++)
         {
-            var discipline = (await client.CreateDiscipline($"Disciplina {i:00}")).Success;
+            var discipline = await client.CreateDiscipline($"Disciplina {i:00}").Success();
             await client.CreateClass(discipline.Id, period.Id);
         }
 

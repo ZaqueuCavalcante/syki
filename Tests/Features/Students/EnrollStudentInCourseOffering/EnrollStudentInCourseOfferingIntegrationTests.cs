@@ -43,11 +43,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var offering = (await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var offering = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id).Success();
 
         // Act
         var result = await client.EnrollStudentInCourseOffering(999999, offering.Id);
@@ -61,7 +61,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
+        var student = await client.CreateStudent(DataGen.UserName, DataGen.Email).Success();
 
         // Act
         var result = await client.EnrollStudentInCourseOffering(student.Id, 999999);
@@ -75,12 +75,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var offering = (await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
+        var student = await client.CreateStudent(DataGen.UserName, DataGen.Email).Success();
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var offering = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id).Success();
         await client.EnrollStudentInCourseOffering(student.Id, offering.Id);
 
         // Act
@@ -95,14 +95,14 @@ public partial class IntegrationTests
     {
         // Arrange
         var otherClient = await _back.LoggedAsDirector();
-        var student = (await otherClient.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
+        var student = await otherClient.CreateStudent(DataGen.UserName, DataGen.Email).Success();
 
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var offering = (await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var offering = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id).Success();
 
         // Act
         var result = await client.EnrollStudentInCourseOffering(student.Id, offering.Id);
@@ -116,14 +116,14 @@ public partial class IntegrationTests
     {
         // Arrange
         var otherClient = await _back.LoggedAsDirector();
-        var campus = (await otherClient.CreateCampus()).Success;
-        var course = (await otherClient.CreateCourse()).Success;
-        var curriculum = (await otherClient.CreateCourseCurriculum(course.Id)).Success;
-        var period = (await otherClient.CreateAcademicPeriod()).Success;
-        var offering = (await otherClient.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
+        var campus = await otherClient.CreateCampus().Success();
+        var course = await otherClient.CreateCourse().Success();
+        var curriculum = await otherClient.CreateCourseCurriculum(course.Id).Success();
+        var period = await otherClient.CreateAcademicPeriod().Success();
+        var offering = await otherClient.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id).Success();
 
         var client = await _back.LoggedAsDirector();
-        var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
+        var student = await client.CreateStudent(DataGen.UserName, DataGen.Email).Success();
 
         // Act
         var result = await client.EnrollStudentInCourseOffering(student.Id, offering.Id);
@@ -141,12 +141,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var offering = (await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id)).Success;
+        var student = await client.CreateStudent(DataGen.UserName, DataGen.Email).Success();
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var offering = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id).Success();
 
         // Act
         var result = await client.EnrollStudentInCourseOffering(student.Id, offering.Id);

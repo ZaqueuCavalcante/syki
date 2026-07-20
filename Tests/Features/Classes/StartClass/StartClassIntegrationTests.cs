@@ -56,9 +56,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
         // Act
         var result = await client.StartClass(@class.Id);
@@ -72,9 +72,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
@@ -92,12 +92,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var enrollment = (await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2))).Success;
+        var enrollment = await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2)).Success();
         await client.ReleaseClassForEnrollment(@class.Id);
         await client.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
 
@@ -113,17 +113,17 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
 
-        var teacher = (await client.CreateTeacher("Chico Ferreira", DataGen.Email)).Success;
+        var teacher = await client.CreateTeacher("Chico Ferreira", DataGen.Email).Success();
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
         await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var enrollment = (await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2))).Success;
+        var enrollment = await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2)).Success();
         await client.ReleaseClassForEnrollment(@class.Id);
         await client.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
 
@@ -143,18 +143,18 @@ public partial class IntegrationTests
     {
         // Arrange — período 2024.1 (01/02 a 01/07), turma com professor e horário na segunda.
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
 
-        var teacher = (await client.CreateTeacher("Chico Ferreira", DataGen.Email)).Success;
+        var teacher = await client.CreateTeacher("Chico Ferreira", DataGen.Email).Success();
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
         await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
         await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var enrollment = (await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2))).Success;
+        var enrollment = await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2)).Success();
         await client.ReleaseClassForEnrollment(@class.Id);
         await client.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
 

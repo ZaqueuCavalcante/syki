@@ -70,8 +70,8 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
 
-        var course = (await client.CreateCourse()).Success;
-        var discipline = (await client.CreateDiscipline()).Success;
+        var course = await client.CreateCourse().Success();
+        var discipline = await client.CreateDiscipline().Success();
 
         // Act
         var response = await client.AddCourseDisciplines(course.Id, [discipline.Id, 999999999]);
@@ -86,11 +86,11 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
 
-        var course = (await client.CreateCourse()).Success;
-        var discipline = (await client.CreateDiscipline()).Success;
+        var course = await client.CreateCourse().Success();
+        var discipline = await client.CreateDiscipline().Success();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherDiscipline = (await otherClient.CreateDiscipline()).Success;
+        var otherDiscipline = await otherClient.CreateDiscipline().Success();
 
         // Act
         var response = await client.AddCourseDisciplines(course.Id, [discipline.Id, otherDiscipline.Id]);

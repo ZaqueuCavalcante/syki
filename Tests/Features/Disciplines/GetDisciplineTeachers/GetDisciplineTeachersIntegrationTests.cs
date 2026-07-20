@@ -60,12 +60,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var geometria = (await client.CreateDiscipline("Geometria")).Success;
-        var fisica = (await client.CreateDiscipline("Fisica")).Success;
+        var geometria = await client.CreateDiscipline("Geometria").Success();
+        var fisica = await client.CreateDiscipline("Fisica").Success();
 
-        var chico = (await client.CreateTeacher("Chico Ferreira", DataGen.Email)).Success;
-        var ana = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
-        var bruno = (await client.CreateTeacher("Bruno Alves", DataGen.Email)).Success;
+        var chico = await client.CreateTeacher("Chico Ferreira", DataGen.Email).Success();
+        var ana = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
+        var bruno = await client.CreateTeacher("Bruno Alves", DataGen.Email).Success();
 
         await client.AssignDisciplinesToTeacher(chico.Id, [geometria.Id]);
         await client.AssignDisciplinesToTeacher(ana.Id, [geometria.Id]);
@@ -85,7 +85,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline("Geometria")).Success;
+        var discipline = await client.CreateDiscipline("Geometria").Success();
 
         // Act
         var result = await client.GetDisciplineTeachers(discipline.Id);

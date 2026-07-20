@@ -114,7 +114,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         await client.CreateRole(name: "Admin");
-        var editor = (await client.CreateRole(name: "Editor")).Success;
+        var editor = await client.CreateRole(name: "Editor").Success();
 
         // Act
         var result = await client.UpdateRole(editor.Id, name: "Admin");
@@ -192,7 +192,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var role = (await client.CreateRole(name: "Admin", description: "Administrador", baseType: UserType.Manager, permissions: [])).Success;
+        var role = await client.CreateRole(name: "Admin", description: "Administrador", baseType: UserType.Manager, permissions: []).Success();
 
         // Act
         var result = await client.UpdateRole(role.Id, name: "Gestor", description: "Gestor acadêmico", baseType: UserType.Manager, permissions: []);
@@ -200,7 +200,7 @@ public partial class IntegrationTests
         // Assert
         result.Success.Id.Should().Be(role.Id);
 
-        var updated = (await client.GetRole(role.Id)).Success;
+        var updated = await client.GetRole(role.Id).Success();
         updated.Name.Should().Be("Gestor");
         updated.Description.Should().Be("Gestor acadêmico");
     }

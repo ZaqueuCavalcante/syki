@@ -64,7 +64,7 @@ public partial class IntegrationTests
         // Assert
         result.ShouldBeSuccess();
 
-        var account = (await client.GetUserAccount()).Success;
+        var account = await client.GetUserAccount().Success();
         account.Id.Should().Be(client.User.Id);
         account.Name.Should().Be("Edson Gomes");
     }
@@ -81,7 +81,7 @@ public partial class IntegrationTests
         // Assert
         result.ShouldBeSuccess();
 
-        var account = (await client.GetUserAccount()).Success;
+        var account = await client.GetUserAccount().Success();
         account.Id.Should().Be(client.User.Id);
         account.Name.Should().Be("Maria Júlia");
     }

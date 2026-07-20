@@ -28,10 +28,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsTeacher();
 
         // Act
-        var result = await client.GetUnreadNotificationsCount();
+        var result = await client.GetUnreadNotificationsCount().Success();
 
         // Assert
-        result.Success.Count.Should().Be(0);
+        result.Count.Should().Be(0);
     }
 
     [Test]

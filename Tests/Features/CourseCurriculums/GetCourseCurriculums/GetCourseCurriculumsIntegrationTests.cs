@@ -57,7 +57,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = (await client.CreateCourse()).Success;
+        var course = await client.CreateCourse().Success();
         await client.CreateCourseCurriculum(course.Id, "Grade 2024");
 
         // Act
@@ -76,7 +76,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = (await client.CreateCourse()).Success;
+        var course = await client.CreateCourse().Success();
 
         for (var i = 1; i <= 12; i++)
             await client.CreateCourseCurriculum(course.Id, $"Grade {i:00}");
@@ -98,7 +98,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var course = (await client.CreateCourse()).Success;
+        var course = await client.CreateCourse().Success();
 
         for (var i = 1; i <= 12; i++)
             await client.CreateCourseCurriculum(course.Id, $"Grade {i:00}");

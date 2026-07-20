@@ -142,7 +142,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector("director@sso-update-happy-path.com");
-        var config = (await client.CreateSsoConfiguration()).Success;
+        var config = await client.CreateSsoConfiguration().Success();
 
         // Act
         var result = await client.UpdateSsoConfiguration(

@@ -60,18 +60,17 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var role = (await client.CreateRole(name: "Admin", description: "Administrador", baseType: UserType.Manager, permissions: [])).Success;
+        var role = await client.CreateRole(name: "Admin", description: "Administrador", baseType: UserType.Manager, permissions: []).Success();
 
         // Act
-        var result = await client.GetRole(role.Id);
+        var result = await client.GetRole(role.Id).Success();
 
         // Assert
-        var found = result.Success;
-        found.Id.Should().Be(role.Id);
-        found.Name.Should().Be("Admin");
-        found.Description.Should().Be("Administrador");
-        found.BaseType.Should().Be(UserType.Manager);
-        found.Permissions.Should().BeEmpty();
+        result.Id.Should().Be(role.Id);
+        result.Name.Should().Be("Admin");
+        result.Description.Should().Be("Administrador");
+        result.BaseType.Should().Be(UserType.Manager);
+        result.Permissions.Should().BeEmpty();
     }
 
     #endregion

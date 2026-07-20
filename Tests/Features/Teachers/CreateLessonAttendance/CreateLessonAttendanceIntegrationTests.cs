@@ -221,13 +221,13 @@ public partial class IntegrationTests
 
     private async Task<int> CreateTeacherClassWithLessons(TestsHttpClient director, string teacherEmail)
     {
-        var teacher = (await director.CreateTeacher(DataGen.UserName, teacherEmail)).Success;
+        var teacher = await director.CreateTeacher(DataGen.UserName, teacherEmail).Success();
 
-        var discipline = (await director.CreateDiscipline()).Success;
+        var discipline = await director.CreateDiscipline().Success();
         await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
-        var period = (await director.CreateAcademicPeriod()).Success;
-        var @class = (await director.CreateClass(discipline.Id, period.Id)).Success;
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
         await director.AssignTeachersToClass(@class.Id, [teacher.Id]);
 
         return @class.Id;
@@ -242,7 +242,7 @@ public partial class IntegrationTests
         List<int> students = [];
         for (var i = 0; i < count; i++)
         {
-            var student = (await director.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
+            var student = await director.CreateStudent(DataGen.UserName, DataGen.Email).Success();
             await director.AssignStudentToClass(student.Id, classId);
             students.Add(student.Id);
         }

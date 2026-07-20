@@ -102,8 +102,8 @@ public partial class IntegrationTests
         await _back.AwaitWebhookCallsProcessing();
 
         // Act
-        var firstPage = (await client.GetWebhookCalls(page: 1, pageSize: 2)).Success;
-        var secondPage = (await client.GetWebhookCalls(page: 2, pageSize: 2)).Success;
+        var firstPage = await client.GetWebhookCalls(page: 1, pageSize: 2).Success();
+        var secondPage = await client.GetWebhookCalls(page: 2, pageSize: 2).Success();
 
         // Assert
         firstPage.Total.Should().Be(3);

@@ -60,9 +60,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var calculo = (await client.CreateDiscipline("Calculo")).Success;
-        var fisica = (await client.CreateDiscipline("Fisica")).Success;
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var calculo = await client.CreateDiscipline("Calculo").Success();
+        var fisica = await client.CreateDiscipline("Fisica").Success();
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
 
         // Act
         var result = await client.GetTeacherPotentialDisciplines(teacher.Id);
@@ -79,9 +79,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var calculo = (await client.CreateDiscipline("Calculo")).Success;
-        var fisica = (await client.CreateDiscipline("Fisica")).Success;
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var calculo = await client.CreateDiscipline("Calculo").Success();
+        var fisica = await client.CreateDiscipline("Fisica").Success();
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
         await client.AssignDisciplinesToTeacher(teacher.Id, [calculo.Id]);
 
         // Act
@@ -98,9 +98,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var calculo = (await client.CreateDiscipline("Calculo")).Success;
+        var calculo = await client.CreateDiscipline("Calculo").Success();
         await client.CreateDiscipline("Fisica");
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
 
         // Act
         var result = await client.GetTeacherPotentialDisciplines(teacher.Id, name: "Calc");

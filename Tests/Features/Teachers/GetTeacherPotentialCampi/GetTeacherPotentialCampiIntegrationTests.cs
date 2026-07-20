@@ -60,9 +60,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var alpha = (await client.CreateCampus(name: "Alpha")).Success;
-        var beta = (await client.CreateCampus(name: "Beta")).Success;
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var alpha = await client.CreateCampus(name: "Alpha").Success();
+        var beta = await client.CreateCampus(name: "Beta").Success();
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
 
         // Act
         var result = await client.GetTeacherPotentialCampi(teacher.Id);
@@ -79,9 +79,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var alpha = (await client.CreateCampus(name: "Alpha")).Success;
-        var beta = (await client.CreateCampus(name: "Beta")).Success;
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var alpha = await client.CreateCampus(name: "Alpha").Success();
+        var beta = await client.CreateCampus(name: "Beta").Success();
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
         await client.AssignCampiToTeacher(teacher.Id, [alpha.Id]);
 
         // Act
@@ -98,9 +98,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var alpha = (await client.CreateCampus(name: "Alpha")).Success;
+        var alpha = await client.CreateCampus(name: "Alpha").Success();
         await client.CreateCampus(name: "Beta");
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
 
         // Act
         var result = await client.GetTeacherPotentialCampi(teacher.Id, name: "Alph");

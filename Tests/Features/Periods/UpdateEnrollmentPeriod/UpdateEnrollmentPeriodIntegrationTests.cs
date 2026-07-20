@@ -56,7 +56,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var period = (await client.CreateEnrollmentPeriod("Matrículas 2024.1")).Success;
+        var period = await client.CreateEnrollmentPeriod("Matrículas 2024.1").Success();
 
         var otherClient = await _back.LoggedAsDirector();
 
@@ -72,7 +72,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var period = (await client.CreateEnrollmentPeriod("Matrículas 2024.1")).Success;
+        var period = await client.CreateEnrollmentPeriod("Matrículas 2024.1").Success();
 
         // Act
         var result = await client.UpdateEnrollmentPeriod(period.Id, startAt: new DateOnly(2024, 01, 15), endAt: new DateOnly(2024, 01, 15));
@@ -86,7 +86,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var period = (await client.CreateEnrollmentPeriod("Matrículas 2024.1")).Success;
+        var period = await client.CreateEnrollmentPeriod("Matrículas 2024.1").Success();
 
         // Act
         var result = await client.UpdateEnrollmentPeriod(period.Id, startAt: new DateOnly(2024, 02, 01), endAt: new DateOnly(2024, 01, 15));
@@ -101,7 +101,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         await client.CreateEnrollmentPeriod("Matrículas 2024.1");
-        var period = (await client.CreateEnrollmentPeriod("Matrículas 2024.2")).Success;
+        var period = await client.CreateEnrollmentPeriod("Matrículas 2024.2").Success();
 
         // Act
         var result = await client.UpdateEnrollmentPeriod(period.Id, name: "Matrículas 2024.1");
@@ -119,7 +119,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var period = (await client.CreateEnrollmentPeriod("Matrículas 2024.1")).Success;
+        var period = await client.CreateEnrollmentPeriod("Matrículas 2024.1").Success();
 
         // Act
         var result = await client.UpdateEnrollmentPeriod(
@@ -148,7 +148,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var period = (await client.CreateEnrollmentPeriod("Matrículas 2024.1")).Success;
+        var period = await client.CreateEnrollmentPeriod("Matrículas 2024.1").Success();
 
         // Act
         var result = await client.UpdateEnrollmentPeriod(

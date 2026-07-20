@@ -60,7 +60,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
+        var campus = await client.CreateCampus().Success();
 
         // Act
         var result = await client.CreateClassroom(campus.Id, name: "Sala 05", capacity: 40);

@@ -56,7 +56,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var director = await _back.LoggedAsDirector();
-        var notification = (await director.CreateNotification()).Success;
+        var notification = await director.CreateNotification().Success();
 
         var other = await _back.LoggedAsDirector();
 
@@ -78,7 +78,7 @@ public partial class IntegrationTests
         var director = await _back.LoggedAsDirector();
         var teacherEmail = DataGen.Email;
         await director.CreateTeacher(DataGen.UserName, teacherEmail);
-        var created = (await director.CreateNotification("Aviso importante", "Descrição do aviso.", UsersGroup.Teachers)).Success;
+        var created = await director.CreateNotification("Aviso importante", "Descrição do aviso.", UsersGroup.Teachers).Success();
 
         // Act
         var result = await director.GetInstitutionNotification(created.Id);
@@ -101,7 +101,7 @@ public partial class IntegrationTests
         var director = await _back.LoggedAsDirector();
         var teacherEmail = DataGen.Email;
         await director.CreateTeacher(DataGen.UserName, teacherEmail);
-        var created = (await director.CreateNotification(targetUsers: UsersGroup.Teachers)).Success;
+        var created = await director.CreateNotification(targetUsers: UsersGroup.Teachers).Success();
 
         var teacher = await _back.LoginAs(teacherEmail);
         await teacher.MarkNotificationsAsViewed(markAll: true);

@@ -58,8 +58,8 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCampus = (await otherClient.CreateCampus()).Success;
-        var otherClassroom = (await otherClient.CreateClassroom(otherCampus.Id)).Success;
+        var otherCampus = await otherClient.CreateCampus().Success();
+        var otherClassroom = await otherClient.CreateClassroom(otherCampus.Id).Success();
 
         // Act
         var result = await client.GetClassroom(otherClassroom.Id);
@@ -77,8 +77,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus(name: "Campus Agreste")).Success;
-        var classroom = (await client.CreateClassroom(campus.Id, name: "Sala 05", capacity: 40)).Success;
+        var campus = await client.CreateCampus(name: "Campus Agreste").Success();
+        var classroom = await client.CreateClassroom(campus.Id, name: "Sala 05", capacity: 40).Success();
 
         // Act
         var result = await client.GetClassroom(classroom.Id);
@@ -101,11 +101,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var classroom = (await client.CreateClassroom(campus.Id, capacity: 40)).Success;
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var campus = await client.CreateCampus().Success();
+        var classroom = await client.CreateClassroom(campus.Id, capacity: 40).Success();
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
         await client.UpdateClassSchedules(@class.Id,
         [
@@ -145,12 +145,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var classroom = (await client.CreateClassroom(campus.Id, capacity: 40)).Success;
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
-        var student = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success;
+        var campus = await client.CreateCampus().Success();
+        var classroom = await client.CreateClassroom(campus.Id, capacity: 40).Success();
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
+        var student = await client.CreateStudent(DataGen.UserName, DataGen.Email).Success();
 
         await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
 

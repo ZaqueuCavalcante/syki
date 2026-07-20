@@ -72,11 +72,11 @@ public partial class IntegrationTests
         await teacher.MarkNotificationsAsViewed(markAll: true);
 
         // Act
-        var result = await teacher.GetNotifications(unreadOnly: true);
+        var result = await teacher.GetNotifications(unreadOnly: true).Success();
 
         // Assert
-        result.Success.Total.Should().Be(0);
-        result.Success.Items.Should().BeEmpty();
+        result.Total.Should().Be(0);
+        result.Items.Should().BeEmpty();
     }
 
     #endregion

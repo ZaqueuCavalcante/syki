@@ -40,7 +40,7 @@ public partial class IntegrationTests
         // Arrange
         var director = await _back.LoggedAsDirector();
         var studentEmail = DataGen.Email;
-        var studentId = (await director.CreateStudent(DataGen.UserName, studentEmail)).Success.Id;
+        var studentId = (await director.CreateStudent(DataGen.UserName, studentEmail).Success()).Id;
 
         var client = await _back.LoginAs(studentEmail);
 
@@ -60,8 +60,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var director = await _back.LoggedAsDirector();
-        var linkedStudentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
-        var otherStudentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var linkedStudentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
+        var otherStudentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         var parentEmail = DataGen.Email;
         await director.CreateParent(DataGen.UserName, parentEmail, [new() { StudentId = linkedStudentId, Relationship = ParentRelationship.Mother }]);
@@ -80,10 +80,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var director = await _back.LoggedAsDirector();
-        var studentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var studentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         var parentEmail = DataGen.Email;
-        var parentId = (await director.CreateParent(DataGen.UserName, parentEmail, [new() { StudentId = studentId, Relationship = ParentRelationship.Mother }])).Success.Id;
+        var parentId = (await director.CreateParent(DataGen.UserName, parentEmail, [new() { StudentId = studentId, Relationship = ParentRelationship.Mother }]).Success()).Id;
 
         await using (var ctx = _back.GetDbContext())
         {
@@ -106,10 +106,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var director = await _back.LoggedAsDirector();
-        var studentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var studentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         var parentEmail = DataGen.Email;
-        var parentId = (await director.CreateParent(DataGen.UserName, parentEmail, [new() { StudentId = studentId, Relationship = ParentRelationship.Mother }])).Success.Id;
+        var parentId = (await director.CreateParent(DataGen.UserName, parentEmail, [new() { StudentId = studentId, Relationship = ParentRelationship.Mother }]).Success()).Id;
 
         await using (var ctx = _back.GetDbContext())
         {
@@ -136,7 +136,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var director = await _back.LoggedAsDirector();
-        var studentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var studentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         var parentEmail = DataGen.Email;
         await director.CreateParent(DataGen.UserName, parentEmail, [new() { StudentId = studentId, Relationship = ParentRelationship.Mother }]);
@@ -144,11 +144,10 @@ public partial class IntegrationTests
         var client = await _back.LoginAs(parentEmail);
 
         // Act
-        var result = await client.GetParentStudentAgenda(studentId);
+        var result = await client.GetParentStudentAgenda(studentId).Success();
 
         // Assert
-        result.ShouldBeSuccess();
-        result.Success.Days.Should().BeEmpty();
+        result.Days.Should().BeEmpty();
     }
 
     [Test]
@@ -157,15 +156,15 @@ public partial class IntegrationTests
         // Arrange
         var director = await _back.LoggedAsDirector();
 
-        var discipline = (await director.CreateDiscipline()).Success;
-        var period = (await director.CreateAcademicPeriod()).Success;
-        var @class = (await director.CreateClass(discipline.Id, period.Id)).Success;
+        var discipline = await director.CreateDiscipline().Success();
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         await director.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
         await director.ReleaseClassForEnrollment(@class.Id);
 
-        var studentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var studentId = (await director.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
         await director.AssignStudentToClass(studentId, @class.Id);
 
         var parentEmail = DataGen.Email;

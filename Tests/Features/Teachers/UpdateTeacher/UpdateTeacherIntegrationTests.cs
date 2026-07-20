@@ -87,7 +87,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
         var usedEmail = DataGen.Email;
         await client.CreateTeacher("Carlos Souza", usedEmail);
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
 
         // Act
         var result = await client.UpdateTeacher(teacher.Id, name: "Ana Lima", email: usedEmail);
@@ -105,7 +105,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
         var newEmail = DataGen.Email;
 
         // Act
@@ -114,7 +114,7 @@ public partial class IntegrationTests
         // Assert
         result.IsSuccess.Should().BeTrue();
 
-        var updated = (await client.GetTeacher(teacher.Id)).Success;
+        var updated = await client.GetTeacher(teacher.Id).Success();
         updated.Name.Should().Be("Ana Paula Lima");
         updated.Email.Should().Be(newEmail);
     }

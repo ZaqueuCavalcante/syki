@@ -71,7 +71,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCampus = (await otherClient.CreateCampus()).Success;
+        var otherCampus = await otherClient.CreateCampus().Success();
 
         // Act
         var result = await client.CreateCourseOffering(otherCampus.Id, 1, 1, 1);
@@ -85,7 +85,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
+        var campus = await client.CreateCampus().Success();
 
         // Act
         var result = await client.CreateCourseOffering(campus.Id, 99999, 1, 1);
@@ -99,10 +99,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
+        var campus = await client.CreateCampus().Success();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCourse = (await otherClient.CreateCourse()).Success;
+        var otherCourse = await otherClient.CreateCourse().Success();
 
         // Act
         var result = await client.CreateCourseOffering(campus.Id, otherCourse.Id, 1, 1);
@@ -116,8 +116,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
 
         // Act
         var result = await client.CreateCourseOffering(campus.Id, course.Id, 99999, 1);
@@ -131,12 +131,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCourse = (await otherClient.CreateCourse()).Success;
-        var otherCurriculum = (await otherClient.CreateCourseCurriculum(otherCourse.Id)).Success;
+        var otherCourse = await otherClient.CreateCourse().Success();
+        var otherCurriculum = await otherClient.CreateCourseCurriculum(otherCourse.Id).Success();
 
         // Act
         var result = await client.CreateCourseOffering(campus.Id, course.Id, otherCurriculum.Id, 1);
@@ -150,11 +150,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
 
-        var anotherCourse = (await client.CreateCourse("Direito")).Success;
-        var anotherCourseCurriculum = (await client.CreateCourseCurriculum(anotherCourse.Id)).Success;
+        var anotherCourse = await client.CreateCourse("Direito").Success();
+        var anotherCourseCurriculum = await client.CreateCourseCurriculum(anotherCourse.Id).Success();
 
         // Act
         var result = await client.CreateCourseOffering(campus.Id, course.Id, anotherCourseCurriculum.Id, 1);
@@ -168,9 +168,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
 
         // Act
         var result = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, 99999);
@@ -184,12 +184,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherPeriod = (await otherClient.CreateAcademicPeriod("2024.1")).Success;
+        var otherPeriod = await otherClient.CreateAcademicPeriod("2024.1").Success();
 
         // Act
         var result = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, otherPeriod.Id);
@@ -207,16 +207,16 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
-        var period = (await client.CreateAcademicPeriod("2024.1")).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
+        var period = await client.CreateAcademicPeriod("2024.1").Success();
 
         // Act
-        var result = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id);
+        var result = await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id).Success();
 
         // Assert
-        result.Success.Id.Should().BePositive();
+        result.Id.Should().BePositive();
     }
 
     #endregion

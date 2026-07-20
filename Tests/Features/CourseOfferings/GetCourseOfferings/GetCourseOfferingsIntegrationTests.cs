@@ -58,10 +58,10 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
-        var period = (await client.CreateAcademicPeriod("2024.1")).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
+        var period = await client.CreateAcademicPeriod("2024.1").Success();
         await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id);
 
         // Act
@@ -80,13 +80,13 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
 
         for (var i = 1; i <= 12; i++)
         {
-            var period = (await client.CreateAcademicPeriod($"20{i:00}.1")).Success;
+            var period = await client.CreateAcademicPeriod($"20{i:00}.1").Success();
             await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id);
         }
 
@@ -106,13 +106,13 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var course = (await client.CreateCourse()).Success;
-        var curriculum = (await client.CreateCourseCurriculum(course.Id)).Success;
+        var campus = await client.CreateCampus().Success();
+        var course = await client.CreateCourse().Success();
+        var curriculum = await client.CreateCourseCurriculum(course.Id).Success();
 
         for (var i = 1; i <= 12; i++)
         {
-            var period = (await client.CreateAcademicPeriod($"20{i:00}.1")).Success;
+            var period = await client.CreateAcademicPeriod($"20{i:00}.1").Success();
             await client.CreateCourseOffering(campus.Id, course.Id, curriculum.Id, period.Id);
         }
 

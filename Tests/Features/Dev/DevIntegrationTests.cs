@@ -32,10 +32,10 @@ public partial class IntegrationTests
 
     private static async Task DevCreateCampi(TestsHttpClient client, DevInstitutionData data)
     {
-        data.CampiIds.Add((await client.CreateCampus("Garoa", BrazilState.PE, "Garanhuns")).Success.Id);
-        data.CampiIds.Add((await client.CreateCampus("Sertão", BrazilState.PE, "Petrolina")).Success.Id);
-        data.CampiIds.Add((await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru")).Success.Id);
-        data.CampiIds.Add((await client.CreateCampus("Suassuna", BrazilState.PE, "Recife")).Success.Id);
+        data.CampiIds.Add((await client.CreateCampus("Garoa", BrazilState.PE, "Garanhuns").Success()).Id);
+        data.CampiIds.Add((await client.CreateCampus("Sertão", BrazilState.PE, "Petrolina").Success()).Id);
+        data.CampiIds.Add((await client.CreateCampus("Agreste", BrazilState.PE, "Caruaru").Success()).Id);
+        data.CampiIds.Add((await client.CreateCampus("Suassuna", BrazilState.PE, "Recife").Success()).Id);
     }
 
     private static async Task DevCreateCourses(TestsHttpClient client, DevInstitutionData data)
@@ -48,8 +48,8 @@ public partial class IntegrationTests
         await client.CreateCourse("Ciência da Computação", CourseType.Bacharelado);
         await client.CreateCourse("Engenharia de Produção", CourseType.PosDoutorado);
 
-        data.DireitoCourseId = (await client.CreateCourse("Direito", CourseType.Bacharelado)).Success.Id;
-        data.AdsCourseId = (await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Bacharelado)).Success.Id;
+        data.DireitoCourseId = (await client.CreateCourse("Direito", CourseType.Bacharelado).Success()).Id;
+        data.AdsCourseId = (await client.CreateCourse("Análise e Desenvolvimento de Sistemas", CourseType.Bacharelado).Success()).Id;
     }
 
     private static async Task DevCreateAdsDisciplines(TestsHttpClient client, DevInstitutionData data)

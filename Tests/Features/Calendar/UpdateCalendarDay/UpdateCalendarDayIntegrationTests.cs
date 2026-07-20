@@ -43,7 +43,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var day = (await client.CreateCalendarDay(new DateTime(2026, 5, 4))).Success;
+        var day = await client.CreateCalendarDay(new DateTime(2026, 5, 4)).Success();
 
         // Act
         var result = await client.UpdateCalendarDay(day.Id, dayType: null);
@@ -70,7 +70,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var director = await _back.LoggedAsDirector();
-        var day = (await director.CreateCalendarDay(new DateTime(2026, 5, 5))).Success;
+        var day = await director.CreateCalendarDay(new DateTime(2026, 5, 5)).Success();
 
         var other = await _back.LoggedAsDirector();
 
@@ -90,7 +90,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var created = (await client.CreateCalendarDay(new DateTime(2026, 6, 24), DayType.Vacation, "Férias")).Success;
+        var created = await client.CreateCalendarDay(new DateTime(2026, 6, 24), DayType.Vacation, "Férias").Success();
 
         // Act
         var result = await client.UpdateCalendarDay(created.Id, DayType.Holiday, "São João");
@@ -108,13 +108,13 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var created = (await client.CreateCalendarDay(new DateTime(2026, 7, 20))).Success;
+        var created = await client.CreateCalendarDay(new DateTime(2026, 7, 20)).Success();
 
         // Act
         await client.UpdateCalendarDay(created.Id, DayType.Default, null);
 
         // Assert
-        var calendar = (await client.GetInstitutionCalendar(2026)).Success;
+        var calendar = await client.GetInstitutionCalendar(2026).Success();
         var day = calendar.Items.First(x => x.Date == new DateTime(2026, 7, 20));
         day.DayType.Should().Be(DayType.Default);
         day.Description.Should().BeNull();

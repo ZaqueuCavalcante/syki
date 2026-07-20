@@ -63,10 +63,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var result = await client.GetInstitutionCalendar(2028);
+        var result = await client.GetInstitutionCalendar(2028).Success();
 
         // Assert
-        result.Success.Total.Should().Be(366);
+        result.Total.Should().Be(366);
     }
 
     [Test]
@@ -76,10 +76,10 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var result = await client.GetInstitutionCalendar();
+        var result = await client.GetInstitutionCalendar().Success();
 
         // Assert
-        result.Success.Year.Should().Be(DateTime.UtcNow.Year);
+        result.Year.Should().Be(DateTime.UtcNow.Year);
     }
 
     [Test]

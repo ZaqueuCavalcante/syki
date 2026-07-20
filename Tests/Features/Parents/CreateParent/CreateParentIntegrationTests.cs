@@ -43,7 +43,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         // Act
         var result = await client.CreateParent(DataGen.UserName, "invalid-email", [new() { StudentId = studentId, Relationship = ParentRelationship.Mother }]);
@@ -57,7 +57,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         var email = DataGen.Email;
         await client.CreateParent(DataGen.UserName, email, [new() { StudentId = studentId, Relationship = ParentRelationship.Mother }]);
@@ -74,7 +74,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         // Act
         var result = await client.CreateParent(DataGen.UserName, DataGen.Email, [new() { StudentId = studentId, Relationship = ParentRelationship.Mother }], phoneNumber: "123456789");
@@ -101,7 +101,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         // Act
         var result = await client.CreateParent(DataGen.UserName, DataGen.Email,
@@ -132,7 +132,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var otherInstitutionClient = await _back.LoggedAsDirector();
-        var otherStudentId = (await otherInstitutionClient.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var otherStudentId = (await otherInstitutionClient.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         var client = await _back.LoggedAsDirector();
 
@@ -152,7 +152,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         // Act
         var result = await client.CreateParent(DataGen.UserName, DataGen.Email, [new() { StudentId = studentId, Relationship = ParentRelationship.Mother }]);
@@ -176,8 +176,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var firstStudentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
-        var secondStudentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var firstStudentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
+        var secondStudentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         // Act
         var result = await client.CreateParent(DataGen.UserName, DataGen.Email,
@@ -202,7 +202,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email)).Success.Id;
+        var studentId = (await client.CreateStudent(DataGen.UserName, DataGen.Email).Success()).Id;
 
         // Act
         var result = await client.CreateParent(DataGen.UserName, DataGen.Email, [new() { StudentId = studentId, Relationship = ParentRelationship.Guardian }]);

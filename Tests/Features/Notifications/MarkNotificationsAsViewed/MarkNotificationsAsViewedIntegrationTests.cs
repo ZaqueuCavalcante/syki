@@ -47,7 +47,7 @@ public partial class IntegrationTests
         var manager = await _back.LoggedAsDirector();
         var teacherEmail = DataGen.Email;
         await manager.CreateTeacher(DataGen.UserName, teacherEmail);
-        var notification = (await manager.CreateNotification(targetUsers: UsersGroup.Teachers)).Success;
+        var notification = await manager.CreateNotification(targetUsers: UsersGroup.Teachers).Success();
 
         var teacher = await _back.LoginAs(teacherEmail);
 
@@ -56,7 +56,7 @@ public partial class IntegrationTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        var unreadCount = (await teacher.GetUnreadNotificationsCount()).Success;
+        var unreadCount = await teacher.GetUnreadNotificationsCount().Success();
         unreadCount.Count.Should().Be(0);
     }
 
@@ -77,7 +77,7 @@ public partial class IntegrationTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        var unreadCount = (await teacher.GetUnreadNotificationsCount()).Success;
+        var unreadCount = await teacher.GetUnreadNotificationsCount().Success();
         unreadCount.Count.Should().Be(0);
     }
 

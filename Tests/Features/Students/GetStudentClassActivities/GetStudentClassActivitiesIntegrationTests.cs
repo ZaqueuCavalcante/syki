@@ -221,7 +221,7 @@ public partial class IntegrationTests
         await EnrollStudentInClass(director, classId, email);
 
         var teacherClient = await _back.LoginAs(teacherEmail);
-        var activity = (await teacherClient.CreateClassActivity(classId, weight: 40)).Success;
+        var activity = await teacherClient.CreateClassActivity(classId, weight: 40).Success();
 
         var client = await _back.LoginAs(email);
         await client.CreateClassActivityWork(activity.Id, "https://github.com/ZaqueuCavalcante/estud");
@@ -241,13 +241,13 @@ public partial class IntegrationTests
     private async Task<(int ClassId, string TeacherEmail)> CreateClassWithTeacher(TestsHttpClient director)
     {
         var teacherEmail = DataGen.Email;
-        var teacher = (await director.CreateTeacher(DataGen.UserName, teacherEmail)).Success;
+        var teacher = await director.CreateTeacher(DataGen.UserName, teacherEmail).Success();
 
-        var discipline = (await director.CreateDiscipline()).Success;
+        var discipline = await director.CreateDiscipline().Success();
         await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
-        var period = (await director.CreateAcademicPeriod()).Success;
-        var @class = (await director.CreateClass(discipline.Id, period.Id)).Success;
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
         await director.AssignTeachersToClass(@class.Id, [teacher.Id]);
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -259,7 +259,7 @@ public partial class IntegrationTests
 
     private static async Task EnrollStudentInClass(TestsHttpClient director, int classId, string studentEmail)
     {
-        var student = (await director.CreateStudent(DataGen.UserName, studentEmail)).Success;
+        var student = await director.CreateStudent(DataGen.UserName, studentEmail).Success();
         await director.AssignStudentToClass(student.Id, classId);
     }
 }

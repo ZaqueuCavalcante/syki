@@ -44,8 +44,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var classroom = (await client.CreateClassroom(campus.Id)).Success;
+        var campus = await client.CreateCampus().Success();
+        var classroom = await client.CreateClassroom(campus.Id).Success();
 
         // Act
         var result = await client.UpdateClassroom(classroom.Id, name, capacity: 50);
@@ -61,8 +61,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var classroom = (await client.CreateClassroom(campus.Id)).Success;
+        var campus = await client.CreateCampus().Success();
+        var classroom = await client.CreateClassroom(campus.Id).Success();
 
         // Act
         var result = await client.UpdateClassroom(classroom.Id, name: "Sala 10", capacity: capacity);
@@ -91,8 +91,8 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         var otherClient = await _back.LoggedAsDirector();
-        var otherCampus = (await otherClient.CreateCampus()).Success;
-        var otherClassroom = (await otherClient.CreateClassroom(otherCampus.Id)).Success;
+        var otherCampus = await otherClient.CreateCampus().Success();
+        var otherClassroom = await otherClient.CreateClassroom(otherCampus.Id).Success();
 
         // Act
         var result = await client.UpdateClassroom(otherClassroom.Id, name: "Sala 10", capacity: 50);
@@ -110,8 +110,8 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var campus = (await client.CreateCampus()).Success;
-        var classroom = (await client.CreateClassroom(campus.Id, name: "Sala 05", capacity: 40)).Success;
+        var campus = await client.CreateCampus().Success();
+        var classroom = await client.CreateClassroom(campus.Id, name: "Sala 05", capacity: 40).Success();
 
         // Act
         var result = await client.UpdateClassroom(classroom.Id, name: "Sala 10", capacity: 50);

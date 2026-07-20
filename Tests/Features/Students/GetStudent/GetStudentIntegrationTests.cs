@@ -61,7 +61,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         var email = DataGen.Email;
-        var student = (await client.CreateStudent("Ana Lima", email)).Success;
+        var student = await client.CreateStudent("Ana Lima", email).Success();
 
         // Act
         var result = await client.GetStudent(student.Id);

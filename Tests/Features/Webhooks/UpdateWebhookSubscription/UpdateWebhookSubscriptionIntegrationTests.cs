@@ -128,7 +128,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var created = (await client.CreateWebhookSubscription()).Success;
+        var created = await client.CreateWebhookSubscription().Success();
 
         // Act
         var result = await client.UpdateWebhookSubscription(
@@ -143,7 +143,7 @@ public partial class IntegrationTests
         var updated = result.Success;
         updated.Id.Should().Be(created.Id);
 
-        var subscription = (await client.GetWebhookSubscription(created.Id)).Success;
+        var subscription = await client.GetWebhookSubscription(created.Id).Success();
         subscription.Name.Should().Be("Atividade publicada");
         subscription.Url.Should().Be("https://webhook.site/my-other-webhook");
         subscription.IsActive.Should().BeFalse();

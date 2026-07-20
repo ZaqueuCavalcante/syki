@@ -61,7 +61,7 @@ public partial class IntegrationTests
         // Arrange
         var client = await _back.LoggedAsDirector();
         var email = DataGen.Email;
-        var teacher = (await client.CreateTeacher("Ana Lima", email)).Success;
+        var teacher = await client.CreateTeacher("Ana Lima", email).Success();
 
         // Act
         var result = await client.GetTeacherDetails(teacher.Id);
@@ -81,9 +81,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
-        var campus = (await client.CreateCampus()).Success;
-        var discipline = (await client.CreateDiscipline()).Success;
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
+        var campus = await client.CreateCampus().Success();
+        var discipline = await client.CreateDiscipline().Success();
 
         await client.AssignCampiToTeacher(teacher.Id, [campus.Id]);
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
@@ -102,11 +102,11 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
         await client.AssignTeachersToClass(@class.Id, [teacher.Id]);
 
@@ -138,12 +138,12 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var discipline = (await client.CreateDiscipline()).Success;
-        var period = (await client.CreateAcademicPeriod()).Success;
-        var @class = (await client.CreateClass(discipline.Id, period.Id)).Success;
+        var discipline = await client.CreateDiscipline().Success();
+        var period = await client.CreateAcademicPeriod().Success();
+        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
-        var ana = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
-        var chico = (await client.CreateTeacher("Chico Ferreira", DataGen.Email)).Success;
+        var ana = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
+        var chico = await client.CreateTeacher("Chico Ferreira", DataGen.Email).Success();
         await client.AssignDisciplinesToTeacher(ana.Id, [discipline.Id]);
         await client.AssignTeachersToClass(@class.Id, [ana.Id]);
 

@@ -56,7 +56,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
 
         // Act
         var result = await client.AssignCampiToTeacher(teacher.Id, [999999]);
@@ -74,9 +74,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var alpha = (await client.CreateCampus(name: "Alpha")).Success;
-        var beta = (await client.CreateCampus(name: "Beta")).Success;
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var alpha = await client.CreateCampus(name: "Alpha").Success();
+        var beta = await client.CreateCampus(name: "Beta").Success();
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
 
         // Act
         var result = await client.AssignCampiToTeacher(teacher.Id, [alpha.Id, beta.Id]);
@@ -84,7 +84,7 @@ public partial class IntegrationTests
         // Assert
         result.IsSuccess.Should().BeTrue();
 
-        var updated = (await client.GetTeacher(teacher.Id)).Success;
+        var updated = await client.GetTeacher(teacher.Id).Success();
         updated.Campi.Should().HaveCount(2);
         updated.Campi.Should().Contain(x => x.Id == alpha.Id);
         updated.Campi.Should().Contain(x => x.Id == beta.Id);

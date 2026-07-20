@@ -77,7 +77,7 @@ public partial class IntegrationTests
         var (otherClassId, otherTeacherEmail) = await CreateClassWithTeacher(otherDirector);
 
         var otherTeacherClient = await _back.LoginAs(otherTeacherEmail);
-        var otherActivity = (await otherTeacherClient.CreateClassActivity(otherClassId)).Success;
+        var otherActivity = await otherTeacherClient.CreateClassActivity(otherClassId).Success();
 
         var director = await _back.LoggedAsDirector();
 
@@ -101,7 +101,7 @@ public partial class IntegrationTests
         var (classId, teacherEmail) = await CreateClassWithTeacher(director);
 
         var teacherClient = await _back.LoginAs(teacherEmail);
-        var activity = (await teacherClient.CreateClassActivity(classId)).Success;
+        var activity = await teacherClient.CreateClassActivity(classId).Success();
 
         var email = DataGen.Email;
         await director.CreateStudent(DataGen.UserName, email);
@@ -143,7 +143,7 @@ public partial class IntegrationTests
         var (otherClassId, otherTeacherEmail) = await CreateClassWithTeacher(director);
 
         var otherTeacherClient = await _back.LoginAs(otherTeacherEmail);
-        var otherActivity = (await otherTeacherClient.CreateClassActivity(otherClassId)).Success;
+        var otherActivity = await otherTeacherClient.CreateClassActivity(otherClassId).Success();
 
         var email = DataGen.Email;
         await EnrollStudentInClass(director, classId, email);
@@ -218,7 +218,7 @@ public partial class IntegrationTests
         await EnrollStudentInClass(director, classId, email);
 
         var teacherClient = await _back.LoginAs(teacherEmail);
-        var activity = (await teacherClient.CreateClassActivity(classId, weight: 40)).Success;
+        var activity = await teacherClient.CreateClassActivity(classId, weight: 40).Success();
 
         var client = await _back.LoginAs(email);
         await client.CreateClassActivityWork(activity.Id, "https://github.com/ZaqueuCavalcante/estud");

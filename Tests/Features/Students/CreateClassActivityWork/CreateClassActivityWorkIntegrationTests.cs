@@ -138,13 +138,13 @@ public partial class IntegrationTests
         var director = await _back.LoggedAsDirector();
 
         var teacherEmail = DataGen.Email;
-        var teacher = (await director.CreateTeacher(DataGen.UserName, teacherEmail)).Success;
+        var teacher = await director.CreateTeacher(DataGen.UserName, teacherEmail).Success();
 
-        var discipline = (await director.CreateDiscipline()).Success;
+        var discipline = await director.CreateDiscipline().Success();
         await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
-        var period = (await director.CreateAcademicPeriod()).Success;
-        var @class = (await director.CreateClass(discipline.Id, period.Id)).Success;
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
         await director.AssignTeachersToClass(@class.Id, [teacher.Id]);
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -152,10 +152,10 @@ public partial class IntegrationTests
         await director.ReleaseClassForEnrollment(@class.Id);
 
         var teacherClient = await _back.LoginAs(teacherEmail);
-        var activity = (await teacherClient.CreateClassActivity(@class.Id)).Success;
+        var activity = await teacherClient.CreateClassActivity(@class.Id).Success();
 
         var email = DataGen.Email;
-        var student = (await director.CreateStudent(DataGen.UserName, email)).Success;
+        var student = await director.CreateStudent(DataGen.UserName, email).Success();
         await director.AssignStudentToClass(student.Id, @class.Id);
 
         var client = await _back.LoginAs(email);
@@ -224,24 +224,24 @@ public partial class IntegrationTests
     private async Task<int> CreateClassActivityWithEnrolledStudent(TestsHttpClient director, string studentEmail)
     {
         var teacherEmail = DataGen.Email;
-        var teacher = (await director.CreateTeacher(DataGen.UserName, teacherEmail)).Success;
+        var teacher = await director.CreateTeacher(DataGen.UserName, teacherEmail).Success();
 
-        var discipline = (await director.CreateDiscipline()).Success;
+        var discipline = await director.CreateDiscipline().Success();
         await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
-        var period = (await director.CreateAcademicPeriod()).Success;
-        var @class = (await director.CreateClass(discipline.Id, period.Id)).Success;
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
         await director.AssignTeachersToClass(@class.Id, [teacher.Id]);
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
         await director.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
         await director.ReleaseClassForEnrollment(@class.Id);
 
-        var student = (await director.CreateStudent(DataGen.UserName, studentEmail)).Success;
+        var student = await director.CreateStudent(DataGen.UserName, studentEmail).Success();
         await director.AssignStudentToClass(student.Id, @class.Id);
 
         var teacherClient = await _back.LoginAs(teacherEmail);
-        var activity = (await teacherClient.CreateClassActivity(@class.Id)).Success;
+        var activity = await teacherClient.CreateClassActivity(@class.Id).Success();
 
         return activity.Id;
     }

@@ -10,7 +10,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         await client.SendResetPasswordToken(user.Email);
         var token = await _back.GetResetPasswordToken(user.Email);
@@ -45,7 +45,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         await client.SendResetPasswordToken(user.Email);
         var token = await _back.GetResetPasswordToken(user.Email);
@@ -64,7 +64,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         await client.SendResetPasswordToken(user.Email);
         var token = "token_errado_lalala";
@@ -81,7 +81,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         await client.SendResetPasswordToken(user.Email);
         var token = await _back.GetResetPasswordToken(user.Email);
@@ -100,7 +100,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         await client.SendResetPasswordToken(user.Email);
         var tokenId = await _back.GetResetPasswordToken(user.Email);
@@ -123,7 +123,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         // Request two reset tokens
         await client.SendResetPasswordToken(user.Email);
@@ -151,7 +151,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         await client.SendResetPasswordToken(user.Email);
         var token = await _back.GetResetPasswordToken(user.Email);
@@ -172,7 +172,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         await client.SendResetPasswordToken(user.Email);
         var token = await _back.GetResetPasswordToken(user.Email);
@@ -196,7 +196,7 @@ public partial class IntegrationTests : IntegrationTestBase
     {
         // Arrange
         var client = _back.GetTestsClient();
-        var user = (await client.RegisterUser(DataGen.Email)).Success;
+        var user = await client.RegisterUser(DataGen.Email).Success();
 
         // Request reset twice
         await client.SendResetPasswordToken(user.Email);

@@ -56,7 +56,7 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
 
         // Act
         var result = await client.AssignDisciplinesToTeacher(teacher.Id, [999999]);
@@ -74,9 +74,9 @@ public partial class IntegrationTests
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
-        var calculo = (await client.CreateDiscipline("Calculo")).Success;
-        var fisica = (await client.CreateDiscipline("Fisica")).Success;
-        var teacher = (await client.CreateTeacher("Ana Lima", DataGen.Email)).Success;
+        var calculo = await client.CreateDiscipline("Calculo").Success();
+        var fisica = await client.CreateDiscipline("Fisica").Success();
+        var teacher = await client.CreateTeacher("Ana Lima", DataGen.Email).Success();
 
         // Act
         var result = await client.AssignDisciplinesToTeacher(teacher.Id, [calculo.Id, fisica.Id]);
@@ -84,7 +84,7 @@ public partial class IntegrationTests
         // Assert
         result.IsSuccess.Should().BeTrue();
 
-        var updated = (await client.GetTeacher(teacher.Id)).Success;
+        var updated = await client.GetTeacher(teacher.Id).Success();
         updated.Disciplines.Should().HaveCount(2);
         updated.Disciplines.Should().Contain(x => x.Id == calculo.Id);
         updated.Disciplines.Should().Contain(x => x.Id == fisica.Id);

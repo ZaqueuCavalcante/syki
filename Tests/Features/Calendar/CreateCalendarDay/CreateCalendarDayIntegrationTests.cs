@@ -90,14 +90,14 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var result = await client.CreateCalendarDay(new DateTime(2026, 3, 16), DayType.Recess, "Semana de provas");
+        var result = await client.CreateCalendarDay(new DateTime(2026, 3, 16), DayType.Recess, "Semana de provas").Success();
 
         // Assert
-        result.Success.Id.Should().BePositive();
+        result.Id.Should().BePositive();
 
-        var calendar = (await client.GetInstitutionCalendar(2026)).Success;
+        var calendar = await client.GetInstitutionCalendar(2026).Success();
         var day = calendar.Items.First(x => x.Date == new DateTime(2026, 3, 16));
-        day.Id.Should().Be(result.Success.Id);
+        day.Id.Should().Be(result.Id);
         day.DayType.Should().Be(DayType.Recess);
         day.Description.Should().Be("Semana de provas");
     }
@@ -112,7 +112,7 @@ public partial class IntegrationTests
         var other = await _back.LoggedAsDirector();
 
         // Act
-        var calendar = (await other.GetInstitutionCalendar(2026)).Success;
+        var calendar = await other.GetInstitutionCalendar(2026).Success();
 
         // Assert
         var day = calendar.Items.First(x => x.Date == new DateTime(2026, 4, 15));

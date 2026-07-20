@@ -24,7 +24,6 @@ internal class ResponseExamples : ExamplesProvider<SuccessOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     ClassNotFound,
     ClassMustBeOnEnrollment,
-    EnrollmentPeriodMustBeFinalized,
     ClassWithoutTeachers,
     ClassWithoutSchedules
 >;

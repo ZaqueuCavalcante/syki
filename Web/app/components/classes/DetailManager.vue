@@ -30,14 +30,24 @@ const { data: institutionConfig } = await useFetch<InstitutionConfig>(
 const assignStudentModalOpen = ref(false)
 const teachersModalOpen = ref(false)
 const schedulesModalOpen = ref(false)
+const classroomsModalOpen = ref(false)
 
 const canStart = can('StartClass')
 const canRelease = can('ReleaseClassForEnrollment')
 const canUpdateTeachers = can('UpdateClassTeachers')
 const canUpdateSchedules = can('UpdateClassSchedules')
+const canUpdateClassrooms = can('UpdateClassClassrooms')
 
-const showEditSchedules = computed(() =>
-  canUpdateSchedules.value && data.value?.status !== 'Started' && data.value?.status !== 'Finalized',
+const isEditableStatus = computed(() =>
+  data.value?.status !== 'Started' && data.value?.status !== 'Finalized',
+)
+
+const showEditSchedules = computed(() => canUpdateSchedules.value && isEditableStatus.value)
+const showEditClassrooms = computed(() => canUpdateClassrooms.value && isEditableStatus.value)
+
+// Horários que já têm sala alocada, para a seção "Salas".
+const scheduledClassrooms = computed(() =>
+  (data.value?.schedules ?? []).filter(s => s.classroom),
 )
 
 const actionLoading = ref(false)
@@ -317,6 +327,44 @@ const studentColumns: TableColumn<ClassStudentItem>[] = [
         <section class="flex flex-col gap-3">
           <div class="flex items-center gap-1.5">
             <h2 class="font-semibold text-highlighted">
+              Salas
+            </h2>
+            <UTooltip v-if="showEditClassrooms" text="Editar">
+              <UButton
+                icon="i-lucide-pencil"
+                color="neutral"
+                variant="ghost"
+                size="xs"
+                @click="(e) => { (e.currentTarget as HTMLElement).blur(); classroomsModalOpen = true }"
+              />
+            </UTooltip>
+          </div>
+
+          <div v-if="scheduledClassrooms.length" class="flex flex-wrap gap-2">
+            <div
+              v-for="(s, i) in scheduledClassrooms"
+              :key="i"
+              class="flex flex-col gap-0.5 rounded-lg border border-default bg-elevated/40 px-3 py-2"
+            >
+              <span class="flex items-center gap-1.5 text-sm font-medium text-highlighted">
+                <UIcon name="i-lucide-door-open" class="size-3.5" />
+                {{ s.classroom }}
+              </span>
+              <span class="flex items-center gap-1 text-xs text-muted">
+                <UIcon name="i-lucide-clock" class="size-3.5" />
+                {{ formatClassSchedule(s) }}
+              </span>
+            </div>
+          </div>
+          <div v-else class="flex items-center gap-2 text-sm text-muted">
+            <UIcon name="i-lucide-door-closed" class="size-4" />
+            Nenhuma sala definida
+          </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+          <div class="flex items-center gap-1.5">
+            <h2 class="font-semibold text-highlighted">
               Alunos
             </h2>
             <UTooltip text="Matricular aluno">
@@ -384,6 +432,15 @@ const studentColumns: TableColumn<ClassStudentItem>[] = [
           :class-id="data.id"
           :schedules="data.schedules"
           :teachers="data.teachers"
+          @saved="refresh()"
+        />
+
+        <ClassesClassroomsModal
+          v-model:open="classroomsModalOpen"
+          :class-id="data.id"
+          :campus-id="data.campusId"
+          :vacancies="data.vacancies"
+          :schedules="data.schedules"
           @saved="refresh()"
         />
 

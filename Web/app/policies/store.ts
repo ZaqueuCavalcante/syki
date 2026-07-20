@@ -199,6 +199,13 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
       hasPermission(Permissions.ManageClasses),
     ],
   },
+  UpdateClassClassrooms: {
+    description: "Definir as salas de uma turma",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageClasses),
+    ],
+  },
   ReleaseClassForEnrollment: {
     description: "Liberar turmas para matrícula",
     requirements: [

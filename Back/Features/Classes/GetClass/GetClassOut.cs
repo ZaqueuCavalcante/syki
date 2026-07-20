@@ -6,6 +6,7 @@ public class GetClassOut : IApiDto<GetClassOut>
     public int DisciplineId { get; set; }
     public string Discipline { get; set; }
     public string Period { get; set; }
+    public int? CampusId { get; set; }
     public int Vacancies { get; set; }
     public int Workload { get; set; }
     public ClassStatus Status { get; set; }
@@ -21,6 +22,7 @@ public class GetClassOut : IApiDto<GetClassOut>
             DisciplineId = 3,
             Discipline = "Banco de Dados",
             Period = "2026.1",
+            CampusId = 1,
             Vacancies = 40,
             Workload = 60,
             Status = ClassStatus.OnEnrollment,
@@ -29,7 +31,7 @@ public class GetClassOut : IApiDto<GetClassOut>
                 new GetClassTeacherOut { Id = 14, Name = "Ana Lima" },
                 new GetClassTeacherOut { Id = 32, Name = "Chico Ferreira" },
             ],
-            Schedules = [new ScheduleOut(Day.Monday, Hour.H07_00, Hour.H10_00) { TeacherId = 14, Teacher = "Ana Lima" }],
+            Schedules = [new ScheduleOut(Day.Monday, Hour.H07_00, Hour.H10_00) { TeacherId = 14, Teacher = "Ana Lima", ClassroomId = 5, Classroom = "Sala 05" }],
             Students =
             [
                 new GetClassStudentOut { Id = 1, Name = "Maria Souza", Status = StudentClassStatus.Matriculado, AverageGrade = 8.5M, AverageAttendance = 92.0M },

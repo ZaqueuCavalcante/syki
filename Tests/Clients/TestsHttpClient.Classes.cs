@@ -2,8 +2,9 @@ using System.Net.Http.Json;
 using Estud.Back.Features.Classes.GetClass;
 using Estud.Back.Features.Classes.GetClasses;
 using Estud.Back.Features.Classes.CreateClass;
-using Estud.Back.Features.Classes.UpdateClassSchedules;
 using Estud.Back.Features.Classes.UpdateClassTeachers;
+using Estud.Back.Features.Classes.UpdateClassSchedules;
+using Estud.Back.Features.Classes.UpdateClassClassrooms;
 
 namespace Estud.Tests.Integration.Clients;
 
@@ -44,6 +45,18 @@ public partial class TestsHttpClient
             Schedules = schedules.ConvertAll(x => new UpdateClassScheduleIn { Day = x.Day, Start = x.Start, End = x.End, TeacherId = x.TeacherId }),
         };
         var response = await http.PutAsJsonAsync($"/classes/{classId}/schedules", data);
+        return await response.Resolve<SuccessOut>();
+    }
+
+    public async Task<OneOf<SuccessOut, ErrorOut>> UpdateClassClassrooms(
+        int classId,
+        List<(Day Day, Hour Start, Hour End, int ClassroomId)> classrooms
+    ) {
+        var data = new UpdateClassClassroomsIn
+        {
+            Classrooms = classrooms.ConvertAll(x => new UpdateClassClassroomIn { Day = x.Day, Start = x.Start, End = x.End, ClassroomId = x.ClassroomId }),
+        };
+        var response = await http.PutAsJsonAsync($"/classes/{classId}/classrooms", data);
         return await response.Resolve<SuccessOut>();
     }
 

@@ -7,7 +7,7 @@ public class UpdateClassTeachersController(UpdateClassTeachersService service) :
     /// Vincular professores à turma
     /// </summary>
     /// <remarks>
-    /// Define os professores que lecionam na turma, no máximo 2. Substitui a lista atual.
+    /// Define os professores que lecionam na turma (no máximo 2).
     /// </remarks>
     [HttpPut("classes/{classId}/teachers")]
     [SwaggerResponseExample(200, typeof(ResponseExamples))]
@@ -25,5 +25,6 @@ internal class ErrorsExamples : ErrorExamplesProvider<
     ClassNotFound,
     TeacherNotFound,
     InvalidTeachersList,
-    TeacherNotAssignedToDiscipline
+    TeacherNotAssignedToDiscipline,
+    TeacherScheduleConflict
 >;

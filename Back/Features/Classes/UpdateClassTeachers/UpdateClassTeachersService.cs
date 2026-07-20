@@ -43,14 +43,33 @@ public class UpdateClassTeachersService(EstudDbContext ctx) : IEstudService
         // - 2 professores → limpa apenas os horários que apontavam para um professor que saiu (o gestor redefine depois).
         if (data.Teachers.Count <= 1)
         {
-            var only = data.Teachers.Count == 1 ? data.Teachers[0] : (int?)null;
+            var teacherId = data.Teachers.Count == 1 ? data.Teachers[0] : (int?)null;
             foreach (var schedule in @class.Schedules)
-                schedule.TeacherId = only;
+                schedule.TeacherId = teacherId;
         }
         else
         {
             foreach (var schedule in @class.Schedules.Where(s => s.TeacherId == null || !data.Teachers.Contains(s.TeacherId.Value)))
                 schedule.TeacherId = null;
+        }
+
+        // Conflito de agenda por professor: cada professor da turma não pode cobrir, em outra
+        // turma não finalizada, um horário que choque com os que passa a cobrir nesta turma.
+        foreach (var teacherId in data.Teachers)
+        {
+            var slotsForTeacher = @class.Schedules.Where(s => s.TeacherId == teacherId).ToList();
+            if (slotsForTeacher.Count == 0) continue;
+
+            var otherSchedules = await ctx.Schedules.AsNoTracking()
+                .Where(s => s.ClassId != null && s.ClassId != classId
+                    && s.Class!.InstitutionId == institutionId
+                    && s.Class.Status != ClassStatus.Finalized
+                    && (s.TeacherId == teacherId
+                        || (s.TeacherId == null && s.Class.Teachers.Any(t => t.Id == teacherId))))
+                .ToListAsync();
+
+            if (slotsForTeacher.Any(ns => otherSchedules.Any(ns.Conflict)))
+                return TeacherScheduleConflict.I;
         }
 
         await ctx.SaveChangesAsync();

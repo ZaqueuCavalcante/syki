@@ -154,6 +154,7 @@ export type PolicyName
     | 'CreateClass'
     | 'UpdateClassTeachers'
     | 'UpdateClassSchedules'
+    | 'UpdateClassClassrooms'
     | 'ReleaseClassForEnrollment'
     | 'StartClass'
     | 'GetTeacherClass'

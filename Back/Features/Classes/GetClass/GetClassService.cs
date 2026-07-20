@@ -22,6 +22,15 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
             if (!hasCurrentEnrollmentPeriod) @class.Status = ClassStatus.AwaitingStart;
         }
 
+        var classroomIds = @class.Schedules
+            .Where(s => s.ClassroomId != null)
+            .Select(s => s.ClassroomId!.Value)
+            .Distinct()
+            .ToList();
+        var classroomNames = await ctx.Classrooms.AsNoTracking()
+            .Where(c => classroomIds.Contains(c.Id))
+            .ToDictionaryAsync(c => c.Id, c => c.Name);
+
         var classStudents = await ctx.ClassStudents.AsNoTracking()
             .Where(cs => cs.ClassId == id)
             .OrderBy(cs => cs.Student!.Name)
@@ -56,6 +65,7 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
             DisciplineId = @class.DisciplineId,
             Discipline = @class.Discipline?.Name ?? "",
             Period = @class.Period?.Name ?? "",
+            CampusId = @class.CampusId,
             Vacancies = @class.Vacancies,
             Workload = @class.Workload,
             Status = @class.Status,
@@ -69,6 +79,8 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
                 {
                     TeacherId = s.TeacherId,
                     Teacher = s.TeacherId == null ? null : @class.Teachers.FirstOrDefault(t => t.Id == s.TeacherId)?.Name,
+                    ClassroomId = s.ClassroomId,
+                    Classroom = s.ClassroomId != null && classroomNames.TryGetValue(s.ClassroomId.Value, out var name) ? name : null,
                 })
                 .ToList(),
             Students = students,

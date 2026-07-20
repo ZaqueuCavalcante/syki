@@ -67,7 +67,7 @@ async function save() {
   saving.value = true
   try {
     await $fetch(`${config.public.backendUrl}/classes/${props.classId}/teachers`, {
-      method: 'POST',
+      method: 'PUT',
       body: { teachers: selectedIds.value },
       credentials: 'include',
     })

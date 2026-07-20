@@ -16,11 +16,6 @@ public class StartClassService(EstudDbContext ctx) : IEstudService
 
         if (@class.Status != ClassStatus.OnEnrollment) return ClassMustBeOnEnrollment.I;
 
-        var today = DateTime.UtcNow.ToDateOnly();
-        var hasCurrentEnrollmentPeriod = await ctx.EnrollmentPeriods
-            .AnyAsync(p => p.InstitutionId == institutionId && p.StartAt <= today && today <= p.EndAt);
-        if (hasCurrentEnrollmentPeriod) return EnrollmentPeriodMustBeFinalized.I;
-
         // Checkpoint de montagem: a turma só inicia com o conjunto completo (professores + horários),
         // pois as aulas derivam dos horários e ficam congeladas a partir daqui.
         if (@class.Teachers.Count == 0) return ClassWithoutTeachers.I;

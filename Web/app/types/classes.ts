@@ -4,6 +4,8 @@ export interface ClassSchedule {
   endAt: string // ex: "H10_00"
   teacherId: number | null
   teacher: string | null
+  classroomId: number | null
+  classroom: string | null
 }
 
 export interface ClassStudentItem {
@@ -25,6 +27,7 @@ export interface GetClassOut {
   discipline: string
   teachers: ClassTeacherItem[]
   period: string
+  campusId: number | null
   vacancies: number
   workload: number
   status: string

@@ -105,6 +105,13 @@ public class ConflictingSchedules : EstudError
     public override string Message { get; set; } = "Horários conflitantes.";
 }
 
+public class ScheduleNotFound : EstudError
+{
+    public static readonly ScheduleNotFound I = new();
+    public override string Code { get; set; } = nameof(ScheduleNotFound);
+    public override string Message { get; set; } = "Horário não encontrado na turma.";
+}
+
 public class InvalidClassActivityWeight : EstudError
 {
     public static readonly InvalidClassActivityWeight I = new();

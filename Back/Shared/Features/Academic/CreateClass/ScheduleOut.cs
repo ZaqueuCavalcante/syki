@@ -13,6 +13,13 @@ public class ScheduleOut
     public int? TeacherId { get; set; }
     public string? Teacher { get; set; }
 
+    /// <summary>
+    /// Sala que sedia este horário.
+    /// Pode ser nula quando a turma ainda não tem sala definida.
+    /// </summary>
+    public int? ClassroomId { get; set; }
+    public string? Classroom { get; set; }
+
     public ScheduleOut() { }
 
     public ScheduleOut(

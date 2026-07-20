@@ -10,6 +10,7 @@ public static partial class Policies
     public const string CreateClass = nameof(CreateClass);
     public const string UpdateClassTeachers = nameof(UpdateClassTeachers);
     public const string UpdateClassSchedules = nameof(UpdateClassSchedules);
+    public const string UpdateClassClassrooms = nameof(UpdateClassClassrooms);
     public const string ReleaseClassForEnrollment = nameof(ReleaseClassForEnrollment);
 
     public static AuthorizationBuilder AddClassesPolicies(this AuthorizationBuilder builder)
@@ -21,6 +22,7 @@ public static partial class Policies
             .AddEstudPolicy(CreateClass, UserType.Manager, EstudPermissions.ManageClasses)
             .AddEstudPolicy(UpdateClassTeachers, UserType.Manager, EstudPermissions.ManageClasses)
             .AddEstudPolicy(UpdateClassSchedules, UserType.Manager, EstudPermissions.ManageClasses)
+            .AddEstudPolicy(UpdateClassClassrooms, UserType.Manager, EstudPermissions.ManageClasses)
             .AddEstudPolicy(ReleaseClassForEnrollment, UserType.Manager, EstudPermissions.ManageClasses);
 
         return builder;

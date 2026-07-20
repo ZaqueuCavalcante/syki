@@ -27,5 +27,30 @@ public class GetClassesItemOut
     public int Vacancies { get; set; }
     public ClassStatus Status { get; set; }
     public List<string> Teachers { get; set; } = [];
-    public List<ScheduleOut> Schedules { get; set; } = [];
+    public List<GetClassesScheduleOut> Schedules { get; set; } = [];
+}
+
+public class GetClassesScheduleOut
+{
+    public Day Day { get; set; }
+    public Hour StartAt { get; set; }
+    public Hour EndAt { get; set; }
+
+    public int? TeacherId { get; set; }
+    public string? Teacher { get; set; }
+
+    public int? ClassroomId { get; set; }
+    public string? Classroom { get; set; }
+
+    public GetClassesScheduleOut() { }
+
+    public GetClassesScheduleOut(
+        Day day,
+        Hour startAt,
+        Hour endAt
+    ) {
+        Day = day;
+        StartAt = startAt;
+        EndAt = endAt;
+    }
 }

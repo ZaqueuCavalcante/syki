@@ -21,7 +21,7 @@ public class CreateStudentController(CreateStudentService service) : ControllerB
 }
 
 internal class RequestExamples : ExamplesProvider<CreateStudentIn>;
-internal class ResponseExamples : ExamplesProvider<StudentOut>;
+internal class ResponseExamples : ExamplesProvider<CreateStudentOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidEmail,
     InvalidBirthdate,

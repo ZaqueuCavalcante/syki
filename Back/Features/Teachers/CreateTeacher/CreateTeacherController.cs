@@ -21,7 +21,7 @@ public class CreateTeacherController(CreateTeacherService service) : ControllerB
 }
 
 internal class RequestExamples : ExamplesProvider<CreateTeacherIn>;
-internal class ResponseExamples : ExamplesProvider<TeacherOut>;
+internal class ResponseExamples : ExamplesProvider<CreateTeacherOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidEmail,
     EmailAlreadyUsed

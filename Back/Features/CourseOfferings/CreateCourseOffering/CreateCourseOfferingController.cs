@@ -20,7 +20,7 @@ public class CreateCourseOfferingController(CreateCourseOfferingService service)
 }
 
 internal class RequestExamples : ExamplesProvider<CreateCourseOfferingIn>;
-internal class ResponseExamples : ExamplesProvider<CourseOfferingOut>;
+internal class ResponseExamples : ExamplesProvider<CreateCourseOfferingOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidCourseSession,
     CampusNotFound,

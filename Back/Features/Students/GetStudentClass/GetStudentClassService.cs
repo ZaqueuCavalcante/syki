@@ -31,7 +31,7 @@ public class GetStudentClassService(EstudDbContext ctx) : IEstudService
             Teachers = @class.Teachers.Select(t => t.Name).Order().ToList(),
             Schedules = @class.Schedules
                 .OrderBy(s => s.Day).ThenBy(s => s.Start)
-                .Select(s => new ScheduleOut(s.Day, s.Start, s.End))
+                .Select(s => new GetStudentClassScheduleOut(s.Day, s.Start, s.End))
                 .ToList(),
         };
     }

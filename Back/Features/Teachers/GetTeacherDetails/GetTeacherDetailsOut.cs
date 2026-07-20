@@ -6,8 +6,8 @@ public class GetTeacherDetailsOut : IApiDto<GetTeacherDetailsOut>
     public string Name { get; set; }
     public string Email { get; set; }
     public List<GetTeacherDetailsCampusOut> Campi { get; set; } = [];
-    public List<GetTeacherDetailsDisciplineOut> Disciplines { get; set; } = [];
     public List<GetTeacherDetailsClassOut> Classes { get; set; } = [];
+    public List<GetTeacherDetailsDisciplineOut> Disciplines { get; set; } = [];
 
     public static IEnumerable<(string, GetTeacherDetailsOut)> GetExamples() =>
     [
@@ -29,7 +29,7 @@ public class GetTeacherDetailsOut : IApiDto<GetTeacherDetailsOut>
                     Students = 32,
                     Workload = 60,
                     Status = ClassStatus.Started,
-                    Schedules = [new ScheduleOut(Day.Monday, Hour.H07_00, Hour.H10_00) { TeacherId = 14, Teacher = "Ana Lima" }],
+                    Schedules = [new GetTeacherDetailsScheduleOut(Day.Monday, Hour.H07_00, Hour.H10_00) { TeacherId = 14, Teacher = "Ana Lima" }],
                 },
             ],
         }),
@@ -66,5 +66,30 @@ public class GetTeacherDetailsClassOut
     /// <summary>
     /// Horários da turma cobertos por este professor
     /// </summary>
-    public List<ScheduleOut> Schedules { get; set; } = [];
+    public List<GetTeacherDetailsScheduleOut> Schedules { get; set; } = [];
+}
+
+public class GetTeacherDetailsScheduleOut
+{
+    public Day Day { get; set; }
+    public Hour StartAt { get; set; }
+    public Hour EndAt { get; set; }
+
+    public int? TeacherId { get; set; }
+    public string? Teacher { get; set; }
+
+    public int? ClassroomId { get; set; }
+    public string? Classroom { get; set; }
+
+    public GetTeacherDetailsScheduleOut() { }
+
+    public GetTeacherDetailsScheduleOut(
+        Day day,
+        Hour startAt,
+        Hour endAt
+    ) {
+        Day = day;
+        StartAt = startAt;
+        EndAt = endAt;
+    }
 }

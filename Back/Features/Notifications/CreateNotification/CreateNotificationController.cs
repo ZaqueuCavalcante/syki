@@ -20,7 +20,7 @@ public class CreateNotificationController(CreateNotificationService service) : C
 }
 
 internal class RequestExamples : ExamplesProvider<CreateNotificationIn>;
-internal class ResponseExamples : ExamplesProvider<NotificationOut>;
+internal class ResponseExamples : ExamplesProvider<CreateNotificationOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     InvalidNotificationTitle,
     InvalidNotificationDescription

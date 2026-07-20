@@ -75,7 +75,7 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
                 .ToList(),
             Schedules = @class.Schedules
                 .OrderBy(s => s.Day).ThenBy(s => s.Start)
-                .Select(s => new ScheduleOut(s.Day, s.Start, s.End)
+                .Select(s => new GetClassScheduleOut(s.Day, s.Start, s.End)
                 {
                     TeacherId = s.TeacherId,
                     Teacher = s.TeacherId == null ? null : @class.Teachers.FirstOrDefault(t => t.Id == s.TeacherId)?.Name,

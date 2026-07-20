@@ -30,7 +30,7 @@ public class GetTeacherDetailsService(EstudDbContext ctx) : IEstudService
                 Schedules = c.Schedules
                     .Where(s => s.TeacherId == id)
                     .OrderBy(s => s.Day).ThenBy(s => s.Start)
-                    .Select(s => new ScheduleOut(s.Day, s.Start, s.End)
+                    .Select(s => new GetTeacherDetailsScheduleOut(s.Day, s.Start, s.End)
                     {
                         TeacherId = s.TeacherId,
                         Teacher = teacherName,

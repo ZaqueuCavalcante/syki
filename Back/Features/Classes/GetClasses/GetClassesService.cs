@@ -62,7 +62,7 @@ public class GetClassesService(EstudDbContext ctx) : IEstudService
             Vacancies = c.Vacancies,
             Status = c.Status,
             Schedules = c.Schedules
-                .Select(s => new ScheduleOut(s.Day, s.Start, s.End))
+                .Select(s => new GetClassesScheduleOut(s.Day, s.Start, s.End))
                 .ToList(),
         });
 

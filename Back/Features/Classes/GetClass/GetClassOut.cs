@@ -10,8 +10,8 @@ public class GetClassOut : IApiDto<GetClassOut>
     public int Vacancies { get; set; }
     public int Workload { get; set; }
     public ClassStatus Status { get; set; }
+    public List<GetClassScheduleOut> Schedules { get; set; } = [];
     public List<GetClassTeacherOut> Teachers { get; set; } = [];
-    public List<ScheduleOut> Schedules { get; set; } = [];
     public List<GetClassStudentOut> Students { get; set; } = [];
 
     public static IEnumerable<(string, GetClassOut)> GetExamples() =>
@@ -31,7 +31,7 @@ public class GetClassOut : IApiDto<GetClassOut>
                 new GetClassTeacherOut { Id = 14, Name = "Ana Lima" },
                 new GetClassTeacherOut { Id = 32, Name = "Chico Ferreira" },
             ],
-            Schedules = [new ScheduleOut(Day.Monday, Hour.H07_00, Hour.H10_00) { TeacherId = 14, Teacher = "Ana Lima", ClassroomId = 5, Classroom = "Sala 05" }],
+            Schedules = [new GetClassScheduleOut(Day.Monday, Hour.H07_00, Hour.H10_00) { TeacherId = 14, Teacher = "Ana Lima", ClassroomId = 5, Classroom = "Sala 05" }],
             Students =
             [
                 new GetClassStudentOut { Id = 1, Name = "Maria Souza", Status = StudentClassStatus.Matriculado, AverageGrade = 8.5M, AverageAttendance = 92.0M },
@@ -61,4 +61,29 @@ public class GetClassStudentOut
     /// Frequência média do aluno na turma (de 0% a 100%)
     /// </summary>
     public decimal AverageAttendance { get; set; }
+}
+
+public class GetClassScheduleOut
+{
+    public Day Day { get; set; }
+    public Hour StartAt { get; set; }
+    public Hour EndAt { get; set; }
+
+    public int? TeacherId { get; set; }
+    public string? Teacher { get; set; }
+
+    public int? ClassroomId { get; set; }
+    public string? Classroom { get; set; }
+
+    public GetClassScheduleOut() { }
+
+    public GetClassScheduleOut(
+        Day day,
+        Hour startAt,
+        Hour endAt
+    ) {
+        Day = day;
+        StartAt = startAt;
+        EndAt = endAt;
+    }
 }

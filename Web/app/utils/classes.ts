@@ -81,7 +81,7 @@ export function formatClassHour(value: string) {
   return value.replace(/^H/, '').replace('_', ':')
 }
 
-export function formatClassSchedule(s: ClassSchedule) {
+export function formatClassSchedule(s: Pick<ClassSchedule, 'day' | 'startAt' | 'endAt'>) {
   return `${dayLabels[s.day] ?? s.day} · ${formatClassHour(s.startAt)} – ${formatClassHour(s.endAt)}`
 }
 

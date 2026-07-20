@@ -1,5 +1,4 @@
 using Estud.Back.Domain.Students;
-using Estud.Back.Domain.CourseOfferings;
 
 namespace Estud.Back.Database.Students;
 
@@ -15,7 +14,7 @@ public class StudentCourseEnrollmentDbConfig : IEntityTypeConfiguration<StudentC
             .WithMany()
             .HasForeignKey(e => e.StudentId);
 
-        entity.HasOne<CourseOffering>()
+        entity.HasOne(e => e.CourseOffering)
             .WithMany()
             .HasForeignKey(e => e.CourseOfferingId);
     }

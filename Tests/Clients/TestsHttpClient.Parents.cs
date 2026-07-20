@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using Estud.Back.Features.Parents.GetParents;
 using Estud.Back.Features.Parents.CreateParent;
+using Estud.Back.Features.Parents.GetParentDetails;
 using Estud.Back.Features.Parents.GetParentStudents;
 using Estud.Back.Features.Parents.GetParentStudentAgenda;
 
@@ -16,6 +17,12 @@ public partial class TestsHttpClient
         var data = new GetParentsIn { Filter = filter, Page = page ?? 1, PageSize = pageSize ?? 10 };
         var response = await http.GetAsync("/parents".AddQueryString(data));
         return await response.Resolve<GetParentsOut>();
+    }
+
+    public async Task<OneOf<GetParentDetailsOut, ErrorOut>> GetParentDetails(int id)
+    {
+        var response = await http.GetAsync($"/parents/{id}/details");
+        return await response.Resolve<GetParentDetailsOut>();
     }
 
     public async Task<OneOf<CreateParentOut, ErrorOut>> CreateParent(

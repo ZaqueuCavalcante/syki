@@ -1,3 +1,5 @@
+using Estud.Back.Domain.CourseOfferings;
+
 namespace Estud.Back.Domain.Students;
 
 /// <summary>
@@ -12,6 +14,8 @@ public class StudentCourseEnrollment
     public int CourseOfferingId { get; set; }
     public DateTime EnrolledAt { get; set; }
     public DateTime? LeftAt { get; set; }
+
+    public CourseOffering? CourseOffering { get; set; }
 
     private StudentCourseEnrollment() {}
 

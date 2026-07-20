@@ -2,19 +2,19 @@
 import type { TableColumn } from '@nuxt/ui'
 import { useDebounceFn } from '@vueuse/core'
 
-interface StudentItem {
+interface TeacherItem {
   id: number
   name: string
   email: string
-  enrollmentCode: string
-  course: string
+  campi: number
+  disciplines: number
 }
 
-interface GetStudentsOut {
+interface GetTeachersOut {
   total: number
   page: number
   pageSize: number
-  items: StudentItem[]
+  items: TeacherItem[]
 }
 
 const UButton = resolveComponent('UButton')
@@ -22,12 +22,24 @@ const UTooltip = resolveComponent('UTooltip')
 
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
-const courseOfferingModalOpen = ref(false)
-const selectedStudent = ref<StudentItem | null>(null)
+const editModalOpen = ref(false)
+const campiModalOpen = ref(false)
+const disciplinesModalOpen = ref(false)
+const selectedTeacher = ref<TeacherItem | null>(null)
 
-function openCourseOffering(student: StudentItem) {
-  selectedStudent.value = student
-  courseOfferingModalOpen.value = true
+function openEdit(teacher: TeacherItem) {
+  selectedTeacher.value = teacher
+  editModalOpen.value = true
+}
+
+function openCampi(teacher: TeacherItem) {
+  selectedTeacher.value = teacher
+  campiModalOpen.value = true
+}
+
+function openDisciplines(teacher: TeacherItem) {
+  selectedTeacher.value = teacher
+  disciplinesModalOpen.value = true
 }
 
 const route = useRoute()
@@ -63,13 +75,13 @@ function clearFilters() {
   appliedFilter.value = ''
 }
 
-const { data, status, refresh } = await useFetch<GetStudentsOut>(`${config.public.backendUrl}/students`, {
+const { data, status, refresh } = await useFetch<GetTeachersOut>(`${config.public.backendUrl}/teachers`, {
   credentials: 'include',
   server: false,
   query: { filter: appliedFilter, page, pageSize }
 })
 
-const columns: TableColumn<StudentItem>[] = [
+const columns: TableColumn<TeacherItem>[] = [
   {
     accessorKey: 'name',
     header: 'Nome',
@@ -79,30 +91,54 @@ const columns: TableColumn<StudentItem>[] = [
     header: 'Email',
   },
   {
-    accessorKey: 'enrollmentCode',
-    header: 'Matrícula',
+    accessorKey: 'campi',
+    header: 'Campi',
   },
   {
-    accessorKey: 'course',
-    header: 'Curso',
+    accessorKey: 'disciplines',
+    header: 'Disciplinas',
   },
   {
     id: 'actions',
-    cell: ({ row }) => h(UTooltip, { text: 'Oferta de curso' }, () => h(UButton, {
-      icon: 'i-lucide-library',
-      color: 'neutral',
-      variant: 'ghost',
-      size: 'sm',
-      onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openCourseOffering(row.original) },
-    })),
+    cell: ({ row }) => h('div', { class: 'flex gap-1' }, [
+      h(UTooltip, { text: 'Editar' }, () => h(UButton, {
+        icon: 'i-lucide-pencil',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openEdit(row.original) },
+      })),
+      h(UTooltip, { text: 'Campi' }, () => h(UButton, {
+        icon: 'i-lucide-map-pin',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openCampi(row.original) },
+      })),
+      h(UTooltip, { text: 'Disciplinas' }, () => h(UButton, {
+        icon: 'i-lucide-book-open',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        onClick: (e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); openDisciplines(row.original) },
+      })),
+      h(UTooltip, { text: 'Ver detalhes' }, () => h(UButton, {
+        icon: 'i-lucide-arrow-right',
+        color: 'neutral',
+        variant: 'ghost',
+        size: 'sm',
+        to: `/teachers/${row.original.id}`,
+        'aria-label': 'Ver detalhes',
+      })),
+    ]),
   },
 ]
 </script>
 
 <template>
-  <UDashboardPanel id="students">
+  <UDashboardPanel id="teachers">
     <template #header>
-      <UDashboardNavbar title="Alunos">
+      <UDashboardNavbar title="Professores">
         <template #leading>
           <UDashboardSidebarCollapse />
         </template>
@@ -115,7 +151,7 @@ const columns: TableColumn<StudentItem>[] = [
           v-model="filter"
           class="max-w-sm"
           icon="i-lucide-search"
-          placeholder="Buscar por nome, email ou matrícula..."
+          placeholder="Buscar por nome ou email..."
           :loading="status === 'pending'"
         >
           <template v-if="filter" #trailing>
@@ -132,7 +168,7 @@ const columns: TableColumn<StudentItem>[] = [
         <UButton
           v-if="data?.items?.length || filter"
           icon="i-lucide-plus"
-          label="Aluno"
+          label="Professor"
           @click="() => { createModalOpen = true }"
         />
       </div>
@@ -140,11 +176,11 @@ const columns: TableColumn<StudentItem>[] = [
         <template #empty>
           <TableEmptyState
             :loading="status === 'pending'"
-            icon="i-lucide-graduation-cap"
-            message="Nenhum aluno cadastrado"
-            button-label="Aluno"
+            icon="i-lucide-user-pen"
+            message="Nenhum professor cadastrado"
+            button-label="Professor"
             :filtered="hasFilters"
-            not-found-message="Nenhum aluno encontrado com os filtros aplicados"
+            not-found-message="Nenhum professor encontrado com os filtros aplicados"
             @create="() => { createModalOpen = true }"
             @clear-filters="clearFilters"
           />
@@ -153,7 +189,7 @@ const columns: TableColumn<StudentItem>[] = [
 
       <div v-if="(data?.total ?? 0) > 0" class="flex items-center justify-between gap-2 mt-4">
         <UBadge color="neutral" variant="subtle" class="h-8 px-3">
-          {{ data?.total }} {{ data?.total === 1 ? 'aluno encontrado' : 'alunos encontrados' }}
+          {{ data?.total }} {{ data?.total === 1 ? 'professor encontrado' : 'professores encontrados' }}
         </UBadge>
 
         <UPagination
@@ -166,6 +202,8 @@ const columns: TableColumn<StudentItem>[] = [
     </template>
   </UDashboardPanel>
 
-  <StudentsCreateModal v-model:open="createModalOpen" @created="refresh()" />
-  <StudentsCourseOfferingModal v-model:open="courseOfferingModalOpen" :student="selectedStudent" @enrolled="refresh()" />
+  <TeachersCreateModal v-model:open="createModalOpen" @created="refresh()" />
+  <TeachersEditModal v-model:open="editModalOpen" :teacher="selectedTeacher" @updated="refresh()" />
+  <TeachersCampiModal v-model:open="campiModalOpen" :teacher="selectedTeacher" @updated="refresh()" />
+  <TeachersDisciplinesModal v-model:open="disciplinesModalOpen" :teacher="selectedTeacher" @updated="refresh()" />
 </template>

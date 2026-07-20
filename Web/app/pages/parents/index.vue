@@ -17,6 +17,9 @@ interface GetParentsOut {
   items: ParentItem[]
 }
 
+const UButton = resolveComponent('UButton')
+const UTooltip = resolveComponent('UTooltip')
+
 const config = useRuntimeConfig()
 const createModalOpen = ref(false)
 
@@ -77,6 +80,18 @@ const columns: TableColumn<ParentItem>[] = [
     accessorKey: 'students',
     header: 'Alunos',
     cell: ({ row }) => row.original.students.join(', ') || '-',
+  },
+  {
+    id: 'actions',
+    header: '',
+    cell: ({ row }) => h('div', { class: 'flex justify-end' }, h(UTooltip, { text: 'Ver detalhes' }, () => h(UButton, {
+      icon: 'i-lucide-arrow-right',
+      color: 'neutral',
+      variant: 'ghost',
+      size: 'sm',
+      to: `/parents/${row.original.id}`,
+      'aria-label': 'Ver detalhes',
+    }))),
   },
 ]
 </script>

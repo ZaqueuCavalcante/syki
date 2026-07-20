@@ -7,6 +7,7 @@ public static partial class Policies
     public const string GetStudent = nameof(GetStudent);
     public const string GetStudents = nameof(GetStudents);
     public const string CreateStudent = nameof(CreateStudent);
+    public const string GetStudentDetails = nameof(GetStudentDetails);
     public const string AssignStudentToClass = nameof(AssignStudentToClass);
     public const string EnrollStudentInCourseOffering = nameof(EnrollStudentInCourseOffering);
 
@@ -23,6 +24,7 @@ public static partial class Policies
             .AddEstudPolicy(GetStudent, UserType.Manager, EstudPermissions.ManageStudents)
             .AddEstudPolicy(GetStudents, UserType.Manager, EstudPermissions.ManageStudents)
             .AddEstudPolicy(CreateStudent, UserType.Manager, EstudPermissions.ManageStudents)
+            .AddEstudPolicy(GetStudentDetails, UserType.Manager, EstudPermissions.ManageStudents)
             .AddEstudPolicy(AssignStudentToClass, UserType.Manager, EstudPermissions.ManageStudents)
             .AddEstudPolicy(EnrollStudentInCourseOffering, UserType.Manager, EstudPermissions.ManageStudents);
 

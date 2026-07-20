@@ -10,7 +10,7 @@ public class ClassStudentDbConfig : IEntityTypeConfiguration<ClassStudent>
 
         entity.HasKey(t => new { t.ClassId, t.StudentId });
 
-        entity.HasOne<Class>()
+        entity.HasOne(x => x.Class)
             .WithMany()
             .HasPrincipalKey(x => x.Id)
             .HasForeignKey(x => x.ClassId);

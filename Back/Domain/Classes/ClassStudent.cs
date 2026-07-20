@@ -11,6 +11,7 @@ public class ClassStudent
     public int StudentId { get; set; }
     public StudentClassStatus Status { get; set; }
 
+    public Class? Class { get; set; }
     public EstudStudent? Student { get; set; }
 
     private ClassStudent() { }

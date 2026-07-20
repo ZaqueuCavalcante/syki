@@ -61,7 +61,7 @@ O timetabling roda por **`(InstitutionId, CampusId, AcademicPeriodId)`**. Só fa
 | Professores | `EstudTeacher` + `TeachersDisciplines` + `TeachersCampi` | Vínculos professor↔disciplina e professor↔campus são **restrições duras** |
 | Ofertas de curso | `CourseOffering` | `(Institution, Campus, Course, Curriculum, AcademicPeriod, Session/Turno)` |
 | Grades curriculares | `CourseCurriculum` + `CourseCurriculumDiscipline` | Liga disciplina → semestre (`Period`), créditos e carga horária |
-| Salas de aula | ⚠️ **entidade `Classroom` não existe ainda** | Só há FK órfão `Schedule.ClassroomId`. Precisa criar `Classroom` (campus, capacidade, tipo) antes de alocar salas |
+| Salas de aula | `Classroom` (`Back/Domain/Classrooms/Classroom.cs`) | Já existe: `CampusId`, `Name`, `Capacity`. `Schedule.ClassroomId` referencia essa entidade |
 | Cargas horárias / créditos | `CourseCurriculumDiscipline` (`Credits`, `Workload`) | Definem quantos slots cada disciplina precisa |
 
 ## Coorte no lugar de "Alunos"
@@ -87,10 +87,10 @@ Alunos só viram input de verdade com matrícula livre/eletivas atravessando ofe
 
 O requisito "uma mesma turma pode ter salas diferentes durante a semana" **já é suportado pelo schema**:
 
-- `Class` tem **um** `TeacherId` e **um** `CampusId`.
+- `Class` **não** tem `TeacherId` único — tem `List<EstudTeacher> Teachers`, vínculo many-to-many via `ClassTeacher`, com **máximo de 2 professores por turma** (`AssignTeachersToClassService.MaxTeachers`). `CampusId` é nullable (turma online).
 - `Schedule` tem `ClassroomId` **e** `TeacherId` próprios, por linha (por dia/horário).
 
-Logo, a alocação de sala/professor produzida pelo timetabling é gravada **em cada `Schedule`**, não na `Class`.
+Logo, a alocação de sala/professor produzida pelo timetabling é gravada **em cada `Schedule`**, não na `Class`. Quando a turma tem 2 professores, o solver também precisa decidir **qual dos dois cobre cada horário** — mesma regra que `UpdateClassSchedulesService` já aplica hoje na edição manual (0 professores → horário sem professor; 1 → preenchido automaticamente; 2 → obrigatório escolher por `Schedule`).
 
 ## Peça já pronta
 

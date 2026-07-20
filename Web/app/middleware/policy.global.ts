@@ -39,7 +39,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const routePolicy = routePolicies[to.path]
   const isClassDetail = to.path.startsWith('/classes/')
   const isClassroomDetail = to.path.startsWith('/classrooms/')
-  if (!routePolicy && !isClassDetail && !isClassroomDetail) return
+  const isTeacherDetail = to.path.startsWith('/teachers/')
+  const isStudentDetail = to.path.startsWith('/students/')
+  if (!routePolicy && !isClassDetail && !isClassroomDetail && !isTeacherDetail && !isStudentDetail) return
 
   const { account, fetchAccount } = useUserAccount()
 
@@ -52,7 +54,13 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   const policyName = routePolicy
-    ?? (isClassroomDetail ? 'GetClassroom' as PolicyName : classDetailPolicies[account.value!.userType])
+    ?? (isClassroomDetail
+      ? 'GetClassroom' as PolicyName
+      : isTeacherDetail
+        ? 'AccessTeachersPage' as PolicyName
+        : isStudentDetail
+          ? 'AccessStudentsPage' as PolicyName
+          : classDetailPolicies[account.value!.userType])
   if (!policyName) return
 
   const { can } = usePolicy()

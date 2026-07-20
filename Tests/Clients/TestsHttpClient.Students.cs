@@ -3,6 +3,7 @@ using Estud.Back.Features.Students.GetStudent;
 using Estud.Back.Features.Students.GetStudents;
 using Estud.Back.Features.Students.CreateStudent;
 using Estud.Back.Features.Students.GetStudentClass;
+using Estud.Back.Features.Students.GetStudentDetails;
 using Estud.Back.Features.Students.AssignStudentToClass;
 using Estud.Back.Features.Students.CreateClassActivityWork;
 using Estud.Back.Features.Students.GetStudentClassActivity;
@@ -44,6 +45,12 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync($"/students/{id}");
         return await response.Resolve<GetStudentOut>();
+    }
+
+    public async Task<OneOf<GetStudentDetailsOut, ErrorOut>> GetStudentDetails(int id)
+    {
+        var response = await http.GetAsync($"/students/{id}/details");
+        return await response.Resolve<GetStudentDetailsOut>();
     }
 
     public async Task<OneOf<GetStudentClassOut, ErrorOut>> GetStudentClass(int id)

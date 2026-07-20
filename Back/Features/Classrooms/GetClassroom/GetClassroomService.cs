@@ -26,10 +26,18 @@ public class GetClassroomService(EstudDbContext ctx) : IEstudService
 
         var classes = await ctx.Classes.AsNoTracking()
             .Include(c => c.Discipline)
+            .Include(c => c.Period)
             .Include(c => c.Teachers)
             .Where(c => classIds.Contains(c.Id))
             .ToListAsync();
         var classById = classes.ToDictionary(c => c.Id);
+
+        var studentCounts = await ctx.ClassStudents.AsNoTracking()
+            .Where(cs => classIds.Contains(cs.ClassId))
+            .GroupBy(cs => cs.ClassId)
+            .Select(g => new { ClassId = g.Key, Students = g.Count() })
+            .ToListAsync();
+        var studentsByClass = studentCounts.ToDictionary(x => x.ClassId, x => x.Students);
 
         var scheduleOuts = schedules.ConvertAll(s =>
         {
@@ -38,12 +46,17 @@ public class GetClassroomService(EstudDbContext ctx) : IEstudService
             {
                 ClassId = s.ClassId ?? 0,
                 Discipline = @class?.Discipline?.Name ?? "",
+                Period = @class?.Period?.Name ?? "",
+                Status = @class?.Status ?? ClassStatus.OnPreEnrollment,
+                Students = @class != null && studentsByClass.TryGetValue(@class.Id, out var count) ? count : 0,
                 Teachers = @class?.Teachers.Select(t => t.Name).Order().ToList() ?? [],
                 Day = s.Day,
                 StartAt = s.Start,
                 EndAt = s.End,
             };
         });
+
+        var weeklyMinutes = schedules.Sum(s => s.End.ToMinutes() - s.Start.ToMinutes());
 
         return new GetClassroomOut
         {
@@ -52,6 +65,9 @@ public class GetClassroomService(EstudDbContext ctx) : IEstudService
             CampusId = classroom.CampusId,
             Campus = classroom.Campus?.Name ?? "",
             Capacity = classroom.Capacity,
+            ClassesCount = classIds.Count,
+            WeeklyHours = Math.Round(weeklyMinutes / 60M, 1),
+            PeakStudents = studentsByClass.Count == 0 ? 0 : studentsByClass.Values.Max(),
             Schedules = scheduleOuts,
         };
     }

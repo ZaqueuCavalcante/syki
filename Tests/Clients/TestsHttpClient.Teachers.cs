@@ -4,6 +4,7 @@ using Estud.Back.Features.Teachers.GetTeachers;
 using Estud.Back.Features.Teachers.CreateTeacher;
 using Estud.Back.Features.Teachers.UpdateTeacher;
 using Estud.Back.Features.Teachers.GetTeacherClass;
+using Estud.Back.Features.Teachers.GetTeacherDetails;
 using Estud.Back.Features.Teachers.CreateClassActivity;
 using Estud.Back.Features.Teachers.AssignCampiToTeacher;
 using Estud.Back.Features.Teachers.CreateLessonAttendance;
@@ -66,6 +67,12 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync($"/teachers/{id}");
         return await response.Resolve<GetTeacherOut>();
+    }
+
+    public async Task<OneOf<GetTeacherDetailsOut, ErrorOut>> GetTeacherDetails(int id)
+    {
+        var response = await http.GetAsync($"/teachers/{id}/details");
+        return await response.Resolve<GetTeacherDetailsOut>();
     }
 
     public async Task<OneOf<GetTeacherPotentialCampiOut, ErrorOut>> GetTeacherPotentialCampi(int id, string? name = null)

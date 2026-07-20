@@ -15,6 +15,9 @@
 - https://mermaid.js.org/
 
 
+- Migração de dados de um sistema X pro Estud
+- Endpoints + Interface de Admin (sobe sob demanda)
+
 
 
 
@@ -76,9 +79,10 @@ Sidebar do aluno
 
 se baseie na tela de detalhes de uma turma do manager
 
-crie uma tela de detalhes de um professor pra um manager
+crie uma tela de detalhes de um responsavel pra um manager
 
-crie endpoint que retorna os detalhes de um professor, apenas manager tem q acessar
+crie endpoint que retorna os detalhes de um responsavel, apenas manager tem q acessar
 
+deve mostrar tbm todos os alunos vinculados com o responsavel
 
 

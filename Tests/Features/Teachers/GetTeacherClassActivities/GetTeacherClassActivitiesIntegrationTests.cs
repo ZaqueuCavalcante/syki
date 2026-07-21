@@ -102,13 +102,22 @@ public partial class IntegrationTests
     public async Task Teachers_GetTeacherClassActivities_Should_get_empty_list_when_class_has_no_activities()
     {
         // Arrange
+        var director = await _back.LoggedAsDirector();
+
         var email = DataGen.Email;
-        var @class = await CreateTeacherClass(email);
+        var teacher = await director.CreateTeacher(DataGen.UserName, email).Success();
+
+        var discipline = await director.CreateDiscipline().Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var client = await _back.LoginAs(email);
 
         // Act
-        var result = await client.GetTeacherClassActivities(@class);
+        var result = await client.GetTeacherClassActivities(@class.Id);
 
         // Assert
         result.Success.Activities.Should().BeEmpty();
@@ -118,14 +127,23 @@ public partial class IntegrationTests
     public async Task Teachers_GetTeacherClassActivities_Should_get_class_activities()
     {
         // Arrange
+        var director = await _back.LoggedAsDirector();
+
         var email = DataGen.Email;
-        var @class = await CreateTeacherClass(email);
+        var teacher = await director.CreateTeacher(DataGen.UserName, email).Success();
+
+        var discipline = await director.CreateDiscipline().Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var client = await _back.LoginAs(email);
 
         var dueDate = DateTime.UtcNow.AddDays(7).ToDateOnly();
         await client.CreateClassActivity(
-            @class,
+            @class.Id,
             ClassNoteType.N1,
             "Modelagem de Banco de Dados",
             "Modele um banco de dados para um sistema de gerenciamento de biblioteca.",
@@ -136,7 +154,7 @@ public partial class IntegrationTests
         );
 
         // Act
-        var result = await client.GetTeacherClassActivities(@class);
+        var result = await client.GetTeacherClassActivities(@class.Id);
 
         // Assert
         var activities = result.Success.Activities;
@@ -144,7 +162,7 @@ public partial class IntegrationTests
 
         var activity = activities[0];
         activity.Id.Should().BeGreaterThan(0);
-        activity.ClassId.Should().Be(@class);
+        activity.ClassId.Should().Be(@class.Id);
         activity.Note.Should().Be(ClassNoteType.N1);
         activity.Title.Should().Be("Modelagem de Banco de Dados");
         activity.Description.Should().Be("Modele um banco de dados para um sistema de gerenciamento de biblioteca.");
@@ -161,17 +179,26 @@ public partial class IntegrationTests
     public async Task Teachers_GetTeacherClassActivities_Should_get_class_activities_ordered_by_note()
     {
         // Arrange
+        var director = await _back.LoggedAsDirector();
+
         var email = DataGen.Email;
-        var @class = await CreateTeacherClass(email);
+        var teacher = await director.CreateTeacher(DataGen.UserName, email).Success();
+
+        var discipline = await director.CreateDiscipline().Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var client = await _back.LoginAs(email);
 
-        await client.CreateClassActivity(@class, ClassNoteType.N3, type: ClassActivityType.Project, weight: 100);
-        await client.CreateClassActivity(@class, ClassNoteType.N1, type: ClassActivityType.Work, weight: 25);
-        await client.CreateClassActivity(@class, ClassNoteType.N2, type: ClassActivityType.Exam, weight: 60);
+        await client.CreateClassActivity(@class.Id, ClassNoteType.N3, type: ClassActivityType.Project, weight: 100);
+        await client.CreateClassActivity(@class.Id, ClassNoteType.N1, type: ClassActivityType.Work, weight: 25);
+        await client.CreateClassActivity(@class.Id, ClassNoteType.N2, type: ClassActivityType.Exam, weight: 60);
 
         // Act
-        var result = await client.GetTeacherClassActivities(@class);
+        var result = await client.GetTeacherClassActivities(@class.Id);
 
         // Assert
         var activities = result.Success.Activities;

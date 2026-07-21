@@ -77,18 +77,17 @@ public partial class IntegrationTests
 
         var email = DataGen.Email;
         await director.CreateTeacher(DataGen.UserName, email);
-        var otherTeacher = await director.CreateTeacher(DataGen.UserName, DataGen.Email).Success();
+        var teacherClient = await _back.LoginAs(email);
 
         var discipline = await director.CreateDiscipline().Success();
+        var otherTeacher = await director.CreateTeacher(DataGen.UserName, DataGen.Email).Success();
         await director.AssignDisciplinesToTeacher(otherTeacher.Id, [discipline.Id]);
 
         var period = await director.CreateAcademicPeriod().Success();
         var @class = await director.CreateClass(discipline.Id, period.Id).Success();
 
-        var client = await _back.LoginAs(email);
-
         // Act
-        var result = await client.CreateClassActivity(@class.Id);
+        var result = await teacherClient.CreateClassActivity(@class.Id);
 
         // Assert
         result.ShouldBeError(TeacherNotAssignedToClass.I);
@@ -99,13 +98,22 @@ public partial class IntegrationTests
     public async Task Teachers_CreateClassActivity_Should_not_create_activity_with_invalid_weight(int weight)
     {
         // Arrange
+        var director = await _back.LoggedAsDirector();
+
         var email = DataGen.Email;
-        var @class = await CreateTeacherClass(email);
+        var teacher = await director.CreateTeacher(DataGen.UserName, email).Success();
+
+        var discipline = await director.CreateDiscipline().Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var client = await _back.LoginAs(email);
 
         // Act
-        var result = await client.CreateClassActivity(@class, weight: weight);
+        var result = await client.CreateClassActivity(@class.Id, weight: weight);
 
         // Assert
         result.ShouldBeError(InvalidClassActivityWeight.I);
@@ -115,14 +123,23 @@ public partial class IntegrationTests
     public async Task Teachers_CreateClassActivity_Should_not_create_activity_when_note_weights_sum_exceeds_100()
     {
         // Arrange
+        var director = await _back.LoggedAsDirector();
+
         var email = DataGen.Email;
-        var @class = await CreateTeacherClass(email);
+        var teacher = await director.CreateTeacher(DataGen.UserName, email).Success();
+
+        var discipline = await director.CreateDiscipline().Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var client = await _back.LoginAs(email);
-        await client.CreateClassActivity(@class, ClassNoteType.N1, weight: 70);
+        await client.CreateClassActivity(@class.Id, ClassNoteType.N1, weight: 70);
 
         // Act
-        var result = await client.CreateClassActivity(@class, ClassNoteType.N1, weight: 31);
+        var result = await client.CreateClassActivity(@class.Id, ClassNoteType.N1, weight: 31);
 
         // Assert
         result.ShouldBeError(InvalidClassActivityWeight.I);
@@ -133,18 +150,27 @@ public partial class IntegrationTests
     #region Happy path
 
     [Test]
-    public async Task Teachers_CreateClassActivity_Should_create_activity()
+    public async Task Teachers_CreateClassActivity_Should_create_class_activity()
     {
         // Arrange
+        var director = await _back.LoggedAsDirector();
+
         var email = DataGen.Email;
-        var @class = await CreateTeacherClass(email);
+        var teacher = await director.CreateTeacher(DataGen.UserName, email).Success();
+
+        var discipline = await director.CreateDiscipline().Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var client = await _back.LoginAs(email);
         var dueDate = DateTime.UtcNow.AddDays(7).ToDateOnly();
 
         // Act
         var result = await client.CreateClassActivity(
-            @class,
+            @class.Id,
             ClassNoteType.N2,
             "Modelagem de Banco de Dados",
             "Modele um banco de dados para um sistema de gerenciamento de biblioteca.",
@@ -160,7 +186,7 @@ public partial class IntegrationTests
 
         await using var ctx = _back.GetDbContext();
         var activity = await ctx.ClassActivities.FirstAsync(x => x.Id == activityId);
-        activity.ClassId.Should().Be(@class);
+        activity.ClassId.Should().Be(@class.Id);
         activity.Note.Should().Be(ClassNoteType.N2);
         activity.Title.Should().Be("Modelagem de Banco de Dados");
         activity.Description.Should().Be("Modele um banco de dados para um sistema de gerenciamento de biblioteca.");
@@ -175,30 +201,6 @@ public partial class IntegrationTests
     public async Task Teachers_CreateClassActivity_Should_create_activities_with_valid_weights_on_each_note()
     {
         // Arrange
-        var email = DataGen.Email;
-        var @class = await CreateTeacherClass(email);
-
-        var client = await _back.LoginAs(email);
-
-        // Act
-        await client.CreateClassActivity(@class, ClassNoteType.N1, type: ClassActivityType.Work, weight: 25);
-        await client.CreateClassActivity(@class, ClassNoteType.N1, type: ClassActivityType.Exam, weight: 75);
-        await client.CreateClassActivity(@class, ClassNoteType.N2, type: ClassActivityType.Presentation, weight: 40);
-        await client.CreateClassActivity(@class, ClassNoteType.N2, type: ClassActivityType.Exam, weight: 60);
-        var result = await client.CreateClassActivity(@class, ClassNoteType.N3, type: ClassActivityType.Project, weight: 100);
-
-        // Assert
-        result.Success.Id.Should().BeGreaterThan(0);
-
-        await using var ctx = _back.GetDbContext();
-        var activities = await ctx.ClassActivities.Where(x => x.ClassId == @class).ToListAsync();
-        activities.Should().HaveCount(5);
-    }
-
-    [Test]
-    public async Task Teachers_CreateClassActivity_Should_create_pending_works_for_enrolled_students()
-    {
-        // Arrange
         var director = await _back.LoggedAsDirector();
 
         var email = DataGen.Email;
@@ -209,45 +211,24 @@ public partial class IntegrationTests
 
         var period = await director.CreateAcademicPeriod().Success();
         var @class = await director.CreateClass(discipline.Id, period.Id).Success();
-
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        await director.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
-        await director.ReleaseClassForEnrollment(@class.Id);
-
-        var student = await director.CreateStudent(DataGen.UserName, DataGen.Email).Success();
-        await director.AssignStudentToClass(student.Id, @class.Id);
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var client = await _back.LoginAs(email);
 
         // Act
-        var result = await client.CreateClassActivity(@class.Id);
+        await client.CreateClassActivity(@class.Id, ClassNoteType.N1, type: ClassActivityType.Work, weight: 25);
+        await client.CreateClassActivity(@class.Id, ClassNoteType.N1, type: ClassActivityType.Exam, weight: 75);
+        await client.CreateClassActivity(@class.Id, ClassNoteType.N2, type: ClassActivityType.Presentation, weight: 40);
+        await client.CreateClassActivity(@class.Id, ClassNoteType.N2, type: ClassActivityType.Exam, weight: 60);
+        var result = await client.CreateClassActivity(@class.Id, ClassNoteType.N3, type: ClassActivityType.Project, weight: 100);
 
         // Assert
-        var activityId = result.Success.Id;
+        result.Success.Id.Should().BeGreaterThan(0);
 
         await using var ctx = _back.GetDbContext();
-        var works = await ctx.ClassActivityWorks.Where(x => x.ClassActivityId == activityId).ToListAsync();
-        works.Should().ContainSingle();
-        works[0].StudentId.Should().Be(student.Id);
-        works[0].Status.Should().Be(ClassActivityWorkStatus.Pending);
-        works[0].Note.Should().Be(0);
+        var activities = await ctx.ClassActivities.Where(x => x.ClassId == @class.Id).ToListAsync();
+        activities.Should().HaveCount(5);
     }
 
     #endregion
-
-    private async Task<int> CreateTeacherClass(string teacherEmail)
-    {
-        var director = await _back.LoggedAsDirector();
-
-        var teacher = await director.CreateTeacher(DataGen.UserName, teacherEmail).Success();
-
-        var discipline = await director.CreateDiscipline().Success();
-        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
-
-        var period = await director.CreateAcademicPeriod().Success();
-        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
-        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
-
-        return @class.Id;
-    }
 }

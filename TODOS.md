@@ -90,8 +90,10 @@ Sidebar do aluno
     - A cada aula as horas cumpridas aumentam
 
 - Frequência feita pelo professor a cada aula
+    - Remover metodos "private async Task" dos testes
 
 - Atividades
+    - CreateClassActivity
     - Notificações
     - Entregas
     - Notas

@@ -60,12 +60,19 @@ public partial class IntegrationTests
         var email = DataGen.Email;
         await director.CreateTeacher(DataGen.UserName, email);
 
-        var @class = await CreateTeacherClassWithLessons(director, DataGen.Email);
+        var teacher = await director.CreateTeacher(DataGen.UserName, DataGen.Email).Success();
+
+        var discipline = await director.CreateDiscipline().Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var client = await _back.LoginAs(email);
 
         // Act
-        var result = await client.GetTeacherClassLessons(@class);
+        var result = await client.GetTeacherClassLessons(@class.Id);
 
         // Assert
         result.ShouldBeError(TeacherNotAssignedToClass.I);
@@ -82,12 +89,20 @@ public partial class IntegrationTests
         var director = await _back.LoggedAsDirector();
 
         var email = DataGen.Email;
-        var @class = await CreateTeacherClassWithLessons(director, email);
+
+        var teacher = await director.CreateTeacher(DataGen.UserName, email).Success();
+
+        var discipline = await director.CreateDiscipline().Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var client = await _back.LoginAs(email);
 
         // Act
-        var result = await client.GetTeacherClassLessons(@class);
+        var result = await client.GetTeacherClassLessons(@class.Id);
 
         // Assert
         var lessons = result.Success.Lessons;
@@ -107,15 +122,24 @@ public partial class IntegrationTests
         var director = await _back.LoggedAsDirector();
 
         var email = DataGen.Email;
-        var @class = await CreateTeacherClassWithLessons(director, email);
-        var students = await EnrollStudentsInClass(director, @class, 2);
-        var lessonId = await GetFirstLessonId(@class);
+
+        var teacher = await director.CreateTeacher(DataGen.UserName, email).Success();
+
+        var discipline = await director.CreateDiscipline().Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
+
+        var students = await EnrollStudentsInClass(director, @class.Id, 2);
+        var lessonId = await GetFirstLessonId(@class.Id);
 
         var client = await _back.LoginAs(email);
         await client.CreateLessonAttendance(lessonId, [students[0]]);
 
         // Act
-        var result = await client.GetTeacherClassLessons(@class);
+        var result = await client.GetTeacherClassLessons(@class.Id);
 
         // Assert
         var lesson = result.Success.Lessons.First(l => l.Id == lessonId);

@@ -11,7 +11,7 @@ public partial class IntegrationTests
         var client = _back.GetTestsClient();
 
         // Act
-        var result = await client.UpdateClassTeachers(1, []);
+        var result = await client.UpdateClassTeachers(classId: 1, teachers: []);
 
         // Assert
         result.ShouldBeError(HttpStatusCode.Unauthorized);
@@ -28,7 +28,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsTeacher();
 
         // Act
-        var result = await client.UpdateClassTeachers(1, []);
+        var result = await client.UpdateClassTeachers(classId: 1, teachers: []);
 
         // Assert
         result.ShouldBeError(HttpStatusCode.Forbidden);
@@ -45,7 +45,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var result = await client.UpdateClassTeachers(999999, []);
+        var result = await client.UpdateClassTeachers(classId: 999999, teachers: []);
 
         // Assert
         result.ShouldBeError(ClassNotFound.I);
@@ -65,7 +65,7 @@ public partial class IntegrationTests
         var third = await client.CreateTeacher(DataGen.UserName, DataGen.Email).Success();
 
         // Act
-        var result = await client.UpdateClassTeachers(@class.Id, [first.Id, second.Id, third.Id]);
+        var result = await client.UpdateClassTeachers(@class.Id, teachers: [first.Id, second.Id, third.Id]);
 
         // Assert
         result.ShouldBeError(InvalidTeachersList.I);
@@ -84,7 +84,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
 
         // Act
-        var result = await client.UpdateClassTeachers(@class.Id, [teacher.Id, teacher.Id]);
+        var result = await client.UpdateClassTeachers(@class.Id, teachers: [teacher.Id, teacher.Id]);
 
         // Assert
         result.ShouldBeError(InvalidTeachersList.I);
@@ -101,7 +101,7 @@ public partial class IntegrationTests
         var teacher = await client.CreateTeacher(DataGen.UserName, DataGen.Email).Success();
 
         // Act
-        var result = await client.UpdateClassTeachers(@class.Id, [teacher.Id, 999999]);
+        var result = await client.UpdateClassTeachers(@class.Id, teachers: [teacher.Id, 999999]);
 
         // Assert
         result.ShouldBeError(TeacherNotFound.I);
@@ -121,7 +121,7 @@ public partial class IntegrationTests
         await client.AssignDisciplinesToTeacher(teacher.Id, [otherDiscipline.Id]);
 
         // Act
-        var result = await client.UpdateClassTeachers(@class.Id, [teacher.Id]);
+        var result = await client.UpdateClassTeachers(@class.Id, teachers: [teacher.Id]);
 
         // Assert
         result.ShouldBeError(TeacherNotAssignedToDiscipline.I);

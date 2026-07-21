@@ -48,14 +48,14 @@ https://www.sistemasiga.net.br/ensino-superior/
     Controle de Conselho de Classe
     Controle de Progressão Parcial
     Controle de Reserva de Vagas
-    Controle de Disciplines Eletivas
-    Controle de Agregação de Disciplines (frentes)
+    Controle de Disciplinas Eletivas
+    Controle de Agregação de Disciplinas (frentes)
     Controle de Ocorrências dos alunos
     Controle de Avaliações Substitutivas
     Controle de Específicas de Pré-vestibular
     Controle de Alunos em Recuperação/Dependência
     Controle de Tarefas
-    Controle de Atividades Extras (como: judô, balé, natação)
+    Controle de Atividades Extras (ex: judô, balé, natação)
     Controle de Requerimento de Protocolos
     Controle de Atendimentos para pais, responsáveis, professores
     Gráficos (desenvolvimento do aluno, desenvolvimento da turma, rendimento escolar)

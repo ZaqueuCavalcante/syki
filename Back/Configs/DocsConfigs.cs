@@ -34,9 +34,10 @@ public static class DocsConfigs
                 if (group == "campi") return ["🏫 Campi"];
                 if (group == "courses") return ["📚 Courses"];
                 if (group == "course-curriculums") return ["📋 Curriculums"];
-                if (group == "course-offerings") return ["🗓️ Offerings"];
+                if (group == "course-offerings") return ["📒 Offerings"];
                 if (group == "disciplines") return ["📖 Disciplines"];
-                if (group == "periods") return ["📅 Periods"];
+                if (group == "periods") return ["📍 Periods"];
+                if (group == "calendar") return ["🗓️ Calendar"];
                 if (group == "students") return ["🎓 Students"];
                 if (group == "teachers") return ["👨‍🏫 Teachers"];
                 if (group == "identity") return ["🛡️ Identity"];
@@ -45,6 +46,8 @@ public static class DocsConfigs
                 if (group == "classes") return ["👩🏻‍🏫 Classes"];
                 if (group == "classrooms") return ["📈 Classrooms"];
                 if (group == "notifications") return ["🔔 Notifications"];
+                if (group == "parents") return ["👨‍👩‍👧 Parents"];
+                if (group == "institutions") return ["🏢 Institutions"];
                 return ["🧱 Cross"];
             });
             options.DocInclusionPredicate((name, api) => true);

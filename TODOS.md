@@ -76,13 +76,24 @@ Sidebar do aluno
 
 
 
+# Steps
 
-se baseie na tela de detalhes de uma turma do manager
+- Agendas
+    - Professor
+    - Aluno
+    - Turma
+    - Sala
 
-crie uma tela de detalhes de um responsavel pra um manager
+- Levar em conta os dias letivos pro cálculo da carga horária da turma
+    - Existe a carga horária objetivo e a carga horária atualmente sendo feita
+    - O cálculo da CH prevista é feita com base nos dias letivos do período
+    - A cada aula as horas cumpridas aumentam
 
-crie endpoint que retorna os detalhes de um responsavel, apenas manager tem q acessar
+- Frequência feita pelo professor a cada aula
 
-deve mostrar tbm todos os alunos vinculados com o responsavel
+- Atividades
+    - Notificações
+    - Entregas
+    - Notas
 
 

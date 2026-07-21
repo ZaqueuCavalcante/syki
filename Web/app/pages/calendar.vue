@@ -44,12 +44,19 @@ interface CalendarCell {
 
 interface CalendarMonth {
   name: string
+  index: number
   offset: number
   cells: CalendarCell[]
 }
 
 function weekDayOf(date: string) {
   return new Date(`${date.slice(0, 10)}T00:00:00`).getDay()
+}
+
+const todayIso = new Date().toLocaleDateString('sv-SE') // yyyy-MM-dd no fuso local
+
+function isToday(item: CalendarItem) {
+  return item.date.slice(0, 10) === todayIso
 }
 
 // Sábado e domingo não são editáveis: não faz sentido mudar o tipo de um dia de fim de semana.
@@ -68,11 +75,19 @@ const months = computed<CalendarMonth[]>(() => {
 
     return {
       name,
+      index,
       offset: cells.length ? cells[0]!.weekDay : 0,
       cells,
     }
   })
 })
+
+const now = new Date()
+
+// Só destaca o mês atual quando o ano exibido é o ano corrente.
+function isCurrentMonth(month: CalendarMonth) {
+  return year.value === now.getFullYear() && month.index === now.getMonth()
+}
 
 const totals = computed(() => {
   const items = data.value?.items ?? []
@@ -140,8 +155,13 @@ function tooltip(item: CalendarItem) {
             :key="month.name"
             class="rounded-lg border border-default p-3"
           >
-            <p class="mb-2 text-sm font-semibold">
-              {{ month.name }}
+            <p class="mb-2">
+              <span
+                class="inline-flex items-center rounded-full px-2.5 py-0.5 text-sm font-semibold"
+                :class="isCurrentMonth(month) ? 'bg-primary text-inverted' : 'text-highlighted'"
+              >
+                {{ month.name }}
+              </span>
             </p>
 
             <div class="grid grid-cols-7 gap-0.5 text-center">
@@ -165,6 +185,7 @@ function tooltip(item: CalendarItem) {
                   :class="[
                     'flex h-7 w-full items-center justify-center rounded text-xs tabular-nums',
                     dayTypeStyles[cell.item.dayType].cell,
+                    isToday(cell.item) && 'ring-2 ring-inset ring-primary font-semibold',
                   ]"
                 >
                   {{ cell.day }}
@@ -175,6 +196,7 @@ function tooltip(item: CalendarItem) {
                   :class="[
                     'flex h-7 w-full cursor-pointer items-center justify-center rounded text-xs tabular-nums',
                     dayTypeStyles[cell.item.dayType].cell,
+                    isToday(cell.item) && 'ring-2 ring-inset ring-primary font-semibold',
                   ]"
                   @click="(e: MouseEvent) => { (e.currentTarget as HTMLElement).blur(); selectDay(cell.item) }"
                 >

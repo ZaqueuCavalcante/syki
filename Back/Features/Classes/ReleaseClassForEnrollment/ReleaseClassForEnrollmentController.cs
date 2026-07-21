@@ -23,6 +23,5 @@ public class ReleaseClassForEnrollmentController(ReleaseClassForEnrollmentServic
 internal class ResponseExamples : ExamplesProvider<SuccessOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     ClassNotFound,
-    NoCurrentEnrollmentPeriod,
     ClassMustBeOnPreEnrollment
 >;

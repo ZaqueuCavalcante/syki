@@ -68,26 +68,6 @@ public partial class IntegrationTests
     }
 
     [Test]
-    public async Task Classes_StartClass_Should_not_start_class_when_enrollment_period_is_not_finalized()
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-        var discipline = await client.CreateDiscipline().Success();
-        var period = await client.CreateAcademicPeriod().Success();
-        var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
-        await client.ReleaseClassForEnrollment(@class.Id);
-
-        // Act
-        var result = await client.StartClass(@class.Id);
-
-        // Assert
-        result.ShouldBeError(EnrollmentPeriodMustBeFinalized.I);
-    }
-
-    [Test]
     public async Task Classes_StartClass_Should_not_start_class_when_class_has_no_teachers()
     {
         // Arrange
@@ -153,10 +133,7 @@ public partial class IntegrationTests
         await client.UpdateClassTeachers(@class.Id, [teacher.Id]);
         await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
 
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var enrollment = await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2)).Success();
         await client.ReleaseClassForEnrollment(@class.Id);
-        await client.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
 
         // Act
         var result = await client.StartClass(@class.Id);
@@ -164,12 +141,12 @@ public partial class IntegrationTests
         // Assert
         result.ShouldBeSuccess();
 
-        await using var db = _back.GetDbContext();
-        var started = await db.Classes.FirstAsync(c => c.Id == @class.Id);
+        await using var ctx = _back.GetDbContext();
+        var started = await ctx.Classes.FirstAsync(c => c.Id == @class.Id);
         started.Status.Should().Be(ClassStatus.Started);
         started.Workload.Should().BeGreaterThan(0);
 
-        var lessons = await db.ClassLessons.Where(l => l.ClassId == @class.Id).ToListAsync();
+        var lessons = await ctx.ClassLessons.Where(l => l.ClassId == @class.Id).ToListAsync();
         lessons.Should().NotBeEmpty();
         lessons.Should().OnlyContain(l => l.Date.DayOfWeek == DayOfWeek.Monday);
         lessons.Should().OnlyContain(l => l.Status == ClassLessonStatus.Pending);

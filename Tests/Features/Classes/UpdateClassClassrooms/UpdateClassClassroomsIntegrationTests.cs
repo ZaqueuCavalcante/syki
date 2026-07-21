@@ -60,10 +60,16 @@ public partial class IntegrationTests
         var discipline = await client.CreateDiscipline().Success();
         var period = await client.CreateAcademicPeriod().Success();
         var @class = await client.CreateClass(discipline.Id, period.Id, campusId: campus.Id).Success();
-        var classroom = await client.CreateClassroom(campus.Id).Success();
+
+        var teacher = await client.CreateTeacher(DataGen.UserName, DataGen.Email).Success();
+        await client.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+        await client.UpdateClassTeachers(@class.Id, [teacher.Id]);
+        await client.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
 
         await client.ReleaseClassForEnrollment(@class.Id);
         await client.StartClass(@class.Id);
+
+        var classroom = await client.CreateClassroom(campus.Id).Success();
 
         // Act
         var result = await client.UpdateClassClassrooms(@class.Id, classrooms: [(Day.Monday, Hour.H07_00, Hour.H10_00, classroom.Id)]);

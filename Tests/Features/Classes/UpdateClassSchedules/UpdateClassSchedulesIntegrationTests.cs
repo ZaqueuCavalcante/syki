@@ -113,7 +113,6 @@ public partial class IntegrationTests
         result.ShouldBeError(InvalidSchedule.I);
     }
 
-    // F2: início == fim → InvalidSchedule
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_not_update_schedules_when_start_equals_end()
     {
@@ -130,7 +129,6 @@ public partial class IntegrationTests
         result.ShouldBeError(InvalidSchedule.I);
     }
 
-    // F3: choque entre os próprios horários → ConflictingSchedules
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_not_update_schedules_when_schedules_conflict_with_each_other()
     {
@@ -151,7 +149,6 @@ public partial class IntegrationTests
         result.ShouldBeError(ConflictingSchedules.I);
     }
 
-    // F4: dia fora do enum → InvalidDay
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_not_update_schedules_when_day_is_invalid()
     {
@@ -168,7 +165,6 @@ public partial class IntegrationTests
         result.ShouldBeError(InvalidDay.I);
     }
 
-    // F5: hora fora do enum → InvalidHour
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_not_update_schedules_when_hour_is_invalid()
     {
@@ -185,7 +181,6 @@ public partial class IntegrationTests
         result.ShouldBeError(InvalidHour.I);
     }
 
-    // P2c: turma com 2 professores e slot sem professor → ScheduleTeacherRequired
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_not_update_schedules_when_a_slot_has_no_teacher_and_the_class_has_two_teachers()
     {
@@ -209,7 +204,6 @@ public partial class IntegrationTests
         result.ShouldBeError(ScheduleTeacherRequired.I);
     }
 
-    // P2d: turma com 2 professores e slot com professor de fora → InvalidScheduleTeacher
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_not_update_schedules_when_a_slot_teacher_is_not_in_the_class()
     {
@@ -234,7 +228,6 @@ public partial class IntegrationTests
         result.ShouldBeError(InvalidScheduleTeacher.I);
     }
 
-    // C1: professor com horário chocando em outra turma não finalizada → TeacherScheduleConflict
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_not_update_schedules_when_they_conflict_with_another_class_of_the_teacher()
     {
@@ -264,7 +257,6 @@ public partial class IntegrationTests
 
     #region Happy path
 
-    // G4: turma OnPreEnrollment é editável (ordena por dia)
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_set_the_schedules_of_a_class_on_pre_enrollment()
     {
@@ -288,7 +280,6 @@ public partial class IntegrationTests
         updated.Schedules.Select(s => s.Day).Should().Equal(Day.Monday, Day.Wednesday);
     }
 
-    // G5: turma OnEnrollment ainda é editável (só bloqueia a partir de Started)
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_set_the_schedules_of_a_class_on_enrollment()
     {
@@ -315,7 +306,6 @@ public partial class IntegrationTests
         updated.Schedules.Should().ContainSingle();
     }
 
-    // P0a: turma sem professores → horário salvo sem professor
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_save_schedules_without_teacher_when_the_class_has_no_teachers()
     {
@@ -336,7 +326,6 @@ public partial class IntegrationTests
         updated.Schedules[0].TeacherId.Should().BeNull();
     }
 
-    // P0b: turma sem professores ignora o professor informado no slot
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_ignore_the_slot_teacher_when_the_class_has_no_teachers()
     {
@@ -359,7 +348,6 @@ public partial class IntegrationTests
         updated.Schedules[0].TeacherId.Should().BeNull();
     }
 
-    // P1a: turma com 1 professor preenche o professor automaticamente
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_auto_assign_the_only_teacher_to_every_slot()
     {
@@ -386,7 +374,6 @@ public partial class IntegrationTests
         updated.Schedules[0].Teacher.Should().Be("Chico Ferreira");
     }
 
-    // P1b: turma com 1 professor sobrescreve o professor informado pelo único professor
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_override_the_slot_teacher_with_the_only_teacher()
     {
@@ -413,7 +400,6 @@ public partial class IntegrationTests
         updated.Schedules[0].TeacherId.Should().Be(teacher.Id);
     }
 
-    // P1c: turma com 1 professor aceita o professor informado quando é o próprio
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_accept_the_slot_teacher_when_it_is_the_only_teacher()
     {
@@ -439,7 +425,6 @@ public partial class IntegrationTests
         updated.Schedules[0].TeacherId.Should().Be(teacher.Id);
     }
 
-    // P2a: turma com 2 professores aceita slot só de um deles (o outro pode ficar sem horário)
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_allow_a_slot_for_only_one_of_the_two_teachers()
     {
@@ -467,7 +452,6 @@ public partial class IntegrationTests
         updated.Schedules[0].TeacherId.Should().Be(chico.Id);
     }
 
-    // P2b: turma com 2 professores grava o professor informado em cada slot
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_assign_a_teacher_to_each_slot_when_the_class_has_two_teachers()
     {
@@ -500,7 +484,6 @@ public partial class IntegrationTests
         updated.Schedules.Single(s => s.Day == Day.Wednesday).TeacherId.Should().Be(ana.Id);
     }
 
-    // C2: professor livre em outro dia não gera conflito
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_not_conflict_when_the_teacher_is_free_on_another_day()
     {
@@ -526,7 +509,6 @@ public partial class IntegrationTests
         result.ShouldBeSuccess();
     }
 
-    // C3: com 2 professores, o professor compartilhado livre naquele slot não gera conflito
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_not_conflict_when_the_shared_teacher_is_free_on_that_slot()
     {
@@ -559,7 +541,6 @@ public partial class IntegrationTests
         result.ShouldBeSuccess();
     }
 
-    // C4: turma finalizada não conta como conflito de agenda
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_not_conflict_with_a_finalized_class_of_the_teacher()
     {
@@ -592,7 +573,6 @@ public partial class IntegrationTests
         result.ShouldBeSuccess();
     }
 
-    // C5: mesmo horário para professores diferentes entre turmas não gera conflito
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_allow_the_same_schedule_for_two_different_teachers()
     {
@@ -620,7 +600,6 @@ public partial class IntegrationTests
         result.ShouldBeSuccess();
     }
 
-    // R1: replace-all substitui a lista atual
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_replace_the_current_schedules_of_the_class()
     {
@@ -644,7 +623,6 @@ public partial class IntegrationTests
         updated.Schedules[0].EndAt.Should().Be(Hour.H22_00);
     }
 
-    // R2: lista vazia remove todos os horários
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_remove_all_schedules_of_the_class_when_list_is_empty()
     {
@@ -665,7 +643,6 @@ public partial class IntegrationTests
         updated.Schedules.Should().BeEmpty();
     }
 
-    // R3: reenviar a mesma lista é idempotente
     [Test]
     public async Task Classes_UpdateClassSchedules_Should_be_idempotent_when_resubmitting_the_same_schedules()
     {

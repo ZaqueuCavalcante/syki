@@ -43,12 +43,6 @@
 
 
 
-
-
-
-
-
-
 - Organizar a documentação por grupo de tópicos/conceitos
     - Vão ter coisas que são apenas conceitos
     - Outras serão guias de como usar/configurar o sistema
@@ -64,11 +58,9 @@
 
 
 
-
-
 Sidebar do aluno
 
-- Curso (vai trazer dados sobre o curso atual dele, a grade de disciplinas, quais ele ja pagou...)
+- Curso (vai trazer dados sobre o curso atual dele, a grade de disciplinas, quais disciplinas ele ta cursando, quais ele ja cursou, quais ainda falta...)
 
 - Notas (traz as notas do aluno das disciplinas do curso, a sua nota media, graficos de notas)
 
@@ -99,3 +91,7 @@ Sidebar do aluno
     - Notas
 
 
+- Private methods
+    CreateClassActivityWithEnrolledStudent
+    CreateClassWithTeacher
+    EnrollStudentsInClass

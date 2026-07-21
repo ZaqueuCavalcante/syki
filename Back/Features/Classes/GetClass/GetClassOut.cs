@@ -11,9 +11,9 @@ public class GetClassOut : IApiDto<GetClassOut>
     public int Vacancies { get; set; }
     public int Workload { get; set; }
     public ClassStatus Status { get; set; }
-    public List<GetClassScheduleOut> Schedules { get; set; } = [];
     public List<GetClassTeacherOut> Teachers { get; set; } = [];
     public List<GetClassStudentOut> Students { get; set; } = [];
+    public List<GetClassScheduleOut> Schedules { get; set; } = [];
 
     public static IEnumerable<(string, GetClassOut)> GetExamples() =>
     [

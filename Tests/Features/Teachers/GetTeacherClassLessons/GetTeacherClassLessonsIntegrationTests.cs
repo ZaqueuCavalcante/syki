@@ -133,7 +133,7 @@ public partial class IntegrationTests
         await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
 
         var students = await EnrollStudentsInClass(director, @class.Id, 2);
-        var lessonId = await GetFirstLessonId(@class.Id);
+        var lessonId = await _back.GetFirstLessonId(@class.Id);
 
         var client = await _back.LoginAs(email);
         await client.CreateLessonAttendance(lessonId, [students[0]]);

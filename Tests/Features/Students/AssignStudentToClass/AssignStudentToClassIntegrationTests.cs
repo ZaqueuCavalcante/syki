@@ -11,7 +11,7 @@ public partial class IntegrationTests
         var client = _back.GetTestsClient();
 
         // Act
-        var result = await client.AssignStudentToClass(1, 1);
+        var result = await client.AssignStudentToClass(studentId: 1, classId: 1);
 
         // Assert
         result.ShouldBeError(HttpStatusCode.Unauthorized);
@@ -28,7 +28,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsTeacher();
 
         // Act
-        var result = await client.AssignStudentToClass(1, 1);
+        var result = await client.AssignStudentToClass(studentId: 1, classId: 1);
 
         // Assert
         result.ShouldBeError(HttpStatusCode.Forbidden);
@@ -45,7 +45,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var result = await client.AssignStudentToClass(999999, 1);
+        var result = await client.AssignStudentToClass(studentId: 999999, classId: 1);
 
         // Assert
         result.ShouldBeError(StudentNotFound.I);
@@ -59,7 +59,7 @@ public partial class IntegrationTests
         var student = await client.CreateStudent(DataGen.UserName, DataGen.Email).Success();
 
         // Act
-        var result = await client.AssignStudentToClass(student.Id, 999999);
+        var result = await client.AssignStudentToClass(student.Id, classId: 999999);
 
         // Assert
         result.ShouldBeError(ClassNotFound.I);
@@ -92,10 +92,7 @@ public partial class IntegrationTests
         var period = await client.CreateAcademicPeriod().Success();
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
         await client.ReleaseClassForEnrollment(@class.Id);
-
         await client.AssignStudentToClass(student.Id, @class.Id);
 
         // Act
@@ -116,10 +113,7 @@ public partial class IntegrationTests
         var period = await client.CreateAcademicPeriod().Success();
         var @class = await client.CreateClass(discipline.Id, period.Id, vacancies: 1).Success();
 
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
         await client.ReleaseClassForEnrollment(@class.Id);
-
         await client.AssignStudentToClass(studentA.Id, @class.Id);
 
         // Act
@@ -143,8 +137,6 @@ public partial class IntegrationTests
         var period = await client.CreateAcademicPeriod().Success();
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
 
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2));
         await client.ReleaseClassForEnrollment(@class.Id);
 
         // Act
@@ -153,8 +145,8 @@ public partial class IntegrationTests
         // Assert
         result.ShouldBeSuccess();
 
-        await using var db = _back.GetDbContext();
-        var link = await db.ClassStudents.FirstAsync(x => x.ClassId == @class.Id && x.StudentId == student.Id);
+        await using var ctx = _back.GetDbContext();
+        var link = await ctx.ClassStudents.FirstAsync(x => x.ClassId == @class.Id && x.StudentId == student.Id);
         link.Status.Should().Be(StudentClassStatus.Matriculado);
     }
 

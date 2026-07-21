@@ -11,7 +11,7 @@ public partial class IntegrationTests
         var client = _back.GetTestsClient();
 
         // Act
-        var result = await client.CreateClassActivity(1);
+        var result = await client.CreateClassActivity(classId: 1);
 
         // Assert
         result.ShouldBeError(HttpStatusCode.Unauthorized);
@@ -28,7 +28,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsDirector();
 
         // Act
-        var result = await client.CreateClassActivity(1);
+        var result = await client.CreateClassActivity(classId: 1);
 
         // Assert
         result.ShouldBeError(HttpStatusCode.Forbidden);
@@ -45,7 +45,7 @@ public partial class IntegrationTests
         var client = await _back.LoggedAsTeacher();
 
         // Act
-        var result = await client.CreateClassActivity(999999);
+        var result = await client.CreateClassActivity(classId: 999999);
 
         // Assert
         result.ShouldBeError(ClassNotFound.I);

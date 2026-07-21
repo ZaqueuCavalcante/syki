@@ -17,9 +17,13 @@ interface GetDisciplinesOut { total: number; items: DisciplineItem[] }
 interface PeriodItem { id: number; name: string }
 interface GetPeriodsOut { total: number; items: PeriodItem[] }
 
-const [{ data: disciplinesData }, { data: periodsData }] = await Promise.all([
+interface CampusItem { id: number; name: string }
+interface GetCampiOut { total: number; items: CampusItem[] }
+
+const [{ data: disciplinesData }, { data: periodsData }, { data: campiData }] = await Promise.all([
   useFetch<GetDisciplinesOut>(`${config.public.backendUrl}/disciplines`, { credentials: 'include', server: false, query: { pageSize: 100 } }),
   useFetch<GetPeriodsOut>(`${config.public.backendUrl}/periods/academic`, { credentials: 'include', server: false }),
+  useFetch<GetCampiOut>(`${config.public.backendUrl}/campi`, { credentials: 'include', server: false }),
 ])
 
 const disciplineOptions = computed(() =>
@@ -27,6 +31,9 @@ const disciplineOptions = computed(() =>
 )
 const periodOptions = computed(() =>
   (periodsData.value?.items ?? []).map(p => ({ label: p.name, value: p.id }))
+)
+const campusOptions = computed(() =>
+  (campiData.value?.items ?? []).map(c => ({ label: c.name, value: c.id }))
 )
 
 // ── Vacancies input ───────────────────────────────────────────
@@ -59,6 +66,7 @@ function onVacanciesInput(e: Event) {
 // ── Form schema ───────────────────────────────────────────────
 const schema = z.object({
   disciplineId: z.number({ error: 'Campo obrigatório' }),
+  campusId:     z.number().optional(),
   periodId:     z.number({ error: 'Campo obrigatório' }),
   vacancies:    z.coerce.number({ error: 'Campo obrigatório' }).int().gt(0, 'Deve ser maior que 0').max(999999, 'Máximo 999.999'),
 })
@@ -67,12 +75,14 @@ type Schema = z.output<typeof schema>
 
 const formState = reactive<Partial<Schema>>({
   disciplineId: undefined,
+  campusId:     undefined,
   periodId:     undefined,
   vacancies:    undefined,
 })
 
 function resetForm() {
   formState.disciplineId = undefined
+  formState.campusId     = undefined
   formState.periodId     = undefined
   formState.vacancies    = undefined
   vacanciesDisplay.value = ''
@@ -86,7 +96,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
     const body = {
       disciplineId: event.data.disciplineId,
-      campusId:     null,
+      campusId:     event.data.campusId ?? null,
       periodId:     event.data.periodId,
       vacancies:    event.data.vacancies,
     }
@@ -124,6 +134,17 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             value-key="value"
             class="w-full"
             placeholder="Selecione a disciplina"
+            :search-input="{ placeholder: 'Buscar por nome...' }"
+          />
+        </UFormField>
+
+        <UFormField label="Campus" name="campusId">
+          <USelectMenu
+            v-model="formState.campusId"
+            :items="campusOptions"
+            value-key="value"
+            class="w-full"
+            placeholder="Selecione o campus"
             :search-input="{ placeholder: 'Buscar por nome...' }"
           />
         </UFormField>

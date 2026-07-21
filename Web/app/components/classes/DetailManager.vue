@@ -227,6 +227,10 @@ const studentColumns: TableColumn<ClassStudentItem>[] = [
                 <UIcon name="i-lucide-clock" class="size-4" />
                 {{ data.workload }}h
               </span>
+              <span v-if="data.campus" class="flex items-center gap-1.5">
+                <UIcon name="i-lucide-map-pin" class="size-4" />
+                {{ data.campus }}
+              </span>
             </div>
             <div
               v-if="showReleaseButton || showStartButton"

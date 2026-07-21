@@ -28,6 +28,7 @@ export interface GetClassOut {
   teachers: ClassTeacherItem[]
   period: string
   campusId: number | null
+  campus: string | null
   vacancies: number
   workload: number
   status: string

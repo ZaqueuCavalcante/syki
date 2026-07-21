@@ -1,3 +1,4 @@
+using Estud.Back.Domain.Campi;
 using Estud.Back.Domain.Periods;
 using Estud.Back.Domain.Teachers;
 using Estud.Back.Domain.Students;
@@ -27,6 +28,7 @@ public class Class
     /// Se a turma não for presencial, o campus será nulo
     /// </summary>
     public int? CampusId { get; set; }
+    public Campus? Campus { get; set; }
 
     public List<Schedule> Schedules { get; set; }
     public List<ClassLesson> Lessons { get; set; }

@@ -7,6 +7,7 @@ public class GetClassOut : IApiDto<GetClassOut>
     public string Discipline { get; set; }
     public string Period { get; set; }
     public int? CampusId { get; set; }
+    public string? Campus { get; set; }
     public int Vacancies { get; set; }
     public int Workload { get; set; }
     public ClassStatus Status { get; set; }
@@ -23,6 +24,7 @@ public class GetClassOut : IApiDto<GetClassOut>
             Discipline = "Banco de Dados",
             Period = "2026.1",
             CampusId = 1,
+            Campus = "Campus Central",
             Vacancies = 40,
             Workload = 60,
             Status = ClassStatus.OnEnrollment,

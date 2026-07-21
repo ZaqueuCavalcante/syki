@@ -10,6 +10,7 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
             .Include(c => c.Discipline)
             .Include(c => c.Teachers)
             .Include(c => c.Period)
+            .Include(c => c.Campus)
             .Include(c => c.Schedules)
             .FirstOrDefaultAsync(c => c.Id == id && c.InstitutionId == institutionId);
         if (@class == null) return ClassNotFound.I;
@@ -66,6 +67,7 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
             Discipline = @class.Discipline?.Name ?? "",
             Period = @class.Period?.Name ?? "",
             CampusId = @class.CampusId,
+            Campus = @class.Campus?.Name,
             Vacancies = @class.Vacancies,
             Workload = @class.Workload,
             Status = @class.Status,

@@ -1,4 +1,3 @@
-using Estud.Back.Domain.Campi;
 using Estud.Back.Domain.Classes;
 using Estud.Back.Domain.Teachers;
 
@@ -12,7 +11,7 @@ public class ClassDbConfig : IEntityTypeConfiguration<Class>
 
         entity.HasKey(e => e.Id);
 
-        entity.HasOne<Campus>()
+        entity.HasOne(e => e.Campus)
             .WithMany()
             .HasForeignKey(e => e.CampusId);
 

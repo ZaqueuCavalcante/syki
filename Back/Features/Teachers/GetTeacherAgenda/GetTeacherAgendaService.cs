@@ -10,7 +10,7 @@ public class GetTeacherAgendaService(EstudDbContext ctx) : IEstudService
 
         var classes = await ctx.Classes.AsNoTracking()
             .Include(x => x.Discipline)
-            .Include(x => x.Schedules)
+            .Include(x => x.Schedules).ThenInclude(s => s.Classroom)
             .Where(x => x.InstitutionId == institutionId && x.Teachers.Any(x => x.Id == teacherId) && x.Status == ClassStatus.Started)
             .ToListAsync();
 
@@ -25,6 +25,7 @@ public class GetTeacherAgendaService(EstudDbContext ctx) : IEstudService
             {
                 ClassId = c.Id,
                 Name = c.Discipline.Name,
+                ClassroomName = s.Classroom != null ? s.Classroom.Name : null,
                 Start = s.Start,
                 End = s.End
             })).OrderBy(d => d.Start).ToList();

@@ -199,5 +199,45 @@ public partial class IntegrationTests
         days[0].Disciplines[1].Name.Should().Be("Álgebra");
     }
 
+    [Test]
+    public async Task Teachers_GetTeacherAgenda_Should_show_the_classroom_name_when_the_schedule_has_a_classroom_and_null_when_online()
+    {
+        // Arrange — turma com dois horários: segunda numa sala física, quarta sem sala (online).
+        var director = await _back.LoggedAsDirector();
+        var campus = await director.CreateCampus().Success();
+        var classroom = await director.CreateClassroom(campus.Id, "Sala 07").Success();
+        var discipline = await director.CreateDiscipline().Success();
+        var period = await director.CreateAcademicPeriod().Success();
+
+        var teacherEmail = DataGen.Email;
+        var teacher = await director.CreateTeacher("Chico Ferreira", teacherEmail).Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+
+        var @class = await director.CreateClass(discipline.Id, period.Id, campusId: campus.Id).Success();
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
+        await director.UpdateClassSchedules(@class.Id,
+        [
+            (Day.Monday, Hour.H07_00, Hour.H10_00, null),
+            (Day.Wednesday, Hour.H07_00, Hour.H10_00, null),
+        ]);
+        await director.UpdateClassClassrooms(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, classroom.Id)]);
+        await director.ReleaseClassForEnrollment(@class.Id);
+        await director.StartClass(@class.Id);
+
+        var client = await _back.LoginAs(teacherEmail);
+
+        // Act
+        var result = await client.GetTeacherAgenda();
+
+        // Assert
+        result.ShouldBeSuccess();
+        var days = result.Success.Days;
+        days.Should().HaveCount(2);
+        days[0].Day.Should().Be(Day.Monday);
+        days[0].Disciplines[0].ClassroomName.Should().Be("Sala 07");
+        days[1].Day.Should().Be(Day.Wednesday);
+        days[1].Disciplines[0].ClassroomName.Should().BeNull();
+    }
+
     #endregion
 }

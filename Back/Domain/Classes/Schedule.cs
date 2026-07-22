@@ -1,3 +1,5 @@
+using Estud.Back.Domain.Classrooms;
+
 namespace Estud.Back.Domain.Classes;
 
 /// <summary>
@@ -17,6 +19,7 @@ public class Schedule
     public Hour End { get; set; }
 
     public Class? Class { get; set; }
+    public Classroom? Classroom { get; set; }
 
     private Schedule() {}
 

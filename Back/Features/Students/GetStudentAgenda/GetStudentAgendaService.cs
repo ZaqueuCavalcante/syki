@@ -13,7 +13,7 @@ public class GetStudentAgendaService(EstudDbContext ctx) : IEstudService
 
         var classes = await ctx.Classes.AsNoTracking()
             .Include(t => t.Discipline)
-            .Include(t => t.Schedules)
+            .Include(t => t.Schedules).ThenInclude(s => s.Classroom)
             .Where(t => t.InstitutionId == institutionId && ids.Contains(t.Id))
             .ToListAsync();
 
@@ -28,6 +28,7 @@ public class GetStudentAgendaService(EstudDbContext ctx) : IEstudService
             {
                 ClassId = c.Id,
                 Name = c.Discipline.Name,
+                ClassroomName = s.Classroom != null ? s.Classroom.Name : null,
                 Start = s.Start,
                 End = s.End
             })).OrderBy(d => d.Start).ToList();

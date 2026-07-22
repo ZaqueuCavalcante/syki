@@ -15,7 +15,7 @@ public class ClassroomDbConfig : IEntityTypeConfiguration<Classroom>
             .HasForeignKey(e => e.CampusId);
 
         entity.HasMany(e => e.Schedules)
-            .WithOne()
+            .WithOne(s => s.Classroom)
             .HasForeignKey(e => e.ClassroomId);
     }
 }

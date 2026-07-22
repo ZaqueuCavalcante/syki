@@ -191,5 +191,50 @@ public partial class IntegrationTests
         days[0].Disciplines[0].End.Should().Be(Hour.H10_00);
     }
 
+    [Test]
+    public async Task Parents_GetParentStudentAgenda_Should_show_the_classroom_name_when_the_schedule_has_a_classroom_and_null_when_online()
+    {
+        // Arrange — turma com dois horários: segunda numa sala física, quarta sem sala (online).
+        var director = await _back.LoggedAsDirector();
+        var campus = await director.CreateCampus().Success();
+        var classroom = await director.CreateClassroom(campus.Id, "Sala 07").Success();
+        var discipline = await director.CreateDiscipline().Success();
+        var period = await director.CreateAcademicPeriod().Success();
+        var @class = await director.CreateClass(discipline.Id, period.Id, campusId: campus.Id).Success();
+
+        var teacher = await director.CreateTeacher(DataGen.UserName, DataGen.Email).Success();
+        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
+        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
+        await director.UpdateClassSchedules(@class.Id,
+        [
+            (Day.Monday, Hour.H07_00, Hour.H10_00, null),
+            (Day.Wednesday, Hour.H07_00, Hour.H10_00, null),
+        ]);
+        await director.UpdateClassClassrooms(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, classroom.Id)]);
+        await director.ReleaseClassForEnrollment(@class.Id);
+
+        var student = await director.CreateStudent(DataGen.UserName, DataGen.Email).Success();
+        await director.AssignStudentToClass(student.Id, @class.Id);
+
+        await director.StartClass(@class.Id);
+
+        var parentEmail = DataGen.Email;
+        await director.CreateParent(DataGen.UserName, parentEmail, [new() { StudentId = student.Id, Relationship = ParentRelationship.Mother }]);
+
+        var client = await _back.LoginAs(parentEmail);
+
+        // Act
+        var result = await client.GetParentStudentAgenda(student.Id);
+
+        // Assert
+        result.ShouldBeSuccess();
+        var days = result.Success.Days;
+        days.Should().HaveCount(2);
+        days[0].Day.Should().Be(Day.Monday);
+        days[0].Disciplines[0].ClassroomName.Should().Be("Sala 07");
+        days[1].Day.Should().Be(Day.Wednesday);
+        days[1].Disciplines[0].ClassroomName.Should().BeNull();
+    }
+
     #endregion
 }

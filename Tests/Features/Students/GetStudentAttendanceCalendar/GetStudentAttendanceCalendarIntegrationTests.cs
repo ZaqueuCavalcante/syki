@@ -1,5 +1,3 @@
-using Estud.Tests.Integration.Clients;
-
 namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests

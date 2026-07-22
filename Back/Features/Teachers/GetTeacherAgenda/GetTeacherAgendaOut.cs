@@ -20,6 +20,7 @@ public class GetTeacherAgendaItemDisciplineOut
 {
     public int? ClassId { get; set; }
     public string Name { get; set; }
+    public string? ClassroomName { get; set; }
     public Hour Start { get; set; }
     public Hour End { get; set; }
 }

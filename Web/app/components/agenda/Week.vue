@@ -231,7 +231,7 @@ const nowLine = computed(() => {
             v-for="(item, idx) in (disciplinesByDay.get(day.key) ?? [])"
             :key="`${item.classId}-${idx}`"
             :to="item.classId ? `/classes/${item.classId}` : undefined"
-            class="absolute inset-x-1 block rounded-md border-l-4 px-2 py-1 shadow-sm"
+            class="absolute inset-x-1 block rounded-md px-2 py-1 shadow-sm"
             :class="[
               colorFor(item.name),
               item.classId
@@ -243,6 +243,13 @@ const nowLine = computed(() => {
             <div class="text-xs font-semibold leading-tight wrap-break-word">{{ item.name }}</div>
             <div class="text-[11px] opacity-80 tabular-nums">
               {{ formatHour(item.start) }} – {{ formatHour(item.end) }}
+            </div>
+            <div class="mt-0.5 flex items-center gap-1 text-[11px] opacity-80">
+              <UIcon
+                :name="item.classroomName ? 'i-lucide-door-open' : 'i-lucide-wifi'"
+                class="size-3 shrink-0"
+              />
+              <span class="wrap-break-word">{{ item.classroomName ?? 'Online' }}</span>
             </div>
           </component>
         </div>

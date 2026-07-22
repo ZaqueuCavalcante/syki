@@ -18,7 +18,12 @@ public class CreateNewClassActivityNotificationCommandHandler(EstudDbContext ctx
 
         var students = await ctx.ClassStudents
             .Where(x => x.ClassId == @class.Id)
-            .Select(x => new { Id = x.StudentId })
+            .Select(x => x.StudentId)
+            .ToListAsync();
+
+        var userIds = await ctx.Students.AsNoTracking()
+            .Where(x => students.Contains(x.Id))
+            .Select(x => x.UserId)
             .ToListAsync();
 
         var notification = new Notification(
@@ -29,9 +34,9 @@ public class CreateNewClassActivityNotificationCommandHandler(EstudDbContext ctx
         );
         ctx.Add(notification);
 
-        foreach (var student in students)
+        foreach (var userId in userIds)
         {
-            ctx.Add(new UserNotification(student.Id, notification));
+            ctx.Add(new UserNotification(userId, notification));
         }
     }
 }

@@ -5,7 +5,7 @@ type BadgeColor = 'neutral' | 'primary' | 'success' | 'warning' | 'error' | 'inf
 export const classStatusLabels: Record<string, string> = {
   OnPreEnrollment: 'Pré-matrícula',
   OnEnrollment: 'Matrícula',
-  AwaitingStart: 'Aguardando início',
+  OnReview: 'Revisão',
   Started: 'Iniciada',
   Finalized: 'Finalizada',
 }
@@ -13,7 +13,7 @@ export const classStatusLabels: Record<string, string> = {
 export const classStatusColors: Record<string, BadgeColor> = {
   OnPreEnrollment: 'neutral',
   OnEnrollment: 'info',
-  AwaitingStart: 'warning',
+  OnReview: 'warning',
   Started: 'primary',
   Finalized: 'success',
 }

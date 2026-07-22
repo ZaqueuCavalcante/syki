@@ -22,9 +22,11 @@ public enum ClassStatus
     /// <summary>
     /// Esse status é apenas virtual, ou seja, é computado em memória com base na data de fim do Período de Matrícula.
     /// No banco de dados o status vigente ainda é o de OnEnrollment.
+    /// Após o fim do Período de Matrícula, a Turma precisa ser revisada antes de ser iniciada,
+    /// para validar que tudo está corretamente definido e não há inconsistência de horários.
     /// </summary>
-    [Description("Aguardando início")]
-    AwaitingStart = 2,
+    [Description("Revisão")]
+    OnReview = 2,
 
     /// <summary>
     /// Uma Turma só pode ser iniciada ao final do Período de Matrícula.

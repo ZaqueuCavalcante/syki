@@ -20,7 +20,7 @@ public class GetClassService(EstudDbContext ctx) : IEstudService
         {
             var hasCurrentEnrollmentPeriod = await ctx.EnrollmentPeriods.AsNoTracking()
                 .AnyAsync(p => p.InstitutionId == institutionId && p.StartAt <= today && today <= p.EndAt);
-            if (!hasCurrentEnrollmentPeriod) @class.Status = ClassStatus.AwaitingStart;
+            if (!hasCurrentEnrollmentPeriod) @class.Status = ClassStatus.OnReview;
         }
 
         var classroomIds = @class.Schedules

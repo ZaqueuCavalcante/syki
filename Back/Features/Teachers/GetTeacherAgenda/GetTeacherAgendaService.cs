@@ -9,19 +9,19 @@ public class GetTeacherAgendaService(EstudDbContext ctx) : IEstudService
         var teacherId = await ctx.GetTeacherId(institutionId, userId);
 
         var classes = await ctx.Classes.AsNoTracking()
-            .Include(t => t.Discipline)
-            .Include(t => t.Schedules)
-            .Where(t => t.InstitutionId == institutionId && t.Teachers.Any(x => x.Id == teacherId) && t.Status == ClassStatus.Started)
+            .Include(x => x.Discipline)
+            .Include(x => x.Schedules)
+            .Where(x => x.InstitutionId == institutionId && x.Teachers.Any(x => x.Id == teacherId) && x.Status == ClassStatus.Started)
             .ToListAsync();
 
         // Pra cada dia, pegar as aulas que acontecem nesse dia, ordenadas pelo horário de início
-        var days = classes.Select(x => x.Schedules.Select(s => s.Day)).SelectMany(x => x).Distinct().OrderBy(x => x).ToList();
+        var days = classes.Select(x => x.Schedules.Where(s => s.TeacherId == teacherId).Select(s => s.Day)).SelectMany(x => x).Distinct().OrderBy(x => x).ToList();
         var agenda = new List<GetTeacherAgendaItemOut>();
 
         foreach (var day in days)
         {
-            var dayClasses = classes.Where(c => c.Schedules.Any(s => s.Day == day)).ToList();
-            var disciplines = dayClasses.SelectMany(c => c.Schedules.Where(s => s.Day == day).Select(s => new GetTeacherAgendaItemDisciplineOut
+            var dayClasses = classes.Where(c => c.Schedules.Any(s => s.Day == day && s.TeacherId == teacherId)).ToList();
+            var disciplines = dayClasses.SelectMany(c => c.Schedules.Where(s => s.Day == day && s.TeacherId == teacherId).Select(s => new GetTeacherAgendaItemDisciplineOut
             {
                 ClassId = c.Id,
                 Name = c.Discipline.Name,

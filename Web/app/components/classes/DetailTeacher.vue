@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import type { ClassLessonItem, GetTeacherClassActivitiesOut, GetTeacherClassLessonsOut, GetTeacherClassOut } from '~/types/classes'
+import type { NavigationMenuItem, TableColumn } from '@nuxt/ui'
+import type { InstitutionConfig } from '~/types/configs'
+import type { ClassLessonItem, ClassStudentItem, GetTeacherClassActivitiesOut, GetTeacherClassLessonsOut, GetTeacherClassOut, GetTeacherClassStudentsOut } from '~/types/classes'
+
+const UAvatar = resolveComponent('UAvatar')
+const UBadge = resolveComponent('UBadge')
 
 const props = defineProps<{ classId: string }>()
 
@@ -10,25 +15,99 @@ const breadcrumb = [
   { label: 'Detalhes da turma' },
 ]
 
+const activeTab = ref('students')
+
+const tabs = computed(() => [[
+  { label: 'Alunos', icon: 'i-lucide-users', active: activeTab.value === 'students', onSelect: () => { activeTab.value = 'students' } },
+  { label: 'Aulas', icon: 'i-lucide-calendar-days', active: activeTab.value === 'lessons', onSelect: () => { activeTab.value = 'lessons' } },
+  { label: 'Atividades', icon: 'i-lucide-clipboard-list', active: activeTab.value === 'activities', onSelect: () => { activeTab.value = 'activities' } },
+]] satisfies NavigationMenuItem[][])
+
+// Dados gerais da turma + horários — carregados ao entrar na página.
 const { data, status, error } = await useFetch<GetTeacherClassOut>(
   `${config.public.backendUrl}/teachers/classes/${props.classId}`,
   { credentials: 'include', server: false },
 )
 
-const { data: activitiesData, refresh: refreshActivities } = await useFetch<GetTeacherClassActivitiesOut>(
-  `${config.public.backendUrl}/teachers/classes/${props.classId}/activities`,
+// Cada tab tem endpoint próprio, chamado toda vez que a tab é acessada.
+// Alunos é a primeira tab, então carrega ao entrar na página.
+const { data: studentsData, status: studentsStatus, refresh: refreshStudents } = await useFetch<GetTeacherClassStudentsOut>(
+  `${config.public.backendUrl}/teachers/classes/${props.classId}/students`,
+  { credentials: 'include', server: false },
+)
+const students = computed(() => studentsData.value?.students ?? [])
+
+const { data: institutionConfig } = await useFetch<InstitutionConfig>(
+  `${config.public.backendUrl}/institutions/config`,
   { credentials: 'include', server: false },
 )
 
-const activities = computed(() => activitiesData.value?.activities ?? [])
+const noteLimit = computed(() => institutionConfig.value?.noteLimit ?? 7)
+const frequencyLimit = computed(() => institutionConfig.value?.frequencyLimit ?? 70)
 
-const { data: lessonsData, refresh: refreshLessons } = await useFetch<GetTeacherClassLessonsOut>(
+// Colunas estáveis (criadas uma vez). As cores de Nota/Frequência leem os
+// limites reativos dentro da própria célula — que roda no render do UTable —
+// então recolorem quando o config da instituição chega, sem recriar o array.
+const studentColumns: TableColumn<ClassStudentItem>[] = [
+  {
+    accessorKey: 'name',
+    header: 'Aluno',
+    cell: ({ row }) => h('div', { class: 'flex items-center gap-2.5' }, [
+      h(UAvatar, { alt: row.original.name, size: '2xs' }),
+      h('span', { class: 'font-medium text-highlighted' }, row.original.name),
+    ]),
+  },
+  {
+    accessorKey: 'averageGrade',
+    header: 'Nota média',
+    cell: ({ row }) => {
+      const grade = row.original.averageGrade
+      if (grade == null) return h('span', { class: 'text-muted' }, '—')
+      const color = grade < noteLimit.value ? 'text-error' : 'text-success'
+      return h('span', { class: `font-medium ${color}` }, grade.toFixed(1).replace('.', ','))
+    },
+  },
+  {
+    accessorKey: 'averageAttendance',
+    header: 'Frequência média',
+    cell: ({ row }) => {
+      const attendance = row.original.averageAttendance
+      if (attendance == null) return h('span', { class: 'text-muted' }, '—')
+      const color = attendance < frequencyLimit.value ? 'text-error' : 'text-success'
+      return h('span', { class: `font-medium ${color}` }, `${Math.round(attendance)}%`)
+    },
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => h(UBadge, {
+      label: studentClassStatusLabels[row.original.status] ?? row.original.status,
+      color: studentClassStatusColors[row.original.status] ?? 'neutral',
+      variant: 'subtle',
+    }),
+  },
+]
+
+const { data: lessonsData, status: lessonsStatus, refresh: refreshLessons } = await useFetch<GetTeacherClassLessonsOut>(
   `${config.public.backendUrl}/teachers/classes/${props.classId}/lessons`,
-  { credentials: 'include', server: false },
+  { credentials: 'include', server: false, immediate: false },
 )
-
 const lessons = computed(() => lessonsData.value?.lessons ?? [])
 
+const { data: activitiesData, status: activitiesStatus, refresh: refreshActivities } = await useFetch<GetTeacherClassActivitiesOut>(
+  `${config.public.backendUrl}/teachers/classes/${props.classId}/activities`,
+  { credentials: 'include', server: false, immediate: false },
+)
+const activities = computed(() => activitiesData.value?.activities ?? [])
+
+watch(activeTab, (tab) => {
+  if (tab === 'students') refreshStudents()
+  else if (tab === 'lessons') refreshLessons()
+  else if (tab === 'activities') refreshActivities()
+})
+
+// Alunos matriculados usados na chamada — vêm dos dados gerais da turma,
+// para a chamada funcionar independente da tab de Alunos ter sido aberta.
 const enrolledStudents = computed(() =>
   (data.value?.students ?? []).filter(s => s.status === 'Matriculado'),
 )
@@ -67,7 +146,7 @@ function openAttendance(lesson: ClassLessonItem) {
         <UButton icon="i-lucide-arrow-left" label="Voltar" to="/home" />
       </div>
 
-      <div v-else class="flex flex-col gap-10 py-2">
+      <div v-else class="flex flex-col gap-6 py-2">
         <div class="grid grid-cols-1 items-start gap-x-4 gap-y-1 sm:grid-cols-[1fr_auto]">
           <h1 class="order-1 text-2xl font-semibold tracking-tight text-highlighted sm:col-start-1 sm:row-start-1">
             {{ data.discipline }}
@@ -81,19 +160,11 @@ function openAttendance(lesson: ClassLessonItem) {
               <UIcon name="i-lucide-clock" class="size-4" />
               {{ data.workload }}h
             </span>
-            <UBadge
-              :label="classStatusLabels[data.status] ?? data.status"
-              :color="classStatusColors[data.status] ?? 'neutral'"
-              variant="subtle"
-            />
           </div>
         </div>
 
+        <!-- Horários -->
         <section class="flex flex-col gap-3">
-          <h2 class="font-semibold text-highlighted">
-            Horários
-          </h2>
-
           <div v-if="data.schedules.length" class="flex flex-wrap gap-2">
             <div
               v-for="(s, i) in data.schedules"
@@ -110,6 +181,13 @@ function openAttendance(lesson: ClassLessonItem) {
                 <UIcon name="i-lucide-clock" class="size-3.5" />
                 {{ formatClassSchedule(s) }}
               </span>
+              <span
+                class="flex items-center gap-1 text-xs"
+                :class="s.classroom ? 'text-muted' : 'text-dimmed'"
+              >
+                <UIcon name="i-lucide-door-open" class="size-3.5" />
+                {{ s.classroom ?? 'Sem sala' }}
+              </span>
             </div>
           </div>
           <div v-else class="flex items-center gap-2 text-sm text-muted">
@@ -118,131 +196,125 @@ function openAttendance(lesson: ClassLessonItem) {
           </div>
         </section>
 
-        <section class="flex flex-col gap-3">
-          <h2 class="font-semibold text-highlighted">
-            Alunos ({{ data.students.length }} / {{ data.vacancies }})
-          </h2>
+        <UNavigationMenu :items="tabs" highlight class="-mx-1" />
 
-          <div v-if="data.students.length" class="flex flex-col divide-y divide-default">
-            <div
-              v-for="student in data.students"
-              :key="student.id"
-              class="flex items-center justify-between py-3"
-            >
-              <div class="flex items-center gap-2.5">
-                <UAvatar :alt="student.name" size="2xs" />
-                <span class="text-sm font-medium text-highlighted">{{ student.name }}</span>
+        <!-- Alunos -->
+        <section v-if="activeTab === 'students'" class="flex flex-col gap-3">
+          <div v-if="studentsStatus === 'pending'" class="flex justify-center py-8">
+            <UIcon name="i-lucide-loader-circle" class="size-6 animate-spin text-muted" />
+          </div>
+          <DataTable v-else :data="students" :columns="studentColumns">
+            <template #empty>
+              <div class="flex items-center justify-center gap-2 py-6 text-sm text-muted">
+                <UIcon name="i-lucide-users" class="size-4" />
+                Nenhum aluno matriculado
               </div>
-              <UBadge
-                :label="studentClassStatusLabels[student.status] ?? student.status"
-                :color="studentClassStatusColors[student.status] ?? 'neutral'"
-                variant="subtle"
+            </template>
+          </DataTable>
+        </section>
+
+        <!-- Aulas -->
+        <section v-else-if="activeTab === 'lessons'" class="flex flex-col gap-3">
+          <div v-if="lessonsStatus === 'pending'" class="flex justify-center py-8">
+            <UIcon name="i-lucide-loader-circle" class="size-6 animate-spin text-muted" />
+          </div>
+          <template v-else>
+            <div v-if="lessons.length" class="flex flex-col divide-y divide-default">
+              <div
+                v-for="lesson in lessons"
+                :key="lesson.id"
+                class="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <div class="flex flex-col gap-1">
+                  <span class="text-sm text-highlighted">Aula {{ lesson.number }}</span>
+                  <span class="text-xs text-muted">{{ formatClassLesson(lesson) }}</span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <UBadge
+                    v-if="lesson.status === 'Finalized'"
+                    :label="`${lesson.presentStudents.length} / ${enrolledStudents.length} presentes`"
+                    color="neutral"
+                    variant="subtle"
+                    icon="i-lucide-user-check"
+                  />
+                  <UBadge
+                    :label="classLessonStatusLabels[lesson.status] ?? lesson.status"
+                    :color="classLessonStatusColors[lesson.status] ?? 'neutral'"
+                    variant="subtle"
+                  />
+                  <UButton
+                    :label="lesson.status === 'Finalized' ? 'Editar chamada' : 'Fazer chamada'"
+                    icon="i-lucide-clipboard-check"
+                    color="neutral"
+                    variant="subtle"
+                    size="sm"
+                    @click="() => { openAttendance(lesson) }"
+                  />
+                </div>
+              </div>
+            </div>
+            <div v-else class="flex items-center gap-2 text-sm text-muted">
+              <UIcon name="i-lucide-calendar-days" class="size-4" />
+              Nenhuma aula cadastrada
+            </div>
+          </template>
+        </section>
+
+        <!-- Atividades -->
+        <section v-else-if="activeTab === 'activities'" class="flex flex-col gap-3">
+          <div v-if="activitiesStatus === 'pending'" class="flex justify-center py-8">
+            <UIcon name="i-lucide-loader-circle" class="size-6 animate-spin text-muted" />
+          </div>
+          <template v-else>
+            <div class="flex items-center justify-end gap-2">
+              <UButton
+                icon="i-lucide-plus"
+                label="Atividade"
+                size="sm"
+                @click="() => { createActivityModalOpen = true }"
               />
             </div>
-          </div>
-          <div v-else class="flex items-center gap-2 text-sm text-muted">
-            <UIcon name="i-lucide-users" class="size-4" />
-            Nenhum aluno matriculado
-          </div>
-        </section>
 
-        <section class="flex flex-col gap-3">
-          <h2 class="font-semibold text-highlighted">
-            Aulas ({{ lessons.length }})
-          </h2>
+            <div v-if="activities.length" class="flex flex-col divide-y divide-default">
+              <NuxtLink
+                v-for="activity in activities"
+                :key="activity.id"
+                :to="`/classes/${props.classId}/activities/${activity.id}`"
+                class="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between hover:bg-elevated/50"
+              >
+                <div class="flex flex-col gap-1">
+                  <span class="text-sm text-highlighted">{{ activity.title }}</span>
+                  <span class="text-xs text-muted">
+                    {{ classActivityTypeLabels[activity.type] ?? activity.type }}
+                    · {{ activity.note }}
+                    · Peso {{ activity.weight }}
+                    · Entrega até {{ formatClassActivityDueDate(activity.dueDate, activity.dueHour) }}
+                  </span>
+                </div>
 
-          <div v-if="lessons.length" class="flex max-h-[32rem] flex-col divide-y divide-default overflow-y-auto">
-            <div
-              v-for="lesson in lessons"
-              :key="lesson.id"
-              class="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between"
-            >
-              <div class="flex flex-col gap-1">
-                <span class="text-sm text-highlighted">Aula {{ lesson.number }}</span>
-                <span class="text-xs text-muted">{{ formatClassLesson(lesson) }}</span>
-              </div>
-
-              <div class="flex items-center gap-2">
-                <UBadge
-                  v-if="lesson.status === 'Finalized'"
-                  :label="`${lesson.presentStudents.length} / ${enrolledStudents.length} presentes`"
-                  color="neutral"
-                  variant="subtle"
-                  icon="i-lucide-user-check"
-                />
-                <UBadge
-                  :label="classLessonStatusLabels[lesson.status] ?? lesson.status"
-                  :color="classLessonStatusColors[lesson.status] ?? 'neutral'"
-                  variant="subtle"
-                />
-                <UButton
-                  :label="lesson.status === 'Finalized' ? 'Editar chamada' : 'Fazer chamada'"
-                  icon="i-lucide-clipboard-check"
-                  color="neutral"
-                  variant="subtle"
-                  size="sm"
-                  @click="() => { openAttendance(lesson) }"
-                />
-              </div>
+                <div class="flex items-center gap-2">
+                  <UBadge
+                    :label="`${activity.deliveredWorks} / ${activity.totalWorks} entregas`"
+                    color="neutral"
+                    variant="subtle"
+                    icon="i-lucide-file-check"
+                  />
+                  <UBadge
+                    :label="classActivityStatusLabels[activity.status] ?? activity.status"
+                    :color="classActivityStatusColors[activity.status] ?? 'neutral'"
+                    variant="subtle"
+                  />
+                </div>
+              </NuxtLink>
             </div>
-          </div>
-          <div v-else class="flex items-center gap-2 text-sm text-muted">
-            <UIcon name="i-lucide-calendar-days" class="size-4" />
-            Nenhuma aula cadastrada
-          </div>
-        </section>
-
-        <section class="flex flex-col gap-3">
-          <div class="flex items-center justify-between gap-2">
-            <h2 class="font-semibold text-highlighted">
-              Atividades ({{ activities.length }})
-            </h2>
-            <UButton
-              icon="i-lucide-plus"
-              label="Atividade"
-              size="sm"
-              @click="() => { createActivityModalOpen = true }"
-            />
-          </div>
-
-          <div v-if="activities.length" class="flex flex-col divide-y divide-default">
-            <NuxtLink
-              v-for="activity in activities"
-              :key="activity.id"
-              :to="`/classes/${props.classId}/activities/${activity.id}`"
-              class="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between hover:bg-elevated/50"
-            >
-              <div class="flex flex-col gap-1">
-                <span class="text-sm text-highlighted">{{ activity.title }}</span>
-                <span class="text-xs text-muted">
-                  {{ classActivityTypeLabels[activity.type] ?? activity.type }}
-                  · {{ activity.note }}
-                  · Peso {{ activity.weight }}
-                  · Entrega até {{ formatClassActivityDueDate(activity.dueDate, activity.dueHour) }}
-                </span>
-              </div>
-
-              <div class="flex items-center gap-2">
-                <UBadge
-                  :label="`${activity.deliveredWorks} / ${activity.totalWorks} entregas`"
-                  color="neutral"
-                  variant="subtle"
-                  icon="i-lucide-file-check"
-                />
-                <UBadge
-                  :label="classActivityStatusLabels[activity.status] ?? activity.status"
-                  :color="classActivityStatusColors[activity.status] ?? 'neutral'"
-                  variant="subtle"
-                />
-              </div>
-            </NuxtLink>
-          </div>
-          <div v-else class="flex flex-col items-center gap-3 py-6">
-            <UIcon name="i-lucide-clipboard-list" class="size-10 text-muted" />
-            <p class="text-sm text-muted">
-              Nenhuma atividade cadastrada
-            </p>
-          </div>
+            <div v-else class="flex flex-col items-center gap-3 py-6">
+              <UIcon name="i-lucide-clipboard-list" class="size-10 text-muted" />
+              <p class="text-sm text-muted">
+                Nenhuma atividade cadastrada
+              </p>
+            </div>
+          </template>
         </section>
 
         <ClassesCreateActivityModal

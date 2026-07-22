@@ -75,11 +75,7 @@ public partial class IntegrationTests
         var discipline = await client.CreateDiscipline().Success();
         var period = await client.CreateAcademicPeriod().Success();
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
-
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var enrollment = await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2)).Success();
         await client.ReleaseClassForEnrollment(@class.Id);
-        await client.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
 
         // Act
         var result = await client.StartClass(@class.Id);
@@ -101,11 +97,7 @@ public partial class IntegrationTests
 
         var @class = await client.CreateClass(discipline.Id, period.Id).Success();
         await client.UpdateClassTeachers(@class.Id, [teacher.Id]);
-
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var enrollment = await client.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2)).Success();
         await client.ReleaseClassForEnrollment(@class.Id);
-        await client.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
 
         // Act
         var result = await client.StartClass(@class.Id);

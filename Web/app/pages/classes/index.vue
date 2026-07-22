@@ -24,7 +24,7 @@ interface GetClassesOut {
 const statusLabels: Record<string, string> = {
   OnPreEnrollment: 'Pré-matrícula',
   OnEnrollment: 'Matrícula',
-  AwaitingStart: 'Aguardando início',
+  OnReview: 'Revisão',
   Started: 'Iniciada',
   Finalized: 'Finalizada',
 }
@@ -32,7 +32,7 @@ const statusLabels: Record<string, string> = {
 const statusColors: Record<string, 'neutral' | 'primary' | 'success' | 'warning' | 'error' | 'info'> = {
   OnPreEnrollment: 'neutral',
   OnEnrollment: 'info',
-  AwaitingStart: 'warning',
+  OnReview: 'warning',
   Started: 'primary',
   Finalized: 'success',
 }

@@ -66,6 +66,10 @@ export interface GetTeacherClassOut {
   students: ClassStudentItem[]
 }
 
+export interface GetTeacherClassStudentsOut {
+  students: ClassStudentItem[]
+}
+
 export interface ClassLessonItem {
   id: number
   number: number

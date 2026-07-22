@@ -149,49 +149,6 @@ public partial class IntegrationTests
         details.Vacancies.Should().Be(40);
         details.Status.Should().Be(ClassStatus.OnPreEnrollment);
         details.Schedules.Should().BeEmpty();
-        details.Students.Should().BeEmpty();
-    }
-
-    [Test]
-    public async Task Teachers_GetTeacherClass_Should_get_class_with_enrolled_students()
-    {
-        // Arrange
-        var director = await _back.LoggedAsDirector();
-
-        var email = DataGen.Email;
-        var teacher = await director.CreateTeacher(DataGen.UserName, email).Success();
-
-        var discipline = await director.CreateDiscipline().Success();
-        await director.AssignDisciplinesToTeacher(teacher.Id, [discipline.Id]);
-
-        var period = await director.CreateAcademicPeriod().Success();
-        var @class = await director.CreateClass(discipline.Id, period.Id).Success();
-        await director.UpdateClassTeachers(@class.Id, [teacher.Id]);
-        await director.UpdateClassSchedules(@class.Id, [(Day.Monday, Hour.H07_00, Hour.H10_00, null)]);
-
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var enrollment = await director.CreateEnrollmentPeriod(startAt: today.AddDays(-2), endAt: today.AddDays(2)).Success();
-        await director.ReleaseClassForEnrollment(@class.Id);
-        await director.UpdateEnrollmentPeriod(enrollment.Id, startAt: today.AddDays(-10), endAt: today.AddDays(-5));
-
-        var studentName = DataGen.UserName;
-        var student = await director.CreateStudent(studentName, DataGen.Email).Success();
-        await director.AssignStudentToClass(student.Id, @class.Id);
-
-        await director.StartClass(@class.Id);
-
-        var client = await _back.LoginAs(email);
-
-        // Act
-        var result = await client.GetTeacherClass(@class.Id);
-
-        // Assert
-        var details = result.Success;
-        details.Status.Should().Be(ClassStatus.Started);
-        details.Students.Should().ContainSingle();
-        details.Students[0].Id.Should().Be(student.Id);
-        details.Students[0].Name.Should().Be(studentName);
-        details.Students[0].Status.Should().Be(StudentClassStatus.Matriculado);
     }
 
     #endregion

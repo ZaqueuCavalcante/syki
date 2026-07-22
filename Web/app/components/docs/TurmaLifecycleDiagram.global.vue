@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{
   steps: () => [
     { label: 'Pré-matrícula', icon: 'i-lucide-file-plus' },
     { label: 'Matrícula', icon: 'i-lucide-clipboard-list' },
-    { label: 'Aguardando início', icon: 'i-lucide-hourglass', virtual: true },
+    { label: 'Revisão', icon: 'i-lucide-clipboard-check', virtual: true },
     { label: 'Iniciada', icon: 'i-lucide-circle-play' },
     { label: 'Finalizada', icon: 'i-lucide-circle-check' }
   ]

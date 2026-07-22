@@ -9,7 +9,7 @@ const orientation = computed(() => (isMobile.value ? 'vertical' : 'horizontal'))
 const steps: TimelineItem[] = [
   { value: 'OnPreEnrollment', title: 'Pré-matrícula', icon: 'i-lucide-file-plus' },
   { value: 'OnEnrollment', title: 'Matrícula', icon: 'i-lucide-clipboard-list' },
-  { value: 'AwaitingStart', title: 'Aguardando início', icon: 'i-lucide-hourglass' },
+  { value: 'OnReview', title: 'Revisão', icon: 'i-lucide-clipboard-check' },
   { value: 'Started', title: 'Iniciada', icon: 'i-lucide-circle-play' },
   { value: 'Finalized', title: 'Finalizada', icon: 'i-lucide-circle-check' },
 ]
@@ -18,7 +18,7 @@ const steps: TimelineItem[] = [
 const descriptions: Record<string, string> = {
   OnPreEnrollment: 'Status inicial, logo após a criação',
   OnEnrollment: 'Aberta para matrícula de alunos, dentro do período de matrícula',
-  AwaitingStart: 'Período de matrícula encerrado, à espera do início',
+  OnReview: 'Período de matrícula encerrado, turma em revisão antes do início',
   Started: 'Turma em andamento — não é possível retroceder a partir daqui',
   Finalized: 'Encerrada ao fim do semestre, com notas e frequências salvas',
 }

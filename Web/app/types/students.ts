@@ -12,7 +12,7 @@ export interface StudentClassItem {
   discipline: string
   period: string
   workload: number
-  status: string // 'OnPreEnrollment' | 'OnEnrollment' | 'AwaitingStart' | 'Started' | 'Finalized'
+  status: string // 'OnPreEnrollment' | 'OnEnrollment' | 'OnReview' | 'Started' | 'Finalized'
   myStatus: string // 'Pendente' | 'Matriculado' | 'Aprovado' | ...
   averageGrade: number // nota média do aluno na turma (de 0 a 10)
   averageAttendance: number // frequência média do aluno na turma (de 0% a 100%)

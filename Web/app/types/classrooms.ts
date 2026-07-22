@@ -2,7 +2,7 @@ export interface ClassroomScheduleItem {
   classId: number
   discipline: string
   period: string
-  status: string // 'OnPreEnrollment' | 'OnEnrollment' | 'AwaitingStart' | 'Started' | 'Finalized'
+  status: string // 'OnPreEnrollment' | 'OnEnrollment' | 'OnReview' | 'Started' | 'Finalized'
   students: number
   teachers: string[]
   day: string // 'Monday' | 'Tuesday' | ...

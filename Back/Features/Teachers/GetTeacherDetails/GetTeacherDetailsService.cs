@@ -50,7 +50,7 @@ public class GetTeacherDetailsService(EstudDbContext ctx) : IEstudService
             if (!hasCurrentEnrollmentPeriod)
             {
                 foreach (var @class in classes.Where(c => c.Status == ClassStatus.OnEnrollment))
-                    @class.Status = ClassStatus.AwaitingStart;
+                    @class.Status = ClassStatus.OnReview;
             }
         }
 

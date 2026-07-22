@@ -56,7 +56,7 @@ const pendingTransition = ref<ClassStatusTransition | null>(null)
 
 const showReleaseButton = computed(() => canRelease.value && data.value?.status === 'OnPreEnrollment')
 const showStartButton = computed(() =>
-  canStart.value && (data.value?.status === 'OnEnrollment' || data.value?.status === 'AwaitingStart'),
+  canStart.value && (data.value?.status === 'OnEnrollment' || data.value?.status === 'OnReview'),
 )
 
 const releaseTransition = computed<ClassStatusTransition>(() => ({

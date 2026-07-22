@@ -10,6 +10,7 @@ public class GetTeacherClassService(EstudDbContext ctx) : IEstudService
 
         var @class = await ctx.Classes.AsNoTracking()
             .Include(c => c.Discipline)
+            .Include(c => c.Teachers)
             .Include(c => c.Period)
             .Include(c => c.Schedules)
             .FirstOrDefaultAsync(c => c.Id == id && c.InstitutionId == institutionId);
@@ -18,18 +19,14 @@ public class GetTeacherClassService(EstudDbContext ctx) : IEstudService
         var assigned = await ctx.ClassTeachers.AnyAsync(ct => ct.ClassId == id && ct.TeacherId == teacherId);
         if (!assigned) return TeacherNotAssignedToClass.I;
 
-        var students = await (
-            from cs in ctx.ClassStudents.AsNoTracking()
-            join s in ctx.Students.AsNoTracking() on cs.StudentId equals s.Id
-            where cs.ClassId == id
-            orderby s.Name
-            select new GetTeacherClassStudentOut
-            {
-                Id = s.Id,
-                Name = s.Name,
-                Status = cs.Status,
-            }
-        ).ToListAsync();
+        var classroomIds = @class.Schedules
+            .Where(s => s.ClassroomId != null)
+            .Select(s => s.ClassroomId!.Value)
+            .Distinct()
+            .ToList();
+        var classroomNames = await ctx.Classrooms.AsNoTracking()
+            .Where(c => classroomIds.Contains(c.Id))
+            .ToDictionaryAsync(c => c.Id, c => c.Name);
 
         return new GetTeacherClassOut
         {
@@ -41,9 +38,12 @@ public class GetTeacherClassService(EstudDbContext ctx) : IEstudService
             Status = @class.Status,
             Schedules = @class.Schedules
                 .OrderBy(s => s.Day).ThenBy(s => s.Start)
-                .Select(s => new GetTeacherClassScheduleOut(s.Day, s.Start, s.End))
+                .Select(s => new GetTeacherClassScheduleOut(s.Day, s.Start, s.End)
+                {
+                    Teacher = s.TeacherId == null ? null : @class.Teachers.FirstOrDefault(t => t.Id == s.TeacherId)?.Name,
+                    Classroom = s.ClassroomId != null && classroomNames.TryGetValue(s.ClassroomId.Value, out var name) ? name : null,
+                })
                 .ToList(),
-            Students = students,
         };
     }
 }

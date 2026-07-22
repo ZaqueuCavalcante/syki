@@ -116,7 +116,7 @@ public partial class IntegrationTests
 
         // Assert
         var item = result.Success.Items.First(x => x.Id == @class.Id);
-        item.Status.Should().Be(ClassStatus.AwaitingStart);
+        item.Status.Should().Be(ClassStatus.OnReview);
 
         // And the persisted status is still OnEnrollment
         await using var db = _back.GetDbContext();

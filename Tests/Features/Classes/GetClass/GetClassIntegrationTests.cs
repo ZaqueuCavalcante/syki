@@ -123,7 +123,7 @@ public partial class IntegrationTests
         var result = await client.GetClass(@class.Id);
 
         // Assert
-        result.Success.Status.Should().Be(ClassStatus.AwaitingStart);
+        result.Success.Status.Should().Be(ClassStatus.OnReview);
     }
 
     #endregion

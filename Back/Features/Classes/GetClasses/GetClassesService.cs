@@ -18,16 +18,16 @@ public class GetClassesService(EstudDbContext ctx) : IEstudService
         var classesQuery = ctx.Classes.AsNoTracking()
             .Where(c => c.InstitutionId == institutionId);
 
-        // Sem período de matrícula aberto, turmas OnEnrollment aparecem como AwaitingStart,
+        // Sem período de matrícula aberto, turmas OnEnrollment aparecem como OnReview,
         // então o filtro precisa considerar o status exibido, e não o salvo no banco.
         if (query.Status is ClassStatus status)
         {
             if (!hasCurrentEnrollmentPeriod && status == ClassStatus.OnEnrollment)
                 return new GetClassesOut { Total = 0, Page = page, PageSize = pageSize };
 
-            if (!hasCurrentEnrollmentPeriod && status == ClassStatus.AwaitingStart)
+            if (!hasCurrentEnrollmentPeriod && status == ClassStatus.OnReview)
                 classesQuery = classesQuery.Where(c =>
-                    c.Status == ClassStatus.AwaitingStart || c.Status == ClassStatus.OnEnrollment);
+                    c.Status == ClassStatus.OnReview || c.Status == ClassStatus.OnEnrollment);
             else
                 classesQuery = classesQuery.Where(c => c.Status == status);
         }
@@ -49,7 +49,7 @@ public class GetClassesService(EstudDbContext ctx) : IEstudService
             foreach (var @class in classes)
             {
                 if (@class.Status == ClassStatus.OnEnrollment)
-                    @class.Status = ClassStatus.AwaitingStart;
+                    @class.Status = ClassStatus.OnReview;
             }
         }
 

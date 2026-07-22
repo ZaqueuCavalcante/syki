@@ -491,6 +491,14 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
       hasUserType(UserTypes.Parent),
     ],
   },
+
+  // Frequencies
+  AccessFrequenciesPage: {
+    description: "Acessar a página de frequência",
+    requirements: [
+      hasUserType(UserTypes.Student),
+    ],
+  },
 };
 
 export function getPolicy(name: PolicyName): PolicyDefinition {

@@ -199,3 +199,5 @@ export type PolicyName
     | 'CreateParent'
   // Children
     | 'AccessChildrenPage'
+  // Frequencies
+    | 'AccessFrequenciesPage'

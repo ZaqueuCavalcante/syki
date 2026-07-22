@@ -34,3 +34,10 @@ public class StudentNotEnrolledInClass : EstudError
     public override string Code { get; set; } = nameof(StudentNotEnrolledInClass);
     public override string Message { get; set; } = "Aluno não matriculado nesta turma.";
 }
+
+public class StudentNotEnrolledInAnyCourse : EstudError
+{
+    public static readonly StudentNotEnrolledInAnyCourse I = new();
+    public override string Code { get; set; } = nameof(StudentNotEnrolledInAnyCourse);
+    public override string Message { get; set; } = "Aluno não matriculado em nenhuma oferta de curso.";
+}

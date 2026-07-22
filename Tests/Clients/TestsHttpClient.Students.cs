@@ -7,7 +7,9 @@ using Estud.Back.Features.Students.GetStudentDetails;
 using Estud.Back.Features.Students.AssignStudentToClass;
 using Estud.Back.Features.Students.CreateClassActivityWork;
 using Estud.Back.Features.Students.GetStudentClassActivity;
+using Estud.Back.Features.Students.GetStudentCourseDetails;
 using Estud.Back.Features.Students.GetStudentClassActivities;
+using Estud.Back.Features.Students.GetStudentAttendanceCalendar;
 using Estud.Back.Features.Students.EnrollStudentInCourseOffering;
 
 namespace Estud.Tests.Integration.Clients;
@@ -53,10 +55,23 @@ public partial class TestsHttpClient
         return await response.Resolve<GetStudentDetailsOut>();
     }
 
+    public async Task<OneOf<GetStudentCourseDetailsOut, ErrorOut>> GetStudentCourseDetails()
+    {
+        var response = await http.GetAsync("/students/course");
+        return await response.Resolve<GetStudentCourseDetailsOut>();
+    }
+
     public async Task<OneOf<GetStudentClassOut, ErrorOut>> GetStudentClass(int id)
     {
         var response = await http.GetAsync($"/students/classes/{id}");
         return await response.Resolve<GetStudentClassOut>();
+    }
+
+    public async Task<OneOf<GetStudentAttendanceCalendarOut, ErrorOut>> GetStudentAttendanceCalendar(int? year = null)
+    {
+        var data = new GetStudentAttendanceCalendarIn { Year = year };
+        var response = await http.GetAsync("/students/attendances/calendar".AddQueryString(data));
+        return await response.Resolve<GetStudentAttendanceCalendarOut>();
     }
 
     public async Task<OneOf<GetStudentClassActivitiesOut, ErrorOut>> GetStudentClassActivities(int classId)

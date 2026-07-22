@@ -225,7 +225,7 @@ const studentColumns: TableColumn<ClassStudentItem>[] = [
               </span>
               <span class="flex items-center gap-1.5">
                 <UIcon name="i-lucide-clock" class="size-4" />
-                {{ data.workload }}h
+                {{ formatClassWorkload(data.workload) }}
               </span>
               <span v-if="data.campus" class="flex items-center gap-1.5">
                 <UIcon name="i-lucide-map-pin" class="size-4" />

@@ -18,6 +18,25 @@ export interface StudentClassItem {
   averageAttendance: number // frequência média do aluno na turma (de 0% a 100%)
 }
 
+export interface StudentCourseDiscipline {
+  id: number
+  name: string
+  period: number // período (semestre) da disciplina na grade
+  credits: number
+  workload: number
+  status: string // 'NaoCursada' | 'Cursando' | 'Aprovada' | 'Dispensada' | 'Reprovada'
+}
+
+export interface GetStudentCourseDetailsOut {
+  courseOfferingId: number
+  course: string
+  curriculum: string
+  campus: string
+  period: string
+  session: string // 'Morning' | 'Afternoon' | 'Evening'
+  disciplines: StudentCourseDiscipline[]
+}
+
 export interface GetStudentDetailsOut {
   id: number
   name: string

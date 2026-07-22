@@ -158,7 +158,7 @@ function openAttendance(lesson: ClassLessonItem) {
             </span>
             <span class="flex items-center gap-1.5">
               <UIcon name="i-lucide-clock" class="size-4" />
-              {{ data.workload }}h
+              {{ formatClassWorkload(data.workload) }}
             </span>
           </div>
         </div>

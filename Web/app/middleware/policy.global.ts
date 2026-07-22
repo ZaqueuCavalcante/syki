@@ -19,6 +19,7 @@ const routePolicies: Record<string, PolicyName> = {
   '/course-curriculums': 'AccessCourseCurriculumsPage',
   '/notifications': 'AccessNotificationsPage',
   '/agenda': 'AccessAgendaPage',
+  '/frequencies': 'AccessFrequenciesPage',
   '/calendar': 'AccessCalendarPage',
   '/configs': 'AccessConfigsPage',
   '/children': 'AccessChildrenPage',

@@ -25,6 +25,7 @@ const allLinks = [
   { label: 'Alunos',        icon: 'i-lucide-graduation-cap', to: '/students',           policy: 'AccessStudentsPage'          as PolicyName },
   { label: 'Responsáveis',  icon: 'i-lucide-users',          to: '/parents',            policy: 'AccessParentsPage'           as PolicyName },
   { label: 'Agenda',        icon: 'i-lucide-calendar-days',  to: '/agenda',             policy: 'AccessAgendaPage'            as PolicyName },
+  { label: 'Frequência',    icon: 'i-lucide-calendar-check', to: '/frequencies',        policy: 'AccessFrequenciesPage'       as PolicyName },
   { label: 'Calendário',    icon: 'i-lucide-calendar-range', to: '/calendar',           policy: 'AccessCalendarPage'          as PolicyName },
   { label: 'Segurança',     icon: 'i-lucide-shield',         to: '/security',           policy: 'AccessSecurityPage'          as PolicyName },
   { label: 'Integrações',   icon: 'i-lucide-webhook',        to: '/integrations',       policy: 'AccessIntegrationsPage'      as PolicyName },

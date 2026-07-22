@@ -85,6 +85,11 @@ export function formatClassSchedule(s: Pick<ClassSchedule, 'day' | 'startAt' | '
   return `${dayLabels[s.day] ?? s.day} · ${formatClassHour(s.startAt)} – ${formatClassHour(s.endAt)}`
 }
 
+// A carga horária vem da API em minutos; exibimos sempre em horas, arredondando para baixo.
+export function formatClassWorkload(minutes: number) {
+  return `${Math.floor(minutes / 60)}h`
+}
+
 export function formatClassActivityDueDate(dueDate: string, dueHour: string) {
   const [year, month, day] = dueDate.split('-')
   return `${day}/${month}/${year} · ${formatClassHour(dueHour)}`

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'docs' })
 
+const tocLinks = useState<any[]>('docs-toc', () => [])
+tocLinks.value = []
+
 useSeoMeta({
   title: 'Documentação - Estud',
   description: 'Guia completo para configurar e usar a plataforma Estud.',
@@ -41,7 +44,7 @@ const sections = [
         Documentação
       </h1>
       <p class="text-xl text-muted">
-        Tudo que você precisa para começar a usar e aproveitar ao máximo a plataforma Estud.
+        Tudo que você precisa para começar a usar e aproveitar ao máximo a plataforma <strong>Estud</strong>.
       </p>
     </div>
 

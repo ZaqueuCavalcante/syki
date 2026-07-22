@@ -3,7 +3,7 @@ title: Introdução
 description: Visão geral da plataforma Estud e seus principais conceitos.
 ---
 
-Bem-vindo à documentação do **Estud**, um sistema de gestão acadêmica (SGA) de código aberto para instituições de ensino.
+Bem-vindo à documentação do **Estud**, o sistema de gestão acadêmica (SGA) que atende instituições de todos os portes e níveis de ensino.
 
 ## O que você vai encontrar aqui
 

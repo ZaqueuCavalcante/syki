@@ -62,6 +62,10 @@ public class InstitutionDbConfig : IEntityTypeConfiguration<Institution>
             .WithOne()
             .HasForeignKey(sc => sc.InstitutionId);
 
+        entity.HasMany(e => e.Roles)
+            .WithOne()
+            .HasForeignKey(r => r.InstitutionId);
+
         entity.HasMany(e => e.Users)
             .WithOne(u => u.Institution)
             .HasForeignKey(u => u.InstitutionId);

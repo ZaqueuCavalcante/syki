@@ -19,6 +19,13 @@ public static class EstudPermissions
         "Configurar Single Sign-On (SSO) para a instituição.",
         [UserType.Manager]
     );
+    public static readonly EstudPermission ManageTwoFactor = new(
+        PermissionGroup.Identity,
+        002,
+        "Gerenciar 2FA.",
+        "Definir quais perfis de acesso são obrigados a usar autenticação de dois fatores.",
+        [UserType.Manager]
+    );
 
     // Users
     public static readonly EstudPermission ManageUsers = new(

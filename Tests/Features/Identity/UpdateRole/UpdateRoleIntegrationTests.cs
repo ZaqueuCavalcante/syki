@@ -69,20 +69,6 @@ public partial class IntegrationTests
     }
 
     [Test]
-    [TestCase((UserType)99)]
-    public async Task Identity_UpdateRole_Should_not_update_role_with_invalid_base_type(UserType baseType)
-    {
-        // Arrange
-        var client = await _back.LoggedAsDirector();
-
-        // Act
-        var result = await client.UpdateRole(1, baseType: baseType);
-
-        // Assert
-        result.ShouldBeError(InvalidRoleBaseType.I);
-    }
-
-    [Test]
     public async Task Identity_UpdateRole_Should_not_update_role_with_invalid_permissions()
     {
         // Arrange
@@ -93,6 +79,20 @@ public partial class IntegrationTests
 
         // Assert
         result.ShouldBeError(InvalidPermissionsList.I);
+    }
+
+    [Test]
+    public async Task Identity_UpdateRole_Should_not_update_role_with_permissions_not_allowed_for_the_base_type()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var role = await client.CreateRole(name: "Professor Substituto", baseType: UserType.Teacher, permissions: []).Success();
+
+        // Act
+        var result = await client.UpdateRole(role.Id, name: "Professor Substituto", permissions: [EstudPermissions.ManageRoles.Id]);
+
+        // Assert
+        result.ShouldBeError(InvalidPermissionsForUserType.I);
     }
 
     [Test]
@@ -195,7 +195,7 @@ public partial class IntegrationTests
         var role = await client.CreateRole(name: "Admin", description: "Administrador", baseType: UserType.Manager, permissions: []).Success();
 
         // Act
-        var result = await client.UpdateRole(role.Id, name: "Gestor", description: "Gestor acadêmico", baseType: UserType.Manager, permissions: []);
+        var result = await client.UpdateRole(role.Id, name: "Gestor", description: "Gestor acadêmico", permissions: []);
 
         // Assert
         result.Success.Id.Should().Be(role.Id);

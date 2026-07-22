@@ -5,7 +5,7 @@ definePageMeta({
 
 const toast = useToast()
 const router = useRouter()
-const { getTwoFactorKey, setupTwoFactor } = useAuth()
+const { getTwoFactorKey, setupTwoFactor, twoFactorSetupLogin, fetchUser } = useAuth()
 
 const isLoading = ref(true)
 const isSettingUp = ref(false)
@@ -51,14 +51,29 @@ async function onSetup() {
     const success = await setupTwoFactor(tokenString)
 
     if (success) {
+      // Troca a credencial de setup pelo JWT full: entra logado direto,
+      // sem precisar refazer o login.
+      const loggedIn = await twoFactorSetupLogin()
+      if (!loggedIn) {
+        toast.add({
+          title: 'Erro',
+          description: 'Não foi possível concluir o login. Faça login novamente.',
+          icon: 'i-lucide-x',
+          color: 'error'
+        })
+        router.push('/login')
+        return
+      }
+
       setupSuccess.value = true
       toast.add({
         title: 'Sucesso',
-        description: '2FA ativado com sucesso! Faça login novamente.',
+        description: '2FA ativado com sucesso! Entrando...',
         icon: 'i-lucide-check',
         color: 'success'
       })
-      router.push('/login')
+      await fetchUser()
+      await navigateTo('/home')
     } else {
       toast.add({
         title: 'Código inválido',

@@ -23,11 +23,11 @@ public class RegisterUserService(EstudDbContext ctx, UserManager<EstudUser> user
         if (emailUsed) return EmailAlreadyUsed.I;
 
         var institution = Institution.NewForUserRegister();
-        var user = new EstudUser(institution, "Seu Nome", email);
-        var magicLink = new MagicLink(user);
+        var directorRole = institution.GetDirectorRole();
 
-        var directorRole = await ctx.GetDirectorRole();
-        var userRole = new EstudUserRole(institution, user, directorRole.Id);
+        var user = new EstudUser(institution, "Seu Nome", email);
+        var userRole = new EstudUserRole(institution, user, directorRole);
+        var magicLink = new MagicLink(user);
 
         ctx.AddRange(institution, magicLink, userRole);
         ctx.AddCommand(institution, new SendFirstAccessMagicLinkEmailCommand(email, magicLink.Id), maxRetries: 1);

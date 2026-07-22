@@ -10,6 +10,6 @@ public class UpdateRoleIn : IApiDto<UpdateRoleIn>
 
     public static IEnumerable<(string, UpdateRoleIn)> GetExamples() =>
     [
-        ("Exemplo", new() { Id = 1, Name = "Admin", Description = "Perfil de administrador", BaseType = UserType.Manager, Permissions = [1, 2, 3] }),
+        ("Exemplo", new() { Id = 1, Name = "Admin", Description = "Perfil de administrador", Permissions = [1, 2, 3] }),
     ];
 }

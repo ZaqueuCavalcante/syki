@@ -5,16 +5,16 @@ const state = reactive<{ [key: string]: boolean }>({
 })
 
 const sections = [{
-  title: 'Notification channels',
-  description: 'Where can we notify you?',
+  title: 'Canais de notificação',
+  description: 'Onde podemos te notificar?',
   fields: [{
     name: 'email',
-    label: 'Email',
-    description: 'Receive a daily email digest.'
+    label: 'E-mail',
+    description: 'Receber um resumo diário por e-mail.'
   }, {
     name: 'desktop',
     label: 'Desktop',
-    description: 'Receive desktop notifications.'
+    description: 'Receber notificações no desktop.'
   }]
 }]
 

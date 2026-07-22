@@ -1,3 +1,4 @@
+using Estud.Back.Auth.Schemes;
 using Estud.Back.Auth.Permissions;
 
 namespace Estud.Back.Auth.Policies;
@@ -21,6 +22,9 @@ public static partial class Policies
 
     public const string SetupTwoFactor = nameof(SetupTwoFactor);
     public const string GetTwoFactorKey = nameof(GetTwoFactorKey);
+    public const string TwoFactorSetupLogin = nameof(TwoFactorSetupLogin);
+    public const string GetTwoFactorEnforcement = nameof(GetTwoFactorEnforcement);
+    public const string SetTwoFactorEnforcement = nameof(SetTwoFactorEnforcement);
 
     public const string Logout = nameof(Logout);
     public const string GetPermissions = nameof(GetPermissions);
@@ -46,9 +50,23 @@ public static partial class Policies
             .AddEstudPolicy(UpdateSsoConfiguration, UserType.Manager, EstudPermissions.ManageSso);
 
         builder
-            .AddEstudPolicy(Logout)
-            .AddEstudPolicy(SetupTwoFactor)
-            .AddEstudPolicy(GetTwoFactorKey);
+            .AddEstudPolicy(GetTwoFactorEnforcement, UserType.Manager, EstudPermissions.ManageTwoFactor)
+            .AddEstudPolicy(SetTwoFactorEnforcement, UserType.Manager, EstudPermissions.ManageTwoFactor);
+
+        builder
+            .AddEstudPolicy(Logout);
+
+        // Os endpoints de setup do 2FA aceitam dois schemes: o Bearer full (setup
+        // voluntário de quem já está logado) e o cookie temp TwoFactorSetup (fluxo
+        // enforced, quando o usuário obrigado ainda não configurou o 2FA).
+        builder
+            .AddEstudPolicy(SetupTwoFactor, [JwtBearerScheme.Name, TwoFactorSetupScheme.Name])
+            .AddEstudPolicy(GetTwoFactorKey, [JwtBearerScheme.Name, TwoFactorSetupScheme.Name]);
+
+        // Login pós-setup enforced: só aceita a credencial de setup — troca o cookie
+        // temp pelo JWT full depois que o 2FA foi habilitado.
+        builder
+            .AddEstudPolicy(TwoFactorSetupLogin, [TwoFactorSetupScheme.Name]);
 
         return builder;
     }

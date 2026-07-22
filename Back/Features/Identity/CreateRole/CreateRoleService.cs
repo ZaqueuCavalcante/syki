@@ -34,7 +34,7 @@ public class CreateRoleService(EstudDbContext ctx) : IEstudService
         var institutionId = ctx.RequestUser.InstitutionId;
 
         var upperCaseName = data.Name.Normalize().ToUpperInvariant();
-        var roleAlreadyExists = await ctx.Roles.AnyAsync(x => x.OwnerId == institutionId && x.NormalizedName == upperCaseName);
+        var roleAlreadyExists = await ctx.Roles.AnyAsync(x => x.InstitutionId == institutionId && x.NormalizedName == upperCaseName);
         if (roleAlreadyExists) return RoleNameAlreadyExists.I;
 
         var role = new EstudRole(institutionId, data.Name, data.Description, data.BaseType, data.Permissions);

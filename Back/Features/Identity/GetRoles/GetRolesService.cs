@@ -5,7 +5,7 @@ public class GetRolesService(EstudDbContext ctx) : IEstudService
     public async Task<GetRolesOut> Get()
     {
         var roles = await ctx.Roles.AsNoTracking()
-            .Where(r => r.OwnerId == ctx.RequestUser.InstitutionId)
+            .Where(r => r.InstitutionId == ctx.RequestUser.InstitutionId)
             .OrderBy(r => r.Name)
             .ToListAsync();
 

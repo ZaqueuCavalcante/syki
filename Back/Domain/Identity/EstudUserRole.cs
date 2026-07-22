@@ -12,6 +12,13 @@ public class EstudUserRole : IdentityUserRole<int>
 
     public EstudUserRole() {}
 
+    public EstudUserRole(Institution institution, EstudUser user, EstudRole role)
+    {
+        Institution = institution;
+        User = user;
+        Role = role;
+    }
+
     public EstudUserRole(Institution institution, EstudUser user, int roleId)
     {
         Institution = institution;

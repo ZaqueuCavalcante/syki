@@ -22,7 +22,7 @@ Terminado o setup, ele recebe o **JWT real** (com todas as permissões) e entra 
 - **Policies**: `Back/Auth/Policies/Policies.cs` — três overloads de `AddEstudPolicy` (só autenticado / autenticado + permissões / autenticado + userType + permissões). **Todas fixam `AddAuthenticationSchemes(JwtBearerScheme.Name)`** — os schemes temp não passam por `[Authorize]`, são lidos manualmente nos services. Identity policies em `Policies.Identity.cs`.
 - **Autorização por permissão**: `RequireAssertion(x => x.User.Permissions.Any(...))`. Permissões lidas do claim `prms` (`Back/Extensions/UserExtensions.cs`).
 - **Contexto por request**: `EnrichBackDbContextMiddleware` popula `ctx.RequestUser` (Id, InstitutionId, RoleId, Permissions) a partir das claims.
-- **Role**: `Back/Domain/Identity/EstudRole.cs` (`OwnerId` = instituição, `BaseType`, `Permissions`). DbConfig em `Back/Database/Identity/EstudRoleDbConfig.cs`.
+- **Role**: `Back/Domain/Identity/EstudRole.cs` (`InstitutionId` = instituição, `BaseType`, `Permissions`). DbConfig em `Back/Database/Identity/EstudRoleDbConfig.cs`.
 - **Config por instituição (padrão de referência)**: features `Institutions/GetInstitutionConfig` + `SetupInstitutionConfig` (GET/POST `institutions/config`) e o par SSO `Identity/GetSsoConfiguration` + `UpdateSsoConfiguration` — modelo a seguir para a tela do Manager.
 
 ### Frontend (já há scaffolding parcial!)
@@ -173,7 +173,7 @@ Modelo: par SSO (`GetSsoConfiguration` / `UpdateSsoConfiguration`). Nova permiss
   - Policy `Manager` + permissão de gestão (ex.: reusar `ManageRoles`, ou nova `ManageSecurity`).
 - **`Back/Features/Identity/SetTwoFactorEnforcement/`** (POST/PUT `identity/2fa-enforcement`):
   - Input: `{ roleId, required }` (ou lista de pares para salvar em lote).
-  - Valida que a role pertence à instituição (`OwnerId == ctx.RequestUser.InstitutionId`), atualiza `TwoFactorRequired`, `SaveChangesAsync`.
+  - Valida que a role pertence à instituição (`InstitutionId == ctx.RequestUser.InstitutionId`), atualiza `TwoFactorRequired`, `SaveChangesAsync`.
   - Seguir o padrão POST de 4 arquivos do `CLAUDE.md` (Controller/Service/In/Out + Mapper), validators nested, `OneOf<TOut, EstudError>`.
 - Registrar policies em `Policies.Identity.cs` (`GetTwoFactorEnforcement`, `SetTwoFactorEnforcement`).
 

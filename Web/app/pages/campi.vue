@@ -80,6 +80,9 @@ const { data, status, refresh } = await useFetch<GetCampiOut>(`${config.public.b
                 <UTooltip text="Editar">
                   <UButton icon="i-lucide-pencil" color="neutral" variant="ghost" size="xs" @click="($event.currentTarget as HTMLElement).blur(); openEdit(campus)" />
                 </UTooltip>
+                <UTooltip text="Ocupação">
+                  <UButton icon="i-lucide-arrow-right" color="neutral" variant="ghost" size="xs" :to="`/campus/${campus.id}`" aria-label="Ocupação" />
+                </UTooltip>
               </div>
             </div>
 

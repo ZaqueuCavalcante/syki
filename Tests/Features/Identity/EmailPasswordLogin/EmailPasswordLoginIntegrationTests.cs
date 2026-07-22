@@ -7,7 +7,7 @@ public partial class IntegrationTests : IntegrationTestBase
     #region Validation errors
 
     [Test]
-    public async Task EmailPasswordLogin_Should_not_login_random_user()
+    public async Task Identity_EmailPasswordLogin_Should_not_login_random_user()
     {
         // Arrange
         var client = _back.GetTestsClient();
@@ -20,7 +20,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task EmailPasswordLogin_Should_not_login_user_with_wrong_email()
+    public async Task Identity_EmailPasswordLogin_Should_not_login_user_with_wrong_email()
     {
         // Arrange
         var client = _back.GetTestsClient();
@@ -34,7 +34,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task EmailPasswordLogin_Should_not_login_user_with_wrong_password()
+    public async Task Identity_EmailPasswordLogin_Should_not_login_user_with_wrong_password()
     {
         // Arrange
         var client = _back.GetTestsClient();
@@ -48,7 +48,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task EmailPasswordLogin_Should_lockout_user_after_3_failed_login_attempts()
+    public async Task Identity_EmailPasswordLogin_Should_lockout_user_after_3_failed_login_attempts()
     {
         // Arrange
         var client = _back.GetTestsClient();
@@ -74,7 +74,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task EmailPasswordLogin_Should_require_two_factor_when_2fa_is_enabled()
+    public async Task Identity_EmailPasswordLogin_Should_require_two_factor_when_2fa_is_enabled()
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
@@ -92,12 +92,99 @@ public partial class IntegrationTests : IntegrationTestBase
         result.ShouldBeError(LoginRequiresTwoFactor.I);
     }
 
+    [Test]
+    public async Task Identity_EmailPasswordLogin_Should_enforce_two_factor_setup_when_role_requires_it()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var roles = await client.GetRoles().Success();
+        var role = roles.Items.First(r => r.BaseType == UserType.Manager);
+        await client.SetTwoFactorEnforcement(role.Id, true);
+
+        await client.Logout();
+
+        // Act
+        var result = await client.EmailPasswordLogin(client.User.Email, "My@nEw@strong@P4ssword");
+
+        // Assert
+        result.ShouldBeError(LoginTwoFactorEnforced.I);
+        // O cookie de setup autentica nos endpoints de setup do 2FA.
+        var key = await client.GetTwoFactorKey();
+        key.ShouldBeSuccess();
+    }
+
+    [Test]
+    public async Task Identity_EmailPasswordLogin_Should_require_two_factor_when_role_requires_it_but_user_already_has_2fa()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var token = keyResponse.Key.GenerateTOTP();
+        await client.SetupTwoFactor(token);
+
+        var roles = await client.GetRoles().Success();
+        var role = roles.Items.First(r => r.BaseType == UserType.Manager);
+        await client.SetTwoFactorEnforcement(role.Id, true);
+
+        await client.Logout();
+
+        // Act
+        var result = await client.EmailPasswordLogin(client.User.Email, "My@nEw@strong@P4ssword");
+
+        // Assert - o fluxo de 2FA já ativo tem precedência sobre o enforcement
+        result.ShouldBeError(LoginRequiresTwoFactor.I);
+    }
+
+    [Test]
+    public async Task Identity_EmailPasswordLogin_Setup_cookie_should_not_authorize_bearer_only_endpoints()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+        var roles = await client.GetRoles().Success();
+        var role = roles.Items.First(r => r.BaseType == UserType.Manager);
+        await client.SetTwoFactorEnforcement(role.Id, true);
+
+        await client.Logout();
+        await client.EmailPasswordLogin(client.User.Email, "My@nEw@strong@P4ssword");
+
+        // Act - com apenas o cookie de setup, um endpoint protegido por Bearer é rejeitado
+        var result = await client.GetRoles();
+
+        // Assert
+        result.ShouldBeError(HttpStatusCode.Unauthorized);
+    }
+
+    [Test]
+    public async Task Identity_EmailPasswordLogin_Setup_cookie_should_not_authorize_get_user_account()
+    {
+        // Arrange - o login enforced deixa apenas o cookie do TwoFactorSetupScheme
+        var client = await _back.LoggedAsDirector();
+        var roles = await client.GetRoles().Success();
+        var role = roles.Items.First(r => r.BaseType == UserType.Manager);
+        await client.SetTwoFactorEnforcement(role.Id, true);
+
+        await client.Logout();
+        var login = await client.EmailPasswordLogin(client.User.Email, "My@nEw@strong@P4ssword");
+        login.ShouldBeError(LoginTwoFactorEnforced.I);
+
+        // Act - GET /users/account é protegido por Bearer; o cookie de setup não é aceito lá
+        var account = await client.GetUserAccount();
+
+        // Assert
+        account.ShouldBeError(HttpStatusCode.Unauthorized);
+
+        // Controle positivo: o mesmo cookie continua destravando só os endpoints de setup do 2FA
+        var key = await client.GetTwoFactorKey();
+        key.ShouldBeSuccess();
+    }
+
     #endregion
 
     #region Happy path
 
     [Test]
-    public async Task EmailPasswordLogin_Should_login_user_with_correct_email_and_password()
+    public async Task Identity_EmailPasswordLogin_Should_login_user_with_correct_email_and_password()
     {
         // Arrange
         var client = _back.GetTestsClient();
@@ -115,7 +202,7 @@ public partial class IntegrationTests : IntegrationTestBase
     }
 
     [Test]
-    public async Task EmailPasswordLogin_Should_reset_failed_attempts_after_successful_login()
+    public async Task Identity_EmailPasswordLogin_Should_reset_failed_attempts_after_successful_login()
     {
         // Arrange
         var client = _back.GetTestsClient();

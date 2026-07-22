@@ -37,7 +37,7 @@ public class CreateParentService(EstudDbContext ctx, UserManager<EstudUser> user
         var existingStudents = await ctx.Students.CountAsync(s => s.InstitutionId == institutionId && studentIds.Contains(s.Id));
         if (existingStudents != studentIds.Count) return StudentNotFound.I;
 
-        var parentRole = await ctx.GetParentRole();
+        var parentRole = await ctx.Roles.Where(x => x.InstitutionId == institutionId && x.BaseType == UserType.Parent).FirstAsync();
 
         var user = new EstudUser(institutionId, data.Name, email)
         {

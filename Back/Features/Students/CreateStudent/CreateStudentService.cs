@@ -31,8 +31,8 @@ public class CreateStudentService(EstudDbContext ctx, UserManager<EstudUser> use
         var emailUsed = await ctx.Users.AnyAsync(u => u.Email == email);
         if (emailUsed) return EmailAlreadyUsed.I;
 
-        var studentRole = await ctx.GetStudentRole();
         var institutionId = ctx.RequestUser.InstitutionId;
+        var studentRole = await ctx.Roles.Where(x => x.InstitutionId == institutionId && x.BaseType == UserType.Student).FirstAsync();
 
         var user = new EstudUser(institutionId, data.Name, email)
         {

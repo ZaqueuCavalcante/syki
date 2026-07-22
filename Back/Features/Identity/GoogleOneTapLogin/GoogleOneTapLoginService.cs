@@ -61,11 +61,11 @@ public class GoogleOneTapLoginService(
         var name = payload.Name;
         if (name.IsEmpty()) name = email;
 
-        var directorRole = await ctx.GetDirectorRole();
-
         var institution = Institution.NewForUserRegister();
+        var directorRole = institution.GetDirectorRole();
+
         var user = new EstudUser(institution, name, email);
-        var userRole = new EstudUserRole(institution, user, directorRole.Id);
+        var userRole = new EstudUserRole(institution, user, directorRole);
         var socialLogin = new UserSocialLogin(user.Id, provider, providerKey, email) { User = user };
 
         ctx.AddRange(institution, userRole, socialLogin);

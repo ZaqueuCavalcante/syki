@@ -1,6 +1,4 @@
 using Dapper;
-using Estud.Back.Cache;
-using Estud.Back.Auth.Roles;
 using Estud.Back.Domain.Identity;
 using Estud.Back.Database.Identity;
 
@@ -42,66 +40,6 @@ public partial class EstudDbContext
         var userRole = await UserRoles.Where(x => x.UserId == userId && x.InstitutionId == institutionId).FirstAsync();
 
         return await Roles.Where(x => x.Id == userRole.RoleId).FirstAsync();
-    }
-
-    public async Task<EstudRole> GetDirectorRole()
-    {
-        return await Cache.GetOrCreateAsync(
-            key: $"{CacheKeys.GetDirectorRole}",
-            state: this,
-            options: new() { Expiration = TimeSpan.FromDays(100) },
-            factory: async (state, ct) =>
-            {
-                return await state.Roles.AsNoTracking()
-                    .Where(x => x.OwnerId == null && x.NormalizedName == EstudDefaultRoles.Director.NormalizedName)
-                    .FirstAsync(ct);
-            }
-        );
-    }
-
-    public async Task<EstudRole> GetTeacherRole()
-    {
-        return await Cache.GetOrCreateAsync(
-            key: $"{CacheKeys.GetTeacherRole}",
-            state: this,
-            options: new() { Expiration = TimeSpan.FromDays(100) },
-            factory: async (state, ct) =>
-            {
-                return await state.Roles.AsNoTracking()
-                    .Where(x => x.OwnerId == null && x.NormalizedName == EstudDefaultRoles.Teacher.NormalizedName)
-                    .FirstAsync(ct);
-            }
-        );
-    }
-
-    public async Task<EstudRole> GetStudentRole()
-    {
-        return await Cache.GetOrCreateAsync(
-            key: $"{CacheKeys.GetStudentRole}",
-            state: this,
-            options: new() { Expiration = TimeSpan.FromDays(100) },
-            factory: async (state, ct) =>
-            {
-                return await state.Roles.AsNoTracking()
-                    .Where(x => x.OwnerId == null && x.NormalizedName == EstudDefaultRoles.Student.NormalizedName)
-                    .FirstAsync(ct);
-            }
-        );
-    }
-
-    public async Task<EstudRole> GetParentRole()
-    {
-        return await Cache.GetOrCreateAsync(
-            key: $"{CacheKeys.GetParentRole}",
-            state: this,
-            options: new() { Expiration = TimeSpan.FromDays(100) },
-            factory: async (state, ct) =>
-            {
-                return await state.Roles.AsNoTracking()
-                    .Where(x => x.OwnerId == null && x.NormalizedName == EstudDefaultRoles.Parent.NormalizedName)
-                    .FirstAsync(ct);
-            }
-        );
     }
 
     public async Task<SsoConfiguration?> GetActiveSsoConfigForSchemeAsync(Guid publicId)

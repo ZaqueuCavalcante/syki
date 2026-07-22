@@ -23,6 +23,7 @@ internal class RequestExamples : ExamplesProvider<EmailPasswordLoginIn>;
 internal class ResponseExamples : ExamplesProvider<EmailPasswordLoginOut>;
 internal class ErrorsExamples : ErrorExamplesProvider<
     LoginRequiresTwoFactor,
+    LoginTwoFactorEnforced,
     LoginUserLockedOut,
     LoginWrongEmailOrPassword
 >;

@@ -300,7 +300,7 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
     description: "Acessar a página de segurança",
     requirements: [
       hasUserType(UserTypes.Manager),
-      hasAnyPermission(Permissions.ManageRoles, Permissions.ManageSso),
+      hasAnyPermission(Permissions.ManageRoles, Permissions.ManageSso, Permissions.ManageTwoFactor),
     ],
   },
   AccessRolesPage: {
@@ -343,6 +343,27 @@ export const Policies: Record<PolicyName, PolicyDefinition> = {
     requirements: [
       hasUserType(UserTypes.Manager),
       hasPermission(Permissions.ManageSso),
+    ],
+  },
+  AccessTwoFactorEnforcementPage: {
+    description: "Acessar a aba de obrigatoriedade de 2FA",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageTwoFactor),
+    ],
+  },
+  GetTwoFactorEnforcement: {
+    description: "Ver a obrigatoriedade de 2FA dos perfis",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageTwoFactor),
+    ],
+  },
+  SetTwoFactorEnforcement: {
+    description: "Definir a obrigatoriedade de 2FA dos perfis",
+    requirements: [
+      hasUserType(UserTypes.Manager),
+      hasPermission(Permissions.ManageTwoFactor),
     ],
   },
 

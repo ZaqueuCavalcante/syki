@@ -10,6 +10,7 @@ public static class AuthenticationConfigs
             .AddAuthentication(options => options.DefaultChallengeScheme = JwtBearerScheme.Name)
             .AddJwtBearerScheme(builder.Configuration)
             .AddSsoTempCookieScheme()
+            .AddTwoFactorSetupScheme()
             .AddSsoOpenIdConnectScheme()
             .AddSocialTempCookieScheme()
             .AddSocialLoginSchemes(builder.Configuration);

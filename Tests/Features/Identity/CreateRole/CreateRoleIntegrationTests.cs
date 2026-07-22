@@ -95,6 +95,19 @@ public partial class IntegrationTests
     }
 
     [Test]
+    public async Task Identity_CreateRole_Should_not_create_role_with_permissions_not_allowed_for_the_base_type()
+    {
+        // Arrange
+        var client = await _back.LoggedAsDirector();
+
+        // Act
+        var result = await client.CreateRole(baseType: UserType.Teacher, permissions: [EstudPermissions.ManageRoles.Id]);
+
+        // Assert
+        result.ShouldBeError(InvalidPermissionsForUserType.I);
+    }
+
+    [Test]
     public async Task Identity_CreateRole_Should_not_create_role_when_name_already_exists()
     {
         // Arrange

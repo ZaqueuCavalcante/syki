@@ -1,5 +1,6 @@
-using Estud.Back.Auth.Schemes;
+using Estud.Back.Auth.Claims;
 using System.Security.Claims;
+using Estud.Back.Auth.Schemes;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -78,6 +79,20 @@ public static partial class HttpExtensions
             var identity = new ClaimsIdentity(IdentityConstants.TwoFactorUserIdScheme);
             identity.AddClaim(new Claim(ClaimTypes.Name, userId.ToString()));
             await context!.SignInAsync(IdentityConstants.TwoFactorUserIdScheme, new ClaimsPrincipal(identity));
+        }
+
+        public async Task SignInTwoFactorSetupSchemeAsync(int userId, int institutionId)
+        {
+            // Credencial intermediária de vida curta que só destrava os endpoints
+            // de setup do 2FA (2fa-key / 2fa-setup). Carrega `sub` + `inst` para que
+            // o EnrichBackDbContextMiddleware popule ctx.RequestUser nesses endpoints.
+            var claims = new List<Claim>
+            {
+                new(EstudClaims.UserId, userId.ToString()),
+                new(EstudClaims.UserInstitutionId, institutionId.ToString()),
+            };
+            var identity = new ClaimsIdentity(claims, TwoFactorSetupScheme.Name);
+            await context!.SignInAsync(TwoFactorSetupScheme.Name, new ClaimsPrincipal(identity));
         }
     }
 }

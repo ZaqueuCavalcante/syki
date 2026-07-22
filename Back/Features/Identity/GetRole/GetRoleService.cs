@@ -5,7 +5,7 @@ public class GetRoleService(EstudDbContext ctx) : IEstudService
     public async Task<OneOf<GetRoleOut, EstudError>> Get(int id)
     {
         var role = await ctx.Roles.AsNoTracking()
-            .FirstOrDefaultAsync(r => r.OwnerId == ctx.RequestUser.InstitutionId && r.Id == id);
+            .FirstOrDefaultAsync(r => r.InstitutionId == ctx.RequestUser.InstitutionId && r.Id == id);
         if (role == null) return RoleNotFound.I;
 
         return new GetRoleOut

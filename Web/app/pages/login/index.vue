@@ -7,6 +7,7 @@ definePageMeta({
 })
 
 const toast = useToast()
+const router = useRouter()
 const config = useRuntimeConfig()
 const { fetchUser } = useAuth()
 

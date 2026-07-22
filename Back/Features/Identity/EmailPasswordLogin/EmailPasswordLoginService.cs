@@ -4,6 +4,7 @@ using Estud.Back.Features.Cross.SignIn;
 namespace Estud.Back.Features.Identity.EmailPasswordLogin;
 
 public class EmailPasswordLoginService(
+    EstudDbContext ctx,
     SignInService service,
     IHttpContextAccessor httpCtx,
     UserManager<EstudUser> userManager) : IEstudService
@@ -29,6 +30,13 @@ public class EmailPasswordLoginService(
         {
             await httpCtx.HttpContext.SignInTwoFactorUserIdSchemeAsync(user.Id);
             return new LoginRequiresTwoFactor();
+        }
+
+        var role = await ctx.GetUserRole(user.Id, user.InstitutionId);
+        if (role.TwoFactorRequired)
+        {
+            await httpCtx.HttpContext.SignInTwoFactorSetupSchemeAsync(user.Id, user.InstitutionId);
+            return new LoginTwoFactorEnforced();
         }
 
         var signInResult = await service.SignIn(data.Email);

@@ -1,3 +1,4 @@
+using Estud.Back.Auth.Roles;
 using Estud.Back.Domain.Campi;
 using Estud.Back.Domain.Classes;
 using Estud.Back.Domain.Courses;
@@ -26,6 +27,7 @@ public class Institution
     public List<Class> Classes { get; set; }
     public List<Course> Courses { get; set; }
     public List<EstudUser> Users { get; set; }
+    public List<EstudRole> Roles { get; set; }
     public List<Command> Commands { get; set; }
     public List<Classroom> Classrooms { get; set; }
     public List<EstudStudent> Students { get; set; }
@@ -45,7 +47,7 @@ public class Institution
 
     public Institution() { }
 
-    public Institution(string name)
+    private Institution(string name)
     {
         Name = name;
         CreatedAt = DateTime.UtcNow;
@@ -56,6 +58,22 @@ public class Institution
     {
         var prefix = new List<string> { "UF", "IF" }.PickRandom();
         var state = Enum.GetValues<BrazilState>().PickRandom();
-        return new Institution($"{prefix}{state}");
+        var institution = new Institution($"{prefix}{state}")
+        {
+            Roles =
+            [
+                EstudDefaultRoles.Parent,
+                EstudDefaultRoles.Student,
+                EstudDefaultRoles.Teacher,
+                EstudDefaultRoles.Director,
+            ]
+        };
+
+        return institution;
+    }
+
+    public EstudRole GetDirectorRole()
+    {
+        return Roles.Single(x => x.BaseType == UserType.Manager);
     }
 }

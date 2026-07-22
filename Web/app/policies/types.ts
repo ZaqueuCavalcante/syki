@@ -5,6 +5,7 @@ export const Permissions = {
   // Identity
   ManageRoles: 0,
   ManageSso: 1,
+  ManageTwoFactor: 2,
 
   // Campi
   ManageCampi: 200,
@@ -172,6 +173,9 @@ export type PolicyName
     | 'AccessSsoPage'
     | 'CreateSsoConfiguration'
     | 'UpdateSsoConfiguration'
+    | 'AccessTwoFactorEnforcementPage'
+    | 'GetTwoFactorEnforcement'
+    | 'SetTwoFactorEnforcement'
   // Integrations
     | 'AccessIntegrationsPage'
     | 'GetWebhookSubscription'

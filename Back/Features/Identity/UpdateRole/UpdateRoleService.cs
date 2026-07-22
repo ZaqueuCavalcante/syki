@@ -14,15 +14,9 @@ public class UpdateRoleService(EstudDbContext ctx) : IEstudService
             RuleFor(x => x.Description).NotEmpty().WithError(InvalidRoleDescription.I);
             RuleFor(x => x.Description).MaximumLength(200).WithError(InvalidRoleDescription.I);
 
-            RuleFor(x => x.BaseType).IsInEnum().WithError(InvalidRoleBaseType.I);
-
             RuleFor(x => x.Permissions)
                 .Must(x => x != null && x.IsAllDistinct() && x.IsSubsetOf(EstudPermissions.Permissions.ConvertAll(p => p.Id)))
                 .WithError(InvalidPermissionsList.I);
-
-            RuleFor(x => x)
-                .Must(x => x.Permissions.All(id => EstudPermissions.IsAllowedFor(id, x.BaseType)))
-                .WithError(InvalidPermissionsForUserType.I);
         }
     }
     private static readonly Validator V = new();
@@ -33,17 +27,20 @@ public class UpdateRoleService(EstudDbContext ctx) : IEstudService
 
         var institutionId = ctx.RequestUser.InstitutionId;
 
-        var role = await ctx.Roles.FirstOrDefaultAsync(r => r.OwnerId == institutionId && r.Id == data.Id);
+        var role = await ctx.Roles.FirstOrDefaultAsync(r => r.InstitutionId == institutionId && r.Id == data.Id);
         if (role == null) return RoleNotFound.I;
 
+        var baseTypePermissionsOk = data.Permissions.All(id => EstudPermissions.IsAllowedFor(id, role.BaseType));
+        if (!baseTypePermissionsOk) return InvalidPermissionsForUserType.I;
+
         var upperCaseName = data.Name.Normalize().ToUpperInvariant();
-        var nameConflict = await ctx.Roles.AnyAsync(r => r.OwnerId == institutionId && r.NormalizedName == upperCaseName && r.Id != data.Id);
+        var nameConflict = await ctx.Roles.AnyAsync(r => r.InstitutionId == institutionId && r.NormalizedName == upperCaseName && r.Id != data.Id);
         if (nameConflict) return RoleNameAlreadyExists.I;
 
         var rolePermissionsOk = role.IsSubsetOf(ctx.RequestUser.Permissions) && data.Permissions.IsSubsetOf(ctx.RequestUser.Permissions);
         if (!rolePermissionsOk) return InvalidRolePermissions.I;
 
-        role.Update(data.Name, upperCaseName, data.Description, data.BaseType, data.Permissions);
+        role.Update(data.Name, upperCaseName, data.Description, data.Permissions);
 
         await ctx.SaveChangesAsync();
 

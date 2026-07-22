@@ -137,11 +137,11 @@ const groups = computed(() => [{
     <div class="fixed top-4 right-6 z-50 flex items-center gap-3">
       <ChildrenSelector />
       <UChip
-        :text="unreadCount > 99 ? '99+' : unreadCount"
+        :text="unreadCount > 9 ? '+9' : unreadCount"
         :show="unreadCount > 0"
         color="error"
-        size="2xl"
-        inset
+        size="3xl"
+        :ui="{ base: 'font-semibold text-xs leading-none h-3.5 min-w-3.5 px-1 rounded-full -translate-x-0.5 translate-y-0.5 pointer-events-none' }"
       >
         <UTooltip text="Notificações">
           <UButton

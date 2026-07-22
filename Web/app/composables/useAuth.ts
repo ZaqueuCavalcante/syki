@@ -45,5 +45,17 @@ export function useAuth() {
     }
   }
 
-  return { fetchUser, twoFactorLogin, getTwoFactorKey, setupTwoFactor }
+  async function twoFactorSetupLogin(): Promise<boolean> {
+    try {
+      await $fetch(`${config.public.backendUrl}/identity/2fa-setup-login`, {
+        method: 'POST',
+        credentials: 'include'
+      })
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  return { fetchUser, twoFactorLogin, getTwoFactorKey, setupTwoFactor, twoFactorSetupLogin }
 }

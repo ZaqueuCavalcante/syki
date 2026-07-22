@@ -10,6 +10,7 @@ const routePolicies: Record<string, PolicyName> = {
   '/periods': 'AccessPeriodsPage',
   '/enrollments': 'AccessEnrollmentsPage',
   '/security/sso': 'AccessSsoPage',
+  '/security/2fa': 'AccessTwoFactorEnforcementPage',
   '/security': 'AccessSecurityPage',
   '/teachers': 'AccessTeachersPage',
   '/students': 'AccessStudentsPage',

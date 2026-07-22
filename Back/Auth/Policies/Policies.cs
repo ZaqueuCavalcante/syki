@@ -16,6 +16,16 @@ public static partial class Policies
     }
 
     /// <summary>
+    /// Basta que o usuário esteja logado, autenticado por qualquer um dos schemes informados.
+    /// </summary>
+    public static AuthorizationBuilder AddEstudPolicy(this AuthorizationBuilder builder, string name, string[] schemes)
+    {
+        return builder.AddPolicy(name, policy => policy
+            .RequireAuthenticatedUser()
+            .AddAuthenticationSchemes(schemes));
+    }
+
+    /// <summary>
     /// O usuário precisa estar logado e seu perfil de acesso deve possuir as permissões especificadas.
     /// </summary>
     public static AuthorizationBuilder AddEstudPolicy(this AuthorizationBuilder builder, string name, params EstudPermission[] permissions)

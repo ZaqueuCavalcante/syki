@@ -15,10 +15,14 @@ public class EstudRoleDbConfig : IEntityTypeConfiguration<EstudRole>
             .HasColumnType("integer[]")
             .IsRequired();
 
+        entity.Property(e => e.TwoFactorRequired)
+            .HasDefaultValue(false)
+            .IsRequired();
+
         entity.HasOne<Institution>()
             .WithMany()
             .HasPrincipalKey(u => u.Id)
-            .HasForeignKey(e => e.OwnerId);
+            .HasForeignKey(e => e.InstitutionId);
 
         // Remove o índice único padrão do ASP.NET Identity
         entity.HasIndex(e => e.NormalizedName)
@@ -27,7 +31,7 @@ public class EstudRoleDbConfig : IEntityTypeConfiguration<EstudRole>
 
         // Índice único composto: permite mesmo nome em orgs diferentes
         // AreNullsDistinct(false) gera NULLS NOT DISTINCT no PostgreSQL 15+
-        entity.HasIndex(e => new { e.OwnerId, e.NormalizedName })
+        entity.HasIndex(e => new { e.InstitutionId, e.NormalizedName })
             .IsUnique()
             .AreNullsDistinct(false);
     }

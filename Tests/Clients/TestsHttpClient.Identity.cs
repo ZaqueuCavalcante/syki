@@ -11,10 +11,13 @@ using Estud.Back.Features.Identity.TwoFactorLogin;
 using Estud.Back.Features.Identity.GetTwoFactorKey;
 using Estud.Back.Features.Identity.EmailPasswordLogin;
 using Estud.Back.Features.Identity.GetSsoConfiguration;
+using Estud.Back.Features.Identity.TwoFactorSetupLogin;
 using Estud.Back.Features.Identity.CheckSsoAvailability;
 using Estud.Back.Features.Identity.CreateSsoConfiguration;
 using Estud.Back.Features.Identity.UpdateSsoConfiguration;
 using Estud.Back.Features.Identity.SendResetPasswordToken;
+using Estud.Back.Features.Identity.SetTwoFactorEnforcement;
+using Estud.Back.Features.Identity.GetTwoFactorEnforcement;
 using Estud.Back.Features.Identity.CheckSocialLoginAvailability;
 
 namespace Estud.Tests.Integration.Clients;
@@ -66,6 +69,13 @@ public partial class TestsHttpClient
         return await response.Resolve<TwoFactorLoginOut>();
     }
 
+    public async Task<OneOf<TwoFactorSetupLoginOut, ErrorOut>> TwoFactorSetupLogin()
+    {
+        var response = await http.PostAsJsonAsync("identity/2fa-setup-login", new {});
+
+        return await response.Resolve<TwoFactorSetupLoginOut>();
+    }
+
     public async Task<HttpResponseMessage> SendResetPasswordToken(string email)
     {
         var data = new SendResetPasswordTokenIn { Email = email };
@@ -105,10 +115,9 @@ public partial class TestsHttpClient
         int id,
         string name = "Admin",
         string description = "Administrador com acesso total",
-        UserType baseType = UserType.Manager,
         List<int>? permissions = null
     ) {
-        var data = new UpdateRoleIn { Id = id, Name = name, Description = description, BaseType = baseType, Permissions = permissions ?? [] };
+        var data = new UpdateRoleIn { Id = id, Name = name, Description = description, Permissions = permissions ?? [] };
         var response = await http.PutAsJsonAsync("identity/roles", data);
         return await response.Resolve<UpdateRoleOut>();
     }
@@ -117,6 +126,19 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync("identity/permissions");
         return await response.Resolve<GetPermissionsOut>();
+    }
+
+    public async Task<OneOf<GetTwoFactorEnforcementOut, ErrorOut>> GetTwoFactorEnforcement()
+    {
+        var response = await http.GetAsync("identity/2fa-enforcement");
+        return await response.Resolve<GetTwoFactorEnforcementOut>();
+    }
+
+    public async Task<OneOf<SetTwoFactorEnforcementOut, ErrorOut>> SetTwoFactorEnforcement(int roleId, bool required)
+    {
+        var data = new SetTwoFactorEnforcementIn { RoleId = roleId, Required = required };
+        var response = await http.PutAsJsonAsync("identity/2fa-enforcement", data);
+        return await response.Resolve<SetTwoFactorEnforcementOut>();
     }
 
     public async Task<OneOf<CreateSsoConfigurationOut, ErrorOut>> CreateSsoConfiguration(

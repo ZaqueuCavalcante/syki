@@ -295,7 +295,7 @@ public class CreateRoleService(EstudDbContext ctx) : IEstudService
         if (V.Run(data, out var error)) return error;   // validation first
 
         var orgId = ctx.RequestUser.InstitutionId;      // multi-tenant scoping from ctx
-        var exists = await ctx.Roles.AnyAsync(x => x.OwnerId == orgId && x.NormalizedName == ...);
+        var exists = await ctx.Roles.AnyAsync(x => x.InstitutionId == orgId && x.NormalizedName == ...);
         if (exists) return RoleNameAlreadyExists.I;     // domain checks after validation
 
         var role = new EstudRole(orgId, data.Name, data.Description, data.Permissions);

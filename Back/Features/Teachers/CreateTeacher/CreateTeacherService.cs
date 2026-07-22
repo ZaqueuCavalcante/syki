@@ -7,15 +7,17 @@ public class CreateTeacherService(EstudDbContext ctx, UserManager<EstudUser> use
 {
     public async Task<OneOf<CreateTeacherOut, EstudError>> Create(CreateTeacherIn data)
     {
+        var institutionId = ctx.RequestUser.InstitutionId;
+
         var email = data.Email.ToLowerInvariant();
         var emailUsed = await ctx.Users.AnyAsync(u => u.Email == email);
         if (emailUsed) return EmailAlreadyUsed.I;
 
-        var user = new EstudUser(ctx.RequestUser.InstitutionId, data.Name, email);
-        var teacher = new EstudTeacher(user, ctx.RequestUser.InstitutionId, data.Name);
+        var user = new EstudUser(institutionId, data.Name, email);
+        var teacher = new EstudTeacher(user, institutionId, data.Name);
 
-        var institution = await ctx.Institutions.FindAsync(ctx.RequestUser.InstitutionId);
-        var teacherRole = await ctx.GetTeacherRole();
+        var institution = await ctx.Institutions.FindAsync(institutionId);
+        var teacherRole = await ctx.Roles.Where(x => x.InstitutionId == institutionId && x.BaseType == UserType.Teacher).FirstAsync();
         var userRole = new EstudUserRole(institution, user, teacherRole.Id);
         ctx.AddRange(teacher, userRole);
 

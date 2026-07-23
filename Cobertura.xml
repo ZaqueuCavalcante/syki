@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.011914359939084476" branch-rate="0.022343594836146972" lines-covered="133" lines-valid="11163" branches-covered="45" branches-valid="2014" complexity="4801" version="0" timestamp="1784843243">
+<coverage line-rate="0.011904761904761904" branch-rate="0.022321428571428572" lines-covered="133" lines-valid="11172" branches-covered="45" branches-valid="2016" complexity="4802" version="0" timestamp="1784848060">
   <sources>
     <source>/</source>
   </sources>
   <packages>
-    <package name="Back" line-rate="0.009039139473922082" branch-rate="0.022410358565737053" complexity="4780">
+    <package name="Back" line-rate="0.009031791907514452" branch-rate="0.022388059701492536" complexity="4781">
       <classes>
         <class name="Estud.Back.Audit.AuditChange" filename="/home/runner/work/syki/syki/Back/Audit/AuditChange.cs" line-rate="0" branch-rate="1" complexity="4">
           <methods>
@@ -8834,15 +8834,15 @@
             </method>
             <method name="Update" signature="(System.String,System.String)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="43" hits="0" branch="false" />
-                <line number="44" hits="0" branch="false" />
                 <line number="45" hits="0" branch="false" />
+                <line number="46" hits="0" branch="false" />
+                <line number="47" hits="0" branch="false" />
               </lines>
             </method>
             <method name="ConfirmEmail" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="49" hits="0" branch="false" />
-                <line number="50" hits="0" branch="false" />
+                <line number="51" hits="0" branch="false" />
+                <line number="52" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -8850,7 +8850,7 @@
                 <line number="15" hits="0" branch="false" />
               </lines>
             </method>
-            <method name=".ctor" signature="(Estud.Back.Domain.Institutions.Institution,System.String,System.String)" line-rate="0" branch-rate="1" complexity="1">
+            <method name=".ctor" signature="(Estud.Back.Domain.Institutions.Institution,System.String,System.String,System.Boolean)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
                 <line number="17" hits="0" branch="false" />
                 <line number="18" hits="0" branch="false" />
@@ -8863,12 +8863,12 @@
                 <line number="25" hits="0" branch="false" />
                 <line number="26" hits="0" branch="false" />
                 <line number="27" hits="0" branch="false" />
+                <line number="28" hits="0" branch="false" />
+                <line number="29" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.Int32,System.String,System.String)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
-                <line number="29" hits="0" branch="false" />
-                <line number="30" hits="0" branch="false" />
                 <line number="31" hits="0" branch="false" />
                 <line number="32" hits="0" branch="false" />
                 <line number="33" hits="0" branch="false" />
@@ -8878,6 +8878,8 @@
                 <line number="37" hits="0" branch="false" />
                 <line number="38" hits="0" branch="false" />
                 <line number="39" hits="0" branch="false" />
+                <line number="40" hits="0" branch="false" />
+                <line number="41" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -8900,8 +8902,8 @@
             <line number="25" hits="0" branch="false" />
             <line number="26" hits="0" branch="false" />
             <line number="27" hits="0" branch="false" />
+            <line number="28" hits="0" branch="false" />
             <line number="29" hits="0" branch="false" />
-            <line number="30" hits="0" branch="false" />
             <line number="31" hits="0" branch="false" />
             <line number="32" hits="0" branch="false" />
             <line number="33" hits="0" branch="false" />
@@ -8911,11 +8913,13 @@
             <line number="37" hits="0" branch="false" />
             <line number="38" hits="0" branch="false" />
             <line number="39" hits="0" branch="false" />
-            <line number="43" hits="0" branch="false" />
-            <line number="44" hits="0" branch="false" />
+            <line number="40" hits="0" branch="false" />
+            <line number="41" hits="0" branch="false" />
             <line number="45" hits="0" branch="false" />
-            <line number="49" hits="0" branch="false" />
-            <line number="50" hits="0" branch="false" />
+            <line number="46" hits="0" branch="false" />
+            <line number="47" hits="0" branch="false" />
+            <line number="51" hits="0" branch="false" />
+            <line number="52" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Domain.Identity.EstudUserRole" filename="/home/runner/work/syki/syki/Back/Domain/Identity/EstudUserRole.cs" line-rate="0" branch-rate="1" complexity="9">
@@ -37330,7 +37334,7 @@
             <line number="32" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Google.FakeGoogleService" filename="/home/runner/work/syki/syki/Back/Google/FakeGoogleService.cs" line-rate="0" branch-rate="1" complexity="3">
+        <class name="Estud.Back.Google.FakeGoogleService" filename="/home/runner/work/syki/syki/Back/Google/FakeGoogleService.cs" line-rate="0" branch-rate="0" complexity="4">
           <methods>
             <method name="ValidateIdTokenAsync" signature="(System.String,System.String)" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -37338,10 +37342,17 @@
                 <line number="12" hits="0" branch="false" />
               </lines>
             </method>
-            <method name="Reset" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="SeedGoogleToken" signature="(System.String,System.String,System.String,System.Boolean,System.String)" line-rate="0" branch-rate="0" complexity="2">
               <lines>
-                <line number="17" hits="0" branch="false" />
-                <line number="18" hits="0" branch="false" />
+                <line number="27" hits="0" branch="true" condition-coverage="0% (0/2)" />
+                <line number="29" hits="0" branch="false" />
+                <line number="30" hits="0" branch="false" />
+                <line number="31" hits="0" branch="false" />
+                <line number="32" hits="0" branch="false" />
+                <line number="33" hits="0" branch="false" />
+                <line number="34" hits="0" branch="false" />
+                <line number="35" hits="0" branch="false" />
+                <line number="37" hits="0" branch="false" />
               </lines>
             </method>
             <method name=".cctor" signature="()" line-rate="0" branch-rate="1" complexity="1">
@@ -37354,8 +37365,15 @@
             <line number="7" hits="0" branch="false" />
             <line number="11" hits="0" branch="false" />
             <line number="12" hits="0" branch="false" />
-            <line number="17" hits="0" branch="false" />
-            <line number="18" hits="0" branch="false" />
+            <line number="27" hits="0" branch="true" condition-coverage="0% (0/2)" />
+            <line number="29" hits="0" branch="false" />
+            <line number="30" hits="0" branch="false" />
+            <line number="31" hits="0" branch="false" />
+            <line number="32" hits="0" branch="false" />
+            <line number="33" hits="0" branch="false" />
+            <line number="34" hits="0" branch="false" />
+            <line number="35" hits="0" branch="false" />
+            <line number="37" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Google.GoogleIdTokenPayload" filename="/home/runner/work/syki/syki/Back/Google/GoogleIdTokenPayload.cs" line-rate="0" branch-rate="1" complexity="4">

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.012118451025056948" branch-rate="0.02302968270214944" lines-covered="133" lines-valid="10975" branches-covered="45" branches-valid="1954" complexity="4702" version="0" timestamp="1784757107">
+<coverage line-rate="0.012125079770261647" branch-rate="0.02302968270214944" lines-covered="133" lines-valid="10969" branches-covered="45" branches-valid="1954" complexity="4701" version="0" timestamp="1784817686">
   <sources>
     <source>/</source>
   </sources>
   <packages>
-    <package name="Back" line-rate="0.009195402298850575" branch-rate="0.023100616016427104" complexity="4681">
+    <package name="Back" line-rate="0.009200478424878094" branch-rate="0.023100616016427104" complexity="4680">
       <classes>
         <class name="Estud.Back.Audit.AuditChange" filename="/home/runner/work/syki/syki/Back/Audit/AuditChange.cs" line-rate="0" branch-rate="1" complexity="4">
           <methods>
@@ -1319,11 +1319,11 @@
                 <line number="33" hits="0" branch="false" />
                 <line number="34" hits="0" branch="false" />
                 <line number="35" hits="0" branch="false" />
-                <line number="36" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Teacher" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="37" hits="0" branch="false" />
                 <line number="38" hits="0" branch="false" />
                 <line number="39" hits="0" branch="false" />
                 <line number="40" hits="0" branch="false" />
@@ -1331,34 +1331,30 @@
                 <line number="42" hits="0" branch="false" />
                 <line number="43" hits="0" branch="false" />
                 <line number="44" hits="0" branch="false" />
-                <line number="45" hits="0" branch="false" />
-                <line number="46" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Student" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="46" hits="0" branch="false" />
+                <line number="47" hits="0" branch="false" />
                 <line number="48" hits="0" branch="false" />
                 <line number="49" hits="0" branch="false" />
                 <line number="50" hits="0" branch="false" />
                 <line number="51" hits="0" branch="false" />
                 <line number="52" hits="0" branch="false" />
                 <line number="53" hits="0" branch="false" />
-                <line number="54" hits="0" branch="false" />
-                <line number="55" hits="0" branch="false" />
-                <line number="56" hits="0" branch="false" />
               </lines>
             </method>
             <method name="get_Parent" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="55" hits="0" branch="false" />
+                <line number="56" hits="0" branch="false" />
+                <line number="57" hits="0" branch="false" />
                 <line number="58" hits="0" branch="false" />
                 <line number="59" hits="0" branch="false" />
                 <line number="60" hits="0" branch="false" />
                 <line number="61" hits="0" branch="false" />
                 <line number="62" hits="0" branch="false" />
-                <line number="63" hits="0" branch="false" />
-                <line number="64" hits="0" branch="false" />
-                <line number="65" hits="0" branch="false" />
-                <line number="66" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -1391,7 +1387,7 @@
             <line number="33" hits="0" branch="false" />
             <line number="34" hits="0" branch="false" />
             <line number="35" hits="0" branch="false" />
-            <line number="36" hits="0" branch="false" />
+            <line number="37" hits="0" branch="false" />
             <line number="38" hits="0" branch="false" />
             <line number="39" hits="0" branch="false" />
             <line number="40" hits="0" branch="false" />
@@ -1399,26 +1395,22 @@
             <line number="42" hits="0" branch="false" />
             <line number="43" hits="0" branch="false" />
             <line number="44" hits="0" branch="false" />
-            <line number="45" hits="0" branch="false" />
             <line number="46" hits="0" branch="false" />
+            <line number="47" hits="0" branch="false" />
             <line number="48" hits="0" branch="false" />
             <line number="49" hits="0" branch="false" />
             <line number="50" hits="0" branch="false" />
             <line number="51" hits="0" branch="false" />
             <line number="52" hits="0" branch="false" />
             <line number="53" hits="0" branch="false" />
-            <line number="54" hits="0" branch="false" />
             <line number="55" hits="0" branch="false" />
             <line number="56" hits="0" branch="false" />
+            <line number="57" hits="0" branch="false" />
             <line number="58" hits="0" branch="false" />
             <line number="59" hits="0" branch="false" />
             <line number="60" hits="0" branch="false" />
             <line number="61" hits="0" branch="false" />
             <line number="62" hits="0" branch="false" />
-            <line number="63" hits="0" branch="false" />
-            <line number="64" hits="0" branch="false" />
-            <line number="65" hits="0" branch="false" />
-            <line number="66" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Auth.Schemes.JwtBearerScheme" filename="/home/runner/work/syki/syki/Back/Auth/Schemes/JwtBearerScheme.cs" line-rate="0" branch-rate="0" complexity="2">
@@ -24392,7 +24384,6 @@
                 <line number="18" hits="0" branch="false" />
                 <line number="19" hits="0" branch="false" />
                 <line number="20" hits="0" branch="false" />
-                <line number="21" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -24408,7 +24399,6 @@
             <line number="18" hits="0" branch="false" />
             <line number="19" hits="0" branch="false" />
             <line number="20" hits="0" branch="false" />
-            <line number="21" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Identity.SetupTwoFactor.SetupTwoFactorController" filename="/home/runner/work/syki/syki/Back/Features/Identity/SetupTwoFactor/SetupTwoFactorController.cs" line-rate="0" branch-rate="1" complexity="2">
@@ -24875,7 +24865,7 @@
             <line number="19" hits="0" branch="false" />
           </lines>
         </class>
-        <class name="Estud.Back.Features.Identity.UpdateRole.UpdateRoleIn" filename="/home/runner/work/syki/syki/Back/Features/Identity/UpdateRole/UpdateRoleIn.cs" line-rate="0" branch-rate="1" complexity="6">
+        <class name="Estud.Back.Features.Identity.UpdateRole.UpdateRoleIn" filename="/home/runner/work/syki/syki/Back/Features/Identity/UpdateRole/UpdateRoleIn.cs" line-rate="0" branch-rate="1" complexity="5">
           <methods>
             <method name="get_Id" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
@@ -24892,21 +24882,16 @@
                 <line number="7" hits="0" branch="false" />
               </lines>
             </method>
-            <method name="get_BaseType" signature="()" line-rate="0" branch-rate="1" complexity="1">
+            <method name="get_Permissions" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
                 <line number="8" hits="0" branch="false" />
               </lines>
             </method>
-            <method name="get_Permissions" signature="()" line-rate="0" branch-rate="1" complexity="1">
-              <lines>
-                <line number="9" hits="0" branch="false" />
-              </lines>
-            </method>
             <method name="GetExamples" signature="()" line-rate="0" branch-rate="1" complexity="1">
               <lines>
+                <line number="11" hits="0" branch="false" />
                 <line number="12" hits="0" branch="false" />
                 <line number="13" hits="0" branch="false" />
-                <line number="14" hits="0" branch="false" />
               </lines>
             </method>
           </methods>
@@ -24915,10 +24900,9 @@
             <line number="6" hits="0" branch="false" />
             <line number="7" hits="0" branch="false" />
             <line number="8" hits="0" branch="false" />
-            <line number="9" hits="0" branch="false" />
+            <line number="11" hits="0" branch="false" />
             <line number="12" hits="0" branch="false" />
             <line number="13" hits="0" branch="false" />
-            <line number="14" hits="0" branch="false" />
           </lines>
         </class>
         <class name="Estud.Back.Features.Identity.UpdateRole.UpdateRoleOut" filename="/home/runner/work/syki/syki/Back/Features/Identity/UpdateRole/UpdateRoleOut.cs" line-rate="0" branch-rate="1" complexity="2">

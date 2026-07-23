@@ -41,9 +41,6 @@ public class CreateClassActivityService(EstudDbContext ctx) : IEstudService
         var activity = result.Success;
         await ctx.SaveChangesAsync(activity);
 
-        ctx.AddCommand(institutionId, new CreateNewClassActivityNotificationCommand(activity.Id));
-        await ctx.SaveChangesAsync();
-
         return new CreateClassActivityOut { Id = activity.Id };
     }
 }

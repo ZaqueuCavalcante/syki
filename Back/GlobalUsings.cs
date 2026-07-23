@@ -12,6 +12,7 @@ global using Estud.Back.Settings;
 global using Estud.Back.Extensions;
 global using System.ComponentModel;
 global using Estud.Back.Middlewares;
+global using Estud.Back.DomainEvents;
 global using Estud.Back.Domain.Enums;
 global using Estud.Back.Auth.Policies;
 global using Microsoft.AspNetCore.Mvc;

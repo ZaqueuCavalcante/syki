@@ -3,7 +3,7 @@ namespace Estud.Back.Domain.Classes;
 /// <summary>
 /// Atividade vinculada à uma Turma
 /// </summary>
-public class ClassActivity
+public class ClassActivity : DomainEntity
 {
     public int Id { get; set; }
     public int ClassId { get; set; }
@@ -49,6 +49,8 @@ public class ClassActivity
         DueHour = dueHour;
 
         Works = students.ConvertAll(x => new ClassActivityWork(Id, x));
+
+        AddDomainEvent(new ClassActivityCreated(Uid));
     }
 
     public static OneOf<ClassActivity, EstudError> New(

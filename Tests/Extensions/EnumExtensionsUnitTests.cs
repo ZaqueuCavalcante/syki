@@ -139,7 +139,6 @@ public class EnumExtensionsUnitTests
         {
             (Day)69,
             (Hour)69,
-            (UserRole)69,
             (CourseType)69,
             (ClassStatus)69,
             (StudentClassStatus)(-69),

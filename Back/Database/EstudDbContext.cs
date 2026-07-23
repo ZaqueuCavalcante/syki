@@ -25,6 +25,7 @@ public partial class EstudDbContext(DbContextOptions<EstudDbContext> options, Np
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.UseNpgsql(npgsqlDataSource, x => x.MigrationsHistoryTable("migrations", DbSchemas.Estud));
 
+        optionsBuilder.AddInterceptors(new SaveDomainEventsInterceptor());
         optionsBuilder.AddInterceptors(new AuditSaveChangesInterceptor());
     }
 
@@ -48,18 +49,26 @@ public partial class EstudDbContext(DbContextOptions<EstudDbContext> options, Np
         ConfigureClassrooms(modelBuilder);
         ConfigureDisciplines(modelBuilder);
         ConfigureInstitutions(modelBuilder);
+        ConfigureDomainEvents(modelBuilder);
         ConfigureNotifications(modelBuilder);
         ConfigureCourseOfferings(modelBuilder);
         ConfigureCourseCurriculums(modelBuilder);
 
-        ConfigureDatabaseNames(modelBuilder);
+        ConfigureDatabaseConventions(modelBuilder);
     }
 
-    private static void ConfigureDatabaseNames(ModelBuilder modelBuilder)
+    private static void ConfigureDatabaseConventions(ModelBuilder modelBuilder)
     {
         foreach (var entity in modelBuilder.Model.GetEntityTypes())
         {
             if (entity.GetTableName().IsEmpty()) continue;
+
+            if (typeof(DomainEntity).IsAssignableFrom(entity.ClrType))
+            {
+                var uid = entity.FindProperty(nameof(DomainEntity.Uid))!;
+                uid.SetMaxLength(26);
+                entity.AddIndex(uid).IsUnique = true;
+            }
 
             entity.SetTableName(entity.GetTableName().ToSnakeCase().Replace("asp_net_", ""));
 

@@ -29,8 +29,8 @@ public static class EntityFrameworkConfigs
         app.UseMiddleware<EnrichBackDbContextMiddleware>();
     }
 
-    public static void UseCommandsProcessorTrigger(this IApplicationBuilder app)
+    public static void UseBackgroundProcessorsTrigger(this IApplicationBuilder app)
     {
-        app.UseMiddleware<CommandsProcessorTriggerMiddleware>();
+        app.UseMiddleware<BackgroundProcessorsTriggerMiddleware>();
     }
 }

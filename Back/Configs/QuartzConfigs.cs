@@ -8,6 +8,7 @@ public static class QuartzConfigs
     public static void AddQuartzConfigs(this WebApplicationBuilder builder)
     {
         var commands = builder.Configuration.Jobs.CommandsPollingIntervalInSeconds;
+        var domainEvents = builder.Configuration.Jobs.DomainEventsPollingIntervalInSeconds;
         var webhookCalls = builder.Configuration.Jobs.WebhookCallsPollingIntervalInSeconds;
 
         builder.Services.AddQuartz(q =>
@@ -18,6 +19,14 @@ public static class QuartzConfigs
                 .ForJob(commandsId)
                 .WithIdentity($"{commandsId}-trigger")
                 .WithSimpleSchedule(s => s.WithIntervalInSeconds(commands).RepeatForever())
+            );
+
+            var domainEventsId = nameof(DomainEventsProcessor);
+            q.AddJob<DomainEventsProcessor>(j => j.WithIdentity(domainEventsId));
+            q.AddTrigger(t => t
+                .ForJob(domainEventsId)
+                .WithIdentity($"{domainEventsId}-trigger")
+                .WithSimpleSchedule(s => s.WithIntervalInSeconds(domainEvents).RepeatForever())
             );
 
             var webhookCallsId = nameof(PendingWebhookCallsProcessor);

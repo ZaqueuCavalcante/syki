@@ -3,6 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddSettingsConfigs();
 builder.AddServicesConfigs();
 builder.AddQuartzConfigs();
+builder.AddDomainEventConfigs();
 builder.AddCommandConfigs();
 
 builder.AddIdentityConfigs();
@@ -43,7 +44,7 @@ app.UseEnrichDbContext();
 
 app.UseDocs();
 
-app.UseCommandsProcessorTrigger();
+app.UseBackgroundProcessorsTrigger();
 
 app.UseControllers();
 

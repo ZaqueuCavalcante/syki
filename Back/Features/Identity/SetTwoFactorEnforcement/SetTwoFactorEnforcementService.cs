@@ -15,8 +15,7 @@ public class SetTwoFactorEnforcementService(EstudDbContext ctx) : IEstudService
 
         return new SetTwoFactorEnforcementOut
         {
-            RoleId = role.Id,
-            TwoFactorRequired = role.TwoFactorRequired,
+            RoleId = role.Id, TwoFactorRequired = role.TwoFactorRequired,
         };
     }
 }

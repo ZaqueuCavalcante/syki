@@ -61,7 +61,6 @@ async function toggleRole(role: TwoFactorEnforcementItem, required: boolean) {
       title="Autenticação de dois fatores"
       description="Escolha quais perfis de acesso são obrigados a usar 2FA no login."
       variant="naked"
-      orientation="horizontal"
       class="mb-4"
     />
 
@@ -76,7 +75,6 @@ async function toggleRole(role: TwoFactorEnforcementItem, required: boolean) {
             </div>
             <USwitch
               :model-value="role.twoFactorRequired"
-              :loading="savingRoleId === role.roleId"
               :disabled="savingRoleId !== null"
               @update:model-value="(value: boolean) => { toggleRole(role, value) }"
             />

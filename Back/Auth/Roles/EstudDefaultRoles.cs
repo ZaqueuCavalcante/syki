@@ -7,10 +7,9 @@ public static class EstudDefaultRoles
 {
 	public static EstudRole Director => new()
     {
-		InstitutionId = null,
 		Name = "Diretor",
 		NormalizedName = "DIRETOR",
-		Description = "Gerencia campi, usuários, perfis, SSO, 2FA, períodos, turmas, cursos, responsáveis, professores, webhooks, alunos, calendário, salas, disciplinas, notificações, ofertas, grades e configurações da instituição.",
+		Description = "Gerencia todos os cadastros e configurações da instituição.",
 		BaseType = UserType.Manager,
 		Permissions = [
 			EstudPermissions.ManageSso.Id,
@@ -37,7 +36,6 @@ public static class EstudDefaultRoles
 
 	public static EstudRole Teacher => new()
     {
-		InstitutionId = null,
 		Name = "Professor",
 		NormalizedName = "PROFESSOR",
 		Description = "Ministra aulas e avalia os alunos.",
@@ -47,7 +45,6 @@ public static class EstudDefaultRoles
 
 	public static EstudRole Student => new()
     {
-		InstitutionId = null,
 		Name = "Aluno",
 		NormalizedName = "ALUNO",
 		Description = "Participa das aulas e é avaliado.",
@@ -57,7 +54,6 @@ public static class EstudDefaultRoles
 
 	public static EstudRole Parent => new()
     {
-		InstitutionId = null,
 		Name = "Responsável",
 		NormalizedName = "RESPONSAVEL",
 		Description = "Acompanha a vida escolar dos alunos vinculados.",

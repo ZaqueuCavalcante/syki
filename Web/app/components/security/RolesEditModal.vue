@@ -30,25 +30,29 @@ interface GetRoleOut {
   permissions: number[]
 }
 
-const userTypeNumbers: Record<string, number> = { 'Manager': 0, 'Teacher': 1, 'Student': 2 }
-
 const { data: permissionsData } = await useFetch<GetPermissionsOut>(
   `${config.public.backendUrl}/identity/permissions`,
   { credentials: 'include', server: false }
 )
 
-const baseTypeOptions = [
-  { label: 'Gestor', value: 0 },
-  { label: 'Professor', value: 1 },
-  { label: 'Aluno', value: 2 },
-]
+const baseTypeLabels: Record<string, string> = {
+  Manager: 'Gestor',
+  Teacher: 'Professor',
+  Student: 'Aluno',
+  Parent: 'Responsável',
+}
 
-const userTypeNames: Record<number, string> = { 0: 'Manager', 1: 'Teacher', 2: 'Student' }
+// Tipo base é imutável: apenas exibido, nunca enviado no update
+const baseType = ref<string | null>(null)
+
+const baseTypeLabel = computed(() => {
+  if (baseType.value === null) return ''
+  return baseTypeLabels[baseType.value] ?? baseType.value
+})
 
 const schema = z.object({
   name: z.string().min(1, 'Nome obrigatório').max(50, 'Máximo 50 caracteres'),
   description: z.string().min(1, 'Descrição obrigatória').max(200, 'Máximo 200 caracteres'),
-  baseType: z.number({ error: 'Tipo base obrigatório' }),
   permissions: z.array(z.number()),
 })
 
@@ -57,23 +61,14 @@ type Schema = z.output<typeof schema>
 const formState = reactive<Partial<Schema>>({
   name: '',
   description: '',
-  baseType: undefined,
   permissions: [],
 })
 
 const filteredPermissions = computed(() => {
-  if (formState.baseType === undefined) return []
-  const typeName = userTypeNames[formState.baseType]
+  if (baseType.value === null) return []
   return (permissionsData.value?.items ?? []).filter(p =>
-    p.allowedTypes.includes(typeName)
+    p.allowedTypes.includes(baseType.value!)
   )
-})
-
-let loadingRole = false
-
-watch(() => formState.baseType, (_, oldVal) => {
-  if (loadingRole) return
-  if (oldVal !== undefined) formState.permissions = []
 })
 
 function togglePermission(id: number) {
@@ -85,7 +80,6 @@ function togglePermission(id: number) {
 watch(open, async (val) => {
   if (val && props.roleId !== null) {
     fetching.value = true
-    loadingRole = true
     try {
       const role = await $fetch<GetRoleOut>(
         `${config.public.backendUrl}/identity/roles/${props.roleId}`,
@@ -93,14 +87,13 @@ watch(open, async (val) => {
       )
       formState.name = role.name
       formState.description = role.description
-      formState.baseType = userTypeNumbers[role.baseType]
+      baseType.value = role.baseType
       formState.permissions = [...role.permissions]
       await nextTick()
     } catch {
       toast.add({ title: 'Erro ao carregar perfil', color: 'error' })
       open.value = false
     } finally {
-      loadingRole = false
       fetching.value = false
     }
   }
@@ -153,17 +146,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           <UTextarea v-model="formState.description" class="w-full" placeholder="Ex: Perfil com acesso a cursos e disciplinas" :rows="3" />
         </UFormField>
 
-        <UFormField label="Tipo base" name="baseType">
-          <USelect
-            v-model="formState.baseType"
-            :items="baseTypeOptions"
-            value-key="value"
-            class="w-full"
-            placeholder="Selecione"
-          />
+        <UFormField v-if="baseType !== null" label="Tipo base">
+          <div class="flex items-center gap-2">
+            <UBadge color="neutral" variant="subtle" :label="baseTypeLabel" />
+            <span class="text-xs text-muted">Não pode ser alterado</span>
+          </div>
         </UFormField>
 
-        <UFormField v-if="formState.baseType !== undefined" label="Permissões" name="permissions">
+        <UFormField v-if="baseType !== null" label="Permissões" name="permissions">
           <div class="flex flex-col gap-2 w-full">
             <UCheckbox
               v-for="perm in filteredPermissions"

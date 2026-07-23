@@ -37,9 +37,9 @@ const weekDays = [
   { key: 'Saturday', label: 'Sábado', short: 'Sáb' },
 ]
 const shifts = [
-  { key: 'Morning', label: 'Matutino', window: '07:00 – 12:00', duration: 300 },
-  { key: 'Afternoon', label: 'Vespertino', window: '12:00 – 18:00', duration: 360 },
-  { key: 'Evening', label: 'Noturno', window: '18:00 – 24:00', duration: 360 },
+  { key: 'Morning', label: 'Matutino', window: '07h–12h', duration: 300 },
+  { key: 'Afternoon', label: 'Vespertino', window: '12h–18h', duration: 360 },
+  { key: 'Evening', label: 'Noturno', window: '18h–24h', duration: 360 },
 ]
 const shiftLabels: Record<string, string> = {
   Morning: 'Matutino',
@@ -54,6 +54,7 @@ const dayLabels: Record<string, string> = {
   Friday: 'Sexta',
   Saturday: 'Sábado',
 }
+const dayShort: Record<string, string> = Object.fromEntries(weekDays.map(d => [d.key, d.short]))
 
 // ── MOCK: gerador de ocupação ─────────────────────────────────────────────────
 const classrooms = [
@@ -130,18 +131,23 @@ function cellFor(dayKey: string, shiftKey: string): OccupancyCell | undefined {
   return data.value.cells.find(c => c.day === dayKey && c.shift === shiftKey)
 }
 
-// ── Totais por turno (stats) ──────────────────────────────────────────────────
-const shiftTotals = computed(() =>
-  shifts.map((shift) => {
+// ── Agregado por turno (vai no eixo esquerdo do grid) ─────────────────────────
+const shiftRate = computed<Record<string, number>>(() => {
+  const out: Record<string, number> = {}
+  for (const shift of shifts) {
     const cells = data.value.cells.filter(c => c.shift === shift.key)
     const used = cells.reduce((s, c) => s + c.usedMinutes, 0)
     const available = cells.reduce((s, c) => s + c.availableMinutes, 0)
-    return {
-      ...shift,
-      rate: available > 0 ? round2((used / available) * 100) : 0,
-    }
-  }),
+    out[shift.key] = available > 0 ? round2((used / available) * 100) : 0
+  }
+  return out
+})
+
+// ── Insights derivados (stats) ────────────────────────────────────────────────
+const peakCell = computed(() =>
+  data.value.cells.reduce((a, b) => (b.rate > a.rate ? b : a), data.value.cells[0]!),
 )
+const freeSlots = computed(() => data.value.cells.filter(c => c.rate === 0).length)
 
 // ── Dia atual (destaque da coluna, espelho do Week.vue) ───────────────────────
 const todayKey = computed(() => {
@@ -149,17 +155,7 @@ const todayKey = computed(() => {
   return keys[new Date().getDay()] ?? null
 })
 
-// ── Rampa sequencial de intensidade do primary (ocupação baixa ≠ ruim) ────────
-function cellClass(rate: number): string {
-  if (rate === 0) return 'bg-elevated text-muted'
-  if (rate < 20) return 'bg-primary/10'
-  if (rate < 40) return 'bg-primary/25'
-  if (rate < 60) return 'bg-primary/40'
-  if (rate < 80) return 'bg-primary/60 text-inverted'
-  return 'bg-primary/80 text-inverted'
-}
-
-// ── Formatação de minutos → "3h 30min" ────────────────────────────────────────
+// ── Formatação ────────────────────────────────────────────────────────────────
 function formatMinutes(minutes: number): string {
   if (minutes <= 0) return '0min'
   const h = Math.floor(minutes / 60)
@@ -168,30 +164,49 @@ function formatMinutes(minutes: number): string {
   if (m === 0) return `${h}h`
   return `${h}h ${m}min`
 }
-
 function formatRate(rate: number): string {
   return `${rate.toFixed(0)}%`
 }
 
+// Rampa sequencial de intensidade do primary — ocupação baixa não é "ruim",
+// então nada de vermelho/verde: só uma escala de saturação.
+function cellClass(rate: number): string {
+  if (rate === 0) return 'bg-elevated text-dimmed ring-1 ring-inset ring-default/60'
+  if (rate < 20) return 'bg-primary/10 text-highlighted'
+  if (rate < 40) return 'bg-primary/25 text-highlighted'
+  if (rate < 60) return 'bg-primary/40 text-highlighted'
+  if (rate < 80) return 'bg-primary/60 text-inverted'
+  return 'bg-primary/85 text-inverted'
+}
+
 // ── Drilldown selecionado ─────────────────────────────────────────────────────
-const selected = ref<{ day: string, shift: string } | null>({ day: 'Monday', shift: 'Morning' })
+const selected = ref<{ day: string, shift: string }>({ day: 'Monday', shift: 'Morning' })
 
 function selectCell(day: string, shift: string) {
   selected.value = { day, shift }
 }
+function isSelected(day: string, shift: string) {
+  return selected.value.day === day && selected.value.shift === shift
+}
 
-const selectedCell = computed(() =>
-  selected.value ? cellFor(selected.value.day, selected.value.shift) : undefined,
-)
-
+const selectedCell = computed(() => cellFor(selected.value.day, selected.value.shift))
 const selectedClassrooms = computed(() =>
   [...(selectedCell.value?.classrooms ?? [])].sort((a, b) => b.rate - a.rate),
 )
+
+// ── Animação de preenchimento no load (salas "enchendo") ──────────────────────
+const filled = ref(false)
+onMounted(() => {
+  requestAnimationFrame(() => { filled.value = true })
+})
 
 const breadcrumb = [
   { label: 'Campi', to: '/campi', icon: 'i-lucide-map-pin' },
   { label: 'Ocupação' },
 ]
+
+// Degraus da legenda — um por faixa da rampa do cellClass
+const legendSteps = [0, 10, 30, 50, 70, 90]
 </script>
 
 <template>
@@ -235,52 +250,77 @@ const breadcrumb = [
       </div>
 
       <div v-else class="flex flex-col gap-10 py-2">
-        <!-- Cabeçalho + stats -->
-        <div class="flex flex-col gap-5">
-          <div class="flex flex-col gap-1">
-            <h1 class="text-2xl font-semibold tracking-tight text-highlighted">
-              {{ data.campus }}
-            </h1>
-            <p class="text-sm text-muted">
-              Ocupação das salas por dia da semana e turno — medida pelo tempo agendado
-              sobre o tempo disponível.
-            </p>
+        <!-- Cabeçalho -->
+        <div class="flex flex-col gap-1">
+          <h1 class="text-2xl font-semibold tracking-tight text-highlighted">
+            {{ data.campus }}
+          </h1>
+          <p class="text-sm text-muted">
+            Quanto do tempo de cada sala está reservado, por dia e turno.
+          </p>
+        </div>
+
+        <!-- Stats: insights, não totais crus -->
+        <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div class="flex items-center gap-4 rounded-xl border border-primary/25 bg-primary/[0.04] px-4 py-4">
+            <div class="flex flex-col leading-none">
+              <span class="text-4xl font-bold tabular-nums tracking-tight text-primary">{{ formatRate(data.overallRate) }}</span>
+              <span class="mt-2 text-xs font-medium text-muted">Ocupação geral</span>
+            </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-4 sm:grid-cols-5">
-            <div class="rounded-xl border border-default bg-elevated/40 px-4 py-3">
-              <span class="text-2xl font-bold text-primary leading-none">{{ formatRate(data.overallRate) }}</span>
-              <span class="mt-1 block text-xs text-muted">Taxa geral</span>
-            </div>
-            <div class="rounded-xl border border-default bg-elevated/40 px-4 py-3">
-              <span class="text-2xl font-bold text-highlighted leading-none">{{ data.totalClassrooms }}</span>
-              <span class="mt-1 block text-xs text-muted">Salas</span>
-            </div>
-            <div
-              v-for="shift in shiftTotals"
-              :key="shift.key"
-              class="rounded-xl border border-default bg-elevated/40 px-4 py-3"
-            >
-              <span class="text-2xl font-bold text-highlighted leading-none">{{ formatRate(shift.rate) }}</span>
-              <span class="mt-1 block text-xs text-muted">{{ shift.label }}</span>
-            </div>
+          <div class="flex flex-col justify-center rounded-xl border border-default bg-elevated/40 px-4 py-4">
+            <span class="text-2xl font-bold tabular-nums leading-none text-highlighted">{{ data.totalClassrooms }}</span>
+            <span class="mt-2 text-xs text-muted">Salas no campus</span>
+          </div>
+
+          <div class="flex flex-col justify-center rounded-xl border border-default bg-elevated/40 px-4 py-4">
+            <span class="text-sm font-semibold text-highlighted">
+              {{ dayShort[peakCell.day] }} · {{ shiftLabels[peakCell.shift] }}
+            </span>
+            <span class="mt-0.5 text-xl font-bold tabular-nums leading-none text-primary">{{ formatRate(peakCell.rate) }}</span>
+            <span class="mt-2 text-xs text-muted">Horário de pico</span>
+          </div>
+
+          <div class="flex flex-col justify-center rounded-xl border border-default bg-elevated/40 px-4 py-4">
+            <span class="text-2xl font-bold tabular-nums leading-none text-highlighted">
+              {{ freeSlots }}<span class="text-base font-medium text-muted"> / 18</span>
+            </span>
+            <span class="mt-2 text-xs text-muted">Turnos livres</span>
           </div>
         </div>
 
-        <!-- Heatmap -->
-        <section class="flex flex-col gap-3">
-          <h2 class="font-semibold text-highlighted">
-            Mapa de ocupação
-          </h2>
+        <!-- Mapa de calor: dia × turno -->
+        <section class="flex flex-col gap-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <h2 class="font-semibold text-highlighted">
+              Mapa de ocupação
+            </h2>
+            <!-- Legenda: rampa de intensidade -->
+            <div class="flex items-center gap-2 text-xs text-muted">
+              <span>0%</span>
+              <div class="flex items-center gap-1">
+                <div
+                  v-for="step in legendSteps"
+                  :key="step"
+                  class="size-4 rounded-sm"
+                  :class="cellClass(step)"
+                />
+              </div>
+              <span>100%</span>
+            </div>
+          </div>
 
-          <div class="overflow-x-auto">
-            <div class="grid min-w-140 grid-cols-[auto_repeat(6,1fr)] gap-1.5">
+          <!-- p-1/-m-1: o ring de hover/seleção é desenhado FORA da caixa da célula,
+               então o container de scroll precisa de folga pra não recortá-lo nas bordas. -->
+          <div class="overflow-x-auto p-1 -m-1">
+            <div class="grid min-w-160 grid-cols-[auto_repeat(6,minmax(0,1fr))] gap-2">
               <!-- Header: dias da semana -->
               <div />
               <div
                 v-for="day in weekDays"
                 :key="day.key"
-                class="px-1 pb-1 text-center"
+                class="pb-1 text-center"
               >
                 <span
                   class="inline-flex items-center rounded-full px-2.5 py-0.5 text-sm font-semibold"
@@ -292,23 +332,26 @@ const breadcrumb = [
 
               <!-- Linhas por turno -->
               <template v-for="shift in shifts" :key="shift.key">
-                <div class="flex flex-col justify-center pr-2 text-right">
+                <!-- Eixo esquerdo: rótulo do turno + agregado (dupla função) -->
+                <div class="flex flex-col justify-center pr-3 text-right">
                   <span class="text-sm font-medium text-highlighted">{{ shift.label }}</span>
                   <span class="text-[11px] text-muted tabular-nums">{{ shift.window }}</span>
+                  <span class="mt-0.5 text-xs font-semibold tabular-nums text-primary">{{ formatRate(shiftRate[shift.key] ?? 0) }}</span>
                 </div>
 
+                <!-- Célula do mapa de calor -->
                 <button
                   v-for="day in weekDays"
                   :key="`${day.key}-${shift.key}`"
                   type="button"
-                  class="flex h-16 flex-col items-center justify-center rounded-lg text-sm font-semibold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  class="flex h-16 items-center justify-center rounded-lg text-sm font-semibold tabular-nums transition-shadow hover:ring-2 hover:ring-primary/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                   :class="[
                     cellClass(cellFor(day.key, shift.key)?.rate ?? 0),
-                    selected?.day === day.key && selected?.shift === shift.key ? 'ring-2 ring-primary' : '',
+                    isSelected(day.key, shift.key) ? 'ring-2 ring-primary' : '',
                   ]"
                   @click="() => { selectCell(day.key, shift.key) }"
                 >
-                  <span class="tabular-nums">{{ formatRate(cellFor(day.key, shift.key)?.rate ?? 0) }}</span>
+                  {{ formatRate(cellFor(day.key, shift.key)?.rate ?? 0) }}
                 </button>
               </template>
             </div>
@@ -316,36 +359,37 @@ const breadcrumb = [
         </section>
 
         <!-- Drilldown inline (micro) -->
-        <section v-if="selectedCell" class="flex flex-col gap-3">
-          <div class="flex items-baseline gap-2">
-            <h2 class="font-semibold text-highlighted">
-              {{ dayLabels[selectedCell.day] }} · {{ shiftLabels[selectedCell.shift] }}
-            </h2>
-            <span class="text-sm text-muted">
-              {{ formatMinutes(selectedCell.usedMinutes) }} de {{ formatMinutes(selectedCell.availableMinutes) }}
-            </span>
+        <section v-if="selectedCell" class="flex flex-col gap-4 rounded-xl border border-default bg-elevated/30 p-5">
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex flex-col gap-0.5">
+              <h2 class="font-semibold text-highlighted">
+                {{ dayLabels[selectedCell.day] }} · {{ shiftLabels[selectedCell.shift] }}
+              </h2>
+              <span class="text-sm text-muted">
+                {{ formatMinutes(selectedCell.usedMinutes) }} reservados de {{ formatMinutes(selectedCell.availableMinutes) }}
+              </span>
+            </div>
+            <span class="text-2xl font-bold tabular-nums text-primary">{{ formatRate(selectedCell.rate) }}</span>
           </div>
 
-          <div class="flex flex-col divide-y divide-default rounded-xl border border-default overflow-hidden">
+          <div class="flex flex-col gap-3">
             <div
               v-for="room in selectedClassrooms"
               :key="room.id"
-              class="flex items-center gap-4 px-4 py-3"
+              class="flex items-center gap-4"
             >
-              <span class="w-32 shrink-0 truncate text-sm font-medium text-highlighted">{{ room.name }}</span>
-              <span class="w-20 shrink-0 text-xs text-muted tabular-nums">{{ formatMinutes(room.usedMinutes) }}</span>
-              <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-elevated">
+              <span class="w-28 shrink-0 truncate text-sm font-medium text-highlighted">{{ room.name }}</span>
+              <div class="h-2 flex-1 overflow-hidden rounded-full bg-elevated ring-1 ring-inset ring-default/60">
                 <div
-                  class="h-full rounded-full bg-primary transition-all"
-                  :style="{ width: `${room.rate}%` }"
+                  class="h-full rounded-full bg-primary transition-[width] duration-500 ease-out motion-reduce:transition-none"
+                  :style="{ width: filled ? `${room.rate}%` : '0%' }"
                 />
               </div>
-              <UBadge
-                :label="formatRate(room.rate)"
-                :color="room.rate > 0 ? 'primary' : 'neutral'"
-                variant="subtle"
-                class="w-12 shrink-0 justify-center tabular-nums"
-              />
+              <span class="w-16 shrink-0 text-right text-xs text-muted tabular-nums">{{ formatMinutes(room.usedMinutes) }}</span>
+              <span
+                class="w-11 shrink-0 text-right text-sm font-semibold tabular-nums"
+                :class="room.rate > 0 ? 'text-highlighted' : 'text-dimmed'"
+              >{{ formatRate(room.rate) }}</span>
             </div>
           </div>
         </section>

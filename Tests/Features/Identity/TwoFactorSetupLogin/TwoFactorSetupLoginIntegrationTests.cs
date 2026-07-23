@@ -94,5 +94,32 @@ public partial class IntegrationTests : IntegrationTestBase
         afterLogin.ShouldBeSuccess();
     }
 
+    [Test]
+    public async Task Identity_TwoFactorSetupLogin_Should_invalidate_setup_cookie_after_login()
+    {
+        // Arrange - role obrigada, usuário sem 2FA, logado apenas pelo cookie de setup
+        var client = await _back.LoggedAsDirector();
+        var roles = await client.GetRoles().Success();
+        var role = roles.Items.First(r => r.BaseType == UserType.Manager);
+        await client.SetTwoFactorEnforcement(role.Id, true);
+
+        await client.Logout();
+        var login = await client.EmailPasswordLogin(client.User.Email, "My@nEw@strong@P4ssword");
+        login.ShouldBeError(LoginTwoFactorEnforced.I);
+
+        var keyResponse = await client.GetTwoFactorKey().Success();
+        var token = keyResponse.Key.GenerateTOTP();
+        await client.SetupTwoFactor(token).Success();
+
+        // Primeiro login troca o cookie de setup pelo JWT full
+        await client.TwoFactorSetupLogin().Success();
+
+        // Act - segunda chamada: o cookie de setup já foi invalidado (SignOut), só resta o Bearer
+        var secondLogin = await client.TwoFactorSetupLogin();
+
+        // Assert - a policy só aceita o TwoFactorSetupScheme, que não existe mais → 401
+        secondLogin.ShouldBeError(HttpStatusCode.Unauthorized);
+    }
+
     #endregion
 }

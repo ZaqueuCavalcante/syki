@@ -29,9 +29,10 @@ const baseTypeOptions = [
   { label: 'Gestor', value: 0 },
   { label: 'Professor', value: 1 },
   { label: 'Aluno', value: 2 },
+  { label: 'Responsável', value: 3 },
 ]
 
-const userTypeNames: Record<number, string> = { 0: 'Manager', 1: 'Teacher', 2: 'Student' }
+const userTypeNames: Record<number, string> = { 0: 'Manager', 1: 'Teacher', 2: 'Student', 3: 'Parent' }
 
 const schema = z.object({
   name: z.string().min(1, 'Nome obrigatório').max(50, 'Máximo 50 caracteres'),
@@ -132,6 +133,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
         <UFormField v-if="formState.baseType !== undefined" label="Permissões" name="permissions">
           <div class="flex flex-col gap-2 w-full">
+            <span v-if="!filteredPermissions.length" class="text-sm text-muted">
+              Nenhuma permissão disponível para este tipo base.
+            </span>
             <UCheckbox
               v-for="perm in filteredPermissions"
               :key="perm.id"

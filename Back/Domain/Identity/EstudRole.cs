@@ -2,7 +2,7 @@ namespace Estud.Back.Domain.Identity;
 
 public class EstudRole : IdentityRole<int>
 {
-    public int? InstitutionId { get; set; }
+    public int InstitutionId { get; set; }
     public string Description { get; set; }
     public UserType BaseType { get; set; }
     public List<int> Permissions { get; set; }

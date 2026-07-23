@@ -1,3 +1,6 @@
+using Estud.Back.Features.Identity.EmailPasswordLogin;
+using Estud.Back.Features.Identity.TwoFactorSetupLogin;
+
 namespace Estud.Tests.Integration;
 
 public partial class IntegrationTests : IntegrationTestBase
@@ -50,6 +53,30 @@ public partial class IntegrationTests : IntegrationTestBase
         {
             yield return [token];
         }
+    }
+
+    [Test]
+    public async Task SetupTwoFactor_Should_not_setup_2fa_with_wrong_token_under_setup_cookie()
+    {
+        // Arrange - login enforced deixa apenas o cookie de setup (usuário obrigado, sem 2FA)
+        var client = await _back.LoggedAsDirector();
+        var roles = await client.GetRoles().Success();
+        var role = roles.Items.First(r => r.BaseType == UserType.Manager);
+        await client.SetTwoFactorEnforcement(role.Id, true);
+
+        await client.Logout();
+        var login = await client.EmailPasswordLogin(client.User.Email, "My@nEw@strong@P4ssword");
+        login.ShouldBeError(LoginTwoFactorEnforced.I);
+
+        // Act - conclui o setup com um token inválido usando o cookie de setup
+        var response = await client.SetupTwoFactor("123456");
+
+        // Assert - o setup falha e o 2FA não é habilitado
+        response.ShouldBeError(InvalidTwoFactorToken.I);
+
+        // O usuário permanece no estado de setup: o cookie ainda não vira JWT full
+        var setupLogin = await client.TwoFactorSetupLogin();
+        setupLogin.ShouldBeError(TwoFactorSetupNotCompleted.I);
     }
 
     #endregion

@@ -35,6 +35,7 @@ const columns: TableColumn<RoleItem>[] = [
   {
     accessorKey: 'name',
     header: 'Nome',
+    meta: { class: { th: 'w-48', td: 'w-48' } },
   },
   {
     accessorKey: 'description',
@@ -43,9 +44,11 @@ const columns: TableColumn<RoleItem>[] = [
   {
     accessorKey: 'permissions',
     header: 'Permissões',
+    meta: { class: { th: 'w-32', td: 'w-32' } },
   },
   {
     id: 'actions',
+    meta: { class: { th: 'w-16', td: 'w-16' } },
     cell: ({ row }) => h(UTooltip, { text: 'Editar' }, () => h(UButton, {
       icon: 'i-lucide-pencil',
       color: 'neutral',

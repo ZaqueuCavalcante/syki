@@ -39,7 +39,7 @@ public partial class IntegrationTests : IntegrationTestBase
     #region Validation errors
 
     [Test]
-    public async Task Identity_SetTwoFactorEnforcement_Should_not_set_for_role_from_another_institution()
+    public async Task Identity_SetTwoFactorEnforcement_Should_not_set_for_nonexistent_role()
     {
         // Arrange
         var client = await _back.LoggedAsDirector();
@@ -49,6 +49,27 @@ public partial class IntegrationTests : IntegrationTestBase
 
         // Assert
         result.ShouldBeError(RoleNotFound.I);
+    }
+
+    [Test]
+    public async Task Identity_SetTwoFactorEnforcement_Should_not_set_for_role_from_another_institution()
+    {
+        // Arrange - cada director registra uma nova instituição; pegamos uma role real da instituição B
+        var directorB = await _back.LoggedAsDirector();
+        var rolesB = await directorB.GetRoles().Success();
+        var roleFromB = rolesB.Items.First(r => r.BaseType == UserType.Manager);
+
+        var directorA = await _back.LoggedAsDirector();
+
+        // Act - director A tenta alterar o enforcement de uma role da instituição B
+        var result = await directorA.SetTwoFactorEnforcement(roleFromB.Id, true);
+
+        // Assert - a role existe, mas não pertence à instituição de A → RoleNotFound (isolamento multi-tenant)
+        result.ShouldBeError(RoleNotFound.I);
+
+        // Controle: a role da instituição B continua sem enforcement
+        var afterB = await directorB.GetTwoFactorEnforcement().Success();
+        afterB.Items.First(r => r.RoleId == roleFromB.Id).TwoFactorRequired.Should().BeFalse();
     }
 
     #endregion

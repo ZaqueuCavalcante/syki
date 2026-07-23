@@ -1,12 +1,9 @@
 # TODOS
 
 - System Docs
-- Login with Google (social e OneTap)
 - SSO Multi-Tenant
-- Add RBAC dynamic roles system (feature based)
-- Database schema viz with Vue
-- Projeto deve mostrar que eu sei construir um sistema full-stack
-- Testes com ordem bem definida (Authentication, Authorization, Validation errors, Happy path)
+- Login with Google (social e OneTap)
+- Add RBAC dynamic roles system (permission based)
 - Sistema de tracking de eventos relevantes
 - Suporte para Ensino Fundamental e Médio (pais dos alunos)
 - https://github.com/ZaqueuCavalcante/syki/issues/81
@@ -16,4 +13,6 @@
 
 - Migração de dados de um sistema X pro Estud
 - Endpoints + Interface de Admin (sobe sob demanda)
+
+
 

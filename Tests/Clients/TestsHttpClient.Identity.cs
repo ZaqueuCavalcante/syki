@@ -9,6 +9,7 @@ using Estud.Back.Features.Identity.MagicLinkLogin;
 using Estud.Back.Features.Identity.SetupTwoFactor;
 using Estud.Back.Features.Identity.TwoFactorLogin;
 using Estud.Back.Features.Identity.GetTwoFactorKey;
+using Estud.Back.Features.Identity.GoogleOneTapLogin;
 using Estud.Back.Features.Identity.EmailPasswordLogin;
 using Estud.Back.Features.Identity.GetSsoConfiguration;
 using Estud.Back.Features.Identity.TwoFactorSetupLogin;
@@ -162,6 +163,13 @@ public partial class TestsHttpClient
     {
         var response = await http.GetAsync("identity/social-login/check-availability");
         return await response.Resolve<CheckSocialLoginAvailabilityOut>();
+    }
+
+    public async Task<OneOf<GoogleOneTapLoginOut, ErrorOut>> GoogleOneTapLogin(string? credential)
+    {
+        var data = new GoogleOneTapLoginIn { Credential = credential };
+        var response = await http.PostAsJsonAsync("identity/social-login/google-one-tap", data);
+        return await response.Resolve<GoogleOneTapLoginOut>();
     }
 
     public async Task<OneOf<CheckSsoAvailabilityOut, ErrorOut>> CheckSsoAvailability(string email = "usuario@empresa.com.br")

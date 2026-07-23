@@ -140,7 +140,7 @@ public static class SocialLoginScheme
         var institution = Institution.NewForUserRegister();
         var directorRole = institution.GetDirectorRole();
 
-        var user = new EstudUser(institution, name, email);
+        var user = new EstudUser(institution, name, email, true);
         var userRole = new EstudUserRole(institution, user, directorRole);
         var socialLogin = new UserSocialLogin(user.Id, provider, providerKey, email) { User = user };
 

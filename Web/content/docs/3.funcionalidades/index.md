@@ -7,6 +7,7 @@ O Estud cobre o ciclo completo da gestão acadêmica, desde a criação de curso
 
 ## Módulos disponíveis
 
+- [Instituição](/docs/funcionalidades/instituicao) — a raiz do sistema e o isolamento dos dados
 - [Gestão Acadêmica](/docs/funcionalidades/gestao-academica) — cursos, disciplinas e grades
 - [Turmas e Horários](/docs/funcionalidades/turmas-e-horarios) — criação e gestão de turmas
 - [Relatórios](/docs/funcionalidades/relatorios) — desempenho e frequência

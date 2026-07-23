@@ -2,7 +2,7 @@ namespace Estud.Back.Features.Identity.GoogleOneTapLogin;
 
 public class GoogleOneTapLoginIn : IApiDto<GoogleOneTapLoginIn>
 {
-    public string Credential { get; set; }
+    public string? Credential { get; set; }
 
     public static IEnumerable<(string Name, GoogleOneTapLoginIn Value)> GetExamples() =>
     [

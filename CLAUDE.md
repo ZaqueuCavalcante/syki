@@ -372,6 +372,27 @@ For tests that trigger async command processing use:
 await _back.AwaitCommandsProcessing();
 ```
 
+### Montar o cenário sempre via API/endpoints
+
+Os testes de integração **sempre** devem montar o cenário (arrange) e exercitar o fluxo usando a **própria API e seus endpoints**, através dos helpers do `TestsHttpClient`. Acessar o banco direto via `EstudDbContext` (`_back.GetDbContext()`) é permitido **apenas em último caso** — quando não existe endpoint que produza o estado necessário, ou para *asserts* de estado que a API não expõe.
+
+Se faltar um helper no `TestsHttpClient` pra um endpoint, **crie o helper** em vez de recorrer ao banco.
+
+**Correto** (cria a config de SSO pelos endpoints):
+```csharp
+var config = await director.CreateSsoConfiguration().Success();
+await director.UpdateSsoConfiguration(config.Id, requireSso: true);
+```
+
+**Errado** (semeia direto no banco quando existe endpoint pra isso):
+```csharp
+await using var ctx = _back.GetDbContext();
+var config = new SsoConfiguration(institutionId, ...) { RequireSso = true };
+await ctx.SaveChangesAsync(config);
+```
+
+Ler o banco via `EstudDbContext` num *assert* final (ex.: conferir `EmailConfirmed`, contar linhas) continua válido quando a API não devolve aquele dado.
+
 ### Test file structure — `#region` grouping
 
 Each feature's integration test file groups its tests into `#region` blocks, in this fixed order:

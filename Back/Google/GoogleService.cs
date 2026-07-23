@@ -4,7 +4,7 @@ namespace Estud.Back.Google;
 
 public class GoogleService : IGoogleService
 {
-    public async Task<GoogleIdTokenPayload?> ValidateIdTokenAsync(string credential, string expectedAudience)
+    public async Task<GoogleIdTokenPayload?> ValidateIdTokenAsync(string? credential, string expectedAudience)
     {
         try
         {
@@ -17,10 +17,10 @@ public class GoogleService : IGoogleService
 
             return new GoogleIdTokenPayload
             {
-                Email = payload.Email,
-                EmailVerified = payload.EmailVerified,
-                Subject = payload.Subject,
                 Name = payload.Name,
+                Email = payload.Email,
+                Subject = payload.Subject,
+                EmailVerified = payload.EmailVerified,
             };
         }
         catch (InvalidJwtException)

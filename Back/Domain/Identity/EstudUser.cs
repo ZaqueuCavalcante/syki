@@ -17,13 +17,15 @@ public class EstudUser : IdentityUser<int>
     public EstudUser(
         Institution institution,
         string name,
-        string email
+        string email,
+        bool emailConfirmed
     ) {
         Name = name;
         UserName = email;
         Email = email;
         CreatedAt = DateTime.UtcNow;
         Institution = institution;
+        EmailConfirmed = emailConfirmed;
     }
 
     public EstudUser(
